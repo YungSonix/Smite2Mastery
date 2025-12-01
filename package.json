@@ -21,5 +21,8 @@
     "react-native-screens": "~4.16.0",
     "react-native-webview": "^13.15.0"
   },
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "sharp": "^0.34.5"
+  }
 }
