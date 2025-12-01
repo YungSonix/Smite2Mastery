@@ -1,0 +1,73 @@
+{
+  "expo": {
+    "scheme": "smite2app",
+    "name": "smite2app",
+    "slug": "smite-2-mastery",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "smite2apptest",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": false,
+          "NSExceptionDomains": {
+            "smitecalculator.pro": {
+              "NSIncludesSubdomains": true,
+              "NSTemporaryExceptionAllowsInsecureHTTPLoads": false,
+              "NSTemporaryExceptionRequiresForwardSecrecy": false,
+              "NSExceptionRequiresForwardSecrecy": true,
+              "NSExceptionMinimumTLSVersion": "TLSv1.2"
+            },
+            "smite2.com": {
+              "NSIncludesSubdomains": true,
+              "NSTemporaryExceptionAllowsInsecureHTTPLoads": false,
+              "NSTemporaryExceptionRequiresForwardSecrecy": false,
+              "NSExceptionRequiresForwardSecrecy": true,
+              "NSExceptionMinimumTLSVersion": "TLSv1.2"
+            },
+            "webcdn.hirezstudios.com": {
+              "NSIncludesSubdomains": true,
+              "NSTemporaryExceptionAllowsInsecureHTTPLoads": false,
+              "NSTemporaryExceptionRequiresForwardSecrecy": false,
+              "NSExceptionRequiresForwardSecrecy": true,
+              "NSExceptionMinimumTLSVersion": "TLSv1.2"
+            }
+          }
+        }
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.yungsonixsorganization.smite2mastery",
+      "permissions": [],
+      "usesCleartextTraffic": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "23dcad9c-6b25-4dea-821b-ef4b7e888790"
+      }
+    },
+    "owner": "yungsonixs-organization"
+  }
+}
