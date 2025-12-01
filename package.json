@@ -13,6 +13,7 @@
     "expo": "~54.0.25",
     "expo-dev-client": "~6.0.18",
     "expo-linking": "^8.0.9",
+    "expo-router": "^6.0.15",
     "expo-status-bar": "~3.0.8",
     "react": "19.1.0",
     "react-native": "0.81.5",
