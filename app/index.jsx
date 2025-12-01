@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useState, useMemo, useCallback, lazy, Suspense } from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,9 +10,11 @@ import {
   ActivityIndicator,
   Modal,
   Pressable,
+  InteractionManager,
 } from 'react-native';
 import HomePage from './home';
-import localBuilds from './data/builds.json';
+// Lazy load the large JSON to prevent startup crash
+let localBuilds = null;
 import DataPage from './data';
 import CustomBuildPage from './custombuild';
 import PlayerProfilesPage from './playerprofiles';
@@ -32,8 +34,8 @@ const getRoleIcon = (role) => {
 };
 
 function BuildsPage({ onGodIconPress }) {
-  const [builds, setBuilds] = useState(localBuilds || null);
-  const [loading, setLoading] = useState(false);
+  const [builds, setBuilds] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
@@ -44,6 +46,35 @@ function BuildsPage({ onGodIconPress }) {
   const [selectedAbility, setSelectedAbility] = useState(null); // { godIndex, abilityKey, ability }
   const [selectedItem, setSelectedItem] = useState(null); // { item, itemName }
   const [selectedTip, setSelectedTip] = useState(null); // { tip, tipIndex, godIndex }
+
+  // Lazy load the builds data after the UI has rendered to prevent startup crash
+  useEffect(() => {
+    let isMounted = true;
+    
+    // Wait for interactions to complete before loading heavy data
+    InteractionManager.runAfterInteractions(() => {
+      // Use setTimeout to give the JS thread a breather
+      setTimeout(() => {
+        try {
+          // Dynamic import to load the JSON after app starts
+          const data = require('./data/builds.json');
+          if (isMounted) {
+            setBuilds(data);
+            setLoading(false);
+          }
+        } catch (err) {
+          if (isMounted) {
+            setError('Failed to load builds data');
+            setLoading(false);
+          }
+        }
+      }, 100);
+    });
+    
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // Debounce search query to prevent rapid filtering
   useEffect(() => {

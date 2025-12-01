@@ -9,8 +9,11 @@ import {
   TouchableOpacity,
   Modal,
   Pressable,
+  ActivityIndicator,
+  InteractionManager,
 } from 'react-native';
-import localBuilds from './data/builds.json';
+// Lazy load builds.json to prevent startup crash
+let localBuilds = null;
 import { getLocalItemIcon, getLocalGodAsset } from './localIcons';
 import ConquestMap from './ConquestMap';
 
@@ -204,7 +207,8 @@ const gameModes = [
 ];
 
 export default function DataPage({ initialSelectedGod = null, initialExpandAbilities = false, onBackToBuilds = null }) {
-  const [builds] = useState(localBuilds || null);
+  const [builds, setBuilds] = useState(null);
+  const [dataLoading, setDataLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTab, setSelectedTab] = useState('gods'); // 'gods', 'items', or 'gamemodes'
   const [selectedGod, setSelectedGod] = useState(initialSelectedGod);
@@ -220,6 +224,31 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
   const scrollViewRef = useRef(null);
   // Track if we came from builds page (only true if initialSelectedGod was set on mount)
   const [cameFromBuilds] = useState(!!initialSelectedGod && !!onBackToBuilds);
+  
+  // Lazy load the builds data after the UI has rendered
+  useEffect(() => {
+    let isMounted = true;
+    
+    InteractionManager.runAfterInteractions(() => {
+      setTimeout(() => {
+        try {
+          const data = require('./data/builds.json');
+          if (isMounted) {
+            setBuilds(data);
+            setDataLoading(false);
+          }
+        } catch (err) {
+          if (isMounted) {
+            setDataLoading(false);
+          }
+        }
+      }, 100);
+    });
+    
+    return () => {
+      isMounted = false;
+    };
+  }, []);
   
   // If initialSelectedGod changes, update selectedGod
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,12 +11,15 @@ import {
   TextInput,
   ActivityIndicator,
   Linking,
+  InteractionManager,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
-import localBuilds from './data/builds.json';
+// Lazy load builds.json to prevent startup crash
 import { getLocalItemIcon, getLocalGodAsset } from './localIcons';
 
 export default function CustomBuildPage() {
+  const [localBuilds, setLocalBuilds] = useState(null);
+  const [dataLoading, setDataLoading] = useState(true);
   const [selectedGod, setSelectedGod] = useState(null);
   const [godLevel, setGodLevel] = useState(20);
   const [selectedItems, setSelectedItems] = useState(Array(7).fill(null));
@@ -39,6 +42,31 @@ export default function CustomBuildPage() {
   });
   const [aspectEnabled, setAspectEnabled] = useState(false);
   const [selectedAspect, setSelectedAspect] = useState(null);
+
+  // Lazy load the builds data after the UI has rendered
+  useEffect(() => {
+    let isMounted = true;
+    
+    InteractionManager.runAfterInteractions(() => {
+      setTimeout(() => {
+        try {
+          const data = require('./data/builds.json');
+          if (isMounted) {
+            setLocalBuilds(data);
+            setDataLoading(false);
+          }
+        } catch (err) {
+          if (isMounted) {
+            setDataLoading(false);
+          }
+        }
+      }, 100);
+    });
+    
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   function flattenAny(a) {
     if (!a) return [];
