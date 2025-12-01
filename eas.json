@@ -7,15 +7,15 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "node": "20.18.0"
+      "node": "22.12.0"
     },
     "preview": {
       "distribution": "internal",
-      "node": "20.18.0"
+      "node": "22.12.0"
     },
     "production": {
       "autoIncrement": true,
-      "node": "20.18.0"
+      "node": "22.12.0"
     }
   },
   "submit": {
