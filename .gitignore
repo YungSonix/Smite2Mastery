@@ -39,3 +39,8 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Update scripts (keep private - contains API credentials)
+.scripts/
+update-builds.js
+app/data/builds.json.backup
