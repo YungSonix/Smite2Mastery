@@ -9,6 +9,7 @@ import {
   Image,
   ActivityIndicator,
 } from 'react-native';
+import * as Updates from 'expo-updates';
 import PrivacyPage from './privacy';
 
 // ============================================================================
@@ -38,6 +39,25 @@ export default function HomePage() {
   const [articles, setArticles] = useState([]);
   const [imageErrors, setImageErrors] = useState({});
   const [loadingArticles, setLoadingArticles] = useState(false);
+  const [checkingUpdate, setCheckingUpdate] = useState(false);
+  const [downloadingUpdate, setDownloadingUpdate] = useState(false);
+  const [updateStatus, setUpdateStatus] = useState(null); // 'success', 'error', 'up-to-date', null
+
+  // Get update information from expo-updates
+  const {
+    currentlyRunning,
+    isUpdateAvailable,
+    isUpdatePending,
+  } = Updates.useUpdates();
+
+  // Auto-reload if update is pending
+  useEffect(() => {
+    if (isUpdatePending) {
+      setUpdateStatus('success');
+      // Update has successfully downloaded; apply it now
+      Updates.reloadAsync();
+    }
+  }, [isUpdatePending]);
 
   useEffect(() => {
     // Simple manual configuration - no auto-fetching needed
@@ -68,6 +88,82 @@ export default function HomePage() {
     });
   };
 
+  const checkForUpdates = async () => {
+    setCheckingUpdate(true);
+    setUpdateStatus(null);
+    
+    try {
+      const update = await Updates.checkForUpdateAsync();
+      
+      if (update.isAvailable) {
+        setUpdateStatus('available');
+        // Automatically download if available
+        await downloadUpdate();
+      } else {
+        setUpdateStatus('up-to-date');
+      }
+    } catch (error) {
+      console.error('Error checking for updates:', error);
+      setUpdateStatus('error');
+    } finally {
+      setCheckingUpdate(false);
+    }
+  };
+
+  const downloadUpdate = async () => {
+    setDownloadingUpdate(true);
+    setUpdateStatus(null);
+    
+    try {
+      await Updates.fetchUpdateAsync();
+      setUpdateStatus('success');
+      // Reload will happen automatically via useEffect when isUpdatePending becomes true
+    } catch (error) {
+      console.error('Error downloading update:', error);
+      setUpdateStatus('error');
+    } finally {
+      setDownloadingUpdate(false);
+    }
+  };
+
+  const getUpdateStatusMessage = () => {
+    if (checkingUpdate) return 'Checking for updates...';
+    if (downloadingUpdate) return 'Downloading update...';
+    
+    switch (updateStatus) {
+      case 'success':
+        return '✅ Update downloaded successfully! App will reload...';
+      case 'available':
+        return '📦 Update available! Downloading...';
+      case 'up-to-date':
+        return '✅ App is up to date';
+      case 'error':
+        return '❌ Error checking for updates. Please try again.';
+      default:
+        if (isUpdateAvailable) {
+          return '📦 Update available - tap to download';
+        }
+        return currentlyRunning.isEmbeddedLaunch
+          ? 'App is running from built-in code'
+          : 'App is running an update';
+    }
+  };
+
+  const getUpdateStatusColor = () => {
+    switch (updateStatus) {
+      case 'success':
+        return '#10b981'; // green
+      case 'up-to-date':
+        return '#10b981'; // green
+      case 'error':
+        return '#ef4444'; // red
+      case 'available':
+        return '#f59e0b'; // orange
+      default:
+        return '#7dd3fc'; // blue
+    }
+  };
+
   if (showPrivacy) {
     return (
       <View style={styles.container}>
@@ -91,7 +187,7 @@ export default function HomePage() {
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         {/* App Bio Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>About This App</Text>
+          <Text style={styles.sectionTitle}>About This App. </Text>
           <Text style={styles.bioText}>
             Welcome to the SMITE 2 App! This app provides comprehensive information about all gods, items, and abilities in SMITE 2.
           </Text>
@@ -101,6 +197,43 @@ export default function HomePage() {
           <Text style={styles.bioText}>
             Whether you're looking for the perfect build for your favorite god or researching item stats, this app has everything you need to enhance your SMITE 2 experience.
           </Text>
+        </View>
+
+        {/* Update Status Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>App Updates</Text>
+          <View style={styles.updateStatusContainer}>
+            <Text style={[styles.updateStatusText, { color: getUpdateStatusColor() }]}>
+              {getUpdateStatusMessage()}
+            </Text>
+          </View>
+          <View style={styles.updateButtonsContainer}>
+            <TouchableOpacity
+              style={[styles.updateButton, (checkingUpdate || downloadingUpdate) && styles.updateButtonDisabled]}
+              onPress={checkForUpdates}
+              disabled={checkingUpdate || downloadingUpdate}
+              activeOpacity={0.7}
+            >
+              {checkingUpdate || downloadingUpdate ? (
+                <ActivityIndicator size="small" color="#ffffff" />
+              ) : (
+                <Text style={styles.updateButtonIcon}>🔄</Text>
+              )}
+              <Text style={styles.updateButtonText}>
+                {checkingUpdate ? 'Checking...' : downloadingUpdate ? 'Downloading...' : 'Check for Updates'}
+              </Text>
+            </TouchableOpacity>
+            {isUpdateAvailable && !downloadingUpdate && (
+              <TouchableOpacity
+                style={[styles.updateButton, styles.updateButtonDownload]}
+                onPress={downloadUpdate}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.updateButtonIcon}>⬇️</Text>
+                <Text style={styles.updateButtonText}>Download Update</Text>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
 
         {/* Smite 2 News Section */}
@@ -404,6 +537,60 @@ const styles = StyleSheet.create({
   },
   privacyContainer: {
     flex: 1,
+  },
+  updateStatusContainer: {
+    marginBottom: 10,
+    padding: 8,
+    backgroundColor: '#0f1724',
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  updateStatusText: {
+    fontSize: 12,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  updateButtonsContainer: {
+    flexDirection: 'row',
+    gap: 8,
+    flexWrap: 'wrap',
+  },
+  updateButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#1e90ff',
+    padding: 10,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#1e90ff',
+    minWidth: 120,
+    gap: 6,
+  },
+  updateButtonDisabled: {
+    opacity: 0.6,
+  },
+  updateButtonDownload: {
+    backgroundColor: '#10b981',
+    borderColor: '#10b981',
+  },
+  updateButtonIcon: {
+    fontSize: 16,
+  },
+  updateButtonText: {
+    color: '#ffffff',
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  updateSection: {
+    marginBottom: 20,
+    padding: 12,
+  },
+  updateSectionTitle: {
+    fontSize: 20,
+    marginBottom: 10,
   },
 });
 
