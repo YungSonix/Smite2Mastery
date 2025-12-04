@@ -611,17 +611,266 @@ function BuildsPage({ onGodIconPress }) {
 
               const godIcon = (god && (god.icon || god.GodIcon || (god.abilities && god.abilities.A01 && god.abilities.A01.icon))) || null;
               
+              // Determine role from current build for role-specific start order matching
+              // Priority: currentBuild role info > selectedRole > god's general role
+              let currentRoleLower = '';
+              
+              // First, try to extract role from current build
+              if (currentBuild) {
+                const buildText = [
+                  currentBuild.notes,
+                  currentBuild.title,
+                  currentBuild.role,
+                  currentBuild.lane,
+                  currentBuild.name
+                ].filter(Boolean).join(' ').toLowerCase();
+                
+                // Use word boundaries to avoid false matches (e.g., "support" in "supportive")
+                // Check in order of specificity (more specific first)
+                if (buildText.includes('support') && !buildText.includes('supportive')) {
+                  currentRoleLower = 'support';
+                } else if (buildText.includes('jungle')) {
+                  currentRoleLower = 'jungle';
+                } else if (buildText.includes('solo')) {
+                  currentRoleLower = 'solo';
+                } else if (buildText.includes('adc') || buildText.includes('carry')) {
+                  currentRoleLower = 'adc';
+                } else if (buildText.includes('mid') || buildText.includes('middle')) {
+                  currentRoleLower = 'mid';
+                }
+              }
+              
+              // Fallback to selectedRole if no role found in build
+              if (!currentRoleLower && selectedRole) {
+                currentRoleLower = selectedRole.toLowerCase();
+              }
+              
+              // Final fallback to god's general role
+              if (!currentRoleLower && role) {
+                const roleLower = role.toLowerCase();
+                if (roleLower.includes('adc') || roleLower.includes('carry')) currentRoleLower = 'adc';
+                else if (roleLower.includes('solo')) currentRoleLower = 'solo';
+                else if (roleLower.includes('support')) currentRoleLower = 'support';
+                else if (roleLower.includes('mid') || roleLower.includes('middle')) currentRoleLower = 'mid';
+                else if (roleLower.includes('jungle')) currentRoleLower = 'jungle';
+              }
+
               // Extract leveling order from tips
               let levelingOrder = null;
+              let startOrder = null;
               if (god && god.tips && Array.isArray(god.tips)) {
-                const levelingTip = god.tips.find(tip => 
-                  tip.title && tip.title.toLowerCase().includes('leveling')
-                );
+                // First, try to find a role-specific tip (e.g., "Leveling order (Jungle/Solo)")
+                let levelingTip = null;
+                if (currentRoleLower) {
+                  const roleMap = {
+                    'adc': ['adc', 'carry'],
+                    'solo': ['solo', 'jungle/solo', 'solo/jungle'],
+                    'support': ['support'],
+                    'mid': ['mid', 'middle'],
+                    'jungle': ['jungle', 'jungle/solo', 'solo/jungle']
+                  };
+                  const roleVariants = roleMap[currentRoleLower] || [currentRoleLower];
+                  
+                  // Look for a tip with the role in the title
+                  levelingTip = god.tips.find(tip => {
+                    if (!tip.title || !tip.value) return false;
+                    const titleLower = tip.title.toLowerCase();
+                    // Check if title contains "leveling" and one of our role variants
+                    if (titleLower.includes('leveling') || titleLower.includes('prioritize')) {
+                      for (const roleVariant of roleVariants) {
+                        if (titleLower.includes(roleVariant)) {
+                          return true;
+                        }
+                      }
+                    }
+                    return false;
+                  });
+                }
+                
+                // If no role-specific tip found, use the general "Leveling order" tip
+                if (!levelingTip) {
+                  levelingTip = god.tips.find(tip => 
+                    tip.title && tip.title.toLowerCase().includes('leveling') && 
+                    (!tip.title.toLowerCase().includes('jungle') && !tip.title.toLowerCase().includes('solo'))
+                  );
+                }
+                
+                // Final fallback: any tip with "leveling" or "prioritize"
+                if (!levelingTip) {
+                  levelingTip = god.tips.find(tip => 
+                    tip.title && (tip.title.toLowerCase().includes('leveling') || tip.title.toLowerCase().includes('prioritize'))
+                  );
+                }
+                
                 if (levelingTip && levelingTip.value) {
-                  // Extract numbers from text like "Level your 3, 2, 4, then 1" or "Maxing 1, 3, 4, 2"
-                  const numbers = levelingTip.value.match(/\b[1-4]\b/g);
-                  if (numbers && numbers.length > 0) {
-                    levelingOrder = numbers.map(num => parseInt(num));
+                  const tipValue = levelingTip.value;
+                  
+                  // Extract start order - look for "Start" patterns
+                  // Handle role-specific start orders (e.g., "*Support:* Start 2,1,3" or "**Mid/ADC**: Start 1, 2, 3")
+                  
+                  // Try to find role-specific start order first
+                  let startMatch = null;
+                  
+                  // First, try to find all role-specific start patterns
+                  // Pattern: *Role*: Start or *Role/Role*: Start (single or double asterisk)
+                  const roleStartPattern = /\*{1,2}([^*]+?)\*{1,2}\s*:\s*Start[:\s]+(?:your\s+)?([1-4](?:[\s,]+[1-4])*)/gi;
+                  const allRoleMatches = [];
+                  let roleMatch;
+                  while ((roleMatch = roleStartPattern.exec(tipValue)) !== null) {
+                    allRoleMatches.push({
+                      role: roleMatch[1].toLowerCase().trim(), // lowercase for matching
+                      roleOriginal: roleMatch[1].trim(), // original case for regex matching
+                      numbers: roleMatch[2],
+                      matchIndex: roleMatch.index // position in the string
+                    });
+                  }
+                  
+                  // If we have role-specific matches, try to find one that matches the current role
+                  if (allRoleMatches.length > 0 && currentRoleLower) {
+                    // Map role names for matching, including combined roles
+                    const roleMap = {
+                      'adc': ['adc', 'carry'],
+                      'solo': ['solo', 'jungle/solo', 'solo/jungle'], // Solo can match "Jungle/Solo" in tips
+                      'support': ['support'],
+                      'mid': ['mid', 'middle'],
+                      'jungle': ['jungle', 'jungle/solo', 'solo/jungle', '*Jungle/Solo*'] // Jungle can match "Jungle/Solo" in tips
+                    };
+                    
+                    const roleVariants = roleMap[currentRoleLower] || [currentRoleLower];
+                    
+                    // Check if any role match contains our role
+                    for (const roleMatch of allRoleMatches) {
+                      const matchRole = roleMatch.role;
+                      // Check if the matched role contains any of our role variants
+                      // Handle combined roles like "jungle/solo" matching both "jungle" and "solo"
+                      for (const roleVariant of roleVariants) {
+                        // Direct match
+                        if (matchRole === roleVariant) {
+                          startMatch = [roleMatch.numbers, roleMatch.numbers];
+                          break;
+                        }
+                        // Combined role match: "jungle/solo" contains "jungle" or "solo"
+                        // Check if matchRole contains roleVariant as a whole word (with / or at boundaries)
+                        if (matchRole.includes(roleVariant)) {
+                          // Match if roleVariant is at start/end or surrounded by / or spaces
+                          if (matchRole === roleVariant || 
+                              matchRole.startsWith(roleVariant + '/') ||
+                              matchRole.endsWith('/' + roleVariant) ||
+                              matchRole.includes('/' + roleVariant + '/')) {
+                            startMatch = [roleMatch.numbers, roleMatch.numbers];
+                            break;
+                          }
+                        }
+                      }
+                      if (startMatch) break;
+                    }
+                    
+                    // If no role match found, use the first role-specific match
+                    if (!startMatch && allRoleMatches.length > 0) {
+                      startMatch = [allRoleMatches[0].numbers, allRoleMatches[0].numbers];
+                    }
+                  }
+                  
+                  // If no role-specific match, try general start pattern
+                  if (!startMatch) {
+                    const generalStartPattern = /Start[:\s]+(?:your\s+)?([1-4](?:[\s,]+[1-4])*)/i;
+                    const generalMatch = tipValue.match(generalStartPattern);
+                    if (generalMatch && generalMatch[1]) {
+                      startMatch = [generalMatch[0], generalMatch[1]];
+                    }
+                  }
+                  
+                  if (startMatch && startMatch[1]) {
+                    const startNumbers = startMatch[1].match(/\b[1-4]\b/g);
+                    if (startNumbers && startNumbers.length > 0) {
+                      startOrder = startNumbers.map(num => parseInt(num));
+                    }
+                  }
+                  
+                  // Extract max order numbers from "Maxing" or "Prioritize" patterns
+                  // Look for role-specific max orders first, then general
+                  let maxingMatch = null;
+                  
+                  // If we found a role-specific start order, try to find the corresponding max order in the same role block
+                  if (startMatch && currentRoleLower && allRoleMatches.length > 0) {
+                    // Find the role section that matched our start order (use same logic as start order matching)
+                    const matchedRoleSection = allRoleMatches.find(rm => {
+                      const matchRole = rm.role;
+                      const roleMap = {
+                        'adc': ['adc', 'carry'],
+                        'solo': ['solo', 'jungle/solo', 'solo/jungle'],
+                        'support': ['support'],
+                        'mid': ['mid', 'middle'],
+                        'jungle': ['jungle', 'jungle/solo', 'solo/jungle']
+                      };
+                      const roleVariants = roleMap[currentRoleLower] || [currentRoleLower];
+                      for (const roleVariant of roleVariants) {
+                        // Direct match
+                        if (matchRole === roleVariant) {
+                          return true;
+                        }
+                        // Combined role match: "jungle/solo" contains "jungle" or "solo"
+                        // Check if matchRole contains roleVariant as a whole word (with / or at boundaries)
+                        if (matchRole.includes(roleVariant)) {
+                          // Match if roleVariant is at start/end or surrounded by / or spaces
+                          if (matchRole === roleVariant || 
+                              matchRole.startsWith(roleVariant + '/') ||
+                              matchRole.endsWith('/' + roleVariant) ||
+                              matchRole.includes('/' + roleVariant + '/')) {
+                            return true;
+                          }
+                        }
+                      }
+                      return false;
+                    });
+                    
+                    if (matchedRoleSection) {
+                      // Use the stored match index to find the exact role marker position
+                      // The matchIndex points to the start of "*Role*:" in the tip
+                      const roleBlockStart = matchedRoleSection.matchIndex;
+                      
+                      // Find where this role marker ends (after the colon)
+                      const roleMarkerEndPattern = /\*{1,2}[^*]+\*{1,2}\s*:/g;
+                      roleMarkerEndPattern.lastIndex = roleBlockStart;
+                      const roleMarkerMatch = roleMarkerEndPattern.exec(tipValue);
+                      
+                      if (roleMarkerMatch) {
+                        // Start of the role block content (after "*Role*: ")
+                        const roleBlockContentStart = roleMarkerMatch.index + roleMarkerMatch[0].length;
+                        
+                        // Find the next role marker (if any) to determine where this block ends
+                        const nextRoleMarkerPattern = /\*{1,2}[^*]+\*{1,2}\s*:/g;
+                        nextRoleMarkerPattern.lastIndex = roleBlockContentStart;
+                        const nextRoleMarker = nextRoleMarkerPattern.exec(tipValue);
+                        
+                        const roleBlockEnd = nextRoleMarker ? nextRoleMarker.index : tipValue.length;
+                        const roleBlockText = tipValue.substring(roleBlockContentStart, roleBlockEnd);
+                        
+                        // Now find "Prioritize Maxing" in this specific role block
+                        const maxingPattern = /(?:Prioritize[:\s]+)?(?:Maxing|Max)[:\s]+([1-4](?:[\s,->]+[1-4])*)/i;
+                        maxingMatch = roleBlockText.match(maxingPattern);
+                      }
+                    }
+                  }
+                  
+                  // If no role-specific max order found, try general pattern
+                  if (!maxingMatch) {
+                    const maxingPattern = /(?:Prioritize[:\s]+)?(?:Maxing|Max)[:\s]+([1-4](?:[\s,->]+[1-4])*)/i;
+                    maxingMatch = tipValue.match(maxingPattern);
+                  }
+                  
+                  if (maxingMatch && maxingMatch[1]) {
+                    // Extract numbers, handling arrows and commas
+                    const numbers = maxingMatch[1].match(/\b[1-4]\b/g);
+                    if (numbers && numbers.length > 0) {
+                      levelingOrder = numbers.map(num => parseInt(num));
+                    }
+                  } else {
+                    // Fallback: extract all numbers if no "Maxing" pattern found
+                    const numbers = tipValue.match(/\b[1-4]\b/g);
+                    if (numbers && numbers.length > 0) {
+                      levelingOrder = numbers.map(num => parseInt(num));
+                    }
                   }
                 }
               }
@@ -629,6 +878,14 @@ function BuildsPage({ onGodIconPress }) {
               // Map leveling order numbers to ability keys (1 = A01, 2 = A02, 3 = A03, 4 = A04)
               const levelingAbilities = levelingOrder && god && god.abilities
                 ? levelingOrder.map(num => {
+                    const abilityKey = `A0${num}`;
+                    return god.abilities[abilityKey] ? { key: abilityKey, ability: god.abilities[abilityKey] } : null;
+                  }).filter(Boolean)
+                : null;
+              
+              // Map start order numbers to ability keys
+              const startAbilities = startOrder && god && god.abilities
+                ? startOrder.map(num => {
                     const abilityKey = `A0${num}`;
                     return god.abilities[abilityKey] ? { key: abilityKey, ability: god.abilities[abilityKey] } : null;
                   }).filter(Boolean)
@@ -789,8 +1046,74 @@ function BuildsPage({ onGodIconPress }) {
                     {isExpanded && (
                       <View style={styles.cardExpandedContent}>
 
+                        {startAbilities && startAbilities.length > 0 && (
+                          <View style={styles.levelingOrderContainer} key={`start-order-${idx}-${currentBuildIdx}`}>
+                            <Text style={styles.levelingOrderLabel}>Start Order:</Text>
+                            <View style={styles.levelingOrderIcons}>
+                              {startAbilities.slice(0, 4).map(({ key, ability }, ai) => {
+                                const aIconPath = ability && ability.icon ? ability.icon : null;
+                                const abilityName = ability.name || ability.key || key;
+                                const isLast = ai === startAbilities.slice(0, 4).length - 1;
+                                const isFirst = ai === 0;
+                                return (
+                                  <React.Fragment key={`${idx}-${currentBuildIdx}-start-${ai}-${key}`}>
+                                    <TouchableOpacity
+                                      style={styles.levelingOrderIconWrapper}
+                                      onPress={(e) => {
+                                        e.stopPropagation();
+                                        if (ability && typeof ability === 'object') {
+                                          setSelectedAbility({ godIndex: idx, abilityKey: key, ability: ability, abilityName });
+                                        }
+                                      }}
+                                      activeOpacity={0.7}
+                                    >
+                                      {aIconPath ? (() => {
+                                        const localIcon = getLocalGodAsset(aIconPath);
+                                        if (localIcon) {
+                                          return (
+                                        <Image 
+                                              source={localIcon} 
+                                          style={styles.levelingOrderIcon}
+                                          resizeMode="cover"
+                                        />
+                                          );
+                                        }
+                                        // Fallback to text if local icon not found
+                                        return (
+                                          <View style={styles.levelingOrderIconFallback}>
+                                            <Text style={styles.levelingOrderIconFallbackText}>
+                                              {abilityName.charAt(0) || key.charAt(key.length - 1)}
+                                            </Text>
+                                          </View>
+                                        );
+                                      })() : (
+                                        <View style={styles.levelingOrderIconFallback}>
+                                          <Text style={styles.levelingOrderIconFallbackText}>
+                                            {abilityName.charAt(0) || key.charAt(key.length - 1)}
+                                          </Text>
+                                        </View>
+                                      )}
+                                      {isFirst && (
+                                        <View style={styles.levelingOrderFirstBadge}>
+                                          <Text style={styles.levelingOrderFirstBadgeText}>1st</Text>
+                                        </View>
+                                      )}
+                                      {!isFirst && (
+                                        <Text style={styles.levelingOrderNumber}>{ai + 1}</Text>
+                                      )}
+                                    </TouchableOpacity>
+                                    {!isLast && (
+                                      <Text style={styles.levelingOrderArrow}>→</Text>
+                                    )}
+                                  </React.Fragment>
+                                );
+                              })}
+                            </View>
+                          </View>
+                        )}
+
                         {levelingAbilities && levelingAbilities.length > 0 && (
-                          <View style={styles.levelingOrderContainer}>
+                          <View style={styles.levelingOrderContainer} key={`max-order-${idx}-${currentBuildIdx}`}>
                             <Text style={styles.levelingOrderLabel}>Max Order:</Text>
                             <View style={styles.levelingOrderIcons}>
                               {levelingAbilities.slice(0, 4).map(({ key, ability }, ai) => {
@@ -799,7 +1122,7 @@ function BuildsPage({ onGodIconPress }) {
                                 const isLast = ai === levelingAbilities.slice(0, 4).length - 1;
                                 const isFirst = ai === 0;
                                 return (
-                                  <React.Fragment key={`${idx}-leveling-${ai}-${key}`}>
+                                  <React.Fragment key={`${idx}-${currentBuildIdx}-leveling-${ai}-${key}`}>
                                     <TouchableOpacity
                                       style={styles.levelingOrderIconWrapper}
                                       onPress={(e) => {

@@ -7272,7 +7272,7 @@
                 "tips": [
                     {
                         "title": "Leveling order",
-                        "value": "Start 3, then 1, then another point in your 1. Prioritize: Maxing 1, 3, 4, 2. "
+                        "value": "Prioritize: Maxing 1, 3, 4, 2."
                     }
                 ],
                 "hasAspect": true,
@@ -14059,7 +14059,11 @@
                 "tips": [
                     {
                         "title": "Leveling order",
-                        "value": "*Support:* Start 2,1,3. Prioritize Maxing: 2, 4, 1, 3. \r\n\r\n  *Jungle/Solo:* Start 2,1,2. Prioritize: Maxing 2, 1, 4, 3."
+                        "value": "*Support:* Start 2,1,3. Prioritize Maxing: 2, 4, 1, 3."
+                    },
+                    {
+                        "title": "Leveling order (Jungle/Solo)",
+                        "value": "*Jungle/Solo:* Start 2,1,2. Prioritize: Maxing 2, 1, 4, 3."
                     },
                     {
                         "title": "Tips",
@@ -16176,7 +16180,11 @@
                 "tips": [
                     {
                         "title": "Leveling order",
-                        "value": "**Mid/ADC**: Start 1, 2, 3. Prioritize: Maxing 1,4,2,3.\r\n\r\n  **Support:** Start 1, 2, then your 3. Prioritize: Maxing 2,4,1,3."
+                        "value": "**Mid/ADC**: Start 1, 2, 3. Prioritize: Maxing 1,4,2,3. "
+                    },
+                    {
+                        "title": "Leveling order (Support)",
+                        "value": "**Support:** Start 1, 2, then your 3. Prioritize: Maxing 2,4,1,3."
                     },
                     {
                         "title": "Lovestruck Management Tips (Passive)",
@@ -20194,7 +20202,11 @@
                 "tips": [
                     {
                         "title": "Leveling order",
-                        "value": "**Mid/Solo**: Start 1, 2, then 1 again. After, put a point into your 3. Prioritize: Maxing 1,2,4,3.\r\n\r\n  **Support:** Start 1, 3, then your 2. Prioritize: Maxing 3, 4, 1, 2."
+                        "value": "**Mid/Solo**: Start 1, 2, then 1 again. After, put a point into your 3. Prioritize: Maxing 1,2,4,3."
+                    },
+                    {
+                        "title": "Leveling order (Support)",
+                        "value": "**Support:** Start 1, 3, then your 2. Prioritize: Maxing 3, 4, 1, 2."
                     },
                     {
                         "title": "Charge Management Tips",
@@ -28217,7 +28229,11 @@
                 "tips": [
                     {
                         "title": "Leveling order",
-                        "value": "**Solo**: Start 2, 1, 3. Prioritize: Maxing 2,3,4,1.\r\n\r\n  **Jungle:** Start 2, 1, 3. Prioritize: Maxing 2,1,4,3."
+                        "value": "**Solo**: Start 2, 1, 3. Prioritize: Maxing 2,3,4,1."
+                    },
+                    {
+                        "title": "Leveling order (Jungle)",
+                        "value": "**Jungle:** Start 2, 1, 3. Prioritize: Maxing 2,1,4,3."
                     },
                     {
                         "title": "Ganking Tips (JUNGLE)",
@@ -31262,7 +31278,11 @@
                 "tips": [
                     {
                         "title": "Leveling order",
-                        "value": "**Mid/Solo**: Start 1, 2, then 3. Prioritize: Maxing 1, 2, 3, 4.\r\n\r\n  **Support:** Start 3, 2, then your 1. Prioritize: Maxing 3, 4, 2, 1."
+                        "value": "**Mid/Solo**: Start 1, 2, then 3. Prioritize: Maxing 1, 2, 3, 4."
+                    },
+                    {
+                        "title": "Leveling order (Support)",
+                        "value": "**Support:** Start 3, 2, then your 1. Prioritize: Maxing 3, 4, 2, 1."
                     },
                     {
                         "title": "Tips",
