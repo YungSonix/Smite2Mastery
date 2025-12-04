@@ -187,7 +187,7 @@ export default function HomePage() {
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         {/* App Bio Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>About This App.</Text>
+          <Text style={styles.sectionTitle}>About This App.Trial for web app to see if i can see this </Text>
           <Text style={styles.bioText}>
             Welcome to the SMITE 2 App! This app provides comprehensive information about all gods, items, and abilities in SMITE 2.
           </Text>
