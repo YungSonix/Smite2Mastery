@@ -46,6 +46,7 @@ function BuildsPage({ onGodIconPress }) {
   const [selectedAbility, setSelectedAbility] = useState(null); // { godIndex, abilityKey, ability }
   const [selectedItem, setSelectedItem] = useState(null); // { item, itemName }
   const [selectedTip, setSelectedTip] = useState(null); // { tip, tipIndex, godIndex }
+  const [failedItemIcons, setFailedItemIcons] = useState({}); // Track which item icons failed to load
 
   // Lazy load the builds data after the UI has rendered to prevent startup crash
   useEffect(() => {
@@ -193,13 +194,15 @@ function BuildsPage({ onGodIconPress }) {
     
     // Filter by role if selected
     if (selectedRole) {
-      result = result.filter(({ god }) => {
+      result = result.filter(({ god, builds: godBuilds }) => {
         if (!god) return false;
+        const selectedRoleLower = selectedRole.toLowerCase();
+        
+        // First check god's roles property
         const roles = god.roles || god.role || [];
         const roleArray = Array.isArray(roles) ? roles : [roles];
-        return roleArray.some(r => {
+        const godHasRole = roleArray.some(r => {
           const roleStr = String(r).toLowerCase().trim();
-          const selectedRoleLower = selectedRole.toLowerCase();
           // Handle "ADC" and "Carry" as the same
           if (selectedRoleLower === 'adc') {
             return roleStr === 'adc' || roleStr === 'carry';
@@ -210,6 +213,72 @@ function BuildsPage({ onGodIconPress }) {
           }
           // Also check if role string includes the selected role (for partial matches)
           return roleStr === selectedRoleLower || roleStr.includes(selectedRoleLower) || selectedRoleLower.includes(roleStr);
+        });
+        
+        // If god has the role, include them
+        if (godHasRole) return true;
+        
+        // Otherwise, check if any builds match the selected role
+        const allBuilds = Array.isArray(godBuilds) ? godBuilds : [];
+        if (allBuilds.length === 0) return false;
+        
+        // Check if any build matches the selected role
+        return allBuilds.some((build) => {
+          if (!build) return false;
+          const buildText = [
+            build.notes,
+            build.title,
+            build.role,
+            build.lane,
+            build.name
+          ].filter(Boolean).join(' ').toLowerCase();
+          
+          // Handle "ADC" and "Carry" as the same
+          if (selectedRoleLower === 'adc') {
+            return buildText.includes('adc') || buildText.includes('carry');
+          }
+          
+          // Handle "Mid" and "Middle" as the same
+          if (selectedRoleLower === 'mid') {
+            return buildText.includes('mid') || buildText.includes('middle');
+          }
+          
+          // Handle "Support"
+          if (selectedRoleLower === 'support') {
+            return buildText.includes('support');
+          }
+          
+          // Handle "Jungle"
+          if (selectedRoleLower === 'jungle') {
+            return buildText.includes('jungle');
+          }
+          
+          // Handle "Solo" - check for solo, bruiser solo, solo bruiser, bruiser solo-lane, etc.
+          if (selectedRoleLower === 'solo') {
+            const soloPatterns = [
+              /\bsolo\b/i,
+              /\bbruiser\s+solo/i,
+              /\bsolo\s+bruiser/i,
+              /\bbruiser\s+solo[\s-]lane/i,
+              /\bsolo[\s-]lane/i,
+            ];
+            
+            for (const pattern of soloPatterns) {
+              if (pattern.test(buildText)) {
+                return true;
+              }
+            }
+            
+            const hasBruiser = buildText.includes('bruiser');
+            const hasSolo = buildText.includes('solo');
+            if (hasBruiser && hasSolo) {
+              return true;
+            }
+            
+            return false;
+          }
+          
+          return buildText.includes(selectedRoleLower);
         });
       });
     }
@@ -431,22 +500,6 @@ function BuildsPage({ onGodIconPress }) {
               if (selectedRole) {
                 const selectedRoleLower = selectedRole.toLowerCase();
                 
-                // Check if god's role matches the selected role
-                const godRoleMatches = (() => {
-                  const roles = god.roles || god.role || [];
-                  const roleArray = Array.isArray(roles) ? roles : [roles];
-                  return roleArray.some(r => {
-                    const roleStr = String(r).toLowerCase().trim();
-                    if (selectedRoleLower === 'adc') {
-                      return roleStr === 'adc' || roleStr === 'carry';
-                    }
-                    if (selectedRoleLower === 'mid') {
-                      return roleStr === 'mid' || roleStr === 'middle';
-                    }
-                    return roleStr === selectedRoleLower || roleStr.includes(selectedRoleLower) || selectedRoleLower.includes(roleStr);
-                  });
-                })();
-                
                 const filteredBuilds = allBuilds.filter((build) => {
                   if (!build) return false;
                   // Check build notes, title, role, or lane properties
@@ -462,38 +515,65 @@ function BuildsPage({ onGodIconPress }) {
                   if (selectedRoleLower === 'adc') {
                     return buildText.includes('adc') || buildText.includes('carry');
                   }
+                  
                   // Handle "Mid" and "Middle" as the same
                   if (selectedRoleLower === 'mid') {
                     return buildText.includes('mid') || buildText.includes('middle');
                   }
-                  // Handle "Solo" - check for exact word match to avoid false positives
-                  if (selectedRoleLower === 'solo') {
-                    // Match "solo" as a standalone word (word boundary ensures it's not part of another word)
-                    // Check various forms: "solo", "solo lane", "lane solo"
-                    const soloPattern = /\b(solo|lane solo|solo lane)\b/i;
-                    // Also check if it's exactly "solo" or starts/ends with it
-                    const exactSolo = buildText.trim() === 'solo';
-                    const startsWithSolo = /^\s*solo[\s,]/i.test(buildText);
-                    const endsWithSolo = /[\s,]solo\s*$/i.test(buildText);
-                    const hasSoloWithSpace = /\ssolo\s/i.test(buildText);
-                    
-                    return soloPattern.test(buildText) || exactSolo || startsWithSolo || endsWithSolo || hasSoloWithSpace;
+                  
+                  // Handle "Support"
+                  if (selectedRoleLower === 'support') {
+                    return buildText.includes('support');
                   }
+                  
+                  // Handle "Jungle"
+                  if (selectedRoleLower === 'jungle') {
+                    return buildText.includes('jungle');
+                  }
+                  
+                  // Handle "Solo" - check for solo, bruiser solo, solo bruiser, bruiser solo-lane, etc.
+                  if (selectedRoleLower === 'solo') {
+                    // Check for various solo patterns: "solo", "bruiser solo", "solo bruiser", "solo-lane", "solo lane", "bruiser solo-lane", etc.
+                    const soloPatterns = [
+                      /\bsolo\b/i,                    // "solo" as a word
+                      /\bbruiser\s+solo/i,            // "bruiser solo"
+                      /\bsolo\s+bruiser/i,            // "solo bruiser"
+                      /\bbruiser\s+solo[\s-]lane/i,   // "bruiser solo-lane" or "bruiser solo lane"
+                      /\bsolo[\s-]lane/i,             // "solo-lane" or "solo lane"
+                    ];
+                    
+                    // Check if any pattern matches
+                    for (const pattern of soloPatterns) {
+                      if (pattern.test(buildText)) {
+                        return true;
+                      }
+                    }
+                    
+                    // Also check if build text contains both "bruiser" and "solo" (in any order)
+                    const hasBruiser = buildText.includes('bruiser');
+                    const hasSolo = buildText.includes('solo');
+                    if (hasBruiser && hasSolo) {
+                      return true;
+                    }
+                    
+                    return false;
+                  }
+                  
                   return buildText.includes(selectedRoleLower);
                 });
                 
-                // If god's role matches the selected role but no builds match, show all builds as fallback
-                // Otherwise, only show matching builds
-                if (filteredBuilds.length === 0 && godRoleMatches && allBuilds.length > 0) {
-                  // God matches the role filter but builds don't have role metadata - keep all builds
-                  // (allBuilds already contains all builds, so we don't change it)
-                } else if (filteredBuilds.length > 0) {
-                  // Use filtered builds if we found matches
+                // Only show builds that match the selected role - no fallback to all builds
+                if (filteredBuilds.length > 0) {
                   allBuilds = filteredBuilds;
                 } else {
-                  // No matches and god doesn't match role - show empty (no builds)
+                  // No matching builds - skip rendering this god entirely
                   allBuilds = [];
                 }
+              }
+              
+              // Skip rendering if no builds match the filter
+              if (selectedRole && allBuilds.length === 0) {
+                return null;
               }
               
               // Get the currently selected build index for this god (default to 0)
@@ -617,87 +697,97 @@ function BuildsPage({ onGodIconPress }) {
                     elevation: 5,
                   }
                 ]}>
-                  <TouchableOpacity activeOpacity={0.9} onPress={() => setExpandedIndex(isExpanded ? null : idx)}>
-                    <View style={styles.cardContent}>
-                    <View style={[styles.cardLeft, { borderRightWidth: 2, borderRightColor: cardColors.border + '30', paddingRight: 12, marginRight: 12 }]}>
-                      <TouchableOpacity 
-                        onPress={(e) => {
-                          e.stopPropagation();
-                          if (onGodIconPress && god) {
-                            onGodIconPress(god);
-                          }
-                        }}
-                        activeOpacity={0.7}
-                      >
-                        {godIcon ? (() => {
-                          const localIcon = getLocalGodAsset(godIcon);
-                          if (localIcon) {
-                            return (
-                              <View style={[styles.godIconContainer, { borderColor: cardColors.border + '60' }]}>
-                                <Image 
-                                  source={localIcon} 
-                                  style={styles.godIcon}
-                                  resizeMode="cover"
-                                />
+                  <View>
+                    <TouchableOpacity activeOpacity={0.9} onPress={() => setExpandedIndex(isExpanded ? null : idx)}>
+                      <View style={styles.cardContent}>
+                        <View style={[styles.cardLeft, { borderRightWidth: 2, borderRightColor: cardColors.border + '30', paddingRight: 12, marginRight: 12 }]}>
+                          <TouchableOpacity 
+                            onPress={(e) => {
+                              e.stopPropagation();
+                              if (onGodIconPress && god) {
+                                onGodIconPress(god);
+                              }
+                            }}
+                            activeOpacity={0.7}
+                          >
+                            {godIcon ? (() => {
+                              const localIcon = getLocalGodAsset(godIcon);
+                              if (localIcon) {
+                                return (
+                                  <View style={[styles.godIconContainer, { borderColor: cardColors.border + '60' }]}>
+                                    <Image 
+                                      source={localIcon} 
+                                      style={styles.godIcon}
+                                      resizeMode="cover"
+                                    />
+                                  </View>
+                                );
+                              }
+                              // Fallback to text if local icon not found
+                              return (
+                                <View style={[styles.godFallback, { borderColor: cardColors.border + '60' }]}>
+                                  <Text style={[styles.godFallbackText, { color: cardColors.accent }]}>{title.charAt(0)}</Text>
+                                </View>
+                              );
+                            })() : (
+                              <View style={[styles.godFallback, { borderColor: cardColors.border + '60' }]}>
+                                <Text style={[styles.godFallbackText, { color: cardColors.accent }]}>{title.charAt(0)}</Text>
                               </View>
-                            );
-                          }
-                          // Fallback to text if local icon not found
-                          return (
-                            <View style={[styles.godFallback, { borderColor: cardColors.border + '60' }]}>
-                              <Text style={[styles.godFallbackText, { color: cardColors.accent }]}>{title.charAt(0)}</Text>
+                            )}
+                          </TouchableOpacity>
+                        </View>
+
+                        <View style={styles.cardBody}>
+                          <View style={styles.cardHeaderRow}>
+                            <View style={{ flex: 1 }}>
+                              <Text style={[styles.cardTitle, { color: cardColors.accent }]}>{title}</Text>
+                              {role && (
+                                <View style={[styles.roleBadge, { backgroundColor: cardColors.border + '20', borderColor: cardColors.border + '50', alignSelf: 'flex-start', marginTop: 6 }]}>
+                                  <Text style={[styles.roleBadgeText, { color: cardColors.accent }]}>{role}</Text>
+                                </View>
+                              )}
                             </View>
-                          );
-                        })() : (
-                          <View style={[styles.godFallback, { borderColor: cardColors.border + '60' }]}>
-                            <Text style={[styles.godFallbackText, { color: cardColors.accent }]}>{title.charAt(0)}</Text>
+                            {isExpanded ? (
+                              <Text style={styles.expandIndicator}>▼</Text>
+                            ) : (
+                              <Text style={styles.expandIndicator}>▶</Text>
+                            )}
                           </View>
-                        )}
-                      </TouchableOpacity>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+
+                    {/* Build tabs and title - always visible */}
+                    <View style={styles.cardExpandedContent}>
+                      {hasMultipleBuilds && (
+                        <View style={styles.buildTabs}>
+                          {allBuilds.map((build, buildIdx) => {
+                            const isActive = buildIdx === currentBuildIdx;
+                            return (
+                              <TouchableOpacity
+                                key={buildIdx}
+                                style={[styles.buildTab, isActive && styles.buildTabActive]}
+                                onPress={(e) => {
+                                  e.stopPropagation();
+                                  setSelectedBuildIndex(prev => ({ ...prev, [idx]: buildIdx }));
+                                }}
+                              >
+                                <Text style={[styles.buildTabText, isActive && styles.buildTabTextActive]}>
+                                  {buildIdx + 1}
+                                </Text>
+                              </TouchableOpacity>
+                            );
+                          })}
+                        </View>
+                      )}
+
+                      {currentBuild && currentBuild.notes && (
+                        <Text style={styles.buildTitle}>{currentBuild.notes}</Text>
+                      )}
                     </View>
 
-                    <View style={styles.cardBody}>
-                      <View style={styles.cardHeaderRow}>
-                        <View style={{ flex: 1 }}>
-                          <Text style={[styles.cardTitle, { color: cardColors.accent }]}>{title}</Text>
-                          {role && (
-                            <View style={[styles.roleBadge, { backgroundColor: cardColors.border + '20', borderColor: cardColors.border + '50', alignSelf: 'flex-start', marginTop: 6 }]}>
-                              <Text style={[styles.roleBadgeText, { color: cardColors.accent }]}>{role}</Text>
-                            </View>
-                          )}
-                        </View>
-                        {isExpanded ? (
-                          <Text style={styles.expandIndicator}>▼</Text>
-                        ) : (
-                          <Text style={styles.expandIndicator}>▶</Text>
-                        )}
-                      </View>
-
-                        {hasMultipleBuilds && (
-                          <View style={styles.buildTabs}>
-                            {allBuilds.map((build, buildIdx) => {
-                              const isActive = buildIdx === currentBuildIdx;
-                              return (
-                                <TouchableOpacity
-                                  key={buildIdx}
-                                  style={[styles.buildTab, isActive && styles.buildTabActive]}
-                                  onPress={(e) => {
-                                    e.stopPropagation();
-                                    setSelectedBuildIndex(prev => ({ ...prev, [idx]: buildIdx }));
-                                  }}
-                                >
-                                  <Text style={[styles.buildTabText, isActive && styles.buildTabTextActive]}>
-                                    {buildIdx + 1}
-                                  </Text>
-                                </TouchableOpacity>
-                              );
-                            })}
-                          </View>
-                        )}
-
-                        {currentBuild && currentBuild.notes && (
-                          <Text style={styles.buildTitle}>{currentBuild.notes}</Text>
-                        )}
+                    {isExpanded && (
+                      <View style={styles.cardExpandedContent}>
 
                         {levelingAbilities && levelingAbilities.length > 0 && (
                           <View style={styles.levelingOrderContainer}>
@@ -826,17 +916,59 @@ function BuildsPage({ onGodIconPress }) {
                                       setSelectedItem({ item: meta, itemName: s });
                                     }}
                                   >
-                                      {localIcon ? (
-                                      <View style={styles.iconOuterBorder}>
-                                        <View style={styles.iconInnerBorder}>
-                                          <Image 
-                                              source={localIcon} 
-                                            style={styles.smallIconImg}
-                                            resizeMode="cover"
-                                          />
-                                        </View>
-                                      </View>
-                                    ) : (
+                                      {localIcon ? (() => {
+                                        // Handle both single URI and primary/fallback object
+                                        const imageSource = localIcon.primary || localIcon;
+                                        const fallbackSource = localIcon.fallback;
+                                        const itemKey = `starter-${s}-${si}`;
+                                        const useFallback = failedItemIcons[itemKey];
+                                        
+                                        if (fallbackSource && !useFallback) {
+                                          // Has fallback - try primary first, then fallback on error
+                                          return (
+                                            <View style={styles.iconOuterBorder}>
+                                              <View style={styles.iconInnerBorder}>
+                                                <Image 
+                                                  source={imageSource}
+                                                  style={styles.smallIconImg}
+                                                  resizeMode="cover"
+                                                  onError={() => {
+                                                    setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
+                                                  }}
+                                                />
+                                              </View>
+                                            </View>
+                                          );
+                                        }
+                                        
+                                        if (fallbackSource && useFallback) {
+                                          // Use fallback after primary failed
+                                          return (
+                                            <View style={styles.iconOuterBorder}>
+                                              <View style={styles.iconInnerBorder}>
+                                                <Image 
+                                                  source={fallbackSource}
+                                                  style={styles.smallIconImg}
+                                                  resizeMode="cover"
+                                                />
+                                              </View>
+                                            </View>
+                                          );
+                                        }
+                                        
+                                        // Single URI - use directly
+                                        return (
+                                          <View style={styles.iconOuterBorder}>
+                                            <View style={styles.iconInnerBorder}>
+                                              <Image 
+                                                source={imageSource}
+                                                style={styles.smallIconImg}
+                                                resizeMode="cover"
+                                              />
+                                            </View>
+                                          </View>
+                                        );
+                                      })() : (
                                       <View style={styles.iconOuterBorder}>
                                         <View style={styles.iconInnerBorder}>
                                           <Text style={styles.smallIconText}>{s}</Text>
@@ -873,17 +1005,59 @@ function BuildsPage({ onGodIconPress }) {
                                     setSelectedItem({ item: meta, itemName: f });
                                   }}
                                 >
-                                {localIcon ? (
-                                  <View style={styles.iconOuterBorder}>
-                                    <View style={styles.iconInnerBorder}>
-                                      <Image 
-                                        source={localIcon} 
-                                        style={styles.iconImg}
-                                        resizeMode="cover"
-                                      />
+                                {localIcon ? (() => {
+                                  // Handle both single URI and primary/fallback object
+                                  const imageSource = localIcon.primary || localIcon;
+                                  const fallbackSource = localIcon.fallback;
+                                  const itemKey = `final-${f}-${fi}`;
+                                  const useFallback = failedItemIcons[itemKey];
+                                  
+                                  if (fallbackSource && !useFallback) {
+                                    // Has fallback - try primary first, then fallback on error
+                                    return (
+                                      <View style={styles.iconOuterBorder}>
+                                        <View style={styles.iconInnerBorder}>
+                                          <Image 
+                                            source={imageSource}
+                                            style={styles.iconImg}
+                                            resizeMode="cover"
+                                            onError={() => {
+                                              setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
+                                            }}
+                                          />
+                                        </View>
+                                      </View>
+                                    );
+                                  }
+                                  
+                                  if (fallbackSource && useFallback) {
+                                    // Use fallback after primary failed
+                                    return (
+                                      <View style={styles.iconOuterBorder}>
+                                        <View style={styles.iconInnerBorder}>
+                                          <Image 
+                                            source={fallbackSource}
+                                            style={styles.iconImg}
+                                            resizeMode="cover"
+                                          />
+                                        </View>
+                                      </View>
+                                    );
+                                  }
+                                  
+                                  // Single URI - use directly
+                                  return (
+                                    <View style={styles.iconOuterBorder}>
+                                      <View style={styles.iconInnerBorder}>
+                                        <Image 
+                                          source={imageSource}
+                                          style={styles.iconImg}
+                                          resizeMode="cover"
+                                        />
+                                      </View>
                                     </View>
-                                  </View>
-                                ) : (
+                                  );
+                                })() : (
                                   <View style={styles.iconOuterBorder}>
                                     <View style={[styles.iconInnerBorder, styles.iconFallback]}>
                                       <Text style={styles.iconFallbackText}>{f}</Text>
@@ -896,33 +1070,33 @@ function BuildsPage({ onGodIconPress }) {
                         </View>
                       </View>
 
-                      {isExpanded && god && god.tips && Array.isArray(god.tips) && (
-                        <View style={styles.expand}>
-                          <Text style={styles.expandTitle}>Tips</Text>
-                          {(() => {
-                            const filteredTips = god.tips.filter(tip => tip && tip.title && !tip.title.toLowerCase().includes('leveling'));
-                            return filteredTips.length > 0 ? (
-                              <View style={styles.tipButtonsContainer}>
-                                {filteredTips.map((tip, tipIdx) => (
-                                  <TouchableOpacity
-                                    key={tipIdx}
-                                    style={styles.tipButton}
-                                    onPress={() => setSelectedTip({ tip, tipIndex: tipIdx + 1, godIndex: idx })}
-                                    activeOpacity={0.7}
-                                  >
-                                    <Text style={styles.tipButtonText}>{tipIdx + 1}</Text>
-                                  </TouchableOpacity>
-                                ))}
-                              </View>
-                            ) : (
-                              <Text style={styles.noTipsText}>No tips available</Text>
-                            );
-                          })()}
-                        </View>
-                      )}
-                    </View>
+                        {god && god.tips && Array.isArray(god.tips) && (
+                          <View style={styles.expand}>
+                            <Text style={styles.expandTitle}>Tips</Text>
+                            {(() => {
+                              const filteredTips = god.tips.filter(tip => tip && tip.title && !tip.title.toLowerCase().includes('leveling'));
+                              return filteredTips.length > 0 ? (
+                                <View style={styles.tipButtonsContainer}>
+                                  {filteredTips.map((tip, tipIdx) => (
+                                    <TouchableOpacity
+                                      key={tipIdx}
+                                      style={styles.tipButton}
+                                      onPress={() => setSelectedTip({ tip, tipIndex: tipIdx + 1, godIndex: idx })}
+                                      activeOpacity={0.7}
+                                    >
+                                      <Text style={styles.tipButtonText}>{tipIdx + 1}</Text>
+                                    </TouchableOpacity>
+                                  ))}
+                                </View>
+                              ) : (
+                                <Text style={styles.noTipsText}>No tips available</Text>
+                              );
+                            })()}
+                          </View>
+                        )}
+                      </View>
+                    )}
                   </View>
-                </TouchableOpacity>
                 </View>
               );
             })}
@@ -953,10 +1127,40 @@ function BuildsPage({ onGodIconPress }) {
                     {selectedItem.item && selectedItem.item.icon ? (() => {
                       const localIcon = getLocalItemIcon(selectedItem.item.icon);
                       if (localIcon) {
+                        // Handle both single URI and primary/fallback object
+                        const imageSource = localIcon.primary || localIcon;
+                        const fallbackSource = localIcon.fallback;
+                        const itemKey = `modal-${selectedItem.itemName}`;
+                        const useFallback = failedItemIcons[itemKey];
+                        
+                        if (fallbackSource && !useFallback) {
+                          // Has fallback - try primary first, then fallback on error
+                          return (
+                            <Image 
+                              source={imageSource}
+                              style={styles.modalAbilityIcon}
+                              onError={() => {
+                                setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
+                              }}
+                            />
+                          );
+                        }
+                        
+                        if (fallbackSource && useFallback) {
+                          // Use fallback after primary failed
+                          return (
+                            <Image 
+                              source={fallbackSource}
+                              style={styles.modalAbilityIcon}
+                            />
+                          );
+                        }
+                        
+                        // Single URI - use directly
                         return (
                           <Image 
-                            source={localIcon} 
-                            style={styles.modalAbilityIcon} 
+                            source={imageSource}
+                            style={styles.modalAbilityIcon}
                           />
                         );
                       }
@@ -1363,6 +1567,11 @@ const styles = StyleSheet.create({
   },
   thumb: { width: 56, height: 56, backgroundColor: '#0f1724', borderRadius: 6, marginRight: 10 },
   cardBody: { flex: 1 },
+  cardExpandedContent: {
+    paddingLeft: 12,
+    paddingRight: 12,
+    paddingTop: 8,
+  },
   cardHeaderRow: {
     flexDirection: 'row',
     alignItems: 'center',

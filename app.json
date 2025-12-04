@@ -7,7 +7,6 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": false,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
@@ -41,6 +40,13 @@
               "NSTemporaryExceptionRequiresForwardSecrecy": false,
               "NSExceptionRequiresForwardSecrecy": true,
               "NSExceptionMinimumTLSVersion": "TLSv1.2"
+            },
+            "raw.githubusercontent.com": {
+              "NSIncludesSubdomains": true,
+              "NSTemporaryExceptionAllowsInsecureHTTPLoads": false,
+              "NSTemporaryExceptionRequiresForwardSecrecy": false,
+              "NSExceptionRequiresForwardSecrecy": true,
+              "NSExceptionMinimumTLSVersion": "TLSv1.2"
             }
           }
         }
@@ -53,8 +59,7 @@
       },
       "edgeToEdgeEnabled": true,
       "package": "com.yungsonixsorganization.smite2mastery",
-      "permissions": [],
-      "usesCleartextTraffic": false
+      "permissions": []
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -62,6 +67,15 @@
     "plugins": [
       "expo-router"
     ],
+    "updates": {
+      "url": "https://u.expo.dev/23dcad9c-6b25-4dea-821b-ef4b7e888790",
+      "fallbackToCacheTimeout": 0,
+      "checkAutomatically": "ON_LOAD",
+      "enabled": true
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
     "extra": {
       "router": {},
       "eas": {

@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 // Lazy load builds.json to prevent startup crash
 let localBuilds = null;
-import { getLocalItemIcon, getLocalGodAsset } from './localIcons';
+import { getLocalItemIcon, getLocalGodAsset, getSkinImage } from './localIcons';
 import ConquestMap from './ConquestMap';
 
 
@@ -277,6 +277,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
   const [selectedAbility, setSelectedAbility] = useState(null); // { abilityKey, ability, abilityName }
   const [skinsExpanded, setSkinsExpanded] = useState(false);
   const [selectedSkin, setSelectedSkin] = useState(null);
+  const [failedItemIcons, setFailedItemIcons] = useState({}); // Track which item icons failed to load (for fallback)
   const [loreExpanded, setLoreExpanded] = useState(false);
   const [abilitiesExpanded, setAbilitiesExpanded] = useState(false);
   const [aspectExpanded, setAspectExpanded] = useState(false);
@@ -830,9 +831,35 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                   {selectedItem.icon ? (() => {
                     const localIcon = getLocalItemIcon(selectedItem.icon);
                     if (localIcon) {
+                      const imageSource = localIcon.primary || localIcon;
+                      const fallbackSource = localIcon.fallback;
+                      const iconKey = `selected-item-icon-${selectedItem.internalName || selectedItem.name}`;
+                      const useFallback = failedItemIcons[iconKey];
+                      
+                      if (fallbackSource && !useFallback) {
+                        return (
+                          <Image 
+                            source={imageSource}
+                            style={styles.modalItemIcon}
+                            onError={() => {
+                              setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+                            }}
+                          />
+                        );
+                      }
+                      
+                      if (fallbackSource && useFallback) {
+                        return (
+                          <Image 
+                            source={fallbackSource}
+                            style={styles.modalItemIcon}
+                          />
+                        );
+                      }
+                      
                       return (
                         <Image 
-                          source={localIcon} 
+                          source={imageSource}
                           style={styles.modalItemIcon} 
                         />
                       );
@@ -884,9 +911,26 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         {selectedItem.icon ? (() => {
                           const localIcon = getLocalItemIcon(selectedItem.icon);
                           if (localIcon) {
+                            const imageSource = localIcon.primary || localIcon;
+                            const fallbackSource = localIcon.fallback;
+                            const iconKey = `recipe-tier3-${selectedItem.internalName || selectedItem.name}`;
+                            const useFallback = failedItemIcons[iconKey];
+                            
+                            if (fallbackSource && !useFallback) {
+                              return (
+                                <Image 
+                                  source={imageSource}
+                                  style={styles.recipeTier3Icon}
+                                  onError={() => {
+                                    setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+                                  }}
+                                />
+                              );
+                            }
+                            
                             return (
                               <Image 
-                                source={localIcon} 
+                                source={fallbackSource && useFallback ? fallbackSource : imageSource}
                                 style={styles.recipeTier3Icon} 
                               />
                             );
@@ -941,9 +985,26 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               {compItem.icon ? (() => {
                                 const localIcon = getLocalItemIcon(compItem.icon);
                                 if (localIcon) {
+                                  const imageSource = localIcon.primary || localIcon;
+                                  const fallbackSource = localIcon.fallback;
+                                  const iconKey = `recipe-t1-${compItem.internalName || compItem.name}-${idx}`;
+                                  const useFallback = failedItemIcons[iconKey];
+                                  
+                                  if (fallbackSource && !useFallback) {
+                                    return (
+                                      <Image 
+                                        source={imageSource}
+                                        style={styles.recipeT1Icon}
+                                        onError={() => {
+                                          setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+                                        }}
+                                      />
+                                    );
+                                  }
+                                  
                                   return (
                                     <Image 
-                                      source={localIcon} 
+                                      source={fallbackSource && useFallback ? fallbackSource : imageSource}
                                       style={styles.recipeT1Icon} 
                                     />
                                   );
@@ -989,9 +1050,26 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                   {compItem.icon ? (() => {
                                     const localIcon = getLocalItemIcon(compItem.icon);
                                     if (localIcon) {
+                                      const imageSource = localIcon.primary || localIcon;
+                                      const fallbackSource = localIcon.fallback;
+                                      const iconKey = `recipe-comp-${compItem.internalName || compItem.name}-${idx}`;
+                                      const useFallback = failedItemIcons[iconKey];
+                                      
+                                      if (fallbackSource && !useFallback) {
+                                        return (
+                                          <Image 
+                                            source={imageSource}
+                                            style={styles.recipeComponentIcon}
+                                            onError={() => {
+                                              setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+                                            }}
+                                          />
+                                        );
+                                      }
+                                      
                                       return (
                                         <Image 
-                                          source={localIcon} 
+                                          source={fallbackSource && useFallback ? fallbackSource : imageSource}
                                           style={styles.recipeComponentIcon} 
                                         />
                                       );
@@ -1038,9 +1116,26 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                           {t1Item.icon ? (() => {
                                             const localIcon = getLocalItemIcon(t1Item.icon);
                                             if (localIcon) {
+                                              const imageSource = localIcon.primary || localIcon;
+                                              const fallbackSource = localIcon.fallback;
+                                              const iconKey = `recipe-t1-item-${t1Item.internalName || t1Item.name}-${idx}`;
+                                              const useFallback = failedItemIcons[iconKey];
+                                              
+                                              if (fallbackSource && !useFallback) {
+                                                return (
+                                                  <Image 
+                                                    source={imageSource}
+                                                    style={styles.recipeT1Icon}
+                                                    onError={() => {
+                                                      setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+                                                    }}
+                                                  />
+                                                );
+                                              }
+                                              
                                               return (
                                                 <Image 
-                                                  source={localIcon} 
+                                                  source={fallbackSource && useFallback ? fallbackSource : imageSource}
                                                   style={styles.recipeT1Icon} 
                                                 />
                                               );
@@ -1409,23 +1504,20 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                     </Text>
                     {selectedGod.skins[selectedSkin].skin && (() => {
                       const skinPath = selectedGod.skins[selectedSkin].skin;
-                      const localIcon = getLocalGodAsset(skinPath);
-                      if (localIcon) {
+                      const skinImage = getSkinImage(skinPath);
+                      
+                      if (skinImage && skinImage.remote) {
                         return (
-                      <Image
-                            source={localIcon}
-                        style={styles.selectedSkinImage}
-                        resizeMode="contain"
-                      />
+                          <Image
+                            key={`skin-${selectedSkin}-${skinPath}`} // Key forces re-render when switching skins
+                            source={skinImage.remote}
+                            style={styles.selectedSkinImage}
+                            resizeMode="contain"
+                          />
                         );
                       }
-                      return (
-                        <Image
-                          source={{ uri: `https://www.smitecalculator.pro${skinPath}` }}
-                          style={styles.selectedSkinImage}
-                          resizeMode="contain"
-                        />
-                      );
+                      
+                      return null;
                     })()}
                     {selectedGod.skins[selectedSkin].type && (
                       <Text style={styles.selectedSkinType}>
@@ -2214,10 +2306,44 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         style={styles.cardIcon}
                       />
                     ) : localItemIcon ? (
-                      <Image 
-                        source={localItemIcon} 
-                        style={styles.cardIcon}
-                      />
+                      (() => {
+                        // Handle both single URI and primary/fallback object
+                        const imageSource = localItemIcon.primary || localItemIcon;
+                        const fallbackSource = localItemIcon.fallback;
+                        const itemKey = `${uniqueKey}-icon`;
+                        const useFallback = failedItemIcons[itemKey];
+                        
+                        if (fallbackSource && !useFallback) {
+                          // Has fallback - try primary first, then fallback on error
+                          return (
+                            <Image 
+                              source={imageSource}
+                              style={styles.cardIcon}
+                              onError={() => {
+                                setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
+                              }}
+                            />
+                          );
+                        }
+                        
+                        if (fallbackSource && useFallback) {
+                          // Use fallback after primary failed
+                          return (
+                            <Image 
+                              source={fallbackSource}
+                              style={styles.cardIcon}
+                            />
+                          );
+                        }
+                        
+                        // Single URI - use directly
+                        return (
+                          <Image 
+                            source={imageSource}
+                            style={styles.cardIcon}
+                          />
+                        );
+                      })()
                     ) : consumableIcon ? (
                       <Image 
                         source={consumableIcon} 

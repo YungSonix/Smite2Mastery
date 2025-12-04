@@ -11,97 +11,55 @@ import {
 } from 'react-native';
 import PrivacyPage from './privacy';
 
+// ============================================================================
+// EASY CONFIGURATION - Just update these values when a new patch releases!
+// ============================================================================
+const NEWS_CONFIG = {
+  // Latest Open Beta Patch Info
+  openBeta: {
+    version: 24, // Update this number for new patches
+    title: 'Open Beta 24 - The Bear Goddess Update', // Update this title
+    link: 'https://www.smite2.com/news/open-beta-24-update-notes/', // Update this link
+    image: 'https://webcdn.hirezstudios.com/smite2-cdn/Blog_Header_Promo_Assets_2560x695_c7340cf8b6.jpg', // Update this image link
+    snippet: 'Read the latest SMITE 2 Open Beta update notes and patch information.',
+  },
+  // Latest News Article
+  latestNews: {
+    title: 'SMITE 2 News',
+    link: 'https://www.smite2.com/news',
+    image: 'https://webcdn.hirezstudios.com/smite2-cdn/BLOG_Header_SMITE_2_2560x695_6f634f8313.jpg',
+    snippet: 'Stay updated with the latest SMITE 2 news, patch notes, and updates.',
+  },
+};
+// ============================================================================
+
 export default function HomePage() {
   const [showPrivacy, setShowPrivacy] = useState(false);
-  const [articles, setArticles] = useState([
-    {
-      title: 'OB23 UPDATE - THE NINE-TAILED FOX UPDATE',
-      date: '8 days ago',
-      snippet: 'New Ported God Da Ji - General Melee Basic Attacks Damage Type: Physical Scaling Type: Strength Scaling Passive: Torture Blades Attacks and non-ultimate abilities cause enemies to bleed...',
-      link: 'https://www.smite2.com/news/open-beta-23-update-notes/',
-      image: 'https://webcdn.hirezstudios.com/smite2-cdn/Da_Ji_V5_e8e7f9d875.png',
-    },
-    {
-      title: 'OPEN BETA 22 - KEEPER OF THE WILD UPDATE',
-      date: '22 days ago',
-      snippet: 'New Ported God Sylvanus - General Ranged Basic Attacks Damage Type: Magical Scaling Type: Intelligence Scaling Passive: Nature\'s Bounty When your abilities hit or are deployed...',
-      link: 'https://www.smite2.com/news/open-beta-22-update-notes/',
-      image: 'https://webcdn.hirezstudios.com/smite2-cdn/Blog_Header_Promo_Assets_2560x695_6_20cd38af6d.jpg',
-    },
-    {
-      title: 'OPEN BETA 21 - GODDESS OF THE MAGIC UPDATE',
-      date: '1 month ago',
-      snippet: 'Stay updated with the latest patch notes, balance changes, and updates from SMITE 2. Check out new gods, item changes, and gameplay improvements.',
-      link: 'https://www.smite2.com/news/open-beta-21-update-notes/',
-      image: 'https://webcdn.hirezstudios.com/smite2-cdn/Blog_Header_Promo_Assets_2560x695_5_da7ccb9465.jpg',
-    }
-  ]);
+  const [articles, setArticles] = useState([]);
   const [imageErrors, setImageErrors] = useState({});
-  const [loadingImages, setLoadingImages] = useState(true);
+  const [loadingArticles, setLoadingArticles] = useState(false);
 
   useEffect(() => {
-    // Fetch images from the news page
-    fetch('https://www.smite2.com/news')
-      .then(response => response.text())
-      .then(html => {
-        // Parse HTML to find images matching the pattern: large_Blog_Header_Promo_Assets_2560x695_{number}_{hash}.jpg or .png
-        // Pattern: large_Blog_Header_Promo_Assets_2560x695_ followed by a number, underscore, and random hash
-        const imagePattern = /large_Blog_Header_Promo_Assets_2560x695_\d+_[a-f0-9]+\.(jpg|png)/gi;
-        const urlRegex = /https:\/\/webcdn\.hirezstudios\.com\/smite2-cdn\/large_Blog_Header_Promo_Assets_2560x695_\d+_[a-f0-9]+\.(jpg|png)/gi;
-        
-        const matches = [];
-        let match;
-        
-        // First, try to find images with the specific class pattern
-        const classRegex = /<img[^>]*class="[^"]*aspect-\[16\/9\][^"]*"[^>]*src="(https:\/\/webcdn\.hirezstudios\.com\/smite2-cdn\/[^"]+)"[^>]*>/gi;
-        while ((match = classRegex.exec(html)) !== null) {
-          const imageUrl = match[1];
-          // Check if it matches the blog header pattern
-          if (imageUrl && imagePattern.test(imageUrl)) {
-            matches.push(imageUrl);
-          }
-        }
-        
-        // If we didn't find enough, search for all images matching the pattern in the HTML
-        if (matches.length < 2) {
-          while ((match = urlRegex.exec(html)) !== null) {
-            const imageUrl = match[0];
-            // Avoid duplicates
-            if (!matches.includes(imageUrl)) {
-              matches.push(imageUrl);
-            }
-          }
-        }
-        
-        // Sort matches to ensure consistent ordering (by the number in the filename)
-        matches.sort((a, b) => {
-          const numA = parseInt(a.match(/2560x695_(\d+)_/)?.[1] || '0');
-          const numB = parseInt(b.match(/2560x695_(\d+)_/)?.[1] || '0');
-          return numB - numA; // Sort descending (newest first)
-        });
-        
-        // Update articles with found images (first 3 images for the 3 articles)
-        // Skip first article (OB23) as it already has an image
-        if (matches.length > 0) {
-          setArticles(prevArticles => {
-            const updated = [...prevArticles];
-            // Assign images to OB22 and OB21 (indices 1 and 2)
-            // Take the first 2 images found (excluding OB23 which is already set)
-            if (matches.length >= 1 && updated[1] && !updated[1].image) {
-              updated[1].image = matches[0];
-            }
-            if (matches.length >= 2 && updated[2] && !updated[2].image) {
-              updated[2].image = matches[1];
-            }
-            return updated;
-          });
-        }
-        setLoadingImages(false);
-      })
-      .catch(err => {
-        console.error('Error fetching news images:', err);
-        setLoadingImages(false);
-      });
+    // Simple manual configuration - no auto-fetching needed
+    const configuredArticles = [
+      {
+        title: NEWS_CONFIG.openBeta.title,
+        date: 'Latest',
+        snippet: NEWS_CONFIG.openBeta.snippet,
+        link: NEWS_CONFIG.openBeta.link,
+        image: NEWS_CONFIG.openBeta.image,
+      },
+      {
+        title: NEWS_CONFIG.latestNews.title,
+        date: 'Latest',
+        snippet: NEWS_CONFIG.latestNews.snippet,
+        link: NEWS_CONFIG.latestNews.link,
+        image: NEWS_CONFIG.latestNews.image,
+      },
+    ];
+    
+    setArticles(configuredArticles);
+    setLoadingArticles(false);
   }, []);
 
   const openArticleLink = (url) => {
@@ -152,61 +110,62 @@ export default function HomePage() {
             Stay updated with the latest SMITE 2 news, patch notes, and updates directly from the official SMITE 2 website.
           </Text>
           
-          {/* Latest Articles */}
-          <View style={styles.articlesContainer}>
-            {articles.map((article, index) => (
-              <TouchableOpacity
-                key={index}
-                style={styles.articleCard}
-                onPress={() => openArticleLink(article.link)}
-                activeOpacity={0.7}
-              >
-                {(() => {
-                  // Check if image is valid (not null, not 'null' string, and not errored)
-                  const hasValidImage = article.image && 
-                                       article.image !== 'null' && 
-                                       article.image !== null && 
-                                       !imageErrors[index];
-                  
-                  if (loadingImages && index > 0 && !hasValidImage) {
-                    return (
-                      <View style={styles.articleImagePlaceholder}>
-                        <ActivityIndicator size="small" color="#7dd3fc" />
-                      </View>
-                    );
-                  }
-                  
-                  if (hasValidImage) {
-                    return (
-                      <Image
-                        source={{ uri: article.image }}
-                        style={styles.articleImage}
-                        resizeMode="cover"
-                        onError={(error) => {
-                          console.error(`Image load error for article ${index}:`, error);
-                          setImageErrors(prev => ({ ...prev, [index]: true }));
-                        }}
-                      />
-                    );
-                  }
-                  
-                  return (
-                    <View style={styles.articleImagePlaceholder}>
-                      <Text style={styles.articleImagePlaceholderText}>SMITE 2</Text>
+          {loadingArticles ? (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#7dd3fc" />
+              <Text style={styles.loadingText}>Loading latest news...</Text>
+            </View>
+          ) : (
+            <>
+              {/* Latest Articles */}
+              <View style={styles.articlesContainer}>
+                {articles.map((article, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={styles.articleCard}
+                    onPress={() => openArticleLink(article.link)}
+                    activeOpacity={0.7}
+                  >
+                    {(() => {
+                      // Check if image is valid (not null, not 'null' string, and not errored)
+                      const hasValidImage = article.image && 
+                                           article.image !== 'null' && 
+                                           article.image !== null && 
+                                           !imageErrors[index];
+                      
+                      if (hasValidImage) {
+                        return (
+                          <Image
+                            source={{ uri: article.image }}
+                            style={styles.articleImage}
+                            resizeMode="cover"
+                            onError={(error) => {
+                              console.error(`Image load error for article ${index}:`, error);
+                              setImageErrors(prev => ({ ...prev, [index]: true }));
+                            }}
+                          />
+                        );
+                      }
+                      
+                      return (
+                        <View style={styles.articleImagePlaceholder}>
+                          <Text style={styles.articleImagePlaceholderText}>SMITE 2</Text>
+                        </View>
+                      );
+                    })()}
+                    <View style={styles.articleContent}>
+                      <Text style={styles.articleDate}>{article.date}</Text>
+                      <Text style={styles.articleTitle}>{article.title}</Text>
+                      <Text style={styles.articleSnippet} numberOfLines={3}>
+                        {article.snippet}
+                      </Text>
+                      <Text style={styles.readMore}>Read More →</Text>
                     </View>
-                  );
-                })()}
-                <View style={styles.articleContent}>
-                  <Text style={styles.articleDate}>{article.date}</Text>
-                  <Text style={styles.articleTitle}>{article.title}</Text>
-                  <Text style={styles.articleSnippet} numberOfLines={3}>
-                    {article.snippet}
-                  </Text>
-                  <Text style={styles.readMore}>Read More →</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </>
+          )}
 
           {/* View Full News Page */}
           <View style={styles.fullNewsContainer}>
@@ -285,6 +244,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     marginBottom: 20,
+  },
+  loadingContainer: {
+    padding: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadingText: {
+    color: '#7dd3fc',
+    fontSize: 16,
+    marginTop: 16,
   },
   newsButton: {
     backgroundColor: '#1e90ff',

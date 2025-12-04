@@ -36,8 +36,8 @@
             },
             {
                 "buildsFromT2": [
-            "CursedSickle",
-            "Skeggox"
+                    "CursedSickle",
+                    "Skeggox"
                 ],
                 "components": [
                     "CursedSickle",
@@ -67,7 +67,7 @@
                     "RuinousPoison"
                 ],
                 "components": [
-                    "Skeggox"   ,
+                    "Skeggox",
                     "HuntersBow"
                 ],
                 "icon": "/icons/LernaeanBow.webp",
@@ -252,7 +252,6 @@
                     "LucerneHammer",
                     "Skeggox"
                 ],
-                
                 "icon": "/icons/ObsidianMacuahuitl.webp",
                 "internalName": "ObsidianMacuahuitl",
                 "name": "Oath-Sworn Spear",
@@ -273,16 +272,38 @@
                 "tier": 3,
                 "totalCost": 2550
             },
-            {"name": "Skeggox", 
-            "internalName": "Skeggox",
-            "icon": "/icons/Skeggox.webp", 
-            "tier": 2, 
-            "totalCost": 1000, 
-            "stepCost": 550, 
-            "buildsFromT1": ["Axe"],
-            "tags": ["Tier2", "Strength"], 
-            "buildsInto": ["Dagger of Frenzy", "Jotunn's Revenge", "Shield Splitter", "Barbed Carver", "Devourer's Gauntlet", "Lernaean Bow", "Bloodforge", "Oath-Sworn Spear", "Tyrfing", "Arondight", "Avenging Blade", "Tekko-Kagi", "Pendulum Blade", "Deathbringer", "Avatar's Parashu"]},
-
+            {
+                "name": "Skeggox",
+                "internalName": "Skeggox",
+                "icon": "/icons/Skeggox.webp",
+                "tier": 2,
+                "totalCost": 1000,
+                "stepCost": 550,
+                "buildsFromT1": [
+                    "Axe"
+                ],
+                "tags": [
+                    "Tier2",
+                    "Strength"
+                ],
+                "buildsInto": [
+                    "Dagger of Frenzy",
+                    "Jotunn's Revenge",
+                    "Shield Splitter",
+                    "Barbed Carver",
+                    "Devourer's Gauntlet",
+                    "Lernaean Bow",
+                    "Bloodforge",
+                    "Oath-Sworn Spear",
+                    "Tyrfing",
+                    "Arondight",
+                    "Avenging Blade",
+                    "Tekko-Kagi",
+                    "Pendulum Blade",
+                    "Deathbringer",
+                    "Avatar's Parashu"
+                ]
+            },
             {
                 "buildsFromT1": [
                     "Gem"
@@ -652,7 +673,6 @@
                     "BattleAxe",
                     "Skeggox"
                 ],
-                
                 "icon": "/icons/avengingBlade.webp",
                 "internalName": "ProtectionOfItus",
                 "name": "Avenging Blade",
@@ -1294,9 +1314,9 @@
                 "icon": "/icons/TheNemes.webp",
                 "internalName": "TheNemes",
                 "name": "Gauntlet of Thebes",
-                "passive": "    Assist a Minion: +1 Stack\n    God Kill or Assist: +5 Stacks\nStacks Grant +15 Health (max 40 Stacks)\nAt 40 stacks, Item Evolves: +200 Max Health",
+                "passive": "",
                 "stats": {
-                    "Health": 200,
+                    "Health": 1000,
                     "Mana": 150
                 },
                 "stepCost": 1400,
@@ -1849,7 +1869,6 @@
                 "components": [
                     "EngravedGuard",
                     "HuntersBow"
-                
                 ],
                 "buildsFromT2": [
                     "EngravedGuard",
@@ -2288,7 +2307,10 @@
                 "passive": "Gain access to the Thumper Turret by alternating between an Inferno Cannon and Thumper each ability activation. Thumper pulses out an attack around it every 1s that deals 20/30/40/50/60 + 10% INT Magical Damage to all enemies in the area. Thumper's Rank will match Inferno Cannon's. Cooldown 6s.",
                 "totalCost": 0,
                 "stats": {},
-                "tags": ["God Specific", "Vulcan"]
+                "tags": [
+                    "God Specific",
+                    "Vulcan"
+                ]
             },
             {
                 "godSpecific": true,
@@ -2298,7 +2320,10 @@
                 "passive": "Gain access to the Thumper Turret in your first consumable slot. This will occupy this slot for the entire game. Thumper pulses out an attack around it every 1s that deals 20/30/40/50/60 + 10% INT Magical Damage to all enemies in the area. Thumper's Rank will match Inferno Cannon's. Cooldown 20s.",
                 "totalCost": 0,
                 "stats": {},
-                "tags": ["God Specific", "Vulcan"]
+                "tags": [
+                    "God Specific",
+                    "Vulcan"
+                ]
             },
             {
                 "godSpecific": true,
@@ -2308,7 +2333,10 @@
                 "passive": "Do not gain access to the Thumper ability, instead your passive grants 20 CDR and 5 + 1 per level INT in addition to the other effects when triggered.",
                 "totalCost": 0,
                 "stats": {},
-                "tags": ["God Specific", "Vulcan"]
+                "tags": [
+                    "God Specific",
+                    "Vulcan"
+                ]
             },
             {
                 "godSpecific": true,
@@ -2318,7 +2346,10 @@
                 "passive": "Thumper gains 150 increased HP and applies an 10/15/20/25/30% Attack Speed debuff for 3s on hit.",
                 "totalCost": 0,
                 "stats": {},
-                "tags": ["God Specific", "Vulcan"]
+                "tags": [
+                    "God Specific",
+                    "Vulcan"
+                ]
             },
             {
                 "godSpecific": true,
@@ -2328,7 +2359,10 @@
                 "passive": "Backfire and Magma Bomb deal 20 + 20% INT Bonus Magical Damage.",
                 "totalCost": 0,
                 "stats": {},
-                "tags": ["God Specific", "Vulcan"]
+                "tags": [
+                    "God Specific",
+                    "Vulcan"
+                ]
             },
             {
                 "godSpecific": true,
@@ -2338,7 +2372,10 @@
                 "passive": "Inferno Cannon applies additional damage over time on hit. Hits 6 times over 3s for 3/6/9/12/15 + 2% INT per hit.",
                 "totalCost": 0,
                 "stats": {},
-                "tags": ["God Specific", "Vulcan"]
+                "tags": [
+                    "God Specific",
+                    "Vulcan"
+                ]
             },
             {
                 "godSpecific": true,
@@ -2348,7 +2385,10 @@
                 "passive": "Thumper gains 300 increased HP and applies a 10/20/30/40/50 Physical and Magical Protection buff to allied gods hit for 3s.",
                 "totalCost": 0,
                 "stats": {},
-                "tags": ["God Specific", "Vulcan"]
+                "tags": [
+                    "God Specific",
+                    "Vulcan"
+                ]
             },
             {
                 "godSpecific": true,
@@ -2358,7 +2398,10 @@
                 "passive": "You can have 2 Inferno Cannons deployed at the same time.",
                 "totalCost": 0,
                 "stats": {},
-                "tags": ["God Specific", "Vulcan"]
+                "tags": [
+                    "God Specific",
+                    "Vulcan"
+                ]
             },
             {
                 "godSpecific": true,
@@ -2368,7 +2411,10 @@
                 "passive": "Earthshaker Trembles and Knocks Up enemies it hits for 2s.",
                 "totalCost": 0,
                 "stats": {},
-                "tags": ["God Specific", "Vulcan"]
+                "tags": [
+                    "God Specific",
+                    "Vulcan"
+                ]
             },
             {
                 "consumable": true,
@@ -2391,7 +2437,6 @@
                     "Recommended"
                 ]
             },
-           
             {
                 "consumable": true,
                 "internalName": "MultiPotion",
@@ -2422,16 +2467,15 @@
                 ]
             },
             {
-                    "consumable": true,
-                    "internalName": "ObsidianDagger",
-                    "name": "Obsidian Dagger",
+                "consumable": true,
+                "internalName": "ObsidianDagger",
+                "name": "Obsidian Dagger",
                 "icon": "/icons/Consumables/Consumable_Obsidian_Dagger.png",
                 "passive": "Consume: Take 500 True Damage.\nGain +15% Damage and Attack Speed for 9s\nIf this Damage would kill you, instead become Immune and fully Heal over 3s",
                 "stepCost": 0,
                 "tags": [
                     "Consumable"
                 ]
-                
             },
             {
                 "consumable": true,
@@ -2465,7 +2509,6 @@
                 "tags": [
                     "Consumable"
                 ]
-
             },
             {
                 "consumable": true,
@@ -2709,13 +2752,29 @@
                     "Health": 100
                 },
                 "stepCost": 150,
-                "tags": ["Tier2", "Strength"],
-                "buildsFromT1": ["Axe"],
-                "buildsInto": ["Eye of the Storm", "GoldenBlade", "Runeforged Hammer", "Void Shield", "Avenging Blade", "Tyrfing", "Arondight", "Tekko-Kagi", "Pendulum Blade", "Deathbringer", "Avatar's Parashu"],
+                "tags": [
+                    "Tier2",
+                    "Strength"
+                ],
+                "buildsFromT1": [
+                    "Axe"
+                ],
+                "buildsInto": [
+                    "Eye of the Storm",
+                    "GoldenBlade",
+                    "Runeforged Hammer",
+                    "Void Shield",
+                    "Avenging Blade",
+                    "Tyrfing",
+                    "Arondight",
+                    "Tekko-Kagi",
+                    "Pendulum Blade",
+                    "Deathbringer",
+                    "Avatar's Parashu"
+                ],
                 "tier": 2,
                 "totalCost": 900
             },
-
             {
                 "buildsFromT2": [
                     "VeveCharm",
@@ -2743,7 +2802,6 @@
                 ],
                 "tier": 3,
                 "totalCost": 2450
-               
             },
             {
                 "name": "Umbral Link",
@@ -3009,7 +3067,6 @@
             },
             {
                 "active": true,
-                
                 "buildsFromT1": [
                     "Medallion",
                     "Ring",
@@ -3891,7 +3948,6 @@
                 ],
                 "tier": 2,
                 "totalCost": 950
-                
             },
             {
                 "buildsIntoT3": [
@@ -3976,20 +4032,25 @@
                 "name": "Mana Tome",
                 "tier": 2,
                 "totalCost": 500,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
-            {"buildsFromT1": [
-                "Ring"
-            ],
-            "components": [
-                "Ring"
-            ],
+            {
+                "buildsFromT1": [
+                    "Ring"
+                ],
+                "components": [
+                    "Ring"
+                ],
                 "icon": "/icons/AdroitRing.webp",
                 "internalName": "AdroitRing",
                 "name": "Adroit Ring",
                 "tier": 2,
                 "totalCost": 650,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "buildsFromT1": [
@@ -4005,12 +4066,13 @@
                 "name": "Olmec Blue",
                 "tier": 2,
                 "totalCost": 700,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "buildsFromT1": [
                     "Shield"
-                    
                 ],
                 "components": [
                     "Shield"
@@ -4020,7 +4082,9 @@
                 "name": "Legionnaire Armor",
                 "tier": 2,
                 "totalCost": 750,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "buildsFromT1": [
@@ -4034,7 +4098,9 @@
                 "name": "Hunter's Bow",
                 "tier": 2,
                 "totalCost": 750,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "buildsFromT1": [
@@ -4051,7 +4117,9 @@
                     "Magical Protection": 22
                 },
                 "totalCost": 750,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "icon": "/icons/Odigba.webp",
@@ -4059,7 +4127,9 @@
                 "name": "Odigba",
                 "tier": 2,
                 "totalCost": 800,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "buildsFromT1": [
@@ -4073,7 +4143,9 @@
                 "name": "Veve Charm",
                 "tier": 2,
                 "totalCost": 800,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "buildsFromT1": [
@@ -4089,7 +4161,9 @@
                 "name": "Captain's Ring",
                 "tier": 2,
                 "totalCost": 800,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "buildsFromT1": [
@@ -4105,7 +4179,9 @@
                 "name": "Sage's Ring",
                 "tier": 2,
                 "totalCost": 800,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "buildsFromT1": [
@@ -4121,22 +4197,25 @@
                 "name": "Engraved Guard",
                 "tier": 2,
                 "totalCost": 800,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "buildsFromT1": [
                     "Scythe"
                 ],
-
                 "components": [
                     "Scythe"
-                ],    
+                ],
                 "icon": "/icons/CursedSickle.webp",
                 "internalName": "CursedSickle",
                 "name": "Cursed Sickle",
                 "tier": 2,
                 "totalCost": 850,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "buildsFromT1": [
@@ -4152,7 +4231,9 @@
                 "name": "Medal of Disruption",
                 "tier": 2,
                 "totalCost": 850,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "icon": "/icons/MedalOfDefense.webp",
@@ -4160,7 +4241,9 @@
                 "name": "Medal of Defense",
                 "tier": 2,
                 "totalCost": 850,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "buildsFromT1": [
@@ -4176,7 +4259,9 @@
                 "name": "Enchanted Bracelet",
                 "tier": 2,
                 "totalCost": 900,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "buildsFromT1": [
@@ -4190,7 +4275,9 @@
                 "name": "Killing Stone",
                 "tier": 2,
                 "totalCost": 900,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "buildsFromT1": [
@@ -4206,7 +4293,9 @@
                 "name": "Soul Reliquary",
                 "tier": 2,
                 "totalCost": 900,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "icon": "/icons/VoidShard.webp",
@@ -4214,7 +4303,9 @@
                 "name": "Void Shard",
                 "tier": 2,
                 "totalCost": 900,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "buildsFromT1": [
@@ -4230,7 +4321,9 @@
                 "name": "Flaming Pearl",
                 "tier": 2,
                 "totalCost": 950,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "icon": "/icons/HookedSword.webp",
@@ -4238,7 +4331,9 @@
                 "name": "Hooked Sword",
                 "tier": 2,
                 "totalCost": 1000,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "buildsFromT1": [
@@ -4254,7 +4349,9 @@
                 "name": "Zither",
                 "tier": 2,
                 "totalCost": 1100,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "icon": "/icons/StalwartSigil.webp",
@@ -4262,7 +4359,9 @@
                 "name": "Stalwart Sigil",
                 "tier": 2,
                 "totalCost": 1150,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "icon": "/icons/EvilEye.webp",
@@ -4270,7 +4369,9 @@
                 "name": "Evil Eye",
                 "tier": 2,
                 "totalCost": 1200,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "icon": "/icons/LucerneHammer.webp",
@@ -4278,7 +4379,9 @@
                 "name": "Lucerne Hammer",
                 "tier": 2,
                 "totalCost": 1250,
-                "tags": ["Tier2"]
+                "tags": [
+                    "Tier2"
+                ]
             },
             {
                 "buildsIntoT2": [
@@ -4540,7 +4643,6 @@
                 "totalCost": 650
             },
             {
-                
                 "buildsIntoT2": [
                     "BloodsoakedShroud"
                 ],
@@ -5567,7 +5669,7 @@
                 "totalCost": 300
             },
             {
-                "godSpecific": true, 
+                "godSpecific": true,
                 "buildsFromT1": [
                     "None"
                 ],
@@ -5869,7 +5971,6 @@
                 "tier": 1,
                 "totalCost": 300
             },
-            
             {
                 "buildsIntoT2": [
                     "AdamantineSickle",
@@ -5962,7 +6063,7 @@
                 "name": "Runic Bomb",
                 "passive": "Active: Deals 300 Physical damage and applies Knockback to enemies, plus 1000 True damage to Minions and Structures while reducing their Attack Speed by 35% for 10 seconds.",
                 "stats": {
-                    
+                    "N/A": 0
                 },
                 "stepCost": "N/A",
                 "tags": [
@@ -5986,6 +6087,7 @@
                 "name": "Sundering Arc",
                 "passive": "Active: Instantly deals 175 + 25 per level true damage to Jungle Monsters and Jungle Bosses. Deals 500 damage at level 13 and above. \nHits Gods, dealing 20 + 3 per level True Damage 3 times over 2s. The cooldown is reduced by 30s when used only on Jungle Bosses or Jungle Camps. \nCooldown: 120s.",
                 "stats": {
+                    "N/A": 0
                 },
                 "stepCost": "N/A",
                 "tags": [
@@ -6399,16 +6501,16 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "24 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "2 Dec 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Warrior's Axe",
-                            "Health Chalice",
+                            "Axe",
                             "Health Potion"
                         ],
                         "full_build": [
                             "Sundering Axe",
-                            "Evolved Devourer's Gauntlet",
+                            "The Reaper",
                             "Sanguine Lash",
                             "Regrowth Striders",
                             "Gladiator's Shield",
@@ -6420,7 +6522,7 @@
                     {
                         "author": "Mendar",
                         "last_edit": "17 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
                             "Health Chalice",
@@ -6741,7 +6843,6 @@
                     "ADC",
                     "Middle",
                     "Mid"
-                    
                 ],
                 "pantheon": "Hindu",
                 "release_year": "2024",
@@ -6806,9 +6907,9 @@
                 },
                 "builds": [
                     {
-                        "author": "Mytharria",
-                        "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "author": "Mendar",
+                        "last_edit": "27 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -6823,12 +6924,12 @@
                             "Obsidian Shard",
                             "Soul Reaver"
                         ],
-                        "notes": "INT-oriented burst mid build. "
+                        "notes": "INT-oriented burst mage build. "
                     },
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Leather Cowl",
                             "Axe",
@@ -6844,6 +6945,367 @@
                             "Riptalon"
                         ],
                         "notes": "Crit-oriented ADC build. with **Aspect of Combustion**"
+                    }
+                ]
+            },
+            {
+                "abilities": {
+                    "A01": {
+                        "formulas": {
+                            "Damage_Formula": "{Damage} + {Damage_Scaling}",
+                            "Heal_Formula": "{Heal} + {Heal_Scaling}"
+                        },
+                        "icon": "/icons/artioDruidOne.webp",
+                        "key": "Artio.A01.InGame.Short",
+                        "name": "Energy Surge (Maul Prey)",
+                        "shortDesc": "Druid: Pulse a wave of energy dealing Magical Damage [35% INT + 60% STR] to enemies and healing yourself and allies around each enemy hit.\r\nBear: Swipe twice with your claws dealing Magical Damage [30% INT + 50% STR] to enemies in front of you.",
+                        "valueKeys": {
+                            "Druid Damage": [
+                                70,
+                                105,
+                                140,
+                                175,
+                                210
+                            ],
+                            "Druid Heal": [
+                                30,
+                                50,
+                                70,
+                                90,
+                                110
+                            ],
+                            "Bear Damage": [
+                                40,
+                                70,
+                                100,
+                                130,
+                                160
+                            ],
+                            "Range": [
+                                4
+                            ],
+                            "Radius": [
+                                120
+                            ],
+                            "Cooldown": [
+                                12,
+                                12,
+                                12,
+                                12,
+                                12
+                            ],
+                            "Cost": [
+                                40,
+                                45,
+                                50,
+                                55,
+                                60
+                            ]
+                        },
+                        "scales": "35% INT + 60% STR"
+                    },
+                    "A02": {
+                        "formulas": {},
+                        "icon": "/icons/artioDruidTwo.webp",
+                        "key": "Artio.A02.InGame.Short",
+                        "name": "Entangling Vines (Ferocious Roar)",
+                        "shortDesc": "Druid: Create vines around you that Cripple enemies and reduce their Magical or Physical Power [9-15%] while in the area.\r\nBear: Roar to Stun enemies [1-1.4s] and increase your own Physical and Magical Protections [25-45].",
+                        "valueKeys": {
+                            "Druid Power Debuff": [
+                                -9,
+                                -10.5,
+                                -12,
+                                -13.5,
+                                -15
+                            ],
+                            "Druid Duration": [
+                                4
+                            ],
+                            "Bear Stun Duration": [
+                                1,
+                                1.1,
+                                1.2,
+                                1.3,
+                                1.4
+                            ],
+                            "Bear Protections": [
+                                25,
+                                30,
+                                35,
+                                40,
+                                45
+                            ],
+                            "Radius": [
+                                3.2
+                            ],
+                            "Cooldown": [
+                                15
+                            ],
+                            "Cost": [
+                                50,
+                                55,
+                                60,
+                                65,
+                                70
+                            ]
+                        }
+                    },
+                    "A03": {
+                        "formulas": {
+                            "Damage_Formula": "{Damage} + {Damage_Scaling}",
+                            "Heal_Formula": "{Heal} + {Heal_Scaling}"
+                        },
+                        "icon": "/icons/artioDruidThree.webp",
+                        "key": "Artio.A03.InGame.Short",
+                        "name": "Life Tap (Heavy Charge)",
+                        "shortDesc": "Druid: Channel to deal Magical Damage [15% INT] up to 5 times, heal yourself [3% INT] up to 5 times, slow enemies [10%] per hit, and Root enemies hit 5 times.\r\nBear: Charge forward, dealing Magical Damage [55% INT + 85% STR] and slowing enemies [20%] for 2s.",
+                        "valueKeys": {
+                            "Druid Damage": [
+                                15,
+                                30,
+                                45,
+                                60,
+                                75
+                            ],
+                            "Druid Heal": [
+                                10,
+                                15,
+                                20,
+                                25,
+                                30
+                            ],
+                            "Druid Slow": [
+                                10
+                            ],
+                            "Druid Slow Duration": [
+                                1
+                            ],
+                            "Druid Root Duration": [
+                                1
+                            ],
+                            "Bear Damage": [
+                                75,
+                                120,
+                                165,
+                                210,
+                                255
+                            ],
+                            "Bear Slow": [
+                                20
+                            ],
+                            "Bear Slow Duration": [
+                                2
+                            ],
+                            "Range": [
+                                8.8
+                            ],
+                            "Cooldown": [
+                                15
+                            ],
+                            "Cost": [
+                                55
+                            ]
+                        },
+                        "scales": "15% INT"
+                    },
+                    "A04": {
+                        "formulas": {},
+                        "icon": "/icons/artioDruidFour.webp",
+                        "key": "Artio.A04.InGame.Short",
+                        "name": "Shapeshift",
+                        "shortDesc": "Swap between Druid and Bear forms. Gain Invigoration stacks when hitting enemies, increasing Movement Speed [1-3% per stack] and Mana Regeneration [2 per stack].",
+                        "valueKeys": {
+                            "Move Speed Per Stack": [
+                                1,
+                                1.5,
+                                2,
+                                2.5,
+                                3
+                            ],
+                            "Mana Per Stack": [
+                                2
+                            ],
+                            "Max Stacks": [
+                                8
+                            ],
+                            "Stack Duration": [
+                                6
+                            ]
+                        }
+                    }
+                },
+                "passive": {
+                    "icon": "/icons/artioPassive.webp",
+                    "key": "Artio.PSV.InGame.Short",
+                    "name": "Decompose",
+                    "shortDesc": "Damaging enemies applies Decompose, reducing Protections [4% per stack, max 5] and Healing [25%] for 6s.",
+                    "valueKeys": {
+                        "Protections Debuff Per Stack": [
+                            4
+                        ],
+                        "Max Stacks": [
+                            5
+                        ],
+                        "Healing Reduction": [
+                            25
+                        ],
+                        "Duration": [
+                            6
+                        ]
+                    }
+                },
+                "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.4,
+                        "20": 28,
+                        "rate": "1.40"
+                    },
+                    "BaseAttackSpeed": {
+                        "1": 0.93,
+                        "20": 0.93,
+                        "rate": "0.00"
+                    },
+                    "MagicalProtection": {
+                        "1": 29.2,
+                        "20": 59.4,
+                        "rate": 1.5894736842105264
+                    },
+                    "MaxHealth": {
+                        "1": 672.3,
+                        "20": 2673,
+                        "rate": 105.3
+                    },
+                    "MaxMana": {
+                        "1": 296,
+                        "20": 1094,
+                        "rate": 42
+                    },
+                    "PhysicalProtection": {
+                        "1": 20.1,
+                        "20": 80.6,
+                        "rate": 3.184210526315789
+                    },
+                    "BasicDamage": {
+                        "1": 43,
+                        "20": 87,
+                        "rate": 2.3157894736842106
+                    },
+                    "ManaPerSecond": {
+                        "1": 2,
+                        "20": 7,
+                        "rate": 0
+                    },
+                    "HealthPerSecond": {
+                        "1": 2,
+                        "20": 6,
+                        "rate": 0
+                    }
+                },
+                "basic": {
+                    "icon": "/Artio/Icon_BasicAttack_Magical.webp",
+                    "key": "Basic.MeleeMagical.InGame.Short",
+                    "name": "Artio Basic Attack",
+                    "shortDesc": "Deal Magical Damage [20% Magical Power + 100% Physical Power] to an enemy in front of you.",
+                    "formulas": {
+                        "Damage_Formula": "{Damage} + {Damage_Scaling}"
+                    },
+                    "scales": {
+                        "Damage_Scaling": [
+                            {
+                                "stat": "PhysicalPower",
+                                "values": [
+                                    1
+                                ]
+                            },
+                            {
+                                "stat": "MagicalPower",
+                                "values": [
+                                    0.2
+                                ]
+                            }
+                        ]
+                    },
+                    "valueKeys": {
+                        "ConeAngle": [
+                            120
+                        ],
+                        "Damage": [
+                            0
+                        ],
+                        "RangeCheat": [
+                            1.92
+                        ]
+                    }
+                },
+                "internalName": "Artio_Item",
+                "key": "God.Artio",
+                "name": "Artio",
+                "Type": "Magical",
+                "icon": "/icons/artioImage.webp",
+                "gender": "Female",
+                "pantheon": "Celtic",
+                "release_year": 2025,
+                "range": "Melee",
+                "roles": [
+                    "Solo",
+                    "Support"
+                ],
+                "scaling": [
+                    "INT",
+                    "STR"
+                ],
+                "pros": [
+                    "High Sustain",
+                    "CC",
+                    "Form Utility"
+                ],
+                "loreShort": "Ice melts in cascading waterfalls from jagged mountain peaks, pouring into rivers roaring white to the cold sea.",
+                "loreLong": "Ice melts in cascading waterfalls from jagged mountain peaks, pouring into rivers roaring white to the cold sea. Straightening slowly, like aged men, trees and fauna of the underbrush, now free of snow-weight, reach for the sun. It is spring; the world awakens from darkness and death to grow green again. Her hibernation ends. Coat wet with fresh rain, Artio, Goddess-Bear, roars into the chill morning air.\n\nShe is guardian of the cycle. Not the passage of time, but the balance of things. There is no spring without winter, no death without life, no darkness without light, no goodness without evil. Nature declares these opposites into law and Artio is the enforcer.\n\nAmong the ursine she runs, sometimes in the shape of a woman, lithe and wild, sometimes as a bear, brown and fierce. Nowhere in the forest do there stand shrines in her name, for Artio is less worshipped and more respected. Perhaps, instead, she looms overhead, a constant presence in the twinkle of the stars, a connection of glistening light; the constellation Ursa Major.\n\nAnd now there is war. None could know peace without war, victory without defeat, glory without failure. Artio must join those that fight if only to enforce the cycle of things. Nothing and no one defies the laws of nature like a God.",
+                "shortRole": "Employs Nature Magic to Trap Targets and Take The Form of a Bear",
+                "subText": "Bear Goddess",
+                "aspect": {
+                    "description": "Artio can only change stances inside the fountain. Upon leaving the fountain, her abilities are enhanced and her ultimate changes based on her form.",
+                    "icon": "/icons/aresAspect.webp",
+                    "name": "Aspect of the Denmother",
+                    "valueKeys": {}
+                },
+                "tips": [
+                    {
+                        "title": "Leveling order",
+                        "value": "Start 3, then 1, then another point in your 1. Prioritize: Maxing 1, 3, 4, 2. "
+                    }
+                ],
+                "hasAspect": true,
+                "skins": {
+                    "Ares": {
+                        "name": "Base Artio",
+                        "skin": "/icons/Wallpapers/Artio.webp",
+                        "type": "Base Skin",
+                        "price": {
+                            "diamonds": "0"
+                        }
+                    }
+                },
+                "builds": [
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "2 Dec 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "Bluestone Pendant",
+                            "Health Chalice",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Bluestone Brooch",
+                            "Lifebinder",
+                            "Evolved Prophetic Cloak",
+                            "Gladiator's Shield",
+                            "Genji's Guard",
+                            "Spirit Robe",
+                            "Hide of the Nemean Lion"
+                        ],
+                        "notes": "Bruiser Solo Lane Build"
                     }
                 ]
             },
@@ -7260,9 +7722,9 @@
                 },
                 "builds": [
                     {
-                        "author": "Mendar",
-                        "last_edit": "21 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "author": "Mytharria",
+                        "last_edit": "26 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
                             "Aladdin's Lamp",
@@ -7751,7 +8213,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "War Flag",
                             "Health Chalice",
@@ -7771,7 +8233,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Death's Toll",
                             "Health Chalice",
@@ -7786,12 +8248,12 @@
                             "Sun Beam Bow",
                             "Tyrfing"
                         ],
-                        "notes": "Bruiser AA-oriented warrior build."
+                        "notes": "Bruiser AA-oriented solo warrior build."
                     },
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Golden Dagger",
                             "Axe",
@@ -8208,8 +8670,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "1 Dec 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -8229,7 +8691,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "26 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "War Flag",
                             "Health Chalice",
@@ -8676,7 +9138,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -9119,7 +9581,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -9139,7 +9601,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -9590,7 +10052,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -9610,7 +10072,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "26 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "War Flag",
                             "Health Chalice",
@@ -9630,7 +10092,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Golden Dagger",
                             "Axe",
@@ -10087,7 +10549,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -10645,7 +11107,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "12 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bluestone Pendant",
                             "Axe",
@@ -10665,7 +11127,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -11135,7 +11597,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -11155,7 +11617,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
                             "Gem",
@@ -11598,9 +12060,9 @@
                 },
                 "builds": [
                     {
-                        "author": "Mendar",
-                        "last_edit": "13 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "author": "Mytharria",
+                        "last_edit": "25 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Golden Dagger",
                             "Axe",
@@ -12091,7 +12553,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -12580,7 +13042,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -12600,7 +13062,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "24 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -13152,7 +13614,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "War Flag",
                             "Health Chalice",
@@ -13171,21 +13633,21 @@
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "27 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
-                            "Death's Toll",
+                            "Warrior's Axe",
                             "Health Chalice",
                             "Health Potion"
                         ],
                         "full_build": [
-                            "Death's Embrace",
-                            "Evolved Devourer's Gauntlet",
-                            "Berserker's Shield",
-                            "Hide of the Nemean Lion",
+                            "Sundering Axe",
+                            "The Reaper",
                             "Sanguine Lash",
-                            "Xibalban Effigy",
-                            "Tyrfing"
+                            "Berserker's Shield",
+                            "Gladiator's Shield",
+                            "Glorious Pridwen",
+                            "Spirit Robe"
                         ],
                         "notes": "Bruiser AA-oriented warrior build"
                     }
@@ -13723,8 +14185,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "22 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "30 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bluestone Pendant",
                             "Health Chalice",
@@ -13739,12 +14201,12 @@
                             "Hide of the Nemean Lion",
                             "Draconic Scale"
                         ],
-                        "notes": "Bruiser solo lane build."
+                        "notes": "Bruiser solo-lane build."
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "28 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "25 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Golden Dagger",
                             "Axe",
@@ -13764,7 +14226,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "24 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -14237,7 +14699,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -14257,7 +14719,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
                             "Axe",
@@ -14784,8 +15246,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "27 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bluestone Pendant",
                             "Health Chalice",
@@ -14793,19 +15255,19 @@
                         ],
                         "full_build": [
                             "Bluestone Brooch",
-                            "Evolved Devourer's Gauntlet",
+                            "The Reaper",
+                            "Evolved Prophetic Cloak",
                             "Sanguine Lash",
-                            "Regrowth Striders",
-                            "Genji's Guard",
-                            "Hide of the Nemean Lion",
-                            "Xibalban Effigy"
+                            "Gladiator's Shield",
+                            "Glorious Pridwen",
+                            "Hide of the Nemean Lion"
                         ],
                         "notes": "Bruiser poke warrior build\n"
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "27 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bluestone Pendant",
                             "Axe",
@@ -14813,7 +15275,7 @@
                         ],
                         "full_build": [
                             "Bluestone Brooch",
-                            "Evolved Devourer's Gauntlet",
+                            "The Reaper",
                             "Jotunn's Revenge",
                             "Oath-Sworn Spear",
                             "Heartseeker",
@@ -15262,7 +15724,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Warrior's Axe",
                             "Health Chalice",
@@ -15282,7 +15744,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -15793,7 +16255,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -15813,7 +16275,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "War Flag",
                             "Health Chalice",
@@ -16236,9 +16698,9 @@
                 },
                 "builds": [
                     {
-                        "author": "Mendar",
-                        "last_edit": "21 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "author": "Mytharria",
+                        "last_edit": "25 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
                             "Axe",
@@ -16257,12 +16719,12 @@
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "22 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "30 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Death's Toll",
-                            "Health Potion (3x)",
-                            "Axe"
+                            "Axe",
+                            "Health Potion"
                         ],
                         "full_build": [
                             "Death's Embrace",
@@ -16273,7 +16735,7 @@
                             "Berserker's Shield",
                             "Magi's Cloak"
                         ],
-                        "notes": "Life-Steal Oriented Solo Lane build with **Aspect of Ferocity**"
+                        "notes": "Life-Steal Oriented Solo-Lane build with **Aspect of Ferocity**"
                     }
                 ]
             },
@@ -16683,7 +17145,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -17051,7 +17513,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -17070,8 +17532,8 @@
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "24 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "25 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Potion (3x)",
@@ -17567,7 +18029,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Golden Dagger",
                             "Axe",
@@ -17587,7 +18049,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "24 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -18012,28 +18474,28 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "1 Dec 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
-                            "Warrior's Axe",
+                            "Bluestone Pendant",
                             "Health Chalice",
                             "Health Potion"
                         ],
                         "full_build": [
                             "Bluestone Brooch",
-                            "Breastplate of Valor",
-                            "Genji's Guard",
+                            "Dagger of Frenzy",
                             "Regrowth Striders",
+                            "Genji's Guard",
+                            "Hide of the Nemean Lion",
                             "Spirit Robe",
-                            "Glorious Pridwen",
-                            "Xibalban Effigy"
+                            "Glorious Pridwen"
                         ],
                         "notes": "Bruiser solo-lane build."
                     },
                     {
                         "author": "Mytharria",
                         "last_edit": "24 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -18484,7 +18946,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -18504,7 +18966,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Golden Dagger",
                             "Gem",
@@ -18927,7 +19389,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -19339,7 +19801,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -19845,7 +20307,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -19865,7 +20327,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -20262,7 +20724,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -20282,7 +20744,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Warrior's Axe",
                             "Health Chalice",
@@ -20302,7 +20764,7 @@
                     {
                         "author": "Mendar",
                         "last_edit": "20 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
                             "Health Potion",
@@ -20666,7 +21128,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -21181,8 +21643,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "22 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "27 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bluestone Pendant",
                             "Health Chalice",
@@ -21190,11 +21652,11 @@
                         ],
                         "full_build": [
                             "Bluestone Brooch",
-                            "Evolved Devourer's Gauntlet",
-                            "Sanguine Lash",
-                            "Regrowth Striders",
+                            "Runeforged Hammer",
                             "Gladiator's Shield",
                             "Genji's Guard",
+                            "Glorious Pridwen",
+                            "Spirit Robe",
                             "Hide of the Nemean Lion"
                         ],
                         "notes": "Bruiser active item oriented solo build."
@@ -21654,7 +22116,7 @@
                     {
                         "author": "Mendar",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
                             "Health Chalice",
@@ -21674,7 +22136,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -22130,7 +22592,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -22150,7 +22612,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -22476,7 +22938,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "17 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -22862,7 +23324,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -23250,8 +23712,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "19 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "1 Dec 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bluestone Pendant",
                             "Health Chalice",
@@ -23259,10 +23721,10 @@
                         ],
                         "full_build": [
                             "Bluestone Brooch",
+                            "Triton's Conch",
                             "Evolved Prophetic Cloak",
-                            "Stygian Anchor",
                             "Gladiator's Shield",
-                            "Genji's Guard",
+                            "Stygian Anchor",
                             "Hide of the Nemean Lion",
                             "Glorious Pridwen"
                         ],
@@ -23706,7 +24168,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "24 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -24173,7 +24635,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Golden Dagger",
                             "Axe",
@@ -24193,7 +24655,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Death's Toll",
                             "Axe",
@@ -24595,7 +25057,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -25088,7 +25550,7 @@
                     {
                         "author": "Mendar",
                         "last_edit": "7 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
                             "Axe",
@@ -25507,7 +25969,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -25526,8 +25988,8 @@
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "27 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bluestone Pendant",
                             "Axe",
@@ -25535,7 +25997,7 @@
                         ],
                         "full_build": [
                             "Bluestone Brooch",
-                            "Evolved Devourer's Gauntlet",
+                            "The Reaper",
                             "Barbed Carver",
                             "The Crusher",
                             "Heartseeker",
@@ -25846,8 +26308,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "25 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Golden Dagger",
                             "Health Potion 3x",
@@ -26316,7 +26778,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -26905,7 +27367,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
                             "Health Chalice",
@@ -26925,7 +27387,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "20 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bluestone Pendant",
                             "Health Chalice",
@@ -27362,7 +27824,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "20 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -27382,7 +27844,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -27802,8 +28264,8 @@
                 "builds": [
                     {
                         "author": "Mendar",
-                        "last_edit": "14 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "25 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
                             "Health Chalice",
@@ -27822,8 +28284,8 @@
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "30 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Warrior's Axe",
                             "Health Chalice",
@@ -27831,14 +28293,14 @@
                         ],
                         "full_build": [
                             "Sundering Axe",
-                            "Evolved Devourer's Gauntlet",
+                            "The Reaper",
                             "Sanguine Lash",
                             "Regrowth Striders",
                             "Genji's Guard",
                             "Hide of the Nemean Lion",
                             "Xibalban Effigy"
                         ],
-                        "notes": "Bruiser AA-oriented solo laner with **Aspect of Justice.**"
+                        "notes": "Bruiser AA-oriented solo-lane with **Aspect of Justice.**"
                     }
                 ]
             },
@@ -28265,7 +28727,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "20 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -28285,7 +28747,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -28710,8 +29172,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "1 Dec 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Warrior's Axe",
                             "Health Chalice",
@@ -28719,19 +29181,19 @@
                         ],
                         "full_build": [
                             "Sundering Axe",
-                            "Breastplate of Valor",
+                            "Triton's Conch",
+                            "Evolved Prophetic Cloak",
                             "Gladiator's Shield",
                             "Genji's Guard",
-                            "Hide of the Nemean Lion",
                             "Glorious Pridwen",
-                            "Xibalban Effigy"
+                            "Hide of the Nemean Lion"
                         ],
-                        "notes": "Bruiser solo lane build."
+                        "notes": "Bruiser solo-lane build."
                     },
                     {
                         "author": "Mytharria",
                         "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
                             "Axe",
@@ -28751,7 +29213,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -29121,8 +29583,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "25 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Warrior's Axe",
                             "Health Chalice",
@@ -29130,12 +29592,12 @@
                         ],
                         "full_build": [
                             "Sundering Axe",
+                            "Lifebinder",
                             "Evolved Prophetic Cloak",
                             "Gladiator's Shield",
-                            "Sanguine Lash",
-                            "Xibalban Effigy",
-                            "Hide of the Nemean Lion",
-                            "Freya's Tears"
+                            "Genji's Guard",
+                            "Spirit Robe",
+                            "Hide of the Nemean Lion"
                         ],
                         "notes": "Bruiser poke warrior build.  **Aspect of the Fragmented** OPTIONAL"
                     }
@@ -29589,9 +30051,9 @@
                 },
                 "builds": [
                     {
-                        "author": "Mytharria",
-                        "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "author": "Mendar",
+                        "last_edit": "25 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
                             "Axe",
@@ -29599,8 +30061,8 @@
                         ],
                         "full_build": [
                             "Bumba's Hammer",
-                            "Oath-Sworn Spear",
                             "Barbed Carver",
+                            "The Reaper",
                             "The Crusher",
                             "Heartseeker",
                             "Titan's Bane",
@@ -29610,8 +30072,8 @@
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "27 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bluestone Pendant",
                             "Health Chalice",
@@ -29619,12 +30081,12 @@
                         ],
                         "full_build": [
                             "Bluestone Brooch",
-                            "Evolved Devourer's Gauntlet",
-                            "Regrowth Striders",
+                            "The Reaper",
+                            "Evolved Prophetic Cloak",
                             "Sanguine Lash",
-                            "Hide of the Nemean Lion",
-                            "Draconic Scale",
-                            "Xibalban Effigy"
+                            "Gladiator's Shield",
+                            "Glorious Pridwen",
+                            "Spirit Robe"
                         ],
                         "notes": "Bruiser poke warrior build with **__Aspect of Obsidian__**."
                     }
@@ -30021,7 +30483,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -30041,7 +30503,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -30299,7 +30761,6 @@
                 "key": "God.Princess_Bari",
                 "name": "Princess Bari",
                 "Type": "Magical",
-                
                 "icon": "/icons/bariImage.webp",
                 "passive": {
                     "icon": "/icons/bariPassive.webp",
@@ -30393,7 +30854,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -30413,7 +30874,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -30433,7 +30894,7 @@
                     {
                         "author": "Mendar",
                         "last_edit": "14 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bluestone Pendant",
                             "Axe",
@@ -30881,7 +31342,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -30901,7 +31362,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -31306,7 +31767,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -31738,10 +32199,10 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "22 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "1 Dec 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
-                            "Warrior's Axe",
+                            "Bluestone Pendant",
                             "Health Chalice",
                             "Health Potion"
                         ],
@@ -31750,16 +32211,16 @@
                             "Mystical Mail",
                             "Sanguine Lash",
                             "Regrowth Striders",
-                            "Hide of the Nemean Lion",
-                            "Freya's Tears",
-                            "Xibalban Effigy"
+                            "Gladiator's Shield",
+                            "Glorious Pridwen",
+                            "Hide of the Nemean Lion"
                         ],
                         "notes": "Active item oriented bruiser solo build."
                     },
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -32332,7 +32793,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -32352,7 +32813,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -32756,7 +33217,7 @@
                     {
                         "author": "Mendar",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
                             "Axe",
@@ -33148,8 +33609,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "27 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bluestone Pendant",
                             "Health Chalice",
@@ -33157,19 +33618,19 @@
                         ],
                         "full_build": [
                             "Bluestone Brooch",
-                            "Evolved Devourer's Gauntlet",
+                            "The Reaper",
+                            "Evolved Prophetic Cloak",
                             "Gladiator's Shield",
-                            "Breastplate of Valor",
-                            "Genji's Guard",
-                            "Hide of the Nemean Lion",
-                            "Xibalban Effigy"
+                            "Sanguine Lash",
+                            "Glorious Pridwen",
+                            "Hide of the Nemean Lion"
                         ],
                         "notes": "Bruiser solo-lane build."
                     },
                     {
                         "author": "Mytharria",
                         "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Conduit Gem",
                             "Health Chalice",
@@ -33552,7 +34013,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -33925,8 +34386,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "4 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "25 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -33945,8 +34406,8 @@
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "24 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "25 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -33965,8 +34426,8 @@
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "17 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "25 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -34369,7 +34830,7 @@
                     {
                         "author": "Mendar",
                         "last_edit": "5 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
                             "Axe",
@@ -34388,8 +34849,8 @@
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "30 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Warrior's Axe",
                             "Health Chalice",
@@ -34397,14 +34858,14 @@
                         ],
                         "full_build": [
                             "Sundering Axe",
-                            "Evolved Devourer's Gauntlet",
+                            "The Reaper",
                             "Sanguine Lash",
                             "Regrowth Striders",
                             "Hide of the Nemean Lion",
                             "Draconic Scale",
                             "Oni Hunter's Garb"
                         ],
-                        "notes": "Bruiser HP-oriented solo lane build with **Aspect of Reaping.**"
+                        "notes": "Bruiser HP-oriented solo-lane build with **Aspect of Reaping.**"
                     }
                 ]
             },
@@ -34774,7 +35235,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -34794,7 +35255,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "24 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -35171,7 +35632,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -35191,7 +35652,7 @@
                     {
                         "author": "Mendar",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
                             "Axe",
@@ -35637,7 +36098,7 @@
                     {
                         "author": "Mendar",
                         "last_edit": "14 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
                             "Axe",
@@ -35656,8 +36117,8 @@
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "last_edit": "30 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bluestone Pendant",
                             "Health Chalice",
@@ -35665,19 +36126,19 @@
                         ],
                         "full_build": [
                             "Bluestone Brooch",
-                            "Evolved Devourer's Gauntlet",
-                            "Sanguine Lash",
-                            "Regrowth Striders",
-                            "Genji's Guard",
-                            "Hide of the Nemean Lion",
-                            "Xibalban Effigy"
+                            "Runeforged Hammer",
+                            "Evolved Prophetic Cloak",
+                            "Gladiator's Shield",
+                            "Glorious Pridwen",
+                            "Spirit Robe",
+                            "Hide of the Nemean Lion"
                         ],
-                        "notes": "Bruiser solo lane build with **__Aspect of Thunderstruck__**"
+                        "notes": "Bruiser solo-lane build with **__Aspect of Thunderstruck__**"
                     },
                     {
                         "author": "Mytharria",
                         "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -36073,7 +36534,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bluestone Pendant",
                             "Axe",
@@ -36638,7 +37099,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -37042,7 +37503,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -37062,7 +37523,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Conduit Gem",
                             "Health Chalice",
@@ -37538,7 +37999,7 @@
                     {
                         "author": "Mendar",
                         "last_edit": "1 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -37558,7 +38019,7 @@
                     {
                         "author": "Mendar",
                         "last_edit": "30 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -37941,7 +38402,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -38341,7 +38802,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -38361,7 +38822,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 23",
+                        "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
