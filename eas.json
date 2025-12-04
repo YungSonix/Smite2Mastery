@@ -22,6 +22,9 @@
     "production": {
       "ios": {
         "ascAppId": "6755970757"
+      },
+      "web": {
+        "buildType": "production"
       }
     }
   }
