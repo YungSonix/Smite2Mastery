@@ -44,3 +44,5 @@ yarn-error.*
 .scripts/
 update-builds.js
 app/data/builds.json.backup
+
+.vercel
