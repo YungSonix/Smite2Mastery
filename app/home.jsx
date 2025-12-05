@@ -229,6 +229,21 @@ export default function HomePage() {
     setShowBugReportModal(true);
   };
 
+  const openAppReviewForm = async () => {
+    const APP_REVIEW_FORM_URL = 'https://forms.gle/HfHBQJFhggJPtZh58';
+    try {
+      const supported = await Linking.canOpenURL(APP_REVIEW_FORM_URL);
+      if (supported) {
+        await Linking.openURL(APP_REVIEW_FORM_URL);
+      } else {
+        Alert.alert('Error', 'Unable to open the form. Please check your internet connection.');
+      }
+    } catch (error) {
+      console.error('Error opening form:', error);
+      Alert.alert('Error', 'Unable to open the form. Please try again.');
+    }
+  };
+
   const resetBugReportForm = () => {
     setBugReportData({
       description: '',
@@ -657,7 +672,7 @@ export default function HomePage() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Report a Bug or Crash</Text>
           <Text style={styles.bioText}>
-            Found a bug or experiencing crashes? We'd love to hear about it! Your feedback helps us improve the app.
+            Found a bug or experiencing crashes? I'd love to hear about it! Your feedback helps us improve the app.
           </Text>
           <Text style={styles.bioText}>
             When reporting, please include:
@@ -675,6 +690,25 @@ export default function HomePage() {
           >
             <Text style={styles.bugReportButtonIcon}>🐛</Text>
             <Text style={styles.bugReportButtonText}>Report a Bug or Crash</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* App Review Forms Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>App Review Feedback</Text>
+          <Text style={styles.bioText}>
+            I'd love to hear your thoughts! Share your feedback about the app, what you like, and what could be improved.
+          </Text>
+          <Text style={styles.bioText}>
+            Your feedback helps us make the app better for everyone.
+          </Text>
+          <TouchableOpacity
+            style={styles.appReviewButton}
+            onPress={openAppReviewForm}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.appReviewButtonIcon}>⭐</Text>
+            <Text style={styles.appReviewButtonText}>Open App Review Form</Text>
           </TouchableOpacity>
         </View>
 
@@ -1083,6 +1117,27 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   bugReportButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  // App Review Form Button Styles
+  appReviewButton: {
+    backgroundColor: '#f59e0b',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 12,
+    borderWidth: 1,
+    borderColor: '#f59e0b',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  appReviewButtonIcon: {
+    fontSize: 20,
+  },
+  appReviewButtonText: {
     color: '#ffffff',
     fontSize: 16,
     fontWeight: '700',
