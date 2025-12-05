@@ -40,7 +40,7 @@ yarn-error.*
 /ios
 /android
 
-# Update scripts (keep private - contains API credentials)
+#Update scripts
 .scripts/
 update-builds.js
 app/data/builds.json.backup
