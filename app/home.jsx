@@ -8,13 +8,28 @@ import {
   Linking,
   Image,
   ActivityIndicator,
+  Modal,
 } from 'react-native';
 import * as Updates from 'expo-updates';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import PrivacyPage from './privacy';
 
 // ============================================================================
 // EASY CONFIGURATION - Just update these values when a new patch releases!
 // ============================================================================
+
+// App Version Configuration - Update this when pushing a new version
+const APP_VERSION_CONFIG = {
+  currentVersion: '1.3', // Current app version
+  previousVersion: '1.2', // Previous version (for comparison)
+  updateNotes: [
+    'Added base stats section to god pages with level slider',
+    'Added role icons next to role names on god pages',
+    'Improved god page header design and responsiveness',
+    'Fixed slider interaction for better user experience',
+  ], // Add your update notes here
+};
+
 const NEWS_CONFIG = {
   // Latest Open Beta Patch Info
   openBeta: {
@@ -42,6 +57,7 @@ export default function HomePage() {
   const [checkingUpdate, setCheckingUpdate] = useState(false);
   const [downloadingUpdate, setDownloadingUpdate] = useState(false);
   const [updateStatus, setUpdateStatus] = useState(null); // 'success', 'error', 'up-to-date', null
+  const [showUpdatePopup, setShowUpdatePopup] = useState(false);
 
   // Get update information from expo-updates
   const {
@@ -49,6 +65,27 @@ export default function HomePage() {
     isUpdateAvailable,
     isUpdatePending,
   } = Updates.useUpdates();
+
+  // Check for app update and show popup
+  useEffect(() => {
+    const checkForAppUpdate = async () => {
+      try {
+        const lastSeenVersion = await AsyncStorage.getItem('lastSeenAppVersion');
+        const currentVersion = APP_VERSION_CONFIG.currentVersion;
+        
+        // If we haven't seen this version before, or it's different from last seen, show popup
+        if (!lastSeenVersion || lastSeenVersion !== currentVersion) {
+          setShowUpdatePopup(true);
+          // Store that we've seen this version
+          await AsyncStorage.setItem('lastSeenAppVersion', currentVersion);
+        }
+      } catch (error) {
+        console.error('Error checking app version:', error);
+      }
+    };
+    
+    checkForAppUpdate();
+  }, []);
 
   // Auto-reload if update is pending
   useEffect(() => {
@@ -184,6 +221,49 @@ export default function HomePage() {
 
   return (
     <View style={styles.container}>
+      {/* Update Popup Modal */}
+      <Modal
+        visible={showUpdatePopup}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowUpdatePopup(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.updatePopupContainer}>
+            <View style={styles.updatePopupHeader}>
+              <Text style={styles.updatePopupTitle}>App Updated</Text>
+              <TouchableOpacity
+                style={styles.updatePopupCloseButton}
+                onPress={() => setShowUpdatePopup(false)}
+              >
+                <Text style={styles.updatePopupCloseText}>✕</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.updatePopupContent}>
+              <Text style={styles.updatePopupVersion}>
+                V{APP_VERSION_CONFIG.previousVersion} → V{APP_VERSION_CONFIG.currentVersion}
+              </Text>
+              <View style={styles.updateNotesContainer}>
+                <Text style={styles.updateNotesTitle}>What's New:</Text>
+                {APP_VERSION_CONFIG.updateNotes.map((note, index) => (
+                  <View key={index} style={styles.updateNoteItem}>
+                    <Text style={styles.updateNoteBullet}>•</Text>
+                    <Text style={styles.updateNoteText}>{note}</Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+            <TouchableOpacity
+              style={styles.updatePopupButton}
+              onPress={() => setShowUpdatePopup(false)}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.updatePopupButtonText}>Got it!</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         {/* App Bio Section */}
         <View style={styles.section}>
@@ -234,6 +314,13 @@ export default function HomePage() {
               </TouchableOpacity>
             )}
           </View>
+          <TouchableOpacity
+            style={styles.viewUpdateNotesButton}
+            onPress={() => setShowUpdatePopup(true)}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.viewUpdateNotesButtonText}>View Update Notes (V{APP_VERSION_CONFIG.currentVersion})</Text>
+          </TouchableOpacity>
         </View>
 
         {/* Smite 2 News Section */}

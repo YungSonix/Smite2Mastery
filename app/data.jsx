@@ -115,6 +115,15 @@ const statIcons = {
   'Basic Damage': require('./data/Icons/Stat Icons/HUD_Stats_Icon_BasicAttackPower.png'),
 };
 
+// Role icons
+const roleIcons = {
+  'ADC': require('./data/Icons/Role Icons/T_GodRole_Carry_Small.png'),
+  'Solo': require('./data/Icons/Role Icons/T_GodRole_Solo_Small.png'),
+  'Support': require('./data/Icons/Role Icons/T_GodRole_Support.png'),
+  'Mid': require('./data/Icons/Role Icons/T_GodRole_Mid_Small.png'),
+  'Jungle': require('./data/Icons/Role Icons/T_GodRole_Jungle.png'),
+};
+
 // Pantheon icon mapping (local files)
   const pantheonIcons = {
   'Greek': require('./data/Icons/Pantheon Icons/Greek.png'),
@@ -258,8 +267,19 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
       if (initialExpandAbilities) {
         setAbilitiesExpanded(true);
       }
+      // Reset level and base stats when god changes
+      setGodLevel(1);
+      setBaseStatsExpanded(false);
     }
   }, [initialSelectedGod, initialExpandAbilities]);
+  
+  // Reset level and base stats when selectedGod changes
+  useEffect(() => {
+    if (selectedGod) {
+      setGodLevel(1);
+      setBaseStatsExpanded(false);
+    }
+  }, [selectedGod]);
 
   // Scroll to top when game mode is selected
   useEffect(() => {
@@ -282,6 +302,9 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
   const [abilitiesExpanded, setAbilitiesExpanded] = useState(false);
   const [aspectExpanded, setAspectExpanded] = useState(false);
   const [passiveExpanded, setPassiveExpanded] = useState(false);
+  const [baseStatsExpanded, setBaseStatsExpanded] = useState(false);
+  const [godLevel, setGodLevel] = useState(1);
+  const [sliderTrackWidth, setSliderTrackWidth] = useState(300);
   const [selectedPantheon, setSelectedPantheon] = useState(null);
   const [pantheonDropdownVisible, setPantheonDropdownVisible] = useState(false);
   const [selectedStat, setSelectedStat] = useState(null);
@@ -445,6 +468,28 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     
     return result;
   }, [items, searchQuery, selectedStat, selectedTier]);
+
+  // Calculate base stats at current level (must be at top level, not conditional)
+  const baseStatsAtLevel = useMemo(() => {
+    const stats = {};
+    
+    if (selectedGod && selectedGod.baseStats) {
+      Object.keys(selectedGod.baseStats).forEach((statKey) => {
+        const statData = selectedGod.baseStats[statKey];
+        if (statData && typeof statData === 'object') {
+          const level1 = statData['1'] || 0;
+          const level20 = statData['20'] || 0;
+          // Linear interpolation between level 1 and 20
+          const levelProgress = (godLevel - 1) / 19; // 0 at level 1, 1 at level 20
+          const statValue = level1 + (level20 - level1) * levelProgress;
+          // Round up to whole number
+          stats[statKey] = Math.ceil(statValue);
+        }
+      });
+    }
+    
+    return stats;
+  }, [selectedGod, godLevel]);
 
   return (
     <View style={styles.container}>
@@ -1379,7 +1424,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                 <Text style={styles.backButtonText}>← Back</Text>
               </TouchableOpacity>
               <View style={styles.godPageTitleContainer}>
-                <View style={[styles.modalIconContainer, { borderColor: colors.accent + '60', borderWidth: 2, borderRadius: 12 }]}>
+                <View style={[styles.modalIconContainer, styles.godPageIconContainer, { borderColor: colors.accent + '60', borderWidth: 2, borderRadius: 10 }]}>
                   {(() => {
                     const godIcon = selectedGod.icon || selectedGod.GodIcon || (selectedGod.abilities && selectedGod.abilities.A01 && selectedGod.abilities.A01.icon);
                     const localIcon = godIcon ? getLocalGodAsset(godIcon) : null;
@@ -1387,15 +1432,15 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                       return (
                       <Image 
                           source={localIcon} 
-                        style={styles.modalGodIcon} 
+                        style={styles.godPageIcon} 
                       />
                       );
                     }
                     // No remote fallback here: if there's no local asset configured yet,
                     // show the letter fallback instead of loading from smitecalculator.
                     return (
-                      <View style={[styles.modalGodIconFallback, { backgroundColor: colors.primary + '30' }]}>
-                        <Text style={[styles.modalGodIconFallbackText, { color: colors.accent }]}>
+                      <View style={[styles.godPageIconFallback, { backgroundColor: colors.primary + '30' }]}>
+                        <Text style={[styles.godPageIconFallbackText, { color: colors.accent }]}>
                           {(selectedGod.name || selectedGod.GodName || selectedGod.title || 'U').charAt(0)}
                         </Text>
                       </View>
@@ -1443,16 +1488,28 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         Possible Roles:
                       </Text>
                       <View style={styles.godPageRolesList}>
-                        {possibleRoles.map((role, idx) => (
-                          <React.Fragment key={role}>
-                            <Text style={[styles.godPageRoleText, { color: colors.accent + 'AA' }]}>
-                              {role}
-                            </Text>
-                            {idx < possibleRoles.length - 1 && (
-                              <Text style={[styles.godPageRoleText, { color: colors.accent + 'AA' }]}> • </Text>
-                            )}
-                          </React.Fragment>
-                        ))}
+                        {possibleRoles.map((role, idx) => {
+                          const roleIcon = roleIcons[role];
+                          return (
+                            <React.Fragment key={role}>
+                              <View style={styles.godPageRoleItem}>
+                                {roleIcon && (
+                                  <Image 
+                                    source={roleIcon} 
+                                    style={styles.godPageRoleIcon}
+                                    resizeMode="contain"
+                                  />
+                                )}
+                                <Text style={[styles.godPageRoleText, { color: colors.accent + 'AA' }]}>
+                                  {role}
+                                </Text>
+                              </View>
+                              {idx < possibleRoles.length - 1 && (
+                                <Text style={[styles.godPageRoleText, { color: colors.accent + 'AA' }]}> • </Text>
+                              )}
+                            </React.Fragment>
+                          );
+                        })}
                 </View>
               </View>
                   )}
@@ -1460,6 +1517,108 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                 </View>
             </View>
           <ScrollView style={styles.godPageBody}>
+            {/* Base Stats Section */}
+            {selectedGod.baseStats && typeof selectedGod.baseStats === 'object' && Object.keys(selectedGod.baseStats).length > 0 && (
+              <View style={styles.modalSection}>
+                <TouchableOpacity
+                  style={styles.skinsHeader}
+                  onPress={() => setBaseStatsExpanded(!baseStatsExpanded)}
+                >
+                  <Text style={styles.modalSectionTitle}>Base Stats</Text>
+                  <Text style={styles.skinsToggleText}>
+                    {baseStatsExpanded ? '▼' : '▶'}
+                  </Text>
+                </TouchableOpacity>
+                {baseStatsExpanded && (
+                  <View style={styles.baseStatsContent}>
+                    {/* Level Slider */}
+                    <View style={styles.levelSliderContainer}>
+                      <View style={styles.levelSliderRow}>
+                        <TouchableOpacity
+                          style={[styles.levelSliderButton, godLevel === 1 && styles.levelSliderButtonDisabled]}
+                          onPress={() => setGodLevel(Math.max(1, godLevel - 1))}
+                          disabled={godLevel === 1}
+                        >
+                          <Text style={styles.levelSliderButtonText}>−</Text>
+                        </TouchableOpacity>
+                        <Pressable
+                          style={styles.levelSliderTrack}
+                          onLayout={(event) => {
+                            const { width } = event.nativeEvent.layout;
+                            setSliderTrackWidth(width);
+                          }}
+                          onPress={(event) => {
+                            if (sliderTrackWidth > 0) {
+                              const { locationX } = event.nativeEvent;
+                              const percentage = Math.max(0, Math.min(1, locationX / sliderTrackWidth));
+                              const newLevel = Math.round(1 + percentage * 19);
+                              setGodLevel(Math.max(1, Math.min(20, newLevel)));
+                            }
+                          }}
+                        >
+                          <View 
+                            style={[
+                              styles.levelSliderFill, 
+                              { width: `${((godLevel - 1) / 19) * 100}%` }
+                            ]} 
+                          />
+                          <View 
+                            style={[
+                              styles.levelSliderThumb,
+                              { left: `${((godLevel - 1) / 19) * 100}%` }
+                            ]}
+                            pointerEvents="none"
+                          />
+                        </Pressable>
+                        <TouchableOpacity
+                          style={[styles.levelSliderButton, godLevel === 20 && styles.levelSliderButtonDisabled]}
+                          onPress={() => setGodLevel(Math.min(20, godLevel + 1))}
+                          disabled={godLevel === 20}
+                        >
+                          <Text style={styles.levelSliderButtonText}>+</Text>
+                        </TouchableOpacity>
+                      </View>
+                      <Text style={styles.levelSliderLabel}>God Level: {godLevel}</Text>
+                    </View>
+                    {/* Stats Display */}
+                    <View style={styles.baseStatsGrid}>
+                      {Object.keys(baseStatsAtLevel).map((statKey) => {
+                        const statValue = baseStatsAtLevel[statKey];
+                        // Format stat name for display
+                        const displayName = statKey
+                          .replace(/([A-Z])/g, ' $1')
+                          .replace(/^./, str => str.toUpperCase())
+                          .trim();
+                        
+                        // Get stat color
+                        let statColor = '#94a3b8';
+                        if (["MaxHealth", "Health", "HP5", "Health Regen", "HealthPerTime"].includes(statKey)) statColor = "#22c55e";
+                        else if (["AttackSpeed", "AttackSpeedPercent", "BaseAttackSpeed", "BasicDamage", "Basic Attack Damage", "Basic Damage"].includes(statKey)) statColor = "#f97316";
+                        else if (["PhysicalProtection", "Penetration", "Physical Protection"].includes(statKey)) statColor = "#ef4444";
+                        else if (statKey === "Intelligence" || statKey === "MagicalPower") statColor = "#a855f7";
+                        else if (statKey === "Strength") statColor = "#facc15";
+                        else if (statKey === "Cooldown Rate" || statKey === "Cooldown") statColor = "#0ea5e9";
+                        else if (statKey === "MagicalProtection" || statKey === "Magical Protection") statColor = "#a855f7";
+                        else if (statKey === "Lifesteal") statColor = "#84cc16";
+                        else if (["MaxMana", "MP5", "Mana Regen", "Mana", "Mana Regeneration", "Magical Protection", "ManaPerTime"].includes(statKey)) statColor = "#3b82f6";
+                        else if (statKey === "MovementSpeed" || statKey === "Movement Speed") statColor = "#8b5cf6";
+                        
+                        return (
+                          <View key={statKey} style={styles.baseStatItem}>
+                            <Text style={[styles.baseStatLabel, { color: statColor }]}>
+                              {displayName}:
+                            </Text>
+                            <Text style={styles.baseStatValue}>
+                              {statValue}
+                            </Text>
+                          </View>
+                        );
+                      })}
+                    </View>
+                  </View>
+                )}
+              </View>
+            )}
             {/* Skins Section */}
             {selectedGod.skins && typeof selectedGod.skins === 'object' && Object.keys(selectedGod.skins).length > 0 && (
               <View style={styles.modalSection}>
@@ -3221,6 +3380,105 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontStyle: 'italic',
   },
+  baseStatsContent: {
+    marginTop: 12,
+  },
+  levelSliderContainer: {
+    marginBottom: 20,
+    alignItems: 'center',
+  },
+  levelSliderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    gap: 12,
+    marginBottom: 12,
+  },
+  levelSliderTrack: {
+    flex: 1,
+    height: 8,
+    backgroundColor: '#ffffff',
+    borderRadius: 4,
+    position: 'relative',
+  },
+  levelSliderFill: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: '100%',
+    backgroundColor: '#facc15',
+    borderRadius: 4,
+  },
+  levelSliderThumb: {
+    position: 'absolute',
+    top: -8,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#facc15',
+    borderWidth: 2,
+    borderColor: '#ffffff',
+    transform: [{ translateX: -12 }],
+    shadowColor: '#facc15',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  levelSliderThumbDragging: {
+    transform: [{ translateX: -12 }, { scale: 1.2 }],
+    elevation: 8,
+  },
+  levelSliderButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#1e3a5f',
+    borderWidth: 2,
+    borderColor: '#facc15',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  levelSliderButtonDisabled: {
+    opacity: 0.4,
+    borderColor: '#1e3a5f',
+  },
+  levelSliderButtonText: {
+    color: '#facc15',
+    fontSize: 20,
+    fontWeight: '700',
+    lineHeight: 20,
+  },
+  levelSliderLabel: {
+    color: '#cbd5e1',
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  baseStatsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+  },
+  baseStatItem: {
+    flex: 1,
+    minWidth: '45%',
+    padding: 12,
+    backgroundColor: '#061028',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  baseStatLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  baseStatValue: {
+    color: '#e6eef8',
+    fontSize: 18,
+    fontWeight: '700',
+  },
   trademarkFooter: {
     padding: 1,
     backgroundColor: '#0b1226',
@@ -3239,22 +3497,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#071024',
   },
   godPageHeader: {
-    paddingTop: 20,
-    paddingHorizontal: 20,
-    paddingBottom: 16,
+    paddingTop: 12,
+    paddingHorizontal: 16,
+    paddingBottom: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#1e3a5f',
     backgroundColor: '#0b1226',
+    zIndex: 10,
+    elevation: 5,
+    width: '100%',
+    position: 'relative',
   },
   backButton: {
-    marginBottom: 12,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
+    marginBottom: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
     alignSelf: 'flex-start',
   },
   backButtonText: {
     color: '#1e90ff',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
   },
   godPageTitleContainer: {
@@ -3262,41 +3524,62 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
+  godPageIconContainer: {
+    marginRight: 10,
+  },
+  godPageIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 8,
+  },
+  godPageIconFallback: {
+    width: 44,
+    height: 44,
+    borderRadius: 8,
+    backgroundColor: '#0f1724',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  godPageIconFallbackText: {
+    color: '#e6eef8',
+    fontWeight: '700',
+    fontSize: 20,
+  },
   godPageTitleWrapper: {
     flex: 1,
-    marginLeft: 12,
+    marginLeft: 10,
   },
   godPageTitle: {
     color: '#e6eef8',
-    fontSize: 26,
+    fontSize: 20,
     fontWeight: '800',
-    marginBottom: 8,
+    marginBottom: 4,
     letterSpacing: 0.5,
   },
   godPageSubtext: {
     color: '#cbd5e1',
-    fontSize: 16,
+    fontSize: 13,
     fontWeight: '500',
-    marginTop: 4,
+    marginTop: 2,
     fontStyle: 'italic',
   },
   godPageMetaInfo: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 6,
+    marginTop: 3,
   },
   godPageMetaIcon: {
-    width: 14,
-    height: 14,
-    marginRight: 4,
+    width: 12,
+    height: 12,
+    marginRight: 3,
   },
   godPageMetaText: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '500',
     letterSpacing: 0.3,
   },
   godPageRolesContainer: {
-    marginTop: 8,
+    marginTop: 4,
   },
   godPageRolesLabel: {
     fontSize: 11,
@@ -3308,6 +3591,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
+  },
+  godPageRoleItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 2,
+  },
+  godPageRoleIcon: {
+    width: 12,
+    height: 12,
+    marginRight: 4,
   },
   godPageRoleText: {
     fontSize: 11,
