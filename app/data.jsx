@@ -228,7 +228,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     threeLanes: false,
     jungle: false,
     objectives: false,
-    phases: false,
+    infamy: false,
   });
   const scrollViewRef = useRef(null);
   // Track if we came from builds page (only true if initialSelectedGod was set on mount)
@@ -2195,35 +2195,45 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                     style={styles.detailSectionHeader}
                     onPress={() => setConquestSectionsExpanded({
                       ...conquestSectionsExpanded,
-                      threeLanes: !conquestSectionsExpanded.threeLanes
+                      infamy: !conquestSectionsExpanded.infamy
                     })}
                   >
-                    <Text style={styles.detailSectionTitle}>The Three Lanes</Text>
+                    <Text style={styles.detailSectionTitle}>Infamy System</Text>
                     <Text style={styles.detailSectionToggle}>
-                      {conquestSectionsExpanded.threeLanes ? '▼' : '▶'}
+                      {conquestSectionsExpanded.infamy ? '▼' : '▶'}
                     </Text>
                   </TouchableOpacity>
-                  {conquestSectionsExpanded.threeLanes && (
+                  {conquestSectionsExpanded.infamy && (
                     <>
                       <Text style={styles.detailBodyText}>
-                        Each lane presents a direct path to the enemy base and has a designated role.
+                        The Infamy System is a new way to track your progress in Conquest. It is a 20-level system that you can gain by completing objectives and killing enemies.
                       </Text>
+                      
                       <View style={styles.detailSubsection}>
-                        <Text style={styles.detailSubsectionTitle}>Duo Lane</Text>
+                        <Text style={styles.detailSubsectionTitle}>How Infamy Works</Text>
                         <Text style={styles.detailBodyText}>
-                          The longer of the side lanes, located next to the Gold Fury. Traditionally home to the team's ADC/Carry and Support.
+                          Each team now gains infamy with every jungle creature they defeat. Fire Giant and Gold Fury are excluded. Gaining Infamy levels up jungle camps on your side of the map, yielding better rewards when killing them. Killing camps on your opponent's side also denies the enemy team of that Infamy.
+                        </Text>
+                        <Text style={styles.detailBodyText}>
+                          Each creature falls into a specific category that rewards different amounts of Infamy. Upon reaching a new Infamy level, the jungle camp will increase in Infamy rank and start granting new rewards.
                         </Text>
                       </View>
+
                       <View style={styles.detailSubsection}>
-                        <Text style={styles.detailSubsectionTitle}>Mid Lane</Text>
+                        <Text style={styles.detailSubsectionTitle}>Infamy Rewards:</Text>
                         <Text style={styles.detailBodyText}>
-                          The shortest path between bases, offering quick access to the entire map. The domain of the team's Mid player.
+                          Large creatures grant 40 Infamy.{'\n'}
+                          Small creatures grant 15 Infamy.{'\n'}
+                          Very small creatures grant 5 Infamy.
                         </Text>
                       </View>
+
                       <View style={styles.detailSubsection}>
-                        <Text style={styles.detailSubsectionTitle}>Solo Lane</Text>
+                        <Text style={styles.detailSubsectionTitle}>Current level thresholds are:</Text>
                         <Text style={styles.detailBodyText}>
-                          The shorter side lane, located near the Fire Giant. A proving ground for the team's Solo player or other self-sufficient gods.
+                          Level 1: 140 Infamy{'\n'}
+                          Level 2: 490 Infamy{'\n'}
+                          Level 3: 910 Infamy
                         </Text>
                       </View>
                     </>
@@ -2238,15 +2248,104 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                       jungle: !conquestSectionsExpanded.jungle
                     })}
                   >
-                    <Text style={styles.detailSectionTitle}>The Jungle</Text>
+                    <Text style={styles.detailSectionTitle}>Moonlight Phase</Text>
                     <Text style={styles.detailSectionToggle}>
                       {conquestSectionsExpanded.jungle ? '▼' : '▶'}
                     </Text>
                   </TouchableOpacity>
                   {conquestSectionsExpanded.jungle && (
-                    <Text style={styles.detailBodyText}>
-                      The vast wilderness between the lanes. The Jungle is filled with neutral monster camps that provide Gold, Experience, and unique buffs. The team's Jungler roams this territory, ambushing enemies and securing objectives. Defeating specific jungle camps (Red Buff, Yellow Buff, etc) will level up that specific type of jungle camp. By defeating them on either side of the jungle, you increase the power of your own jungle camps.
-                    </Text>
+                    <>
+                      <Text style={styles.detailBodyText}>
+                        Conquest now alternates between "normal" Conquest and a special phase called the Moonlight Phase at regular intervals during the match.
+                      </Text>
+                      <Text style={styles.detailBodyText}>
+                        The Moonlight Phase features visual changes to the map, plus unique objectives and rewards that only spawn during this phase.
+                      </Text>
+                      <Text style={styles.detailBodyText}>
+                        Matches start in the normal phase until the 6 minute mark when the map transitions to the Moonlight Phase. The Moonlight Phase lasts for 3 minutes before returning to normal. This cycle repeats until the end of the match.
+                      </Text>
+
+                      <View style={styles.detailSubsection}>
+                        <Text style={styles.detailSubsectionTitle}>Moonlight Phase</Text>
+                        <Text style={styles.detailBodyText}>
+                          During the Moonlight phase, each team competes to gather Moonlight Shards. For every Shard your team collects, each team member gets +1 Gold at the end of the phase.
+                        </Text>
+                        <Text style={styles.detailBodyText}>
+                          If you collect more Shards than the enemy team, you'll also spawn a single wave of Naga lane pushers in all 3 lanes.
+                        </Text>
+                        <Text style={styles.detailBodyText}>
+                          Furthermore, if your team reaches the maximum number of 100 Shards before the phase ends, your team will be rewarded with a consumable item: Ritual of the Full Moon.
+                        </Text>
+                      </View>
+
+                      <View style={styles.detailSubsection}>
+                        <Text style={styles.detailSubsectionTitle}>Moonlight Shards</Text>
+                        <Text style={styles.detailBodyText}>
+                          Each Shard picked up adds +1 to your team's total Moonlight Shard count. Shards can be collected from 3 different sources:
+                        </Text>
+                        <Text style={styles.detailBodyText}>
+                          • By destroying Moonlight Crystals that spawn during the phase{'\n'}
+                          {'  '}Drops up to 5 Shards{'\n'}
+                          • By slaying enemy Gods{'\n'}
+                          {'  '}Grants 5 Shards{'\n'}
+                          • By controlling the Moonlight Ritual site at the center of the map{'\n'}
+                          {'  '}Drops 1 Shard per second while under your control, or faster with more allied Gods at the site
+                        </Text>
+                        <Text style={styles.detailBodyText}>
+                          On Pickup: Rewards +12 XP and heals for 1.5% Max Health. (Shards picked up from the Ritual site do not grant the healing portion)
+                        </Text>
+                        <Text style={styles.detailBodyText}>
+                          The number of Shards you personally collect is displayed on the buff bar, and determines the strength of the Ritual of the Full Moon's buff effect.
+                        </Text>
+                      </View>
+
+                      <View style={styles.detailSubsection}>
+                        <Text style={styles.detailSubsectionTitle}>Moonlight Crystals</Text>
+                        <Text style={styles.detailBodyText}>
+                          Spawn at various locations across the map at the start of the Moonlight phase. These can be attacked or interacted with to drop up to 5 Shards. Respawn 30 seconds after destroyed.
+                        </Text>
+                      </View>
+
+                      <View style={styles.detailSubsection}>
+                        <Text style={styles.detailSubsectionTitle}>Moonlight Ritual Site</Text>
+                        <Text style={styles.detailBodyText}>
+                          This capture point at the center of the map unlocks 90 seconds into the Moonlight Phase. Gain control over the site by standing in it with no enemy Gods present. While under your control, the Ritual site rains down a constant stream of Moonlight Shards.
+                        </Text>
+                      </View>
+
+                      <View style={styles.detailSubsection}>
+                        <Text style={styles.detailSubsectionTitle}>Naga Lane Pushers</Text>
+                        <Text style={styles.detailBodyText}>
+                          Spawn with the next minion wave at the end of the Moonlight Phase for the team that collected more Moonlight Shards. The minions in this wave are Champion Minions with +10% Damage Mitigation.
+                        </Text>
+                        <Text style={styles.detailBodyText}>
+                          Stats (base + per Level scaling every 3 minutes):{'\n'}
+                          Max Health: 2000 (+250){'\n'}
+                          Strength: 40 (+8){'\n'}
+                          Physical Protection: 30 (+3){'\n'}
+                          Magical Protection: 20 (+3){'\n'}
+                          XP Reward: 20 (+3){'\n'}
+                          Gold Reward: 10 (+1)
+                        </Text>
+                      </View>
+
+                      <View style={styles.detailSubsection}>
+                        <Text style={styles.detailSubsectionTitle}>Ritual of the Full Moon</Text>
+                        <Text style={styles.detailBodyText}>
+                          This reward pickup spawns at the Ritual Site for the team that reaches 100 Shards. Can be stolen after 10s.
+                        </Text>
+                        <Text style={styles.detailBodyText}>
+                          Picking it up grants you the Ritual of the Full Moon consumable item, which can be used to activate a team Ritual effect for 30s.
+                        </Text>
+                        <Text style={styles.detailBodyText}>
+                          On Consume:{'\n'}
+                          • For allies: Convert all Shards personally carried by your teammates into a Movement Speed buff for 30s. Grants +5% Movement Speed plus more for each Shard{'\n'}
+                          • Reveal all enemy Gods for 5s and summon a Star Strike at their location{'\n'}
+                          • Star Strikes deal 0.75% of Max Health per victim's level as Magical Damage after a 0.5s warm-up{'\n'}
+                          • Gods hit by Star Strikes are revealed for an additional 5s
+                        </Text>
+                      </View>
+                    </>
                   )}
                 </View>
 
@@ -2341,45 +2440,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                   )}
                 </View>
 
-                <View style={styles.detailSection}>
-                  <TouchableOpacity
-                    style={styles.detailSectionHeader}
-                    onPress={() => setConquestSectionsExpanded({
-                      ...conquestSectionsExpanded,
-                      phases: !conquestSectionsExpanded.phases
-                    })}
-                  >
-                    <Text style={styles.detailSectionTitle}>The Flow of Battle: Phases of the Game</Text>
-                    <Text style={styles.detailSectionToggle}>
-                      {conquestSectionsExpanded.phases ? '▼' : '▶'}
-                    </Text>
-                  </TouchableOpacity>
-                  {conquestSectionsExpanded.phases && (
-                    <>
-                      <Text style={styles.detailBodyText}>
-                        A game of Conquest evolves over time, with team priorities shifting as gods become more powerful.
-                      </Text>
-                      <View style={styles.detailSubsection}>
-                        <Text style={styles.detailSubsectionTitle}>Early Game (Laning Phase)</Text>
-                        <Text style={styles.detailBodyText}>
-                          Focus on farming minions in your lane for Gold and XP. Be wary of ganks from the enemy Jungler and look for opportunities to get an early kill.
-                        </Text>
-                      </View>
-                      <View style={styles.detailSubsection}>
-                        <Text style={styles.detailSubsectionTitle}>Mid Game (Objective Focus)</Text>
-                        <Text style={styles.detailBodyText}>
-                          Teams begin to group up to contest major objectives like the Gold Fury and Towers. Map control and vision become critical.
-                        </Text>
-                      </View>
-                      <View style={styles.detailSubsection}>
-                        <Text style={styles.detailSubsectionTitle}>Late Game (Team Fights & Sieges)</Text>
-                        <Text style={styles.detailBodyText}>
-                          With gods at full power, massive 5v5 team fights decide the game. A single victorious fight can lead to securing the Fire Giant and making the final push to destroy the enemy Titan.
-                        </Text>
-                      </View>
-                    </>
-                  )}
-                </View>
+               
 
                 <View style={styles.detailSection}>
                   <Text style={styles.detailSectionTitle}>Interactive Map</Text>
