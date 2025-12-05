@@ -18,7 +18,6 @@ import PrivacyPage from './privacy';
 // EASY CONFIGURATION - Just update these values when a new patch releases!
 // ============================================================================
 
-// App Version Configuration - Update this when pushing a new version
 const APP_VERSION_CONFIG = {
   currentVersion: '1.3', // Current app version
   previousVersion: '1.2', // Previous version (for comparison)
@@ -27,7 +26,7 @@ const APP_VERSION_CONFIG = {
     'Added role icons next to role names on god pages',
     'Improved god page header design and responsiveness',
     'Fixed slider interaction for better user experience',
-  ], // Add your update notes here
+  ], 
 };
 
 const NEWS_CONFIG = {
@@ -678,6 +677,120 @@ const styles = StyleSheet.create({
   updateSectionTitle: {
     fontSize: 20,
     marginBottom: 10,
+  },
+  viewUpdateNotesButton: {
+    marginTop: 12,
+    padding: 12,
+    backgroundColor: '#0f1724',
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    alignItems: 'center',
+  },
+  viewUpdateNotesButtonText: {
+    color: '#7dd3fc',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  // Update Popup Modal Styles
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  updatePopupContainer: {
+    backgroundColor: '#0b1226',
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#1e90ff',
+    width: '100%',
+    maxWidth: 400,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 10,
+  },
+  updatePopupHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+    paddingBottom: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1e3a5f',
+  },
+  updatePopupTitle: {
+    color: '#7dd3fc',
+    fontSize: 24,
+    fontWeight: '700',
+  },
+  updatePopupCloseButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#1e3a5f',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  updatePopupCloseText: {
+    color: '#e6eef8',
+    fontSize: 18,
+    fontWeight: '700',
+    lineHeight: 20,
+  },
+  updatePopupContent: {
+    marginBottom: 20,
+  },
+  updatePopupVersion: {
+    color: '#1e90ff',
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  updateNotesContainer: {
+    marginTop: 8,
+  },
+  updateNotesTitle: {
+    color: '#7dd3fc',
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 12,
+  },
+  updateNoteItem: {
+    flexDirection: 'row',
+    marginBottom: 8,
+    paddingLeft: 4,
+  },
+  updateNoteBullet: {
+    color: '#1e90ff',
+    fontSize: 16,
+    fontWeight: '700',
+    marginRight: 8,
+    width: 20,
+  },
+  updateNoteText: {
+    color: '#cbd5e1',
+    fontSize: 14,
+    lineHeight: 20,
+    flex: 1,
+  },
+  updatePopupButton: {
+    backgroundColor: '#1e90ff',
+    padding: 14,
+    borderRadius: 8,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#1e90ff',
+  },
+  updatePopupButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
   },
 });
 
