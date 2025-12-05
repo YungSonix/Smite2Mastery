@@ -19,9 +19,10 @@ import PrivacyPage from './privacy';
 // ============================================================================
 
 const APP_VERSION_CONFIG = {
-  currentVersion: '1.3', // Current app version
-  previousVersion: '1.2', // Previous version (for comparison)
+  currentVersion: '1.4', // Current app version
+  previousVersion: '1.3', // Previous version (for comparison)
   updateNotes: [
+    'Added more updated information about Conquest',
     'Added base stats section to god pages with level slider',
     'Added role icons next to role names on god pages',
     'Improved god page header design and responsiveness',
