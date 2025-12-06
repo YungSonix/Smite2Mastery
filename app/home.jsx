@@ -60,6 +60,7 @@ const NEWS_CONFIG = {
 // 4. Replace the BUG_REPORT_ENDPOINT below with your Formspree endpoint
 // Formspree will send emails directly to your configured email address
 const BUG_REPORT_ENDPOINT = 'https://formspree.io/f/xqarlgol'; // Replace with your Formspree endpoint
+const APP_REVIEW_ENDPOINT = 'https://formspree.io/f/meoyzvyg'; // App Review Form endpoint
 // ============================================================================
 
 export default function HomePage() {
@@ -82,6 +83,18 @@ export default function HomePage() {
     additional: '',
   });
   const [submittingBugReport, setSubmittingBugReport] = useState(false);
+  const [showAppReviewModal, setShowAppReviewModal] = useState(false);
+  const [appReviewData, setAppReviewData] = useState({
+    iphoneModel: '',
+    confusing: '',
+    likeMost: '',
+    recommendScale: 5,
+    loadingIssues: '',
+    speedScale: 3,
+    wishFeature: '',
+    otherApps: '',
+  });
+  const [submittingAppReview, setSubmittingAppReview] = useState(false);
 
   // Get update information from expo-updates
   const {
@@ -229,18 +242,101 @@ export default function HomePage() {
     setShowBugReportModal(true);
   };
 
-  const openAppReviewForm = async () => {
-    const APP_REVIEW_FORM_URL = 'https://forms.gle/HfHBQJFhggJPtZh58';
+  const openAppReviewForm = () => {
+    setShowAppReviewModal(true);
+  };
+
+  const resetAppReviewForm = () => {
+    setAppReviewData({
+      iphoneModel: '',
+      confusing: '',
+      likeMost: '',
+      recommendScale: 5,
+      loadingIssues: '',
+      speedScale: 3,
+      wishFeature: '',
+      otherApps: '',
+    });
+  };
+
+  const submitAppReview = async () => {
+    // Validate required fields
+    if (!appReviewData.iphoneModel) {
+      Alert.alert('Required Field', 'Please select your iPhone model.');
+      return;
+    }
+    if (!appReviewData.confusing.trim()) {
+      Alert.alert('Required Field', 'Please answer if anything felt confusing.');
+      return;
+    }
+    if (!appReviewData.likeMost.trim()) {
+      Alert.alert('Required Field', 'Please tell us what you like most about the app.');
+      return;
+    }
+    if (!appReviewData.loadingIssues.trim()) {
+      Alert.alert('Required Field', 'Please answer if you had any loading issues.');
+      return;
+    }
+    if (!appReviewData.wishFeature.trim()) {
+      Alert.alert('Required Field', 'Please tell us one feature you wish the app had.');
+      return;
+    }
+    if (!appReviewData.otherApps.trim()) {
+      Alert.alert('Required Field', 'Please answer about other apps or sites you use.');
+      return;
+    }
+
+    setSubmittingAppReview(true);
+
     try {
-      const supported = await Linking.canOpenURL(APP_REVIEW_FORM_URL);
-      if (supported) {
-        await Linking.openURL(APP_REVIEW_FORM_URL);
+      const formData = {
+        _subject: `App Review Feedback - SMITE 2 App v${APP_VERSION_CONFIG.currentVersion}`,
+        _format: 'plain',
+        'iPhone Model': appReviewData.iphoneModel,
+        'Was there anything confusing?': appReviewData.confusing.trim(),
+        'What do you like most?': appReviewData.likeMost.trim(),
+        'Recommendation Scale (1-10)': appReviewData.recommendScale,
+        'Loading Issues': appReviewData.loadingIssues.trim(),
+        'Speed Scale (1-5)': appReviewData.speedScale,
+        'One feature you wish the app had': appReviewData.wishFeature.trim(),
+        'Other apps or sites used': appReviewData.otherApps.trim(),
+      };
+
+      const response = await fetch(APP_REVIEW_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        Alert.alert(
+          'Thank You!',
+          'Your feedback has been submitted successfully. We really appreciate your input!',
+          [
+            {
+              text: 'OK',
+              onPress: () => {
+                setShowAppReviewModal(false);
+                resetAppReviewForm();
+              },
+            },
+          ]
+        );
       } else {
-        Alert.alert('Error', 'Unable to open the form. Please check your internet connection.');
+        throw new Error('Submission failed');
       }
     } catch (error) {
-      console.error('Error opening form:', error);
-      Alert.alert('Error', 'Unable to open the form. Please try again.');
+      console.error('Error submitting app review:', error);
+      Alert.alert(
+        'Submission Error',
+        'Unable to submit feedback. Please check your internet connection and try again.',
+        [{ text: 'OK' }]
+      );
+    } finally {
+      setSubmittingAppReview(false);
     }
   };
 
@@ -509,6 +605,218 @@ export default function HomePage() {
                   <ActivityIndicator size="small" color="#ffffff" />
                 ) : (
                   <Text style={styles.bugReportSubmitButtonText}>Submit Report</Text>
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* App Review Modal */}
+      <Modal
+        visible={showAppReviewModal}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => {
+          setShowAppReviewModal(false);
+          resetAppReviewForm();
+        }}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.appReviewModalContainer}>
+            <View style={styles.appReviewModalHeader}>
+              <Text style={styles.appReviewModalTitle}>App Review Feedback</Text>
+              <TouchableOpacity
+                style={styles.appReviewModalCloseButton}
+                onPress={() => {
+                  setShowAppReviewModal(false);
+                  resetAppReviewForm();
+                }}
+              >
+                <Text style={styles.appReviewModalCloseText}>✕</Text>
+              </TouchableOpacity>
+            </View>
+            <ScrollView style={styles.appReviewModalContent} showsVerticalScrollIndicator={true}>
+              <Text style={styles.appReviewFieldLabel}>
+                1. What iPhone do you currently have? <Text style={styles.requiredStar}>*</Text>
+              </Text>
+              <View style={styles.appReviewDropdown}>
+                <TouchableOpacity
+                  style={styles.appReviewDropdownButton}
+                  onPress={() => {
+                    Alert.alert(
+                      'Select iPhone Model',
+                      '',
+                      [
+                        { text: 'Cancel', style: 'cancel' },
+                        { text: 'N/A using browser instead', onPress: () => setAppReviewData({ ...appReviewData, iphoneModel: 'N/A using browser instead' }) },
+                        { text: '12 (mini, max, pro, or pro max)', onPress: () => setAppReviewData({ ...appReviewData, iphoneModel: '12 (mini, max, pro, or pro max)' }) },
+                        { text: '13 (mini, max, pro, or pro max)', onPress: () => setAppReviewData({ ...appReviewData, iphoneModel: '13 (mini, max, pro, or pro max)' }) },
+                        { text: '14 (mini, max, pro, or pro max)', onPress: () => setAppReviewData({ ...appReviewData, iphoneModel: '14 (mini, max, pro, or pro max)' }) },
+                        { text: '15 (mini, max, pro, or pro max)', onPress: () => setAppReviewData({ ...appReviewData, iphoneModel: '15 (mini, max, pro, or pro max)' }) },
+                        { text: '16 (mini, max, pro, or pro max)', onPress: () => setAppReviewData({ ...appReviewData, iphoneModel: '16 (mini, max, pro, or pro max)' }) },
+                        { text: '17 (mini, max, pro, or pro max)', onPress: () => setAppReviewData({ ...appReviewData, iphoneModel: '17 (mini, max, pro, or pro max)' }) },
+                      ]
+                    );
+                  }}
+                >
+                  <Text style={[styles.appReviewDropdownText, !appReviewData.iphoneModel && styles.appReviewPlaceholder]}>
+                    {appReviewData.iphoneModel || 'Select iPhone model...'}
+                  </Text>
+                  <Text style={styles.appReviewDropdownArrow}>▼</Text>
+                </TouchableOpacity>
+              </View>
+
+              <Text style={styles.appReviewFieldLabel}>
+                2. Was there anything that felt confusing to you as a user? <Text style={styles.requiredStar}>*</Text>
+              </Text>
+              <TextInput
+                style={[styles.appReviewInput, styles.appReviewTextArea]}
+                placeholder="Describe anything that felt confusing..."
+                placeholderTextColor="#64748b"
+                value={appReviewData.confusing}
+                onChangeText={(text) => setAppReviewData({ ...appReviewData, confusing: text })}
+                multiline
+                numberOfLines={4}
+                textAlignVertical="top"
+              />
+
+              <Text style={styles.appReviewFieldLabel}>
+                3. What do you like most about this app? <Text style={styles.requiredStar}>*</Text>
+              </Text>
+              <TextInput
+                style={[styles.appReviewInput, styles.appReviewTextArea]}
+                placeholder="Tell us what you like most..."
+                placeholderTextColor="#64748b"
+                value={appReviewData.likeMost}
+                onChangeText={(text) => setAppReviewData({ ...appReviewData, likeMost: text })}
+                multiline
+                numberOfLines={4}
+                textAlignVertical="top"
+              />
+
+              <Text style={styles.appReviewFieldLabel}>
+                4. On a scale of 1 to 10, how likely are you to recommend this app? <Text style={styles.requiredStar}>*</Text>
+              </Text>
+              <View style={styles.appReviewScaleContainer}>
+                <Text style={styles.appReviewScaleLabel}>Unlikely</Text>
+                <View style={styles.appReviewScaleButtons}>
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                    <TouchableOpacity
+                      key={num}
+                      style={[
+                        styles.appReviewScaleButton,
+                        appReviewData.recommendScale === num && styles.appReviewScaleButtonActive,
+                      ]}
+                      onPress={() => setAppReviewData({ ...appReviewData, recommendScale: num })}
+                    >
+                      <Text
+                        style={[
+                          styles.appReviewScaleButtonText,
+                          appReviewData.recommendScale === num && styles.appReviewScaleButtonTextActive,
+                        ]}
+                      >
+                        {num}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+                <Text style={styles.appReviewScaleLabel}>Very Likely</Text>
+              </View>
+              <Text style={styles.appReviewScaleValue}>Selected: {appReviewData.recommendScale}/10</Text>
+
+              <Text style={styles.appReviewFieldLabel}>
+                5. Did you have any issues loading any information? (Whether Images or text) <Text style={styles.requiredStar}>*</Text>
+              </Text>
+              <TextInput
+                style={[styles.appReviewInput, styles.appReviewTextArea]}
+                placeholder="Describe any loading issues..."
+                placeholderTextColor="#64748b"
+                value={appReviewData.loadingIssues}
+                onChangeText={(text) => setAppReviewData({ ...appReviewData, loadingIssues: text })}
+                multiline
+                numberOfLines={4}
+                textAlignVertical="top"
+              />
+
+              <Text style={styles.appReviewFieldLabel}>
+                6. Does the app feel fast or slow when you use it? (Any input lag) <Text style={styles.requiredStar}>*</Text>
+              </Text>
+              <View style={styles.appReviewScaleContainer}>
+                <Text style={styles.appReviewScaleLabel}>Slow</Text>
+                <View style={styles.appReviewScaleButtons}>
+                  {[1, 2, 3, 4, 5].map((num) => (
+                    <TouchableOpacity
+                      key={num}
+                      style={[
+                        styles.appReviewScaleButton,
+                        appReviewData.speedScale === num && styles.appReviewScaleButtonActive,
+                      ]}
+                      onPress={() => setAppReviewData({ ...appReviewData, speedScale: num })}
+                    >
+                      <Text
+                        style={[
+                          styles.appReviewScaleButtonText,
+                          appReviewData.speedScale === num && styles.appReviewScaleButtonTextActive,
+                        ]}
+                      >
+                        {num}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+                <Text style={styles.appReviewScaleLabel}>Fast</Text>
+              </View>
+              <Text style={styles.appReviewScaleValue}>Selected: {appReviewData.speedScale}/5</Text>
+
+              <Text style={styles.appReviewFieldLabel}>
+                7. What's ONE feature you wish my app had? <Text style={styles.requiredStar}>*</Text>
+              </Text>
+              <TextInput
+                style={[styles.appReviewInput, styles.appReviewTextArea]}
+                placeholder="Tell us one feature you'd like to see..."
+                placeholderTextColor="#64748b"
+                value={appReviewData.wishFeature}
+                onChangeText={(text) => setAppReviewData({ ...appReviewData, wishFeature: text })}
+                multiline
+                numberOfLines={3}
+                textAlignVertical="top"
+              />
+
+              <Text style={styles.appReviewFieldLabel}>
+                8. What other apps or sites do you use to get smite 2 information and what do you feel they do better? <Text style={styles.requiredStar}>*</Text>
+              </Text>
+              <TextInput
+                style={[styles.appReviewInput, styles.appReviewTextArea]}
+                placeholder="Share other apps or sites you use..."
+                placeholderTextColor="#64748b"
+                value={appReviewData.otherApps}
+                onChangeText={(text) => setAppReviewData({ ...appReviewData, otherApps: text })}
+                multiline
+                numberOfLines={4}
+                textAlignVertical="top"
+              />
+            </ScrollView>
+            <View style={styles.appReviewModalFooter}>
+              <TouchableOpacity
+                style={[styles.appReviewCancelButton, submittingAppReview && styles.appReviewButtonDisabled]}
+                onPress={() => {
+                  setShowAppReviewModal(false);
+                  resetAppReviewForm();
+                }}
+                disabled={submittingAppReview}
+              >
+                <Text style={styles.appReviewCancelButtonText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.appReviewSubmitButton, submittingAppReview && styles.appReviewButtonDisabled]}
+                onPress={submitAppReview}
+                disabled={submittingAppReview}
+              >
+                {submittingAppReview ? (
+                  <ActivityIndicator size="small" color="#ffffff" />
+                ) : (
+                  <Text style={styles.appReviewSubmitButtonText}>Submit Feedback</Text>
                 )}
               </TouchableOpacity>
             </View>
@@ -1123,13 +1431,13 @@ const styles = StyleSheet.create({
   },
   // App Review Form Button Styles
   appReviewButton: {
-    backgroundColor: '#f59e0b',
+    backgroundColor: '#10b981',
     padding: 16,
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 12,
     borderWidth: 1,
-    borderColor: '#f59e0b',
+    borderColor: '#10b981',
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 8,
@@ -1265,6 +1573,193 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   bugReportButtonDisabled: {
+    opacity: 0.6,
+  },
+  // App Review Modal Styles
+  appReviewModalContainer: {
+    backgroundColor: '#0b1226',
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#10b981',
+    width: '95%',
+    maxWidth: 600,
+    height: '90%',
+    maxHeight: '90%',
+    margin: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 10,
+    flexDirection: 'column',
+  },
+  appReviewModalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 20,
+    paddingBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1e3a5f',
+  },
+  appReviewModalTitle: {
+    color: '#10b981',
+    fontSize: 22,
+    fontWeight: '700',
+    flex: 1,
+  },
+  appReviewModalCloseButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#1e3a5f',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 12,
+  },
+  appReviewModalCloseText: {
+    color: '#e6eef8',
+    fontSize: 18,
+    fontWeight: '700',
+    lineHeight: 20,
+  },
+  appReviewModalContent: {
+    flex: 1,
+    padding: 20,
+    paddingBottom: 10,
+  },
+  appReviewFieldLabel: {
+    color: '#7dd3fc',
+    fontSize: 14,
+    fontWeight: '600',
+    marginBottom: 8,
+    marginTop: 16,
+  },
+  appReviewInput: {
+    backgroundColor: '#0f1724',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    borderRadius: 8,
+    padding: 12,
+    color: '#e6eef8',
+    fontSize: 14,
+    marginBottom: 4,
+  },
+  appReviewTextArea: {
+    minHeight: 100,
+    paddingTop: 12,
+  },
+  appReviewDropdown: {
+    marginBottom: 4,
+  },
+  appReviewDropdownButton: {
+    backgroundColor: '#0f1724',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    borderRadius: 8,
+    padding: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  appReviewDropdownText: {
+    color: '#e6eef8',
+    fontSize: 14,
+    flex: 1,
+  },
+  appReviewPlaceholder: {
+    color: '#64748b',
+  },
+  appReviewDropdownArrow: {
+    color: '#7dd3fc',
+    fontSize: 12,
+    marginLeft: 8,
+  },
+  appReviewScaleContainer: {
+    marginBottom: 8,
+  },
+  appReviewScaleButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 8,
+    gap: 1,
+  },
+  appReviewScaleButton: {
+    flex: 1,
+    maxWidth: 30,
+    backgroundColor: '#0f1724',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    borderRadius: 4,
+    padding: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 28,
+  },
+  appReviewScaleButtonActive: {
+    backgroundColor: '#10b981',
+    borderColor: '#10b981',
+  },
+  appReviewScaleButtonText: {
+    color: '#cbd5e1',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  appReviewScaleButtonTextActive: {
+    color: '#ffffff',
+    fontWeight: '700',
+  },
+  appReviewScaleLabel: {
+    color: '#94a3b8',
+    fontSize: 12,
+    textAlign: 'center',
+  },
+  appReviewScaleValue: {
+    color: '#7dd3fc',
+    fontSize: 12,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginTop: 4,
+  },
+  appReviewModalFooter: {
+    flexDirection: 'row',
+    padding: 20,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#1e3a5f',
+    gap: 12,
+  },
+  appReviewCancelButton: {
+    flex: 1,
+    backgroundColor: '#1e3a5f',
+    padding: 14,
+    borderRadius: 8,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  appReviewCancelButtonText: {
+    color: '#cbd5e1',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  appReviewSubmitButton: {
+    flex: 1,
+    backgroundColor: '#10b981',
+    padding: 14,
+    borderRadius: 8,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#10b981',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  appReviewSubmitButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  appReviewButtonDisabled: {
     opacity: 0.6,
   },
 });
