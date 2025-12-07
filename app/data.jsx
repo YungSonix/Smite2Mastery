@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   TextInput,
   ScrollView,
   TouchableOpacity,
@@ -12,6 +11,7 @@ import {
   ActivityIndicator,
   InteractionManager,
 } from 'react-native';
+import { Image } from 'expo-image';
 // Lazy load builds.json to prevent startup crash
 let localBuilds = null;
 import { getLocalItemIcon, getLocalGodAsset, getSkinImage } from './localIcons';
@@ -215,25 +215,105 @@ const gameModes = [
   },
 ];
 
+// Gameplay Mechanics data structure - SMITE 2 specific
+const gameplayMechanics = {
+  subcategories: [
+    { id: 'combat-damage', name: 'Combat & Damage', count: 9 },
+    { id: 'statistics', name: 'Statistics', count: 4 },
+    { id: 'health-healing', name: 'Health & Healing', count: 6 },
+    { id: 'buffs-debuffs', name: 'Buffs & Debuffs', count: 2 },
+    { id: 'crowd-control', name: 'Crowd Control', count: 15 },
+    { id: 'god-abilities', name: 'God Abilities', count: 12 },
+    { id: 'movement', name: 'Movement', count: 1 },
+    { id: 'structures', name: 'Structures', count: 4 },
+    { id: 'minions', name: 'Minions', count: 1 },
+    { id: 'jungle', name: 'Jungle', count: 2 },
+    { id: 'ui-interface', name: 'UI & Interface', count: 2 },
+    { id: 'economy', name: 'Economy & Progression', count: 6 },
+    { id: 'game-modes', name: 'Game Modes', count: 6 },
+    { id: 'player-systems', name: 'Player Systems', count: 13 },
+    { id: 'cosmetics', name: 'Cosmetics', count: 6 },
+    { id: 'terminology', name: 'Terminology', count: 80 },
+    { id: 'items-system', name: 'Items System', count: 8 },
+  ],
+  mechanics: [
+    // Mechanics will be added here
+  ]
+};
+
 export default function DataPage({ initialSelectedGod = null, initialExpandAbilities = false, onBackToBuilds = null }) {
   const [builds, setBuilds] = useState(null);
   const [dataLoading, setDataLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedTab, setSelectedTab] = useState('gods'); // 'gods', 'items', or 'gamemodes'
+  const [selectedTab, setSelectedTab] = useState('gods'); // 'gods', 'items', 'gamemodes', or 'mechanics'
   const [selectedGod, setSelectedGod] = useState(initialSelectedGod);
   const [selectedGameMode, setSelectedGameMode] = useState(null);
+  const [selectedMechanic, setSelectedMechanic] = useState(null);
+  const [selectedMechanicCategory, setSelectedMechanicCategory] = useState(null);
+  const [mechanicCategoryDropdownVisible, setMechanicCategoryDropdownVisible] = useState(false);
   const [gamemodesDescriptionExpanded, setGamemodesDescriptionExpanded] = useState(false);
   const [conquestSectionsExpanded, setConquestSectionsExpanded] = useState({
     battleground: false,
     threeLanes: false,
-    jungle: false,
+    jungleCamps: false,
     objectives: false,
     infamy: false,
   });
+  const [campLevel, setCampLevel] = useState(0);
+  const [expandedCamps, setExpandedCamps] = useState({});
+  const [minionLevel, setMinionLevel] = useState(0);
+  const [expandedMinions, setExpandedMinions] = useState({});
+  const [bossLevel, setBossLevel] = useState(0);
+  const [expandedBosses, setExpandedBosses] = useState({});
   const scrollViewRef = useRef(null);
   // Track if we came from builds page (only true if initialSelectedGod was set on mount)
   const [cameFromBuilds] = useState(!!initialSelectedGod && !!onBackToBuilds);
   
+  // Reset tab and related state when component mounts or when navigating back
+  useEffect(() => {
+    // Only reset if we're not coming from builds page with a specific god
+    if (!initialSelectedGod) {
+      setSelectedTab('gods');
+      setSelectedGod(null);
+      setSelectedItem(null);
+      setSelectedGameMode(null);
+      setSelectedMechanic(null);
+      setSearchQuery('');
+      setSelectedPantheon(null);
+      setPantheonDropdownVisible(false);
+      setSelectedStat(null);
+      setStatDropdownVisible(false);
+      setSelectedTier(null);
+      setTierDropdownVisible(false);
+      setSkinsExpanded(false);
+      setSelectedSkin(null);
+      setLoreExpanded(false);
+      setAbilitiesExpanded(false);
+      setAspectExpanded(false);
+      setPassiveExpanded(false);
+      setSelectedAbility(null);
+      setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
+      setBaseStatsExpanded(false);
+      setGodLevel(1);
+      setGamemodesDescriptionExpanded(false);
+      setSelectedMechanicCategory(null);
+      setMechanicCategoryDropdownVisible(false);
+      setConquestSectionsExpanded({
+        battleground: false,
+        threeLanes: false,
+        jungleCamps: false,
+        objectives: false,
+        infamy: false,
+      });
+      setCampLevel(0);
+      setExpandedCamps({});
+      setMinionLevel(0);
+      setExpandedMinions({});
+      setBossLevel(0);
+      setExpandedBosses({});
+    }
+  }, []);
+
   // Lazy load the builds data after the UI has rendered
   useEffect(() => {
     let isMounted = true;
@@ -278,12 +358,22 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     if (selectedGod) {
       setGodLevel(1);
       setBaseStatsExpanded(false);
+      // Close all dropdowns when a god is selected
+      setPantheonDropdownVisible(false);
+      setStatDropdownVisible(false);
+      setTierDropdownVisible(false);
+      setMechanicCategoryDropdownVisible(false);
     }
   }, [selectedGod]);
 
   // Scroll to top when game mode is selected
   useEffect(() => {
     if (selectedGameMode && selectedTab === 'gamemodes') {
+      // Close all dropdowns when a game mode is selected
+      setPantheonDropdownVisible(false);
+      setStatDropdownVisible(false);
+      setTierDropdownVisible(false);
+      setMechanicCategoryDropdownVisible(false);
       // Use multiple timeouts to ensure scroll happens after content is rendered
       setTimeout(() => {
         scrollViewRef.current?.scrollTo({ y: 0, animated: false });
@@ -293,6 +383,37 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
       }, 200);
     }
   }, [selectedGameMode, selectedTab]);
+
+  // Scroll to top when mechanic is selected
+  useEffect(() => {
+    if (selectedMechanic && selectedTab === 'mechanics') {
+      // Close all dropdowns when a mechanic is selected
+      setPantheonDropdownVisible(false);
+      setStatDropdownVisible(false);
+      setTierDropdownVisible(false);
+      setMechanicCategoryDropdownVisible(false);
+      // Use multiple timeouts to ensure scroll happens after content is rendered
+      setTimeout(() => {
+        scrollViewRef.current?.scrollTo({ y: 0, animated: false });
+      }, 50);
+      setTimeout(() => {
+        scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+      }, 200);
+    }
+  }, [selectedMechanic, selectedTab]);
+
+  // Scroll to top when tab changes
+  useEffect(() => {
+    // Scroll to top when switching tabs (but not when selecting items/gods/mechanics)
+    if (!selectedGod && !selectedItem && !selectedMechanic && !selectedGameMode) {
+      setTimeout(() => {
+        scrollViewRef.current?.scrollTo({ y: 0, animated: false });
+      }, 50);
+      setTimeout(() => {
+        scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+      }, 100);
+    }
+  }, [selectedTab, selectedGod, selectedItem, selectedMechanic, selectedGameMode]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedAbility, setSelectedAbility] = useState(null); // { abilityKey, ability, abilityName }
   const [skinsExpanded, setSkinsExpanded] = useState(false);
@@ -307,6 +428,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
   const [sliderTrackWidth, setSliderTrackWidth] = useState(300);
   const [selectedPantheon, setSelectedPantheon] = useState(null);
   const [pantheonDropdownVisible, setPantheonDropdownVisible] = useState(false);
+  const [showGodSkins, setShowGodSkins] = useState(false); // Toggle between icons and base skins
   const [selectedStat, setSelectedStat] = useState(null);
   const [statDropdownVisible, setStatDropdownVisible] = useState(false);
   const [selectedTier, setSelectedTier] = useState(null);
@@ -387,7 +509,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
       });
     } else {
       // Show only first 20 when no search (but still respect pantheon filter)
-      result = result.slice(0, 20);
+      result = result.slice(0, 80);
     }
     
     return result;
@@ -453,17 +575,43 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     }
     
     // Apply search filter
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
+    if (searchQuery && searchQuery.trim().length > 0) {
+      const query = searchQuery.toLowerCase().trim();
       result = result.filter((item) => {
         if (!item || typeof item !== 'object') return false;
-        const name = (item.name || '').toString().toLowerCase();
-        const internalName = (item.internalName || '').toString().toLowerCase();
-        return name.includes(query) || internalName.includes(query);
+        
+        // Get name and internalName, handling various formats
+        const name = (item.name || '').toString().toLowerCase().trim();
+        const internalName = (item.internalName || '').toString().toLowerCase().trim();
+        
+        // Check if query matches name or internalName
+        if (name.includes(query) || internalName.includes(query)) {
+          return true;
+        }
+        
+        // Also check normalized versions (no special chars, no spaces)
+        const nameNormalized = name.replace(/[^a-z0-9]/g, '');
+        const internalNameNormalized = internalName.replace(/[^a-z0-9]/g, '');
+        const queryNormalized = query.replace(/[^a-z0-9]/g, '');
+        
+        if (nameNormalized.includes(queryNormalized) || internalNameNormalized.includes(queryNormalized)) {
+          return true;
+        }
+        
+        // Check without spaces
+        const nameNoSpaces = name.replace(/\s+/g, '');
+        const internalNameNoSpaces = internalName.replace(/\s+/g, '');
+        const queryNoSpaces = query.replace(/\s+/g, '');
+        
+        if (nameNoSpaces.includes(queryNoSpaces) || internalNameNoSpaces.includes(queryNoSpaces)) {
+          return true;
+        }
+        
+        return false;
       });
     } else {
-      // Show only first 20 when no search (but still respect stat and tier filters)
-      result = result.slice(0, 20);
+      // Show only first 30 when no search (but still respect stat and tier filters)
+      result = result.slice(0, 230);
     }
     
     return result;
@@ -490,6 +638,49 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     
     return stats;
   }, [selectedGod, godLevel]);
+
+  // Filter mechanics
+  const filteredMechanics = useMemo(() => {
+    let result = gameplayMechanics.mechanics;
+    
+    // Apply category filter
+    if (selectedMechanicCategory) {
+      result = result.filter((mechanic) => mechanic.category === selectedMechanicCategory);
+    }
+    
+    // Apply search filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter((mechanic) => {
+        const name = (mechanic.name || '').toString().toLowerCase();
+        const description = (mechanic.description || '').toString().toLowerCase();
+        return name.includes(query) || description.includes(query);
+      });
+    } else {
+      // Show only first 20 when no search (but still respect category filter)
+      result = result.slice(0, 30);
+    }
+    
+    // Sort alphabetically by name
+    return result.sort((a, b) => {
+      const nameA = (a.name || '').toString().toLowerCase();
+      const nameB = (b.name || '').toString().toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
+  }, [searchQuery, selectedMechanicCategory]);
+
+  // Get mechanics by category for subcategory display
+  const mechanicsByCategory = useMemo(() => {
+    const grouped = {};
+    gameplayMechanics.mechanics.forEach((mechanic) => {
+      const category = mechanic.category || 'other';
+      if (!grouped[category]) {
+        grouped[category] = [];
+      }
+      grouped[category].push(mechanic);
+    });
+    return grouped;
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -575,10 +766,45 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
               setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
               setSelectedGameMode(null);
               setGamemodesDescriptionExpanded(false);
+              setSelectedMechanic(null);
+              setSelectedMechanicCategory(null);
+              setMechanicCategoryDropdownVisible(false);
             }}
           >
             <Text style={[styles.tabText, selectedTab === 'gamemodes' && styles.tabTextActive]}>
               Gamemodes ({gameModes.length})
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.tab, selectedTab === 'mechanics' && styles.tabActive]}
+            onPress={() => {
+              setSelectedTab('mechanics');
+              setSelectedPantheon(null);
+              setPantheonDropdownVisible(false);
+              setSelectedStat(null);
+              setStatDropdownVisible(false);
+              setSelectedTier(null);
+              setTierDropdownVisible(false);
+              // Close any open detail pages
+              setSelectedGod(null);
+              setSelectedItem(null);
+              setSkinsExpanded(false);
+              setSelectedSkin(null);
+              setLoreExpanded(false);
+              setAbilitiesExpanded(false);
+              setAspectExpanded(false);
+              setPassiveExpanded(false);
+              setSelectedAbility(null);
+              setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
+              setSelectedGameMode(null);
+              setGamemodesDescriptionExpanded(false);
+              setSelectedMechanic(null);
+              setSelectedMechanicCategory(null);
+              setMechanicCategoryDropdownVisible(false);
+            }}
+          >
+            <Text style={[styles.tabText, selectedTab === 'mechanics' && styles.tabTextActive]}>
+              Gameplay Mechanics ({gameplayMechanics.mechanics.length})
             </Text>
           </TouchableOpacity>
         </View>
@@ -587,8 +813,13 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
           {selectedTab === 'gods' && (
             <View style={styles.filterButtonContainer}>
                 <TouchableOpacity
-                  style={[styles.filterButton, selectedPantheon && styles.filterButtonActive]}
-                  onPress={() => setPantheonDropdownVisible(!pantheonDropdownVisible)}
+                  style={[styles.filterButton, selectedPantheon && styles.filterButtonActive, selectedGod && styles.filterButtonDisabled]}
+                  onPress={() => {
+                    if (!selectedGod) {
+                      setPantheonDropdownVisible(!pantheonDropdownVisible);
+                    }
+                  }}
+                  disabled={!!selectedGod}
                 >
                   <Text style={styles.filterButtonText}>
                     {selectedPantheon ? selectedPantheon : 'Filter'}
@@ -597,7 +828,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                     {pantheonDropdownVisible ? '▼' : '▶'}
                   </Text>
                 </TouchableOpacity>
-                {pantheonDropdownVisible && (
+                {pantheonDropdownVisible && !selectedGod && (
                   <View style={styles.pantheonDropdown}>
                     <ScrollView style={styles.pantheonDropdownScroll} nestedScrollEnabled={true}>
                       <TouchableOpacity
@@ -640,11 +871,14 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
             <>
             <View style={styles.filterButtonContainer}>
                 <TouchableOpacity
-                  style={[styles.filterButton, selectedStat && styles.filterButtonActive]}
+                  style={[styles.filterButton, selectedStat && styles.filterButtonActive, selectedItem && styles.filterButtonDisabled]}
                     onPress={() => {
-                      setStatDropdownVisible(!statDropdownVisible);
-                      setTierDropdownVisible(false);
+                      if (!selectedItem) {
+                        setStatDropdownVisible(!statDropdownVisible);
+                        setTierDropdownVisible(false);
+                      }
                     }}
+                    disabled={!!selectedItem}
                 >
                   <Text style={styles.filterButtonText}>
                     {selectedStat ? selectedStat : 'Filter'}
@@ -653,7 +887,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                     {statDropdownVisible ? '▼' : '▶'}
                   </Text>
                 </TouchableOpacity>
-                {statDropdownVisible && (
+                {statDropdownVisible && !selectedItem && (
                   <View style={styles.pantheonDropdown}>
                     <ScrollView style={styles.pantheonDropdownScroll} nestedScrollEnabled={true}>
                       <TouchableOpacity
@@ -693,18 +927,21 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                 </View>
               <TextInput
                 style={styles.search}
-                placeholder={searchQuery ? `Search ${selectedTab}...` : `Showing first 20 ${selectedTab}. Search to see more...`}
+                placeholder={searchQuery ? `Search ${selectedTab}...` : `Showing all avaiable items ${selectedTab}. Search to see more...`}
                 placeholderTextColor="#cbd5e1"
                 value={searchQuery}
                 onChangeText={setSearchQuery}
               />
               <View style={styles.filterButtonContainer}>
                   <TouchableOpacity
-                    style={[styles.filterButton, selectedTier && styles.filterButtonActive]}
+                    style={[styles.filterButton, selectedTier && styles.filterButtonActive, selectedItem && styles.filterButtonDisabled]}
                     onPress={() => {
-                      setTierDropdownVisible(!tierDropdownVisible);
-                      setStatDropdownVisible(false);
+                      if (!selectedItem) {
+                        setTierDropdownVisible(!tierDropdownVisible);
+                        setStatDropdownVisible(false);
+                      }
                     }}
+                    disabled={!!selectedItem}
                   >
                     <Text style={styles.filterButtonText}>
                       {selectedTier ? selectedTier : 'Tier'}
@@ -713,7 +950,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                       {tierDropdownVisible ? '▼' : '▶'}
                     </Text>
                   </TouchableOpacity>
-                  {tierDropdownVisible && (
+                  {tierDropdownVisible && !selectedItem && (
                     <View style={[styles.pantheonDropdown, styles.tierDropdown]}>
                       <ScrollView style={styles.pantheonDropdownScroll} nestedScrollEnabled={true}>
                         <TouchableOpacity
@@ -743,14 +980,80 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
               </View>
             </>
           )}
-          {selectedTab === 'gods' && (
-          <TextInput
-            style={styles.search}
-            placeholder={searchQuery ? `Search ${selectedTab}...` : `Showing first 20 ${selectedTab}. Search to see more...`}
-            placeholderTextColor="#cbd5e1"
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-          />
+          {selectedTab === 'mechanics' && (
+            <View style={styles.filterButtonContainer}>
+              <TouchableOpacity
+                style={[styles.filterButton, selectedMechanicCategory && styles.filterButtonActive]}
+                onPress={() => {
+                  setMechanicCategoryDropdownVisible(!mechanicCategoryDropdownVisible);
+                }}
+              >
+                <Text style={styles.filterButtonText}>
+                  {selectedMechanicCategory ? gameplayMechanics.subcategories.find(c => c.id === selectedMechanicCategory)?.name || selectedMechanicCategory : 'Category'}
+                </Text>
+                <Text style={styles.filterButtonIcon}>
+                  {mechanicCategoryDropdownVisible ? '▼' : '▶'}
+                </Text>
+              </TouchableOpacity>
+              {mechanicCategoryDropdownVisible && (
+                <View style={styles.pantheonDropdown}>
+                  <ScrollView style={styles.pantheonDropdownScroll} nestedScrollEnabled={true}>
+                    <TouchableOpacity
+                      style={[styles.pantheonOption, !selectedMechanicCategory && styles.pantheonOptionActive]}
+                      onPress={() => {
+                        setSelectedMechanicCategory(null);
+                        setMechanicCategoryDropdownVisible(false);
+                      }}
+                    >
+                      <Text style={styles.pantheonOptionText}>All Categories</Text>
+                    </TouchableOpacity>
+                    {gameplayMechanics.subcategories.map((category) => {
+                      const categoryMechanics = mechanicsByCategory[category.id] || [];
+                      return (
+                        <TouchableOpacity
+                          key={category.id}
+                          style={[styles.pantheonOption, selectedMechanicCategory === category.id && styles.pantheonOptionActive]}
+                          onPress={() => {
+                            setSelectedMechanicCategory(category.id);
+                            setMechanicCategoryDropdownVisible(false);
+                          }}
+                        >
+                          <Text style={styles.pantheonOptionText}>
+                            {category.name} ({categoryMechanics.length})
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </ScrollView>
+                </View>
+              )}
+            </View>
+          )}
+          {(selectedTab === 'gods' || selectedTab === 'mechanics') && (
+            <>
+              <TextInput
+                style={styles.search}
+                placeholder={searchQuery ? `Search ${selectedTab}...` : `Showing all available ${selectedTab}. Search to see more...`}
+                placeholderTextColor="#cbd5e1"
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+              />
+              {selectedTab === 'gods' && (
+                <TouchableOpacity
+                  style={[styles.filterButton, showGodSkins && styles.filterButtonActive, selectedGod && styles.filterButtonDisabled, { marginLeft: 8 }]}
+                  onPress={() => {
+                    if (!selectedGod) {
+                      setShowGodSkins(!showGodSkins);
+                    }
+                  }}
+                  disabled={!!selectedGod}
+                >
+                  <Text style={styles.filterButtonText}>
+                    {showGodSkins ? 'God Cards' : 'Icons'}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </>
           )}
         </View>
       </View>
@@ -1040,6 +1343,9 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                       <Image 
                                         source={imageSource}
                                         style={styles.recipeT1Icon}
+                                        contentFit="cover"
+                                        cachePolicy="memory-disk"
+                                        transition={200}
                                         onError={() => {
                                           setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
                                         }}
@@ -1050,7 +1356,10 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                   return (
                                     <Image 
                                       source={fallbackSource && useFallback ? fallbackSource : imageSource}
-                                      style={styles.recipeT1Icon} 
+                                      style={styles.recipeT1Icon}
+                                      contentFit="cover"
+                                      cachePolicy="memory-disk"
+                                      transition={200}
                                     />
                                   );
                                 }
@@ -1105,6 +1414,9 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                           <Image 
                                             source={imageSource}
                                             style={styles.recipeComponentIcon}
+                                            contentFit="cover"
+                                            cachePolicy="memory-disk"
+                                            transition={200}
                                             onError={() => {
                                               setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
                                             }}
@@ -1115,7 +1427,10 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                       return (
                                         <Image 
                                           source={fallbackSource && useFallback ? fallbackSource : imageSource}
-                                          style={styles.recipeComponentIcon} 
+                                          style={styles.recipeComponentIcon}
+                                          contentFit="cover"
+                                          cachePolicy="memory-disk"
+                                          transition={200}
                                         />
                                       );
                                     }
@@ -1432,7 +1747,10 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                       return (
                       <Image 
                           source={localIcon} 
-                        style={styles.godPageIcon} 
+                        style={styles.godPageIcon}
+                        contentFit="cover"
+                        cachePolicy="memory-disk"
+                        transition={200}
                       />
                       );
                     }
@@ -1665,13 +1983,53 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                       const skinPath = selectedGod.skins[selectedSkin].skin;
                       const skinImage = getSkinImage(skinPath);
                       
-                      if (skinImage && skinImage.remote) {
+                      if (skinImage) {
+                        // Handle both single URI and primary/fallback object
+                        const imageSource = skinImage.primary || skinImage;
+                        const fallbackSource = skinImage.fallback;
+                        const skinKey = `skin-detail-${selectedSkin}-${skinPath}`;
+                        const useFallback = failedItemIcons[skinKey];
+                        
+                        if (fallbackSource && !useFallback) {
+                          // Has fallback - try primary first, then fallback on error
+                          return (
+                            <Image
+                              key={`skin-${selectedSkin}-${skinPath}`}
+                              source={imageSource}
+                              style={styles.selectedSkinImage}
+                              contentFit="contain"
+                              cachePolicy="memory-disk"
+                              transition={200}
+                              onError={() => {
+                                setFailedItemIcons(prev => ({ ...prev, [skinKey]: true }));
+                              }}
+                            />
+                          );
+                        }
+                        
+                        if (fallbackSource && useFallback) {
+                          // Use fallback after primary failed
+                          return (
+                            <Image
+                              key={`skin-${selectedSkin}-${skinPath}`}
+                              source={fallbackSource}
+                              style={styles.selectedSkinImage}
+                              contentFit="contain"
+                              cachePolicy="memory-disk"
+                              transition={200}
+                            />
+                          );
+                        }
+                        
+                        // Single URI - use directly
                         return (
                           <Image
-                            key={`skin-${selectedSkin}-${skinPath}`} // Key forces re-render when switching skins
-                            source={skinImage.remote}
+                            key={`skin-${selectedSkin}-${skinPath}`}
+                            source={imageSource}
                             style={styles.selectedSkinImage}
-                            resizeMode="contain"
+                            contentFit="contain"
+                            cachePolicy="memory-disk"
+                            transition={200}
                           />
                         );
                       }
@@ -1737,7 +2095,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                           {abilityIconPath ? (() => {
                             const localIcon = getLocalGodAsset(abilityIconPath);
                             if (localIcon) {
-                              return <Image source={localIcon} style={styles.abilityIconCompact} />;
+                              return <Image source={localIcon} style={styles.abilityIconCompact} contentFit="cover" cachePolicy="memory-disk" transition={200} />;
                             }
                             return (
                               <View style={styles.abilityIconFallbackCompact}>
@@ -2006,6 +2364,9 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         <Image 
                               source={localIcon} 
                           style={styles.abilityTooltipIcon}
+                          contentFit="cover"
+                          cachePolicy="memory-disk"
+                          transition={200}
                             />
                           );
                         }
@@ -2140,7 +2501,37 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
           )}
         </View>
         );
-      })() : selectedGameMode && selectedTab === 'gamemodes' ? (
+      })() : selectedMechanic && selectedTab === 'mechanics' ? (
+        <ScrollView 
+          ref={scrollViewRef}
+          style={styles.content}
+        >
+          <View style={styles.detailContainer}>
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => setSelectedMechanic(null)}
+            >
+              <Text style={styles.backButtonText}>← Back</Text>
+            </TouchableOpacity>
+
+            <View style={styles.detailHeader}>
+              <Text style={styles.detailTitle}>{selectedMechanic.name}</Text>
+              {selectedMechanic.category && (
+                <Text style={styles.detailSubtitle}>
+                  Category: {gameplayMechanics.subcategories.find(c => c.id === selectedMechanic.category)?.name || selectedMechanic.category}
+                </Text>
+              )}
+            </View>
+
+            <View style={styles.detailSection}>
+              <Text style={styles.detailSectionTitle}>Description</Text>
+              <Text style={styles.detailDescription}>
+                {selectedMechanic.description || 'No description available.'}
+              </Text>
+            </View>
+          </View>
+        </ScrollView>
+      ) : selectedGameMode && selectedTab === 'gamemodes' ? (
         <ScrollView 
           ref={scrollViewRef}
           style={styles.content}
@@ -2372,75 +2763,1478 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                     </Text>
                     <View style={styles.detailList}>
                       <View style={styles.detailListItem}>
-                        <Image source={towerIcons['Tower']} style={styles.detailListItemIcon} />
+                        <Image source={towerIcons['Tower']} style={styles.detailListItemIcon} contentFit="contain" cachePolicy="memory-disk" />
                         <Text style={styles.detailListItemText}>• <Text style={styles.detailListBold}>Towers:</Text> Each lane is protected by two formidable towers that provide vision and attack the player if they are in range.</Text>
                       </View>
                       <View style={styles.detailListItem}>
-                        <Image source={phoenixIcons['Phoenix']} style={styles.detailListItemIcon} />
+                        <Image source={phoenixIcons['Phoenix']} style={styles.detailListItemIcon} contentFit="contain" cachePolicy="memory-disk" />
                         <Text style={styles.detailListItemText}>• <Text style={styles.detailListBold}>Phoenixes:</Text> The final bastion of defense in each lane. Destroying a Phoenix supercharges your lane's minions into a fiery onslaught and is required before the Titan can be harmed.</Text>
                       </View>
                       <View style={styles.detailListItem}>
-                        <Image source={titanIcons['Titan']} style={styles.detailListItemIcon} />
+                        <Image source={titanIcons['Titan']} style={styles.detailListItemIcon} contentFit="contain" cachePolicy="memory-disk" />
                         <Text style={styles.detailListItemText}>• <Text style={styles.detailListBold}>The Titan:</Text> The heart of the base. A powerful boss in its own right, it will defend itself fiercely. The first team to destroy the enemy Titan claims victory.</Text>
                       </View>
                     </View>
                   </View>
 
                   <View style={styles.detailSubsection}>
-                    <Text style={styles.detailSubsectionTitle}>Jungle Buffs: Gain the advantage</Text>
+                    <Text style={styles.detailSubsectionTitle}>Minions: Levels Every 3 Minutes</Text>
+                    <Text style={styles.detailBodyText}>
+                      Minions level up every 3 minutes, increasing their stats and rewards. Adjust the level below to see values at different stages:
+                    </Text>
+                    
+                    <View style={styles.campLevelControls}>
+                      <TouchableOpacity
+                        style={[styles.campLevelButton, minionLevel === 0 && styles.campLevelButtonDisabled]}
+                        onPress={() => setMinionLevel(Math.max(0, minionLevel - 1))}
+                        disabled={minionLevel === 0}
+                      >
+                        <Text style={[styles.campLevelButtonText, minionLevel === 0 && styles.campLevelButtonTextDisabled]}>−</Text>
+                      </TouchableOpacity>
+                      <View style={styles.campLevelDisplay}>
+                        <Text style={styles.campLevelLabel}>Level: {minionLevel}</Text>
+                        <Text style={styles.campLevelTime}>{minionLevel * 3}:00</Text>
+                      </View>
+                      <TouchableOpacity
+                        style={[styles.campLevelButton, minionLevel === 10 && styles.campLevelButtonDisabled]}
+                        onPress={() => setMinionLevel(Math.min(10, minionLevel + 1))}
+                        disabled={minionLevel === 10}
+                      >
+                        <Text style={[styles.campLevelButtonText, minionLevel === 10 && styles.campLevelButtonTextDisabled]}>+</Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    {/* Melee Minion */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedMinions({
+                          ...expandedMinions,
+                          'melee': !expandedMinions['melee']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Melee Minion</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedMinions['melee'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedMinions['melee'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{48 + (5 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{(18 + (0.25 * minionLevel)).toFixed(2)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{500 + (25 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{14 + (6 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{16 + (2 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Ranged Minion */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedMinions({
+                          ...expandedMinions,
+                          'ranged': !expandedMinions['ranged']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Ranged Minion</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedMinions['ranged'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedMinions['ranged'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{28 + (5 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{(12 + (0.25 * minionLevel)).toFixed(2)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{250 + (25 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{8 + (4 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{34 + (4 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>0.55</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Minotaur */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedMinions({
+                          ...expandedMinions,
+                          'minotaur': !expandedMinions['minotaur']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Minotaur</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedMinions['minotaur'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedMinions['minotaur'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{70 + (5 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{66 + (1 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{800 + (100 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{18 + (6 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{120 + (5 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Brute */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedMinions({
+                          ...expandedMinions,
+                          'brute': !expandedMinions['brute']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Brute</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedMinions['brute'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedMinions['brute'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{48 + (5 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{(18 + (0.25 * minionLevel)).toFixed(2)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>750</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Fire Melee Minion */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedMinions({
+                          ...expandedMinions,
+                          'fire-melee': !expandedMinions['fire-melee']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Fire Melee Minion</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedMinions['fire-melee'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedMinions['fire-melee'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{50 + (5 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{(18 + (0.25 * minionLevel)).toFixed(2)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{700 + (25 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{28 + (6 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{32 + (4 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Fire Ranged Minion */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedMinions({
+                          ...expandedMinions,
+                          'fire-ranged': !expandedMinions['fire-ranged']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Fire Ranged Minion</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedMinions['fire-ranged'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedMinions['fire-ranged'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{30 + (5 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{(12 + (0.25 * minionLevel)).toFixed(2)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{500 + (25 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{20 + (4 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{68 + (4 * minionLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>0.55</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+                  </View>
+
+                  <View style={styles.detailSubsection}>
+                    <Text style={styles.detailSubsectionTitle}>Jungle Bosses: Levels Every 3 Minutes</Text>
+                    <Text style={styles.detailBodyText}>
+                      Jungle bosses level up every 3 minutes, increasing their stats and rewards. Adjust the level below to see values at different stages:
+                    </Text>
+                    
+                    <View style={styles.campLevelControls}>
+                      <TouchableOpacity
+                        style={[styles.campLevelButton, bossLevel === 0 && styles.campLevelButtonDisabled]}
+                        onPress={() => setBossLevel(Math.max(0, bossLevel - 1))}
+                        disabled={bossLevel === 0}
+                      >
+                        <Text style={[styles.campLevelButtonText, bossLevel === 0 && styles.campLevelButtonTextDisabled]}>−</Text>
+                      </TouchableOpacity>
+                      <View style={styles.campLevelDisplay}>
+                        <Text style={styles.campLevelLabel}>Level: {bossLevel}</Text>
+                        <Text style={styles.campLevelTime}>{bossLevel * 3}:00</Text>
+                      </View>
+                      <TouchableOpacity
+                        style={[styles.campLevelButton, bossLevel === 40 && styles.campLevelButtonDisabled]}
+                        onPress={() => setBossLevel(Math.min(40, bossLevel + 1))}
+                        disabled={bossLevel === 40}
+                      >
+                        <Text style={[styles.campLevelButtonText, bossLevel === 40 && styles.campLevelButtonTextDisabled]}>+</Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    {/* Naga */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedBosses({
+                          ...expandedBosses,
+                          'naga': !expandedBosses['naga']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Naga</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedBosses['naga'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedBosses['naga'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{50 + (5 * bossLevel)} (Global)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{75 + (6 * bossLevel)} (Global)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{Math.min(2250 + (100 * bossLevel), 10000)} (Cap @ 10000)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{Math.min(27 + (3 * bossLevel), 100)} (Cap @ 100)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{40 + (8 * bossLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>400</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>40</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Pyromancer */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedBosses({
+                          ...expandedBosses,
+                          'pyromancer': !expandedBosses['pyromancer']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Pyromancer</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedBosses['pyromancer'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedBosses['pyromancer'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{50 + (5 * bossLevel)} (Global)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{75 + (6 * bossLevel)} (Global)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{Math.min(2250 + (100 * bossLevel), 10000)} (Cap @ 10000)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{Math.min(27 + (3 * bossLevel), 100)} (Cap @ 100)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{40 + (8 * bossLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>400</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>40</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Gold Fury */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedBosses({
+                          ...expandedBosses,
+                          'gold-fury': !expandedBosses['gold-fury']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Gold Fury</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedBosses['gold-fury'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedBosses['gold-fury'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{60 + (5 * bossLevel)} (Global)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{156 + (6 * bossLevel)} (Global)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{Math.min(2750 + (100 * bossLevel), 11000)} (Cap @ 11000)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{Math.min(30 + (3 * bossLevel), 120)} (Cap @ 120)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{67 + (8 * bossLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>450</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>40</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Ancient Fury */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedBosses({
+                          ...expandedBosses,
+                          'ancient-fury': !expandedBosses['ancient-fury']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Ancient Fury</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedBosses['ancient-fury'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedBosses['ancient-fury'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{60 + (5 * bossLevel)} (Global)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{156 + (6 * bossLevel)} (Global)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{Math.min(3200 + (100 * bossLevel), 12500)} (Cap @ 12500)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{Math.min(30 + (3 * bossLevel), 120)} (Cap @ 120)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{80 + (8 * bossLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>450</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>40</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Fire Giant */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedBosses({
+                          ...expandedBosses,
+                          'fire-giant': !expandedBosses['fire-giant']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Fire Giant</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedBosses['fire-giant'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedBosses['fire-giant'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{200 + (5 * bossLevel)} (Global)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{180 + (6 * bossLevel)} (Global)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{Math.min(6300 + (100 * bossLevel), 16500)} (Cap @ 16500)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{Math.min(48 + (4 * bossLevel), 150)} (Cap @ 150)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>120 str, 60 int + (8 per level)</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>0</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>40</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+                  </View>
+                    </> 
+                  )}
+                </View>
+
+                <View style={styles.detailSection}>
+                  <TouchableOpacity
+                    style={styles.detailSectionHeader}
+                    onPress={() => setConquestSectionsExpanded({
+                      ...conquestSectionsExpanded,
+                      jungleCamps: !conquestSectionsExpanded.jungleCamps
+                    })}
+                  >
+                    <Text style={styles.detailSectionTitle}>Jungle Camps</Text>
+                    <Text style={styles.detailSectionToggle}>
+                      {conquestSectionsExpanded.jungleCamps ? '▼' : '▶'}
+                    </Text>
+                  </TouchableOpacity>
+                  {conquestSectionsExpanded.jungleCamps && (
+                    <>
+                  <View style={styles.detailSubsection}>
+                    <Text style={styles.detailSubsectionTitle}>Jungle Buffs: Gain the Advantage</Text>
                     <View style={styles.detailList}>
                       <View style={styles.detailListItem}>
-                        <Image source={buffIcons['Caustic']} style={styles.detailListItemIcon} />
-                        <Text style={styles.detailListItemText}>• <Text style={[styles.detailListBold, { color: buffColors['Caustic'] }]}>Red Buff (Caustic):</Text>Attacks and abilities apply poison that deals 2.5% of Max Health over 3 seconds.</Text>
+                        <Image source={buffIcons['Caustic']} style={styles.detailListItemIcon} contentFit="contain" cachePolicy="memory-disk" />
+                        <Text style={styles.detailListItemText}>• <Text style={[styles.detailListBold, { color: buffColors['Caustic'] }]}>Red Buff (Caustic):</Text> Attacks and abilities apply poison that deals 2.5% of Max Health over 3 seconds.</Text>
                       </View>
                       <View style={styles.detailListItem}>
-                        <Image source={buffIcons['Primal']} style={styles.detailListItemIcon} />
+                        <Image source={buffIcons['Primal']} style={styles.detailListItemIcon} contentFit="contain" cachePolicy="memory-disk" />
                         <Text style={styles.detailListItemText}>• <Text style={[styles.detailListBold, { color: buffColors['Primal'] }]}>Blue Buff (Primal):</Text> Gain +5 Mana Regeneration.</Text>
                       </View>
                       <View style={styles.detailListItem}>
-                        <Image source={buffIcons['Inspiration']} style={styles.detailListItemIcon} />
+                        <Image source={buffIcons['Inspiration']} style={styles.detailListItemIcon} contentFit="contain" cachePolicy="memory-disk" />
                         <Text style={styles.detailListItemText}>• <Text style={[styles.detailListBold, { color: buffColors['Inspiration'] }]}>Purple Buff (Inspiration):</Text> Gain +4 Strength and Intelligence, once per ability hit or basic attack hit. Max 5 stacks.</Text>
                       </View>
                       <View style={styles.detailListItem}>
-                        <Image source={buffIcons['Pathfinder']} style={styles.detailListItemIcon} />
-                        <Text style={styles.detailListItemText}>• <Text style={[styles.detailListBold, { color: buffColors['Pathfinder'] }]}>Yellow Buff (Pathfinder):</Text>Gain +10% Movement Speed. Recover 10% of the monster's health as healing and restore 25 mana.</Text>
+                        <Image source={buffIcons['Pathfinder']} style={styles.detailListItemIcon} contentFit="contain" cachePolicy="memory-disk" />
+                        <Text style={styles.detailListItemText}>• <Text style={[styles.detailListBold, { color: buffColors['Pathfinder'] }]}>Yellow Buff (Pathfinder):</Text> Gain +10% Movement Speed. Recover 10% of the monster's health as healing and restore 25 mana.</Text>
                       </View>
                     </View>
                   </View>
 
                   <View style={styles.detailSubsection}>
-                    <Text style={styles.detailSubsectionTitle}>Jungle Bosses: Turning the Tides</Text>
+                    <Text style={styles.detailSubsectionTitle}>Jungle Camps: Levels Every 3 Minutes</Text>
                     <Text style={styles.detailBodyText}>
-                      Controlling these epic monsters can swing the momentum of the entire game. These Jungle Bosses are Gold Fury, Ancient Fury and Fire Giant.
+                      Jungle camps level up every 3 minutes, increasing their stats and rewards. Adjust the level below to see values at different stages:
                     </Text>
-                    <View style={styles.detailTable}>
-                      <View style={styles.detailTableRow}>
-                        <Text style={[styles.detailTableHeader, { flex: 1 }]}>Objective</Text>
-                        <Text style={[styles.detailTableHeader, { flex: 1 }]}>Location</Text>
-                        <Text style={[styles.detailTableHeader, { flex: 2 }]}>Reward</Text>
+                    
+                    <View style={styles.campLevelControls}>
+                      <TouchableOpacity
+                        style={[styles.campLevelButton, campLevel === 0 && styles.campLevelButtonDisabled]}
+                        onPress={() => setCampLevel(Math.max(0, campLevel - 1))}
+                        disabled={campLevel === 0}
+                      >
+                        <Text style={[styles.campLevelButtonText, campLevel === 0 && styles.campLevelButtonTextDisabled]}>−</Text>
+                      </TouchableOpacity>
+                      <View style={styles.campLevelDisplay}>
+                        <Text style={styles.campLevelLabel}>Level: {campLevel}</Text>
+                        <Text style={styles.campLevelTime}>{campLevel * 3}:00</Text>
                       </View>
-                      <View style={styles.detailTableRow}>
-                        <Text style={[styles.detailTableCell, { flex: 1 }]}>Gold Fury</Text>
-                        <Text style={[styles.detailTableCell, { flex: 1 }]}>Duo Lane side</Text>
-                        <Text style={[styles.detailTableCell, { flex: 2 }]}>Grants a large sum of Gold to the entire team. First Defeat: Speed boost out of fountain is permanently doubled. Second Defeat: Nearby friendly minions take reduced damage and deal more damage. Third Defeat: Deal +25% bonus true damage to Structures and Gain +50 Protections when near an enemy Structure. After three defeats, it is replaced by the Ancient Fury.</Text>
+                      <TouchableOpacity
+                        style={[styles.campLevelButton, campLevel === 10 && styles.campLevelButtonDisabled]}
+                        onPress={() => setCampLevel(Math.min(10, campLevel + 1))}
+                        disabled={campLevel === 10}
+                      >
+                        <Text style={[styles.campLevelButtonText, campLevel === 10 && styles.campLevelButtonTextDisabled]}>+</Text>
+                      </TouchableOpacity>
+                    </View>
+                    
+                    {/* Alpha Monster (Buff Camp) */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedCamps({
+                          ...expandedCamps,
+                          'alpha-buff': !expandedCamps['alpha-buff']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Alpha Monster (Buff Camp)</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedCamps['alpha-buff'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedCamps['alpha-buff'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{86 + (9 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{(56 + (0.5 * campLevel)).toFixed(1)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{975 + (133 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{26 + (3 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{15 + (3 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
                       </View>
-                      <View style={styles.detailTableRow}>
-                        <Text style={[styles.detailTableCell, { flex: 1 }]}>Ancient Fury</Text>
-                        <Text style={[styles.detailTableCell, { flex: 1 }]}>Duo Lane side</Text>
-                        <Text style={[styles.detailTableCell, { flex: 2 }]}>Temporarily disables the enemy's Towers and Phoenixes, opening a window for a major assault.</Text>
+                      )}
+                    </View>
+
+                    {/* Small Monster (Buff Camp) */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedCamps({
+                          ...expandedCamps,
+                          'small-buff': !expandedCamps['small-buff']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Small Monster (Buff Camp)</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedCamps['small-buff'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedCamps['small-buff'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{29 + (9 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{(19.5 + (0.5 * campLevel)).toFixed(1)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{208 + (60 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{14 + (1 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{16 + (3 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
                       </View>
-                      <View style={styles.detailTableRow}>
-                        <Text style={[styles.detailTableCell, { flex: 1 }]}>Fire Giant</Text>
-                        <Text style={[styles.detailTableCell, { flex: 1 }]}>Solo Lane side</Text>
-                        <Text style={[styles.detailTableCell, { flex: 2 }]}>Grants the "Might of the Fire Giant" buff to the entire team, massively increasing damage and protections, and improving structure damage. The key to ending the game.</Text>
+                      )}
+                    </View>
+
+                    {/* Alpha Monster (Mid Camp) */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedCamps({
+                          ...expandedCamps,
+                          'alpha-mid': !expandedCamps['alpha-mid']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Alpha Monster (Mid Camp)</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedCamps['alpha-mid'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedCamps['alpha-mid'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{86 + (9 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{(56 + (0.5 * campLevel)).toFixed(1)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{675 + (133 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{18 + (3 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{15 + (3 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
                       </View>
+                      )}
+                    </View>
+
+                    {/* Small Monster (Mid Camp) */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedCamps({
+                          ...expandedCamps,
+                          'small-mid': !expandedCamps['small-mid']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Small Monster (Mid Camp)</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedCamps['small-mid'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedCamps['small-mid'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{29 + (9 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{(19.5 + (0.5 * campLevel)).toFixed(1)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{160 + (60 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{8 + (1 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{8 + (3 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Cyclops Warrior */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedCamps({
+                          ...expandedCamps,
+                          'cyclops': !expandedCamps['cyclops']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Cyclops Warrior</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedCamps['cyclops'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedCamps['cyclops'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{86 + (9 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{(56 + (0.5 * campLevel)).toFixed(1)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{702 + (140 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{19 + (3 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{15 + (3 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Cyclops Warrior (Small) */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedCamps({
+                          ...expandedCamps,
+                          'cyclops-small': !expandedCamps['cyclops-small']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Cyclops Warrior (Small)</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedCamps['cyclops-small'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedCamps['cyclops-small'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{29 + (9 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{(19 + (0.5 * campLevel)).toFixed(1)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{208 + (60 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{12 + (1 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{8 + (3 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Oracle */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedCamps({
+                          ...expandedCamps,
+                          'oracle': !expandedCamps['oracle']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Oracle</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedCamps['oracle'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedCamps['oracle'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{86 + (9 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{(57 + (0.5 * campLevel)).toFixed(1)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{675 + (133 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{18 + (3 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{15 + (3 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Scorpion */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedCamps({
+                          ...expandedCamps,
+                          'scorpion': !expandedCamps['scorpion']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Scorpion</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedCamps['scorpion'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedCamps['scorpion'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{146 + (9 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{(110 + (0.5 * campLevel)).toFixed(1)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{1350 + (133 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{26 + (3 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{45 + (3 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Rogue Cyclops */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedCamps({
+                          ...expandedCamps,
+                          'rogue-cyclops': !expandedCamps['rogue-cyclops']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Rogue Cyclops</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedCamps['rogue-cyclops'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedCamps['rogue-cyclops'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>0</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{45 + (5 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{702 + (140 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{19 + (3 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{12 + (3 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Rogue Cyclops (Small) */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedCamps({
+                          ...expandedCamps,
+                          'rogue-cyclops-small': !expandedCamps['rogue-cyclops-small']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Rogue Cyclops (Small)</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedCamps['rogue-cyclops-small'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedCamps['rogue-cyclops-small'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>0</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{7 + (5 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{208 + (60 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{12 + (1 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{8 + (3 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Elder Harpy */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedCamps({
+                          ...expandedCamps,
+                          'elder-harpy': !expandedCamps['elder-harpy']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Elder Harpy</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedCamps['elder-harpy'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedCamps['elder-harpy'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{72 + (9 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{(33 + (0.5 * campLevel)).toFixed(1)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{619 + (75 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{21 + (1 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{15 + (2 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Harpy */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedCamps({
+                          ...expandedCamps,
+                          'harpy': !expandedCamps['harpy']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Harpy</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedCamps['harpy'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedCamps['harpy'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{12 + (9 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{(5 + (0.5 * campLevel)).toFixed(1)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{188 + (45 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{9 + (1 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{5 + (2 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Roaming Harpy */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedCamps({
+                          ...expandedCamps,
+                          'roaming-harpy': !expandedCamps['roaming-harpy']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Roaming Harpy</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedCamps['roaming-harpy'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedCamps['roaming-harpy'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{50 + (9 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{(20 + (0.5 * campLevel)).toFixed(1)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{536 + (75 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{21 + (1 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{15 + (2 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Elder Harpy (Side) */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedCamps({
+                          ...expandedCamps,
+                          'elder-harpy-side': !expandedCamps['elder-harpy-side']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Elder Harpy (Side)</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedCamps['elder-harpy-side'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedCamps['elder-harpy-side'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{29 + (9 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{(10 + (0.5 * campLevel)).toFixed(1)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{412 + (75 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{14 + (1 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{20 + (2 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
+                      </View>
+                      )}
+                    </View>
+
+                    {/* Harpy (Side) */}
+                    <View style={styles.detailCampCard}>
+                      <TouchableOpacity
+                        style={styles.detailCampHeader}
+                        onPress={() => setExpandedCamps({
+                          ...expandedCamps,
+                          'harpy-side': !expandedCamps['harpy-side']
+                        })}
+                      >
+                        <Text style={styles.detailCampName}>Harpy (Side)</Text>
+                        <Text style={styles.detailCampToggle}>
+                          {expandedCamps['harpy-side'] ? '▼' : '▶'}
+                        </Text>
+                      </TouchableOpacity>
+                      {expandedCamps['harpy-side'] && (
+                      <View style={styles.detailCampStats}>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{7 + (9 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
+                          <Text style={styles.detailCampStatValue}>{(2 + (0.5 * campLevel)).toFixed(1)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Health:</Text>
+                          <Text style={styles.detailCampStatValue}>{100 + (45 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
+                          <Text style={styles.detailCampStatValue}>{6 + (1 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Power:</Text>
+                          <Text style={styles.detailCampStatValue}>{5 + (2 * campLevel)}</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>325</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
+                          <Text style={styles.detailCampStatValue}>1</Text>
+                        </View>
+                        <View style={styles.detailCampStatRow}>
+                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
+                          <Text style={styles.detailCampStatValue}>10</Text>
+                        </View>
+                      </View>
+                      )}
                     </View>
                   </View>
                     </>
                   )}
                 </View>
-
-               
 
                 <View style={styles.detailSection}>
                   <Text style={styles.detailSectionTitle}>Interactive Map</Text>
@@ -2454,7 +4248,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
           </View>
         </ScrollView>
       ) : (
-        <ScrollView style={styles.content}>
+        <ScrollView ref={scrollViewRef} style={styles.content}>
           {selectedTab === 'gods' ? (
             <View style={styles.grid}>
               {filteredGods.map((god, idx) => {
@@ -2465,7 +4259,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                 return (
                   <TouchableOpacity
                     key={uniqueKey}
-                    style={styles.card}
+                    style={[styles.card, showGodSkins && styles.cardWithSkin]}
                     onPress={() => {
                       setSelectedGod(god);
                       setSkinsExpanded(false);
@@ -2478,13 +4272,106 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                       setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
                     }}
                   >
-                    {godIcon ? (() => {
+                    {showGodSkins && god.skins && typeof god.skins === 'object' && Object.keys(god.skins).length > 0 ? (() => {
+                      // Find base/default skin - look for "default" or "base" type, or use first skin
+                      let baseSkin = null;
+                      let baseSkinKey = null;
+                      
+                      // First, try to find a skin with type "default" or "base"
+                      for (const [key, skin] of Object.entries(god.skins)) {
+                        if (skin.type && (skin.type.toLowerCase() === 'default' || skin.type.toLowerCase() === 'base')) {
+                          baseSkin = skin;
+                          baseSkinKey = key;
+                          break;
+                        }
+                      }
+                      
+                      // If no default/base found, use the first skin
+                      if (!baseSkin) {
+                        const firstKey = Object.keys(god.skins)[0];
+                        baseSkin = god.skins[firstKey];
+                        baseSkinKey = firstKey;
+                      }
+                      
+                      if (baseSkin && baseSkin.skin) {
+                        const skinImage = getSkinImage(baseSkin.skin);
+                        if (skinImage) {
+                          // Handle both single URI and primary/fallback object
+                          const imageSource = skinImage.primary || skinImage;
+                          const fallbackSource = skinImage.fallback;
+                          const skinKey = `god-card-${name}-${baseSkinKey}`;
+                          const useFallback = failedItemIcons[skinKey];
+                          
+                          if (fallbackSource && !useFallback) {
+                            // Has fallback - try primary first, then fallback on error
+                            return (
+                              <Image 
+                                source={imageSource}
+                                style={[styles.cardIcon, styles.cardIconSkin]}
+                                contentFit="contain"
+                                cachePolicy="memory-disk"
+                                transition={200}
+                                onError={() => {
+                                  setFailedItemIcons(prev => ({ ...prev, [skinKey]: true }));
+                                }}
+                              />
+                            );
+                          }
+                          
+                          if (fallbackSource && useFallback) {
+                            // Use fallback after primary failed
+                            return (
+                              <Image 
+                                source={fallbackSource}
+                                style={[styles.cardIcon, styles.cardIconSkin]}
+                                contentFit="contain"
+                                cachePolicy="memory-disk"
+                                transition={200}
+                              />
+                            );
+                          }
+                          
+                          // Single URI - use directly
+                          return (
+                            <Image 
+                              source={imageSource}
+                              style={[styles.cardIcon, styles.cardIconSkin]}
+                              contentFit="contain"
+                              cachePolicy="memory-disk"
+                              transition={200}
+                            />
+                          );
+                        }
+                      }
+                      
+                      // Fallback to icon if skin not available
+                      const localIcon = godIcon ? getLocalGodAsset(godIcon) : null;
+                      if (localIcon) {
+                        return (
+                          <Image 
+                            source={localIcon} 
+                            style={styles.cardIcon}
+                            contentFit="cover"
+                            cachePolicy="memory-disk"
+                            transition={200}
+                          />
+                        );
+                      }
+                      return (
+                        <View style={styles.cardIconFallback}>
+                          <Text style={styles.cardIconFallbackText}>{name.charAt(0)}</Text>
+                        </View>
+                      );
+                    })() : godIcon ? (() => {
                       const localIcon = getLocalGodAsset(godIcon);
                       if (localIcon) {
                         return (
                           <Image 
                             source={localIcon} 
                             style={styles.cardIcon}
+                            contentFit="cover"
+                            cachePolicy="memory-disk"
+                            transition={200}
                           />
                         );
                       }
@@ -2524,6 +4411,9 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                       <Image 
                         source={modIcon} 
                         style={styles.cardIcon}
+                        contentFit="cover"
+                        cachePolicy="memory-disk"
+                        transition={200}
                       />
                     ) : localItemIcon ? (
                       (() => {
@@ -2539,6 +4429,9 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                             <Image 
                               source={imageSource}
                               style={styles.cardIcon}
+                              contentFit="cover"
+                              cachePolicy="memory-disk"
+                              transition={200}
                               onError={() => {
                                 setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
                               }}
@@ -2552,6 +4445,9 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                             <Image 
                               source={fallbackSource}
                               style={styles.cardIcon}
+                              contentFit="cover"
+                              cachePolicy="memory-disk"
+                              transition={200}
                             />
                           );
                         }
@@ -2561,6 +4457,9 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                           <Image 
                             source={imageSource}
                             style={styles.cardIcon}
+                            contentFit="cover"
+                            cachePolicy="memory-disk"
+                            transition={200}
                           />
                         );
                       })()
@@ -2568,11 +4467,17 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                       <Image 
                         source={consumableIcon} 
                         style={styles.cardIcon}
+                        contentFit="cover"
+                        cachePolicy="memory-disk"
+                        transition={200}
                       />
                     ) : itemIcon ? (
                       <Image 
                         source={{ uri: `https://www.smitecalculator.pro${itemIcon}` }} 
                         style={styles.cardIcon}
+                        contentFit="cover"
+                        cachePolicy="memory-disk"
+                        transition={200}
                       />
                     ) : (
                       <View style={styles.cardIconFallback}>
@@ -2583,6 +4488,46 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                   </TouchableOpacity>
                 );
               })}
+            </View>
+          ) : selectedTab === 'mechanics' ? (
+            <View>
+              <View style={styles.gamemodesIntro}>
+                <Text style={styles.gamemodesIntroTitle}>Gameplay Mechanics</Text>
+                <Text style={styles.gamemodesIntroText}>
+                  Comprehensive guide to all gameplay mechanics, systems, and terminology in SMITE 2.{' '}
+                  <Text style={styles.gamemodesIntroTextRed}>
+                    All data collected from ingame and official sources like Smite 2 Wiki - TBD .
+                  </Text>
+                </Text>
+                <Text style={styles.gamemodesIntroText}>
+                  Browse by category or search for specific mechanics to learn more about how the game works.
+                </Text>
+              </View>
+              <View style={styles.grid}>
+                {filteredMechanics.map((mechanic) => {
+                  const categoryName = gameplayMechanics.subcategories.find(c => c.id === mechanic.category)?.name || 'Other';
+                  return (
+                    <TouchableOpacity
+                      key={mechanic.id}
+                      style={styles.card}
+                      onPress={() => {
+                        setSelectedMechanic(mechanic);
+                        setTimeout(() => {
+                          scrollViewRef.current?.scrollTo({ y: 0, animated: false });
+                        }, 100);
+                      }}
+                    >
+                      <View style={styles.cardIconFallback}>
+                        <Text style={styles.cardIconFallbackText}>{mechanic.name.charAt(0)}</Text>
+                      </View>
+                      <Text style={styles.cardText} numberOfLines={1}>{mechanic.name}</Text>
+                      <Text style={[styles.cardText, { fontSize: 10, color: '#94a3b8', marginTop: 2 }]} numberOfLines={1}>
+                        {categoryName}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
             </View>
           ) : (
             <View>
@@ -2652,7 +4597,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                     }}
                   >
                     {gameModeIcons[mode.id] ? (
-                      <Image source={gameModeIcons[mode.id]} style={styles.cardIcon} />
+                      <Image source={gameModeIcons[mode.id]} style={styles.cardIcon} contentFit="cover" cachePolicy="memory-disk" transition={200} />
                     ) : (
                       <View style={styles.cardIconFallback}>
                         <Text style={styles.cardIconFallbackText}>{mode.name.charAt(0)}</Text>
@@ -2707,12 +4652,12 @@ const styles = StyleSheet.create({
   tabBar: {
     flexDirection: 'row',
     marginBottom: 12,
-    gap: 12,
+    gap: 6,
   },
   tab: {
     flex: 1,
-    paddingVertical: 10,
-    borderRadius: 8,
+    paddingVertical: 4,
+    borderRadius: 4,
     backgroundColor: '#031320',
     alignItems: 'center',
     borderWidth: 1,
@@ -2724,7 +4669,7 @@ const styles = StyleSheet.create({
   },
   tabText: {
     color: '#94a3b8',
-    fontSize: 14,
+    fontSize: 10,
     fontWeight: '600',
   },
   tabTextActive: {
@@ -2742,29 +4687,33 @@ const styles = StyleSheet.create({
   },
   filterButton: {
     backgroundColor: '#06202f',
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderRadius: 8,
+    paddingHorizontal: 6,
+    paddingVertical: 4,
+    borderRadius: 4,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
+    gap: 3,
     borderWidth: 1,
     borderColor: '#1e3a5f',
-    minWidth: 80,
+    minWidth: 60,
   },
   filterButtonActive: {
     backgroundColor: '#1e90ff',
     borderColor: '#1e90ff',
   },
+  filterButtonDisabled: {
+    opacity: 0.4,
+    backgroundColor: '#031320',
+  },
   filterButtonText: {
     color: '#e6eef8',
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: '600',
     flex: 1,
   },
   filterButtonIcon: {
     color: '#e6eef8',
-    fontSize: 10,
+    fontSize: 8,
   },
   statOptionIcon: {
     width: 20,
@@ -2781,7 +4730,8 @@ const styles = StyleSheet.create({
     borderColor: '#1e3a5f',
     minWidth: 180,
     maxHeight: 200,
-    zIndex: 1000,
+    zIndex: 10000,
+    elevation: 100,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
@@ -2839,11 +4789,27 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#1e3a5f',
   },
+  cardWithSkin: {
+    width: '48%',
+    padding: 2,
+    minHeight: 360,
+    backgroundColor: '#0b1226',
+    overflow: 'hidden',
+  },
   cardIcon: {
     width: 56,
     height: 56,
     borderRadius: 8,
     marginBottom: 6,
+  },
+  cardIconSkin: {
+    width: '100%',
+    aspectRatio: 0.6,
+    minHeight: 340,
+    borderRadius: 12,
+    alignSelf: 'center',
+    marginBottom: 4,
+    backgroundColor: '#0b1226',
   },
   cardIconFallback: {
     width: 56,
@@ -4151,6 +6117,106 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     marginBottom: 8,
+  },
+  detailCampCard: {
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  detailCampHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+    paddingBottom: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1e3a5f',
+  },
+  detailCampToggle: {
+    color: '#7dd3fc',
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  detailCampName: {
+    color: '#e6eef8',
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  detailCampStats: {
+    gap: 6,
+  },
+  detailCampStatRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 2,
+  },
+  detailCampStatLabel: {
+    color: '#94a3b8',
+    fontSize: 12,
+    fontWeight: '600',
+    flex: 1,
+  },
+  detailCampStatValue: {
+    color: '#e6eef8',
+    fontSize: 12,
+    fontWeight: '500',
+    flex: 1,
+    textAlign: 'right',
+  },
+  campLevelControls: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 16,
+    marginBottom: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  campLevelButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 8,
+    backgroundColor: '#1e3a5f',
+    borderWidth: 1,
+    borderColor: '#3b5f8f',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  campLevelButtonDisabled: {
+    backgroundColor: '#061028',
+    borderColor: '#0f1724',
+    opacity: 0.5,
+  },
+  campLevelButtonText: {
+    color: '#e6eef8',
+    fontSize: 20,
+    fontWeight: '700',
+  },
+  campLevelButtonTextDisabled: {
+    color: '#64748b',
+  },
+  campLevelDisplay: {
+    alignItems: 'center',
+    minWidth: 100,
+  },
+  campLevelLabel: {
+    color: '#e6eef8',
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 4,
+  },
+  campLevelTime: {
+    color: '#94a3b8',
+    fontSize: 12,
+    fontWeight: '500',
   },
   detailBodyText: {
     color: '#cbd5e1',

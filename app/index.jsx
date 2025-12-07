@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   TextInput,
   ScrollView,
   TouchableOpacity,
@@ -12,6 +11,7 @@ import {
   Pressable,
   InteractionManager,
 } from 'react-native';
+import { Image } from 'expo-image';
 import HomePage from './home';
 // Lazy load the large JSON to prevent startup crash
 let localBuilds = null;
@@ -41,7 +41,7 @@ function BuildsPage({ onGodIconPress }) {
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [selectedRole, setSelectedRole] = useState(null); // 'ADC', 'Solo', 'Support', 'Mid', 'Jungle'
   const [expandedIndex, setExpandedIndex] = useState(null);
-  const [initialDisplayLimit] = useState(15); // Only show first 15 gods initially
+  const [initialDisplayLimit] = useState(80); // Only show first 80 gods initially
   const [selectedBuildIndex, setSelectedBuildIndex] = useState({}); // { godIndex: buildIndex }
   const [selectedAbility, setSelectedAbility] = useState(null); // { godIndex, abilityKey, ability }
   const [selectedItem, setSelectedItem] = useState(null); // { item, itemName }
@@ -397,7 +397,7 @@ function BuildsPage({ onGodIconPress }) {
           >
             <View style={styles.roleFilterButtonContent}>
               {getRoleIcon('ADC') && (
-                <Image source={getRoleIcon('ADC')} style={styles.roleFilterIcon} />
+                <Image source={getRoleIcon('ADC')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" />
               )}
               <Text style={[styles.roleFilterText, selectedRole === 'ADC' && styles.roleFilterTextActive]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>ADC</Text>
             </View>
@@ -412,7 +412,7 @@ function BuildsPage({ onGodIconPress }) {
           >
             <View style={styles.roleFilterButtonContent}>
               {getRoleIcon('Solo') && (
-                <Image source={getRoleIcon('Solo')} style={styles.roleFilterIcon} />
+                <Image source={getRoleIcon('Solo')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" />
               )}
               <Text style={[styles.roleFilterText, selectedRole === 'Solo' && styles.roleFilterTextActive]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>Solo</Text>
             </View>
@@ -427,7 +427,7 @@ function BuildsPage({ onGodIconPress }) {
           >
             <View style={styles.roleFilterButtonContent}>
               {getRoleIcon('Support') && (
-                <Image source={getRoleIcon('Support')} style={styles.roleFilterIcon} />
+                <Image source={getRoleIcon('Support')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" />
               )}
               <Text style={[styles.roleFilterText, selectedRole === 'Support' && styles.roleFilterTextActive]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>Support</Text>
             </View>
@@ -442,7 +442,7 @@ function BuildsPage({ onGodIconPress }) {
           >
             <View style={styles.roleFilterButtonContent}>
               {getRoleIcon('Mid') && (
-                <Image source={getRoleIcon('Mid')} style={styles.roleFilterIcon} />
+                <Image source={getRoleIcon('Mid')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" />
               )}
               <Text style={[styles.roleFilterText, selectedRole === 'Mid' && styles.roleFilterTextActive]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>Mid</Text>
             </View>
@@ -457,7 +457,7 @@ function BuildsPage({ onGodIconPress }) {
           >
             <View style={styles.roleFilterButtonContent}>
               {getRoleIcon('Jungle') && (
-                <Image source={getRoleIcon('Jungle')} style={styles.roleFilterIcon} />
+                <Image source={getRoleIcon('Jungle')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" />
               )}
               <Text style={[styles.roleFilterText, selectedRole === 'Jungle' && styles.roleFilterTextActive]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>Jungle</Text>
             </View>
@@ -975,7 +975,9 @@ function BuildsPage({ onGodIconPress }) {
                                     <Image 
                                       source={localIcon} 
                                       style={styles.godIcon}
-                                      resizeMode="cover"
+                                      contentFit="cover"
+                                      cachePolicy="memory-disk"
+                                      transition={200}
                                     />
                                   </View>
                                 );
@@ -1074,7 +1076,9 @@ function BuildsPage({ onGodIconPress }) {
                                         <Image 
                                               source={localIcon} 
                                           style={styles.levelingOrderIcon}
-                                          resizeMode="cover"
+                                          contentFit="cover"
+                                          cachePolicy="memory-disk"
+                                          transition={200}
                                         />
                                           );
                                         }
@@ -1140,7 +1144,9 @@ function BuildsPage({ onGodIconPress }) {
                                         <Image 
                                               source={localIcon} 
                                           style={styles.levelingOrderIcon}
-                                          resizeMode="cover"
+                                          contentFit="cover"
+                                          cachePolicy="memory-disk"
+                                          transition={200}
                                         />
                                           );
                                         }
@@ -1195,7 +1201,9 @@ function BuildsPage({ onGodIconPress }) {
                                     <Image 
                                       source={localIcon} 
                                       style={styles.aspectIcon}
-                                      resizeMode="cover"
+                                      contentFit="cover"
+                                      cachePolicy="memory-disk"
+                                      transition={200}
                                     />
                                   );
                                 }
@@ -1254,7 +1262,9 @@ function BuildsPage({ onGodIconPress }) {
                                                 <Image 
                                                   source={imageSource}
                                                   style={styles.smallIconImg}
-                                                  resizeMode="cover"
+                                                  contentFit="cover"
+                                                  cachePolicy="memory-disk"
+                                                  transition={200}
                                                   onError={() => {
                                                     setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
                                                   }}
@@ -1272,7 +1282,9 @@ function BuildsPage({ onGodIconPress }) {
                                                 <Image 
                                                   source={fallbackSource}
                                                   style={styles.smallIconImg}
-                                                  resizeMode="cover"
+                                                  contentFit="cover"
+                                                  cachePolicy="memory-disk"
+                                                  transition={200}
                                                 />
                                               </View>
                                             </View>
@@ -1286,7 +1298,9 @@ function BuildsPage({ onGodIconPress }) {
                                               <Image 
                                                 source={imageSource}
                                                 style={styles.smallIconImg}
-                                                resizeMode="cover"
+                                                contentFit="cover"
+                                                cachePolicy="memory-disk"
+                                                transition={200}
                                               />
                                             </View>
                                           </View>
@@ -1343,7 +1357,9 @@ function BuildsPage({ onGodIconPress }) {
                                           <Image 
                                             source={imageSource}
                                             style={styles.iconImg}
-                                            resizeMode="cover"
+                                            contentFit="cover"
+                                            cachePolicy="memory-disk"
+                                            transition={200}
                                             onError={() => {
                                               setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
                                             }}
@@ -1361,7 +1377,9 @@ function BuildsPage({ onGodIconPress }) {
                                           <Image 
                                             source={fallbackSource}
                                             style={styles.iconImg}
-                                            resizeMode="cover"
+                                            contentFit="cover"
+                                            cachePolicy="memory-disk"
+                                            transition={200}
                                           />
                                         </View>
                                       </View>
@@ -1375,7 +1393,9 @@ function BuildsPage({ onGodIconPress }) {
                                         <Image 
                                           source={imageSource}
                                           style={styles.iconImg}
-                                          resizeMode="cover"
+                                          contentFit="cover"
+                                          cachePolicy="memory-disk"
+                                          transition={200}
                                         />
                                       </View>
                                     </View>
@@ -1462,6 +1482,9 @@ function BuildsPage({ onGodIconPress }) {
                             <Image 
                               source={imageSource}
                               style={styles.modalAbilityIcon}
+                              contentFit="cover"
+                              cachePolicy="memory-disk"
+                              transition={200}
                               onError={() => {
                                 setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
                               }}
@@ -1475,6 +1498,9 @@ function BuildsPage({ onGodIconPress }) {
                             <Image 
                               source={fallbackSource}
                               style={styles.modalAbilityIcon}
+                              contentFit="cover"
+                              cachePolicy="memory-disk"
+                              transition={200}
                             />
                           );
                         }
@@ -1484,6 +1510,9 @@ function BuildsPage({ onGodIconPress }) {
                           <Image 
                             source={imageSource}
                             style={styles.modalAbilityIcon}
+                            contentFit="cover"
+                            cachePolicy="memory-disk"
+                            transition={200}
                           />
                         );
                       }
@@ -1598,7 +1627,10 @@ function BuildsPage({ onGodIconPress }) {
                         return (
                       <Image 
                             source={localIcon} 
-                        style={styles.modalAbilityIcon} 
+                        style={styles.modalAbilityIcon}
+                        contentFit="cover"
+                        cachePolicy="memory-disk"
+                        transition={200}
                       />
                         );
                       }
@@ -2521,6 +2553,7 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState('homepage');
   const [godFromBuilds, setGodFromBuilds] = useState(null);
   const [expandAbilities, setExpandAbilities] = useState(false);
+  const [dataPageKey, setDataPageKey] = useState(0);
 
   return (
     <View style={navStyles.container}>
@@ -2535,7 +2568,13 @@ export default function App() {
         </TouchableOpacity>
         <TouchableOpacity
           style={[navStyles.navButton, currentPage === 'data' && navStyles.navButtonActive]}
-          onPress={() => setCurrentPage('data')}
+          onPress={() => {
+            setCurrentPage('data');
+            // Force remount of DataPage by changing key
+            if (currentPage !== 'data') {
+              setDataPageKey(prev => prev + 1);
+            }
+          }}
         >
           <Text style={[navStyles.navButtonText, currentPage === 'data' && navStyles.navButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit>
             Database
@@ -2574,7 +2613,8 @@ Builds
           onGodIconPress={(god, shouldExpandAbilities = false) => { 
             setGodFromBuilds(god); 
             setExpandAbilities(shouldExpandAbilities);
-            setCurrentPage('data'); 
+            setCurrentPage('data');
+            setDataPageKey(prev => prev + 1);
           }} 
         />
       </View>
@@ -2585,6 +2625,7 @@ Builds
       {currentPage === 'custombuild' && <CustomBuildPage />}
       {currentPage === 'data' && (
         <DataPage 
+          key={`data-page-${dataPageKey}`}
           initialSelectedGod={godFromBuilds} 
           initialExpandAbilities={expandAbilities}
           onBackToBuilds={() => { 

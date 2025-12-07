@@ -9107,6 +9107,14 @@
                 "hasAspect": false,
                 "aspect": {},
                 "skins": {
+                    "Anubis": {
+                        "name": "Base Anubis",
+                        "skin": "/icons/Wallpapers/Anubis.webp",
+                        "type": "Base Skin",
+                        "price": {
+                            "diamonds": "0"
+                        }
+                    },
                     "Kitsune Sage": {
                         "name": "Kitsune Sage",
                         "skin": "/icons/Wallpapers/Anubis_t_skincard_kitsunesage_.webp",
@@ -9117,14 +9125,7 @@
                             "gemsdia": ""
                         }
                     },
-                    "Anubis": {
-                        "name": "Base Anubis",
-                        "skin": "/icons/Wallpapers/Anubis.webp",
-                        "type": "Base Skin",
-                        "price": {
-                            "diamonds": "0"
-                        }
-                    },
+                    
                     "Blight Hound": {
                         "name": "Blight Hound",
                         "skin": "/icons/Wallpapers/Anubis_Blighthound.webp",
@@ -13649,7 +13650,7 @@
                             "Glorious Pridwen",
                             "Spirit Robe"
                         ],
-                        "notes": "Bruiser AA-oriented warrior build"
+                        "notes": "Bruiser AA-oriented warrior solo build"
                     }
                 ]
             },
@@ -15266,7 +15267,7 @@
                             "Glorious Pridwen",
                             "Hide of the Nemean Lion"
                         ],
-                        "notes": "Bruiser poke warrior build\n"
+                        "notes": "Bruiser poke warrior solo build\n"
                     },
                     {
                         "author": "Mytharria",
@@ -21129,7 +21130,7 @@
                 "skins": {
                     "Hou Yi": {
                         "name": "Base Hou Yi",
-                        "skin": "/icons/Wallpapers/Hou_Yi.webp",
+                        "skin": "/icons/Wallpapers/HouYi.webp",
                         "type": "Base Skin",
                         "price": {
                             "diamonds": "0"
@@ -27414,7 +27415,7 @@
                             "Glorious Pridwen",
                             "Hide of the Nemean Lion"
                         ],
-                        "notes": "Bruiser poke warrior build."
+                        "notes": "Bruiser poke warrior solo build."
                     }
                 ]
             },
@@ -29615,7 +29616,7 @@
                             "Spirit Robe",
                             "Hide of the Nemean Lion"
                         ],
-                        "notes": "Bruiser poke warrior build.  **Aspect of the Fragmented** OPTIONAL"
+                        "notes": "Bruiser poke warrior solo build.  **Aspect of the Fragmented** OPTIONAL"
                     }
                 ]
             },
@@ -30104,7 +30105,7 @@
                             "Glorious Pridwen",
                             "Spirit Robe"
                         ],
-                        "notes": "Bruiser poke warrior build with **__Aspect of Obsidian__**."
+                        "notes": "Bruiser poke warrior solo build with **__Aspect of Obsidian__**."
                     }
                 ]
             },

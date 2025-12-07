@@ -10,11 +10,8 @@ const ITEM_ICONS_PATH = `${GITHUB_BASE}/Item%20Icons`;
 // If images are in a subfolder, update this path accordingly
 const GOD_ICONS_PATH = `${GITHUB_BASE}/God%20Info`;
 
-// Skin/wallpaper path - wallpapers are in Wallpapers subfolder
-const SKINS_PATH = `${GITHUB_BASE}/Wallpapers`;
-
-// Base URL for smitecalculator.pro (for skin fallback)
-const SMITECALCULATOR_BASE = 'https://www.smitecalculator.pro';
+// Skin/wallpaper path - wallpapers are in app/data/Icons/Wallpapers folder
+const SKINS_PATH = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/app/data/Icons/Wallpapers';
 
 // Helper to create URI object for React Native Image
 function createImageUri(basePath, filename) {
@@ -74,8 +71,8 @@ export function getLocalGodAsset(iconPath) {
   return uri;
 }
 
-// Skin/wallpaper lookup - lazy loads from smitecalculator.pro only when user clicks on a skin
-// Skins are NOT loaded until user expands skins section AND selects a specific skin
+// Skin/wallpaper lookup - loads from GitHub repo
+// Skins are in app/data/Icons/Wallpapers folder
 export function getSkinImage(skinPath) {
   if (!skinPath) return null;
   
@@ -84,15 +81,30 @@ export function getSkinImage(skinPath) {
   const filename = skinPath.split('/').pop() || '';
   if (!filename) return null;
   
-  // First try local GitHub (in case skins are added to repo later)
-  // Convert to lowercase for case-sensitive GitHub URLs
+  // Try both lowercase and original case for GitHub URLs
   const lowercaseFilename = filename.toLowerCase();
-  const localUri = createImageUri(SKINS_PATH, lowercaseFilename);
+  const originalFilename = filename;
   
-  // Return object with both options - component can try local first, then fallback to smitecalculator
+  // If they're the same, just return single URI
+  if (lowercaseFilename === originalFilename) {
+    const uri = createImageUri(SKINS_PATH, lowercaseFilename);
+    if (__DEV__) {
+      console.log('Loading skin image:', filename, 'from:', uri.uri);
+    }
+    return uri;
+  }
+  
+  // Return both options: try lowercase first, then original case
+  const primary = createImageUri(SKINS_PATH, lowercaseFilename);
+  const fallback = createImageUri(SKINS_PATH, originalFilename);
+  
+  if (__DEV__) {
+    console.log('Loading skin image:', filename, '-> trying lowercase:', primary.uri, 'or original:', fallback.uri);
+  }
+  
   return {
-    local: localUri, // Try GitHub first
-    remote: { uri: `${SMITECALCULATOR_BASE}${skinPath}` } // Fallback to smitecalculator.pro
+    primary: primary,
+    fallback: fallback
   };
 }
 

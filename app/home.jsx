@@ -21,9 +21,10 @@ import PrivacyPage from './privacy';
 // ============================================================================
 
 const APP_VERSION_CONFIG = {
-  currentVersion: '1.4', // Current app version
-  previousVersion: '1.3', // Previous version (for comparison)
+  currentVersion: '1.5', // Current app version
+  previousVersion: '1.4', // Previous version (for comparison)
   updateNotes: [
+    'Added app review form. and bug report form.',
     'Added more updated information about Conquest',
     'Added base stats section to god pages with level slider',
     'Added role icons next to role names on god pages',
@@ -78,8 +79,6 @@ export default function HomePage() {
     device: '',
     os: '',
     steps: '',
-    expected: '',
-    actual: '',
     additional: '',
   });
   const [submittingBugReport, setSubmittingBugReport] = useState(false);
@@ -346,8 +345,6 @@ export default function HomePage() {
       device: '',
       os: '',
       steps: '',
-      expected: '',
-      actual: '',
       additional: '',
     });
   };
@@ -370,8 +367,6 @@ export default function HomePage() {
         'Device': bugReportData.device.trim() || 'Not specified',
         'OS': bugReportData.os.trim() || 'Not specified',
         'Steps to Reproduce': bugReportData.steps.trim() || 'Not specified',
-        'Expected Behavior': bugReportData.expected.trim() || 'Not specified',
-        'Actual Behavior': bugReportData.actual.trim() || 'Not specified',
         'Additional Notes': bugReportData.additional.trim() || 'None',
       };
 
@@ -545,29 +540,7 @@ export default function HomePage() {
                 textAlignVertical="top"
               />
 
-              <Text style={styles.bugReportFieldLabel}>Expected Behavior (optional)</Text>
-              <TextInput
-                style={[styles.bugReportInput, styles.bugReportTextArea]}
-                placeholder="What should have happened?"
-                placeholderTextColor="#64748b"
-                value={bugReportData.expected}
-                onChangeText={(text) => setBugReportData({ ...bugReportData, expected: text })}
-                multiline
-                numberOfLines={2}
-                textAlignVertical="top"
-              />
-
-              <Text style={styles.bugReportFieldLabel}>Actual Behavior (optional)</Text>
-              <TextInput
-                style={[styles.bugReportInput, styles.bugReportTextArea]}
-                placeholder="What actually happened?"
-                placeholderTextColor="#64748b"
-                value={bugReportData.actual}
-                onChangeText={(text) => setBugReportData({ ...bugReportData, actual: text })}
-                multiline
-                numberOfLines={2}
-                textAlignVertical="top"
-              />
+              
 
               <Text style={styles.bugReportFieldLabel}>Additional Notes (optional)</Text>
               <TextInput
@@ -829,7 +802,7 @@ export default function HomePage() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>About This App </Text>
           <Text style={styles.bioText}>
-            Welcome to the SMITE 2 App! This app provides comprehensive information about all gods, items, and abilities in SMITE 2.
+            Welcome to the SMITE 2 App! This app provides comprehensive information about all gods, abilities, items, gamemodes and so much more in SMITE 2.
           </Text>
           <Text style={styles.bioText}>
             Browse through community builds, explore the complete database of gods and items, filter by pantheons and stats, and stay up to date with the latest SMITE 2 news and patch notes.
@@ -989,7 +962,6 @@ export default function HomePage() {
             <Text style={styles.bugReportItem}>• App version: {APP_VERSION_CONFIG.currentVersion}</Text>
             <Text style={styles.bugReportItem}>• Device and OS information</Text>
             <Text style={styles.bugReportItem}>• Steps to reproduce the issue</Text>
-            <Text style={styles.bugReportItem}>• Expected vs actual behavior</Text>
           </View>
           <TouchableOpacity
             style={styles.bugReportButton}
@@ -1008,7 +980,7 @@ export default function HomePage() {
             I'd love to hear your thoughts! Share your feedback about the app, what you like, and what could be improved.
           </Text>
           <Text style={styles.bioText}>
-            Your feedback helps us make the app better for everyone.
+            Your feedback helps me make the app better for everyone.
           </Text>
           <TouchableOpacity
             style={styles.appReviewButton}
@@ -1016,7 +988,7 @@ export default function HomePage() {
             activeOpacity={0.7}
           >
             <Text style={styles.appReviewButtonIcon}>⭐</Text>
-            <Text style={styles.appReviewButtonText}>Open App Review Form</Text>
+            <Text style={styles.appReviewButtonText}>Submit App Review Feedback</Text>
           </TouchableOpacity>
         </View>
 
