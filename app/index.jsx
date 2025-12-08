@@ -10,6 +10,7 @@ import {
   Modal,
   Pressable,
   InteractionManager,
+  Platform,
 } from 'react-native';
 import { Image } from 'expo-image';
 import HomePage from './home';
@@ -2554,6 +2555,174 @@ export default function App() {
   const [godFromBuilds, setGodFromBuilds] = useState(null);
   const [expandAbilities, setExpandAbilities] = useState(false);
   const [dataPageKey, setDataPageKey] = useState(0);
+
+  // Disable browser inspection on web
+  useEffect(() => {
+    if (Platform.OS === 'web') {
+      // Disable right-click context menu
+      const handleContextMenu = (e) => {
+        e.preventDefault();
+        return false;
+      };
+
+      // Disable keyboard shortcuts for dev tools
+      const handleKeyDown = (e) => {
+        // Disable F12
+        if (e.keyCode === 123) {
+          e.preventDefault();
+          return false;
+        }
+        // Disable Ctrl+Shift+I (Chrome DevTools)
+        if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+          e.preventDefault();
+          return false;
+        }
+        // Disable Ctrl+Shift+J (Chrome Console)
+        if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
+          e.preventDefault();
+          return false;
+        }
+        // Disable Ctrl+Shift+C (Chrome Element Inspector)
+        if (e.ctrlKey && e.shiftKey && e.keyCode === 67) {
+          e.preventDefault();
+          return false;
+        }
+        // Disable Ctrl+U (View Source)
+        if (e.ctrlKey && e.keyCode === 85) {
+          e.preventDefault();
+          return false;
+        }
+        // Disable Ctrl+S (Save Page)
+        if (e.ctrlKey && e.keyCode === 83) {
+          e.preventDefault();
+          return false;
+        }
+        // Disable Ctrl+P (Print)
+        if (e.ctrlKey && e.keyCode === 80) {
+          e.preventDefault();
+          return false;
+        }
+        // Disable Ctrl+Shift+K (Firefox Console)
+        if (e.ctrlKey && e.shiftKey && e.keyCode === 75) {
+          e.preventDefault();
+          return false;
+        }
+        // Disable Ctrl+Shift+E (Firefox Network Monitor)
+        if (e.ctrlKey && e.shiftKey && e.keyCode === 69) {
+          e.preventDefault();
+          return false;
+        }
+      };
+
+      // Disable text selection (but allow in input fields)
+      const handleSelectStart = (e) => {
+        const target = e.target;
+        const isInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
+        if (!isInput) {
+          e.preventDefault();
+          return false;
+        }
+      };
+
+      // Disable drag
+      const handleDragStart = (e) => {
+        e.preventDefault();
+        return false;
+      };
+
+      // Disable copy (but allow in input fields)
+      const handleCopy = (e) => {
+        const target = e.target;
+        const isInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
+        if (!isInput) {
+          e.preventDefault();
+          return false;
+        }
+      };
+
+      // Disable cut (but allow in input fields)
+      const handleCut = (e) => {
+        const target = e.target;
+        const isInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
+        if (!isInput) {
+          e.preventDefault();
+          return false;
+        }
+      };
+
+      // Disable paste (but allow in input fields)
+      const handlePaste = (e) => {
+        const target = e.target;
+        const isInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
+        if (!isInput) {
+          e.preventDefault();
+          return false;
+        }
+      };
+
+      // Add event listeners
+      document.addEventListener('contextmenu', handleContextMenu);
+      document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('selectstart', handleSelectStart);
+      document.addEventListener('dragstart', handleDragStart);
+      document.addEventListener('copy', handleCopy);
+      document.addEventListener('cut', handleCut);
+      document.addEventListener('paste', handlePaste);
+
+      // Disable console methods first
+      const noop = () => {};
+      const originalConsole = { ...console };
+      console.log = noop;
+      console.warn = noop;
+      console.error = noop;
+      console.info = noop;
+      console.debug = noop;
+      console.table = noop;
+      console.trace = noop;
+      console.group = noop;
+      console.groupEnd = noop;
+      console.time = noop;
+      console.timeEnd = noop;
+      console.clear = noop;
+
+      // Disable dev tools detection
+      let devtools = { open: false };
+      const element = new Image();
+      Object.defineProperty(element, 'id', {
+        get: function() {
+          devtools.open = true;
+          // Optionally redirect or show warning
+          // window.location.href = 'about:blank';
+        }
+      });
+
+      // Check for dev tools periodically
+      const checkDevTools = setInterval(() => {
+        devtools.open = false;
+        // Use original console for detection
+        originalConsole.log(element);
+        originalConsole.clear();
+        if (devtools.open) {
+          // Dev tools detected - you can add custom handling here
+          // For example: window.location.href = 'about:blank';
+        }
+      }, 1000);
+
+      // Cleanup function
+      return () => {
+        document.removeEventListener('contextmenu', handleContextMenu);
+        document.removeEventListener('keydown', handleKeyDown);
+        document.removeEventListener('selectstart', handleSelectStart);
+        document.removeEventListener('dragstart', handleDragStart);
+        document.removeEventListener('copy', handleCopy);
+        document.removeEventListener('cut', handleCut);
+        document.removeEventListener('paste', handlePaste);
+        clearInterval(checkDevTools);
+        // Restore console
+        Object.assign(console, originalConsole);
+      };
+    }
+  }, []);
 
   return (
     <View style={navStyles.container}>

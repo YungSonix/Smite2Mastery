@@ -21,17 +21,32 @@ import PrivacyPage from './privacy';
 // ============================================================================
 
 const APP_VERSION_CONFIG = {
-  currentVersion: '1.5', // Current app version
-  previousVersion: '1.4', // Previous version (for comparison)
+  currentVersion: '1.0.0', // Current app version
+  previousVersion: '1.0.0', // Previous version (for comparison)
   updateNotes: [
-    'Added app review form. and bug report form.',
-    'Added more updated information about Conquest',
-    'Added base stats section to god pages with level slider',
-    'Added role icons next to role names on god pages',
-    'Improved god page header design and responsiveness',
-    'Fixed slider interaction for better user experience',
+    'Initial release of the SMITE 2 App.',
+    'Added version history section to the home page.',
+    'Gods page now has a base stats section with level slider.',
+    'Added role icons next to role names on god pages.',
+    'Added app review form and bug report form.',
+    'Added update status section to the home page.',
   ], 
 };
+
+// Version History - Add new versions here when releasing updates
+// The current version will automatically be added to this list when you update APP_VERSION_CONFIG
+const VERSION_HISTORY = [
+  {
+    version: '1.0.0',
+    date: '2025-12-07', // Format: YYYY-MM-DD
+    updateNotes: [
+      'Initial release of the SMITE 2 App.',
+      'Added app review form and bug report form.',
+      'Added update status section to the home page.',
+    ],
+  },
+ 
+];
 
 const NEWS_CONFIG = {
   // Latest Open Beta Patch Info
@@ -94,6 +109,7 @@ export default function HomePage() {
     otherApps: '',
   });
   const [submittingAppReview, setSubmittingAppReview] = useState(false);
+  const [showVersionHistory, setShowVersionHistory] = useState(false);
 
   // Get update information from expo-updates
   const {
@@ -798,6 +814,19 @@ export default function HomePage() {
       </Modal>
 
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+        {/* App Header with Icon */}
+        <View style={styles.appHeaderSection}>
+          <View style={styles.appIconContainer}>
+            <Image
+              source={require('../assets/icon.png')}
+              style={styles.appIcon}
+              resizeMode="contain"
+            />
+          </View>
+          <Text style={styles.appHeaderTitle}>SMITE 2 Mastery</Text>
+          <Text style={styles.appHeaderSubtitle}>Your Complete SMITE 2 Companion</Text>
+        </View>
+
         {/* App Bio Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>About This App </Text>
@@ -854,6 +883,57 @@ export default function HomePage() {
           >
             <Text style={styles.viewUpdateNotesButtonText}>View Update Notes (V{APP_VERSION_CONFIG.currentVersion})</Text>
           </TouchableOpacity>
+        </View>
+
+        {/* Version History Section */}
+        <View style={styles.section}>
+          <View style={styles.versionHistoryHeader}>
+            <Text style={styles.sectionTitle}>Version History</Text>
+            <TouchableOpacity
+              style={styles.versionHistoryToggle}
+              onPress={() => setShowVersionHistory(!showVersionHistory)}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.versionHistoryToggleText}>
+                {showVersionHistory ? '▼ Hide' : '▶ Show'} Previous Versions
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.bioText}>
+            View update notes and changes from previous app versions.
+          </Text>
+          
+          {showVersionHistory && (
+            <View style={styles.versionHistoryContainer}>
+              {VERSION_HISTORY.map((versionData, index) => (
+                <View key={index} style={styles.versionCard}>
+                  <View style={styles.versionCardHeader}>
+                    <Text style={styles.versionNumber}>Version {versionData.version}</Text>
+                    {versionData.date && (
+                      <Text style={styles.versionDate}>
+                        {new Date(versionData.date).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })}
+                      </Text>
+                    )}
+                  </View>
+                  <View style={styles.versionNotesContainer}>
+                    {versionData.updateNotes.map((note, noteIndex) => (
+                      <View key={noteIndex} style={styles.versionNoteItem}>
+                        <Text style={styles.versionNoteBullet}>•</Text>
+                        <Text style={styles.versionNoteText}>{note}</Text>
+                      </View>
+                    ))}
+                  </View>
+                </View>
+              ))}
+              {VERSION_HISTORY.length === 0 && (
+                <Text style={styles.noVersionsText}>No previous versions available.</Text>
+              )}
+            </View>
+          )}
         </View>
 
         {/* Smite 2 News Section */}
@@ -1014,6 +1094,47 @@ const styles = StyleSheet.create({
   scrollContent: {
     padding: 20,
     paddingBottom: 40,
+  },
+  appHeaderSection: {
+    alignItems: 'center',
+    marginBottom: 32,
+    padding: 24,
+    backgroundColor: '#0b1226',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  appIconContainer: {
+    width: 120,
+    height: 120,
+    borderRadius: 24,
+    backgroundColor: '#0f1724',
+    padding: 12,
+    marginBottom: 16,
+    borderWidth: 2,
+    borderColor: '#1e90ff',
+    shadowColor: '#1e90ff',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  appIcon: {
+    width: '100%',
+    height: '100%',
+  },
+  appHeaderTitle: {
+    color: '#7dd3fc',
+    fontSize: 28,
+    fontWeight: '700',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  appHeaderSubtitle: {
+    color: '#cbd5e1',
+    fontSize: 16,
+    textAlign: 'center',
+    opacity: 0.9,
   },
   section: {
     marginBottom: 32,
@@ -1733,6 +1854,83 @@ const styles = StyleSheet.create({
   },
   appReviewButtonDisabled: {
     opacity: 0.6,
+  },
+  // Version History Styles
+  versionHistoryHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+    flexWrap: 'wrap',
+  },
+  versionHistoryToggle: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    backgroundColor: '#0f1724',
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  versionHistoryToggleText: {
+    color: '#7dd3fc',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  versionHistoryContainer: {
+    marginTop: 16,
+  },
+  versionCard: {
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  versionCardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+    flexWrap: 'wrap',
+  },
+  versionNumber: {
+    color: '#1e90ff',
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  versionDate: {
+    color: '#94a3b8',
+    fontSize: 12,
+    fontStyle: 'italic',
+  },
+  versionNotesContainer: {
+    marginTop: 8,
+  },
+  versionNoteItem: {
+    flexDirection: 'row',
+    marginBottom: 8,
+    paddingLeft: 4,
+  },
+  versionNoteBullet: {
+    color: '#1e90ff',
+    fontSize: 16,
+    fontWeight: '700',
+    marginRight: 8,
+    width: 20,
+  },
+  versionNoteText: {
+    color: '#cbd5e1',
+    fontSize: 14,
+    lineHeight: 20,
+    flex: 1,
+  },
+  noVersionsText: {
+    color: '#64748b',
+    fontSize: 14,
+    fontStyle: 'italic',
+    textAlign: 'center',
+    padding: 20,
   },
 });
 
