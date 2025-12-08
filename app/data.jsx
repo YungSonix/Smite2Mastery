@@ -249,6 +249,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
   const [selectedGod, setSelectedGod] = useState(initialSelectedGod);
   const [selectedGameMode, setSelectedGameMode] = useState(null);
   const [selectedMechanic, setSelectedMechanic] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [selectedMechanicCategory, setSelectedMechanicCategory] = useState(null);
   const [mechanicCategoryDropdownVisible, setMechanicCategoryDropdownVisible] = useState(false);
   const [gamemodesDescriptionExpanded, setGamemodesDescriptionExpanded] = useState(false);
@@ -414,7 +415,6 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
       }, 100);
     }
   }, [selectedTab, selectedGod, selectedItem, selectedMechanic, selectedGameMode]);
-  const [selectedItem, setSelectedItem] = useState(null);
   const [selectedAbility, setSelectedAbility] = useState(null); // { abilityKey, ability, abilityName }
   const [skinsExpanded, setSkinsExpanded] = useState(false);
   const [selectedSkin, setSelectedSkin] = useState(null);

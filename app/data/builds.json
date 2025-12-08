@@ -35150,10 +35150,10 @@
                     }
                 },
                 "internalName": "The_Morrigan_Item",
-                "key": "Morrigan",
+                "key": "MorriT",
                 "name": "The Morrigan",
                 "Type": "Magical",
-                "icon": "/icons/morriganImage.webp",
+                "icon": "/icons/MorriTImage.webp",
                 "passive": {
                     "formulas": {
                         "Damage_Formula": "{Damage}"
