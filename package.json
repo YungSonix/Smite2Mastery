@@ -8,7 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eas-install": "npm ci",
-    "prebuild": "npm run eas-install"
+    "prebuild": "npm run eas-install",
+    "verify-icons": "node verify-icons.js"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",
