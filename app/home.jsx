@@ -11,6 +11,7 @@ import {
   Modal,
   Alert,
   TextInput,
+  Platform,
 } from 'react-native';
 import * as Updates from 'expo-updates';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -77,6 +78,7 @@ const NEWS_CONFIG = {
 // Formspree will send emails directly to your configured email address
 const BUG_REPORT_ENDPOINT = 'https://formspree.io/f/xqarlgol'; // Replace with your Formspree endpoint
 const APP_REVIEW_ENDPOINT = 'https://formspree.io/f/meoyzvyg'; // App Review Form endpoint
+const MISSING_OUTDATED_ENDPOINT = 'https://formspree.io/f/xdkqlezy'; // Missing/Outdated Feature Report endpoint
 // ============================================================================
 
 export default function HomePage() {
@@ -110,6 +112,12 @@ export default function HomePage() {
   });
   const [submittingAppReview, setSubmittingAppReview] = useState(false);
   const [showVersionHistory, setShowVersionHistory] = useState(false);
+  const [showMissingOutdatedModal, setShowMissingOutdatedModal] = useState(false);
+  const [missingOutdatedData, setMissingOutdatedData] = useState({
+    type: '', // 'missing' or 'outdated'
+    description: '',
+  });
+  const [submittingMissingOutdated, setSubmittingMissingOutdated] = useState(false);
 
   // Get update information from expo-updates
   const {
@@ -259,6 +267,77 @@ export default function HomePage() {
 
   const openAppReviewForm = () => {
     setShowAppReviewModal(true);
+  };
+
+  const openMissingOutdatedForm = () => {
+    setShowMissingOutdatedModal(true);
+  };
+
+  const resetMissingOutdatedForm = () => {
+    setMissingOutdatedData({
+      type: '',
+      description: '',
+    });
+  };
+
+  const submitMissingOutdated = async () => {
+    // Validate required fields
+    if (!missingOutdatedData.type) {
+      Alert.alert('Required Field', 'Please select if this is a missing feature or outdated.');
+      return;
+    }
+    if (!missingOutdatedData.description.trim()) {
+      Alert.alert('Required Field', 'Please write and tell us what it is.');
+      return;
+    }
+
+    setSubmittingMissingOutdated(true);
+
+    try {
+      const formData = {
+        _subject: `Missing/Outdated Feature Report - SMITE 2 App v${APP_VERSION_CONFIG.currentVersion}`,
+        _format: 'plain',
+        'Type': missingOutdatedData.type === 'missing' ? 'Something is missing' : 'Outdated',
+        'Description': missingOutdatedData.description.trim(),
+        'App Version': APP_VERSION_CONFIG.currentVersion,
+      };
+
+      const response = await fetch(MISSING_OUTDATED_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        Alert.alert(
+          'Thank You!',
+          'Your report has been submitted successfully. We appreciate your feedback!',
+          [
+            {
+              text: 'OK',
+              onPress: () => {
+                setShowMissingOutdatedModal(false);
+                resetMissingOutdatedForm();
+              },
+            },
+          ]
+        );
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (error) {
+      console.error('Error submitting missing/outdated report:', error);
+      Alert.alert(
+        'Submission Error',
+        'Unable to submit report. Please check your internet connection and try again.',
+        [{ text: 'OK' }]
+      );
+    } finally {
+      setSubmittingMissingOutdated(false);
+    }
   };
 
   const resetAppReviewForm = () => {
@@ -594,6 +673,114 @@ export default function HomePage() {
                   <ActivityIndicator size="small" color="#ffffff" />
                 ) : (
                   <Text style={styles.bugReportSubmitButtonText}>Submit Report</Text>
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Missing/Outdated Feature Modal */}
+      <Modal
+        visible={showMissingOutdatedModal}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => {
+          setShowMissingOutdatedModal(false);
+          resetMissingOutdatedForm();
+        }}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.missingOutdatedModalContainer}>
+            <View style={styles.missingOutdatedModalHeader}>
+              <Text style={styles.missingOutdatedModalTitle}>Report a Missing Feature or Outdated</Text>
+              <TouchableOpacity
+                style={styles.missingOutdatedModalCloseButton}
+                onPress={() => {
+                  setShowMissingOutdatedModal(false);
+                  resetMissingOutdatedForm();
+                }}
+              >
+                <Text style={styles.missingOutdatedModalCloseText}>✕</Text>
+              </TouchableOpacity>
+            </View>
+            <ScrollView style={styles.missingOutdatedModalContent} showsVerticalScrollIndicator={true}>
+              <Text style={styles.missingOutdatedFieldLabel}>
+                Is this feature missing something or is it outdated? <Text style={styles.requiredStar}>*</Text>
+              </Text>
+              <View style={styles.missingOutdatedOptionsContainer}>
+                <TouchableOpacity
+                  style={[
+                    styles.missingOutdatedOptionButton,
+                    missingOutdatedData.type === 'missing' && styles.missingOutdatedOptionButtonActive,
+                  ]}
+                  onPress={() => setMissingOutdatedData({ ...missingOutdatedData, type: 'missing' })}
+                >
+                  <Text
+                    style={[
+                      styles.missingOutdatedOptionText,
+                      missingOutdatedData.type === 'missing' && styles.missingOutdatedOptionTextActive,
+                    ]}
+                  >
+                    Something is missing
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles.missingOutdatedOptionButton,
+                    missingOutdatedData.type === 'outdated' && styles.missingOutdatedOptionButtonActive,
+                  ]}
+                  onPress={() => setMissingOutdatedData({ ...missingOutdatedData, type: 'outdated' })}
+                >
+                  <Text
+                    style={[
+                      styles.missingOutdatedOptionText,
+                      missingOutdatedData.type === 'outdated' && styles.missingOutdatedOptionTextActive,
+                    ]}
+                  >
+                    Outdated
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <Text style={styles.missingOutdatedFieldLabel}>
+                Please write and tell me what it is <Text style={styles.requiredStar}>*</Text>
+              </Text>
+              <TextInput
+                style={[styles.missingOutdatedInput, styles.missingOutdatedTextArea]}
+                placeholder="Describe what is missing or outdated..."
+                placeholderTextColor="#64748b"
+                value={missingOutdatedData.description}
+                onChangeText={(text) => setMissingOutdatedData({ ...missingOutdatedData, description: text })}
+                multiline
+                numberOfLines={8}
+                textAlignVertical="top"
+              />
+
+              <Text style={styles.missingOutdatedInfoText}>
+                App Version: {APP_VERSION_CONFIG.currentVersion}
+              </Text>
+            </ScrollView>
+            <View style={styles.missingOutdatedModalFooter}>
+              <TouchableOpacity
+                style={[styles.missingOutdatedCancelButton, submittingMissingOutdated && styles.missingOutdatedButtonDisabled]}
+                onPress={() => {
+                  setShowMissingOutdatedModal(false);
+                  resetMissingOutdatedForm();
+                }}
+                disabled={submittingMissingOutdated}
+              >
+                <Text style={styles.missingOutdatedCancelButtonText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.missingOutdatedSubmitButton, submittingMissingOutdated && styles.missingOutdatedButtonDisabled]}
+                onPress={submitMissingOutdated}
+                disabled={submittingMissingOutdated}
+              >
+                {submittingMissingOutdated ? (
+                  <ActivityIndicator size="small" color="#ffffff" />
+                ) : (
+                  <Text style={styles.missingOutdatedSubmitButtonText}>Submit Report</Text>
                 )}
               </TouchableOpacity>
             </View>
@@ -1050,6 +1237,22 @@ export default function HomePage() {
           >
             <Text style={styles.bugReportButtonIcon}>🐛</Text>
             <Text style={styles.bugReportButtonText}>Report a Bug or Crash</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Report Missing or Outdated Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Report a Missing Feature or Outdated</Text>
+          <Text style={styles.bioText}>
+            Found something missing or outdated in the app? Let us know! Your feedback helps us keep the app up to date.
+          </Text>
+          <TouchableOpacity
+            style={styles.reportMissingButton}
+            onPress={openMissingOutdatedForm}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.reportMissingButtonIcon}>📝</Text>
+            <Text style={styles.reportMissingButtonText}>Report a Missing Feature or Outdated</Text>
           </TouchableOpacity>
         </View>
 
@@ -1522,6 +1725,37 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
   },
+  // Report Missing or Outdated Button Styles
+  reportMissingButton: {
+    backgroundColor: '#ea580c',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 12,
+    borderWidth: 1,
+    borderColor: '#f97316',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  reportMissingButtonIcon: {
+    fontSize: 20,
+  },
+  reportMissingButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  formContainer: {
+    marginTop: 12,
+    width: '100%',
+    height: 600,
+    borderRadius: 8,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    backgroundColor: '#0f1724',
+  },
   // App Review Form Button Styles
   appReviewButton: {
     backgroundColor: '#10b981',
@@ -1931,6 +2165,156 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     textAlign: 'center',
     padding: 20,
+  },
+  // Missing/Outdated Feature Modal Styles
+  missingOutdatedModalContainer: {
+    backgroundColor: '#0b1226',
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#ea580c',
+    width: '95%',
+    maxWidth: 600,
+    height: '90%',
+    maxHeight: '90%',
+    margin: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 10,
+    flexDirection: 'column',
+  },
+  missingOutdatedModalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 20,
+    paddingBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1e3a5f',
+  },
+  missingOutdatedModalTitle: {
+    color: '#ea580c',
+    fontSize: 22,
+    fontWeight: '700',
+    flex: 1,
+  },
+  missingOutdatedModalCloseButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#1e3a5f',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 12,
+  },
+  missingOutdatedModalCloseText: {
+    color: '#e6eef8',
+    fontSize: 18,
+    fontWeight: '700',
+    lineHeight: 20,
+  },
+  missingOutdatedModalContent: {
+    flex: 1,
+    padding: 20,
+    paddingBottom: 10,
+  },
+  missingOutdatedFieldLabel: {
+    color: '#7dd3fc',
+    fontSize: 14,
+    fontWeight: '600',
+    marginBottom: 8,
+    marginTop: 12,
+  },
+  missingOutdatedOptionsContainer: {
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 4,
+  },
+  missingOutdatedOptionButton: {
+    flex: 1,
+    backgroundColor: '#0f1724',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    borderRadius: 8,
+    padding: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  missingOutdatedOptionButtonActive: {
+    backgroundColor: '#ea580c',
+    borderColor: '#ea580c',
+  },
+  missingOutdatedOptionText: {
+    color: '#cbd5e1',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  missingOutdatedOptionTextActive: {
+    color: '#ffffff',
+    fontWeight: '700',
+  },
+  missingOutdatedInput: {
+    backgroundColor: '#0f1724',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    borderRadius: 8,
+    padding: 12,
+    color: '#e6eef8',
+    fontSize: 14,
+    marginBottom: 4,
+  },
+  missingOutdatedTextArea: {
+    minHeight: 150,
+    paddingTop: 12,
+  },
+  missingOutdatedInfoText: {
+    color: '#94a3b8',
+    fontSize: 12,
+    marginTop: 16,
+    marginBottom: 8,
+    fontStyle: 'italic',
+  },
+  missingOutdatedModalFooter: {
+    flexDirection: 'row',
+    padding: 20,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#1e3a5f',
+    gap: 12,
+  },
+  missingOutdatedCancelButton: {
+    flex: 1,
+    backgroundColor: '#1e3a5f',
+    padding: 14,
+    borderRadius: 8,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  missingOutdatedCancelButtonText: {
+    color: '#cbd5e1',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  missingOutdatedSubmitButton: {
+    flex: 1,
+    backgroundColor: '#ea580c',
+    padding: 14,
+    borderRadius: 8,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ea580c',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  missingOutdatedSubmitButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  missingOutdatedButtonDisabled: {
+    opacity: 0.6,
   },
 });
 

@@ -2045,6 +2045,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderTopColor: '#15803d',
     alignItems: 'center',
+    gap: 12,
   },
   linkButton: {
     paddingVertical: 12,
@@ -2055,6 +2056,19 @@ const styles = StyleSheet.create({
     borderColor: '#15803d',
   },
   linkText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  reportButton: {
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    backgroundColor: '#ea580c',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#f97316',
+  },
+  reportButtonText: {
     color: '#ffffff',
     fontSize: 14,
     fontWeight: '600',
