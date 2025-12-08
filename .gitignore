@@ -47,3 +47,7 @@ update-builds.js
 app/data/builds.json.backup
 
 .vercel
+
+# Image files to reduce repository size
+# Ignore all Icons directory (contains thousands of game asset images)
+app/data/Icons/
