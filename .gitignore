@@ -49,5 +49,15 @@ app/data/builds.json.backup
 .vercel
 
 # Image files to reduce repository size
-# Ignore all Icons directory (contains thousands of game asset images)
+# Ignore most Icons directory (contains thousands of game asset images)
+# But keep essential icons that are required by the code
 app/data/Icons/
+
+# Keep essential icons that are required by the code (negation patterns)
+!app/data/Icons/Role Icons/
+!app/data/Icons/Pantheon Icons/
+!app/data/Icons/Stat Icons/
+!app/data/Icons/Consumables/
+!app/data/Icons/Vulcan Mods/
+!app/data/Icons/Game Modes/
+!app/data/Icons/Conquest Images/
