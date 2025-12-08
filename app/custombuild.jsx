@@ -12,6 +12,7 @@ import {
   ActivityIndicator,
   Linking,
   InteractionManager,
+  Platform,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 // Lazy load builds.json to prevent startup crash
@@ -42,6 +43,7 @@ export default function CustomBuildPage() {
   });
   const [aspectEnabled, setAspectEnabled] = useState(false);
   const [selectedAspect, setSelectedAspect] = useState(null);
+  const [webViewError, setWebViewError] = useState(false);
 
   // Lazy load the builds data after the UI has rendered
   useEffect(() => {
@@ -240,85 +242,38 @@ export default function CustomBuildPage() {
   const godName = selectedGod ? (selectedGod.name || selectedGod.GodName || selectedGod.title || selectedGod.displayName || 'Unknown') : 'Select God';
   const godIcon = selectedGod && (selectedGod.icon || selectedGod.GodIcon || (selectedGod.abilities && selectedGod.abilities.A01 && selectedGod.abilities.A01.icon));
 
-  // TEST MODE: Set to true to use WebView, false to use original custom build
-  const USE_WEBVIEW = true;
+  // TEST MODE: Set to true to use WebView/iframe, false to use original custom build
+  const USE_WEBVIEW_ENABLED = true; // Set to false to always use native component
+  const USE_WEBVIEW = USE_WEBVIEW_ENABLED && !webViewError;
+  const IS_WEB = Platform.OS === 'web';
 
-  return (
-    <View style={styles.container}>
-      {USE_WEBVIEW ? (
-        <>
-          <WebView
-            source={{ uri: 'https://www.smitecalculator.pro' }}
-            style={styles.webview}
-            startInLoadingState={true}
-            scalesPageToFit={true}
-            injectedJavaScript={`
-            (function() {
-              const meta = document.createElement('meta');
-              meta.name = 'viewport';
-              meta.content = 'width=device-width, initial-scale=0.75, maximum-scale=1.0, user-scalable=yes';
-              document.getElementsByTagName('head')[0].appendChild(meta);
-              
-              // Zoom out and center the body
-              document.body.style.zoom = '0.75';
-              document.body.style.transform = 'scale(0.75)';
-              document.body.style.transformOrigin = 'center center';
-              document.body.style.margin = '0 auto';
-              document.body.style.display = 'flex';
-              document.body.style.flexDirection = 'column';
-              document.body.style.alignItems = 'center';
-              document.body.style.justifyContent = 'center';
-              document.body.style.minHeight = '100vh';
-              
-              // Center the main container if it exists
-              const mainContainer = document.querySelector('main') || document.querySelector('.container') || document.body.firstElementChild;
-              if (mainContainer) {
-                mainContainer.style.margin = '0 auto';
-                mainContainer.style.maxWidth = '100%';
-              }
-              
-              // Darken buttons
-              const style = document.createElement('style');
-              style.textContent = \`
-                button, 
-                .btn, 
-                [role="button"],
-                input[type="button"],
-                input[type="submit"],
-                a.button {
-                  background-color: #1a1f2e !important;
-                  color: #e2e8f0 !important;
-                  border-color: #3a4a4a !important;
-                }
-                button:hover, 
-                .btn:hover, 
-                [role="button"]:hover,
-                input[type="button"]:hover,
-                input[type="submit"]:hover,
-                a.button:hover {
-                  background-color:rgb(213, 214, 218) !important;
-                  border-color: #15803d !important;
-                }
-                button:active, 
-                .btn:active, 
-                [role="button"]:active,
-                input[type="button"]:active,
-                input[type="submit"]:active,
-                a.button:active {
-                  background-color:rgb(203, 206, 216) !important;
-                }
-              \`;
-              document.head.appendChild(style);
-            })();
-            true;
-          `}
-          onMessage={() => {}}
-          renderLoading={() => (
-            <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color="#B8FF12" />
-            </View>
-          )}
-        />
+  // Handle WebView errors and fallback to native component
+  const handleWebViewError = (syntheticEvent) => {
+    const { nativeEvent } = syntheticEvent;
+    console.warn('WebView error: ', nativeEvent);
+    setWebViewError(true);
+  };
+
+  // Render iframe for web platform
+  const renderWebIframe = () => {
+    if (!IS_WEB) return null;
+    
+    return (
+      <>
+        <View style={styles.webview}>
+          <iframe
+            src="https://www.smitecalculator.pro"
+            style={{
+              width: '100%',
+              height: '100%',
+              border: 'none',
+              display: 'block',
+            }}
+            title="SMITE Calculator"
+            allow="fullscreen"
+            allowFullScreen
+          />
+        </View>
         <View style={styles.linkContainer}>
           <TouchableOpacity
             style={styles.linkButton}
@@ -327,6 +282,113 @@ export default function CustomBuildPage() {
             <Text style={styles.linkText}>Open in Browser: smitecalculator.pro</Text>
           </TouchableOpacity>
         </View>
+      </>
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      {USE_WEBVIEW ? (
+        <>
+          {IS_WEB ? (
+            renderWebIframe()
+          ) : (
+            <>
+              <WebView
+                source={{ uri: 'https://www.smitecalculator.pro' }}
+                style={styles.webview}
+                startInLoadingState={true}
+                scalesPageToFit={true}
+                injectedJavaScript={`
+                (function() {
+                  const meta = document.createElement('meta');
+                  meta.name = 'viewport';
+                  meta.content = 'width=device-width, initial-scale=0.75, maximum-scale=1.0, user-scalable=yes';
+                  document.getElementsByTagName('head')[0].appendChild(meta);
+                  
+                  // Zoom out and center the body
+                  document.body.style.zoom = '0.75';
+                  document.body.style.transform = 'scale(0.75)';
+                  document.body.style.transformOrigin = 'center center';
+                  document.body.style.margin = '0 auto';
+                  document.body.style.display = 'flex';
+                  document.body.style.flexDirection = 'column';
+                  document.body.style.alignItems = 'center';
+                  document.body.style.justifyContent = 'center';
+                  document.body.style.minHeight = '100vh';
+                  
+                  // Center the main container if it exists
+                  const mainContainer = document.querySelector('main') || document.querySelector('.container') || document.body.firstElementChild;
+                  if (mainContainer) {
+                    mainContainer.style.margin = '0 auto';
+                    mainContainer.style.maxWidth = '100%';
+                  }
+                  
+                  // Darken buttons
+                  const style = document.createElement('style');
+                  style.textContent = \`
+                    button, 
+                    .btn, 
+                    [role="button"],
+                    input[type="button"],
+                    input[type="submit"],
+                    a.button {
+                      background-color: #1a1f2e !important;
+                      color: #e2e8f0 !important;
+                      border-color: #3a4a4a !important;
+                    }
+                    button:hover, 
+                    .btn:hover, 
+                    [role="button"]:hover,
+                    input[type="button"]:hover,
+                    input[type="submit"]:hover,
+                    a.button:hover {
+                      background-color:rgb(213, 214, 218) !important;
+                      border-color: #15803d !important;
+                    }
+                    button:active, 
+                    .btn:active, 
+                    [role="button"]:active,
+                    input[type="button"]:active,
+                    input[type="submit"]:active,
+                    a.button:active {
+                      background-color:rgb(203, 206, 216) !important;
+                    }
+                  \`;
+                  document.head.appendChild(style);
+                })();
+                true;
+              `}
+                onMessage={() => {}}
+                onError={handleWebViewError}
+                onHttpError={handleWebViewError}
+                renderError={() => (
+                  <View style={styles.errorContainer}>
+                    <Text style={styles.errorText}>WebView is not supported on this platform.</Text>
+                    <TouchableOpacity
+                      style={styles.linkButton}
+                      onPress={() => Linking.openURL('https://www.smitecalculator.pro')}
+                    >
+                      <Text style={styles.linkText}>Open in Browser: smitecalculator.pro</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+                renderLoading={() => (
+                  <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color="#B8FF12" />
+                  </View>
+                )}
+              />
+              <View style={styles.linkContainer}>
+                <TouchableOpacity
+                  style={styles.linkButton}
+                  onPress={() => Linking.openURL('https://www.smitecalculator.pro')}
+                >
+                  <Text style={styles.linkText}>Open in Browser: smitecalculator.pro</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
         </>
       ) : (
         <>
@@ -1962,6 +2024,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#0a0e1a',
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#0a0e1a',
+  },
+  errorText: {
+    color: '#ef4444',
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 20,
+    textAlign: 'center',
   },
   linkContainer: {
     padding: 16,

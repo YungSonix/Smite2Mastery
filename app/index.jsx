@@ -11,6 +11,7 @@ import {
   Pressable,
   InteractionManager,
   Platform,
+  Linking,
 } from 'react-native';
 import { Image } from 'expo-image';
 import HomePage from './home';
@@ -48,6 +49,7 @@ function BuildsPage({ onGodIconPress }) {
   const [selectedItem, setSelectedItem] = useState(null); // { item, itemName }
   const [selectedTip, setSelectedTip] = useState(null); // { tip, tipIndex, godIndex }
   const [failedItemIcons, setFailedItemIcons] = useState({}); // Track which item icons failed to load
+  const [activeTab, setActiveTab] = useState('builds'); // 'builds' or 'guides'
 
   // Lazy load the builds data after the UI has rendered to prevent startup crash
   useEffect(() => {
@@ -375,10 +377,70 @@ function BuildsPage({ onGodIconPress }) {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.logo}>SMITE 2</Text>
-        <Text style={styles.headerSub}>Curated Builds (Made by the Mentor Team) </Text>
         
+        {/* Tab Toggle Buttons */}
+        <View style={styles.tabButtons}>
+          <TouchableOpacity
+            style={[styles.tabButton, activeTab === 'builds' && styles.tabButtonActive]}
+            onPress={() => setActiveTab('builds')}
+            activeOpacity={0.7}
+          >
+            <Text style={[styles.tabButtonText, activeTab === 'builds' && styles.tabButtonTextActive]}>
+              Builds
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.tabButton, activeTab === 'guides' && styles.tabButtonActive]}
+            onPress={() => setActiveTab('guides')}
+            activeOpacity={0.7}
+          >
+            <Text style={[styles.tabButtonText, activeTab === 'guides' && styles.tabButtonTextActive]}>
+              Guides
+            </Text>
+          </TouchableOpacity>
+        </View>
+        
+        {activeTab === 'builds' && (
+          <Text style={styles.headerSub}>Curated Builds (Made by the Mentor Team)</Text>
+        )}
       </View>
 
+      {activeTab === 'guides' ? (
+        <ScrollView style={styles.guidesContainer} contentContainerStyle={styles.guidesContentContainer}>
+          <View style={styles.channelProfileCard}>
+            <View style={styles.channelProfileContent}>
+              <View style={styles.channelAvatarContainer}>
+                <Image
+                  source={{ uri: 'https://yt3.googleusercontent.com/2XgpF5D7qs8oQVMu6Y7pL1zGUrBRtczUH5XmIwm8WnJAEVNIs60DAR1cO-_WT31ZzIz11XpMfPE=s160-c-k-c0x00ffffff-no-rj' }}
+                  style={styles.channelAvatar}
+                  contentFit="cover"
+                  cachePolicy="memory-disk"
+                />
+              </View>
+              <View style={styles.channelInfo}>
+                <Text style={styles.channelName}>SMITE Mentors</Text>
+                <Text style={styles.channelHandle}>@SMITEMentors</Text>
+                <View style={styles.channelStats}>
+                  <Text style={styles.channelSubscribers}>29 subscribers</Text>
+                </View>
+              </View>
+            </View>
+            <TouchableOpacity
+              style={styles.openChannelButton}
+              onPress={() => Linking.openURL('https://www.youtube.com/@SMITEMentors/videos')}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.openChannelButtonText}>Open Channel in YouTube</Text>
+            </TouchableOpacity>
+            <View style={styles.channelDescription}>
+              <Text style={styles.channelDescriptionText}>
+                Watch guides and tutorials from the SMITE Mentors team. Learn from experienced players and improve your gameplay.
+              </Text>
+            </View>
+          </View>
+        </ScrollView>
+      ) : (
+        <>
       <View style={styles.controls}>
         <TextInput
           style={styles.search}
@@ -1448,6 +1510,8 @@ function BuildsPage({ onGodIconPress }) {
           )}
         </View>
       </View>
+        </>
+      )}
 
       {/* Item Tooltip Modal */}
       <Modal
@@ -1822,7 +1886,113 @@ const styles = StyleSheet.create({
   },
   headerSub: {
     color: '#94a3b8',
-    marginTop: 4,
+    marginTop: 8,
+    textAlign: 'center',
+  },
+  tabButtons: {
+    flexDirection: 'row',
+    marginTop: 12,
+    marginBottom: 8,
+    gap: 8,
+    justifyContent: 'center',
+  },
+  tabButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    borderRadius: 6,
+    backgroundColor: '#0b1226',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    minWidth: 80,
+  },
+  tabButtonActive: {
+    backgroundColor: '#1e90ff',
+    borderColor: '#1e90ff',
+  },
+  tabButtonText: {
+    color: '#94a3b8',
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  tabButtonTextActive: {
+    color: '#ffffff',
+    fontWeight: '700',
+  },
+  guidesContainer: {
+    flex: 1,
+    backgroundColor: '#071024',
+  },
+  guidesContentContainer: {
+    padding: 20,
+  },
+  channelProfileCard: {
+    backgroundColor: '#0b1226',
+    borderRadius: 12,
+    padding: 24,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  channelProfileContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  channelAvatarContainer: {
+    marginRight: 16,
+  },
+  channelAvatar: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: '#0a1a2e',
+    borderWidth: 2,
+    borderColor: '#1e3a5f',
+  },
+  channelInfo: {
+    flex: 1,
+  },
+  channelName: {
+    color: '#ffffff',
+    fontSize: 24,
+    fontWeight: '700',
+    marginBottom: 4,
+  },
+  channelHandle: {
+    color: '#ffffff',
+    fontSize: 16,
+    marginBottom: 6,
+    opacity: 0.9,
+  },
+  channelStats: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  channelSubscribers: {
+    color: '#ffffff',
+    fontSize: 14,
+    opacity: 0.8,
+  },
+  openChannelButton: {
+    backgroundColor: '#1e90ff',
+    padding: 14,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  openChannelButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  channelDescription: {
+    marginTop: 8,
+  },
+  channelDescriptionText: {
+    color: '#cbd5e1',
+    fontSize: 14,
+    lineHeight: 20,
+    opacity: 0.9,
   },
   controls: {
     marginBottom: 12,
@@ -2614,14 +2784,10 @@ export default function App() {
         }
       };
 
-      // Disable text selection (but allow in input fields)
+      // Disable text selection
       const handleSelectStart = (e) => {
-        const target = e.target;
-        const isInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
-        if (!isInput) {
-          e.preventDefault();
-          return false;
-        }
+        e.preventDefault();
+        return false;
       };
 
       // Disable drag
@@ -2630,34 +2796,22 @@ export default function App() {
         return false;
       };
 
-      // Disable copy (but allow in input fields)
+      // Disable copy
       const handleCopy = (e) => {
-        const target = e.target;
-        const isInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
-        if (!isInput) {
-          e.preventDefault();
-          return false;
-        }
+        e.preventDefault();
+        return false;
       };
 
-      // Disable cut (but allow in input fields)
+      // Disable cut
       const handleCut = (e) => {
-        const target = e.target;
-        const isInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
-        if (!isInput) {
-          e.preventDefault();
-          return false;
-        }
+        e.preventDefault();
+        return false;
       };
 
-      // Disable paste (but allow in input fields)
+      // Disable paste
       const handlePaste = (e) => {
-        const target = e.target;
-        const isInput = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
-        if (!isInput) {
-          e.preventDefault();
+        e.preventDefault();
           return false;
-        }
       };
 
       // Add event listeners
@@ -2668,22 +2822,6 @@ export default function App() {
       document.addEventListener('copy', handleCopy);
       document.addEventListener('cut', handleCut);
       document.addEventListener('paste', handlePaste);
-
-      // Disable console methods first
-      const noop = () => {};
-      const originalConsole = { ...console };
-      console.log = noop;
-      console.warn = noop;
-      console.error = noop;
-      console.info = noop;
-      console.debug = noop;
-      console.table = noop;
-      console.trace = noop;
-      console.group = noop;
-      console.groupEnd = noop;
-      console.time = noop;
-      console.timeEnd = noop;
-      console.clear = noop;
 
       // Disable dev tools detection
       let devtools = { open: false };
@@ -2699,14 +2837,28 @@ export default function App() {
       // Check for dev tools periodically
       const checkDevTools = setInterval(() => {
         devtools.open = false;
-        // Use original console for detection
-        originalConsole.log(element);
-        originalConsole.clear();
+        console.log(element);
+        console.clear();
         if (devtools.open) {
           // Dev tools detected - you can add custom handling here
           // For example: window.location.href = 'about:blank';
         }
       }, 1000);
+
+      // Disable console methods
+      const noop = () => {};
+      const originalConsole = { ...console };
+      console.log = noop;
+      console.warn = noop;
+      console.error = noop;
+      console.info = noop;
+      console.debug = noop;
+      console.table = noop;
+      console.trace = noop;
+      console.group = noop;
+      console.groupEnd = noop;
+      console.time = noop;
+      console.timeEnd = noop;
 
       // Cleanup function
       return () => {
