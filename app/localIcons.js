@@ -11,7 +11,7 @@ const ITEM_ICONS_PATH = `${GITHUB_BASE}/Item%20Icons`;
 const GOD_ICONS_PATH = `${GITHUB_BASE}/God%20Info`;
 
 // Skin/wallpaper path - wallpapers are in app/data/Icons/Wallpapers folder
-const SKINS_PATH = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/app/data/Icons/Wallpapers';
+const SKINS_PATH = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/master/app/data/Icons/Wallpapers';
 
 // Helper to create URI object for React Native Image
 function createImageUri(basePath, filename) {

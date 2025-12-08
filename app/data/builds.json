@@ -35150,7 +35150,7 @@
                     }
                 },
                 "internalName": "The_Morrigan_Item",
-                "key": "God.TheMorrigan",
+                "key": "Morrigan",
                 "name": "The Morrigan",
                 "Type": "Magical",
                 "icon": "/icons/morriganImage.webp",
@@ -35637,7 +35637,7 @@
                 ],
                 "icon": "/icons/tsukuImage.webp",
                 "shortRole": "God of The Moon",
-                "subText": "Wield Moon-Froged Tonfa. Contral Distance, then Finish Foes in Eclipsing Bursts.",
+                "subText": "God of The Moon",
                 "tips": [],
                 "skins": {
                     "Tsukuyomi": {
@@ -37508,7 +37508,7 @@
                 ],
                 "icon": "/icons/xbalImage.webp",
                 "shortRole": "Hidden Jaguar Sun",
-                "subText": "Poison Enemies and Enshroud Them in Darkness",
+                "subText": "Hidden Jaguar Sun",
                 "tips": [],
                 "skins": {
                     "Xbalanque": {
