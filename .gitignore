@@ -52,8 +52,5 @@ app/data/builds.json.backup
 # Ignore large asset directories (contains thousands of game asset images)
 # But keep essential icons that are required by the code
 app/data/Icons/God Info/
-app/data/Icons/Item Icons/
-app/data/Icons/Wallpapers/
-
 # Keep essential icons that are required by the code
 # (Role Icons, Pantheon Icons, Stat Icons, Consumables, Vulcan Mods, Game Modes, Conquest Images are tracked)
