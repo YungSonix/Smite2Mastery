@@ -1853,6 +1853,16 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
           // Otherwise, alphabetical
           return a.localeCompare(b);
         });
+
+        // Extract scaling type from god's scaling property (authoritative source)
+        const scalingTypes = [];
+        if (selectedGod.scaling && Array.isArray(selectedGod.scaling)) {
+          selectedGod.scaling.forEach(scaleType => {
+            if (scaleType === 'STR' || scaleType === 'INT') {
+              scalingTypes.push(scaleType);
+            }
+          });
+        }
         
         const pantheonColors = {
           'Greek': { primary: '#4a90e2', secondary: '#357abd', accent: '#5ba3f5' },
@@ -1966,6 +1976,38 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                       )}
                     </View>
                   )}
+                  {scalingTypes.length > 0 && (
+                    <View style={styles.godPageRolesContainer}>
+                      <Text style={[styles.godPageRolesLabel, { color: colors.accent + 'AA' }]}>
+                        Scaling:
+                      </Text>
+                      <View style={styles.godPageRolesList}>
+                        {scalingTypes.map((scaleType, idx) => {
+                          const scaleIcon = scaleType === 'STR' ? statIcons['Strength'] : statIcons['Intelligence'];
+                          return (
+                            <React.Fragment key={scaleType}>
+                              <View style={styles.godPageRoleItem}>
+                                {scaleIcon && (
+                                  <Image 
+                                    source={scaleIcon} 
+                                    style={styles.godPageRoleIcon}
+                                    resizeMode="contain"
+                                    accessibilityLabel={`${scaleType === 'STR' ? 'Strength' : 'Intelligence'} scaling icon`}
+                                  />
+                                )}
+                                <Text style={[styles.godPageRoleText, { color: colors.accent + 'AA' }]}>
+                                  {scaleType}
+                                </Text>
+                              </View>
+                              {idx < scalingTypes.length - 1 && (
+                                <Text style={[styles.godPageRoleText, { color: colors.accent + 'AA' }]}> • </Text>
+                              )}
+                            </React.Fragment>
+                          );
+                        })}
+                      </View>
+                    </View>
+                  )}
                   {possibleRoles.length > 0 && (
                     <View style={styles.godPageRolesContainer}>
                       <Text style={[styles.godPageRolesLabel, { color: colors.accent + 'AA' }]}>
@@ -1995,8 +2037,8 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                             </React.Fragment>
                           );
                         })}
-                </View>
-              </View>
+                      </View>
+                    </View>
                   )}
                 </View>
                 </View>
