@@ -10,12 +10,16 @@ import {
   Pressable,
   ActivityIndicator,
   InteractionManager,
+  Platform,
 } from 'react-native';
 import { Image } from 'expo-image';
 // Lazy load builds.json to prevent startup crash
 let localBuilds = null;
 import { getLocalItemIcon, getLocalGodAsset, getSkinImage } from './localIcons';
 import ConquestMap from './ConquestMap';
+
+// Platform check for web
+const IS_WEB = Platform.OS === 'web';
 
 
 // Import game mode icons
@@ -270,6 +274,26 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
   // Track if we came from builds page (only true if initialSelectedGod was set on mount)
   const [cameFromBuilds] = useState(!!initialSelectedGod && !!onBackToBuilds);
   
+  // Hide scrollbars on web
+  useEffect(() => {
+    if (IS_WEB && typeof document !== 'undefined') {
+      const style = document.createElement('style');
+      style.textContent = `
+        * {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        *::-webkit-scrollbar {
+          display: none;
+        }
+      `;
+      document.head.appendChild(style);
+      return () => {
+        document.head.removeChild(style);
+      };
+    }
+  }, []);
+
   // Reset tab and related state when component mounts or when navigating back
   useEffect(() => {
     // Only reset if we're not coming from builds page with a specific god
@@ -426,6 +450,9 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
   const [baseStatsExpanded, setBaseStatsExpanded] = useState(false);
   const [godLevel, setGodLevel] = useState(1);
   const [sliderTrackWidth, setSliderTrackWidth] = useState(300);
+  const [sliderTrackLayout, setSliderTrackLayout] = useState({ x: 0, y: 0, width: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const sliderTrackRef = useRef(null);
   const [selectedPantheon, setSelectedPantheon] = useState(null);
   const [pantheonDropdownVisible, setPantheonDropdownVisible] = useState(false);
   const [showGodSkins, setShowGodSkins] = useState(false); // Toggle between icons and base skins
@@ -617,6 +644,106 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     return result;
   }, [items, searchQuery, selectedStat, selectedTier]);
 
+  // Handle slider movement for both web and mobile
+  const handleSliderMove = useCallback((event) => {
+    const nativeEvent = event.nativeEvent;
+    if (sliderTrackWidth > 0 && sliderTrackRef.current) {
+      let locationX;
+      if (IS_WEB) {
+        // For web, try multiple methods to get the correct position
+        // First try locationX (works in some React Native Web versions)
+        locationX = nativeEvent?.locationX;
+        
+        // If locationX is not available or seems wrong, calculate from clientX
+        if (locationX === undefined || locationX === null || locationX < 0 || locationX > sliderTrackWidth) {
+          const clientX = nativeEvent?.clientX ?? nativeEvent?.pageX ?? 0;
+          // Always try to get element position for accuracy
+          try {
+            const element = sliderTrackRef.current;
+            if (element && typeof element.getBoundingClientRect === 'function') {
+              const rect = element.getBoundingClientRect();
+              locationX = clientX - rect.left;
+            } else {
+              locationX = clientX - sliderTrackLayout.x;
+            }
+          } catch (e) {
+            // Final fallback
+            locationX = clientX - sliderTrackLayout.x;
+          }
+        }
+        // Ensure locationX is within bounds
+        locationX = Math.max(0, Math.min(sliderTrackWidth, locationX));
+      } else {
+        // For mobile, use locationX directly or calculate from touches
+        if (nativeEvent?.locationX !== undefined && nativeEvent?.locationX !== null) {
+          locationX = nativeEvent.locationX;
+        } else if (nativeEvent?.touches && nativeEvent.touches.length > 0) {
+          // Fallback: calculate from touch position
+          const touch = nativeEvent.touches[0];
+          if (touch && sliderTrackLayout.x > 0) {
+            locationX = touch.pageX - sliderTrackLayout.x;
+          } else {
+            locationX = 0;
+          }
+        } else {
+          locationX = nativeEvent?.locationX ?? 0;
+        }
+        // Ensure locationX is within bounds
+        locationX = Math.max(0, Math.min(sliderTrackWidth, locationX));
+      }
+      const percentage = Math.max(0, Math.min(1, locationX / sliderTrackWidth));
+      const newLevel = Math.round(1 + percentage * 19);
+      setGodLevel(Math.max(1, Math.min(20, newLevel)));
+    }
+  }, [sliderTrackWidth, sliderTrackLayout, IS_WEB]);
+
+  // Handle mouse move for web (for smooth dragging)
+  const handleMouseMove = useCallback((e) => {
+    if (!isDragging || !IS_WEB) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (sliderTrackRef.current && sliderTrackWidth > 0) {
+      try {
+        const element = sliderTrackRef.current;
+        if (element && typeof element.getBoundingClientRect === 'function') {
+          const rect = element.getBoundingClientRect();
+          const clientX = e.clientX;
+          const locationX = Math.max(0, Math.min(sliderTrackWidth, clientX - rect.left));
+          const percentage = Math.max(0, Math.min(1, locationX / sliderTrackWidth));
+          const newLevel = Math.round(1 + percentage * 19);
+          setGodLevel(Math.max(1, Math.min(20, newLevel)));
+        }
+      } catch (err) {
+        // Ignore errors
+      }
+    }
+  }, [isDragging, sliderTrackWidth, IS_WEB]);
+
+  // Handle mouse up for web
+  const handleMouseUp = useCallback(() => {
+    if (IS_WEB && isDragging) {
+      setIsDragging(false);
+      if (typeof document !== 'undefined') {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      }
+    }
+  }, [isDragging, IS_WEB, handleMouseMove]);
+
+  // Set up mouse event listeners for web when dragging starts
+  useEffect(() => {
+    if (IS_WEB && isDragging) {
+      if (typeof document !== 'undefined') {
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+        return () => {
+          document.removeEventListener('mousemove', handleMouseMove);
+          document.removeEventListener('mouseup', handleMouseUp);
+        };
+      }
+    }
+  }, [isDragging, IS_WEB, handleMouseMove, handleMouseUp]);
+
   // Calculate base stats at current level (must be at top level, not conditional)
   const baseStatsAtLevel = useMemo(() => {
     const stats = {};
@@ -682,13 +809,19 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     return grouped;
   }, []);
 
+  // Check if any detail page is open
+  const isDetailPageOpen = selectedGod || selectedItem || selectedGameMode || selectedMechanic;
+
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.logo}>SMITE 2 Database</Text>
-        <Text style={styles.headerSub}>All gameplay information about Smite 2 will be located here.</Text>
-      </View>
+      {!isDetailPageOpen && (
+        <View style={styles.header}>
+          <Text style={styles.logo}>SMITE 2 Database</Text>
+          <Text style={styles.headerSub}>All gameplay information about Smite 2 will be located here.</Text>
+        </View>
+      )}
 
+      {!isDetailPageOpen && (
       <View style={styles.controls}>
         <View style={styles.tabBar}>
           <TouchableOpacity
@@ -1057,6 +1190,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
           )}
         </View>
       </View>
+      )}
 
       {/* Show Item Detail Page if selected, otherwise show God Detail Page or grid */}
       {selectedItem ? (() => {
@@ -1751,6 +1885,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         contentFit="cover"
                         cachePolicy="memory-disk"
                         transition={200}
+                        accessibilityLabel={`${selectedGod.name || selectedGod.GodName || selectedGod.title || 'God'} icon`}
                       />
                       );
                     }
@@ -1816,6 +1951,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                     source={roleIcon} 
                                     style={styles.godPageRoleIcon}
                                     resizeMode="contain"
+                                    accessibilityLabel={`${role} role icon`}
                                   />
                                 )}
                                 <Text style={[styles.godPageRoleText, { color: colors.accent + 'AA' }]}>
@@ -1834,7 +1970,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                 </View>
                 </View>
             </View>
-          <ScrollView style={styles.godPageBody}>
+          <ScrollView style={styles.godPageBody} scrollEnabled={!isDragging}>
             {/* Base Stats Section */}
             {selectedGod.baseStats && typeof selectedGod.baseStats === 'object' && Object.keys(selectedGod.baseStats).length > 0 && (
               <View style={styles.modalSection}>
@@ -1859,35 +1995,176 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         >
                           <Text style={styles.levelSliderButtonText}>−</Text>
                         </TouchableOpacity>
-                        <Pressable
-                          style={styles.levelSliderTrack}
+                        <View
+                          ref={sliderTrackRef}
+                          style={[
+                            styles.levelSliderTrack,
+                            isDragging && styles.levelSliderTrackActive
+                          ]}
                           onLayout={(event) => {
-                            const { width } = event.nativeEvent.layout;
+                            const { width, x, y } = event.nativeEvent.layout;
                             setSliderTrackWidth(width);
+                            if (IS_WEB) {
+                              // For web, we need to measure the element's position on screen
+                              // Use a small delay to ensure layout is complete
+                              setTimeout(() => {
+                                if (sliderTrackRef.current) {
+                                  try {
+                                    const element = sliderTrackRef.current;
+                                    if (element && typeof element.measure === 'function') {
+                                      element.measure((fx, fy, fwidth, fheight, px, py) => {
+                                        setSliderTrackLayout({ x: px, y: py, width: fwidth });
+                                      });
+                                    } else if (element && typeof element.getBoundingClientRect === 'function') {
+                                      const rect = element.getBoundingClientRect();
+                                      setSliderTrackLayout({ x: rect.left, y: rect.top, width: rect.width });
+                                    } else {
+                                      setSliderTrackLayout({ x, y, width });
+                                    }
+                                  } catch (e) {
+                                    setSliderTrackLayout({ x, y, width });
+                                  }
+                                }
+                              }, 0);
+                            } else {
+                              setSliderTrackLayout({ x, y, width });
+                            }
                           }}
-                          onPress={(event) => {
-                            if (sliderTrackWidth > 0) {
-                              const { locationX } = event.nativeEvent;
-                              const percentage = Math.max(0, Math.min(1, locationX / sliderTrackWidth));
-                              const newLevel = Math.round(1 + percentage * 19);
-                              setGodLevel(Math.max(1, Math.min(20, newLevel)));
+                          onStartShouldSetResponder={() => true}
+                          onMoveShouldSetResponder={() => true}
+                          onResponderGrant={(event) => {
+                            if (!IS_WEB) {
+                              event.preventDefault();
+                              setIsDragging(true);
+                              handleSliderMove(event);
+                            }
+                          }}
+                          onResponderMove={(event) => {
+                            if (!IS_WEB && isDragging) {
+                              event.preventDefault();
+                              handleSliderMove(event);
+                            }
+                          }}
+                          onResponderRelease={() => {
+                            if (!IS_WEB) {
+                              setIsDragging(false);
+                            }
+                          }}
+                          onResponderTerminationRequest={() => false}
+                          onMouseDown={(e) => {
+                            if (IS_WEB && sliderTrackRef.current && sliderTrackWidth > 0) {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setIsDragging(true);
+                              handleSliderMove({ nativeEvent: { clientX: e.clientX, pageX: e.pageX } });
+                            }
+                          }}
+                          onTouchStart={(e) => {
+                            if (!IS_WEB && sliderTrackRef.current && sliderTrackWidth > 0) {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              const touch = e.nativeEvent.touches[0];
+                              if (touch) {
+                                setIsDragging(true);
+                                const touchX = touch.pageX - (sliderTrackLayout.x || 0);
+                                handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                              }
+                            }
+                          }}
+                          onTouchMove={(e) => {
+                            if (!IS_WEB && isDragging && sliderTrackRef.current && sliderTrackWidth > 0) {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              const touch = e.nativeEvent.touches[0];
+                              if (touch) {
+                                const touchX = touch.pageX - (sliderTrackLayout.x || 0);
+                                handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                              }
+                            }
+                          }}
+                          onTouchEnd={(e) => {
+                            if (!IS_WEB) {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setIsDragging(false);
                             }
                           }}
                         >
                           <View 
                             style={[
-                              styles.levelSliderFill, 
+                              styles.levelSliderFill,
+                              isDragging && styles.levelSliderFillActive,
                               { width: `${((godLevel - 1) / 19) * 100}%` }
                             ]} 
+                            pointerEvents="none"
                           />
                           <View 
                             style={[
                               styles.levelSliderThumb,
+                              isDragging && styles.levelSliderThumbDragging,
                               { left: `${((godLevel - 1) / 19) * 100}%` }
                             ]}
-                            pointerEvents="none"
+                            onStartShouldSetResponder={() => true}
+                            onMoveShouldSetResponder={() => true}
+                            onResponderGrant={(event) => {
+                              if (!IS_WEB) {
+                                event.preventDefault();
+                                setIsDragging(true);
+                                handleSliderMove(event);
+                              }
+                            }}
+                            onResponderMove={(event) => {
+                              if (!IS_WEB && isDragging) {
+                                event.preventDefault();
+                                handleSliderMove(event);
+                              }
+                            }}
+                            onResponderRelease={() => {
+                              if (!IS_WEB) {
+                                setIsDragging(false);
+                              }
+                            }}
+                            onResponderTerminationRequest={() => false}
+                            onMouseDown={(e) => {
+                              if (IS_WEB && sliderTrackRef.current && sliderTrackWidth > 0) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setIsDragging(true);
+                                handleSliderMove({ nativeEvent: { clientX: e.clientX, pageX: e.pageX } });
+                              }
+                            }}
+                            onTouchStart={(e) => {
+                              if (!IS_WEB && sliderTrackRef.current && sliderTrackWidth > 0) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                const touch = e.nativeEvent.touches[0];
+                                if (touch) {
+                                  setIsDragging(true);
+                                  const touchX = touch.pageX - (sliderTrackLayout.x || 0);
+                                  handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                                }
+                              }
+                            }}
+                            onTouchMove={(e) => {
+                              if (!IS_WEB && isDragging && sliderTrackRef.current && sliderTrackWidth > 0) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                const touch = e.nativeEvent.touches[0];
+                                if (touch) {
+                                  const touchX = touch.pageX - (sliderTrackLayout.x || 0);
+                                  handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                                }
+                              }
+                            }}
+                            onTouchEnd={(e) => {
+                              if (!IS_WEB) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setIsDragging(false);
+                              }
+                            }}
                           />
-                        </Pressable>
+                        </View>
                         <TouchableOpacity
                           style={[styles.levelSliderButton, godLevel === 20 && styles.levelSliderButtonDisabled]}
                           onPress={() => setGodLevel(Math.min(20, godLevel + 1))}
@@ -2000,6 +2277,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               contentFit="contain"
                               cachePolicy="memory-disk"
                               transition={200}
+                              accessibilityLabel={`${selectedGod.skins[selectedSkin].name || selectedSkin} skin image`}
                               onError={() => {
                                 setFailedItemIcons(prev => ({ ...prev, [skinKey]: true }));
                               }}
@@ -2017,6 +2295,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               contentFit="contain"
                               cachePolicy="memory-disk"
                               transition={200}
+                              accessibilityLabel={`${selectedGod.skins[selectedSkin].name || selectedSkin} skin image`}
                             />
                           );
                         }
@@ -2030,6 +2309,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                             contentFit="contain"
                             cachePolicy="memory-disk"
                             transition={200}
+                            accessibilityLabel={`${selectedGod.skins[selectedSkin].name || selectedSkin} skin image`}
                           />
                         );
                       }
@@ -2095,7 +2375,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                           {abilityIconPath ? (() => {
                             const localIcon = getLocalGodAsset(abilityIconPath);
                             if (localIcon) {
-                              return <Image source={localIcon} style={styles.abilityIconCompact} contentFit="cover" cachePolicy="memory-disk" transition={200} />;
+                              return <Image source={localIcon} style={styles.abilityIconCompact} contentFit="cover" cachePolicy="memory-disk" transition={200} accessibilityLabel={`${abilityName} ability icon`} />;
                             }
                             return (
                               <View style={styles.abilityIconFallbackCompact}>
@@ -2137,6 +2417,8 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               source={localIcon} 
                           style={styles.aspectIcon}
                           resizeMode="cover"
+                          cachePolicy="memory-disk"
+                          transition={200}
                         />
                           );
                         }
@@ -4536,7 +4818,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                 <Text style={styles.gamemodesIntroText}>
                   Each of the Game Modes in SMITE 2 has its own play style, rules and objectives.{' '}
                   <Text style={styles.gamemodesIntroTextRed}>
-                    All data collected from ingame and official sources like Smite Wiki 2.
+                    All data collected from ingame and official sources like Smite 2 Wiki.
                   </Text>
                 </Text>
                 <TouchableOpacity
@@ -4597,7 +4879,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                     }}
                   >
                     {gameModeIcons[mode.id] ? (
-                      <Image source={gameModeIcons[mode.id]} style={styles.cardIcon} contentFit="cover" cachePolicy="memory-disk" transition={200} />
+                      <Image source={gameModeIcons[mode.id]} style={styles.cardIcon} contentFit="cover" cachePolicy="memory-disk" transition={200} accessibilityLabel={`${mode.name} game mode icon`} />
                     ) : (
                       <View style={styles.cardIconFallback}>
                         <Text style={styles.cardIconFallbackText}>{mode.name.charAt(0)}</Text>
@@ -4629,6 +4911,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#071024',
     paddingTop: 20,
+    ...(IS_WEB && {
+      maxWidth: 1200,
+      alignSelf: 'center',
+      width: '100%',
+      paddingHorizontal: 20,
+    }),
   },
   header: {
     alignItems: 'center',
@@ -5418,15 +5706,35 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
-    gap: 12,
+    gap: 16,
     marginBottom: 12,
   },
   levelSliderTrack: {
     flex: 1,
-    height: 8,
+    height: IS_WEB ? 12 : 8,
     backgroundColor: '#ffffff',
     borderRadius: 4,
     position: 'relative',
+    cursor: IS_WEB ? 'pointer' : 'default',
+    transition: IS_WEB ? 'all 0.2s ease' : undefined,
+    marginHorizontal: 4,
+    ...(IS_WEB && {
+      minHeight: 12,
+      touchAction: 'none',
+      userSelect: 'none',
+      WebkitUserSelect: 'none',
+    }),
+    ...(!IS_WEB && {
+      touchAction: 'none',
+    }),
+  },
+  levelSliderTrackActive: {
+    backgroundColor: '#e5e7eb',
+    shadowColor: '#facc15',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 2,
   },
   levelSliderFill: {
     position: 'absolute',
@@ -5435,26 +5743,55 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#facc15',
     borderRadius: 4,
+    transition: IS_WEB ? 'all 0.1s linear' : undefined,
+  },
+  levelSliderFillActive: {
+    backgroundColor: '#fbbf24',
+    shadowColor: '#facc15',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.6,
+    shadowRadius: 4,
   },
   levelSliderThumb: {
     position: 'absolute',
-    top: -8,
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    top: IS_WEB ? -10 : -8,
+    width: IS_WEB ? 28 : 24,
+    height: IS_WEB ? 28 : 24,
+    borderRadius: IS_WEB ? 14 : 12,
     backgroundColor: '#facc15',
     borderWidth: 2,
     borderColor: '#ffffff',
-    transform: [{ translateX: -12 }],
+    transform: [{ translateX: IS_WEB ? -14 : -12 }],
     shadowColor: '#facc15',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: 5,
+    transition: IS_WEB ? 'all 0.1s linear' : undefined,
+    zIndex: 10,
+    ...(IS_WEB && {
+      cursor: 'grab',
+      touchAction: 'none',
+      userSelect: 'none',
+      WebkitUserSelect: 'none',
+    }),
+    ...(!IS_WEB && {
+      touchAction: 'none',
+    }),
   },
   levelSliderThumbDragging: {
-    transform: [{ translateX: -12 }, { scale: 1.2 }],
-    elevation: 8,
+    transform: [{ translateX: IS_WEB ? -17 : -14 }, { scale: 1.3 }],
+    backgroundColor: '#fbbf24',
+    borderColor: '#ffffff',
+    borderWidth: 3,
+    shadowColor: '#facc15',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.8,
+    shadowRadius: 8,
+    elevation: 10,
+    ...(IS_WEB && {
+      cursor: 'grabbing',
+    }),
   },
   levelSliderButton: {
     width: 36,

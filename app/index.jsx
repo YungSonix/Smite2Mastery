@@ -407,6 +407,7 @@ function BuildsPage({ onGodIconPress }) {
 
       {activeTab === 'guides' ? (
         <ScrollView style={styles.guidesContainer} contentContainerStyle={styles.guidesContentContainer}>
+          {/* SMITE Mentors */}
           <View style={styles.channelProfileCard}>
             <View style={styles.channelProfileContent}>
               <View style={styles.channelAvatarContainer}>
@@ -415,6 +416,7 @@ function BuildsPage({ onGodIconPress }) {
                   style={styles.channelAvatar}
                   contentFit="cover"
                   cachePolicy="memory-disk"
+                  accessibilityLabel="SMITE Mentors channel avatar"
                 />
               </View>
               <View style={styles.channelInfo}>
@@ -438,6 +440,125 @@ function BuildsPage({ onGodIconPress }) {
               </Text>
             </View>
           </View>
+
+          {/* Snaddyyy */}
+          <View style={styles.channelProfileCard}>
+            <View style={styles.channelProfileContent}>
+              <View style={styles.channelAvatarContainer}>
+                <Image
+                  source={{ uri: 'https://yt3.googleusercontent.com/5M8q1zJMm0dYEXgYbMv8kS2c3OQs65yMNdPQ3AaYBk92dGF9WuqraqrBP4FmvrIDGoINFpx-SQ=s160-c-k-c0x00ffffff-no-rj' }}
+                  style={styles.channelAvatar}
+                  contentFit="cover"
+                  cachePolicy="memory-disk"
+                  accessibilityLabel="Snaddyyy channel avatar"
+                />
+              </View>
+              <View style={styles.channelInfo}>
+                <Text style={styles.channelName}>Snaddyyy</Text>
+                <Text style={styles.channelHandle}>@Snaddyyy</Text>
+              </View>
+            </View>
+            <TouchableOpacity
+              style={styles.openChannelButton}
+              onPress={() => Linking.openURL('https://www.youtube.com/@Snaddyyy/videos')}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.openChannelButtonText}>Open Channel in YouTube</Text>
+            </TouchableOpacity>
+            <View style={styles.channelDescription}>
+              <Text style={styles.channelDescriptionText}>
+                Professional SMITE player and content creator. Watch high-level gameplay, guides, and tips to improve your SMITE 2 skills.
+              </Text>
+            </View>
+          </View>
+
+          {/* Weak3n */}
+          <View style={styles.channelProfileCard}>
+            <View style={styles.channelProfileContent}>
+              <View style={styles.channelAvatarContainer}>
+                <Image
+                  source={{ uri: 'https://yt3.googleusercontent.com/ytc/AIdro_n7rSS9O_T25aptb33yYjBr7l8e9VPEavnSYK8prhwcl-E=s160-c-k-c0x00ffffff-no-rj' }}
+                  style={styles.channelAvatar}
+                  contentFit="cover"
+                  cachePolicy="memory-disk"
+                  accessibilityLabel="Weak3n channel avatar"
+                />
+              </View>
+              <View style={styles.channelInfo}>
+                <Text style={styles.channelName}>Weak3n</Text>
+                <Text style={styles.channelHandle}>@weak3n</Text>
+              </View>
+            </View>
+            <TouchableOpacity
+              style={styles.openChannelButton}
+              onPress={() => Linking.openURL('https://www.youtube.com/weak3n/videos')}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.openChannelButtonText}>Open Channel in YouTube</Text>
+            </TouchableOpacity>
+            <View style={styles.channelDescription}>
+              <Text style={styles.channelDescriptionText}>
+                Professional SMITE player and streamer. Learn from one of the best players in the SMITE community with guides, gameplay, and analysis.
+              </Text>
+            </View>
+          </View>
+
+          {/* Inbowned */}
+          <View style={styles.channelProfileCard}>
+            <View style={styles.channelProfileContent}>
+              <View style={styles.channelAvatarContainer}>
+                <Image
+                  source={{ uri: 'https://yt3.googleusercontent.com/ytc/AIdro_lalSvCUULC3MJ3WrwqFFY5NjamgZj-gHtrOnzMevI8kw=s160-c-k-c0x00ffffff-no-rj' }}
+                  style={styles.channelAvatar}
+                  contentFit="cover"
+                  cachePolicy="memory-disk"
+                  accessibilityLabel="Inbowned channel avatar"
+                />
+              </View>
+              <View style={styles.channelInfo}>
+                <Text style={styles.channelName}>Inbowned</Text>
+                <Text style={styles.channelHandle}>@inbowned</Text>
+              </View>
+            </View>
+            <TouchableOpacity
+              style={styles.openChannelButton}
+              onPress={() => Linking.openURL('https://www.youtube.com/inbowned/videos')}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.openChannelButtonText}>Open Channel in YouTube</Text>
+            </TouchableOpacity>
+            <View style={styles.channelDescription}>
+              <Text style={styles.channelDescriptionText}>
+                Professional SMITE player and content creator. Watch competitive gameplay, guides, and educational content to level up your SMITE 2 gameplay.
+              </Text>
+            </View>
+          </View>
+
+          {/* Channel 4 (Channel ID) */}
+          <View style={styles.channelProfileCard}>
+            <View style={styles.channelProfileContent}>
+              <View style={styles.channelAvatarContainer}>
+                <Image
+                  source={{ uri: 'https://yt3.googleusercontent.com/nsJHCAtwZ6dKz0huoaJQm7qzt_T9FSVz9CYRR0sWODUh3mDtX-EcfNmxOOVsoGOAZfvNC-3S=s160-c-k-c0x00ffffff-no-rj' }}
+                  style={styles.channelAvatar}
+                  contentFit="cover"
+                  cachePolicy="memory-disk"
+                  accessibilityLabel="SMITE 2 Creator channel avatar"
+                />
+              </View>
+              <View style={styles.channelInfo}>
+                <Text style={styles.channelName}>SMITE 2 Creator</Text>
+                <Text style={styles.channelHandle}>YouTube Channel</Text>
+              </View>
+            </View>
+            <TouchableOpacity
+              style={styles.openChannelButton}
+              onPress={() => Linking.openURL('https://www.youtube.com/channel/UCdDMqqLAonqVsFBFJqMkDpg/videos')}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.openChannelButtonText}>Open Channel in YouTube</Text>
+            </TouchableOpacity>
+          </View>
         </ScrollView>
       ) : (
         <>
@@ -460,7 +581,7 @@ function BuildsPage({ onGodIconPress }) {
           >
             <View style={styles.roleFilterButtonContent}>
               {getRoleIcon('ADC') && (
-                <Image source={getRoleIcon('ADC')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" />
+                <Image source={getRoleIcon('ADC')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" accessibilityLabel="ADC role icon" />
               )}
               <Text style={[styles.roleFilterText, selectedRole === 'ADC' && styles.roleFilterTextActive]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>ADC</Text>
             </View>
@@ -475,7 +596,7 @@ function BuildsPage({ onGodIconPress }) {
           >
             <View style={styles.roleFilterButtonContent}>
               {getRoleIcon('Solo') && (
-                <Image source={getRoleIcon('Solo')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" />
+                <Image source={getRoleIcon('Solo')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" accessibilityLabel="Solo role icon" />
               )}
               <Text style={[styles.roleFilterText, selectedRole === 'Solo' && styles.roleFilterTextActive]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>Solo</Text>
             </View>
@@ -490,7 +611,7 @@ function BuildsPage({ onGodIconPress }) {
           >
             <View style={styles.roleFilterButtonContent}>
               {getRoleIcon('Support') && (
-                <Image source={getRoleIcon('Support')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" />
+                <Image source={getRoleIcon('Support')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" accessibilityLabel="Support role icon" />
               )}
               <Text style={[styles.roleFilterText, selectedRole === 'Support' && styles.roleFilterTextActive]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>Support</Text>
             </View>
@@ -505,7 +626,7 @@ function BuildsPage({ onGodIconPress }) {
           >
             <View style={styles.roleFilterButtonContent}>
               {getRoleIcon('Mid') && (
-                <Image source={getRoleIcon('Mid')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" />
+                <Image source={getRoleIcon('Mid')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" accessibilityLabel="Mid role icon" />
               )}
               <Text style={[styles.roleFilterText, selectedRole === 'Mid' && styles.roleFilterTextActive]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>Mid</Text>
             </View>
@@ -520,7 +641,7 @@ function BuildsPage({ onGodIconPress }) {
           >
             <View style={styles.roleFilterButtonContent}>
               {getRoleIcon('Jungle') && (
-                <Image source={getRoleIcon('Jungle')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" />
+                <Image source={getRoleIcon('Jungle')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" accessibilityLabel="Jungle role icon" />
               )}
               <Text style={[styles.roleFilterText, selectedRole === 'Jungle' && styles.roleFilterTextActive]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>Jungle</Text>
             </View>
@@ -1041,6 +1162,7 @@ function BuildsPage({ onGodIconPress }) {
                                       contentFit="cover"
                                       cachePolicy="memory-disk"
                                       transition={200}
+                                      accessibilityLabel={`${title} icon`}
                                     />
                                   </View>
                                 );
@@ -1142,6 +1264,7 @@ function BuildsPage({ onGodIconPress }) {
                                           contentFit="cover"
                                           cachePolicy="memory-disk"
                                           transition={200}
+                                          accessibilityLabel={`${abilityName} ability icon`}
                                         />
                                           );
                                         }
@@ -1210,6 +1333,7 @@ function BuildsPage({ onGodIconPress }) {
                                           contentFit="cover"
                                           cachePolicy="memory-disk"
                                           transition={200}
+                                          accessibilityLabel={`${abilityName} ability icon`}
                                         />
                                           );
                                         }
@@ -1259,6 +1383,7 @@ function BuildsPage({ onGodIconPress }) {
                             >
                               {aspect.icon ? (() => {
                                 const localIcon = getLocalGodAsset(aspect.icon);
+                                const aspectNameForLabel = aspect.name ? aspect.name.replace(/\*\*__|__\*\*/g, '') : 'Aspect';
                                 if (localIcon) {
                                   return (
                                     <Image 
@@ -1267,6 +1392,7 @@ function BuildsPage({ onGodIconPress }) {
                                       contentFit="cover"
                                       cachePolicy="memory-disk"
                                       transition={200}
+                                      accessibilityLabel={`${aspectNameForLabel} icon`}
                                     />
                                   );
                                 }
@@ -1328,6 +1454,7 @@ function BuildsPage({ onGodIconPress }) {
                                                   contentFit="cover"
                                                   cachePolicy="memory-disk"
                                                   transition={200}
+                                                  accessibilityLabel={`${s} item icon`}
                                                   onError={() => {
                                                     setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
                                                   }}
@@ -1348,6 +1475,7 @@ function BuildsPage({ onGodIconPress }) {
                                                   contentFit="cover"
                                                   cachePolicy="memory-disk"
                                                   transition={200}
+                                                  accessibilityLabel={`${s} item icon`}
                                                 />
                                               </View>
                                             </View>
@@ -1364,6 +1492,7 @@ function BuildsPage({ onGodIconPress }) {
                                                 contentFit="cover"
                                                 cachePolicy="memory-disk"
                                                 transition={200}
+                                                accessibilityLabel={`${s} item icon`}
                                               />
                                             </View>
                                           </View>
@@ -1443,6 +1572,7 @@ function BuildsPage({ onGodIconPress }) {
                                             contentFit="cover"
                                             cachePolicy="memory-disk"
                                             transition={200}
+                                            accessibilityLabel={`${f} item icon`}
                                           />
                                         </View>
                                       </View>
@@ -1459,6 +1589,7 @@ function BuildsPage({ onGodIconPress }) {
                                           contentFit="cover"
                                           cachePolicy="memory-disk"
                                           transition={200}
+                                          accessibilityLabel={`${f} item icon`}
                                         />
                                       </View>
                                     </View>
@@ -1566,6 +1697,7 @@ function BuildsPage({ onGodIconPress }) {
                               contentFit="cover"
                               cachePolicy="memory-disk"
                               transition={200}
+                              accessibilityLabel={`${selectedItem.itemName} item icon`}
                             />
                           );
                         }
@@ -1578,6 +1710,7 @@ function BuildsPage({ onGodIconPress }) {
                             contentFit="cover"
                             cachePolicy="memory-disk"
                             transition={200}
+                            accessibilityLabel={`${selectedItem.itemName} item icon`}
                           />
                         );
                       }
@@ -1696,6 +1829,7 @@ function BuildsPage({ onGodIconPress }) {
                         contentFit="cover"
                         cachePolicy="memory-disk"
                         transition={200}
+                        accessibilityLabel={`${selectedAbility.abilityName || 'Ability'} icon`}
                       />
                         );
                       }
@@ -2988,11 +3122,11 @@ const navStyles = StyleSheet.create({
     minWidth: 0,
   },
   navButtonActive: {
-    backgroundColor: '#1e90ff',
-    borderColor: '#1e90ff',
+    backgroundColor: '#0066cc',
+    borderColor: '#0066cc',
   },
   navButtonText: {
-    color: '#94a3b8',
+    color: '#cbd5e1',
     fontSize: 11,
     fontWeight: '600',
     textAlign: 'center',

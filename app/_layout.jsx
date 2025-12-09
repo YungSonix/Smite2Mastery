@@ -3,6 +3,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ErrorBoundary from './ErrorBoundary';
 import { useEffect, useMemo } from 'react';
 import * as Updates from 'expo-updates';
+import { Platform } from 'react-native';
 
 // Global error handler for unhandled promise rejections and errors
 const setupGlobalErrorHandlers = () => {
@@ -61,6 +62,17 @@ const setupGlobalErrorHandlers = () => {
 export default function RootLayout() {
   useEffect(() => {
     setupGlobalErrorHandlers();
+    
+    // Add meta description for SEO on web
+    if (Platform.OS === 'web' && typeof document !== 'undefined') {
+      let metaDescription = document.querySelector('meta[name="description"]');
+      if (!metaDescription) {
+        metaDescription = document.createElement('meta');
+        metaDescription.setAttribute('name', 'description');
+        document.head.appendChild(metaDescription);
+      }
+      metaDescription.setAttribute('content', 'SMITE 2 Mastery - Comprehensive guides, builds, and database for SMITE 2. Find curated builds, god guides, item information, and gameplay mechanics.');
+    }
     
     // Check for EAS Updates
     async function checkForUpdates() {
