@@ -1175,6 +1175,8 @@ function BuildsPage({ onGodIconPress }) {
                                       cachePolicy="memory-disk"
                                       transition={200}
                                       accessibilityLabel={`${title} icon`}
+                                      placeholderContentFit="cover"
+                                      recyclingKey={`god-${title}`}
                                     />
                                   </View>
                                 );

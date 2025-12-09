@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useRef, Suspense, lazy } from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,7 +16,8 @@ import { Image } from 'expo-image';
 // Lazy load builds.json to prevent startup crash
 let localBuilds = null;
 import { getLocalItemIcon, getLocalGodAsset, getSkinImage } from './localIcons';
-import ConquestMap from './ConquestMap';
+// Lazy load ConquestMap since it's only used in gamemodes view
+const ConquestMap = React.lazy(() => import('./ConquestMap'));
 
 // Platform check for web
 const IS_WEB = Platform.OS === 'web';
@@ -674,19 +675,33 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
         // Ensure locationX is within bounds
         locationX = Math.max(0, Math.min(sliderTrackWidth, locationX));
       } else {
-        // For mobile, use locationX directly or calculate from touches
-        if (nativeEvent?.locationX !== undefined && nativeEvent?.locationX !== null) {
+        // For mobile, try multiple methods to get accurate position
+        if (nativeEvent?.locationX !== undefined && nativeEvent?.locationX !== null && nativeEvent.locationX >= 0) {
+          // Use locationX if available (most reliable on mobile)
           locationX = nativeEvent.locationX;
         } else if (nativeEvent?.touches && nativeEvent.touches.length > 0) {
-          // Fallback: calculate from touch position
+          // Calculate from touch position
           const touch = nativeEvent.touches[0];
-          if (touch && sliderTrackLayout.x > 0) {
-            locationX = touch.pageX - sliderTrackLayout.x;
+          if (touch && sliderTrackRef.current) {
+            try {
+              // Try to get position from layout or measure
+              if (sliderTrackLayout.x > 0) {
+                locationX = touch.pageX - sliderTrackLayout.x;
+              } else {
+                // Fallback: try to use pageX relative to screen and estimate
+                // This is less accurate but better than nothing
+                locationX = nativeEvent?.locationX ?? (touch.pageX % sliderTrackWidth);
+              }
+            } catch (e) {
+              locationX = nativeEvent?.locationX ?? 0;
+            }
           } else {
-            locationX = 0;
+            locationX = nativeEvent?.locationX ?? 0;
           }
+        } else if (nativeEvent?.locationX !== undefined && nativeEvent?.locationX !== null) {
+          locationX = nativeEvent.locationX;
         } else {
-          locationX = nativeEvent?.locationX ?? 0;
+          locationX = 0;
         }
         // Ensure locationX is within bounds
         locationX = Math.max(0, Math.min(sliderTrackWidth, locationX));
@@ -2046,8 +2061,9 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                             }
                           }}
                           onResponderMove={(event) => {
-                            if (!IS_WEB && isDragging) {
+                            if (!IS_WEB) {
                               event.preventDefault();
+                              setIsDragging(true);
                               handleSliderMove(event);
                             }
                           }}
@@ -2069,22 +2085,29 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                             if (!IS_WEB && sliderTrackRef.current && sliderTrackWidth > 0) {
                               e.preventDefault();
                               e.stopPropagation();
+                              setIsDragging(true);
                               const touch = e.nativeEvent.touches[0];
-                              if (touch) {
-                                setIsDragging(true);
-                                const touchX = touch.pageX - (sliderTrackLayout.x || 0);
-                                handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                              if (touch && sliderTrackRef.current) {
+                                // Use measure to get accurate position
+                                sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
+                                  const touchX = touch.pageX - px;
+                                  handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                                });
                               }
                             }
                           }}
                           onTouchMove={(e) => {
-                            if (!IS_WEB && isDragging && sliderTrackRef.current && sliderTrackWidth > 0) {
+                            if (!IS_WEB && sliderTrackRef.current && sliderTrackWidth > 0) {
                               e.preventDefault();
                               e.stopPropagation();
                               const touch = e.nativeEvent.touches[0];
-                              if (touch) {
-                                const touchX = touch.pageX - (sliderTrackLayout.x || 0);
-                                handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                              if (touch && sliderTrackRef.current) {
+                                setIsDragging(true);
+                                // Use measure to get accurate position on each move
+                                sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
+                                  const touchX = touch.pageX - px;
+                                  handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                                });
                               }
                             }
                           }}
@@ -2120,8 +2143,9 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               }
                             }}
                             onResponderMove={(event) => {
-                              if (!IS_WEB && isDragging) {
+                              if (!IS_WEB) {
                                 event.preventDefault();
+                                setIsDragging(true);
                                 handleSliderMove(event);
                               }
                             }}
@@ -2143,22 +2167,29 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               if (!IS_WEB && sliderTrackRef.current && sliderTrackWidth > 0) {
                                 e.preventDefault();
                                 e.stopPropagation();
+                                setIsDragging(true);
                                 const touch = e.nativeEvent.touches[0];
-                                if (touch) {
-                                  setIsDragging(true);
-                                  const touchX = touch.pageX - (sliderTrackLayout.x || 0);
-                                  handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                                if (touch && sliderTrackRef.current) {
+                                  // Use measure to get accurate position
+                                  sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
+                                    const touchX = touch.pageX - px;
+                                    handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                                  });
                                 }
                               }
                             }}
                             onTouchMove={(e) => {
-                              if (!IS_WEB && isDragging && sliderTrackRef.current && sliderTrackWidth > 0) {
+                              if (!IS_WEB && sliderTrackRef.current && sliderTrackWidth > 0) {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 const touch = e.nativeEvent.touches[0];
-                                if (touch) {
-                                  const touchX = touch.pageX - (sliderTrackLayout.x || 0);
-                                  handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                                if (touch && sliderTrackRef.current) {
+                                  setIsDragging(true);
+                                  // Use measure to get accurate position on each move
+                                  sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
+                                    const touchX = touch.pageX - px;
+                                    handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                                  });
                                 }
                               }
                             }}
@@ -4529,7 +4560,9 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                   <Text style={styles.detailBodyText}>
                     Explore the Conquest map with this interactive tool. Click on structures, objectives, and jungle camps to learn more about them.
                   </Text>
-                  <ConquestMap />
+                  <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ margin: 20 }} />}>
+                    <ConquestMap />
+                  </Suspense>
                 </View>
               </>
             )}

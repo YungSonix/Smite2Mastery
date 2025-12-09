@@ -114,6 +114,33 @@ export default function RootLayout() {
         }
         metaElement.setAttribute('content', tag.content);
       });
+
+      // Add resource hints for external domains (improves performance)
+      const externalDomains = [
+        'https://raw.githubusercontent.com',
+        'https://yt3.googleusercontent.com',
+        'https://yt3.ggpht.com'
+      ];
+
+      externalDomains.forEach(domain => {
+        let link = document.querySelector(`link[rel="preconnect"][href="${domain}"]`);
+        if (!link) {
+          link = document.createElement('link');
+          link.rel = 'preconnect';
+          link.href = domain;
+          link.crossOrigin = 'anonymous';
+          document.head.appendChild(link);
+        }
+
+        // Also add dns-prefetch as fallback
+        let dnsLink = document.querySelector(`link[rel="dns-prefetch"][href="${domain}"]`);
+        if (!dnsLink) {
+          dnsLink = document.createElement('link');
+          dnsLink.rel = 'dns-prefetch';
+          dnsLink.href = domain;
+          document.head.appendChild(dnsLink);
+        }
+      });
     }
     
     // Check for EAS Updates
