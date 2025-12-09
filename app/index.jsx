@@ -18,6 +18,8 @@ import HomePage from './home';
 // Lazy load the large JSON to prevent startup crash
 let localBuilds = null;
 import DataPage from './data';
+
+const IS_WEB = Platform.OS === 'web';
 import CustomBuildPage from './custombuild';
 import PlayerProfilesPage from './playerprofiles';
 import { getLocalItemIcon, getLocalGodAsset } from './localIcons';
@@ -406,7 +408,11 @@ function BuildsPage({ onGodIconPress }) {
       </View>
 
       {activeTab === 'guides' ? (
-        <ScrollView style={styles.guidesContainer} contentContainerStyle={styles.guidesContentContainer}>
+        <ScrollView 
+          style={styles.guidesContainer} 
+          contentContainerStyle={styles.guidesContentContainer}
+          showsVerticalScrollIndicator={false}
+        >
           {/* SMITE Mentors */}
           <View style={styles.channelProfileCard}>
             <View style={styles.channelProfileContent}>
@@ -467,7 +473,7 @@ function BuildsPage({ onGodIconPress }) {
             </TouchableOpacity>
             <View style={styles.channelDescription}>
               <Text style={styles.channelDescriptionText}>
-                Professional SMITE player and content creator. Watch high-level gameplay, guides, and tips to improve your SMITE 2 skills.
+              Some SMITE, playing Poe 2, LoL, Wiz101 among other things!
               </Text>
             </View>
           </View>
@@ -498,7 +504,7 @@ function BuildsPage({ onGodIconPress }) {
             </TouchableOpacity>
             <View style={styles.channelDescription}>
               <Text style={styles.channelDescriptionText}>
-                Professional SMITE player and streamer. Learn from one of the best players in the SMITE community with guides, gameplay, and analysis.
+              My name is Kurt. I played Smite professionally for 8 years and now I do my best to help you get better and provide you with quality content! I try to create content based on my life and any other games I jump in to!
               </Text>
             </View>
           </View>
@@ -529,7 +535,8 @@ function BuildsPage({ onGodIconPress }) {
             </TouchableOpacity>
             <View style={styles.channelDescription}>
               <Text style={styles.channelDescriptionText}>
-                Professional SMITE player and content creator. Watch competitive gameplay, guides, and educational content to level up your SMITE 2 gameplay.
+              Ex Smite pro player and caster, current streamer and enjoyer of sports!
+
               </Text>
             </View>
           </View>
@@ -547,8 +554,9 @@ function BuildsPage({ onGodIconPress }) {
                 />
               </View>
               <View style={styles.channelInfo}>
-                <Text style={styles.channelName}>SMITE 2 Creator</Text>
-                <Text style={styles.channelHandle}>YouTube Channel</Text>
+                <Text style={styles.channelName}>IcyyCold</Text>
+                <Text style={styles.channelHandle}>@IcyyCold</Text>
+                <Text style={styles.channelDescriptionText}>Smite 2 Top 10 Ranked Deity Jungler making Play-By-Play videos! I stream 12 hours every day on Twitch!</Text>
               </View>
             </View>
             <TouchableOpacity
@@ -670,7 +678,10 @@ function BuildsPage({ onGodIconPress }) {
               <Text style={styles.loadingText}>Loading builds...</Text>
             </View>
           ) : (
-          <ScrollView contentContainerStyle={styles.cardGrid}>
+          <ScrollView 
+            contentContainerStyle={styles.cardGrid}
+            showsVerticalScrollIndicator={false}
+          >
             {filtered.map(({ god, builds: godBuilds }, idx) => {
               if (!god) return null;
               
@@ -2007,6 +2018,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#071024',
     padding: 20,
     paddingTop: 36,
+    ...(IS_WEB && {
+      maxWidth: 1200,
+      alignSelf: 'center',
+      width: '100%',
+      paddingHorizontal: 20,
+    }),
   },
   header: {
     alignItems: 'center',
@@ -2860,6 +2877,28 @@ export default function App() {
   const [expandAbilities, setExpandAbilities] = useState(false);
   const [dataPageKey, setDataPageKey] = useState(0);
 
+  // Hide scrollbars on web
+  useEffect(() => {
+    if (IS_WEB && typeof document !== 'undefined') {
+      const style = document.createElement('style');
+      style.textContent = `
+        * {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        *::-webkit-scrollbar {
+          display: none;
+        }
+      `;
+      document.head.appendChild(style);
+      return () => {
+        if (document.head.contains(style)) {
+          document.head.removeChild(style);
+        }
+      };
+    }
+  }, []);
+
   // Disable browser inspection on web
   useEffect(() => {
     if (Platform.OS === 'web') {
@@ -3011,8 +3050,14 @@ export default function App() {
   }, []);
 
   return (
-    <View style={navStyles.container}>
-      <View style={navStyles.navBar}>
+    <View style={navStyles.outerContainer}>
+      <ScrollView 
+        style={navStyles.outerScrollView}
+        contentContainerStyle={navStyles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={navStyles.container}>
+          <View style={navStyles.navBar}>
         <TouchableOpacity
           style={[navStyles.navButton, currentPage === 'playerprofiles' && navStyles.navButtonActive]}
           onPress={() => setCurrentPage('playerprofiles')}
@@ -3090,14 +3135,31 @@ Builds
           }} 
         />
       )}
+        </View>
+      </ScrollView>
     </View>
   );
 }
 
 const navStyles = StyleSheet.create({
-  container: {
+  outerContainer: {
     flex: 1,
     backgroundColor: '#071024',
+  },
+  outerScrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
+  container: {
+    minHeight: '100%',
+    backgroundColor: '#071024',
+    ...(IS_WEB && {
+      maxWidth: 1200,
+      alignSelf: 'center',
+      width: '100%',
+    }),
   },
   navBar: {
     flexDirection: 'row',
