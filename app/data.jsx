@@ -655,21 +655,31 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
         // First try locationX (works in some React Native Web versions)
         locationX = nativeEvent?.locationX;
         
-        // If locationX is not available or seems wrong, calculate from clientX
+        // If locationX is not available or seems wrong, calculate from clientX/pageX
         if (locationX === undefined || locationX === null || locationX < 0 || locationX > sliderTrackWidth) {
-          const clientX = nativeEvent?.clientX ?? nativeEvent?.pageX ?? 0;
+          // Try to get clientX from touch events (for mobile web)
+          const clientX = nativeEvent?.clientX ?? nativeEvent?.touches?.[0]?.clientX ?? nativeEvent?.changedTouches?.[0]?.clientX ?? nativeEvent?.pageX ?? 0;
           // Always try to get element position for accuracy
           try {
             const element = sliderTrackRef.current;
             if (element && typeof element.getBoundingClientRect === 'function') {
               const rect = element.getBoundingClientRect();
               locationX = clientX - rect.left;
-            } else {
+            } else if (sliderTrackLayout.x > 0) {
               locationX = clientX - sliderTrackLayout.x;
+            } else {
+              // Fallback: try to use pageX if clientX didn't work
+              const pageX = nativeEvent?.pageX ?? nativeEvent?.touches?.[0]?.pageX ?? nativeEvent?.changedTouches?.[0]?.pageX ?? 0;
+              if (pageX > 0 && sliderTrackLayout.x > 0) {
+                locationX = pageX - sliderTrackLayout.x;
+              } else {
+                locationX = 0;
+              }
             }
           } catch (e) {
             // Final fallback
-            locationX = clientX - sliderTrackLayout.x;
+            const pageX = nativeEvent?.pageX ?? nativeEvent?.touches?.[0]?.pageX ?? nativeEvent?.changedTouches?.[0]?.pageX ?? 0;
+            locationX = pageX - (sliderTrackLayout.x || 0);
           }
         }
         // Ensure locationX is within bounds
@@ -2082,41 +2092,90 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                             }
                           }}
                           onTouchStart={(e) => {
-                            if (!IS_WEB && sliderTrackRef.current && sliderTrackWidth > 0) {
+                            // Handle touch for both native and web (mobile browsers)
+                            if (sliderTrackRef.current && sliderTrackWidth > 0) {
                               e.preventDefault();
                               e.stopPropagation();
                               setIsDragging(true);
-                              const touch = e.nativeEvent.touches[0];
-                              if (touch && sliderTrackRef.current) {
-                                // Use measure to get accurate position
-                                sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
-                                  const touchX = touch.pageX - px;
-                                  handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
-                                });
+                              
+                              let touchX = 0;
+                              if (IS_WEB) {
+                                // For web/mobile browsers
+                                const touch = e.nativeEvent?.touches?.[0] || (e.nativeEvent?.changedTouches?.[0]);
+                                if (touch && sliderTrackRef.current) {
+                                  const rect = sliderTrackRef.current.getBoundingClientRect?.();
+                                  if (rect) {
+                                    touchX = touch.clientX - rect.left;
+                                  } else {
+                                    touchX = touch.pageX - (sliderTrackLayout.x || 0);
+                                  }
+                                }
+                              } else {
+                                // For native React Native
+                                const touch = e.nativeEvent.touches[0];
+                                if (touch && sliderTrackRef.current) {
+                                  sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
+                                    touchX = touch.pageX - px;
+                                    handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                                  });
+                                  return; // measure is async
+                                }
+                              }
+                              
+                              if (touchX > 0 || !IS_WEB) {
+                                const touch = IS_WEB ? (e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0]) : e.nativeEvent.touches[0];
+                                handleSliderMove({ nativeEvent: { locationX: touchX, touches: touch ? [touch] : [] } });
                               }
                             }
                           }}
                           onTouchMove={(e) => {
-                            if (!IS_WEB && sliderTrackRef.current && sliderTrackWidth > 0) {
+                            // Handle touch for both native and web (mobile browsers)
+                            // Don't require isDragging check - allow dragging immediately on move
+                            if (sliderTrackRef.current && sliderTrackWidth > 0) {
                               e.preventDefault();
                               e.stopPropagation();
-                              const touch = e.nativeEvent.touches[0];
-                              if (touch && sliderTrackRef.current) {
-                                setIsDragging(true);
-                                // Use measure to get accurate position on each move
-                                sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
-                                  const touchX = touch.pageX - px;
-                                  handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
-                                });
+                              setIsDragging(true);
+                              
+                              let touchX = 0;
+                              if (IS_WEB) {
+                                // For web/mobile browsers
+                                const touch = e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0];
+                                if (touch && sliderTrackRef.current) {
+                                  try {
+                                    const rect = sliderTrackRef.current.getBoundingClientRect?.();
+                                    if (rect) {
+                                      touchX = touch.clientX - rect.left;
+                                    } else if (touch.pageX && sliderTrackLayout.x > 0) {
+                                      touchX = touch.pageX - sliderTrackLayout.x;
+                                    } else {
+                                      touchX = touch.clientX || 0;
+                                    }
+                                  } catch (err) {
+                                    touchX = (touch.pageX || touch.clientX || 0) - (sliderTrackLayout.x || 0);
+                                  }
+                                }
+                              } else {
+                                // For native React Native
+                                const touch = e.nativeEvent.touches[0];
+                                if (touch && sliderTrackRef.current) {
+                                  sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
+                                    touchX = touch.pageX - px;
+                                    handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                                  });
+                                  return; // measure is async
+                                }
+                              }
+                              
+                              if (touchX >= 0 || !IS_WEB) {
+                                const touch = IS_WEB ? (e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0]) : e.nativeEvent.touches[0];
+                                handleSliderMove({ nativeEvent: { locationX: touchX, touches: touch ? [touch] : [], clientX: touch?.clientX, pageX: touch?.pageX } });
                               }
                             }
                           }}
                           onTouchEnd={(e) => {
-                            if (!IS_WEB) {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              setIsDragging(false);
-                            }
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setIsDragging(false);
                           }}
                         >
                           <View 
@@ -2164,41 +2223,90 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               }
                             }}
                             onTouchStart={(e) => {
-                              if (!IS_WEB && sliderTrackRef.current && sliderTrackWidth > 0) {
+                              // Handle touch for both native and web (mobile browsers)
+                              if (sliderTrackRef.current && sliderTrackWidth > 0) {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 setIsDragging(true);
-                                const touch = e.nativeEvent.touches[0];
-                                if (touch && sliderTrackRef.current) {
-                                  // Use measure to get accurate position
-                                  sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
-                                    const touchX = touch.pageX - px;
-                                    handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
-                                  });
+                                
+                                let touchX = 0;
+                                if (IS_WEB) {
+                                  // For web/mobile browsers
+                                  const touch = e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0];
+                                  if (touch && sliderTrackRef.current) {
+                                    const rect = sliderTrackRef.current.getBoundingClientRect?.();
+                                    if (rect) {
+                                      touchX = touch.clientX - rect.left;
+                                    } else {
+                                      touchX = touch.pageX - (sliderTrackLayout.x || 0);
+                                    }
+                                  }
+                                } else {
+                                  // For native React Native
+                                  const touch = e.nativeEvent.touches[0];
+                                  if (touch && sliderTrackRef.current) {
+                                    sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
+                                      touchX = touch.pageX - px;
+                                      handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                                    });
+                                    return; // measure is async
+                                  }
+                                }
+                                
+                                if (touchX > 0 || !IS_WEB) {
+                                  const touch = IS_WEB ? (e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0]) : e.nativeEvent.touches[0];
+                                  handleSliderMove({ nativeEvent: { locationX: touchX, touches: touch ? [touch] : [] } });
                                 }
                               }
                             }}
                             onTouchMove={(e) => {
-                              if (!IS_WEB && sliderTrackRef.current && sliderTrackWidth > 0) {
+                              // Handle touch for both native and web (mobile browsers)
+                              // Don't require isDragging check - allow dragging immediately on move
+                              if (sliderTrackRef.current && sliderTrackWidth > 0) {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                const touch = e.nativeEvent.touches[0];
-                                if (touch && sliderTrackRef.current) {
-                                  setIsDragging(true);
-                                  // Use measure to get accurate position on each move
-                                  sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
-                                    const touchX = touch.pageX - px;
-                                    handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
-                                  });
+                                setIsDragging(true);
+                                
+                                let touchX = 0;
+                                if (IS_WEB) {
+                                  // For web/mobile browsers
+                                  const touch = e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0];
+                                  if (touch && sliderTrackRef.current) {
+                                    try {
+                                      const rect = sliderTrackRef.current.getBoundingClientRect?.();
+                                      if (rect) {
+                                        touchX = touch.clientX - rect.left;
+                                      } else if (touch.pageX && sliderTrackLayout.x > 0) {
+                                        touchX = touch.pageX - sliderTrackLayout.x;
+                                      } else {
+                                        touchX = touch.clientX || 0;
+                                      }
+                                    } catch (err) {
+                                      touchX = (touch.pageX || touch.clientX || 0) - (sliderTrackLayout.x || 0);
+                                    }
+                                  }
+                                } else {
+                                  // For native React Native
+                                  const touch = e.nativeEvent.touches[0];
+                                  if (touch && sliderTrackRef.current) {
+                                    sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
+                                      touchX = touch.pageX - px;
+                                      handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                                    });
+                                    return; // measure is async
+                                  }
+                                }
+                                
+                                if (touchX >= 0 || !IS_WEB) {
+                                  const touch = IS_WEB ? (e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0]) : e.nativeEvent.touches[0];
+                                  handleSliderMove({ nativeEvent: { locationX: touchX, touches: touch ? [touch] : [], clientX: touch?.clientX, pageX: touch?.pageX } });
                                 }
                               }
                             }}
                             onTouchEnd={(e) => {
-                              if (!IS_WEB) {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                setIsDragging(false);
-                              }
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setIsDragging(false);
                             }}
                           />
                         </View>
