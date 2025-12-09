@@ -63,15 +63,57 @@ export default function RootLayout() {
   useEffect(() => {
     setupGlobalErrorHandlers();
     
-    // Add meta description for SEO on web
+    // Add meta tags for SEO on web
     if (Platform.OS === 'web' && typeof document !== 'undefined') {
-      let metaDescription = document.querySelector('meta[name="description"]');
-      if (!metaDescription) {
-        metaDescription = document.createElement('meta');
-        metaDescription.setAttribute('name', 'description');
-        document.head.appendChild(metaDescription);
-      }
-      metaDescription.setAttribute('content', 'SMITE 2 Mastery - Comprehensive guides, builds, and database for SMITE 2. Find curated builds, god guides, item information, and gameplay mechanics.');
+      const metaTags = {
+        description: {
+          name: 'description',
+          content: 'SMITE 2 Mastery - Comprehensive guides, builds, and database for SMITE 2. Find curated builds, god guides, item information, and gameplay mechanics.'
+        },
+        keywords: {
+          name: 'keywords',
+          content: 'SMITE 2, builds, guides, gods, items, database, calculator, mastery, strategies, gameplay'
+        },
+        'og:title': {
+          property: 'og:title',
+          content: 'SMITE 2 Mastery - Builds, Guides & Database'
+        },
+        'og:description': {
+          property: 'og:description',
+          content: 'Comprehensive guides, builds, and database for SMITE 2. Find curated builds, god guides, item information, and gameplay mechanics.'
+        },
+        'og:type': {
+          property: 'og:type',
+          content: 'website'
+        },
+        'twitter:card': {
+          name: 'twitter:card',
+          content: 'summary_large_image'
+        },
+        'twitter:title': {
+          name: 'twitter:title',
+          content: 'SMITE 2 Mastery - Builds, Guides & Database'
+        },
+        'twitter:description': {
+          name: 'twitter:description',
+          content: 'Comprehensive guides, builds, and database for SMITE 2. Find curated builds, god guides, item information, and gameplay mechanics.'
+        }
+      };
+
+      // Create or update each meta tag
+      Object.keys(metaTags).forEach(key => {
+        const tag = metaTags[key];
+        const attribute = tag.name ? 'name' : 'property';
+        const value = tag.name || tag.property;
+        let metaElement = document.querySelector(`meta[${attribute}="${value}"]`);
+        
+        if (!metaElement) {
+          metaElement = document.createElement('meta');
+          metaElement.setAttribute(attribute, value);
+          document.head.appendChild(metaElement);
+        }
+        metaElement.setAttribute('content', tag.content);
+      });
     }
     
     // Check for EAS Updates
