@@ -3,6 +3,66 @@
     "outputDirectory": "dist",
     "devCommand": "npx expo start --web",
     "framework": null,
+    "headers": [
+      {
+        "source": "/(.*\\.(js|css|json|map))",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "/(.*\\.(png|jpg|jpeg|gif|svg|webp|ico|woff|woff2|ttf|eot))",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "/_expo/static/(.*)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "/assets/(.*)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "/(.*\\.html)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=0, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "/robots.txt",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=3600"
+          },
+          {
+            "key": "Content-Type",
+            "value": "text/plain"
+          }
+        ]
+      }
+    ],
     "rewrites": [
       {
         "source": "/(.*)",
