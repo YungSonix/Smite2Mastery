@@ -22,15 +22,15 @@ import PrivacyPage from './privacy';
 // ============================================================================
 
 const APP_VERSION_CONFIG = {
-  currentVersion: '1.0.0', // Current app version
+  currentVersion: '1.1.0', // Current app version
   previousVersion: '1.0.0', // Previous version (for comparison)
   updateNotes: [
-    'Initial release of the SMITE 2 App.',
-    'Added version history section to the home page.',
-    'Gods page now has a base stats section with level slider.',
-    'Added role icons next to role names on god pages.',
-    'Added app review form and bug report form.',
-    'Added update status section to the home page.',
+    'Gods slider now draggable.',
+    'Added new channels to Guides section',
+    'Updated home page.',
+    'Made improvements while in a god/item page.',
+    'Improved Web performance.',
+    'Fixed some bugs.',
   ], 
 };
 
@@ -42,6 +42,7 @@ const VERSION_HISTORY = [
     date: '2025-12-07', // Format: YYYY-MM-DD
     updateNotes: [
       'Initial release of the SMITE 2 App.',
+
       'Added app review form and bug report form.',
       'Added update status section to the home page.',
     ],
@@ -112,6 +113,10 @@ export default function HomePage() {
   });
   const [submittingAppReview, setSubmittingAppReview] = useState(false);
   const [showVersionHistory, setShowVersionHistory] = useState(false);
+  const [showFeedbackSection, setShowFeedbackSection] = useState(false);
+  const [showAppUpdates, setShowAppUpdates] = useState(false);
+  const [showNewsSection, setShowNewsSection] = useState(false);
+  const [showPrivacySection, setShowPrivacySection] = useState(false);
   const [showMissingOutdatedModal, setShowMissingOutdatedModal] = useState(false);
   const [missingOutdatedData, setMissingOutdatedData] = useState({
     type: '', // 'missing' or 'outdated'
@@ -125,6 +130,28 @@ export default function HomePage() {
     isUpdateAvailable,
     isUpdatePending,
   } = Updates.useUpdates();
+
+  // Hide scrollbars on web
+  useEffect(() => {
+    if (Platform.OS === 'web' && typeof document !== 'undefined') {
+      const style = document.createElement('style');
+      style.textContent = `
+        * {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        *::-webkit-scrollbar {
+          display: none;
+        }
+      `;
+      document.head.appendChild(style);
+      return () => {
+        if (document.head.contains(style)) {
+          document.head.removeChild(style);
+        }
+      };
+    }
+  }, []);
 
   // Check for app update and show popup
   useEffect(() => {
@@ -522,8 +549,14 @@ export default function HomePage() {
   }
 
   return (
-    <View style={styles.container}>
-      {/* Update Popup Modal */}
+    <View style={styles.outerContainer}>
+      <ScrollView 
+        style={styles.outerScrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.container}>
+          {/* Update Popup Modal */}
       <Modal
         visible={showUpdatePopup}
         transparent={true}
@@ -1000,7 +1033,6 @@ export default function HomePage() {
         </View>
       </Modal>
 
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         {/* App Header with Icon */}
         <View style={styles.appHeaderSection}>
           <View style={styles.appIconContainer}>
@@ -1030,7 +1062,21 @@ export default function HomePage() {
 
         {/* Update Status Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>App Updates</Text>
+          <View style={styles.expandableSectionHeader}>
+            <Text style={styles.sectionTitle}>App Updates</Text>
+            <TouchableOpacity
+              style={styles.expandableSectionToggle}
+              onPress={() => setShowAppUpdates(!showAppUpdates)}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.expandableSectionToggleText}>
+                {showAppUpdates ? '▼ Hide' : '▶ Show'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          
+          {showAppUpdates && (
+            <View style={styles.expandableSectionContent}>
           <View style={styles.updateStatusContainer}>
             <Text style={[styles.updateStatusText, { color: getUpdateStatusColor() }]}>
               {getUpdateStatusMessage()}
@@ -1070,28 +1116,23 @@ export default function HomePage() {
           >
             <Text style={styles.viewUpdateNotesButtonText}>View Update Notes (V{APP_VERSION_CONFIG.currentVersion})</Text>
           </TouchableOpacity>
-        </View>
 
-        {/* Version History Section */}
-        <View style={styles.section}>
-          <View style={styles.versionHistoryHeader}>
-            <Text style={styles.sectionTitle}>Version History</Text>
-            <TouchableOpacity
-              style={styles.versionHistoryToggle}
-              onPress={() => setShowVersionHistory(!showVersionHistory)}
-              activeOpacity={0.7}
-            >
-              <Text style={styles.versionHistoryToggleText}>
-                {showVersionHistory ? '▼ Hide' : '▶ Show'} Previous Versions
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <Text style={styles.bioText}>
-            View update notes and changes from previous app versions.
-          </Text>
+          {/* Version History - Expandable Section */}
+          <TouchableOpacity
+            style={styles.versionHistoryToggle}
+            onPress={() => setShowVersionHistory(!showVersionHistory)}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.versionHistoryToggleText}>
+              {showVersionHistory ? '▼ Hide' : '▶ Show'} Version History
+            </Text>
+          </TouchableOpacity>
           
           {showVersionHistory && (
             <View style={styles.versionHistoryContainer}>
+              <Text style={styles.bioText}>
+                View update notes and changes from previous app versions.
+              </Text>
               {VERSION_HISTORY.map((versionData, index) => (
                 <View key={index} style={styles.versionCard}>
                   <View style={styles.versionCardHeader}>
@@ -1121,11 +1162,27 @@ export default function HomePage() {
               )}
             </View>
           )}
+            </View>
+          )}
         </View>
 
         {/* Smite 2 News Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>SMITE 2 News</Text>
+          <View style={styles.expandableSectionHeader}>
+            <Text style={styles.sectionTitle}>SMITE 2 News</Text>
+            <TouchableOpacity
+              style={styles.expandableSectionToggle}
+              onPress={() => setShowNewsSection(!showNewsSection)}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.expandableSectionToggleText}>
+                {showNewsSection ? '▼ Hide' : '▶ Show'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          
+          {showNewsSection && (
+            <View style={styles.expandableSectionContent}>
           <Text style={styles.newsDescription}>
             Stay updated with the latest SMITE 2 news, patch notes, and updates directly from the official SMITE 2 website.
           </Text>
@@ -1198,11 +1255,27 @@ export default function HomePage() {
               <Text style={styles.fullNewsButtonText}>Open News Page in Browser</Text>
             </TouchableOpacity>
           </View>
+            </View>
+          )}
         </View>
 
         {/* Privacy & Security Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Privacy & Security</Text>
+          <View style={styles.expandableSectionHeader}>
+            <Text style={styles.sectionTitle}>Privacy & Security</Text>
+            <TouchableOpacity
+              style={styles.expandableSectionToggle}
+              onPress={() => setShowPrivacySection(!showPrivacySection)}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.expandableSectionToggleText}>
+                {showPrivacySection ? '▼ Hide' : '▶ Show'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          
+          {showPrivacySection && (
+            <View style={styles.expandableSectionContent}>
           <Text style={styles.bioText}>
             Your privacy is important to us. This app does not collect or store any personal information. 
             All data remains on your device.
@@ -1214,65 +1287,61 @@ export default function HomePage() {
           >
             <Text style={styles.privacyButtonText}>View Privacy & Security Policy</Text>
           </TouchableOpacity>
+            </View>
+          )}
         </View>
 
-        {/* Report a Bug Section */}
+        {/* Feedback & Reports Section - Expandable */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Report a Bug or Crash</Text>
-          <Text style={styles.bioText}>
-            Found a bug or experiencing crashes? I'd love to hear about it! Your feedback helps us improve the app.
-          </Text>
-          <Text style={styles.bioText}>
-            When reporting, please include:
-          </Text>
-          <View style={styles.bugReportList}>
-            <Text style={styles.bugReportItem}>• App version: {APP_VERSION_CONFIG.currentVersion}</Text>
-            <Text style={styles.bugReportItem}>• Device and OS information</Text>
-            <Text style={styles.bugReportItem}>• Steps to reproduce the issue</Text>
+          <View style={styles.feedbackSectionHeader}>
+            <Text style={styles.sectionTitle}>Feedback & Reports</Text>
+            <TouchableOpacity
+              style={styles.feedbackSectionToggle}
+              onPress={() => setShowFeedbackSection(!showFeedbackSection)}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.feedbackSectionToggleText}>
+                {showFeedbackSection ? '▼ Hide' : '▶ Show'}
+              </Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={styles.bugReportButton}
-            onPress={reportBug}
-            activeOpacity={0.7}
-          >
-            <Text style={styles.bugReportButtonIcon}>🐛</Text>
-            <Text style={styles.bugReportButtonText}>Report a Bug or Crash</Text>
-          </TouchableOpacity>
-        </View>
+          <Text style={styles.bioText}>
+            Share your feedback, report issues, or suggest improvements. Your input helps us make the app better!
+          </Text>
+          
+          {showFeedbackSection && (
+            <View style={styles.feedbackSectionContent}>
+              {/* App Feedback - Green */}
+              <TouchableOpacity
+                style={[styles.appFeedbackButton, { marginBottom: 12 }]}
+                onPress={openAppReviewForm}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.appFeedbackButtonIcon}>⭐</Text>
+                <Text style={styles.appFeedbackButtonText}>App Feedback</Text>
+              </TouchableOpacity>
 
-        {/* Report Missing or Outdated Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Report a Missing Feature or Outdated</Text>
-          <Text style={styles.bioText}>
-            Found something missing or outdated in the app? Let us know! Your feedback helps us keep the app up to date.
-          </Text>
-          <TouchableOpacity
-            style={styles.reportMissingButton}
-            onPress={openMissingOutdatedForm}
-            activeOpacity={0.7}
-          >
-            <Text style={styles.reportMissingButtonIcon}>📝</Text>
-            <Text style={styles.reportMissingButtonText}>Report a Missing Feature or Outdated</Text>
-          </TouchableOpacity>
-        </View>
+              {/* Feature Request - Orange */}
+              <TouchableOpacity
+                style={[styles.feedbackButton, { marginBottom: 12 }]}
+                onPress={openMissingOutdatedForm}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.feedbackButtonIcon}>📝</Text>
+                <Text style={styles.feedbackButtonText}>Request a Feature</Text>
+              </TouchableOpacity>
 
-        {/* App Review Forms Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>App Review Feedback</Text>
-          <Text style={styles.bioText}>
-            I'd love to hear your thoughts! Share your feedback about the app, what you like, and what could be improved.
-          </Text>
-          <Text style={styles.bioText}>
-            Your feedback helps me make the app better for everyone.
-          </Text>
-          <TouchableOpacity
-            style={styles.appReviewButton}
-            onPress={openAppReviewForm}
-            activeOpacity={0.7}
-          >
-            <Text style={styles.appReviewButtonIcon}>⭐</Text>
-            <Text style={styles.appReviewButtonText}>Submit App Review Feedback</Text>
-          </TouchableOpacity>
+              {/* Bug Report - Red */}
+              <TouchableOpacity
+                style={styles.bugReportButton}
+                onPress={reportBug}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.bugReportButtonIcon}>🐛</Text>
+                <Text style={styles.bugReportButtonText}>Report a Bug</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
 
         {/* Trademark Footer */}
@@ -1281,18 +1350,39 @@ export default function HomePage() {
             SMITE 2 is a registered trademark of Hi-Rez Studios. Trademarks are the property of their respective owners. Game materials copyright Hi-Rez Studios. Hi-Rez Studios has not endorsed and is not responsible for this site or its content.
           </Text>
         </View>
+        </View>
       </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  outerContainer: {
     flex: 1,
     backgroundColor: '#071024',
   },
+  outerScrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
+  container: {
+    minHeight: '100%',
+    backgroundColor: '#071024',
+    ...(Platform.OS === 'web' && {
+      maxWidth: 1200,
+      alignSelf: 'center',
+      width: '100%',
+      paddingHorizontal: 20,
+    }),
+  },
   scrollView: {
     flex: 1,
+    ...(Platform.OS === 'web' && {
+      scrollbarWidth: 'none',
+      msOverflowStyle: 'none',
+    }),
   },
   scrollContent: {
     padding: 20,
@@ -1710,7 +1800,6 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 8,
     alignItems: 'center',
-    marginTop: 12,
     borderWidth: 1,
     borderColor: '#ef4444',
     flexDirection: 'row',
@@ -1721,6 +1810,87 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   bugReportButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  // Feedback & Reports Section Styles
+  feedbackSectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  feedbackSectionToggle: {
+    padding: 8,
+    borderRadius: 6,
+    backgroundColor: '#0f1724',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  feedbackSectionToggleText: {
+    color: '#7dd3fc',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  feedbackSectionContent: {
+    marginTop: 12,
+  },
+  expandableSectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  expandableSectionToggle: {
+    padding: 8,
+    borderRadius: 6,
+    backgroundColor: '#0f1724',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  expandableSectionToggleText: {
+    color: '#7dd3fc',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  expandableSectionContent: {
+    marginTop: 8,
+  },
+  feedbackButton: {
+    backgroundColor: '#ea580c',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ea580c',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  feedbackButtonIcon: {
+    fontSize: 20,
+  },
+  feedbackButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  appFeedbackButton: {
+    backgroundColor: '#10b981',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#10b981',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  appFeedbackButtonIcon: {
+    fontSize: 20,
+  },
+  appFeedbackButtonText: {
     color: '#ffffff',
     fontSize: 16,
     fontWeight: '700',
@@ -1757,6 +1927,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0f1724',
   },
   // App Review Form Button Styles
+  // Legacy appReviewButton - kept for backward compatibility but not used in new layout
   appReviewButton: {
     backgroundColor: '#10b981',
     padding: 16,
@@ -2097,21 +2268,22 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     flexWrap: 'wrap',
   },
+  versionHistoryContainer: {
+    marginTop: 12,
+  },
   versionHistoryToggle: {
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    backgroundColor: '#0f1724',
+    marginTop: 12,
+    padding: 10,
     borderRadius: 6,
+    backgroundColor: '#0f1724',
     borderWidth: 1,
     borderColor: '#1e3a5f',
+    alignItems: 'center',
   },
   versionHistoryToggleText: {
     color: '#7dd3fc',
     fontSize: 14,
     fontWeight: '600',
-  },
-  versionHistoryContainer: {
-    marginTop: 16,
   },
   versionCard: {
     backgroundColor: '#0f1724',

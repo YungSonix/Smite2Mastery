@@ -813,8 +813,14 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
   const isDetailPageOpen = selectedGod || selectedItem || selectedGameMode || selectedMechanic;
 
   return (
-    <View style={styles.container}>
-      {!isDetailPageOpen && (
+    <View style={styles.outerContainer}>
+      <ScrollView 
+        style={styles.outerScrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.container}>
+          {!isDetailPageOpen && (
         <View style={styles.header}>
           <Text style={styles.logo}>SMITE 2 Database</Text>
           <Text style={styles.headerSub}>All gameplay information about Smite 2 will be located here.</Text>
@@ -4902,13 +4908,25 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
           SMITE 2 is a registered trademark of Hi-Rez Studios. Trademarks are the property of their respective owners. Game materials copyright Hi-Rez Studios. Hi-Rez Studios has not endorsed and is not responsible for this site or its content.
         </Text>
       </View>
+        </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  outerContainer: {
     flex: 1,
+    backgroundColor: '#071024',
+  },
+  outerScrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
+  container: {
+    minHeight: '100%',
     backgroundColor: '#071024',
     paddingTop: 20,
     ...(IS_WEB && {
