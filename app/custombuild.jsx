@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import {
   StyleSheet,
   Text,
@@ -18,6 +18,9 @@ import { WebView } from 'react-native-webview';
 // Lazy load builds.json to prevent startup crash
 import { getLocalItemIcon, getLocalGodAsset } from './localIcons';
 
+// Platform check for web
+const IS_WEB = Platform.OS === 'web';
+
 export default function CustomBuildPage() {
   const [localBuilds, setLocalBuilds] = useState(null);
   const [dataLoading, setDataLoading] = useState(true);
@@ -30,6 +33,9 @@ export default function CustomBuildPage() {
   const [godSearchQuery, setGodSearchQuery] = useState('');
   const [itemSearchQuery, setItemSearchQuery] = useState('');
   const [sliderWidth, setSliderWidth] = useState(300);
+  const [sliderLayout, setSliderLayout] = useState({ x: 0, y: 0, width: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const sliderRef = useRef(null);
   const [selectedRole, setSelectedRole] = useState(null);
   const [selectedStat, setSelectedStat] = useState(null);
   const [roleDropdownVisible, setRoleDropdownVisible] = useState(false);
@@ -167,6 +173,106 @@ export default function CustomBuildPage() {
     return result;
   }, [items, itemSearchQuery, selectedStat]);
 
+  // Handle slider movement for both web and mobile
+  const handleSliderMove = useCallback((event) => {
+    const nativeEvent = event.nativeEvent;
+    if (sliderWidth > 0 && sliderRef.current) {
+      let locationX;
+      if (IS_WEB) {
+        // For web, try multiple methods to get the correct position
+        // First try locationX (works in some React Native Web versions)
+        locationX = nativeEvent?.locationX;
+        
+        // If locationX is not available or seems wrong, calculate from clientX
+        if (locationX === undefined || locationX === null || locationX < 0 || locationX > sliderWidth) {
+          const clientX = nativeEvent?.clientX ?? nativeEvent?.pageX ?? 0;
+          // Always try to get element position for accuracy
+          try {
+            const element = sliderRef.current;
+            if (element && typeof element.getBoundingClientRect === 'function') {
+              const rect = element.getBoundingClientRect();
+              locationX = clientX - rect.left;
+            } else {
+              locationX = clientX - sliderLayout.x;
+            }
+          } catch (e) {
+            // Final fallback
+            locationX = clientX - sliderLayout.x;
+          }
+        }
+        // Ensure locationX is within bounds
+        locationX = Math.max(0, Math.min(sliderWidth, locationX));
+      } else {
+        // For mobile, use locationX directly or calculate from touches
+        if (nativeEvent?.locationX !== undefined && nativeEvent?.locationX !== null) {
+          locationX = nativeEvent.locationX;
+        } else if (nativeEvent?.touches && nativeEvent.touches.length > 0) {
+          // Fallback: calculate from touch position
+          const touch = nativeEvent.touches[0];
+          if (touch && sliderLayout.x > 0) {
+            locationX = touch.pageX - sliderLayout.x;
+          } else {
+            locationX = 0;
+          }
+        } else {
+          locationX = nativeEvent?.locationX ?? 0;
+        }
+        // Ensure locationX is within bounds
+        locationX = Math.max(0, Math.min(sliderWidth, locationX));
+      }
+      const percentage = Math.max(0, Math.min(1, locationX / sliderWidth));
+      const newLevel = Math.round(1 + percentage * 19);
+      setGodLevel(Math.max(1, Math.min(20, newLevel)));
+    }
+  }, [sliderWidth, sliderLayout, IS_WEB]);
+
+  // Handle mouse move for web (for smooth dragging)
+  const handleMouseMove = useCallback((e) => {
+    if (!isDragging || !IS_WEB) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (sliderRef.current && sliderWidth > 0) {
+      try {
+        const element = sliderRef.current;
+        if (element && typeof element.getBoundingClientRect === 'function') {
+          const rect = element.getBoundingClientRect();
+          const clientX = e.clientX;
+          const locationX = Math.max(0, Math.min(sliderWidth, clientX - rect.left));
+          const percentage = Math.max(0, Math.min(1, locationX / sliderWidth));
+          const newLevel = Math.round(1 + percentage * 19);
+          setGodLevel(Math.max(1, Math.min(20, newLevel)));
+        }
+      } catch (err) {
+        // Ignore errors
+      }
+    }
+  }, [isDragging, sliderWidth, IS_WEB]);
+
+  // Handle mouse up for web
+  const handleMouseUp = useCallback(() => {
+    if (IS_WEB && isDragging) {
+      setIsDragging(false);
+      if (typeof document !== 'undefined') {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      }
+    }
+  }, [isDragging, IS_WEB, handleMouseMove]);
+
+  // Set up mouse event listeners for web when dragging starts
+  useEffect(() => {
+    if (IS_WEB && isDragging) {
+      if (typeof document !== 'undefined') {
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
+        return () => {
+          document.removeEventListener('mousemove', handleMouseMove);
+          document.removeEventListener('mouseup', handleMouseUp);
+        };
+      }
+    }
+  }, [isDragging, IS_WEB, handleMouseMove, handleMouseUp]);
+
   // Calculate base stats at current level
   const baseStatsAtLevel = useMemo(() => {
     const stats = {};
@@ -245,7 +351,6 @@ export default function CustomBuildPage() {
   // TEST MODE: Set to true to use WebView/iframe, false to use original custom build
   const USE_WEBVIEW_ENABLED = true; // Set to false to always use native component
   const USE_WEBVIEW = USE_WEBVIEW_ENABLED && !webViewError;
-  const IS_WEB = Platform.OS === 'web';
 
   // Handle WebView errors and fallback to native component
   const handleWebViewError = (syntheticEvent) => {
@@ -392,7 +497,7 @@ export default function CustomBuildPage() {
         </>
       ) : (
         <>
-          <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+          <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent} scrollEnabled={!isDragging}>
         {/* Character Overview Section */}
         <View style={styles.characterSection}>
           <View style={styles.characterHeader}>
@@ -460,6 +565,8 @@ export default function CustomBuildPage() {
                         source={localIcon}
                         style={styles.aspectIcon}
                         resizeMode="cover"
+                        cachePolicy="memory-disk"
+                        transition={200}
                       />
                     );
                   }
@@ -479,21 +586,165 @@ export default function CustomBuildPage() {
 
           <View style={styles.levelContainer}>
             <View style={styles.sliderContainer}>
-              <Pressable
+              <View
+                ref={sliderRef}
                 style={styles.sliderTrack}
                 onLayout={(e) => {
-                  setSliderWidth(e.nativeEvent.layout.width);
+                  const { width, x, y } = e.nativeEvent.layout;
+                  setSliderWidth(width);
+                  if (IS_WEB) {
+                    // For web, we need to measure the element's position on screen
+                    setTimeout(() => {
+                      if (sliderRef.current) {
+                        try {
+                          const element = sliderRef.current;
+                          if (element && typeof element.measure === 'function') {
+                            element.measure((fx, fy, fwidth, fheight, px, py) => {
+                              setSliderLayout({ x: px, y: py, width: fwidth });
+                            });
+                          } else if (element && typeof element.getBoundingClientRect === 'function') {
+                            const rect = element.getBoundingClientRect();
+                            setSliderLayout({ x: rect.left, y: rect.top, width: rect.width });
+                          } else {
+                            setSliderLayout({ x, y, width });
+                          }
+                        } catch (e) {
+                          setSliderLayout({ x, y, width });
+                        }
+                      }
+                    }, 0);
+                  } else {
+                    setSliderLayout({ x, y, width });
+                  }
                 }}
-                onPress={(e) => {
-                  const { locationX } = e.nativeEvent;
-                  const percentage = Math.max(0, Math.min(1, locationX / sliderWidth));
-                  const newLevel = Math.round(1 + percentage * 19);
-                  setGodLevel(newLevel);
+                onStartShouldSetResponder={() => true}
+                onMoveShouldSetResponder={() => true}
+                onResponderGrant={(event) => {
+                  if (!IS_WEB) {
+                    event.preventDefault();
+                    setIsDragging(true);
+                    handleSliderMove(event);
+                  }
+                }}
+                onResponderMove={(event) => {
+                  if (!IS_WEB && isDragging) {
+                    event.preventDefault();
+                    handleSliderMove(event);
+                  }
+                }}
+                onResponderRelease={() => {
+                  if (!IS_WEB) {
+                    setIsDragging(false);
+                  }
+                }}
+                onResponderTerminationRequest={() => false}
+                onMouseDown={(e) => {
+                  if (IS_WEB && sliderRef.current && sliderWidth > 0) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setIsDragging(true);
+                    handleSliderMove({ nativeEvent: { clientX: e.clientX, pageX: e.pageX } });
+                  }
+                }}
+                onTouchStart={(e) => {
+                  if (!IS_WEB && sliderRef.current && sliderWidth > 0) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const touch = e.nativeEvent.touches[0];
+                    if (touch) {
+                      setIsDragging(true);
+                      const touchX = touch.pageX - (sliderLayout.x || 0);
+                      handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                    }
+                  }
+                }}
+                onTouchMove={(e) => {
+                  if (!IS_WEB && isDragging && sliderRef.current && sliderWidth > 0) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const touch = e.nativeEvent.touches[0];
+                    if (touch) {
+                      const touchX = touch.pageX - (sliderLayout.x || 0);
+                      handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                    }
+                  }
+                }}
+                onTouchEnd={(e) => {
+                  if (!IS_WEB) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setIsDragging(false);
+                  }
                 }}
               >
-                <View style={[styles.sliderFill, { width: `${((godLevel - 1) / 19) * 100}%` }]} />
-                <View style={[styles.sliderThumb, { left: `${((godLevel - 1) / 19) * 100}%` }]} />
-              </Pressable>
+                <View style={[styles.sliderFill, { width: `${((godLevel - 1) / 19) * 100}%` }]} pointerEvents="none" />
+                <View 
+                  style={[
+                    styles.sliderThumb,
+                    isDragging && styles.sliderThumbDragging,
+                    { left: `${((godLevel - 1) / 19) * 100}%` }
+                  ]} 
+                  onStartShouldSetResponder={() => true}
+                  onMoveShouldSetResponder={() => true}
+                  onResponderGrant={(event) => {
+                    if (!IS_WEB) {
+                      event.preventDefault();
+                      setIsDragging(true);
+                      handleSliderMove(event);
+                    }
+                  }}
+                  onResponderMove={(event) => {
+                    if (!IS_WEB && isDragging) {
+                      event.preventDefault();
+                      handleSliderMove(event);
+                    }
+                  }}
+                  onResponderRelease={() => {
+                    if (!IS_WEB) {
+                      setIsDragging(false);
+                    }
+                  }}
+                  onResponderTerminationRequest={() => false}
+                  onMouseDown={(e) => {
+                    if (IS_WEB && sliderRef.current && sliderWidth > 0) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setIsDragging(true);
+                      handleSliderMove({ nativeEvent: { clientX: e.clientX, pageX: e.pageX } });
+                    }
+                  }}
+                  onTouchStart={(e) => {
+                    if (!IS_WEB && sliderRef.current && sliderWidth > 0) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      const touch = e.nativeEvent.touches[0];
+                      if (touch) {
+                        setIsDragging(true);
+                        const touchX = touch.pageX - (sliderLayout.x || 0);
+                        handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                      }
+                    }
+                  }}
+                  onTouchMove={(e) => {
+                    if (!IS_WEB && isDragging && sliderRef.current && sliderWidth > 0) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      const touch = e.nativeEvent.touches[0];
+                      if (touch) {
+                        const touchX = touch.pageX - (sliderLayout.x || 0);
+                        handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                      }
+                    }
+                  }}
+                  onTouchEnd={(e) => {
+                    if (!IS_WEB) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setIsDragging(false);
+                    }
+                  }}
+                />
+              </View>
               <View style={styles.levelButtons}>
                 <TouchableOpacity
                   style={styles.levelButton}
@@ -1267,6 +1518,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0a0e1a',
+    ...(IS_WEB && {
+      maxWidth: 1400,
+      alignSelf: 'center',
+      width: '100%',
+    }),
   },
   scrollView: {
     flex: 1,
@@ -1274,6 +1530,9 @@ const styles = StyleSheet.create({
   scrollContent: {
     padding: 20,
     paddingBottom: 40,
+    ...(IS_WEB && {
+      paddingHorizontal: 'max(20px, calc((100% - 1400px) / 2 + 20px))',
+    }),
   },
   characterSection: {
     backgroundColor: '#1a1f2e',
@@ -1400,13 +1659,33 @@ const styles = StyleSheet.create({
   },
   sliderTrack: {
     width: '100%',
-    height: 10,
+    height: IS_WEB ? 14 : 10,
     backgroundColor: '#2a2f3f',
     borderRadius: 5,
     position: 'relative',
     marginBottom: 16,
     borderWidth: 1,
     borderColor: '#3a4a4a',
+    transition: IS_WEB ? 'all 0.2s ease' : undefined,
+    ...(IS_WEB && {
+      cursor: 'pointer',
+      minHeight: 14,
+      touchAction: 'none',
+      userSelect: 'none',
+      WebkitUserSelect: 'none',
+    }),
+    ...(!IS_WEB && {
+      touchAction: 'none',
+    }),
+  },
+  sliderTrackActive: {
+    borderColor: '#22c55e',
+    backgroundColor: '#1f2937',
+    shadowColor: '#22c55e',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 2,
   },
   sliderFill: {
     height: '100%',
@@ -1415,15 +1694,23 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     top: 0,
+    transition: IS_WEB ? 'all 0.1s linear' : undefined,
+  },
+  sliderFillActive: {
+    backgroundColor: '#9AE600',
+    shadowColor: '#B8FF12',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.6,
+    shadowRadius: 4,
   },
   sliderThumb: {
-    width: 26,
-    height: 26,
-    borderRadius: 13,
+    width: IS_WEB ? 30 : 26,
+    height: IS_WEB ? 30 : 26,
+    borderRadius: IS_WEB ? 15 : 13,
     backgroundColor: '#22c55e',
     position: 'absolute',
-    top: -8,
-    marginLeft: -13,
+    top: IS_WEB ? -10 : -8,
+    marginLeft: IS_WEB ? -15 : -13,
     borderWidth: 3,
     borderColor: '#15803d',
     shadowColor: '#15803d',
@@ -1431,6 +1718,31 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 4,
     elevation: 6,
+    transition: IS_WEB ? 'all 0.1s linear' : undefined,
+    zIndex: 10,
+    ...(IS_WEB && {
+      cursor: 'grab',
+      touchAction: 'none',
+      userSelect: 'none',
+      WebkitUserSelect: 'none',
+    }),
+    ...(!IS_WEB && {
+      touchAction: 'none',
+    }),
+  },
+  sliderThumbDragging: {
+    transform: [{ scale: 1.4 }],
+    backgroundColor: '#16a34a',
+    borderColor: '#15803d',
+    borderWidth: 4,
+    shadowColor: '#22c55e',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.8,
+    shadowRadius: 8,
+    elevation: 10,
+    ...(IS_WEB && {
+      cursor: 'grabbing',
+    }),
   },
   levelButtons: {
     flexDirection: 'row',

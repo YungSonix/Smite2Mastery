@@ -6342,17 +6342,13 @@
                         "20": 90,
                         "rate": 2.4
                     },
-                    "MagicalPower": {
-                        "1": 0,
-                        "20": 0,
-                        "rate": 0
-                    },
+                
                     "MagicalProtection": {
                         "1": 27.5,
                         "20": 56,
                         "rate": 1.5
                     },
-                    "ManaPerTime": {
+                    "ManaPerSecond": {
                         "1": 2.25,
                         "20": 7,
                         "rate": 0.25
@@ -6367,11 +6363,7 @@
                         "20": 1094,
                         "rate": 42
                     },
-                    "MovementSpeed": {
-                        "1": 375,
-                        "20": 375,
-                        "rate": 0
-                    },
+                   
                     "PhysicalProtection": {
                         "1": 19,
                         "20": 76,
