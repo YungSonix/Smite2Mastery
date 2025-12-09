@@ -22,9 +22,10 @@ import PrivacyPage from './privacy';
 // ============================================================================
 
 const APP_VERSION_CONFIG = {
-  currentVersion: '1.1.0', // Current app version
-  previousVersion: '1.0.0', // Previous version (for comparison)
+  currentVersion: '1.1.1', // Current app version
+  previousVersion: '1.1.0', // Previous version (for comparison)
   updateNotes: [
+    'Added scaling to god pages.',
     'Gods slider now draggable.',
     'Added new channels to Guides section',
     'Updated home page.',
@@ -37,6 +38,18 @@ const APP_VERSION_CONFIG = {
 // Version History - Add new versions here when releasing updates
 // The current version will automatically be added to this list when you update APP_VERSION_CONFIG
 const VERSION_HISTORY = [
+  {
+    version: '1.1.0',
+    date: '2025-12-09', // Format: YYYY-MM-DD
+    updateNotes: [
+      'Gods slider now draggable.',
+      'Added new channels to Guides section',
+      'Updated home page.',
+      'Made improvements while in a god/item page.',
+      'Improved Web performance.',
+      'Fixed some bugs.',
+    ],
+  },
   {
     version: '1.0.0',
     date: '2025-12-07', // Format: YYYY-MM-DD
