@@ -980,7 +980,7 @@
                 "name": "Totem of Death",
                 "passive": "    Ability Hit a God or Boss: Apply 1 Stack of Piercing:\n    Piercing reduces 6% Protections for 4s. Stacks up to 5 times:",
                 "stats": {
-                    "Cooldown Rate": 20,
+                    "Cooldown Rate": 15,
                     "Intelligence": 60
                 },
                 "stepCost": 1150,
@@ -1342,7 +1342,7 @@
                 "icon": "/icons/eyeOfErebus.webp",
                 "internalName": "EyeofErebus",
                 "name": "Eye of Erebus",
-                "passive": "Adaptive Stat: +35 STR/50 INT (based on highest item stat) \nOn use: Spawn a Watchful Eye that lasts 40s. \n Enemy enters range: Fires seeking projectile: \n Deals Magical Damage equal to 15% enemy max health.\n +25% Slow for 1.5s\n During Moonlight Phase: Each time you deal damage to a god: -2s Cooldown of this item (Once per target, per Attack or Ability).\nCooldown:60s",
+                "passive": "Adaptive Stat: +35 STR/50 INT (based on highest item stat) \nOn use: Spawn a Watchful Eye that lasts 40s. \n Enemy enters range: Fires seeking projectile: \n Deals Magical Damage equal to 15% enemy max health.\n +25% Slow for 2.5s\n During Moonlight Phase: Each time you deal damage to a god: -2s Cooldown of this item (Once per target, per Attack or Ability).\nCooldown:40s",
                 "stats": {
                     "Health": 250,
                     "Cooldown Rate": 15
@@ -2210,7 +2210,7 @@
                 "starter": true,
                 "stats": {
                     "Lifesteal": 5,
-                    "Strength": 45
+                    "Strength": 55
                 },
                 "stepCost": 1500,
                 "tags": [
@@ -2661,12 +2661,12 @@
                 "icon": "/icons/SharpshootersArrow.webp",
                 "internalName": "SharpshootersArrow",
                 "name": "Sharpshooter's Arrow",
-                "passive": "\r+5% Gold Gain from Kills and Assists\r\n+10% Attack Damage against enemy gods over 7.5m away\r\nRequires Level 20.",
+                "passive": "\r+5% Gold Gain from Kills and Assists\r\n+10% Attack Damage against enemy gods over 6m away\r\nRequires Level 20.",
                 "starter": true,
                 "stats": {
                     "Attack Speed": 15,
                     "Critical Chance": 15,
-                    "Basic Damage": 40
+                    "Basic Damage": 50
                 },
                 "stepCost": 1500,
                 "tier": 2,
@@ -4570,7 +4570,7 @@
                     "StartingLoadout"
                 ],
                 "tier": 1,
-                "totalCost": 650
+                "totalCost": 600
             },
             {
                 "buildsIntoT2": [
@@ -4996,7 +4996,7 @@
                 "icon": "/icons/Polynomicon.webp",
                 "internalName": "Polynomicon",
                 "name": "Polynomicon",
-                "passive": "    Ability Used: Your next Attack deals bonus Magical Damage\n    Damage = 60% of your Intellgience",
+                "passive": "    Ability Used: Your next Attack deals bonus Magical Damage\n    Damage = 80% of your Intellgience\n    Cooldown: 2 seconds.",
                 "stats": {
                     "Intelligence": 75,
                     "Mana": 200,
@@ -5030,7 +5030,7 @@
                 "icon": "/icons/DaggerOfFrenzy.webp",
                 "internalName": "DaggerOfFrenzy",
                 "name": "Dagger of Frenzy",
-                "passive": "    On Use:\n +10 (+4 per Level) Attack Damage\n +50% Attack Speed\n    Buff lasts 6 Attacks:\n    Killing a God refreshes Cooldown.\nCooldown: 15s\n   You can own up to 3 active items at once",
+                "passive": "    On Use:\n +10 (+4 per Level) Attack Damage\n +30% + 1% per Level Attack Speed\n    Buff lasts 6 Attacks:\n    Killing a God refreshes Cooldown.\nCooldown: 15s\n   You can own up to 3 active items at once",
                 "stats": {
                     "Attack Speed": 10,
                     "Strength": 35
@@ -6338,17 +6338,21 @@
                         "rate": 0.208
                     },
                     "BasicDamage": {
-                        "1": 44.4,
+                        "1": 42,
                         "20": 90,
-                        "rate": 2.4
+                        "rate": 2.526315789473684
                     },
-                
+                    "MagicalPower": {
+                        "1": 0,
+                        "20": 0,
+                        "rate": 0
+                    },
                     "MagicalProtection": {
                         "1": 27.5,
                         "20": 56,
                         "rate": 1.5
                     },
-                    "ManaPerSecond": {
+                    "ManaPerTime": {
                         "1": 2.25,
                         "20": 7,
                         "rate": 0.25
@@ -6363,7 +6367,11 @@
                         "20": 1094,
                         "rate": 42
                     },
-                   
+                    "MovementSpeed": {
+                        "1": 375,
+                        "20": 375,
+                        "rate": 0
+                    },
                     "PhysicalProtection": {
                         "1": 19,
                         "20": 76,
@@ -6493,7 +6501,7 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "2 Dec 2025",
+                        "last_edit": "9 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Warrior's Axe",
@@ -6504,20 +6512,20 @@
                             "Sundering Axe",
                             "The Reaper",
                             "Sanguine Lash",
-                            "Regrowth Striders",
+                            "Hide of the Nemean Lion",
                             "Gladiator's Shield",
-                            "Genji's Guard",
-                            "Hide of the Nemean Lion"
+                            "Glorious Pridwen",
+                            "Spirit Robe"
                         ],
                         "notes": "Bruiser solo-lane build."
                     },
                     {
-                        "author": "Mendar",
-                        "last_edit": "17 Nov 2025",
+                        "author": "Mytharria",
+                        "last_edit": "4 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
-                            "Health Chalice",
+                            "Axe",
                             "Health Potion"
                         ],
                         "full_build": [
@@ -6527,7 +6535,7 @@
                             "Barbed Carver",
                             "Heartseeker",
                             "Titan's Bane",
-                            "The Crusher"
+                            "Magi's Cloak"
                         ],
                         "notes": "Full-damage jungle build with **Aspect of Prowess**"
                     }
@@ -6726,9 +6734,9 @@
                         "rate": 2.85
                     },
                     "BasicDamage": {
-                        "1": 42.18,
+                        "1": 39.9,
                         "20": 85.5,
-                        "rate": 2.28
+                        "rate": 2.4
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -6899,8 +6907,8 @@
                 },
                 "builds": [
                     {
-                        "author": "Mendar",
-                        "last_edit": "27 Nov 2025",
+                        "author": "Mytharria",
+                        "last_edit": "9 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Sands Of Time",
@@ -6909,14 +6917,14 @@
                         ],
                         "full_build": [
                             "Pendulum Of The Ages",
-                            "Doom Orb",
-                            "Spear of Desolation",
                             "Chronos' Pendant",
+                            "Spear of Desolation",
                             "Rod of Tahuti",
                             "Obsidian Shard",
-                            "Soul Reaver"
+                            "Soul Reaver",
+                            "Soul Gem"
                         ],
-                        "notes": "INT-oriented mid burst mage build. "
+                        "notes": "INT-oriented burst mage build. "
                     },
                     {
                         "author": "Mytharria",
@@ -6992,6 +7000,9 @@
                                 50,
                                 55,
                                 60
+                            ],
+                            "TickCount": [
+                                "Maul Prey: 2\n"
                             ]
                         },
                         "scales": "35% INT + 60% STR"
@@ -7084,6 +7095,9 @@
                             ],
                             "Bear Slow": [
                                 20
+                            ],
+                            "TickCount": [
+                                "Life Tap: 5\n"
                             ],
                             "Bear Slow Duration": [
                                 2
@@ -7298,6 +7312,25 @@
                             "Hide of the Nemean Lion"
                         ],
                         "notes": "Bruiser Solo Lane Build"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "4 Dec 2025",
+                        "starting": [
+                            "Selflessness",
+                            "Health Chalice",
+                            "Sash"
+                        ],
+                        "full_build": [
+                            "Heroism",
+                            "Lifebinder",
+                            "Evolved Prophetic Cloak",
+                            "Stampede",
+                            "Talisman of Purification",
+                            "Regrowth Striders",
+                            "Freya's Tears"
+                        ],
+                        "notes": "Active-Item Oriented Support Build"
                     }
                 ]
             },
@@ -7463,10 +7496,17 @@
                             ],
                             "Damage": [
                                 60,
-                                105,
-                                150,
-                                195,
-                                240
+                                115,
+                                170,
+                                225,
+                                280
+                            ],
+                            "Genie Damage": [
+                                35,
+                                50,
+                                65,
+                                80,
+                                95
                             ],
                             "RadiusCheat": [
                                 3.2
@@ -7549,7 +7589,8 @@
                                 45,
                                 50
                             ]
-                        }
+                        },
+                        "scales": "90% INT + 65% STR"
                     }
                 },
                 "baseStats": {
@@ -7584,9 +7625,9 @@
                         "rate": 3.089473684210526
                     },
                     "BasicDamage": {
-                        "1": 43,
-                        "20": 87,
-                        "rate": 2.3157894736842106
+                        "1": 42,
+                        "20": 90,
+                        "rate": 2.526315789473684
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -7714,13 +7755,13 @@
                 },
                 "builds": [
                     {
-                        "author": "Mytharria",
-                        "last_edit": "26 Nov 2025",
+                        "author": "Mendar",
+                        "last_edit": "4 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
                             "Aladdin's Lamp",
-                            "Gem"
+                            "Axe"
                         ],
                         "full_build": [
                             "Bumba's Spear",
@@ -8018,9 +8059,9 @@
                         "rate": 3.089473684210526
                     },
                     "BasicDamage": {
-                        "1": 43,
-                        "20": 87,
-                        "rate": 2.3157894736842106
+                        "1": 42,
+                        "20": 90,
+                        "rate": 2.526315789473684
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -8204,7 +8245,7 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
+                        "last_edit": "3 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
                             "War Flag",
@@ -8224,7 +8265,7 @@
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
+                        "last_edit": "3 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Death's Toll",
@@ -8240,7 +8281,7 @@
                             "Sun Beam Bow",
                             "Tyrfing"
                         ],
-                        "notes": "Bruiser AA-oriented solo warrior build."
+                        "notes": "Bruiser AA-oriented warrior build."
                     },
                     {
                         "author": "Mytharria",
@@ -8520,9 +8561,9 @@
                         "rate": 2.910526315789474
                     },
                     "BasicDamage": {
-                        "1": 47,
-                        "20": 95,
-                        "rate": 2.526315789473684
+                        "1": 45.36,
+                        "20": 97.2,
+                        "rate": 2.7284210526315786
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -8991,9 +9032,9 @@
                         "rate": 3
                     },
                     "BasicDamage": {
-                        "1": 42,
-                        "20": 86,
-                        "rate": 2.3157894736842106
+                        "1": 39.9,
+                        "20": 85.5,
+                        "rate": 2.4
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -9117,7 +9158,6 @@
                             "gemsdia": ""
                         }
                     },
-                    
                     "Blight Hound": {
                         "name": "Blight Hound",
                         "skin": "/icons/Wallpapers/Anubis_Blighthound.webp",
@@ -9146,7 +9186,7 @@
                             "Obsidian Shard",
                             "Spear of Desolation"
                         ],
-                        "notes": "INT-oriented mid burst mage build with lifesteal "
+                        "notes": "INT-oriented burst mage build with lifesteal "
                     }
                 ]
             },
@@ -9403,9 +9443,9 @@
                         "rate": 2.85
                     },
                     "BasicDamage": {
-                        "1": 42.18,
+                        "1": 39.9,
                         "20": 85.5,
-                        "rate": 2.28
+                        "rate": 2.4
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -9589,7 +9629,7 @@
                             "Obsidian Shard",
                             "Soul Reaver"
                         ],
-                        "notes": "INT-oriented mid burst mage build. "
+                        "notes": "INT-oriented burst mage build. "
                     },
                     {
                         "author": "Mytharria",
@@ -9818,9 +9858,9 @@
                         "rate": 3.18
                     },
                     "BasicDamage": {
-                        "1": 48,
-                        "20": 97,
-                        "rate": 2.328
+                        "1": 45.36,
+                        "20": 97.2,
+                        "rate": 2.7284210526315786
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -10405,9 +10445,9 @@
                         "rate": 3.184210526315789
                     },
                     "BasicDamage": {
-                        "1": 43,
-                        "20": 87,
-                        "rate": 2.3157894736842106
+                        "1": 39.9,
+                        "20": 90,
+                        "rate": 2.636842105263158
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -10829,9 +10869,9 @@
                         "rate": 2.910526315789474
                     },
                     "BasicDamage": {
-                        "1": 47,
-                        "20": 95,
-                        "rate": 2.526315789473684
+                        "1": 45.36,
+                        "20": 97.2,
+                        "rate": 2.7284210526315786
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -11393,9 +11433,9 @@
                         "rate": 3.184210526315789
                     },
                     "BasicDamage": {
-                        "1": 43,
-                        "20": 87,
-                        "rate": 2.3157894736842106
+                        "1": 39.9,
+                        "20": 90,
+                        "rate": 2.636842105263158
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -11854,9 +11894,9 @@
                         "rate": 0.208
                     },
                     "BasicDamage": {
-                        "1": 44.4,
+                        "1": 42,
                         "20": 90,
-                        "rate": 2.4
+                        "rate": 2.526315789473684
                     },
                     "MagicalPower": {
                         "1": 0,
@@ -12365,9 +12405,9 @@
                         "rate": 3.089473684210526
                     },
                     "BasicDamage": {
-                        "1": 43,
-                        "20": 87,
-                        "rate": 2.3157894736842106
+                        "1": 43.68,
+                        "20": 85.5,
+                        "rate": 2.201052631578947
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -12906,9 +12946,9 @@
                         "rate": 3
                     },
                     "BasicDamage": {
-                        "1": 43.068,
-                        "20": 87.3,
-                        "rate": 2.328
+                        "1": 39.9,
+                        "20": 85.5,
+                        "rate": 2.4
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -13050,7 +13090,7 @@
                             "Obsidian Shard",
                             "Soul Reaver"
                         ],
-                        "notes": "INT-oriented mid burst mage build. With **Aspect of Hysteria**"
+                        "notes": "INT-oriented burst mage build. With **Aspect of Hysteria**"
                     },
                     {
                         "author": "Mytharria",
@@ -13251,6 +13291,10 @@
                                 80
                             ],
                             "Healing": [
+                                6,
+                                7,
+                                8,
+                                9,
                                 10
                             ],
                             "Damage": [
@@ -13400,9 +13444,9 @@
                         "rate": 3.089473684210526
                     },
                     "BasicDamage": {
-                        "1": 43,
-                        "20": 87,
-                        "rate": 2.3157894736842106
+                        "1": 42,
+                        "20": 90,
+                        "rate": 2.526315789473684
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -13606,7 +13650,7 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
+                        "last_edit": "3 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
                             "War Flag",
@@ -13626,7 +13670,7 @@
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "27 Nov 2025",
+                        "last_edit": "3 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Warrior's Axe",
@@ -13642,7 +13686,7 @@
                             "Glorious Pridwen",
                             "Spirit Robe"
                         ],
-                        "notes": "Bruiser AA-oriented warrior solo build"
+                        "notes": "Bruiser AA-oriented warrior build"
                     }
                 ]
             },
@@ -13930,9 +13974,9 @@
                         "rate": 0.208
                     },
                     "BasicDamage": {
-                        "1": 42.18,
+                        "1": 39.9,
                         "20": 85.5,
-                        "rate": 2.28
+                        "rate": 2.4
                     },
                     "MagicalPower": {
                         "1": 0,
@@ -14522,9 +14566,9 @@
                         "rate": 2.910526315789474
                     },
                     "BasicDamage": {
-                        "1": 47,
-                        "20": 95,
-                        "rate": 2.526315789473684
+                        "1": 43.68,
+                        "20": 93.6,
+                        "rate": 2.6273684210526316
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -15022,9 +15066,9 @@
                         "rate": 3.089473684210526
                     },
                     "BasicDamage": {
-                        "1": 43,
-                        "20": 87,
-                        "rate": 2.3157894736842106
+                        "1": 42,
+                        "20": 90,
+                        "rate": 2.526315789473684
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -15259,7 +15303,7 @@
                             "Glorious Pridwen",
                             "Hide of the Nemean Lion"
                         ],
-                        "notes": "Bruiser poke warrior solo build\n"
+                        "notes": "Bruiser poke warrior build\n"
                     },
                     {
                         "author": "Mytharria",
@@ -15310,11 +15354,11 @@
                                 80
                             ],
                             "Damage": [
-                                50,
-                                75,
-                                100,
-                                125,
-                                150
+                                65,
+                                90,
+                                115,
+                                140,
+                                165
                             ],
                             "Radius": [
                                 0.56
@@ -15448,17 +15492,13 @@
                             ],
                             "Soul Health": [
                                 50,
-                                75,
-                                100,
-                                125,
-                                150
+                                60,
+                                70,
+                                80,
+                                90
                             ],
                             "Cooldown": [
-                                16,
-                                16,
-                                16,
-                                16,
-                                16
+                                14
                             ]
                         }
                     },
@@ -15532,9 +15572,9 @@
                         "rate": 3.089473684210526
                     },
                     "BasicDamage": {
-                        "1": 43,
-                        "20": 87,
-                        "rate": 2.3157894736842106
+                        "1": 42,
+                        "20": 90,
+                        "rate": 2.526315789473684
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -16083,9 +16123,9 @@
                         "rate": 2.91
                     },
                     "BasicDamage": {
-                        "1": 47.064,
-                        "20": 95.4,
-                        "rate": 2.5440000000000005
+                        "1": 45.36,
+                        "20": 97.2,
+                        "rate": 2.7284210526315786
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -16304,7 +16344,7 @@
                         "icon": "/icons/daJiOne.webp",
                         "key": "DaJi.A01.InGame.Short",
                         "name": "Horrible Burns",
-                        "scales": "20% STR, 10% STR (Per Tick), 3% STR Bonus",
+                        "scales": "20% STR, 10% STR (Per Tick), 2% STR Bonus",
                         "shortDesc": "While active, your next successful Attack will Slow, deals bonus [20% STR] Physical Damage, and deals additional [10% STR] Physical Damage every second.\n • The nearest enemy god below a health threshold is marked, reducing this ability's cooldown rapidly.\n • Hitting a marked enemy god with this ability permanently increases its damage scaling by [3% STR].\n • While active, you gain Haste.",
                         "valueKeys": {
                             "Damage": [
@@ -16391,10 +16431,6 @@
                                 180
                             ],
                             "Cooldown": [
-                                11,
-                                11,
-                                11,
-                                11,
                                 11
                             ],
                             "TickCount": [
@@ -16548,10 +16584,10 @@
                     "icon": "/icons/daJiPassive.webp",
                     "key": "DaJi.Passive.InGame.Short",
                     "name": "Torture Blades",
-                    "shortDesc": "Basic Attacks and Non-Ultimate Abilites bleed enemies, dealing [7% STR] Physical Damage every 1s for 2s. \n • Stacks infinitely\n • Does not proc item effects.",
+                    "shortDesc": "Basic Attacks and Non-Ultimate Abilites bleed enemies, dealing [5% STR] Physical Damage every 1s for 2s. \n • Stacks infinitely\n • Does not proc item effects.",
                     "valueKeys": {
                         "Base Damage": [
-                            7
+                            5
                         ]
                     }
                 },
@@ -16699,8 +16735,8 @@
                 },
                 "builds": [
                     {
-                        "author": "Mytharria",
-                        "last_edit": "25 Nov 2025",
+                        "author": "Mendar",
+                        "last_edit": "4 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
@@ -17005,9 +17041,9 @@
                         "rate": 2.91
                     },
                     "BasicDamage": {
-                        "1": 46,
-                        "20": 93,
-                        "rate": 2.526315789473684
+                        "1": 43.68,
+                        "20": 93.6,
+                        "rate": 2.6273684210526316
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -17275,6 +17311,10 @@
                                 "1.5s"
                             ],
                             "Cooldown": [
+                                16,
+                                15.5,
+                                15,
+                                14.5,
                                 14
                             ],
                             "Cost": [
@@ -17352,7 +17392,7 @@
                     "name": "Funeral Rites",
                     "shortDesc": "Whenever a God dies within 12m of Eset, she gains a stack of Funeral Rites, granting Health Regen and Mana Regen for her and nearby allies. Additionally, every third Basic Attack from Eset is empowered, allowing it to hit in a wider radius and applying bonus Damage based on her stacks.\n  \n  Notes:\n  • At 4 stacks, Eset’s Invocation buff can stack up to 4 times.\n  • At 5 stacks, Eset’s Invocation buff can stack up to 5 times.\n  • At 10 stacks, Eset’s Invocation buff can stack up to 6 times, and Eset gains 10% Cooldown Rate.",
                     "valueKeys": {
-                        "BonusDamage": "10% INT per stack",
+                        "BonusDamage": "7.5% INT per stack",
                         "HealthRegen": "0.4 per stack",
                         "ManaRegen": "0.4 per stack"
                     }
@@ -17529,7 +17569,7 @@
                             "Obsidian Shard",
                             "Soul Reaver"
                         ],
-                        "notes": "INT-oriented mid burst mage build with lifesteal "
+                        "notes": "INT-oriented cooldown burst mage build"
                     },
                     {
                         "author": "Mytharria",
@@ -17844,9 +17884,9 @@
                         "rate": 3
                     },
                     "BasicDamage": {
-                        "1": 46,
-                        "20": 93,
-                        "rate": 2.473684210526316
+                        "1": 42,
+                        "20": 90,
+                        "rate": 2.526315789473684
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -18317,9 +18357,9 @@
                         "rate": 3.24
                     },
                     "BasicDamage": {
-                        "1": 42.18,
-                        "20": 85.5,
-                        "rate": 2.28
+                        "1": 42,
+                        "20": 90,
+                        "rate": 2.526315789473684
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -19227,9 +19267,9 @@
                         "rate": 3.24
                     },
                     "BasicDamage": {
-                        "1": 42.18,
+                        "1": 39.9,
                         "20": 85.5,
-                        "rate": 2.28
+                        "rate": 2.4
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -19418,7 +19458,7 @@
                         "icon": "/icons/hadesOne.webp",
                         "key": "Hades.A01.InGame.Short",
                         "name": "Death From Below",
-                        "scales": "75% INT",
+                        "scales": "85% INT",
                         "shortDesc": "Leap through the underworld, then emerge and deal [75% INT] Magical Damage to enemies.\r\n\r\n  • Blighted enemies are Slowed ",
                         "valueKeys": {
                             "Cooldown": [
@@ -19669,9 +19709,9 @@
                         "rate": 1.4526315789473683
                     },
                     "MaxHealth": {
-                        "1": 617.625,
+                        "1": 546,
                         "20": 2377.5,
-                        "rate": 92.625
+                        "rate": 101.4
                     },
                     "MaxMana": {
                         "1": 305,
@@ -19684,9 +19724,9 @@
                         "rate": 3
                     },
                     "BasicDamage": {
-                        "1": 43,
-                        "20": 87,
-                        "rate": 2.3157894736842106
+                        "1": 39.9,
+                        "20": 85.5,
+                        "rate": 2.4
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -20088,9 +20128,9 @@
                         "rate": 2.910526315789474
                     },
                     "BasicDamage": {
-                        "1": 42,
-                        "20": 86,
-                        "rate": 2.3157894736842106
+                        "1": 39.9,
+                        "20": 85.5,
+                        "rate": 2.4
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -20327,7 +20367,7 @@
                             "Obsidian Shard",
                             "Soul Reaver"
                         ],
-                        "notes": "INT-oriented mid burst mage build."
+                        "notes": "INT-oriented burst mage build."
                     },
                     {
                         "author": "Mytharria",
@@ -20566,9 +20606,9 @@
                         "rate": 3.09
                     },
                     "BasicDamage": {
-                        "1": 43,
-                        "20": 87,
-                        "rate": 2
+                        "1": 42,
+                        "20": 90,
+                        "rate": 2.526315789473684
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -21490,9 +21530,9 @@
                         "rate": 0.20789473684210524
                     },
                     "BasicDamage": {
-                        "1": 44,
+                        "1": 42,
                         "20": 90,
-                        "rate": 2.4210526315789473
+                        "rate": 2.526315789473684
                     },
                     "MagicalPower": {
                         "1": 0,
@@ -21948,9 +21988,9 @@
                         "rate": 0.19999999999999998
                     },
                     "BasicDamage": {
-                        "1": 47.4,
-                        "20": 95,
-                        "rate": 2.4
+                        "1": 42,
+                        "20": 90,
+                        "rate": 2.526315789473684
                     },
                     "MagicalPower": {
                         "1": 0,
@@ -22120,11 +22160,11 @@
                 "builds": [
                     {
                         "author": "Mendar",
-                        "last_edit": "23 Oct 2025",
+                        "last_edit": "4 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
-                            "Health Chalice",
+                            "Axe",
                             "Health Potion"
                         ],
                         "full_build": [
@@ -22427,9 +22467,9 @@
                         "rate": 2.910526315789474
                     },
                     "BasicDamage": {
-                        "1": 40,
-                        "20": 86,
-                        "rate": 2.4210526315789473
+                        "1": 38.64,
+                        "20": 90,
+                        "rate": 2.7031578947368424
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -22632,7 +22672,7 @@
                             "Rod of Tahuti",
                             "Soul Reaver"
                         ],
-                        "notes": "INT-oriented mid burst mage build."
+                        "notes": "INT-oriented burst mage build."
                     }
                 ]
             },
@@ -22830,9 +22870,9 @@
                         "rate": 2.910526315789474
                     },
                     "BasicDamage": {
-                        "1": 47,
-                        "20": 91,
-                        "rate": 2.526315789473684
+                        "1": 39.9,
+                        "20": 85.5,
+                        "rate": 2.4
                     },
                     "ManaPerSecond": {
                         "1": 2.4,
@@ -22958,7 +22998,7 @@
                             "Obsidian Shard",
                             "Staff of Myrddin"
                         ],
-                        "notes": "INT-oriented mid burst mage build."
+                        "notes": "INT-oriented burst mage build."
                     }
                 ]
             },
@@ -23214,9 +23254,9 @@
                         "rate": 2.910526315789474
                     },
                     "BasicDamage": {
-                        "1": 46,
-                        "20": 94,
-                        "rate": 2.526315789473684
+                        "1": 45.36,
+                        "20": 97.2,
+                        "rate": 2.7284210526315786
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -23562,7 +23602,7 @@
                         "rate": 3.184210526315789
                     },
                     "BasicDamage": {
-                        "1": 24,
+                        "1": 20,
                         "20": 100,
                         "rate": 2.473684210526316
                     },
@@ -23626,7 +23666,7 @@
                     "shortDesc": "You are immune to Hard Displacement, but are instead Dazed, a debuff that Slows you and increases the damage you take.\nHits from Basic attacks and Venomous Haze cause enemy gods to gain a debuff stack. At max stacks, the next hit deals damage based on your Max Health or Strength, and resets the debuff.\nHard Displacement effects include: Banish, Grab, Knockback, Levitate and Vortex effects. Jormungandr's breath auto attack hits 5 times a second, proccing auto attack items at 40% damage and 20% healing.",
                     "valueKeys": {
                         "Damage": [
-                            "8% Max Health",
+                            "6% Max Health",
                             "115% Strength"
                         ],
                         "Max Stacks": [
@@ -24005,9 +24045,9 @@
                         "rate": 3.18
                     },
                     "BasicDamage": {
-                        "1": 43.068,
-                        "20": 87.3,
-                        "rate": 2.328
+                        "1": 39.9,
+                        "20": 85.5,
+                        "rate": 2.4
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -24206,11 +24246,11 @@
                         "shortDesc": "Leap dealing [80% STR] Physical Damage to enemies when landing. Heal [20-60] Health if this ability landed on an enemy.\n• If you landed on an enemy god, heal for 6% of their missing health\n• If you landed on multiple gods, restore based on the god that would heal you the most\n• Applies 3 stacks of Rupture",
                         "valueKeys": {
                             "Damage": [
-                                65,
-                                115,
-                                165,
-                                215,
-                                265
+                                70,
+                                125,
+                                180,
+                                235,
+                                290
                             ],
                             "Heal": [
                                 20,
@@ -24438,9 +24478,9 @@
                         "rate": 3.18
                     },
                     "BasicDamage": {
-                        "1": 39,
+                        "1": 38.64,
                         "20": 90,
-                        "rate": 2.328
+                        "rate": 2.7031578947368424
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -24927,9 +24967,9 @@
                         "rate": 2.910526315789474
                     },
                     "BasicDamage": {
-                        "1": 42,
-                        "20": 86,
-                        "rate": 2.3157894736842106
+                        "1": 39.9,
+                        "20": 85.5,
+                        "rate": 2.4
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -25077,7 +25117,7 @@
                             "Obsidian Shard",
                             "Soul Reaver"
                         ],
-                        "notes": "INT-oriented mid burst mage build."
+                        "notes": "INT-oriented burst mage build."
                     }
                 ]
             },
@@ -25409,9 +25449,9 @@
                         "rate": 2.910526315789474
                     },
                     "BasicDamage": {
-                        "1": 44,
+                        "1": 42,
                         "20": 90,
-                        "rate": 2.473684210526316
+                        "rate": 2.526315789473684
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -25743,11 +25783,7 @@
                                 40
                             ],
                             "Cooldown": [
-                                110,
-                                110,
-                                110,
-                                110,
-                                110
+                                90
                             ],
                             "Cost": [
                                 100,
@@ -25842,9 +25878,9 @@
                         "rate": 2.85
                     },
                     "BasicDamage": {
-                        "1": 46.176,
+                        "1": 43.68,
                         "20": 93.6,
-                        "rate": 2.4959999999999996
+                        "rate": 2.6273684210526316
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -26264,8 +26300,8 @@
                         "rate": 3.18
                     },
                     "BasicDamage": {
-                        "1": 48,
-                        "20": 97,
+                        "1": 42,
+                        "20": 90,
                         "rate": 2.328
                     },
                     "ManaPerSecond": {
@@ -26313,11 +26349,11 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "25 Nov 2025",
+                        "last_edit": "6 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Golden Dagger",
-                            "Health Potion 3x",
+                            "Health Potion",
                             "Axe"
                         ],
                         "full_build": [
@@ -26628,8 +26664,8 @@
                         "rate": 2.910526315789474
                     },
                     "BasicDamage": {
-                        "1": 43,
-                        "20": 91,
+                        "1": 39.9,
+                        "20": 85.5,
                         "rate": 2.4
                     },
                     "ManaPerSecond": {
@@ -26798,7 +26834,7 @@
                             "Obsidian Shard",
                             "Soul Reaver"
                         ],
-                        "notes": "INT-oriented mid burst mage build. "
+                        "notes": "INT-oriented burst mage build. "
                     }
                 ]
             },
@@ -27103,6 +27139,9 @@
                                 6,
                                 6
                             ],
+                            "TickCount": [
+                                5
+                            ],
                             "Shield": [
                                 160,
                                 200,
@@ -27185,9 +27224,9 @@
                         "rate": 3.089473684210526
                     },
                     "BasicDamage": {
-                        "1": 44,
+                        "1": 42,
                         "20": 90,
-                        "rate": 2.4210526315789473
+                        "rate": 2.526315789473684
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -27370,18 +27409,18 @@
                 },
                 "builds": [
                     {
-                        "author": "Mytharria",
-                        "last_edit": "2 Oct 2025",
+                        "author": "Mendar",
+                        "last_edit": "4 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
-                            "Health Chalice",
+                            "Axe",
                             "Health Potion"
                         ],
                         "full_build": [
                             "Bumba's Hammer",
+                            "The Reaper",
                             "Barbed Carver",
-                            "Oath-Sworn Spear",
                             "Pendulum Blade",
                             "Heartseeker",
                             "The Crusher",
@@ -27391,7 +27430,7 @@
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "20 Nov 2025",
+                        "last_edit": "7 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bluestone Pendant",
@@ -27402,12 +27441,12 @@
                             "Bluestone Brooch",
                             "Barbed Carver",
                             "Sanguine Lash",
-                            "Stygian Anchor",
+                            "Umbral Link",
                             "Gladiator's Shield",
                             "Glorious Pridwen",
                             "Hide of the Nemean Lion"
                         ],
-                        "notes": "Bruiser poke warrior solo build."
+                        "notes": "Bruiser poke warrior build."
                     }
                 ]
             },
@@ -27624,9 +27663,9 @@
                         "rate": 2.910526315789474
                     },
                     "BasicDamage": {
-                        "1": 44,
-                        "20": 90,
-                        "rate": 2.4210526315789473
+                        "1": 43.68,
+                        "20": 93.6,
+                        "rate": 2.6273684210526316
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -27844,7 +27883,7 @@
                             "Obsidian Shard",
                             "Soul Reaver"
                         ],
-                        "notes": "INT-oriented mid burst mage build."
+                        "notes": "INT-oriented burst mage build."
                     },
                     {
                         "author": "Mytharria",
@@ -28098,9 +28137,9 @@
                         "rate": 0.19999999999999998
                     },
                     "BasicDamage": {
-                        "1": 44.4,
+                        "1": 42,
                         "20": 90,
-                        "rate": 2.4
+                        "rate": 2.526315789473684
                     },
                     "MagicalPower": {
                         "1": 0,
@@ -28273,11 +28312,11 @@
                 "builds": [
                     {
                         "author": "Mendar",
-                        "last_edit": "25 Nov 2025",
+                        "last_edit": "4 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
-                            "Health Chalice",
+                            "Axe",
                             "Health Potion"
                         ],
                         "full_build": [
@@ -28287,7 +28326,7 @@
                             "The Crusher",
                             "Heartseeker",
                             "Titan's Bane",
-                            "Arondight"
+                            "Pendulum Blade"
                         ],
                         "notes": "Ability-based STR jungler."
                     },
@@ -28571,9 +28610,9 @@
                         "rate": 3
                     },
                     "BasicDamage": {
-                        "1": 42,
-                        "20": 86,
-                        "rate": 2.3157894736842106
+                        "1": 39.9,
+                        "20": 85.5,
+                        "rate": 2.4
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -28751,7 +28790,7 @@
                             "Obsidian Shard",
                             "Soul Reaver"
                         ],
-                        "notes": "INT-oriented mid burst mage build. "
+                        "notes": "INT-oriented burst mage build. "
                     },
                     {
                         "author": "Mytharria",
@@ -29051,9 +29090,9 @@
                         "rate": 3.089473684210526
                     },
                     "BasicDamage": {
-                        "1": 44,
+                        "1": 42,
                         "20": 90,
-                        "rate": 2.4210526315789473
+                        "rate": 2.526315789473684
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -29200,8 +29239,8 @@
                         "notes": "Bruiser solo-lane build."
                     },
                     {
-                        "author": "Mytharria",
-                        "last_edit": "2 Oct 2025",
+                        "author": "Mendar",
+                        "last_edit": "4 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
@@ -29215,7 +29254,7 @@
                             "Oath-Sworn Spear",
                             "Heartseeker",
                             "Titan's Bane",
-                            "The Crusher"
+                            "Magi's Cloak"
                         ],
                         "notes": "Full damage jungle build."
                     },
@@ -29608,7 +29647,7 @@
                             "Spirit Robe",
                             "Hide of the Nemean Lion"
                         ],
-                        "notes": "Bruiser poke warrior solo build.  **Aspect of the Fragmented** OPTIONAL"
+                        "notes": "Bruiser poke warrior build.  **Aspect of the Fragmented** OPTIONAL"
                     }
                 ]
             },
@@ -29622,7 +29661,7 @@
                         "icon": "/icons/peleOne.webp",
                         "key": "Pele.A01.InGame.Short",
                         "name": "Pyroclast",
-                        "scales": "55% STR",
+                        "scales": "60% STR",
                         "shortDesc": "Fires a Magma projectile that deals [55% STR] Physical Damage and grants fuel per enemy hit. At max range the Magma persists and fires additional shard projectiles back to you, dealing [15% STR] Physical Damage to enemies. \r\n\r\n   • The number of shards returning is dependent on the rank of this ability. \r\n\r\n  • Pele has 2 charges of this ability.",
                         "valueKeys": {
                             "Cooldown": [
@@ -29647,7 +29686,7 @@
                                 220
                             ],
                             "Fuel Regen": [
-                                5
+                                10
                             ],
                             "Range": [
                                 9.6
@@ -29676,7 +29715,7 @@
                         "icon": "/icons/peleTwo.webp",
                         "key": "Pele.A02.InGame.Short",
                         "name": "Eruption",
-                        "scales": "60% STR",
+                        "scales": "65% STR",
                         "shortDesc": "Deal [60% STR] Physical Damage and Knock Up enemies around you.\r\n\tAt ranks 3 and 5 this area gains an additional explosion areas, which deal [40% STR] Physical Damage and a smaller Knock Up.\r\n\r\n   • Activating this ability while using Magma Rush grants a large Movement Speed boost during the pre-fire of Eruption. ",
                         "valueKeys": {
                             "Cooldown": [
@@ -29880,9 +29919,9 @@
                         "rate": 3
                     },
                     "BasicDamage": {
-                        "1": 44.4,
+                        "1": 42,
                         "20": 90,
-                        "rate": 2.4
+                        "rate": 2.526315789473684
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -30061,7 +30100,7 @@
                 "builds": [
                     {
                         "author": "Mendar",
-                        "last_edit": "25 Nov 2025",
+                        "last_edit": "4 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
@@ -30070,8 +30109,8 @@
                         ],
                         "full_build": [
                             "Bumba's Hammer",
-                            "Barbed Carver",
                             "The Reaper",
+                            "Barbed Carver",
                             "The Crusher",
                             "Heartseeker",
                             "Titan's Bane",
@@ -30097,7 +30136,7 @@
                             "Glorious Pridwen",
                             "Spirit Robe"
                         ],
-                        "notes": "Bruiser poke warrior solo build with **__Aspect of Obsidian__**."
+                        "notes": "Bruiser poke warrior build with **__Aspect of Obsidian__**."
                     }
                 ]
             },
@@ -30342,9 +30381,9 @@
                         "rate": 2.91
                     },
                     "BasicDamage": {
-                        "1": 42.18,
+                        "1": 39.9,
                         "20": 85.5,
-                        "rate": 2.28
+                        "rate": 2.4
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -30507,7 +30546,7 @@
                             "Rod of Tahuti",
                             "Soul Reaver"
                         ],
-                        "notes": "INT-oriented mid burst mage build. (swap pendulum for Bumba's Spear if you're jungle)"
+                        "notes": "INT-oriented burst mage build. (swap pendulum for Bumba's Spear if you're jungle)"
                     },
                     {
                         "author": "Mytharria",
@@ -30586,7 +30625,7 @@
                         "icon": "/icons/bariTwo.webp",
                         "key": "Sol.A02.InGame.Short",
                         "name": "Warding Gust",
-                        "scales": "60% INT + 50% STR",
+                        "scales": "80% INT + 50% STR",
                         "shortDesc": "Swipe your fan dealing [50% STR + 60% INT] Magical Damage to enemies and Knockback enemies who are close. \r\n• -30% Damage to enemies further away \r\n• Mystic Surge: +20% Damage and Knockback. Bells pushed are treated as Mystic Surge Bell",
                         "valueKeys": {
                             "Damage": [
@@ -30616,7 +30655,7 @@
                         "icon": "/icons/bariThree.webp",
                         "key": "Sol.A03.InGame.Short",
                         "name": "Reverent Steps",
-                        "scales": "55% INT + 75% STR",
+                        "scales": "70% INT + 45% STR",
                         "shortDesc": "Dance for a short burst of speed in any direction, then fire a projectile dealing [75% STR + 55% INT + 100% Basic Damage] Magical Damage when it ends. \r\n• Hitting a god grants 50 Spirit and reduces this ability’s Cooldown by 25% \r\n• Mystic Surge: +20% Damage, dealt instantly in a line. Bells pushed are treated as Mystic Surge Bell",
                         "valueKeys": {
                             "Damage": [
@@ -30791,15 +30830,15 @@
                             45,
                             60,
                             75,
-                            90
+                            105
                         ],
                         "Strength": [
-                            7,
-                            14,
-                            21,
-                            28,
-                            38,
-                            49
+                            10,
+                            18,
+                            26,
+                            34,
+                            42,
+                            60
                         ],
                         "Spirit on Minion Hit": [
                             2
@@ -30898,7 +30937,7 @@
                             "Obsidian Shard",
                             "Soul Reaver"
                         ],
-                        "notes": "INT-oriented mid cooldown burst mage build"
+                        "notes": "INT-oriented cooldown burst mage build"
                     },
                     {
                         "author": "Mendar",
@@ -31032,7 +31071,7 @@
                         "icon": "/icons/raThree.webp",
                         "key": "Ra.A03.InGame.Short",
                         "name": "Solar Blessing",
-                        "scales": "30% INT",
+                        "scales": "35% INT",
                         "shortDesc": "Summon a pillar of blessed light repeatedly dealing [30% INT] Magical Damage and Healing allies for  Health.\r\n\r\n  • The light empowers you and allied gods in the area, granting Strength, Intelligence, Physical Protection, and Magical Protection",
                         "valueKeys": {
                             "Cooldown": [
@@ -31058,10 +31097,10 @@
                             ],
                             "Heal": [
                                 10,
-                                19,
-                                28,
-                                37,
-                                46
+                                17,
+                                24,
+                                31,
+                                38
                             ],
                             "IntBuff": [
                                 20,
@@ -31190,9 +31229,9 @@
                         "rate": 2.91
                     },
                     "BasicDamage": {
-                        "1": 43.068,
-                        "20": 87.3,
-                        "rate": 2.328
+                        "1": 39.9,
+                        "20": 85.5,
+                        "rate": 2.4
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -31370,7 +31409,7 @@
                             "Rod of Tahuti",
                             "Soul Reaver"
                         ],
-                        "notes": "INT-oriented mid burst mage build."
+                        "notes": "INT-oriented burst mage build."
                     },
                     {
                         "author": "Mytharria",
@@ -31630,9 +31669,9 @@
                         "rate": 0.19999999999999998
                     },
                     "BasicDamage": {
-                        "1": 47.952,
+                        "1": 45.36,
                         "20": 97.2,
-                        "rate": 2.592
+                        "rate": 2.7284210526315786
                     },
                     "MagicalPower": {
                         "1": 0,
@@ -32054,9 +32093,9 @@
                         "rate": 3.089473684210526
                     },
                     "BasicDamage": {
-                        "1": 43,
-                        "20": 87,
-                        "rate": 2.3157894736842106
+                        "1": 39.9,
+                        "20": 85.5,
+                        "rate": 2.4
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -32525,9 +32564,9 @@
                         "rate": 2.910526315789474
                     },
                     "BasicDamage": {
-                        "1": 46,
-                        "20": 93,
-                        "rate": 2.473684210526316
+                        "1": 43.68,
+                        "20": 90,
+                        "rate": 2.437894736842105
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -32841,7 +32880,7 @@
                             "Obsidian Shard",
                             "Soul Reaver"
                         ],
-                        "notes": "INT-oriented mid burst mage build with **Aspect of Conflagration**"
+                        "notes": "INT-oriented burst mage build with **Aspect of Conflagration**"
                     }
                 ]
             },
@@ -33104,9 +33143,9 @@
                         "rate": 2.910526315789474
                     },
                     "BasicDamage": {
-                        "1": 46,
-                        "20": 93,
-                        "rate": 2.473684210526316
+                        "1": 42,
+                        "20": 90,
+                        "rate": 2.526315789473684
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -33229,7 +33268,7 @@
                 "builds": [
                     {
                         "author": "Mendar",
-                        "last_edit": "23 Oct 2025",
+                        "last_edit": "4 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Bumba's Cudgel",
@@ -33239,11 +33278,11 @@
                         "full_build": [
                             "Bumba's Hammer",
                             "Hydra's Lament",
-                            "Oath-Sworn Spear",
+                            "Barbed Carver",
                             "The Crusher",
                             "Heartseeker",
                             "Titan's Bane",
-                            "Barbed Carver"
+                            "Oath-Sworn Spear"
                         ],
                         "notes": "Cooldown + burst damage jungler"
                     }
@@ -33460,9 +33499,9 @@
                         "rate": 3.24
                     },
                     "BasicDamage": {
-                        "1": 43,
-                        "20": 87,
-                        "rate": 2.28
+                        "1": 42,
+                        "20": 90,
+                        "rate": 2.526315789473684
                     },
                     "ManaPerSecond": {
                         "1": 2.2,
@@ -33658,7 +33697,7 @@
                             "Rod of Tahuti",
                             "Staff of Myrddin"
                         ],
-                        "notes": "Full Damage Mid INT Build with **__Aspect of Transformation__**"
+                        "notes": "Full Damage INT Build with **__Aspect of Transformation__**"
                     }
                 ]
             },
@@ -33877,9 +33916,9 @@
                         "rate": 2.910526315789474
                     },
                     "BasicDamage": {
-                        "1": 42,
-                        "20": 86,
-                        "rate": 2.473684210526316
+                        "1": 39.9,
+                        "20": 85.5,
+                        "rate": 2.4
                     },
                     "ManaPerSecond": {
                         "1": 2.3,
@@ -34041,7 +34080,7 @@
                             "Obsidian Shard",
                             "Soul Reaver"
                         ],
-                        "notes": "INT-oriented mid burst mage build."
+                        "notes": "INT-oriented burst mage build."
                     }
                 ]
             },
@@ -34705,9 +34744,9 @@
                         "rate": 3
                     },
                     "BasicDamage": {
-                        "1": 46,
-                        "20": 93,
-                        "rate": 2.473684210526316
+                        "1": 42,
+                        "20": 90,
+                        "rate": 2.526315789473684
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -35090,9 +35129,9 @@
                         "rate": 2.910526315789474
                     },
                     "BasicDamage": {
-                        "1": 43,
-                        "20": 91,
-                        "rate": 2.4
+                        "1": 43.68,
+                        "20": 90,
+                        "rate": 2.437894736842105
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -35263,11 +35302,11 @@
                             "Obsidian Shard",
                             "Soul Reaver"
                         ],
-                        "notes": "INT-oriented mid burst mage build. **Aspect of Mischief OPTIONAL** (If aspect is on, replace Signet with Gem of Focus)"
+                        "notes": "INT-oriented burst mage build. **Aspect of Mischief OPTIONAL** (If aspect is on, replace Signet with Gem of Focus)"
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "24 Nov 2025",
+                        "last_edit": "3 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
                             "Selflessness",
@@ -35912,9 +35951,9 @@
                         "rate": 3
                     },
                     "BasicDamage": {
-                        "1": 45,
+                        "1": 42,
                         "20": 90,
-                        "rate": 2.25
+                        "rate": 2.526315789473684
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -36389,9 +36428,9 @@
                         "rate": 2.85
                     },
                     "BasicDamage": {
-                        "1": 47.952,
+                        "1": 45.36,
                         "20": 97.2,
-                        "rate": 2.592
+                        "rate": 2.7284210526315786
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -36879,9 +36918,9 @@
                         "rate": 0.19999999999999998
                     },
                     "BasicDamage": {
-                        "1": 42.18,
+                        "1": 39.9,
                         "20": 85.5,
-                        "rate": 2.28
+                        "rate": 2.4
                     },
                     "MagicalPower": {
                         "1": 0,
@@ -37127,7 +37166,7 @@
                             "Obsidian Shard",
                             "Soul Reaver"
                         ],
-                        "notes": "INT-oriented mid burst mage build."
+                        "notes": "INT-oriented burst mage build."
                     }
                 ]
             },
@@ -37143,10 +37182,10 @@
                         "valueKeys": {
                             "Damage": [
                                 10,
+                                15,
                                 20,
-                                30,
-                                40,
-                                50
+                                25,
+                                30
                             ],
                             "SplitProjectileDamage": [
                                 30,
@@ -37156,7 +37195,7 @@
                                 40
                             ],
                             "SplitProjectileRange": [
-                                4.8
+                                3.5
                             ],
                             "Cooldown": [
                                 0.5
@@ -37284,17 +37323,17 @@
                         "valueKeys": {
                             "AttackSpeed": [
                                 20,
-                                28,
-                                36,
-                                44,
-                                52
+                                25,
+                                30,
+                                35,
+                                40
                             ],
                             "MovementSpeed": [
                                 20,
+                                25,
                                 30,
-                                40,
-                                50,
-                                60
+                                35,
+                                40
                             ],
                             "IncreasedAttackRange": [
                                 6.4
@@ -37551,7 +37590,7 @@
                             "Obsidian Shard",
                             "Soul Reaver"
                         ],
-                        "notes": "Full Damage Mid/ADC INT Build with **__Aspect of the Nightstalker__**"
+                        "notes": "Full Damage INT Build with **__Aspect of the Nightstalker__**"
                     }
                 ]
             },
@@ -37858,9 +37897,9 @@
                         "rate": 3.184210526315789
                     },
                     "BasicDamage": {
-                        "1": 43,
-                        "20": 87,
-                        "rate": 2.3157894736842106
+                        "1": 39.9,
+                        "20": 85.5,
+                        "rate": 2.4
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -38047,7 +38086,7 @@
                             "Rod of Tahuti",
                             "Soul Gem"
                         ],
-                        "notes": "INT-oriented mid burst mage build. With **Aspect of Downpour**"
+                        "notes": "INT-oriented burst mage build. With **Aspect of Downpour**"
                     }
                 ]
             },
@@ -38282,9 +38321,9 @@
                         "rate": 3.184210526315789
                     },
                     "BasicDamage": {
-                        "1": 46,
-                        "20": 93,
-                        "rate": 2.473684210526316
+                        "1": 42,
+                        "20": 90,
+                        "rate": 2.526315789473684
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -38687,9 +38726,9 @@
                         "rate": 3
                     },
                     "BasicDamage": {
-                        "1": 44,
+                        "1": 39.9,
                         "20": 90,
-                        "rate": 2.4210526315789473
+                        "rate": 2.636842105263158
                     },
                     "ManaPerSecond": {
                         "1": 2,
@@ -38830,7 +38869,7 @@
                             "Obsidian Shard",
                             "Soul Reaver"
                         ],
-                        "notes": "INT-oriented mid burst mage build. "
+                        "notes": "INT-oriented burst mage build. "
                     },
                     {
                         "author": "Mytharria",

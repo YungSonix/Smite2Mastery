@@ -14,14 +14,15 @@ import {
   Linking,
 } from 'react-native';
 import { Image } from 'expo-image';
-import HomePage from './home';
+// Lazy load page components to reduce initial bundle size
+const HomePage = lazy(() => import('./home'));
+const DataPage = lazy(() => import('./data'));
+const CustomBuildPage = lazy(() => import('./custombuild'));
+const PlayerProfilesPage = lazy(() => import('./playerprofiles'));
 // Lazy load the large JSON to prevent startup crash
 let localBuilds = null;
-import DataPage from './data';
 
 const IS_WEB = Platform.OS === 'web';
-import CustomBuildPage from './custombuild';
-import PlayerProfilesPage from './playerprofiles';
 import { getLocalItemIcon, getLocalGodAsset } from './localIcons';
 
 // Role icons
@@ -3119,21 +3120,35 @@ Builds
         />
       </View>
       
-      {/* Render other pages conditionally */}
-      {currentPage === 'playerprofiles' && <PlayerProfilesPage />}
-      {currentPage === 'homepage' && <HomePage />}
-      {currentPage === 'custombuild' && <CustomBuildPage />}
+      {/* Render other pages conditionally with lazy loading */}
+      {currentPage === 'playerprofiles' && (
+        <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
+          <PlayerProfilesPage />
+        </Suspense>
+      )}
+      {currentPage === 'homepage' && (
+        <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
+          <HomePage />
+        </Suspense>
+      )}
+      {currentPage === 'custombuild' && (
+        <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
+          <CustomBuildPage />
+        </Suspense>
+      )}
       {currentPage === 'data' && (
-        <DataPage 
-          key={`data-page-${dataPageKey}`}
-          initialSelectedGod={godFromBuilds} 
-          initialExpandAbilities={expandAbilities}
-          onBackToBuilds={() => { 
-            setGodFromBuilds(null); 
-            setExpandAbilities(false);
-            setCurrentPage('builds'); 
-          }} 
-        />
+        <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
+          <DataPage 
+            key={`data-page-${dataPageKey}`}
+            initialSelectedGod={godFromBuilds} 
+            initialExpandAbilities={expandAbilities}
+            onBackToBuilds={() => { 
+              setGodFromBuilds(null); 
+              setExpandAbilities(false);
+              setCurrentPage('builds');
+            }} 
+          />
+        </Suspense>
       )}
         </View>
       </ScrollView>
