@@ -1,67 +1,122 @@
-import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  Image,
   ScrollView,
   TouchableOpacity,
   Modal,
-  Pressable,
   TextInput,
   ActivityIndicator,
-  Linking,
   InteractionManager,
   Platform,
+  Pressable,
+  Alert,
 } from 'react-native';
-import { WebView } from 'react-native-webview';
-// Lazy load builds.json to prevent startup crash
+import { Image } from 'expo-image';
 import { getLocalItemIcon, getLocalGodAsset } from './localIcons';
+import { useScreenDimensions } from '../hooks/useScreenDimensions';
 
-// Platform check for web
 const IS_WEB = Platform.OS === 'web';
 
+// Storage helper
+const storage = {
+  async getItem(key) {
+    if (IS_WEB && typeof window !== 'undefined' && window.localStorage) {
+      return window.localStorage.getItem(key);
+    }
+    try {
+      const AsyncStorage = require('@react-native-async-storage/async-storage').default;
+      return await AsyncStorage.getItem(key);
+    } catch (e) {
+      return null;
+    }
+  },
+  async setItem(key, value) {
+    if (IS_WEB && typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.setItem(key, value);
+      return;
+    }
+    try {
+      const AsyncStorage = require('@react-native-async-storage/async-storage').default;
+      await AsyncStorage.setItem(key, value);
+    } catch (e) {
+      // Ignore
+    }
+  },
+};
+
 export default function CustomBuildPage() {
+  // Use responsive screen dimensions
+  const screenDimensions = useScreenDimensions();
   const [localBuilds, setLocalBuilds] = useState(null);
   const [dataLoading, setDataLoading] = useState(true);
   const [selectedGod, setSelectedGod] = useState(null);
   const [godLevel, setGodLevel] = useState(20);
-  const [selectedItems, setSelectedItems] = useState(Array(7).fill(null));
-  const [abilityRanks, setAbilityRanks] = useState({ A01: 0, A02: 0, A03: 0, A04: 0, A05: 0 });
+  const [selectedItems, setSelectedItems] = useState(Array(6).fill(null));
   const [showGodPicker, setShowGodPicker] = useState(false);
   const [showItemPicker, setShowItemPicker] = useState(null); // Index of item slot
+  const [selectedItemInfo, setSelectedItemInfo] = useState(null); // { item, index } for info modal
   const [godSearchQuery, setGodSearchQuery] = useState('');
   const [itemSearchQuery, setItemSearchQuery] = useState('');
-  const [sliderWidth, setSliderWidth] = useState(300);
-  const [sliderLayout, setSliderLayout] = useState({ x: 0, y: 0, width: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const sliderRef = useRef(null);
-  const [selectedRole, setSelectedRole] = useState(null);
+  const [failedItemIcons, setFailedItemIcons] = useState({});
   const [selectedStat, setSelectedStat] = useState(null);
-  const [roleDropdownVisible, setRoleDropdownVisible] = useState(false);
+  const [selectedTier, setSelectedTier] = useState(null);
   const [statDropdownVisible, setStatDropdownVisible] = useState(false);
-  const [selectedAbility, setSelectedAbility] = useState(null); // { abilityKey, ability, abilityName }
-  const [selectedItem, setSelectedItem] = useState(null); // { item, itemName }
-  const [abilitySectionsExpanded, setAbilitySectionsExpanded] = useState({
-    scales: false,
-    description: false,
-    stats: false,
-  });
-  const [aspectEnabled, setAspectEnabled] = useState(false);
-  const [selectedAspect, setSelectedAspect] = useState(null);
-  const [webViewError, setWebViewError] = useState(false);
+  const [tierDropdownVisible, setTierDropdownVisible] = useState(false);
+  const [showSaveBuildModal, setShowSaveBuildModal] = useState(false);
+  const [buildName, setBuildName] = useState('');
+  
+  // Slider state
+  const [sliderTrackWidth, setSliderTrackWidth] = useState(300);
+  const [sliderTrackLayout, setSliderTrackLayout] = useState({ x: 0, y: 0, width: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const sliderTrackRef = useRef(null);
 
-  // Lazy load the builds data after the UI has rendered
+  // Lazy load the builds data
   useEffect(() => {
     let isMounted = true;
     
     InteractionManager.runAfterInteractions(() => {
-      setTimeout(() => {
+      setTimeout(async () => {
         try {
           const data = require('./data/builds.json');
           if (isMounted) {
             setLocalBuilds(data);
             setDataLoading(false);
+            
+            // Check if we need to load a saved build
+            try {
+              const savedBuildStr = IS_WEB && typeof window !== 'undefined' && window.localStorage
+                ? window.localStorage.getItem('loadSavedBuild')
+                : await storage.getItem('loadSavedBuild');
+              
+              if (savedBuildStr) {
+                const savedBuild = JSON.parse(savedBuildStr);
+                if (savedBuild.godInternalName) {
+                  const allGods = flattenAny(data.gods);
+                  const god = allGods.find(g => (g.internalName || '').toLowerCase() === (savedBuild.godInternalName || '').toLowerCase());
+                  if (god) {
+                    setSelectedGod(god);
+                  }
+                }
+                if (savedBuild.items && Array.isArray(savedBuild.items)) {
+                  setSelectedItems(savedBuild.items);
+                }
+                if (savedBuild.godLevel) {
+                  setGodLevel(savedBuild.godLevel);
+                }
+                
+                // Clear the saved build flag
+                if (IS_WEB && typeof window !== 'undefined' && window.localStorage) {
+                  window.localStorage.removeItem('loadSavedBuild');
+                } else {
+                  await storage.removeItem('loadSavedBuild');
+                }
+              }
+            } catch (e) {
+              console.error('Error loading saved build:', e);
+            }
           }
         } catch (err) {
           if (isMounted) {
@@ -109,40 +164,13 @@ export default function CustomBuildPage() {
 
   // Filter gods for picker
   const filteredGods = useMemo(() => {
-    let result = gods;
-    
-    // Apply role filter
-    if (selectedRole) {
-      result = result.filter((god) => {
-        if (!god) return false;
-        const roles = god.roles || god.role || [];
-        const roleArray = Array.isArray(roles) ? roles : [roles];
-        return roleArray.some(r => {
-          const roleStr = String(r).toLowerCase();
-          const selectedRoleLower = selectedRole.toLowerCase();
-          // Handle "ADC" and "Carry" as the same
-          if (selectedRoleLower === 'adc') {
-            return roleStr === 'adc' || roleStr === 'carry';
-          }
-          return roleStr === selectedRoleLower;
-        });
-      });
-    }
-    
-    // Apply search filter
-    if (godSearchQuery) {
-      const query = godSearchQuery.toLowerCase();
-      result = result.filter((god) => {
-        const name = (god.name || god.GodName || god.title || god.displayName || '').toString().toLowerCase();
-        return name.includes(query);
-      });
-    } else {
-      // Show only first 20 when no search (but still respect role filter)
-      result = result.slice(0, 20);
-    }
-    
-    return result;
-  }, [gods, godSearchQuery, selectedRole]);
+    if (!godSearchQuery.trim()) return gods.slice(0, 50); // Limit initial display
+    const query = godSearchQuery.toLowerCase();
+    return gods.filter((god) => {
+      const name = (god.name || god.GodName || god.title || god.displayName || '').toString().toLowerCase();
+      return name.includes(query);
+    });
+  }, [gods, godSearchQuery]);
 
   // Filter items for picker
   const filteredItems = useMemo(() => {
@@ -156,89 +184,129 @@ export default function CustomBuildPage() {
       });
     }
     
-    // Apply search filter
-    if (itemSearchQuery) {
-      const query = itemSearchQuery.toLowerCase();
+    // Apply tier filter
+    if (selectedTier) {
       result = result.filter((item) => {
         if (!item || typeof item !== 'object') return false;
-        const name = (item.name || '').toString().toLowerCase();
-        const internalName = (item.internalName || '').toString().toLowerCase();
-        return name.includes(query) || internalName.includes(query);
+        
+        if (selectedTier === 'Starter') {
+          return item.starter === true || (item.name && item.name.toLowerCase().includes('starter'));
+        } else if (selectedTier === 'Active') {
+          return item.active === true && 
+                 (item.tier || item.totalCost || (item.stats && Object.keys(item.stats).length > 0)) &&
+                 (!item.stepCost || item.tier);
+        } else if (selectedTier === 'Relic') {
+          return item.relic === true;
+        } else if (selectedTier === 'Consumable') {
+          return item.consumable === true || 
+                 (item.active === true && item.stepCost && !item.tier) ||
+                 (item.name && item.name.toLowerCase().includes('consumable'));
+        } else if (selectedTier === 'God Specific') {
+          return item.godSpecific === true ||
+                 (item.name && (
+                   item.name.toLowerCase().includes('aladdinslamp') || 
+                   item.name.toLowerCase().includes('baron') ||
+                   item.name.toLowerCase().includes('alternator mod') ||
+                   item.name.toLowerCase().includes('dual mod') ||
+                   item.name.toLowerCase().includes('effeciency mod') ||
+                   item.name.toLowerCase().includes('resonator mod') ||
+                   item.name.toLowerCase().includes('thermal mod') ||
+                   item.name.toLowerCase().includes('shrapnel mod') ||
+                   item.name.toLowerCase().includes('masterwork mod') ||
+                   item.name.toLowerCase().includes('surplus mod') ||
+                   item.name.toLowerCase().includes('seismic mod')
+                 ));
+        } else if (selectedTier === 'Tier 1' || selectedTier === 'Tier 2' || selectedTier === 'Tier 3') {
+          const tierNum = selectedTier === 'Tier 1' ? 1 : selectedTier === 'Tier 2' ? 2 : 3;
+          return item.tier === tierNum;
+        }
+        return true;
+      });
+    }
+    
+    // Apply search filter
+    if (itemSearchQuery && itemSearchQuery.trim().length > 0) {
+      const query = itemSearchQuery.toLowerCase().trim();
+      result = result.filter((item) => {
+        if (!item || typeof item !== 'object') return false;
+        const name = (item.name || item.internalName || '').toString().toLowerCase();
+        return name.includes(query);
       });
     } else {
-      // Show only first 20 when no search (but still respect stat filter)
-      result = result.slice(0, 20);
+      // Limit initial display when no search
+      result = result.slice(0, 100);
     }
     
     return result;
-  }, [items, itemSearchQuery, selectedStat]);
+  }, [items, itemSearchQuery, selectedStat, selectedTier]);
 
   // Handle slider movement for both web and mobile
   const handleSliderMove = useCallback((event) => {
     const nativeEvent = event.nativeEvent;
-    if (sliderWidth > 0 && sliderRef.current) {
+    if (sliderTrackWidth > 0 && sliderTrackRef.current) {
       let locationX;
       if (IS_WEB) {
-        // For web, try multiple methods to get the correct position
-        // First try locationX (works in some React Native Web versions)
         locationX = nativeEvent?.locationX;
-        
-        // If locationX is not available or seems wrong, calculate from clientX
-        if (locationX === undefined || locationX === null || locationX < 0 || locationX > sliderWidth) {
-          const clientX = nativeEvent?.clientX ?? nativeEvent?.pageX ?? 0;
-          // Always try to get element position for accuracy
+        if (locationX === undefined || locationX === null || locationX < 0 || locationX > sliderTrackWidth) {
+          const clientX = nativeEvent?.clientX ?? nativeEvent?.touches?.[0]?.clientX ?? nativeEvent?.changedTouches?.[0]?.clientX ?? nativeEvent?.pageX ?? 0;
           try {
-            const element = sliderRef.current;
+            const element = sliderTrackRef.current;
             if (element && typeof element.getBoundingClientRect === 'function') {
               const rect = element.getBoundingClientRect();
               locationX = clientX - rect.left;
+            } else if (sliderTrackLayout.x > 0) {
+              locationX = clientX - sliderTrackLayout.x;
             } else {
-              locationX = clientX - sliderLayout.x;
+              const pageX = nativeEvent?.pageX ?? nativeEvent?.touches?.[0]?.pageX ?? nativeEvent?.changedTouches?.[0]?.pageX ?? 0;
+              locationX = pageX - (sliderTrackLayout.x || 0);
             }
           } catch (e) {
-            // Final fallback
-            locationX = clientX - sliderLayout.x;
+            const pageX = nativeEvent?.pageX ?? nativeEvent?.touches?.[0]?.pageX ?? nativeEvent?.changedTouches?.[0]?.pageX ?? 0;
+            locationX = pageX - (sliderTrackLayout.x || 0);
           }
         }
-        // Ensure locationX is within bounds
-        locationX = Math.max(0, Math.min(sliderWidth, locationX));
+        locationX = Math.max(0, Math.min(sliderTrackWidth, locationX));
       } else {
-        // For mobile, use locationX directly or calculate from touches
-        if (nativeEvent?.locationX !== undefined && nativeEvent?.locationX !== null) {
+        if (nativeEvent?.locationX !== undefined && nativeEvent?.locationX !== null && nativeEvent.locationX >= 0) {
           locationX = nativeEvent.locationX;
         } else if (nativeEvent?.touches && nativeEvent.touches.length > 0) {
-          // Fallback: calculate from touch position
           const touch = nativeEvent.touches[0];
-          if (touch && sliderLayout.x > 0) {
-            locationX = touch.pageX - sliderLayout.x;
+          if (touch && sliderTrackRef.current) {
+            try {
+              if (sliderTrackLayout.x > 0) {
+                locationX = touch.pageX - sliderTrackLayout.x;
+              } else {
+                locationX = nativeEvent?.locationX ?? (touch.pageX % sliderTrackWidth);
+              }
+            } catch (e) {
+              locationX = nativeEvent?.locationX ?? 0;
+            }
           } else {
-            locationX = 0;
+            locationX = nativeEvent?.locationX ?? 0;
           }
         } else {
           locationX = nativeEvent?.locationX ?? 0;
         }
-        // Ensure locationX is within bounds
-        locationX = Math.max(0, Math.min(sliderWidth, locationX));
+        locationX = Math.max(0, Math.min(sliderTrackWidth, locationX));
       }
-      const percentage = Math.max(0, Math.min(1, locationX / sliderWidth));
+      const percentage = Math.max(0, Math.min(1, locationX / sliderTrackWidth));
       const newLevel = Math.round(1 + percentage * 19);
       setGodLevel(Math.max(1, Math.min(20, newLevel)));
     }
-  }, [sliderWidth, sliderLayout, IS_WEB]);
+  }, [sliderTrackWidth, sliderTrackLayout, IS_WEB]);
 
-  // Handle mouse move for web (for smooth dragging)
   const handleMouseMove = useCallback((e) => {
     if (!isDragging || !IS_WEB) return;
     e.preventDefault();
     e.stopPropagation();
-    if (sliderRef.current && sliderWidth > 0) {
+    if (sliderTrackRef.current && sliderTrackWidth > 0) {
       try {
-        const element = sliderRef.current;
+        const element = sliderTrackRef.current;
         if (element && typeof element.getBoundingClientRect === 'function') {
           const rect = element.getBoundingClientRect();
           const clientX = e.clientX;
-          const locationX = Math.max(0, Math.min(sliderWidth, clientX - rect.left));
-          const percentage = Math.max(0, Math.min(1, locationX / sliderWidth));
+          const locationX = Math.max(0, Math.min(sliderTrackWidth, clientX - rect.left));
+          const percentage = Math.max(0, Math.min(1, locationX / sliderTrackWidth));
           const newLevel = Math.round(1 + percentage * 19);
           setGodLevel(Math.max(1, Math.min(20, newLevel)));
         }
@@ -246,9 +314,8 @@ export default function CustomBuildPage() {
         // Ignore errors
       }
     }
-  }, [isDragging, sliderWidth, IS_WEB]);
+  }, [isDragging, sliderTrackWidth, IS_WEB]);
 
-  // Handle mouse up for web
   const handleMouseUp = useCallback(() => {
     if (IS_WEB && isDragging) {
       setIsDragging(false);
@@ -259,7 +326,6 @@ export default function CustomBuildPage() {
     }
   }, [isDragging, IS_WEB, handleMouseMove]);
 
-  // Set up mouse event listeners for web when dragging starts
   useEffect(() => {
     if (IS_WEB && isDragging) {
       if (typeof document !== 'undefined') {
@@ -274,7 +340,7 @@ export default function CustomBuildPage() {
   }, [isDragging, IS_WEB, handleMouseMove, handleMouseUp]);
 
   // Calculate base stats at current level
-  const baseStatsAtLevel = useMemo(() => {
+  const baseStats = useMemo(() => {
     const stats = {};
     
     if (selectedGod && selectedGod.baseStats) {
@@ -288,6 +354,9 @@ export default function CustomBuildPage() {
           const statValue = level1 + (level20 - level1) * levelProgress;
           // Round up to whole number
           stats[statKey] = Math.ceil(statValue);
+        } else if (statData !== null && statData !== undefined) {
+          // If it's a direct value (not an object), use it as is
+          stats[statKey] = statData;
         }
       });
     }
@@ -295,26 +364,46 @@ export default function CustomBuildPage() {
     return stats;
   }, [selectedGod, godLevel]);
 
+  // Stat key normalization - maps item stat keys to base stat keys
+  const normalizeStatKey = (itemKey) => {
+    const mapping = {
+      'Health': 'MaxHealth',
+      'Mana': 'MaxMana',
+      'Health Regen': 'HealthPerSecond',
+      'HP5': 'HealthPerSecond',
+      'Mana Regen': 'ManaPerSecond',
+      'MP5': 'ManaPerSecond',
+      'Physical Protection': 'PhysicalProtection',
+      'Magical Protection': 'MagicalProtection',
+      'Physical Power': 'BasicDamage',
+      'Magical Power': 'BasicDamage',
+      'Attack Speed': 'BaseAttackSpeed',
+      'AttackSpeed': 'BaseAttackSpeed',
+    };
+    return mapping[itemKey] || itemKey;
+  };
+
   // Calculate total stats
   const totalStats = useMemo(() => {
-    const stats = { ...baseStatsAtLevel };
+    const stats = { ...baseStats };
     
-    // Add item stats
+    // Add item stats with normalized keys
     selectedItems.forEach((item) => {
       if (item && item.stats) {
-        Object.keys(item.stats).forEach((key) => {
-          stats[key] = (stats[key] || 0) + (item.stats[key] || 0);
+        Object.keys(item.stats).forEach((itemKey) => {
+          const normalizedKey = normalizeStatKey(itemKey);
+          stats[normalizedKey] = (stats[normalizedKey] || 0) + (item.stats[itemKey] || 0);
         });
       }
     });
     
-    // Round all stats up to whole numbers
+    // Round all stats to whole numbers
     Object.keys(stats).forEach((key) => {
-      stats[key] = Math.ceil(stats[key]);
+      stats[key] = Math.round(stats[key] || 0);
     });
     
     return stats;
-  }, [baseStatsAtLevel, selectedItems]);
+  }, [baseStats, selectedItems]);
 
   // Calculate total gold cost
   const totalGold = useMemo(() => {
@@ -335,378 +424,100 @@ export default function CustomBuildPage() {
     const newItems = [...selectedItems];
     newItems[index] = null;
     setSelectedItems(newItems);
+    setSelectedItemInfo(null);
   };
 
+  const showItemInfo = (item, index) => {
+    setSelectedItemInfo({ item, index });
+  };
 
-  const updateAbilityRank = (abilityKey, rank) => {
-    setAbilityRanks(prev => ({
-      ...prev,
-      [abilityKey]: rank
-    }));
+  const changeItem = () => {
+    if (selectedItemInfo) {
+      setShowItemPicker(selectedItemInfo.index);
+      setSelectedItemInfo(null);
+    }
   };
 
   const godName = selectedGod ? (selectedGod.name || selectedGod.GodName || selectedGod.title || selectedGod.displayName || 'Unknown') : 'Select God';
   const godIcon = selectedGod && (selectedGod.icon || selectedGod.GodIcon || (selectedGod.abilities && selectedGod.abilities.A01 && selectedGod.abilities.A01.icon));
 
-  // TEST MODE: Set to true to use WebView/iframe, false to use original custom build
-  const USE_WEBVIEW_ENABLED = true; // Set to false to always use native component
-  const USE_WEBVIEW = USE_WEBVIEW_ENABLED && !webViewError;
-
-  // Handle WebView errors and fallback to native component
-  const handleWebViewError = (syntheticEvent) => {
-    const { nativeEvent } = syntheticEvent;
-    console.warn('WebView error: ', nativeEvent);
-    setWebViewError(true);
+  // Stat display names
+  const statDisplayNames = {
+    health: 'Health',
+    mana: 'Mana',
+    physicalProtection: 'Physical Protection',
+    magicalProtection: 'Magical Protection',
+    physicalPower: 'Physical Power',
+    magicalPower: 'Magical Power',
+    attackSpeed: 'Attack Speed',
+    movementSpeed: 'Movement Speed',
+    healthRegen: 'HP5',
+    manaRegen: 'MP5',
+    penetration: 'Penetration',
+    lifesteal: 'Lifesteal',
+    cooldownReduction: 'Cooldown Reduction',
+    critChance: 'Critical Strike Chance',
   };
 
-  // Render iframe for web platform
-  const renderWebIframe = () => {
-    if (!IS_WEB) return null;
-    
+  if (dataLoading) {
     return (
-      <>
-        <View style={styles.webview}>
-          <iframe
-            src="https://www.smitecalculator.pro"
-            style={{
-              width: '100%',
-              height: '100%',
-              border: 'none',
-              display: 'block',
-            }}
-            title="SMITE Calculator"
-            allow="fullscreen"
-            allowFullScreen
-          />
-        </View>
-        <View style={styles.linkContainer}>
-          <TouchableOpacity
-            style={styles.linkButton}
-            onPress={() => Linking.openURL('https://www.smitecalculator.pro')}
-          >
-            <Text style={styles.linkText}>Open in Browser: smitecalculator.pro</Text>
-          </TouchableOpacity>
-        </View>
-      </>
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#1e90ff" />
+        <Text style={styles.loadingText}>Loading...</Text>
+      </View>
     );
-  };
+  }
 
   return (
     <View style={styles.container}>
-      {USE_WEBVIEW ? (
-        <>
-          {IS_WEB ? (
-            renderWebIframe()
-          ) : (
-            <>
-              <WebView
-                source={{ uri: 'https://www.smitecalculator.pro' }}
-                style={styles.webview}
-                startInLoadingState={true}
-                scalesPageToFit={true}
-                injectedJavaScript={`
-                (function() {
-                  const meta = document.createElement('meta');
-                  meta.name = 'viewport';
-                  meta.content = 'width=device-width, initial-scale=0.75, maximum-scale=1.0, user-scalable=yes';
-                  document.getElementsByTagName('head')[0].appendChild(meta);
-                  
-                  // Zoom out and center the body
-                  document.body.style.zoom = '0.75';
-                  document.body.style.transform = 'scale(0.75)';
-                  document.body.style.transformOrigin = 'center center';
-                  document.body.style.margin = '0 auto';
-                  document.body.style.display = 'flex';
-                  document.body.style.flexDirection = 'column';
-                  document.body.style.alignItems = 'center';
-                  document.body.style.justifyContent = 'center';
-                  document.body.style.minHeight = '100vh';
-                  
-                  // Center the main container if it exists
-                  const mainContainer = document.querySelector('main') || document.querySelector('.container') || document.body.firstElementChild;
-                  if (mainContainer) {
-                    mainContainer.style.margin = '0 auto';
-                    mainContainer.style.maxWidth = '100%';
-                  }
-                  
-                  // Darken buttons
-                  const style = document.createElement('style');
-                  style.textContent = \`
-                    button, 
-                    .btn, 
-                    [role="button"],
-                    input[type="button"],
-                    input[type="submit"],
-                    a.button {
-                      background-color: #1a1f2e !important;
-                      color: #e2e8f0 !important;
-                      border-color: #3a4a4a !important;
-                    }
-                    button:hover, 
-                    .btn:hover, 
-                    [role="button"]:hover,
-                    input[type="button"]:hover,
-                    input[type="submit"]:hover,
-                    a.button:hover {
-                      background-color:rgb(213, 214, 218) !important;
-                      border-color: #15803d !important;
-                    }
-                    button:active, 
-                    .btn:active, 
-                    [role="button"]:active,
-                    input[type="button"]:active,
-                    input[type="submit"]:active,
-                    a.button:active {
-                      background-color:rgb(203, 206, 216) !important;
-                    }
-                  \`;
-                  document.head.appendChild(style);
-                })();
-                true;
-              `}
-                onMessage={() => {}}
-                onError={handleWebViewError}
-                onHttpError={handleWebViewError}
-                renderError={() => (
-                  <View style={styles.errorContainer}>
-                    <Text style={styles.errorText}>WebView is not supported on this platform.</Text>
-                    <TouchableOpacity
-                      style={styles.linkButton}
-                      onPress={() => Linking.openURL('https://www.smitecalculator.pro')}
-                    >
-                      <Text style={styles.linkText}>Open in Browser: smitecalculator.pro</Text>
-                    </TouchableOpacity>
-                  </View>
-                )}
-                renderLoading={() => (
-                  <View style={styles.loadingContainer}>
-                    <ActivityIndicator size="large" color="#B8FF12" />
-                  </View>
-                )}
-              />
-              <View style={styles.linkContainer}>
-                <TouchableOpacity
-                  style={styles.linkButton}
-                  onPress={() => Linking.openURL('https://www.smitecalculator.pro')}
-                >
-                  <Text style={styles.linkText}>Open in Browser: smitecalculator.pro</Text>
-                </TouchableOpacity>
-              </View>
-            </>
-          )}
-        </>
-      ) : (
-        <>
-          <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent} scrollEnabled={!isDragging}>
-        {/* Character Overview Section */}
-        <View style={styles.characterSection}>
-          <View style={styles.characterHeader}>
-            <Text style={styles.characterTitle}>{godName}</Text>
-            <TouchableOpacity
-              style={styles.deleteButton}
-              onPress={() => {
-                setSelectedGod(null);
-                setSelectedItems(Array(7).fill(null));
-                setAbilityRanks({ A01: 0, A02: 0, A03: 0, A04: 0, A05: 0 });
-                setGodLevel(20);
-                setAspectEnabled(false);
-                setSelectedAbility(null);
-                setSelectedItem(null);
-              }}
-            >
-              <Text style={styles.deleteButtonText}>🗑️</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.characterPortraitContainer}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+        {/* God Selection */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Select God</Text>
+          <TouchableOpacity
+            style={styles.godSelector}
+            onPress={() => setShowGodPicker(true)}
+            activeOpacity={0.7}
+          >
             {godIcon ? (
-              <TouchableOpacity
-                onPress={() => setShowGodPicker(true)}
-                activeOpacity={0.7}
-              >
-                {(() => {
-                  const localIcon = getLocalGodAsset(godIcon);
-                  if (localIcon) {
-                    return (
-                      <Image
-                        source={localIcon}
-                        style={styles.characterPortrait}
-                        resizeMode="cover"
-                      />
-                    );
-                  }
-                  return (
-                    <View style={styles.characterPortraitPlaceholder}>
-                      <Text style={styles.characterPortraitText}>?</Text>
-                    </View>
-                  );
-                })()}
-              </TouchableOpacity>
+              <Image
+                source={getLocalGodAsset(godIcon)}
+                style={styles.godIcon}
+                resizeMode="cover"
+                accessibilityLabel={selectedGod ? `${selectedGod.name || selectedGod.GodName || 'God'} icon` : 'God icon'}
+              />
             ) : (
-              <TouchableOpacity
-                style={styles.characterPortraitPlaceholder}
-                onPress={() => setShowGodPicker(true)}
-                activeOpacity={0.7}
-              >
-                <Text style={styles.characterPortraitText}>?</Text>
-              </TouchableOpacity>
+              <View style={styles.godIconPlaceholder}>
+                <Text style={styles.godIconPlaceholderText}>?</Text>
+              </View>
             )}
-            {selectedGod && selectedGod.aspect && (
-              <TouchableOpacity
-                style={[styles.aspectIconButton, aspectEnabled && styles.aspectIconButtonEnabled]}
-                onPress={() => setAspectEnabled(!aspectEnabled)}
-                onLongPress={() => setSelectedAspect(selectedGod.aspect)}
-              >
-                {selectedGod.aspect.icon ? (() => {
-                  const localIcon = getLocalGodAsset(selectedGod.aspect.icon);
-                  if (localIcon) {
-                    return (
-                      <Image
-                        source={localIcon}
-                        style={styles.aspectIcon}
-                        resizeMode="cover"
-                        cachePolicy="memory-disk"
-                        transition={200}
-                      />
-                    );
-                  }
-                  return (
-                    <View style={styles.aspectIconPlaceholder}>
-                      <Text style={styles.aspectIconText}>A</Text>
-                    </View>
-                  );
-                })() : (
-                  <View style={styles.aspectIconPlaceholder}>
-                    <Text style={styles.aspectIconText}>A</Text>
-                  </View>
-                )}
-              </TouchableOpacity>
-            )}
-          </View>
+            <Text style={styles.godNameText}>{godName}</Text>
+          </TouchableOpacity>
+        </View>
 
-          <View style={styles.levelContainer}>
-            <View style={styles.sliderContainer}>
-              <View
-                ref={sliderRef}
-                style={styles.sliderTrack}
-                onLayout={(e) => {
-                  const { width, x, y } = e.nativeEvent.layout;
-                  setSliderWidth(width);
-                  if (IS_WEB) {
-                    // For web, we need to measure the element's position on screen
-                    setTimeout(() => {
-                      if (sliderRef.current) {
-                        try {
-                          const element = sliderRef.current;
-                          if (element && typeof element.measure === 'function') {
-                            element.measure((fx, fy, fwidth, fheight, px, py) => {
-                              setSliderLayout({ x: px, y: py, width: fwidth });
-                            });
-                          } else if (element && typeof element.getBoundingClientRect === 'function') {
-                            const rect = element.getBoundingClientRect();
-                            setSliderLayout({ x: rect.left, y: rect.top, width: rect.width });
-                          } else {
-                            setSliderLayout({ x, y, width });
-                          }
-                        } catch (e) {
-                          setSliderLayout({ x, y, width });
-                        }
-                      }
-                    }, 0);
-                  } else {
-                    setSliderLayout({ x, y, width });
-                  }
-                }}
-                onStartShouldSetResponder={() => true}
-                onMoveShouldSetResponder={() => true}
-                onResponderGrant={(event) => {
-                  if (!IS_WEB) {
-                    event.preventDefault();
-                    setIsDragging(true);
-                    handleSliderMove(event);
-                  }
-                }}
-                onResponderMove={(event) => {
-                  if (!IS_WEB && isDragging) {
-                    event.preventDefault();
-                    handleSliderMove(event);
-                  }
-                }}
-                onResponderRelease={() => {
-                  if (!IS_WEB) {
-                    setIsDragging(false);
-                  }
-                }}
-                onResponderTerminationRequest={() => false}
-                onMouseDown={(e) => {
-                  if (IS_WEB && sliderRef.current && sliderWidth > 0) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setIsDragging(true);
-                    handleSliderMove({ nativeEvent: { clientX: e.clientX, pageX: e.pageX } });
-                  }
-                }}
-                onTouchStart={(e) => {
-                  if (!IS_WEB && sliderRef.current && sliderWidth > 0) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const touch = e.nativeEvent.touches[0];
-                    if (touch) {
-                      setIsDragging(true);
-                      const touchX = touch.pageX - (sliderLayout.x || 0);
-                      handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
-                    }
-                  }
-                }}
-                onTouchMove={(e) => {
-                  if (!IS_WEB && isDragging && sliderRef.current && sliderWidth > 0) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const touch = e.nativeEvent.touches[0];
-                    if (touch) {
-                      const touchX = touch.pageX - (sliderLayout.x || 0);
-                      handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
-                    }
-                  }
-                }}
-                onTouchEnd={(e) => {
-                  if (!IS_WEB) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setIsDragging(false);
-                  }
-                }}
-              >
-                <View style={[styles.sliderFill, { width: `${((godLevel - 1) / 19) * 100}%` }]} pointerEvents="none" />
-                <View 
-                  style={[
-                    styles.sliderThumb,
-                    isDragging && styles.sliderThumbDragging,
-                    { left: `${((godLevel - 1) / 19) * 100}%` }
-                  ]} 
-                  onStartShouldSetResponder={() => true}
-                  onMoveShouldSetResponder={() => true}
-                  onResponderGrant={(event) => {
-                    if (!IS_WEB) {
-                      event.preventDefault();
-                      setIsDragging(true);
-                      handleSliderMove(event);
-                    }
+        {/* Level Slider */}
+        {selectedGod && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Player Level</Text>
+            <View style={styles.levelContainer}>
+              <View style={styles.levelSliderContainer}>
+                <TouchableOpacity
+                  style={[styles.levelSliderButton, godLevel === 1 && styles.levelSliderButtonDisabled]}
+                  onPress={() => setGodLevel(Math.max(1, godLevel - 1))}
+                  disabled={godLevel === 1}
+                >
+                  <Text style={styles.levelSliderButtonText}>-</Text>
+                </TouchableOpacity>
+                <View
+                  ref={sliderTrackRef}
+                  style={styles.levelSliderTrack}
+                  onLayout={(e) => {
+                    const { width, x } = e.nativeEvent.layout;
+                    setSliderTrackWidth(width);
+                    setSliderTrackLayout({ x, y: e.nativeEvent.layout.y, width });
                   }}
-                  onResponderMove={(event) => {
-                    if (!IS_WEB && isDragging) {
-                      event.preventDefault();
-                      handleSliderMove(event);
-                    }
-                  }}
-                  onResponderRelease={() => {
-                    if (!IS_WEB) {
-                      setIsDragging(false);
-                    }
-                  }}
-                  onResponderTerminationRequest={() => false}
                   onMouseDown={(e) => {
-                    if (IS_WEB && sliderRef.current && sliderWidth > 0) {
+                    if (IS_WEB && sliderTrackRef.current && sliderTrackWidth > 0) {
                       e.preventDefault();
                       e.stopPropagation();
                       setIsDragging(true);
@@ -714,224 +525,468 @@ export default function CustomBuildPage() {
                     }
                   }}
                   onTouchStart={(e) => {
-                    if (!IS_WEB && sliderRef.current && sliderWidth > 0) {
+                    if (sliderTrackRef.current && sliderTrackWidth > 0) {
                       e.preventDefault();
                       e.stopPropagation();
-                      const touch = e.nativeEvent.touches[0];
-                      if (touch) {
-                        setIsDragging(true);
-                        const touchX = touch.pageX - (sliderLayout.x || 0);
-                        handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                      setIsDragging(true);
+                      let touchX = 0;
+                      if (IS_WEB) {
+                        const touch = e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0];
+                        if (touch && sliderTrackRef.current) {
+                          const rect = sliderTrackRef.current.getBoundingClientRect?.();
+                          if (rect) {
+                            touchX = touch.clientX - rect.left;
+                          } else {
+                            touchX = touch.pageX - (sliderTrackLayout.x || 0);
+                          }
+                        }
+                      } else {
+                        const touch = e.nativeEvent.touches[0];
+                        if (touch && sliderTrackRef.current) {
+                          sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
+                            touchX = touch.pageX - px;
+                            handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                          });
+                          return;
+                        }
+                      }
+                      if (touchX > 0 || !IS_WEB) {
+                        const touch = IS_WEB ? (e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0]) : e.nativeEvent.touches[0];
+                        handleSliderMove({ nativeEvent: { locationX: touchX, touches: touch ? [touch] : [] } });
                       }
                     }
                   }}
                   onTouchMove={(e) => {
-                    if (!IS_WEB && isDragging && sliderRef.current && sliderWidth > 0) {
+                    if (sliderTrackRef.current && sliderTrackWidth > 0) {
                       e.preventDefault();
                       e.stopPropagation();
-                      const touch = e.nativeEvent.touches[0];
-                      if (touch) {
-                        const touchX = touch.pageX - (sliderLayout.x || 0);
-                        handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                      setIsDragging(true);
+                      let touchX = 0;
+                      if (IS_WEB) {
+                        const touch = e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0];
+                        if (touch && sliderTrackRef.current) {
+                          try {
+                            const rect = sliderTrackRef.current.getBoundingClientRect?.();
+                            if (rect) {
+                              touchX = touch.clientX - rect.left;
+                            } else if (touch.pageX && sliderTrackLayout.x > 0) {
+                              touchX = touch.pageX - sliderTrackLayout.x;
+                            } else {
+                              touchX = touch.clientX || 0;
+                            }
+                          } catch (err) {
+                            touchX = (touch.pageX || touch.clientX || 0) - (sliderTrackLayout.x || 0);
+                          }
+                        }
+                      } else {
+                        const touch = e.nativeEvent.touches[0];
+                        if (touch && sliderTrackRef.current) {
+                          sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
+                            touchX = touch.pageX - px;
+                            handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                          });
+                          return;
+                        }
+                      }
+                      if (touchX >= 0 || !IS_WEB) {
+                        const touch = IS_WEB ? (e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0]) : e.nativeEvent.touches[0];
+                        handleSliderMove({ nativeEvent: { locationX: touchX, touches: touch ? [touch] : [], clientX: touch?.clientX, pageX: touch?.pageX } });
                       }
                     }
                   }}
                   onTouchEnd={(e) => {
-                    if (!IS_WEB) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setIsDragging(false);
+                  }}
+                >
+                  <View 
+                    style={[
+                      styles.levelSliderFill,
+                      isDragging && styles.levelSliderFillActive,
+                      { width: `${((godLevel - 1) / 19) * 100}%` }
+                    ]} 
+                    pointerEvents="none"
+                  />
+                  <View 
+                    style={[
+                      styles.levelSliderThumb,
+                      isDragging && styles.levelSliderThumbDragging,
+                      { left: `${((godLevel - 1) / 19) * 100}%` }
+                    ]}
+                    onStartShouldSetResponder={() => true}
+                    onMoveShouldSetResponder={() => true}
+                    onResponderGrant={(event) => {
+                      if (!IS_WEB) {
+                        event.preventDefault();
+                        setIsDragging(true);
+                        handleSliderMove(event);
+                      }
+                    }}
+                    onResponderMove={(event) => {
+                      if (!IS_WEB) {
+                        event.preventDefault();
+                        setIsDragging(true);
+                        handleSliderMove(event);
+                      }
+                    }}
+                    onResponderRelease={() => {
+                      if (!IS_WEB) {
+                        setIsDragging(false);
+                      }
+                    }}
+                    onResponderTerminationRequest={() => false}
+                    onMouseDown={(e) => {
+                      if (IS_WEB && sliderTrackRef.current && sliderTrackWidth > 0) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setIsDragging(true);
+                        handleSliderMove({ nativeEvent: { clientX: e.clientX, pageX: e.pageX } });
+                      }
+                    }}
+                    onTouchStart={(e) => {
+                      if (sliderTrackRef.current && sliderTrackWidth > 0) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setIsDragging(true);
+                        let touchX = 0;
+                        if (IS_WEB) {
+                          const touch = e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0];
+                          if (touch && sliderTrackRef.current) {
+                            const rect = sliderTrackRef.current.getBoundingClientRect?.();
+                            if (rect) {
+                              touchX = touch.clientX - rect.left;
+                            } else {
+                              touchX = touch.pageX - (sliderTrackLayout.x || 0);
+                            }
+                          }
+                        } else {
+                          const touch = e.nativeEvent.touches[0];
+                          if (touch && sliderTrackRef.current) {
+                            sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
+                              touchX = touch.pageX - px;
+                              handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                            });
+                            return;
+                          }
+                        }
+                        if (touchX > 0 || !IS_WEB) {
+                          const touch = IS_WEB ? (e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0]) : e.nativeEvent.touches[0];
+                          handleSliderMove({ nativeEvent: { locationX: touchX, touches: touch ? [touch] : [] } });
+                        }
+                      }
+                    }}
+                    onTouchMove={(e) => {
+                      if (sliderTrackRef.current && sliderTrackWidth > 0) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setIsDragging(true);
+                        let touchX = 0;
+                        if (IS_WEB) {
+                          const touch = e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0];
+                          if (touch && sliderTrackRef.current) {
+                            try {
+                              const rect = sliderTrackRef.current.getBoundingClientRect?.();
+                              if (rect) {
+                                touchX = touch.clientX - rect.left;
+                              } else if (touch.pageX && sliderTrackLayout.x > 0) {
+                                touchX = touch.pageX - sliderTrackLayout.x;
+                              } else {
+                                touchX = touch.clientX || 0;
+                              }
+                            } catch (err) {
+                              touchX = (touch.pageX || touch.clientX || 0) - (sliderTrackLayout.x || 0);
+                            }
+                          }
+                        } else {
+                          const touch = e.nativeEvent.touches[0];
+                          if (touch && sliderTrackRef.current) {
+                            sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
+                              touchX = touch.pageX - px;
+                              handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
+                            });
+                            return;
+                          }
+                        }
+                        if (touchX >= 0 || !IS_WEB) {
+                          const touch = IS_WEB ? (e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0]) : e.nativeEvent.touches[0];
+                          handleSliderMove({ nativeEvent: { locationX: touchX, touches: touch ? [touch] : [], clientX: touch?.clientX, pageX: touch?.pageX } });
+                        }
+                      }
+                    }}
+                    onTouchEnd={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
                       setIsDragging(false);
+                    }}
+                  />
+                </View>
+                <TouchableOpacity
+                  style={[styles.levelSliderButton, godLevel === 20 && styles.levelSliderButtonDisabled]}
+                  onPress={() => setGodLevel(Math.min(20, godLevel + 1))}
+                  disabled={godLevel === 20}
+                >
+                  <Text style={styles.levelSliderButtonText}>+</Text>
+                </TouchableOpacity>
+              </View>
+              <Text style={styles.levelSliderLabel}>Level: {godLevel}</Text>
+            </View>
+          </View>
+        )}
+
+        {/* Item Slots */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Build Items</Text>
+          <View style={styles.itemSlotsContainer}>
+            {selectedItems.map((item, index) => (
+              <View key={index} style={styles.itemSlot}>
+                <TouchableOpacity
+                  style={styles.itemSlotButton}
+                  onPress={() => {
+                    if (item) {
+                      showItemInfo(item, index);
+                    } else {
+                      setShowItemPicker(index);
                     }
                   }}
-                />
-              </View>
-              <View style={styles.levelButtons}>
-                <TouchableOpacity
-                  style={styles.levelButton}
-                  onPress={() => setGodLevel(Math.max(1, godLevel - 1))}
+                  activeOpacity={0.7}
                 >
-                  <Text style={styles.levelButtonText}>−</Text>
-                </TouchableOpacity>
-                <Text style={styles.levelText}>God Level: {godLevel}</Text>
-                <TouchableOpacity
-                  style={styles.levelButton}
-                  onPress={() => setGodLevel(Math.min(20, godLevel + 1))}
-                >
-                  <Text style={styles.levelButtonText}>+</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </View>
-
-        {/* ITEMS Section */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>ITEMS</Text>
-            <View style={styles.goldContainer}>
-              <Text style={styles.goldIcon}>🪙</Text>
-              <Text style={styles.goldText}>{totalGold.toLocaleString()}</Text>
-            </View>
-          </View>
-          <View style={styles.itemsGrid}>
-            {selectedItems.map((item, index) => (
-              <TouchableOpacity
-                key={index}
-                style={styles.itemSlot}
-                onPress={() => {
-                  if (item) {
-                    setSelectedItem({ item, itemName: item.name || item.internalName });
-                  } else {
-                    setShowItemPicker(index);
-                  }
-                }}
-                onLongPress={() => {
-                  if (item) {
-                    removeItem(index);
-                  } else {
-                    setShowItemPicker(index);
-                  }
-                }}
-              >
-                {item ? (
-                  <>
-                    {item.icon ? (
-                      (() => {
-                        const localIcon = getLocalItemIcon(item.icon);
-                        if (localIcon) {
+                  {item ? (
+                    <>
+                      {(() => {
+                        const localIcon = getLocalItemIcon(item.icon || item.internalName);
+                        if (!localIcon) {
+                          return (
+                            <View style={styles.itemIconPlaceholder}>
+                              <Text style={styles.itemIconPlaceholderText}>?</Text>
+                            </View>
+                          );
+                        }
+                        
+                        const imageSource = localIcon.primary || localIcon;
+                        const fallbackSource = localIcon.fallback;
+                        const iconKey = `item-${item.internalName || item.name}-${index}`;
+                        const useFallback = failedItemIcons[iconKey];
+                        
+                        if (fallbackSource && !useFallback) {
                           return (
                             <Image
-                              source={localIcon}
+                              source={imageSource}
+                              style={styles.itemIcon}
+                              resizeMode="cover"
+                              onError={() => {
+                                setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+                              }}
+                            />
+                          );
+                        }
+                        
+                        if (fallbackSource && useFallback) {
+                          return (
+                            <Image
+                              source={fallbackSource}
                               style={styles.itemIcon}
                               resizeMode="cover"
                             />
                           );
                         }
+                        
                         return (
-                          <View style={styles.itemIconPlaceholder}>
-                            <Text style={styles.itemIconText}>{item.name ? item.name.charAt(0) : '?'}</Text>
-                          </View>
+                          <Image
+                            source={imageSource}
+                            style={styles.itemIcon}
+                            resizeMode="cover"
+                          />
                         );
-                      })()
-                    ) : (
-                      <View style={styles.itemIconPlaceholder}>
-                        <Text style={styles.itemIconText}>{item.name ? item.name.charAt(0) : '?'}</Text>
-                      </View>
-                    )}
-                  </>
-                ) : (
-                  <View style={styles.emptySlot}>
-                    <Text style={styles.emptySlotText}>+</Text>
-                  </View>
-                )}
-              </TouchableOpacity>
+                      })()}
+                      <Text style={styles.itemName} numberOfLines={2}>
+                        {item.name || item.internalName}
+                      </Text>
+                    </>
+                  ) : (
+                    <View style={styles.itemSlotPlaceholder}>
+                      <Text style={styles.itemSlotPlaceholderText}>+</Text>
+                      <Text style={styles.itemSlotNumber}>{index + 1}</Text>
+                    </View>
+                  )}
+                </TouchableOpacity>
+              </View>
             ))}
           </View>
         </View>
 
-
-        {/* ABILITIES Section */}
+        {/* Stats Summary */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>ABILITIES</Text>
-          {selectedGod && selectedGod.abilities ? (
-            <View style={styles.abilitiesRow}>
-              {Object.keys(selectedGod.abilities).slice(0, 5).map((abilityKey) => {
-                const ability = selectedGod.abilities[abilityKey];
-                const rank = abilityRanks[abilityKey] || 0;
-                return (
-                  <View key={abilityKey} style={styles.abilityContainer}>
-                    <TouchableOpacity
-                      style={styles.abilityIconButton}
-                      onPress={() => {
-                        const abilityName = ability.name || abilityKey;
-                        setSelectedAbility({ abilityKey, ability, abilityName });
-                      }}
-                      onLongPress={() => {
-                        const newRank = rank >= 5 ? 0 : rank + 1;
-                        updateAbilityRank(abilityKey, newRank);
-                      }}
-                    >
-                      {ability && ability.icon ? (() => {
-                        const localIcon = getLocalGodAsset(ability.icon);
-                        if (localIcon) {
-                          return (
-                            <Image
-                              source={localIcon}
-                              style={styles.abilityIcon}
-                              resizeMode="cover"
-                            />
-                          );
-                        }
-                        return (
-                          <View style={styles.abilityIconPlaceholder}>
-                            <Text style={styles.abilityIconText}>{abilityKey}</Text>
-                          </View>
-                        );
-                      })() : (
-                        <View style={styles.abilityIconPlaceholder}>
-                          <Text style={styles.abilityIconText}>{abilityKey}</Text>
-                        </View>
-                      )}
-                    </TouchableOpacity>
-                    {rank > 0 && (
-                      <View style={styles.rankContainer}>
-                        <Text style={styles.rankText}>Rank: {rank}</Text>
-                        <View style={styles.rankIndicator} />
-                      </View>
-                    )}
-                  </View>
-                );
-              })}
-            </View>
-          ) : (
-            <Text style={styles.instructionText}>Select a god to view abilities</Text>
-          )}
-          <Text style={styles.instructionText}>Click ability icons to add them to damage rotation.</Text>
-        </View>
-
-        {/* STATS Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>STATS</Text>
-          {selectedGod && selectedGod.baseStats && Object.keys(baseStatsAtLevel).length > 0 && (
-            <View style={styles.baseStatsContainer}>
-              <Text style={styles.baseStatsTitle}>Base Stats (Level {godLevel}):</Text>
-              {Object.keys(baseStatsAtLevel).map((statKey) => {
-                const statValue = baseStatsAtLevel[statKey];
-                // Round up to whole number
-                const formattedValue = typeof statValue === 'number' 
-                  ? Math.ceil(statValue).toString()
-                  : statValue;
-                return (
-                  <View key={statKey} style={styles.statRow}>
-                    <Text style={styles.statLabel}>{statKey}:</Text>
-                    <Text style={styles.statValue}>{formattedValue}</Text>
-                  </View>
-                );
-              })}
-            </View>
-          )}
-          <View style={styles.statsContainer}>
-            <Text style={styles.totalStatsTitle}>Total Stats (with Items):</Text>
-            {Object.keys(totalStats).length > 0 ? (
-              Object.keys(totalStats).map((statKey) => {
-                const statValue = totalStats[statKey];
-                // Already rounded in useMemo, just convert to string
-                const formattedValue = typeof statValue === 'number' 
-                  ? statValue.toString()
-                  : statValue;
-                return (
-                  <View key={statKey} style={styles.statRow}>
-                    <Text style={styles.statLabel}>{statKey}:</Text>
-                    <Text style={styles.statValue}>{formattedValue}</Text>
-                  </View>
-                );
-              })
-            ) : (
-              <Text style={styles.noStatsText}>No stats calculated. Select a god and add items to see stats.</Text>
-            )}
+          <Text style={styles.sectionTitle}>Total Stats</Text>
+          <View style={styles.statsGrid}>
+            {Object.keys(totalStats)
+              .filter(key => totalStats[key] !== 0 || baseStats[key])
+              .sort()
+              .map((statKey) => (
+                <View key={statKey} style={styles.statItem}>
+                  <Text style={styles.statLabel}>
+                    {statDisplayNames[statKey] || statKey}
+                  </Text>
+                  <Text style={styles.statValue}>{totalStats[statKey]}</Text>
+                </View>
+              ))}
           </View>
         </View>
+
+        {/* Gold Cost */}
+        <View style={styles.section}>
+          <View style={styles.goldContainer}>
+            <Text style={styles.goldLabel}>Total Gold Cost:</Text>
+            <Text style={styles.goldValue}>{totalGold.toLocaleString()}</Text>
+          </View>
+        </View>
+
+        {/* Save Build Button */}
+        {selectedGod && (
+          <View style={styles.section}>
+            <TouchableOpacity
+              style={styles.saveBuildButton}
+              onPress={async () => {
+                const currentUser = await storage.getItem('currentUser');
+                if (!currentUser) {
+                  Alert.alert('Not Logged In', 'Please log in to your profile to save builds.');
+                  return;
+                }
+                setBuildName(selectedGod.name || selectedGod.GodName || 'My Build');
+                setShowSaveBuildModal(true);
+              }}
+            >
+              <Text style={styles.saveBuildButtonText}>Save Build to Profile</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </ScrollView>
+
+      {/* Item Info Modal */}
+      <Modal
+        visible={selectedItemInfo !== null}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setSelectedItemInfo(null)}
+      >
+        <Pressable 
+          style={styles.modalOverlay}
+          onPress={() => setSelectedItemInfo(null)}
+        >
+          <Pressable 
+            style={styles.itemInfoModal}
+            onPress={(e) => e.stopPropagation()}
+          >
+            {selectedItemInfo && selectedItemInfo.item && (
+              <>
+                <View style={styles.itemInfoHeader}>
+                  <Text style={styles.itemInfoTitle}>
+                    {selectedItemInfo.item.name || selectedItemInfo.item.internalName}
+                  </Text>
+                  <TouchableOpacity
+                    style={styles.modalCloseButton}
+                    onPress={() => setSelectedItemInfo(null)}
+                  >
+                    <Text style={styles.modalCloseText}>✕</Text>
+                  </TouchableOpacity>
+                </View>
+                
+                {(() => {
+                  const localIcon = getLocalItemIcon(selectedItemInfo.item.icon || selectedItemInfo.item.internalName);
+                  if (localIcon) {
+                    const imageSource = localIcon.primary || localIcon;
+                    const fallbackSource = localIcon.fallback;
+                    const iconKey = `info-${selectedItemInfo.item.internalName || selectedItemInfo.item.name}`;
+                    const useFallback = failedItemIcons[iconKey];
+                    
+                    return (
+                      <View style={styles.itemInfoIconContainer}>
+                        {fallbackSource && !useFallback ? (
+                          <Image
+                            source={imageSource}
+                            style={styles.itemInfoIcon}
+                            resizeMode="cover"
+                            onError={() => {
+                              setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+                            }}
+                          />
+                        ) : fallbackSource && useFallback ? (
+                          <Image
+                            source={fallbackSource}
+                            style={styles.itemInfoIcon}
+                            resizeMode="cover"
+                          />
+                        ) : (
+                          <Image
+                            source={imageSource}
+                            style={styles.itemInfoIcon}
+                            resizeMode="cover"
+                          />
+                        )}
+                      </View>
+                    );
+                  }
+                  return null;
+                })()}
+                
+                {selectedItemInfo.item.stats && Object.keys(selectedItemInfo.item.stats).length > 0 && (
+                  <View style={styles.itemInfoStats}>
+                    <Text style={styles.itemInfoStatsTitle}>Stats:</Text>
+                    {Object.keys(selectedItemInfo.item.stats).map((statKey) => {
+                      const statValue = selectedItemInfo.item.stats[statKey];
+                      // Color code stat labels based on stat type (same as builds section)
+                      let statColor = '#94a3b8'; // default
+                      if (["MaxHealth", "Health", "HP5", "Health Regen"].includes(statKey)) statColor = "#22c55e"; // green
+                      else if (["AttackSpeed", "Critical Chance", "CriticalChance", "Critical Damage", "Attack Speed","Basic Attack Damage", "Criticial Chance", "Critical Damage", "Basic Damage"].includes(statKey)) statColor = "#f97316"; // orange
+                      else if (["PhysicalProtection", "Penetration", "Physical Protection"].includes(statKey)) statColor = "#ef4444"; // red
+                      else if (statKey === "Intelligence") statColor = "#a855f7"; // purple
+                      else if (statKey === "Strength") statColor = "#facc15"; // yellow
+                      else if (statKey === "Cooldown Rate") statColor = "#0ea5e9"; // blue
+                      else if (statKey === "MagicalProtection") statColor = "#a855f7"; // purple
+                      else if (statKey === "Lifesteal") statColor = "#84cc16"; // light yellow green
+                      else if (["MaxMana", "MP5", "Mana Regen", "Mana", "Mana Regeneration", "Magical Protection"].includes(statKey)) statColor = "#3b82f6"; // blue
+                      
+                      return (
+                        <View key={statKey} style={styles.itemInfoStatRow}>
+                          <Text style={[styles.itemInfoStatLabel, { color: statColor }]}>
+                            {statDisplayNames[statKey] || statKey}:
+                          </Text>
+                          <Text style={styles.itemInfoStatValue}>
+                            {statValue}
+                          </Text>
+                        </View>
+                      );
+                    })}
+                  </View>
+                )}
+                
+                {selectedItemInfo.item.totalCost && (
+                  <View style={styles.itemInfoCost}>
+                    <Text style={styles.itemInfoCostText}>
+                      Cost: {selectedItemInfo.item.totalCost.toLocaleString()} Gold
+                    </Text>
+                  </View>
+                )}
+                
+                <View style={styles.itemInfoButtons}>
+                  <TouchableOpacity
+                    style={styles.changeItemButton}
+                    onPress={changeItem}
+                  >
+                    <Text style={styles.changeItemButtonText}>Change Item</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.removeItemButtonLarge}
+                    onPress={() => removeItem(selectedItemInfo.index)}
+                  >
+                    <Text style={styles.removeItemButtonTextLarge}>Remove</Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            )}
+          </Pressable>
+        </Pressable>
+      </Modal>
 
       {/* God Picker Modal */}
       <Modal
@@ -943,113 +998,55 @@ export default function CustomBuildPage() {
           setGodSearchQuery('');
         }}
       >
-        <Pressable style={styles.modalOverlay} onPress={() => {
-          setShowGodPicker(false);
-          setGodSearchQuery('');
-        }}>
-          <Pressable style={styles.modalContent} onPress={(e) => e.stopPropagation()}>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>Select God</Text>
-              <TouchableOpacity onPress={() => {
-                setShowGodPicker(false);
-                setGodSearchQuery('');
-                setSelectedRole(null);
-              }}>
-                <Text style={styles.modalCloseButton}>×</Text>
+              <TouchableOpacity
+                style={styles.modalCloseButton}
+                onPress={() => {
+                  setShowGodPicker(false);
+                  setGodSearchQuery('');
+                }}
+              >
+                <Text style={styles.modalCloseText}>✕</Text>
               </TouchableOpacity>
             </View>
             <TextInput
               style={styles.searchInput}
-              placeholder="Only first 20 gods shown. Search for more..."
-              placeholderTextColor="#94a3b8"
+              placeholder="Search gods..."
+              placeholderTextColor="#64748b"
               value={godSearchQuery}
               onChangeText={setGodSearchQuery}
             />
-            <View style={styles.filterContainer}>
-              <TouchableOpacity
-                style={styles.filterButton}
-                onPress={() => setRoleDropdownVisible(!roleDropdownVisible)}
-              >
-                <Text style={styles.filterButtonText}>
-                  {selectedRole ? `Role: ${selectedRole}` : 'Filter by Role'}
-                </Text>
-                <Text style={styles.filterButtonArrow}>{roleDropdownVisible ? '▲' : '▼'}</Text>
-              </TouchableOpacity>
-              {roleDropdownVisible && (
-                <View style={styles.filterDropdown}>
-                  <TouchableOpacity
-                    style={styles.filterOption}
-                    onPress={() => {
-                      setSelectedRole(null);
-                      setRoleDropdownVisible(false);
-                    }}
-                  >
-                    <Text style={styles.filterOptionText}>All Roles</Text>
-                  </TouchableOpacity>
-                  {['ADC', 'Solo', 'Support', 'Mid', 'Jungle'].map((role) => (
-                    <TouchableOpacity
-                      key={role}
-                      style={styles.filterOption}
-                      onPress={() => {
-                        setSelectedRole(role);
-                        setRoleDropdownVisible(false);
-                      }}
-                    >
-                      <Text style={[styles.filterOptionText, selectedRole === role && styles.filterOptionTextActive]}>
-                        {role}
-                      </Text>
-                    </TouchableOpacity>
-                  ))}
-                </View>
-              )}
-            </View>
-            <ScrollView style={styles.pickerList}>
+            <ScrollView style={styles.modalContent}>
               {filteredGods.map((god, index) => {
-                const name = (god.name || god.GodName || god.title || god.displayName || 'Unknown');
-                const icon = (god.icon || god.GodIcon || (god.abilities && god.abilities.A01 && god.abilities.A01.icon));
+                const name = god.name || god.GodName || god.title || god.displayName || 'Unknown';
+                const icon = god.icon || god.GodIcon || (god.abilities && god.abilities.A01 && god.abilities.A01.icon);
                 return (
                   <TouchableOpacity
                     key={index}
-                    style={styles.pickerItem}
+                    style={styles.godPickerItem}
                     onPress={() => {
                       setSelectedGod(god);
                       setShowGodPicker(false);
                       setGodSearchQuery('');
-                      // Reset ability ranks when changing god
-                      setAbilityRanks({ A01: 0, A02: 0, A03: 0, A04: 0, A05: 0 });
-                      setAspectEnabled(false);
-                      setSelectedAbility(null);
-                      setSelectedItem(null);
                     }}
                   >
-                    {icon ? (() => {
-                      const localIcon = getLocalGodAsset(icon);
-                      if (localIcon) {
-                        return (
-                          <Image
-                            source={localIcon}
-                            style={styles.pickerIcon}
-                            resizeMode="cover"
-                          />
-                        );
-                      }
-                      return (
-                        <View style={styles.pickerIconPlaceholder}>
-                          <Text style={styles.pickerIconText}>{name.charAt(0)}</Text>
-                        </View>
-                      );
-                    })() : (
-                      <View style={styles.pickerIconPlaceholder}>
-                        <Text style={styles.pickerIconText}>{name.charAt(0)}</Text>
-                      </View>
+                    {icon && (
+                      <Image
+                        source={getLocalGodAsset(icon)}
+                        style={styles.godPickerIcon}
+                        resizeMode="cover"
+                      />
                     )}
-                    <Text style={styles.pickerText}>{name}</Text>
+                    <Text style={styles.godPickerName}>{name}</Text>
                   </TouchableOpacity>
                 );
               })}
             </ScrollView>
-          </Pressable>
-        </Pressable>
+          </View>
+        </View>
       </Modal>
 
       {/* Item Picker Modal */}
@@ -1062,454 +1059,254 @@ export default function CustomBuildPage() {
           setItemSearchQuery('');
         }}
       >
-        <Pressable style={styles.modalOverlay} onPress={() => {
-          setShowItemPicker(null);
-          setItemSearchQuery('');
-        }}>
-          <Pressable style={styles.modalContent} onPress={(e) => e.stopPropagation()}>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
             <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>Select Item</Text>
-              <TouchableOpacity onPress={() => {
-                setShowItemPicker(null);
-                setItemSearchQuery('');
-                setSelectedStat(null);
-              }}>
-                <Text style={styles.modalCloseButton}>×</Text>
+              <Text style={styles.modalTitle}>Select Item (Slot {showItemPicker !== null ? showItemPicker + 1 : ''})</Text>
+              <TouchableOpacity
+                style={styles.modalCloseButton}
+                onPress={() => {
+                  setShowItemPicker(null);
+                  setItemSearchQuery('');
+                  setSelectedStat(null);
+                  setSelectedTier(null);
+                }}
+              >
+                <Text style={styles.modalCloseText}>✕</Text>
               </TouchableOpacity>
             </View>
-            <TextInput
-              style={styles.searchInput}
-              placeholder="Only first 20 items shown. Search for more..."
-              placeholderTextColor="#94a3b8"
-              value={itemSearchQuery}
-              onChangeText={setItemSearchQuery}
-            />
-            <View style={styles.filterButtonContainer}>
-              <TouchableOpacity
-                style={[styles.filterButton, selectedStat && styles.filterButtonActive]}
-                onPress={() => setStatDropdownVisible(!statDropdownVisible)}
-              >
-                <Text style={styles.filterButtonText}>
-                  {selectedStat ? selectedStat : 'Filter'}
-                </Text>
-                <Text style={styles.filterButtonIcon}>
-                  {statDropdownVisible ? '▼' : '▶'}
-                </Text>
-              </TouchableOpacity>
+            <View style={styles.filterContainer}>
+              <View style={styles.filterRow}>
+                <TouchableOpacity
+                  style={[styles.filterButton, selectedStat && styles.filterButtonActive]}
+                  onPress={() => {
+                    setStatDropdownVisible(!statDropdownVisible);
+                    setTierDropdownVisible(false);
+                  }}
+                >
+                  <Text style={[styles.filterButtonText, selectedStat && styles.filterButtonTextActive]}>
+                    Stat: {selectedStat || 'All'}
+                  </Text>
+                  <Text style={styles.filterButtonArrow}>{statDropdownVisible ? '▲' : '▼'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.filterButton, selectedTier && styles.filterButtonActive]}
+                  onPress={() => {
+                    setTierDropdownVisible(!tierDropdownVisible);
+                    setStatDropdownVisible(false);
+                  }}
+                >
+                  <Text style={[styles.filterButtonText, selectedTier && styles.filterButtonTextActive]}>
+                    Tier: {selectedTier || 'All'}
+                  </Text>
+                  <Text style={styles.filterButtonArrow}>{tierDropdownVisible ? '▲' : '▼'}</Text>
+                </TouchableOpacity>
+                {(selectedStat || selectedTier) && (
+                  <TouchableOpacity
+                    style={styles.clearFilterButton}
+                    onPress={() => {
+                      setSelectedStat(null);
+                      setSelectedTier(null);
+                    }}
+                  >
+                    <Text style={styles.clearFilterButtonText}>Clear</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
               {statDropdownVisible && (
-                <View style={styles.pantheonDropdown}>
-                  <ScrollView style={styles.pantheonDropdownScroll} nestedScrollEnabled={true}>
+                <View style={styles.dropdownContainer}>
+                  <ScrollView style={styles.dropdownScroll} nestedScrollEnabled>
                     <TouchableOpacity
-                      style={[styles.pantheonOption, !selectedStat && styles.pantheonOptionActive]}
+                      style={[styles.dropdownItem, !selectedStat && styles.dropdownItemActive]}
                       onPress={() => {
                         setSelectedStat(null);
                         setStatDropdownVisible(false);
                       }}
                     >
-                      <Text style={styles.pantheonOptionText}>All Stats</Text>
+                      <Text style={[styles.dropdownItemText, !selectedStat && styles.dropdownItemTextActive]}>All</Text>
                     </TouchableOpacity>
                     {availableStats.map((stat) => (
                       <TouchableOpacity
                         key={stat}
-                        style={[styles.pantheonOption, selectedStat === stat && styles.pantheonOptionActive]}
+                        style={[styles.dropdownItem, selectedStat === stat && styles.dropdownItemActive]}
                         onPress={() => {
                           setSelectedStat(stat);
                           setStatDropdownVisible(false);
                         }}
                       >
-                        <Text style={styles.pantheonOptionText}>{stat}</Text>
+                        <Text style={[styles.dropdownItemText, selectedStat === stat && styles.dropdownItemTextActive]}>{stat}</Text>
+                      </TouchableOpacity>
+                    ))}
+                  </ScrollView>
+                </View>
+              )}
+              {tierDropdownVisible && (
+                <View style={styles.dropdownContainer}>
+                  <ScrollView style={styles.dropdownScroll} nestedScrollEnabled>
+                    {['All', 'Starter', 'Tier 1', 'Tier 2', 'Tier 3', 'Active', 'Relic', 'Consumable', 'God Specific'].map((tier) => (
+                      <TouchableOpacity
+                        key={tier}
+                        style={[styles.dropdownItem, selectedTier === tier && styles.dropdownItemActive]}
+                        onPress={() => {
+                          setSelectedTier(tier === 'All' ? null : tier);
+                          setTierDropdownVisible(false);
+                        }}
+                      >
+                        <Text style={[styles.dropdownItemText, selectedTier === tier && styles.dropdownItemTextActive]}>{tier}</Text>
                       </TouchableOpacity>
                     ))}
                   </ScrollView>
                 </View>
               )}
             </View>
-            <ScrollView style={styles.pickerList}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search items..."
+              placeholderTextColor="#64748b"
+              value={itemSearchQuery}
+              onChangeText={setItemSearchQuery}
+            />
+            <ScrollView style={styles.modalContent}>
               {filteredItems.map((item, index) => {
                 const name = item.name || item.internalName || 'Unknown';
+                const icon = item.icon || item.internalName;
+                const cost = item.totalCost || 0;
+                const localIcon = getLocalItemIcon(icon);
+                const iconKey = `picker-${item.internalName || item.name}-${index}`;
+                const useFallback = failedItemIcons[iconKey];
+                
                 return (
                   <TouchableOpacity
                     key={index}
-                    style={styles.pickerItem}
-                    onPress={() => selectItem(item, showItemPicker)}
+                    style={styles.itemPickerItem}
+                    onPress={() => {
+                      selectItem(item, showItemPicker);
+                    }}
                   >
-                    {item.icon ? (() => {
-                      const localIcon = getLocalItemIcon(item.icon);
-                      if (localIcon) {
-                        return (
+                    {localIcon && (
+                      <>
+                        {localIcon.fallback && !useFallback ? (
                           <Image
-                            source={localIcon}
-                            style={styles.pickerIcon}
+                            source={localIcon.primary || localIcon}
+                            style={styles.itemPickerIcon}
+                            resizeMode="cover"
+                            onError={() => {
+                              setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+                            }}
+                          />
+                        ) : localIcon.fallback && useFallback ? (
+                          <Image
+                            source={localIcon.fallback}
+                            style={styles.itemPickerIcon}
                             resizeMode="cover"
                           />
-                        );
-                      }
-                      return (
-                        <View style={styles.pickerIconPlaceholder}>
-                          <Text style={styles.pickerIconText}>{name.charAt(0)}</Text>
-                        </View>
-                      );
-                    })() : (
-                      <View style={styles.pickerIconPlaceholder}>
-                        <Text style={styles.pickerIconText}>{name.charAt(0)}</Text>
-                      </View>
+                        ) : (
+                          <Image
+                            source={localIcon.primary || localIcon}
+                            style={styles.itemPickerIcon}
+                            resizeMode="cover"
+                          />
+                        )}
+                      </>
                     )}
-                    <View style={styles.pickerItemInfo}>
-                      <Text style={styles.pickerText}>{name}</Text>
-                      {item.totalCost && (
-                        <Text style={styles.pickerSubtext}>{item.totalCost} Gold</Text>
+                    <View style={styles.itemPickerInfo}>
+                      <Text style={styles.itemPickerName}>{name}</Text>
+                      {cost > 0 && (
+                        <Text style={styles.itemPickerCost}>{cost.toLocaleString()} Gold</Text>
                       )}
                     </View>
                   </TouchableOpacity>
                 );
               })}
             </ScrollView>
-          </Pressable>
-        </Pressable>
+          </View>
+        </View>
       </Modal>
 
-      {/* Ability Tooltip Modal */}
+      {/* Save Build Modal */}
       <Modal
-        visible={selectedAbility !== null}
+        visible={showSaveBuildModal}
         transparent={true}
         animationType="fade"
-        onRequestClose={() => {
-          setSelectedAbility(null);
-          setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
-        }}
+        onRequestClose={() => setShowSaveBuildModal(false)}
       >
         <Pressable 
           style={styles.modalOverlay}
-          onPress={() => {
-            setSelectedAbility(null);
-            setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
-          }}
+          onPress={() => setShowSaveBuildModal(false)}
         >
           <Pressable 
-            style={styles.modalContent}
+            style={styles.saveBuildModal}
             onPress={(e) => e.stopPropagation()}
           >
-            {selectedAbility && selectedAbility.ability && (
-              <>
-                <View style={styles.modalHeader}>
-                  <View style={styles.modalIconContainer}>
-                    {selectedAbility.ability.icon ? (() => {
-                      const localIcon = getLocalGodAsset(selectedAbility.ability.icon);
-                      if (localIcon) {
-                        return (
-                          <Image 
-                            source={localIcon} 
-                            style={styles.modalAbilityIcon} 
-                          />
-                        );
-                      }
-                      return (
-                        <View style={styles.modalAbilityIconFallback}>
-                          <Text style={styles.modalAbilityIconFallbackText}>
-                            {(selectedAbility.abilityName || 'A').charAt(0)}
-                          </Text>
-                        </View>
-                      );
-                    })() : (
-                      <View style={styles.modalAbilityIconFallback}>
-                        <Text style={styles.modalAbilityIconFallbackText}>
-                          {(selectedAbility.abilityName || 'A').charAt(0)}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                  <Text style={styles.modalTitle}>{selectedAbility.abilityName || 'Ability'}</Text>
-                  <TouchableOpacity 
-                    style={styles.modalCloseButton}
-                    onPress={() => {
-                      setSelectedAbility(null);
-                      setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
-                    }}
-                  >
-                    <Text style={styles.modalCloseButtonText}>×</Text>
-                  </TouchableOpacity>
-                </View>
+            <View style={styles.saveBuildModalHeader}>
+              <Text style={styles.saveBuildModalTitle}>Save Build</Text>
+              <TouchableOpacity
+                style={styles.modalCloseButton}
+                onPress={() => setShowSaveBuildModal(false)}
+              >
+                <Text style={styles.modalCloseText}>✕</Text>
+              </TouchableOpacity>
+            </View>
+            
+            <Text style={styles.saveBuildModalLabel}>Build Name:</Text>
+            <TextInput
+              style={styles.saveBuildModalInput}
+              placeholder="Enter build name..."
+              placeholderTextColor="#64748b"
+              value={buildName}
+              onChangeText={setBuildName}
+              autoFocus={true}
+            />
+            
+            <View style={styles.saveBuildModalButtons}>
+              <TouchableOpacity
+                style={[styles.saveBuildModalButton, styles.saveBuildModalButtonCancel]}
+                onPress={() => setShowSaveBuildModal(false)}
+              >
+                <Text style={styles.saveBuildModalButtonText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.saveBuildModalButton, styles.saveBuildModalButtonSave]}
+                onPress={async () => {
+                  if (!buildName.trim()) {
+                    Alert.alert('Error', 'Please enter a build name.');
+                    return;
+                  }
 
-                <ScrollView 
-                  style={styles.modalBody}
-                  contentContainerStyle={styles.modalBodyContent}
-                  showsVerticalScrollIndicator={true}
-                  bounces={false}
-                >
-                  {selectedAbility.ability.scales && (
-                    <View style={styles.abilityTooltipSection}>
-                      <TouchableOpacity
-                        style={styles.abilityTooltipSectionHeader}
-                        onPress={() => setAbilitySectionsExpanded({
-                          ...abilitySectionsExpanded,
-                          scales: !abilitySectionsExpanded.scales
-                        })}
-                      >
-                        <Text style={styles.abilityTooltipSectionTitle}>Scales</Text>
-                        <Text style={styles.abilityTooltipSectionToggle}>
-                          {abilitySectionsExpanded.scales ? '▼' : '▶'}
-                        </Text>
-                      </TouchableOpacity>
-                      {abilitySectionsExpanded.scales && (
-                        <ScrollView 
-                          style={styles.abilityTooltipScrollContent}
-                          nestedScrollEnabled={true}
-                          showsVerticalScrollIndicator={true}
-                          scrollEnabled={true}
-                          pointerEvents="auto"
-                        >
-                          <Text style={styles.abilityTooltipScales}>
-                            {String(selectedAbility.ability.scales)}
-                          </Text>
-                        </ScrollView>
-                      )}
-                    </View>
-                  )}
-                  
-                  {(selectedAbility.ability.shortDesc || selectedAbility.ability.description) && (
-                    <View style={styles.abilityTooltipSection}>
-                      <TouchableOpacity
-                        style={styles.abilityTooltipSectionHeader}
-                        onPress={() => setAbilitySectionsExpanded({
-                          ...abilitySectionsExpanded,
-                          description: !abilitySectionsExpanded.description
-                        })}
-                      >
-                        <Text style={styles.abilityTooltipSectionTitle}>Description</Text>
-                        <Text style={styles.abilityTooltipSectionToggle}>
-                          {abilitySectionsExpanded.description ? '▼' : '▶'}
-                        </Text>
-                      </TouchableOpacity>
-                      {abilitySectionsExpanded.description && (
-                        <ScrollView 
-                          style={styles.abilityTooltipScrollContent}
-                          nestedScrollEnabled={true}
-                          showsVerticalScrollIndicator={true}
-                          scrollEnabled={true}
-                          pointerEvents="auto"
-                        >
-                          <Text style={styles.abilityTooltipDescription}>
-                            {selectedAbility.ability.shortDesc 
-                              ? String(selectedAbility.ability.shortDesc)
-                              : String(selectedAbility.ability.description)}
-                          </Text>
-                        </ScrollView>
-                      )}
-                    </View>
-                  )}
+                  const currentUser = await storage.getItem('currentUser');
+                  const buildData = {
+                    name: buildName.trim(),
+                    god: selectedGod.name || selectedGod.GodName || selectedGod.title || selectedGod.displayName,
+                    godInternalName: selectedGod.internalName || selectedGod.GodName,
+                    godIcon: selectedGod.icon || selectedGod.GodIcon,
+                    items: selectedItems.filter(Boolean).map(item => ({
+                      name: item.name || item.internalName,
+                      internalName: item.internalName,
+                      icon: item.icon,
+                    })),
+                    godLevel,
+                    createdAt: new Date().toISOString(),
+                  };
 
-                  {selectedAbility.ability.valueKeys && typeof selectedAbility.ability.valueKeys === 'object' && Object.keys(selectedAbility.ability.valueKeys).length > 0 && (
-                    <View style={styles.abilityTooltipSection}>
-                      <TouchableOpacity
-                        style={styles.abilityTooltipSectionHeader}
-                        onPress={() => setAbilitySectionsExpanded({
-                          ...abilitySectionsExpanded,
-                          stats: !abilitySectionsExpanded.stats
-                        })}
-                      >
-                        <Text style={styles.abilityTooltipSectionTitle}>Stats</Text>
-                        <Text style={styles.abilityTooltipSectionToggle}>
-                          {abilitySectionsExpanded.stats ? '▼' : '▶'}
-                        </Text>
-                      </TouchableOpacity>
-                      {abilitySectionsExpanded.stats && (
-                        <ScrollView 
-                          style={styles.abilityTooltipScrollContent}
-                          nestedScrollEnabled={true}
-                          showsVerticalScrollIndicator={true}
-                          scrollEnabled={true}
-                          pointerEvents="auto"
-                        >
-                          <View style={styles.abilityTooltipStats}>
-                            {Object.keys(selectedAbility.ability.valueKeys).map((statKey) => {
-                              try {
-                                const statValue = selectedAbility.ability.valueKeys[statKey];
-                                if (!statValue || (Array.isArray(statValue) && statValue.length === 0)) return null;
-                                return (
-                                  <View key={statKey} style={styles.abilityTooltipStatRow}>
-                                    <Text style={styles.abilityTooltipStatLabel}>{String(statKey)}:</Text>
-                                    <Text style={styles.abilityTooltipStatValue}>
-                                      {Array.isArray(statValue) ? statValue.join(', ') : String(statValue)}
-                                    </Text>
-                                  </View>
-                                );
-                              } catch (e) {
-                                return null;
-                              }
-                            })}
-                          </View>
-                        </ScrollView>
-                      )}
-                    </View>
-                  )}
-                </ScrollView>
-              </>
-            )}
+                  try {
+                    const savedBuildsData = await storage.getItem(`savedBuilds_${currentUser}`);
+                    const savedBuilds = savedBuildsData ? JSON.parse(savedBuildsData) : [];
+                    savedBuilds.push(buildData);
+                    await storage.setItem(`savedBuilds_${currentUser}`, JSON.stringify(savedBuilds));
+                    setShowSaveBuildModal(false);
+                    setBuildName('');
+                    Alert.alert('Success', 'Build saved to your profile!');
+                  } catch (error) {
+                    Alert.alert('Error', 'Failed to save build. Please try again.');
+                  }
+                }}
+              >
+                <Text style={styles.saveBuildModalButtonText}>Save</Text>
+              </TouchableOpacity>
+            </View>
           </Pressable>
         </Pressable>
       </Modal>
-
-      {/* Item Tooltip Modal */}
-      <Modal
-        visible={selectedItem !== null}
-        transparent={true}
-        animationType="fade"
-        onRequestClose={() => setSelectedItem(null)}
-      >
-        <Pressable 
-          style={styles.modalOverlay}
-          onPress={() => setSelectedItem(null)}
-        >
-          <Pressable 
-            style={styles.modalContent}
-            onPress={(e) => e.stopPropagation()}
-          >
-            {selectedItem && selectedItem.item && (
-              <>
-                <View style={styles.modalHeader}>
-                  <View style={styles.modalIconContainer}>
-                    {selectedItem.item.icon ? (() => {
-                      const localIcon = getLocalItemIcon(selectedItem.item.icon);
-                      if (localIcon) {
-                        return (
-                          <Image 
-                            source={localIcon} 
-                            style={styles.modalItemIcon} 
-                          />
-                        );
-                      }
-                      return (
-                        <View style={styles.modalItemIconFallback}>
-                          <Text style={styles.modalItemIconFallbackText}>
-                            {(selectedItem.item.name || selectedItem.itemName || 'U').charAt(0)}
-                          </Text>
-                        </View>
-                      );
-                    })() : (
-                      <View style={styles.modalItemIconFallback}>
-                        <Text style={styles.modalItemIconFallbackText}>
-                          {(selectedItem.item.name || selectedItem.itemName || 'U').charAt(0)}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                  <Text style={styles.modalTitle}>
-                    {selectedItem.item.name || selectedItem.itemName || 'Unknown Item'}
-                  </Text>
-                  <TouchableOpacity onPress={() => setSelectedItem(null)}>
-                    <Text style={styles.modalCloseButtonText}>×</Text>
-                  </TouchableOpacity>
-                </View>
-                <ScrollView style={styles.modalBody}>
-                  {selectedItem.item.tier && (
-                    <Text style={styles.modalInfo}>Tier: {selectedItem.item.tier}</Text>
-                  )}
-                  {selectedItem.item.totalCost && (
-                    <Text style={styles.modalInfo}>Cost: {selectedItem.item.totalCost} Gold</Text>
-                  )}
-                  {selectedItem.item.stepCost && !selectedItem.item.totalCost && (
-                    <Text style={styles.modalInfo}>Cost: {selectedItem.item.stepCost} Gold</Text>
-                  )}
-                  {selectedItem.item.active && (
-                    <Text style={styles.modalInfo}>Type: Active/Consumable</Text>
-                  )}
-                  {selectedItem.item.stats && (
-                    <View style={styles.modalSection}>
-                      <Text style={styles.modalSectionTitle}>Stats</Text>
-                      {Object.keys(selectedItem.item.stats).map((statKey) => (
-                        <Text key={statKey} style={styles.modalText}>
-                          {statKey}: {selectedItem.item.stats[statKey]}
-                        </Text>
-                      ))}
-                    </View>
-                  )}
-                  {selectedItem.item.passive && (
-                    <View style={styles.modalSection}>
-                      <Text style={styles.modalSectionTitle}>Passive</Text>
-                      <Text style={styles.modalText}>{selectedItem.item.passive}</Text>
-                    </View>
-                  )}
-                </ScrollView>
-              </>
-            )}
-          </Pressable>
-        </Pressable>
-      </Modal>
-
-      {/* Aspect Tooltip Modal */}
-      <Modal
-        visible={selectedAspect !== null}
-        transparent={true}
-        animationType="fade"
-        onRequestClose={() => setSelectedAspect(null)}
-      >
-        <Pressable 
-          style={styles.modalOverlay}
-          onPress={() => setSelectedAspect(null)}
-        >
-          <Pressable 
-            style={styles.modalContent}
-            onPress={(e) => e.stopPropagation()}
-          >
-            {selectedAspect && (
-              <>
-                <View style={styles.modalHeader}>
-                  <View style={styles.modalIconContainer}>
-                    {selectedAspect.icon ? (() => {
-                      const localIcon = getLocalGodAsset(selectedAspect.icon);
-                      if (localIcon) {
-                        return (
-                          <Image 
-                            source={localIcon} 
-                            style={styles.modalAbilityIcon} 
-                          />
-                        );
-                      }
-                      return (
-                        <View style={styles.modalAbilityIconFallback}>
-                          <Text style={styles.modalAbilityIconFallbackText}>A</Text>
-                        </View>
-                      );
-                    })() : (
-                      <View style={styles.modalAbilityIconFallback}>
-                        <Text style={styles.modalAbilityIconFallbackText}>A</Text>
-                      </View>
-                    )}
-                  </View>
-                  <Text style={styles.modalTitle}>
-                    {selectedAspect.name ? selectedAspect.name.replace(/\*\*__|__\*\*/g, '') : 'Aspect'}
-                  </Text>
-                  <TouchableOpacity 
-                    style={styles.modalCloseButton}
-                    onPress={() => setSelectedAspect(null)}
-                  >
-                    <Text style={styles.modalCloseButtonText}>×</Text>
-                  </TouchableOpacity>
-                </View>
-                <ScrollView 
-                  style={styles.modalBody}
-                  contentContainerStyle={styles.modalBodyContent}
-                  showsVerticalScrollIndicator={true}
-                  bounces={false}
-                >
-                  {selectedAspect.description && (
-                    <Text style={styles.modalText}>{selectedAspect.description}</Text>
-                  )}
-                </ScrollView>
-              </>
-            )}
-          </Pressable>
-        </Pressable>
-      </Modal>
-        </>
-      )}
-
-      {/* Trademark Footer */}
-      <View style={styles.trademarkFooter}>
-        <Text style={styles.trademarkText}>
-          SMITE 2 is a registered trademark of Hi-Rez Studios. Trademarks are the property of their respective owners. Game materials copyright Hi-Rez Studios. Hi-Rez Studios has not endorsed and is not responsible for this site or its content.
-        </Text>
-      </View>
     </View>
   );
 }
@@ -1517,873 +1314,645 @@ export default function CustomBuildPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0a0e1a',
-    ...(IS_WEB && {
-      maxWidth: 1400,
-      alignSelf: 'center',
-      width: '100%',
-    }),
+    backgroundColor: '#071024',
   },
   scrollView: {
     flex: 1,
   },
   scrollContent: {
-    padding: 20,
-    paddingBottom: 40,
+    padding: 16,
     ...(IS_WEB && {
-      paddingHorizontal: 'max(20px, calc((100% - 1400px) / 2 + 20px))',
+      maxWidth: 1200,
+      alignSelf: 'center',
+      width: '100%',
     }),
   },
-  characterSection: {
-    backgroundColor: '#1a1f2e',
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 20,
-    borderWidth: 2,
-    borderColor: '#B8FF12',
-    shadowColor: '#B8FF12',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 5,
-  },
-  characterHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  loadingContainer: {
+    flex: 1,
     justifyContent: 'center',
-    marginBottom: 16,
-    position: 'relative',
-  },
-  deleteButton: {
-    position: 'absolute',
-    right: 0,
-    width: 32,
-    height: 32,
-    backgroundColor: '#252a3a',
-    borderRadius: 8,
     alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#3a4a4a',
+    backgroundColor: '#071024',
   },
-  deleteButtonText: {
+  loadingText: {
+    color: '#cbd5e1',
+    marginTop: 16,
     fontSize: 16,
   },
-  characterTitle: {
-    flex: 1,
-    textAlign: 'center',
-    color: '#e2e8f0',
+  section: {
+    marginBottom: 24,
+    backgroundColor: '#0b1226',
+    borderRadius: 12,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  sectionTitle: {
+    color: '#7dd3fc',
+    fontSize: 20,
+    fontWeight: '700',
+    marginBottom: 16,
+  },
+  // God Selection
+  godSelector: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    padding: 20,
+    paddingVertical: 20,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    minHeight: 100,
+    width: '100%',
+    ...(IS_WEB && {
+      cursor: 'pointer',
+      transition: 'all 0.2s ease',
+    }),
+  },
+  godIcon: {
+    width: 72,
+    height: 72,
+    borderRadius: 8,
+    marginRight: 20,
+    flexShrink: 0,
+  },
+  godIconPlaceholder: {
+    width: 72,
+    height: 72,
+    borderRadius: 8,
+    backgroundColor: '#1e3a5f',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 20,
+    flexShrink: 0,
+  },
+  godIconPlaceholderText: {
+    color: '#64748b',
     fontSize: 24,
     fontWeight: '700',
   },
-  characterPortraitContainer: {
-    alignItems: 'center',
-    marginBottom: 16,
-    position: 'relative',
+  godNameText: {
+    color: '#e6eef8',
+    fontSize: 20,
+    fontWeight: '600',
+    flex: 1,
+    paddingRight: 8,
   },
-  aspectIconButton: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: '#252a3a',
-    borderWidth: 3,
-    borderColor: '#3a4a4a',
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
-    shadowColor: '#15803d',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  aspectIconButtonEnabled: {
-    borderColor: '#15803d',
-    backgroundColor: '#2a3a3a',
-    shadowOpacity: 0.6,
-  },
-  aspectIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-  },
-  aspectIconPlaceholder: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: '#0f1724',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  aspectIconText: {
-    color: '#22c55e',
-    fontSize: 18,
-    fontWeight: '700',
-  },
-  characterPortrait: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    borderWidth: 3,
-    borderColor: '#15803d',
-    shadowColor: '#15803d',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.3,
-    shadowRadius: 12,
-    elevation: 8,
-  },
-  characterPortraitPlaceholder: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: '#252a3a',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 3,
-    borderColor: '#15803d',
-    borderStyle: 'dashed',
-  },
-  characterPortraitText: {
-    color: '#22c55e',
-    fontSize: 48,
-    fontWeight: '700',
-  },
+  // Level Slider
   levelContainer: {
-    marginTop: 16,
+    marginTop: 8,
   },
-  sliderContainer: {
-    width: '100%',
+  levelSliderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    marginBottom: 8,
   },
-  sliderTrack: {
-    width: '100%',
-    height: IS_WEB ? 14 : 10,
-    backgroundColor: '#2a2f3f',
-    borderRadius: 5,
+  levelSliderTrack: {
+    flex: 1,
+    height: IS_WEB ? 12 : 8,
+    backgroundColor: '#ffffff',
+    borderRadius: 4,
     position: 'relative',
-    marginBottom: 16,
-    borderWidth: 1,
-    borderColor: '#3a4a4a',
-    transition: IS_WEB ? 'all 0.2s ease' : undefined,
-    ...(IS_WEB && {
-      cursor: 'pointer',
-      minHeight: 14,
-      touchAction: 'none',
-      userSelect: 'none',
-      WebkitUserSelect: 'none',
-    }),
-    ...(!IS_WEB && {
-      touchAction: 'none',
-    }),
+    cursor: IS_WEB ? 'pointer' : 'default',
   },
-  sliderTrackActive: {
-    borderColor: '#22c55e',
-    backgroundColor: '#1f2937',
-    shadowColor: '#22c55e',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 2,
-  },
-  sliderFill: {
-    height: '100%',
-    backgroundColor: '#B8FF12',
-    borderRadius: 5,
+  levelSliderFill: {
     position: 'absolute',
     left: 0,
     top: 0,
-    transition: IS_WEB ? 'all 0.1s linear' : undefined,
+    height: '100%',
+    backgroundColor: '#facc15',
+    borderRadius: 4,
   },
-  sliderFillActive: {
-    backgroundColor: '#9AE600',
-    shadowColor: '#B8FF12',
+  levelSliderFillActive: {
+    backgroundColor: '#fbbf24',
+    shadowColor: '#facc15',
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.6,
     shadowRadius: 4,
   },
-  sliderThumb: {
-    width: IS_WEB ? 30 : 26,
-    height: IS_WEB ? 30 : 26,
-    borderRadius: IS_WEB ? 15 : 13,
-    backgroundColor: '#22c55e',
+  levelSliderThumb: {
     position: 'absolute',
     top: IS_WEB ? -10 : -8,
-    marginLeft: IS_WEB ? -15 : -13,
-    borderWidth: 3,
-    borderColor: '#15803d',
-    shadowColor: '#15803d',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.4,
-    shadowRadius: 4,
-    elevation: 6,
-    transition: IS_WEB ? 'all 0.1s linear' : undefined,
-    zIndex: 10,
-    ...(IS_WEB && {
-      cursor: 'grab',
-      touchAction: 'none',
-      userSelect: 'none',
-      WebkitUserSelect: 'none',
-    }),
-    ...(!IS_WEB && {
-      touchAction: 'none',
-    }),
+    width: IS_WEB ? 28 : 24,
+    height: IS_WEB ? 28 : 24,
+    borderRadius: IS_WEB ? 14 : 12,
+    backgroundColor: '#facc15',
+    borderWidth: 2,
+    borderColor: '#ffffff',
+    marginLeft: IS_WEB ? -14 : -12,
   },
-  sliderThumbDragging: {
-    transform: [{ scale: 1.4 }],
-    backgroundColor: '#16a34a',
-    borderColor: '#15803d',
-    borderWidth: 4,
-    shadowColor: '#22c55e',
-    shadowOffset: { width: 0, height: 4 },
+  levelSliderThumbDragging: {
+    transform: [{ translateX: IS_WEB ? -17 : -14 }, { scale: 1.3 }],
+    backgroundColor: '#fbbf24',
+    borderColor: '#ffffff',
+    borderWidth: 3,
+    shadowColor: '#facc15',
+    shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
     shadowRadius: 8,
-    elevation: 10,
-    ...(IS_WEB && {
-      cursor: 'grabbing',
-    }),
   },
-  levelButtons: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  levelButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#252a3a',
-    alignItems: 'center',
+  levelSliderButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#1e3a5f',
+    borderWidth: 2,
+    borderColor: '#1e3a5f',
     justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: '#15803d',
-  },
-  levelButtonText: {
-    color: '#22c55e',
-    fontSize: 24,
-    fontWeight: '700',
-    lineHeight: 24,
-  },
-  levelText: {
-    color: '#e2e8f0',
-    fontSize: 16,
-    fontWeight: '600',
-    flex: 1,
-    textAlign: 'center',
-  },
-  section: {
-    backgroundColor: '#1a1f2e',
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 20,
-    borderWidth: 2,
-    borderColor: '#B8FF12',
-    shadowColor: '#B8FF12',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    elevation: 3,
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
   },
-  sectionTitle: {
-    color: '#22c55e',
+  levelSliderButtonDisabled: {
+    opacity: 0.4,
+    borderColor: '#1e3a5f',
+  },
+  levelSliderButtonText: {
+    color: '#facc15',
     fontSize: 20,
-    fontWeight: '800',
-    marginBottom: 16,
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-  },
-  goldContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    backgroundColor: '#252a3a',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#3a4a4a',
-  },
-  goldIcon: {
-    fontSize: 18,
-  },
-  goldText: {
-    color: '#fbbf24',
-    fontSize: 16,
     fontWeight: '700',
+    lineHeight: 20,
   },
-  itemsGrid: {
+  levelSliderLabel: {
+    color: '#cbd5e1',
+    fontSize: 14,
+    textAlign: 'center',
+    marginTop: 4,
+  },
+  // Item Slots
+  itemSlotsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 12,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
   },
   itemSlot: {
-    width: '13%',
+    width: IS_WEB ? '18%' : '28%',
+    minWidth: 110,
+    maxWidth: IS_WEB ? 140 : undefined,
+  },
+  itemSlotButton: {
     aspectRatio: 1,
-    borderRadius: 10,
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 12,
+    position: 'relative',
     overflow: 'hidden',
-    backgroundColor: '#252a3a',
-    borderWidth: 2,
-    borderColor: '#15803d',
+    ...(IS_WEB && {
+      cursor: 'pointer',
+      transition: 'all 0.2s ease',
+    }),
   },
   itemIcon: {
     width: '100%',
-    height: '100%',
+    height: '70%',
+    borderRadius: 6,
+    maxWidth: '100%',
+    maxHeight: '100%',
   },
   itemIconPlaceholder: {
     width: '100%',
-    height: '100%',
-    backgroundColor: '#252a3a',
-    alignItems: 'center',
+    height: '70%',
+    backgroundColor: '#1e3a5f',
+    borderRadius: 6,
     justifyContent: 'center',
-  },
-  itemIconText: {
-    color: '#e2e8f0',
-    fontSize: 12,
-    fontWeight: '700',
-  },
-  emptySlot: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#252a3a',
     alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 2,
-    borderStyle: 'dashed',
-    borderColor: '#15803d',
   },
-  emptySlotText: {
+  itemIconPlaceholderText: {
     color: '#64748b',
     fontSize: 24,
-    fontWeight: '300',
-  },
-  buffsGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 12,
-    justifyContent: 'space-between',
-  },
-  buffSlot: {
-    width: '30%',
-    aspectRatio: 1,
-    borderRadius: 8,
-    backgroundColor: '#071024',
-    borderWidth: 1,
-    borderColor: '#1e3a5f',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buffIcon: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#0f1724',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buffText: {
-    color: '#e6eef8',
-    fontSize: 20,
     fontWeight: '700',
   },
-  emptyBuffText: {
+  itemName: {
+    color: '#cbd5e1',
+    fontSize: 10,
+    textAlign: 'center',
+    marginTop: 4,
+  },
+  itemSlotPlaceholder: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  itemSlotPlaceholderText: {
     color: '#64748b',
     fontSize: 32,
     fontWeight: '300',
   },
-  abilitiesRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 16,
-  },
-  abilityContainer: {
-    alignItems: 'center',
-    flex: 1,
-  },
-  abilityIconButton: {
-    width: 56,
-    height: 56,
-    borderRadius: 12,
-    overflow: 'hidden',
-    backgroundColor: '#252a3a',
-    borderWidth: 2,
-    borderColor: '#15803d',
-    marginBottom: 8,
-  },
-  abilityIcon: {
-    width: '100%',
-    height: '100%',
-  },
-  abilityIconPlaceholder: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#252a3a',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  abilityIconText: {
-    color: '#e2e8f0',
-    fontSize: 10,
-    fontWeight: '700',
-  },
-  rankContainer: {
-    alignItems: 'center',
-  },
-  rankText: {
-    color: '#e2e8f0',
-    fontSize: 10,
-    fontWeight: '600',
-  },
-  rankIndicator: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#15803d',
-    marginTop: 2,
-  },
-  instructionText: {
-    color: '#94a3b8',
+  itemSlotNumber: {
+    color: '#64748b',
     fontSize: 12,
-    fontStyle: 'italic',
-    marginTop: 8,
+    marginTop: 4,
   },
-  baseStatsContainer: {
-    marginBottom: 16,
-    paddingBottom: 16,
-    borderBottomWidth: 2,
-    borderBottomColor: '#3a4a4a',
-  },
-  baseStatsTitle: {
-    color: '#22c55e',
-    fontSize: 14,
-    fontWeight: '700',
-    marginBottom: 8,
-  },
-  statsContainer: {
-    marginTop: 8,
-  },
-  totalStatsTitle: {
-    color: '#fbbf24',
-    fontSize: 16,
-    fontWeight: '800',
-    marginBottom: 8,
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-  },
-  statRow: {
+  // Stats
+  statsGrid: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 10,
-    paddingHorizontal: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: '#3a4a4a',
-    backgroundColor: '#252a3a',
-    marginBottom: 4,
-    borderRadius: 6,
+    flexWrap: 'wrap',
+    gap: 12,
+  },
+  statItem: {
+    flex: 1,
+    minWidth: '45%',
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
   },
   statLabel: {
     color: '#94a3b8',
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 12,
+    marginBottom: 4,
   },
   statValue: {
-    color: '#e2e8f0',
-    fontSize: 14,
+    color: '#7dd3fc',
+    fontSize: 20,
     fontWeight: '700',
   },
-  noStatsText: {
-    color: '#6b7280',
-    fontSize: 14,
-    fontStyle: 'italic',
-    textAlign: 'center',
-    marginTop: 16,
-  },
-  filterButtonContainer: {
-    position: 'relative',
-    zIndex: 10,
-    marginBottom: 16,
-  },
-  filterButton: {
+  // Gold
+  goldContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#252a3a',
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: '#3a4a4a',
-    minWidth: 120,
-  },
-  filterButtonActive: {
-    backgroundColor: '#15803d',
-    borderColor: '#22c55e',
-  },
-  filterButtonText: {
-    color: '#e2e8f0',
-    fontSize: 14,
-    fontWeight: '600',
-    flex: 1,
-  },
-  filterButtonIcon: {
-    color: '#e2e8f0',
-    fontSize: 12,
-    marginLeft: 8,
-  },
-  pantheonDropdown: {
-    position: 'absolute',
-    top: '100%',
-    left: 0,
-    right: 0,
-    backgroundColor: '#1a1f2e',
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: '#15803d',
-    marginTop: 4,
-    maxHeight: 200,
-    zIndex: 1000,
-    shadowColor: '#15803d',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 8,
-  },
-  pantheonDropdownScroll: {
-    maxHeight: 200,
-  },
-  pantheonOption: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#3a4a4a',
-  },
-  pantheonOptionActive: {
-    backgroundColor: '#252a3a',
-  },
-  pantheonOptionText: {
-    color: '#e2e8f0',
-    fontSize: 14,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(10, 14, 26, 0.85)',
-    justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
   },
-  modalContent: {
-    backgroundColor: '#1a1f2e',
+  goldLabel: {
+    color: '#cbd5e1',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  goldValue: {
+    color: '#fbbf24',
+    fontSize: 24,
+    fontWeight: '700',
+  },
+  saveBuildButton: {
+    backgroundColor: '#1e90ff',
+    padding: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  saveBuildButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  // Item Info Modal
+  itemInfoModal: {
+    backgroundColor: '#0b1226',
     borderRadius: 16,
     padding: 20,
-    width: '100%',
-    maxWidth: 500,
-    maxHeight: '80%',
+    maxWidth: 400,
+    width: '90%',
     borderWidth: 2,
-    borderColor: '#15803d',
-    shadowColor: '#15803d',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.2,
-    shadowRadius: 16,
-    elevation: 10,
+    borderColor: '#1e90ff',
+    alignSelf: 'center',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+  },
+  itemInfoHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  itemInfoTitle: {
+    color: '#7dd3fc',
+    fontSize: 22,
+    fontWeight: '700',
+    flex: 1,
+  },
+  itemInfoIconContainer: {
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  itemInfoIcon: {
+    width: 80,
+    height: 80,
+    borderRadius: 8,
+  },
+  itemInfoStats: {
+    marginBottom: 16,
+  },
+  itemInfoStatsTitle: {
+    color: '#7dd3fc',
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 8,
+  },
+  itemInfoStatRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 4,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1e3a5f',
+  },
+  itemInfoStatLabel: {
+    color: '#cbd5e1',
+    fontSize: 14,
+  },
+  itemInfoStatValue: {
+    color: '#7dd3fc',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  itemInfoCost: {
+    marginBottom: 16,
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#1e3a5f',
+  },
+  itemInfoCostText: {
+    color: '#fbbf24',
+    fontSize: 16,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  itemInfoButtons: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  changeItemButton: {
+    flex: 1,
+    backgroundColor: '#1e90ff',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  changeItemButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  removeItemButtonLarge: {
+    flex: 1,
+    backgroundColor: '#ef4444',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  removeItemButtonTextLarge: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  // Modals
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    backgroundColor: '#0b1226',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    width: '95%',
+    maxWidth: 800,
+    maxHeight: '85%',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    ...(IS_WEB && {
+      maxWidth: 900,
+    }),
   },
   modalHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
-    paddingBottom: 12,
-    borderBottomWidth: 2,
-    borderBottomColor: '#3a4a4a',
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1e3a5f',
   },
   modalTitle: {
-    color: '#e2e8f0',
+    color: '#7dd3fc',
     fontSize: 20,
     fontWeight: '700',
-  },
-  modalCloseButton: {
-    color: '#e6eef8',
-    fontSize: 28,
-    fontWeight: '700',
-    lineHeight: 28,
-  },
-  searchInput: {
-    backgroundColor: '#252a3a',
-    color: '#e2e8f0',
-    padding: 12,
-    borderRadius: 10,
-    marginBottom: 16,
-    borderWidth: 2,
-    borderColor: '#3a4a4a',
-  },
-  pickerList: {
-    maxHeight: 400,
-  },
-  pickerItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 12,
-    borderRadius: 10,
-    backgroundColor: '#252a3a',
-    marginBottom: 8,
-    borderWidth: 2,
-    borderColor: '#3a4a4a',
-  },
-  pickerIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 8,
-    marginRight: 12,
-  },
-  pickerIconPlaceholder: {
-    width: 48,
-    height: 48,
-    borderRadius: 8,
-    backgroundColor: '#252a3a',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-  },
-  pickerIconText: {
-    color: '#e2e8f0',
-    fontSize: 18,
-    fontWeight: '700',
-  },
-  pickerItemInfo: {
-    flex: 1,
-  },
-  pickerText: {
-    color: '#e2e8f0',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  pickerSubtext: {
-    color: '#94a3b8',
-    fontSize: 12,
-    marginTop: 2,
-  },
-  placeholderText: {
-    color: '#94a3b8',
-    fontSize: 14,
-    textAlign: 'center',
-    padding: 20,
-  },
-  modalIconContainer: {
-    marginRight: 12,
-  },
-  modalAbilityIcon: {
-    width: 56,
-    height: 56,
-    borderRadius: 8,
-  },
-  modalAbilityIconFallback: {
-    width: 56,
-    height: 56,
-    borderRadius: 8,
-    backgroundColor: '#252a3a',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalAbilityIconFallbackText: {
-    color: '#e2e8f0',
-    fontWeight: '700',
-    fontSize: 24,
-  },
-  modalItemIcon: {
-    width: 56,
-    height: 56,
-    borderRadius: 8,
-  },
-  modalItemIconFallback: {
-    width: 56,
-    height: 56,
-    borderRadius: 8,
-    backgroundColor: '#252a3a',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalItemIconFallbackText: {
-    color: '#e2e8f0',
-    fontWeight: '700',
-    fontSize: 24,
   },
   modalCloseButton: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#252a3a',
+    backgroundColor: '#1e3a5f',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalCloseText: {
+    color: '#e6eef8',
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  searchInput: {
+    backgroundColor: '#0f1724',
+    borderWidth: 2,
+    borderColor: '#1e90ff',
+    borderRadius: 8,
+    padding: 16,
+    margin: 16,
+    marginHorizontal: 16,
+    color: '#e6eef8',
+    fontSize: 18,
+    minHeight: 56,
+  },
+  modalContent: {
+    padding: 16,
+  },
+  godPickerItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    minHeight: 70,
+  },
+  godPickerIcon: {
+    width: 60,
+    height: 60,
+    borderRadius: 8,
+    marginRight: 16,
+  },
+  godPickerName: {
+    color: '#e6eef8',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  itemPickerItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  itemPickerIcon: {
+    width: 50,
+    height: 50,
+    borderRadius: 8,
+    marginRight: 12,
+  },
+  itemPickerInfo: {
+    flex: 1,
+  },
+  itemPickerName: {
+    color: '#e6eef8',
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  itemPickerCost: {
+    color: '#fbbf24',
+    fontSize: 14,
+  },
+  saveBuildModal: {
+    backgroundColor: '#0b1226',
+    borderRadius: 12,
+    padding: 20,
+    width: '90%',
+    maxWidth: 400,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  saveBuildModalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  saveBuildModalTitle: {
+    color: '#7dd3fc',
+    fontSize: 20,
+    fontWeight: '700',
+  },
+  saveBuildModalLabel: {
+    color: '#cbd5e1',
+    fontSize: 14,
+    marginBottom: 8,
+  },
+  saveBuildModalInput: {
+    backgroundColor: '#0f1724',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    borderRadius: 8,
+    padding: 12,
+    color: '#e6eef8',
+    fontSize: 16,
+    marginBottom: 20,
+  },
+  saveBuildModalButtons: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  saveBuildModalButton: {
+    flex: 1,
+    padding: 12,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#3a4a4a',
   },
-  modalCloseButtonText: {
-    color: '#e2e8f0',
-    fontSize: 24,
-    fontWeight: '700',
-    lineHeight: 28,
+  saveBuildModalButtonCancel: {
+    backgroundColor: '#64748b',
   },
-  modalBodyContent: {
-    paddingBottom: 8,
+  saveBuildModalButtonSave: {
+    backgroundColor: '#1e90ff',
   },
-  modalInfo: {
-    color: '#22c55e',
-    fontSize: 14,
-    marginBottom: 8,
-  },
-  modalSection: {
-    marginTop: 16,
-    paddingTop: 16,
-    borderTopWidth: 2,
-    borderTopColor: '#3a4a4a',
-  },
-  modalSectionTitle: {
-    color: '#22c55e',
+  saveBuildModalButtonText: {
+    color: '#ffffff',
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: '600',
+  },
+  filterContainer: {
+    paddingHorizontal: 16,
+    paddingTop: 8,
+    paddingBottom: 0,
+  },
+  filterRow: {
+    flexDirection: 'row',
+    gap: 8,
     marginBottom: 8,
+    flexWrap: 'wrap',
   },
-  modalText: {
-    color: '#e2e8f0',
-    fontSize: 14,
-    lineHeight: 20,
-    marginBottom: 8,
-  },
-  abilityTooltipSection: {
-    marginBottom: 12,
-    borderBottomWidth: 2,
-    borderBottomColor: '#3a4a4a',
-    paddingBottom: 8,
-  },
-  abilityTooltipSectionHeader: {
+  filterButton: {
+    flex: 1,
+    minWidth: 120,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 8,
+    backgroundColor: '#0f1724',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    borderRadius: 8,
+    padding: 10,
   },
-  abilityTooltipSectionTitle: {
-    color: '#22c55e',
+  filterButtonActive: {
+    backgroundColor: '#1e3a5f',
+    borderColor: '#1e90ff',
+  },
+  filterButtonText: {
+    color: '#cbd5e1',
     fontSize: 14,
-    fontWeight: '700',
-  },
-  abilityTooltipSectionToggle: {
-    color: '#22c55e',
-    fontSize: 12,
-    fontWeight: '700',
-  },
-  abilityTooltipScrollContent: {
-    maxHeight: 200,
-    paddingVertical: 8,
-  },
-  abilityTooltipScales: {
-    color: '#e2e8f0',
-    fontSize: 12,
-    lineHeight: 18,
-  },
-  abilityTooltipDescription: {
-    color: '#e2e8f0',
-    fontSize: 12,
-    lineHeight: 18,
-  },
-  abilityTooltipStats: {
-    marginTop: 8,
-  },
-  abilityTooltipStatRow: {
-    flexDirection: 'row',
-    marginBottom: 8,
-    paddingBottom: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: '#3a4a4a',
-  },
-  abilityTooltipStatLabel: {
-    color: '#94a3b8',
-    fontSize: 12,
     fontWeight: '600',
-    minWidth: 100,
   },
-  abilityTooltipStatValue: {
-    color: '#e2e8f0',
-    fontSize: 12,
-    flex: 1,
+  filterButtonTextActive: {
+    color: '#7dd3fc',
   },
-  trademarkFooter: {
-    padding: 1,
-    backgroundColor: '#0b1226',
-    borderTopWidth: 1,
-    borderTopColor: '#1e3a5f',
-  },
-  trademarkText: {
+  filterButtonArrow: {
     color: '#64748b',
-    fontSize: 6,
-    lineHeight: 8,
-    textAlign: 'center',
+    fontSize: 10,
+    marginLeft: 8,
   },
-  webview: {
-    flex: 1,
-    backgroundColor: '#0a0e1a',
-  },
-  loadingContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#0a0e1a',
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#0a0e1a',
-  },
-  errorText: {
-    color: '#ef4444',
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  linkContainer: {
-    padding: 16,
-    backgroundColor: '#1a1f2e',
-    borderTopWidth: 2,
-    borderTopColor: '#15803d',
-    alignItems: 'center',
-    gap: 12,
-  },
-  linkButton: {
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    backgroundColor: '#252a3a',
+  clearFilterButton: {
+    backgroundColor: '#ef4444',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
     borderRadius: 8,
-    borderWidth: 2,
-    borderColor: '#15803d',
+    justifyContent: 'center',
   },
-  linkText: {
+  clearFilterButtonText: {
     color: '#ffffff',
     fontSize: 14,
     fontWeight: '600',
   },
-  reportButton: {
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    backgroundColor: '#ea580c',
+  dropdownContainer: {
+    backgroundColor: '#0f1724',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
     borderRadius: 8,
-    borderWidth: 2,
-    borderColor: '#f97316',
+    marginTop: 4,
+    marginBottom: 8,
+    maxHeight: 200,
+    zIndex: 1000,
   },
-  reportButtonText: {
-    color: '#ffffff',
+  dropdownScroll: {
+    maxHeight: 200,
+  },
+  dropdownItem: {
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1e3a5f',
+  },
+  dropdownItemActive: {
+    backgroundColor: '#1e3a5f',
+  },
+  dropdownItemText: {
+    color: '#cbd5e1',
     fontSize: 14,
-    fontWeight: '600',
+  },
+  dropdownItemTextActive: {
+    color: '#7dd3fc',
+    fontWeight: '700',
   },
 });
-

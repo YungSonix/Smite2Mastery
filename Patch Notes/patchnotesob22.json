@@ -1,0 +1,564 @@
+{
+    "patchName": "Open Beta 22 - Keeper Of The Wild Update",
+    "summary": "Sylvanus ported to SMITE 2. Ward timers added to minimap. New Pantheon Quests added. Multiple god balance changes and item adjustments.",
+    "gods": [
+      {
+        "type": "god",
+        "name": "Sylvanus",
+        "changeType": "new",
+        "changes": [
+          {
+            "section": "General",
+            "description": [
+              "Ranged Basic Attacks",
+              "Damage Type: Magical",
+              "Scaling Type: Intelligence Scaling"
+            ]
+          },
+          {
+            "section": "Passive",
+            "abilityName": "Nature's Bounty",
+            "abilityNumber": "(P)",
+            "description": [
+              "When your abilities hit or are deployed, a seed pod appears. Picking it up restores Mana and reduces your cooldowns. Picking up 8 spawns a pod near Sylvanus"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Verdant Growth",
+            "abilityNumber": "(1)",
+            "description": [
+              "Throw a pod that deals Magical Damage, applies Protection reduction and roots enemies.",
+              "If it lands on the ground without hitting an enemy, it grows into a flower that grants nearby allies Mana Regeneration"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Wisps",
+            "abilityNumber": "(2)",
+            "description": [
+              "Release wisps that restore health to allies or will deal Magical Damage to enemies repeatedly over time. Allies gain Protections while healed.",
+              "The first wisp tick deals twice the normal amount of damage and healing",
+              "Wisps can revive Wilted Flowers or cause Living Flowers to grant Protections in an aura."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Nature's Grasp",
+            "abilityNumber": "(3)",
+            "description": [
+              "Extend a vine that Stuns the first enemy god hit and Pulls them towards Sylvanus.",
+              "Sylvanus can pull pods to him, granting a Mana aura. If Sylvanus drops below 40% Health he consumes the aura to gain Wisps."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Wrath of Terra",
+            "abilityNumber": "(4)",
+            "description": [
+              "Slam the ground, Knocking Up enemies in an area and dealing Magical Damage repeatedly over time.",
+              "If a pod has been grabbed, consume it to apply Verdant Growth's Protection Reduction."
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of Grover's Wrath",
+            "releaseDate": "November 7th",
+            "description": [
+              "Attacks: +15% damage to targets debuffed by Sylvanus.",
+              "Wisp's Heal, Protections and Ultimate Knockup reduced by 40%",
+              "Nature's Grasp tethers, dealing damage and slowing while also granting Sylvanus Haste.",
+              "Gain Anger (+Attack Speed) when Verdant Growth or an Ally dies; +2 on Ultimate cast. At 4 stacks, Enrage: +Attack Speed and a free Wisps or Nature's Grasp cast."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Amaterasu",
+        "changeType": "shift",
+        "changes": [
+          {
+            "section": "Passive",
+            "abilityName": "Illuminating Strike",
+            "abilityNumber": "(P)",
+            "description": [
+              "Can now be triggered by 3 Basic Attacks and/or Dazzling Offensive hits."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Divine Presence",
+            "abilityNumber": "(1)",
+            "description": [
+              "Decreased Attack Speed: 10/14/18/22/26% -> 8/11/14/17/20%",
+              "Decreased Strength: 14/18/22/26/30 -> 12/15/18/21/24"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Heavenly Reflection",
+            "abilityNumber": "(2)",
+            "description": [
+              "Increased Base Damage: 70/105/140/175/210 -> 80/120/160/200/240",
+              "This increases the Maximum Damage from 140/420 -> 160/480"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Dazzling Offensive",
+            "abilityNumber": "(4)",
+            "description": [
+              "Increased Base Damage: 100/140/180/220/260 -> 100/150/200/250/300",
+              "This increases the 2nd hit damage from 120/312 to 120/360",
+              "This increases the 3rd hit damage from 140/364 to 140/420",
+              "Increased Intelligence Scaling: 45% -> 50%"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Aphrodite",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Back Off",
+            "abilityNumber": "(2)",
+            "description": [
+              "Increased Bonus Damage: 20/35/50/65/80 -> 40/60/80/100/120",
+              "Increased Bonus Damage Scaling: 15% -> 20% Intelligence",
+              "Increased Damage Scaling: 85% -> 90% Intelligence",
+              "Increased Soul Mate Scaling: 50% -> 60% Intelligence"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Love Birds",
+            "abilityNumber": "(3)",
+            "description": [
+              "Increased Heal Per Tick: 8/10/12/14/16 -> 10/12/14/16/18",
+              "Increased Ally Heal Scaling: 2% -> 2.5% Intelligence"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Chaac",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Passive",
+            "abilityName": "Overflow",
+            "abilityNumber": "(P)",
+            "description": [
+              "NEW: Increased Heal Amount Per Level: 0 -> 1"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Rain Dance",
+            "abilityNumber": "(3)",
+            "description": [
+              "NEW: Grants a stack of Overflow every 1.5s.",
+              "This results in 4 stacks over the whole Rain Dance."
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of Fulmination",
+            "abilityName": "Rain Dance",
+            "abilityNumber": "(3)",
+            "description": [
+              "NEW: Does not generate stacks of Overflow."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Eset",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Dispel Magic",
+            "abilityNumber": "(3)",
+            "description": [
+              "Decreased Slow: 20/22.5/25/27.5/30% -> 20%"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Hecate",
+        "changeType": "fix",
+        "changes": [
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of Ruin",
+            "abilityName": "Spell Eater",
+            "abilityNumber": "(2)",
+            "description": [
+              "This ability no longer fires when enemy gods use toggle/stance-switch abilities"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Hua Mulan",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Divine Mastery",
+            "abilityNumber": "(4)",
+            "description": [
+              "Decreased Protections while firing: 40% -> 30%"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Mercury",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Passive",
+            "abilityName": "Fastest God Alive",
+            "abilityNumber": "(P)",
+            "description": [
+              "Decreased Bonus Basic Attack Damage for every 1cm Traveled: 0.05% -> 0.04% (Max 25% -> 20%)"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Sonic Boom",
+            "abilityNumber": "(4)",
+            "description": [
+              "Decreased Maximum Bonus Speed from 40% -> 30%.",
+              "Fixed an issue where the tooltip didn't state the Spin Duration or the Bonus Speed from casting the Ultimate."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Nu Wa",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Clay Soldiers",
+            "abilityNumber": "(2)",
+            "description": [
+              "Increased Clay Soldier Dash Scaling: 5% -> 7.5% Intelligence",
+              "Increased Strength of Earth Penetration: 4/6/8/10/12 -> 6/9/12/15/18"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Shining Metal",
+            "abilityNumber": "(3)",
+            "description": [
+              "Increased Base Damage: 90/130/170/210/250 -> 90/135/180/225/270",
+              "Increased Damage Scaling: 65% -> 75% Intelligence"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Osiris",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of the Fragmented",
+            "abilityName": "Fragmented",
+            "abilityNumber": "(P)",
+            "description": [
+              "Decreased Damage Mitigation Per Stack: 2% -> 1%"
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of the Fragmented",
+            "abilityName": "Sickle Strike",
+            "abilityNumber": "(1)",
+            "description": [
+              "Decreased Protection from Item Scaling: 35% -> 25%"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Sobek",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Passive",
+            "abilityName": "Blessing of the Nile",
+            "abilityNumber": "(P)",
+            "description": [
+              "Increased Protections Per Stack: 2 -> 3",
+              "Increased Protections Per Stack Per Level: 0.4 -> 0.5"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Scylla",
+        "changeType": "shift",
+        "changes": [
+          {
+            "section": "General",
+            "description": [
+              "Fixed some tooltip spacing issues."
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of the Devourer",
+            "abilityName": "Sentinel",
+            "description": [
+              "New: Increased Damage Scaling: 0% -> 5% Max Mana",
+              "Removed: No longer reduces its own Cooldown."
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of the Devourer",
+            "abilityName": "I'm a Monster",
+            "abilityNumber": "(4)",
+            "description": [
+              "Decreased Bonus Damage Scaling: 22/24/26/28/30% -> 21/22/23/24/25% of Max Mana"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Thor",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Tectonic Rift",
+            "abilityNumber": "(2)",
+            "description": [
+              "Increased Strength Scaling: 20% -> 30%",
+              "Aspect remains unchanged."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Berserker Barrage",
+            "abilityNumber": "(3)",
+            "description": [
+              "Increased Spin Strength Scaling: 35% -> 40%",
+              "Aspect remains unchanged."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Tsukuyomi",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of Mangetsu",
+            "abilityName": "Piercing Moonlight",
+            "abilityNumber": "(4)",
+            "description": [
+              "Increased Explosion Base Damage: 50/75/100/125/150 -> 75/100/125/150/175",
+              "Increased Explosion Intelligence Scaling: 50% -> 65%"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Xbalanque",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Poison Darts",
+            "abilityNumber": "(2)",
+            "description": [
+              "Decreased Strength Scaling: 30% -> 25%",
+              "Decreased Intelligence Scaling: 40% -> 35%",
+              "Decreased Tick Strength Scaling: 10% -> 7.5%",
+              "Decreased Tick Intelligence Scaling: 20% -> 15%"
+            ]
+          }
+        ]
+      }
+    ],
+    "items": [
+      {
+        "type": "item",
+        "name": "Chandra's Grace",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "description": "Increased Health and Mana Regen: 15 -> 20",
+            "note": "Our intent is for the Regen to be as impactful, but lower the amount of total Cooldown Reduction granted."
+          },
+          {
+            "description": "Decreased Buff Duration: 4s -> 3s"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Daybreak Gavel",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Decreased Cost: 2650 -> 2500"
+          },
+          {
+            "description": "Increased Strength: 55 -> 60"
+          },
+          {
+            "description": "Increased Intelligence: 75 -> 80"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Dagger of Frenzy",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Increased On Use Attack Damage Per Level: 3 -> 4"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Eye of Erebus",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Increased Health: 200 -> 250"
+          },
+          {
+            "description": "Increased Watchful Eye Duration: 30s -> 40s"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Leviathan's Hide",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Now also reduces Attack Damage Power as well as Strength."
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Screeching Gargoyle",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Increased Cooldown Rate: 10 -> 15"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Shield Splitter",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Increased Range: 8.8m -> 11.2m"
+          },
+          {
+            "description": "Increased Physical Protection: 20 -> 25"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Stone of Binding",
+        "changeType": "shift",
+        "changes": [
+          {
+            "description": "Increased Cost: 2250 -> 2550",
+            "note": "Stone of Binding felt awkward compared to its Smite 1 counterpart. Being so cheap but being combined with an Item Protection threshold to be effective made it feel awkward to build. We are increasing the cost to be able to provide more stats, making it feel better in a completed build. Additionally, we are removing the Item Protection Threshold and instead focusing the gameplay towards gods that can consistently disrupt and Crowd Control their opponents, by making each stack more impactful, straightforward, and rewarding players who can apply multiple control effects over the length of a fight."
+          },
+          {
+            "description": "Increased Physical Protection: 25 -> 35"
+          },
+          {
+            "description": "Increased Magical Protection: 20 -> 25"
+          },
+          {
+            "description": "Decreased Stack Count: 4 -> 3"
+          },
+          {
+            "description": "Increased Protection Reduction: 5 -> 7"
+          },
+          {
+            "description": "Removed: Item Protection Threshold for 2 Stacks"
+          },
+          {
+            "description": "Increased Stack Duration: 4s -> 6s"
+          },
+          {
+            "description": "Stacks now fade off one at a time"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "The Executioner",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Decreased Cost: 2650 -> 2550"
+          }
+        ]
+      }
+    ],
+    "gameModes": [
+      {
+        "type": "gameMode",
+        "name": "Jungle Practice",
+        "changeType": "improvement",
+        "changes": [
+          {
+            "description": "Added an 'Add Item Stacks' option to the Practice Menu"
+          }
+        ]
+      }
+    ],
+    "qualityOfLife": [
+      {
+        "type": "feature",
+        "name": "Ward Timers",
+        "changeType": "new",
+        "description": "Wards you place should now show a timer on your minimap to indicate how long they will remain active until expiry."
+      },
+      {
+        "type": "feature",
+        "name": "Pantheon Quests",
+        "changeType": "new",
+        "description": "New Pantheon Quests within the Events tab! Complete Pantheon Quests to earn Badges!"
+      }
+    ]
+  }

@@ -14,11 +14,16 @@ import {
   Linking,
 } from 'react-native';
 import { Image } from 'expo-image';
+import { useScreenDimensions } from '../hooks/useScreenDimensions';
 // Lazy load page components to reduce initial bundle size
 const HomePage = lazy(() => import('./home'));
 const DataPage = lazy(() => import('./data'));
 const CustomBuildPage = lazy(() => import('./custombuild'));
 const PlayerProfilesPage = lazy(() => import('./playerprofiles'));
+const PatchHubPage = lazy(() => import('./patchhub'));
+const MorePage = lazy(() => import('./more'));
+const WordlePage = lazy(() => import('./wordle'));
+const MyBuildsPage = lazy(() => import('./mybuilds'));
 // Lazy load the large JSON to prevent startup crash
 let localBuilds = null;
 
@@ -38,7 +43,87 @@ const getRoleIcon = (role) => {
   return roleIcons[role] || null;
 };
 
-function BuildsPage({ onGodIconPress }) {
+// Patch Badge Tooltip Component
+function PatchBadgeTooltip({ changeType, version, entityType, badgeStyle, textStyle, overlayStyle, contentStyle, tooltipTextStyle, closeButtonStyle, closeTextStyle }) {
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const getChangeTypeText = (type) => {
+    const types = {
+      'buffed': 'Buffed',
+      'nerfed': 'Nerfed',
+      'shifted': 'Shifted',
+      'new': 'New',
+    };
+    return types[type] || 'Updated';
+  };
+
+  return (
+    <>
+      <TouchableOpacity
+        style={badgeStyle}
+        onPress={() => setShowTooltip(true)}
+        activeOpacity={0.7}
+      >
+        <Text style={textStyle}>
+          {getChangeTypeText(changeType)}
+        </Text>
+      </TouchableOpacity>
+      
+      <Modal
+        visible={showTooltip}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowTooltip(false)}
+      >
+        <Pressable
+          style={overlayStyle}
+          onPress={() => setShowTooltip(false)}
+        >
+          <View style={contentStyle}>
+            <Text style={tooltipTextStyle}>
+              This {entityType} was recently {changeType} this patch ({version}).
+            </Text>
+            <TouchableOpacity
+              style={closeButtonStyle}
+              onPress={() => setShowTooltip(false)}
+            >
+              <Text style={closeTextStyle}>✕</Text>
+            </TouchableOpacity>
+          </View>
+        </Pressable>
+      </Modal>
+    </>
+  );
+}
+
+// Storage helper
+const storage = {
+  async getItem(key) {
+    if (IS_WEB && typeof window !== 'undefined' && window.localStorage) {
+      return window.localStorage.getItem(key);
+    }
+    try {
+      const AsyncStorage = require('@react-native-async-storage/async-storage').default;
+      return await AsyncStorage.getItem(key);
+    } catch (e) {
+      return null;
+    }
+  },
+  async setItem(key, value) {
+    if (IS_WEB && typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.setItem(key, value);
+      return;
+    }
+    try {
+      const AsyncStorage = require('@react-native-async-storage/async-storage').default;
+      await AsyncStorage.setItem(key, value);
+    } catch (e) {
+      // Ignore
+    }
+  },
+};
+
+function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = false }) {
   const [builds, setBuilds] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -52,7 +137,31 @@ function BuildsPage({ onGodIconPress }) {
   const [selectedItem, setSelectedItem] = useState(null); // { item, itemName }
   const [selectedTip, setSelectedTip] = useState(null); // { tip, tipIndex, godIndex }
   const [failedItemIcons, setFailedItemIcons] = useState({}); // Track which item icons failed to load
-  const [activeTab, setActiveTab] = useState('builds'); // 'builds' or 'guides'
+  const [activeTab, setActiveTab] = useState(initialTab === 'guides' ? 'guides' : 'builds'); // 'builds' or 'guides'
+  const [pinnedBuilds, setPinnedBuilds] = useState(new Set()); // Track pinned builds
+  
+  // Load pinned builds from storage
+  useEffect(() => {
+    const loadPinnedBuilds = async () => {
+      const currentUser = await storage.getItem('currentUser');
+      if (currentUser) {
+        const pinnedBuildsData = await storage.getItem(`pinnedBuilds_${currentUser}`);
+        if (pinnedBuildsData) {
+          const pinned = JSON.parse(pinnedBuildsData);
+          const buildKeys = new Set(pinned.map(b => b.buildKey));
+          setPinnedBuilds(buildKeys);
+        }
+      }
+    };
+    loadPinnedBuilds();
+  }, []);
+  
+  // Sync activeTab with initialTab when it changes
+  useEffect(() => {
+    if (initialTab === 'guides' || initialTab === 'builds') {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
 
   // Lazy load the builds data after the UI has rendered to prevent startup crash
   useEffect(() => {
@@ -196,11 +305,39 @@ function BuildsPage({ onGodIconPress }) {
     if (!pairs || pairs.length === 0) return [];
     const lowerQuery = debouncedQuery.toLowerCase().trim();
     
-    let result = pairs;
+    // Store pairs with original indices before filtering/sorting
+    let result = pairs.map((pair, origIdx) => ({ pair, origIdx }));
+    
+    // Sort pairs to prioritize pinned builds - pinned builds appear first
+    result = result.sort((a, b) => {
+      const aBuilds = Array.isArray(a.pair.builds) ? a.pair.builds : [];
+      const bBuilds = Array.isArray(b.pair.builds) ? b.pair.builds : [];
+      
+      // Check if any builds in pair a are pinned (using original index)
+      const aHasPinned = aBuilds.some((build, buildIdx) => {
+        const aTitle = (a.pair.god?.name || a.pair.god?.GodName || 'Unknown');
+        const buildKey = `${aTitle}-${a.origIdx}-${buildIdx}`;
+        return pinnedBuilds.has(buildKey);
+      });
+      
+      // Check if any builds in pair b are pinned (using original index)
+      const bHasPinned = bBuilds.some((build, buildIdx) => {
+        const bTitle = (b.pair.god?.name || b.pair.god?.GodName || 'Unknown');
+        const buildKey = `${bTitle}-${b.origIdx}-${buildIdx}`;
+        return pinnedBuilds.has(buildKey);
+      });
+      
+      // Pinned pairs come first
+      if (aHasPinned && !bHasPinned) return -1;
+      if (!aHasPinned && bHasPinned) return 1;
+      return 0;
+    });
     
     // Filter by role if selected
     if (selectedRole) {
-      result = result.filter(({ god, builds: godBuilds }) => {
+      result = result.filter(({ pair }) => {
+        const god = pair.god;
+        const godBuilds = pair.builds;
         if (!god) return false;
         const selectedRoleLower = selectedRole.toLowerCase();
         
@@ -290,19 +427,23 @@ function BuildsPage({ onGodIconPress }) {
     }
     
     // Filter by search query
-    if (lowerQuery.length > 0) {
-      result = result.filter(({ god }) => {
+    if (lowerQuery) {
+      result = result.filter(({ pair }) => {
+        const god = pair.god;
         if (!god) return false;
         const name = (god.name || god.GodName || god.title || god.displayName || '').toString().toLowerCase();
-        return name.includes(lowerQuery);
+        const role = (god.role || god.class || god.type || '').toString().toLowerCase();
+        const pantheon = (god.pantheon || '').toString().toLowerCase();
+        return name.includes(lowerQuery) || role.includes(lowerQuery) || pantheon.includes(lowerQuery);
       });
     } else if (!selectedRole) {
       // If no search query and no role filter, only show first N gods for performance
       result = result.slice(0, initialDisplayLimit);
     }
     
-    return result;
-  }, [pairs, debouncedQuery, selectedRole, initialDisplayLimit]);
+    // Extract just the pairs after filtering/sorting
+    return result.map(({ pair }) => pair);
+  }, [pairs, debouncedQuery, selectedRole, initialDisplayLimit, pinnedBuilds]);
 
   // Fast item lookup function using the pre-built map
   const findItem = useCallback((metaName) => {
@@ -381,27 +522,29 @@ function BuildsPage({ onGodIconPress }) {
       <View style={styles.header}>
         <Text style={styles.logo}>SMITE 2</Text>
         
-        {/* Tab Toggle Buttons */}
-        <View style={styles.tabButtons}>
-          <TouchableOpacity
-            style={[styles.tabButton, activeTab === 'builds' && styles.tabButtonActive]}
-            onPress={() => setActiveTab('builds')}
-            activeOpacity={0.7}
-          >
-            <Text style={[styles.tabButtonText, activeTab === 'builds' && styles.tabButtonTextActive]}>
-              Builds
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.tabButton, activeTab === 'guides' && styles.tabButtonActive]}
-            onPress={() => setActiveTab('guides')}
-            activeOpacity={0.7}
-          >
-            <Text style={[styles.tabButtonText, activeTab === 'guides' && styles.tabButtonTextActive]}>
-              Guides
-            </Text>
-          </TouchableOpacity>
-        </View>
+        {/* Tab Toggle Buttons - Hide when using sub-nav */}
+        {!hideInternalTabs && (
+          <View style={styles.tabButtons}>
+            <TouchableOpacity
+              style={[styles.tabButton, activeTab === 'builds' && styles.tabButtonActive]}
+              onPress={() => setActiveTab('builds')}
+              activeOpacity={0.7}
+            >
+              <Text style={[styles.tabButtonText, activeTab === 'builds' && styles.tabButtonTextActive]}>
+                Builds
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.tabButton, activeTab === 'guides' && styles.tabButtonActive]}
+              onPress={() => setActiveTab('guides')}
+              activeOpacity={0.7}
+            >
+              <Text style={[styles.tabButtonText, activeTab === 'guides' && styles.tabButtonTextActive]}>
+                Guides
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
         
         {activeTab === 'builds' && (
           <Text style={styles.headerSub}>Curated Builds (Made by the Mentor Team)</Text>
@@ -683,7 +826,11 @@ function BuildsPage({ onGodIconPress }) {
             contentContainerStyle={styles.cardGrid}
             showsVerticalScrollIndicator={false}
           >
-            {filtered.map(({ god, builds: godBuilds }, idx) => {
+            {filtered.map((pair, mapIdx) => {
+              // Find original index in pairs array
+              const origIdx = pairs.findIndex(p => p === pair);
+              const idx = origIdx >= 0 ? origIdx : mapIdx;
+              const { god, builds: godBuilds } = pair;
               if (!god) return null;
               
               const title = (god.name || god.GodName || god.title || god.displayName) || 'Unknown';
@@ -692,11 +839,14 @@ function BuildsPage({ onGodIconPress }) {
               // Get all builds for this god (default to empty array)
               let allBuilds = Array.isArray(godBuilds) ? godBuilds : [];
               
+              // Store original indices before filtering/sorting
+              let buildsWithIndices = allBuilds.map((build, origIdx) => ({ build, origIdx }));
+              
               // Filter builds by selected role if a role is selected
               if (selectedRole) {
                 const selectedRoleLower = selectedRole.toLowerCase();
                 
-                const filteredBuilds = allBuilds.filter((build) => {
+                const filteredBuilds = buildsWithIndices.filter(({ build }) => {
                   if (!build) return false;
                   // Check build notes, title, role, or lane properties
                   const buildText = [
@@ -760,12 +910,27 @@ function BuildsPage({ onGodIconPress }) {
                 
                 // Only show builds that match the selected role - no fallback to all builds
                 if (filteredBuilds.length > 0) {
-                  allBuilds = filteredBuilds;
+                  buildsWithIndices = filteredBuilds;
                 } else {
                   // No matching builds - skip rendering this god entirely
-                  allBuilds = [];
+                  buildsWithIndices = [];
                 }
               }
+              
+              // Sort builds to prioritize pinned builds within each god (using original indices)
+              buildsWithIndices.sort((a, b) => {
+                const buildKeyA = `${title}-${idx}-${a.origIdx}`;
+                const buildKeyB = `${title}-${idx}-${b.origIdx}`;
+                const aIsPinned = pinnedBuilds.has(buildKeyA);
+                const bIsPinned = pinnedBuilds.has(buildKeyB);
+                
+                if (aIsPinned && !bIsPinned) return -1;
+                if (!aIsPinned && bIsPinned) return 1;
+                return 0;
+              });
+              
+              // Extract just the builds array after sorting
+              allBuilds = buildsWithIndices.map(item => item.build);
               
               // Skip rendering if no builds match the filter
               if (selectedRole && allBuilds.length === 0) {
@@ -1163,35 +1328,52 @@ function BuildsPage({ onGodIconPress }) {
                             }}
                             activeOpacity={0.7}
                           >
-                            {godIcon ? (() => {
-                              const localIcon = getLocalGodAsset(godIcon);
-                              if (localIcon) {
+                            <View style={{ position: 'relative' }}>
+                              {godIcon ? (() => {
+                                const localIcon = getLocalGodAsset(godIcon);
+                                if (localIcon) {
+                                  return (
+                                    <View style={[styles.godIconContainer, { borderColor: cardColors.border + '60' }]}>
+                                      <Image 
+                                        source={localIcon} 
+                                        style={styles.godIcon}
+                                        contentFit="cover"
+                                        cachePolicy="memory-disk"
+                                        transition={200}
+                                        accessibilityLabel={`${title} icon`}
+                                        placeholderContentFit="cover"
+                                        recyclingKey={`god-${title}`}
+                                      />
+                                    </View>
+                                  );
+                                }
+                                // Fallback to text if local icon not found
                                 return (
-                                  <View style={[styles.godIconContainer, { borderColor: cardColors.border + '60' }]}>
-                                    <Image 
-                                      source={localIcon} 
-                                      style={styles.godIcon}
-                                      contentFit="cover"
-                                      cachePolicy="memory-disk"
-                                      transition={200}
-                                      accessibilityLabel={`${title} icon`}
-                                      placeholderContentFit="cover"
-                                      recyclingKey={`god-${title}`}
-                                    />
+                                  <View style={[styles.godFallback, { borderColor: cardColors.border + '60' }]}>
+                                    <Text style={[styles.godFallbackText, { color: cardColors.accent }]}>{title.charAt(0)}</Text>
                                   </View>
                                 );
-                              }
-                              // Fallback to text if local icon not found
-                              return (
+                              })() : (
                                 <View style={[styles.godFallback, { borderColor: cardColors.border + '60' }]}>
                                   <Text style={[styles.godFallbackText, { color: cardColors.accent }]}>{title.charAt(0)}</Text>
                                 </View>
-                              );
-                            })() : (
-                              <View style={[styles.godFallback, { borderColor: cardColors.border + '60' }]}>
-                                <Text style={[styles.godFallbackText, { color: cardColors.accent }]}>{title.charAt(0)}</Text>
-                              </View>
-                            )}
+                              )}
+                              {/* Patch indicator badge */}
+                              {god && god.latestPatchChange && (
+                                <PatchBadgeTooltip
+                                  changeType={god.latestPatchChange.type}
+                                  version={god.latestPatchChange.version || 'latest'}
+                                  entityType="god"
+                                  badgeStyle={[styles.patchBadge, styles[`patchBadge${god.latestPatchChange.type.charAt(0).toUpperCase() + god.latestPatchChange.type.slice(1)}`]]}
+                                  textStyle={styles.patchBadgeText}
+                                  overlayStyle={styles.tooltipOverlay}
+                                  contentStyle={styles.tooltipContent}
+                                  tooltipTextStyle={styles.tooltipText}
+                                  closeButtonStyle={styles.tooltipCloseButton}
+                                  closeTextStyle={styles.tooltipCloseText}
+                                />
+                              )}
+                            </View>
                           </TouchableOpacity>
                         </View>
 
@@ -1205,11 +1387,62 @@ function BuildsPage({ onGodIconPress }) {
                                 </View>
                               )}
                             </View>
-                            {isExpanded ? (
-                              <Text style={styles.expandIndicator}>▼</Text>
-                            ) : (
-                              <Text style={styles.expandIndicator}>▶</Text>
-                            )}
+                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                              <TouchableOpacity
+                                onPress={async (e) => {
+                                  e.stopPropagation();
+                                  const currentUser = await storage.getItem('currentUser');
+                                  if (!currentUser) {
+                                    Alert.alert('Not Logged In', 'Please log in to your profile to pin builds.');
+                                    return;
+                                  }
+                                  
+                                  const buildKey = `${title}-${idx}-${currentBuildIdx}`;
+                                  const isPinned = pinnedBuilds.has(buildKey);
+                                  
+                                  try {
+                                    const pinnedBuildsData = await storage.getItem(`pinnedBuilds_${currentUser}`);
+                                    const pinned = pinnedBuildsData ? JSON.parse(pinnedBuildsData) : [];
+                                    
+                                    if (isPinned) {
+                                      // Unpin
+                                      const updated = pinned.filter(b => b.buildKey !== buildKey);
+                                      await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(updated));
+                                      setPinnedBuilds(prev => {
+                                        const next = new Set(prev);
+                                        next.delete(buildKey);
+                                        return next;
+                                      });
+                                    } else {
+                                      // Pin
+                                      pinned.push({
+                                        buildKey,
+                                        godName: title,
+                                        godInternalName: god?.internalName || god?.GodName,
+                                        role: role || 'Unknown',
+                                        buildTitle: currentBuild?.notes || currentBuild?.title || `${role || 'Build'} Build`,
+                                        build: currentBuild,
+                                        pinnedAt: new Date().toISOString(),
+                                      });
+                                      await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(pinned));
+                                      setPinnedBuilds(prev => new Set(prev).add(buildKey));
+                                    }
+                                  } catch (error) {
+                                    Alert.alert('Error', 'Failed to pin/unpin build. Please try again.');
+                                  }
+                                }}
+                                style={styles.pinButton}
+                              >
+                                <Text style={styles.pinButtonText}>
+                                  {pinnedBuilds.has(`${title}-${idx}-${currentBuildIdx}`) ? '📌' : '📍'}
+                                </Text>
+                              </TouchableOpacity>
+                              {isExpanded ? (
+                                <Text style={styles.expandIndicator}>▼</Text>
+                              ) : (
+                                <Text style={styles.expandIndicator}>▶</Text>
+                              )}
+                            </View>
                           </View>
                         </View>
                       </View>
@@ -1450,19 +1683,20 @@ function BuildsPage({ onGodIconPress }) {
                                       setSelectedItem({ item: meta, itemName: s });
                                     }}
                                   >
-                                      {localIcon ? (() => {
-                                        // Handle both single URI and primary/fallback object
-                                        const imageSource = localIcon.primary || localIcon;
-                                        const fallbackSource = localIcon.fallback;
-                                        const itemKey = `starter-${s}-${si}`;
-                                        const useFallback = failedItemIcons[itemKey];
-                                        
-                                        if (fallbackSource && !useFallback) {
-                                          // Has fallback - try primary first, then fallback on error
-                                          return (
-                                            <View style={styles.iconOuterBorder}>
-                                              <View style={styles.iconInnerBorder}>
-                                                <Image 
+                                      <View style={{ position: 'relative' }}>
+                                        {localIcon ? (() => {
+                                          // Handle both single URI and primary/fallback object
+                                          const imageSource = localIcon.primary || localIcon;
+                                          const fallbackSource = localIcon.fallback;
+                                          const itemKey = `starter-${s}-${si}`;
+                                          const useFallback = failedItemIcons[itemKey];
+                                          
+                                          if (fallbackSource && !useFallback) {
+                                            // Has fallback - try primary first, then fallback on error
+                                            return (
+                                              <View style={styles.iconOuterBorder}>
+                                                <View style={styles.iconInnerBorder}>
+                                                  <Image 
                                                   source={imageSource}
                                                   style={styles.smallIconImg}
                                                   contentFit="cover"
@@ -1518,6 +1752,22 @@ function BuildsPage({ onGodIconPress }) {
                                         </View>
                                       </View>
                                     )}
+                                    {/* Patch indicator badge for starter items */}
+                                    {meta && meta.latestPatchChange && (
+                                      <PatchBadgeTooltip
+                                        changeType={meta.latestPatchChange.type}
+                                        version={meta.latestPatchChange.version || 'latest'}
+                                        entityType="item"
+                                        badgeStyle={[styles.patchBadge, styles.patchBadgeSmall, styles[`patchBadge${meta.latestPatchChange.type.charAt(0).toUpperCase() + meta.latestPatchChange.type.slice(1)}`]]}
+                                        textStyle={styles.patchBadgeText}
+                                        overlayStyle={styles.tooltipOverlay}
+                                        contentStyle={styles.tooltipContent}
+                                        tooltipTextStyle={styles.tooltipText}
+                                        closeButtonStyle={styles.tooltipCloseButton}
+                                        closeTextStyle={styles.tooltipCloseText}
+                                      />
+                                    )}
+                                  </View>
                                   </TouchableOpacity>
                               );
                             })}
@@ -1548,16 +1798,17 @@ function BuildsPage({ onGodIconPress }) {
                                     setSelectedItem({ item: meta, itemName: f });
                                   }}
                                 >
-                                {localIcon ? (() => {
-                                  // Handle both single URI and primary/fallback object
-                                  const imageSource = localIcon.primary || localIcon;
-                                  const fallbackSource = localIcon.fallback;
-                                  const itemKey = `final-${f}-${fi}`;
-                                  const useFallback = failedItemIcons[itemKey];
-                                  
-                                  if (fallbackSource && !useFallback) {
-                                    // Has fallback - try primary first, then fallback on error
-                                    return (
+                                  <View style={{ position: 'relative' }}>
+                                    {localIcon ? (() => {
+                                      // Handle both single URI and primary/fallback object
+                                      const imageSource = localIcon.primary || localIcon;
+                                      const fallbackSource = localIcon.fallback;
+                                      const itemKey = `final-${f}-${fi}`;
+                                      const useFallback = failedItemIcons[itemKey];
+                                      
+                                      if (fallbackSource && !useFallback) {
+                                        // Has fallback - try primary first, then fallback on error
+                                        return (
                                       <View style={styles.iconOuterBorder}>
                                         <View style={styles.iconInnerBorder}>
                                           <Image 
@@ -1615,6 +1866,22 @@ function BuildsPage({ onGodIconPress }) {
                                     </View>
                                   </View>
                                 )}
+                                {/* Patch indicator badge for final items */}
+                                {meta && meta.latestPatchChange && (
+                                  <PatchBadgeTooltip
+                                    changeType={meta.latestPatchChange.type}
+                                    version={meta.latestPatchChange.version || 'latest'}
+                                    entityType="item"
+                                    badgeStyle={[styles.patchBadge, styles.patchBadgeSmall, styles[`patchBadge${meta.latestPatchChange.type.charAt(0).toUpperCase() + meta.latestPatchChange.type.slice(1)}`]]}
+                                    textStyle={styles.patchBadgeText}
+                                    overlayStyle={styles.tooltipOverlay}
+                                    contentStyle={styles.tooltipContent}
+                                    tooltipTextStyle={styles.tooltipText}
+                                    closeButtonStyle={styles.tooltipCloseButton}
+                                    closeTextStyle={styles.tooltipCloseText}
+                                  />
+                                )}
+                                  </View>
                                 </TouchableOpacity>
                             );
                           })}
@@ -2265,6 +2532,13 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     flex: 1,
   },
+  pinButton: {
+    padding: 4,
+    borderRadius: 4,
+  },
+  pinButtonText: {
+    fontSize: 18,
+  },
   expandIndicator: {
     color: '#94a3b8',
     fontSize: 16,
@@ -2414,6 +2688,86 @@ const styles = StyleSheet.create({
     color: '#e6eef8', 
     fontWeight: '700', 
     fontSize: 24,
+  },
+  patchBadge: {
+    position: 'absolute',
+    top: -4,
+    right: -4,
+    minWidth: 24,
+    height: 24,
+    paddingHorizontal: 6,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#ffffff',
+  },
+  patchBadgeBuffed: {
+    backgroundColor: '#22c55e',
+  },
+  patchBadgeNerfed: {
+    backgroundColor: '#ef4444',
+  },
+  patchBadgeShifted: {
+    backgroundColor: '#fbbf24',
+  },
+  patchBadgeNew: {
+    backgroundColor: '#8b5cf6',
+  },
+  patchBadgeText: {
+    fontSize: 8,
+    fontWeight: '700',
+    color: '#ffffff',
+  },
+  patchBadgeSmall: {
+    minWidth: 18,
+    height: 18,
+    borderRadius: 9,
+    borderWidth: 1.5,
+    paddingHorizontal: 3,
+  },
+  tooltipOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tooltipContent: {
+    backgroundColor: '#0b1226',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    paddingRight: 40,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    maxWidth: 300,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+    position: 'relative',
+  },
+  tooltipText: {
+    color: '#e6eef8',
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  tooltipCloseButton: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#1e3a5f',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tooltipCloseText: {
+    color: '#e6eef8',
+    fontSize: 16,
+    fontWeight: '700',
   },
   expand: { marginTop: 10, backgroundColor: '#061028', padding: 12, borderRadius: 8 },
   expandTitle: { color: '#e6eef8', fontWeight: '800', marginBottom: 12, fontSize: 16 },
@@ -2875,10 +3229,18 @@ const styles = StyleSheet.create({
 
 // Main App Component with Navigation
 export default function App() {
+  // Use responsive screen dimensions
+  const screenDimensions = useScreenDimensions();
+  
   const [currentPage, setCurrentPage] = useState('homepage');
   const [godFromBuilds, setGodFromBuilds] = useState(null);
   const [expandAbilities, setExpandAbilities] = useState(false);
   const [dataPageKey, setDataPageKey] = useState(0);
+  // Sub-navigation states
+  const [databaseSubTab, setDatabaseSubTab] = useState('gods'); // 'gods', 'items', 'gamemodes', 'mechanics'
+  const [buildsSubTab, setBuildsSubTab] = useState('community'); // 'community', 'guides', 'custom', 'mybuilds'
+  const [patchHubSubTab, setPatchHubSubTab] = useState('simple'); // 'simple', 'catchup', 'archive'
+  const [moreSubTab, setMoreSubTab] = useState('minigames'); // 'minigames', 'profile', 'tools'
 
   // Hide scrollbars on web
   useEffect(() => {
@@ -2904,57 +3266,57 @@ export default function App() {
 
   // Disable browser inspection on web
   useEffect(() => {
-    if (Platform.OS === 'web') {
+    if (IS_WEB && typeof document !== 'undefined' && typeof window !== 'undefined') {
       // Disable right-click context menu
       const handleContextMenu = (e) => {
         e.preventDefault();
         return false;
       };
 
-      // Disable keyboard shortcuts for dev tools
+      // Disable keyboard shortcuts for dev tools (using modern key property)
       const handleKeyDown = (e) => {
         // Disable F12
-        if (e.keyCode === 123) {
+        if (e.key === 'F12' || e.keyCode === 123) {
           e.preventDefault();
           return false;
         }
         // Disable Ctrl+Shift+I (Chrome DevTools)
-        if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.keyCode === 73)) {
           e.preventDefault();
           return false;
-        }
+        } 
         // Disable Ctrl+Shift+J (Chrome Console)
-        if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'J' || e.key === 'j' || e.keyCode === 74)) {
           e.preventDefault();
-          return false;
+          return false; 
         }
         // Disable Ctrl+Shift+C (Chrome Element Inspector)
-        if (e.ctrlKey && e.shiftKey && e.keyCode === 67) {
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'C' || e.key === 'c' || e.keyCode === 67)) {
           e.preventDefault();
           return false;
         }
         // Disable Ctrl+U (View Source)
-        if (e.ctrlKey && e.keyCode === 85) {
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'U' || e.key === 'u' || e.keyCode === 85)) {
           e.preventDefault();
           return false;
         }
         // Disable Ctrl+S (Save Page)
-        if (e.ctrlKey && e.keyCode === 83) {
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'S' || e.key === 's' || e.keyCode === 83) && !e.shiftKey) {
           e.preventDefault();
           return false;
         }
         // Disable Ctrl+P (Print)
-        if (e.ctrlKey && e.keyCode === 80) {
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'P' || e.key === 'p' || e.keyCode === 80)) {
           e.preventDefault();
           return false;
         }
         // Disable Ctrl+Shift+K (Firefox Console)
-        if (e.ctrlKey && e.shiftKey && e.keyCode === 75) {
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'K' || e.key === 'k' || e.keyCode === 75)) {
           e.preventDefault();
           return false;
         }
         // Disable Ctrl+Shift+E (Firefox Network Monitor)
-        if (e.ctrlKey && e.shiftKey && e.keyCode === 69) {
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'E' || e.key === 'e' || e.keyCode === 69)) {
           e.preventDefault();
           return false;
         }
@@ -2987,17 +3349,17 @@ export default function App() {
       // Disable paste
       const handlePaste = (e) => {
         e.preventDefault();
-          return false;
+        return false;
       };
 
-      // Add event listeners
-      document.addEventListener('contextmenu', handleContextMenu);
-      document.addEventListener('keydown', handleKeyDown);
-      document.addEventListener('selectstart', handleSelectStart);
-      document.addEventListener('dragstart', handleDragStart);
-      document.addEventListener('copy', handleCopy);
-      document.addEventListener('cut', handleCut);
-      document.addEventListener('paste', handlePaste);
+      // Add event listeners with capture phase for better blocking
+      document.addEventListener('contextmenu', handleContextMenu, { capture: true, passive: false });
+      document.addEventListener('keydown', handleKeyDown, { capture: true, passive: false });
+      document.addEventListener('selectstart', handleSelectStart, { capture: true, passive: false });
+      document.addEventListener('dragstart', handleDragStart, { capture: true, passive: false });
+      document.addEventListener('copy', handleCopy, { capture: true, passive: false });
+      document.addEventListener('cut', handleCut, { capture: true, passive: false });
+      document.addEventListener('paste', handlePaste, { capture: true, passive: false });
 
       // Disable dev tools detection
       let devtools = { open: false };
@@ -3005,8 +3367,6 @@ export default function App() {
       Object.defineProperty(element, 'id', {
         get: function() {
           devtools.open = true;
-          // Optionally redirect or show warning
-          // window.location.href = 'about:blank';
         }
       });
 
@@ -3016,8 +3376,8 @@ export default function App() {
         console.log(element);
         console.clear();
         if (devtools.open) {
-          // Dev tools detected - you can add custom handling here
-          // For example: window.location.href = 'about:blank';
+          // Dev tools detected
+          console.clear();
         }
       }, 1000);
 
@@ -3038,19 +3398,21 @@ export default function App() {
 
       // Cleanup function
       return () => {
-        document.removeEventListener('contextmenu', handleContextMenu);
-        document.removeEventListener('keydown', handleKeyDown);
-        document.removeEventListener('selectstart', handleSelectStart);
-        document.removeEventListener('dragstart', handleDragStart);
-        document.removeEventListener('copy', handleCopy);
-        document.removeEventListener('cut', handleCut);
-        document.removeEventListener('paste', handlePaste);
+        document.removeEventListener('contextmenu', handleContextMenu, { capture: true });
+        document.removeEventListener('keydown', handleKeyDown, { capture: true });
+        document.removeEventListener('selectstart', handleSelectStart, { capture: true });
+        document.removeEventListener('dragstart', handleDragStart, { capture: true });
+        document.removeEventListener('copy', handleCopy, { capture: true });
+        document.removeEventListener('cut', handleCut, { capture: true });
+        document.removeEventListener('paste', handlePaste, { capture: true });
         clearInterval(checkDevTools);
         // Restore console
         Object.assign(console, originalConsole);
       };
     }
   }, []);
+
+  
 
   return (
     <View style={navStyles.outerContainer}>
@@ -3062,14 +3424,6 @@ export default function App() {
         <View style={navStyles.container}>
           <View style={navStyles.navBar}>
         <TouchableOpacity
-          style={[navStyles.navButton, currentPage === 'playerprofiles' && navStyles.navButtonActive]}
-          onPress={() => setCurrentPage('playerprofiles')}
-        >
-          <Text style={[navStyles.navButtonText, currentPage === 'playerprofiles' && navStyles.navButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit>
-            Player Profiles
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
           style={[navStyles.navButton, currentPage === 'data' && navStyles.navButtonActive]}
           onPress={() => {
             setCurrentPage('data');
@@ -3080,15 +3434,7 @@ export default function App() {
           }}
         >
           <Text style={[navStyles.navButtonText, currentPage === 'data' && navStyles.navButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit>
-            Database
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[navStyles.navButton, currentPage === 'homepage' && navStyles.navButtonActive]}
-          onPress={() => setCurrentPage('homepage')}
-        >
-          <Text style={[navStyles.navButtonText, currentPage === 'homepage' && navStyles.navButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit>
-            Home
+            📚 Database
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -3096,59 +3442,318 @@ export default function App() {
           onPress={() => setCurrentPage('builds')}
         >
           <Text style={[navStyles.navButtonText, currentPage === 'builds' && navStyles.navButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit>
-Builds
+            🛠️ Builds
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[navStyles.navButton, currentPage === 'custombuild' && navStyles.navButtonActive]}
-          onPress={() => setCurrentPage('custombuild')}
+          style={[navStyles.navButton, currentPage === 'homepage' && navStyles.navButtonActive]}
+          onPress={() => setCurrentPage('homepage')}
         >
-          <Text style={[navStyles.navButtonText, currentPage === 'custombuild' && navStyles.navButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit>
-            Custom Build
+          <Text style={[navStyles.navButtonText, currentPage === 'homepage' && navStyles.navButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit>
+            🏠 Home
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[navStyles.navButton, currentPage === 'patchhub' && navStyles.navButtonActive]}
+          onPress={() => setCurrentPage('patchhub')}
+        >
+          <Text style={[navStyles.navButtonText, currentPage === 'patchhub' && navStyles.navButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit>
+            📰 Patch Hub
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[navStyles.navButton, currentPage === 'more' && navStyles.navButtonActive]}
+          onPress={() => setCurrentPage('more')}
+        >
+          <Text style={[navStyles.navButtonText, currentPage === 'more' && navStyles.navButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit>
+            🎮 More
           </Text>
         </TouchableOpacity>
       </View>
       
-      {/* Keep BuildsPage always mounted to preserve state, but hide when not active */}
-      <View style={currentPage === 'builds' ? navStyles.pageVisible : navStyles.pageHidden} pointerEvents={currentPage === 'builds' ? 'auto' : 'none'}>
-        <BuildsPage 
-          key="builds-page" 
-          onGodIconPress={(god, shouldExpandAbilities = false) => { 
-            setGodFromBuilds(god); 
-            setExpandAbilities(shouldExpandAbilities);
-            setCurrentPage('data');
-            setDataPageKey(prev => prev + 1);
-          }} 
-        />
-      </View>
-      
-      {/* Render other pages conditionally with lazy loading */}
-      {currentPage === 'playerprofiles' && (
-        <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
-          <PlayerProfilesPage />
-        </Suspense>
+      {/* Sub-navigation bars */}
+      {currentPage === 'data' && (
+        <View style={navStyles.subNavBar}>
+          <TouchableOpacity
+            style={[navStyles.subNavButton, databaseSubTab === 'gods' && navStyles.subNavButtonActive]}
+            onPress={() => {
+              setCurrentPage('data');
+              setDatabaseSubTab('gods');
+            }}
+          >
+            <Text style={[navStyles.subNavButtonText, databaseSubTab === 'gods' && navStyles.subNavButtonTextActive]}>
+              Gods
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[navStyles.subNavButton, databaseSubTab === 'items' && navStyles.subNavButtonActive]}
+            onPress={() => {
+              setCurrentPage('data');
+              setDatabaseSubTab('items');
+            }}
+          >
+            <Text style={[navStyles.subNavButtonText, databaseSubTab === 'items' && navStyles.subNavButtonTextActive]}>
+              Items
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[navStyles.subNavButton, databaseSubTab === 'gamemodes' && navStyles.subNavButtonActive]}
+            onPress={() => {
+              setCurrentPage('data');
+              setDatabaseSubTab('gamemodes');
+            }}
+          >
+            <Text style={[navStyles.subNavButtonText, databaseSubTab === 'gamemodes' && navStyles.subNavButtonTextActive]}>
+              Game Modes
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[navStyles.subNavButton, databaseSubTab === 'mechanics' && navStyles.subNavButtonActive]}
+            onPress={() => {
+              setCurrentPage('data');
+              setDatabaseSubTab('mechanics');
+            }}
+          >
+            <Text style={[navStyles.subNavButtonText, databaseSubTab === 'mechanics' && navStyles.subNavButtonTextActive]}>
+              Mechanics
+            </Text>
+          </TouchableOpacity>
+        </View>
       )}
+      
+      {(currentPage === 'builds' || currentPage === 'custombuild') && (
+        <View style={navStyles.subNavBar}>
+          <TouchableOpacity
+            style={[navStyles.subNavButton, buildsSubTab === 'community' && navStyles.subNavButtonActive]}
+            onPress={() => {
+              setBuildsSubTab('community');
+              setCurrentPage('builds');
+            }}
+          >
+            <Text style={[navStyles.subNavButtonText, buildsSubTab === 'community' && navStyles.subNavButtonTextActive]}>
+              Community Builds
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[navStyles.subNavButton, buildsSubTab === 'guides' && navStyles.subNavButtonActive]}
+            onPress={() => {
+              setBuildsSubTab('guides');
+              setCurrentPage('builds');
+            }}
+          >
+            <Text style={[navStyles.subNavButtonText, buildsSubTab === 'guides' && navStyles.subNavButtonTextActive]}>
+              Guides
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[navStyles.subNavButton, (buildsSubTab === 'custom' || currentPage === 'custombuild') && navStyles.subNavButtonActive]}
+            onPress={() => {
+              setBuildsSubTab('custom');
+              setCurrentPage('custombuild');
+            }}
+          >
+            <Text style={[navStyles.subNavButtonText, (buildsSubTab === 'custom' || currentPage === 'custombuild') && navStyles.subNavButtonTextActive]}>
+              Custom Builder
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[navStyles.subNavButton, buildsSubTab === 'mybuilds' && navStyles.subNavButtonActive]}
+            onPress={() => {
+              setBuildsSubTab('mybuilds');
+              setCurrentPage('builds');
+            }}
+          >
+            <Text style={[navStyles.subNavButtonText, buildsSubTab === 'mybuilds' && navStyles.subNavButtonTextActive]}>
+              My Builds
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
+      
+      {currentPage === 'patchhub' && (
+        <View style={navStyles.subNavBar}>
+          <TouchableOpacity
+            style={[navStyles.subNavButton, patchHubSubTab === 'simple' && navStyles.subNavButtonActive]}
+            onPress={() => setPatchHubSubTab('simple')}
+          >
+            <Text style={[navStyles.subNavButtonText, patchHubSubTab === 'simple' && navStyles.subNavButtonTextActive]}>
+              Simple Summary
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[navStyles.subNavButton, patchHubSubTab === 'catchup' && navStyles.subNavButtonActive]}
+            onPress={() => setPatchHubSubTab('catchup')}
+          >
+            <Text style={[navStyles.subNavButtonText, patchHubSubTab === 'catchup' && navStyles.subNavButtonTextActive]}>
+              Catch Me Up
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[navStyles.subNavButton, patchHubSubTab === 'archive' && navStyles.subNavButtonActive]}
+            onPress={() => setPatchHubSubTab('archive')}
+          >
+            <Text style={[navStyles.subNavButtonText, patchHubSubTab === 'archive' && navStyles.subNavButtonTextActive]}>
+              Archive
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {currentPage === 'more' && (
+        <View style={navStyles.subNavBar}>
+          <TouchableOpacity
+            style={[navStyles.subNavButton, moreSubTab === 'minigames' && navStyles.subNavButtonActive]}
+            onPress={() => setMoreSubTab('minigames')}
+          >
+            <Text style={[navStyles.subNavButtonText, moreSubTab === 'minigames' && navStyles.subNavButtonTextActive]}>
+              Mini Games
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[navStyles.subNavButton, moreSubTab === 'profile' && navStyles.subNavButtonActive]}
+            onPress={() => setMoreSubTab('profile')}
+          >
+            <Text style={[navStyles.subNavButtonText, moreSubTab === 'profile' && navStyles.subNavButtonTextActive]}>
+              Profile
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[navStyles.subNavButton, moreSubTab === 'tools' && navStyles.subNavButtonActive]}
+            onPress={() => setMoreSubTab('tools')}
+          >
+            <Text style={[navStyles.subNavButtonText, moreSubTab === 'tools' && navStyles.subNavButtonTextActive]}>
+              Tools
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
+      
+      {/* Home page */}
       {currentPage === 'homepage' && (
         <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
-          <HomePage />
+          <HomePage 
+            setCurrentPage={setCurrentPage}
+            setPatchHubSubTab={setPatchHubSubTab}
+          />
         </Suspense>
       )}
-      {currentPage === 'custombuild' && (
-        <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
-          <CustomBuildPage />
-        </Suspense>
-      )}
+      
+      {/* Database page - show based on sub-tab */}
       {currentPage === 'data' && (
         <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
           <DataPage 
-            key={`data-page-${dataPageKey}`}
+            key="data-page"
             initialSelectedGod={godFromBuilds} 
             initialExpandAbilities={expandAbilities}
+            initialTab={databaseSubTab}
             onBackToBuilds={() => { 
               setGodFromBuilds(null); 
               setExpandAbilities(false);
               setCurrentPage('builds');
+              setBuildsSubTab('community');
             }} 
+          />
+        </Suspense>
+      )}
+      
+      {/* Builds pages - handle different sub-tabs */}
+      {currentPage === 'builds' && (buildsSubTab === 'community' || buildsSubTab === 'guides') && (
+        <View style={navStyles.pageVisible} pointerEvents={currentPage === 'builds' ? 'auto' : 'none'}>
+          <BuildsPage 
+            key={`builds-page-${buildsSubTab}`}
+            initialTab={buildsSubTab === 'guides' ? 'guides' : 'builds'}
+            hideInternalTabs={true}
+            onGodIconPress={(god, shouldExpandAbilities = false) => { 
+              setGodFromBuilds(god); 
+              setExpandAbilities(shouldExpandAbilities);
+              setCurrentPage('data');
+              setDatabaseSubTab('gods');
+              setDataPageKey(prev => prev + 1);
+            }} 
+          />
+        </View>
+      )}
+      
+      {currentPage === 'builds' && buildsSubTab === 'mybuilds' && (
+        <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
+          <MyBuildsPage />
+        </Suspense>
+      )}
+      
+      {/* Custom Build page */}
+      {(currentPage === 'custombuild' || (currentPage === 'builds' && buildsSubTab === 'custom')) && (
+        <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
+          <CustomBuildPage />
+        </Suspense>
+      )}
+      
+      {/* Patch Hub page */}
+      {currentPage === 'patchhub' && (
+        <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
+          <PatchHubPage subTab={patchHubSubTab} />
+        </Suspense>
+      )}
+      
+      {/* More page */}
+      {currentPage === 'more' && (
+        <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
+          <MorePage 
+            activeTab={moreSubTab}
+            onNavigateToBuilds={(godInternalName) => {
+              // Navigate to builds page
+              setCurrentPage('builds');
+              setBuildsSubTab('community');
+              
+              // If a god is specified, try to find and set it
+              if (godInternalName) {
+                try {
+                  const buildsData = require('./data/builds.json');
+                  if (buildsData && buildsData.gods) {
+                    function flattenAny(a) {
+                      if (!a) return [];
+                      if (!Array.isArray(a)) return [a];
+                      return a.flat(Infinity).filter(Boolean);
+                    }
+                    const allGods = flattenAny(buildsData.gods);
+                    const god = allGods.find(g => (g.internalName || '').toLowerCase() === (godInternalName || '').toLowerCase());
+                    if (god) {
+                      setGodFromBuilds(god);
+                    }
+                  }
+                } catch (err) {
+                  // If require fails, just navigate without setting god
+                }
+              }
+            }}
+            onNavigateToGod={(godInternalName) => {
+              // Find the god and navigate to database gods page
+              if (godInternalName) {
+                try {
+                  const buildsData = require('./data/builds.json');
+                  if (buildsData && buildsData.gods) {
+                    function flattenAny(a) {
+                      if (!a) return [];
+                      if (!Array.isArray(a)) return [a];
+                      return a.flat(Infinity).filter(Boolean);
+                    }
+                    const allGods = flattenAny(buildsData.gods);
+                    const god = allGods.find(g => (g.internalName || '').toLowerCase() === (godInternalName || '').toLowerCase());
+                    if (god) {
+                      setGodFromBuilds(god);
+                      setCurrentPage('data');
+                      setDatabaseSubTab('gods');
+                    }
+                  }
+                } catch (err) {
+                  // If require fails, just navigate without setting god
+                  setCurrentPage('data');
+                  setDatabaseSubTab('gods');
+                }
+              } else {
+                setCurrentPage('data');
+                setDatabaseSubTab('gods');
+              }
+            }}
           />
         </Suspense>
       )}
@@ -3199,6 +3804,12 @@ const navStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#06202f',
     minWidth: 0,
+    ...(IS_WEB && {
+      cursor: 'pointer',
+      minHeight: 44,
+      transition: 'background-color 0.2s, border-color 0.2s',
+      userSelect: 'none',
+    }),
   },
   navButtonActive: {
     backgroundColor: '#0066cc',
@@ -3213,6 +3824,64 @@ const navStyles = StyleSheet.create({
   navButtonTextActive: {
     color: '#ffffff',
     fontWeight: '700',
+  },
+  subNavBar: {
+    flexDirection: 'row',
+    backgroundColor: '#0b1226',
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1e3a5f',
+    gap: 4,
+  },
+  subNavButton: {
+    flex: 1,
+    paddingVertical: 6,
+    paddingHorizontal: 4,
+    borderRadius: 6,
+    backgroundColor: '#031320',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#06202f',
+    minWidth: 0,
+    ...(IS_WEB && {
+      cursor: 'pointer',
+      minHeight: 40,
+      transition: 'background-color 0.2s, border-color 0.2s',
+      userSelect: 'none',
+    }),
+  },
+  subNavButtonActive: {
+    backgroundColor: '#1e90ff',
+    borderColor: '#1e90ff',
+  },
+  subNavButtonText: {
+    color: '#94a3b8',
+    fontSize: 10,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  subNavButtonTextActive: {
+    color: '#ffffff',
+    fontWeight: '700',
+  },
+  placeholderContainer: {
+    flex: 1,
+    padding: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  placeholderTitle: {
+    color: '#7dd3fc',
+    fontSize: 24,
+    fontWeight: '700',
+    marginBottom: 12,
+  },
+  placeholderText: {
+    color: '#cbd5e1',
+    fontSize: 16,
+    textAlign: 'center',
   },
   pageVisible: {
     flex: 1,
