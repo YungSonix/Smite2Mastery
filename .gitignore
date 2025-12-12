@@ -77,8 +77,10 @@ config/supabase.js
 
 # Image files to reduce repository size
 # Ignore large asset directories (contains thousands of game asset images)
-# But keep essential icons that are required by the code
+# These are loaded from GitHub CDN, so they don't need to be in the repo
 app/data/Icons/God Info/
+app/data/Icons/Wallpapers/
+app/data/Icons/Item Icons/
 
 # Keep essential icons that are required by the code
 # (Role Icons, Pantheon Icons, Stat Icons, Consumables, Vulcan Mods, Game Modes, Conquest Images are tracked)
