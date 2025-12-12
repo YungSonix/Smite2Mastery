@@ -1,0 +1,52 @@
+import { createClient } from '@supabase/supabase-js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Platform } from 'react-native';
+
+// Get Supabase credentials from environment variables
+// For Expo, use EXPO_PUBLIC_ prefix
+// You can set these in a .env file or in your build environment
+const SUPABASE_URL = process.env.EXPO_PUBLIC_SUPABASE_URL || '';
+const SUPABASE_ANON_KEY = process.env.EXPO_PUBLIC_SUPABASE_KEY || '';
+
+// Create a storage adapter that works on both web and native
+const storageAdapter = Platform.OS === 'web' 
+  ? {
+      getItem: async (key) => {
+        if (typeof window !== 'undefined' && window.localStorage) {
+          return window.localStorage.getItem(key);
+        }
+        return null;
+      },
+      setItem: async (key, value) => {
+        if (typeof window !== 'undefined' && window.localStorage) {
+          window.localStorage.setItem(key, value);
+        }
+      },
+      removeItem: async (key) => {
+        if (typeof window !== 'undefined' && window.localStorage) {
+          window.localStorage.removeItem(key);
+        }
+      },
+    }
+  : AsyncStorage;
+
+// Create Supabase client with storage adapter for session persistence
+// If credentials are missing, create a mock client that will fail gracefully
+export const supabase = (SUPABASE_URL && SUPABASE_ANON_KEY)
+  ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: {
+        storage: storageAdapter,
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: false,
+      },
+    })
+  : {
+      // Mock supabase client when credentials are missing
+      from: () => ({
+        select: () => ({ eq: () => ({ single: async () => ({ data: null, error: { code: 'MISSING_CONFIG' } }) }) }),
+        upsert: async () => ({ error: { code: 'MISSING_CONFIG' } }),
+      }),
+      rpc: async () => ({ error: { code: 'MISSING_CONFIG' } }),
+    };
+
