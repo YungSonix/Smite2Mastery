@@ -23,16 +23,18 @@ import { useScreenDimensions } from '../hooks/useScreenDimensions';
 // ============================================================================
 
 const APP_VERSION_CONFIG = {
-  currentVersion: '1.1.1', // Current app version
+  currentVersion: '2.0.0', // Current app version
   previousVersion: '1.1.0', // Previous version (for comparison)
   updateNotes: [
+    'Updated all pages.',
+    'Added new features and improvements.',
+    'New God builder page.',
+    'Custom Profiles page.',
     'Added scaling to god pages.',
-    'Gods slider now draggable.',
-    'Added new channels to Guides section',
-    'Updated home page.',
-    'Made improvements while in a god/item page.',
+    'Gods slider is now draggable.',
+    'Added new channels to Guides section.',
     'Improved Web performance.',
-    'Fixed some bugs.',
+    'Fixed some bugs and accessibility issues.',
   ], 
 };
 
