@@ -16,6 +16,7 @@ import {
 import * as Updates from 'expo-updates';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PrivacyPage from './privacy';
+import { useScreenDimensions } from '../hooks/useScreenDimensions';
 
 // ============================================================================
 // EASY CONFIGURATION - Just update these values when a new patch releases!
@@ -95,7 +96,9 @@ const APP_REVIEW_ENDPOINT = 'https://formspree.io/f/meoyzvyg'; // App Review For
 const MISSING_OUTDATED_ENDPOINT = 'https://formspree.io/f/xdkqlezy'; // Missing/Outdated Feature Report endpoint
 // ============================================================================
 
-export default function HomePage() {
+export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
+  // Use responsive screen dimensions
+  const screenDimensions = useScreenDimensions();
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [articles, setArticles] = useState([]);
   const [imageErrors, setImageErrors] = useState({});
@@ -1053,6 +1056,7 @@ export default function HomePage() {
               source={require('../assets/icon.png')}
               style={styles.appIcon}
               resizeMode="contain"
+              accessibilityLabel="SMITE 2 Mastery app icon"
             />
           </View>
           <Text style={styles.appHeaderTitle}>SMITE 2 Mastery</Text>
@@ -1061,7 +1065,7 @@ export default function HomePage() {
 
         {/* App Bio Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>About This App </Text>
+          <Text style={styles.sectionTitle}>About This App</Text>
           <Text style={styles.bioText}>
             Welcome to the SMITE 2 App! This app provides comprehensive information about all gods, abilities, items, gamemodes and so much more in SMITE 2.
           </Text>
@@ -1073,10 +1077,47 @@ export default function HomePage() {
           </Text>
         </View>
 
-        {/* Update Status Section */}
+        {/* Hero Banner with Latest Patch */}
+        <View style={styles.heroBanner}>
+          <Image
+            source={{ uri: NEWS_CONFIG.openBeta.image }}
+            style={styles.heroImage}
+            resizeMode="contain"
+            contentFit="contain"
+            onError={() => {
+              // Fallback if image fails
+            }}
+          />
+          <View style={styles.heroContent}>
+            <Text style={styles.heroTitle}>{NEWS_CONFIG.openBeta.title}</Text>
+            <Text style={styles.heroSubtitle}>Latest Patch - Open Beta {NEWS_CONFIG.openBeta.version}</Text>
+            <View style={styles.heroButtonsContainer}>
+              <TouchableOpacity
+                style={styles.heroButton}
+                onPress={() => {
+                  if (setCurrentPage) {
+                    setCurrentPage('patchhub');
+                  }
+                }}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.heroButtonText}>Read Patch Notes →</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.heroButton}
+                onPress={() => openArticleLink('https://www.smite2.com/news/')}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.heroButtonText}>Show Latest Smite 2 News →</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+
+        {/* More Info Section */}
         <View style={styles.section}>
           <View style={styles.expandableSectionHeader}>
-            <Text style={styles.sectionTitle}>App Updates</Text>
+            <Text style={styles.sectionTitle}>More Info</Text>
             <TouchableOpacity
               style={styles.expandableSectionToggle}
               onPress={() => setShowAppUpdates(!showAppUpdates)}
@@ -1090,6 +1131,8 @@ export default function HomePage() {
           
           {showAppUpdates && (
             <View style={styles.expandableSectionContent}>
+              {/* App Updates Subsection */}
+              <Text style={styles.subSectionTitle}>App Updates</Text>
           <View style={styles.updateStatusContainer}>
             <Text style={[styles.updateStatusText, { color: getUpdateStatusColor() }]}>
               {getUpdateStatusMessage()}
@@ -1175,120 +1218,9 @@ export default function HomePage() {
               )}
             </View>
           )}
-            </View>
-          )}
-        </View>
 
-        {/* Smite 2 News Section */}
-        <View style={styles.section}>
-          <View style={styles.expandableSectionHeader}>
-            <Text style={styles.sectionTitle}>SMITE 2 News</Text>
-            <TouchableOpacity
-              style={styles.expandableSectionToggle}
-              onPress={() => setShowNewsSection(!showNewsSection)}
-              activeOpacity={0.7}
-            >
-              <Text style={styles.expandableSectionToggleText}>
-                {showNewsSection ? '▼ Hide' : '▶ Show'}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          
-          {showNewsSection && (
-            <View style={styles.expandableSectionContent}>
-          <Text style={styles.newsDescription}>
-            Stay updated with the latest SMITE 2 news, patch notes, and updates directly from the official SMITE 2 website.
-          </Text>
-          
-          {loadingArticles ? (
-            <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color="#7dd3fc" />
-              <Text style={styles.loadingText}>Loading latest news...</Text>
-            </View>
-          ) : (
-            <>
-              {/* Latest Articles */}
-              <View style={styles.articlesContainer}>
-                {articles.map((article, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    style={styles.articleCard}
-                    onPress={() => openArticleLink(article.link)}
-                    activeOpacity={0.7}
-                  >
-                    {(() => {
-                      // Check if image is valid (not null, not 'null' string, and not errored)
-                      const hasValidImage = article.image && 
-                                           article.image !== 'null' && 
-                                           article.image !== null && 
-                                           !imageErrors[index];
-                      
-                      if (hasValidImage) {
-                        return (
-                          <Image
-                            source={{ uri: article.image }}
-                            style={styles.articleImage}
-                            resizeMode="cover"
-                            onError={(error) => {
-                              console.error(`Image load error for article ${index}:`, error);
-                              setImageErrors(prev => ({ ...prev, [index]: true }));
-                            }}
-                          />
-                        );
-                      }
-                      
-                      return (
-                        <View style={styles.articleImagePlaceholder}>
-                          <Text style={styles.articleImagePlaceholderText}>SMITE 2</Text>
-                        </View>
-                      );
-                    })()}
-                    <View style={styles.articleContent}>
-                      <Text style={styles.articleDate}>{article.date}</Text>
-                      <Text style={styles.articleTitle}>{article.title}</Text>
-                      <Text style={styles.articleSnippet} numberOfLines={3}>
-                        {article.snippet}
-                      </Text>
-                      <Text style={styles.readMore}>Read More →</Text>
-                    </View>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </>
-          )}
-
-          {/* View Full News Page */}
-          <View style={styles.fullNewsContainer}>
-            <Text style={styles.webViewTitle}>View Full News Page</Text>
-            <TouchableOpacity
-              style={styles.fullNewsButton}
-              onPress={() => openArticleLink('https://www.smite2.com/news')}
-              activeOpacity={0.7}
-            >
-              <Text style={styles.fullNewsButtonText}>Open News Page in Browser</Text>
-            </TouchableOpacity>
-          </View>
-            </View>
-          )}
-        </View>
-
-        {/* Privacy & Security Section */}
-        <View style={styles.section}>
-          <View style={styles.expandableSectionHeader}>
-            <Text style={styles.sectionTitle}>Privacy & Security</Text>
-            <TouchableOpacity
-              style={styles.expandableSectionToggle}
-              onPress={() => setShowPrivacySection(!showPrivacySection)}
-              activeOpacity={0.7}
-            >
-              <Text style={styles.expandableSectionToggleText}>
-                {showPrivacySection ? '▼ Hide' : '▶ Show'}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          
-          {showPrivacySection && (
-            <View style={styles.expandableSectionContent}>
+              {/* Privacy & Security Subsection */}
+              <Text style={styles.subSectionTitle}>Privacy & Security</Text>
           <Text style={styles.bioText}>
             Your privacy is important to us. This app does not collect or store any personal information. 
             All data remains on your device.
@@ -1300,29 +1232,12 @@ export default function HomePage() {
           >
             <Text style={styles.privacyButtonText}>View Privacy & Security Policy</Text>
           </TouchableOpacity>
-            </View>
-          )}
-        </View>
 
-        {/* Feedback & Reports Section - Expandable */}
-        <View style={styles.section}>
-          <View style={styles.feedbackSectionHeader}>
-            <Text style={styles.sectionTitle}>Feedback & Reports</Text>
-            <TouchableOpacity
-              style={styles.feedbackSectionToggle}
-              onPress={() => setShowFeedbackSection(!showFeedbackSection)}
-              activeOpacity={0.7}
-            >
-              <Text style={styles.feedbackSectionToggleText}>
-                {showFeedbackSection ? '▼ Hide' : '▶ Show'}
-              </Text>
-            </TouchableOpacity>
-          </View>
+              {/* Feedback & Reports Subsection */}
+              <Text style={styles.subSectionTitle}>Feedback & Reports</Text>
           <Text style={styles.bioText}>
             Share your feedback, report issues, or suggest improvements. Your input helps us make the app better!
           </Text>
-          
-          {showFeedbackSection && (
             <View style={styles.feedbackSectionContent}>
               {/* App Feedback - Green */}
               <TouchableOpacity
@@ -1353,6 +1268,7 @@ export default function HomePage() {
                 <Text style={styles.bugReportButtonIcon}>🐛</Text>
                 <Text style={styles.bugReportButtonText}>Report a Bug</Text>
               </TouchableOpacity>
+              </View>
             </View>
           )}
         </View>
@@ -1449,6 +1365,13 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: '#1e3a5f',
+  },
+  subSectionTitle: {
+    color: '#7dd3fc',
+    fontSize: 20,
+    fontWeight: '700',
+    marginTop: 16,
+    marginBottom: 12,
   },
   sectionTitle: {
     color: '#7dd3fc',
@@ -1861,6 +1784,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#0f1724',
     borderWidth: 1,
     borderColor: '#1e3a5f',
+    ...(Platform.OS === 'web' && {
+      cursor: 'pointer',
+      minHeight: 36,
+      transition: 'background-color 0.2s',
+      userSelect: 'none',
+    }),
   },
   expandableSectionToggleText: {
     color: '#7dd3fc',
@@ -2500,6 +2429,122 @@ const styles = StyleSheet.create({
   },
   missingOutdatedButtonDisabled: {
     opacity: 0.6,
+  },
+  // Hero Banner Styles
+  heroBanner: {
+    marginBottom: 32,
+    borderRadius: 12,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    backgroundColor: 'transparent',
+  },
+  heroImage: {
+    width: '100%',
+    ...(Platform.OS === 'web' ? {
+      height: 400,
+      minHeight: 400,
+    } : {
+      height: 300,
+      minHeight: 300,
+    }),
+    backgroundColor: 'transparent',
+  },
+  heroContent: {
+    backgroundColor: '#071024',
+    padding: Platform.OS === 'web' ? 24 : 20,
+    borderTopWidth: 2,
+    borderTopColor: '#1e90ff',
+  },
+  heroTitle: {
+    color: '#7dd3fc',
+    fontSize: Platform.OS === 'web' ? 28 : 24,
+    fontWeight: '700',
+    marginBottom: 8,
+  },
+  heroSubtitle: {
+    color: '#cbd5e1',
+    fontSize: Platform.OS === 'web' ? 18 : 16,
+    marginBottom: 20,
+  },
+  heroButtonsContainer: {
+    flexDirection: 'row',
+    gap: 12,
+    flexWrap: 'wrap',
+  },
+  heroButton: {
+    backgroundColor: '#1e90ff',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    alignSelf: 'flex-start',
+    borderWidth: 1,
+    borderColor: '#1e90ff',
+    ...(Platform.OS === 'web' && {
+      cursor: 'pointer',
+      minHeight: 44,
+      transition: 'background-color 0.2s, transform 0.1s',
+      userSelect: 'none',
+      ':hover': {
+        backgroundColor: '#0066cc',
+        transform: 'scale(1.02)',
+      },
+      ':active': {
+        transform: 'scale(0.98)',
+      },
+    }),
+  },
+  heroButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  // Quick Links Styles
+  quickLinksContainer: {
+    flexDirection: 'row',
+    gap: 12,
+    flexWrap: 'wrap',
+  },
+  quickLinkCard: {
+    flex: 1,
+    minWidth: '30%',
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    padding: 16,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  quickLinkIcon: {
+    fontSize: 32,
+    marginBottom: 8,
+  },
+  quickLinkText: {
+    color: '#e6eef8',
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  // Catch Me Up Button
+  catchMeUpButton: {
+    backgroundColor: '#1e90ff',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    ...(Platform.OS === 'web' && {
+      cursor: 'pointer',
+      minHeight: 48,
+      transition: 'background-color 0.2s',
+      userSelect: 'none',
+    }),
+    marginTop: 12,
+    borderWidth: 1,
+    borderColor: '#1e90ff',
+  },
+  catchMeUpButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
   },
 });
 

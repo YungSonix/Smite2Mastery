@@ -1,0 +1,667 @@
+{
+  "patchName": "Open Beta 24 - The Bear Goddess Update",
+  "summary": "Artio added with Druid/Bear stances. New Traveler pages released. Conquest, Assault, and Joust got small mode tweaks. Several gods buffed and several gods nerfed.",
+  "gods": [
+    {
+      "type": "god",
+      "name": "Sol",
+      "changeType": "fix",
+      "changes": [
+        {
+          "section": "General",
+          "description": "Fixed an issue where towers would continue to shoot her while she was immune."
+        }
+      ]
+    },
+    {
+      "type": "god",
+      "name": "Aladdin",
+      "changeType": "buff",
+      "changes": [
+        {
+          "section": "Passive",
+          "abilityName": "Genie's Lamp",
+          "abilityNumber": "(P)",
+          "description": [
+            "Decreased Stats from Items Base: 1% -> 0%",
+            "Increased Stats from Items Per Level: 0.4% -> 0.6%",
+            "Level 1: 1.4% -> 0.6%",
+            "Level 20: 9% -> 12%",
+            "Helps later in the game when holding a wish."
+          ]
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Agile Run",
+          "abilityNumber": "(3)",
+          "description": [
+            "Increased Base Damage: 60/105/150/195/240 -> 60/115/170/225/280",
+            "Increased Genie Damage: 20/30/40/50/60 -> 35/50/65/80/95",
+            "Increased Genie Strength Scaling: 25% -> 40%",
+            "Increased Genie Intelligence Scaling: 15% -> 20%"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "god",
+      "name": "Bellona",
+      "changeType": "nerf",
+      "changes": [
+        {
+          "section": "Ability",
+          "abilityName": "Scourge",
+          "abilityNumber": "(1)",
+          "description": [
+            "Decreased Heal: 10 -> 6/7/8/9/10"
+          ]
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Eagle's Rally",
+          "abilityNumber": "(4)",
+          "description": [
+            "Decreased Protection Scaling: 10% -> 7.5%",
+            "Decreased Strength: 16/24/32/40/48 -> 8/16/24/32/40",
+            "Decreased Intelligence: 30/38/46/54/62 -> 22/30/38/46/54",
+            "Decreased Physical Protection: 15/20/25/30/35 -> 10/15/20/25/30",
+            "Decreased Magical Protection: 15/20/25/30/35 -> 10/15/20/25/30"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "god",
+      "name": "Cerberus",
+      "changeType": "buff",
+      "changes": [
+        {
+          "section": "Ability",
+          "abilityName": "Paralyzing Spit",
+          "abilityNumber": "(1)",
+          "description": [
+            "Increased Base Damage: 50/75/100/125/150 -> 65/90/115/140/165"
+          ]
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Soul Expulsion",
+          "abilityNumber": "(3)",
+          "description": [
+            "Decreased Soul Health: 50/75/100/125/150 -> 50/60/70/80/90",
+            "Removed Soul Health Regen",
+            "Decreased Cooldown: 16s -> 14s"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "god",
+      "name": "Da Ji",
+      "changeType": "nerf",
+      "changes": [
+        {
+          "section": "Passive",
+          "abilityName": "Torture Blades",
+          "abilityNumber": "(P)",
+          "description": [
+            "Decreased Strength Scaling: 7% -> 5%"
+          ]
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Horrible Burns",
+          "abilityNumber": "(1)",
+          "description": [
+            "Decreased Bonus Damage Scaling: 3% -> 2%"
+          ]
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Aspect of Ferocity – Horrible Burns",
+          "abilityNumber": "(1)",
+          "description": [
+            "Decreased Lifesteal: 20% -> 15%"
+          ]
+        },
+        {
+          "section": "Ability",
+          "abilityName": "One Thousand Cuts",
+          "abilityNumber": "(2)",
+          "description": [
+            "Increased Cooldown: 11/10/9/8/7s -> 11s"
+          ]
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Trickster Spirit",
+          "abilityNumber": "(3)",
+          "description": [
+            "Decreased Attack Speed: 30/35/45/45/50% -> 20/25/30/35/40%"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "god",
+      "name": "Eset",
+      "changeType": "nerf",
+      "changes": [
+        {
+          "section": "Passive",
+          "abilityName": "Funeral Rites",
+          "abilityNumber": "(P)",
+          "description": [
+            "Decreased Bonus Damage Scaling: 10% -> 7.5%"
+          ]
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Dispel Magic",
+          "abilityNumber": "(3)",
+          "description": [
+            "Increased Cooldown: 14s -> 16/15.5/15/14.5/14s"
+          ]
+        },
+        {
+          "section": "Passive",
+          "abilityName": "Aspect of the Lifewarden – Funeral Rites",
+          "abilityNumber": "(P)",
+          "description": [
+            "Decreased Bonus Damage Scaling: 8% -> 7.5%"
+          ]
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Wing Gust",
+          "abilityNumber": "(2)",
+          "description": [
+            "Decreased Base Heal: 15/20/25/30/35 -> 12/16/20/24/28",
+            "Decreased Heal Protection Scaling: 8% -> 6%"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "god",
+      "name": "Hades",
+      "changeType": "buff",
+      "changes": [
+        {
+          "section": "General",
+          "description": [
+            "Increased Base Health: 525 -> 546",
+            "Increased Health Per Level: 92.6 -> 101.4",
+            "Level 20 Health: 2377.5 -> 2574"
+          ]
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Death From Below",
+          "abilityNumber": "(1)",
+          "description": [
+            "Increased Intelligence Scaling: 75% -> 85%"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "god",
+      "name": "Hun Batz",
+      "changeType": "nerf",
+      "changes": [
+        {
+          "section": "Passive",
+          "abilityName": "Infused Strikes",
+          "abilityNumber": "(P)",
+          "description": [
+            "Decreased Strength Per Stack: 3 + 0.25 Per Level -> 2 + 0.2 Per Level"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "god",
+      "name": "Jormungandr",
+      "changeType": "shift",
+      "changes": [
+        {
+          "section": "General",
+          "description": [
+            "Decreased base Inhand Power: 24 -> 20"
+          ]
+        },
+        {
+          "section": "Passive",
+          "abilityName": "Immovable",
+          "abilityNumber": "(P)",
+          "description": [
+            "Decreased Max Health Scaling: 8% -> 6%"
+          ]
+        },
+        {
+          "section": "Ability",
+          "abilityName": "The World Serpent",
+          "abilityNumber": "(4)",
+          "description": [
+            "New: Each enemy god hit provides stacking 10/12/14/16/18 omni-protections, up to 4 stacks for 6s."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "god",
+      "name": "Kali",
+      "changeType": "buff",
+      "changes": [
+        {
+          "section": "Ability",
+          "abilityName": "Nimble Strike",
+          "abilityNumber": "(1)",
+          "description": [
+            "Increased Base Damage: 65/115/165/215/265 -> 70/125/180/235/290"
+          ]
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Lash",
+          "abilityNumber": "(2)",
+          "description": [
+            "Increased Bleed Damage: 5/10/15/20/25 -> 10/15/20/25/30"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "god",
+      "name": "Mercury",
+      "changeType": "nerf",
+      "changes": [
+        {
+          "section": "Ability",
+          "abilityName": "Special Delivery",
+          "abilityNumber": "(3)",
+          "description": [
+            "Now throws after a minimum of 0.133s; cancel attempts before that still throw at 0.133s."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "god",
+      "name": "Medusa",
+      "changeType": "buff",
+      "changes": [
+        {
+          "section": "Ability",
+          "abilityName": "Petrify",
+          "abilityNumber": "(4)",
+          "description": [
+            "Decreased Cooldown: 110s -> 90s"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "god",
+      "name": "Mulan",
+      "changeType": "fix/buff",
+      "changes": [
+        {
+          "section": "Ability",
+          "abilityName": "Grapple",
+          "abilityNumber": "(2)",
+          "description": [
+            "Fixed projectile speed parity issue",
+            "Time to max range reduced: 0.48s -> 0.3s",
+            "Hit timing now feels more in sync"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "god",
+      "name": "Osiris",
+      "changeType": "nerf",
+      "changes": [
+        {
+          "section": "Ability",
+          "abilityName": "Aspect of the Fragmented – Sickle Strike",
+          "abilityNumber": "(1)",
+          "description": [
+            "Decreased Protection from Item Scaling: 15% -> 0%"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "god",
+      "name": "Pele",
+      "changeType": "buff",
+      "changes": [
+        {
+          "section": "Ability",
+          "abilityName": "Pyroclast",
+          "abilityNumber": "(1)",
+          "description": [
+            "Increased Fuel Regained: 5 -> 10",
+            "Increased Initial Damage Strength Scaling: 55% -> 60%"
+          ]
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Eruption",
+          "abilityNumber": "(2)",
+          "description": [
+            "Increased Inner Ring Strength Scaling: 60% -> 65%",
+            "Increased Outer Ring Strength Scaling: 40% -> 45%"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "god",
+      "name": "Princess Bari",
+      "changeType": "buff",
+      "changes": [
+        {
+          "section": "Passive",
+          "abilityName": "Mystic Surge",
+          "abilityNumber": "(P)",
+          "description": [
+            "Increased Strength: 7/14/21/28/35/49 -> 10/18/26/34/42/60",
+            "Increased Intelligence: 15/30/45/60/75/90 -> 15/30/45/60/75/105"
+          ]
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Warding Gust",
+          "abilityNumber": "(2)",
+          "description": [
+            "Increased Intelligence Scaling: 60% -> 80%"
+          ]
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Reverent Steps",
+          "abilityNumber": "(3)",
+          "description": [
+            "Decreased Strength Scaling: 75% -> 45%",
+            "Increased Intelligence Scaling: 55% -> 70%"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "god",
+      "name": "Ra",
+      "changeType": "shift",
+      "changes": [
+        {
+          "section": "Ability",
+          "abilityName": "Divine Light",
+          "abilityNumber": "(2)",
+          "description": [
+            "Solar Rays can now proc item effects again",
+            "Decreased Item Proc Strength: 100% -> 50%"
+          ]
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Solar Blessing",
+          "abilityNumber": "(3)",
+          "description": [
+            "Decreased Heal: 10/19/28/37/46 -> 10/17/24/31/38",
+            "Increased Intelligence Scaling Per Tick: 30% -> 35%"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "god",
+      "name": "Xbalanque",
+      "changeType": "nerf",
+      "changes": [
+        {
+          "section": "Ability",
+          "abilityName": "Branching Bola",
+          "abilityNumber": "(1)",
+          "description": [
+            "Decreased Damage: 10/20/30/40/50 -> 10/15/20/25/30",
+            "Decreased Split Projectile Range: 4.8m -> 3.5m"
+          ]
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Darkest of Nights",
+          "abilityNumber": "(4)",
+          "description": [
+            "Decreased Attack Speed: 20/28/36/44/52% -> 20/25/30/35/40%",
+            "Decreased Movement Speed: 20/30/40/50/60% -> 20/25/30/35/40%"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "god",
+      "name": "Artio",
+      "changeType": "new",
+      "changes": [
+        {
+          "section": "General",
+          "description": [
+            "Ranged Basic Attacks in Druid Stance",
+            "Melee Basic Attacks in Bear Stance",
+            "Damage Type: Magical",
+            "Scaling Type: Intelligence & Strength Scaling"
+          ]
+        },
+        {
+          "section": "Passive",
+          "abilityName": "Decompose",
+          "abilityNumber": "(P)",
+          "description": [
+            "When Artio hits enemy Gods with damaging abilities, the target will begin to decompose, decreasing physical and magical protections and reducing their healing."
+          ]
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Energy Surge / Maul Prey",
+          "abilityNumber": "(1)",
+          "description": [
+            "Druid: Artio pulses out a strong wave of energy dealing Magical damage to enemies. She will heal herself and allies around each enemy god hit by this ability.",
+            "Bear: Artio swipes twice in front of her with her claws, dealing magical damage to enemies with each swipe."
+          ],
+          "stances": {
+            "Druid": "Artio pulses out a strong wave of energy dealing Magical damage to enemies. She will heal herself and allies around each enemy god hit by this ability.",
+            "Bear": "Artio swipes twice in front of her with her claws, dealing magical damage to enemies with each swipe."
+          }
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Entangling Vines / Ferocious Roar",
+          "abilityNumber": "(2)",
+          "description": [
+            "Druid: Artio creates a thicket of vines around herself that cripples enemy Gods and reduces their magical or physical power.",
+            "Bear: Artio lets out a ferocious roar that stuns all nearby enemies and increases her physical and magical protections."
+          ],
+          "stances": {
+            "Druid": "Creates a thicket of vines around herself that cripples enemy Gods and reduces their magical or physical power.",
+            "Bear": "Lets out a ferocious roar that stuns all nearby enemies and increases her physical and magical protections."
+          }
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Life Tap / Heavy Charge",
+          "abilityNumber": "(3)",
+          "description": [
+            "Druid: Artio channels and drains life from enemies in a line. Enemies gain stacking slow; at 5 stacks they are rooted.",
+            "Bear: Artio charges forward with increased movement speed. Enemies hit take damage and are slowed."
+          ],
+          "stances": {
+            "Druid": "Channels and drains life from enemies in a line. Enemies gain stacking slow; at 5 stacks they are rooted.",
+            "Bear": "Charges forward with increased movement speed. Enemies hit take damage and are slowed."
+          }
+        },
+        {
+          "section": "Ability",
+          "abilityName": "Shapeshift",
+          "abilityNumber": "(4)",
+          "description": [
+            "Artio shifts between Druid and Bear stances. When she hits enemies with abilities, she gains stacks of Invigoration, granting movement speed and mana regeneration."
+          ]
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "type": "item",
+      "name": "Talisman of Purification",
+      "changeType": "fix",
+      "changes": [
+        {
+          "description": "Fixed issue where CC immunity failed while untargetable."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "name": "Leather Cowl",
+      "changeType": "buff",
+      "changes": [
+        {
+          "description": "Decreased Cost: 650 -> 600"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "name": "Hunter's Cowl",
+      "changeType": "buff",
+      "changes": [
+        {
+          "description": "Increased Strength: 45 -> 55"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "name": "Sharpshooter's Arrow",
+      "changeType": "nerf",
+      "changes": [
+        {
+          "description": "Increased Base Attack Power: 40 -> 50"
+        },
+        {
+          "description": "Decreased proc distance: 7.5m -> 6m"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "name": "Dagger of Frenzy",
+      "changeType": "nerf",
+      "changes": [
+        {
+          "description": "Increased Cost: 2400 -> 2500"
+        },
+        {
+          "description": "Decreased Attack Speed: 50% -> 30% + 1% per level"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "name": "Eye of Erebus",
+      "changeType": "buff",
+      "changes": [
+        {
+          "description": "Increased Slow Duration: 1.5s -> 2.5s"
+        },
+        {
+          "description": "Decreased Cooldown: 60s -> 40s"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "name": "Polynomicon",
+      "changeType": "nerf",
+      "changes": [
+        {
+          "description": "Internal cooldown of 2s added"
+        },
+        {
+          "description": "Increased Bonus Damage Intelligence Scaling: 60% -> 80%"
+        }
+      ]
+    }
+  ],
+  "gameModes": [
+    {
+      "type": "gameMode",
+      "name": "Conquest",
+      "changes": [
+        {
+          "category": "Base Teleporters",
+          "description": "Now automatically cancel the teleport if the Tower being teleported to is destroyed"
+        },
+        {
+          "category": "Pyromancer",
+          "description": "Removed the structure damage that gets dealt to the lowest Health enemy Tower when Pyromancer is slain"
+        },
+        {
+          "category": "Runic Bomb",
+          "description": [
+            "Can no longer be destroyed by Basic Attacks",
+            "Damage now bypasses Backdoor Protections"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "gameMode",
+      "name": "Assault",
+      "changes": [
+        {
+          "category": "Healer Tiers",
+          "description": "Adjusted Healer Tiers. We are adjusting these based on their potential top end healing as a god; as Aspects can create big disparities.",
+          "details": [
+            {
+              "tier": "Tier 1",
+              "description": "Healers with consistent and high team healing",
+              "gods": ["Guan Yu", "Ra", "Sylvanus"]
+            },
+            {
+              "tier": "Tier 2",
+              "description": "Healers with more limited or lower overall team healing",
+              "gods": ["Aphrodite", "Yemoja", "Baron Samedi"]
+            },
+            {
+              "tier": "Tier 3",
+              "description": "Healers with even more conditional and lower overall team healing",
+              "gods": ["Cupid", "Eset"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "gameMode",
+      "name": "Quickplay Joust",
+      "changes": [
+        {
+          "category": "Respawn Times",
+          "description": [
+            "Decreased Player Respawn Multiplier: 0.65 -> 0.55",
+            "Decreased Player Respawn Maximum: 30s -> 25s",
+            "Decreased Respawn Minimum: 7s -> 5s",
+            "Increased Respawn Duration Overtime Conversion: 60s -> 90s"
+          ]
+        }
+      ]
+    }
+  ]
+  
+}

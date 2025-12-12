@@ -1,0 +1,533 @@
+{
+    "patchName": "Open Beta 20 - Broken God of the Afterlife Update",
+    "summary": "Osiris ported to SMITE 2. Loki's Aspect of Concealment replaced with Aspect of Agony. Simultaneous Ranked Bans implemented (10 total bans). Titans no longer immune to crits. Multiple item nerfs and recipe reorganizations.",
+    "gods": [
+      {
+        "type": "god",
+        "name": "Osiris",
+        "changeType": "new",
+        "changes": [
+          {
+            "section": "General",
+            "description": [
+              "Melee Basic Attacks",
+              "Damage Type: Physical",
+              "Scaling Type: Strength, with Protection Scaling on some abilities"
+            ]
+          },
+          {
+            "section": "Passive",
+            "abilityName": "Fragmented",
+            "abilityNumber": "(P)",
+            "description": [
+              "Lose a Fragment of your body each time you use an ability, gaining 2% Damage Mitigation for each missing Fragment.",
+              "After Losing 8 fragments, become a spirit for 6 successful basic attacks: walk through enemies and enemy blockers, gain Attack Speed, and your basic attacks ignore movement speed penalty."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Sickle Strike",
+            "abilityNumber": "(1)",
+            "description": [
+              "Throw your Sickle, dealing Physical Damage and slowing the first god hit. It passes through minions."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Spirit Flail",
+            "abilityNumber": "(2)",
+            "description": [
+              "Strike the target area with your flail, dealing Physical Damage and granting movement speed.",
+              "Enemies affected by Sickle Strike have their slow increased in power and duration."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Judgement Tether",
+            "abilityNumber": "(3)",
+            "description": [
+              "Tether yourself to nearby enemy Gods. Tethered enemies have reduced attack speed and reduced damage for 4 seconds.",
+              "The tether breaks if targets move far enough away.",
+              "Targets still in range when the duration expires are stunned."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Lord of the Afterlife",
+            "abilityNumber": "(4)",
+            "description": [
+              "Leap to a target location, dealing physical damage and rooting enemies. Apply a negative cooldown reduction and healing prevention to enemy gods hit.",
+              "On Use: Immediately gain maximum Fragment Stacks"
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of the Fragmented",
+            "releaseDate": "October 10th",
+            "description": [
+              "Abilities now scale with intelligence only. Fragments are lost passively on casts and on ability god hits. Osiris gains % Damage dealt or Damage Mitigated based on how whole he is.",
+              "Sickle Strike has no cooldown and costs 4 Fragments.",
+              "Spirit Flail consumes Sickle Strike for bonus damage but no slow.",
+              "Lord of the Afterlife summons a slowing, damage-dealing specter. You no longer leap to location"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Loki",
+        "changeType": "rework",
+        "changes": [
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of Concealment",
+            "description": [
+              "Removed: This aspect has been removed from the game"
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of Agony",
+            "description": [
+              "NEW: Loki's previous Aspect was underperforming and failed to hit the mark of making him a viable Support or Solo. This new, replacement Aspect is intended to fill that niche",
+              "Vanish no longer grants Stealth; its attack now inflicts Blind instead of Bleed.",
+              "Agonizing Visions can be cast on allies, providing damage mitigation while slowing enemies.",
+              "Behind You now deals bonus damage scaling with your Health and Protections rather than its percentage increase.",
+              "Aspect Damage Mitigation: 15/17.5/20/22.5/25%",
+              "Aspect Backstab Health Scaling: 2%",
+              "Aspect Protection Scaling: 12%"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Ares",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "No Escape",
+            "abilityNumber": "(4)",
+            "description": [
+              "This ability no longer Cripples"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Fenrir",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Seething Howl",
+            "abilityNumber": "(2)",
+            "description": [
+              "Decreased Lifesteal: 12% -> 8/8.5/9/9.5/10%",
+              "Note: This ability description was incorrectly listed to be providing 20% Lifesteal"
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of Loyalty",
+            "abilityName": "Seething Howl",
+            "abilityNumber": "(2)",
+            "description": [
+              "Decreased Lifesteal: 12% -> 8/8.5/9/9.5/10%"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Hades",
+        "changeType": "fix",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Pillar Of Agony",
+            "abilityNumber": "(4)",
+            "description": [
+              "Fixed an issue where casting this ability would noticeably reduce FPS."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Hou Yi",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Divebomb",
+            "abilityNumber": "(3)",
+            "description": [
+              "Decreased Range: 8.8m -> 7.2m"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Nu Wa",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Mysterious Fog",
+            "abilityNumber": "(1)",
+            "description": [
+              "While Stealthed, Allies will now pass through other characters"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Princess Bari",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Sacred Bell",
+            "abilityNumber": "(1)",
+            "description": [
+              "Increased Lob Damage: 65/105/145/185/225 -> 70/115/160/205/250",
+              "Decreased Cooldown: 15/14.5/14/13.5/13s -> 13s",
+              "Fixed an issue where Mystic Surge was not increasing the Sacred Bell Roll Damage"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Sun Wukong",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Passive",
+            "abilityName": "Undefeated Body",
+            "abilityNumber": "(P)",
+            "description": [
+              "Decreased Protections Per Level: 2 -> 1.5",
+              "Decreased Strength and Intelligence Per Level: 1.5 -> 1"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Thanatos",
+        "changeType": "fix",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Hovering Death",
+            "abilityNumber": "(4)",
+            "description": [
+              "Fixed an issue where kills from this ability would not trigger his passive cooldown reduction, or reduction from items like Jotunn's Revenge."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Tsukuyomi",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Dark Moon Shuriken",
+            "abilityNumber": "(1)",
+            "description": [
+              "Decreased Damage: 80/130/180/230/280 -> 70/120/170/220/270",
+              "Decreased Strength Scaling: 90% -> 80%",
+              "Decreased Intelligence Scaling: 80% -> 70%"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Piercing Moonlight",
+            "abilityNumber": "(4)",
+            "description": [
+              "Increased Cooldown: 90s -> 100s"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "The Morrigan",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Deadly Aspects",
+            "abilityNumber": "(1)",
+            "description": [
+              "This ability no longer resets The Morrigan's Attack chain"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Confusion",
+            "abilityNumber": "(3)",
+            "description": [
+              "While Stealthed, The Morrigan will now pass through other characters"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Xbalanque",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Poison Darts",
+            "abilityNumber": "(2)",
+            "description": [
+              "Decreased Intelligence Scaling: 45% -> 40%",
+              "Decreased Strength Per Tick: 15% -> 10%",
+              "Decreased Intelligence Scaling Per Tick: 25% -> 20%"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Darkest of Nights",
+            "abilityNumber": "(4)",
+            "description": [
+              "Decreased Attack Speed: 20/30/40/50/60% -> 20/28/36/44/52%"
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of the Nightstalker",
+            "abilityName": "Darkest of Nights",
+            "abilityNumber": "(4)",
+            "description": [
+              "Decreased Ability Damage buff: 10/15/20/25/30% -> 10/13/16/19/22%"
+            ]
+          }
+        ]
+      }
+    ],
+    "items": [
+      {
+        "type": "item",
+        "name": "Lernaean Bow",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "description": "Decreased Damage: 50% -> 40%"
+          },
+          {
+            "description": "Increased Cooldown: 20s -> 30s"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Pendulum Blade",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "description": "Increased Cost: 2550g -> 2800g"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Polynomicon",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "description": "Decreased Intelligence Scaling: 65% -> 60%"
+          },
+          {
+            "description": "Increased Cost: 2400g -> 2550g"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Riptalon",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "description": "Decreased Attack Speed: 25% -> 20%"
+          },
+          {
+            "description": "Increased Recipe Cost: 900 -> 1100"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Sanguine Lash",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "description": "The Passive and Active Damage from this Item no longer provides Lifesteal"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Vital Amplifier",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "description": "Decreased Attack Speed per stack: 10% -> 7.5%"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Item Recipe Updates",
+        "changeType": "improvement",
+        "changes": [
+          {
+            "description": "Many item recipes were updated so items you are more likely to want first appear to the left of the tree, making quick purchases easier.",
+            "affectedItems": [
+              "Gem of Focus",
+              "Polynomicon",
+              "Devourer's Gloves",
+              "Lernaean Bow",
+              "Bloodforge",
+              "Pendulum Blade",
+              "Avenging Blade",
+              "Tekko Kagi",
+              "Jade Scepter",
+              "The Crusher",
+              "Deathbringer",
+              "Heartseeker",
+              "Phoenix Feather",
+              "Prophetic Cloak",
+              "Ancile",
+              "Rod of Asclepius",
+              "Runeforged Hammer",
+              "Shifter's Shield",
+              "Helm of Darkness",
+              "Contagion"
+            ]
+          }
+        ]
+      }
+    ],
+    "gameModes": [
+      {
+        "type": "gameMode",
+        "name": "Conquest",
+        "changeType": "balance",
+        "changes": [
+          {
+            "feature": "Titans",
+            "description": [
+              "Titans are no longer immune to damage from Critical Strikes",
+              "Now take 50% less bonus damage from Crits"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ranked",
+        "name": "Ranked Conquest",
+        "changeType": "major_update",
+        "changes": [
+          {
+            "feature": "Simultaneous Ranked Bans",
+            "description": [
+              "Simultaneous Ranked Bans are now implemented. Each player will be able to Ban 1 God, bringing the maximum number of potential Banned Gods to 10.",
+              "As a result, players must now own 20 Gods to participate in Ranked Conquest"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "gameMode",
+        "name": "Arena and Joust",
+        "changeType": "balance",
+        "changes": [
+          {
+            "description": "Pacing changes have been made to reduce the length of matches in these modes"
+          }
+        ]
+      }
+    ],
+    "qualityOfLife": [
+      {
+        "type": "feature",
+        "name": "New Match Lobby",
+        "changeType": "improvement",
+        "description": [
+          "Improvements to match lobby interface, making it easier to select between Gods",
+          "Now displays your teammates' models as they lock in"
+        ]
+      },
+      {
+        "type": "feature",
+        "name": "Music System Rework",
+        "changeType": "improvement",
+        "description": [
+          "Tracks will no longer play over each other",
+          "Specific new logic will determine how long the Titan track plays, and what can end the music"
+        ]
+      },
+      {
+        "type": "feature",
+        "name": "Audio Updates",
+        "changeType": "new",
+        "description": [
+          "New FX for Agility relic",
+          "New FX and Audio for Curios",
+          "Alternate Hitmarker Sounds have been added for Crits, Ticks, and Waveclear"
+        ]
+      },
+      {
+        "type": "feature",
+        "name": "Performance",
+        "changeType": "improvement",
+        "description": "Code for the Profile UI has been rewritten for increased performance"
+      },
+      {
+        "type": "feature",
+        "name": "Wandering Path",
+        "changeType": "new",
+        "description": [
+          "Wandering Market Levels are now reflected on a Path, with a visible Level Number",
+          "Each Level continues to grant Wandering Market coins at the past rate",
+          "Every fifth level (e.g. 5, 10, 15, …) grants an additional bonus reward",
+          "Players can earn 300 Diamonds by completing the Path, in addition to other rewards",
+          "Note: A Reaping Event Pumpkin is available at Level 55"
+        ]
+      },
+      {
+        "type": "feature",
+        "name": "Wandering Path Free Store",
+        "changeType": "new",
+        "description": [
+          "Players may spend their Wandering Market Coins to unlock:",
+          "New: Market Chest (May be rolled once per day - Has a chance to roll Skins, Cosmetics, Diamonds, Boosters, Ascension Pass Tokens, Legacy Gems, or Wandering Market Coins)",
+          "God Unlock Tokens (Unlimited)",
+          "Classic Announcer Pack Chest (Once per Week)",
+          "Classic Cutesy Chest (Once per Week)",
+          "Classic Music Chest (Once per Week)",
+          "Classic Skin Chest (Once per 28 Days)"
+        ]
+      },
+      {
+        "type": "feature",
+        "name": "Weekly Quest",
+        "changeType": "new",
+        "description": [
+          "A new Weekly Quest has been added to SMITE 2",
+          "This grants Wandering Market Coins after playing 4, 8, and 16 games each week"
+        ]
+      }
+    ]
+  }

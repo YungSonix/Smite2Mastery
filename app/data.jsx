@@ -11,17 +11,49 @@ import {
   ActivityIndicator,
   InteractionManager,
   Platform,
+  Alert,
+  Dimensions,
 } from 'react-native';
 import { Image } from 'expo-image';
 // Lazy load builds.json to prevent startup crash
 let localBuilds = null;
 import { getLocalItemIcon, getLocalGodAsset, getSkinImage } from './localIcons';
+
+// Storage helper (same as in index.jsx)
+const IS_WEB_STORAGE = Platform.OS === 'web';
+const storage = {
+  async getItem(key) {
+    if (IS_WEB_STORAGE && typeof window !== 'undefined' && window.localStorage) {
+      return window.localStorage.getItem(key);
+    }
+    try {
+      const AsyncStorage = require('@react-native-async-storage/async-storage').default;
+      return await AsyncStorage.getItem(key);
+    } catch (e) {
+      return null;
+    }
+  },
+  async setItem(key, value) {
+    if (IS_WEB_STORAGE && typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.setItem(key, value);
+      return;
+    }
+    try {
+      const AsyncStorage = require('@react-native-async-storage/async-storage').default;
+      await AsyncStorage.setItem(key, value);
+    } catch (e) {
+      // Ignore
+    }
+  },
+};
 // Lazy load ConquestMap since it's only used in gamemodes view
 const ConquestMap = React.lazy(() => import('./ConquestMap'));
 
 // Platform check for web
 const IS_WEB = Platform.OS === 'web';
 
+// Import reusable screen dimensions hook
+import { useScreenDimensions } from '../hooks/useScreenDimensions';
 
 // Import game mode icons
 const gameModeIcons = {
@@ -246,11 +278,93 @@ const gameplayMechanics = {
   ]
 };
 
-export default function DataPage({ initialSelectedGod = null, initialExpandAbilities = false, onBackToBuilds = null }) {
+// Patch Badge Tooltip Component (defined outside to avoid recreation)
+function PatchBadgeTooltip({ changeType, version, entityType, badgeStyle, textStyle, overlayStyle, contentStyle, tooltipTextStyle, closeButtonStyle, closeTextStyle }) {
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const getChangeTypeText = (type) => {
+    const types = {
+      'buffed': 'Buffed',
+      'nerfed': 'Nerfed',
+      'shifted': 'Shifted',
+      'new': 'New',
+    };
+    return types[type] || 'Updated';
+  };
+
+  return (
+    <>
+      <TouchableOpacity
+        style={badgeStyle}
+        onPress={() => setShowTooltip(true)}
+        activeOpacity={0.7}
+      >
+        <Text style={textStyle}>
+          {getChangeTypeText(changeType)}
+        </Text>
+      </TouchableOpacity>
+      
+      <Modal
+        visible={showTooltip}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowTooltip(false)}
+      >
+        <Pressable
+          style={overlayStyle}
+          onPress={() => setShowTooltip(false)}
+        >
+          <View style={contentStyle}>
+            <Text style={tooltipTextStyle}>
+              This {entityType} was recently {changeType} this patch ({version}).
+            </Text>
+            <TouchableOpacity
+              style={closeButtonStyle}
+              onPress={() => setShowTooltip(false)}
+            >
+              <Text style={closeTextStyle}>✕</Text>
+            </TouchableOpacity>
+          </View>
+        </Pressable>
+      </Modal>
+    </>
+  );
+}
+
+export default function DataPage({ initialSelectedGod = null, initialExpandAbilities = false, onBackToBuilds = null, initialTab = 'gods' }) {
+  // Get responsive screen dimensions
+  const screenDimensions = useScreenDimensions();
+  const SCREEN_WIDTH = screenDimensions.width;
   const [builds, setBuilds] = useState(null);
   const [dataLoading, setDataLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedTab, setSelectedTab] = useState('gods'); // 'gods', 'items', 'gamemodes', or 'mechanics'
+  const [selectedTab, setSelectedTab] = useState(initialTab); // 'gods', 'items', 'gamemodes', or 'mechanics'
+  const [pinnedGods, setPinnedGods] = useState(new Set());
+  const [currentUser, setCurrentUser] = useState(null);
+  
+  // Load pinned gods state
+  useEffect(() => {
+    const loadPinnedGods = async () => {
+      const user = await storage.getItem('currentUser');
+      setCurrentUser(user);
+      if (user) {
+        const pinnedGodsData = await storage.getItem(`pinnedGods_${user}`);
+        if (pinnedGodsData) {
+          const pinned = JSON.parse(pinnedGodsData);
+          const godNames = new Set(pinned.map(g => g.name || g.GodName));
+          setPinnedGods(godNames);
+        }
+      }
+    };
+    loadPinnedGods();
+  }, []);
+  
+  // Sync selectedTab with initialTab when it changes
+  useEffect(() => {
+    if (initialTab) {
+      setSelectedTab(initialTab);
+    }
+  }, [initialTab]);
   const [selectedGod, setSelectedGod] = useState(initialSelectedGod);
   const [selectedGameMode, setSelectedGameMode] = useState(null);
   const [selectedMechanic, setSelectedMechanic] = useState(null);
@@ -295,11 +409,11 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     }
   }, []);
 
-  // Reset tab and related state when component mounts or when navigating back
+  // Reset related state when component mounts or when navigating back
   useEffect(() => {
     // Only reset if we're not coming from builds page with a specific god
+    // Don't reset selectedTab here - it's handled by initialTab prop and the sync useEffect
     if (!initialSelectedGod) {
-      setSelectedTab('gods');
       setSelectedGod(null);
       setSelectedItem(null);
       setSelectedGameMode(null);
@@ -340,8 +454,13 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     }
   }, []);
 
-  // Lazy load the builds data after the UI has rendered
+  // Lazy load the builds data after the UI has rendered (only once)
   useEffect(() => {
+    // Only load if data isn't already loaded
+    if (builds !== null) {
+      return;
+    }
+    
     let isMounted = true;
     
     InteractionManager.runAfterInteractions(() => {
@@ -363,7 +482,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, []); // Empty deps - only run once on mount
   
   // If initialSelectedGod changes, update selectedGod
   useEffect(() => {
@@ -852,126 +971,8 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
         </View>
       )}
 
-      {!isDetailPageOpen && (
+      {(selectedTab === 'gods' || selectedTab === 'items' || selectedTab === 'mechanics') && !isDetailPageOpen && (
       <View style={styles.controls}>
-        <View style={styles.tabBar}>
-          <TouchableOpacity
-            style={[styles.tab, selectedTab === 'gods' && styles.tabActive]}
-            onPress={() => {
-              setSelectedTab('gods');
-              setSelectedPantheon(null);
-              setPantheonDropdownVisible(false);
-              // Close any open detail pages
-              setSelectedGod(null);
-              setSelectedItem(null);
-              setSkinsExpanded(false);
-              setSelectedSkin(null);
-              setLoreExpanded(false);
-              setAbilitiesExpanded(false);
-              setAspectExpanded(false);
-              setPassiveExpanded(false);
-              setSelectedAbility(null);
-              setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
-              setSelectedGameMode(null);
-            }}
-          >
-            <Text style={[styles.tabText, selectedTab === 'gods' && styles.tabTextActive]}>
-              Gods ({gods.length})
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.tab, selectedTab === 'items' && styles.tabActive]}
-            onPress={() => {
-              setSelectedTab('items');
-              setSelectedPantheon(null);
-              setPantheonDropdownVisible(false);
-              setSelectedStat(null);
-              setStatDropdownVisible(false);
-              setSelectedTier(null);
-              setTierDropdownVisible(false);
-              // Close any open detail pages
-              setSelectedGod(null);
-              setSelectedItem(null);
-              setSkinsExpanded(false);
-              setSelectedSkin(null);
-              setLoreExpanded(false);
-              setAbilitiesExpanded(false);
-              setAspectExpanded(false);
-              setPassiveExpanded(false);
-              setSelectedAbility(null);
-              setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
-              setSelectedGameMode(null);
-            }}
-          >
-            <Text style={[styles.tabText, selectedTab === 'items' && styles.tabTextActive]}>
-              Items ({items.length})
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.tab, selectedTab === 'gamemodes' && styles.tabActive]}
-            onPress={() => {
-              setSelectedTab('gamemodes');
-              setSelectedPantheon(null);
-              setPantheonDropdownVisible(false);
-              setSelectedStat(null);
-              setStatDropdownVisible(false);
-              setSelectedTier(null);
-              setTierDropdownVisible(false);
-              // Close any open detail pages
-              setSelectedGod(null);
-              setSelectedItem(null);
-              setSkinsExpanded(false);
-              setSelectedSkin(null);
-              setLoreExpanded(false);
-              setAbilitiesExpanded(false);
-              setAspectExpanded(false);
-              setPassiveExpanded(false);
-              setSelectedAbility(null);
-              setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
-              setSelectedGameMode(null);
-              setGamemodesDescriptionExpanded(false);
-              setSelectedMechanic(null);
-              setSelectedMechanicCategory(null);
-              setMechanicCategoryDropdownVisible(false);
-            }}
-          >
-            <Text style={[styles.tabText, selectedTab === 'gamemodes' && styles.tabTextActive]}>
-              Gamemodes ({gameModes.length})
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.tab, selectedTab === 'mechanics' && styles.tabActive]}
-            onPress={() => {
-              setSelectedTab('mechanics');
-              setSelectedPantheon(null);
-              setPantheonDropdownVisible(false);
-              setSelectedStat(null);
-              setStatDropdownVisible(false);
-              setSelectedTier(null);
-              setTierDropdownVisible(false);
-              // Close any open detail pages
-              setSelectedGod(null);
-              setSelectedItem(null);
-              setSkinsExpanded(false);
-              setSelectedSkin(null);
-              setLoreExpanded(false);
-              setAbilitiesExpanded(false);
-              setAspectExpanded(false);
-              setPassiveExpanded(false);
-              setSelectedAbility(null);
-              setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
-              setSelectedGameMode(null);
-              setGamemodesDescriptionExpanded(false);
-              setSelectedMechanic(null);
-              setSelectedMechanicCategory(null);
-              setMechanicCategoryDropdownVisible(false);
-            }}
-          >
-            <Text style={[styles.tabText, selectedTab === 'mechanics' && styles.tabTextActive]}>
-              Gameplay Mechanics ({gameplayMechanics.mechanics.length})
-            </Text>
-          </TouchableOpacity>
-        </View>
 
         <View style={styles.searchRow}>
           {selectedTab === 'gods' && (
@@ -1020,6 +1021,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                 source={pantheonIcon} 
                                 style={styles.pantheonOptionIcon}
                                 resizeMode="contain"
+                                accessibilityLabel={`${pantheon} pantheon icon`}
                               />
                             )}
                             <Text style={[styles.pantheonOptionText, { marginLeft: pantheonIcon ? 10 : 0 }]}>{pantheon}</Text>
@@ -1079,6 +1081,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                   source={statIcon} 
                                   style={styles.statOptionIcon}
                                   resizeMode="contain"
+                                  accessibilityLabel={`${stat} stat icon`}
                                 />
                               )}
                               <Text style={[styles.pantheonOptionText, { marginLeft: statIcon ? 10 : 0 }]}>{stat}</Text>
@@ -1354,6 +1357,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                           <Image 
                             source={imageSource}
                             style={styles.modalItemIcon}
+                            accessibilityLabel={`${selectedItem.name || selectedItem.internalName || 'Item'} icon`}
                             onError={() => {
                               setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
                             }}
@@ -1366,6 +1370,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                           <Image 
                             source={fallbackSource}
                             style={styles.modalItemIcon}
+                            accessibilityLabel={`${selectedItem.name || selectedItem.internalName || 'Item'} icon`}
                           />
                         );
                       }
@@ -1373,7 +1378,8 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                       return (
                         <Image 
                           source={imageSource}
-                          style={styles.modalItemIcon} 
+                          style={styles.modalItemIcon}
+                          accessibilityLabel={`${selectedItem.name || selectedItem.internalName || 'Item'} icon`}
                         />
                       );
                     }
@@ -1582,6 +1588,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                             contentFit="cover"
                                             cachePolicy="memory-disk"
                                             transition={200}
+                                            accessibilityLabel={`${compItem.name || compItem.internalName || 'Component'} icon`}
                                             onError={() => {
                                               setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
                                             }}
@@ -1596,6 +1603,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                           contentFit="cover"
                                           cachePolicy="memory-disk"
                                           transition={200}
+                                          accessibilityLabel={`${compItem.name || compItem.internalName || 'Component'} icon`}
                                         />
                                       );
                                     }
@@ -4727,22 +4735,110 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                 const godIcon = (god.icon || god.GodIcon || (god.abilities && god.abilities.A01 && god.abilities.A01.icon)) || null;
                 const uniqueKey = name + (god.GodName || god.name || idx);
                 
+                // Responsive width calculation - works for both web and mobile
+                const cardWidthStyle = (() => {
+                  if (SCREEN_WIDTH >= 1400) {
+                    return IS_WEB 
+                      ? { position: 'relative', width: 'calc(16.666% - 8.34px)', minWidth: 140, maxWidth: 160 } // 6 per row
+                      : { position: 'relative', width: '16%', minWidth: 140 }; // 6 per row
+                  } else if (SCREEN_WIDTH >= 1100) {
+                    return IS_WEB
+                      ? { position: 'relative', width: 'calc(20% - 8px)', minWidth: 130, maxWidth: 150 } // 5 per row
+                      : { position: 'relative', width: '19%', minWidth: 130 }; // 5 per row
+                  } else if (SCREEN_WIDTH >= 768) {
+                    return IS_WEB
+                      ? { position: 'relative', width: 'calc(25% - 7.5px)', minWidth: 120, maxWidth: 140 } // 4 per row
+                      : { position: 'relative', width: '24%', minWidth: 120 }; // 4 per row
+                  } else {
+                    // Mobile: 3 per row for all mobile screens
+                    // Calculate width accounting for gap (12px * 2 gaps = 24px) and padding (20px * 2 = 40px)
+                    const padding = 40; // 20px on each side
+                    const gaps = 24; // 12px gap * 2 gaps for 3 items
+                    const availableWidth = SCREEN_WIDTH - padding;
+                    const itemWidth = (availableWidth - gaps) / 3;
+                    const itemWidthPercent = (itemWidth / SCREEN_WIDTH) * 100;
+                    
+                    return IS_WEB
+                      ? { position: 'relative', width: 'calc(33.333% - 6.67px)', minWidth: 100, maxWidth: 130 } // 3 per row
+                      : { position: 'relative', width: `${itemWidthPercent}%`, minWidth: Math.max(itemWidth - 5, 90), flex: 0, maxWidth: itemWidth + 5 }; // 3 per row - calculated width
+                  }
+                })();
+                
                 return (
-                  <TouchableOpacity
-                    key={uniqueKey}
-                    style={[styles.card, showGodSkins && styles.cardWithSkin]}
-                    onPress={() => {
-                      setSelectedGod(god);
-                      setSkinsExpanded(false);
-                      setSelectedSkin(null);
-                      setLoreExpanded(false);
-                      setAbilitiesExpanded(false);
-                      setAspectExpanded(false);
-                      setPassiveExpanded(false);
-                      setSelectedAbility(null);
-                      setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
-                    }}
-                  >
+                  <View key={uniqueKey} style={cardWidthStyle}>
+                    <TouchableOpacity
+                      style={[styles.card, showGodSkins && styles.cardWithSkin]}
+                      onPress={() => {
+                        setSelectedGod(god);
+                        setSkinsExpanded(false);
+                        setSelectedSkin(null);
+                        setLoreExpanded(false);
+                        setAbilitiesExpanded(false);
+                        setAspectExpanded(false);
+                        setPassiveExpanded(false);
+                        setSelectedAbility(null);
+                        setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
+                      }}
+                    >
+                      {/* Patch indicator badge */}
+                      {god.latestPatchChange && (
+                        <PatchBadgeTooltip
+                          changeType={god.latestPatchChange.type}
+                          version={god.latestPatchChange.version || 'latest'}
+                          entityType="god"
+                          badgeStyle={[styles.patchBadge, styles[`patchBadge${god.latestPatchChange.type.charAt(0).toUpperCase() + god.latestPatchChange.type.slice(1)}`]]}
+                          textStyle={styles.patchBadgeText}
+                          overlayStyle={styles.tooltipOverlay}
+                          contentStyle={styles.tooltipContent}
+                          tooltipTextStyle={styles.tooltipText}
+                          closeButtonStyle={styles.tooltipCloseButton}
+                          closeTextStyle={styles.tooltipCloseText}
+                        />
+                      )}
+                      {/* Pin button */}
+                      <TouchableOpacity
+                        style={styles.godPinButton}
+                        onPress={async (e) => {
+                          e.stopPropagation();
+                          if (!currentUser) {
+                            Alert.alert('Not Logged In', 'Please log in to your profile to pin gods.');
+                            return;
+                          }
+                          
+                          const godName = god.name || god.GodName || god.title || god.displayName;
+                          const isPinned = pinnedGods.has(godName);
+                          
+                          try {
+                            const pinnedGodsData = await storage.getItem(`pinnedGods_${currentUser}`);
+                            const pinnedGodsList = pinnedGodsData ? JSON.parse(pinnedGodsData) : [];
+                            
+                            if (isPinned) {
+                              const updated = pinnedGodsList.filter(g => (g.name || g.GodName) !== godName);
+                              await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(updated));
+                              setPinnedGods(prev => {
+                                const next = new Set(prev);
+                                next.delete(godName);
+                                return next;
+                              });
+                            } else {
+                              pinnedGodsList.push({
+                                name: god.name || god.GodName,
+                                GodName: god.GodName,
+                                internalName: god.internalName,
+                                icon: god.icon || god.GodIcon,
+                              });
+                              await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(pinnedGodsList));
+                              setPinnedGods(prev => new Set(prev).add(godName));
+                            }
+                          } catch (error) {
+                            Alert.alert('Error', 'Failed to pin/unpin god. Please try again.');
+                          }
+                        }}
+                      >
+                        <Text style={styles.godPinButtonText}>
+                          {pinnedGods.has(god.name || god.GodName || god.title || god.displayName) ? '📌' : '📍'}
+                        </Text>
+                      </TouchableOpacity>
                     {showGodSkins && god.skins && typeof god.skins === 'object' && Object.keys(god.skins).length > 0 ? (() => {
                       // Find base/default skin - look for "default" or "base" type, or use first skin
                       let baseSkin = null;
@@ -4825,6 +4921,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                             contentFit="cover"
                             cachePolicy="memory-disk"
                             transition={200}
+                            accessibilityLabel={`${name} icon`}
                           />
                         );
                       }
@@ -4843,6 +4940,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                             contentFit="cover"
                             cachePolicy="memory-disk"
                             transition={200}
+                            accessibilityLabel={`${name} icon`}
                           />
                         );
                       }
@@ -4857,7 +4955,8 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                       </View>
                     )}
                     <Text style={styles.cardText} numberOfLines={1}>{name}</Text>
-                  </TouchableOpacity>
+                    </TouchableOpacity>
+                  </View>
                 );
               })}
             </View>
@@ -4872,12 +4971,56 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                 const modIcon = vulcanModItemIcons[name] || null;
                 const uniqueKey = (item.internalName || item.name || name) + idx;
                 
+                // Responsive width calculation - works for both web and mobile
+                const cardWidthStyle = (() => {
+                  if (SCREEN_WIDTH >= 1400) {
+                    return IS_WEB 
+                      ? { position: 'relative', width: 'calc(16.666% - 8.34px)', minWidth: 140, maxWidth: 160 } // 6 per row
+                      : { position: 'relative', width: '16%', minWidth: 140 }; // 6 per row
+                  } else if (SCREEN_WIDTH >= 1100) {
+                    return IS_WEB
+                      ? { position: 'relative', width: 'calc(20% - 8px)', minWidth: 130, maxWidth: 150 } // 5 per row
+                      : { position: 'relative', width: '19%', minWidth: 130 }; // 5 per row
+                  } else if (SCREEN_WIDTH >= 768) {
+                    return IS_WEB
+                      ? { position: 'relative', width: 'calc(25% - 7.5px)', minWidth: 120, maxWidth: 140 } // 4 per row
+                      : { position: 'relative', width: '24%', minWidth: 120 }; // 4 per row
+                  } else {
+                    // Mobile: 3 per row for all mobile screens
+                    // Calculate width accounting for gap (12px * 2 gaps = 24px) and padding (20px * 2 = 40px)
+                    const padding = 40; // 20px on each side
+                    const gaps = 24; // 12px gap * 2 gaps for 3 items
+                    const availableWidth = SCREEN_WIDTH - padding;
+                    const itemWidth = (availableWidth - gaps) / 3;
+                    const itemWidthPercent = (itemWidth / SCREEN_WIDTH) * 100;
+                    
+                    return IS_WEB
+                      ? { position: 'relative', width: 'calc(33.333% - 6.67px)', minWidth: 100, maxWidth: 130 } // 3 per row
+                      : { position: 'relative', width: `${itemWidthPercent}%`, minWidth: Math.max(itemWidth - 5, 90), flex: 0, maxWidth: itemWidth + 5 }; // 3 per row - calculated width
+                  }
+                })();
+                
                 return (
-                  <TouchableOpacity
-                    key={uniqueKey}
-                    style={styles.card}
-                    onPress={() => setSelectedItem(item)}
-                  >
+                  <View key={uniqueKey} style={cardWidthStyle}>
+                    <TouchableOpacity
+                      style={styles.card}
+                      onPress={() => setSelectedItem(item)}
+                    >
+                    {/* Patch indicator badge */}
+                    {item.latestPatchChange && (
+                      <PatchBadgeTooltip
+                        changeType={item.latestPatchChange.type}
+                        version={item.latestPatchChange.version || 'latest'}
+                        entityType="item"
+                        badgeStyle={[styles.patchBadge, styles[`patchBadge${item.latestPatchChange.type.charAt(0).toUpperCase() + item.latestPatchChange.type.slice(1)}`]]}
+                        textStyle={styles.patchBadgeText}
+                        overlayStyle={styles.tooltipOverlay}
+                        contentStyle={styles.tooltipContent}
+                        tooltipTextStyle={styles.tooltipText}
+                        closeButtonStyle={styles.tooltipCloseButton}
+                        closeTextStyle={styles.tooltipCloseText}
+                      />
+                    )}
                     {modIcon ? (
                       <Image 
                         source={modIcon} 
@@ -4885,6 +5028,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         contentFit="cover"
                         cachePolicy="memory-disk"
                         transition={200}
+                        accessibilityLabel={`${name} mod icon`}
                       />
                     ) : localItemIcon ? (
                       (() => {
@@ -4903,6 +5047,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               contentFit="cover"
                               cachePolicy="memory-disk"
                               transition={200}
+                              accessibilityLabel={`${name} item icon`}
                               onError={() => {
                                 setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
                               }}
@@ -4919,6 +5064,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               contentFit="cover"
                               cachePolicy="memory-disk"
                               transition={200}
+                              accessibilityLabel={`${name} item icon`}
                             />
                           );
                         }
@@ -4931,6 +5077,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                             contentFit="cover"
                             cachePolicy="memory-disk"
                             transition={200}
+                            accessibilityLabel={`${name} item icon`}
                           />
                         );
                       })()
@@ -4956,7 +5103,8 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                       </View>
                     )}
                     <Text style={styles.cardText} numberOfLines={1}>{name}</Text>
-                  </TouchableOpacity>
+                    </TouchableOpacity>
+                  </View>
                 );
               })}
             </View>
@@ -5056,26 +5204,27 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
               </View>
               <View style={styles.grid}>
                 {gameModes.map((mode) => (
-                  <TouchableOpacity
-                    key={mode.id}
-                    style={styles.card}
-                    onPress={() => {
-                      setSelectedGameMode(mode);
-                      // Scroll to top after a short delay to ensure content is rendered
-                      setTimeout(() => {
-                        scrollViewRef.current?.scrollTo({ y: 0, animated: false });
-                      }, 100);
-                    }}
-                  >
-                    {gameModeIcons[mode.id] ? (
-                      <Image source={gameModeIcons[mode.id]} style={styles.cardIcon} contentFit="cover" cachePolicy="memory-disk" transition={200} accessibilityLabel={`${mode.name} game mode icon`} />
-                    ) : (
-                      <View style={styles.cardIconFallback}>
-                        <Text style={styles.cardIconFallbackText}>{mode.name.charAt(0)}</Text>
-                      </View>
-                    )}
-                    <Text style={styles.cardText} numberOfLines={1}>{mode.name}</Text>
-                  </TouchableOpacity>
+                  <View key={mode.id} style={{ width: '30%' }}>
+                    <TouchableOpacity
+                      style={styles.card}
+                      onPress={() => {
+                        setSelectedGameMode(mode);
+                        // Scroll to top after a short delay to ensure content is rendered
+                        setTimeout(() => {
+                          scrollViewRef.current?.scrollTo({ y: 0, animated: false });
+                        }, 100);
+                      }}
+                    >
+                      {gameModeIcons[mode.id] ? (
+                        <Image source={gameModeIcons[mode.id]} style={styles.cardIcon} contentFit="cover" cachePolicy="memory-disk" transition={200} accessibilityLabel={`${mode.name} game mode icon`} />
+                      ) : (
+                        <View style={styles.cardIconFallback}>
+                          <Text style={styles.cardIconFallbackText}>{mode.name.charAt(0)}</Text>
+                        </View>
+                      )}
+                      <Text style={styles.cardText} numberOfLines={1}>{mode.name}</Text>
+                    </TouchableOpacity>
+                  </View>
                 ))}
               </View>
             </View>
@@ -5268,15 +5417,23 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: 12,
     paddingBottom: 24,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    width: '100%',
+    ...(IS_WEB && {
+      maxWidth: '100%',
+      paddingHorizontal: 10,
+    }),
   },
   card: {
-    width: '30%',
+    width: '100%',
     backgroundColor: '#0b1226',
     borderRadius: 8,
     padding: 8,
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#1e3a5f',
+    position: 'relative',
   },
   cardWithSkin: {
     width: '48%',
@@ -5284,6 +5441,81 @@ const styles = StyleSheet.create({
     minHeight: 360,
     backgroundColor: '#0b1226',
     overflow: 'hidden',
+    position: 'relative',
+  },
+  patchBadge: {
+    position: 'absolute',
+    top: 4,
+    right: 4,
+    minWidth: 24,
+    height: 24,
+    paddingHorizontal: 6,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 10,
+    borderWidth: 2,
+    borderColor: '#ffffff',
+  },
+  patchBadgeBuffed: {
+    backgroundColor: '#22c55e',
+  },
+  patchBadgeNerfed: {
+    backgroundColor: '#ef4444',
+  },
+  patchBadgeShifted: {
+    backgroundColor: '#fbbf24',
+  },
+  patchBadgeNew: {
+    backgroundColor: '#8b5cf6',
+  },
+  patchBadgeText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#ffffff',
+  },
+  tooltipOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tooltipContent: {
+    backgroundColor: '#0b1226',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    paddingRight: 40,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    maxWidth: 300,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+    position: 'relative',
+  },
+  tooltipText: {
+    color: '#e6eef8',
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  tooltipCloseButton: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#1e3a5f',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tooltipCloseText: {
+    color: '#e6eef8',
+    fontSize: 16,
+    fontWeight: '700',
   },
   cardIcon: {
     width: 56,
@@ -5318,6 +5550,20 @@ const styles = StyleSheet.create({
     color: '#e6eef8',
     fontSize: 11,
     textAlign: 'center',
+  },
+  godPinButton: {
+    position: 'absolute',
+    top: 4,
+    left: 4,
+    zIndex: 11,
+    padding: 4,
+    borderRadius: 4,
+    backgroundColor: 'rgba(15, 23, 42, 0.8)',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  godPinButtonText: {
+    fontSize: 16,
   },
   modalOverlay: {
     flex: 1,

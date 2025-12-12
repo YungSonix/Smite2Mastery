@@ -1,0 +1,668 @@
+{
+    "patchName": "Open Beta 21 - Goddess of Magic Update",
+    "summary": "Eset ported to SMITE 2. Conquest Map Phases introduced with Moonlight Phase mechanic. Soft Ranked Reset for Conquest. New Moonlight-themed items added. Multiple god balance changes.",
+    "gods": [
+      {
+        "type": "god",
+        "name": "Eset",
+        "changeType": "new",
+        "changes": [
+          {
+            "section": "General",
+            "description": [
+              "Ranged Basic Attacks",
+              "Damage Type: Magical",
+              "Scaling Type: Intelligence Scaling"
+            ]
+          },
+          {
+            "section": "Passive",
+            "abilityName": "Funeral Rites",
+            "abilityNumber": "(P)",
+            "description": [
+              "Whenever a god dies within range of Eset, she gains a stack of Funeral Rites; granting HP5 and MP5 to her and nearby allies. Additionally, every third basic attack from Eset is empowered; allowing it to hit in a wider radius and dealing bonus damage based on her stacks of invocation.",
+              "At 5 stacks, Eset's invocation buff can stack up to 5 stacks.",
+              "At 10 stacks, Eset's invocation buff can stack up to 6 stacks and Eset gains 10 Cooldown Rate."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Wing Gust",
+            "abilityNumber": "(1)",
+            "description": [
+              "Fire 4 projectiles in a line, each dealing magical damage to all targets in their path.",
+              "While casting, Eset gains movement speed, reduced backpedal and strafing penalties and gains immunity to knockback and root effects.",
+              "Each projectile grants a stack of invocation the first time it hits an enemy."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Spirit Ball",
+            "abilityNumber": "(2)",
+            "description": [
+              "Sends forth a ball of spirit energy. While it travels, Eset can re-activate the ability to detonate the ball, dealing magical damage and stunning enemies.",
+              "The further the ball travels, the higher its damage and stun duration.",
+              "When the ball deals damage to enemies, grants a stack of invocation for each enemy hit."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Dispel Magic",
+            "abilityNumber": "(3)",
+            "description": [
+              "Eset silences and slows enemy gods at her location. Enemy gods hit also lose a portion of their magical protections.",
+              "If Eset hits an enemy god, allies near Dispel Magic or Eset gain a shield."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Circle of Protection",
+            "abilityNumber": "(4)",
+            "description": [
+              "Call down your staff and create a circle of protective magic for 5 seconds before it explodes, dealing magical damage to all enemies and healing all allies in the area.",
+              "Eset can re-activate this ability at any time to detonate it, dealing the damage and healing early.",
+              "Any damage dealt in the area while active charges the circle, increasing its damage and healing.",
+              "While standing in the area, allies take 30% less damage."
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of the Lifewarden",
+            "releaseDate": "October 24th",
+            "description": [
+              "Dispel Magic no longer requires an enemy god hit to shield allies and now applies Transference to all allies it shields.",
+              "Wing Gust no longer has damage scaling, but applies a movement speed aura to allies, and when its projectiles hit enemies, all allies with transference are healed."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Cabrakan",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of the Rotund Jotunn",
+            "description": [
+              "Seismic Crush Stealths you and Slows enemies instead of Stunning.",
+              "Refraction Shield stacks energy by dealing damage and deals bonus damage instead of a Stun.",
+              "Tremors spawns a vision dealing damage and Slowing on the final hit.",
+              "You teleport to a location before casting Tectonic Shift, each Wall having less Health."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Ares",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Call to Arms",
+            "abilityNumber": "(2)",
+            "description": [
+              "Decreased Health Regen: 8/11/14/17/20 -> 6/8/10/12/14"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Searing Flesh",
+            "abilityNumber": "(3)",
+            "description": [
+              "Decreased % Health Damage per tick to minions: 4% -> 3.5%"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Athena",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Confound",
+            "abilityNumber": "(2)",
+            "description": [
+              "Decreased Cooldown: 16s -> 16/15.5/15/14.5/14s"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Shield Wall",
+            "abilityNumber": "(3)",
+            "description": [
+              "Decreased Cooldown: 14/13.5/13/12.5/12s -> 12s"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Defender of Olympus",
+            "abilityNumber": "(4)",
+            "description": [
+              "Increased Shield Health: 50/100/150/200/250 -> 200/225/250/275/300"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Awilix",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Summon Suku",
+            "abilityNumber": "(1)",
+            "description": [
+              "Increased Damage: 70/120/170/220/270 -> 85/135/180/235/285"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Gravity Surge",
+            "abilityNumber": "(4)",
+            "description": [
+              "Decreased Cooldown: 90s -> 90/85/80/75/70s"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Fenrir",
+        "changeType": "fix",
+        "changes": [
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of Loyalty",
+            "abilityName": "Seething Howl",
+            "abilityNumber": "(2)",
+            "description": [
+              "Fixed so this ability correctly only applies the buff to gods"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Jormungandr",
+        "changeType": "shift",
+        "changes": [
+          {
+            "section": "General",
+            "description": [
+              "Decreased base Inhand Power: 30 -> 24",
+              "Increased Per Level Inhand Power: 3.3 -> 4"
+            ]
+          },
+          {
+            "section": "Passive",
+            "abilityName": "Immovable",
+            "abilityNumber": "(P)",
+            "description": [
+              "Increased Max Health Scaling: 6% -> 8%"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Venomous Haze",
+            "abilityNumber": "(1)",
+            "description": [
+              "Decreased Cooldown: 15/14/13/12/11s -> 13/12.5/12/11.5/11s"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Nu Wa",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Fire Shards",
+            "abilityNumber": "(4)",
+            "description": [
+              "This ability now only procs item effects for 50% damage"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Ra",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Divine Light",
+            "abilityNumber": "(2)",
+            "description": [
+              "Increased Damage: 70/120/150/200/250 -> 85/135/185/235/285",
+              "Fixed an issue where these ranks were non-uniform"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Solar Blessing",
+            "abilityNumber": "(3)",
+            "description": [
+              "Increased Protections: 10/15/20/25/30 -> 15/20/25/30/35"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Sun Wukong",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "The Magic Cudgel",
+            "abilityNumber": "(1)",
+            "description": [
+              "Decreased Intelligence Scaling: 75% -> 70%"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Master's Will",
+            "abilityNumber": "(2)",
+            "description": [
+              "Decreased Intelligence Scaling: 85% -> 75%"
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of Transformation",
+            "abilityName": "Undefeated Body",
+            "abilityNumber": "(P)",
+            "description": [
+              "The threshold buffs no longer provide Protections"
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of Transformation",
+            "abilityName": "72 Transformations",
+            "abilityNumber": "(3)",
+            "description": [
+              "Decreased Eagle Cooldown reduction: 25% -> 20%"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Xbalanque",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Passive",
+            "abilityName": "Dead of Night",
+            "abilityNumber": "(P)",
+            "description": [
+              "Decreased Strength per Stack: 4 -> 3",
+              "Decreased Intelligence per Stack: 6 -> 5",
+              "Decreased Strength per Threshold Stack: 10 -> 7",
+              "Decreased Intelligence per Threshold Stack: 15 -> 10"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Poison Darts",
+            "abilityNumber": "(2)",
+            "description": [
+              "Decreased Strength Scaling: 35% -> 30%"
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of the Nightstalker",
+            "abilityName": "Poison Darts",
+            "abilityNumber": "(2)",
+            "description": [
+              "Decreased Subsequent Dart Damage: 60% -> 50%"
+            ]
+          }
+        ]
+      }
+    ],
+    "items": [
+      {
+        "type": "item",
+        "name": "Helm of Darkness",
+        "changeType": "new",
+        "itemCategory": "Moonlight Item",
+        "changes": [
+          {
+            "description": "During Moonlight Phase: While Stealthed: +15% Movement Speed"
+          },
+          {
+            "description": "Pass through an enemy god: Physical Damage equal to 15% of your Max Health"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Screeching Gargoyle",
+        "changeType": "new",
+        "itemCategory": "Moonlight Item",
+        "changes": [
+          {
+            "description": "During Moonlight Phase: Hits enemies around you"
+          },
+          {
+            "description": "Silence lasts 1.5s"
+          },
+          {
+            "description": "-15% Protections"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "The Reaper",
+        "changeType": "new",
+        "itemCategory": "Moonlight Item",
+        "changes": [
+          {
+            "description": "During Moonlight Phase: Hit enemies below 50% Health: 1 Stack of 5% Lifesteal (Max 4, lasts 6s)"
+          },
+          {
+            "description": "No The Reaper stacks are lost on death"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Eye of Erebus",
+        "changeType": "new",
+        "cost": 2600,
+        "recipe": "Adroit Ring + Survivor's Sash",
+        "changes": [
+          {
+            "description": "200 Health"
+          },
+          {
+            "description": "15 Cooldown Rate"
+          },
+          {
+            "description": "Adaptive Stat: +35 Strength or +50 Intelligence (based on highest item stat)"
+          },
+          {
+            "description": "On Use: Spawn a Watchful Eye that lasts 30s"
+          },
+          {
+            "description": "Enemy enters range: Fires a seeking projectile: Magical Damage equal to 15% of Enemy Max Health + 25% Slow for 1.5s"
+          },
+          {
+            "description": "Cooldown: 60s"
+          },
+          {
+            "description": "During Moonlight Phase: Each time you deal damage to a god: -2s Cooldown of this item (Once per target, per Attack or Ability)"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Chandra's Grace",
+        "changeType": "new",
+        "cost": 2300,
+        "recipe": "Veve Charm + Adroit Ring",
+        "changes": [
+          {
+            "description": "350 Health"
+          },
+          {
+            "description": "20 Cooldown Rate"
+          },
+          {
+            "description": "Every 30s: Lowest Health ally within 8.8m gain: +15 Health Regen, +15 Mana Regen, 0.2s off Cooldowns every 0.2s for 4s"
+          },
+          {
+            "description": "Buff lasts 4s"
+          },
+          {
+            "description": "During Moonlight Phase: On trigger: You also gain the Buff"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Xibalban Effigy",
+        "changeType": "new",
+        "cost": 2750,
+        "recipe": "Stalwart Sigil + Mana Tome",
+        "changes": [
+          {
+            "description": "30 Physical Protection"
+          },
+          {
+            "description": "30 Magical Protection"
+          },
+          {
+            "description": "300 Mana"
+          },
+          {
+            "description": "4 Mana Regen"
+          },
+          {
+            "description": "On Use: Take 50% Damage for 4s. After: Take Physical Damage equal to mitigated Damage. Cannot drop below 5% Health"
+          },
+          {
+            "description": "During Moonlight Phase: Only 50% of the mitigated Damage is dealt back"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Ancile",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Increased Health: 200 -> 250"
+          },
+          {
+            "description": "Decreased Cooldown: 80s -> 70s"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Arondight",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Increased Strength: 50 -> 55"
+          },
+          {
+            "description": "Decreased Cooldown: 75s -> 60s"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Brawlers Ruin",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Changed Recipe: Survivors Sash + Legionnaire Armor to Survivors Sash + Enraged Guard"
+          },
+          {
+            "description": "Decreased Physical Protection: 20 -> 15"
+          },
+          {
+            "description": "Added: 15 Magical Protection"
+          },
+          {
+            "description": "Decreased Damage Proc Physical Protection: 25 -> 20"
+          },
+          {
+            "description": "Added: 20 Damage Proc Magical Protection"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Death Metal",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Decreased Cost: 2700 -> 2600"
+          },
+          {
+            "description": "Increased Active Crit Chance: 15% -> 25%"
+          },
+          {
+            "description": "Fixed Description: This item was incorrectly listed as having 20% Attack Speed instead of 25%"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Necronomicon",
+        "changeType": "shift",
+        "changes": [
+          {
+            "description": "Passive: This item now has 6 max stacks, each providing 30 Intelligence. Dying causes you to lose 4 stacks.",
+            "note": "This item no longer reduces Protections with stacks."
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Talisman of Purification",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Increased Magical Protection: 25 -> 30"
+          },
+          {
+            "description": "Increased Max Health: 275 -> 300"
+          },
+          {
+            "description": "Decreased Cooldown: 180s -> 140s"
+          }
+        ]
+      }
+    ],
+    "gameModes": [
+      {
+        "type": "gameMode",
+        "name": "Conquest",
+        "changeType": "major_update",
+        "changes": [
+          {
+            "feature": "Map Phases",
+            "description": [
+              "Conquest now alternates between 'normal' Conquest and a special phase called the Moonlight Phase at regular intervals during the match",
+              "The Moonlight Phase features visual changes to the map, plus unique objectives and rewards that only spawn during this phase",
+              "Matches start in the normal phase until the 6 minute mark when the map transitions to the Moonlight Phase",
+              "The Moonlight Phase lasts for 3 minutes before returning to normal",
+              "This cycle repeats until the end of the match"
+            ]
+          },
+          {
+            "feature": "Moonlight Phase",
+            "description": [
+              "During the Moonlight phase, each team competes to gather Moonlight Shards",
+              "For every Shard your team collects, each team member gets +1 Gold at the end of the phase",
+              "If you collect more Shards than the enemy team, you'll also spawn a single wave of Naga lane pushers in all 3 lanes",
+              "Furthermore, if your team reaches the maximum number of 100 Shards before the phase ends, your team will be rewarded with a consumable item: Ritual of the Full Moon"
+            ]
+          },
+          {
+            "feature": "Moonlight Shards",
+            "description": [
+              "Each Shard picked up adds +1 to your team's total Moonlight Shard count",
+              "Shards can be collected from 3 different sources:",
+              "By destroying Moonlight Crystals that spawn during the phase (Drops up to 5 Shards)",
+              "By slaying enemy Gods (Grants 5 Shards)",
+              "By controlling the Moonlight Ritual site at the center of the map (Drops 1 Shard per second while under your control, or faster with more allied Gods at the site)",
+              "On Pickup: Rewards +12 XP and heals for 1.5% Max Health (Shards picked up from the Ritual site do not grant the healing portion)",
+              "The number of Shards you personally collect is displayed on the buff bar, and determines the strength of the Ritual of the Full Moon's buff effect"
+            ]
+          },
+          {
+            "feature": "Moonlight Crystals",
+            "description": [
+              "Spawn at various locations across the map at the start of the Moonlight phase",
+              "These can be attacked or interacted with to drop up to 5 Shards",
+              "Respawn 30 seconds after destroyed"
+            ]
+          },
+          {
+            "feature": "Moonlight Ritual Site",
+            "description": [
+              "This capture point at the center of the map unlocks 90 seconds into the Moonlight Phase",
+              "Gain control over the site by standing in it with no enemy Gods present",
+              "While under your control, the Ritual site rains down a constant stream of Moonlight Shards"
+            ]
+          },
+          {
+            "feature": "Naga Lane Pushers",
+            "description": [
+              "Spawn with the next minion wave at the end of the Moonlight Phase for the team that collected more Moonlight Shards",
+              "The minions in this wave are Champion Minions with +10% Damage Mitigation",
+              "Stats (base + per Level scaling every 3 minutes): Max Health: 2000 (+250), Strength: 40 (+8), Physical Protection: 30 (+3), Magical Protection: 20 (+3), XP Reward: 20 (+3), Gold Reward: 10 (+1)"
+            ]
+          },
+          {
+            "feature": "Ritual of the Full Moon",
+            "description": [
+              "This reward pickup spawns at the Ritual Site for the team that reaches 100 Shards",
+              "Can be stolen after 10s",
+              "Picking it up grants you the Ritual of the Full Moon consumable item, which can be used to activate a team Ritual effect for 30s",
+              "On Consume: For allies: Convert all Shards personally carried by your teammates into a Movement Speed buff for 30s. Grants +5% Movement Speed plus more for each Shard",
+              "Reveal all enemy Gods for 5s and summon a Star Strike at their location",
+              "Star Strikes deal 0.75% of Max Health per victim's level as Magical Damage after a 0.5s warm-up",
+              "Gods hit by Star Strikes are revealed for an additional 5s"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ranked",
+        "name": "Ranked Conquest",
+        "changeType": "soft_reset",
+        "changes": [
+          {
+            "description": "Demigods drop to Obsidian 1"
+          },
+          {
+            "description": "Deities drop to Masters 2"
+          },
+          {
+            "description": "All others drop a division and a tier"
+          },
+          {
+            "description": "You do not drop below Platinum 3. Anyone below Platinum 3 will see no adjustments"
+          },
+          {
+            "description": "Badges will be awarded for last split's performance"
+          }
+        ]
+      }
+    ],
+    "bugFixes": [
+      {
+        "type": "visual",
+        "description": "Scepter of Dominion targeter visual upgrade"
+      },
+      {
+        "type": "god",
+        "name": "Hecate",
+        "description": "Ability 04 fixed to not have galaxy fill and not be total darkness"
+      },
+      {
+        "type": "god",
+        "name": "Janus, Osiris, and Tsukuyomi",
+        "description": "Attacks on tower now play hits at proper location"
+      }
+    ]
+  }

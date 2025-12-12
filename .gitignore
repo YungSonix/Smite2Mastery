@@ -32,6 +32,7 @@ yarn-error.*
 
 # local env files
 .env*.local
+.env
 
 # typescript
 *.tsbuildinfo
@@ -40,12 +41,39 @@ yarn-error.*
 /ios
 /android
 
-#Update scripts
+# Update scripts (old location)
 .scripts/
 update-builds.js
 app/data/builds.json.backup
 
+# Build/deployment
 .vercel
+web-build/
+
+# Sensitive configuration files (contains API keys)
+config/supabase.js
+
+# Temporary/output files
+output.txt
+*.log
+
+# Git installer files
+Git/
+*.exe
+
+# Sensitive configuration files (contains API keys)
+# Keep the .example file for reference, but ignore the actual config
+config/supabase.js
+!config/supabase.js.example
+
+# Patch notes source files (keep JSON, ignore text sources)
+*.txt
+!public/**/*.txt
+
+# Backup and temporary files
+*.backup
+*.bak
+*~
 
 # Image files to reduce repository size
 # Ignore large asset directories (contains thousands of game asset images)
