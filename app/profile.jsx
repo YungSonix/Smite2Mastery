@@ -12,7 +12,31 @@ import {
   Alert,
   Pressable,
 } from 'react-native';
-import { supabase } from '../config/supabase';
+// Import supabase with fallback for missing config
+let supabase;
+try {
+  supabase = require('../config/supabase').supabase;
+} catch (e) {
+  // Fallback mock supabase if config file is missing
+  const mockQuery = {
+    eq: () => ({
+      single: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+      update: () => ({
+        eq: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+      }),
+    }),
+    single: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+    upsert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+  };
+  supabase = {
+    from: () => ({
+      select: () => mockQuery,
+      upsert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+      update: () => mockQuery,
+    }),
+    rpc: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+  };
+}
 import CryptoJS from 'crypto-js';
 import { useScreenDimensions } from '../hooks/useScreenDimensions';
 
@@ -164,6 +188,11 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         .select('username, password_hash')
         .eq('username', username.trim())
         .single();
+      
+      if (error && error.code === 'MISSING_CONFIG') {
+        Alert.alert('Error', 'Supabase configuration is missing. Please configure your Supabase credentials.');
+        return;
+      }
       
       if (error || !data) {
         Alert.alert('Error', 'Invalid username or password');
@@ -375,7 +404,14 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     try {
       // Try to set user context for RLS (might not exist yet)
       try {
-        await supabase.rpc('set_current_user', { username_param: currentUser });
+        const rpcResult = await supabase.rpc('set_current_user', { username_param: currentUser });
+        if (rpcResult && rpcResult.error && rpcResult.error.code === 'MISSING_CONFIG') {
+          // Fallback to local storage if config is missing
+          await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(pinnedBuilds));
+          await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(pinnedGods));
+          await storage.setItem(`savedBuilds_${currentUser}`, JSON.stringify(savedBuilds));
+          return;
+        }
       } catch (rpcError) {
         // Continue without RLS context if function doesn't exist
       }
@@ -391,6 +427,14 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         }, {
           onConflict: 'username'
         });
+      
+      if (error && error.code === 'MISSING_CONFIG') {
+        // Fallback to local storage if config is missing
+        await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(pinnedBuilds));
+        await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(pinnedGods));
+        await storage.setItem(`savedBuilds_${currentUser}`, JSON.stringify(savedBuilds));
+        return;
+      }
       
       if (error) {
         console.error('Error saving user data:', error);
