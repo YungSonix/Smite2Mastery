@@ -31,10 +31,18 @@ try {
   supabase = {
     from: () => ({
       select: () => mockQuery,
+      insert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
       upsert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
       update: () => mockQuery,
     }),
     rpc: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+    auth: {
+      signIn: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+      signUp: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+      signOut: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+      getSession: async () => ({ data: { session: null }, error: null }),
+      getUser: async () => ({ data: { user: null }, error: null }),
+    },
   };
 }
 import CryptoJS from 'crypto-js';
@@ -243,11 +251,16 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       const recoveryCodeGenerated = generateRecoveryCode();
       
       // Check if username already exists
-      const { data: existingUser } = await supabase
+      const { data: existingUser, error: checkError } = await supabase
         .from('app_users')
         .select('username')
         .eq('username', usernameTrimmed)
         .single();
+      
+      if (checkError && checkError.code === 'MISSING_CONFIG') {
+        Alert.alert('Error', 'Supabase configuration is missing. Please configure your Supabase credentials.');
+        return;
+      }
       
       if (existingUser) {
         Alert.alert('Error', 'Username already exists');
@@ -264,7 +277,9 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         });
       
       if (userError) {
-        if (userError.code === '23505') { // Unique constraint violation
+        if (userError.code === 'MISSING_CONFIG') {
+          Alert.alert('Error', 'Supabase configuration is missing. Please configure your Supabase credentials.');
+        } else if (userError.code === '23505') { // Unique constraint violation
           Alert.alert('Error', 'Username already exists');
         } else {
           throw userError;
