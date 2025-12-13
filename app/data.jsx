@@ -463,17 +463,17 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     let isMounted = true;
     
     // Load immediately without delay
-    try {
-      const data = require('./data/builds.json');
-      if (isMounted) {
-        setBuilds(data);
-        setDataLoading(false);
-      }
-    } catch (err) {
-      if (isMounted) {
-        setDataLoading(false);
-      }
-    }
+        try {
+          const data = require('./data/builds.json');
+          if (isMounted) {
+            setBuilds(data);
+            setDataLoading(false);
+          }
+        } catch (err) {
+          if (isMounted) {
+            setDataLoading(false);
+          }
+        }
     
     return () => {
       isMounted = false;
@@ -1405,7 +1405,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                       return (
                         <Image 
                           source={imageSource}
-                          style={styles.modalItemIcon}
+                          style={styles.modalItemIcon} 
                           accessibilityLabel={`${selectedItem.name || selectedItem.internalName || 'Item'} icon`}
                         />
                       );
@@ -4772,15 +4772,15 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                       onPress={() => {
                         // Use startTransition for instant UI feedback, then update state
                         startTransition(() => {
-                          setSelectedGod(god);
-                          setSkinsExpanded(false);
-                          setSelectedSkin(null);
-                          setLoreExpanded(false);
-                          setAbilitiesExpanded(false);
-                          setAspectExpanded(false);
-                          setPassiveExpanded(false);
-                          setSelectedAbility(null);
-                          setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
+                        setSelectedGod(god);
+                        setSkinsExpanded(false);
+                        setSelectedSkin(null);
+                        setLoreExpanded(false);
+                        setAbilitiesExpanded(false);
+                        setAspectExpanded(false);
+                        setPassiveExpanded(false);
+                        setSelectedAbility(null);
+                        setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
                         });
                       }}
                       activeOpacity={0.7}
