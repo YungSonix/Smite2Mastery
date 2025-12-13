@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback, lazy, Suspense } from 'react';
+import React, { useEffect, useState, useMemo, useCallback, lazy, Suspense, startTransition } from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
   Modal,
   Pressable,
-  InteractionManager,
   Platform,
   Linking,
 } from 'react-native';
@@ -163,29 +162,23 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
     }
   }, [initialTab]);
 
-  // Lazy load the builds data after the UI has rendered to prevent startup crash
+  // Lazy load the builds data immediately
   useEffect(() => {
     let isMounted = true;
     
-    // Wait for interactions to complete before loading heavy data
-    InteractionManager.runAfterInteractions(() => {
-      // Use setTimeout to give the JS thread a breather
-      setTimeout(() => {
-        try {
-          // Dynamic import to load the JSON after app starts
-          const data = require('./data/builds.json');
-          if (isMounted) {
-            setBuilds(data);
-            setLoading(false);
-          }
-        } catch (err) {
-          if (isMounted) {
-            setError('Failed to load builds data');
-            setLoading(false);
-          }
-        }
-      }, 100);
-    });
+    // Load immediately without delay
+    try {
+      const data = require('./data/builds.json');
+      if (isMounted) {
+        setBuilds(data);
+        setLoading(false);
+      }
+    } catch (err) {
+      if (isMounted) {
+        setError('Failed to load builds data');
+        setLoading(false);
+      }
+    }
     
     return () => {
       isMounted = false;
@@ -1293,7 +1286,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
               
               const cardColors = cardRole && roleColors[cardRole] 
                 ? roleColors[cardRole] 
-                : { bg: '#0b1226', border: '#1e3a5f', accent: '#7dd3fc' };
+                : { bg: '#0b1226', border: '#1e3a5f', accent: '#ffffff' };
               
               // Alternate card styling for visual variety
               const isEven = idx % 2 === 0;
@@ -1316,7 +1309,11 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                   }
                 ]}>
                   <View>
-                    <TouchableOpacity activeOpacity={0.9} onPress={() => setExpandedIndex(isExpanded ? null : idx)}>
+                    <TouchableOpacity activeOpacity={0.9} onPress={() => {
+                      startTransition(() => {
+                        setExpandedIndex(isExpanded ? null : idx);
+                      });
+                    }}>
                       <View style={styles.cardContent}>
                         <View style={[styles.cardLeft, { borderRightWidth: 2, borderRightColor: cardColors.border + '30', paddingRight: 12, marginRight: 12 }]}>
                           <TouchableOpacity 
@@ -1339,7 +1336,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                         style={styles.godIcon}
                                         contentFit="cover"
                                         cachePolicy="memory-disk"
-                                        transition={200}
+                                        transition={0}
                                         accessibilityLabel={`${title} icon`}
                                         placeholderContentFit="cover"
                                         recyclingKey={`god-${title}`}
@@ -1460,7 +1457,9 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                 style={[styles.buildTab, isActive && styles.buildTabActive]}
                                 onPress={(e) => {
                                   e.stopPropagation();
-                                  setSelectedBuildIndex(prev => ({ ...prev, [idx]: buildIdx }));
+                                  startTransition(() => {
+                                    setSelectedBuildIndex(prev => ({ ...prev, [idx]: buildIdx }));
+                                  });
                                 }}
                               >
                                 <Text style={[styles.buildTabText, isActive && styles.buildTabTextActive]}>
@@ -1496,7 +1495,9 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                       onPress={(e) => {
                                         e.stopPropagation();
                                         if (ability && typeof ability === 'object') {
-                                          setSelectedAbility({ godIndex: idx, abilityKey: key, ability: ability, abilityName });
+                                          startTransition(() => {
+                                            setSelectedAbility({ godIndex: idx, abilityKey: key, ability: ability, abilityName });
+                                          });
                                         }
                                       }}
                                       activeOpacity={0.7}
@@ -1510,7 +1511,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                           style={styles.levelingOrderIcon}
                                           contentFit="cover"
                                           cachePolicy="memory-disk"
-                                          transition={200}
+                                          transition={0}
                                           accessibilityLabel={`${abilityName} ability icon`}
                                         />
                                           );
@@ -1565,7 +1566,9 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                       onPress={(e) => {
                                         e.stopPropagation();
                                         if (ability && typeof ability === 'object') {
-                                          setSelectedAbility({ godIndex: idx, abilityKey: key, ability: ability, abilityName });
+                                          startTransition(() => {
+                                            setSelectedAbility({ godIndex: idx, abilityKey: key, ability: ability, abilityName });
+                                          });
                                         }
                                       }}
                                       activeOpacity={0.7}
@@ -1579,7 +1582,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                           style={styles.levelingOrderIcon}
                                           contentFit="cover"
                                           cachePolicy="memory-disk"
-                                          transition={200}
+                                          transition={0}
                                           accessibilityLabel={`${abilityName} ability icon`}
                                         />
                                           );
@@ -1625,7 +1628,9 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                               onPress={(e) => {
                                 e.stopPropagation();
                                 const aspectName = aspect.name ? aspect.name.replace(/\*\*__|__\*\*/g, '') : 'Aspect';
-                                setSelectedAbility({ godIndex: idx, abilityKey: 'aspect', ability: aspect, abilityName: aspectName });
+                                startTransition(() => {
+                                  setSelectedAbility({ godIndex: idx, abilityKey: 'aspect', ability: aspect, abilityName: aspectName });
+                                });
                               }}
                             >
                               {aspect.icon ? (() => {
@@ -1680,7 +1685,9 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                     style={styles.smallIconSlot}
                                     onPress={(e) => {
                                       e.stopPropagation();
-                                      setSelectedItem({ item: meta, itemName: s });
+                                      startTransition(() => {
+                                        setSelectedItem({ item: meta, itemName: s });
+                                      });
                                     }}
                                   >
                                       <View style={{ position: 'relative' }}>
@@ -1701,7 +1708,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                                   style={styles.smallIconImg}
                                                   contentFit="cover"
                                                   cachePolicy="memory-disk"
-                                                  transition={200}
+                                                  transition={0}
                                                   accessibilityLabel={`${s} item icon`}
                                                   onError={() => {
                                                     setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
@@ -1722,7 +1729,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                                   style={styles.smallIconImg}
                                                   contentFit="cover"
                                                   cachePolicy="memory-disk"
-                                                  transition={200}
+                                                  transition={0}
                                                   accessibilityLabel={`${s} item icon`}
                                                 />
                                               </View>
@@ -1739,7 +1746,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                                 style={styles.smallIconImg}
                                                 contentFit="cover"
                                                 cachePolicy="memory-disk"
-                                                transition={200}
+                                                transition={0}
                                                 accessibilityLabel={`${s} item icon`}
                                               />
                                             </View>
@@ -1795,7 +1802,9 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                   style={styles.iconWrap}
                                   onPress={(e) => {
                                     e.stopPropagation();
-                                    setSelectedItem({ item: meta, itemName: f });
+                                    startTransition(() => {
+                                      setSelectedItem({ item: meta, itemName: f });
+                                    });
                                   }}
                                 >
                                   <View style={{ position: 'relative' }}>
@@ -1816,7 +1825,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                             style={styles.iconImg}
                                             contentFit="cover"
                                             cachePolicy="memory-disk"
-                                            transition={200}
+                                            transition={0}
                                             onError={() => {
                                               setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
                                             }}
@@ -1836,7 +1845,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                             style={styles.iconImg}
                                             contentFit="cover"
                                             cachePolicy="memory-disk"
-                                            transition={200}
+                                            transition={0}
                                             accessibilityLabel={`${f} item icon`}
                                           />
                                         </View>
@@ -1853,7 +1862,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                           style={styles.iconImg}
                                           contentFit="cover"
                                           cachePolicy="memory-disk"
-                                          transition={200}
+                                          transition={0}
                                           accessibilityLabel={`${f} item icon`}
                                         />
                                       </View>
@@ -1899,7 +1908,11 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                     <TouchableOpacity
                                       key={tipIdx}
                                       style={styles.tipButton}
-                                      onPress={() => setSelectedTip({ tip, tipIndex: tipIdx + 1, godIndex: idx })}
+                                      onPress={() => {
+                                        startTransition(() => {
+                                          setSelectedTip({ tip, tipIndex: tipIdx + 1, godIndex: idx });
+                                        });
+                                      }}
                                       activeOpacity={0.7}
                                     >
                                       <Text style={styles.tipButtonText}>{tipIdx + 1}</Text>
@@ -2863,14 +2876,14 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   buildTitle: {
-    color: '#7dd3fc',
+    color: '#ffffff',
     fontSize: 15,
     fontWeight: '700',
     marginTop: 8,
     marginBottom: 12,
     paddingHorizontal: 12,
     paddingVertical: 10,
-    backgroundColor: '#0f1724',
+    backgroundColor: '#9b760b',
     borderRadius: 10,
     borderLeftWidth: 4,
     borderLeftColor: '#1e90ff',
@@ -3439,7 +3452,11 @@ export default function App() {
         </TouchableOpacity>
         <TouchableOpacity
           style={[navStyles.navButton, currentPage === 'builds' && navStyles.navButtonActive]}
-          onPress={() => setCurrentPage('builds')}
+          onPress={() => {
+            startTransition(() => {
+              setCurrentPage('builds');
+            });
+          }}
         >
           <Text style={[navStyles.navButtonText, currentPage === 'builds' && navStyles.navButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit>
             🛠️ Builds
@@ -3447,7 +3464,11 @@ export default function App() {
         </TouchableOpacity>
         <TouchableOpacity
           style={[navStyles.navButton, currentPage === 'homepage' && navStyles.navButtonActive]}
-          onPress={() => setCurrentPage('homepage')}
+          onPress={() => {
+            startTransition(() => {
+              setCurrentPage('homepage');
+            });
+          }}
         >
           <Text style={[navStyles.navButtonText, currentPage === 'homepage' && navStyles.navButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit>
             🏠 Home
@@ -3455,7 +3476,11 @@ export default function App() {
         </TouchableOpacity>
         <TouchableOpacity
           style={[navStyles.navButton, currentPage === 'patchhub' && navStyles.navButtonActive]}
-          onPress={() => setCurrentPage('patchhub')}
+          onPress={() => {
+            startTransition(() => {
+              setCurrentPage('patchhub');
+            });
+          }}
         >
           <Text style={[navStyles.navButtonText, currentPage === 'patchhub' && navStyles.navButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit>
             📰 Patch Hub
@@ -3463,7 +3488,11 @@ export default function App() {
         </TouchableOpacity>
         <TouchableOpacity
           style={[navStyles.navButton, currentPage === 'more' && navStyles.navButtonActive]}
-          onPress={() => setCurrentPage('more')}
+          onPress={() => {
+            startTransition(() => {
+              setCurrentPage('more');
+            });
+          }}
         >
           <Text style={[navStyles.navButtonText, currentPage === 'more' && navStyles.navButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit>
             🎮 More
@@ -3488,8 +3517,10 @@ export default function App() {
           <TouchableOpacity
             style={[navStyles.subNavButton, databaseSubTab === 'items' && navStyles.subNavButtonActive]}
             onPress={() => {
-              setCurrentPage('data');
-              setDatabaseSubTab('items');
+              startTransition(() => {
+                setCurrentPage('data');
+                setDatabaseSubTab('items');
+              });
             }}
           >
             <Text style={[navStyles.subNavButtonText, databaseSubTab === 'items' && navStyles.subNavButtonTextActive]}>
@@ -3499,8 +3530,10 @@ export default function App() {
           <TouchableOpacity
             style={[navStyles.subNavButton, databaseSubTab === 'gamemodes' && navStyles.subNavButtonActive]}
             onPress={() => {
-              setCurrentPage('data');
-              setDatabaseSubTab('gamemodes');
+              startTransition(() => {
+                setCurrentPage('data');
+                setDatabaseSubTab('gamemodes');
+              });
             }}
           >
             <Text style={[navStyles.subNavButtonText, databaseSubTab === 'gamemodes' && navStyles.subNavButtonTextActive]}>
@@ -3510,8 +3543,10 @@ export default function App() {
           <TouchableOpacity
             style={[navStyles.subNavButton, databaseSubTab === 'mechanics' && navStyles.subNavButtonActive]}
             onPress={() => {
-              setCurrentPage('data');
-              setDatabaseSubTab('mechanics');
+              startTransition(() => {
+                setCurrentPage('data');
+                setDatabaseSubTab('mechanics');
+              });
             }}
           >
             <Text style={[navStyles.subNavButtonText, databaseSubTab === 'mechanics' && navStyles.subNavButtonTextActive]}>
@@ -3526,8 +3561,10 @@ export default function App() {
           <TouchableOpacity
             style={[navStyles.subNavButton, buildsSubTab === 'community' && navStyles.subNavButtonActive]}
             onPress={() => {
-              setBuildsSubTab('community');
-              setCurrentPage('builds');
+              startTransition(() => {
+                setBuildsSubTab('community');
+                setCurrentPage('builds');
+              });
             }}
           >
             <Text style={[navStyles.subNavButtonText, buildsSubTab === 'community' && navStyles.subNavButtonTextActive]}>
@@ -3537,8 +3574,10 @@ export default function App() {
           <TouchableOpacity
             style={[navStyles.subNavButton, buildsSubTab === 'guides' && navStyles.subNavButtonActive]}
             onPress={() => {
-              setBuildsSubTab('guides');
-              setCurrentPage('builds');
+              startTransition(() => {
+                setBuildsSubTab('guides');
+                setCurrentPage('builds');
+              });
             }}
           >
             <Text style={[navStyles.subNavButtonText, buildsSubTab === 'guides' && navStyles.subNavButtonTextActive]}>
@@ -3548,8 +3587,10 @@ export default function App() {
           <TouchableOpacity
             style={[navStyles.subNavButton, (buildsSubTab === 'custom' || currentPage === 'custombuild') && navStyles.subNavButtonActive]}
             onPress={() => {
-              setBuildsSubTab('custom');
-              setCurrentPage('custombuild');
+              startTransition(() => {
+                setBuildsSubTab('custom');
+                setCurrentPage('custombuild');
+              });
             }}
           >
             <Text style={[navStyles.subNavButtonText, (buildsSubTab === 'custom' || currentPage === 'custombuild') && navStyles.subNavButtonTextActive]}>
@@ -3559,8 +3600,10 @@ export default function App() {
           <TouchableOpacity
             style={[navStyles.subNavButton, buildsSubTab === 'mybuilds' && navStyles.subNavButtonActive]}
             onPress={() => {
-              setBuildsSubTab('mybuilds');
-              setCurrentPage('builds');
+              startTransition(() => {
+                setBuildsSubTab('mybuilds');
+                setCurrentPage('builds');
+              });
             }}
           >
             <Text style={[navStyles.subNavButtonText, buildsSubTab === 'mybuilds' && navStyles.subNavButtonTextActive]}>
@@ -3574,7 +3617,11 @@ export default function App() {
         <View style={navStyles.subNavBar}>
           <TouchableOpacity
             style={[navStyles.subNavButton, patchHubSubTab === 'simple' && navStyles.subNavButtonActive]}
-            onPress={() => setPatchHubSubTab('simple')}
+            onPress={() => {
+              startTransition(() => {
+                setPatchHubSubTab('simple');
+              });
+            }}
           >
             <Text style={[navStyles.subNavButtonText, patchHubSubTab === 'simple' && navStyles.subNavButtonTextActive]}>
               Simple Summary
@@ -3582,7 +3629,11 @@ export default function App() {
           </TouchableOpacity>
           <TouchableOpacity
             style={[navStyles.subNavButton, patchHubSubTab === 'catchup' && navStyles.subNavButtonActive]}
-            onPress={() => setPatchHubSubTab('catchup')}
+            onPress={() => {
+              startTransition(() => {
+                setPatchHubSubTab('catchup');
+              });
+            }}
           >
             <Text style={[navStyles.subNavButtonText, patchHubSubTab === 'catchup' && navStyles.subNavButtonTextActive]}>
               Catch Me Up
@@ -3590,7 +3641,11 @@ export default function App() {
           </TouchableOpacity>
           <TouchableOpacity
             style={[navStyles.subNavButton, patchHubSubTab === 'archive' && navStyles.subNavButtonActive]}
-            onPress={() => setPatchHubSubTab('archive')}
+            onPress={() => {
+              startTransition(() => {
+                setPatchHubSubTab('archive');
+              });
+            }}
           >
             <Text style={[navStyles.subNavButtonText, patchHubSubTab === 'archive' && navStyles.subNavButtonTextActive]}>
               Archive
@@ -3603,7 +3658,11 @@ export default function App() {
         <View style={navStyles.subNavBar}>
           <TouchableOpacity
             style={[navStyles.subNavButton, moreSubTab === 'minigames' && navStyles.subNavButtonActive]}
-            onPress={() => setMoreSubTab('minigames')}
+            onPress={() => {
+              startTransition(() => {
+                setMoreSubTab('minigames');
+              });
+            }}
           >
             <Text style={[navStyles.subNavButtonText, moreSubTab === 'minigames' && navStyles.subNavButtonTextActive]}>
               Mini Games
@@ -3611,7 +3670,11 @@ export default function App() {
           </TouchableOpacity>
           <TouchableOpacity
             style={[navStyles.subNavButton, moreSubTab === 'profile' && navStyles.subNavButtonActive]}
-            onPress={() => setMoreSubTab('profile')}
+            onPress={() => {
+              startTransition(() => {
+                setMoreSubTab('profile');
+              });
+            }}
           >
             <Text style={[navStyles.subNavButtonText, moreSubTab === 'profile' && navStyles.subNavButtonTextActive]}>
               Profile
@@ -3619,7 +3682,11 @@ export default function App() {
           </TouchableOpacity>
           <TouchableOpacity
             style={[navStyles.subNavButton, moreSubTab === 'tools' && navStyles.subNavButtonActive]}
-            onPress={() => setMoreSubTab('tools')}
+            onPress={() => {
+              startTransition(() => {
+                setMoreSubTab('tools');
+              });
+            }}
           >
             <Text style={[navStyles.subNavButtonText, moreSubTab === 'tools' && navStyles.subNavButtonTextActive]}>
               Tools

@@ -875,7 +875,22 @@ export default function PatchHubPage({ subTab = 'simple' }) {
       <View key={godName} style={[
         styles.changeCard, 
         { backgroundColor: cardBgColor, borderColor: borderColor },
-        IS_WEB && isArtio && styles.changeCardArtioWeb
+        IS_WEB && isArtio && styles.changeCardArtioWeb,
+        IS_WEB && screenDimensions.width < 1024 && screenDimensions.width >= 768 && {
+          flexBasis: 'calc(50% - 8px)',
+          minWidth: '200px',
+          maxWidth: '300px',
+        },
+        IS_WEB && screenDimensions.width < 768 && screenDimensions.width >= 500 && {
+          flexBasis: 'calc(50% - 8px)',
+          minWidth: '160px',
+          maxWidth: '250px',
+        },
+        IS_WEB && screenDimensions.width < 500 && {
+          flexBasis: 'calc(100% - 0px)',
+          minWidth: '100%',
+          maxWidth: '100%',
+        }
       ]}>
         <View style={styles.changeCardHeader}>
           {localIcon ? (
@@ -1114,7 +1129,24 @@ export default function PatchHubPage({ subTab = 'simple' }) {
     const changeText = changes || summary;
     
     return (
-      <View key={itemName} style={styles.changeCard}>
+      <View key={itemName} style={[
+        styles.changeCard,
+        IS_WEB && screenDimensions.width < 1024 && screenDimensions.width >= 768 && {
+          flexBasis: 'calc(50% - 8px)',
+          minWidth: '200px',
+          maxWidth: '300px',
+        },
+        IS_WEB && screenDimensions.width < 768 && screenDimensions.width >= 500 && {
+          flexBasis: 'calc(50% - 8px)',
+          minWidth: '160px',
+          maxWidth: '250px',
+        },
+        IS_WEB && screenDimensions.width < 500 && {
+          flexBasis: 'calc(100% - 0px)',
+          minWidth: '100%',
+          maxWidth: '100%',
+        }
+      ]}>
         <View style={styles.changeCardHeader}>
           {localItemIcon ? (() => {
             // Handle both single URI and primary/fallback object (same pattern as data.jsx)
@@ -1131,7 +1163,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                   style={styles.changeIcon}
                   contentFit="cover"
                   cachePolicy="memory-disk"
-                  transition={200}
+                  transition={0}
                   onError={() => {
                     setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
                   }}
@@ -1147,7 +1179,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                   style={styles.changeIcon}
                   contentFit="cover"
                   cachePolicy="memory-disk"
-                  transition={200}
+                  transition={0}
                 />
               );
             }
@@ -2145,6 +2177,12 @@ export default function PatchHubPage({ subTab = 'simple' }) {
             <Pressable
               style={[
                 styles.catchUpTooltipContent,
+                IS_WEB && screenDimensions.width < 768 && {
+                  width: screenDimensions.width < 500 ? '92%' : '90%',
+                  maxWidth: screenDimensions.width < 500 ? '92%' : '90%',
+                  maxHeight: screenDimensions.width < 500 ? '75vh' : '70vh',
+                  padding: screenDimensions.width < 500 ? 12 : 14,
+                },
                 !IS_WEB && {
                   width: screenDimensions.width < 500 ? '98%' : screenDimensions.width < 768 ? '95%' : '90%',
                   maxWidth: screenDimensions.width < 500 ? '98%' : screenDimensions.width < 768 ? '95%' : '90%',
@@ -2163,10 +2201,18 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                     flexDirection: 'column', 
                     minHeight: 0,
                     maxHeight: screenDimensions.width < 500 ? screenDimensions.height * 0.8 : screenDimensions.width < 768 ? screenDimensions.height * 0.75 : screenDimensions.height * 0.7,
-                  }) 
+                  }),
+                  ...(IS_WEB && screenDimensions.width < 768 && {
+                    maxHeight: screenDimensions.width < 500 ? '75vh' : '70vh',
+                  })
                 }}>
                   <View style={styles.catchUpTooltipHeader}>
-                    <Text style={styles.catchUpTooltipTitle}>{catchUpTooltip.name}</Text>
+                    <Text style={[
+                      styles.catchUpTooltipTitle,
+                      IS_WEB && screenDimensions.width < 768 && {
+                        fontSize: screenDimensions.width < 500 ? 16 : 18,
+                      }
+                    ]}>{catchUpTooltip.name}</Text>
                     <TouchableOpacity
                       style={styles.catchUpTooltipClose}
                       onPress={() => {
@@ -2178,7 +2224,12 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                     </TouchableOpacity>
                   </View>
                   <ScrollView 
-                    style={styles.catchUpTooltipBody} 
+                    style={[
+                      styles.catchUpTooltipBody,
+                      IS_WEB && screenDimensions.width < 768 && {
+                        maxHeight: screenDimensions.width < 500 ? 350 : 400,
+                      }
+                    ]} 
                     contentContainerStyle={styles.catchUpTooltipBodyContent}
                     nestedScrollEnabled={true}
                     showsVerticalScrollIndicator={true}
@@ -2228,7 +2279,12 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                                         accessibilityLabel={`${abilityName} ability icon`}
                                       />
                                     )}
-                                    <Text style={styles.catchUpTooltipChangeAbility} selectable>
+                                    <Text style={[
+                                      styles.catchUpTooltipChangeAbility,
+                                      IS_WEB && screenDimensions.width < 768 && {
+                                        fontSize: screenDimensions.width < 500 ? 12 : 13,
+                                      }
+                                    ]} selectable>
                                       {abilityName}
                                     </Text>
                                   </View>
@@ -2237,7 +2293,13 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                                   </Text>
                                 </TouchableOpacity>
                                 {isExpanded && (
-                                  <Text style={styles.catchUpTooltipChangeDetails} selectable>
+                                  <Text style={[
+                                    styles.catchUpTooltipChangeDetails,
+                                    IS_WEB && screenDimensions.width < 768 && {
+                                      fontSize: screenDimensions.width < 500 ? 11 : 12,
+                                      lineHeight: screenDimensions.width < 500 ? 15 : 16,
+                                    }
+                                  ]} selectable>
                                     {typeof details === 'string' ? details : Array.isArray(details) ? details.join(' | ') : ''}
                                   </Text>
                                 )}
@@ -2248,7 +2310,13 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                       );
                     })()}
                     {catchUpTooltip.type === 'item' && (
-                      <Text style={styles.catchUpTooltipChangeDetails} pointerEvents="none">
+                      <Text style={[
+                        styles.catchUpTooltipChangeDetails,
+                        IS_WEB && screenDimensions.width < 768 && {
+                          fontSize: screenDimensions.width < 500 ? 11 : 12,
+                          lineHeight: screenDimensions.width < 500 ? 15 : 16,
+                        }
+                      ]} pointerEvents="none">
                         {typeof catchUpTooltip.changes === 'string' 
                           ? catchUpTooltip.changes 
                           : Array.isArray(catchUpTooltip.changes) 
@@ -2945,6 +3013,21 @@ const styles = StyleSheet.create({
       display: 'flex',
       flexDirection: 'column',
       maxHeight: '75%',
+    }),
+    // Mobile web (iPhone Chrome) - smaller sizing
+    ...(IS_WEB && {
+      '@media (max-width: 767px)': {
+        width: '90%',
+        maxWidth: '90%',
+        maxHeight: '70vh',
+        padding: 14,
+      },
+      '@media (max-width: 500px)': {
+        width: '92%',
+        maxWidth: '92%',
+        maxHeight: '75vh',
+        padding: 12,
+      },
     }),
   },
   catchUpTooltipHeader: {
