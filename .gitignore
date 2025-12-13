@@ -63,7 +63,6 @@ Git/
 
 # Sensitive configuration files (contains API keys)
 # Keep the .example file for reference, but ignore the actual config
-config/supabase.js
 !config/supabase.js.example
 
 # Patch notes source files (keep JSON, ignore text sources)
