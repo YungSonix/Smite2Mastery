@@ -4,6 +4,7 @@ import ErrorBoundary from './ErrorBoundary';
 import { useEffect, useMemo } from 'react';
 import * as Updates from 'expo-updates';
 import { Platform } from 'react-native';
+import { Analytics } from '@vercel/analytics/react';
 
 // Global error handler for unhandled promise rejections and errors
 const setupGlobalErrorHandlers = () => {
@@ -183,6 +184,7 @@ export default function RootLayout() {
     <ErrorBoundary>
       <SafeAreaProvider>
         <Stack screenOptions={screenOptions} />
+        {Platform.OS === 'web' && <Analytics />}
       </SafeAreaProvider>
     </ErrorBoundary>
   );
