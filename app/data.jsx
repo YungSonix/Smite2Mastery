@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect, useRef, Suspense, lazy } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useRef, Suspense, lazy, startTransition } from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,7 +9,6 @@ import {
   Modal,
   Pressable,
   ActivityIndicator,
-  InteractionManager,
   Platform,
   Alert,
   Dimensions,
@@ -463,21 +462,18 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     
     let isMounted = true;
     
-    InteractionManager.runAfterInteractions(() => {
-      setTimeout(() => {
-        try {
-          const data = require('./data/builds.json');
-          if (isMounted) {
-            setBuilds(data);
-            setDataLoading(false);
-          }
-        } catch (err) {
-          if (isMounted) {
-            setDataLoading(false);
-          }
-        }
-      }, 100);
-    });
+    // Load immediately without delay
+    try {
+      const data = require('./data/builds.json');
+      if (isMounted) {
+        setBuilds(data);
+        setDataLoading(false);
+      }
+    } catch (err) {
+      if (isMounted) {
+        setDataLoading(false);
+      }
+    }
     
     return () => {
       isMounted = false;
@@ -637,6 +633,37 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     });
     return Array.from(statSet).sort();
   }, [items]);
+
+  // Memoize card width style calculation based on screen width
+  const getCardWidthStyle = useCallback(() => {
+    if (SCREEN_WIDTH >= 1400) {
+      return IS_WEB 
+        ? { position: 'relative', width: 'calc(16.666% - 8.34px)', minWidth: 140, maxWidth: 160 } // 6 per row
+        : { position: 'relative', width: '16%', minWidth: 140 }; // 6 per row
+    } else if (SCREEN_WIDTH >= 1100) {
+      return IS_WEB
+        ? { position: 'relative', width: 'calc(20% - 8px)', minWidth: 130, maxWidth: 150 } // 5 per row
+        : { position: 'relative', width: '19%', minWidth: 130 }; // 5 per row
+    } else if (SCREEN_WIDTH >= 900) {
+      return IS_WEB
+        ? { position: 'relative', width: 'calc(25% - 7.5px)', minWidth: 120, maxWidth: 140 } // 4 per row
+        : { position: 'relative', width: '24%', minWidth: 120 }; // 4 per row
+    } else {
+      // Mobile and tablets up to 900px: 3 per row (includes 600px and 390px devices)
+      // For web, use calc for precise 3 per row
+      // For native, calculate percentage to ensure 3 per row
+      return IS_WEB
+        ? { position: 'relative', width: 'calc(33.333% - 8px)', minWidth: 0, maxWidth: 'none', flexShrink: 0 } // 3 per row
+        : (() => {
+            const padding = 40; // 20px on each side
+            const gaps = 24; // 12px gap * 2 gaps for 3 items
+            const availableWidth = SCREEN_WIDTH - padding;
+            const itemWidth = (availableWidth - gaps) / 3;
+            const itemWidthPercent = (itemWidth / SCREEN_WIDTH) * 100;
+            return { position: 'relative', width: `${itemWidthPercent}%`, minWidth: 0, flex: 0, flexShrink: 0, maxWidth: 'none' }; // 3 per row
+          })()
+    }
+  }, [SCREEN_WIDTH]);
 
   // Filter gods
   const filteredGods = useMemo(() => {
@@ -1516,7 +1543,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                         style={styles.recipeT1Icon}
                                         contentFit="cover"
                                         cachePolicy="memory-disk"
-                                        transition={200}
+                                        transition={0}
                                         onError={() => {
                                           setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
                                         }}
@@ -1530,7 +1557,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                       style={styles.recipeT1Icon}
                                       contentFit="cover"
                                       cachePolicy="memory-disk"
-                                      transition={200}
+                                      transition={0}
                                     />
                                   );
                                 }
@@ -1587,7 +1614,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                             style={styles.recipeComponentIcon}
                                             contentFit="cover"
                                             cachePolicy="memory-disk"
-                                            transition={200}
+                                            transition={0}
                                             accessibilityLabel={`${compItem.name || compItem.internalName || 'Component'} icon`}
                                             onError={() => {
                                               setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
@@ -1602,7 +1629,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                           style={styles.recipeComponentIcon}
                                           contentFit="cover"
                                           cachePolicy="memory-disk"
-                                          transition={200}
+                                          transition={0}
                                           accessibilityLabel={`${compItem.name || compItem.internalName || 'Component'} icon`}
                                         />
                                       );
@@ -1933,7 +1960,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         style={styles.godPageIcon}
                         contentFit="cover"
                         cachePolicy="memory-disk"
-                        transition={200}
+                        transition={0}
                         accessibilityLabel={`${selectedGod.name || selectedGod.GodName || selectedGod.title || 'God'} icon`}
                       />
                       );
@@ -2471,7 +2498,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               style={styles.selectedSkinImage}
                               contentFit="contain"
                               cachePolicy="memory-disk"
-                              transition={200}
+                              transition={0}
                               accessibilityLabel={`${selectedGod.skins[selectedSkin].name || selectedSkin} skin image`}
                               onError={() => {
                                 setFailedItemIcons(prev => ({ ...prev, [skinKey]: true }));
@@ -2489,7 +2516,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               style={styles.selectedSkinImage}
                               contentFit="contain"
                               cachePolicy="memory-disk"
-                              transition={200}
+                              transition={0}
                               accessibilityLabel={`${selectedGod.skins[selectedSkin].name || selectedSkin} skin image`}
                             />
                           );
@@ -2503,7 +2530,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                             style={styles.selectedSkinImage}
                             contentFit="contain"
                             cachePolicy="memory-disk"
-                            transition={200}
+                            transition={0}
                             accessibilityLabel={`${selectedGod.skins[selectedSkin].name || selectedSkin} skin image`}
                           />
                         );
@@ -2613,7 +2640,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                           style={styles.aspectIcon}
                           resizeMode="cover"
                           cachePolicy="memory-disk"
-                          transition={200}
+                          transition={0}
                         />
                           );
                         }
@@ -2843,7 +2870,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                           style={styles.abilityTooltipIcon}
                           contentFit="cover"
                           cachePolicy="memory-disk"
-                          transition={200}
+                          transition={0}
                             />
                           );
                         }
@@ -4735,50 +4762,28 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                 const godIcon = (god.icon || god.GodIcon || (god.abilities && god.abilities.A01 && god.abilities.A01.icon)) || null;
                 const uniqueKey = name + (god.GodName || god.name || idx);
                 
-                // Responsive width calculation - works for both web and mobile
-                const cardWidthStyle = (() => {
-                  if (SCREEN_WIDTH >= 1400) {
-                    return IS_WEB 
-                      ? { position: 'relative', width: 'calc(16.666% - 8.34px)', minWidth: 140, maxWidth: 160 } // 6 per row
-                      : { position: 'relative', width: '16%', minWidth: 140 }; // 6 per row
-                  } else if (SCREEN_WIDTH >= 1100) {
-                    return IS_WEB
-                      ? { position: 'relative', width: 'calc(20% - 8px)', minWidth: 130, maxWidth: 150 } // 5 per row
-                      : { position: 'relative', width: '19%', minWidth: 130 }; // 5 per row
-                  } else if (SCREEN_WIDTH >= 768) {
-                    return IS_WEB
-                      ? { position: 'relative', width: 'calc(25% - 7.5px)', minWidth: 120, maxWidth: 140 } // 4 per row
-                      : { position: 'relative', width: '24%', minWidth: 120 }; // 4 per row
-                  } else {
-                    // Mobile: 3 per row for all mobile screens
-                    // Calculate width accounting for gap (12px * 2 gaps = 24px) and padding (20px * 2 = 40px)
-                    const padding = 40; // 20px on each side
-                    const gaps = 24; // 12px gap * 2 gaps for 3 items
-                    const availableWidth = SCREEN_WIDTH - padding;
-                    const itemWidth = (availableWidth - gaps) / 3;
-                    const itemWidthPercent = (itemWidth / SCREEN_WIDTH) * 100;
-                    
-                    return IS_WEB
-                      ? { position: 'relative', width: 'calc(33.333% - 6.67px)', minWidth: 100, maxWidth: 130 } // 3 per row
-                      : { position: 'relative', width: `${itemWidthPercent}%`, minWidth: Math.max(itemWidth - 5, 90), flex: 0, maxWidth: itemWidth + 5 }; // 3 per row - calculated width
-                  }
-                })();
+                // Use memoized card width style
+                const cardWidthStyle = getCardWidthStyle();
                 
                 return (
                   <View key={uniqueKey} style={cardWidthStyle}>
                     <TouchableOpacity
                       style={[styles.card, showGodSkins && styles.cardWithSkin]}
                       onPress={() => {
-                        setSelectedGod(god);
-                        setSkinsExpanded(false);
-                        setSelectedSkin(null);
-                        setLoreExpanded(false);
-                        setAbilitiesExpanded(false);
-                        setAspectExpanded(false);
-                        setPassiveExpanded(false);
-                        setSelectedAbility(null);
-                        setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
+                        // Use startTransition for instant UI feedback, then update state
+                        startTransition(() => {
+                          setSelectedGod(god);
+                          setSkinsExpanded(false);
+                          setSelectedSkin(null);
+                          setLoreExpanded(false);
+                          setAbilitiesExpanded(false);
+                          setAspectExpanded(false);
+                          setPassiveExpanded(false);
+                          setSelectedAbility(null);
+                          setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
+                        });
                       }}
+                      activeOpacity={0.7}
                     >
                       {/* Patch indicator badge */}
                       {god.latestPatchChange && (
@@ -4877,7 +4882,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                 style={[styles.cardIcon, styles.cardIconSkin]}
                                 contentFit="contain"
                                 cachePolicy="memory-disk"
-                                transition={200}
+                                transition={0}
                                 onError={() => {
                                   setFailedItemIcons(prev => ({ ...prev, [skinKey]: true }));
                                 }}
@@ -4893,7 +4898,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                 style={[styles.cardIcon, styles.cardIconSkin]}
                                 contentFit="contain"
                                 cachePolicy="memory-disk"
-                                transition={200}
+                                transition={0}
                               />
                             );
                           }
@@ -4905,7 +4910,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               style={[styles.cardIcon, styles.cardIconSkin]}
                               contentFit="contain"
                               cachePolicy="memory-disk"
-                              transition={200}
+                              transition={0}
                             />
                           );
                         }
@@ -4920,7 +4925,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                             style={styles.cardIcon}
                             contentFit="cover"
                             cachePolicy="memory-disk"
-                            transition={200}
+                            transition={0}
                             accessibilityLabel={`${name} icon`}
                           />
                         );
@@ -4939,7 +4944,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                             style={styles.cardIcon}
                             contentFit="cover"
                             cachePolicy="memory-disk"
-                            transition={200}
+                            transition={0}
                             accessibilityLabel={`${name} icon`}
                           />
                         );
@@ -4971,40 +4976,20 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                 const modIcon = vulcanModItemIcons[name] || null;
                 const uniqueKey = (item.internalName || item.name || name) + idx;
                 
-                // Responsive width calculation - works for both web and mobile
-                const cardWidthStyle = (() => {
-                  if (SCREEN_WIDTH >= 1400) {
-                    return IS_WEB 
-                      ? { position: 'relative', width: 'calc(16.666% - 8.34px)', minWidth: 140, maxWidth: 160 } // 6 per row
-                      : { position: 'relative', width: '16%', minWidth: 140 }; // 6 per row
-                  } else if (SCREEN_WIDTH >= 1100) {
-                    return IS_WEB
-                      ? { position: 'relative', width: 'calc(20% - 8px)', minWidth: 130, maxWidth: 150 } // 5 per row
-                      : { position: 'relative', width: '19%', minWidth: 130 }; // 5 per row
-                  } else if (SCREEN_WIDTH >= 768) {
-                    return IS_WEB
-                      ? { position: 'relative', width: 'calc(25% - 7.5px)', minWidth: 120, maxWidth: 140 } // 4 per row
-                      : { position: 'relative', width: '24%', minWidth: 120 }; // 4 per row
-                  } else {
-                    // Mobile: 3 per row for all mobile screens
-                    // Calculate width accounting for gap (12px * 2 gaps = 24px) and padding (20px * 2 = 40px)
-                    const padding = 40; // 20px on each side
-                    const gaps = 24; // 12px gap * 2 gaps for 3 items
-                    const availableWidth = SCREEN_WIDTH - padding;
-                    const itemWidth = (availableWidth - gaps) / 3;
-                    const itemWidthPercent = (itemWidth / SCREEN_WIDTH) * 100;
-                    
-                    return IS_WEB
-                      ? { position: 'relative', width: 'calc(33.333% - 6.67px)', minWidth: 100, maxWidth: 130 } // 3 per row
-                      : { position: 'relative', width: `${itemWidthPercent}%`, minWidth: Math.max(itemWidth - 5, 90), flex: 0, maxWidth: itemWidth + 5 }; // 3 per row - calculated width
-                  }
-                })();
+                // Use memoized card width style
+                const cardWidthStyle = getCardWidthStyle();
                 
                 return (
                   <View key={uniqueKey} style={cardWidthStyle}>
                     <TouchableOpacity
                       style={styles.card}
-                      onPress={() => setSelectedItem(item)}
+                      onPress={() => {
+                        // Use startTransition for instant UI feedback
+                        startTransition(() => {
+                          setSelectedItem(item);
+                        });
+                      }}
+                      activeOpacity={0.7}
                     >
                     {/* Patch indicator badge */}
                     {item.latestPatchChange && (
@@ -5027,7 +5012,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         style={styles.cardIcon}
                         contentFit="cover"
                         cachePolicy="memory-disk"
-                        transition={200}
+                        transition={0}
                         accessibilityLabel={`${name} mod icon`}
                       />
                     ) : localItemIcon ? (
@@ -5046,7 +5031,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               style={styles.cardIcon}
                               contentFit="cover"
                               cachePolicy="memory-disk"
-                              transition={200}
+                              transition={0}
                               accessibilityLabel={`${name} item icon`}
                               onError={() => {
                                 setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
@@ -5063,7 +5048,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               style={styles.cardIcon}
                               contentFit="cover"
                               cachePolicy="memory-disk"
-                              transition={200}
+                              transition={0}
                               accessibilityLabel={`${name} item icon`}
                             />
                           );
@@ -5076,7 +5061,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                             style={styles.cardIcon}
                             contentFit="cover"
                             cachePolicy="memory-disk"
-                            transition={200}
+                            transition={0}
                             accessibilityLabel={`${name} item icon`}
                           />
                         );
@@ -5087,7 +5072,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         style={styles.cardIcon}
                         contentFit="cover"
                         cachePolicy="memory-disk"
-                        transition={200}
+                        transition={0}
                       />
                     ) : itemIcon ? (
                       <Image 
@@ -5095,7 +5080,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         style={styles.cardIcon}
                         contentFit="cover"
                         cachePolicy="memory-disk"
-                        transition={200}
+                        transition={0}
                       />
                     ) : (
                       <View style={styles.cardIconFallback}>
