@@ -9,7 +9,8 @@
     "web": "expo start --web",
     "eas-install": "npm ci",
     "prebuild": "npm run eas-install",
-    "verify-icons": "node verify-icons.js"
+    "verify-icons": "node verify-icons.js",
+    "check-env": "node scripts/check-env.js"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",
