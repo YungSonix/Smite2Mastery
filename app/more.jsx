@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Platform,
   ActivityIndicator,
+  Linking,
 } from 'react-native';
 
 const IS_WEB = Platform.OS === 'web';
@@ -102,6 +103,24 @@ export default function MorePage({ activeTab = 'minigames', onNavigateToBuilds, 
               <TouchableOpacity style={styles.card} onPress={() => {}}>
                 <Text style={styles.cardTitle}>Damage Calculator</Text>
                 <Text style={styles.cardDescription}>Coming soon</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          
+          {/* External Links Section */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>External Resources</Text>
+            <View style={styles.grid}>
+              <TouchableOpacity 
+                style={styles.card} 
+                onPress={() => {
+                  Linking.openURL('https://tracker.gg/smite2').catch((err) => {
+                    console.error('Failed to open Tracker.gg:', err);
+                  });
+                }}
+              >
+                <Text style={styles.cardTitle}>Tracker Profile</Text>
+                <Text style={styles.cardDescription}>View stats on Tracker.gg</Text>
               </TouchableOpacity>
             </View>
           </View>

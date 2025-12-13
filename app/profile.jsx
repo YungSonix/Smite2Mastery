@@ -699,8 +699,11 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                     setGeneratedRecoveryCode('');
                     setForgotPasswordUsername('');
                   }}
+                  activeOpacity={0.8}
                 >
-                  <Text style={styles.confirmButtonText}>I've Saved It</Text>
+                  <Text style={styles.confirmButtonText} allowFontScaling={true}>
+                    I've Saved It
+                  </Text>
                 </TouchableOpacity>
               </Pressable>
             </Pressable>
@@ -1162,9 +1165,10 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
     alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 44,
     ...(IS_WEB && {
       cursor: 'pointer',
-      minHeight: 44,
       transition: 'background-color 0.2s',
     }),
   },
@@ -1172,6 +1176,9 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 16,
     fontWeight: '700',
+    textAlign: 'center',
+    includeFontPadding: false,
+    textAlignVertical: 'center',
   },
   forgotPasswordLink: {
     marginTop: 12,
