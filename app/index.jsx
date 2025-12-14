@@ -1425,8 +1425,18 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                   const isPinned = pinnedBuilds.has(buildKey);
                                   
                                   try {
+                                    console.log('🔧 Pin/Unpin build action:', {
+                                      buildKey,
+                                      godName: title,
+                                      isPinned,
+                                      currentUser,
+                                      hasSupabase: !!supabase,
+                                    });
+                                    
                                     const pinnedBuildsData = await storage.getItem(`pinnedBuilds_${currentUser}`);
                                     const pinned = pinnedBuildsData ? JSON.parse(pinnedBuildsData) : [];
+                                    
+                                    console.log('📋 Current pinned builds list:', pinned.length);
                                     
                                     if (isPinned) {
                                       // Unpin
@@ -1439,12 +1449,22 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                       });
                                       
                                       // Sync to Supabase - get existing data first to preserve other fields
+                                      if (!supabase || !supabase.from) {
+                                        console.error('❌ Supabase not available, skipping sync');
+                                        return;
+                                      }
+                                      
                                       try {
-                                        const { data: existingData } = await supabase
+                                        console.log('🔄 Syncing unpinned build to Supabase...');
+                                        const { data: existingData, error: fetchError } = await supabase
                                           .from('user_data')
                                           .select('pinned_builds, pinned_gods, saved_builds')
                                           .eq('username', currentUser)
                                           .single();
+                                        
+                                        if (fetchError && fetchError.code !== 'PGRST116') {
+                                          console.error('❌ Error fetching existing data:', fetchError);
+                                        }
                                         
                                         const { error } = await supabase
                                           .from('user_data')
@@ -1457,13 +1477,18 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                           }, {
                                             onConflict: 'username'
                                           });
-                                        if (error && error.code !== 'MISSING_CONFIG') {
-                                          console.error('Error syncing unpinned build to Supabase:', error);
-                                        } else if (!error) {
-                                          console.log('✅ Unpinned build synced to Supabase');
+                                        
+                                        if (error) {
+                                          if (error.code === 'MISSING_CONFIG') {
+                                            console.log('⚠️ Supabase not configured, skipping sync');
+                                          } else {
+                                            console.error('❌ Error syncing unpinned build to Supabase:', error);
+                                          }
+                                        } else {
+                                          console.log('✅ Unpinned build synced to Supabase successfully');
                                         }
                                       } catch (supabaseError) {
-                                        console.error('Error syncing to Supabase:', supabaseError);
+                                        console.error('❌ Exception syncing to Supabase:', supabaseError);
                                       }
                                     } else {
                                       // Pin
@@ -1481,12 +1506,26 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                       setPinnedBuilds(prev => new Set(prev).add(buildKey));
                                       
                                       // Sync to Supabase - get existing data first to preserve other fields
+                                      if (!supabase || !supabase.from) {
+                                        console.error('❌ Supabase not available, skipping sync');
+                                        return;
+                                      }
+                                      
                                       try {
-                                        const { data: existingData } = await supabase
+                                        console.log('🔄 Syncing pinned build to Supabase...', {
+                                          buildKey,
+                                          godName: title,
+                                          totalPinned: pinned.length,
+                                        });
+                                        const { data: existingData, error: fetchError } = await supabase
                                           .from('user_data')
                                           .select('pinned_builds, pinned_gods, saved_builds')
                                           .eq('username', currentUser)
                                           .single();
+                                        
+                                        if (fetchError && fetchError.code !== 'PGRST116') {
+                                          console.error('❌ Error fetching existing data:', fetchError);
+                                        }
                                         
                                         const { error } = await supabase
                                           .from('user_data')
@@ -1499,13 +1538,18 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                           }, {
                                             onConflict: 'username'
                                           });
-                                        if (error && error.code !== 'MISSING_CONFIG') {
-                                          console.error('Error syncing pinned build to Supabase:', error);
-                                        } else if (!error) {
-                                          console.log('✅ Pinned build synced to Supabase:', pinned.length, 'builds');
+                                        
+                                        if (error) {
+                                          if (error.code === 'MISSING_CONFIG') {
+                                            console.log('⚠️ Supabase not configured, skipping sync');
+                                          } else {
+                                            console.error('❌ Error syncing pinned build to Supabase:', error);
+                                          }
+                                        } else {
+                                          console.log('✅ Pinned build synced to Supabase successfully:', pinned.length, 'total builds');
                                         }
                                       } catch (supabaseError) {
-                                        console.error('Error syncing to Supabase:', supabaseError);
+                                        console.error('❌ Exception syncing to Supabase:', supabaseError);
                                       }
                                     }
                                   } catch (error) {
