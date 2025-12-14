@@ -4814,10 +4814,14 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                           const isPinned = pinnedGods.has(godName);
                           
                           try {
+                            // Import supabase
+                            const { supabase } = require('./config/supabase');
+                            
                             const pinnedGodsData = await storage.getItem(`pinnedGods_${currentUser}`);
                             const pinnedGodsList = pinnedGodsData ? JSON.parse(pinnedGodsData) : [];
                             
                             if (isPinned) {
+                              // Unpin
                               const updated = pinnedGodsList.filter(g => (g.name || g.GodName) !== godName);
                               await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(updated));
                               setPinnedGods(prev => {
@@ -4825,15 +4829,55 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                 next.delete(godName);
                                 return next;
                               });
+                              
+                              // Sync to Supabase
+                              try {
+                                const { error } = await supabase
+                                  .from('user_data')
+                                  .upsert({
+                                    username: currentUser,
+                                    pinned_gods: updated,
+                                    updated_at: new Date().toISOString(),
+                                  }, {
+                                    onConflict: 'username'
+                                  });
+                                if (error && error.code !== 'MISSING_CONFIG') {
+                                  console.error('Error syncing unpinned god to Supabase:', error);
+                                }
+                              } catch (supabaseError) {
+                                console.error('Error syncing to Supabase:', supabaseError);
+                              }
                             } else {
-                              pinnedGodsList.push({
+                              // Pin
+                              const newPinnedGod = {
                                 name: god.name || god.GodName,
                                 GodName: god.GodName,
                                 internalName: god.internalName,
                                 icon: god.icon || god.GodIcon,
-                              });
+                              };
+                              pinnedGodsList.push(newPinnedGod);
                               await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(pinnedGodsList));
                               setPinnedGods(prev => new Set(prev).add(godName));
+                              
+                              // Sync to Supabase
+                              try {
+                                const { error } = await supabase
+                                  .from('user_data')
+                                  .upsert({
+                                    username: currentUser,
+                                    pinned_gods: pinnedGodsList,
+                                    updated_at: new Date().toISOString(),
+                                  }, {
+                                    onConflict: 'username'
+                                  });
+                                if (error && error.code !== 'MISSING_CONFIG') {
+                                  console.error('Error syncing pinned god to Supabase:', error);
+                                } else if (!error) {
+                                  console.log('✅ Pinned god synced to Supabase');
+                                }
+                              } catch (supabaseError) {
+                                console.error('Error syncing to Supabase:', supabaseError);
+                              }
                             }
                           } catch (error) {
                             Alert.alert('Error', 'Failed to pin/unpin god. Please try again.');

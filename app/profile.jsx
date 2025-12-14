@@ -817,20 +817,27 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         console.log('RPC set_current_user not available, continuing...');
       }
       
-      // Get existing data to merge (don't overwrite other fields)
-      const { data: existingData } = await supabase
-        .from('user_data')
-        .select('pinned_builds, pinned_gods, saved_builds')
-        .eq('username', currentUser)
-        .single();
+      // Ensure we're sending arrays, not null/undefined
+      const buildsToSaveArray = Array.isArray(buildsToSave) ? buildsToSave : [];
+      const godsToSaveArray = Array.isArray(godsToSave) ? godsToSave : [];
+      const savedToSaveArray = Array.isArray(savedToSave) ? savedToSave : [];
+      
+      console.log('Sending to Supabase:', {
+        pinned_builds: buildsToSaveArray.length,
+        pinned_gods: godsToSaveArray.length,
+        saved_builds: savedToSaveArray.length,
+        buildsType: Array.isArray(buildsToSave),
+        godsType: Array.isArray(godsToSave),
+        savedType: Array.isArray(savedToSave),
+      });
       
       const { error } = await supabase
         .from('user_data')
         .upsert({
           username: currentUser,
-          pinned_builds: buildsToSave,
-          pinned_gods: godsToSave,
-          saved_builds: savedToSave,
+          pinned_builds: buildsToSaveArray,
+          pinned_gods: godsToSaveArray,
+          saved_builds: savedToSaveArray,
           updated_at: new Date().toISOString(),
         }, {
           onConflict: 'username'
@@ -838,10 +845,12 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       
       if (!error) {
         console.log('✅ Supabase upsert successful:', {
-          pinned_builds: Array.isArray(buildsToSave) ? buildsToSave.length : 'not array',
-          pinned_gods: Array.isArray(godsToSave) ? godsToSave.length : 'not array',
-          saved_builds: Array.isArray(savedToSave) ? savedToSave.length : 'not array',
+          pinned_builds: buildsToSaveArray.length,
+          pinned_gods: godsToSaveArray.length,
+          saved_builds: savedToSaveArray.length,
         });
+      } else {
+        console.error('❌ Supabase upsert error:', error);
       }
       
       if (error && error.code === 'MISSING_CONFIG') {
