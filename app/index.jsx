@@ -161,7 +161,7 @@ const storage = {
   },
 };
 
-function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = false }) {
+function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = false, onNavigateToGod = null }) {
   const [builds, setBuilds] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -175,8 +175,16 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
   const [selectedItem, setSelectedItem] = useState(null); // { item, itemName }
   const [selectedTip, setSelectedTip] = useState(null); // { tip, tipIndex, godIndex }
   const [failedItemIcons, setFailedItemIcons] = useState({}); // Track which item icons failed to load
-  const [activeTab, setActiveTab] = useState(initialTab === 'guides' ? 'guides' : 'builds'); // 'builds' or 'guides'
+  const [activeTab, setActiveTab] = useState(initialTab === 'guides' ? 'guides' : initialTab === 'randomizer' ? 'randomizer' : 'builds'); // 'builds', 'guides', or 'randomizer'
   const [pinnedBuilds, setPinnedBuilds] = useState(new Set()); // Track pinned builds
+  // Randomizer state
+  const [randomGod, setRandomGod] = useState(null);
+  const [randomItems, setRandomItems] = useState(Array(7).fill(null));
+  const [randomRelic, setRandomRelic] = useState(null);
+  const [godRerolls, setGodRerolls] = useState(3);
+  const [itemRerolls, setItemRerolls] = useState(3);
+  const [selectedRandomItem, setSelectedRandomItem] = useState(null); // { item, itemName } for tooltip
+  const [aspectActive, setAspectActive] = useState(false); // Track if aspect is active
   
   // Load pinned builds from storage
   useEffect(() => {
@@ -575,15 +583,653 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                 Guides
               </Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.tabButton, activeTab === 'randomizer' && styles.tabButtonActive]}
+              onPress={() => setActiveTab('randomizer')}
+              activeOpacity={0.7}
+            >
+              <Text style={[styles.tabButtonText, activeTab === 'randomizer' && styles.tabButtonTextActive]}>
+                Randomizer
+              </Text>
+            </TouchableOpacity>
           </View>
         )}
         
         {activeTab === 'builds' && (
           <Text style={styles.headerSub}>Curated Builds (Made by the Mentor Team)</Text>
         )}
+        {activeTab === 'randomizer' && (
+          <Text style={styles.headerSub}>Random God & Build Generator</Text>
+        )}
       </View>
 
-      {activeTab === 'guides' ? (
+      {activeTab === 'randomizer' ? (
+        <ScrollView 
+          style={styles.guidesContainer} 
+          contentContainerStyle={styles.guidesContentContainer}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* Randomizer Section */}
+          <View style={randomizerStyles.randomizerContainer}>
+            {/* Main Randomize All Button */}
+            <View style={randomizerStyles.randomizerSection}>
+              <TouchableOpacity
+                style={randomizerStyles.randomizeAllButton}
+                onPress={() => {
+                  // Randomize God (always randomize, but only decrement rerolls if available)
+                  if (gods.length > 0) {
+                    const randomGodIndex = Math.floor(Math.random() * gods.length);
+                    const newGod = gods[randomGodIndex];
+                    setRandomGod(newGod);
+                    // Randomly activate aspect if god has one
+                    if (newGod && newGod.aspect) {
+                      setAspectActive(Math.random() > 0.5); // 50% chance to be active
+                    } else {
+                      setAspectActive(false);
+                    }
+                    if (godRerolls > 0) {
+                      setGodRerolls(godRerolls - 1);
+                    }
+                  }
+                  
+                  // Randomize Items (always randomize, but only decrement rerolls if available)
+                  // 1 starter (mandatory) + up to 3 active items + remaining tier 3 items = 7 total
+                  if (items.length > 0) {
+                    // Filter starter items
+                    const starterItems = items.filter(item => {
+                      if (!item || typeof item !== 'object') return false;
+                      return item.starter === true && (item.name || item.internalName);
+                    });
+                    
+                    // Filter active items (not consumables, have active: true)
+                    const activeItems = items.filter(item => {
+                      if (!item || typeof item !== 'object') return false;
+                      return item.active === true && 
+                             !item.relic && 
+                             !item.consumable && 
+                             !item.starter &&
+                             (item.tier || item.totalCost || (item.stats && Object.keys(item.stats).length > 0)) &&
+                             (!item.stepCost || item.tier) &&
+                             (item.name || item.internalName);
+                    });
+                    
+                    // Filter tier 3 items (not active, not starter, not consumable)
+                    const tier3Items = items.filter(item => {
+                      if (!item || typeof item !== 'object') return false;
+                      return item.tier === 3 && 
+                             !item.relic && 
+                             !item.consumable && 
+                             !item.starter &&
+                             item.active !== true &&
+                             (item.name || item.internalName);
+                    });
+                    
+                    if (starterItems.length > 0) {
+                      const newItems = [];
+                      
+                      // 1. Add 1 starter item (mandatory)
+                      const randomStarterIndex = Math.floor(Math.random() * starterItems.length);
+                      newItems.push(starterItems[randomStarterIndex]);
+                      
+                      // 2. Add up to 3 active items
+                      const numActiveItems = Math.min(3, activeItems.length);
+                      const selectedActiveItems = [];
+                      for (let i = 0; i < numActiveItems; i++) {
+                        const randomActiveIndex = Math.floor(Math.random() * activeItems.length);
+                        selectedActiveItems.push(activeItems[randomActiveIndex]);
+                      }
+                      newItems.push(...selectedActiveItems);
+                      
+                      // 3. Fill remaining slots with tier 3 items (up to 7 total)
+                      const remainingSlots = 7 - newItems.length;
+                      for (let i = 0; i < remainingSlots && tier3Items.length > 0; i++) {
+                        const randomTier3Index = Math.floor(Math.random() * tier3Items.length);
+                        newItems.push(tier3Items[randomTier3Index]);
+                      }
+                      
+                      // Ensure we have exactly 7 items (pad with null if needed)
+                      while (newItems.length < 7) {
+                        newItems.push(null);
+                      }
+                      
+                      setRandomItems(newItems.slice(0, 7));
+                      if (itemRerolls > 0) {
+                        setItemRerolls(itemRerolls - 1);
+                      }
+                    }
+                  }
+                  
+                  // Randomize Relic (always available, no reroll limit)
+                  const relics = items.filter(item => {
+                    if (!item || typeof item !== 'object') return false;
+                    return item.relic === true;
+                  });
+                  
+                  if (relics.length > 0) {
+                    const randomRelicIndex = Math.floor(Math.random() * relics.length);
+                    setRandomRelic(relics[randomRelicIndex]);
+                  }
+                }}
+              >
+                <Text style={randomizerStyles.randomizeAllButtonText}>
+                   Randomize All
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* God Randomizer */}
+            <View style={randomizerStyles.randomizerSection}>
+              <Text style={randomizerStyles.randomizerTitle}>Random God</Text>
+              <View style={randomizerStyles.randomizerGodContainer}>
+                {randomGod ? (
+                  <>
+                    <TouchableOpacity
+                      style={randomizerStyles.randomizerGodCard}
+                      onPress={() => {
+                        if (randomGod) {
+                          if (onNavigateToGod) {
+                            onNavigateToGod(randomGod);
+                          } else if (onGodIconPress) {
+                            onGodIconPress(randomGod);
+                          }
+                        }
+                      }}
+                      activeOpacity={0.7}
+                    >
+                      <Image
+                        source={getLocalGodAsset(randomGod.icon || randomGod.GodIcon || (randomGod.abilities && randomGod.abilities.A01 && randomGod.abilities.A01.icon))}
+                        style={randomizerStyles.randomizerGodIcon}
+                        resizeMode="cover"
+                      />
+                      <Text style={randomizerStyles.randomizerGodName}>
+                        {randomGod.name || randomGod.GodName || randomGod.title || randomGod.displayName || 'Unknown'}
+                      </Text>
+                    </TouchableOpacity>
+                    
+                    {/* Aspect Slot */}
+                    {randomGod.aspect && (
+                      <View
+                        style={[
+                          randomizerStyles.randomizerAspectSlot,
+                          aspectActive && randomizerStyles.randomizerAspectSlotActive
+                        ]}
+                      >
+                        {randomGod.aspect.icon ? (
+                          <Image
+                            source={getLocalGodAsset(randomGod.aspect.icon)}
+                            style={randomizerStyles.randomizerAspectIcon}
+                            resizeMode="cover"
+                          />
+                        ) : (
+                          <View style={randomizerStyles.randomizerAspectIconPlaceholder}>
+                            <Text style={randomizerStyles.randomizerAspectIconPlaceholderText}>A</Text>
+                          </View>
+                        )}
+                        <Text style={randomizerStyles.randomizerAspectName} numberOfLines={2}>
+                          {randomGod.aspect.name || 'Aspect'}
+                        </Text>
+                        {aspectActive && (
+                          <View style={randomizerStyles.randomizerAspectActiveIndicator}>
+                            <Text style={randomizerStyles.randomizerAspectActiveText}>✓</Text>
+                          </View>
+                        )}
+                      </View>
+                    )}
+                  </>
+                ) : (
+                  <View style={randomizerStyles.randomizerGodPlaceholder}>
+                    <Text style={randomizerStyles.randomizerPlaceholderText}>No God Selected</Text>
+                  </View>
+                )}
+              </View>
+              <View style={randomizerStyles.randomizerButtonRow}>
+                <TouchableOpacity
+                  style={[randomizerStyles.randomizerButton, godRerolls === 0 && randomizerStyles.randomizerButtonDisabled]}
+                  onPress={() => {
+                    if (godRerolls > 0 && gods.length > 0) {
+                      const randomIndex = Math.floor(Math.random() * gods.length);
+                      const newGod = gods[randomIndex];
+                      setRandomGod(newGod);
+                      // Randomly activate aspect if god has one
+                      if (newGod && newGod.aspect) {
+                        setAspectActive(Math.random() > 0.5); // 50% chance to be active
+                      } else {
+                        setAspectActive(false);
+                      }
+                      setGodRerolls(godRerolls - 1);
+                    }
+                  }}
+                  disabled={godRerolls === 0}
+                >
+                  <Text style={randomizerStyles.randomizerButtonText}>
+                    Randomize God {godRerolls > 0 ? `(${godRerolls} left)` : '(No rerolls)'}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[randomizerStyles.randomizerResetButton]}
+                  onPress={() => {
+                    setGodRerolls(3);
+                    setRandomGod(null);
+                    setAspectActive(false);
+                  }}
+                >
+                  <Text style={randomizerStyles.randomizerResetButtonText}>Reset</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {/* Items Randomizer */}
+            <View style={randomizerStyles.randomizerSection}>
+              <Text style={randomizerStyles.randomizerTitle}>Random Build</Text>
+              
+              {/* Starter Item */}
+              <View style={randomizerStyles.randomizerStarterSection}>
+                <Text style={randomizerStyles.randomizerSubtitle}>Starter:</Text>
+                <View style={randomizerStyles.randomizerStarterContainer}>
+                  {randomItems[0] ? (
+                    <View style={randomizerStyles.randomizerItemSlotWrapper}>
+                      <TouchableOpacity
+                        style={randomizerStyles.randomizerItemSlot}
+                        onPress={() => {
+                          if (randomItems[0]) {
+                            setSelectedRandomItem({ item: randomItems[0], itemName: randomItems[0].name || randomItems[0].internalName || 'Unknown' });
+                          }
+                        }}
+                        activeOpacity={0.7}
+                      >
+                      {(() => {
+                        const item = randomItems[0];
+                        const localIcon = getLocalItemIcon(item.icon || item.internalName);
+                        if (!localIcon) {
+                          return (
+                            <View style={randomizerStyles.randomizerItemIconPlaceholder}>
+                              <Text style={randomizerStyles.randomizerItemIconPlaceholderText}>?</Text>
+                            </View>
+                          );
+                        }
+                        const imageSource = localIcon.primary || localIcon;
+                        const fallbackSource = localIcon.fallback;
+                        const iconKey = `random-starter-${item.internalName || item.name}`;
+                        const useFallback = failedItemIcons[iconKey];
+                        
+                        if (fallbackSource && !useFallback) {
+                          return (
+                            <Image
+                              source={imageSource}
+                              style={randomizerStyles.randomizerItemIcon}
+                              resizeMode="cover"
+                              onError={() => {
+                                setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+                              }}
+                            />
+                          );
+                        }
+                        if (fallbackSource && useFallback) {
+                          return (
+                            <Image
+                              source={fallbackSource}
+                              style={randomizerStyles.randomizerItemIcon}
+                              resizeMode="cover"
+                            />
+                          );
+                        }
+                        return (
+                          <Image
+                            source={imageSource}
+                            style={randomizerStyles.randomizerItemIcon}
+                            resizeMode="cover"
+                          />
+                        );
+                      })()}
+                      <Text style={randomizerStyles.randomizerItemName} numberOfLines={2}>
+                        {randomItems[0].name || randomItems[0].internalName}
+                      </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={randomizerStyles.randomizerItemRandomizeButton}
+                        onPress={() => {
+                          // Randomize just the starter item
+                          const starterItems = items.filter(item => {
+                            if (!item || typeof item !== 'object') return false;
+                            return item.starter === true && (item.name || item.internalName);
+                          });
+                          
+                          if (starterItems.length > 0) {
+                            const randomIndex = Math.floor(Math.random() * starterItems.length);
+                            const newItems = [...randomItems];
+                            newItems[0] = starterItems[randomIndex];
+                            setRandomItems(newItems);
+                          }
+                        }}
+                        activeOpacity={0.7}
+                      >
+                        <Text style={randomizerStyles.randomizerItemRandomizeButtonText}>RR</Text>
+                      </TouchableOpacity>
+                    </View>
+                  ) : (
+                    <View style={randomizerStyles.randomizerItemPlaceholder}>
+                      <Text style={randomizerStyles.randomizerItemPlaceholderText}>+</Text>
+                    </View>
+                  )}
+                </View>
+              </View>
+
+              {/* Regular Items (6 items) */}
+              <View style={randomizerStyles.randomizerItemsSection}>
+                <Text style={randomizerStyles.randomizerSubtitle}>Items:</Text>
+                <View style={randomizerStyles.randomizerItemsContainer}>
+                  {randomItems.slice(1, 7).map((item, index) => (
+                    <View key={index + 1} style={randomizerStyles.randomizerItemSlotWrapper}>
+                      <TouchableOpacity
+                        style={randomizerStyles.randomizerItemSlot}
+                        onPress={() => {
+                          if (item) {
+                            setSelectedRandomItem({ item, itemName: item.name || item.internalName || 'Unknown' });
+                          }
+                        }}
+                        activeOpacity={0.7}
+                      >
+                      {item ? (
+                        <>
+                          {(() => {
+                            const localIcon = getLocalItemIcon(item.icon || item.internalName);
+                            if (!localIcon) {
+                              return (
+                                <View style={randomizerStyles.randomizerItemIconPlaceholder}>
+                                  <Text style={randomizerStyles.randomizerItemIconPlaceholderText}>?</Text>
+                                </View>
+                              );
+                            }
+                            const imageSource = localIcon.primary || localIcon;
+                            const fallbackSource = localIcon.fallback;
+                            const iconKey = `random-item-${item.internalName || item.name}-${index + 1}`;
+                            const useFallback = failedItemIcons[iconKey];
+                            
+                            if (fallbackSource && !useFallback) {
+                              return (
+                                <Image
+                                  source={imageSource}
+                                  style={randomizerStyles.randomizerItemIcon}
+                                  resizeMode="cover"
+                                  onError={() => {
+                                    setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+                                  }}
+                                />
+                              );
+                            }
+                            if (fallbackSource && useFallback) {
+                              return (
+                                <Image
+                                  source={fallbackSource}
+                                  style={randomizerStyles.randomizerItemIcon}
+                                  resizeMode="cover"
+                                />
+                              );
+                            }
+                            return (
+                              <Image
+                                source={imageSource}
+                                style={randomizerStyles.randomizerItemIcon}
+                                resizeMode="cover"
+                              />
+                            );
+                          })()}
+                          <Text style={randomizerStyles.randomizerItemName} numberOfLines={2}>
+                            {item.name || item.internalName}
+                          </Text>
+                        </>
+                      ) : (
+                        <View style={randomizerStyles.randomizerItemPlaceholder}>
+                          <Text style={randomizerStyles.randomizerItemPlaceholderText}>+</Text>
+                          <Text style={randomizerStyles.randomizerItemNumber}>{index + 2}</Text>
+                        </View>
+                      )}
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={randomizerStyles.randomizerItemRandomizeButton}
+                        onPress={() => {
+                          // Randomize just this single item
+                          // Determine which pool to use based on slot position
+                          // Slots 1-3 (index 0-2) can be active items, slots 4-6 (index 3-5) are tier 3
+                          const slotPosition = index + 1;
+                          let itemPool = [];
+                          
+                          if (slotPosition <= 3) {
+                            // First 3 slots can be active items
+                            const activeItems = items.filter(item => {
+                              if (!item || typeof item !== 'object') return false;
+                              return item.active === true && 
+                                     !item.relic && 
+                                     !item.consumable && 
+                                     !item.starter &&
+                                     (item.tier || item.totalCost || (item.stats && Object.keys(item.stats).length > 0)) &&
+                                     (!item.stepCost || item.tier) &&
+                                     (item.name || item.internalName);
+                            });
+                            
+                            // Also include tier 3 items as fallback
+                            const tier3Items = items.filter(item => {
+                              if (!item || typeof item !== 'object') return false;
+                              return item.tier === 3 && 
+                                     !item.relic && 
+                                     !item.consumable && 
+                                     !item.starter &&
+                                     item.active !== true &&
+                                     (item.name || item.internalName);
+                            });
+                            
+                            itemPool = [...activeItems, ...tier3Items];
+                          } else {
+                            // Slots 4-6 are tier 3 items only
+                            itemPool = items.filter(item => {
+                              if (!item || typeof item !== 'object') return false;
+                              return item.tier === 3 && 
+                                     !item.relic && 
+                                     !item.consumable && 
+                                     !item.starter &&
+                                     item.active !== true &&
+                                     (item.name || item.internalName);
+                            });
+                          }
+                          
+                          if (itemPool.length > 0) {
+                            const randomIndex = Math.floor(Math.random() * itemPool.length);
+                            const newItems = [...randomItems];
+                            newItems[index + 1] = itemPool[randomIndex];
+                            setRandomItems(newItems);
+                          }
+                        }}
+                        activeOpacity={0.7}
+                      >
+                        <Text style={randomizerStyles.randomizerItemRandomizeButtonText}>RR</Text>
+                      </TouchableOpacity>
+                    </View>
+                  ))}
+                </View>
+              </View>
+              <View style={randomizerStyles.randomizerButtonRow}>
+                <TouchableOpacity
+                  style={[randomizerStyles.randomizerButton, itemRerolls === 0 && randomizerStyles.randomizerButtonDisabled]}
+                  onPress={() => {
+                    if (itemRerolls > 0 && items.length > 0) {
+                      // Filter starter items
+                      const starterItems = items.filter(item => {
+                        if (!item || typeof item !== 'object') return false;
+                        return item.starter === true && (item.name || item.internalName);
+                      });
+                      
+                      // Filter active items (not consumables, have active: true)
+                      const activeItems = items.filter(item => {
+                        if (!item || typeof item !== 'object') return false;
+                        return item.active === true && 
+                               !item.relic && 
+                               !item.consumable && 
+                               !item.starter &&
+                               (item.tier || item.totalCost || (item.stats && Object.keys(item.stats).length > 0)) &&
+                               (!item.stepCost || item.tier) &&
+                               (item.name || item.internalName);
+                      });
+                      
+                      // Filter tier 3 items (not active, not starter, not consumable)
+                      const tier3Items = items.filter(item => {
+                        if (!item || typeof item !== 'object') return false;
+                        return item.tier === 3 && 
+                               !item.relic && 
+                               !item.consumable && 
+                               !item.starter &&
+                               item.active !== true &&
+                               (item.name || item.internalName);
+                      });
+                      
+                      if (starterItems.length > 0) {
+                        const newItems = [];
+                        
+                        // 1. Add 1 starter item (mandatory)
+                        const randomStarterIndex = Math.floor(Math.random() * starterItems.length);
+                        newItems.push(starterItems[randomStarterIndex]);
+                        
+                        // 2. Add up to 3 active items
+                        const numActiveItems = Math.min(3, activeItems.length);
+                        const selectedActiveItems = [];
+                        for (let i = 0; i < numActiveItems; i++) {
+                          const randomActiveIndex = Math.floor(Math.random() * activeItems.length);
+                          selectedActiveItems.push(activeItems[randomActiveIndex]);
+                        }
+                        newItems.push(...selectedActiveItems);
+                        
+                        // 3. Fill remaining slots with tier 3 items (up to 7 total)
+                        const remainingSlots = 7 - newItems.length;
+                        for (let i = 0; i < remainingSlots && tier3Items.length > 0; i++) {
+                          const randomTier3Index = Math.floor(Math.random() * tier3Items.length);
+                          newItems.push(tier3Items[randomTier3Index]);
+                        }
+                        
+                        // Ensure we have exactly 7 items (pad with null if needed)
+                        while (newItems.length < 7) {
+                          newItems.push(null);
+                        }
+                        
+                        setRandomItems(newItems.slice(0, 7));
+                        setItemRerolls(itemRerolls - 1);
+                      }
+                    }
+                  }}
+                  disabled={itemRerolls === 0}
+                >
+                  <Text style={randomizerStyles.randomizerButtonText}>
+                    Randomize Items {itemRerolls > 0 ? `(${itemRerolls} left)` : '(No rerolls)'}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[randomizerStyles.randomizerResetButton]}
+                  onPress={() => {
+                    setItemRerolls(3);
+                    setRandomItems(Array(7).fill(null));
+                  }}
+                >
+                  <Text style={randomizerStyles.randomizerResetButtonText}>Reset</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {/* Relic Randomizer */}
+            <View style={randomizerStyles.randomizerSection}>
+              <Text style={randomizerStyles.randomizerTitle}>Random Relic</Text>
+              <View style={randomizerStyles.randomizerRelicContainer}>
+                {randomRelic ? (
+                  <TouchableOpacity
+                    style={randomizerStyles.randomizerRelicSlot}
+                    onPress={() => {
+                      if (randomRelic) {
+                        setSelectedRandomItem({ item: randomRelic, itemName: randomRelic.name || randomRelic.internalName || 'Unknown' });
+                      }
+                    }}
+                    activeOpacity={0.7}
+                  >
+                    {(() => {
+                      const localIcon = getLocalItemIcon(randomRelic.icon || randomRelic.internalName);
+                      if (!localIcon) {
+                        return (
+                          <View style={randomizerStyles.randomizerItemIconPlaceholder}>
+                            <Text style={randomizerStyles.randomizerItemIconPlaceholderText}>?</Text>
+                          </View>
+                        );
+                      }
+                      const imageSource = localIcon.primary || localIcon;
+                      const fallbackSource = localIcon.fallback;
+                      const iconKey = `random-relic-${randomRelic.internalName || randomRelic.name}`;
+                      const useFallback = failedItemIcons[iconKey];
+                      
+                      if (fallbackSource && !useFallback) {
+                        return (
+                          <Image
+                            source={imageSource}
+                            style={randomizerStyles.randomizerItemIcon}
+                            resizeMode="cover"
+                            onError={() => {
+                              setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+                            }}
+                          />
+                        );
+                      }
+                      if (fallbackSource && useFallback) {
+                        return (
+                          <Image
+                            source={fallbackSource}
+                            style={randomizerStyles.randomizerItemIcon}
+                            resizeMode="cover"
+                          />
+                        );
+                      }
+                      return (
+                        <Image
+                          source={imageSource}
+                          style={randomizerStyles.randomizerItemIcon}
+                          resizeMode="cover"
+                        />
+                      );
+                    })()}
+                    <Text style={randomizerStyles.randomizerItemName} numberOfLines={2}>
+                      {randomRelic.name || randomRelic.internalName}
+                    </Text>
+                  </TouchableOpacity>
+                ) : (
+                  <View style={randomizerStyles.randomizerRelicPlaceholder}>
+                    <Text style={randomizerStyles.randomizerPlaceholderText}>No Relic Selected</Text>
+                  </View>
+                )}
+              </View>
+              <View style={randomizerStyles.randomizerButtonRow}>
+                <TouchableOpacity
+                  style={randomizerStyles.randomizerButton}
+                  onPress={() => {
+                    // Filter relics
+                    const relics = items.filter(item => {
+                      if (!item || typeof item !== 'object') return false;
+                      return item.relic === true;
+                    });
+                    
+                    if (relics.length > 0) {
+                      const randomIndex = Math.floor(Math.random() * relics.length);
+                      setRandomRelic(relics[randomIndex]);
+                    }
+                  }}
+                >
+                  <Text style={randomizerStyles.randomizerButtonText}>Randomize Relic</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[randomizerStyles.randomizerResetButton]}
+                  onPress={() => {
+                    setRandomRelic(null);
+                  }}
+                >
+                  <Text style={randomizerStyles.randomizerResetButtonText}>Reset</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+      ) : activeTab === 'guides' ? (
         <ScrollView 
           style={styles.guidesContainer} 
           contentContainerStyle={styles.guidesContentContainer}
@@ -2080,6 +2726,150 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
       </View>
         </>
       )}
+
+      {/* Random Item Tooltip Modal */}
+      <Modal
+        visible={selectedRandomItem !== null}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setSelectedRandomItem(null)}
+      >
+        <Pressable 
+          style={styles.modalOverlay}
+          onPress={() => setSelectedRandomItem(null)}
+        >
+          <Pressable 
+            style={styles.modalContent}
+            onPress={(e) => e.stopPropagation()}
+          >
+            {selectedRandomItem && (
+              <>
+                <View style={styles.modalHeader}>
+                  <View style={styles.modalIconContainer}>
+                    {selectedRandomItem.item && selectedRandomItem.item.icon ? (() => {
+                      const localIcon = getLocalItemIcon(selectedRandomItem.item.icon);
+                      if (localIcon) {
+                        const imageSource = localIcon.primary || localIcon;
+                        const fallbackSource = localIcon.fallback;
+                        const itemKey = `modal-${selectedRandomItem.itemName}`;
+                        const useFallback = failedItemIcons[itemKey];
+                        
+                        if (fallbackSource && !useFallback) {
+                          return (
+                            <Image 
+                              source={imageSource}
+                              style={styles.modalAbilityIcon}
+                              contentFit="cover"
+                              cachePolicy="memory-disk"
+                              transition={200}
+                              onError={() => {
+                                setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
+                              }}
+                            />
+                          );
+                        }
+                        if (fallbackSource && useFallback) {
+                          return (
+                            <Image 
+                              source={fallbackSource}
+                              style={styles.modalAbilityIcon}
+                              contentFit="cover"
+                              cachePolicy="memory-disk"
+                              transition={200}
+                              accessibilityLabel={`${selectedRandomItem.itemName} item icon`}
+                            />
+                          );
+                        }
+                        return (
+                          <Image 
+                            source={imageSource}
+                            style={styles.modalAbilityIcon}
+                            contentFit="cover"
+                            cachePolicy="memory-disk"
+                            transition={200}
+                            accessibilityLabel={`${selectedRandomItem.itemName} item icon`}
+                          />
+                        );
+                      }
+                      return (
+                        <View style={styles.modalAbilityIconFallback}>
+                          <Text style={styles.modalAbilityIconFallbackText}>
+                            {selectedRandomItem.itemName.charAt(0)}
+                          </Text>
+                        </View>
+                      );
+                    })() : (
+                      <View style={styles.modalAbilityIconFallback}>
+                        <Text style={styles.modalAbilityIconFallbackText}>
+                          {selectedRandomItem.itemName.charAt(0)}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                  <Text style={styles.modalTitle}>
+                    {selectedRandomItem.item ? (selectedRandomItem.item.name || selectedRandomItem.itemName) : selectedRandomItem.itemName}
+                  </Text>
+                  <TouchableOpacity 
+                    style={styles.modalCloseButton}
+                    onPress={() => setSelectedRandomItem(null)}
+                  >
+                    <Text style={styles.modalCloseButtonText}>×</Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={styles.modalBody}>
+                  {selectedRandomItem.item && selectedRandomItem.item.tier && (
+                    <Text style={styles.modalTier}>Tier {selectedRandomItem.item.tier} Item</Text>
+                  )}
+
+                  {selectedRandomItem.item && selectedRandomItem.item.totalCost && (
+                    <Text style={[styles.modalCost, { color: '#fbbf24', fontWeight: '700' }]}>
+                      Cost: {selectedRandomItem.item.totalCost} Gold
+                    </Text>
+                  )}
+
+                  {selectedRandomItem.item && selectedRandomItem.item.stats && (
+                    <View style={styles.modalStats}>
+                      <Text style={styles.modalStatsTitle}>Stats:</Text>
+                      {Object.keys(selectedRandomItem.item.stats).map((statKey) => {
+                        const statValue = selectedRandomItem.item.stats[statKey];
+                        let statColor = '#94a3b8';
+                        if (["MaxHealth", "Health", "HP5", "Health Regen"].includes(statKey)) statColor = "#22c55e";
+                        else if (["AttackSpeed", "Critical Chance", "CriticalChance", "Critical Damage", "Attack Speed","Basic Attack Damage", "Criticial Chance", "Critical Damage", "Basic Damage"].includes(statKey)) statColor = "#f97316";
+                        else if (["PhysicalProtection", "Penetration", "Physical Protection"].includes(statKey)) statColor = "#ef4444";
+                        else if (statKey === "Intelligence") statColor = "#a855f7";
+                        else if (statKey === "Strength") statColor = "#facc15";
+                        else if (statKey === "Cooldown Rate") statColor = "#0ea5e9";
+                        else if (statKey === "MagicalProtection") statColor = "#a855f7";
+                        else if (statKey === "Lifesteal") statColor = "#84cc16";
+                        else if (["MaxMana", "MP5", "Mana Regen", "Mana", "Mana Regeneration", "Magical Protection"].includes(statKey)) statColor = "#3b82f6";
+                        
+                        return (
+                          <View key={statKey} style={styles.modalStatRow}>
+                            <Text style={[styles.modalStatLabel, { color: statColor }]}>{statKey}:</Text>
+                            <Text style={styles.modalStatValue}>
+                              {typeof statValue === 'object' ? JSON.stringify(statValue) : statValue}
+                            </Text>
+                          </View>
+                        );
+                      })}
+                    </View>
+                  )}
+
+                  {selectedRandomItem.item && selectedRandomItem.item.passive && (
+                    <View style={styles.modalPassiveContainer}>
+                      <Text style={styles.modalPassiveTitle}>Passive:</Text>
+                      <Text style={styles.modalDescription}>
+                        {selectedRandomItem.item.passive}
+                      </Text>
+                    </View>
+                  )}
+                </View>
+              </>
+            )}
+          </Pressable>
+        </Pressable>
+      </Modal>
 
       {/* Item Tooltip Modal */}
       <Modal
@@ -3741,6 +4531,19 @@ export default function App() {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
+            style={[navStyles.subNavButton, buildsSubTab === 'randomizer' && navStyles.subNavButtonActive]}
+            onPress={() => {
+              startTransition(() => {
+                setBuildsSubTab('randomizer');
+                setCurrentPage('builds');
+              });
+            }}
+          >
+            <Text style={[navStyles.subNavButtonText, buildsSubTab === 'randomizer' && navStyles.subNavButtonTextActive]}>
+              Randomizer
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             style={[navStyles.subNavButton, buildsSubTab === 'mybuilds' && navStyles.subNavButtonActive]}
             onPress={() => {
               startTransition(() => {
@@ -3867,11 +4670,11 @@ export default function App() {
       )}
       
       {/* Builds pages - handle different sub-tabs */}
-      {currentPage === 'builds' && (buildsSubTab === 'community' || buildsSubTab === 'guides') && (
+      {currentPage === 'builds' && (buildsSubTab === 'community' || buildsSubTab === 'guides' || buildsSubTab === 'randomizer') && (
         <View style={navStyles.pageVisible} pointerEvents={currentPage === 'builds' ? 'auto' : 'none'}>
           <BuildsPage 
             key={`builds-page-${buildsSubTab}`}
-            initialTab={buildsSubTab === 'guides' ? 'guides' : 'builds'}
+            initialTab={buildsSubTab === 'guides' ? 'guides' : buildsSubTab === 'randomizer' ? 'randomizer' : 'builds'}
             hideInternalTabs={true}
             onGodIconPress={(god, shouldExpandAbilities = false) => { 
               setGodFromBuilds(god); 
@@ -3879,7 +4682,13 @@ export default function App() {
               setCurrentPage('data');
               setDatabaseSubTab('gods');
               setDataPageKey(prev => prev + 1);
-            }} 
+            }}
+            onNavigateToGod={(god) => {
+              setGodFromBuilds(god);
+              setCurrentPage('data');
+              setDatabaseSubTab('gods');
+              setDataPageKey(prev => prev + 1);
+            }}
           />
         </View>
       )}
@@ -3892,9 +4701,11 @@ export default function App() {
       
       {/* Custom Build page */}
       {(currentPage === 'custombuild' || (currentPage === 'builds' && buildsSubTab === 'custom')) && (
-        <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
-          <CustomBuildPage />
-        </Suspense>
+        <View style={navStyles.pageVisible} pointerEvents={(currentPage === 'custombuild' || (currentPage === 'builds' && buildsSubTab === 'custom')) ? 'auto' : 'none'}>
+          <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
+            <CustomBuildPage />
+          </Suspense>
+        </View>
       )}
       
       {/* Patch Hub page */}
@@ -3983,6 +4794,380 @@ export default function App() {
   );
 }
 
+// Randomizer styles
+const randomizerStyles = StyleSheet.create({
+  randomizerContainer: {
+    padding: 16,
+    backgroundColor: '#071024',
+  },
+  randomizerSection: {
+    backgroundColor: '#0b1226',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  randomizerTitle: {
+    color: '#7dd3fc',
+    fontSize: 20,
+    fontWeight: '700',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  randomizerGodContainer: {
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  randomizerGodCard: {
+    backgroundColor: '#0f1724',
+    borderRadius: 12,
+    padding: 20,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    minWidth: 200,
+    width: '100%',
+    maxWidth: 300,
+    ...(IS_WEB && {
+      cursor: 'pointer',
+      transition: 'border-color 0.2s, transform 0.1s',
+      ':hover': {
+        borderColor: '#1e90ff',
+        transform: 'scale(1.02)',
+      },
+    }),
+  },
+  randomizerGodIcon: {
+    width: 100,
+    height: 100,
+    borderRadius: 8,
+    marginBottom: 12,
+    borderWidth: 2,
+    borderColor: '#1e3a5f',
+  },
+  randomizerGodName: {
+    color: '#e6eef8',
+    fontSize: 18,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  randomizerGodPlaceholder: {
+    backgroundColor: '#0f1724',
+    borderRadius: 12,
+    padding: 40,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    borderStyle: 'dashed',
+  },
+  randomizerPlaceholderText: {
+    color: '#64748b',
+    fontSize: 16,
+  },
+  randomizerStarterSection: {
+    marginBottom: 20,
+  },
+  randomizerSubtitle: {
+    color: '#94a3b8',
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  randomizerStarterContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  randomizerItemsSection: {
+    marginBottom: 16,
+  },
+  randomizerItemsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: IS_WEB ? 8 : 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 16,
+    ...(IS_WEB && {
+      maxWidth: '100%',
+    }),
+  },
+  randomizerItemSlotWrapper: {
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  randomizerItemSlot: {
+    width: IS_WEB ? 90 : 80,
+    maxWidth: IS_WEB ? 90 : 80,
+    minWidth: IS_WEB ? 90 : 80,
+    aspectRatio: 1,
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: IS_WEB ? 8 : 6,
+    flexShrink: 0,
+    flexGrow: 0,
+    ...(IS_WEB && {
+      cursor: 'pointer',
+      transition: 'border-color 0.2s, transform 0.1s',
+    }),
+  },
+  randomizerItemRandomizeButton: {
+    position: 'absolute',
+    top: -8,
+    right: -8,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#1e90ff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#0b1226',
+    zIndex: 10,
+    ...(IS_WEB && {
+      cursor: 'pointer',
+      transition: 'background-color 0.2s, transform 0.1s',
+      ':hover': {
+        backgroundColor: '#0ea5e9',
+        transform: 'scale(1.1)',
+      },
+    }),
+  },
+  randomizerItemRandomizeButtonText: {
+    color: '#ffffff',
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  randomizerItemIcon: {
+    width: '100%',
+    height: '70%',
+    borderRadius: 6,
+  },
+  randomizerItemIconPlaceholder: {
+    width: '100%',
+    height: '70%',
+    backgroundColor: '#1e3a5f',
+    borderRadius: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  randomizerItemIconPlaceholderText: {
+    color: '#64748b',
+    fontSize: 24,
+    fontWeight: '700',
+  },
+  randomizerItemName: {
+    color: '#cbd5e1',
+    fontSize: IS_WEB ? 9 : 7,
+    textAlign: 'center',
+    marginTop: 4,
+    fontWeight: '500',
+    lineHeight: IS_WEB ? 11 : 9,
+  },
+  randomizerItemPlaceholder: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  randomizerItemPlaceholderText: {
+    color: '#64748b',
+    fontSize: 24,
+    fontWeight: '300',
+  },
+  randomizerItemNumber: {
+    color: '#64748b',
+    fontSize: 10,
+    marginTop: 4,
+  },
+  randomizerRelicContainer: {
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  randomizerRelicSlot: {
+    width: 120,
+    aspectRatio: 1,
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 8,
+  },
+  randomizerRelicPlaceholder: {
+    width: 120,
+    aspectRatio: 1,
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    borderStyle: 'dashed',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  randomizerButtonRow: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  randomizerButton: {
+    flex: 1,
+    backgroundColor: '#1e90ff',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    ...(IS_WEB && {
+      cursor: 'pointer',
+      transition: 'background-color 0.2s',
+    }),
+  },
+  randomizerButtonDisabled: {
+    backgroundColor: '#64748b',
+    opacity: 0.6,
+    ...(IS_WEB && {
+      cursor: 'not-allowed',
+    }),
+  },
+  randomizerButtonText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  randomizerResetButton: {
+    backgroundColor: '#0f1724',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    minWidth: 80,
+    ...(IS_WEB && {
+      cursor: 'pointer',
+      transition: 'background-color 0.2s, border-color 0.2s',
+    }),
+  },
+  randomizerResetButtonText: {
+    color: '#cbd5e1',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  randomizerAspectSlot: {
+    marginTop: 16,
+    width: 120,
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#1e3a5f',
+    padding: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+    ...(IS_WEB && {
+      cursor: 'pointer',
+      transition: 'border-color 0.2s, background-color 0.2s',
+    }),
+  },
+  randomizerAspectSlotActive: {
+    backgroundColor: '#1e3a5f',
+    borderColor: '#1e90ff',
+    borderWidth: 2,
+    shadowColor: '#1e90ff',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.5,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  randomizerAspectIcon: {
+    width: 60,
+    height: 60,
+    borderRadius: 6,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  randomizerAspectIconPlaceholder: {
+    width: 60,
+    height: 60,
+    borderRadius: 6,
+    backgroundColor: '#1e3a5f',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: '#0f1724',
+  },
+  randomizerAspectIconPlaceholderText: {
+    color: '#64748b',
+    fontSize: 24,
+    fontWeight: '700',
+  },
+  randomizerAspectName: {
+    color: '#cbd5e1',
+    fontSize: 11,
+    textAlign: 'center',
+    fontWeight: '600',
+    lineHeight: 14,
+  },
+  randomizerAspectActiveIndicator: {
+    position: 'absolute',
+    top: 4,
+    right: 4,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#10b981',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#0b1226',
+    zIndex: 10,
+  },
+  randomizerAspectActiveText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  randomizeAllButton: {
+    backgroundColor: '#10b981',
+    padding: 20,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#059669',
+    ...(IS_WEB && {
+      cursor: 'pointer',
+      transition: 'background-color 0.2s, transform 0.1s',
+      ':hover': {
+        backgroundColor: '#059669',
+        transform: 'scale(1.02)',
+      },
+    }),
+  },
+  randomizeAllButtonDisabled: {
+    backgroundColor: '#64748b',
+    borderColor: '#475569',
+    opacity: 0.6,
+    ...(IS_WEB && {
+      cursor: 'not-allowed',
+    }),
+  },
+  randomizeAllButtonText: {
+    color: '#ffffff',
+    fontSize: 20,
+    fontWeight: '800',
+    textAlign: 'center',
+    letterSpacing: 1,
+  },
+});
+
 const navStyles = StyleSheet.create({
   outerContainer: {
     flex: 1,
@@ -4065,6 +5250,7 @@ const navStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#06202f',
     minWidth: 0,
+    flexBasis: 0,
     ...(IS_WEB && {
       cursor: 'pointer',
       minHeight: 40,
