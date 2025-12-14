@@ -46,17 +46,20 @@ const storage = {
   },
 };
 
-export default function CustomBuildPage() {
+export default function CustomBuildPage({ onNavigateToGod }) {
   // Use responsive screen dimensions
   const screenDimensions = useScreenDimensions();
   const [localBuilds, setLocalBuilds] = useState(null);
   const [dataLoading, setDataLoading] = useState(true);
   const [selectedGod, setSelectedGod] = useState(null);
   const [godLevel, setGodLevel] = useState(20);
-  const [selectedItems, setSelectedItems] = useState(Array(6).fill(null));
+  const [selectedItems, setSelectedItems] = useState(Array(7).fill(null));
+  const [selectedRelic, setSelectedRelic] = useState(null);
+  const [aspectActive, setAspectActive] = useState(false);
   const [showGodPicker, setShowGodPicker] = useState(false);
   const [showItemPicker, setShowItemPicker] = useState(null); // Index of item slot
   const [selectedItemInfo, setSelectedItemInfo] = useState(null); // { item, index } for info modal
+  const [selectedItemTooltip, setSelectedItemTooltip] = useState(null); // { item, itemName } for tooltip modal
   const [godSearchQuery, setGodSearchQuery] = useState('');
   const [itemSearchQuery, setItemSearchQuery] = useState('');
   const [failedItemIcons, setFailedItemIcons] = useState({});
@@ -65,7 +68,12 @@ export default function CustomBuildPage() {
   const [statDropdownVisible, setStatDropdownVisible] = useState(false);
   const [tierDropdownVisible, setTierDropdownVisible] = useState(false);
   const [showSaveBuildModal, setShowSaveBuildModal] = useState(false);
+  const [showLoadBuildModal, setShowLoadBuildModal] = useState(false);
+  const [savedBuilds, setSavedBuilds] = useState([]);
   const [buildName, setBuildName] = useState('');
+  // Randomizer state
+  const [godRerolls, setGodRerolls] = useState(3);
+  const [itemRerolls, setItemRerolls] = useState(3);
   
   // Slider state
   const [sliderTrackWidth, setSliderTrackWidth] = useState(300);
@@ -101,10 +109,18 @@ export default function CustomBuildPage() {
                   }
                 }
                 if (savedBuild.items && Array.isArray(savedBuild.items)) {
-                  setSelectedItems(savedBuild.items);
+                  // Ensure we have 7 slots
+                  const itemsArray = [...savedBuild.items];
+                  while (itemsArray.length < 7) {
+                    itemsArray.push(null);
+                  }
+                  setSelectedItems(itemsArray.slice(0, 7));
                 }
                 if (savedBuild.godLevel) {
                   setGodLevel(savedBuild.godLevel);
+                }
+                if (savedBuild.aspectActive !== undefined) {
+                  setAspectActive(savedBuild.aspectActive);
                 }
                 
                 // Clear the saved build flag
@@ -145,6 +161,14 @@ export default function CustomBuildPage() {
     return allItems.filter((item) => {
       if (!item || typeof item !== 'object') return false;
       return (item.name || item.internalName || item.active === true);
+    });
+  }, [allItems]);
+
+  // Filter relics
+  const relics = useMemo(() => {
+    return allItems.filter((item) => {
+      if (!item || typeof item !== 'object') return false;
+      return item.relic === true;
     });
   }, [allItems]);
 
@@ -352,8 +376,13 @@ export default function CustomBuildPage() {
           // Linear interpolation between level 1 and 20
           const levelProgress = (godLevel - 1) / 19; // 0 at level 1, 1 at level 20
           const statValue = level1 + (level20 - level1) * levelProgress;
-          // Round up to whole number
-          stats[statKey] = Math.ceil(statValue);
+          // For protections, keep decimal precision for accurate EHP calculation
+          // Round other stats to whole numbers
+          if (statKey === 'PhysicalProtection' || statKey === 'MagicalProtection') {
+            stats[statKey] = statValue; // Keep decimal for protections
+          } else {
+            stats[statKey] = Math.ceil(statValue);
+          }
         } else if (statData !== null && statData !== undefined) {
           // If it's a direct value (not an object), use it as is
           stats[statKey] = statData;
@@ -397,13 +426,68 @@ export default function CustomBuildPage() {
       }
     });
     
-    // Round all stats to whole numbers
+    // Round stats to whole numbers, but keep protections as decimals for EHP calculation
     Object.keys(stats).forEach((key) => {
-      stats[key] = Math.round(stats[key] || 0);
+      if (key === 'PhysicalProtection' || key === 'MagicalProtection') {
+        // Keep protection values with decimal precision for accurate EHP
+        stats[key] = stats[key] || 0;
+      } else {
+        stats[key] = Math.round(stats[key] || 0);
+      }
     });
     
     return stats;
   }, [baseStats, selectedItems]);
+
+  // Calculate Effective Health Points
+  // Using the formula from smitecalculator:
+  // EHP = Health * (1 + (1 - ((100 * 100) / (Protection + 100) / 100)))
+  // Note: Order of operations matters - division is left-to-right
+  const effectiveHealth = useMemo(() => {
+    // Get HP - check multiple possible keys
+    const hp = totalStats.MaxHealth || totalStats.Health || 0;
+    
+    // Get Physical Protection - use the exact value from totalStats (may be decimal)
+    const physicalProtection = totalStats.PhysicalProtection || 0;
+    
+    // Get Magical Protection - use the exact value from totalStats (may be decimal)
+    const magicalProtection = totalStats.MagicalProtection || 0;
+    
+    // Physical Effective Health using smitecalculator formula
+    // EHP = Health * (1 + (1 - ((100 * 100) / (Protection + 100) / 100)))
+    // Division is left-to-right: (100*100) / (prot+100) / 100
+    const phpInner = (100 * 100) / (physicalProtection + 100) / 100;
+    const php = hp * (1 + (1 - phpInner));
+    
+    // Magical Effective Health using smitecalculator formula
+    // EHP = Health * (1 + (1 - ((100 * 100) / (Protection + 100) / 100)))
+    // Division is left-to-right: (100*100) / (prot+100) / 100
+    const ehpInner = (100 * 100) / (magicalProtection + 100) / 100;
+    const ehp = hp * (1 + (1 - ehpInner));
+    
+    // Debug logging to help diagnose the 5-number difference
+    // Check if there's any difference in how protections are being used
+    if (__DEV__) {
+      console.log('EHP Calculation Debug:', {
+        hp,
+        physicalProtection,
+        magicalProtection,
+        phpInner,
+        ehpInner,
+        php: Math.round(php),
+        ehp: Math.round(ehp),
+        phpRaw: php,
+        ehpRaw: ehp,
+        phpFormula: `HP * (1 + (1 - ((100*100)/(${physicalProtection}+100)/100)))`,
+        ehpFormula: `HP * (1 + (1 - ((100*100)/(${magicalProtection}+100)/100)))`,
+      });
+    }
+    
+    return {
+      PHP: Math.round(php),
+      EHP: Math.round(ehp),
+    };
+  }, [totalStats]);
 
   // Calculate total gold cost
   const totalGold = useMemo(() => {
@@ -459,6 +543,25 @@ export default function CustomBuildPage() {
     critChance: 'Critical Strike Chance',
   };
 
+  // Load saved builds
+  useEffect(() => {
+    const loadSavedBuilds = async () => {
+      try {
+        const currentUser = await storage.getItem('currentUser');
+        if (currentUser) {
+          const savedBuildsData = await storage.getItem(`savedBuilds_${currentUser}`);
+          if (savedBuildsData) {
+            const builds = JSON.parse(savedBuildsData);
+            setSavedBuilds(builds);
+          }
+        }
+      } catch (e) {
+        console.error('Error loading saved builds:', e);
+      }
+    };
+    loadSavedBuilds();
+  }, []);
+
   if (dataLoading) {
     return (
       <View style={styles.loadingContainer}>
@@ -471,28 +574,78 @@ export default function CustomBuildPage() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+        {/* Load Saved Build Button */}
+        <View style={styles.section}>
+          <TouchableOpacity
+            style={styles.loadBuildButton}
+            onPress={() => setShowLoadBuildModal(true)}
+          >
+            <Text style={styles.loadBuildButtonText}>Load Saved Build</Text>
+          </TouchableOpacity>
+        </View>
+
         {/* God Selection */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Select God</Text>
-          <TouchableOpacity
-            style={styles.godSelector}
-            onPress={() => setShowGodPicker(true)}
-            activeOpacity={0.7}
-          >
-            {godIcon ? (
-              <Image
-                source={getLocalGodAsset(godIcon)}
-                style={styles.godIcon}
-                resizeMode="cover"
-                accessibilityLabel={selectedGod ? `${selectedGod.name || selectedGod.GodName || 'God'} icon` : 'God icon'}
-              />
-            ) : (
-              <View style={styles.godIconPlaceholder}>
-                <Text style={styles.godIconPlaceholderText}>?</Text>
-              </View>
+          <View style={styles.godSelectorContainer}>
+            <TouchableOpacity
+              style={styles.godSelector}
+              onPress={() => setShowGodPicker(true)}
+              activeOpacity={0.7}
+            >
+              {godIcon ? (
+                <Image
+                  source={getLocalGodAsset(godIcon)}
+                  style={styles.godIcon}
+                  resizeMode="cover"
+                  accessibilityLabel={selectedGod ? `${selectedGod.name || selectedGod.GodName || 'God'} icon` : 'God icon'}
+                />
+              ) : (
+                <View style={styles.godIconPlaceholder}>
+                  <Text style={styles.godIconPlaceholderText}>?</Text>
+                </View>
+              )}
+              <Text style={styles.godNameText}>{godName}</Text>
+            </TouchableOpacity>
+            {/* Aspect Slot */}
+            {selectedGod && selectedGod.aspect && (
+              <TouchableOpacity
+                style={[
+                  styles.aspectSlotButton,
+                  aspectActive && styles.aspectSlotButtonActive
+                ]}
+                onPress={() => setAspectActive(!aspectActive)}
+                activeOpacity={0.7}
+              >
+                {(() => {
+                  const aspectIcon = selectedGod.aspect.icon;
+                  if (aspectIcon) {
+                    const localIcon = getLocalGodAsset(aspectIcon);
+                    if (localIcon) {
+                      return (
+                        <Image
+                          source={localIcon}
+                          style={styles.aspectSlotIcon}
+                          resizeMode="cover"
+                        />
+                      );
+                    }
+                  }
+                  return (
+                    <View style={styles.aspectSlotIconPlaceholder}>
+                      <Text style={styles.aspectSlotIconPlaceholderText}>A</Text>
+                    </View>
+                  );
+                })()}
+                <Text style={styles.aspectSlotLabel}>Aspect</Text>
+                {aspectActive && (
+                  <View style={styles.aspectActiveIndicatorSmall}>
+                    <Text style={styles.aspectActiveTextSmall}>✓</Text>
+                  </View>
+                )}
+              </TouchableOpacity>
             )}
-            <Text style={styles.godNameText}>{godName}</Text>
-          </TouchableOpacity>
+          </View>
         </View>
 
         {/* Level Slider */}
@@ -819,17 +972,128 @@ export default function CustomBuildPage() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Total Stats</Text>
           <View style={styles.statsGrid}>
-            {Object.keys(totalStats)
-              .filter(key => totalStats[key] !== 0 || baseStats[key])
-              .sort()
-              .map((statKey) => (
-                <View key={statKey} style={styles.statItem}>
-                  <Text style={styles.statLabel}>
-                    {statDisplayNames[statKey] || statKey}
-                  </Text>
-                  <Text style={styles.statValue}>{totalStats[statKey]}</Text>
-                </View>
-              ))}
+            {(() => {
+              // Define the order we want stats to appear
+              const statOrder = [
+                'BaseAttackSpeed',
+                'BasicDamage',
+                'MaxHealth',
+                'HealthPerSecond',
+                'MaxMana',
+                'ManaPerSecond',
+                'PhysicalProtection',
+                'MagicalProtection',
+              ];
+              
+              // Get all stats and filter
+              const allStats = Object.keys(totalStats)
+                .filter(key => totalStats[key] !== 0 || baseStats[key]);
+              
+              // Separate ordered stats and remaining stats
+              const orderedStats = statOrder.filter(key => allStats.includes(key));
+              const remainingStats = allStats
+                .filter(key => !statOrder.includes(key))
+                .sort();
+              
+              // Build the final stat list with EHP inserted after protections
+              const finalStats = [];
+              
+              orderedStats.forEach((statKey) => {
+                finalStats.push(statKey);
+                
+                // Insert Physical EHP right after PhysicalProtection
+                if (statKey === 'PhysicalProtection' && (totalStats.MaxHealth || totalStats.Health)) {
+                  finalStats.push('__PhysicalEHP__');
+                }
+                
+                // Insert Magical EHP right after MagicalProtection
+                if (statKey === 'MagicalProtection' && (totalStats.MaxHealth || totalStats.Health)) {
+                  finalStats.push('__MagicalEHP__');
+                }
+              });
+              
+              // Add remaining stats
+              finalStats.push(...remainingStats);
+              
+              return finalStats.map((statKey) => {
+                // Handle EHP placeholders
+                if (statKey === '__PhysicalEHP__') {
+                  return (
+                    <View key="PhysicalEHP" style={styles.statItem}>
+                      <Text style={[styles.statLabel, { color: '#ef4444' }]}>
+                        Physical EHP
+                      </Text>
+                      <Text style={[styles.statValue, { color: '#ef4444' }]}>
+                        {effectiveHealth.PHP.toLocaleString()}
+                      </Text>
+                    </View>
+                  );
+                }
+                
+                if (statKey === '__MagicalEHP__') {
+                  return (
+                    <View key="MagicalEHP" style={styles.statItem}>
+                      <Text style={[styles.statLabel, { color: '#a855f7' }]}>
+                        Magical EHP
+                      </Text>
+                      <Text style={[styles.statValue, { color: '#a855f7' }]}>
+                        {effectiveHealth.EHP.toLocaleString()}
+                      </Text>
+                    </View>
+                  );
+                }
+                
+                // Regular stat
+                // Color code stat labels based on stat type
+                let statColor = '#94a3b8'; // default gray
+                const statName = (statDisplayNames[statKey] || statKey).toLowerCase();
+                const statKeyLower = statKey.toLowerCase();
+                
+                if (statName.includes('health') || statKeyLower.includes('health') || statName.includes('hp5') || statKeyLower.includes('healthper')) {
+                  statColor = '#22c55e'; // green
+                } else if (statName.includes('mana') || statKeyLower.includes('mana') || statName.includes('mp5') || statKeyLower.includes('manaper')) {
+                  statColor = '#3b82f6'; // blue
+                } else if (statName.includes('physical protection') || statKeyLower.includes('physicalprotection')) {
+                  statColor = '#ef4444'; // red
+                } else if (statName.includes('magical protection') || statKeyLower.includes('magicalprotection')) {
+                  statColor = '#a855f7'; // purple
+                } else if (statName.includes('physical power') || statKeyLower.includes('basicdamage')) {
+                  statColor = '#f97316'; // orange
+                } else if (statName.includes('magical power') || statKeyLower.includes('magicalpower')) {
+                  statColor = '#ec4899'; // pink
+                } else if (statName.includes('attack speed') || statKeyLower.includes('attackspeed') || statKeyLower.includes('baseattackspeed')) {
+                  statColor = '#f97316'; // orange
+                } else if (statName.includes('movement speed') || statKeyLower.includes('movementspeed')) {
+                  statColor = '#10b981'; // emerald
+                } else if (statName.includes('penetration') || statKeyLower.includes('penetration')) {
+                  statColor = '#ef4444'; // red
+                } else if (statName.includes('lifesteal') || statKeyLower.includes('lifesteal')) {
+                  statColor = '#84cc16'; // lime
+                } else if (statName.includes('cooldown') || statKeyLower.includes('cooldown')) {
+                  statColor = '#0ea5e9'; // sky blue
+                } else if (statName.includes('critical') || statKeyLower.includes('critical') || statName.includes('crit')) {
+                  statColor = '#f97316'; // orange
+                } else if (statName.includes('strength') || statKeyLower.includes('strength')) {
+                  statColor = '#facc15'; // yellow
+                } else if (statName.includes('intelligence') || statKeyLower.includes('intelligence')) {
+                  statColor = '#a855f7'; // purple
+                }
+                
+                // Display rounded value for protections, but keep decimal for calculation
+                const displayValue = (statKey === 'PhysicalProtection' || statKey === 'MagicalProtection') 
+                  ? Math.round(totalStats[statKey]) 
+                  : totalStats[statKey];
+                
+                return (
+                  <View key={statKey} style={styles.statItem}>
+                    <Text style={[styles.statLabel, { color: statColor }]}>
+                      {statDisplayNames[statKey] || statKey}
+                    </Text>
+                    <Text style={[styles.statValue, { color: statColor }]}>{displayValue}</Text>
+                  </View>
+                );
+              });
+            })()}
           </View>
         </View>
 
@@ -1223,6 +1487,79 @@ export default function CustomBuildPage() {
         </View>
       </Modal>
 
+      {/* Load Saved Build Modal */}
+      <Modal
+        visible={showLoadBuildModal}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setShowLoadBuildModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>Load Saved Build</Text>
+              <TouchableOpacity
+                style={styles.modalCloseButton}
+                onPress={() => setShowLoadBuildModal(false)}
+              >
+                <Text style={styles.modalCloseText}>✕</Text>
+              </TouchableOpacity>
+            </View>
+            <ScrollView style={styles.modalContent}>
+              {savedBuilds.length === 0 ? (
+                <Text style={styles.noSavedBuildsText}>No saved builds found.</Text>
+              ) : (
+                savedBuilds.map((build, index) => (
+                  <TouchableOpacity
+                    key={build.id || index}
+                    style={styles.savedBuildItem}
+                    onPress={async () => {
+                      try {
+                        // Load the build data
+                        if (build.godInternalName) {
+                          const allGods = flattenAny(localBuilds.gods);
+                          const god = allGods.find(g => (g.internalName || '').toLowerCase() === (build.godInternalName || '').toLowerCase());
+                          if (god) {
+                            setSelectedGod(god);
+                          }
+                        }
+                        if (build.items && Array.isArray(build.items)) {
+                          const itemsArray = [...build.items];
+                          while (itemsArray.length < 7) {
+                            itemsArray.push(null);
+                          }
+                          setSelectedItems(itemsArray.slice(0, 7));
+                        }
+                        if (build.godLevel) {
+                          setGodLevel(build.godLevel);
+                        }
+                        if (build.aspectActive !== undefined) {
+                          setAspectActive(build.aspectActive);
+                        }
+                        setShowLoadBuildModal(false);
+                      } catch (e) {
+                        console.error('Error loading build:', e);
+                        Alert.alert('Error', 'Failed to load build. Please try again.');
+                      }
+                    }}
+                  >
+                    <View style={styles.savedBuildInfo}>
+                      <Text style={styles.savedBuildName}>{build.name || 'Unnamed Build'}</Text>
+                      <Text style={styles.savedBuildGod}>{build.god || 'Unknown God'}</Text>
+                      {build.createdAt && (
+                        <Text style={styles.savedBuildDate}>
+                          {new Date(build.createdAt).toLocaleDateString()}
+                        </Text>
+                      )}
+                    </View>
+                  </TouchableOpacity>
+                ))
+              )}
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
+
       {/* Save Build Modal */}
       <Modal
         visible={showSaveBuildModal}
@@ -1285,6 +1622,7 @@ export default function CustomBuildPage() {
                       icon: item.icon,
                     })),
                     godLevel,
+                    aspectActive: aspectActive && selectedGod.aspect ? true : false,
                     createdAt: new Date().toISOString(),
                   };
 
@@ -1390,6 +1728,11 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   // God Selection
+  godSelectorContainer: {
+    flexDirection: 'row',
+    gap: 12,
+    alignItems: 'center',
+  },
   godSelector: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -1400,7 +1743,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#1e3a5f',
     minHeight: 100,
-    width: '100%',
+    flex: 1,
     ...(IS_WEB && {
       cursor: 'pointer',
       transition: 'all 0.2s ease',
@@ -1518,18 +1861,65 @@ const styles = StyleSheet.create({
   // Item Slots
   itemSlotsContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 12,
-    justifyContent: 'center',
+    flexWrap: IS_WEB ? 'nowrap' : 'wrap',
+    gap: IS_WEB ? 4 : 0,
+    justifyContent: IS_WEB ? 'space-between' : 'flex-start',
     alignItems: 'center',
     width: '100%',
   },
   itemSlot: {
-    width: IS_WEB ? '18%' : '28%',
-    minWidth: 110,
-    maxWidth: IS_WEB ? 140 : undefined,
+    width: IS_WEB ? '13%' : '18%',
+    maxWidth: IS_WEB ? 90 : undefined,
+    minWidth: IS_WEB ? 70 : undefined,
+    flexShrink: 0,
+    flexGrow: 0,
+    marginBottom: IS_WEB ? 0 : 4,
+    ...(IS_WEB ? {} : {
+      // On mobile: 4 items per row (23.5% * 4 = 94%, leaving 6% for 3 gaps of 2% each)
+      marginRight: '2%',
+    }),
   },
   itemSlotButton: {
+    aspectRatio: 1,
+    backgroundColor: '#0f1724',
+    borderRadius: IS_WEB ? 6 : 4,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: IS_WEB ? 6 : 3,
+    position: 'relative',
+    overflow: 'hidden',
+    width: '100%',
+    ...(IS_WEB && {
+      cursor: 'pointer',
+      transition: 'all 0.2s ease',
+    }),
+  },
+  itemSlotButtonActive: {
+    borderColor: '#facc15',
+    borderWidth: 2,
+    backgroundColor: '#1a1a0a',
+  },
+  aspectActiveIndicator: {
+    position: 'absolute',
+    top: 2,
+    right: 2,
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: '#22c55e',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  aspectActiveText: {
+    color: '#ffffff',
+    fontSize: 10,
+    fontWeight: '700',
+  },
+  // Aspect Slot in God Selector
+  aspectSlotButton: {
+    width: IS_WEB ? 100 : 80,
     aspectRatio: 1,
     backgroundColor: '#0f1724',
     borderRadius: 8,
@@ -1537,7 +1927,7 @@ const styles = StyleSheet.create({
     borderColor: '#1e3a5f',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 12,
+    padding: 8,
     position: 'relative',
     overflow: 'hidden',
     ...(IS_WEB && {
@@ -1545,31 +1935,77 @@ const styles = StyleSheet.create({
       transition: 'all 0.2s ease',
     }),
   },
+  aspectSlotButtonActive: {
+    borderColor: '#facc15',
+    borderWidth: 2,
+    backgroundColor: '#1a1a0a',
+  },
+  aspectSlotIcon: {
+    width: '70%',
+    height: '70%',
+    borderRadius: 4,
+  },
+  aspectSlotIconPlaceholder: {
+    width: '70%',
+    height: '70%',
+    backgroundColor: '#1e3a5f',
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  aspectSlotIconPlaceholderText: {
+    color: '#64748b',
+    fontSize: 24,
+    fontWeight: '700',
+  },
+  aspectSlotLabel: {
+    color: '#cbd5e1',
+    fontSize: IS_WEB ? 10 : 8,
+    textAlign: 'center',
+    marginTop: 2,
+  },
+  aspectActiveIndicatorSmall: {
+    position: 'absolute',
+    top: 2,
+    right: 2,
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: '#22c55e',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  aspectActiveTextSmall: {
+    color: '#ffffff',
+    fontSize: 10,
+    fontWeight: '700',
+  },
   itemIcon: {
     width: '100%',
-    height: '70%',
-    borderRadius: 6,
+    height: IS_WEB ? '70%' : '65%',
+    borderRadius: 4,
     maxWidth: '100%',
     maxHeight: '100%',
   },
   itemIconPlaceholder: {
     width: '100%',
-    height: '70%',
+    height: IS_WEB ? '70%' : '65%',
     backgroundColor: '#1e3a5f',
-    borderRadius: 6,
+    borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
   },
   itemIconPlaceholderText: {
     color: '#64748b',
-    fontSize: 24,
+    fontSize: IS_WEB ? 18 : 14,
     fontWeight: '700',
   },
   itemName: {
     color: '#cbd5e1',
-    fontSize: 10,
+    fontSize: IS_WEB ? 8 : 6,
     textAlign: 'center',
-    marginTop: 4,
+    marginTop: IS_WEB ? 2 : 1,
+    lineHeight: IS_WEB ? 10 : 8,
   },
   itemSlotPlaceholder: {
     justifyContent: 'center',
@@ -1582,8 +2018,8 @@ const styles = StyleSheet.create({
   },
   itemSlotNumber: {
     color: '#64748b',
-    fontSize: 12,
-    marginTop: 4,
+    fontSize: 10,
+    marginTop: 2,
   },
   // Stats
   statsGrid: {
@@ -1601,12 +2037,11 @@ const styles = StyleSheet.create({
     borderColor: '#1e3a5f',
   },
   statLabel: {
-    color: '#94a3b8',
     fontSize: 12,
     marginBottom: 4,
+    fontWeight: '600',
   },
   statValue: {
-    color: '#7dd3fc',
     fontSize: 20,
     fontWeight: '700',
   },
@@ -1642,6 +2077,50 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 16,
     fontWeight: '700',
+  },
+  loadBuildButton: {
+    backgroundColor: '#10b981',
+    padding: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadBuildButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  savedBuildItem: {
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  savedBuildInfo: {
+    flex: 1,
+  },
+  savedBuildName: {
+    color: '#7dd3fc',
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 4,
+  },
+  savedBuildGod: {
+    color: '#cbd5e1',
+    fontSize: 14,
+    marginBottom: 4,
+  },
+  savedBuildDate: {
+    color: '#64748b',
+    fontSize: 12,
+  },
+  noSavedBuildsText: {
+    color: '#94a3b8',
+    fontSize: 16,
+    textAlign: 'center',
+    padding: 40,
   },
   // Item Info Modal
   itemInfoModal: {
