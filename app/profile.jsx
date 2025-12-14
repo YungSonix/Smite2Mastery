@@ -817,6 +817,13 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         console.log('RPC set_current_user not available, continuing...');
       }
       
+      // Get existing data to merge (don't overwrite other fields)
+      const { data: existingData } = await supabase
+        .from('user_data')
+        .select('pinned_builds, pinned_gods, saved_builds')
+        .eq('username', currentUser)
+        .single();
+      
       const { error } = await supabase
         .from('user_data')
         .upsert({
@@ -828,6 +835,14 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         }, {
           onConflict: 'username'
         });
+      
+      if (!error) {
+        console.log('✅ Supabase upsert successful:', {
+          pinned_builds: Array.isArray(buildsToSave) ? buildsToSave.length : 'not array',
+          pinned_gods: Array.isArray(godsToSave) ? godsToSave.length : 'not array',
+          saved_builds: Array.isArray(savedToSave) ? savedToSave.length : 'not array',
+        });
+      }
       
       if (error && error.code === 'MISSING_CONFIG') {
         // Supabase not configured, local storage already saved above
@@ -852,9 +867,10 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   const pinBuild = async (build) => {
     if (!currentUser) return;
     const newPinned = [...pinnedBuilds, build];
+    console.log('Pinning build:', build, 'from', pinnedBuilds.length, 'to', newPinned.length);
     setPinnedBuilds(newPinned);
-    console.log('Pinning build:', build);
-    await saveUserDataToSupabase();
+    // Pass the new array directly to ensure we save the updated data
+    await saveUserDataToSupabase(newPinned, null, null);
   };
 
   const unpinBuild = async (buildIdOrKey) => {
@@ -869,9 +885,10 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   const pinGod = async (god) => {
     if (!currentUser) return;
     const newPinned = [...pinnedGods, god];
+    console.log('Pinning god:', god, 'from', pinnedGods.length, 'to', newPinned.length);
     setPinnedGods(newPinned);
-    console.log('Pinning god:', god);
-    await saveUserDataToSupabase();
+    // Pass the new array directly to ensure we save the updated data
+    await saveUserDataToSupabase(null, newPinned, null);
   };
 
   const unpinGod = async (godName) => {
@@ -886,16 +903,19 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   const saveBuild = async (build) => {
     if (!currentUser) return;
     const newSaved = [...savedBuilds, { ...build, id: Date.now(), savedAt: Date.now() }];
+    console.log('Saving build:', build, 'from', savedBuilds.length, 'to', newSaved.length);
     setSavedBuilds(newSaved);
-    console.log('Saving build:', build);
-    await saveUserDataToSupabase();
+    // Pass the new array directly to ensure we save the updated data
+    await saveUserDataToSupabase(null, null, newSaved);
   };
 
   const deleteSavedBuild = async (buildId) => {
     if (!currentUser) return;
     const newSaved = savedBuilds.filter(b => b.id !== buildId);
+    console.log('Deleting saved build:', buildId, 'from', savedBuilds.length, 'to', newSaved.length);
     setSavedBuilds(newSaved);
-    await saveUserDataToSupabase();
+    // Pass the new array directly to ensure we save the updated data
+    await saveUserDataToSupabase(null, null, newSaved);
   };
 
   if (!isLoggedIn) {
@@ -1315,6 +1335,25 @@ export const profileHelpers = {
     const builds = pinnedBuilds ? JSON.parse(pinnedBuilds) : [];
     builds.push({ ...build, id: Date.now() });
     await storage.setItem(`pinnedBuilds_${user}`, JSON.stringify(builds));
+    
+    // Also sync to Supabase
+    try {
+      const { error } = await supabase
+        .from('user_data')
+        .upsert({
+          username: user,
+          pinned_builds: builds,
+          updated_at: new Date().toISOString(),
+        }, {
+          onConflict: 'username'
+        });
+      if (error && error.code !== 'MISSING_CONFIG') {
+        console.error('Error syncing pinned build to Supabase:', error);
+      }
+    } catch (error) {
+      console.error('Error syncing to Supabase:', error);
+    }
+    
     return true;
   },
   async pinGod(god) {
@@ -1324,6 +1363,25 @@ export const profileHelpers = {
     const gods = pinnedGods ? JSON.parse(pinnedGods) : [];
     gods.push(god);
     await storage.setItem(`pinnedGods_${user}`, JSON.stringify(gods));
+    
+    // Also sync to Supabase
+    try {
+      const { error } = await supabase
+        .from('user_data')
+        .upsert({
+          username: user,
+          pinned_gods: gods,
+          updated_at: new Date().toISOString(),
+        }, {
+          onConflict: 'username'
+        });
+      if (error && error.code !== 'MISSING_CONFIG') {
+        console.error('Error syncing pinned god to Supabase:', error);
+      }
+    } catch (error) {
+      console.error('Error syncing to Supabase:', error);
+    }
+    
     return true;
   },
   async saveBuild(build) {
@@ -1333,6 +1391,25 @@ export const profileHelpers = {
     const builds = savedBuilds ? JSON.parse(savedBuilds) : [];
     builds.push({ ...build, id: Date.now(), savedAt: Date.now() });
     await storage.setItem(`savedBuilds_${user}`, JSON.stringify(builds));
+    
+    // Also sync to Supabase
+    try {
+      const { error } = await supabase
+        .from('user_data')
+        .upsert({
+          username: user,
+          saved_builds: builds,
+          updated_at: new Date().toISOString(),
+        }, {
+          onConflict: 'username'
+        });
+      if (error && error.code !== 'MISSING_CONFIG') {
+        console.error('Error syncing saved build to Supabase:', error);
+      }
+    } catch (error) {
+      console.error('Error syncing to Supabase:', error);
+    }
+    
     return true;
   },
 };
