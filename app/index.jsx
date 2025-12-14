@@ -29,6 +29,33 @@ let localBuilds = null;
 const IS_WEB = Platform.OS === 'web';
 import { getLocalItemIcon, getLocalGodAsset } from './localIcons';
 
+// Import supabase with fallback for missing config
+let supabase;
+try {
+  supabase = require('./config/supabase').supabase;
+} catch (e) {
+  // Fallback mock supabase if config file is missing
+  const mockQuery = {
+    eq: () => ({
+      single: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+      update: () => ({
+        eq: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+      }),
+    }),
+    single: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+    upsert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+  };
+  supabase = {
+    from: () => ({
+      select: () => mockQuery,
+      insert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+      upsert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+      update: () => mockQuery,
+    }),
+    rpc: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+  };
+}
+
 // Role icons
 const roleIcons = {
   'ADC': require('./data/Icons/Role Icons/T_GodRole_Carry_Small.png'),
@@ -1398,9 +1425,6 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                   const isPinned = pinnedBuilds.has(buildKey);
                                   
                                   try {
-                                    // Import supabase
-                                    const { supabase } = require('./config/supabase');
-                                    
                                     const pinnedBuildsData = await storage.getItem(`pinnedBuilds_${currentUser}`);
                                     const pinned = pinnedBuildsData ? JSON.parse(pinnedBuildsData) : [];
                                     
@@ -1414,19 +1438,29 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                         return next;
                                       });
                                       
-                                      // Sync to Supabase
+                                      // Sync to Supabase - get existing data first to preserve other fields
                                       try {
+                                        const { data: existingData } = await supabase
+                                          .from('user_data')
+                                          .select('pinned_builds, pinned_gods, saved_builds')
+                                          .eq('username', currentUser)
+                                          .single();
+                                        
                                         const { error } = await supabase
                                           .from('user_data')
                                           .upsert({
                                             username: currentUser,
                                             pinned_builds: updated,
+                                            pinned_gods: existingData?.pinned_gods || [],
+                                            saved_builds: existingData?.saved_builds || [],
                                             updated_at: new Date().toISOString(),
                                           }, {
                                             onConflict: 'username'
                                           });
                                         if (error && error.code !== 'MISSING_CONFIG') {
                                           console.error('Error syncing unpinned build to Supabase:', error);
+                                        } else if (!error) {
+                                          console.log('✅ Unpinned build synced to Supabase');
                                         }
                                       } catch (supabaseError) {
                                         console.error('Error syncing to Supabase:', supabaseError);
@@ -1446,13 +1480,21 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                       await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(pinned));
                                       setPinnedBuilds(prev => new Set(prev).add(buildKey));
                                       
-                                      // Sync to Supabase
+                                      // Sync to Supabase - get existing data first to preserve other fields
                                       try {
+                                        const { data: existingData } = await supabase
+                                          .from('user_data')
+                                          .select('pinned_builds, pinned_gods, saved_builds')
+                                          .eq('username', currentUser)
+                                          .single();
+                                        
                                         const { error } = await supabase
                                           .from('user_data')
                                           .upsert({
                                             username: currentUser,
                                             pinned_builds: pinned,
+                                            pinned_gods: existingData?.pinned_gods || [],
+                                            saved_builds: existingData?.saved_builds || [],
                                             updated_at: new Date().toISOString(),
                                           }, {
                                             onConflict: 'username'
@@ -1460,13 +1502,14 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                         if (error && error.code !== 'MISSING_CONFIG') {
                                           console.error('Error syncing pinned build to Supabase:', error);
                                         } else if (!error) {
-                                          console.log('✅ Pinned build synced to Supabase');
+                                          console.log('✅ Pinned build synced to Supabase:', pinned.length, 'builds');
                                         }
                                       } catch (supabaseError) {
                                         console.error('Error syncing to Supabase:', supabaseError);
                                       }
                                     }
                                   } catch (error) {
+                                    console.error('Error pinning/unpinning build:', error);
                                     Alert.alert('Error', 'Failed to pin/unpin build. Please try again.');
                                   }
                                 }}
