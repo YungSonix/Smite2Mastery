@@ -11,6 +11,7 @@ import {
   Platform,
   Alert,
   Pressable,
+  AppState,
 } from 'react-native';
 // Import supabase with fallback for missing config
 let supabase;
@@ -95,7 +96,7 @@ const storage = {
   },
 };
 
-export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNavigateToCustomBuild }) {
+export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNavigateToCustomBuild, onNavigateToMyBuilds }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -128,6 +129,52 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     }
   }, [currentUser]);
 
+  // Reload data when component becomes visible (for native apps)
+  // This ensures data is fresh when user navigates to profile tab
+  useEffect(() => {
+    let isActive = true;
+    let intervalId = null;
+    
+    const reloadData = async () => {
+      if (currentUser && isLoggedIn && isActive) {
+        console.log('Profile page - reloading user data');
+        await loadUserData();
+      }
+    };
+    
+    // Reload immediately when component mounts or when user/login changes
+    reloadData();
+    
+    // Set up periodic refresh (every 10 seconds) to catch saves from other components
+    // Less frequent to avoid interfering with active saves
+    intervalId = setInterval(() => {
+      if (currentUser && isLoggedIn && isActive) {
+        reloadData();
+      }
+    }, 1000);
+    
+    // For web, also listen to visibility changes
+    if (Platform.OS === 'web' && typeof document !== 'undefined') {
+      const handleVisibilityChange = () => {
+        if (!document.hidden && currentUser && isLoggedIn && isActive) {
+          reloadData();
+        }
+      };
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+      
+      return () => {
+        isActive = false;
+        if (intervalId) clearInterval(intervalId);
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+      };
+    }
+    
+    return () => {
+      isActive = false;
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [currentUser, isLoggedIn]);
+
   const checkLoginStatus = async () => {
     const loggedInUser = await storage.getItem('currentUser');
     if (loggedInUser) {
@@ -140,67 +187,111 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   const loadUserData = async () => {
     if (!currentUser) return;
     
+    // ALWAYS load from local storage first (most up-to-date, source of truth)
+    const localPinnedBuilds = await storage.getItem(`pinnedBuilds_${currentUser}`);
+    const localPinnedGods = await storage.getItem(`pinnedGods_${currentUser}`);
+    const localSavedBuilds = await storage.getItem(`savedBuilds_${currentUser}`);
+    
+    let pinnedBuilds = localPinnedBuilds ? JSON.parse(localPinnedBuilds) : [];
+    let pinnedGods = localPinnedGods ? JSON.parse(localPinnedGods) : [];
+    let savedBuilds = localSavedBuilds ? JSON.parse(localSavedBuilds) : [];
+    
+    console.log('Loaded from local storage:', {
+      pinnedBuilds: pinnedBuilds.length,
+      pinnedGods: pinnedGods.length,
+      savedBuilds: savedBuilds.length,
+    });
+    
+    // Set state immediately with local data (fast, reliable)
+    setPinnedBuilds(pinnedBuilds);
+    setPinnedGods(pinnedGods);
+    setSavedBuilds(savedBuilds);
+    
+    // Then try to sync with Supabase in background (merge if Supabase has newer data)
     try {
       // Try to set user context for RLS (don't fail if this doesn't exist)
       try {
         const rpcResult = await supabase.rpc('set_current_user', { username_param: currentUser });
         if (rpcResult && rpcResult.error && rpcResult.error.code === 'MISSING_CONFIG') {
-          // Supabase not configured, use local storage
-          await loadUserDataFromLocal();
+          // Supabase not configured, local storage is already loaded
           return;
         }
       } catch (rpcError) {
         // RPC function might not exist, continue anyway
-        console.log('RPC set_current_user not available, continuing...');
       }
       
       // Try to load from Supabase
       const { data, error } = await supabase
         .from('user_data')
-        .select('pinned_builds, pinned_gods, saved_builds')
+        .select('pinned_builds, pinned_gods, saved_builds, updated_at')
         .eq('username', currentUser)
         .single();
       
       if (error && error.code === 'MISSING_CONFIG') {
-        // Supabase not configured, use local storage
-        await loadUserDataFromLocal();
+        // Supabase not configured, local storage already loaded
         return;
       }
       
       if (error && error.code !== 'PGRST116') { // PGRST116 = no rows returned
         console.error('Error loading user data from Supabase:', error);
-        // Fallback to local storage
-        await loadUserDataFromLocal();
+        // Local storage already loaded, continue
         return;
       }
       
       if (data) {
-        const pinnedBuilds = data.pinned_builds || [];
-        const pinnedGods = data.pinned_gods || [];
-        const savedBuilds = data.saved_builds || [];
+        const supabasePinnedBuilds = data.pinned_builds || [];
+        const supabasePinnedGods = data.pinned_gods || [];
+        const supabaseSavedBuilds = data.saved_builds || [];
         
-        setPinnedBuilds(pinnedBuilds);
-        setPinnedGods(pinnedGods);
-        setSavedBuilds(savedBuilds);
-        
-        console.log('Loaded from Supabase:', {
-          pinnedBuilds: pinnedBuilds.length,
-          pinnedGods: pinnedGods.length,
-          savedBuilds: savedBuilds.length,
+        // Merge: prefer local storage (most recent), but add any unique items from Supabase
+        // For saved builds, merge by ID to avoid duplicates
+        const mergedSavedBuilds = [...savedBuilds];
+        supabaseSavedBuilds.forEach(sbBuild => {
+          if (!mergedSavedBuilds.find(b => b.id === sbBuild.id)) {
+            mergedSavedBuilds.push(sbBuild);
+          }
         });
         
-        // Also sync to local storage as backup
-        await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(pinnedBuilds));
-        await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(pinnedGods));
-        await storage.setItem(`savedBuilds_${currentUser}`, JSON.stringify(savedBuilds));
-      } else {
-        // No data in Supabase, try local storage
-        await loadUserDataFromLocal();
+        // For pinned builds, merge by buildKey/id
+        const mergedPinnedBuilds = [...pinnedBuilds];
+        supabasePinnedBuilds.forEach(sbBuild => {
+          if (!mergedPinnedBuilds.find(b => (b.id === sbBuild.id || b.buildKey === sbBuild.buildKey))) {
+            mergedPinnedBuilds.push(sbBuild);
+          }
+        });
+        
+        // For pinned gods, merge by name
+        const mergedPinnedGods = [...pinnedGods];
+        supabasePinnedGods.forEach(sbGod => {
+          const godName = sbGod.name || sbGod.GodName;
+          if (!mergedPinnedGods.find(g => (g.name || g.GodName) === godName)) {
+            mergedPinnedGods.push(sbGod);
+          }
+        });
+        
+        // Only update if there are differences (avoid unnecessary re-renders)
+        if (mergedSavedBuilds.length !== savedBuilds.length || 
+            mergedPinnedBuilds.length !== pinnedBuilds.length ||
+            mergedPinnedGods.length !== pinnedGods.length) {
+          setPinnedBuilds(mergedPinnedBuilds);
+          setPinnedGods(mergedPinnedGods);
+          setSavedBuilds(mergedSavedBuilds);
+          
+          // Save merged data back to local storage
+          await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(mergedPinnedBuilds));
+          await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(mergedPinnedGods));
+          await storage.setItem(`savedBuilds_${currentUser}`, JSON.stringify(mergedSavedBuilds));
+          
+          console.log('Merged with Supabase data:', {
+            pinnedBuilds: mergedPinnedBuilds.length,
+            pinnedGods: mergedPinnedGods.length,
+            savedBuilds: mergedSavedBuilds.length,
+          });
+        }
       }
     } catch (error) {
-      console.error('Error loading user data:', error);
-      // Fallback to local storage on any error
-      await loadUserDataFromLocal();
+      console.error('Error syncing with Supabase:', error);
+      // Local storage already loaded, continue
     }
   };
 
@@ -638,12 +729,29 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   };
 
   const saveUserDataToSupabase = async () => {
-    if (!currentUser) return;
+    if (!currentUser) {
+      console.warn('saveUserDataToSupabase: No current user');
+      return;
+    }
+    
+    console.log('Saving user data:', {
+      user: currentUser,
+      pinnedBuilds: pinnedBuilds.length,
+      pinnedGods: pinnedGods.length,
+      savedBuilds: savedBuilds.length,
+      platform: Platform.OS,
+    });
     
     // Always save to local storage first (fast, reliable)
-    await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(pinnedBuilds));
-    await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(pinnedGods));
-    await storage.setItem(`savedBuilds_${currentUser}`, JSON.stringify(savedBuilds));
+    try {
+      await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(pinnedBuilds));
+      await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(pinnedGods));
+      await storage.setItem(`savedBuilds_${currentUser}`, JSON.stringify(savedBuilds));
+      console.log('✅ Saved to local storage');
+    } catch (storageError) {
+      console.error('❌ Error saving to local storage:', storageError);
+      // Continue anyway, try Supabase
+    }
     
     // Then try to save to Supabase (async, don't block)
     try {
@@ -652,10 +760,12 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         const rpcResult = await supabase.rpc('set_current_user', { username_param: currentUser });
         if (rpcResult && rpcResult.error && rpcResult.error.code === 'MISSING_CONFIG') {
           // Supabase not configured, local storage already saved above
+          console.log('Supabase not configured, using local storage only');
           return;
         }
       } catch (rpcError) {
         // Continue without RLS context if function doesn't exist
+        console.log('RPC set_current_user not available, continuing...');
       }
       
       const { error } = await supabase
@@ -672,15 +782,18 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       
       if (error && error.code === 'MISSING_CONFIG') {
         // Supabase not configured, local storage already saved above
+        console.log('Supabase MISSING_CONFIG, using local storage only');
         return;
       }
       
       if (error) {
-        console.error('Error saving user data to Supabase:', error);
+        console.error('❌ Error saving user data to Supabase:', error);
         // Local storage already saved above, so data is safe
+      } else {
+        console.log('✅ Saved to Supabase successfully');
       }
     } catch (error) {
-      console.error('Error saving to Supabase:', error);
+      console.error('❌ Error saving to Supabase:', error);
       // Local storage already saved above, so data is safe
     }
   };
@@ -1100,7 +1213,10 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                 key={build.id || `saved-build-${idx}`} 
                 style={styles.buildCard}
                 onPress={() => {
-                  if (onNavigateToCustomBuild) {
+                  if (onNavigateToMyBuilds) {
+                    onNavigateToMyBuilds();
+                  } else if (onNavigateToCustomBuild) {
+                    // Fallback to custom build if MyBuilds navigation not available
                     onNavigateToCustomBuild(build);
                   }
                 }}

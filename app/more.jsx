@@ -15,7 +15,7 @@ import { useScreenDimensions } from '../hooks/useScreenDimensions';
 const WordlePage = lazy(() => import('./wordle'));
 const ProfilePage = lazy(() => import('./profile'));
 
-export default function MorePage({ activeTab = 'minigames', onNavigateToBuilds, onNavigateToGod, onNavigateToCustomBuild }) {
+export default function MorePage({ activeTab = 'minigames', onNavigateToBuilds, onNavigateToGod, onNavigateToCustomBuild, onNavigateToMyBuilds }) {
   // Use responsive screen dimensions
   const screenDimensions = useScreenDimensions();
   
@@ -79,9 +79,11 @@ export default function MorePage({ activeTab = 'minigames', onNavigateToBuilds, 
               </View>
             }>
               <ProfilePage 
+                key={`profile-${activeTab}`}
                 onNavigateToBuilds={onNavigateToBuilds} 
                 onNavigateToGod={onNavigateToGod}
                 onNavigateToCustomBuild={onNavigateToCustomBuild}
+                onNavigateToMyBuilds={onNavigateToMyBuilds}
               />
             </Suspense>
           )}
@@ -107,7 +109,7 @@ export default function MorePage({ activeTab = 'minigames', onNavigateToBuilds, 
             </View>
           </View>
           
-          {/* External Links Section */}
+          {/* External Links Section */} 
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>External Resources</Text>
             <View style={styles.grid}>

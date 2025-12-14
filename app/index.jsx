@@ -3651,6 +3651,16 @@ export default function App() {
                 setDatabaseSubTab('gods');
               }
             }}
+            onNavigateToCustomBuild={(build) => {
+              // Navigate to custom build page with the build data
+              setCurrentPage('custombuild');
+              setBuildsSubTab('custom');
+            }}
+            onNavigateToMyBuilds={() => {
+              // Navigate to My Builds tab
+              setCurrentPage('builds');
+              setBuildsSubTab('mybuilds');
+            }}
           />
         </Suspense>
       )}

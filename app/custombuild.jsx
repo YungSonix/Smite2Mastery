@@ -1289,14 +1289,51 @@ export default function CustomBuildPage() {
                   };
 
                   try {
+                    // Import supabase
+                    const { supabase } = require('../config/supabase');
+                    
+                    // Save to local storage first (CRITICAL - this is the source of truth)
                     const savedBuildsData = await storage.getItem(`savedBuilds_${currentUser}`);
                     const savedBuilds = savedBuildsData ? JSON.parse(savedBuildsData) : [];
-                    savedBuilds.push(buildData);
+                    const newBuild = { ...buildData, id: Date.now(), savedAt: Date.now() };
+                    savedBuilds.push(newBuild);
+                    
+                    // Save to local storage FIRST and wait for it to complete
                     await storage.setItem(`savedBuilds_${currentUser}`, JSON.stringify(savedBuilds));
+                    console.log('✅ Build saved to local storage:', newBuild.name);
+                    
+                    // Verify it was saved
+                    const verifyData = await storage.getItem(`savedBuilds_${currentUser}`);
+                    const verifyBuilds = verifyData ? JSON.parse(verifyData) : [];
+                    console.log('✅ Verified local storage has', verifyBuilds.length, 'builds');
+                    
+                    // Also save to Supabase (async, don't block)
+                    try {
+                      const { error } = await supabase
+                        .from('user_data')
+                        .upsert({
+                          username: currentUser,
+                          saved_builds: savedBuilds,
+                          updated_at: new Date().toISOString(),
+                        }, {
+                          onConflict: 'username'
+                        });
+                      
+                      if (error && error.code !== 'MISSING_CONFIG') {
+                        console.error('Error saving to Supabase:', error);
+                      } else if (!error) {
+                        console.log('✅ Build saved to Supabase');
+                      }
+                    } catch (supabaseError) {
+                      console.error('Supabase save error:', supabaseError);
+                      // Continue anyway, local storage is saved
+                    }
+                    
                     setShowSaveBuildModal(false);
                     setBuildName('');
                     Alert.alert('Success', 'Build saved to your profile!');
                   } catch (error) {
+                    console.error('❌ Error saving build:', error);
                     Alert.alert('Error', 'Failed to save build. Please try again.');
                   }
                 }}
