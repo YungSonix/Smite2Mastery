@@ -18,6 +18,33 @@ import { Image } from 'expo-image';
 let localBuilds = null;
 import { getLocalItemIcon, getLocalGodAsset, getSkinImage } from './localIcons';
 
+// Import supabase with fallback for missing config
+let supabase;
+try {
+  supabase = require('./config/supabase').supabase;
+} catch (e) {
+  // Fallback mock supabase if config file is missing
+  const mockQuery = {
+    eq: () => ({
+      single: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+      update: () => ({
+        eq: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+      }),
+    }),
+    single: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+    upsert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+  };
+  supabase = {
+    from: () => ({
+      select: () => mockQuery,
+      insert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+      upsert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+      update: () => mockQuery,
+    }),
+    rpc: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+  };
+}
+
 // Storage helper (same as in index.jsx)
 const IS_WEB_STORAGE = Platform.OS === 'web';
 const storage = {
@@ -4814,9 +4841,6 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                           const isPinned = pinnedGods.has(godName);
                           
                           try {
-                            // Import supabase
-                            const { supabase } = require('./config/supabase');
-                            
                             const pinnedGodsData = await storage.getItem(`pinnedGods_${currentUser}`);
                             const pinnedGodsList = pinnedGodsData ? JSON.parse(pinnedGodsData) : [];
                             
@@ -4830,19 +4854,29 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                 return next;
                               });
                               
-                              // Sync to Supabase
+                              // Sync to Supabase - get existing data first to preserve other fields
                               try {
+                                const { data: existingData } = await supabase
+                                  .from('user_data')
+                                  .select('pinned_builds, pinned_gods, saved_builds')
+                                  .eq('username', currentUser)
+                                  .single();
+                                
                                 const { error } = await supabase
                                   .from('user_data')
                                   .upsert({
                                     username: currentUser,
+                                    pinned_builds: existingData?.pinned_builds || [],
                                     pinned_gods: updated,
+                                    saved_builds: existingData?.saved_builds || [],
                                     updated_at: new Date().toISOString(),
                                   }, {
                                     onConflict: 'username'
                                   });
                                 if (error && error.code !== 'MISSING_CONFIG') {
                                   console.error('Error syncing unpinned god to Supabase:', error);
+                                } else if (!error) {
+                                  console.log('✅ Unpinned god synced to Supabase');
                                 }
                               } catch (supabaseError) {
                                 console.error('Error syncing to Supabase:', supabaseError);
@@ -4859,13 +4893,21 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(pinnedGodsList));
                               setPinnedGods(prev => new Set(prev).add(godName));
                               
-                              // Sync to Supabase
+                              // Sync to Supabase - get existing data first to preserve other fields
                               try {
+                                const { data: existingData } = await supabase
+                                  .from('user_data')
+                                  .select('pinned_builds, pinned_gods, saved_builds')
+                                  .eq('username', currentUser)
+                                  .single();
+                                
                                 const { error } = await supabase
                                   .from('user_data')
                                   .upsert({
                                     username: currentUser,
+                                    pinned_builds: existingData?.pinned_builds || [],
                                     pinned_gods: pinnedGodsList,
+                                    saved_builds: existingData?.saved_builds || [],
                                     updated_at: new Date().toISOString(),
                                   }, {
                                     onConflict: 'username'
@@ -4873,13 +4915,14 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                 if (error && error.code !== 'MISSING_CONFIG') {
                                   console.error('Error syncing pinned god to Supabase:', error);
                                 } else if (!error) {
-                                  console.log('✅ Pinned god synced to Supabase');
+                                  console.log('✅ Pinned god synced to Supabase:', pinnedGodsList.length, 'gods');
                                 }
                               } catch (supabaseError) {
                                 console.error('Error syncing to Supabase:', supabaseError);
                               }
                             }
                           } catch (error) {
+                            console.error('Error pinning/unpinning god:', error);
                             Alert.alert('Error', 'Failed to pin/unpin god. Please try again.');
                           }
                         }}
