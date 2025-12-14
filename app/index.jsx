@@ -1398,6 +1398,9 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                   const isPinned = pinnedBuilds.has(buildKey);
                                   
                                   try {
+                                    // Import supabase
+                                    const { supabase } = require('./config/supabase');
+                                    
                                     const pinnedBuildsData = await storage.getItem(`pinnedBuilds_${currentUser}`);
                                     const pinned = pinnedBuildsData ? JSON.parse(pinnedBuildsData) : [];
                                     
@@ -1410,9 +1413,27 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                         next.delete(buildKey);
                                         return next;
                                       });
+                                      
+                                      // Sync to Supabase
+                                      try {
+                                        const { error } = await supabase
+                                          .from('user_data')
+                                          .upsert({
+                                            username: currentUser,
+                                            pinned_builds: updated,
+                                            updated_at: new Date().toISOString(),
+                                          }, {
+                                            onConflict: 'username'
+                                          });
+                                        if (error && error.code !== 'MISSING_CONFIG') {
+                                          console.error('Error syncing unpinned build to Supabase:', error);
+                                        }
+                                      } catch (supabaseError) {
+                                        console.error('Error syncing to Supabase:', supabaseError);
+                                      }
                                     } else {
                                       // Pin
-                                      pinned.push({
+                                      const newPinnedBuild = {
                                         buildKey,
                                         godName: title,
                                         godInternalName: god?.internalName || god?.GodName,
@@ -1420,9 +1441,30 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                         buildTitle: currentBuild?.notes || currentBuild?.title || `${role || 'Build'} Build`,
                                         build: currentBuild,
                                         pinnedAt: new Date().toISOString(),
-                                      });
+                                      };
+                                      pinned.push(newPinnedBuild);
                                       await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(pinned));
                                       setPinnedBuilds(prev => new Set(prev).add(buildKey));
+                                      
+                                      // Sync to Supabase
+                                      try {
+                                        const { error } = await supabase
+                                          .from('user_data')
+                                          .upsert({
+                                            username: currentUser,
+                                            pinned_builds: pinned,
+                                            updated_at: new Date().toISOString(),
+                                          }, {
+                                            onConflict: 'username'
+                                          });
+                                        if (error && error.code !== 'MISSING_CONFIG') {
+                                          console.error('Error syncing pinned build to Supabase:', error);
+                                        } else if (!error) {
+                                          console.log('✅ Pinned build synced to Supabase');
+                                        }
+                                      } catch (supabaseError) {
+                                        console.error('Error syncing to Supabase:', supabaseError);
+                                      }
                                     }
                                   } catch (error) {
                                     Alert.alert('Error', 'Failed to pin/unpin build. Please try again.');
