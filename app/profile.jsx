@@ -115,6 +115,8 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   const [pinnedBuilds, setPinnedBuilds] = useState([]);
   const [pinnedGods, setPinnedGods] = useState([]);
   const [savedBuilds, setSavedBuilds] = useState([]);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false);
 
   useEffect(() => {
     checkLoginStatus();
@@ -248,25 +250,39 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
 
   const handleLogin = async () => {
     if (!username.trim() || !password.trim()) {
-      Alert.alert('Error', 'Please enter both username and password');
+      const errorMsg = 'Please enter both username and password';
+      console.error('Login validation error:', errorMsg);
+      if (Platform.OS === 'web') {
+        alert(errorMsg);
+      } else {
+        Alert.alert('Error', errorMsg);
+      }
       return;
     }
 
+    setIsLoggingIn(true);
+    console.log('Attempting login for:', username.trim());
+    
     try {
       const passwordHash = hashPassword(password);
       
+      console.log('Querying Supabase for user...');
       const { data, error } = await supabase
         .from('app_users')
         .select('username, password_hash')
         .eq('username', username.trim())
         .single();
       
+      console.log('Supabase response:', { data: !!data, error: error?.code || error?.message });
+      
       if (error && error.code === 'MISSING_CONFIG') {
+        console.error('Supabase MISSING_CONFIG error');
         // Supabase not configured, try local storage login
         const localUser = await storage.getItem(`user_${username.trim()}`);
         if (localUser) {
           const userData = JSON.parse(localUser);
           if (userData.password_hash === passwordHash) {
+            console.log('Login successful via local storage');
             await storage.setItem('currentUser', username.trim());
             setCurrentUser(username.trim());
             setIsLoggedIn(true);
@@ -274,11 +290,26 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
             setUsername('');
             setPassword('');
             await loadUserDataFromLocal();
+            if (Platform.OS === 'web') {
+              alert('Login successful!');
+            }
+            setIsLoggingIn(false);
             return;
           }
         }
-        Alert.alert('Error', 'Supabase configuration is missing. Please configure your Supabase credentials.');
+        const errorMsg = 'Supabase configuration is missing. Please configure your Supabase credentials.';
+        console.error(errorMsg);
+        if (Platform.OS === 'web') {
+          alert(errorMsg);
+        } else {
+          Alert.alert('Error', errorMsg);
+        }
+        setIsLoggingIn(false);
         return;
+      }
+      
+      if (error) {
+        console.error('Supabase query error:', error.code, error.message);
       }
       
       if (error || !data) {
@@ -287,6 +318,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         if (localUser) {
           const userData = JSON.parse(localUser);
           if (userData.password_hash === passwordHash) {
+            console.log('Login successful via local storage fallback');
             await storage.setItem('currentUser', username.trim());
             setCurrentUser(username.trim());
             setIsLoggedIn(true);
@@ -294,14 +326,26 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
             setUsername('');
             setPassword('');
             await loadUserDataFromLocal();
+            if (Platform.OS === 'web') {
+              alert('Login successful!');
+            }
+            setIsLoggingIn(false);
             return;
           }
         }
-        Alert.alert('Error', 'Invalid username or password');
+        const errorMsg = 'Invalid username or password';
+        console.error(errorMsg);
+        if (Platform.OS === 'web') {
+          alert(errorMsg);
+        } else {
+          Alert.alert('Error', errorMsg);
+        }
+        setIsLoggingIn(false);
         return;
       }
       
       if (data.password_hash === passwordHash) {
+        console.log('Login successful via Supabase');
         await storage.setItem('currentUser', username.trim());
         setCurrentUser(username.trim());
         setIsLoggedIn(true);
@@ -309,35 +353,79 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         setUsername('');
         setPassword('');
         await loadUserData();
+        if (Platform.OS === 'web') {
+          alert('Login successful!');
+        }
+        setIsLoggingIn(false);
       } else {
-        Alert.alert('Error', 'Invalid username or password');
+        const errorMsg = 'Invalid username or password';
+        console.error(errorMsg);
+        if (Platform.OS === 'web') {
+          alert(errorMsg);
+        } else {
+          Alert.alert('Error', errorMsg);
+        }
+        setIsLoggingIn(false);
       }
     } catch (error) {
       console.error('Login error:', error);
-      Alert.alert('Error', 'Failed to login. Please try again.');
+      const errorMsg = `Failed to login: ${error.message || 'Unknown error'}`;
+      if (Platform.OS === 'web') {
+        alert(errorMsg);
+      } else {
+        Alert.alert('Error', errorMsg);
+      }
+      setIsLoggingIn(false);
     }
   };
 
   const handleRegister = async () => {
     if (!registerUsername.trim() || !registerPassword.trim() || !confirmPassword.trim()) {
-      Alert.alert('Error', 'Please fill in all fields');
+      const errorMsg = 'Please fill in all fields';
+      console.error('Registration validation error:', errorMsg);
+      if (Platform.OS === 'web') {
+        alert(errorMsg);
+      } else {
+        Alert.alert('Error', errorMsg);
+      }
       return;
     }
 
     if (registerPassword !== confirmPassword) {
-      Alert.alert('Error', 'Passwords do not match');
+      const errorMsg = 'Passwords do not match';
+      console.error('Registration validation error:', errorMsg);
+      if (Platform.OS === 'web') {
+        alert(errorMsg);
+      } else {
+        Alert.alert('Error', errorMsg);
+      }
       return;
     }
 
     if (registerPassword.length < 4) {
-      Alert.alert('Error', 'Password must be at least 4 characters');
+      const errorMsg = 'Password must be at least 4 characters';
+      console.error('Registration validation error:', errorMsg);
+      if (Platform.OS === 'web') {
+        alert(errorMsg);
+      } else {
+        Alert.alert('Error', errorMsg);
+      }
       return;
     }
 
     if (registerUsername.length < 3) {
-      Alert.alert('Error', 'Username must be at least 3 characters');
+      const errorMsg = 'Username must be at least 3 characters';
+      console.error('Registration validation error:', errorMsg);
+      if (Platform.OS === 'web') {
+        alert(errorMsg);
+      } else {
+        Alert.alert('Error', errorMsg);
+      }
       return;
     }
+
+    setIsRegistering(true);
+    console.log('Attempting registration for:', registerUsername.trim());
 
     try {
       const usernameTrimmed = registerUsername.trim();
@@ -345,23 +433,41 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       const recoveryCodeGenerated = generateRecoveryCode();
       
       // Check if username already exists
+      console.log('Checking if username exists...');
       const { data: existingUser, error: checkError } = await supabase
         .from('app_users')
         .select('username')
         .eq('username', usernameTrimmed)
         .single();
       
+      console.log('Username check response:', { exists: !!existingUser, error: checkError?.code || checkError?.message });
+      
       if (checkError && checkError.code === 'MISSING_CONFIG') {
-        Alert.alert('Error', 'Supabase configuration is missing. Please configure your Supabase credentials.');
+        const errorMsg = 'Supabase configuration is missing. Please configure your Supabase credentials.';
+        console.error(errorMsg);
+        if (Platform.OS === 'web') {
+          alert(errorMsg);
+        } else {
+          Alert.alert('Error', errorMsg);
+        }
+        setIsRegistering(false);
         return;
       }
       
       if (existingUser) {
-        Alert.alert('Error', 'Username already exists');
+        const errorMsg = 'Username already exists';
+        console.error(errorMsg);
+        if (Platform.OS === 'web') {
+          alert(errorMsg);
+        } else {
+          Alert.alert('Error', errorMsg);
+        }
+        setIsRegistering(false);
         return;
       }
       
       // Create user with recovery code
+      console.log('Creating user in Supabase...');
       const { error: userError } = await supabase
         .from('app_users')
         .insert({
@@ -370,18 +476,34 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
           recovery_code: recoveryCodeGenerated,
         });
       
+      console.log('User creation response:', { error: userError?.code || userError?.message || 'Success' });
+      
       if (userError) {
         if (userError.code === 'MISSING_CONFIG') {
-          Alert.alert('Error', 'Supabase configuration is missing. Please configure your Supabase credentials.');
+          const errorMsg = 'Supabase configuration is missing. Please configure your Supabase credentials.';
+          console.error(errorMsg);
+          if (Platform.OS === 'web') {
+            alert(errorMsg);
+          } else {
+            Alert.alert('Error', errorMsg);
+          }
         } else if (userError.code === '23505') { // Unique constraint violation
-          Alert.alert('Error', 'Username already exists');
+          const errorMsg = 'Username already exists';
+          console.error(errorMsg);
+          if (Platform.OS === 'web') {
+            alert(errorMsg);
+          } else {
+            Alert.alert('Error', errorMsg);
+          }
         } else {
           throw userError;
         }
+        setIsRegistering(false);
         return;
       }
       
       // Initialize user data
+      console.log('Creating user data in Supabase...');
       const { error: dataError } = await supabase
         .from('user_data')
         .insert({
@@ -410,9 +532,17 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       
       // Show the recovery code modal - don't log in yet
       setShowRecoveryCodeModal(true);
+      setIsRegistering(false);
+      console.log('Registration successful!');
     } catch (error) {
       console.error('Registration error:', error);
-      Alert.alert('Error', `Failed to create account: ${error.message || 'Unknown error'}`);
+      const errorMsg = `Failed to create account: ${error.message || 'Unknown error'}`;
+      if (Platform.OS === 'web') {
+        alert(errorMsg);
+      } else {
+        Alert.alert('Error', errorMsg);
+      }
+      setIsRegistering(false);
     }
   };
 
@@ -653,8 +783,16 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                   }}>
                     <Text style={styles.cancelButtonText}>Cancel</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.confirmButton} onPress={handleLogin}>
-                    <Text style={styles.confirmButtonText}>Sign In</Text>
+                  <TouchableOpacity 
+                    style={[styles.confirmButton, isLoggingIn && styles.confirmButtonDisabled]} 
+                    onPress={handleLogin}
+                    disabled={isLoggingIn}
+                  >
+                    {isLoggingIn ? (
+                      <ActivityIndicator color="#ffffff" />
+                    ) : (
+                      <Text style={styles.confirmButtonText}>Sign In</Text>
+                    )}
                   </TouchableOpacity>
                 </View>
                 <TouchableOpacity 
@@ -852,8 +990,16 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                   }}>
                     <Text style={styles.cancelButtonText}>Cancel</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.confirmButton} onPress={handleRegister}>
-                    <Text style={styles.confirmButtonText}>Create</Text>
+                  <TouchableOpacity 
+                    style={[styles.confirmButton, isRegistering && styles.confirmButtonDisabled]} 
+                    onPress={handleRegister}
+                    disabled={isRegistering}
+                  >
+                    {isRegistering ? (
+                      <ActivityIndicator color="#ffffff" />
+                    ) : (
+                      <Text style={styles.confirmButtonText}>Create</Text>
+                    )}
                   </TouchableOpacity>
                 </View>
               </Pressable>
@@ -1261,6 +1407,12 @@ const styles = StyleSheet.create({
     ...(IS_WEB && {
       cursor: 'pointer',
       transition: 'background-color 0.2s',
+    }),
+  },
+  confirmButtonDisabled: {
+    opacity: 0.6,
+    ...(IS_WEB && {
+      cursor: 'not-allowed',
     }),
   },
   confirmButtonText: {
