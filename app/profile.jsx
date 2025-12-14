@@ -123,6 +123,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
   const [showLoginSuccess, setShowLoginSuccess] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     checkLoginStatus();
@@ -141,7 +142,8 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     let intervalId = null;
     
     const reloadData = async () => {
-      if (currentUser && isLoggedIn && isActive) {
+      // Don't reload if we're currently saving (to avoid overwriting changes)
+      if (currentUser && isLoggedIn && isActive && !isSaving) {
         console.log('Profile page - reloading user data');
         await loadUserData();
       }
@@ -766,28 +768,37 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     }
   };
 
-  const saveUserDataToSupabase = async () => {
+  const saveUserDataToSupabase = async (newPinnedBuilds = null, newPinnedGods = null, newSavedBuilds = null) => {
     if (!currentUser) {
       console.warn('saveUserDataToSupabase: No current user');
       return;
     }
     
+    setIsSaving(true);
+    
+    // Use provided values or fall back to current state
+    const buildsToSave = newPinnedBuilds !== null ? newPinnedBuilds : pinnedBuilds;
+    const godsToSave = newPinnedGods !== null ? newPinnedGods : pinnedGods;
+    const savedToSave = newSavedBuilds !== null ? newSavedBuilds : savedBuilds;
+    
     console.log('Saving user data:', {
       user: currentUser,
-      pinnedBuilds: pinnedBuilds.length,
-      pinnedGods: pinnedGods.length,
-      savedBuilds: savedBuilds.length,
+      pinnedBuilds: buildsToSave.length,
+      pinnedGods: godsToSave.length,
+      savedBuilds: savedToSave.length,
       platform: Platform.OS,
+      usingProvidedValues: newPinnedBuilds !== null || newPinnedGods !== null || newSavedBuilds !== null,
     });
     
     // Always save to local storage first (fast, reliable)
     try {
-      await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(pinnedBuilds));
-      await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(pinnedGods));
-      await storage.setItem(`savedBuilds_${currentUser}`, JSON.stringify(savedBuilds));
+      await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(buildsToSave));
+      await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(godsToSave));
+      await storage.setItem(`savedBuilds_${currentUser}`, JSON.stringify(savedToSave));
       console.log('✅ Saved to local storage');
     } catch (storageError) {
       console.error('❌ Error saving to local storage:', storageError);
+      setIsSaving(false);
       // Continue anyway, try Supabase
     }
     
@@ -810,9 +821,9 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         .from('user_data')
         .upsert({
           username: currentUser,
-          pinned_builds: pinnedBuilds,
-          pinned_gods: pinnedGods,
-          saved_builds: savedBuilds,
+          pinned_builds: buildsToSave,
+          pinned_gods: godsToSave,
+          saved_builds: savedToSave,
           updated_at: new Date().toISOString(),
         }, {
           onConflict: 'username'
@@ -833,6 +844,8 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     } catch (error) {
       console.error('❌ Error saving to Supabase:', error);
       // Local storage already saved above, so data is safe
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -847,8 +860,10 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   const unpinBuild = async (buildIdOrKey) => {
     if (!currentUser) return;
     const newPinned = pinnedBuilds.filter(b => (b.id !== buildIdOrKey && b.buildKey !== buildIdOrKey));
+    console.log('Unpinning build:', buildIdOrKey, 'from', pinnedBuilds.length, 'to', newPinned.length);
     setPinnedBuilds(newPinned);
-    await saveUserDataToSupabase();
+    // Pass the new array directly to ensure we save the updated data
+    await saveUserDataToSupabase(newPinned, null, null);
   };
 
   const pinGod = async (god) => {
@@ -862,8 +877,10 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   const unpinGod = async (godName) => {
     if (!currentUser) return;
     const newPinned = pinnedGods.filter(g => (g.name || g.GodName) !== godName);
+    console.log('Unpinning god:', godName, 'from', pinnedGods.length, 'to', newPinned.length);
     setPinnedGods(newPinned);
-    await saveUserDataToSupabase();
+    // Pass the new array directly to ensure we save the updated data
+    await saveUserDataToSupabase(null, newPinned, null);
   };
 
   const saveBuild = async (build) => {
