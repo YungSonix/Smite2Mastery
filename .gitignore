@@ -50,9 +50,6 @@ app/data/builds.json.backup
 .vercel
 web-build/
 
-# Sensitive configuration files (contains API keys)
-config/supabase.js
-
 # Temporary/output files
 output.txt
 *.log
@@ -61,10 +58,9 @@ output.txt
 Git/
 *.exe
 
-# Sensitive configuration files (contains API keys)
-# Keep the .example file for reference, but ignore the actual config
-config/supabase.js
-!config/supabase.js.example
+# Note: config/supabase.js is now tracked in git
+# It uses fallback values, so it's safe to commit
+# Environment variables will override fallbacks when set
 
 # Patch notes source files (keep JSON, ignore text sources)
 *.txt
