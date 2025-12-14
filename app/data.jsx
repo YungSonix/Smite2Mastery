@@ -18,32 +18,45 @@ import { Image } from 'expo-image';
 let localBuilds = null;
 import { getLocalItemIcon, getLocalGodAsset, getSkinImage } from './localIcons';
 
-// Import supabase with fallback for missing config
-let supabase;
-try {
-  supabase = require('../config/supabase').supabase;
-} catch (e) {
-  // Fallback mock supabase if config file is missing
-  const mockQuery = {
-    eq: () => ({
-      single: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
-      update: () => ({
-        eq: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+// Import supabase lazily to avoid module load errors on mobile
+let supabase = null;
+let supabaseInitialized = false;
+
+const getSupabase = () => {
+  if (supabaseInitialized) {
+    return supabase;
+  }
+  
+  try {
+    supabase = require('../config/supabase').supabase;
+    supabaseInitialized = true;
+    return supabase;
+  } catch (e) {
+    console.warn('Failed to load Supabase config, using mock:', e.message);
+    // Fallback mock supabase if config file is missing
+    const mockQuery = {
+      eq: () => ({
+        single: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+        update: () => ({
+          eq: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+        }),
       }),
-    }),
-    single: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
-    upsert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
-  };
-  supabase = {
-    from: () => ({
-      select: () => mockQuery,
-      insert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+      single: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
       upsert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
-      update: () => mockQuery,
-    }),
-    rpc: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
-  };
-}
+    };
+    supabase = {
+      from: () => ({
+        select: () => mockQuery,
+        insert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+        upsert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+        update: () => mockQuery,
+      }),
+      rpc: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+    };
+    supabaseInitialized = true;
+    return supabase;
+  }
+};
 
 // Storage helper (same as in index.jsx)
 const IS_WEB_STORAGE = Platform.OS === 'web';
@@ -4844,7 +4857,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                             godName,
                             isPinned,
                             currentUser,
-                            hasSupabase: !!supabase,
+                            hasSupabase: !!getSupabase(),
                             supabaseType: typeof supabase,
                             supabaseFrom: supabase?.from ? 'has from method' : 'missing from method',
                           });
@@ -4870,14 +4883,15 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               });
                               
                               // Sync to Supabase - get existing data first to preserve other fields
-                              if (!supabase || !supabase.from) {
+                              const supabaseClient = getSupabase();
+                              if (!supabaseClient || !supabaseClient.from) {
                                 console.error('❌ Supabase not available, skipping sync');
                                 return;
                               }
                               
                               try {
                                 console.log('🔄 Fetching existing data from Supabase for unpin...');
-                                const { data: existingData, error: fetchError } = await supabase
+                                const { data: existingData, error: fetchError } = await supabaseClient
                                   .from('user_data')
                                   .select('pinned_builds, pinned_gods, saved_builds')
                                   .eq('username', currentUser)
@@ -4894,7 +4908,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                   existing_saved_builds: existingData?.saved_builds?.length || 0,
                                 });
                                 
-                                const { error } = await supabase
+                                const { error } = await supabaseClient
                                   .from('user_data')
                                   .upsert({
                                     username: currentUser,
@@ -4931,14 +4945,15 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               setPinnedGods(prev => new Set(prev).add(godName));
                               
                               // Sync to Supabase - get existing data first to preserve other fields
-                              if (!supabase || !supabase.from) {
+                              const supabaseClient = getSupabase();
+                              if (!supabaseClient || !supabaseClient.from) {
                                 console.error('❌ Supabase not available, skipping sync');
                                 return;
                               }
                               
                               try {
                                 console.log('🔄 Fetching existing data from Supabase for pin...');
-                                const { data: existingData, error: fetchError } = await supabase
+                                const { data: existingData, error: fetchError } = await supabaseClient
                                   .from('user_data')
                                   .select('pinned_builds, pinned_gods, saved_builds')
                                   .eq('username', currentUser)
@@ -4956,7 +4971,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                   existing_saved_builds: existingData?.saved_builds?.length || 0,
                                 });
                                 
-                                const { error } = await supabase
+                                const { error } = await supabaseClient
                                   .from('user_data')
                                   .upsert({
                                     username: currentUser,
