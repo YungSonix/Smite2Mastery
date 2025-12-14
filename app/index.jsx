@@ -29,32 +29,45 @@ let localBuilds = null;
 const IS_WEB = Platform.OS === 'web';
 import { getLocalItemIcon, getLocalGodAsset } from './localIcons';
 
-// Import supabase with fallback for missing config
-let supabase;
-try {
-  supabase = require('../config/supabase').supabase;
-} catch (e) {
-  // Fallback mock supabase if config file is missing
-  const mockQuery = {
-    eq: () => ({
-      single: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
-      update: () => ({
-        eq: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+// Import supabase lazily to avoid module load errors on mobile
+let supabase = null;
+let supabaseInitialized = false;
+
+const getSupabase = () => {
+  if (supabaseInitialized) {
+    return supabase;
+  }
+  
+  try {
+    supabase = require('../config/supabase').supabase;
+    supabaseInitialized = true;
+    return supabase;
+  } catch (e) {
+    console.warn('Failed to load Supabase config, using mock:', e.message);
+    // Fallback mock supabase if config file is missing
+    const mockQuery = {
+      eq: () => ({
+        single: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+        update: () => ({
+          eq: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+        }),
       }),
-    }),
-    single: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
-    upsert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
-  };
-  supabase = {
-    from: () => ({
-      select: () => mockQuery,
-      insert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+      single: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
       upsert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
-      update: () => mockQuery,
-    }),
-    rpc: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
-  };
-}
+    };
+    supabase = {
+      from: () => ({
+        select: () => mockQuery,
+        insert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+        upsert: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+        update: () => mockQuery,
+      }),
+      rpc: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+    };
+    supabaseInitialized = true;
+    return supabase;
+  }
+};
 
 // Role icons
 const roleIcons = {
@@ -121,177 +134,6 @@ function PatchBadgeTooltip({ changeType, version, entityType, badgeStyle, textSt
     </>
   );
 }
-// Hide scrollbars on web
-useEffect(() => {
-  if (IS_WEB && typeof document !== 'undefined') {
-    const style = document.createElement('style');
-    style.textContent = `
-      * {
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-      }
-      *::-webkit-scrollbar {
-        display: none;
-      }
-    `;
-    document.head.appendChild(style);
-    return () => {
-      if (document.head.contains(style)) {
-        document.head.removeChild(style);
-      }
-    };
-  }
-}, []);
-
-// Disable browser inspection on web
-useEffect(() => {
-  if (IS_WEB && typeof document !== 'undefined' && typeof window !== 'undefined') {
-    // Disable right-click context menu
-    const handleContextMenu = (e) => {
-      e.preventDefault();
-      return false;
-    };
-
-    // Disable keyboard shortcuts for dev tools (using modern key property)
-    const handleKeyDown = (e) => {
-      // Disable F12
-      if (e.key === 'F12' || e.keyCode === 123) {
-        e.preventDefault();
-        return false;
-      }
-      // Disable Ctrl+Shift+I (Chrome DevTools)
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.keyCode === 73)) {
-        e.preventDefault();
-        return false;
-      } 
-      // Disable Ctrl+Shift+J (Chrome Console)
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'J' || e.key === 'j' || e.keyCode === 74)) {
-        e.preventDefault();
-        return false; 
-      }
-      // Disable Ctrl+Shift+C (Chrome Element Inspector)
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'C' || e.key === 'c' || e.keyCode === 67)) {
-        e.preventDefault();
-        return false;
-      }
-      // Disable Ctrl+U (View Source)
-      if ((e.ctrlKey || e.metaKey) && (e.key === 'U' || e.key === 'u' || e.keyCode === 85)) {
-        e.preventDefault();
-        return false;
-      }
-      // Disable Ctrl+S (Save Page)
-      if ((e.ctrlKey || e.metaKey) && (e.key === 'S' || e.key === 's' || e.keyCode === 83) && !e.shiftKey) {
-        e.preventDefault();
-        return false;
-      }
-      // Disable Ctrl+P (Print)
-      if ((e.ctrlKey || e.metaKey) && (e.key === 'P' || e.key === 'p' || e.keyCode === 80)) {
-        e.preventDefault();
-        return false;
-      }
-      // Disable Ctrl+Shift+K (Firefox Console)
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'K' || e.key === 'k' || e.keyCode === 75)) {
-        e.preventDefault();
-        return false;
-      }
-      // Disable Ctrl+Shift+E (Firefox Network Monitor)
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'E' || e.key === 'e' || e.keyCode === 69)) {
-        e.preventDefault();
-        return false;
-      }
-    };
-
-    // Disable text selection
-    const handleSelectStart = (e) => {
-      e.preventDefault();
-      return false;
-    };
-
-    // Disable drag
-    const handleDragStart = (e) => {
-      e.preventDefault();
-      return false;
-    };
-
-    // Disable copy
-    const handleCopy = (e) => {
-      e.preventDefault();
-      return false;
-    };
-
-    // Disable cut
-    const handleCut = (e) => {
-      e.preventDefault();
-      return false;
-    };
-
-    // Disable paste
-    const handlePaste = (e) => {
-      e.preventDefault();
-      return false;
-    };
-
-    // Add event listeners with capture phase for better blocking
-    document.addEventListener('contextmenu', handleContextMenu, { capture: true, passive: false });
-    document.addEventListener('keydown', handleKeyDown, { capture: true, passive: false });
-    document.addEventListener('selectstart', handleSelectStart, { capture: true, passive: false });
-    document.addEventListener('dragstart', handleDragStart, { capture: true, passive: false });
-    document.addEventListener('copy', handleCopy, { capture: true, passive: false });
-    document.addEventListener('cut', handleCut, { capture: true, passive: false });
-    document.addEventListener('paste', handlePaste, { capture: true, passive: false });
-
-    // Disable dev tools detection
-    let devtools = { open: false };
-    const element = new Image();
-    Object.defineProperty(element, 'id', {
-      get: function() {
-        devtools.open = true;
-      }
-    });
-
-    // Check for dev tools periodically
-    const checkDevTools = setInterval(() => {
-      devtools.open = false;
-      console.log(element);
-      console.clear();
-      if (devtools.open) {
-        // Dev tools detected
-        console.clear();
-      }
-    }, 1000);
-
-    // Disable console methods
-    const noop = () => {};
-    const originalConsole = { ...console };
-    console.log = noop;
-    console.warn = noop;
-    console.error = noop;
-    console.info = noop;
-    console.debug = noop;
-    console.table = noop;
-    console.trace = noop;
-    console.group = noop;
-    console.groupEnd = noop;
-    console.time = noop;
-    console.timeEnd = noop;
-
-    // Cleanup function
-    return () => {
-      document.removeEventListener('contextmenu', handleContextMenu, { capture: true });
-      document.removeEventListener('keydown', handleKeyDown, { capture: true });
-      document.removeEventListener('selectstart', handleSelectStart, { capture: true });
-      document.removeEventListener('dragstart', handleDragStart, { capture: true });
-      document.removeEventListener('copy', handleCopy, { capture: true });
-      document.removeEventListener('cut', handleCut, { capture: true });
-      document.removeEventListener('paste', handlePaste, { capture: true });
-      clearInterval(checkDevTools);
-      // Restore console
-      Object.assign(console, originalConsole);
-    };
-  }
-}, []);
-
-
 // Storage helper
 const storage = {
   async getItem(key) {
@@ -1600,7 +1442,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                       godName: title,
                                       isPinned,
                                       currentUser,
-                                      hasSupabase: !!supabase,
+                                      hasSupabase: !!getSupabase(),
                                     });
                                     
                                     const pinnedBuildsData = await storage.getItem(`pinnedBuilds_${currentUser}`);
@@ -1619,14 +1461,15 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                       });
                                       
                                       // Sync to Supabase - get existing data first to preserve other fields
-                                      if (!supabase || !supabase.from) {
+                                      const supabaseClient = getSupabase();
+                                      if (!supabaseClient || !supabaseClient.from) {
                                         console.error('❌ Supabase not available, skipping sync');
                                         return;
                                       }
                                       
                                       try {
                                         console.log('🔄 Syncing unpinned build to Supabase...');
-                                        const { data: existingData, error: fetchError } = await supabase
+                                        const { data: existingData, error: fetchError } = await supabaseClient
                                           .from('user_data')
                                           .select('pinned_builds, pinned_gods, saved_builds')
                                           .eq('username', currentUser)
@@ -1636,7 +1479,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                           console.error('❌ Error fetching existing data:', fetchError);
                                         }
                                         
-                                        const { error } = await supabase
+                                        const { error } = await supabaseClient
                                           .from('user_data')
                                           .upsert({
                                             username: currentUser,
@@ -1676,7 +1519,8 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                       setPinnedBuilds(prev => new Set(prev).add(buildKey));
                                       
                                       // Sync to Supabase - get existing data first to preserve other fields
-                                      if (!supabase || !supabase.from) {
+                                      const supabaseClient = getSupabase();
+                                      if (!supabaseClient || !supabaseClient.from) {
                                         console.error('❌ Supabase not available, skipping sync');
                                         return;
                                       }
@@ -1687,7 +1531,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                           godName: title,
                                           totalPinned: pinned.length,
                                         });
-                                        const { data: existingData, error: fetchError } = await supabase
+                                        const { data: existingData, error: fetchError } = await supabaseClient
                                           .from('user_data')
                                           .select('pinned_builds, pinned_gods, saved_builds')
                                           .eq('username', currentUser)
@@ -1697,7 +1541,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                           console.error('❌ Error fetching existing data:', fetchError);
                                         }
                                         
-                                        const { error } = await supabase
+                                        const { error } = await supabaseClient
                                           .from('user_data')
                                           .upsert({
                                             username: currentUser,
@@ -3544,6 +3388,176 @@ export default function App() {
   // Use responsive screen dimensions
   const screenDimensions = useScreenDimensions();
   
+  // Web-only effects - hide scrollbars and disable dev tools
+  useEffect(() => {
+    if (IS_WEB && typeof document !== 'undefined') {
+      const style = document.createElement('style');
+      style.textContent = `
+        * {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        *::-webkit-scrollbar {
+          display: none;
+        }
+      `;
+      document.head.appendChild(style);
+      return () => {
+        if (document.head.contains(style)) {
+          document.head.removeChild(style);
+        }
+      };
+    }
+  }, []);
+
+  // Disable browser inspection on web
+  useEffect(() => {
+    if (IS_WEB && typeof document !== 'undefined' && typeof window !== 'undefined') {
+      // Disable right-click context menu
+      const handleContextMenu = (e) => {
+        e.preventDefault();
+        return false;
+      };
+
+      // Disable keyboard shortcuts for dev tools (using modern key property)
+      const handleKeyDown = (e) => {
+        // Disable F12
+        if (e.key === 'F12' || e.keyCode === 123) {
+          e.preventDefault();
+          return false;
+        }
+        // Disable Ctrl+Shift+I (Chrome DevTools)
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.keyCode === 73)) {
+          e.preventDefault();
+          return false;
+        } 
+        // Disable Ctrl+Shift+J (Chrome Console)
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'J' || e.key === 'j' || e.keyCode === 74)) {
+          e.preventDefault();
+          return false; 
+        }
+        // Disable Ctrl+Shift+C (Chrome Element Inspector)
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'C' || e.key === 'c' || e.keyCode === 67)) {
+          e.preventDefault();
+          return false;
+        }
+        // Disable Ctrl+U (View Source)
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'U' || e.key === 'u' || e.keyCode === 85)) {
+          e.preventDefault();
+          return false;
+        }
+        // Disable Ctrl+S (Save Page)
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'S' || e.key === 's' || e.keyCode === 83) && !e.shiftKey) {
+          e.preventDefault();
+          return false;
+        }
+        // Disable Ctrl+P (Print)
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'P' || e.key === 'p' || e.keyCode === 80)) {
+          e.preventDefault();
+          return false;
+        }
+        // Disable Ctrl+Shift+K (Firefox Console)
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'K' || e.key === 'k' || e.keyCode === 75)) {
+          e.preventDefault();
+          return false;
+        }
+        // Disable Ctrl+Shift+E (Firefox Network Monitor)
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'E' || e.key === 'e' || e.keyCode === 69)) {
+          e.preventDefault();
+          return false;
+        }
+      };
+
+      // Disable text selection
+      const handleSelectStart = (e) => {
+        e.preventDefault();
+        return false;
+      };
+
+      // Disable drag
+      const handleDragStart = (e) => {
+        e.preventDefault();
+        return false;
+      };
+
+      // Disable copy
+      const handleCopy = (e) => {
+        e.preventDefault();
+        return false;
+      };
+
+      // Disable cut
+      const handleCut = (e) => {
+        e.preventDefault();
+        return false;
+      };
+
+      // Disable paste
+      const handlePaste = (e) => {
+        e.preventDefault();
+        return false;
+      };
+
+      // Add event listeners with capture phase for better blocking
+      document.addEventListener('contextmenu', handleContextMenu, { capture: true, passive: false });
+      document.addEventListener('keydown', handleKeyDown, { capture: true, passive: false });
+      document.addEventListener('selectstart', handleSelectStart, { capture: true, passive: false });
+      document.addEventListener('dragstart', handleDragStart, { capture: true, passive: false });
+      document.addEventListener('copy', handleCopy, { capture: true, passive: false });
+      document.addEventListener('cut', handleCut, { capture: true, passive: false });
+      document.addEventListener('paste', handlePaste, { capture: true, passive: false });
+
+      // Disable dev tools detection
+      let devtools = { open: false };
+      const element = new Image();
+      Object.defineProperty(element, 'id', {
+        get: function() {
+          devtools.open = true;
+        }
+      });
+
+      // Check for dev tools periodically
+      const checkDevTools = setInterval(() => {
+        devtools.open = false;
+        console.log(element);
+        console.clear();
+        if (devtools.open) {
+          // Dev tools detected
+          console.clear();
+        }
+      }, 1000);
+
+      // Disable console methods
+      const noop = () => {};
+      const originalConsole = { ...console };
+      console.log = noop;
+      console.warn = noop;
+      console.error = noop;
+      console.info = noop;
+      console.debug = noop;
+      console.table = noop;
+      console.trace = noop;
+      console.group = noop;
+      console.groupEnd = noop;
+      console.time = noop;
+      console.timeEnd = noop;
+
+      // Cleanup function
+      return () => {
+        document.removeEventListener('contextmenu', handleContextMenu, { capture: true });
+        document.removeEventListener('keydown', handleKeyDown, { capture: true });
+        document.removeEventListener('selectstart', handleSelectStart, { capture: true });
+        document.removeEventListener('dragstart', handleDragStart, { capture: true });
+        document.removeEventListener('copy', handleCopy, { capture: true });
+        document.removeEventListener('cut', handleCut, { capture: true });
+        document.removeEventListener('paste', handlePaste, { capture: true });
+        clearInterval(checkDevTools);
+        // Restore console
+        Object.assign(console, originalConsole);
+      };
+    }
+  }, []);
+
   const [currentPage, setCurrentPage] = useState('homepage');
   const [godFromBuilds, setGodFromBuilds] = useState(null);
   const [expandAbilities, setExpandAbilities] = useState(false);
