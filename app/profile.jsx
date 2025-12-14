@@ -78,7 +78,11 @@ const storage = {
       console.error('Storage setItem error:', e);
       // On web, localStorage might throw if quota exceeded
       if (IS_WEB) {
-        Alert.alert('Storage Error', 'Unable to save data. Please check your browser storage settings.');
+        if (Platform.OS === 'web') {
+          console.error('Unable to save data. Please check your browser storage settings.');
+        } else {
+          Alert.alert('Storage Error', 'Unable to save data. Please check your browser storage settings.');
+        }
       }
     }
   },
@@ -118,6 +122,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   const [savedBuilds, setSavedBuilds] = useState([]);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
+  const [showLoginSuccess, setShowLoginSuccess] = useState(false);
 
   useEffect(() => {
     checkLoginStatus();
@@ -242,37 +247,72 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         const supabasePinnedBuilds = data.pinned_builds || [];
         const supabasePinnedGods = data.pinned_gods || [];
         const supabaseSavedBuilds = data.saved_builds || [];
+        const supabaseUpdatedAt = data.updated_at ? new Date(data.updated_at).getTime() : 0;
         
-        // Merge: prefer local storage (most recent), but add any unique items from Supabase
-        // For saved builds, merge by ID to avoid duplicates
-        const mergedSavedBuilds = [...savedBuilds];
-        supabaseSavedBuilds.forEach(sbBuild => {
-          if (!mergedSavedBuilds.find(b => b.id === sbBuild.id)) {
-            mergedSavedBuilds.push(sbBuild);
-          }
-        });
+        // If local storage is empty but Supabase has data, use Supabase data
+        // Otherwise, merge both sources
+        let mergedSavedBuilds, mergedPinnedBuilds, mergedPinnedGods;
         
-        // For pinned builds, merge by buildKey/id
-        const mergedPinnedBuilds = [...pinnedBuilds];
-        supabasePinnedBuilds.forEach(sbBuild => {
-          if (!mergedPinnedBuilds.find(b => (b.id === sbBuild.id || b.buildKey === sbBuild.buildKey))) {
-            mergedPinnedBuilds.push(sbBuild);
-          }
-        });
+        if (savedBuilds.length === 0 && supabaseSavedBuilds.length > 0) {
+          // Local is empty, use Supabase
+          mergedSavedBuilds = supabaseSavedBuilds;
+        } else {
+          // Merge: start with local, add unique items from Supabase
+          mergedSavedBuilds = [...savedBuilds];
+          supabaseSavedBuilds.forEach(sbBuild => {
+            if (!mergedSavedBuilds.find(b => b.id === sbBuild.id)) {
+              mergedSavedBuilds.push(sbBuild);
+            }
+          });
+        }
         
-        // For pinned gods, merge by name
-        const mergedPinnedGods = [...pinnedGods];
-        supabasePinnedGods.forEach(sbGod => {
-          const godName = sbGod.name || sbGod.GodName;
-          if (!mergedPinnedGods.find(g => (g.name || g.GodName) === godName)) {
-            mergedPinnedGods.push(sbGod);
-          }
-        });
+        if (pinnedBuilds.length === 0 && supabasePinnedBuilds.length > 0) {
+          // Local is empty, use Supabase
+          mergedPinnedBuilds = supabasePinnedBuilds;
+        } else {
+          // Merge: start with local, add unique items from Supabase
+          mergedPinnedBuilds = [...pinnedBuilds];
+          supabasePinnedBuilds.forEach(sbBuild => {
+            const exists = mergedPinnedBuilds.find(b => 
+              (b.id && b.id === sbBuild.id) || 
+              (b.buildKey && b.buildKey === sbBuild.buildKey) ||
+              (sbBuild.id && b.id === sbBuild.id) ||
+              (sbBuild.buildKey && b.buildKey === sbBuild.buildKey)
+            );
+            if (!exists) {
+              mergedPinnedBuilds.push(sbBuild);
+            }
+          });
+        }
         
-        // Only update if there are differences (avoid unnecessary re-renders)
-        if (mergedSavedBuilds.length !== savedBuilds.length || 
-            mergedPinnedBuilds.length !== pinnedBuilds.length ||
-            mergedPinnedGods.length !== pinnedGods.length) {
+        if (pinnedGods.length === 0 && supabasePinnedGods.length > 0) {
+          // Local is empty, use Supabase
+          mergedPinnedGods = supabasePinnedGods;
+        } else {
+          // Merge: start with local, add unique items from Supabase
+          mergedPinnedGods = [...pinnedGods];
+          supabasePinnedGods.forEach(sbGod => {
+            const godName = sbGod.name || sbGod.GodName;
+            const exists = mergedPinnedGods.find(g => {
+              const gName = g.name || g.GodName;
+              return gName === godName;
+            });
+            if (!exists) {
+              mergedPinnedGods.push(sbGod);
+            }
+          });
+        }
+        
+        // Always update if Supabase has data (to ensure sync)
+        const hasChanges = 
+          mergedSavedBuilds.length !== savedBuilds.length || 
+          mergedPinnedBuilds.length !== pinnedBuilds.length ||
+          mergedPinnedGods.length !== pinnedGods.length ||
+          JSON.stringify(mergedSavedBuilds) !== JSON.stringify(savedBuilds) ||
+          JSON.stringify(mergedPinnedBuilds) !== JSON.stringify(pinnedBuilds) ||
+          JSON.stringify(mergedPinnedGods) !== JSON.stringify(pinnedGods);
+        
+        if (hasChanges) {
           setPinnedBuilds(mergedPinnedBuilds);
           setPinnedGods(mergedPinnedGods);
           setSavedBuilds(mergedSavedBuilds);
@@ -282,10 +322,10 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
           await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(mergedPinnedGods));
           await storage.setItem(`savedBuilds_${currentUser}`, JSON.stringify(mergedSavedBuilds));
           
-          console.log('Merged with Supabase data:', {
-            pinnedBuilds: mergedPinnedBuilds.length,
-            pinnedGods: mergedPinnedGods.length,
-            savedBuilds: mergedSavedBuilds.length,
+          console.log('✅ Merged with Supabase data:', {
+            pinnedBuilds: `${pinnedBuilds.length} → ${mergedPinnedBuilds.length}`,
+            pinnedGods: `${pinnedGods.length} → ${mergedPinnedGods.length}`,
+            savedBuilds: `${savedBuilds.length} → ${mergedSavedBuilds.length}`,
           });
         }
       }
@@ -344,7 +384,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       const errorMsg = 'Please enter both username and password';
       console.error('Login validation error:', errorMsg);
       if (Platform.OS === 'web') {
-        alert(errorMsg);
+        console.error(errorMsg);
       } else {
         Alert.alert('Error', errorMsg);
       }
@@ -381,9 +421,8 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
             setUsername('');
             setPassword('');
             await loadUserDataFromLocal();
-            if (Platform.OS === 'web') {
-              alert('Login successful!');
-            }
+            setShowLoginSuccess(true);
+            setTimeout(() => setShowLoginSuccess(false), 3000);
             setIsLoggingIn(false);
             return;
           }
@@ -391,10 +430,10 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         const errorMsg = 'Supabase configuration is missing. Please configure your Supabase credentials.';
         console.error(errorMsg);
         if (Platform.OS === 'web') {
-          alert(errorMsg);
-        } else {
-          Alert.alert('Error', errorMsg);
-        }
+        console.error(errorMsg);
+      } else {
+        Alert.alert('Error', errorMsg);
+      }
         setIsLoggingIn(false);
         return;
       }
@@ -417,9 +456,8 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
             setUsername('');
             setPassword('');
             await loadUserDataFromLocal();
-            if (Platform.OS === 'web') {
-              alert('Login successful!');
-            }
+            setShowLoginSuccess(true);
+            setTimeout(() => setShowLoginSuccess(false), 3000);
             setIsLoggingIn(false);
             return;
           }
@@ -427,10 +465,10 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         const errorMsg = 'Invalid username or password';
         console.error(errorMsg);
         if (Platform.OS === 'web') {
-          alert(errorMsg);
-        } else {
-          Alert.alert('Error', errorMsg);
-        }
+        console.error(errorMsg);
+      } else {
+        Alert.alert('Error', errorMsg);
+      }
         setIsLoggingIn(false);
         return;
       }
@@ -452,17 +490,17 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         const errorMsg = 'Invalid username or password';
         console.error(errorMsg);
         if (Platform.OS === 'web') {
-          alert(errorMsg);
-        } else {
-          Alert.alert('Error', errorMsg);
-        }
+        console.error(errorMsg);
+      } else {
+        Alert.alert('Error', errorMsg);
+      }
         setIsLoggingIn(false);
       }
     } catch (error) {
       console.error('Login error:', error);
       const errorMsg = `Failed to login: ${error.message || 'Unknown error'}`;
       if (Platform.OS === 'web') {
-        alert(errorMsg);
+        console.error(errorMsg);
       } else {
         Alert.alert('Error', errorMsg);
       }
@@ -475,7 +513,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       const errorMsg = 'Please fill in all fields';
       console.error('Registration validation error:', errorMsg);
       if (Platform.OS === 'web') {
-        alert(errorMsg);
+        console.error(errorMsg);
       } else {
         Alert.alert('Error', errorMsg);
       }
@@ -486,7 +524,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       const errorMsg = 'Passwords do not match';
       console.error('Registration validation error:', errorMsg);
       if (Platform.OS === 'web') {
-        alert(errorMsg);
+        console.error(errorMsg);
       } else {
         Alert.alert('Error', errorMsg);
       }
@@ -497,7 +535,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       const errorMsg = 'Password must be at least 4 characters';
       console.error('Registration validation error:', errorMsg);
       if (Platform.OS === 'web') {
-        alert(errorMsg);
+        console.error(errorMsg);
       } else {
         Alert.alert('Error', errorMsg);
       }
@@ -508,7 +546,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       const errorMsg = 'Username must be at least 3 characters';
       console.error('Registration validation error:', errorMsg);
       if (Platform.OS === 'web') {
-        alert(errorMsg);
+        console.error(errorMsg);
       } else {
         Alert.alert('Error', errorMsg);
       }
@@ -537,10 +575,10 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         const errorMsg = 'Supabase configuration is missing. Please configure your Supabase credentials.';
         console.error(errorMsg);
         if (Platform.OS === 'web') {
-          alert(errorMsg);
-        } else {
-          Alert.alert('Error', errorMsg);
-        }
+        console.error(errorMsg);
+      } else {
+        Alert.alert('Error', errorMsg);
+      }
         setIsRegistering(false);
         return;
       }
@@ -549,10 +587,10 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         const errorMsg = 'Username already exists';
         console.error(errorMsg);
         if (Platform.OS === 'web') {
-          alert(errorMsg);
-        } else {
-          Alert.alert('Error', errorMsg);
-        }
+        console.error(errorMsg);
+      } else {
+        Alert.alert('Error', errorMsg);
+      }
         setIsRegistering(false);
         return;
       }
@@ -629,7 +667,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       console.error('Registration error:', error);
       const errorMsg = `Failed to create account: ${error.message || 'Unknown error'}`;
       if (Platform.OS === 'web') {
-        alert(errorMsg);
+        console.error(errorMsg);
       } else {
         Alert.alert('Error', errorMsg);
       }
@@ -1283,6 +1321,31 @@ export const profileHelpers = {
 };
 
 const styles = StyleSheet.create({
+  successTooltip: {
+    position: 'absolute',
+    top: Platform.OS === 'web' ? 20 : 60,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    zIndex: 9999,
+    ...(Platform.OS === 'web' && {
+      position: 'fixed',
+    }),
+  },
+  successTooltipText: {
+    backgroundColor: '#10b981',
+    color: '#ffffff',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 8,
+    fontSize: 16,
+    fontWeight: '600',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
   container: {
     flex: 1,
     backgroundColor: '#071024',
