@@ -60,3 +60,4 @@ if (allPresent) {
   console.log('\n📖 See ENV_SETUP.md for detailed instructions');
   process.exit(1);
 }
+
