@@ -139,32 +139,96 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     if (!currentUser) return;
     
     try {
-      // Set user context for RLS
-      await supabase.rpc('set_current_user', { username_param: currentUser });
+      // Try to set user context for RLS (don't fail if this doesn't exist)
+      try {
+        const rpcResult = await supabase.rpc('set_current_user', { username_param: currentUser });
+        if (rpcResult && rpcResult.error && rpcResult.error.code === 'MISSING_CONFIG') {
+          // Supabase not configured, use local storage
+          await loadUserDataFromLocal();
+          return;
+        }
+      } catch (rpcError) {
+        // RPC function might not exist, continue anyway
+        console.log('RPC set_current_user not available, continuing...');
+      }
       
+      // Try to load from Supabase
       const { data, error } = await supabase
         .from('user_data')
         .select('pinned_builds, pinned_gods, saved_builds')
         .eq('username', currentUser)
         .single();
       
+      if (error && error.code === 'MISSING_CONFIG') {
+        // Supabase not configured, use local storage
+        await loadUserDataFromLocal();
+        return;
+      }
+      
       if (error && error.code !== 'PGRST116') { // PGRST116 = no rows returned
-        console.error('Error loading user data:', error);
+        console.error('Error loading user data from Supabase:', error);
+        // Fallback to local storage
+        await loadUserDataFromLocal();
         return;
       }
       
       if (data) {
-        setPinnedBuilds(data.pinned_builds || []);
-        setPinnedGods(data.pinned_gods || []);
-        setSavedBuilds(data.saved_builds || []);
+        const pinnedBuilds = data.pinned_builds || [];
+        const pinnedGods = data.pinned_gods || [];
+        const savedBuilds = data.saved_builds || [];
+        
+        setPinnedBuilds(pinnedBuilds);
+        setPinnedGods(pinnedGods);
+        setSavedBuilds(savedBuilds);
+        
+        console.log('Loaded from Supabase:', {
+          pinnedBuilds: pinnedBuilds.length,
+          pinnedGods: pinnedGods.length,
+          savedBuilds: savedBuilds.length,
+        });
+        
+        // Also sync to local storage as backup
+        await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(pinnedBuilds));
+        await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(pinnedGods));
+        await storage.setItem(`savedBuilds_${currentUser}`, JSON.stringify(savedBuilds));
       } else {
-        // Initialize empty data
-        setPinnedBuilds([]);
-        setPinnedGods([]);
-        setSavedBuilds([]);
+        // No data in Supabase, try local storage
+        await loadUserDataFromLocal();
       }
     } catch (error) {
       console.error('Error loading user data:', error);
+      // Fallback to local storage on any error
+      await loadUserDataFromLocal();
+    }
+  };
+
+  const loadUserDataFromLocal = async () => {
+    if (!currentUser) return;
+    
+    try {
+      const pinnedBuildsStr = await storage.getItem(`pinnedBuilds_${currentUser}`);
+      const pinnedGodsStr = await storage.getItem(`pinnedGods_${currentUser}`);
+      const savedBuildsStr = await storage.getItem(`savedBuilds_${currentUser}`);
+      
+      const pinnedBuilds = pinnedBuildsStr ? JSON.parse(pinnedBuildsStr) : [];
+      const pinnedGods = pinnedGodsStr ? JSON.parse(pinnedGodsStr) : [];
+      const savedBuilds = savedBuildsStr ? JSON.parse(savedBuildsStr) : [];
+      
+      setPinnedBuilds(pinnedBuilds);
+      setPinnedGods(pinnedGods);
+      setSavedBuilds(savedBuilds);
+      
+      console.log('Loaded from local storage:', {
+        pinnedBuilds: pinnedBuilds.length,
+        pinnedGods: pinnedGods.length,
+        savedBuilds: savedBuilds.length,
+      });
+    } catch (error) {
+      console.error('Error loading from local storage:', error);
+      // Initialize empty if local storage also fails
+      setPinnedBuilds([]);
+      setPinnedGods([]);
+      setSavedBuilds([]);
     }
   };
 
@@ -198,11 +262,41 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         .single();
       
       if (error && error.code === 'MISSING_CONFIG') {
+        // Supabase not configured, try local storage login
+        const localUser = await storage.getItem(`user_${username.trim()}`);
+        if (localUser) {
+          const userData = JSON.parse(localUser);
+          if (userData.password_hash === passwordHash) {
+            await storage.setItem('currentUser', username.trim());
+            setCurrentUser(username.trim());
+            setIsLoggedIn(true);
+            setShowLoginModal(false);
+            setUsername('');
+            setPassword('');
+            await loadUserDataFromLocal();
+            return;
+          }
+        }
         Alert.alert('Error', 'Supabase configuration is missing. Please configure your Supabase credentials.');
         return;
       }
       
       if (error || !data) {
+        // Try local storage as fallback
+        const localUser = await storage.getItem(`user_${username.trim()}`);
+        if (localUser) {
+          const userData = JSON.parse(localUser);
+          if (userData.password_hash === passwordHash) {
+            await storage.setItem('currentUser', username.trim());
+            setCurrentUser(username.trim());
+            setIsLoggedIn(true);
+            setShowLoginModal(false);
+            setUsername('');
+            setPassword('');
+            await loadUserDataFromLocal();
+            return;
+          }
+        }
         Alert.alert('Error', 'Invalid username or password');
         return;
       }
@@ -416,15 +510,18 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   const saveUserDataToSupabase = async () => {
     if (!currentUser) return;
     
+    // Always save to local storage first (fast, reliable)
+    await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(pinnedBuilds));
+    await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(pinnedGods));
+    await storage.setItem(`savedBuilds_${currentUser}`, JSON.stringify(savedBuilds));
+    
+    // Then try to save to Supabase (async, don't block)
     try {
       // Try to set user context for RLS (might not exist yet)
       try {
         const rpcResult = await supabase.rpc('set_current_user', { username_param: currentUser });
         if (rpcResult && rpcResult.error && rpcResult.error.code === 'MISSING_CONFIG') {
-          // Fallback to local storage if config is missing
-          await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(pinnedBuilds));
-          await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(pinnedGods));
-          await storage.setItem(`savedBuilds_${currentUser}`, JSON.stringify(savedBuilds));
+          // Supabase not configured, local storage already saved above
           return;
         }
       } catch (rpcError) {
@@ -444,26 +541,17 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         });
       
       if (error && error.code === 'MISSING_CONFIG') {
-        // Fallback to local storage if config is missing
-        await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(pinnedBuilds));
-        await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(pinnedGods));
-        await storage.setItem(`savedBuilds_${currentUser}`, JSON.stringify(savedBuilds));
+        // Supabase not configured, local storage already saved above
         return;
       }
       
       if (error) {
-        console.error('Error saving user data:', error);
-        // Fallback to local storage if Supabase fails
-        await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(pinnedBuilds));
-        await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(pinnedGods));
-        await storage.setItem(`savedBuilds_${currentUser}`, JSON.stringify(savedBuilds));
+        console.error('Error saving user data to Supabase:', error);
+        // Local storage already saved above, so data is safe
       }
     } catch (error) {
       console.error('Error saving to Supabase:', error);
-      // Fallback to local storage
-      await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(pinnedBuilds));
-      await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(pinnedGods));
-      await storage.setItem(`savedBuilds_${currentUser}`, JSON.stringify(savedBuilds));
+      // Local storage already saved above, so data is safe
     }
   };
 
@@ -471,6 +559,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     if (!currentUser) return;
     const newPinned = [...pinnedBuilds, build];
     setPinnedBuilds(newPinned);
+    console.log('Pinning build:', build);
     await saveUserDataToSupabase();
   };
 
@@ -485,6 +574,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     if (!currentUser) return;
     const newPinned = [...pinnedGods, god];
     setPinnedGods(newPinned);
+    console.log('Pinning god:', god);
     await saveUserDataToSupabase();
   };
 
@@ -499,6 +589,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     if (!currentUser) return;
     const newSaved = [...savedBuilds, { ...build, id: Date.now(), savedAt: Date.now() }];
     setSavedBuilds(newSaved);
+    console.log('Saving build:', build);
     await saveUserDataToSupabase();
   };
 
@@ -1034,7 +1125,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#d1c21d',
+    backgroundColor: '#ffffff',
     borderRadius: 8,
     padding: 12,
     marginBottom: 8,
@@ -1044,19 +1135,19 @@ const styles = StyleSheet.create({
       cursor: 'pointer',
       transition: 'background-color 0.2s, border-color 0.2s',
       ':hover': {
-        backgroundColor: '#0b1226',
+        backgroundColor: '#f0f0f0',
         borderColor: '#1e90ff',
       },
     }),
   },
   buildName: {
-    color: '#e6eef8',
+    color: '#071024',
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 4,
   },
   buildSubtitleContainer: {
-    backgroundColor: '#fbbf24',
+    backgroundColor: '#e5e7eb',
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 4,
@@ -1064,17 +1155,17 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   buildSubtitle: {
-    color: '#1e3a5f',
+    color: '#071024',
     fontSize: 14,
     fontStyle: 'italic',
   },
   buildDate: {
-    color: '#94a3b8',
+    color: '#64748b',
     fontSize: 12,
     marginTop: 4,
   },
   unpinText: {
-    color: '#fbbf24',
+    color: '#1e90ff',
     fontSize: 14,
     fontWeight: '600',
   },
