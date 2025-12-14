@@ -93,7 +93,7 @@ export default function MorePage({ activeTab = 'minigames', onNavigateToBuilds, 
                 <Text style={styles.sectionTitle}>Tools</Text>
             <View style={styles.grid}>
               <TouchableOpacity style={styles.card} onPress={() => {}}>
-                <Text style={styles.cardTitle}>God Randomizer</Text>
+                <Text style={styles.cardTitle}>God Randomizer(TBD)</Text>
                 <Text style={styles.cardDescription}>Random god selector</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.card} onPress={() => {}}>
