@@ -156,7 +156,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       if (currentUser && isLoggedIn && isActive) {
         reloadData();
       }
-    }, 1000);
+    }, 4000);
     
     // For web, also listen to visibility changes
     if (Platform.OS === 'web' && typeof document !== 'undefined') {
