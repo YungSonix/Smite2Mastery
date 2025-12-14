@@ -4840,9 +4840,24 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                           const godName = god.name || god.GodName || god.title || god.displayName;
                           const isPinned = pinnedGods.has(godName);
                           
+                          console.log('🔧 Pin/Unpin god action:', {
+                            godName,
+                            isPinned,
+                            currentUser,
+                            hasSupabase: !!supabase,
+                            supabaseType: typeof supabase,
+                            supabaseFrom: supabase?.from ? 'has from method' : 'missing from method',
+                          });
+                          
+                          if (!supabase || !supabase.from) {
+                            console.error('❌ Supabase is not available! Cannot sync to Supabase.');
+                          }
+                          
                           try {
                             const pinnedGodsData = await storage.getItem(`pinnedGods_${currentUser}`);
                             const pinnedGodsList = pinnedGodsData ? JSON.parse(pinnedGodsData) : [];
+                            
+                            console.log('📋 Current pinned gods list:', pinnedGodsList.length);
                             
                             if (isPinned) {
                               // Unpin
@@ -4855,12 +4870,29 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               });
                               
                               // Sync to Supabase - get existing data first to preserve other fields
+                              if (!supabase || !supabase.from) {
+                                console.error('❌ Supabase not available, skipping sync');
+                                return;
+                              }
+                              
                               try {
-                                const { data: existingData } = await supabase
+                                console.log('🔄 Fetching existing data from Supabase for unpin...');
+                                const { data: existingData, error: fetchError } = await supabase
                                   .from('user_data')
                                   .select('pinned_builds, pinned_gods, saved_builds')
                                   .eq('username', currentUser)
                                   .single();
+                                
+                                if (fetchError && fetchError.code !== 'PGRST116') {
+                                  console.error('❌ Error fetching existing data:', fetchError);
+                                }
+                                
+                                console.log('💾 Upserting to Supabase with updated pinned_gods:', {
+                                  username: currentUser,
+                                  pinned_gods_count: updated.length,
+                                  existing_pinned_builds: existingData?.pinned_builds?.length || 0,
+                                  existing_saved_builds: existingData?.saved_builds?.length || 0,
+                                });
                                 
                                 const { error } = await supabase
                                   .from('user_data')
@@ -4873,13 +4905,18 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                   }, {
                                     onConflict: 'username'
                                   });
-                                if (error && error.code !== 'MISSING_CONFIG') {
-                                  console.error('Error syncing unpinned god to Supabase:', error);
-                                } else if (!error) {
-                                  console.log('✅ Unpinned god synced to Supabase');
+                                
+                                if (error) {
+                                  if (error.code === 'MISSING_CONFIG') {
+                                    console.log('⚠️ Supabase not configured, skipping sync');
+                                  } else {
+                                    console.error('❌ Error syncing unpinned god to Supabase:', error);
+                                  }
+                                } else {
+                                  console.log('✅ Unpinned god synced to Supabase successfully');
                                 }
                               } catch (supabaseError) {
-                                console.error('Error syncing to Supabase:', supabaseError);
+                                console.error('❌ Exception syncing to Supabase:', supabaseError);
                               }
                             } else {
                               // Pin
@@ -4894,12 +4931,30 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               setPinnedGods(prev => new Set(prev).add(godName));
                               
                               // Sync to Supabase - get existing data first to preserve other fields
+                              if (!supabase || !supabase.from) {
+                                console.error('❌ Supabase not available, skipping sync');
+                                return;
+                              }
+                              
                               try {
-                                const { data: existingData } = await supabase
+                                console.log('🔄 Fetching existing data from Supabase for pin...');
+                                const { data: existingData, error: fetchError } = await supabase
                                   .from('user_data')
                                   .select('pinned_builds, pinned_gods, saved_builds')
                                   .eq('username', currentUser)
                                   .single();
+                                
+                                if (fetchError && fetchError.code !== 'PGRST116') {
+                                  console.error('❌ Error fetching existing data:', fetchError);
+                                }
+                                
+                                console.log('💾 Upserting to Supabase with new pinned god:', {
+                                  username: currentUser,
+                                  pinned_gods_count: pinnedGodsList.length,
+                                  new_god: newPinnedGod.name,
+                                  existing_pinned_builds: existingData?.pinned_builds?.length || 0,
+                                  existing_saved_builds: existingData?.saved_builds?.length || 0,
+                                });
                                 
                                 const { error } = await supabase
                                   .from('user_data')
@@ -4912,17 +4967,28 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                   }, {
                                     onConflict: 'username'
                                   });
-                                if (error && error.code !== 'MISSING_CONFIG') {
-                                  console.error('Error syncing pinned god to Supabase:', error);
-                                } else if (!error) {
-                                  console.log('✅ Pinned god synced to Supabase:', pinnedGodsList.length, 'gods');
+                                
+                                if (error) {
+                                  if (error.code === 'MISSING_CONFIG') {
+                                    console.log('⚠️ Supabase not configured, skipping sync');
+                                  } else {
+                                    console.error('❌ Error syncing pinned god to Supabase:', error);
+                                  }
+                                } else {
+                                  console.log('✅ Pinned god synced to Supabase successfully:', pinnedGodsList.length, 'total gods');
                                 }
                               } catch (supabaseError) {
-                                console.error('Error syncing to Supabase:', supabaseError);
+                                console.error('❌ Exception syncing to Supabase:', supabaseError);
                               }
                             }
                           } catch (error) {
-                            console.error('Error pinning/unpinning god:', error);
+                            console.error('❌ Error pinning/unpinning god:', error);
+                            console.error('Error details:', {
+                              message: error.message,
+                              stack: error.stack,
+                              currentUser,
+                              godName,
+                            });
                             Alert.alert('Error', 'Failed to pin/unpin god. Please try again.');
                           }
                         }}
