@@ -21,7 +21,7 @@ import { getLocalItemIcon, getLocalGodAsset, getSkinImage } from './localIcons';
 // Import supabase with fallback for missing config
 let supabase;
 try {
-  supabase = require('./config/supabase').supabase;
+  supabase = require('../config/supabase').supabase;
 } catch (e) {
   // Fallback mock supabase if config file is missing
   const mockQuery = {
