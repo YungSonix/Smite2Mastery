@@ -54,21 +54,112 @@ export function getLocalItemIcon(iconPath) {
   };
 }
 
-// God asset lookup - images are directly in God Info folder (no subfolder)
+// Optional overrides for god icon base names when GitHub uses a shortened name.
+// Keys and values are all lowercase, with spaces removed.
+// Example: "Jormungandr" icons on GitHub might be "jormImage.webp", etc.
+const GOD_ICON_BASE_OVERRIDES = {
+  jormungandr: 'jorm',
+  izanami: 'iza',
+  poseidon: 'pos',
+  cernunnos: 'cern',
+  tsukuyomi: 'tsuku',
+  bellona: 'bell',
+  hunbatz: 'batz',
+  guanyu: 'guan',
+  cabrakan: 'cab',
+  cerberus: 'cerb',
+ 
+};
+
+function getGodIconBaseName(godName) {
+  if (!godName) return null;
+  const normalized = String(godName)
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, '');
+
+  if (GOD_ICON_BASE_OVERRIDES[normalized]) {
+    return GOD_ICON_BASE_OVERRIDES[normalized];
+  }
+
+  return normalized;
+}
+
+// God asset lookup - uses the filename that is passed in
+// (kept for legacy callers that already know the exact filename)
 export function getLocalGodAsset(iconPath) {
   if (!iconPath) return null;
   const base = iconPath.split('/').pop() || '';
   if (!base) return null;
   
-  // Images are directly in God Info folder (e.g., achillesImage.webp)
-  // Path: https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/[filename]
   const uri = createImageUri(GOD_ICONS_PATH, base);
   
-  // Debug: log the URL in development
   if (__DEV__) {
-    console.log('Loading god asset:', base, 'from:', uri.uri);
+    console.log('Loading god asset (by path):', base, 'from:', uri.uri);
   }
   
+  return uri;
+}
+
+// God icon lookup by god name only – matches GitHub naming like "achillesImage.webp"
+// We build the filename from the lowercase, spaceless god name + "Image.webp".
+// Example: "Achilles" -> "achillesImage.webp"
+export function getRemoteGodIconByName(godName) {
+  if (!godName) return null;
+  const baseName = getGodIconBaseName(godName);
+  if (!baseName) return null;
+  const filename = `${baseName}Image.webp`;
+  const uri = createImageUri(GOD_ICONS_PATH, filename);
+
+  if (__DEV__) {
+    console.log('Loading god icon by name:', godName, '->', uri.uri);
+  }
+
+  return uri;
+}
+
+// Ability icon lookup for a god, using suffixes like One/Two/Three/Four/Passive/Aspect
+// Example: ("Achilles", "1")   -> "achillesOne.webp"
+//          ("Achilles", "2")   -> "achillesTwo.webp"
+//          ("Achilles", "3")   -> "achillesThree.webp"
+//          ("Achilles", "4")   -> "achillesFour.webp"
+//          ("Achilles", "P")   -> "achillesPassive.webp"
+//          ("Achilles", "A")   -> "achillesAspect.webp"
+const ABILITY_SUFFIXES = {
+  '1': 'One',
+  '2': 'Two',
+  '3': 'Three',
+  '4': 'Four',
+  P: 'Passive',
+  p: 'Passive',
+  passive: 'Passive',
+  A: 'Aspect',
+  a: 'Aspect',
+  aspect: 'Aspect',
+};
+
+export function getGodAbilityIcon(godName, abilityKey, variant) {
+  if (!godName || !abilityKey) return null;
+
+  const baseName = getGodIconBaseName(godName);
+  if (!baseName) return null;
+
+  const suffixKey = String(abilityKey).trim();
+  const suffix = ABILITY_SUFFIXES[suffixKey];
+  if (!suffix) return null;
+
+  // For gods like Ullr that have multiple forms (e.g., Axe/Bow),
+  // we can pass a variant string that sits between the base name and suffix:
+  // e.g. "ullr" + "Axe" + "One" -> "ullrAxeOne.webp"
+  const variantPart = variant ? String(variant).trim() : '';
+
+  const filename = `${baseName}${variantPart}${suffix}.webp`;
+  const uri = createImageUri(GOD_ICONS_PATH, filename);
+
+  if (__DEV__) {
+    console.log('Loading ability icon:', godName, abilityKey, '->', uri.uri);
+  }
+
   return uri;
 }
 

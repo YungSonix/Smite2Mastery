@@ -968,14 +968,57 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
           // Linear interpolation between level 1 and 20
           const levelProgress = (godLevel - 1) / 19; // 0 at level 1, 1 at level 20
           const statValue = level1 + (level20 - level1) * levelProgress;
-          // Round up to whole number
-          stats[statKey] = Math.ceil(statValue);
+          // Keep decimal precision for key combat stats like protections, attack speed, and basic damage.
+          // Other stats can be rounded to whole numbers for readability.
+          if (
+            statKey === 'PhysicalProtection' ||
+            statKey === 'MagicalProtection' ||
+            statKey === 'BaseAttackSpeed' ||
+            statKey === 'BasicDamage' ||
+            statKey === 'AttackSpeedPercent'
+          ) {
+            stats[statKey] = statValue;
+          } else {
+            stats[statKey] = Math.round(statValue);
+          }
         }
       });
+
+      // Combine base attack speed and total attack speed percent into a single effective Attack Speed stat.
+      const baseAS = stats.BaseAttackSpeed || 0;
+      const bonusASPercent = stats.AttackSpeedPercent || 0;
+      if (baseAS) {
+        const effectiveAS = baseAS * (1 + bonusASPercent / 100);
+        stats.AttackSpeedEffective = effectiveAS;
+      }
+
+      // We don't need to show raw BaseAttackSpeed or AttackSpeedPercent in the UI; we only surface effective Attack Speed.
+      delete stats.BaseAttackSpeed;
+      delete stats.AttackSpeedPercent;
     }
     
     return stats;
   }, [selectedGod, godLevel]);
+
+  // Effective Health calculation for base stats (similar to custombuild page)
+  const baseEffectiveHealth = useMemo(() => {
+    const hp = baseStatsAtLevel.MaxHealth || baseStatsAtLevel.Health || 0;
+    const physicalProtection = baseStatsAtLevel.PhysicalProtection || 0;
+    const magicalProtection = baseStatsAtLevel.MagicalProtection || 0;
+
+    // Same formula/order as custombuild:
+    // EHP = Health * (1 + (1 - ((100 * 100) / (Protection + 100) / 100)))
+    const phpInner = (100 * 100) / (physicalProtection + 100) / 100;
+    const php = hp * (1 + (1 - phpInner));
+
+    const ehpInner = (100 * 100) / (magicalProtection + 100) / 100;
+    const ehp = hp * (1 + (1 - ehpInner));
+
+    return {
+      PHP: Math.round(php || 0),
+      EHP: Math.round(ehp || 0),
+    };
+  }, [baseStatsAtLevel]);
 
   // Filter mechanics
   const filteredMechanics = useMemo(() => {
@@ -1801,7 +1844,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                   {Object.keys(selectedItem.stats).map((statKey) => {
                     const statValue = selectedItem.stats[statKey];
                     let statColor = '#94a3b8';
-                    if (["MaxHealth", "Health", "HP5", "Health Regen"].includes(statKey)) statColor = "#22c55e";
+                    if (["MaxHealth", "Health", "HP5", "Health Regen", "HealthPerSecond"].includes(statKey)) statColor = "#22c55e";
                     else if (["AttackSpeed", "Critical Chance", "CriticalChance", "Critical Damage", "Attack Speed","Basic Attack Damage", "Criticial Chance", "Critical Damage", "Basic Damage"].includes(statKey)) statColor = "#f97316";
                     else if (["PhysicalProtection", "Penetration", "Physical Protection"].includes(statKey)) statColor = "#ef4444";
                     else if (statKey === "Intelligence") statColor = "#a855f7";
@@ -1809,7 +1852,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                     else if (statKey === "Cooldown Rate") statColor = "#0ea5e9";
                     else if (statKey === "MagicalProtection") statColor = "#a855f7";
                     else if (statKey === "Lifesteal") statColor = "#84cc16";
-                    else if (["MaxMana", "MP5", "Mana Regen", "Mana", "Mana Regeneration", "Magical Protection"].includes(statKey)) statColor = "#3b82f6";
+                    else if (["MaxMana", "MP5", "Mana Regen", "Mana", "Mana Regeneration", "Magical Protection", "ManaPerSecond"].includes(statKey)) statColor = "#3b82f6";
                     
                     return (
                       <View key={statKey} style={styles.itemStatRow}>
@@ -2439,38 +2482,134 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                     </View>
                     {/* Stats Display */}
                     <View style={styles.baseStatsGrid}>
-                      {Object.keys(baseStatsAtLevel).map((statKey) => {
-                        const statValue = baseStatsAtLevel[statKey];
-                        // Format stat name for display
-                        const displayName = statKey
-                          .replace(/([A-Z])/g, ' $1')
-                          .replace(/^./, str => str.toUpperCase())
-                          .trim();
-                        
-                        // Get stat color
-                        let statColor = '#94a3b8';
-                        if (["MaxHealth", "Health", "HP5", "Health Regen", "HealthPerTime"].includes(statKey)) statColor = "#22c55e";
-                        else if (["AttackSpeed", "AttackSpeedPercent", "BaseAttackSpeed", "BasicDamage", "Basic Attack Damage", "Basic Damage"].includes(statKey)) statColor = "#f97316";
-                        else if (["PhysicalProtection", "Penetration", "Physical Protection"].includes(statKey)) statColor = "#ef4444";
-                        else if (statKey === "Intelligence" || statKey === "MagicalPower") statColor = "#a855f7";
-                        else if (statKey === "Strength") statColor = "#facc15";
-                        else if (statKey === "Cooldown Rate" || statKey === "Cooldown") statColor = "#0ea5e9";
-                        else if (statKey === "MagicalProtection" || statKey === "Magical Protection") statColor = "#a855f7";
-                        else if (statKey === "Lifesteal") statColor = "#84cc16";
-                        else if (["MaxMana", "MP5", "Mana Regen", "Mana", "Mana Regeneration", "Magical Protection", "ManaPerTime"].includes(statKey)) statColor = "#3b82f6";
-                        else if (statKey === "MovementSpeed" || statKey === "Movement Speed") statColor = "#8b5cf6";
-                        
-                        return (
-                          <View key={statKey} style={styles.baseStatItem}>
-                            <Text style={[styles.baseStatLabel, { color: statColor }]}>
-                              {displayName}:
-                            </Text>
-                            <Text style={styles.baseStatValue}>
-                              {statValue}
-                            </Text>
-                          </View>
+                      {(() => {
+                        // Match ordering with custombuild: AS, BasicDamage, HP, regen, mana, protections, EHPs, then others
+                        const statOrder = [
+                          'AttackSpeedEffective',
+                          'BasicDamage',
+                          'MaxHealth',
+                          'HealthPerSecond',
+                          'MaxMana',
+                          'ManaPerSecond',
+                          'PhysicalProtection',
+                          'MagicalProtection',
+                        ];
+
+                        const allStats = Object.keys(baseStatsAtLevel).filter(
+                          (key) => baseStatsAtLevel[key] !== 0 && key !== 'BaseAttackSpeed'
                         );
-                      })}
+
+                        const orderedStats = statOrder.filter((key) => allStats.includes(key));
+                        const remainingStats = allStats
+                          .filter((key) => !statOrder.includes(key))
+                          .sort();
+
+                        const finalStats = [];
+
+                        orderedStats.forEach((statKey) => {
+                          finalStats.push(statKey);
+
+                          if (statKey === 'PhysicalProtection' && (baseStatsAtLevel.MaxHealth || baseStatsAtLevel.Health)) {
+                            finalStats.push('__PhysicalEHP__');
+                          }
+                          if (statKey === 'MagicalProtection' && (baseStatsAtLevel.MaxHealth || baseStatsAtLevel.Health)) {
+                            finalStats.push('__MagicalEHP__');
+                          }
+                        });
+
+                        finalStats.push(...remainingStats);
+
+                        return finalStats.map((statKey) => {
+                          if (statKey === '__PhysicalEHP__') {
+                            return (
+                              <View key="PhysicalEHP" style={styles.baseStatItem}>
+                                <Text style={[styles.baseStatLabel, { color: '#ef4444' }]}>
+                                  Physical EHP:
+                                </Text>
+                                <Text style={[styles.baseStatValue, { color: '#ef4444' }]}>
+                                  {baseEffectiveHealth.PHP.toLocaleString()}
+                                </Text>
+                              </View>
+                            );
+                          }
+
+                          if (statKey === '__MagicalEHP__') {
+                            return (
+                              <View key="MagicalEHP" style={styles.baseStatItem}>
+                                <Text style={[styles.baseStatLabel, { color: '#a855f7' }]}>
+                                  Magical EHP:
+                                </Text>
+                                <Text style={[styles.baseStatValue, { color: '#a855f7' }]}>
+                                  {baseEffectiveHealth.EHP.toLocaleString()}
+                                </Text>
+                              </View>
+                            );
+                          }
+
+                          const rawValue = baseStatsAtLevel[statKey];
+                          let statValue = rawValue;
+
+                          // Format stat name for display
+                          let displayName;
+                          if (statKey === 'AttackSpeedEffective') {
+                            displayName = 'Attack Speed';
+                          } else {
+                            displayName = statKey
+                              .replace(/([A-Z])/g, ' $1')
+                              .replace(/^./, (str) => str.toUpperCase())
+                              .trim();
+                          }
+
+                          // Get stat color (aligned with custombuild)
+                          let statColor = '#94a3b8';
+                          if (['MaxHealth', 'Health', 'HP5', 'Health Regen', 'HealthPerSecond'].includes(statKey))
+                            statColor = '#22c55e';
+                          else if (
+                            [
+                              'AttackSpeed',
+                              'AttackSpeedPercent',
+                              'BaseAttackSpeed',
+                              'AttackSpeedEffective',
+                              'BasicDamage',
+                              'Basic Attack Damage',
+                              'Basic Damage',
+                            ].includes(statKey)
+                          )
+                            statColor = '#f97316';
+                          else if (['PhysicalProtection', 'Penetration', 'Physical Protection'].includes(statKey))
+                            statColor = '#ef4444';
+                          else if (statKey === 'Intelligence' || statKey === 'MagicalPower') statColor = '#a855f7';
+                          else if (statKey === 'Strength') statColor = '#facc15';
+                          else if (statKey === 'Cooldown Rate' || statKey === 'Cooldown') statColor = '#0ea5e9';
+                          else if (statKey === 'MagicalProtection' || statKey === 'Magical Protection') statColor = '#a855f7';
+                          else if (statKey === 'Lifesteal') statColor = '#84cc16';
+                          else if (
+                            ['MaxMana', 'MP5', 'Mana Regen', 'Mana', 'Mana Regeneration', 'Magical Protection', 'ManaPerSecond'].includes(
+                              statKey
+                            )
+                          )
+                            statColor = '#3b82f6';
+                          else if (statKey === 'MovementSpeed' || statKey === 'Movement Speed') statColor = '#8b5cf6';
+
+                          let displayValue = statValue;
+                          if (
+                            statKey === 'AttackSpeedEffective' ||
+                            statKey === 'BaseAttackSpeed' ||
+                            statKey === 'BasicDamage'
+                          ) {
+                            displayValue = Number(displayValue).toFixed(3);
+                          }
+
+                          return (
+                            <View key={statKey} style={styles.baseStatItem}>
+                              <Text style={[styles.baseStatLabel, { color: statColor }]}>
+                                {displayName}:
+                              </Text>
+                              <Text style={styles.baseStatValue}>{displayValue}</Text>
+                            </View>
+                          );
+                        });
+                      })()}
                     </View>
                   </View>
                 )}

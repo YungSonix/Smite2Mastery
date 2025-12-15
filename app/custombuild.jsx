@@ -376,12 +376,18 @@ export default function CustomBuildPage({ onNavigateToGod }) {
           // Linear interpolation between level 1 and 20
           const levelProgress = (godLevel - 1) / 19; // 0 at level 1, 1 at level 20
           const statValue = level1 + (level20 - level1) * levelProgress;
-          // For protections, keep decimal precision for accurate EHP calculation
-          // Round other stats to whole numbers
-          if (statKey === 'PhysicalProtection' || statKey === 'MagicalProtection') {
-            stats[statKey] = statValue; // Keep decimal for protections
+          // Keep decimal precision for key combat stats like protections, attack speed, and basic damage.
+          // Other stats can be rounded to whole numbers for readability.
+          if (
+            statKey === 'PhysicalProtection' ||
+            statKey === 'MagicalProtection' ||
+            statKey === 'BaseAttackSpeed' ||
+            statKey === 'BasicDamage' ||
+            statKey === 'AttackSpeedPercent'
+          ) {
+            stats[statKey] = statValue;
           } else {
-            stats[statKey] = Math.ceil(statValue);
+            stats[statKey] = Math.round(statValue);
           }
         } else if (statData !== null && statData !== undefined) {
           // If it's a direct value (not an object), use it as is
@@ -406,8 +412,14 @@ export default function CustomBuildPage({ onNavigateToGod }) {
       'Magical Protection': 'MagicalProtection',
       'Physical Power': 'BasicDamage',
       'Magical Power': 'BasicDamage',
-      'Attack Speed': 'BaseAttackSpeed',
-      'AttackSpeed': 'BaseAttackSpeed',
+      // Strength remains its own stat; we also add it into BasicDamage separately
+      // Treat item attack speed as percent bonus that applies on top of base
+      'Attack Speed': 'AttackSpeedPercent',
+      'AttackSpeed': 'AttackSpeedPercent',
+      'Attack Speed %': 'AttackSpeedPercent',
+      'AttackSpeed %': 'AttackSpeedPercent',
+      'Attack Speed Percent': 'AttackSpeedPercent',
+      'AttackSpeed Percent': 'AttackSpeedPercent',
     };
     return mapping[itemKey] || itemKey;
   };
@@ -425,16 +437,43 @@ export default function CustomBuildPage({ onNavigateToGod }) {
         });
       }
     });
+
+    // Let Strength also contribute directly to Basic Attack Damage.
+    // This keeps Strength visible as its own stat while ensuring BasicDamage reflects STR from items.
+    const totalStrength = stats.Strength || 0;
+    if (totalStrength) {
+      stats.BasicDamage = (stats.BasicDamage || 0) + totalStrength;
+    }
     
-    // Round stats to whole numbers, but keep protections as decimals for EHP calculation
+    // Round stats for display where appropriate, but keep key combat stats as decimals
     Object.keys(stats).forEach((key) => {
-      if (key === 'PhysicalProtection' || key === 'MagicalProtection') {
-        // Keep protection values with decimal precision for accurate EHP
+      if (
+        key === 'PhysicalProtection' ||
+        key === 'MagicalProtection' ||
+        key === 'BaseAttackSpeed' ||
+        key === 'BasicDamage' ||
+        key === 'AttackSpeedPercent'
+      ) {
+        // Keep these with decimal precision for accurate comparison (attack speed, basic damage, protections)
         stats[key] = stats[key] || 0;
       } else {
         stats[key] = Math.round(stats[key] || 0);
       }
     });
+
+    // Combine base attack speed and total attack speed percent into a single effective Attack Speed stat.
+    const baseAS = stats.BaseAttackSpeed || 0;
+    const bonusASPercent = stats.AttackSpeedPercent || 0; // already in % units, e.g. 29.12
+    if (baseAS) {
+      const effectiveAS = baseAS * (1 + bonusASPercent / 100);
+      stats.AttackSpeedEffective = effectiveAS;
+    }
+
+    // We keep AttackSpeedPercent internally for possible future use, but we don't need to
+    // show it as a separate stat in the UI, so remove it from the stats map.
+    delete stats.AttackSpeedPercent;
+    // Do not show raw BaseAttackSpeed in the UI either; we only surface the combined Attack Speed.
+    delete stats.BaseAttackSpeed;
     
     return stats;
   }, [baseStats, selectedItems]);
@@ -534,6 +573,7 @@ export default function CustomBuildPage({ onNavigateToGod }) {
     physicalPower: 'Physical Power',
     magicalPower: 'Magical Power',
     attackSpeed: 'Attack Speed',
+    AttackSpeedEffective: 'Attack Speed',
     movementSpeed: 'Movement Speed',
     healthRegen: 'HP5',
     manaRegen: 'MP5',
@@ -975,7 +1015,7 @@ export default function CustomBuildPage({ onNavigateToGod }) {
             {(() => {
               // Define the order we want stats to appear
               const statOrder = [
-                'BaseAttackSpeed',
+                'AttackSpeedEffective',
                 'BasicDamage',
                 'MaxHealth',
                 'HealthPerSecond',
@@ -985,9 +1025,9 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                 'MagicalProtection',
               ];
               
-              // Get all stats and filter
+              // Get all stats and filter, but hide internal-only keys like BaseAttackSpeed
               const allStats = Object.keys(totalStats)
-                .filter(key => totalStats[key] !== 0 || baseStats[key]);
+                .filter(key => (totalStats[key] !== 0 || baseStats[key]) && key !== 'BaseAttackSpeed');
               
               // Separate ordered stats and remaining stats
               const orderedStats = statOrder.filter(key => allStats.includes(key));
@@ -1079,10 +1119,18 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                   statColor = '#a855f7'; // purple
                 }
                 
-                // Display rounded value for protections, but keep decimal for calculation
-                const displayValue = (statKey === 'PhysicalProtection' || statKey === 'MagicalProtection') 
-                  ? Math.round(totalStats[statKey]) 
-                  : totalStats[statKey];
+                // Display rounded value for protections, but keep decimals for attack speed and basic damage
+                let displayValue = totalStats[statKey];
+                if (statKey === 'PhysicalProtection' || statKey === 'MagicalProtection') {
+                  displayValue = Math.round(displayValue);
+                } else if (
+                  statKey === 'BaseAttackSpeed' ||
+                  statKey === 'AttackSpeedEffective' ||
+                  statKey === 'BasicDamage'
+                ) {
+                  // Show up to 3 decimal places for these key stats
+                  displayValue = Number(displayValue.toFixed(3));
+                }
                 
                 return (
                   <View key={statKey} style={styles.statItem}>
