@@ -6387,6 +6387,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.456,
+                        "20": 29.12,
+                        "rate": 1.4560000000000002
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.9672,
                         "20": 0.9672,
@@ -6551,26 +6556,6 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "9 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Warrior's Axe",
-                            "Axe",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Sundering Axe",
-                            "The Reaper",
-                            "Sanguine Lash",
-                            "Hide of the Nemean Lion",
-                            "Gladiator's Shield",
-                            "Glorious Pridwen",
-                            "Spirit Robe"
-                        ],
-                        "notes": "Bruiser solo-lane build."
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "4 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
@@ -6588,6 +6573,26 @@
                             "Magi's Cloak"
                         ],
                         "notes": "Full-damage jungle build with **Aspect of Prowess**"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "9 Dec 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "Warrior's Axe",
+                            "Axe",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Sundering Axe",
+                            "The Reaper",
+                            "Sanguine Lash",
+                            "Hide of the Nemean Lion",
+                            "Gladiator's Shield",
+                            "Glorious Pridwen",
+                            "Spirit Robe"
+                        ],
+                        "notes": "Bruiser solo-lane build."
                     }
                 ]
             },
@@ -6753,6 +6758,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.33,
+                        "20": 26.6,
+                        "rate": 1.33
+                    },
                     "BaseAttackSpeed": {
                         "1": 1,
                         "20": 1,
@@ -7206,6 +7216,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.4,
+                        "20": 28,
+                        "rate": "1.40"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -7643,6 +7658,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.442,
+                        "20": 28.84,
+                        "rate": "1.44"
+                    },
                     "BaseAttackSpeed": {
                         "1": 1,
                         "20": 1,
@@ -8081,6 +8101,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.442,
+                        "20": 28.84,
+                        "rate": "1.44"
+                    },
                     "BaseAttackSpeed": {
                         "1": 1,
                         "20": 1,
@@ -8296,26 +8321,6 @@
                         "last_edit": "3 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
-                            "War Flag",
-                            "Health Chalice",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "War Banner",
-                            "Evolved Gauntlet of Thebes",
-                            "Stampede",
-                            "Eros' Bow",
-                            "Talisman of Purification",
-                            "Shogun's Ofuda",
-                            "Spirit Robe"
-                        ],
-                        "notes": "Auto attack healing support build. "
-                    },
-                    {
-                        "author": "Mytharria",
-                        "last_edit": "3 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
                             "Death's Toll",
                             "Health Chalice",
                             "Health Potion"
@@ -8350,6 +8355,26 @@
                             "Odysseus' Bow"
                         ],
                         "notes": "AA-oriented jungle build. with **Aspect of Valor**"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "3 Dec 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "War Flag",
+                            "Health Chalice",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "War Banner",
+                            "Evolved Gauntlet of Thebes",
+                            "Stampede",
+                            "Eros' Bow",
+                            "Talisman of Purification",
+                            "Shogun's Ofuda",
+                            "Spirit Robe"
+                        ],
+                        "notes": "Auto attack healing support build. "
                     }
                 ]
             },
@@ -8578,6 +8603,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 29.68,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.99,
                         "20": 0.99,
@@ -9044,6 +9074,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.358,
+                        "20": 27.16,
+                        "rate": "1.36"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -9450,6 +9485,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.4,
+                        "20": 28,
+                        "rate": "1.40"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -9860,6 +9900,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.4,
+                        "20": 28,
+                        "rate": "1.40"
+                    },
                     "BaseAttackSpeed": {
                         "1": 1.01,
                         "20": 1.01,
@@ -10442,6 +10487,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.4,
+                        "20": 28,
+                        "rate": "1.40"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -10861,6 +10911,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 29.68,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.99,
                         "20": 0.99,
@@ -11157,26 +11212,6 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "12 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Bluestone Pendant",
-                            "Axe",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Bluestone Brooch",
-                            "Jotunn's Revenge",
-                            "Hydra's Lament",
-                            "Oath-Sworn Spear",
-                            "Heartseeker",
-                            "Titan's Bane",
-                            "The Crusher"
-                        ],
-                        "notes": "Cooldown + burst damage mid laner/adc **Aspect of The Wild OPTIONAL**"
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
@@ -11194,6 +11229,26 @@
                             "Riptalon"
                         ],
                         "notes": "Crit-oriented ADC build."
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "12 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "Bluestone Pendant",
+                            "Axe",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Bluestone Brooch",
+                            "Jotunn's Revenge",
+                            "Hydra's Lament",
+                            "Oath-Sworn Spear",
+                            "Heartseeker",
+                            "Titan's Bane",
+                            "The Crusher"
+                        ],
+                        "notes": "Cooldown + burst damage mid laner/adc **Aspect of The Wild OPTIONAL**"
                     }
                 ]
             },
@@ -11420,6 +11475,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.4,
+                        "20": 28,
+                        "rate": "1.40"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -11645,26 +11705,6 @@
                         "last_edit": "23 Oct 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
-                            "Selflessness",
-                            "Health Chalice",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Heroism",
-                            "Stampede",
-                            "Oni Hunter's Garb",
-                            "Freya's Tears",
-                            "Circe's Hexstone",
-                            "Hide of the Nemean Lion",
-                            "Contagion"
-                        ],
-                        "notes": "Cooldown-oriented active item support build"
-                    },
-                    {
-                        "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
                             "Bumba's Cudgel",
                             "Gem",
                             "Health Potion"
@@ -11679,6 +11719,26 @@
                             "Rod of Tahuti"
                         ],
                         "notes": "1 shot combo jungler build with **Aspect of War**"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "23 Oct 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "Selflessness",
+                            "Health Chalice",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Heroism",
+                            "Stampede",
+                            "Oni Hunter's Garb",
+                            "Freya's Tears",
+                            "Circe's Hexstone",
+                            "Hide of the Nemean Lion",
+                            "Contagion"
+                        ],
+                        "notes": "Cooldown-oriented active item support build"
                     }
                 ]
             },
@@ -11891,6 +11951,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.456,
+                        "20": 29.12,
+                        "rate": 1.4560000000000002
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.9672,
                         "20": 0.9672,
@@ -12372,6 +12437,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.4,
+                        "20": 28,
+                        "rate": "1.40"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -12908,6 +12978,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.358,
+                        "20": 27.16,
+                        "rate": "1.36"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -13062,26 +13137,6 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Sands Of Time",
-                            "Gem",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Pendulum Of The Ages",
-                            "Chronos' Pendant",
-                            "Polynomicon",
-                            "Doom Orb",
-                            "Rod of Tahuti",
-                            "Obsidian Shard",
-                            "Soul Reaver"
-                        ],
-                        "notes": "INT-oriented burst mage build. With **Aspect of Hysteria**"
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "24 Nov 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
@@ -13099,6 +13154,26 @@
                             "Freya's Tears"
                         ],
                         "notes": "Cooldown-oriented active item support build"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "11 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "Sands Of Time",
+                            "Gem",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Pendulum Of The Ages",
+                            "Chronos' Pendant",
+                            "Polynomicon",
+                            "Doom Orb",
+                            "Rod of Tahuti",
+                            "Obsidian Shard",
+                            "Soul Reaver"
+                        ],
+                        "notes": "INT-oriented burst mage build. With **Aspect of Hysteria**"
                     }
                 ]
             },
@@ -13401,6 +13476,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.442,
+                        "20": 28.84,
+                        "rate": "1.44"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.96,
                         "20": 0.96,
@@ -13636,26 +13716,6 @@
                         "last_edit": "3 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
-                            "War Flag",
-                            "Health Chalice",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "War Banner",
-                            "Evolved Gauntlet of Thebes",
-                            "Stampede",
-                            "Eros' Bow",
-                            "Talisman of Purification",
-                            "Shogun's Ofuda",
-                            "Spirit Robe"
-                        ],
-                        "notes": "Auto attack healing support build. With **__Aspect of Vindication__** "
-                    },
-                    {
-                        "author": "Mytharria",
-                        "last_edit": "3 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
                             "Warrior's Axe",
                             "Health Chalice",
                             "Health Potion"
@@ -13670,6 +13730,26 @@
                             "Spirit Robe"
                         ],
                         "notes": "Bruiser AA-oriented warrior build"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "3 Dec 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "War Flag",
+                            "Health Chalice",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "War Banner",
+                            "Evolved Gauntlet of Thebes",
+                            "Stampede",
+                            "Eros' Bow",
+                            "Talisman of Purification",
+                            "Shogun's Ofuda",
+                            "Spirit Robe"
+                        ],
+                        "notes": "Auto attack healing support build. With **__Aspect of Vindication__** "
                     }
                 ],
                 "patchChanges": {
@@ -13950,6 +14030,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.33,
+                        "20": 26.6,
+                        "rate": 1.33
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.9672,
                         "20": 0.9672,
@@ -14203,26 +14288,6 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "30 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Bluestone Pendant",
-                            "Health Chalice",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Bluestone Brooch",
-                            "Pendulum Blade",
-                            "Mystical Mail",
-                            "Sanguine Lash",
-                            "Genji's Guard",
-                            "Hide of the Nemean Lion",
-                            "Draconic Scale"
-                        ],
-                        "notes": "Bruiser solo-lane build."
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "25 Nov 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
@@ -14260,6 +14325,26 @@
                             "Draconic Scale"
                         ],
                         "notes": "Cooldown-oriented active item support build"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "30 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "Bluestone Pendant",
+                            "Health Chalice",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Bluestone Brooch",
+                            "Pendulum Blade",
+                            "Mystical Mail",
+                            "Sanguine Lash",
+                            "Genji's Guard",
+                            "Hide of the Nemean Lion",
+                            "Draconic Scale"
+                        ],
+                        "notes": "Bruiser solo-lane build."
                     }
                 ]
             },
@@ -14512,6 +14597,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 29.68,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.99,
                         "20": 0.99,
@@ -15007,6 +15097,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.442,
+                        "20": 28.84,
+                        "rate": "1.44"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.96,
                         "20": 0.96,
@@ -15508,6 +15603,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.442,
+                        "20": 28.84,
+                        "rate": "1.44"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.96,
                         "20": 0.96,
@@ -15725,26 +15825,6 @@
                         "last_edit": "23 Oct 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
-                            "Warrior's Axe",
-                            "Health Chalice",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Sundering Axe",
-                            "Mystical Mail",
-                            "Sanguine Lash",
-                            "Regrowth Striders",
-                            "Hide of the Nemean Lion",
-                            "Spirit Robe",
-                            "Xibalban Effigy"
-                        ],
-                        "notes": "Bruiser solo-lane build"
-                    },
-                    {
-                        "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
                             "Selflessness",
                             "Health Chalice",
                             "Health Potion"
@@ -15759,6 +15839,26 @@
                             "Freya's Tears"
                         ],
                         "notes": "Cooldown-oriented active item support build"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "23 Oct 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "Warrior's Axe",
+                            "Health Chalice",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Sundering Axe",
+                            "Mystical Mail",
+                            "Sanguine Lash",
+                            "Regrowth Striders",
+                            "Hide of the Nemean Lion",
+                            "Spirit Robe",
+                            "Xibalban Effigy"
+                        ],
+                        "notes": "Bruiser solo-lane build"
                     }
                 ],
                 "patchChanges": {
@@ -16063,6 +16163,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 29.68,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.9858,
                         "20": 0.9858,
@@ -16558,6 +16663,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.512,
+                        "20": 27.5,
+                        "rate": 1.447
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.98,
                         "20": 0.98,
@@ -16970,6 +17080,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 29.68,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.9858,
                         "20": 0.9858,
@@ -17353,6 +17468,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.456,
+                        "20": 29.12,
+                        "rate": "1.46"
+                    },
                     "BaseAttackSpeed": {
                         "1": 1.0044,
                         "20": 1.0044,
@@ -17812,6 +17932,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 29.68,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.99,
                         "20": 0.99,
@@ -18023,26 +18148,6 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Bumba's Golden Dagger",
-                            "Axe",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Bumba's Spear",
-                            "Bragi's Harp",
-                            "Tyrfing",
-                            "Pharaoh's Curse",
-                            "Sanguine Lash",
-                            "Titan's Bane",
-                            "Glorious Pridwen"
-                        ],
-                        "notes": "Bruiser-AA jungle build (Last item is situational, Hide of Nemean, Pharaoh's Curse, or Magi's Cloak)"
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "24 Nov 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
@@ -18060,6 +18165,26 @@
                             "Freya's Tears"
                         ],
                         "notes": "Cooldown-oriented active item support build with **__Aspect of Loyalty__**"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "23 Oct 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "Bumba's Golden Dagger",
+                            "Axe",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Bumba's Spear",
+                            "Bragi's Harp",
+                            "Tyrfing",
+                            "Pharaoh's Curse",
+                            "Sanguine Lash",
+                            "Titan's Bane",
+                            "Glorious Pridwen"
+                        ],
+                        "notes": "Bruiser-AA jungle build (Last item is situational, Hide of Nemean, Pharaoh's Curse, or Magi's Cloak)"
                     }
                 ]
             },
@@ -18280,6 +18405,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.33,
+                        "20": 26.6,
+                        "rate": 1.33
+                    },
                     "BaseAttackSpeed": {
                         "1": 1.01,
                         "20": 1.01,
@@ -18701,6 +18831,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.33,
+                        "20": 26.6,
+                        "rate": 1.33
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -19180,6 +19315,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.33,
+                        "20": 26.6,
+                        "rate": 1.33
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -19632,6 +19772,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.358,
+                        "20": 27.16,
+                        "rate": "1.36"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -20040,6 +20185,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.358,
+                        "20": 27.16,
+                        "rate": "1.36"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -20513,6 +20663,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.442,
+                        "20": 28.84,
+                        "rate": "1.44"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.9579,
                         "20": 0.9579,
@@ -20700,24 +20855,24 @@
                 },
                 "builds": [
                     {
-                        "author": "Mytharria",
-                        "last_edit": "2 Oct 2025",
+                        "author": "Mendar",
+                        "last_edit": "20 Oct 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
-                            "Selflessness",
-                            "Health Chalice",
-                            "Health Potion"
+                            "Bumba's Cudgel",
+                            "Health Potion",
+                            "Axe"
                         ],
                         "full_build": [
-                            "Heroism",
+                            "Bumba's Hammer",
+                            "Hydra's Lament",
+                            "Pendulum Blade",
                             "Regrowth Striders",
-                            "Sanguine Lash",
-                            "Mystical Mail",
-                            "Hide of the Nemean Lion",
-                            "Oni Hunter's Garb",
-                            "Freya's Tears"
+                            "Heartseeker",
+                            "Titan's Bane",
+                            "Oath-Sworn Spear"
                         ],
-                        "notes": "Cooldown-oriented active item support build"
+                        "notes": "Full damage jungle build."
                     },
                     {
                         "author": "Mytharria",
@@ -20740,24 +20895,24 @@
                         "notes": "Bruiser active item solo build."
                     },
                     {
-                        "author": "Mendar",
-                        "last_edit": "20 Oct 2025",
+                        "author": "Mytharria",
+                        "last_edit": "2 Oct 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
-                            "Bumba's Cudgel",
-                            "Health Potion",
-                            "Axe"
+                            "Selflessness",
+                            "Health Chalice",
+                            "Health Potion"
                         ],
                         "full_build": [
-                            "Bumba's Hammer",
-                            "Hydra's Lament",
-                            "Pendulum Blade",
+                            "Heroism",
                             "Regrowth Striders",
-                            "Heartseeker",
-                            "Titan's Bane",
-                            "Oath-Sworn Spear"
+                            "Sanguine Lash",
+                            "Mystical Mail",
+                            "Hide of the Nemean Lion",
+                            "Oni Hunter's Garb",
+                            "Freya's Tears"
                         ],
-                        "notes": "Full damage jungle build."
+                        "notes": "Cooldown-oriented active item support build"
                     }
                 ]
             },
@@ -20935,6 +21090,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.442,
+                        "20": 28.84,
+                        "rate": "1.44"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -21442,6 +21602,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.456,
+                        "20": 29.12,
+                        "rate": 1.4560000000000002
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.97,
                         "20": 0.97,
@@ -21894,6 +22059,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.456,
+                        "20": 29.12,
+                        "rate": 1.4560000000000002
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.9672,
                         "20": 0.9672,
@@ -22066,26 +22236,6 @@
                 },
                 "builds": [
                     {
-                        "author": "Mendar",
-                        "last_edit": "4 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Bumba's Cudgel",
-                            "Axe",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Bumba's Hammer",
-                            "Hydra's Lament",
-                            "Oath-Sworn Spear",
-                            "The Crusher",
-                            "Heartseeker",
-                            "Titan's Bane",
-                            "Barbed Carver"
-                        ],
-                        "notes": "Cooldown-Oriented jungler build with high burst damage. With **__Aspect of Disruption__**"
-                    },
-                    {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
                         "based_on_patch": "Open BETA 24",
@@ -22104,6 +22254,26 @@
                             "Draconic Scale"
                         ],
                         "notes": "Cooldown-oriented active item support build with **__Aspect of Disruption__**."
+                    },
+                    {
+                        "author": "Mendar",
+                        "last_edit": "4 Dec 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "Bumba's Cudgel",
+                            "Axe",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Bumba's Hammer",
+                            "Hydra's Lament",
+                            "Oath-Sworn Spear",
+                            "The Crusher",
+                            "Heartseeker",
+                            "Titan's Bane",
+                            "Barbed Carver"
+                        ],
+                        "notes": "Cooldown-Oriented jungler build with high burst damage. With **__Aspect of Disruption__**"
                     }
                 ],
                 "patchChanges": {
@@ -22352,6 +22522,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.442,
+                        "20": 28.84,
+                        "rate": "1.44"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -22750,6 +22925,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 29.68,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 1.01,
                         "20": 1.01,
@@ -23129,6 +23309,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 29.68,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.99,
                         "20": 0.99,
@@ -23472,6 +23657,11 @@
                 },
                 "archtypes": [],
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.4,
+                        "20": 28,
+                        "rate": "1.40"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -23919,6 +24109,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.4,
+                        "20": 28,
+                        "rate": "1.40"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -24347,6 +24542,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.4,
+                        "20": 28,
+                        "rate": "1.40"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.97,
                         "20": 0.97,
@@ -24577,26 +24777,6 @@
                         "last_edit": "2 Oct 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
-                            "Bumba's Golden Dagger",
-                            "Axe",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Bumba's Spear",
-                            "Bragi's Harp",
-                            "Tyrfing",
-                            "Sun Beam Bow",
-                            "Hastened Fatalis",
-                            "Odysseus' Bow",
-                            "Titan's Bane"
-                        ],
-                        "notes": "Shred AA Jungle Build (if Sun Beam Bow is not wanted due to mana sustain issues, get The Executioner, BIG DPS LOSS)"
-                    },
-                    {
-                        "author": "Mytharria",
-                        "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
                             "Death's Toll",
                             "Axe",
                             "Health Potion"
@@ -24611,6 +24791,26 @@
                             "Hastened Fatalis"
                         ],
                         "notes": "Shred AA ADC Build With **__Aspect of Destruction__**"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "2 Oct 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "Bumba's Golden Dagger",
+                            "Axe",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Bumba's Spear",
+                            "Bragi's Harp",
+                            "Tyrfing",
+                            "Sun Beam Bow",
+                            "Hastened Fatalis",
+                            "Odysseus' Bow",
+                            "Titan's Bane"
+                        ],
+                        "notes": "Shred AA Jungle Build (if Sun Beam Bow is not wanted due to mana sustain issues, get The Executioner, BIG DPS LOSS)"
                     }
                 ],
                 "patchChanges": {
@@ -24840,6 +25040,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.358,
+                        "20": 27.16,
+                        "rate": "1.36"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -25317,6 +25522,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 29.68,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.99,
                         "20": 0.99,
@@ -25741,6 +25951,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.456,
+                        "20": 29.12,
+                        "rate": "1.46"
+                    },
                     "BaseAttackSpeed": {
                         "1": 1,
                         "20": 1,
@@ -26167,6 +26382,11 @@
                 },
                 "Type": "Physical",
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.4,
+                        "20": 28,
+                        "rate": "1.40"
+                    },
                     "BaseAttackSpeed": {
                         "1": 1.01,
                         "20": 1.01,
@@ -26535,6 +26755,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 29.68,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.99,
                         "20": 0.99,
@@ -27090,6 +27315,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.442,
+                        "20": 28.84,
+                        "rate": "1.44"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.96,
                         "20": 0.96,
@@ -27524,6 +27754,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 29.68,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.99,
                         "20": 0.99,
@@ -27754,26 +27989,6 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "20 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Conduit Gem",
-                            "Gem",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Archmage's Gem",
-                            "Chronos' Pendant",
-                            "Polynomicon",
-                            "Spear of Desolation",
-                            "Rod of Tahuti",
-                            "Obsidian Shard",
-                            "Soul Reaver"
-                        ],
-                        "notes": "INT-oriented burst mage build."
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
@@ -27791,6 +28006,26 @@
                             "Riptalon"
                         ],
                         "notes": "Crit-oriented ADC build with **Aspect of Wind**"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "20 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "Conduit Gem",
+                            "Gem",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Archmage's Gem",
+                            "Chronos' Pendant",
+                            "Polynomicon",
+                            "Spear of Desolation",
+                            "Rod of Tahuti",
+                            "Obsidian Shard",
+                            "Soul Reaver"
+                        ],
+                        "notes": "INT-oriented burst mage build."
                     }
                 ]
             },
@@ -28008,6 +28243,11 @@
                     "name": "**__Aspect of Justice__**"
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.512,
+                        "20": 30.24,
+                        "rate": 1.5119999999999998
+                    },
                     "BaseAttackSpeed": {
                         "1": 1.0044,
                         "20": 1.0044,
@@ -28451,6 +28691,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.358,
+                        "20": 27.16,
+                        "rate": "1.36"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -28926,6 +29171,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.442,
+                        "20": 28.84,
+                        "rate": "1.44"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.96,
                         "20": 0.96,
@@ -29082,23 +29332,23 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "1 Dec 2025",
+                        "last_edit": "23 Oct 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
-                            "Warrior's Axe",
+                            "Selflessness",
                             "Health Chalice",
                             "Health Potion"
                         ],
                         "full_build": [
-                            "Sundering Axe",
-                            "Triton's Conch",
-                            "Evolved Prophetic Cloak",
-                            "Gladiator's Shield",
-                            "Genji's Guard",
-                            "Glorious Pridwen",
-                            "Hide of the Nemean Lion"
+                            "Heroism",
+                            "Stampede",
+                            "Talisman of Purification",
+                            "Spirit Robe",
+                            "Freya's Tears",
+                            "Hide of the Nemean Lion",
+                            "Draconic Scale"
                         ],
-                        "notes": "Bruiser solo-lane build."
+                        "notes": "Cooldown-oriented active item support build"
                     },
                     {
                         "author": "Mendar",
@@ -29122,23 +29372,23 @@
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
+                        "last_edit": "1 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
-                            "Selflessness",
+                            "Warrior's Axe",
                             "Health Chalice",
                             "Health Potion"
                         ],
                         "full_build": [
-                            "Heroism",
-                            "Stampede",
-                            "Talisman of Purification",
-                            "Spirit Robe",
-                            "Freya's Tears",
-                            "Hide of the Nemean Lion",
-                            "Draconic Scale"
+                            "Sundering Axe",
+                            "Triton's Conch",
+                            "Evolved Prophetic Cloak",
+                            "Gladiator's Shield",
+                            "Genji's Guard",
+                            "Glorious Pridwen",
+                            "Hide of the Nemean Lion"
                         ],
-                        "notes": "Cooldown-oriented active item support build"
+                        "notes": "Bruiser solo-lane build."
                     }
                 ]
             },
@@ -29328,6 +29578,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.456,
+                        "20": 29.12,
+                        "rate": "1.46"
+                    },
                     "BaseAttackSpeed": {
                         "1": 1.0044,
                         "20": 1.0044,
@@ -29754,6 +30009,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.456,
+                        "20": 29.12,
+                        "rate": "1.46"
+                    },
                     "BaseAttackSpeed": {
                         "1": 1.0044,
                         "20": 1.0044,
@@ -30220,6 +30480,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.358,
+                        "20": 27.16,
+                        "rate": "1.36"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -30395,26 +30660,6 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Sands Of Time",
-                            "Gem",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Pendulum Of The Ages",
-                            "Doom Orb",
-                            "Spear of Desolation",
-                            "Nimble Ring",
-                            "Obsidian Shard",
-                            "Rod of Tahuti",
-                            "Soul Reaver"
-                        ],
-                        "notes": "INT-oriented burst mage build. (swap pendulum for Bumba's Spear if you're jungle)"
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
@@ -30432,6 +30677,26 @@
                             "Riptalon"
                         ],
                         "notes": "Crit-oriented ADC build. With **Aspect of the Trident**"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "2 Oct 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "Sands Of Time",
+                            "Gem",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Pendulum Of The Ages",
+                            "Doom Orb",
+                            "Spear of Desolation",
+                            "Nimble Ring",
+                            "Obsidian Shard",
+                            "Rod of Tahuti",
+                            "Soul Reaver"
+                        ],
+                        "notes": "INT-oriented burst mage build. (swap pendulum for Bumba's Spear if you're jungle)"
                     }
                 ]
             },
@@ -30585,6 +30850,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 29.68,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.99,
                         "20": 0.99,
@@ -31068,6 +31338,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.4,
+                        "20": 28,
+                        "rate": "1.40"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -31527,6 +31802,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.7,
+                        "20": 34,
+                        "rate": 1.7
+                    },
                     "BaseAttackSpeed": {
                         "1": 1,
                         "20": 1,
@@ -31921,6 +32201,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.4,
+                        "20": 28,
+                        "rate": "1.40"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.96,
                         "20": 0.96,
@@ -32387,6 +32672,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 29.68,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.99,
                         "20": 0.99,
@@ -32970,6 +33260,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 29.68,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.99,
                         "20": 0.99,
@@ -33321,6 +33616,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.33,
+                        "20": 26.6,
+                        "rate": 1.33
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.97,
                         "20": 0.97,
@@ -33733,6 +34033,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 15,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 1.01,
                         "20": 1.01,
@@ -34113,6 +34418,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.456,
+                        "20": 29.12,
+                        "rate": 1.4560000000000002
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.91,
                         "20": 0.91,
@@ -34541,6 +34851,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 29.68,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.99,
                         "20": 0.99,
@@ -34703,26 +35018,6 @@
                 },
                 "builds": [
                     {
-                        "author": "Mendar",
-                        "last_edit": "5 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Bumba's Cudgel",
-                            "Axe",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Bumba's Hammer",
-                            "The Reaper",
-                            "Hydra's Lament",
-                            "Oath-Sworn Spear",
-                            "Heartseeker",
-                            "Titan's Bane",
-                            "Pendulum Blade"
-                        ],
-                        "notes": "Cooldown + burst damage jungler"
-                    },
-                    {
                         "author": "Mytharria",
                         "last_edit": "30 Nov 2025",
                         "based_on_patch": "Open BETA 24",
@@ -34741,6 +35036,26 @@
                             "Oni Hunter's Garb"
                         ],
                         "notes": "Bruiser HP-oriented solo-lane build with **Aspect of Reaping.**"
+                    },
+                    {
+                        "author": "Mendar",
+                        "last_edit": "5 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "Bumba's Cudgel",
+                            "Axe",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Bumba's Hammer",
+                            "The Reaper",
+                            "Hydra's Lament",
+                            "Oath-Sworn Spear",
+                            "Heartseeker",
+                            "Titan's Bane",
+                            "Pendulum Blade"
+                        ],
+                        "notes": "Cooldown + burst damage jungler"
                     }
                 ]
             },
@@ -34921,6 +35236,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 29.68,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.99,
                         "20": 0.99,
@@ -35104,26 +35424,6 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Conduit Gem",
-                            "Gem",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Archmage's Gem",
-                            "Chronos' Pendant",
-                            "Polynomicon",
-                            "Ancient Signet",
-                            "Rod of Tahuti",
-                            "Obsidian Shard",
-                            "Soul Reaver"
-                        ],
-                        "notes": "INT-oriented burst mage build. **Aspect of Mischief OPTIONAL** (If aspect is on, replace Signet with Gem of Focus)"
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "3 Dec 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
@@ -35141,6 +35441,26 @@
                             "Amanita Charm"
                         ],
                         "notes": "Cooldown-oriented active item support build"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "11 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "Conduit Gem",
+                            "Gem",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Archmage's Gem",
+                            "Chronos' Pendant",
+                            "Polynomicon",
+                            "Ancient Signet",
+                            "Rod of Tahuti",
+                            "Obsidian Shard",
+                            "Soul Reaver"
+                        ],
+                        "notes": "INT-oriented burst mage build. **Aspect of Mischief OPTIONAL** (If aspect is on, replace Signet with Gem of Focus)"
                     }
                 ]
             },
@@ -35335,6 +35655,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 29.68,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.9858,
                         "20": 0.9858,
@@ -35733,6 +36058,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.484,
+                        "20": 29.68,
+                        "rate": "1.48"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.9858,
                         "20": 0.9858,
@@ -35977,26 +36307,6 @@
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "30 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Bluestone Pendant",
-                            "Health Chalice",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Bluestone Brooch",
-                            "Runeforged Hammer",
-                            "Evolved Prophetic Cloak",
-                            "Gladiator's Shield",
-                            "Glorious Pridwen",
-                            "Spirit Robe",
-                            "Hide of the Nemean Lion"
-                        ],
-                        "notes": "Bruiser solo-lane build with **__Aspect of Thunderstruck__**"
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "2 Oct 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
@@ -36014,6 +36324,26 @@
                             "Spirit Robe"
                         ],
                         "notes": "Cooldown-oriented active item support build with **__Aspect of Thunderstruck__**"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "30 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "Bluestone Pendant",
+                            "Health Chalice",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Bluestone Brooch",
+                            "Runeforged Hammer",
+                            "Evolved Prophetic Cloak",
+                            "Gladiator's Shield",
+                            "Glorious Pridwen",
+                            "Spirit Robe",
+                            "Hide of the Nemean Lion"
+                        ],
+                        "notes": "Bruiser solo-lane build with **__Aspect of Thunderstruck__**"
                     }
                 ]
             },
@@ -36205,6 +36535,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.33,
+                        "20": 26.6,
+                        "rate": 1.33
+                    },
                     "BaseAttackSpeed": {
                         "1": 1,
                         "20": 1,
@@ -36705,6 +37040,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.4,
+                        "20": 28,
+                        "rate": 1.4000000000000001
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -37154,6 +37494,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.7,
+                        "20": 34,
+                        "rate": 1.7
+                    },
                     "BaseAttackSpeed": {
                         "1": 1,
                         "20": 1,
@@ -37648,6 +37993,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.4,
+                        "20": 28,
+                        "rate": "1.40"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -37827,26 +38177,6 @@
                 "builds": [
                     {
                         "author": "Mendar",
-                        "last_edit": "1 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Selflessness",
-                            "Health Chalice",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Heroism",
-                            "Chandra's Grace",
-                            "Stampede",
-                            "Talisman of Purification",
-                            "Amanita Charm",
-                            "Spear of Desolation",
-                            "Spirit Robe"
-                        ],
-                        "notes": "Cooldown-oriented active item support build"
-                    },
-                    {
-                        "author": "Mendar",
                         "last_edit": "30 Oct 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
@@ -37864,6 +38194,26 @@
                             "Soul Gem"
                         ],
                         "notes": "INT-oriented burst mage build. With **Aspect of Downpour**"
+                    },
+                    {
+                        "author": "Mendar",
+                        "last_edit": "1 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "Selflessness",
+                            "Health Chalice",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Heroism",
+                            "Chandra's Grace",
+                            "Stampede",
+                            "Talisman of Purification",
+                            "Amanita Charm",
+                            "Spear of Desolation",
+                            "Spirit Robe"
+                        ],
+                        "notes": "Cooldown-oriented active item support build"
                     }
                 ]
             },
@@ -38067,6 +38417,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.4,
+                        "20": 28,
+                        "rate": "1.40"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -38467,6 +38822,11 @@
                     }
                 },
                 "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.358,
+                        "20": 27.16,
+                        "rate": "1.36"
+                    },
                     "BaseAttackSpeed": {
                         "1": 0.93,
                         "20": 0.93,
@@ -38620,26 +38980,6 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Sands Of Time",
-                            "Gem",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Pendulum Of The Ages",
-                            "Doom Orb",
-                            "Spear of Desolation",
-                            "Staff of Myrddin",
-                            "Rod of Tahuti",
-                            "Obsidian Shard",
-                            "Soul Reaver"
-                        ],
-                        "notes": "INT-oriented burst mage build. "
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
                         "based_on_patch": "Open BETA 24",
                         "starting": [
@@ -38657,6 +38997,26 @@
                             "Riptalon"
                         ],
                         "notes": "Crit-oriented ADC build."
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "11 Nov 2025",
+                        "based_on_patch": "Open BETA 24",
+                        "starting": [
+                            "Sands Of Time",
+                            "Gem",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Pendulum Of The Ages",
+                            "Doom Orb",
+                            "Spear of Desolation",
+                            "Staff of Myrddin",
+                            "Rod of Tahuti",
+                            "Obsidian Shard",
+                            "Soul Reaver"
+                        ],
+                        "notes": "INT-oriented burst mage build. "
                     }
                 ]
             }

@@ -85,6 +85,18 @@
     "Type": "Deity"
   },
   {
+    "godName": "Apollo",
+    "pantheon": "Greek",
+    "Attack Type": "Ranged",
+    "Power Type": "Physical",
+    "Role": "ADC",
+    "Scales with": "Mixed",
+    "Gender": "Male",
+    "releaseYear": "2013-03-06",
+    "icon": "God Icons/t_GodPortrait_Apollo.png",
+    "Type": "Deity"
+  },
+  {
     "godName": "Ares",
     "pantheon": "Greek",
     "Attack Type": "Melee",
@@ -106,6 +118,18 @@
     "Gender": "Female",
     "releaseYear": "2012-05-31",
     "icon": "God Icons/t_GodPortrait_Artemis.png",
+    "Type": "Deity"
+  },
+  {
+    "godName": "Artio",
+    "pantheon": "Celtic",
+    "Attack Type": "Melee",
+    "Power Type": "Magical",
+    "Role": "Support",
+    "Scales with": "INT",
+    "Gender": "Female",
+    "releaseYear": "2017-08-01",
+    "icon": "God Icons/t_GodPortrait_Artio.png",
     "Type": "Deity"
   },
   {
@@ -181,6 +205,18 @@
     "Type": "Deity"
   },
   {
+    "godName": "Cerberus",
+    "pantheon": "Greek",
+    "Attack Type": "Melee",
+    "Power Type": "Magical",
+    "Role": "Support",
+    "Scales with": "INT",
+    "Gender": "Male",
+    "releaseYear": "2018-01-09",
+    "icon": "God Icons/t_GodPortrait_Cerberus.png",
+    "Type": "Monster"
+  },
+  {
     "godName": "Cernunnos",
     "pantheon": "Celtic",
     "Attack Type": "Ranged",
@@ -217,6 +253,18 @@
     "Type": "Deity"
   },
   {
+    "godName": "Da Ji",
+    "pantheon": "Chinese",
+    "Attack Type": "Melee",
+    "Power Type": "Physical",
+    "Role": "Jungle",
+    "Scales with": "STR",
+    "Gender": "Female",
+    "releaseYear": "2017-04-11",
+    "icon": "God Icons/t_GodPortrait_DaJi.png",
+    "Type": "Human"
+  },
+  {
     "godName": "Danzaburou",
     "pantheon": "Japanese",
     "Attack Type": "Ranged",
@@ -226,6 +274,18 @@
     "Gender": "Male",
     "releaseYear": "2020-12-15",
     "icon": "God Icons/t_GodPortrait_Danzaburou.png",
+    "Type": "Deity"
+  },
+  {
+    "godName": "Eset",
+    "pantheon": "Egyptian",
+    "Attack Type": "Ranged",
+    "Power Type": "Magical",
+    "Role": "Mid",
+    "Scales with": "INT",
+    "Gender": "Female",
+    "releaseYear": "2013-05-15",
+    "icon": "God Icons/t_GodPortrait_Eset.png",
     "Type": "Deity"
   },
   {
@@ -241,6 +301,18 @@
     "Type": "Monster"
   },
   {
+    "godName": "Ganesha",
+    "pantheon": "Hindu",
+    "Attack Type": "Melee",
+    "Power Type": "Magical",
+    "Role": "Support",
+    "Scales with": "INT",
+    "Gender": "Male",
+    "releaseYear": "2017-04-25",
+    "icon": "God Icons/t_GodPortrait_Ganesha.png",
+    "Type": "Deity"
+  },
+  {
     "godName": "Geb",
     "pantheon": "Egyptian",
     "Attack Type": "Melee",
@@ -251,6 +323,18 @@
     "releaseYear": "2014-01-16",
     "icon": "God Icons/t_GodPortrait_Geb.png",
     "Type": "Deity"
+  },
+  {
+    "godName": "Guan Yu",
+    "pantheon": "Chinese",
+    "Attack Type": "Melee",
+    "Power Type": "Physical",
+    "Role": "Solo",
+    "Scales with": "STR",
+    "Gender": "Male",
+    "releaseYear": "2012-05-31",
+    "icon": "God Icons/t_GodPortrait_GuanYu.png",
+    "Type": "Human"
   },
   {
     "godName": "Hades",
@@ -289,6 +373,18 @@
     "Type": "Demigod"
   },
   {
+    "godName": "Hou Yi",
+    "pantheon": "Chinese",
+    "Attack Type": "Ranged",
+    "Power Type": "Physical",
+    "Role": "ADC",
+    "Scales with": "STR",
+    "Gender": "Male",
+    "releaseYear": "2015-01-13",
+    "icon": "God Icons/t_GodPortrait_HouYi.png",
+    "Type": "Deity"
+  },
+  {
     "godName": "Hua Mulan",
     "pantheon": "Chinese",
     "Attack Type": "Melee",
@@ -325,6 +421,18 @@
     "Type": "Deity"
   },
   {
+    "godName": "Janus",
+    "pantheon": "Roman",
+    "Attack Type": "Ranged",
+    "Power Type": "Magical",
+    "Role": "Mid",
+    "Scales with": "INT",
+    "Gender": "Male",
+    "releaseYear": "2014-05-28",
+    "icon": "God Icons/t_GodPortrait_Janus.png",
+    "Type": "Deity"
+  },
+  {
     "godName": "Jing Wei",
     "pantheon": "Chinese",
     "Attack Type": "Ranged",
@@ -334,6 +442,30 @@
     "Gender": "Female",
     "releaseYear": "2016-04-12",
     "icon": "God Icons/t_GodPortrait_JingWei.png",
+    "Type": "Deity"
+  },
+  {
+    "godName": "Jormungandr",
+    "pantheon": "Norse",
+    "Attack Type": "Ranged",
+    "Power Type": "Magical",
+    "Role": "Solo",
+    "Scales with": "INT",
+    "Gender": "Male",
+    "releaseYear": "2019-03-05",
+    "icon": "God Icons/t_GodPortrait_Jormungandr.png",
+    "Type": "Monster"
+  },
+  {
+    "godName": "Kali",
+    "pantheon": "Hindu",
+    "Attack Type": "Melee",
+    "Power Type": "Physical",
+    "Role": "Jungle",
+    "Scales with": "STR",
+    "Gender": "Female",
+    "releaseYear": "2012-05-31",
+    "icon": "God Icons/t_GodPortrait_Kali.png",
     "Type": "Deity"
   },
   {
@@ -385,6 +517,30 @@
     "Type": "Monster"
   },
   {
+    "godName": "Mercury",
+    "pantheon": "Roman",
+    "Attack Type": "Melee",
+    "Power Type": "Physical",
+    "Role": "Jungle",
+    "Scales with": "STR",
+    "Gender": "Male",
+    "releaseYear": "2013-10-02",
+    "icon": "God Icons/t_GodPortrait_Mercury.png",
+    "Type": "Deity"
+  },
+  {
+    "godName": "Merlin",
+    "pantheon": "Arthurian",
+    "Attack Type": "Ranged",
+    "Power Type": "Magical",
+    "Role": "Mid",
+    "Scales with": "INT",
+    "Gender": "Male",
+    "releaseYear": "2019-01-08",
+    "icon": "God Icons/t_GodPortrait_Merlin.png",
+    "Type": "Human"
+  },
+  {
     "godName": "Mordred",
     "pantheon": "Arthurian",
     "Attack Type": "Melee",
@@ -433,6 +589,18 @@
     "Type": "Deity"
   },
   {
+    "godName": "Nut",
+    "pantheon": "Egyptian",
+    "Attack Type": "Ranged",
+    "Power Type": "Magical",
+    "Role": "Support",
+    "Scales with": "INT",
+    "Gender": "Female",
+    "releaseYear": "2024-11-06",
+    "icon": "God Icons/t_GodPortrait_Nut.png",
+    "Type": "Deity"
+  },
+  {
     "godName": "Odin",
     "pantheon": "Norse",
     "Attack Type": "Melee",
@@ -442,6 +610,18 @@
     "Gender": "Male",
     "releaseYear": "2012-05-31",
     "icon": "God Icons/t_GodPortrait_Odin.png",
+    "Type": "Deity"
+  },
+  {
+    "godName": "Osiris",
+    "pantheon": "Egyptian",
+    "Attack Type": "Melee",
+    "Power Type": "Physical",
+    "Role": "Solo",
+    "Scales with": "STR",
+    "Gender": "Male",
+    "releaseYear": "2014-05-14",
+    "icon": "God Icons/t_GodPortrait_Osiris.png",
     "Type": "Deity"
   },
   {
@@ -505,6 +685,18 @@
     "Type": "Deity"
   },
   {
+    "godName": "Scylla",
+    "pantheon": "Greek",
+    "Attack Type": "Ranged",
+    "Power Type": "Magical",
+    "Role": "Mid",
+    "Scales with": "INT",
+    "Gender": "Female",
+    "releaseYear": "2014-03-05",
+    "icon": "God Icons/t_GodPortrait_Scylla.png",
+    "Type": "Monster"
+  },
+  {
     "godName": "Sobek",
     "pantheon": "Egyptian",
     "Attack Type": "Melee",
@@ -529,6 +721,18 @@
     "Type": "Deity"
   },
   {
+    "godName": "Sun Wukong",
+    "pantheon": "Chinese",
+    "Attack Type": "Melee",
+    "Power Type": "Physical",
+    "Role": "Solo",
+    "Scales with": "STR",
+    "Gender": "Male",
+    "releaseYear": "2013-10-23",
+    "icon": "God Icons/t_GodPortrait_SunWukong.png",
+    "Type": "Deity"
+  },
+  {
     "godName": "Susano",
     "pantheon": "Japanese",
     "Attack Type": "Melee",
@@ -538,6 +742,18 @@
     "Gender": "Male",
     "releaseYear": "2016-05-10",
     "icon": "God Icons/t_GodPortrait_Susano.png",
+    "Type": "Deity"
+  },
+  {
+    "godName": "Sylvanus",
+    "pantheon": "Roman",
+    "Attack Type": "Ranged",
+    "Power Type": "Magical",
+    "Role": "Support",
+    "Scales with": "INT",
+    "Gender": "Male",
+    "releaseYear": "2014-10-01",
+    "icon": "God Icons/t_GodPortrait_Sylvanus.png",
     "Type": "Deity"
   },
   {
@@ -577,6 +793,18 @@
     "Type": "Deity"
   },
   {
+    "godName": "Tsukuyomi",
+    "pantheon": "Japanese",
+    "Attack Type": "Melee",
+    "Power Type": "Physical",
+    "Role": "Jungle",
+    "Scales with": "STR",
+    "Gender": "Male",
+    "releaseYear": "2020-07-14",
+    "icon": "God Icons/t_GodPortrait_Tsukuyomi.png",
+    "Type": "Deity"
+  },
+  {
     "godName": "Ullr",
     "pantheon": "Norse",
     "Attack Type": "Ranged",
@@ -598,6 +826,18 @@
     "Gender": "Male",
     "releaseYear": "2013-01-30",
     "icon": "God Icons/t_GodPortrait_Vulcan.png",
+    "Type": "Deity"
+  },
+  {
+    "godName": "Xbalanque",
+    "pantheon": "Maya",
+    "Attack Type": "Ranged",
+    "Power Type": "Physical",
+    "Role": "ADC",
+    "Scales with": "STR",
+    "Gender": "Male",
+    "releaseYear": "2012-12-19",
+    "icon": "God Icons/t_GodPortrait_Xbalanque.png",
     "Type": "Deity"
   },
   {

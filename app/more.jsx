@@ -13,6 +13,7 @@ import {
 const IS_WEB = Platform.OS === 'web';
 import { useScreenDimensions } from '../hooks/useScreenDimensions';
 const WordlePage = lazy(() => import('./wordle'));
+const AbilityGamePage = lazy(() => import('./ability'));
 const ProfilePage = lazy(() => import('./profile'));
 
 export default function MorePage({ activeTab = 'minigames', onNavigateToBuilds, onNavigateToGod, onNavigateToCustomBuild, onNavigateToMyBuilds }) {
@@ -22,14 +23,30 @@ export default function MorePage({ activeTab = 'minigames', onNavigateToBuilds, 
   const [selectedGame, setSelectedGame] = useState(null);
 
   // If a game is selected, show it
-  if (selectedGame) {
+  if (selectedGame === 'god-wordle') {
     return (
-      <Suspense fallback={
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#1e90ff" />
-        </View>
-      }>
-        <WordlePage gameMode={selectedGame} onBack={() => setSelectedGame(null)} />
+      <Suspense
+        fallback={
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#1e90ff" />
+          </View>
+        }
+      >
+        <WordlePage gameMode="daily" onBack={() => setSelectedGame(null)} />
+      </Suspense>
+    );
+  }
+
+  if (selectedGame === 'guess-ability') {
+    return (
+      <Suspense
+        fallback={
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#1e90ff" />
+          </View>
+        }
+      >
+        <AbilityGamePage onBack={() => setSelectedGame(null)} />
       </Suspense>
     );
   }
@@ -49,14 +66,26 @@ export default function MorePage({ activeTab = 'minigames', onNavigateToBuilds, 
               {/* Mini Games Section */}
               <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Mini Games</Text>
+                <Text style={styles.sectionNote}>
+                  Choose a mini game below to play. More games coming soon.
+                </Text>
                 <View style={styles.grid}>
-                  <TouchableOpacity style={styles.card} onPress={() => { /* No action, TBD */ }}>
-                    <Text style={styles.cardTitle}>God Wordle (TBD)</Text>
-                    <Text style={styles.cardDescription}>Coming Soon</Text>
+                  {/* God Wordle - active game */}
+                  <TouchableOpacity 
+                    style={styles.card} 
+                    onPress={() => setSelectedGame('god-wordle')}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={styles.cardTitle}>God Wordle</Text>
+                    <Text style={styles.cardDescription}>Guess the Smite 2 god in 6 tries.</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.card} onPress={() => { /* No action, TBD */ }}>
-                    <Text style={styles.cardTitle}>Guess the Ability (TBD)</Text>
-                    <Text style={styles.cardDescription}>Coming Soon</Text>
+                  <TouchableOpacity 
+                    style={styles.card} 
+                    onPress={() => setSelectedGame('guess-ability')}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={styles.cardTitle}>Guess the Ability</Text>
+                    <Text style={styles.cardDescription}>Guess the god and ability (1-4).</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.card} onPress={() => { /* No action, TBD */ }}>
                     <Text style={styles.cardTitle}>Guess the Skin (TBD)</Text>
@@ -178,17 +207,26 @@ const styles = StyleSheet.create({
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 12,
+    gap: IS_WEB ? 12 : 8,
+    justifyContent: 'center',
   },
   card: {
-    flex: 1,
-    minWidth: '45%',
     backgroundColor: '#0b1226',
     borderRadius: 12,
-    padding: 16,
+    padding: IS_WEB ? 16 : 10,
     borderWidth: 1,
     borderColor: '#1e3a5f',
     alignItems: 'center',
+    marginBottom: IS_WEB ? 12 : 8,
+    ...(IS_WEB
+      ? {
+          flexBasis: '45%',
+          maxWidth: '45%',
+        }
+      : {
+          flexBasis: '40%',
+          maxWidth: 150,
+        }),
   },
   cardIcon: {
     fontSize: 32,
@@ -196,14 +234,14 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     color: '#e6eef8',
-    fontSize: 16,
+    fontSize: IS_WEB ? 16 : 14,
     fontWeight: '700',
     marginBottom: 4,
     textAlign: 'center',
   },
   cardDescription: {
     color: '#94a3b8',
-    fontSize: 12,
+    fontSize: IS_WEB ? 12 : 11,
     textAlign: 'center',
   },
   loadingContainer: {
