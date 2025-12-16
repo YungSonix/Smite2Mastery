@@ -61,7 +61,7 @@ const storage = {
 export default function PatchHubPage({ subTab = 'simple' }) {
   // Use responsive screen dimensions
   const screenDimensions = useScreenDimensions();
-  const [selectedLastPatch, setSelectedLastPatch] = useState(24); // Default to OB24 (latest)
+  const [selectedLastPatch, setSelectedLastPatch] = useState(25); // Default to OB25 (latest)
   const [catchUpData, setCatchUpData] = useState(null);
   const [catchUpLoading, setCatchUpLoading] = useState(false);
   const [showPatchPicker, setShowPatchPicker] = useState(false);
@@ -78,6 +78,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
     godsNerfed: true,
     godsShifted: true,
     itemsBuffed: true,
+    itemsNew: true,
     itemsNerfed: true,
     itemsChanged: true,
     gameModes: true,
@@ -90,6 +91,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
     catchUpGodsNerfed: true,
     catchUpGodsShifted: true,
     catchUpItems: true,
+    catchUpItemsNew: true,
     catchUpGameModes: true,
   });
   
@@ -264,6 +266,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
 
   // Static patch file mapping (required for React Native bundle)
   const patchFiles = {
+    25: require('../Patch Notes/patchnotesob25.json'),
     24: require('../Patch Notes/patchnotesob24.json'),
     23: require('../Patch Notes/patchnotesob23.json'),    
     22: require('../Patch Notes/patchnotesob22.json'),
@@ -285,11 +288,11 @@ export default function PatchHubPage({ subTab = 'simple' }) {
 
   // Function to aggregate changes across all patches from lastPatchNumber to latest
   const generateCatchUp = (lastPatchNumber) => {
-    if (lastPatchNumber >= 24) {
+    if (lastPatchNumber >= 25) {
       setCatchUpData({
         summary: "You're already on the latest patch! No changes to catch up on.",
         gods: { new: [], buffed: [], nerfed: [], shifted: [] },
-        items: { buffed: [], nerfed: [], changed: [] },
+        items: { buffed: [], new: [], nerfed: [], changed: [] },
         gameModes: []
       });
       return;
@@ -302,17 +305,18 @@ export default function PatchHubPage({ subTab = 'simple' }) {
       const result = {
         summary: '',
         gods: { new: [], buffed: [], nerfed: [], shifted: [] },
-        items: { buffed: [], nerfed: [], changed: [] },
+        items: { buffed: [], new: [], nerfed: [], changed: [] },
         gameModes: []
       };
       
       // Track all gods/items we've seen to avoid duplicates
       const seenGods = new Set();
       const seenItems = new Set();
+      const seenItemsNew = new Set();
       const seenGameModes = new Set();
       
       // Load and process each patch from lastPatchNumber + 1 to 24
-      for (let patchNum = lastPatchNumber + 1; patchNum <= 24; patchNum++) {
+      for (let patchNum = lastPatchNumber + 1; patchNum <= 25; patchNum++) {
         const patch = loadPatchFile(patchNum);
         if (!patch) continue; // Skip if patch file doesn't exist
         
@@ -377,7 +381,11 @@ export default function PatchHubPage({ subTab = 'simple' }) {
             } else if (changeType === 'nerf' && !seenItems.has(`nerf-${itemKey}`)) {
               result.items.nerfed.push(item);
               seenItems.add(`nerf-${itemKey}`);
-            } else if ((changeType === 'change' || changeType === 'shift' || changeType === 'fix') && !seenItems.has(`change-${itemKey}`)) {
+            } else if (
+              (changeType === 'change' || changeType === 'shift' || changeType === 'fix' || changeType === 'new') &&
+              !seenItems.has(`change-${itemKey}`)
+            ) {
+              // Treat "new" items as "changed" so they appear in the Items Changed section
               result.items.changed.push(item);
               seenItems.add(`change-${itemKey}`);
             }
@@ -408,19 +416,39 @@ export default function PatchHubPage({ subTab = 'simple' }) {
         new: result.gods.new.length,
         buffed: result.gods.buffed.length,
         nerfed: result.gods.nerfed.length,
-        shifted: result.gods.shifted.length
+        shifted: result.gods.shifted.length,
       };
-      
-      const itemCount = result.items.buffed.length + result.items.nerfed.length + result.items.changed.length;
+
+      const itemCount =
+        result.items.buffed.length + result.items.new.length + result.items.nerfed.length + result.items.changed.length;
       const modeCount = result.gameModes.length;
-      
-      result.summary = `Since OB${lastPatchNumber}, there have been ` +
+
+      // Count how many gods received Aspect-specific changes
+      const allGodEntries = [
+        ...result.gods.new,
+        ...result.gods.buffed,
+        ...result.gods.nerfed,
+        ...result.gods.shifted,
+      ];
+      const aspectGodCount = allGodEntries.filter((g) =>
+        Array.isArray(g.changes) && g.changes.some((c) => c.section === 'Aspect')
+      ).length;
+
+      // Count how many items are brand-new
+      const newItemCount = result.items.new.filter(
+        (it) => (it.changeType || '').toLowerCase() === 'new'
+      ).length;
+
+      result.summary =
+        `Since OB${lastPatchNumber}, there have been ` +
         `${godCounts.new} new god${godCounts.new !== 1 ? 's' : ''}, ` +
         `${godCounts.buffed} god${godCounts.buffed !== 1 ? 's' : ''} buffed, ` +
         `${godCounts.nerfed} god${godCounts.nerfed !== 1 ? 's' : ''} nerfed` +
-        `${godCounts.shifted > 0 ? `, ${godCounts.shifted} god${godCounts.shifted !== 1 ? 's' : ''} shifted` : ''}, ` +
-        `${itemCount} item${itemCount !== 1 ? 's' : ''} changed, ` +
-        `and ${modeCount} game mode${modeCount !== 1 ? 's' : ''} updated.`;
+        `${godCounts.shifted > 0 ? `, ${godCounts.shifted} god${godCounts.shifted !== 1 ? 's' : ''} shifted` : ''}` +
+        `${aspectGodCount > 0 ? ` (including ${aspectGodCount} Aspect update${aspectGodCount !== 1 ? 's' : ''})` : ''}` +
+        `, ${itemCount} item${itemCount !== 1 ? 's' : ''} changed` +
+        `${newItemCount > 0 ? ` (${newItemCount} new)` : ''}` +
+        `, and ${modeCount} game mode${modeCount !== 1 ? 's' : ''} updated.`;
       
       setCatchUpData(result);
     } catch (err) {
@@ -437,7 +465,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
   };
 
   // Function to compare two patch files and return differences
-  const comparePatches = (oldPatch, newPatch) => {
+  const comparePatches = (oldPatch,  newPatch) => {
     const result = {
       summary: '',
       gods: { new: [], buffed: [], nerfed: [], shifted: [] },
@@ -467,20 +495,18 @@ export default function PatchHubPage({ subTab = 'simple' }) {
       }
     });
     
-    // Find gods that changed
+    // Find gods that changed (including Aspect-only buffs/nerfs/shifts)
     Object.keys(newGods).forEach(godName => {
       const newGod = newGods[godName];
-      const oldGod = oldGods[godName];
-      
-      if (oldGod) {
-        const changeType = (newGod.changeType || '').toLowerCase();
-        if (changeType === 'buff') {
-          result.gods.buffed.push(newGod);
-        } else if (changeType === 'nerf') {
-          result.gods.nerfed.push(newGod);
-        } else if (changeType === 'shift') {
-          result.gods.shifted.push(newGod);
-        }
+      const changeType = (newGod.changeType || '').toLowerCase();
+
+      // We already handled pure "new" gods above; here we care about balance changes
+      if (changeType === 'buff') {
+        result.gods.buffed.push(newGod);
+      } else if (changeType === 'nerf') {
+        result.gods.nerfed.push(newGod);
+      } else if (changeType === 'shift') {
+        result.gods.shifted.push(newGod);
       }
     });
     
@@ -538,7 +564,10 @@ export default function PatchHubPage({ subTab = 'simple' }) {
       shifted: result.gods.shifted.length
     };
     
-    const itemCount = result.items.buffed.length + result.items.nerfed.length + result.items.changed.length;
+    const itemCount = result.items.buffed.length + result.items.new.length + result.items.nerfed.length + result.items.changed.length;
+    const newItemCount = result.items.changed.filter(
+      (it) => (it.changeType || '').toLowerCase() === 'new'
+    ).length;
     const modeCount = result.gameModes.length;
     
     const oldPatchNum = oldPatch.patchName?.match(/OB\s*(\d+)/i)?.[1] || '?';
@@ -547,7 +576,8 @@ export default function PatchHubPage({ subTab = 'simple' }) {
       `${godCounts.buffed} god${godCounts.buffed !== 1 ? 's' : ''} buffed, ` +
       `${godCounts.nerfed} god${godCounts.nerfed !== 1 ? 's' : ''} nerfed` +
       `${godCounts.shifted > 0 ? `, ${godCounts.shifted} god${godCounts.shifted !== 1 ? 's' : ''} shifted` : ''}, ` +
-      `${itemCount} item${itemCount !== 1 ? 's' : ''} changed, ` +
+      `${itemCount} item${itemCount !== 1 ? 's' : ''} changed (${newItemCount} new)` +
+      `${newItemCount > 0 ? ` (${newItemCount} new)` : ''}, ` +
       `and ${modeCount} game mode${modeCount !== 1 ? 's' : ''} updated.`;
     
     return result;
@@ -560,7 +590,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
     InteractionManager.runAfterInteractions(() => {
       setTimeout(() => {
         try {
-          const patchNotes = require('../Patch Notes/patchnotesob24.json');
+          const patchNotes = require('../Patch Notes/patchnotesob25.json');
           const builds = require('./data/builds.json');
           
           if (isMounted) {
@@ -1123,6 +1153,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
       buffed: '#10b981',
       nerfed: '#ef4444',
       changed: '#f59e0b',
+      new: '#8b5cf6',
     };
     
     const badgeColor = badgeColors[changeType] || '#64748b';
@@ -1227,6 +1258,11 @@ export default function PatchHubPage({ subTab = 'simple' }) {
               {changeType === 'shift' && (
                 <View style={[styles.patchBadge, styles.patchBadgeShifted]}>
                   <Text style={styles.patchBadgeText}>SHIFTED</Text>
+                </View>
+              )}
+              {changeType === 'new' && (
+                <View style={[styles.patchBadge, styles.patchBadgeNew]}>
+                  <Text style={styles.patchBadgeText}>NEW</Text>
                 </View>
               )}
             </View>
@@ -1429,6 +1465,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                 {/* Item Changes - Consolidated */}
                 {((patchData.items?.buffed && patchData.items.buffed.length > 0) || 
                   (patchData.items?.nerfed && patchData.items.nerfed.length > 0) || 
+                  (patchData.items?.new && patchData.items.new.length > 0) ||
                   (patchData.items?.changed && patchData.items.changed.length > 0)) && (
                   <View style={styles.expandableSection}>
                     <TouchableOpacity
@@ -1437,7 +1474,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                       activeOpacity={0.7}
                     >
                       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flex: 1 }}>
-                        <Text style={styles.sectionTitle}>ITEM CHANGES ({(patchData.items.buffed?.length || 0) + (patchData.items.nerfed?.length || 0) + (patchData.items.changed?.length || 0)})</Text>
+                        <Text style={styles.sectionTitle}>ITEM CHANGES ({(patchData.items.buffed?.length || 0) + (patchData.items.new?.length || 0) + (patchData.items.nerfed?.length || 0) + (patchData.items.changed?.length || 0)})</Text>
                       </View>
                       <Text style={styles.expandIcon}>{expandedSections.itemsBuffed ? '▼' : '▶'}</Text>
                     </TouchableOpacity>
@@ -1650,10 +1687,13 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                             changes.forEach(change => {
                               // Handle new format: { section, abilityName, abilityNumber, description }
                               const abilityName = change.abilityName || change.ability;
-                              if (abilityName && god && god.abilities) {
-                                // Skip General section
-                                if (change.section === 'General') return;
-                                
+                              
+                              if (!god) return;
+                              
+                              // Skip General section
+                              if (change.section === 'General') return;
+                              
+                              if (abilityName && god.abilities) {
                                 const ability = findAbilityByName(god, abilityName);
                                 if (ability && ability.icon) {
                                   const abIcon = getLocalGodAsset(ability.icon);
@@ -1666,6 +1706,14 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                                   if (abIcon && !abilityIcons.find(a => a.icon === abIcon)) {
                                     abilityIcons.push({ icon: abIcon, name: 'Passive' });
                                   }
+                                }
+                              }
+                              
+                              // Aspect changes – use god.aspect icon when present
+                              if (change.section === 'Aspect' && god.aspect && god.aspect.icon) {
+                                const aspectIcon = getLocalGodAsset(god.aspect.icon);
+                                if (aspectIcon && !abilityIcons.find(a => a.icon === aspectIcon)) {
+                                  abilityIcons.push({ icon: aspectIcon, name: change.aspectName || 'Aspect' });
                                 }
                               }
                             });
@@ -1743,9 +1791,12 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                           if (Array.isArray(changes)) {
                             changes.forEach(change => {
                               const abilityName = change.abilityName || change.ability;
-                              if (abilityName && god && god.abilities) {
-                                if (change.section === 'General') return;
-                                
+                              
+                              if (!god) return;
+                              
+                              if (change.section === 'General') return;
+                              
+                              if (abilityName && god.abilities) {
                                 const ability = findAbilityByName(god, abilityName);
                                 if (ability && ability.icon) {
                                   const abIcon = getLocalGodAsset(ability.icon);
@@ -1757,6 +1808,13 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                                   if (abIcon && !abilityIcons.find(a => a.icon === abIcon)) {
                                     abilityIcons.push({ icon: abIcon, name: 'Passive' });
                                   }
+                                }
+                              }
+                              
+                              if (change.section === 'Aspect' && god.aspect && god.aspect.icon) {
+                                const aspectIcon = getLocalGodAsset(god.aspect.icon);
+                                if (aspectIcon && !abilityIcons.find(a => a.icon === aspectIcon)) {
+                                  abilityIcons.push({ icon: aspectIcon, name: change.aspectName || 'Aspect' });
                                 }
                               }
                             });
@@ -1834,9 +1892,12 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                           if (Array.isArray(changes)) {
                             changes.forEach(change => {
                               const abilityName = change.abilityName || change.ability;
-                              if (abilityName && god && god.abilities) {
-                                if (change.section === 'General') return;
-                                
+                              
+                              if (!god) return;
+                              
+                              if (change.section === 'General') return;
+                              
+                              if (abilityName && god.abilities) {
                                 const ability = findAbilityByName(god, abilityName);
                                 if (ability && ability.icon) {
                                   const abIcon = getLocalGodAsset(ability.icon);
@@ -1848,6 +1909,13 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                                   if (abIcon && !abilityIcons.find(a => a.icon === abIcon)) {
                                     abilityIcons.push({ icon: abIcon, name: 'Passive' });
                                   }
+                                }
+                              }
+                              
+                              if (change.section === 'Aspect' && god.aspect && god.aspect.icon) {
+                                const aspectIcon = getLocalGodAsset(god.aspect.icon);
+                                if (aspectIcon && !abilityIcons.find(a => a.icon === aspectIcon)) {
+                                  abilityIcons.push({ icon: aspectIcon, name: change.aspectName || 'Aspect' });
                                 }
                               }
                             });
@@ -2134,7 +2202,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
               )}
               
               <Text style={styles.infoText}>
-                Select the patch number you last played (OB24 is the latest). 
+                Select the patch number you last played (OB25 is the latest). 
                 We'll show you all changes from that patch to the current one.
               </Text>
             </View>

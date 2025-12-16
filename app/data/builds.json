@@ -5774,6 +5774,194 @@
                 "totalCost": 0
             },
             {
+                "newRelicItems": [
+                    {
+                        "relic": false,
+                        "buildsFromT1": [
+                            "None"
+                        ],
+                        "components": [
+                            "None"
+                        ],
+                        "icon": "/icons/MoteOfChaos.webp",
+                        "internalName": "MoteOfChaos",
+                        "name": "Mote of Chaos",
+                        "passive": "Component item used for upgrading Relics into Active Items.",
+                        "stats": {
+                            "statsFromItems": 5
+                        },
+                        "stepCost": 1250,
+                        "tags": [
+                            "Component"
+                        ],
+                        "tier": 2,
+                        "totalCost": 1250
+                    },
+                    {
+                        "relic": false,
+                        "buildsFromT1": [
+                            "None"
+                        ],
+                        "components": [
+                            "BlinkRune",
+                            "MoteOfChaos"
+                        ],
+                        "icon": "/icons/BlinkingAbyss.webp",
+                        "internalName": "BlinkingAbyss",
+                        "name": "Blinking Abyss",
+                        "passive": "Active: Teleport up to 5.6m. 1s after Teleport: Deal 150 (+30% Strength/Intelligence) in a 3.2m radius. If this damages a god, reduce cooldown -50s.\nCooldown: 140s\nNote: Can be used in combat. Cannot be used while firing an ability.",
+                        "stats": {
+                            "strength": 25,
+                            "intelligence": 45,
+                            "statsFromItems": 7.5
+                        },
+                        "stepCost": 1250,
+                        "tags": [
+                            "Active",
+                            "Adaptive",
+                            "Damage",
+                            "Mobility"
+                        ],
+                        "tier": 3,
+                        "totalCost": 2500
+                    },
+                    {
+                        "relic": false,
+                        "buildsFromT1": [
+                            "None"
+                        ],
+                        "components": [
+                            "AegisOfAcceleration",
+                            "MoteOfChaos"
+                        ],
+                        "icon": "/icons/TimeLockAegis.webp",
+                        "internalName": "TimeLockAegis",
+                        "name": "Time-Lock Aegis",
+                        "passive": "Active: You become Invulnerable to all damage and healing for 3s, but you are Rooted and unable to act. You can reactivate to end this effect early.\nWhile in Stasis, regenerate 30s worth of Health, 30s worth of Mana, and 10s worth of Ability Cooldowns.\nCooldown: 140s",
+                        "stats": {
+                            "physicalProtection": 20,
+                            "magicalProtection": 20,
+                            "statsFromItems": 7.5
+                        },
+                        "stepCost": 1250,
+                        "tags": [
+                            "Active",
+                            "Defense",
+                            "Utility"
+                        ],
+                        "tier": 3,
+                        "totalCost": 2500
+                    },
+                    {
+                        "relic": false,
+                        "buildsFromT1": [
+                            "None"
+                        ],
+                        "components": [
+                            "PurificationBeads",
+                            "MoteOfChaos"
+                        ],
+                        "icon": "/icons/TalismanOfPurification.webp",
+                        "internalName": "TalismanOfPurification",
+                        "name": "Talisman of Purification",
+                        "passive": "Active: You become CC Immune for 2 seconds.\nCooldown: 150s",
+                        "stats": {
+                            "cooldownRate": 15,
+                            "statsFromItems": 7.5
+                        },
+                        "stepCost": 1250,
+                        "tags": [
+                            "Active",
+                            "Utility",
+                            "Cooldown"
+                        ],
+                        "tier": 3,
+                        "totalCost": 2500
+                    },
+                    {
+                        "relic": false,
+                        "buildsFromT1": [
+                            "None"
+                        ],
+                        "components": [
+                            "AgilityRune",
+                            "MoteOfChaos"
+                        ],
+                        "icon": "/icons/AgilityGreaves.webp",
+                        "internalName": "AgilityGreaves",
+                        "name": "Agility Greaves",
+                        "passive": "Ranged Gods: +40% Attack Projectile Speed. +80% After using this active for 3s.\nMelee Gods: -15% Attack Movement Penalty. -30% After using this active for 3s.\nActive: Dash in the direction you are currently moving.\nCooldown: 20s",
+                        "stats": {
+                            "movementSpeed": 5,
+                            "statsFromItems": 7.5
+                        },
+                        "stepCost": 1250,
+                        "tags": [
+                            "Active",
+                            "Mobility",
+                            "Movement Speed"
+                        ],
+                        "tier": 3,
+                        "totalCost": 2500
+                    },
+                    {
+                        "relic": false,
+                        "buildsFromT1": [
+                            "None"
+                        ],
+                        "components": [
+                            "SunderingArc",
+                            "MoteOfChaos"
+                        ],
+                        "icon": "/icons/SunderingEcho.webp",
+                        "internalName": "SunderingEcho",
+                        "name": "Sundering Echo",
+                        "passive": "Active: Bleed Enemies, dealing 25 (+4 per Level) True Damage 3 times over 4s. Jungle Monsters/Bosses take 50 (+8 per Level) instead.\nEnemies who die explode, applying this effect to nearby enemies.\nDuration: Over 3s",
+                        "stats": {
+                            "strength": 25,
+                            "intelligence": 45,
+                            "statsFromItems": 7.5
+                        },
+                        "stepCost": 1250,
+                        "tags": [
+                            "Active",
+                            "Adaptive",
+                            "Damage",
+                            "Jungle"
+                        ],
+                        "tier": 3,
+                        "totalCost": 2500
+                    },
+                    {
+                        "relic": false,
+                        "buildsFromT1": [
+                            "None"
+                        ],
+                        "components": [
+                            "PhantomShell",
+                            "MoteOfChaos"
+                        ],
+                        "icon": "/icons/ShellOfRebuke.webp",
+                        "internalName": "ShellOfRebuke",
+                        "name": "Shell of Rebuke",
+                        "passive": "Active: Create an area of safety at your location, granting a shield/phantom effect to allied gods when they first touch the area. The area mitigates 35% of all damage, up to a maximum of 400 + 50 Per Level Damage. Lasts 5s.\nCooldown: 120s",
+                        "stats": {
+                            "physicalProtection": 20,
+                            "magicalProtection": 20,
+                            "statsFromItems": 7.5
+                        },
+                        "stepCost": 1250,
+                        "tags": [
+                            "Active",
+                            "Defense",
+                            "Support"
+                        ],
+                        "tier": 3,
+                        "totalCost": 2500
+                    }
+                ]
+            },
+            {
                 "relic": true,
                 "buildsFromT1": [
                     "None"
@@ -16845,6 +17033,391 @@
                     "version": "OB24",
                     "type": "nerfed"
                 }
+            },
+            {
+                "abilities": {
+                    "A01": {
+                        "formulas": {
+                            "Damage_Formula": "{Damage} + {Damage_Scaling}"
+                        },
+                        "icon": "/icons/nutOne.webp",
+                        "key": "Nut.A01.InGame.Short",
+                        "name": "Convergence",
+                        "scales": "12% STR + 15% INT",
+                        "shortDesc": "Your Attacks fire two additional projectiles that deal [12% STR + 15% INT] Magical Damage. These and your Attack pass through enemies.\r\n\r\nAstral Flux: Consumes 4 stacks to cause targets to lose Protections.\r\n\r\n  • This ability gains stacks if Nut dies while firing.\r\n  • Start the match with 2 full shots of this ability.\r\n  • If you cancel this ability without firing a shot, it goes on a 1s cooldown.",
+                        "valueKeys": {
+                            "Damage": [
+                                15
+                            ],
+                            "Inner Damage (% of Attack Damage)": [
+                                40,
+                                45,
+                                50,
+                                55,
+                                60
+                            ],
+                            "Outer Damage": [
+                                3,
+                                6,
+                                9,
+                                12,
+                                15
+                            ],
+                            "Protections Reduced": [
+                                15
+                            ],
+                            "Radius": [
+                                0.96
+                            ],
+                            "Range": [
+                                8.8
+                            ],
+                            "Cooldown": [
+                                10,
+                                10,
+                                10,
+                                10,
+                                10
+                            ],
+                            "Cost": [
+                                45,
+                                50,
+                                55,
+                                60,
+                                65
+                            ]
+                        }
+                    },
+                    "A02": {
+                        "formulas": {
+                            "InnerDamage_Formula": "{Inner Damage} + {Inner Scaling}",
+                            "OuterDamage_Formula": "{Outer Damage} + {Outer Scaling}",
+                            "EchoDamage_Formula": "{Echo Damage} + {Echo Scaling}"
+                        },
+                        "icon": "/icons/nutTwo.webp",
+                        "key": "Nut.A02.InGame.Short",
+                        "name": "Crashing Comet",
+                        "scales": "50% STR + 85% INT (center) / 25% STR + 50% INT (outer)",
+                        "shortDesc": "Call down a comet that deals [50% STR + 85% INT] Magical Damage where it lands and [25% STR + 50% INT] Magical Damage in an area around it.\r\n\r\n  • Enemies in the center are Rooted\r\n  • Enemies on the edge are Trembled\r\n\r\nAstral Flux: Consumes 4 stacks to cause the comet to echo, damaging and trembling again.",
+                        "valueKeys": {
+                            "Inner Damage": [
+                                100,
+                                150,
+                                200,
+                                250,
+                                300
+                            ],
+                            "Outer Damage": [
+                                50,
+                                75,
+                                100,
+                                125,
+                                150
+                            ],
+                            "Echo Damage": [
+                                30,
+                                45,
+                                60,
+                                75,
+                                90
+                            ],
+                            "Root Duration": [
+                                0.9,
+                                1,
+                                1.1,
+                                1.2,
+                                1.3
+                            ],
+                            "Radius": [
+                                "1.6m / 4.0m"
+                            ],
+                            "Range": [
+                                8.8
+                            ],
+                            "Cooldown": [
+                                12,
+                                12,
+                                12,
+                                12,
+                                12
+                            ],
+                            "Cost": [
+                                65,
+                                65,
+                                65,
+                                65,
+                                65
+                            ]
+                        }
+                    },
+                    "A03": {
+                        "formulas": {
+                            "Damage_Formula": "{Damage} + {Damage_Scaling}"
+                        },
+                        "icon": "/icons/nutThree.webp",
+                        "key": "Nut.A03.InGame.Short",
+                        "name": "Warp",
+                        "scales": "30% STR + 40% INT",
+                        "shortDesc": "Teleport in the direction you are moving and fire homing projectiles at nearby enemies that deal [30% STR + 40% INT] Magical Damage and applies a stacking slow. Subsequent hits deal 33% damage.\r\n\r\nStellar Flux: Resets the Cooldown of Convergence and grants 8 Ammo.\r\nAstral Flux: Consumes 4 stacks to fire 2 additional projectiles.\r\n\r\n  • Projectiles deal increased damage to the first target hit, and reduced damage to subsequent hits.",
+                        "valueKeys": {
+                            "Damage": [
+                                40,
+                                75,
+                                110,
+                                145,
+                                180
+                            ],
+                            "Slow": [
+                                "10% Per Stack"
+                            ],
+                            "Slow Duration": [
+                                "3s"
+                            ],
+                            "Radius": [
+                                7.2
+                            ],
+                            "Range": [
+                                -0.01
+                            ],
+                            "Cooldown": [
+                                12,
+                                12,
+                                12,
+                                12,
+                                12
+                            ],
+                            "Cost": [
+                                50,
+                                45,
+                                50,
+                                55,
+                                60
+                            ]
+                        }
+                    },
+                    "A04": {
+                        "formulas": {
+                            "ProjectileDamage_Formula": "{Projectile Damage} + {Projectile Damage Scaling}",
+                            "ExplodeDamage_Formula": "{Explode Damage} + {Explode Damage Scaling}"
+                        },
+                        "icon": "/icons/nutFour.webp",
+                        "key": "Nut.A04.InGame.Short",
+                        "name": "Skyfall",
+                        "scales": "90% STR + 80% INT / 45% STR + 40% INT",
+                        "shortDesc": "Become CC Immune and ascend into the sky. Fire a massive black hole that deals [90% STR + 80% INT] Magical Damage before detonating for [45% STR + 40% INT] Magical Damage and Pulling enemies toward the center.\r\n\r\n  • Grants 2 stacks of Flux for each God hit\r\n  • Projectile lands after 1s, and detonates 0.5s later.",
+                        "valueKeys": {
+                            "Projectile Damage": [
+                                200,
+                                260,
+                                320,
+                                380,
+                                440
+                            ],
+                            "Explode Damage": [
+                                85,
+                                110,
+                                135,
+                                160,
+                                185
+                            ],
+                            "Radius": [
+                                "3.2m / 6.4m"
+                            ],
+                            "Range": [
+                                11.2
+                            ],
+                            "TickCount": [
+                                2
+                            ],
+                            "Cooldown": [
+                                10,
+                                10,
+                                10,
+                                10,
+                                10
+                            ],
+                            "Cost": [
+                                45,
+                                50,
+                                55,
+                                60,
+                                65
+                            ]
+                        }
+                    }
+                },
+                "baseStats": {
+                    "AttackSpeedPercent": {
+                        "1": 1.442,
+                        "20": 28.84,
+                        "rate": "1.44"
+                    },
+                    "BaseAttackSpeed": {
+                        "1": 1.02,
+                        "20": 1.02,
+                        "rate": "0.00"
+                    },
+                    "BasicDamage": {
+                        "1": 48,
+                        "20": 97,
+                        "rate": 2.7284210526315786
+                    },
+                    "PhysicalProtection": {
+                        "1": 18,
+                        "20": 72,
+                        "rate": 2.910526315789474
+                    },
+                    "MagicalProtection": {
+                        "1": 26,
+                        "20": 53,
+                        "rate": 1.4526315789473683
+                    },
+                    "ManaPerSecond": {
+                        "1": 2,
+                        "20": 7,
+                        "rate": 0
+                    },
+                    "MaxMana": {
+                        "1": 296,
+                        "20": 1094,
+                        "rate": 41
+                    },
+                    "HealthPerSecond": {
+                        "1": 2,
+                        "20": 6,
+                        "rate": 0
+                    },
+                    "MaxHealth": {
+                        "1": 592,
+                        "20": 2352,
+                        "rate": 92.625
+                    }
+                },
+                "basic": {
+                    "formulas": {
+                        "Damage_Formula": "{Damage} + {Damage_Scaling}"
+                    },
+                    "icon": "/icons/nutImage.webp",
+                    "key": "Basic.RangedMag.InGame.Short",
+                    "name": "Nut Basic Attack",
+                    "scales": {
+                        "Damage_Scaling": [
+                            {
+                                "stat": "PhysicalPower",
+                                "values": [
+                                    1
+                                ]
+                            },
+                            {
+                                "stat": "MagicalPower",
+                                "values": [
+                                    ".2"
+                                ]
+                            }
+                        ]
+                    },
+                    "shortDesc": "Fire a projectile that deals Magical Damage to the first enemy hit.",
+                    "valueKeys": {
+                        "Damage": [
+                            0
+                        ],
+                        "RadiusCheat": [
+                            ".48"
+                        ],
+                        "RangeCheat": [
+                            8.8
+                        ]
+                    }
+                },
+                "internalName": "Nut_Item",
+                "key": "God.Nut",
+                "name": "Nut",
+                "Type": "Magical",
+                "icon": "/icons/nutImage.webp",
+                "passive": {
+                    "formulas": {},
+                    "icon": "/icons/nutPassive.webp",
+                    "key": "Nut.PSV.InGame.Short",
+                    "name": "Flux",
+                    "scales": "",
+                    "shortDesc": "While Strength exceeds Intelligence, Ability hits grant Stellar Flux which provides Attack Speed. Stacks decay every 3s.\r\n\r\nOtherwise, Basic Attacks grant Astral Flux. Abilities consume this for Bonus Magical Damage and effects.\r\n\r\nBoth stack up to 10.",
+                    "valueKeys": {
+                        "Attack Speed": [
+                            "2% Per Stack"
+                        ],
+                        "Attack Speed Per Level": [
+                            "0.1% Per Stack"
+                        ],
+                        "Bonus Damage": [
+                            "20%"
+                        ],
+                        "Max Stacks": [
+                            10
+                        ],
+                        "Stack Decay": [
+                            "Every 3s"
+                        ]
+                    }
+                },
+                "loreShort": "Nut, Mistress of the Sky, stretches across the heavens, her body a canopy of stars guarding all beneath her.",
+                "loreLong": "Nut, Mistress of the Sky, stretches across the heavens, her body a canopy of stars guarding all beneath her. She is the mother of gods, including Osiris, Set, Eset, and Nephthys, and the eternal protector of Ra as he journeys through the night. To mortals, she is both comfort and mystery, offering safe passage to souls traveling to the afterlife. Though separated from her husband Geb by the decree of Ra, her love bridges even the vast distance between earth and sky. Worshippers call upon Nut for peace, renewal, and the promise of dawn after darkness. On the battlefield, she is serene yet unyielding, her celestial power shielding allies and dispelling the chaos that dares to threaten the cosmic order.",
+                "shortRole": "Descends from the Stars, Blasting Foes with Converging Cosmic Power",
+                "subText": "Goddess of the Sky",
+                "tips": [],
+                "aspect": {
+                    "description": "Flux becomes Cosmic Flux (Mitigation, decays). Decaying past 10 stacks Heals allies.\r\nBase Damage +20%, Scaling -20%. Convergence grants a mini version of itself to allies on God hit.\r\nCrashing Comet Stuns and Slows. Warp grants CC Immunity to self and 1 nearby ally.",
+                    "icon": "/icons/batzAspect.webp",
+                    "name": "Aspect of the Cosmos",
+                    "valueKeys": {}
+                },
+                "gender": "Female",
+                "pantheon": "Egyptian",
+                "roles": [
+                    "Support",
+                    "ADC"
+                ],
+                "release_year": "2025",
+                "range": "Ranged",
+                "pros": [
+                    "Burst",
+                    "Utility"
+                ],
+                "scaling": [
+                    "INT",
+                    "STR"
+                ],
+                "hasAspect": true,
+                "skins": {
+                    "Nut": {
+                        "name": "Base Nut",
+                        "skin": "/icons/Wallpapers/Nut.webp",
+                        "type": "Base Skin",
+                        "price": {
+                            "diamonds": "0"
+                        }
+                    }
+                },
+                "builds": [
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "15 Dec 2025",
+                        "starting": [
+                            "Gilded Arrow",
+                            "Health Potion",
+                            "Axe"
+                        ],
+                        "full_build": [
+                            "Sharpshooter's Arrow",
+                            "Lernaean Bow",
+                            "Evolved Rage",
+                            "Dagger of Frenzy",
+                            "Deathbringer",
+                            "Titan's Bane",
+                            "Riptalon"
+                        ],
+                        "notes": "Crit-Oriented ADC Build"
+                    }
+                ]
             },
             {
                 "abilities": {
