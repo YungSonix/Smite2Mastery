@@ -69,10 +69,10 @@ const VERSION_HISTORY = [
 const NEWS_CONFIG = {
   // Latest Open Beta Patch Info
   openBeta: {
-    version: 24, // Update this number for new patches
-    title: 'Open Beta 24 - The Bear Goddess Update', // Update this title
-    link: 'https://www.smite2.com/news/open-beta-24-update-notes/', // Update this link
-    image: 'https://webcdn.hirezstudios.com/smite2-cdn/Blog_Header_Promo_Assets_2560x695_c7340cf8b6.jpg', // Update this image link
+    version: 25, // Update this number for new patches
+    title: 'Open Beta 25 - Goddess of the Sky Update', // Update this title
+    link: 'https://www.smite2.com/news/open-beta-25-update-notes/', // Update this link
+    image: 'https://webcdn.hirezstudios.com/smite2-cdn/Blog_Header_Image_Nut_Default_11r2_2560x695_de720a4b2c.jpg', // Update this image link
     snippet: 'Read the latest SMITE 2 Open Beta update notes and patch information.',
   },
   // Latest News Article

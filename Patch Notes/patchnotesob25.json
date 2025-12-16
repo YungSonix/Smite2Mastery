@@ -1,0 +1,751 @@
+{
+    "patchName": "Open Beta 25 - Goddess of the Sky Update",
+    "releaseDate": "12-15-25",
+    "summary": "Nut ported to SMITE 2. Major Relic Overhaul allowing relics to be upgraded into active items. Conquest Moonlight Phase escalations added (Moonlight Queen, Ancient Fury, Enhanced Fire Giant). Geb and Kukulkan aspects reworked/added. Multiple god balance changes.",
+    "gods": [
+      {
+        "type": "god",
+        "name": "Nut",
+        "changeType": "new",
+        "changes": [
+          {
+            "section": "General",
+            "description": [
+              "Ranged Basic Attacks",
+              "Damage Type: Magical",
+              "Scaling Type: Intelligence & Strength Scaling"
+            ]
+          },
+          {
+            "section": "Passive",
+            "abilityName": "Flux",
+            "abilityNumber": "(P)",
+            "description": [
+              "While Strength exceeds Intelligence, Ability hits grant Stellar Flux which provides Attack Speed. Stacks decay every 3s.",
+              "Otherwise, Basic Attacks grant Astral Flux. Abilities consume this for bonus Magical Damage and effects."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Convergence",
+            "abilityNumber": "(1)",
+            "description": [
+              "Your attacks fire two additional projectiles that deal magical damage. These and your attacks pass through enemies.",
+              "Astral Flux: Consumes 4 stacks to cause targets to lose Protections."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Crashing Comet",
+            "abilityNumber": "(2)",
+            "description": [
+              "Call down a comet that deals Magical damage where it lands and less Magical damage in the area around it. Enemies in the center are Rooted. Enemies on the edge are Trembled.",
+              "Astral Flux: Consumes 4 stacks to cause the comet to echo, damaging and trembling again."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Warp",
+            "abilityNumber": "(3)",
+            "description": [
+              "Teleport in the direction you are moving and fire homing projectiles at nearby enemies that deal Magical damage and applies a stacking slow.",
+              "Stellar Flux: Resets cooldown of Convergence and grants 8 ammo",
+              "Astral Flux: Consumes 4 stacks to fire 2 additional projectiles."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Skyfall",
+            "abilityNumber": "(4)",
+            "description": [
+              "Become CC immune and ascend into the sky. Fire a massive black hole that deals Magical damage before detonating for additional damage and Pulling enemies toward the center."
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of the Cosmos",
+            "releaseDate": "December 26th",
+            "description": [
+              "Flux becomes Cosmic Flux (Mitigation, decays). Decaying past 10 stacks Heals allies. Base damage +20%, Scaling -20%.",
+              "Convergence grants a mini version of itself to allies on God hit.",
+              "Crashing Comet Stuns and Slows.",
+              "Warp grants CC immunity to self and 1 nearby ally"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Geb",
+        "changeType": "shift",
+        "changes": [
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of Calamity",
+            "releaseDate": "December 19th",
+            "description": [
+              "Reworked: Geb's attacks are ranged, travel slowly, and pierce with damage falloff.",
+              "Shockwave deals circular damage, Crits, triggers on-hits, and grants Attack Speed on god hit.",
+              "Stone Shield is self-only and buffs attack damage.",
+              "Cataclysm causes Knockback rather than a Stun."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Kukulkan",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of the Squall",
+            "releaseDate": "January 2nd",
+            "description": [
+              "New: You gain Mana from Jungle monster kills and god kills and assists.",
+              "Zephyr has a shorter range but fires 3 projectiles.",
+              "Slipstream is always a dash and steals protections.",
+              "Whirlwind attaches to you and explodes in a blast that knocks back enemies."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Agni",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of Combustion",
+            "abilityName": "Combustion",
+            "abilityNumber": "(P)",
+            "description": [
+              "Decreased Tick Strength Scaling: 2% -> 1.5%",
+              "Decreased Burst Per Level Scaling: 10 -> 5"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Anhur",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Shifting Sands",
+            "abilityNumber": "(1)",
+            "description": [
+              "Increased Damage taken debuff: 8/11/14/17/20% -> 12/15/18/21/24%"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Disperse",
+            "abilityNumber": "(3)",
+            "description": [
+              "Increased Strength Scaling: 60% -> 75%"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Artio",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of the Denmother",
+            "abilityName": "Shapeshift",
+            "abilityNumber": "(4)",
+            "description": [
+              "While in aspect, Artio no longer gains the benefits of Shapeshift's passive Movement Speed and Mana Regeneration"
+            ]
+          },
+          {
+            "section": "Passive",
+            "abilityName": "Decompose",
+            "abilityNumber": "(P)",
+            "description": [
+              "No longer applies antiheal."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Energy Surge (Druid)",
+            "abilityNumber": "(1)",
+            "description": [
+              "Now applies antiheal"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Maul Prey (Bear)",
+            "abilityNumber": "(1)",
+            "description": [
+              "Now applies antiheal"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Eset",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Dispel Magic",
+            "abilityNumber": "(3)",
+            "description": [
+              "Decreased Silence Duration: 1.5s -> 1s"
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of the Lifewarden",
+            "abilityName": "Wing Gust",
+            "abilityNumber": "(1)",
+            "description": [
+              "Decreased Heal Scaling: 6% Protections -> 5% Protections"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Hun Batz",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "General",
+            "description": [
+              "Fixed an issue where Hun Batz's Attacks were dealing 5 more damage than intended"
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of Disruption",
+            "abilityName": "Infused Strikes",
+            "abilityNumber": "(P)",
+            "description": [
+              "Removed bonus damage"
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of Disruption",
+            "abilityName": "Sacred Monkey",
+            "abilityNumber": "(3)",
+            "description": [
+              "Decreased Strength Scaling: 55% -> 35%"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Jormungandr",
+        "changeType": "shift",
+        "changes": [
+          {
+            "section": "General",
+            "description": [
+              "Now classified as a Ranged character",
+              "This affects certain item interactions such as Agility relic",
+              "Note - Jormungandr's Movement speed penalty was already set to Ranged on release"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Loki",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Vanish",
+            "abilityNumber": "(1)",
+            "description": [
+              "Increased Strength Scaling per tick: 15% -> 20%"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Agonizing Visions",
+            "abilityNumber": "(2)",
+            "description": [
+              "Increased Damage per tick: 13/18/23/28/33 -> 20/25/30/35/40"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Mulan",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Grapple",
+            "abilityNumber": "(3)",
+            "description": [
+              "Decreased Protections: 25/30/35/40/45 -> 15/20/25/30/35",
+              "Removed Movement Speed from Mastery bonus"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Thor",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Tectonic Rift",
+            "abilityNumber": "(2)",
+            "description": [
+              "Decreased Cooldown: 17/16.5/16/15.5/15s -> 15s"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Berserker Barrage",
+            "abilityNumber": "(3)",
+            "description": [
+              "Increased Spin Damage: 30/50/70/90/110 -> 40/60/80/100/120",
+              "Increased Cone Damage: 50/70/90/110/130 -> 65/85/105/125/145"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Tsukuyomi",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "aspectName": "Aspect of Mangetsu",
+            "abilityName": "Piercing Moonlight(Aspect)",
+            "abilityNumber": "(4)",
+            "description": [
+              "Increased Dash Damage: 75/100/125/150/175 + 40% Strength + 65% Intelligence -> 120/140/160/180/200 + 50% Strength + 75% Intelligence"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Xbalanque",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "aspectName": "Aspect of the Nightstalker",
+            "abilityName": "Branching Bola(Aspect)",
+            "abilityNumber": "(1)",
+            "description": [
+              "Increased Damage: 50/75/100/125/150 -> 70/90/110/130/150",
+              "Increased Scaling: 35% Strength + 55% Intelligence -> 45% Strength + 65% Intelligence"
+            ]
+          }
+        ]
+      }
+    ],
+    "items": [
+      
+      {
+        "type": "item",
+        "name": "Mote of Chaos",
+        "changeType": "new",
+        "cost": 1250,
+        "changes": [
+          {
+            "description": "+5% Stats from Items"
+          },
+          {
+            "description": "This item is used as a component when turning Relics into Actives."
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Blinking Abyss",
+        "changeType": "new",
+        "recipe": "Blink Rune + Mote of Chaos + 1250 Gold",
+        "changes": [
+          {
+            "description": "Adaptive: +25 Strength or +45 Intelligence"
+          },
+          {
+            "description": "+7.5% Stats from Items"
+          },
+          {
+            "description": "On Use: Teleport up to 5.6m. 1s after Teleport: Deal 150 (+30% Strength/Intelligence) in a 3.2m radius. If this damages a god, reduce cooldown -50s."
+          },
+          {
+            "description": "Cooldown: 140s"
+          },
+          {
+            "description": "Notes: Can be used in combat. Cannot be used while firing an ability."
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Time-Lock Aegis",
+        "changeType": "new",
+        "recipe": "Aegis of Acceleration + Mote of Chaos + 1250 Gold",
+        "changes": [
+          {
+            "description": "+20 Physical Protection"
+          },
+          {
+            "description": "+20 Magical Protection"
+          },
+          {
+            "description": "+7.5% Stats from Items"
+          },
+          {
+            "description": "Active: You become Invulnerable to all damage and healing for 3s, but you are Rooted and unable to act. You can reactivate to end this effect early."
+          },
+          {
+            "description": "While in Stasis, regenerate 30s worth of Health, 30s worth of Mana, and 10s worth of Ability Cooldowns."
+          },
+          {
+            "description": "Cooldown: 140s"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Talisman of Purification",
+        "changeType": "shift",
+        "recipe": "Purification Beads + Mote of Chaos + 1250 Gold",
+        "changes": [
+          {
+            "description": "Now Builds From: Purification Beads + Mote of Chaos + 1250 Gold"
+          },
+          {
+            "description": "Decreased Magical Protection: 30 -> 0"
+          },
+          {
+            "description": "Decreased Max Health: 300 -> 0"
+          },
+          {
+            "description": "Increased Cooldown Rate: 10 -> 15"
+          },
+          {
+            "description": "NEW: +7.5% Stats from Items"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Agility Greaves",
+        "changeType": "new",
+        "recipe": "Agility Rune + Mote of Chaos + 1250 Gold",
+        "changes": [
+          {
+            "description": "+5% Movement Speed"
+          },
+          {
+            "description": "+7.5% Stats from Items"
+          },
+          {
+            "description": "Ranged Gods: +40% Attack Projectile Speed. +80% After using this active for 3s."
+          },
+          {
+            "description": "Melee Gods: -15% Attack Movement Penalty. -30% After using this active for 3s."
+          },
+          {
+            "description": "On Use: Dash in the direction you are currently moving."
+          },
+          {
+            "description": "Cooldown: 20s"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Sundering Arc",
+        "changeType": "rework",
+        "changes": [
+          {
+            "description": "Removed: Deal 175 (+25 per Level, caps at 500 at Level 13) True Damage to Jungle Monsters/Bosses."
+          },
+          {
+            "description": "Bleed is now applied to all enemies, not just gods."
+          },
+          {
+            "description": "Bleed deals 50 (+8 per level) 3 times over 2s to Jungle Monsters/Bosses."
+          },
+          {
+            "description": "Still deals 25 (+4 per Level) 3 times over 2s to everyone else."
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Sundering Echo",
+        "changeType": "new",
+        "recipe": "Sundering Arc + Mote of Chaos + 1250 Gold",
+        "changes": [
+          {
+            "description": "Adaptive: +25 Strength or +45 Intelligence"
+          },
+          {
+            "description": "+7.5% Stats from Items"
+          },
+          {
+            "description": "On Use: Bleed Enemies, dealing 25 (+4 per Level) True Damage 3 times over 4s. Jungle Monsters/Bosses take 50 (+8 per Level) instead."
+          },
+          {
+            "description": "Enemies who die explode, applying this effect to nearby enemies."
+          },
+          {
+            "description": "Duration: Over 3s"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Shell of Rebuke",
+        "changeType": "new",
+        "recipe": "Phantom Shell + Mote of Chaos + 1250 Gold",
+        "changes": [
+          {
+            "description": "+20 Physical Protection"
+          },
+          {
+            "description": "+20 Magical Protection"
+          },
+          {
+            "description": "+7.5% Stats from Items"
+          },
+          {
+            "description": "Active: Create an area of safety at your location, granting a shield/phantom effect to allied gods when they first touch the area. The area mitigates 35% of all damage, up to a maximum of 400 + 50 Per Level Damage. Lasts 5s."
+          },
+          {
+            "description": "Cooldown: 120s"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Ragnarok's Wake",
+        "changeType": "new",
+        "recipe": "Medal of Defense + Medal of Defense + 900g",
+        "cost": 2600,
+        "changes": [
+          {
+            "description": "+250 Health"
+          },
+          {
+            "description": "+45 Physical Protection"
+          },
+          {
+            "description": "On Use: Choose a target location. After channeling for 2s, become a meteor and fly to that location, dealing heavy damage and knocking enemies straight up upon impact."
+          },
+          {
+            "description": "Cooldown: 140s"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Jade Scepter",
+        "changeType": "rework",
+        "changes": [
+          {
+            "description": "Removed Current Active"
+          },
+          {
+            "description": "NEW: On Use: Place a jade current at a target location. After 1s it erupts, knocking away any god in the area, including allies."
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Lifebinder",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "description": "Decreased Intelligence: 60 -> 40"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Regrowth Striders",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "description": "Decreased Cooldown Rate: 15 -> 10"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Scepter of Dominion",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Decreased Buildup time: 1.5s -> 1s"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Sphere of Negation",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "description": "Decreased Magical Protection: 70 -> 60"
+          }
+        ]
+      }
+    ],
+    "gameModes": [
+      {
+        "type": "gameMode",
+        "name": "Conquest",
+        "changeType": "major_update",
+        "changes": [
+          {
+            "feature": "Layout & Jungle Camp Changes",
+            "description": [
+              "Side Teleporters, Back Side Harpies, and Side Oracles removed"
+            ]
+          },
+          {
+            "feature": "Fire Imps",
+            "description": [
+              "No longer despawn when other bosses spawn in Fire Giant pit"
+            ]
+          },
+          {
+            "feature": "Fire Giant's Fury",
+            "description": [
+              "This buff no longer scales with each Fire Giant that has been slain on the map",
+              "Now grants flat +50 STR or +75 INT, whichever is already higher"
+            ]
+          },
+          {
+            "feature": "Moonlight Phase",
+            "description": [
+              "Winning the Moonlight Phase by gathering more Shards now resets base teleporter cooldowns for all team members",
+              "Naga Lane Pushers can now be teleported to via base teleporters, provided they have pushed further up the lane than your furthest Tower"
+            ]
+          },
+          {
+            "feature": "Ritual of the Full Moon Shift",
+            "description": [
+              "Now grants +5% Movement Speed and an additional +0.5% for every 5 Shards personally collected",
+              "Enemies are now revealed for 7s, up from 3s",
+              "Removed the follow-up damage portion of this Ritual"
+            ]
+          },
+          {
+            "feature": "2nd Moonlight Phase (15:00) - Moonlight Queen",
+            "description": [
+              "The Queen Naga returns as a Neutral Boss that spawns only once in Fire Giant Pit at the start of the 2nd Moonlight Phase",
+              "Will despawn if not slain before dawn (18:00)",
+              "Does not heal when leashed; does not respawn",
+              "Moonlight Queen stats (scales every 1 minute): Max Health: 3250 (+300 + 10*min), Strength: 40 (+8), Protections: 30 (+3), Team XP Reward: 100 (+5), Team Gold Reward: 100 (+6)",
+              "Kill rewards: Grants all team members Moonlight Queen's Favor (Permanent +5% Strength and Intelligence)",
+              "Drops the Ritual of Star Strike consumable item",
+              "On Consume: Grant all allies the Star Strike passive ability for 30 seconds",
+              "Star Strike follows up Ability damage with a secondary AoE explosion that deals 100 + 20% Intelligence as Magical Damage (Can only trigger once per ability)"
+            ]
+          },
+          {
+            "feature": "3rd Moonlight Phase (24:00) - Ancient Fury",
+            "description": [
+              "Gold Fury becomes the Ancient Fury at the start of the 3rd Moonlight Phase",
+              "Ancient Fury debuff no longer disables Backdoor Protections"
+            ]
+          },
+          {
+            "feature": "4th Moonlight Phase (33:00) - Enhanced Fire Giant",
+            "description": [
+              "Fire Giant becomes Enhanced at the start of the 4th Moonlight Phase",
+              "Enhanced Fire Giant stat bonuses: +20% Max Health, +85 Strength, +85 Intelligence",
+              "Kill rewards: Grants all team members Fire Giant's Rage",
+              "Grants +80 STR or +120 INT (+30/45 over Fire Giant's Fury)",
+              "Heals 2% of Health and Mana every second (+1% over Fire Giant's Fury)",
+              "Attacks bypass Backdoor Protections"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "gameMode",
+        "name": "Assault",
+        "changeType": "balance",
+        "changes": [
+          {
+            "description": "Increased Overtime Conversion: 30s -> 45s"
+          },
+          {
+            "description": "Increased Overtime Start: 10m -> 15m"
+          },
+          {
+            "description": "Instead of adding 1s of respawn duration every 30s after 10m, it will now add 1s of respawn duration every 45s after 15m."
+          }
+        ]
+      }
+    ],
+    "bugFixes": [
+      {
+        "type": "gameplay",
+        "description": "Fixed an issue where some NPCs could steal Fire Giant buff if they got the last hit"
+      },
+      {
+        "type": "gameplay",
+        "description": "Fixed an issue where Runic Bomb could be stopped by walls"
+      },
+      {
+        "type": "visual",
+        "description": "Fixed XP and Gold cutting off"
+      },
+      {
+        "type": "ui",
+        "description": "Removed Double Recommended Tabs"
+      },
+      {
+        "type": "ui",
+        "description": "Removed assigned 'Role' banner in non-conquest mode"
+      },
+      {
+        "type": "god",
+        "name": "Artio",
+        "description": "Artio A01 hit sound is easier to hear now that the sound is actually playing"
+      }
+    ],
+    "qualityOfLife": [
+      {
+        "type": "feature",
+        "name": "UI Improvements",
+        "changeType": "improvement",
+        "description": [
+          "Updated Pause and Surrender widgets to be clearer",
+          "Some visual changes for pick/ban",
+          "Support for default selecting god skin loadout"
+        ]
+      },
+      {
+        "type": "feature",
+        "name": "Performance Optimizations",
+        "changeType": "improvement",
+        "description": [
+          "Various Optimizations: Chat Windows, Prompts, Health Bars"
+        ]
+      }
+    ]
+  }
