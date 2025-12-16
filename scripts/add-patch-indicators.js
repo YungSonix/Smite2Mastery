@@ -43,14 +43,17 @@ function saveJsonFile(filePath, data) {
 }
 
 function addPatchIndicator(item, changeType, patchVersion) {
+  // Initialize patchChanges if it doesn't exist
   if (!item.patchChanges) {
     item.patchChanges = {};
   }
   
+  // Initialize the current patch version if it doesn't exist
   if (!item.patchChanges[patchVersion]) {
     item.patchChanges[patchVersion] = [];
   }
   
+  // Add the current change type to the latest patch (if not already present)
   if (!item.patchChanges[patchVersion].includes(changeType)) {
     item.patchChanges[patchVersion].push(changeType);
   }
@@ -60,6 +63,17 @@ function addPatchIndicator(item, changeType, patchVersion) {
     version: patchVersion,
     type: changeType,
   };
+}
+
+function clearOldPatches(item, patchVersion) {
+  // Clear all patch changes except the current patch version
+  if (item.patchChanges) {
+    const currentPatchChanges = item.patchChanges[patchVersion] || [];
+    item.patchChanges = {};
+    if (currentPatchChanges.length > 0) {
+      item.patchChanges[patchVersion] = currentPatchChanges;
+    }
+  }
 }
 
 function flattenAny(a) {
@@ -147,48 +161,115 @@ async function main() {
     console.log(`📝 Loading patch notes from: ${patchNotesPath}`);
     const patchNotes = loadJsonFile(patchNotesPath);
     
-    // Convert patch notes format to changes format
-    // Extract god/item names, handling both string and object formats
-    const extractNames = (arr) => {
-      if (!Array.isArray(arr)) return [];
-      return arr.map(item => typeof item === 'string' ? item : (item.name || item)).filter(Boolean);
-    };
+    // Check if this is the new format (flat array with changeType) or old format (grouped by type)
+    const isNewFormat = Array.isArray(patchNotes.gods) && patchNotes.gods.length > 0 && patchNotes.gods[0].changeType;
     
-    changes = {
-      gods: {
-        buffed: extractNames(patchNotes.gods?.buffed || []),
-        nerfed: extractNames(patchNotes.gods?.nerfed || []),
-        shifted: extractNames(patchNotes.gods?.shifted || []),
-        new: extractNames(patchNotes.gods?.new || []) // Extract new gods (like Artio)
-      },
-      items: {
-        buffed: extractNames(patchNotes.items?.buffed || []),
-        nerfed: extractNames(patchNotes.items?.nerfed || []),
-        shifted: extractNames(patchNotes.items?.changed || []),
-        new: extractNames(patchNotes.items?.new || []) // Extract new items if they exist
+    if (isNewFormat) {
+      // New format: flat arrays with changeType property (e.g., patchnotesob25.json)
+      changes = {
+        gods: {
+          buffed: [],
+          nerfed: [],
+          shifted: [],
+          new: [],
+        },
+        items: {
+          buffed: [],
+          nerfed: [],
+          shifted: [],
+          new: [],
+        },
+      };
+      
+      // Process gods from flat array
+      if (Array.isArray(patchNotes.gods)) {
+        patchNotes.gods.forEach((entry) => {
+          if (entry.type === 'god' && entry.name) {
+            const changeType = (entry.changeType || '').toLowerCase();
+            if (changeType === 'buff') {
+              changes.gods.buffed.push(entry.name);
+            } else if (changeType === 'nerf') {
+              changes.gods.nerfed.push(entry.name);
+            } else if (changeType === 'shift' || changeType === 'rework') {
+              changes.gods.shifted.push(entry.name);
+            } else if (changeType === 'new') {
+              changes.gods.new.push(entry.name);
+            }
+          }
+        });
       }
-    };
+      
+      // Process items from flat array
+      if (Array.isArray(patchNotes.items)) {
+        patchNotes.items.forEach((entry) => {
+          if (entry.type === 'item' && entry.name) {
+            const changeType = (entry.changeType || '').toLowerCase();
+            if (changeType === 'buff') {
+              changes.items.buffed.push(entry.name);
+            } else if (changeType === 'nerf') {
+              changes.items.nerfed.push(entry.name);
+            } else if (changeType === 'shift' || changeType === 'fix' || changeType === 'change' || changeType === 'rework' || changeType === 'major_system') {
+              changes.items.shifted.push(entry.name);
+            } else if (changeType === 'new') {
+              changes.items.new.push(entry.name);
+            }
+          }
+        });
+      }
+    } else {
+      // Old format: grouped by changeType (e.g., gods.buffed, gods.nerfed, etc.)
+      const extractNames = (arr) => {
+        if (!Array.isArray(arr)) return [];
+        return arr.map((item) => (typeof item === 'string' ? item : item.name || item)).filter(Boolean);
+      };
+      
+      changes = {
+        gods: {
+          buffed: extractNames(patchNotes.gods?.buffed || []),
+          nerfed: extractNames(patchNotes.gods?.nerfed || []),
+          shifted: extractNames(patchNotes.gods?.shifted || []),
+          new: extractNames(patchNotes.gods?.new || []),
+        },
+        items: {
+          buffed: extractNames(patchNotes.items?.buffed || []),
+          nerfed: extractNames(patchNotes.items?.nerfed || []),
+          shifted: extractNames(patchNotes.items?.changed || []),
+          new: extractNames(patchNotes.items?.new || []),
+        },
+      };
+    }
     
     // Check for items that might be in wrong category (e.g., Dagger of Frenzy in buffed but should be nerfed)
     // If an item appears in both or has conflicting indicators, prioritize based on summary
     const allItemNames = new Set([
       ...changes.items.buffed,
       ...changes.items.nerfed,
-      ...changes.items.shifted
+      ...changes.items.shifted,
+      ...changes.items.new,
     ]);
     
-    allItemNames.forEach(itemName => {
+    allItemNames.forEach((itemName) => {
       const buffedIndex = changes.items.buffed.indexOf(itemName);
       const nerfedIndex = changes.items.nerfed.indexOf(itemName);
       
       if (buffedIndex !== -1 && nerfedIndex !== -1) {
         // Item in both - check summaries to determine
-        const itemEntry = patchNotes.items?.buffed?.find(i => (typeof i === 'string' ? i : i.name) === itemName) ||
-                         patchNotes.items?.nerfed?.find(i => (typeof i === 'string' ? i : i.name) === itemName);
+        let itemEntry = null;
+        if (isNewFormat) {
+          itemEntry = patchNotes.items?.find((i) => i.name === itemName);
+        } else {
+          itemEntry =
+            patchNotes.items?.buffed?.find((i) => (typeof i === 'string' ? i : i.name) === itemName) ||
+            patchNotes.items?.nerfed?.find((i) => (typeof i === 'string' ? i : i.name) === itemName);
+        }
         const summary = itemEntry?.summary?.toLowerCase() || '';
+        const description = Array.isArray(itemEntry?.changes)
+          ? itemEntry.changes.map((c) => c.description || '').join(' ').toLowerCase()
+          : '';
+        const combined = summary + ' ' + description;
         
         // If summary indicates cost increase or stat decrease, it's likely a nerf
-        if (summary.includes('increased cost') || (summary.includes('decreased') && !summary.includes('cost'))) {
+        if (combined.includes('increased cost') || (combined.includes('decreased') && !combined.includes('cost'))) {
           changes.items.buffed.splice(buffedIndex, 1);
         } else {
           changes.items.nerfed.splice(nerfedIndex, 1);
@@ -196,8 +277,12 @@ async function main() {
       }
     });
     
-    console.log(`✅ Converted patch notes: ${changes.gods.buffed.length} buffed, ${changes.gods.nerfed.length} nerfed, ${changes.gods.shifted.length} shifted, ${changes.gods.new.length} new gods`);
-    console.log(`   Items: ${changes.items.buffed.length} buffed, ${changes.items.nerfed.length} nerfed, ${changes.items.shifted.length} changed, ${changes.items.new.length} new`);
+    console.log(
+      `✅ Converted patch notes: ${changes.gods.buffed.length} buffed, ${changes.gods.nerfed.length} nerfed, ${changes.gods.shifted.length} shifted, ${changes.gods.new.length} new gods`
+    );
+    console.log(
+      `   Items: ${changes.items.buffed.length} buffed, ${changes.items.nerfed.length} nerfed, ${changes.items.shifted.length} shifted, ${changes.items.new.length} new`
+    );
   } else {
     // Fall back to changes.json file
     const changesPath = path.resolve(path.dirname(buildsPath), 'changes.json');
@@ -235,6 +320,25 @@ async function main() {
       process.exit(0);
     }
   }
+  
+  // First, clear all old patches for all gods and items (keep only current patch)
+  console.log('🧹 Clearing old patch indicators...');
+  const allGods = flattenAny(builds.gods || []);
+  const allItems = flattenAny(builds.items || []);
+  
+  allGods.forEach(god => {
+    if (god && typeof god === 'object') {
+      clearOldPatches(god, patchVersion);
+    }
+  });
+  
+  allItems.forEach(item => {
+    if (item && typeof item === 'object') {
+      clearOldPatches(item, patchVersion);
+    }
+  });
+  
+  console.log(`   Cleared old patches for ${allGods.length} gods and ${allItems.length} items`);
   
   let changedCount = 0;
   
