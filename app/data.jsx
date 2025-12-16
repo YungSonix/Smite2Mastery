@@ -4983,16 +4983,11 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                     </>
                   )}
                 </View>
-
-                <View style={styles.detailSection}>
-                  <Text style={styles.detailSectionTitle}>Interactive Map(Will be updated later this week) </Text>
-                  <Text style={styles.detailBodyText}>
-                    Explore the Conquest map with this interactive tool. Click on structures, objectives, and jungle camps to learn more about them.
-                  </Text>
-                  <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ margin: 20 }} />}>
-                    <ConquestMap />
-                  </Suspense>
-                </View>
+<view style={styles.detailSection}>
+  <Text style={styles.detailSectionTitle}>Conquest Static Map(Interactive will be updated later this week) </Text>
+  <Image source={require('../data/conquestmap.png')} style={styles.detailBodyText} />
+</view>
+                
               </>
             )}
           </View>
