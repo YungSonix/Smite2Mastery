@@ -158,7 +158,7 @@
                   "MedalOfDefense"
                 ],
                 "icon": "/icons/RagnaroksWake.webp",
-                "internalName": "RagnaroksWake",
+                "internalName": "Ragnarok'sWake",
                 "name": "Ragnarok's Wake",
                 "passive": "    On Use:\nBuildup for 2s before flying for 2.5s to your target location as a meteor of Ragnarok. Can travel up to 30m.\nEnemies near where you land take 600 Magical Damage and are knocked straight up.\nCooldown: 140s.\n    You can own up to 3 active items at once",
                 "stats": {
