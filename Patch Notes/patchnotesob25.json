@@ -62,10 +62,11 @@
             ]
           },
           {
-            "section": "Aspect",
-            "aspectName": "Aspect of the Cosmos",
+            "section": "Ability",
+            "abilityName": "Aspect of the Cosmos",
             "releaseDate": "December 26th",
             "description": [
+            "Release Date: December 26th",
               "Flux becomes Cosmic Flux (Mitigation, decays). Decaying past 10 stacks Heals allies. Base damage +20%, Scaling -20%.",
               "Convergence grants a mini version of itself to allies on God hit.",
               "Crashing Comet Stuns and Slows.",
@@ -80,10 +81,11 @@
         "changeType": "shift",
         "changes": [
           {
-            "section": "Aspect",
-            "aspectName": "Aspect of Calamity",
+            "section": "Ability",
+            "abilityName": "Aspect of Calamity",
             "releaseDate": "December 19th",
             "description": [
+              "Release Date: December 26th",
               "Reworked: Geb's attacks are ranged, travel slowly, and pierce with damage falloff.",
               "Shockwave deals circular damage, Crits, triggers on-hits, and grants Attack Speed on god hit.",
               "Stone Shield is self-only and buffs attack damage.",
@@ -95,13 +97,14 @@
       {
         "type": "god",
         "name": "Kukulkan",
-        "changeType": "buff",
+        "changeType": "newAspects",
         "changes": [
           {
-            "section": "Aspect",
-            "aspectName": "Aspect of the Squall",
+            "section": "Ability",
+            "abilityName": "Aspect of the Squall",
             "releaseDate": "January 2nd",
             "description": [
+            "Release Date: January 2nd",
               "New: You gain Mana from Jungle monster kills and god kills and assists.",
               "Zephyr has a shorter range but fires 3 projectiles.",
               "Slipstream is always a dash and steals protections.",
@@ -116,9 +119,8 @@
         "changeType": "nerf",
         "changes": [
           {
-            "section": "Aspect",
-            "aspectName": "Aspect of Combustion",
-            "abilityName": "Combustion",
+            "section": "Ability",
+            "abilityName": "Combustion(Aspect)",
             "abilityNumber": "(P)",
             "description": [
               "Decreased Tick Strength Scaling: 2% -> 1.5%",
@@ -204,9 +206,8 @@
             ]
           },
           {
-            "section": "Aspect",
-            "aspectName": "Aspect of the Lifewarden",
-            "abilityName": "Wing Gust",
+            "section": "Ability",
+            "abilityName": "Wing Gust(Aspect)",
             "abilityNumber": "(1)",
             "description": [
               "Decreased Heal Scaling: 6% Protections -> 5% Protections"
@@ -226,18 +227,16 @@
             ]
           },
           {
-            "section": "Aspect",
-            "aspectName": "Aspect of Disruption",
-            "abilityName": "Infused Strikes",
+            "section": "Ability",
+            "abilityName": "Infused Strikes(Aspect)",
             "abilityNumber": "(P)",
             "description": [
               "Removed bonus damage"
             ]
           },
           {
-            "section": "Aspect",
-            "aspectName": "Aspect of Disruption",
-            "abilityName": "Sacred Monkey",
+            "section": "Ability",
+            "abilityName": "Sacred Monkey(Aspect)",
             "abilityNumber": "(3)",
             "description": [
               "Decreased Strength Scaling: 55% -> 35%"
@@ -330,7 +329,6 @@
         "changes": [
           {
             "section": "Ability",
-            "aspectName": "Aspect of Mangetsu",
             "abilityName": "Piercing Moonlight(Aspect)",
             "abilityNumber": "(4)",
             "description": [
