@@ -3348,7 +3348,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                           During the Moonlight phase, each team competes to gather Moonlight Shards. For every Shard your team collects, each team member gets +1 Gold at the end of the phase.
                         </Text>
                         <Text style={styles.detailBodyText}>
-                          If you collect more Shards than the enemy team, you'll also spawn a single wave of Naga lane pushers in all 3 lanes.
+                          If you collect more Shards than the enemy team, you'll also spawn a single wave of Naga lane pushers in all 3 lanes and reset base teleporter cooldowns for all team members.
                         </Text>
                         <Text style={styles.detailBodyText}>
                           Furthermore, if your team reaches the maximum number of 100 Shards before the phase ends, your team will be rewarded with a consumable item: Ritual of the Full Moon.
@@ -3396,6 +3396,9 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                           Spawn with the next minion wave at the end of the Moonlight Phase for the team that collected more Moonlight Shards. The minions in this wave are Champion Minions with +10% Damage Mitigation.
                         </Text>
                         <Text style={styles.detailBodyText}>
+                          Naga Lane Pushers can be teleported to via base teleporters, provided they have pushed further up the lane than your furthest Tower.
+                        </Text>
+                        <Text style={styles.detailBodyText}>
                           Stats (base + per Level scaling every 3 minutes):{'\n'}
                           Max Health: 2000 (+250){'\n'}
                           Strength: 40 (+8){'\n'}
@@ -3416,16 +3419,75 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         </Text>
                         <Text style={styles.detailBodyText}>
                           On Consume:{'\n'}
-                          • For allies: Convert all Shards personally carried by your teammates into a Movement Speed buff for 30s. Grants +5% Movement Speed plus more for each Shard{'\n'}
-                          • Reveal all enemy Gods for 5s and summon a Star Strike at their location{'\n'}
-                          • Star Strikes deal 0.75% of Max Health per victim's level as Magical Damage after a 0.5s warm-up{'\n'}
+                          • For allies: Grants +5% Movement Speed and an additional +0.5% for every 5 Shards personally collected for 30s{'\n'}
+                          • Reveal all enemy Gods for 7s and summon a Star Strike at their location{'\n'}
                           • Gods hit by Star Strikes are revealed for an additional 5s
+                        </Text>
+                      </View>
+
+                      <View style={styles.detailSubsection}>
+                        <Text style={styles.detailSubsectionTitle}>Moonlight Phase Escalations</Text>
+                        <Text style={styles.detailBodyText}>
+                          The 2nd, 3rd, and 4th Moonlight Phases trigger various escalations in the map.
+                        </Text>
+                      </View>
+
+                      <View style={styles.detailSubsection}>
+                        <Text style={styles.detailSubsectionTitle}>2nd Moonlight Phase (15:00) - Moonlight Queen</Text>
+                        <Text style={styles.detailBodyText}>
+                          The Queen Naga returns as a Neutral Boss that spawns only once in Fire Giant Pit at the start of the 2nd Moonlight Phase. Will despawn if not slain before dawn (18:00). Does not heal when leashed; does not respawn.
+                        </Text>
+                        <Text style={styles.detailBodyText}>
+                          Moonlight Queen stats (scales every 1 minute):{'\n'}
+                          Max Health: 3250 (+300 + 10*min){'\n'}
+                          Strength: 40 (+8){'\n'}
+                          Protections: 30 (+3){'\n'}
+                          Team XP Reward: 100 (+5){'\n'}
+                          Team Gold Reward: 100 (+6)
+                        </Text>
+                        <Text style={styles.detailBodyText}>
+                          Kill rewards:{'\n'}
+                          • Grants all team members Moonlight Queen's Favor{'\n'}
+                          {'  '}Permanent +5% Strength and Intelligence{'\n'}
+                          • Drops the Ritual of Star Strike consumable item{'\n'}
+                          {'  '}On Consume: Grant all allies the Star Strike passive ability for 30 seconds{'\n'}
+                          {'  '}Star Strike follows up Ability damage with a secondary AoE explosion that deals 100 + 20% Intelligence as Magical Damage{'\n'}
+                          {'  '}Can only trigger once per ability
+                        </Text>
+                      </View>
+
+                      <View style={styles.detailSubsection}>
+                        <Text style={styles.detailSubsectionTitle}>3rd Moonlight Phase (24:00) - Ancient Fury</Text>
+                        <Text style={styles.detailBodyText}>
+                          Gold Fury becomes the Ancient Fury at the start of the 3rd Moonlight Phase.
+                        </Text>
+                        <Text style={styles.detailBodyText}>
+                          Ancient Fury debuff no longer disables Backdoor Protections.
+                        </Text>
+                      </View>
+
+                      <View style={styles.detailSubsection}>
+                        <Text style={styles.detailSubsectionTitle}>4th Moonlight Phase (33:00) - Enhanced Fire Giant</Text>
+                        <Text style={styles.detailBodyText}>
+                          Fire Giant becomes Enhanced at the start of the 4th Moonlight Phase.
+                        </Text>
+                        <Text style={styles.detailBodyText}>
+                          Enhanced Fire Giant stat bonuses:{'\n'}
+                          • +20% Max Health{'\n'}
+                          • +85 Strength{'\n'}
+                          • +85 Intelligence
+                        </Text>
+                        <Text style={styles.detailBodyText}>
+                          Kill rewards:{'\n'}
+                          • Grants all team members Fire Giant's Rage{'\n'}
+                          {'  '}Grants +80 STR or +120 INT (+30/45 over Fire Giant's Fury){'\n'}
+                          {'  '}Heals 2% of Health and Mana every second (+1% over Fire Giant's Fury){'\n'}
+                          {'  '}Attacks bypass Backdoor Protections
                         </Text>
                       </View>
                     </>
                   )}
                 </View>
-
                 <View style={styles.detailSection}>
                   <TouchableOpacity
                     style={styles.detailSectionHeader}
