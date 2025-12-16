@@ -327,6 +327,7 @@ function PatchBadgeTooltip({ changeType, version, entityType, badgeStyle, textSt
       'nerfed': 'Nerfed',
       'shifted': 'Shifted',
       'new': 'New',
+      'newAspects': 'New Aspects',
     };
     return types[type] || 'Updated';
   };
@@ -1204,7 +1205,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                 </View>
               <TextInput
                 style={styles.search}
-                placeholder={searchQuery ? `Search ${selectedTab}...` : `Showing all avaiable items ${selectedTab}. Search to see more...`}
+                placeholder={searchQuery ? `Search ${selectedTab}...` : `Showing all available items ${selectedTab}. Search to see more...`}
                 placeholderTextColor="#cbd5e1"
                 value={searchQuery}
                 onChangeText={setSearchQuery}
@@ -1848,6 +1849,8 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                     else if (["AttackSpeed", "Critical Chance", "CriticalChance", "Critical Damage", "Attack Speed","Basic Attack Damage", "Criticial Chance", "Critical Damage", "Basic Damage"].includes(statKey)) statColor = "#f97316";
                     else if (["PhysicalProtection", "Penetration", "Physical Protection"].includes(statKey)) statColor = "#ef4444";
                     else if (statKey === "Intelligence") statColor = "#a855f7";
+                    else if (statKey === "MovementSpeed") statColor = "#0ea5e9";
+                    else if (statKey === "%statsFromItems") statColor = "#f97316";
                     else if (statKey === "Strength") statColor = "#facc15";
                     else if (statKey === "Cooldown Rate") statColor = "#0ea5e9";
                     else if (statKey === "MagicalProtection") statColor = "#a855f7";
@@ -5759,6 +5762,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fbbf24',
   },
   patchBadgeNew: {
+    backgroundColor: '#8b5cf6',
+  },
+  patchBadgeNewAspects: {
     backgroundColor: '#8b5cf6',
   },
   patchBadgeText: {

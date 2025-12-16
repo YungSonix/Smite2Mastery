@@ -75,6 +75,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
   const [expandedSections, setExpandedSections] = useState({
     newGods: true,
     godsBuffed: true,
+    newAspects: true,
     godsNerfed: true,
     godsShifted: true,
     itemsBuffed: true,
@@ -88,6 +89,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
   const [catchUpExpandedSections, setCatchUpExpandedSections] = useState({
     catchUpNewGods: true,
     catchUpGodsBuffed: true,
+    catchUpNewAspects: true,
     catchUpGodsNerfed: true,
     catchUpGodsShifted: true,
     catchUpItems: true,
@@ -123,12 +125,18 @@ export default function PatchHubPage({ subTab = 'simple' }) {
       summary: rawData.summary || '',
       gods: {
         new: [],
+        newAspects: [],
+        buffedAspects: [],
+        nerfedAspects: [],
         buffed: [],
+        buffedAspects: [],
         nerfed: [],
+        nerfedAspects: [],
         shifted: []
       },
       items: {
         buffed: [],
+        new: [],
         nerfed: [],
         changed: []
       },
@@ -146,7 +154,10 @@ export default function PatchHubPage({ subTab = 'simple' }) {
       
       // Map changeType to our format (handle combined types like "fix/buff", "shift/buff")
       let category = 'shifted';
-      if (changeType.includes('new')) category = 'new';
+      if (changeType === 'new') category = 'new';
+      else if (changeType === 'newAspects' || changeType.includes('newAspects')) category = 'newAspects';
+      else if (changeType === 'buffAspects') category = 'buffedAspects';
+      else if (changeType === 'nerfAspects') category = 'nerfedAspects';
       else if (changeType.includes('buff') && !changeType.includes('nerf')) category = 'buffed';
       else if (changeType.includes('nerf')) category = 'nerfed';
       else if (changeType.includes('shift') || changeType.includes('fix') || changeType.includes('revert')) category = 'shifted';
@@ -155,7 +166,8 @@ export default function PatchHubPage({ subTab = 'simple' }) {
       const changes = [];
       
       godEntry.changes.forEach(change => {
-        if (change.section === 'General') {
+
+        if (change.section === 'General' || change.section === 'New Aspect') {
           // General section - combine all descriptions into one entry
           if (Array.isArray(change.description)) {
             changes.push({
@@ -255,6 +267,8 @@ export default function PatchHubPage({ subTab = 'simple' }) {
           grouped.items.buffed.push(itemObj);
         } else if (changeType.includes('nerf')) {
           grouped.items.nerfed.push(itemObj);
+        } else if (changeType.includes('new')) {
+          grouped.items.new.push(itemObj);
         } else if (changeType.includes('fix') || changeType.includes('shift')) {
           grouped.items.changed.push(itemObj);
         }
@@ -327,10 +341,14 @@ export default function PatchHubPage({ subTab = 'simple' }) {
             const changeType = (god.changeType || '').toLowerCase();
             
             // Only add if we haven't seen this god yet (new gods) or if change type changed
-            if (changeType === 'new' && !seenGods.has(godKey)) {
-              result.gods.new.push(god);
+            if ((changeType === 'new' || changeType === 'newAspects') && !seenGods.has(godKey)) {
+              if (changeType === 'newAspects') {
+                result.gods.newAspects.push(god);
+              } else {
+                result.gods.new.push(god);
+              }
               seenGods.add(godKey);
-            } else if (changeType === 'buff' && !seenGods.has(`buff-${godKey}`)) {
+            } else if ((changeType === 'buff' || changeType === 'buffAspects') && !seenGods.has(`buff-${godKey}`)) {
               // Check if already added, if so update it
               const existing = result.gods.buffed.find(g => g.name.toLowerCase() === godKey);
               if (existing) {
@@ -343,7 +361,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                 result.gods.buffed.push(god);
                 seenGods.add(`buff-${godKey}`);
               }
-            } else if (changeType === 'nerf' && !seenGods.has(`nerf-${godKey}`)) {
+            } else if ((changeType === 'nerf' || changeType === 'nerfAspects') && !seenGods.has(`nerf-${godKey}`)) {
               const existing = result.gods.nerfed.find(g => g.name.toLowerCase() === godKey);
               if (existing) {
                 if (god.changes && Array.isArray(god.changes)) {
@@ -354,7 +372,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                 result.gods.nerfed.push(god);
                 seenGods.add(`nerf-${godKey}`);
               }
-            } else if (changeType === 'shift' && !seenGods.has(`shift-${godKey}`)) {
+            } else if ((changeType === 'shift' || changeType === 'shiftAspects') && !seenGods.has(`shift-${godKey}`)) {
               const existing = result.gods.shifted.find(g => g.name.toLowerCase() === godKey);
               if (existing) {
                 if (god.changes && Array.isArray(god.changes)) {
@@ -381,8 +399,11 @@ export default function PatchHubPage({ subTab = 'simple' }) {
             } else if (changeType === 'nerf' && !seenItems.has(`nerf-${itemKey}`)) {
               result.items.nerfed.push(item);
               seenItems.add(`nerf-${itemKey}`);
+            } else if (changeType === 'new' && !seenItems.has(`new-${itemKey}`)) {
+              result.items.new.push(item);
+              seenItems.add(`new-${itemKey}`);
             } else if (
-              (changeType === 'change' || changeType === 'shift' || changeType === 'fix' || changeType === 'new') &&
+              (changeType === 'change' || changeType === 'shift' || changeType === 'fix') &&
               !seenItems.has(`change-${itemKey}`)
             ) {
               // Treat "new" items as "changed" so they appear in the Items Changed section
@@ -442,10 +463,12 @@ export default function PatchHubPage({ subTab = 'simple' }) {
       result.summary =
         `Since OB${lastPatchNumber}, there have been ` +
         `${godCounts.new} new god${godCounts.new !== 1 ? 's' : ''}, ` +
+        `${godCounts.newAspects} new Aspect${godCounts.newAspects !== 1 ? 's' : ''}, ` +
         `${godCounts.buffed} god${godCounts.buffed !== 1 ? 's' : ''} buffed, ` +
+        `${godCounts.buffedAspects} Aspect${godCounts.buffedAspects !== 1 ? 's' : ''} buffed, ` +
         `${godCounts.nerfed} god${godCounts.nerfed !== 1 ? 's' : ''} nerfed` +
+        `${godCounts.nerfedAspects} Aspect${godCounts.nerfedAspects !== 1 ? 's' : ''} nerfed, ` +
         `${godCounts.shifted > 0 ? `, ${godCounts.shifted} god${godCounts.shifted !== 1 ? 's' : ''} shifted` : ''}` +
-        `${aspectGodCount > 0 ? ` (including ${aspectGodCount} Aspect update${aspectGodCount !== 1 ? 's' : ''})` : ''}` +
         `, ${itemCount} item${itemCount !== 1 ? 's' : ''} changed` +
         `${newItemCount > 0 ? ` (${newItemCount} new)` : ''}` +
         `, and ${modeCount} game mode${modeCount !== 1 ? 's' : ''} updated.`;
@@ -455,7 +478,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
       console.error('Error generating catch up:', err);
       setCatchUpData({
         summary: `Error generating catch up: ${err.message}`,
-        gods: { new: [], buffed: [], nerfed: [], shifted: [] },
+        gods: { new: [], newAspects: [], buffed: [], buffedAspects: [], nerfed: [], nerfedAspects: [], shifted: [] },
         items: { buffed: [], nerfed: [], changed: [] },
         gameModes: []
       });
@@ -468,7 +491,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
   const comparePatches = (oldPatch,  newPatch) => {
     const result = {
       summary: '',
-      gods: { new: [], buffed: [], nerfed: [], shifted: [] },
+      gods: { new: [], newAspects: [], buffed: [], buffedAspects: [], nerfed: [], nerfedAspects: [], shifted: [] },
       items: { buffed: [], nerfed: [], changed: [] },
       gameModes: []
     };
@@ -490,7 +513,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
     
     // Find new gods (in new but not in old)
     Object.keys(newGods).forEach(godName => {
-      if (!oldGods[godName] && newGods[godName].changeType === 'new') {
+      if (!oldGods[godName] && (newGods[godName].changeType === 'new' || newGods[godName].changeType === 'newAspects')) {
         result.gods.new.push(newGods[godName]);
       }
     });
@@ -501,11 +524,11 @@ export default function PatchHubPage({ subTab = 'simple' }) {
       const changeType = (newGod.changeType || '').toLowerCase();
 
       // We already handled pure "new" gods above; here we care about balance changes
-      if (changeType === 'buff') {
+      if (changeType === 'buff' || changeType === 'buffAspects') {
         result.gods.buffed.push(newGod);
       } else if (changeType === 'nerf') {
         result.gods.nerfed.push(newGod);
-      } else if (changeType === 'shift') {
+      } else if (changeType === 'shift' || changeType === 'shiftAspects') {
         result.gods.shifted.push(newGod);
       }
     });
@@ -513,7 +536,6 @@ export default function PatchHubPage({ subTab = 'simple' }) {
     // Compare items
     const oldItems = {};
     const newItems = {};
-    
     if (oldPatch.items && Array.isArray(oldPatch.items)) {
       oldPatch.items.forEach(item => {
         oldItems[item.name.toLowerCase()] = item;
@@ -525,7 +547,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
         newItems[item.name.toLowerCase()] = item;
         const oldItem = oldItems[item.name.toLowerCase()];
         if (!oldItem || oldItem.changeType !== item.changeType) {
-          if (item.changeType === 'buff') {
+          if (item.changeType === 'buff' || item.changeType === 'buffAspects') {
             result.items.buffed.push(item);
           } else if (item.changeType === 'nerf') {
             result.items.nerfed.push(item);
@@ -573,8 +595,11 @@ export default function PatchHubPage({ subTab = 'simple' }) {
     const oldPatchNum = oldPatch.patchName?.match(/OB\s*(\d+)/i)?.[1] || '?';
     result.summary = `Since OB${oldPatchNum}, there have been ` +
       `${godCounts.new} new god${godCounts.new !== 1 ? 's' : ''}, ` +
+      `${godCounts.newAspects} new Aspect${godCounts.newAspects !== 1 ? 's' : ''}, ` +
       `${godCounts.buffed} god${godCounts.buffed !== 1 ? 's' : ''} buffed, ` +
+      `${godCounts.buffedAspects} Aspect${godCounts.buffedAspects !== 1 ? 's' : ''} buffed, ` +
       `${godCounts.nerfed} god${godCounts.nerfed !== 1 ? 's' : ''} nerfed` +
+      `${godCounts.nerfedAspects} Aspect${godCounts.nerfedAspects !== 1 ? 's' : ''} nerfed, ` +
       `${godCounts.shifted > 0 ? `, ${godCounts.shifted} god${godCounts.shifted !== 1 ? 's' : ''} shifted` : ''}, ` +
       `${itemCount} item${itemCount !== 1 ? 's' : ''} changed (${newItemCount} new)` +
       `${newItemCount > 0 ? ` (${newItemCount} new)` : ''}, ` +
@@ -1148,9 +1173,10 @@ export default function PatchHubPage({ subTab = 'simple' }) {
     
     const itemIcon = item && item.icon;
     const localItemIcon = itemIcon ? getLocalItemIcon(itemIcon) : null;
-    
+    const newAspects = itemEntry.changeType === 'newAspects';
     const badgeColors = {
       buffed: '#10b981',
+      newAspects: '#8b5cf6',
       nerfed: '#ef4444',
       changed: '#f59e0b',
       new: '#8b5cf6',
@@ -1230,6 +1256,11 @@ export default function PatchHubPage({ subTab = 'simple' }) {
               <Text style={[styles.changeIconFallbackText, { color: badgeColor }]}>
                 {itemName.charAt(0)}
               </Text>
+            </View>
+          )}
+          {changeType === 'newAspects' && (
+            <View style={[styles.patchBadge, styles.patchBadgeNew]}>
+              <Text style={styles.patchBadgeText}>NEW ASPECT</Text>
             </View>
           )}
           <View style={styles.changeCardTitleContainer}>
@@ -1389,7 +1420,29 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                     )}
                   </View>
                 )}
-
+{/* New Aspects */}
+{patchData.gods?.newAspects && patchData.gods.newAspects.length > 0 && (
+  <View style={styles.expandableSection}>
+    <TouchableOpacity
+      style={styles.sectionHeaderNewAspects}
+      onPress={() => toggleSection('newAspects')}
+      activeOpacity={0.7}
+    >
+      <View style={[{ flexDirection: 'row', alignItems: 'center', gap: 8, flex: 1 }]}>
+        <View style={[styles.patchBadge, styles.patchBadgeNewAspects]}>
+          <Text style={styles.patchBadgeText}>NEW ASPECT</Text>
+        </View>
+        <Text style={styles.sectionTitle}>NEW ASPECT ({patchData.gods.newAspects.length})</Text>
+      </View>
+      <Text style={styles.expandIcon}>{expandedSections.newAspects ? '▼' : '▶'}</Text>
+    </TouchableOpacity>
+    {expandedSections.newAspects && (
+      <View style={styles.sectionContent}>
+        {patchData.gods.newAspects.map(aspect => renderGodCard(aspect, 'new'))}
+      </View>
+    )}
+  </View>
+)}
                 {/* Gods Buffed */}
                 {patchData.gods?.buffed && patchData.gods.buffed.length > 0 && (
                   <View style={styles.expandableSection}>
@@ -1491,6 +1544,10 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                         {patchData.items.changed && patchData.items.changed.map(item => {
                           const changeType = (item.changeType || 'changed').toLowerCase();
                           return renderItemCard(item, changeType === 'fix' ? 'fix' : changeType === 'shift' ? 'shift' : 'changed');
+                        })}
+                        {patchData.items.new && patchData.items.new.map(item => {
+                          const changeType = item.changeType || 'new';
+                          return renderItemCard(item, changeType === 'new' ? 'new' : changeType);
                         })}
                       </View>
                     )}
@@ -2485,6 +2542,11 @@ const styles = StyleSheet.create({
     paddingRight: 20, // Extra padding for expand icon
     backgroundColor: '#0f1724',
   },
+  sectionHeaderNewAspects: {
+    backgroundColor: 'rgba(139, 92, 246, 0.15)',
+    borderLeftWidth: 4,
+    borderLeftColor: '#8b5cf6',
+  },
   sectionHeaderBuffed: {
     backgroundColor: 'rgba(34, 197, 94, 0.15)',
     borderLeftWidth: 4,
@@ -3243,6 +3305,10 @@ const styles = StyleSheet.create({
   },
   patchBadgeNew: {
     backgroundColor: '#8b5cf6',
+  },
+  patchBadgeNewAspects: {
+    backgroundColor: '#8b5cf6',
+    borderColor: '#8b5cf6',
   },
   patchBadgeText: {
     fontSize: 10,
