@@ -2167,48 +2167,7 @@
                 "tier": 3,
                 "totalCost": 2500
             },
-            {
-                "active": true,
-                "buildsFromT1": [
-                    "Medallion",
-                    "Ring",
-                    "Rune"
-                ],
-                "components": [
-                    "AdroitRing",
-                    "MedalOfDisruption"
-                ],
-                "icon": "/icons/TalismanOfPurification.webp",
-                "internalName": "TalismanOfPurification",
-                "name": "Talisman of Purification",
-                "passive": "    On Use: You and Allies within 6.4m:\n    Are Cleansed of all Crowd Control\n    Gain Crowd Control Immunity for 1s\nCooldown:140s\n    You can own up to 3 active items at once",
-                "stats": {
-                    "Cooldown Rate": 10,
-                    "Health": 300,
-                    "Magical Protection": 30
-                },
-                "stepCost": 1000,
-                "tags": [
-                    "Health",
-                    "Tier3",
-                    "Magical Protection",
-                    "Active",
-                    "Support",
-                    "CooldownReduction",
-                    "Defensive"
-                ],
-                "tier": 3,
-                "totalCost": 2500,
-                "patchChanges": {
-                    "OB25": [
-                        "shifted"
-                    ]
-                },
-                "latestPatchChange": {
-                    "version": "OB25",
-                    "type": "shifted"
-                }
-            },
+            
             {
                 "buildsFromT1": [
                     "Rune",
