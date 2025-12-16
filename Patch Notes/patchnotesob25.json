@@ -97,7 +97,7 @@
       {
         "type": "god",
         "name": "Kukulkan",
-        "changeType": "newAspects",
+        "changeType": "shift",
         "changes": [
           {
             "section": "Ability",

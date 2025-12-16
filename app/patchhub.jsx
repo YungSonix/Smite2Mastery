@@ -403,7 +403,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
               result.items.new.push(item);
               seenItems.add(`new-${itemKey}`);
             } else if (
-              (changeType === 'change' || changeType === 'shift' || changeType === 'fix') &&
+              (changeType === 'change' || changeType === 'shift' || changeType === 'fix' || changeType === 'new') &&
               !seenItems.has(`change-${itemKey}`)
             ) {
               // Treat "new" items as "changed" so they appear in the Items Changed section
@@ -479,7 +479,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
       setCatchUpData({
         summary: `Error generating catch up: ${err.message}`,
         gods: { new: [], newAspects: [], buffed: [], buffedAspects: [], nerfed: [], nerfedAspects: [], shifted: [] },
-        items: { buffed: [], nerfed: [], changed: [] },
+        items: { buffed: [], new: [], nerfed: [], changed: [] },
         gameModes: []
       });
     }
@@ -492,7 +492,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
     const result = {
       summary: '',
       gods: { new: [], newAspects: [], buffed: [], buffedAspects: [], nerfed: [], nerfedAspects: [], shifted: [] },
-      items: { buffed: [], nerfed: [], changed: [] },
+      items: { buffed: [], new: [], nerfed: [], changed: [] },
       gameModes: []
     };
     
@@ -536,6 +536,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
     // Compare items
     const oldItems = {};
     const newItems = {};
+    
     if (oldPatch.items && Array.isArray(oldPatch.items)) {
       oldPatch.items.forEach(item => {
         oldItems[item.name.toLowerCase()] = item;
@@ -551,6 +552,8 @@ export default function PatchHubPage({ subTab = 'simple' }) {
             result.items.buffed.push(item);
           } else if (item.changeType === 'nerf') {
             result.items.nerfed.push(item);
+          } else if (item.changeType === 'new') {
+            result.items.new.push(item);
           } else {
             result.items.changed.push(item);
           }
@@ -1541,13 +1544,13 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                           const changeType = item.changeType || 'nerf';
                           return renderItemCard(item, changeType === 'nerf' ? 'nerf' : changeType);
                         })}
-                        {patchData.items.changed && patchData.items.changed.map(item => {
-                          const changeType = (item.changeType || 'changed').toLowerCase();
-                          return renderItemCard(item, changeType === 'fix' ? 'fix' : changeType === 'shift' ? 'shift' : 'changed');
-                        })}
                         {patchData.items.new && patchData.items.new.map(item => {
                           const changeType = item.changeType || 'new';
                           return renderItemCard(item, changeType === 'new' ? 'new' : changeType);
+                        })}
+                        {patchData.items.changed && patchData.items.changed.map(item => {
+                          const changeType = (item.changeType || 'changed').toLowerCase();
+                          return renderItemCard(item, changeType === 'fix' ? 'fix' : changeType === 'shift' ? 'shift' : 'changed');
                         })}
                       </View>
                     )}
@@ -2108,7 +2111,6 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                           const fallbackSource = localItemIcon?.fallback;
                           const itemKey = `catchup-item-nerf-${itemName}`;
                           const useFallback = failedItemIcons[itemKey];
-                          
                           return (
                             <TouchableOpacity 
                               key={`nerf-${idx}`} 
@@ -2221,6 +2223,86 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                             </View>
                           );
                         })}
+                        </View>
+                      )}
+                    </View>
+                  )}{/* New Items */}
+                  {catchUpData.items && catchUpData.items.new?.length > 0 && (
+                    <View style={styles.catchUpSection}>
+                      <TouchableOpacity
+                        style={styles.catchUpSectionHeader}
+                        onPress={() => toggleCatchUpSection('catchUpNewItems')}
+                        activeOpacity={0.7}
+                      >
+                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 }}>
+                          <Text style={styles.catchUpSectionTitle}>New Items ({catchUpData.items.new?.length || 0})</Text>
+                        </View>
+                        <Text style={styles.expandIcon}>{catchUpExpandedSections.catchUpNewItems ? '▼' : '▶'}</Text>
+                      </TouchableOpacity>
+                      {catchUpExpandedSections.catchUpNewItems && (
+                        <View style={styles.catchUpIconsGrid}>
+                          {catchUpData.items.new?.map((itemEntry, idx) => {
+                            const itemName = typeof itemEntry === 'string' ? itemEntry : itemEntry.name;
+                            const changes = typeof itemEntry === 'object' && itemEntry.changes ? itemEntry.changes : [];
+                            const summary = typeof itemEntry === 'object' && itemEntry.summary ? itemEntry.summary : '';
+                            const item = findItemByName(itemName);
+                            const itemIcon = item && (item.icon || item.internalName || itemName);
+                            const localItemIcon = itemIcon ? getLocalItemIcon(itemIcon) : null;
+                            const imageSource = localItemIcon?.primary || localItemIcon;
+                            const fallbackSource = localItemIcon?.fallback;
+                            const itemKey = `catchup-item-new-${itemName}`;
+                            const useFallback = failedItemIcons[itemKey];
+                            
+                            return (
+                              <TouchableOpacity 
+                                key={`new-${idx}`} 
+                                style={styles.catchUpIconContainer}
+                                onPress={() => setCatchUpTooltip({
+                                  name: itemName,
+                                  type: 'item',
+                                  changeType: 'new',
+                                  changes: changes || summary,
+                                })}
+                                activeOpacity={0.7}
+                              >
+                                {imageSource ? (
+                                  fallbackSource && !useFallback ? (
+                                    <Image 
+                                      source={imageSource} 
+                                      style={styles.catchUpItemIcon} 
+                                      contentFit="cover"
+                                      accessibilityLabel={`${itemName} item icon`}
+                                      onError={() => {
+                                        setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
+                                      }}
+                                    />
+                                  ) : fallbackSource && useFallback ? (
+                                    <Image 
+                                      source={fallbackSource} 
+                                      style={styles.catchUpItemIcon} 
+                                      contentFit="cover"
+                                      accessibilityLabel={`${itemName} item icon`}
+                                    />
+                                  ) : (
+                                    <Image 
+                                      source={imageSource} 
+                                      style={styles.catchUpItemIcon} 
+                                      contentFit="cover"
+                                      accessibilityLabel={`${itemName} item icon`}
+                                    />
+                                  )
+                                ) : (
+                                  <View style={[styles.catchUpIconFallback, { backgroundColor: '#8b5cf640' }]}>
+                                    <Text style={styles.catchUpIconFallbackText}>{itemName.charAt(0)}</Text>
+                                  </View>
+                                )}
+                                <View style={[styles.patchBadge, styles.patchBadgeNew, { marginTop: 4 }]}>
+                                  <Text style={styles.patchBadgeText}>NEW</Text>
+                                </View>
+                                <Text style={styles.catchUpIconLabel} numberOfLines={1} ellipsizeMode="tail">{itemName}</Text>
+                              </TouchableOpacity>
+                            );
+                          })}
                         </View>
                       )}
                     </View>
@@ -2434,21 +2516,29 @@ export default function PatchHubPage({ subTab = 'simple' }) {
                         </>
                       );
                     })()}
-                    {catchUpTooltip.type === 'item' && (
-                      <Text style={[
-                        styles.catchUpTooltipChangeDetails,
-                        IS_WEB && screenDimensions.width < 768 && {
-                          fontSize: screenDimensions.width < 500 ? 11 : 12,
-                          lineHeight: screenDimensions.width < 500 ? 15 : 16,
-                        }
-                      ]} pointerEvents="none">
-                        {typeof catchUpTooltip.changes === 'string' 
-                          ? catchUpTooltip.changes 
-                          : Array.isArray(catchUpTooltip.changes) 
-                            ? catchUpTooltip.changes.join(' | ')
-                            : 'No details available'}
-                      </Text>
-                    )}
+                  {catchUpTooltip.type === 'item' && (
+  <Text style={[
+    styles.catchUpTooltipChangeDetails,
+    IS_WEB && screenDimensions.width < 768 && {
+      fontSize: screenDimensions.width < 500 ? 11 : 12,
+      lineHeight: screenDimensions.width < 500 ? 15 : 16,
+    }
+  ]} selectable>
+    {(() => {
+      const changes = catchUpTooltip.changes;
+      if (typeof changes === 'string') {
+        return changes;
+      } else if (Array.isArray(changes)) {
+        return changes.map(c => 
+          typeof c === 'string' ? c : (c.details || c.description || c.summary || '')
+        ).filter(Boolean).join('\n\n');
+      } else if (typeof changes === 'object' && changes !== null) {
+        return changes.details || changes.description || changes.summary || 'No details available';
+      }
+      return 'No details available';
+    })()}
+  </Text>
+)}
                   </ScrollView>
                 </View>
               )}
