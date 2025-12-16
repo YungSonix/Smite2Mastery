@@ -1366,16 +1366,7 @@
           "Cooldown Rate"
         ],
         "tier": 3,
-        "totalCost": 2600,
-        "patchChanges": {
-          "OB24": [
-            "buffed"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "buffed"
-        }
+        "totalCost": 2600
       },
       {
         "buildsFromT1": [
@@ -2162,9 +2153,6 @@
         "tier": 3,
         "totalCost": 2500,
         "patchChanges": {
-          "OB24": [
-            "buffed"
-          ],
           "OB25": [
             "shifted"
           ]
@@ -2251,16 +2239,8 @@
           "Attack Speed"
         ],
         "tier": 2,
-        "totalCost": 2150,
-        "patchChanges": {
-          "OB24": [
-            "buffed"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "buffed"
-        }
+        "totalCost": 2150
+
       },
       {
         "components": [
@@ -2716,16 +2696,7 @@
           "StartingLoadout",
           "Carry.STR",
           "Critical Strike Chance"
-        ],
-        "patchChanges": {
-          "OB24": [
-            "buffed"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "buffed"
-        }
+        ]
       },
       {
         "components": [
@@ -4654,16 +4625,7 @@
           "StartingLoadout"
         ],
         "tier": 1,
-        "totalCost": 600,
-        "patchChanges": {
-          "OB24": [
-            "buffed"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "buffed"
-        }
+        "totalCost": 600
       },
       {
         "buildsIntoT2": [
@@ -5107,17 +5069,7 @@
           "Carry.Hybrid"
         ],
         "tier": 3,
-        "totalCost": 2550,
-        "patchChanges": {
-          "OB24": [
-            "buffed",
-            "nerfed"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "nerfed"
-        }
+        "totalCost": 2550
       },
       {
         "active": true,
@@ -5149,17 +5101,7 @@
           "Jungle.STR"
         ],
         "tier": 3,
-        "totalCost": 2400,
-        "patchChanges": {
-          "OB24": [
-            "buffed",
-            "nerfed"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "nerfed"
-        }
+        "totalCost": 2400
       },
       {
         "buildsFromT1": [
@@ -5822,190 +5764,190 @@
         "totalCost": 0
       },
       {
-            "relic": false,
-            "buildsFromT1": [
-              "None"
-            ],
-            "components": [
-              "None"
-            ],
-            "icon": "/icons/MoteOfChaos.webp",
-            "internalName": "MoteOfChaos",
-            "name": "Mote of Chaos",
-            "passive": "Component item used for upgrading Relics into Active Items.",
-            "stats": {
-              "statsFromItems": 5
-            },
-            "stepCost": 1250,
-            "tags": [
-              "Component"
-            ],
-            "tier": 2,
-            "totalCost": 1250
-          },
-          {
-            "relic": false,
-            "buildsFromT1": [
-              "None"
-            ],
-            "components": [
-              "BlinkRune",
-              "MoteOfChaos"
-            ],
-            "icon": "/icons/BlinkingAbyss.webp",
-            "internalName": "BlinkingAbyss",
-            "name": "Blinking Abyss",
-            "passive": "Active: Teleport up to 5.6m. 1s after Teleport: Deal 150 (+30% Strength/Intelligence) in a 3.2m radius. If this damages a god, reduce cooldown -50s.\nCooldown: 140s\nNote: Can be used in combat. Cannot be used while firing an ability.",
-            "stats": {
-              "strength": 25,
-              "intelligence": 45,
-              "statsFromItems": 7.5
-            },
-            "stepCost": 1250,
-            "tags": [
-              "Active",
-              "Adaptive",
-              "Damage",
-              "Mobility"
-            ],
-            "tier": 3,
-            "totalCost": 2500
-          },
-          {
-            "relic": false,
-            "buildsFromT1": [
-              "None"
-            ],
-            "components": [
-              "AegisOfAcceleration",
-              "MoteOfChaos"
-            ],
-            "icon": "/icons/TimeLockAegis.webp",
-            "internalName": "TimeLockAegis",
-            "name": "Time-Lock Aegis",
-            "passive": "Active: You become Invulnerable to all damage and healing for 3s, but you are Rooted and unable to act. You can reactivate to end this effect early.\nWhile in Stasis, regenerate 30s worth of Health, 30s worth of Mana, and 10s worth of Ability Cooldowns.\nCooldown: 140s",
-            "stats": {
-              "physicalProtection": 20,
-              "magicalProtection": 20,
-              "statsFromItems": 7.5
-            },
-            "stepCost": 1250,
-            "tags": [
-              "Active",
-              "Defense",
-              "Utility"
-            ],
-            "tier": 3,
-            "totalCost": 2500
-          },
-          {
-            "relic": false,
-            "buildsFromT1": [
-              "None"
-            ],
-            "components": [
-              "PurificationBeads",
-              "MoteOfChaos"
-            ],
-            "icon": "/icons/TalismanOfPurification.webp",
-            "internalName": "TalismanOfPurification",
-            "name": "Talisman of Purification",
-            "passive": "Active: You become CC Immune for 2 seconds.\nCooldown: 150s",
-            "stats": {
-              "cooldownRate": 15,
-              "statsFromItems": 7.5
-            },
-            "stepCost": 1250,
-            "tags": [
-              "Active",
-              "Utility",
-              "Cooldown"
-            ],
-            "tier": 3,
-            "totalCost": 2500
-          },
-          {
-            "relic": false,
-            "buildsFromT1": [
-              "None"
-            ],
-            "components": [
-              "AgilityRune",
-              "MoteOfChaos"
-            ],
-            "icon": "/icons/AgilityGreaves.webp",
-            "internalName": "AgilityGreaves",
-            "name": "Agility Greaves",
-            "passive": "Ranged Gods: +40% Attack Projectile Speed. +80% After using this active for 3s.\nMelee Gods: -15% Attack Movement Penalty. -30% After using this active for 3s.\nActive: Dash in the direction you are currently moving.\nCooldown: 20s",
-            "stats": {
-              "movementSpeed": 5,
-              "statsFromItems": 7.5
-            },
-            "stepCost": 1250,
-            "tags": [
-              "Active",
-              "Mobility",
-              "Movement Speed"
-            ],
-            "tier": 3,
-            "totalCost": 2500
-          },
-          {
-            "relic": false,
-            "buildsFromT1": [
-              "None"
-            ],
-            "components": [
-              "SunderingArc",
-              "MoteOfChaos"
-            ],
-            "icon": "/icons/SunderingEcho.webp",
-            "internalName": "SunderingEcho",
-            "name": "Sundering Echo",
-            "passive": "Active: Bleed Enemies, dealing 25 (+4 per Level) True Damage 3 times over 4s. Jungle Monsters/Bosses take 50 (+8 per Level) instead.\nEnemies who die explode, applying this effect to nearby enemies.\nDuration: Over 3s",
-            "stats": {
-              "strength": 25,
-              "intelligence": 45,
-              "statsFromItems": 7.5
-            },
-            "stepCost": 1250,
-            "tags": [
-              "Active",
-              "Adaptive",
-              "Damage",
-              "Jungle"
-            ],
-            "tier": 3,
-            "totalCost": 2500
-          },
-          {
-            "relic": false,
-            "buildsFromT1": [
-              "None"
-            ],
-            "components": [
-              "PhantomShell",
-              "MoteOfChaos"
-            ],
-            "icon": "/icons/ShellOfRebuke.webp",
-            "internalName": "ShellOfRebuke",
-            "name": "Shell of Rebuke",
-            "passive": "Active: Create an area of safety at your location, granting a shield/phantom effect to allied gods when they first touch the area. The area mitigates 35% of all damage, up to a maximum of 400 + 50 Per Level Damage. Lasts 5s.\nCooldown: 120s",
-            "stats": {
-              "physicalProtection": 20,
-              "magicalProtection": 20,
-              "statsFromItems": 7.5
-            },
-            "stepCost": 1250,
-            "tags": [
-              "Active",
-              "Defense",
-              "Support"
-            ],
-            "tier": 3,
-            "totalCost": 2500
-          },
-        {
+        "relic": false,
+        "buildsFromT1": [
+          "None"
+        ],
+        "components": [
+          "None"
+        ],
+        "icon": "/icons/MoteOfChaos.webp",
+        "internalName": "MoteOfChaos",
+        "name": "Mote of Chaos",
+        "passive": "Component item used for upgrading Relics into Active Items.",
+        "stats": {
+          "statsFromItems": 5
+        },
+        "stepCost": 1250,
+        "tags": [
+          "Component"
+        ],
+        "tier": 2,
+        "totalCost": 1250
+      },
+      {
+        "relic": false,
+        "buildsFromT1": [
+          "None"
+        ],
+        "components": [
+          "BlinkRune",
+          "MoteOfChaos"
+        ],
+        "icon": "/icons/BlinkingAbyss.webp",
+        "internalName": "BlinkingAbyss",
+        "name": "Blinking Abyss",
+        "passive": "Active: Teleport up to 5.6m. 1s after Teleport: Deal 150 (+30% Strength/Intelligence) in a 3.2m radius. If this damages a god, reduce cooldown -50s.\nCooldown: 140s\nNote: Can be used in combat. Cannot be used while firing an ability.",
+        "stats": {
+          "strength": 25,
+          "intelligence": 45,
+          "statsFromItems": 7.5
+        },
+        "stepCost": 1250,
+        "tags": [
+          "Active",
+          "Adaptive",
+          "Damage",
+          "Mobility"
+        ],
+        "tier": 3,
+        "totalCost": 2500
+      },
+      {
+        "relic": false,
+        "buildsFromT1": [
+          "None"
+        ],
+        "components": [
+          "AegisOfAcceleration",
+          "MoteOfChaos"
+        ],
+        "icon": "/icons/TimeLockAegis.webp",
+        "internalName": "TimeLockAegis",
+        "name": "Time-Lock Aegis",
+        "passive": "Active: You become Invulnerable to all damage and healing for 3s, but you are Rooted and unable to act. You can reactivate to end this effect early.\nWhile in Stasis, regenerate 30s worth of Health, 30s worth of Mana, and 10s worth of Ability Cooldowns.\nCooldown: 140s",
+        "stats": {
+          "physicalProtection": 20,
+          "magicalProtection": 20,
+          "statsFromItems": 7.5
+        },
+        "stepCost": 1250,
+        "tags": [
+          "Active",
+          "Defense",
+          "Utility"
+        ],
+        "tier": 3,
+        "totalCost": 2500
+      },
+      {
+        "relic": false,
+        "buildsFromT1": [
+          "None"
+        ],
+        "components": [
+          "PurificationBeads",
+          "MoteOfChaos"
+        ],
+        "icon": "/icons/TalismanOfPurification.webp",
+        "internalName": "TalismanOfPurification",
+        "name": "Talisman of Purification",
+        "passive": "Active: You become CC Immune for 2 seconds.\nCooldown: 150s",
+        "stats": {
+          "cooldownRate": 15,
+          "statsFromItems": 7.5
+        },
+        "stepCost": 1250,
+        "tags": [
+          "Active",
+          "Utility",
+          "Cooldown"
+        ],
+        "tier": 3,
+        "totalCost": 2500
+      },
+      {
+        "relic": false,
+        "buildsFromT1": [
+          "None"
+        ],
+        "components": [
+          "AgilityRune",
+          "MoteOfChaos"
+        ],
+        "icon": "/icons/AgilityGreaves.webp",
+        "internalName": "AgilityGreaves",
+        "name": "Agility Greaves",
+        "passive": "Ranged Gods: +40% Attack Projectile Speed. +80% After using this active for 3s.\nMelee Gods: -15% Attack Movement Penalty. -30% After using this active for 3s.\nActive: Dash in the direction you are currently moving.\nCooldown: 20s",
+        "stats": {
+          "movementSpeed": 5,
+          "statsFromItems": 7.5
+        },
+        "stepCost": 1250,
+        "tags": [
+          "Active",
+          "Mobility",
+          "Movement Speed"
+        ],
+        "tier": 3,
+        "totalCost": 2500
+      },
+      {
+        "relic": false,
+        "buildsFromT1": [
+          "None"
+        ],
+        "components": [
+          "SunderingArc",
+          "MoteOfChaos"
+        ],
+        "icon": "/icons/SunderingEcho.webp",
+        "internalName": "SunderingEcho",
+        "name": "Sundering Echo",
+        "passive": "Active: Bleed Enemies, dealing 25 (+4 per Level) True Damage 3 times over 4s. Jungle Monsters/Bosses take 50 (+8 per Level) instead.\nEnemies who die explode, applying this effect to nearby enemies.\nDuration: Over 3s",
+        "stats": {
+          "strength": 25,
+          "intelligence": 45,
+          "statsFromItems": 7.5
+        },
+        "stepCost": 1250,
+        "tags": [
+          "Active",
+          "Adaptive",
+          "Damage",
+          "Jungle"
+        ],
+        "tier": 3,
+        "totalCost": 2500
+      },
+      {
+        "relic": false,
+        "buildsFromT1": [
+          "None"
+        ],
+        "components": [
+          "PhantomShell",
+          "MoteOfChaos"
+        ],
+        "icon": "/icons/ShellOfRebuke.webp",
+        "internalName": "ShellOfRebuke",
+        "name": "Shell of Rebuke",
+        "passive": "Active: Create an area of safety at your location, granting a shield/phantom effect to allied gods when they first touch the area. The area mitigates 35% of all damage, up to a maximum of 400 + 50 Per Level Damage. Lasts 5s.\nCooldown: 120s",
+        "stats": {
+          "physicalProtection": 20,
+          "magicalProtection": 20,
+          "statsFromItems": 7.5
+        },
+        "stepCost": 1250,
+        "tags": [
+          "Active",
+          "Defense",
+          "Support"
+        ],
+        "tier": 3,
+        "totalCost": 2500
+      },
+      {
         "relic": true,
         "buildsFromT1": [
           "None"
@@ -7639,16 +7581,9 @@
           }
         ],
         "patchChanges": {
-          "OB24": [
-            "new"
-          ],
           "OB25": [
             "nerfed"
           ]
-        },
-        "latestPatchChange": {
-          "version": "OB25",
-          "type": "nerfed"
         }
       },
       {
@@ -8091,16 +8026,8 @@
             ],
             "notes": "STR-oriented jungle build. (sell lamp after all wishes are used/when you're full build for Pendulum Blade)"
           }
-        ],
-        "patchChanges": {
-          "OB24": [
-            "buffed"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "buffed"
-        }
+        ]
+
       },
       {
         "abilities": {
@@ -14013,16 +13940,8 @@
             ],
             "notes": "Auto attack healing support build. With **__Aspect of Vindication__** "
           }
-        ],
-        "patchChanges": {
-          "OB24": [
-            "nerfed"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "nerfed"
-        }
+        ]
+     
       },
       {
         "abilities": {
@@ -16122,16 +16041,7 @@
             ],
             "notes": "Bruiser solo-lane build"
           }
-        ],
-        "patchChanges": {
-          "OB24": [
-            "buffed"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "buffed"
-        }
+        ]
       },
       {
         "abilities": {
@@ -17097,16 +17007,7 @@
             ],
             "notes": "Life-Steal Oriented Solo-Lane build with **Aspect of Ferocity**"
           }
-        ],
-        "patchChanges": {
-          "OB24": [
-            "nerfed"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "nerfed"
-        }
+        ]
       },
       {
         "abilities": {
@@ -18316,12 +18217,10 @@
               "Freya's Tears"
             ],
             "notes": "Active-Oriented Support build with **Aspect of Lifewarden**"
-          }
+          } 
         ],
         "patchChanges": {
-          "OB24": [
-            "nerfed"
-          ],
+          
           "OB25": [
             "nerfed"
           ]
@@ -20606,16 +20505,8 @@
             ],
             "notes": "INT-oriented burst mage build for solo/mid."
           }
-        ],
-        "patchChanges": {
-          "OB24": [
-            "buffed"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "buffed"
-        }
+        ]
+    
       },
       {
         "abilities": {
@@ -22454,9 +22345,7 @@
           }
         ],
         "patchChanges": {
-          "OB24": [
-            "buffed"
-          ],
+
           "OB25": [
             "nerfed"
           ]
@@ -22948,9 +22837,6 @@
           }
         ],
         "patchChanges": {
-          "OB24": [
-            "nerfed"
-          ],
           "OB25": [
             "nerfed"
           ]
@@ -24537,9 +24423,7 @@
           }
         ],
         "patchChanges": {
-          "OB24": [
-            "shifted"
-          ],
+          
           "OB25": [
             "shifted"
           ]
@@ -25491,13 +25375,7 @@
           }
         ],
         "patchChanges": {
-          "OB24": [
-            "buffed"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "buffed"
+        
         }
       },
       {
@@ -26846,16 +26724,8 @@
             ],
             "notes": "STR ability-based mid-lane/ADC build."
           }
-        ],
-        "patchChanges": {
-          "OB24": [
-            "buffed"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "buffed"
-        }
+        ]
+      
       },
       {
         "name": "Mercury",
@@ -27175,16 +27045,7 @@
             ],
             "notes": "Full-damage jungle build (You can swap Lernaean Bow for Riptalon if wanted)"
           }
-        ],
-        "patchChanges": {
-          "OB24": [
-            "nerfed"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "nerfed"
-        }
+        ]
       },
       {
         "abilities": {
@@ -30456,16 +30317,8 @@
             ],
             "notes": "Bruiser poke warrior build.  **Aspect of the Fragmented** OPTIONAL"
           }
-        ],
-        "patchChanges": {
-          "OB24": [
-            "nerfed"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "nerfed"
-        }
+        ]
+    
       },
       {
         "abilities": {
@@ -30954,16 +30807,7 @@
             ],
             "notes": "Bruiser poke warrior build with **__Aspect of Obsidian__**."
           }
-        ],
-        "patchChanges": {
-          "OB24": [
-            "buffed"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "buffed"
-        }
+        ]
       },
       {
         "abilities": {
@@ -31784,17 +31628,8 @@
             ],
             "notes": "STR-oriented burst mid/adc build "
           }
-        ],
-        "patchChanges": {
-          "OB24": [
-            "buffed",
-            "shifted"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "shifted"
-        }
+        ]
+        
       },
       {
         "abilities": {
@@ -32261,21 +32096,13 @@
               "Stampede",
               "Talisman of Purification",
               "Spirit Robe",
-              "Amanita Charm",
+              "Amanita Charm",  
               "Freya's Tears"
             ],
             "notes": "Cooldown-oriented active item support build with **Aspect of Thermotherapy**"
           }
-        ],
-        "patchChanges": {
-          "OB24": [
-            "shifted"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "shifted"
-        }
+        ]
+        
       },
       {
         "abilities": {
@@ -33716,16 +33543,8 @@
             ],
             "notes": "INT-oriented burst mage build with **Aspect of Conflagration**"
           }
-        ],
-        "patchChanges": {
-          "OB24": [
-            "shifted"
-          ]
-        },
-        "latestPatchChange": {
-          "version": "OB24",
-          "type": "shifted"
-        }
+        ]
+      
       },
       {
         "abilities": {
@@ -38425,9 +38244,6 @@
           }
         ],
         "patchChanges": {
-          "OB24": [
-            "nerfed"
-          ],
           "OB25": [
             "buffed"
           ]
