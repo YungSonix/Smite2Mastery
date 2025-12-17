@@ -84,52 +84,24 @@ try {
 // For now we focus on standard ability slots 1–4 plus Passive/Aspect
 const ABILITY_KEYS = ['1', '2', '3', '4', 'P', 'A'];
 
-// Pick a random (god, ability, variant) combination.
-// If a previous target is provided, we try to avoid returning the same combo consecutively.
-function pickRandomAbilityTarget(prevTarget = null) {
+function pickRandomAbilityTarget() {
   if (!Array.isArray(GODS) || GODS.length === 0) return null;
 
   // Filter to gods that should have ability icons on GitHub (we assume all do)
   const godsWithNames = GODS.filter((g) => !!g.godName);
   if (godsWithNames.length === 0) return null;
 
-  // To avoid showing exactly the same icon twice in a row, try a few times
-  // to pick a different combination than prevTarget (if provided).
-  for (let attempts = 0; attempts < 10; attempts++) {
-    const godIndex = Math.floor(Math.random() * godsWithNames.length);
-    const god = godsWithNames[godIndex];
+  const godIndex = Math.floor(Math.random() * godsWithNames.length);
+  const god = godsWithNames[godIndex];
 
-    // Special handling for gods with multiple ability icon sets (e.g., Ullr Axe/Bow)
-    let variant = null;
-    if (normalize(god.godName) === 'ullr') {
-      variant = Math.random() > 0.5 ? 'Axe' : 'Bow';
-    }
+  // Only use 1–4 for guessing, as requested
+  const abilityChoices = ['1', '2', '3', '4'];
+  const abilityIndex = Math.floor(Math.random() * abilityChoices.length);
+  const abilityKey = abilityChoices[abilityIndex];
 
-    // Use 1–4 and Passive ("P") as possible answers
-    const abilityChoices = ['1', '2', '3', '4', 'P'];
-    const abilityIndex = Math.floor(Math.random() * abilityChoices.length);
-    const abilityKey = abilityChoices[abilityIndex];
-
-    const candidate = { god, abilityKey, variant };
-
-    if (
-      !prevTarget ||
-      !prevTarget.god ||
-      prevTarget.god.godName !== candidate.god.godName ||
-      prevTarget.abilityKey !== candidate.abilityKey ||
-      prevTarget.variant !== candidate.variant
-    ) {
-      return candidate;
-    }
-  }
-
-  // Fallback: return whatever we picked last if we couldn't find a different one
-  const fallbackGodIndex = Math.floor(Math.random() * godsWithNames.length);
-  const fallbackGod = godsWithNames[fallbackGodIndex];
   return {
-    god: fallbackGod,
-    abilityKey: '1',
-    variant: null,
+    god,
+    abilityKey,
   };
 }
 
@@ -254,16 +226,6 @@ export default function AbilityGamePage({ onBack = null }) {
     }
   };
 
-  const handleRestart = () => {
-    const nextTarget = pickRandomAbilityTarget();
-    setTarget(nextTarget);
-    setGuessGodText('');
-    setSelectedAbilityKey(null);
-    setError('');
-    setFeedback('');
-    setCurrentStreak(0);
-  };
-
   const handleSubmitGuess = () => {
     if (!target || !Array.isArray(GODS) || GODS.length === 0) return;
     if (!guessGodText.trim()) {
@@ -271,7 +233,7 @@ export default function AbilityGamePage({ onBack = null }) {
       return;
     }
     if (!selectedAbilityKey) {
-      setError('Select an ability (1–4 or P for passive).');
+      setError('Select an ability (1–4).');
       return;
     }
 
@@ -298,8 +260,8 @@ export default function AbilityGamePage({ onBack = null }) {
         submitBestStreak(newStreak);
       }
 
-      // Immediately move to the next random ability (avoid repeating current target)
-      const nextTarget = pickRandomAbilityTarget(target);
+      // Immediately move to the next random ability
+      const nextTarget = pickRandomAbilityTarget();
       setTarget(nextTarget);
       setGuessGodText('');
       setSelectedAbilityKey(null);
@@ -310,8 +272,8 @@ export default function AbilityGamePage({ onBack = null }) {
       );
       setCurrentStreak(0);
 
-      // Immediately move to the next random ability (avoid repeating current target)
-      const nextTarget = pickRandomAbilityTarget(target);
+      // Immediately move to the next random ability
+      const nextTarget = pickRandomAbilityTarget();
       setTarget(nextTarget);
       setGuessGodText('');
       setSelectedAbilityKey(null);
@@ -321,7 +283,7 @@ export default function AbilityGamePage({ onBack = null }) {
 
   const abilityIconSource =
     target && target.god
-      ? getGodAbilityIcon(target.god.godName, target.abilityKey, target.variant)
+      ? getGodAbilityIcon(target.god.godName, target.abilityKey)
       : null;
 
   return (
@@ -406,9 +368,9 @@ export default function AbilityGamePage({ onBack = null }) {
               </View>
 
               <View style={styles.inputSection}>
-              <Text style={styles.inputLabel}>Ability (1–4 or P for passive):</Text>
+                <Text style={styles.inputLabel}>Ability Number:</Text>
                 <View style={styles.abilityButtonsRow}>
-                  {['1', '2', '3', '4', 'P'].map((key) => (
+                  {['1', '2', '3', '4'].map((key) => (
                     <TouchableOpacity
                       key={key}
                       style={[
@@ -436,9 +398,6 @@ export default function AbilityGamePage({ onBack = null }) {
 
               <TouchableOpacity style={styles.submitButton} onPress={handleSubmitGuess}>
                 <Text style={styles.submitButtonText}>Submit Guess</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.restartButton} onPress={handleRestart}>
-                <Text style={styles.restartButtonText}>Restart Streak</Text>
               </TouchableOpacity>
             </>
           )}
@@ -656,20 +615,6 @@ const styles = StyleSheet.create({
   },
   submitButtonText: {
     color: '#ffffff',
-    fontSize: 14,
-    fontWeight: '700',
-  },
-  restartButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    backgroundColor: '#1e3a5f',
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 16,
-  },
-  restartButtonText: {
-    color: '#e5e7eb',
     fontSize: 14,
     fontWeight: '700',
   },
