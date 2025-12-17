@@ -538,7 +538,6 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
           <View style={styles.tableContainer}>
             <View style={styles.tableHeaderRow}>
               <Text style={[styles.tableHeaderCell, styles.tableHeaderCellFirst]}>#</Text>
-              <Text style={[styles.tableHeaderCell, styles.tableHeaderName]}>God</Text>
               {['Pantheon', 'Role', 'Attack', 'Power', 'Scales', 'Gender', 'Year'].map((label) => (
                 <Text key={label} style={styles.tableHeaderCell}>
                   {label}
