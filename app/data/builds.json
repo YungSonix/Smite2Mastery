@@ -148,37 +148,37 @@
             {
                 "active": true,
                 "buildsFromT1": [
-                  "Shield",
-                  "Shield",
-                  "Shield",
-                  "Shield"
+                    "Shield",
+                    "Shield",
+                    "Shield",
+                    "Shield"
                 ],
                 "components": [
-                  "MedalOfDefense",
-                  "MedalOfDefense"
+                    "MedalOfDefense",
+                    "MedalOfDefense"
                 ],
                 "icon": "/icons/RagnaroksWake.webp",
                 "internalName": "RagnaroksWake",
                 "name": "Ragnarok's Wake",
-                "passive": "    On Use:\nBuildup for 2s before flying for 2.5s to your target location as a meteor of Ragnarok. Can travel up to 30m.\nEnemies near where you land take 600 Magical Damage and are knocked straight up.\nCooldown: 140s.\n    You can own up to 3 active items at once",
+                "passive": "On Use: Choose a target location. After channeling for 2s, become a meteor and fly to that location, dealing heavy damage and knocking enemies straight up upon impact.\nCooldown: 140s.\nYou can own up to 3 active items at once",
                 "stats": {
-                  "Health": 250,
-                  "Physical Protection": 45
+                    "Health": 250,
+                    "Physical Protection": 45
                 },
                 "stepCost": 900,
                 "tags": [
-                  "Active",
-                  "Defense",
-                  "Defensive",
-                  "Physical Protection",
-                  "Health",
-                  "Solo.STR",
-                  "Solo.INT",
-                  "Support.STR",
-                  "Support.INT",
-                  "Tier3",
-                  "Mobility",
-                  "Damage"
+                    "Active",
+                    "Defense",
+                    "Defensive",
+                    "Physical Protection",
+                    "Health",
+                    "Solo.STR",
+                    "Solo.INT",
+                    "Support.STR",
+                    "Support.INT",
+                    "Tier3",
+                    "Mobility",
+                    "Damage"
                 ],
                 "tier": 3,
                 "totalCost": 2600,
@@ -191,7 +191,7 @@
                     "version": "OB25",
                     "type": "new"
                 }
-              },
+            },
             {
                 "active": true,
                 "buildsFromT1": [
@@ -2167,7 +2167,6 @@
                 "tier": 3,
                 "totalCost": 2500
             },
-            
             {
                 "buildsFromT1": [
                     "Rune",
@@ -2951,7 +2950,7 @@
                 "stats": {
                     "Physical Protection": 35,
                     "Mana Regen": 3,
-                    "Cooldown Rate": 15
+                    "Cooldown Rate": 10
                 },
                 "tags": [
                     "Healing",
@@ -3304,7 +3303,7 @@
                 "icon": "/icons/ScepterOfDominion.webp",
                 "internalName": "ScepterOfDominion",
                 "name": "Scepter of Dominion",
-                "passive": "    On Use: Create a zone that puts gods into Stasis.\n    The Zone appears after 1.5s\n    The Stasis lasts 2s\nCooldown: 90s\n    You can own up to 3 active items at once",
+                "passive": "    On Use: Create a zone that puts gods into Stasis.\n    The Zone appears after 1s\n    The Stasis lasts 2s\nCooldown: 90s\n    You can own up to 3 active items at once",
                 "stats": {
                     "Health": 150,
                     "Intelligence": 30,
@@ -3354,7 +3353,7 @@
                 "stats": {
                     "Health": 300,
                     "Health Regen": 3,
-                    "Intelligence": 60
+                    "Intelligence": 40
                 },
                 "stepCost": 750,
                 "tags": [
@@ -3773,7 +3772,7 @@
                 "passive": "Gain 2.5% Max Health Magical Shield every 3s, up to a maximum of 15% Max Health.",
                 "stats": {
                     "Intelligence": 40,
-                    "Magical Protection": 70
+                    "Magical Protection": 60
                 },
                 "stepCost": 1500,
                 "tags": [
@@ -4300,10 +4299,16 @@
                 "internalName": "MedalOfDefense",
                 "name": "Medal of Defense",
                 "tier": 2,
-                "totalCost": 850,
+                "totalCost": 1100,
                 "tags": [
                     "Tier2"
-                ]
+                ],
+                "passive": "",
+                "stepCost": 200,
+                "stats": {
+                    "Physical Protection": 10,
+                    "Health": 125
+                }
             },
             {
                 "buildsFromT1": [
@@ -5748,7 +5753,6 @@
                 "tier": 1,
                 "totalCost": 0
             },
-            
             {
                 "relic": true,
                 "buildsFromT1": [
@@ -5780,10 +5784,8 @@
                 "icon": "/icons/MoteOfChaos.webp",
                 "internalName": "MoteOfChaos",
                 "name": "Mote of Chaos",
-                "passive": "Component item used for upgrading Relics into Active Items.",
-                "stats": {
-                    "statsFromItems": 5
-                },
+                "passive": "Passive: +5% Stats from Items.\nUsed as a component when turning Relics into Actives.",
+                "stats": {},
                 "stepCost": 1250,
                 "tags": [
                     "Component"
@@ -5813,11 +5815,10 @@
                 "icon": "/icons/BlinkingAbyss.webp",
                 "internalName": "BlinkingAbyss",
                 "name": "Blinking Abyss",
-                "passive": "Active: Teleport up to 5.6m. 1s after Teleport: Deal 150 (+30% Strength/Intelligence) in a 3.2m radius. If this damages a god, reduce cooldown -50s.\nCooldown: 140s\nNote: Can be used in combat. Cannot be used while firing an ability.",
+                "passive": "On Use: Teleport up to 5.6m.\n1s after Teleport: Deal 150 (+30% Strength/Intelligence) in a 3.2m radius. If this damages a god, reduce cooldown -50s.\n+7.5% Stats from Items\nCooldown: 140s.\nNotes: Can be used in combat. Cannot be used while firing an ability.\nYou can own up to 3 active items at once",
                 "stats": {
                     "Strength": 25,
-                    "Intelligence": 45,
-                    "%statsFromItems": 7.5
+                    "Intelligence": 45
                 },
                 "stepCost": 1250,
                 "tags": [
@@ -5838,7 +5839,6 @@
                     "type": "new"
                 }
             },
-
             {
                 "relic": false,
                 "buildsFromT1": [
@@ -5851,11 +5851,10 @@
                 "icon": "/icons/TimeLockAegis.webp",
                 "internalName": "TimeLockAegis",
                 "name": "Time-Lock Aegis",
-                "passive": "Active: You become Invulnerable to all damage and healing for 3s, but you are Rooted and unable to act. You can reactivate to end this effect early.\nWhile in Stasis, regenerate 30s worth of Health, 30s worth of Mana, and 10s worth of Ability Cooldowns.\nCooldown: 140s",
+                "passive": "Active: You become Invulnerable to all damage and healing for 3s, but you are Rooted and unable to act. You can reactivate to end this effect early.\nWhile in Stasis, regenerate 30s worth of Health, 30s worth of Mana, and 10s worth of Ability Cooldowns.\n+7.5% Stats from Items\nCooldown: 140s\nYou can own up to 3 active items at once",
                 "stats": {
-                    "physicalProtection": 20,
-                    "magicalProtection": 20,
-                    "%statsFromItems": 7.5
+                    "Physical Protection": 20,
+                    "Magical Protection": 20
                 },
                 "stepCost": 1250,
                 "tags": [
@@ -5887,11 +5886,9 @@
                 "icon": "/icons/TalismanOfPurification.webp",
                 "internalName": "TalismanOfPurification",
                 "name": "Talisman of Purification",
-                "passive": "    On Use: You and Allies within 6.4m:\n    Are Cleansed of all Crowd Control\n    Gain Crowd Control Immunity for 1s\nCooldown:140s\n    You can own up to 3 active items at once",
+                "passive": "    On Use: You and Allies within 6.4m:\n    Are Cleansed of all Crowd Control\n    Gain Crowd Control Immunity for 1s\nCooldown:140s\n   \n7.5% Stats from Items\n You can own up to 3 active items at once",
                 "stats": {
-                    "Cooldown Rate": 10,
-                    "Health": 300,
-                    "Magical Protection": 30
+                    "Cooldown Rate": 15
                 },
                 "stepCost": 1000,
                 "tags": [
@@ -5960,11 +5957,10 @@
                 "icon": "/icons/SunderingEcho.webp",
                 "internalName": "SunderingEcho",
                 "name": "Sundering Echo",
-                "passive": "Active: Bleed Enemies, dealing 25 (+4 per Level) True Damage 3 times over 4s. Jungle Monsters/Bosses take 50 (+8 per Level) instead.\nEnemies who die explode, applying this effect to nearby enemies.\nDuration: Over 3s",
+                "passive": "On Use: Bleed Enemies, dealing 25 (+4 per Level) True Damage 3 times over 4s. Jungle Monsters/Bosses take 50 (+8 per Level) instead.\nEnemies who die explode, applying this effect to nearby enemies.\nOver 3s\n+7.5% Stats from Items\nYou can own up to 3 active items at once",
                 "stats": {
                     "Strength": 25,
-                    "Intelligence": 45,
-                    "%statsFromItems": 7.5
+                    "Intelligence": 45
                 },
                 "stepCost": 1250,
                 "tags": [
@@ -5975,7 +5971,7 @@
                 ],
                 "tier": 3,
                 "totalCost": 2500,
-                 "patchChanges": {
+                "patchChanges": {
                     "OB25": [
                         "new"
                     ]
@@ -5998,11 +5994,10 @@
                 "icon": "/icons/ShellOfRebuke.webp",
                 "internalName": "ShellOfRebuke",
                 "name": "Shell of Rebuke",
-                "passive": "Active: Create an area of safety at your location, granting a shield/phantom effect to allied gods when they first touch the area. The area mitigates 35% of all damage, up to a maximum of 400 + 50 Per Level Damage. Lasts 5s.\nCooldown: 120s",
+                "passive": "Active: Create an area of safety at your location, granting a shield/phantom effect to allied gods when they first touch the area. The area mitigates 35% of all damage, up to a maximum of 400 + 50 Per Level Damage. Lasts 5s.\n+7.5% Stats from Items\nCooldown: 120s.\nYou can own up to 3 active items at once",
                 "stats": {
-                    "PhysicalProtection": 20,
-                    "MagicalProtection": 20,
-                    "%statsFromItems": 7.5
+                    "Physical Protection": 20,
+                    "Magical Protection": 20
                 },
                 "stepCost": 1250,
                 "tags": [
@@ -6814,28 +6809,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "4 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Bumba's Cudgel",
-                            "Axe",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Bumba's Hammer",
-                            "Hydra's Lament",
-                            "Oath-Sworn Spear",
-                            "Barbed Carver",
-                            "Heartseeker",
-                            "Titan's Bane",
-                            "Magi's Cloak"
-                        ],
-                        "notes": "Full-damage jungle build with **Aspect of Prowess**"
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "9 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Warrior's Axe",
                             "Axe",
@@ -6851,6 +6826,26 @@
                             "Spirit Robe"
                         ],
                         "notes": "Bruiser solo-lane build."
+                    },
+                    {
+                        "author": "Mendar",
+                        "last_edit": "16 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Bumba's Cudgel",
+                            "Axe",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Bumba's Hammer",
+                            "Hydra's Lament",
+                            "Barbed Carver",
+                            "The Crusher",
+                            "Heartseeker",
+                            "Titan's Bane",
+                            "Blinking Abyss"
+                        ],
+                        "notes": "Full-damage jungle build with **Aspect of Prowess**"
                     }
                 ]
             },
@@ -7222,7 +7217,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "9 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -7242,7 +7237,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Leather Cowl",
                             "Axe",
@@ -7466,7 +7461,7 @@
                     "icon": "/icons/artioPassive.webp",
                     "key": "Artio.PSV.InGame.Short",
                     "name": "Decompose",
-                    "shortDesc": "Damaging enemies applies Decompose, reducing Protections [4% per stack, max 5] and Healing [25%] for 6s.",
+                    "shortDesc": "Damaging enemies applies Decompose, reducing Protections [4% per stack, max 5].",
                     "valueKeys": {
                         "Protections Debuff Per Stack": [
                             4
@@ -7618,7 +7613,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "2 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bluestone Pendant",
                             "Health Chalice",
@@ -7638,6 +7633,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -8083,8 +8079,8 @@
                 "builds": [
                     {
                         "author": "Mendar",
-                        "last_edit": "11 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "last_edit": "16 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bumba's Cudgel",
                             "Aladdin's Lamp",
@@ -8097,7 +8093,7 @@
                             "Barbed Carver",
                             "Heartseeker",
                             "Titan's Bane",
-                            "Pendulum Blade"
+                            "Time-Lock Aegis"
                         ],
                         "notes": "STR-oriented jungle build. (sell lamp after all wishes are used/when you're full build for Pendulum Blade)"
                     }
@@ -8573,7 +8569,27 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "3 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "War Flag",
+                            "Health Chalice",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "War Banner",
+                            "Evolved Gauntlet of Thebes",
+                            "Stampede",
+                            "Eros' Bow",
+                            "Talisman of Purification",
+                            "Shogun's Ofuda",
+                            "Spirit Robe"
+                        ],
+                        "notes": "Auto attack healing support build. "
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "3 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Death's Toll",
                             "Health Chalice",
@@ -8592,8 +8608,8 @@
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "last_edit": "17 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bumba's Golden Dagger",
                             "Axe",
@@ -8609,26 +8625,6 @@
                             "Odysseus' Bow"
                         ],
                         "notes": "AA-oriented jungle build. with **Aspect of Valor**"
-                    },
-                    {
-                        "author": "Mytharria",
-                        "last_edit": "3 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "War Flag",
-                            "Health Chalice",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "War Banner",
-                            "Evolved Gauntlet of Thebes",
-                            "Stampede",
-                            "Eros' Bow",
-                            "Talisman of Purification",
-                            "Shogun's Ofuda",
-                            "Spirit Robe"
-                        ],
-                        "notes": "Auto attack healing support build. "
                     }
                 ]
             },
@@ -8665,11 +8661,11 @@
                                 80
                             ],
                             "DamageIncrease": [
-                                8,
-                                11,
-                                14,
-                                17,
-                                20
+                                12,
+                                15,
+                                18,
+                                21,
+                                24
                             ],
                             "Lifetime": [
                                 7.5,
@@ -8754,7 +8750,7 @@
                         "icon": "/icons/anhurThree.webp",
                         "key": "Anhur.A03.InGame.Short",
                         "name": "Disperse",
-                        "scales": "60% STR",
+                        "scales": "75% STR",
                         "shortDesc": "Leap forward, dealing [60% STR] Physical Damage where you land.\r\n\r\n  • Knock Back all enemies from your landing point",
                         "valueKeys": {
                             "Cooldown": [
@@ -9031,7 +9027,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "1 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -9051,7 +9047,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "26 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "War Flag",
                             "Health Chalice",
@@ -9507,7 +9503,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -9950,7 +9946,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -9970,7 +9966,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -10421,7 +10417,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -10441,7 +10437,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "26 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "War Flag",
                             "Health Chalice",
@@ -10461,7 +10457,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bumba's Golden Dagger",
                             "Axe",
@@ -10918,7 +10914,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -11475,28 +11471,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Gilded Arrow",
-                            "Axe",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Sharpshooter's Arrow",
-                            "Lernaean Bow",
-                            "Evolved Rage",
-                            "Dagger of Frenzy",
-                            "Deathbringer",
-                            "Titan's Bane",
-                            "Riptalon"
-                        ],
-                        "notes": "Crit-oriented ADC build."
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "12 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bluestone Pendant",
                             "Axe",
@@ -11512,6 +11488,26 @@
                             "The Crusher"
                         ],
                         "notes": "Cooldown + burst damage mid laner/adc **Aspect of The Wild OPTIONAL**"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "4 Oct 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Gilded Arrow",
+                            "Axe",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Sharpshooter's Arrow",
+                            "Lernaean Bow",
+                            "Evolved Rage",
+                            "Dagger of Frenzy",
+                            "Deathbringer",
+                            "Titan's Bane",
+                            "Riptalon"
+                        ],
+                        "notes": "Crit-oriented ADC build."
                     }
                 ]
             },
@@ -11966,27 +11962,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Bumba's Cudgel",
-                            "Gem",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Bumba's Hammer",
-                            "Evolved Book of Thoth",
-                            "Hydra's Lament",
-                            "Evolved Transcendence",
-                            "Polynomicon",
-                            "Obsidian Shard",
-                            "Rod of Tahuti"
-                        ],
-                        "notes": "1 shot combo jungler build with **Aspect of War**"
-                    },
-                    {
-                        "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -12002,6 +11978,26 @@
                             "Contagion"
                         ],
                         "notes": "Cooldown-oriented active item support build"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "23 Oct 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Bumba's Cudgel",
+                            "Gem",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Bumba's Hammer",
+                            "Evolved Book of Thoth",
+                            "Hydra's Lament",
+                            "Evolved Transcendence",
+                            "Polynomicon",
+                            "Obsidian Shard",
+                            "Rod of Tahuti"
+                        ],
+                        "notes": "1 shot combo jungler build with **Aspect of War**"
                     }
                 ]
             },
@@ -12419,9 +12415,9 @@
                 },
                 "builds": [
                     {
-                        "author": "Mytharria",
-                        "last_edit": "25 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "author": "Mendar",
+                        "last_edit": "16 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bumba's Golden Dagger",
                             "Axe",
@@ -12434,7 +12430,7 @@
                             "Pendulum Blade",
                             "Heartseeker",
                             "Titan's Bane",
-                            "Arondight"
+                            "Blinking Abyss"
                         ],
                         "notes": "Full-damage jungle build."
                     }
@@ -12912,7 +12908,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -13400,8 +13396,28 @@
                 "builds": [
                     {
                         "author": "Mytharria",
+                        "last_edit": "17 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Sands Of Time",
+                            "Gem",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Pendulum Of The Ages",
+                            "Chronos' Pendant",
+                            "Gem of Focus",
+                            "Rod of Tahuti",
+                            "Obsidian Shard",
+                            "Obsidian Shard",
+                            "Soul Reaver"
+                        ],
+                        "notes": "INT-oriented burst mage build. With **Aspect of Hysteria**"
+                    },
+                    {
+                        "author": "Mytharria",
                         "last_edit": "24 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -13417,26 +13433,6 @@
                             "Freya's Tears"
                         ],
                         "notes": "Cooldown-oriented active item support build"
-                    },
-                    {
-                        "author": "Mytharria",
-                        "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Sands Of Time",
-                            "Gem",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Pendulum Of The Ages",
-                            "Chronos' Pendant",
-                            "Polynomicon",
-                            "Doom Orb",
-                            "Rod of Tahuti",
-                            "Obsidian Shard",
-                            "Soul Reaver"
-                        ],
-                        "notes": "INT-oriented burst mage build. With **Aspect of Hysteria**"
                     }
                 ]
             },
@@ -13977,27 +13973,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "3 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Warrior's Axe",
-                            "Health Chalice",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Sundering Axe",
-                            "The Reaper",
-                            "Sanguine Lash",
-                            "Berserker's Shield",
-                            "Gladiator's Shield",
-                            "Glorious Pridwen",
-                            "Spirit Robe"
-                        ],
-                        "notes": "Bruiser AA-oriented warrior build"
-                    },
-                    {
-                        "author": "Mytharria",
-                        "last_edit": "3 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "War Flag",
                             "Health Chalice",
@@ -14013,6 +13989,26 @@
                             "Spirit Robe"
                         ],
                         "notes": "Auto attack healing support build. With **__Aspect of Vindication__** "
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "3 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Warrior's Axe",
+                            "Health Chalice",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Sundering Axe",
+                            "The Reaper",
+                            "Sanguine Lash",
+                            "Berserker's Shield",
+                            "Gladiator's Shield",
+                            "Glorious Pridwen",
+                            "Spirit Robe"
+                        ],
+                        "notes": "Bruiser AA-oriented warrior build"
                     }
                 ]
             },
@@ -14542,8 +14538,28 @@
                 "builds": [
                     {
                         "author": "Mytharria",
+                        "last_edit": "30 Nov 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Bluestone Pendant",
+                            "Health Chalice",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Bluestone Brooch",
+                            "Pendulum Blade",
+                            "Mystical Mail",
+                            "Sanguine Lash",
+                            "Genji's Guard",
+                            "Hide of the Nemean Lion",
+                            "Draconic Scale"
+                        ],
+                        "notes": "Bruiser solo-lane build."
+                    },
+                    {
+                        "author": "Mytharria",
                         "last_edit": "25 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bumba's Golden Dagger",
                             "Axe",
@@ -14563,7 +14579,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "24 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -14579,26 +14595,6 @@
                             "Draconic Scale"
                         ],
                         "notes": "Cooldown-oriented active item support build"
-                    },
-                    {
-                        "author": "Mytharria",
-                        "last_edit": "30 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Bluestone Pendant",
-                            "Health Chalice",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Bluestone Brooch",
-                            "Pendulum Blade",
-                            "Mystical Mail",
-                            "Sanguine Lash",
-                            "Genji's Guard",
-                            "Hide of the Nemean Lion",
-                            "Draconic Scale"
-                        ],
-                        "notes": "Bruiser solo-lane build."
                     }
                 ]
             },
@@ -15056,7 +15052,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -15074,9 +15070,9 @@
                         "notes": "Crit-oriented ADC build."
                     },
                     {
-                        "author": "Mytharria",
-                        "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "author": "Mendar",
+                        "last_edit": "16 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bumba's Cudgel",
                             "Axe",
@@ -15086,10 +15082,10 @@
                             "Bumba's Hammer",
                             "Pendulum Blade",
                             "Hydra's Lament",
-                            "Oath-Sworn Spear",
                             "The Crusher",
                             "Heartseeker",
-                            "Titan's Bane"
+                            "Titan's Bane",
+                            "Blinking Abyss"
                         ],
                         "notes": "CDR-oriented Jungle Build with **__Aspect of Strife__**"
                     }
@@ -15603,8 +15599,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "27 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "last_edit": "17 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bluestone Pendant",
                             "Health Chalice",
@@ -15624,7 +15620,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "27 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bluestone Pendant",
                             "Axe",
@@ -16077,27 +16073,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Selflessness",
-                            "Health Chalice",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Heroism",
-                            "Stampede",
-                            "Talisman of Purification",
-                            "Spirit Robe",
-                            "Hide of the Nemean Lion",
-                            "Draconic Scale",
-                            "Freya's Tears"
-                        ],
-                        "notes": "Cooldown-oriented active item support build"
-                    },
-                    {
-                        "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Warrior's Axe",
                             "Health Chalice",
@@ -16113,6 +16089,26 @@
                             "Xibalban Effigy"
                         ],
                         "notes": "Bruiser solo-lane build"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "23 Oct 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Selflessness",
+                            "Health Chalice",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Heroism",
+                            "Stampede",
+                            "Talisman of Purification",
+                            "Spirit Robe",
+                            "Hide of the Nemean Lion",
+                            "Draconic Scale",
+                            "Freya's Tears"
+                        ],
+                        "notes": "Cooldown-oriented active item support build"
                     }
                 ]
             },
@@ -16612,7 +16608,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -16632,7 +16628,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "War Flag",
                             "Health Chalice",
@@ -17043,7 +17039,7 @@
                     {
                         "author": "Mendar",
                         "last_edit": "4 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bumba's Cudgel",
                             "Axe",
@@ -17063,7 +17059,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "30 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Death's Toll",
                             "Axe",
@@ -17449,6 +17445,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "15 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Gilded Arrow",
                             "Health Potion",
@@ -17882,7 +17879,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -18008,7 +18005,7 @@
                                 "2.5s"
                             ],
                             "SilenceDuration": [
-                                "1.5s"
+                                "1s"
                             ],
                             "Cooldown": [
                                 16,
@@ -18254,7 +18251,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -18274,7 +18271,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "25 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Potion (3x)",
@@ -18778,28 +18775,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "24 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Selflessness",
-                            "Health Chalice",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Heroism",
-                            "Stampede",
-                            "Talisman of Purification",
-                            "Hide of the Nemean Lion",
-                            "Spirit Robe",
-                            "Draconic Scale",
-                            "Freya's Tears"
-                        ],
-                        "notes": "Cooldown-oriented active item support build with **__Aspect of Loyalty__**"
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bumba's Golden Dagger",
                             "Axe",
@@ -18815,6 +18792,26 @@
                             "Glorious Pridwen"
                         ],
                         "notes": "Bruiser-AA jungle build (Last item is situational, Hide of Nemean, Pharaoh's Curse, or Magi's Cloak)"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "24 Nov 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Selflessness",
+                            "Health Chalice",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Heroism",
+                            "Stampede",
+                            "Talisman of Purification",
+                            "Hide of the Nemean Lion",
+                            "Spirit Robe",
+                            "Draconic Scale",
+                            "Freya's Tears"
+                        ],
+                        "notes": "Cooldown-oriented active item support build with **__Aspect of Loyalty__**"
                     }
                 ]
             },
@@ -19225,7 +19222,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "1 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bluestone Pendant",
                             "Health Chalice",
@@ -19245,7 +19242,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "24 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -19696,7 +19693,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -19716,7 +19713,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bumba's Golden Dagger",
                             "Gem",
@@ -20139,7 +20136,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -20560,7 +20557,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -21069,8 +21066,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "last_edit": "17 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -21080,9 +21077,9 @@
                             "Pendulum Of The Ages",
                             "Chronos' Pendant",
                             "Spear of Desolation",
-                            "Ancient Signet",
                             "Rod of Tahuti",
                             "Obsidian Shard",
+                            "Ancient Signet",
                             "Soul Reaver"
                         ],
                         "notes": "INT-oriented burst mage build."
@@ -21090,7 +21087,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -21485,29 +21482,29 @@
                 },
                 "builds": [
                     {
-                        "author": "Mendar",
-                        "last_edit": "20 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "author": "Mytharria",
+                        "last_edit": "2 Oct 2025",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
-                            "Bumba's Cudgel",
-                            "Health Potion",
-                            "Axe"
+                            "Selflessness",
+                            "Health Chalice",
+                            "Health Potion"
                         ],
                         "full_build": [
-                            "Bumba's Hammer",
-                            "Hydra's Lament",
-                            "Pendulum Blade",
+                            "Heroism",
                             "Regrowth Striders",
-                            "Heartseeker",
-                            "Titan's Bane",
-                            "Oath-Sworn Spear"
+                            "Sanguine Lash",
+                            "Mystical Mail",
+                            "Hide of the Nemean Lion",
+                            "Oni Hunter's Garb",
+                            "Freya's Tears"
                         ],
-                        "notes": "Full damage jungle build."
+                        "notes": "Cooldown-oriented active item support build"
                     },
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Warrior's Axe",
                             "Health Chalice",
@@ -21525,24 +21522,24 @@
                         "notes": "Bruiser active item solo build."
                     },
                     {
-                        "author": "Mytharria",
-                        "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "author": "Mendar",
+                        "last_edit": "16 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
-                            "Selflessness",
-                            "Health Chalice",
-                            "Health Potion"
+                            "Bumba's Cudgel",
+                            "Health Potion",
+                            "Axe"
                         ],
                         "full_build": [
-                            "Heroism",
+                            "Bumba's Hammer",
+                            "Hydra's Lament",
+                            "Pendulum Blade",
                             "Regrowth Striders",
-                            "Sanguine Lash",
-                            "Mystical Mail",
-                            "Hide of the Nemean Lion",
-                            "Oni Hunter's Garb",
-                            "Freya's Tears"
+                            "Heartseeker",
+                            "Titan's Bane",
+                            "Blinking Abyss"
                         ],
-                        "notes": "Cooldown-oriented active item support build"
+                        "notes": "Full damage jungle build."
                     }
                 ]
             },
@@ -21891,7 +21888,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -22122,26 +22119,19 @@
                                 60,
                                 60
                             ],
-                            "PermanentMovementSpeed": [
-                                5,
-                                5,
-                                5,
-                                5,
-                                5
-                            ],
                             "PermanentProtections": [
-                                5,
-                                5,
-                                5,
-                                5,
-                                5
-                            ],
-                            "Protections": [
+                                15,
+                                20,
                                 25,
                                 30,
-                                35,
-                                40,
-                                45
+                                35
+                            ],
+                            "Protections": [
+                                15,
+                                20,
+                                25,
+                                30,
+                                35
                             ],
                             "Range": [
                                 9.6,
@@ -22397,7 +22387,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "27 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bluestone Pendant",
                             "Health Chalice",
@@ -22550,7 +22540,7 @@
                         "icon": "/icons/batzThree.webp",
                         "key": "HunBatz.A03.InGame.Short",
                         "name": "Sacred Monkey",
-                        "scales": "55% STR",
+                        "scales": "35% STR",
                         "shortDesc": "Throw a projectile monkey that deals [55% STR] Physical Damage to any enemies it hits. After hitting, it will bounce to nearby enemies applying a Mark to only the most recently hit enemy. Reactivate this ability to Teleport to the Marked enemy. ",
                         "valueKeys": {
                             "Cooldown": [
@@ -22866,9 +22856,29 @@
                 },
                 "builds": [
                     {
+                        "author": "Mendar",
+                        "last_edit": "16 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Bumba's Cudgel",
+                            "Axe",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Bumba's Hammer",
+                            "Hydra's Lament",
+                            "Oath-Sworn Spear",
+                            "The Crusher",
+                            "Heartseeker",
+                            "Titan's Bane",
+                            "Blinking Abyss"
+                        ],
+                        "notes": "Cooldown-Oriented jungler build with high burst damage. With **__Aspect of Disruption__**"
+                    },
+                    {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -22884,26 +22894,6 @@
                             "Draconic Scale"
                         ],
                         "notes": "Cooldown-oriented active item support build with **__Aspect of Disruption__**."
-                    },
-                    {
-                        "author": "Mendar",
-                        "last_edit": "4 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Bumba's Cudgel",
-                            "Axe",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Bumba's Hammer",
-                            "Hydra's Lament",
-                            "Oath-Sworn Spear",
-                            "The Crusher",
-                            "Heartseeker",
-                            "Titan's Bane",
-                            "Barbed Carver"
-                        ],
-                        "notes": "Cooldown-Oriented jungler build with high burst damage. With **__Aspect of Disruption__**"
                     }
                 ],
                 "patchChanges": {
@@ -23353,7 +23343,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -23373,7 +23363,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -23699,7 +23689,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "17 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -24085,7 +24075,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -24474,7 +24464,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "1 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bluestone Pendant",
                             "Health Chalice",
@@ -24938,7 +24928,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "24 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -25403,9 +25393,29 @@
                 },
                 "builds": [
                     {
+                        "author": "Mendar",
+                        "last_edit": "16 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Bumba's Golden Dagger",
+                            "Axe",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Bumba's Spear",
+                            "Bragi's Harp",
+                            "Tyrfing",
+                            "Sun Beam Bow",
+                            "Hastened Fatalis",
+                            "Titan's Bane",
+                            "Blinking Abyss"
+                        ],
+                        "notes": "Shred AA Jungle Build (if Sun Beam Bow is not wanted due to mana sustain issues, get The Executioner, BIG DPS LOSS)"
+                    },
+                    {
                         "author": "Mytharria",
                         "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Death's Toll",
                             "Axe",
@@ -25421,26 +25431,6 @@
                             "Hastened Fatalis"
                         ],
                         "notes": "Shred AA ADC Build With **__Aspect of Destruction__**"
-                    },
-                    {
-                        "author": "Mytharria",
-                        "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Bumba's Golden Dagger",
-                            "Axe",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Bumba's Spear",
-                            "Bragi's Harp",
-                            "Tyrfing",
-                            "Sun Beam Bow",
-                            "Hastened Fatalis",
-                            "Odysseus' Bow",
-                            "Titan's Bane"
-                        ],
-                        "notes": "Shred AA Jungle Build (if Sun Beam Bow is not wanted due to mana sustain issues, get The Executioner, BIG DPS LOSS)"
                     }
                 ],
                 "patchChanges": {}
@@ -25793,9 +25783,7 @@
                     "INT"
                 ],
                 "hasAspect": false,
-                "aspect": {
-                    
-                },
+                "aspect": {},
                 "skins": {
                     "Kukulkan": {
                         "name": "Base Kukulkan",
@@ -25830,7 +25818,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -25869,7 +25857,7 @@
                         "icon": "/icons/lokiOne.webp",
                         "key": "Loki.A01.InGame.Short",
                         "name": "Vanish",
-                        "scales": "15% STR",
+                        "scales": "20% STR",
                         "shortDesc": "Disappear in a puff of smoke, become Stealth and gain Movement Speed. \r\n\r\n  • Your next basic attack deals additional [15% STR] Physical Damage over time\r\n  • Killing a god resets the cooldown of this ability\r\n  • You are Immune to Slows while Stealthed",
                         "valueKeys": {
                             "Buff Duration": [
@@ -25964,11 +25952,11 @@
                                 70
                             ],
                             "Damage": [
-                                13,
-                                18,
-                                23,
-                                28,
-                                33
+                                20,
+                                25,
+                                30,
+                                35,
+                                40
                             ],
                             "Damage Reduction": [
                                 5,
@@ -26333,7 +26321,7 @@
                     {
                         "author": "Mendar",
                         "last_edit": "7 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bumba's Cudgel",
                             "Axe",
@@ -26757,7 +26745,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -26777,7 +26765,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "27 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bluestone Pendant",
                             "Axe",
@@ -27097,7 +27085,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "6 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bumba's Golden Dagger",
                             "Health Potion",
@@ -27566,7 +27554,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -28157,8 +28145,8 @@
                 "builds": [
                     {
                         "author": "Mendar",
-                        "last_edit": "4 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "last_edit": "16 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bumba's Cudgel",
                             "Axe",
@@ -28168,17 +28156,17 @@
                             "Bumba's Hammer",
                             "The Reaper",
                             "Barbed Carver",
-                            "Pendulum Blade",
-                            "Heartseeker",
                             "The Crusher",
-                            "Titan's Bane"
+                            "Heartseeker",
+                            "Titan's Bane",
+                            "Blinking Abyss"
                         ],
                         "notes": "Full damage STR-based jungle build with **__Aspect of Rage.__** "
                     },
                     {
                         "author": "Mytharria",
                         "last_edit": "7 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bluestone Pendant",
                             "Health Chalice",
@@ -28614,28 +28602,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Gilded Arrow",
-                            "Axe",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Sharpshooter's Arrow",
-                            "Lernaean Bow",
-                            "Evolved Rage",
-                            "Dagger of Frenzy",
-                            "Deathbringer",
-                            "Titan's Bane",
-                            "Riptalon"
-                        ],
-                        "notes": "Crit-oriented ADC build with **Aspect of Wind**"
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "20 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -28651,6 +28619,26 @@
                             "Soul Reaver"
                         ],
                         "notes": "INT-oriented burst mage build."
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "4 Oct 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Gilded Arrow",
+                            "Axe",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Sharpshooter's Arrow",
+                            "Lernaean Bow",
+                            "Evolved Rage",
+                            "Dagger of Frenzy",
+                            "Deathbringer",
+                            "Titan's Bane",
+                            "Riptalon"
+                        ],
+                        "notes": "Crit-oriented ADC build with **Aspect of Wind**"
                     }
                 ]
             },
@@ -29049,8 +29037,8 @@
                 "builds": [
                     {
                         "author": "Mendar",
-                        "last_edit": "4 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "last_edit": "16 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bumba's Cudgel",
                             "Axe",
@@ -29063,14 +29051,14 @@
                             "The Crusher",
                             "Heartseeker",
                             "Titan's Bane",
-                            "Pendulum Blade"
+                            "Blinking Abyss"
                         ],
                         "notes": "Ability-based STR jungler."
                     },
                     {
                         "author": "Mytharria",
                         "last_edit": "30 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Warrior's Axe",
                             "Health Chalice",
@@ -29512,7 +29500,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "20 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -29532,7 +29520,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -29957,48 +29945,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Selflessness",
-                            "Health Chalice",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Heroism",
-                            "Stampede",
-                            "Talisman of Purification",
-                            "Spirit Robe",
-                            "Freya's Tears",
-                            "Hide of the Nemean Lion",
-                            "Draconic Scale"
-                        ],
-                        "notes": "Cooldown-oriented active item support build"
-                    },
-                    {
-                        "author": "Mendar",
-                        "last_edit": "4 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Bumba's Cudgel",
-                            "Axe",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Bumba's Hammer",
-                            "Pendulum Blade",
-                            "Arondight",
-                            "Oath-Sworn Spear",
-                            "Heartseeker",
-                            "Titan's Bane",
-                            "Magi's Cloak"
-                        ],
-                        "notes": "Full damage jungle build."
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "1 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Warrior's Axe",
                             "Health Chalice",
@@ -30014,6 +29962,46 @@
                             "Hide of the Nemean Lion"
                         ],
                         "notes": "Bruiser solo-lane build."
+                    },
+                    {
+                        "author": "Mendar",
+                        "last_edit": "16 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Bumba's Cudgel",
+                            "Axe",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Bumba's Hammer",
+                            "Pendulum Blade",
+                            "Arondight",
+                            "Oath-Sworn Spear",
+                            "Heartseeker",
+                            "Titan's Bane",
+                            "Blinking Abyss"
+                        ],
+                        "notes": "Full damage jungle build."
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "23 Oct 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Selflessness",
+                            "Health Chalice",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Heroism",
+                            "Stampede",
+                            "Talisman of Purification",
+                            "Spirit Robe",
+                            "Freya's Tears",
+                            "Hide of the Nemean Lion",
+                            "Draconic Scale"
+                        ],
+                        "notes": "Cooldown-oriented active item support build"
                     }
                 ]
             },
@@ -30369,7 +30357,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "25 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Warrior's Axe",
                             "Health Chalice",
@@ -30838,7 +30826,7 @@
                     {
                         "author": "Mendar",
                         "last_edit": "4 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bumba's Cudgel",
                             "Axe",
@@ -30858,7 +30846,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "27 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bluestone Pendant",
                             "Health Chalice",
@@ -31267,28 +31255,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Gilded Arrow",
-                            "Axe",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Sharpshooter's Arrow",
-                            "Lernaean Bow",
-                            "Evolved Rage",
-                            "Dagger of Frenzy",
-                            "Deathbringer",
-                            "Titan's Bane",
-                            "Riptalon"
-                        ],
-                        "notes": "Crit-oriented ADC build. With **Aspect of the Trident**"
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -31304,6 +31272,26 @@
                             "Soul Reaver"
                         ],
                         "notes": "INT-oriented burst mage build. (swap pendulum for Bumba's Spear if you're jungle)"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "4 Oct 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Gilded Arrow",
+                            "Axe",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Sharpshooter's Arrow",
+                            "Lernaean Bow",
+                            "Evolved Rage",
+                            "Dagger of Frenzy",
+                            "Deathbringer",
+                            "Titan's Bane",
+                            "Riptalon"
+                        ],
+                        "notes": "Crit-oriented ADC build. With **Aspect of the Trident**"
                     }
                 ]
             },
@@ -31639,7 +31627,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -31658,8 +31646,8 @@
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "last_edit": "17 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -31679,7 +31667,7 @@
                     {
                         "author": "Mendar",
                         "last_edit": "14 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bluestone Pendant",
                             "Axe",
@@ -32130,8 +32118,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "last_edit": "17 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -32142,8 +32130,8 @@
                             "Doom Orb",
                             "Spear of Desolation",
                             "Nimble Ring",
-                            "Obsidian Shard",
                             "Rod of Tahuti",
+                            "Obsidian Shard",
                             "Soul Reaver"
                         ],
                         "notes": "INT-oriented burst mage build."
@@ -32151,7 +32139,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -32546,7 +32534,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -32979,7 +32967,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "1 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bluestone Pendant",
                             "Health Chalice",
@@ -32999,7 +32987,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -33572,7 +33560,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -33592,7 +33580,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -33995,8 +33983,8 @@
                 "builds": [
                     {
                         "author": "Mendar",
-                        "last_edit": "4 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "last_edit": "16 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bumba's Cudgel",
                             "Axe",
@@ -34009,7 +33997,7 @@
                             "The Crusher",
                             "Heartseeker",
                             "Titan's Bane",
-                            "Oath-Sworn Spear"
+                            "Blinking Abyss"
                         ],
                         "notes": "Cooldown + burst damage jungler"
                     }
@@ -34389,7 +34377,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "27 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bluestone Pendant",
                             "Health Chalice",
@@ -34409,7 +34397,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Conduit Gem",
                             "Health Chalice",
@@ -34792,7 +34780,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -35156,7 +35144,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "25 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -35176,7 +35164,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "25 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -35196,7 +35184,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "25 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -35597,9 +35585,29 @@
                 },
                 "builds": [
                     {
+                        "author": "Mendar",
+                        "last_edit": "16 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Bumba's Cudgel",
+                            "Axe",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Bumba's Hammer",
+                            "The Reaper",
+                            "Hydra's Lament",
+                            "Oath-Sworn Spear",
+                            "Heartseeker",
+                            "Titan's Bane",
+                            "Blinking Abyss"
+                        ],
+                        "notes": "Blink + burst damage jungler"
+                    },
+                    {
                         "author": "Mytharria",
                         "last_edit": "30 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Warrior's Axe",
                             "Health Chalice",
@@ -35615,26 +35623,6 @@
                             "Oni Hunter's Garb"
                         ],
                         "notes": "Bruiser HP-oriented solo-lane build with **Aspect of Reaping.**"
-                    },
-                    {
-                        "author": "Mendar",
-                        "last_edit": "5 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Bumba's Cudgel",
-                            "Axe",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Bumba's Hammer",
-                            "The Reaper",
-                            "Hydra's Lament",
-                            "Oath-Sworn Spear",
-                            "Heartseeker",
-                            "Titan's Bane",
-                            "Pendulum Blade"
-                        ],
-                        "notes": "Cooldown + burst damage jungler"
                     }
                 ]
             },
@@ -36003,28 +35991,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "3 Dec 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Selflessness",
-                            "Health Chalice",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Heroism",
-                            "Lifebinder",
-                            "Breastplate of Valor",
-                            "Genji's Guard",
-                            "The World Stone",
-                            "Freya's Tears",
-                            "Amanita Charm"
-                        ],
-                        "notes": "Cooldown-oriented active item support build"
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -36040,6 +36008,26 @@
                             "Soul Reaver"
                         ],
                         "notes": "INT-oriented burst mage build. **Aspect of Mischief OPTIONAL** (If aspect is on, replace Signet with Gem of Focus)"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "3 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Selflessness",
+                            "Health Chalice",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Heroism",
+                            "Lifebinder",
+                            "Breastplate of Valor",
+                            "Genji's Guard",
+                            "The World Stone",
+                            "Freya's Tears",
+                            "Amanita Charm"
+                        ],
+                        "notes": "Cooldown-oriented active item support build"
                     }
                 ]
             },
@@ -36401,7 +36389,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Conduit Gem",
                             "Gem",
@@ -36420,8 +36408,8 @@
                     },
                     {
                         "author": "Mendar",
-                        "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "last_edit": "16 Dec 2025",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bumba's Cudgel",
                             "Axe",
@@ -36434,7 +36422,7 @@
                             "The Crusher",
                             "Heartseeker",
                             "Titan's Bane",
-                            "Barbed Carver"
+                            "Time-Lock Aegis"
                         ],
                         "notes": "Cooldown + burst damage jungler"
                     }
@@ -36508,10 +36496,6 @@
                         "shortDesc": "Slam Mjolnir down creating a fissure, dealing [30% STR] Physical Damage to enemies as it erupts. Enemies hit are also Stunned.\r\n\r\n   • The fissure blocks movement, but allows projectiles to pass through\r\n\r\n  • Reactivate to bring the fissure down early",
                         "valueKeys": {
                             "Cooldown": [
-                                17,
-                                16.5,
-                                16,
-                                15.5,
                                 15
                             ],
                             "Cost": [
@@ -36576,18 +36560,18 @@
                                 75
                             ],
                             "Damage": [
-                                30,
-                                50,
-                                70,
-                                90,
-                                110
+                                40,
+                                60,
+                                80,
+                                100,
+                                120
                             ],
                             "FinalDamage": [
-                                50,
-                                70,
-                                90,
-                                110,
-                                130
+                                65,
+                                85,
+                                105,
+                                125,
+                                145
                             ],
                             "TickCount": [
                                 3
@@ -36876,7 +36860,7 @@
                     {
                         "author": "Mendar",
                         "last_edit": "14 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bumba's Cudgel",
                             "Axe",
@@ -36895,28 +36879,8 @@
                     },
                     {
                         "author": "Mytharria",
-                        "last_edit": "2 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Selflessness",
-                            "Health Chalice",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Heroism",
-                            "Mystical Mail",
-                            "Sanguine Lash",
-                            "Talisman of Purification",
-                            "Hide of the Nemean Lion",
-                            "Freya's Tears",
-                            "Spirit Robe"
-                        ],
-                        "notes": "Cooldown-oriented active item support build with **__Aspect of Thunderstruck__**"
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "30 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bluestone Pendant",
                             "Health Chalice",
@@ -36932,6 +36896,26 @@
                             "Hide of the Nemean Lion"
                         ],
                         "notes": "Bruiser solo-lane build with **__Aspect of Thunderstruck__**"
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "2 Oct 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Selflessness",
+                            "Health Chalice",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Heroism",
+                            "Mystical Mail",
+                            "Sanguine Lash",
+                            "Talisman of Purification",
+                            "Hide of the Nemean Lion",
+                            "Freya's Tears",
+                            "Spirit Robe"
+                        ],
+                        "notes": "Cooldown-oriented active item support build with **__Aspect of Thunderstruck__**"
                     }
                 ],
                 "patchChanges": {
@@ -37321,7 +37305,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Bluestone Pendant",
                             "Axe",
@@ -37876,7 +37860,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -38270,7 +38254,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Gilded Arrow",
                             "Axe",
@@ -38290,7 +38274,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Conduit Gem",
                             "Health Chalice",
@@ -38774,28 +38758,8 @@
                 "builds": [
                     {
                         "author": "Mendar",
-                        "last_edit": "30 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Conduit Gem",
-                            "Gem",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Archmage's Gem",
-                            "Gem of Focus",
-                            "Necronomicon",
-                            "Spear of Desolation",
-                            "Obsidian Shard",
-                            "Rod of Tahuti",
-                            "Soul Gem"
-                        ],
-                        "notes": "INT-oriented burst mage build. With **Aspect of Downpour**"
-                    },
-                    {
-                        "author": "Mendar",
                         "last_edit": "1 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -38811,6 +38775,26 @@
                             "Spirit Robe"
                         ],
                         "notes": "Cooldown-oriented active item support build"
+                    },
+                    {
+                        "author": "Mendar",
+                        "last_edit": "30 Oct 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Conduit Gem",
+                            "Gem",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Archmage's Gem",
+                            "Gem of Focus",
+                            "Necronomicon",
+                            "Spear of Desolation",
+                            "Obsidian Shard",
+                            "Rod of Tahuti",
+                            "Soul Gem"
+                        ],
+                        "notes": "INT-oriented burst mage build. With **Aspect of Downpour**"
                     }
                 ]
             },
@@ -39178,7 +39162,7 @@
                     {
                         "author": "Mytharria",
                         "last_edit": "23 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Selflessness",
                             "Health Chalice",
@@ -39577,28 +39561,8 @@
                 "builds": [
                     {
                         "author": "Mytharria",
-                        "last_edit": "4 Oct 2025",
-                        "based_on_patch": "Open BETA 24",
-                        "starting": [
-                            "Gilded Arrow",
-                            "Axe",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Sharpshooter's Arrow",
-                            "Lernaean Bow",
-                            "Evolved Rage",
-                            "Dagger of Frenzy",
-                            "Deathbringer",
-                            "Titan's Bane",
-                            "Riptalon"
-                        ],
-                        "notes": "Crit-oriented ADC build."
-                    },
-                    {
-                        "author": "Mytharria",
                         "last_edit": "11 Nov 2025",
-                        "based_on_patch": "Open BETA 24",
+                        "based_on_patch": "Open BETA 25",
                         "starting": [
                             "Sands Of Time",
                             "Gem",
@@ -39614,6 +39578,26 @@
                             "Soul Reaver"
                         ],
                         "notes": "INT-oriented burst mage build. "
+                    },
+                    {
+                        "author": "Mytharria",
+                        "last_edit": "4 Oct 2025",
+                        "based_on_patch": "Open BETA 25",
+                        "starting": [
+                            "Gilded Arrow",
+                            "Axe",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Sharpshooter's Arrow",
+                            "Lernaean Bow",
+                            "Evolved Rage",
+                            "Dagger of Frenzy",
+                            "Deathbringer",
+                            "Titan's Bane",
+                            "Riptalon"
+                        ],
+                        "notes": "Crit-oriented ADC build."
                     }
                 ]
             }

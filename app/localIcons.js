@@ -59,6 +59,7 @@ export function getLocalItemIcon(iconPath) {
 // Example: "Jormungandr" icons on GitHub might be "jormImage.webp", etc.
 const GOD_ICON_BASE_OVERRIDES = {
   jormungandr: 'jorm',
+  'yemoja': 'yem',
   izanami: 'iza',
   poseidon: 'pos',
   cernunnos: 'cern',
