@@ -1,4 +1,3 @@
-
 // Remote image URLs from GitHub
 // Base URL for all icons - updated to match actual repo structure
 const GITHUB_BASE = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img';
@@ -58,36 +57,45 @@ export function getLocalItemIcon(iconPath) {
 // Keys and values are all lowercase, with spaces removed.
 // Example: "Jormungandr" icons on GitHub might be "jormImage.webp", etc.
 const GOD_ICON_BASE_OVERRIDES = {
-  jormungandr: 'jorm',
-  yemoja: 'yem',
+ jormungandr: 'jorm',
+ yemoja: 'yem',
  jingwei: 'jing',
  princessbari: 'bari',
  nemesis: 'nem',
  Aphrodite:'aphro',
  Amaterasu:'ama',
- BaronSamedi:'baron',
-daji: 'daJi',
- Bellona:'bell',
+baronsamedi: 'baron',
+ daji: 'daJi',
+ bellona:'bell',
  Mercury:'merc',
  Poseidon:'pos',
-  izanami: 'iza',
-  SunWukong:'wukong',
-  Thanatos:'thana',
-  Danzaburou:'danza',
-  TheMorrigan:'morri',
-  HuaMulan:'mulan',
-  Hercules:'herc',
-  Kukulkan:'kuku',
-  Xbalanque:'xbal',
-  poseidon: 'pos',
-  cernunnos: 'cern',
-  tsukuyomi: 'tsuku',
-  bellona: 'bell',
-  hunbatz: 'batz',
-  guanyu: 'guan',
-  cabrakan: 'cab',
-  cerberus: 'cerb',
+ izanami: 'iza',
+ SunWukong:'wukong',
+ thanatos:'thana',
+ Danzaburou:'danza',
+ TheMorrigan:'morri',
+ HuaMulan:'mulan',
+ Hercules:'herc',
+ Kukulkan:'kuku',
+ Xbalanque:'xbal',
+ poseidon: 'pos',
+ cernunnos: 'cern',
+ tsukuyomi: 'tsuku',
+ bellona: 'bell',
+ hunbatz: 'batz',
+ guanyu: 'guan',
+ cabrakan: 'cab',
+ cerberus: 'cerb',
  
+};
+
+// Gods that have multiple forms/stances with different ability icons
+// Example: Artio has Bear and Druid forms, so abilities are like "artioBearOne.webp" and "artioDruidOne.webp"
+const GOD_VARIANTS = {
+  Artio: ['Bear', 'Druid'],
+  Ullr: ['Axe', 'Bow'],
+  Merlin: ['Fire', 'Ice', 'Arcane'], // Adjust these based on your actual variants
+  // Add more multi-form gods here as needed (e.g., Hel, Tyr, King Arthur, Cu Chulainn)
 };
 
 function getGodIconBaseName(godName) {
@@ -102,6 +110,16 @@ function getGodIconBaseName(godName) {
   }
 
   return normalized;
+}
+
+// Helper function to get all variants for a god
+export function getGodVariants(godName) {
+  return GOD_VARIANTS[godName] || null;
+}
+
+// Helper function to check if a god has variants
+export function godHasVariants(godName) {
+  return godName in GOD_VARIANTS;
 }
 
 // God asset lookup - uses the filename that is passed in
@@ -144,6 +162,9 @@ export function getRemoteGodIconByName(godName) {
 //          ("Achilles", "4")   -> "achillesFour.webp"
 //          ("Achilles", "P")   -> "achillesPassive.webp"
 //          ("Achilles", "A")   -> "achillesAspect.webp"
+// For gods with variants (like Artio):
+//          ("Artio", "1", "Druid") -> "artioDruidOne.webp"
+//          ("Artio", "1", "Bear")  -> "artioBearOne.webp"
 const ABILITY_SUFFIXES = {
   '1': 'One',
   '2': 'Two',
@@ -167,16 +188,17 @@ export function getGodAbilityIcon(godName, abilityKey, variant) {
   const suffix = ABILITY_SUFFIXES[suffixKey];
   if (!suffix) return null;
 
-  // For gods like Ullr that have multiple forms (e.g., Axe/Bow),
+  // For gods like Ullr, Artio, Merlin that have multiple forms (e.g., Axe/Bow, Bear/Druid),
   // we can pass a variant string that sits between the base name and suffix:
-  // e.g. "ullr" + "Axe" + "One" -> "ullrAxeOne.webp"
+  // e.g. "artio" + "Druid" + "One" -> "artioDruidOne.webp"
+  //      "ullr" + "Axe" + "One" -> "ullrAxeOne.webp"
   const variantPart = variant ? String(variant).trim() : '';
 
   const filename = `${baseName}${variantPart}${suffix}.webp`;
   const uri = createImageUri(GOD_ICONS_PATH, filename);
 
   if (__DEV__) {
-    console.log('Loading ability icon:', godName, abilityKey, '->', uri.uri);
+    console.log('Loading ability icon:', godName, abilityKey, variant ? `(${variant})` : '', '->', uri.uri);
   }
 
   return uri;
