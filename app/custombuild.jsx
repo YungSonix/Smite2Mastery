@@ -89,6 +89,58 @@ export default function CustomBuildPage({ onNavigateToGod }) {
   const [isUserCertified, setIsUserCertified] = useState(false); // Track if user is certified
   const [showStartingAbilityPicker, setShowStartingAbilityPicker] = useState(false);
   const [currentStartingAbilityLevel, setCurrentStartingAbilityLevel] = useState(0); // 0-4 for levels 1-5
+  const [showPostToCertifiedModal, setShowPostToCertifiedModal] = useState(false);
+  const [certifiedBuildName, setCertifiedBuildName] = useState('');
+  const [isPostingToCertified, setIsPostingToCertified] = useState(false);
+  
+  // Check certification status on mount and periodically
+  useEffect(() => {
+    const checkCertificationStatus = async () => {
+      try {
+        const currentUser = await storage.getItem('currentUser');
+        if (!currentUser) {
+          setIsUserCertified(false);
+          return;
+        }
+        
+        // Check from Supabase
+        try {
+          const { supabase } = require('../config/supabase');
+          const { data, error } = await supabase
+            .from('certification_requests')
+            .select('status')
+            .eq('username', currentUser)
+            .order('requested_at', { ascending: false })
+            .limit(1)
+            .single();
+          
+          if (!error && data && data.status === 'approved') {
+            setIsUserCertified(true);
+            // Also save to local storage
+            await storage.setItem(`certificationStatus_${currentUser}`, 'approved');
+          } else {
+            // Check local storage as fallback
+            const cachedStatus = await storage.getItem(`certificationStatus_${currentUser}`);
+            setIsUserCertified(cachedStatus === 'approved');
+          }
+        } catch (err) {
+          // Check local storage as fallback
+          const cachedStatus = await storage.getItem(`certificationStatus_${currentUser}`);
+          setIsUserCertified(cachedStatus === 'approved');
+        }
+      } catch (error) {
+        console.error('Error checking certification status:', error);
+      }
+    };
+    
+    checkCertificationStatus();
+    
+    // Refresh certification status every 30 seconds
+    const interval = setInterval(checkCertificationStatus, 30000);
+    
+    return () => clearInterval(interval);
+  }, []);
+  
   // Randomizer state
   const [godRerolls, setGodRerolls] = useState(3);
   const [itemRerolls, setItemRerolls] = useState(3);
@@ -1530,6 +1582,32 @@ export default function CustomBuildPage({ onNavigateToGod }) {
               <Text style={styles.saveBuildButtonText}>Save Build to Profile</Text>
             </TouchableOpacity>
             
+            {/* Post to Certified Builds Button - Only show if user is certified */}
+            {isUserCertified && (
+              <TouchableOpacity
+                style={[styles.postToCommunityButton, styles.postToCertifiedButton]}
+                onPress={async () => {
+                  const currentUser = await storage.getItem('currentUser');
+                  if (!currentUser) {
+                    Alert.alert('Not Logged In', 'Please log in to post certified builds.');
+                    return;
+                  }
+                  
+                  // Check if build is complete
+                  const hasItems = selectedItems.filter(Boolean).length > 0;
+                  if (!hasItems) {
+                    Alert.alert('Incomplete Build', 'Please add items to your build before posting.');
+                    return;
+                  }
+                  
+                  setCertifiedBuildName('');
+                  setShowPostToCertifiedModal(true);
+                }}
+              >
+                <Text style={styles.postToCommunityButtonText}>Post to Certified Builds</Text>
+              </TouchableOpacity>
+            )}
+            
             {/* Post to Community Builds Button */}
             <TouchableOpacity
               style={styles.postToCommunityButton}
@@ -2502,6 +2580,218 @@ export default function CustomBuildPage({ onNavigateToGod }) {
         </Pressable>
       </Modal>
 
+      {/* Post to Certified Builds Modal */}
+      <Modal
+        visible={showPostToCertifiedModal}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowPostToCertifiedModal(false)}
+      >
+        <Pressable 
+          style={styles.modalOverlay}
+          onPress={() => setShowPostToCertifiedModal(false)}
+        >
+          <Pressable 
+            style={styles.saveBuildModal}
+            onPress={(e) => e.stopPropagation()}
+          >
+            <View style={styles.saveBuildModalHeader}>
+              <Text style={styles.saveBuildModalTitle}>Post to Certified Builds</Text>
+              <TouchableOpacity
+                style={styles.modalCloseButton}
+                onPress={() => setShowPostToCertifiedModal(false)}
+              >
+                <Text style={styles.modalCloseText}>✕</Text>
+              </TouchableOpacity>
+            </View>
+            
+            <Text style={styles.saveBuildModalLabel}>Build Name:</Text>
+            <TextInput
+              style={styles.saveBuildModalInput}
+              placeholder="Enter build name (e.g., 'Full-Damage STR Jungle Build')"
+              placeholderTextColor="#64748b"
+              value={certifiedBuildName}
+              onChangeText={setCertifiedBuildName}
+              autoFocus={true}
+            />
+            
+            <Text style={styles.saveBuildModalLabel}>Gamemodes:</Text>
+            <View style={styles.gamemodeTagsContainer}>
+              {['All Modes', 'Joust', 'Dual', 'Arena', 'Conquest', 'Assault'].map((mode) => {
+                const isSelected = selectedGamemodes.includes(mode);
+                return (
+                  <TouchableOpacity
+                    key={mode}
+                    style={[
+                      styles.gamemodeTag,
+                      isSelected && styles.gamemodeTagSelected
+                    ]}
+                    onPress={() => {
+                      if (mode === 'All Modes') {
+                        setSelectedGamemodes(['All Modes']);
+                      } else {
+                        let newModes = selectedGamemodes.filter(m => m !== 'All Modes');
+                        if (isSelected) {
+                          newModes = newModes.filter(m => m !== mode);
+                          if (newModes.length === 0) {
+                            newModes = ['All Modes'];
+                          }
+                        } else {
+                          newModes.push(mode);
+                        }
+                        setSelectedGamemodes(newModes);
+                      }
+                    }}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={[
+                      styles.gamemodeTagText,
+                      isSelected && styles.gamemodeTagTextSelected
+                    ]}>
+                      {mode}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+            
+            <View style={styles.saveBuildModalButtons}>
+              <TouchableOpacity
+                style={[styles.saveBuildModalButton, styles.saveBuildModalButtonCancel]}
+                onPress={() => {
+                  setShowPostToCertifiedModal(false);
+                  setCertifiedBuildName('');
+                  setSelectedGamemodes(['All Modes']);
+                }}
+              >
+                <Text style={styles.saveBuildModalButtonText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.saveBuildModalButton, styles.saveBuildModalButtonSave, isPostingToCertified && styles.saveBuildModalButtonDisabled]}
+                onPress={async () => {
+                  if (!certifiedBuildName.trim()) {
+                    Alert.alert('Error', 'Please enter a build name.');
+                    return;
+                  }
+
+                  const currentUser = await storage.getItem('currentUser');
+                  if (!currentUser) {
+                    Alert.alert('Not Logged In', 'Please log in to post certified builds.');
+                    setShowPostToCertifiedModal(false);
+                    return;
+                  }
+
+                  setIsPostingToCertified(true);
+                  
+                  try {
+                    const { supabase } = require('../config/supabase');
+                    
+                    const gamemodesToSave = selectedGamemodes.includes('All Modes')
+                      ? ['Joust', 'Dual', 'Arena', 'Conquest', 'Assault']
+                      : selectedGamemodes;
+                    
+                    const buildData = {
+                      name: certifiedBuildName.trim(),
+                      god: selectedGod.name || selectedGod.GodName || selectedGod.title || selectedGod.displayName,
+                      godInternalName: selectedGod.internalName || selectedGod.GodName,
+                      godIcon: selectedGod.icon || selectedGod.GodIcon,
+                      items: selectedItems.filter(Boolean).map(item => ({
+                        name: item.name || item.internalName,
+                        internalName: item.internalName,
+                        icon: item.icon,
+                      })),
+                      startingItems: startingItems.filter(Boolean).map(item => ({
+                        name: item.name || item.internalName,
+                        internalName: item.internalName,
+                        icon: item.icon,
+                      })),
+                      relic: selectedRelic ? {
+                        name: selectedRelic.name || selectedRelic.internalName,
+                        internalName: selectedRelic.internalName,
+                        icon: selectedRelic.icon,
+                      } : null,
+                      godLevel,
+                      aspectActive: aspectActive && selectedGod.aspect ? true : false,
+                      author: currentUser,
+                      notes: buildTips.trim() || certifiedBuildName.trim(),
+                      tips: buildTips.trim(),
+                      abilityLevelingOrder: abilityLevelingOrder,
+                      startingAbilityOrder: startingAbilityOrder,
+                      itemSwaps: itemSwaps.map(swap => ({
+                        item: swap.item,
+                        reasoning: swap.reasoning,
+                      })),
+                      roles: selectedRoles,
+                      gamemodes: gamemodesToSave,
+                      createdAt: new Date().toISOString(),
+                      isCertified: true,
+                    };
+
+                    const { data, error } = await supabase
+                      .from('certified_builds')
+                      .insert({
+                        username: currentUser,
+                        build_name: certifiedBuildName.trim(),
+                        god_name: buildData.god,
+                        god_internal_name: buildData.godInternalName,
+                        items: buildData.items,
+                        starting_items: buildData.startingItems,
+                        relic: buildData.relic,
+                        god_level: godLevel,
+                        aspect_active: buildData.aspectActive,
+                        notes: buildData.notes || buildData.tips || certifiedBuildName.trim(),
+                        tips: buildData.tips,
+                        ability_leveling_order: buildData.abilityLevelingOrder,
+                        starting_ability_order: buildData.startingAbilityOrder,
+                        item_swaps: buildData.itemSwaps,
+                        roles: buildData.roles,
+                        gamemodes: gamemodesToSave,
+                        created_at: new Date().toISOString(),
+                      });
+
+                    if (error) {
+                      console.error('Error posting to certified builds:', error);
+                      if (error.code === 'MISSING_CONFIG') {
+                        Alert.alert(
+                          'Development Mode', 
+                          'Supabase is not configured in development. In production, your builds will be saved properly.'
+                        );
+                        setShowPostToCertifiedModal(false);
+                        setCertifiedBuildName('');
+                        setSelectedGamemodes(['All Modes']);
+                        setIsPostingToCertified(false);
+                        Alert.alert('Success (Dev Mode)', 'Build posted! In production, this will be saved to the database.');
+                      } else {
+                        Alert.alert('Error', `Failed to post build: ${error.message || 'Please try again.'}`);
+                      }
+                      setIsPostingToCertified(false);
+                      return;
+                    }
+
+                    setShowPostToCertifiedModal(false);
+                    setCertifiedBuildName('');
+                    setSelectedGamemodes(['All Modes']);
+                    setIsPostingToCertified(false);
+                    Alert.alert('Success', 'Your certified build has been posted!');
+                  } catch (error) {
+                    console.error('Exception posting to certified builds:', error);
+                    Alert.alert('Error', 'An error occurred. Please try again.');
+                    setIsPostingToCertified(false);
+                  }
+                }}
+                disabled={isPostingToCertified}
+              >
+                {isPostingToCertified ? (
+                  <ActivityIndicator size="small" color="#ffffff" />
+                ) : (
+                  <Text style={styles.saveBuildModalButtonText}>Post Build</Text>
+                )}
+              </TouchableOpacity>
+            </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
+
       {/* Post to Community Builds Modal */}
       <Modal
         visible={showPostToCommunityModal}
@@ -3173,6 +3463,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     textAlign: 'center',
+  },
+  postToCertifiedButton: {
+    backgroundColor: '#f59e0b',
+    borderColor: '#d97706',
   },
   saveBuildModalButtonDisabled: {
     opacity: 0.6,
