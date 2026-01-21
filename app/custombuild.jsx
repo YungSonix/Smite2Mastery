@@ -52,10 +52,12 @@ export default function CustomBuildPage({ onNavigateToGod }) {
   const [localBuilds, setLocalBuilds] = useState(null);
   const [dataLoading, setDataLoading] = useState(true);
   const [selectedGod, setSelectedGod] = useState(null);
-  const [godLevel, setGodLevel] = useState(20);
+  const [godLevel, setGodLevel] = useState(20); // Keep for backward compatibility but don't show UI
   const [selectedItems, setSelectedItems] = useState(Array(7).fill(null));
+  const [startingItems, setStartingItems] = useState(Array(5).fill(null)); // 5 starting item slots
   const [selectedRelic, setSelectedRelic] = useState(null);
   const [aspectActive, setAspectActive] = useState(false);
+  const [selectedRoles, setSelectedRoles] = useState([]); // Array of selected roles (max 4)
   const [showGodPicker, setShowGodPicker] = useState(false);
   const [showItemPicker, setShowItemPicker] = useState(null); // Index of item slot
   const [selectedItemInfo, setSelectedItemInfo] = useState(null); // { item, index } for info modal
@@ -75,6 +77,18 @@ export default function CustomBuildPage({ onNavigateToGod }) {
   const [communityBuildName, setCommunityBuildName] = useState('');
   const [isPostingToCommunity, setIsPostingToCommunity] = useState(false);
   const [selectedGamemodes, setSelectedGamemodes] = useState(['All Modes']); // Default to "All Modes"
+  const [showRelicPicker, setShowRelicPicker] = useState(false);
+  const [abilityLevelingOrder, setAbilityLevelingOrder] = useState([]); // Array of ability keys like ['A01', 'A02', 'A03']
+  const [startingAbilityOrder, setStartingAbilityOrder] = useState(Array(5).fill(null)); // Array of 5 ability keys for first 5 levels
+  const [buildTips, setBuildTips] = useState(''); // Tips/notes text
+  const [itemSwaps, setItemSwaps] = useState([]); // Array of { item: {name, icon}, reasoning: string }
+  const [showSwapModal, setShowSwapModal] = useState(false);
+  const [currentSwapIndex, setCurrentSwapIndex] = useState(null); // For editing swaps
+  const [swapItem, setSwapItem] = useState(null);
+  const [swapReasoning, setSwapReasoning] = useState('');
+  const [isUserCertified, setIsUserCertified] = useState(false); // Track if user is certified
+  const [showStartingAbilityPicker, setShowStartingAbilityPicker] = useState(false);
+  const [currentStartingAbilityLevel, setCurrentStartingAbilityLevel] = useState(0); // 0-4 for levels 1-5
   // Randomizer state
   const [godRerolls, setGodRerolls] = useState(3);
   const [itemRerolls, setItemRerolls] = useState(3);
@@ -119,6 +133,28 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                     itemsArray.push(null);
                   }
                   setSelectedItems(itemsArray.slice(0, 7));
+                }
+                if (savedBuild.startingItems && Array.isArray(savedBuild.startingItems)) {
+                  // Ensure we have 5 slots
+                  const startingItemsArray = [...savedBuild.startingItems];
+                  while (startingItemsArray.length < 5) {
+                    startingItemsArray.push(null);
+                  }
+                  setStartingItems(startingItemsArray.slice(0, 5));
+                }
+                if (savedBuild.roles && Array.isArray(savedBuild.roles)) {
+                  setSelectedRoles(savedBuild.roles);
+                }
+                if (savedBuild.abilityLevelingOrder && Array.isArray(savedBuild.abilityLevelingOrder)) {
+                  setAbilityLevelingOrder(savedBuild.abilityLevelingOrder);
+                }
+                if (savedBuild.startingAbilityOrder && Array.isArray(savedBuild.startingAbilityOrder)) {
+                  // Ensure we have exactly 5 slots
+                  const orderArray = [...savedBuild.startingAbilityOrder];
+                  while (orderArray.length < 5) {
+                    orderArray.push(null);
+                  }
+                  setStartingAbilityOrder(orderArray.slice(0, 5));
                 }
                 if (savedBuild.godLevel) {
                   setGodLevel(savedBuild.godLevel);
@@ -204,6 +240,34 @@ export default function CustomBuildPage({ onNavigateToGod }) {
   const filteredItems = useMemo(() => {
     let result = items;
     
+    // Auto-filter for starter slots - only show starter items
+    // Starter slot in build items (index 0) - only starter items
+    if (showItemPicker === 0) {
+      result = result.filter((item) => {
+        if (!item || typeof item !== 'object') return false;
+        return item.starter === true || (item.name && item.name.toLowerCase().includes('starter'));
+      });
+    }
+    
+    // Auto-filter by tier for starting items
+    // If selecting for starter slot (index 100), only show starter items
+    // If selecting for other starting slots (index 101-104), show tier 1 and tier 2 items
+    if (showItemPicker !== null && showItemPicker >= 100 && showItemPicker < 105) {
+      if (showItemPicker === 100) {
+        // Starter slot in starting items - only starter items
+        result = result.filter((item) => {
+          if (!item || typeof item !== 'object') return false;
+          return item.starter === true || (item.name && item.name.toLowerCase().includes('starter'));
+        });
+      } else {
+        // Other starting slots (101-104) - tier 1 and tier 2 items
+        result = result.filter((item) => {
+          if (!item || typeof item !== 'object') return false;
+          return item.tier === 1 || item.tier === 2;
+        });
+      }
+    }
+    
     // Apply stat filter
     if (selectedStat) {
       result = result.filter((item) => {
@@ -212,8 +276,8 @@ export default function CustomBuildPage({ onNavigateToGod }) {
       });
     }
     
-    // Apply tier filter
-    if (selectedTier) {
+    // Apply tier filter (only if not already filtered by starting items)
+    if (selectedTier && (showItemPicker === null || showItemPicker < 100 || showItemPicker >= 105)) {
       result = result.filter((item) => {
         if (!item || typeof item !== 'object') return false;
         
@@ -266,7 +330,7 @@ export default function CustomBuildPage({ onNavigateToGod }) {
     }
     
     return result;
-  }, [items, itemSearchQuery, selectedStat, selectedTier]);
+  }, [items, itemSearchQuery, selectedStat, selectedTier, showItemPicker]);
 
   // Handle slider movement for both web and mobile
   const handleSliderMove = useCallback((event) => {
@@ -367,7 +431,7 @@ export default function CustomBuildPage({ onNavigateToGod }) {
     }
   }, [isDragging, IS_WEB, handleMouseMove, handleMouseUp]);
 
-  // Calculate base stats at current level
+  // Calculate base stats at max level (always level 20)
   const baseStats = useMemo(() => {
     const stats = {};
     
@@ -375,11 +439,8 @@ export default function CustomBuildPage({ onNavigateToGod }) {
       Object.keys(selectedGod.baseStats).forEach((statKey) => {
         const statData = selectedGod.baseStats[statKey];
         if (statData && typeof statData === 'object') {
-          const level1 = statData['1'] || 0;
-          const level20 = statData['20'] || 0;
-          // Linear interpolation between level 1 and 20
-          const levelProgress = (godLevel - 1) / 19; // 0 at level 1, 1 at level 20
-          const statValue = level1 + (level20 - level1) * levelProgress;
+          // Always use level 20 stats (max level)
+          const statValue = statData['20'] || 0;
           // Keep decimal precision for key combat stats like protections, attack speed, and basic damage.
           // Other stats can be rounded to whole numbers for readability.
           if (
@@ -540,17 +601,43 @@ export default function CustomBuildPage({ onNavigateToGod }) {
   }, [selectedItems]);
 
   const selectItem = (item, index) => {
-    const newItems = [...selectedItems];
-    newItems[index] = item;
-    setSelectedItems(newItems);
+    // Check if this is for a swap (index 999)
+    if (index === 999) {
+      setSwapItem(item);
+      setShowItemPicker(null);
+      setItemSearchQuery('');
+      setSelectedStat(null);
+      setSelectedTier(null);
+      // Keep swap modal open
+      return;
+    }
+    // Check if this is a starting item (index >= 100)
+    if (index >= 100) {
+      const startingIndex = index - 100;
+      const newStartingItems = [...startingItems];
+      newStartingItems[startingIndex] = item;
+      setStartingItems(newStartingItems);
+    } else {
+      const newItems = [...selectedItems];
+      newItems[index] = item;
+      setSelectedItems(newItems);
+    }
     setShowItemPicker(null);
     setItemSearchQuery('');
   };
 
   const removeItem = (index) => {
-    const newItems = [...selectedItems];
-    newItems[index] = null;
-    setSelectedItems(newItems);
+    // Check if this is a starting item (index >= 100)
+    if (index >= 100) {
+      const startingIndex = index - 100;
+      const newStartingItems = [...startingItems];
+      newStartingItems[startingIndex] = null;
+      setStartingItems(newStartingItems);
+    } else {
+      const newItems = [...selectedItems];
+      newItems[index] = null;
+      setSelectedItems(newItems);
+    }
     setSelectedItemInfo(null);
   };
 
@@ -692,241 +779,160 @@ export default function CustomBuildPage({ onNavigateToGod }) {
           </View>
         </View>
 
-        {/* Level Slider */}
+        {/* Starting Items */}
         {selectedGod && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Player Level</Text>
-            <View style={styles.levelContainer}>
-              <View style={styles.levelSliderContainer}>
+            <Text style={styles.sectionTitle}>Starting Items</Text>
+            {/* Starter item on its own row */}
+            <View style={styles.starterStartingItemRow}>
+              <View style={styles.startingItemSlot}>
+                <Text style={styles.starterItemLabel}>Starter</Text>
                 <TouchableOpacity
-                  style={[styles.levelSliderButton, godLevel === 1 && styles.levelSliderButtonDisabled]}
-                  onPress={() => setGodLevel(Math.max(1, godLevel - 1))}
-                  disabled={godLevel === 1}
-                >
-                  <Text style={styles.levelSliderButtonText}>-</Text>
-                </TouchableOpacity>
-                <View
-                  ref={sliderTrackRef}
-                  style={styles.levelSliderTrack}
-                  onLayout={(e) => {
-                    const { width, x } = e.nativeEvent.layout;
-                    setSliderTrackWidth(width);
-                    setSliderTrackLayout({ x, y: e.nativeEvent.layout.y, width });
-                  }}
-                  onMouseDown={(e) => {
-                    if (IS_WEB && sliderTrackRef.current && sliderTrackWidth > 0) {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setIsDragging(true);
-                      handleSliderMove({ nativeEvent: { clientX: e.clientX, pageX: e.pageX } });
+                  style={styles.startingItemSlotButton}
+                  onPress={() => {
+                    if (startingItems[0]) {
+                      showItemInfo(startingItems[0], 100);
+                    } else {
+                      setShowItemPicker(100);
                     }
                   }}
-                  onTouchStart={(e) => {
-                    if (sliderTrackRef.current && sliderTrackWidth > 0) {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setIsDragging(true);
-                      let touchX = 0;
-                      if (IS_WEB) {
-                        const touch = e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0];
-                        if (touch && sliderTrackRef.current) {
-                          const rect = sliderTrackRef.current.getBoundingClientRect?.();
-                          if (rect) {
-                            touchX = touch.clientX - rect.left;
-                          } else {
-                            touchX = touch.pageX - (sliderTrackLayout.x || 0);
-                          }
-                        }
-                      } else {
-                        const touch = e.nativeEvent.touches[0];
-                        if (touch && sliderTrackRef.current) {
-                          sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
-                            touchX = touch.pageX - px;
-                            handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
-                          });
-                          return;
-                        }
-                      }
-                      if (touchX > 0 || !IS_WEB) {
-                        const touch = IS_WEB ? (e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0]) : e.nativeEvent.touches[0];
-                        handleSliderMove({ nativeEvent: { locationX: touchX, touches: touch ? [touch] : [] } });
-                      }
-                    }
-                  }}
-                  onTouchMove={(e) => {
-                    if (sliderTrackRef.current && sliderTrackWidth > 0) {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setIsDragging(true);
-                      let touchX = 0;
-                      if (IS_WEB) {
-                        const touch = e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0];
-                        if (touch && sliderTrackRef.current) {
-                          try {
-                            const rect = sliderTrackRef.current.getBoundingClientRect?.();
-                            if (rect) {
-                              touchX = touch.clientX - rect.left;
-                            } else if (touch.pageX && sliderTrackLayout.x > 0) {
-                              touchX = touch.pageX - sliderTrackLayout.x;
-                            } else {
-                              touchX = touch.clientX || 0;
-                            }
-                          } catch (err) {
-                            touchX = (touch.pageX || touch.clientX || 0) - (sliderTrackLayout.x || 0);
-                          }
-                        }
-                      } else {
-                        const touch = e.nativeEvent.touches[0];
-                        if (touch && sliderTrackRef.current) {
-                          sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
-                            touchX = touch.pageX - px;
-                            handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
-                          });
-                          return;
-                        }
-                      }
-                      if (touchX >= 0 || !IS_WEB) {
-                        const touch = IS_WEB ? (e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0]) : e.nativeEvent.touches[0];
-                        handleSliderMove({ nativeEvent: { locationX: touchX, touches: touch ? [touch] : [], clientX: touch?.clientX, pageX: touch?.pageX } });
-                      }
-                    }
-                  }}
-                  onTouchEnd={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setIsDragging(false);
-                  }}
+                  activeOpacity={0.7}
                 >
-                  <View 
-                    style={[
-                      styles.levelSliderFill,
-                      isDragging && styles.levelSliderFillActive,
-                      { width: `${((godLevel - 1) / 19) * 100}%` }
-                    ]} 
-                    pointerEvents="none"
-                  />
-                  <View 
-                    style={[
-                      styles.levelSliderThumb,
-                      isDragging && styles.levelSliderThumbDragging,
-                      { left: `${((godLevel - 1) / 19) * 100}%` }
-                    ]}
-                    onStartShouldSetResponder={() => true}
-                    onMoveShouldSetResponder={() => true}
-                    onResponderGrant={(event) => {
-                      if (!IS_WEB) {
-                        event.preventDefault();
-                        setIsDragging(true);
-                        handleSliderMove(event);
-                      }
-                    }}
-                    onResponderMove={(event) => {
-                      if (!IS_WEB) {
-                        event.preventDefault();
-                        setIsDragging(true);
-                        handleSliderMove(event);
-                      }
-                    }}
-                    onResponderRelease={() => {
-                      if (!IS_WEB) {
-                        setIsDragging(false);
-                      }
-                    }}
-                    onResponderTerminationRequest={() => false}
-                    onMouseDown={(e) => {
-                      if (IS_WEB && sliderTrackRef.current && sliderTrackWidth > 0) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setIsDragging(true);
-                        handleSliderMove({ nativeEvent: { clientX: e.clientX, pageX: e.pageX } });
-                      }
-                    }}
-                    onTouchStart={(e) => {
-                      if (sliderTrackRef.current && sliderTrackWidth > 0) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setIsDragging(true);
-                        let touchX = 0;
-                        if (IS_WEB) {
-                          const touch = e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0];
-                          if (touch && sliderTrackRef.current) {
-                            const rect = sliderTrackRef.current.getBoundingClientRect?.();
-                            if (rect) {
-                              touchX = touch.clientX - rect.left;
-                            } else {
-                              touchX = touch.pageX - (sliderTrackLayout.x || 0);
-                            }
-                          }
-                        } else {
-                          const touch = e.nativeEvent.touches[0];
-                          if (touch && sliderTrackRef.current) {
-                            sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
-                              touchX = touch.pageX - px;
-                              handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
-                            });
-                            return;
-                          }
+                  {startingItems[0] ? (
+                    <>
+                      {(() => {
+                        const localIcon = getLocalItemIcon(startingItems[0].icon || startingItems[0].internalName);
+                        if (!localIcon) {
+                          return (
+                            <View style={styles.startingItemIconPlaceholder}>
+                              <Text style={styles.startingItemIconPlaceholderText}>?</Text>
+                            </View>
+                          );
                         }
-                        if (touchX > 0 || !IS_WEB) {
-                          const touch = IS_WEB ? (e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0]) : e.nativeEvent.touches[0];
-                          handleSliderMove({ nativeEvent: { locationX: touchX, touches: touch ? [touch] : [] } });
+                        
+                        const imageSource = localIcon.primary || localIcon;
+                        const fallbackSource = localIcon.fallback;
+                        const iconKey = `starting-item-${startingItems[0].internalName || startingItems[0].name}-0`;
+                        const useFallback = failedItemIcons[iconKey];
+                        
+                        if (fallbackSource && !useFallback) {
+                          return (
+                            <Image
+                              source={imageSource}
+                              style={styles.startingItemIcon}
+                              resizeMode="cover"
+                              onError={() => {
+                                setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+                              }}
+                            />
+                          );
                         }
-                      }
-                    }}
-                    onTouchMove={(e) => {
-                      if (sliderTrackRef.current && sliderTrackWidth > 0) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setIsDragging(true);
-                        let touchX = 0;
-                        if (IS_WEB) {
-                          const touch = e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0];
-                          if (touch && sliderTrackRef.current) {
-                            try {
-                              const rect = sliderTrackRef.current.getBoundingClientRect?.();
-                              if (rect) {
-                                touchX = touch.clientX - rect.left;
-                              } else if (touch.pageX && sliderTrackLayout.x > 0) {
-                                touchX = touch.pageX - sliderTrackLayout.x;
-                              } else {
-                                touchX = touch.clientX || 0;
-                              }
-                            } catch (err) {
-                              touchX = (touch.pageX || touch.clientX || 0) - (sliderTrackLayout.x || 0);
-                            }
-                          }
-                        } else {
-                          const touch = e.nativeEvent.touches[0];
-                          if (touch && sliderTrackRef.current) {
-                            sliderTrackRef.current.measure((fx, fy, width, height, px, py) => {
-                              touchX = touch.pageX - px;
-                              handleSliderMove({ nativeEvent: { locationX: touchX, touches: [touch] } });
-                            });
-                            return;
-                          }
+                        
+                        if (fallbackSource && useFallback) {
+                          return (
+                            <Image
+                              source={fallbackSource}
+                              style={styles.startingItemIcon}
+                              resizeMode="cover"
+                            />
+                          );
                         }
-                        if (touchX >= 0 || !IS_WEB) {
-                          const touch = IS_WEB ? (e.nativeEvent?.touches?.[0] || e.nativeEvent?.changedTouches?.[0]) : e.nativeEvent.touches[0];
-                          handleSliderMove({ nativeEvent: { locationX: touchX, touches: touch ? [touch] : [], clientX: touch?.clientX, pageX: touch?.pageX } });
-                        }
-                      }
-                    }}
-                    onTouchEnd={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setIsDragging(false);
-                    }}
-                  />
-                </View>
-                <TouchableOpacity
-                  style={[styles.levelSliderButton, godLevel === 20 && styles.levelSliderButtonDisabled]}
-                  onPress={() => setGodLevel(Math.min(20, godLevel + 1))}
-                  disabled={godLevel === 20}
-                >
-                  <Text style={styles.levelSliderButtonText}>+</Text>
+                        
+                        return (
+                          <Image
+                            source={imageSource}
+                            style={styles.startingItemIcon}
+                            resizeMode="cover"
+                          />
+                        );
+                      })()}
+                      <Text style={styles.startingItemName} numberOfLines={2}>
+                        {startingItems[0].name || startingItems[0].internalName}
+                      </Text>
+                    </>
+                  ) : (
+                    <View style={styles.startingItemSlotPlaceholder}>
+                      <Text style={styles.startingItemSlotPlaceholderText}>+</Text>
+                    </View>
+                  )}
                 </TouchableOpacity>
               </View>
-              <Text style={styles.levelSliderLabel}>Level: {godLevel}</Text>
+            </View>
+            {/* Rest of starting items (4 on one row) */}
+            <View style={styles.startingItemsContainer}>
+              {startingItems.slice(1).map((item, index) => (
+                <View key={index + 1} style={styles.startingItemSlot}>
+                  <TouchableOpacity
+                    style={styles.startingItemSlotButton}
+                    onPress={() => {
+                      if (item) {
+                        showItemInfo(item, index + 101); // Use offset to distinguish from regular items (101-104)
+                      } else {
+                        setShowItemPicker(index + 101); // Use offset for starting items (101-104)
+                      }
+                    }}
+                    activeOpacity={0.7}
+                  >
+                    {item ? (
+                      <>
+                        {(() => {
+                          const localIcon = getLocalItemIcon(item.icon || item.internalName);
+                          if (!localIcon) {
+                            return (
+                              <View style={styles.startingItemIconPlaceholder}>
+                                <Text style={styles.startingItemIconPlaceholderText}>?</Text>
+                              </View>
+                            );
+                          }
+                          
+                          const imageSource = localIcon.primary || localIcon;
+                          const fallbackSource = localIcon.fallback;
+                          const iconKey = `starting-item-${item.internalName || item.name}-${index}`;
+                          const useFallback = failedItemIcons[iconKey];
+                          
+                          if (fallbackSource && !useFallback) {
+                            return (
+                              <Image
+                                source={imageSource}
+                                style={styles.startingItemIcon}
+                                resizeMode="cover"
+                                onError={() => {
+                                  setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+                                }}
+                              />
+                            );
+                          }
+                          
+                          if (fallbackSource && useFallback) {
+                            return (
+                              <Image
+                                source={fallbackSource}
+                                style={styles.startingItemIcon}
+                                resizeMode="cover"
+                              />
+                            );
+                          }
+                          
+                          return (
+                            <Image
+                              source={imageSource}
+                              style={styles.startingItemIcon}
+                              resizeMode="cover"
+                            />
+                          );
+                        })()}
+                        <Text style={styles.startingItemName} numberOfLines={2}>
+                          {item.name || item.internalName}
+                        </Text>
+                      </>
+                    ) : (
+                      <View style={styles.startingItemSlotPlaceholder}>
+                        <Text style={styles.startingItemSlotPlaceholderText}>+</Text>
+                      </View>
+                    )}
+                  </TouchableOpacity>
+                </View>
+              ))}
             </View>
           </View>
         )}
@@ -934,16 +940,93 @@ export default function CustomBuildPage({ onNavigateToGod }) {
         {/* Item Slots */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Build Items</Text>
+          {/* Starter Item - First item on its own row */}
+          <View style={styles.starterItemRow}>
+            <View style={styles.itemSlot}>
+              <Text style={styles.starterItemLabel}>Starter</Text>
+              <TouchableOpacity
+                style={styles.itemSlotButton}
+                onPress={() => {
+                  if (selectedItems[0]) {
+                    showItemInfo(selectedItems[0], 0);
+                  } else {
+                    setShowItemPicker(0);
+                  }
+                }}
+                activeOpacity={0.7}
+              >
+                {selectedItems[0] ? (
+                  <>
+                    {(() => {
+                      const localIcon = getLocalItemIcon(selectedItems[0].icon || selectedItems[0].internalName);
+                      if (!localIcon) {
+                        return (
+                          <View style={styles.itemIconPlaceholder}>
+                            <Text style={styles.itemIconPlaceholderText}>?</Text>
+                          </View>
+                        );
+                      }
+                      
+                      const imageSource = localIcon.primary || localIcon;
+                      const fallbackSource = localIcon.fallback;
+                      const iconKey = `item-${selectedItems[0].internalName || selectedItems[0].name}-0`;
+                      const useFallback = failedItemIcons[iconKey];
+                      
+                      if (fallbackSource && !useFallback) {
+                        return (
+                          <Image
+                            source={imageSource}
+                            style={styles.itemIcon}
+                            resizeMode="cover"
+                            onError={() => {
+                              setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+                            }}
+                          />
+                        );
+                      }
+                      
+                      if (fallbackSource && useFallback) {
+                        return (
+                          <Image
+                            source={fallbackSource}
+                            style={styles.itemIcon}
+                            resizeMode="cover"
+                          />
+                        );
+                      }
+                      
+                      return (
+                        <Image
+                          source={imageSource}
+                          style={styles.itemIcon}
+                          resizeMode="cover"
+                        />
+                      );
+                    })()}
+                    <Text style={styles.itemName} numberOfLines={2}>
+                      {selectedItems[0].name || selectedItems[0].internalName}
+                    </Text>
+                  </>
+                ) : (
+                  <View style={styles.itemSlotPlaceholder}>
+                    <Text style={styles.itemSlotPlaceholderText}>+</Text>
+                    <Text style={styles.itemSlotNumber}>1</Text>
+                  </View>
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+          {/* Rest of the items */}
           <View style={styles.itemSlotsContainer}>
-            {selectedItems.map((item, index) => (
-              <View key={index} style={styles.itemSlot}>
+            {selectedItems.slice(1).map((item, index) => (
+              <View key={index + 1} style={styles.itemSlot}>
                 <TouchableOpacity
                   style={styles.itemSlotButton}
                   onPress={() => {
                     if (item) {
-                      showItemInfo(item, index);
+                      showItemInfo(item, index + 1);
                     } else {
-                      setShowItemPicker(index);
+                      setShowItemPicker(index + 1);
                     }
                   }}
                   activeOpacity={0.7}
@@ -1011,6 +1094,278 @@ export default function CustomBuildPage({ onNavigateToGod }) {
             ))}
           </View>
         </View>
+
+        {/* Relic Selection */}
+        {selectedGod && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Relic</Text>
+            <TouchableOpacity
+              style={styles.relicSlot}
+              onPress={() => setShowRelicPicker(true)}
+              activeOpacity={0.7}
+            >
+              {selectedRelic ? (
+                <>
+                  {(() => {
+                    const localIcon = getLocalItemIcon(selectedRelic.icon || selectedRelic.internalName);
+                    if (!localIcon) {
+                      return (
+                        <View style={styles.relicIconPlaceholder}>
+                          <Text style={styles.relicIconPlaceholderText}>?</Text>
+                        </View>
+                      );
+                    }
+                    
+                    const imageSource = localIcon.primary || localIcon;
+                    const fallbackSource = localIcon.fallback;
+                    const iconKey = `relic-${selectedRelic.internalName || selectedRelic.name}`;
+                    const useFallback = failedItemIcons[iconKey];
+                    
+                    if (fallbackSource && !useFallback) {
+                      return (
+                        <Image
+                          source={imageSource}
+                          style={styles.relicIcon}
+                          resizeMode="cover"
+                          onError={() => {
+                            setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+                          }}
+                        />
+                      );
+                    }
+                    
+                    if (fallbackSource && useFallback) {
+                      return (
+                        <Image
+                          source={fallbackSource}
+                          style={styles.relicIcon}
+                          resizeMode="cover"
+                        />
+                      );
+                    }
+                    
+                    return (
+                      <Image
+                        source={imageSource}
+                        style={styles.relicIcon}
+                        resizeMode="cover"
+                      />
+                    );
+                  })()}
+                  <Text style={styles.relicName}>{selectedRelic.name || selectedRelic.internalName}</Text>
+                  <TouchableOpacity
+                    style={styles.removeRelicButton}
+                    onPress={(e) => {
+                      e.stopPropagation();
+                      setSelectedRelic(null);
+                    }}
+                  >
+                    <Text style={styles.removeRelicButtonText}>✕</Text>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <>
+                  <View style={styles.relicIconPlaceholder}>
+                    <Text style={styles.relicIconPlaceholderText}>+</Text>
+                  </View>
+                  <Text style={styles.relicPlaceholderText}>Select Relic</Text>
+                </>
+              )}
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {/* Starting Ability Order (First 5 Levels) */}
+        {selectedGod && selectedGod.abilities && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Starting Ability Order (Levels 1-5)</Text>
+            <Text style={styles.sectionSubtitle}>Select which ability to level at each of the first 5 levels</Text>
+            <View style={styles.startingAbilityOrderContainer}>
+              {[1, 2, 3, 4, 5].map((level) => {
+                const abilityKey = startingAbilityOrder[level - 1];
+                const ability = abilityKey ? selectedGod.abilities[abilityKey] : null;
+                return (
+                  <View key={level} style={styles.startingAbilityLevelSlot}>
+                    <Text style={styles.startingAbilityLevelLabel}>Level {level}</Text>
+                    <TouchableOpacity
+                      style={[
+                        styles.startingAbilitySlotButton,
+                        ability && styles.startingAbilitySlotButtonSelected
+                      ]}
+                      onPress={() => {
+                        // Set which level we're editing and show ability picker modal
+                        setCurrentStartingAbilityLevel(level - 1);
+                        setShowStartingAbilityPicker(true);
+                      }}
+                      activeOpacity={0.7}
+                    >
+                      {ability ? (
+                        <>
+                          {ability.icon && (
+                            <Image
+                              source={getLocalGodAsset(ability.icon)}
+                              style={styles.startingAbilityIcon}
+                              resizeMode="cover"
+                            />
+                          )}
+                          <Text style={styles.startingAbilityName} numberOfLines={1}>
+                            {ability.name || abilityKey}
+                          </Text>
+                        </>
+                      ) : (
+                        <>
+                          <View style={styles.startingAbilityIconPlaceholder}>
+                            <Text style={styles.startingAbilityIconPlaceholderText}>?</Text>
+                          </View>
+                          <Text style={styles.startingAbilityPlaceholderText}>Select</Text>
+                        </>
+                      )}
+                    </TouchableOpacity>
+                  </View>
+                );
+              })}
+            </View>
+            {startingAbilityOrder.some(ability => ability !== null) && (
+              <TouchableOpacity
+                style={styles.clearAbilityOrderButton}
+                onPress={() => setStartingAbilityOrder(Array(5).fill(null))}
+              >
+                <Text style={styles.clearAbilityOrderText}>Clear Order</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
+
+        {/* Max Ability Leveling Order */}
+        {selectedGod && selectedGod.abilities && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Max Ability Leveling Order</Text>
+            <Text style={styles.sectionSubtitle}>Tap abilities in the order you want to level them</Text>
+            <View style={styles.abilityLevelingContainerSingleRow}>
+              {Object.keys(selectedGod.abilities).map((abilityKey) => {
+                const ability = selectedGod.abilities[abilityKey];
+                const orderIndex = abilityLevelingOrder.indexOf(abilityKey);
+                const isSelected = orderIndex !== -1;
+                return (
+                  <TouchableOpacity
+                    key={abilityKey}
+                    style={[
+                      styles.abilityLevelingButtonSmall,
+                      isSelected && styles.abilityLevelingButtonSelected
+                    ]}
+                    onPress={() => {
+                      if (isSelected) {
+                        // Remove from order
+                        setAbilityLevelingOrder(prev => prev.filter(k => k !== abilityKey));
+                      } else {
+                        // Add to order
+                        setAbilityLevelingOrder(prev => [...prev, abilityKey]);
+                      }
+                    }}
+                    activeOpacity={0.7}
+                  >
+                    {ability.icon && (
+                      <Image
+                        source={getLocalGodAsset(ability.icon)}
+                        style={styles.abilityLevelingIconSmall}
+                        resizeMode="cover"
+                      />
+                    )}
+                    {isSelected && (
+                      <View style={styles.abilityLevelingOrderBadgeSmall}>
+                        <Text style={styles.abilityLevelingOrderTextSmall}>{orderIndex + 1}</Text>
+                      </View>
+                    )}
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+            {abilityLevelingOrder.length > 0 && (
+              <TouchableOpacity
+                style={styles.clearAbilityOrderButton}
+                onPress={() => setAbilityLevelingOrder([])}
+              >
+                <Text style={styles.clearAbilityOrderText}>Clear Order</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
+
+        {/* Build Tips */}
+        {selectedGod && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Build Tips & Notes</Text>
+            <TextInput
+              style={styles.buildTipsInput}
+              placeholder="Add tips, strategies, or notes for this build..."
+              placeholderTextColor="#64748b"
+              value={buildTips}
+              onChangeText={setBuildTips}
+              multiline={true}
+              numberOfLines={4}
+              textAlignVertical="top"
+            />
+          </View>
+        )}
+
+        {/* Item Swaps */}
+        {selectedGod && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Item Swaps</Text>
+            <Text style={styles.sectionSubtitle}>Add alternative items and explain when to use them</Text>
+            {itemSwaps.map((swap, index) => (
+              <View key={index} style={styles.swapItem}>
+                {swap.item && (
+                  <Image
+                    source={getLocalItemIcon(swap.item.icon || swap.item.internalName)}
+                    style={styles.swapItemIcon}
+                    resizeMode="cover"
+                  />
+                )}
+                <View style={styles.swapItemContent}>
+                  <Text style={styles.swapItemName}>
+                    {swap.item ? (swap.item.name || swap.item.internalName) : 'No item selected'}
+                  </Text>
+                  {swap.reasoning && (
+                    <Text style={styles.swapItemReasoning}>{swap.reasoning}</Text>
+                  )}
+                </View>
+                <View style={styles.swapItemActions}>
+                  <TouchableOpacity
+                    style={styles.editSwapButton}
+                    onPress={() => {
+                      setCurrentSwapIndex(index);
+                      setSwapItem(swap.item);
+                      setSwapReasoning(swap.reasoning || '');
+                      setShowSwapModal(true);
+                    }}
+                  >
+                    <Text style={styles.editSwapButtonText}>Edit</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.deleteSwapButton}
+                    onPress={() => {
+                      setItemSwaps(prev => prev.filter((_, i) => i !== index));
+                    }}
+                  >
+                    <Text style={styles.deleteSwapButtonText}>✕</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ))}
+            <TouchableOpacity
+              style={styles.addSwapButton}
+              onPress={() => {
+                setCurrentSwapIndex(null);
+                setSwapItem(null);
+                setSwapReasoning('');
+                setShowSwapModal(true);
+              }}
+            >
+              <Text style={styles.addSwapButtonText}>+ Add Swap</Text>
+            </TouchableOpacity>
+          </View>
+        )}
 
         {/* Stats Summary */}
         <View style={styles.section}>
@@ -1412,7 +1767,19 @@ export default function CustomBuildPage({ onNavigateToGod }) {
         <View style={styles.modalOverlay}>
           <View style={styles.modalContainer}>
             <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>Select Item (Slot {showItemPicker !== null ? showItemPicker + 1 : ''})</Text>
+              <Text style={styles.modalTitle}>
+                {showItemPicker === 999 
+                  ? 'Select Item for Swap' 
+                  : showItemPicker === 0
+                  ? 'Select Starter Item'
+                  : showItemPicker === 100
+                  ? 'Select Starter Item'
+                  : showItemPicker >= 101 && showItemPicker < 105
+                  ? `Select Starting Item (Slot ${showItemPicker - 100 + 1}) `
+                  : showItemPicker !== null
+                  ? `Select Item (Slot ${showItemPicker + 1})`
+                  : 'Select Item'}
+              </Text>
               <TouchableOpacity
                 style={styles.modalCloseButton}
                 onPress={() => {
@@ -1530,7 +1897,21 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                     key={index}
                     style={styles.itemPickerItem}
                     onPress={() => {
-                      selectItem(item, showItemPicker);
+                      // Check if we're selecting for a swap (index 999)
+                      if (showItemPicker === 999) {
+                        // This is for a swap - set the item and reopen swap modal
+                        setSwapItem(item);
+                        setShowItemPicker(null);
+                        setItemSearchQuery('');
+                        setSelectedStat(null);
+                        setSelectedTier(null);
+                        // Reopen swap modal after a brief delay
+                        setTimeout(() => {
+                          setShowSwapModal(true);
+                        }, 100);
+                      } else {
+                        selectItem(item, showItemPicker);
+                      }
                     }}
                   >
                     {localIcon && (
@@ -1707,6 +2088,14 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                       internalName: item.internalName,
                       icon: item.icon,
                     })),
+                    startingItems: startingItems.filter(Boolean).map(item => ({
+                      name: item.name || item.internalName,
+                      internalName: item.internalName,
+                      icon: item.icon,
+                    })),
+                    roles: selectedRoles,
+                    abilityLevelingOrder: abilityLevelingOrder,
+                    startingAbilityOrder: startingAbilityOrder,
                     godLevel,
                     aspectActive: aspectActive && selectedGod.aspect ? true : false,
                     createdAt: new Date().toISOString(),
@@ -1765,6 +2154,350 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                 <Text style={styles.saveBuildModalButtonText}>Save</Text>
               </TouchableOpacity>
             </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
+
+      {/* Relic Picker Modal */}
+      <Modal
+        visible={showRelicPicker}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => {
+          setShowRelicPicker(false);
+          setItemSearchQuery('');
+        }}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>Select Relic</Text>
+              <TouchableOpacity
+                style={styles.modalCloseButton}
+                onPress={() => {
+                  setShowRelicPicker(false);
+                  setItemSearchQuery('');
+                }}
+              >
+                <Text style={styles.modalCloseText}>✕</Text>
+              </TouchableOpacity>
+            </View>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search relics..."
+              placeholderTextColor="#64748b"
+              value={itemSearchQuery}
+              onChangeText={setItemSearchQuery}
+            />
+            <ScrollView style={styles.modalContent}>
+              {relics
+                .filter((relic) => {
+                  if (!itemSearchQuery.trim()) return true;
+                  const query = itemSearchQuery.toLowerCase();
+                  const name = (relic.name || relic.internalName || '').toString().toLowerCase();
+                  return name.includes(query);
+                })
+                .map((relic, index) => {
+                  const name = relic.name || relic.internalName || 'Unknown';
+                  const icon = relic.icon || relic.internalName;
+                  const localIcon = getLocalItemIcon(icon);
+                  const iconKey = `relic-picker-${relic.internalName || relic.name || index}`;
+                  const useFallback = failedItemIcons[iconKey];
+                  
+                  return (
+                    <TouchableOpacity
+                      key={index}
+                      style={styles.itemPickerItem}
+                      onPress={() => {
+                        setSelectedRelic(relic);
+                        setShowRelicPicker(false);
+                        setItemSearchQuery('');
+                      }}
+                    >
+                      {localIcon ? (() => {
+                        const imageSource = localIcon.primary || localIcon;
+                        const fallbackSource = localIcon.fallback;
+                        
+                        if (fallbackSource && !useFallback) {
+                          return (
+                            <Image
+                              source={imageSource}
+                              style={styles.itemPickerIcon}
+                              resizeMode="cover"
+                              onError={() => {
+                                setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+                              }}
+                            />
+                          );
+                        }
+                        
+                        if (fallbackSource && useFallback) {
+                          return (
+                            <Image
+                              source={fallbackSource}
+                              style={styles.itemPickerIcon}
+                              resizeMode="cover"
+                            />
+                          );
+                        }
+                        
+                        return (
+                          <Image
+                            source={imageSource}
+                            style={styles.itemPickerIcon}
+                            resizeMode="cover"
+                          />
+                        );
+                      })() : null}
+                      <Text style={styles.itemPickerName}>{name}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Item Swap Modal */}
+      <Modal
+        visible={showSwapModal}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => {
+          setShowSwapModal(false);
+          setSwapItem(null);
+          setSwapReasoning('');
+          setItemSearchQuery('');
+        }}
+      >
+        <Pressable
+          style={styles.modalOverlay}
+          onPress={() => {
+            setShowSwapModal(false);
+            setSwapItem(null);
+            setSwapReasoning('');
+            setItemSearchQuery('');
+          }}
+        >
+          <Pressable
+            style={styles.saveBuildModal}
+            onPress={(e) => e.stopPropagation()}
+          >
+            <View style={styles.saveBuildModalHeader}>
+              <Text style={styles.saveBuildModalTitle}>
+                {currentSwapIndex !== null ? 'Edit Swap' : 'Add Item Swap'}
+              </Text>
+              <TouchableOpacity
+                style={styles.modalCloseButton}
+                onPress={() => {
+                  setShowSwapModal(false);
+                  setSwapItem(null);
+                  setSwapReasoning('');
+                  setItemSearchQuery('');
+                }}
+              >
+                <Text style={styles.modalCloseText}>✕</Text>
+              </TouchableOpacity>
+            </View>
+            
+            <Text style={styles.saveBuildModalLabel}>Item:</Text>
+            <TouchableOpacity
+              style={styles.swapItemSelector}
+              onPress={() => {
+                // Temporarily close swap modal and open item picker
+                // We'll reopen swap modal after item selection
+                setShowSwapModal(false);
+                setShowItemPicker(999); // Special index for swap item selection
+              }}
+            >
+              {swapItem ? (
+                <View style={styles.swapItemSelectorContent}>
+                  {(() => {
+                    const iconName = swapItem.icon || swapItem.internalName;
+                    const localIcon = getLocalItemIcon(iconName);
+                    if (localIcon) {
+                      const imageSource = localIcon.primary || localIcon;
+                      const fallbackSource = localIcon.fallback;
+                      const iconKey = `swap-item-${swapItem.internalName || swapItem.name}`;
+                      const useFallback = failedItemIcons[iconKey];
+                      
+                      if (fallbackSource && !useFallback) {
+                        return (
+                          <Image
+                            source={imageSource}
+                            style={styles.swapItemSelectorIcon}
+                            resizeMode="cover"
+                            onError={() => {
+                              setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+                            }}
+                          />
+                        );
+                      }
+                      
+                      if (fallbackSource && useFallback) {
+                        return (
+                          <Image
+                            source={fallbackSource}
+                            style={styles.swapItemSelectorIcon}
+                            resizeMode="cover"
+                          />
+                        );
+                      }
+                      
+                      return (
+                        <Image
+                          source={imageSource}
+                          style={styles.swapItemSelectorIcon}
+                          resizeMode="cover"
+                        />
+                      );
+                    }
+                    return null;
+                  })()}
+                  <Text style={styles.swapItemSelectorText}>
+                    {swapItem.name || swapItem.internalName}
+                  </Text>
+                </View>
+              ) : (
+                <View style={styles.swapItemSelectorPlaceholder}>
+                  <Text style={styles.swapItemSelectorPlaceholderText}>+ Tap to select item</Text>
+                </View>
+              )}
+            </TouchableOpacity>
+            
+            <Text style={styles.saveBuildModalLabel}>Reasoning:</Text>
+            <TextInput
+              style={[styles.saveBuildModalInput, styles.swapReasoningInput]}
+              placeholder="Explain when to use this swap..."
+              placeholderTextColor="#64748b"
+              value={swapReasoning}
+              onChangeText={setSwapReasoning}
+              multiline={true}
+              numberOfLines={3}
+              textAlignVertical="top"
+            />
+
+            <View style={styles.saveBuildModalButtons}>
+              <TouchableOpacity
+                style={[styles.saveBuildModalButton, styles.saveBuildModalButtonCancel]}
+                onPress={() => {
+                  setShowSwapModal(false);
+                  setSwapItem(null);
+                  setSwapReasoning('');
+                  setItemSearchQuery('');
+                }}
+              >
+                <Text style={styles.saveBuildModalButtonText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.saveBuildModalButton, styles.saveBuildModalButtonSave]}
+                onPress={() => {
+                  if (!swapItem) {
+                    Alert.alert('Error', 'Please select an item for the swap.');
+                    return;
+                  }
+                  if (!swapReasoning.trim()) {
+                    Alert.alert('Error', 'Please provide reasoning for this swap.');
+                    return;
+                  }
+                  
+                  if (currentSwapIndex !== null) {
+                    // Edit existing swap
+                    setItemSwaps(prev => {
+                      const newSwaps = [...prev];
+                      newSwaps[currentSwapIndex] = { item: swapItem, reasoning: swapReasoning.trim() };
+                      return newSwaps;
+                    });
+                  } else {
+                    // Add new swap
+                    setItemSwaps(prev => [...prev, { item: swapItem, reasoning: swapReasoning.trim() }]);
+                  }
+                  
+                  setShowSwapModal(false);
+                  setSwapItem(null);
+                  setSwapReasoning('');
+                  setItemSearchQuery('');
+                }}
+              >
+                <Text style={styles.saveBuildModalButtonText}>
+                  {currentSwapIndex !== null ? 'Save' : 'Add'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
+
+      {/* Starting Ability Picker Modal */}
+      <Modal
+        visible={showStartingAbilityPicker}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => {
+          setShowStartingAbilityPicker(false);
+          setCurrentStartingAbilityLevel(0);
+        }}
+      >
+        <Pressable
+          style={styles.modalOverlay}
+          onPress={() => {
+            setShowStartingAbilityPicker(false);
+            setCurrentStartingAbilityLevel(0);
+          }}
+        >
+          <Pressable
+            style={styles.modalContainer}
+            onPress={(e) => e.stopPropagation()}
+          >
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>
+                Select Ability for Level {currentStartingAbilityLevel + 1}
+              </Text>
+              <TouchableOpacity
+                style={styles.modalCloseButton}
+                onPress={() => {
+                  setShowStartingAbilityPicker(false);
+                  setCurrentStartingAbilityLevel(0);
+                }}
+              >
+                <Text style={styles.modalCloseText}>✕</Text>
+              </TouchableOpacity>
+            </View>
+            <ScrollView style={styles.modalContent}>
+              {selectedGod && selectedGod.abilities && Object.keys(selectedGod.abilities).map((abilityKey) => {
+                const ability = selectedGod.abilities[abilityKey];
+                const isSelected = startingAbilityOrder[currentStartingAbilityLevel] === abilityKey;
+                return (
+                  <TouchableOpacity
+                    key={abilityKey}
+                    style={[
+                      styles.itemPickerItem,
+                      isSelected && { backgroundColor: '#1e3a5f' }
+                    ]}
+                    onPress={() => {
+                      const newStartingOrder = [...startingAbilityOrder];
+                      newStartingOrder[currentStartingAbilityLevel] = abilityKey;
+                      setStartingAbilityOrder(newStartingOrder);
+                      setShowStartingAbilityPicker(false);
+                      setCurrentStartingAbilityLevel(0);
+                    }}
+                  >
+                    {ability.icon && (
+                      <Image
+                        source={getLocalGodAsset(ability.icon)}
+                        style={styles.itemPickerIcon}
+                        resizeMode="cover"
+                      />
+                    )}
+                    <View style={styles.itemPickerInfo}>
+                      <Text style={styles.itemPickerName}>
+                        {ability.name || abilityKey} {isSelected && '✓'}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                );
+              })}
+            </ScrollView>
           </Pressable>
         </Pressable>
       </Modal>
@@ -1886,7 +2619,22 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                       ? ['Joust', 'Dual', 'Arena', 'Conquest', 'Assault']
                       : selectedGamemodes;
                     
-                    // Prepare build data for community
+                    // Check if user is certified (for posting to certified builds)
+                    let isCertified = false;
+                    try {
+                      const { data: certData } = await supabase
+                        .from('certification_requests')
+                        .select('status')
+                        .eq('username', currentUser)
+                        .eq('status', 'approved')
+                        .limit(1)
+                        .single();
+                      isCertified = !!(certData && certData.status === 'approved');
+                    } catch (certErr) {
+                      // Not certified, continue as community build
+                    }
+                    
+                    // Prepare build data for community/certified
                     const buildData = {
                       name: communityBuildName.trim(),
                       god: selectedGod.name || selectedGod.GodName || selectedGod.title || selectedGod.displayName,
@@ -1905,12 +2653,22 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                       godLevel,
                       aspectActive: aspectActive && selectedGod.aspect ? true : false,
                       author: currentUser,
-                      notes: communityBuildName.trim(),
+                      notes: buildTips.trim() || communityBuildName.trim(),
+                      tips: buildTips.trim(),
+                      abilityLevelingOrder: abilityLevelingOrder,
+                      itemSwaps: itemSwaps.map(swap => ({
+                        item: swap.item,
+                        reasoning: swap.reasoning,
+                      })),
                       gamemodes: gamemodesToSave,
                       createdAt: new Date().toISOString(),
+                      isCertified: isCertified,
                     };
 
-                    // Post to community builds table
+                    // For now, all builds go to community_builds
+                    // Certified builds will be filtered by author in index.jsx
+                    // In the future, you can create a separate certified_builds table
+                    // Post to community builds table with additional metadata
                     const { data, error } = await supabase
                       .from('community_builds')
                       .insert({
@@ -1919,10 +2677,16 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                         god_name: buildData.god,
                         god_internal_name: buildData.godInternalName,
                         items: buildData.items,
+                        starting_items: buildData.startingItems,
                         relic: buildData.relic,
                         god_level: godLevel,
                         aspect_active: buildData.aspectActive,
-                        notes: communityBuildName.trim(),
+                        notes: buildData.notes || buildData.tips || communityBuildName.trim(),
+                        tips: buildData.tips,
+                        ability_leveling_order: buildData.abilityLevelingOrder,
+                        starting_ability_order: buildData.startingAbilityOrder,
+                        item_swaps: buildData.itemSwaps,
+                        roles: buildData.roles,
                         gamemodes: gamemodesToSave,
                         created_at: new Date().toISOString(),
                       });
@@ -2002,18 +2766,23 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   section: {
-    marginBottom: 24,
+    marginBottom: IS_WEB ? 24 : 16,
     backgroundColor: '#0b1226',
-    borderRadius: 12,
-    padding: 16,
+    borderRadius: IS_WEB ? 12 : 8,
+    padding: IS_WEB ? 16 : 12,
     borderWidth: 1,
     borderColor: '#1e3a5f',
   },
   sectionTitle: {
     color: '#7dd3fc',
-    fontSize: 20,
+    fontSize: IS_WEB ? 20 : 16,
     fontWeight: '700',
-    marginBottom: 16,
+    marginBottom: IS_WEB ? 12 : 8,
+  },
+  sectionSubtitle: {
+    color: '#94a3b8',
+    fontSize: IS_WEB ? 14 : 12,
+    marginBottom: 12,
   },
   // God Selection
   godSelectorContainer: {
@@ -2026,11 +2795,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#0f1724',
     borderRadius: 8,
-    padding: 20,
-    paddingVertical: 20,
+    padding: IS_WEB ? 12 : 10,
     borderWidth: 1,
     borderColor: '#1e3a5f',
-    minHeight: 100,
+    minHeight: IS_WEB ? 70 : 60,
     flex: 1,
     ...(IS_WEB && {
       cursor: 'pointer',
@@ -2038,30 +2806,30 @@ const styles = StyleSheet.create({
     }),
   },
   godIcon: {
-    width: 72,
-    height: 72,
-    borderRadius: 8,
-    marginRight: 20,
+    width: IS_WEB ? 50 : 45,
+    height: IS_WEB ? 50 : 45,
+    borderRadius: 6,
+    marginRight: IS_WEB ? 12 : 10,
     flexShrink: 0,
   },
   godIconPlaceholder: {
-    width: 72,
-    height: 72,
-    borderRadius: 8,
+    width: IS_WEB ? 50 : 45,
+    height: IS_WEB ? 50 : 45,
+    borderRadius: 6,
     backgroundColor: '#1e3a5f',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 20,
+    marginRight: IS_WEB ? 12 : 10,
     flexShrink: 0,
   },
   godIconPlaceholderText: {
     color: '#64748b',
-    fontSize: 24,
+    fontSize: IS_WEB ? 20 : 18,
     fontWeight: '700',
   },
   godNameText: {
     color: '#e6eef8',
-    fontSize: 20,
+    fontSize: IS_WEB ? 16 : 14,
     fontWeight: '600',
     flex: 1,
     paddingRight: 8,
@@ -2147,25 +2915,35 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   // Item Slots
+  starterItemRow: {
+    marginBottom: IS_WEB ? 12 : 10,
+    alignItems: 'center',
+  },
+  starterItemLabel: {
+    color: '#7dd3fc',
+    fontSize: IS_WEB ? 14 : 12,
+    fontWeight: '700',
+    marginBottom: IS_WEB ? 8 : 6,
+    textAlign: 'center',
+  },
   itemSlotsContainer: {
     flexDirection: 'row',
-    flexWrap: IS_WEB ? 'nowrap' : 'wrap',
-    gap: IS_WEB ? 4 : 0,
-    justifyContent: IS_WEB ? 'space-between' : 'flex-start',
+    flexWrap: 'wrap',
+    gap: IS_WEB ? 8 : 6,
+    justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
   },
   itemSlot: {
-    width: IS_WEB ? '13%' : '18%',
-    maxWidth: IS_WEB ? 90 : undefined,
-    minWidth: IS_WEB ? 70 : undefined,
+    width: IS_WEB ? '30%' : '30%',
+    maxWidth: IS_WEB ? 120 : undefined,
+    minWidth: IS_WEB ? 80 : 70,
     flexShrink: 0,
     flexGrow: 0,
-    marginBottom: IS_WEB ? 0 : 4,
-    ...(IS_WEB ? {} : {
-      // On mobile: 4 items per row (23.5% * 4 = 94%, leaving 6% for 3 gaps of 2% each)
-      marginRight: '2%',
-    }),
+    marginBottom: IS_WEB ? 8 : 6,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   itemSlotButton: {
     aspectRatio: 1,
@@ -2175,13 +2953,15 @@ const styles = StyleSheet.create({
     borderColor: '#1e3a5f',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: IS_WEB ? 6 : 3,
+    padding: IS_WEB ? 8 : 3,
     position: 'relative',
     overflow: 'hidden',
     width: '100%',
+    display: 'flex',
     ...(IS_WEB && {
       cursor: 'pointer',
       transition: 'all 0.2s ease',
+      flexDirection: 'column',
     }),
   },
   itemSlotButtonActive: {
@@ -2269,11 +3049,17 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   itemIcon: {
-    width: '100%',
-    height: IS_WEB ? '70%' : '65%',
+    width: IS_WEB ? '90%' : '100%',
+    height: IS_WEB ? '75%' : '65%',
     borderRadius: 4,
     maxWidth: '100%',
     maxHeight: '100%',
+    alignSelf: 'center',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    ...(IS_WEB && {
+      objectFit: 'contain',
+    }),
   },
   itemIconPlaceholder: {
     width: '100%',
@@ -2810,5 +3596,436 @@ const styles = StyleSheet.create({
   dropdownItemTextActive: {
     color: '#7dd3fc',
     fontWeight: '700',
+  },
+  // Relic Styles
+  relicSlot: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    padding: IS_WEB ? 16 : 12,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    minHeight: IS_WEB ? 80 : 70,
+  },
+  relicIcon: {
+    width: IS_WEB ? 56 : 48,
+    height: IS_WEB ? 56 : 48,
+    borderRadius: 6,
+    marginRight: 12,
+  },
+  relicIconPlaceholder: {
+    width: IS_WEB ? 56 : 48,
+    height: IS_WEB ? 56 : 48,
+    borderRadius: 6,
+    backgroundColor: '#1e3a5f',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+  },
+  relicIconPlaceholderText: {
+    color: '#64748b',
+    fontSize: IS_WEB ? 24 : 20,
+    fontWeight: '700',
+  },
+  relicName: {
+    color: '#e6eef8',
+    fontSize: IS_WEB ? 16 : 14,
+    fontWeight: '600',
+    flex: 1,
+  },
+  relicPlaceholderText: {
+    color: '#64748b',
+    fontSize: IS_WEB ? 14 : 12,
+  },
+  removeRelicButton: {
+    width: IS_WEB ? 32 : 28,
+    height: IS_WEB ? 32 : 28,
+    borderRadius: IS_WEB ? 16 : 14,
+    backgroundColor: '#ef4444',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 8,
+  },
+  removeRelicButtonText: {
+    color: '#ffffff',
+    fontSize: IS_WEB ? 18 : 16,
+    fontWeight: '700',
+  },
+  // Ability Leveling Styles - Single Row
+  abilityLevelingContainerSingleRow: {
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    gap: IS_WEB ? 16 : 6,
+    marginBottom: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+  },
+  abilityLevelingButtonSmall: {
+    width: IS_WEB ? 80 : 50,
+    height: IS_WEB ? 80 : 50,
+    backgroundColor: '#0f1724',
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: IS_WEB ? 6 : 3,
+    position: 'relative',
+    display: 'flex',
+  },
+  abilityLevelingButtonSelected: {
+    borderColor: '#1e90ff',
+    borderWidth: 2,
+    backgroundColor: '#0a1a2e',
+  },
+  abilityLevelingIconSmall: {
+    width: IS_WEB ? 68 : 40,
+    height: IS_WEB ? 68 : 40,
+    borderRadius: 4,
+    alignSelf: 'center',
+    ...(IS_WEB && {
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    }),
+  },
+  abilityLevelingOrderBadgeSmall: {
+    position: 'absolute',
+    top: 2,
+    right: 2,
+    width: IS_WEB ? 18 : 16,
+    height: IS_WEB ? 18 : 16,
+    borderRadius: IS_WEB ? 9 : 8,
+    backgroundColor: '#1e90ff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1.5,
+    borderColor: '#0b1226',
+  },
+  abilityLevelingOrderTextSmall: {
+    color: '#ffffff',
+    fontSize: IS_WEB ? 10 : 8,
+    fontWeight: '700',
+  },
+  clearAbilityOrderButton: {
+    backgroundColor: '#ef4444',
+    paddingVertical: IS_WEB ? 10 : 8,
+    paddingHorizontal: IS_WEB ? 16 : 12,
+    borderRadius: 6,
+    alignSelf: 'flex-start',
+  },
+  clearAbilityOrderText: {
+    color: '#ffffff',
+    fontSize: IS_WEB ? 14 : 12,
+    fontWeight: '600',
+  },
+  // Build Tips Styles
+  buildTipsInput: {
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    padding: IS_WEB ? 12 : 10,
+    color: '#e6eef8',
+    fontSize: IS_WEB ? 14 : 13,
+    minHeight: IS_WEB ? 100 : 80,
+    maxHeight: IS_WEB ? 200 : 150,
+    textAlignVertical: 'top',
+  },
+  // Item Swaps Styles
+  swapItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    padding: IS_WEB ? 12 : 10,
+    marginBottom: IS_WEB ? 12 : 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  swapItemIcon: {
+    width: IS_WEB ? 48 : 40,
+    height: IS_WEB ? 48 : 40,
+    borderRadius: 6,
+    marginRight: IS_WEB ? 12 : 10,
+  },
+  swapItemContent: {
+    flex: 1,
+  },
+  swapItemName: {
+    color: '#7dd3fc',
+    fontSize: IS_WEB ? 16 : 14,
+    fontWeight: '700',
+    marginBottom: 4,
+  },
+  swapItemReasoning: {
+    color: '#cbd5e1',
+    fontSize: IS_WEB ? 14 : 12,
+    lineHeight: IS_WEB ? 20 : 18,
+  },
+  swapItemActions: {
+    flexDirection: 'row',
+    gap: IS_WEB ? 8 : 6,
+  },
+  editSwapButton: {
+    backgroundColor: '#1e90ff',
+    paddingVertical: IS_WEB ? 8 : 6,
+    paddingHorizontal: IS_WEB ? 12 : 10,
+    borderRadius: 6,
+  },
+  editSwapButtonText: {
+    color: '#ffffff',
+    fontSize: IS_WEB ? 12 : 10,
+    fontWeight: '600',
+  },
+  deleteSwapButton: {
+    backgroundColor: '#ef4444',
+    width: IS_WEB ? 32 : 28,
+    height: IS_WEB ? 32 : 28,
+    borderRadius: IS_WEB ? 16 : 14,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  deleteSwapButtonText: {
+    color: '#ffffff',
+    fontSize: IS_WEB ? 16 : 14,
+    fontWeight: '700',
+  },
+  addSwapButton: {
+    backgroundColor: '#10b981',
+    paddingVertical: IS_WEB ? 12 : 10,
+    paddingHorizontal: IS_WEB ? 16 : 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#059669',
+  },
+  addSwapButtonText: {
+    color: '#ffffff',
+    fontSize: IS_WEB ? 14 : 12,
+    fontWeight: '700',
+  },
+  swapItemSelector: {
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#1e3a5f',
+    borderStyle: 'dashed',
+    padding: IS_WEB ? 16 : 14,
+    marginBottom: 12,
+    minHeight: IS_WEB ? 70 : 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  swapItemSelectorText: {
+    color: '#e6eef8',
+    fontSize: IS_WEB ? 14 : 13,
+    flex: 1,
+  },
+  swapItemSelectorContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+  },
+  swapItemSelectorIcon: {
+    width: IS_WEB ? 40 : 36,
+    height: IS_WEB ? 40 : 36,
+    borderRadius: 4,
+    marginRight: 12,
+  },
+  swapItemSelectorPlaceholder: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  swapItemSelectorPlaceholderText: {
+    color: '#64748b',
+    fontSize: IS_WEB ? 14 : 12,
+    fontStyle: 'italic',
+  },
+  swapReasoningInput: {
+    minHeight: IS_WEB ? 80 : 70,
+    maxHeight: IS_WEB ? 150 : 120,
+  },
+  // Starting Ability Order Styles
+  startingAbilityOrderContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: IS_WEB ? 10 : 8,
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+  startingAbilityLevelSlot: {
+    width: IS_WEB ? '18%' : '18%',
+    minWidth: IS_WEB ? 70 : 65,
+    maxWidth: IS_WEB ? 90 : 85,
+  },
+  startingAbilityLevelLabel: {
+    color: '#7dd3fc',
+    fontSize: IS_WEB ? 12 : 10,
+    fontWeight: '700',
+    marginBottom: IS_WEB ? 6 : 4,
+    textAlign: 'center',
+  },
+  startingAbilitySlotButton: {
+    aspectRatio: 1,
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: IS_WEB ? 6 : 4,
+    position: 'relative',
+  },
+  startingAbilitySlotButtonSelected: {
+    borderColor: '#1e90ff',
+    borderWidth: 2,
+    backgroundColor: '#0a1a2e',
+  },
+  startingAbilityIcon: {
+    width: IS_WEB ? 48 : 40,
+    height: IS_WEB ? 48 : 40,
+    borderRadius: 4,
+    marginBottom: 4,
+  },
+  startingAbilityIconPlaceholder: {
+    width: IS_WEB ? 48 : 40,
+    height: IS_WEB ? 48 : 40,
+    borderRadius: 4,
+    backgroundColor: '#1e3a5f',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  startingAbilityIconPlaceholderText: {
+    color: '#64748b',
+    fontSize: IS_WEB ? 20 : 18,
+    fontWeight: '700',
+  },
+  startingAbilityName: {
+    color: '#cbd5e1',
+    fontSize: IS_WEB ? 9 : 8,
+    textAlign: 'center',
+    marginTop: 2,
+  },
+  startingAbilityPlaceholderText: {
+    color: '#64748b',
+    fontSize: IS_WEB ? 10 : 9,
+    textAlign: 'center',
+  },
+  // Role Selection Styles
+  roleContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: IS_WEB ? 10 : 8,
+  },
+  roleButton: {
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    paddingVertical: IS_WEB ? 10 : 8,
+    paddingHorizontal: IS_WEB ? 16 : 14,
+    minWidth: IS_WEB ? 90 : 80,
+  },
+  roleButtonSelected: {
+    backgroundColor: '#1e90ff',
+    borderColor: '#0ea5e9',
+    borderWidth: 2,
+  },
+  roleButtonDisabled: {
+    opacity: 0.5,
+  },
+  roleButtonText: {
+    color: '#cbd5e1',
+    fontSize: IS_WEB ? 14 : 12,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  roleButtonTextSelected: {
+    color: '#ffffff',
+    fontWeight: '700',
+  },
+  roleButtonTextDisabled: {
+    color: '#64748b',
+  },
+  // Starting Items Styles
+  starterStartingItemRow: {
+    marginBottom: IS_WEB ? 12 : 10,
+    alignItems: 'center',
+  },
+  startingItemsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    gap: IS_WEB ? 8 : 6,
+    justifyContent: 'center',
+    width: '100%',
+  },
+  startingItemSlot: {
+    width: IS_WEB ? '23%' : '23%',
+    minWidth: IS_WEB ? 70 : 60,
+    maxWidth: IS_WEB ? 90 : 80,
+  },
+  startingItemSlotButton: {
+    aspectRatio: 1,
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: IS_WEB ? 8 : 6,
+    position: 'relative',
+    width: '100%',
+    display: 'flex',
+    ...(IS_WEB && {
+      flexDirection: 'column',
+    }),
+  },
+  startingItemIcon: {
+    width: IS_WEB ? '85%' : '100%',
+    height: IS_WEB ? '70%' : '65%',
+    borderRadius: 4,
+    maxWidth: '100%',
+    maxHeight: '100%',
+    alignSelf: 'center',
+    ...(IS_WEB && {
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      objectFit: 'contain',
+    }),
+  },
+  startingItemIconPlaceholder: {
+    width: '100%',
+    height: IS_WEB ? '70%' : '65%',
+    backgroundColor: '#1e3a5f',
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  startingItemIconPlaceholderText: {
+    color: '#64748b',
+    fontSize: IS_WEB ? 18 : 14,
+    fontWeight: '700',
+  },
+  startingItemName: {
+    color: '#cbd5e1',
+    fontSize: IS_WEB ? 8 : 6,
+    textAlign: 'center',
+    marginTop: IS_WEB ? 2 : 1,
+    lineHeight: IS_WEB ? 10 : 8,
+  },
+  startingItemSlotPlaceholder: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+  },
+  startingItemSlotPlaceholderText: {
+    color: '#64748b',
+    fontSize: IS_WEB ? 32 : 28,
+    fontWeight: '300',
   },
 });
