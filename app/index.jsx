@@ -196,6 +196,9 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
   const [activeTab, setActiveTab] = useState(initialTab === 'guides' ? 'guides' : initialTab === 'randomizer' ? 'randomizer' : 'builds'); // 'builds', 'guides', or 'randomizer'
   const [pinnedBuilds, setPinnedBuilds] = useState(new Set()); // Track pinned builds
   const [buildCategory, setBuildCategory] = useState('featured'); // 'featured', 'certified', 'community'
+  // Community builds from Supabase
+  const [communityBuildsFromDB, setCommunityBuildsFromDB] = useState([]);
+  const [loadingCommunityBuilds, setLoadingCommunityBuilds] = useState(false);
   // Filter dropdown states
   const [roleDropdownVisible, setRoleDropdownVisible] = useState(false);
   const [authorDropdownVisible, setAuthorDropdownVisible] = useState(false);
@@ -208,6 +211,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
   const [currentUser, setCurrentUser] = useState(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isRequestingCertification, setIsRequestingCertification] = useState(false);
+  const [certificationRequestStatus, setCertificationRequestStatus] = useState(null); // 'pending', 'approved', 'rejected', null
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -220,11 +224,36 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
   const [selectedRandomItem, setSelectedRandomItem] = useState(null); // { item, itemName } for tooltip
   const [aspectActive, setAspectActive] = useState(false); // Track if aspect is active
   
-  // Check login status
+  // Check login status and certification request status
   useEffect(() => {
     const checkLogin = async () => {
       const user = await storage.getItem('currentUser');
       setCurrentUser(user);
+      
+      // Check if user has a pending certification request
+      if (user) {
+        try {
+          const supabaseClient = getSupabase();
+          if (supabaseClient && supabaseClient.from) {
+            const { data, error } = await supabaseClient
+              .from('certification_requests')
+              .select('status')
+              .eq('username', user)
+              .order('requested_at', { ascending: false })
+              .limit(1)
+              .single();
+            
+            if (!error && data) {
+              setCertificationRequestStatus(data.status); // 'pending', 'approved', 'rejected'
+            } else if (error && error.code !== 'PGRST116') {
+              // PGRST116 = no rows found, which is fine
+              console.error('Error checking certification status:', error);
+            }
+          }
+        } catch (err) {
+          console.error('Exception checking certification status:', err);
+        }
+      }
     };
     checkLogin();
   }, []);
@@ -274,6 +303,55 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
       isMounted = false;
     };
   }, []);
+
+  // Load community builds from Supabase when Community tab is active
+  useEffect(() => {
+    if (buildCategory !== 'community') return;
+    
+    let isMounted = true;
+    setLoadingCommunityBuilds(true);
+    
+    const loadCommunityBuilds = async () => {
+      try {
+        const supabaseClient = getSupabase();
+        if (!supabaseClient || !supabaseClient.from) {
+          if (isMounted) {
+            setLoadingCommunityBuilds(false);
+          }
+          return;
+        }
+        
+        const { data, error } = await supabaseClient
+          .from('community_builds')
+          .select('*')
+          .order('created_at', { ascending: false });
+        
+        if (error) {
+          console.error('Error loading community builds:', error);
+          if (isMounted) {
+            setLoadingCommunityBuilds(false);
+          }
+          return;
+        }
+        
+        if (isMounted && data) {
+          setCommunityBuildsFromDB(data || []);
+          setLoadingCommunityBuilds(false);
+        }
+      } catch (err) {
+        console.error('Exception loading community builds:', err);
+        if (isMounted) {
+          setLoadingCommunityBuilds(false);
+        }
+      }
+    };
+    
+    loadCommunityBuilds();
+    
+    return () => {
+      isMounted = false;
+    };
+  }, [buildCategory]);
 
   // Debounce search query to prevent rapid filtering
   useEffect(() => {
@@ -403,17 +481,26 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
       if (Array.isArray(godBuilds)) {
         godBuilds.forEach(build => {
           if (build && build.author) {
-            const category = getBuildCategory(build);
-            // Only include authors that have builds in the current category
-            if (buildCategory === 'featured' && category === 'featured') {
-              const author = build.author.toString().trim();
-              if (author) authorsSet.add(author);
-            } else if (buildCategory === 'certified' && category === 'certified') {
-              const author = build.author.toString().trim();
-              if (author) authorsSet.add(author);
-            } else if (buildCategory === 'community' && category === 'community') {
-              const author = build.author.toString().trim();
-              if (author) authorsSet.add(author);
+            // For DB builds, they're always community builds
+            if (build.fromDatabase) {
+              if (buildCategory === 'community') {
+                const author = build.author.toString().trim();
+                if (author) authorsSet.add(author);
+              }
+            } else {
+              // JSON builds - use category check
+              const category = getBuildCategory(build);
+              // Only include authors that have builds in the current category
+              if (buildCategory === 'featured' && category === 'featured') {
+                const author = build.author.toString().trim();
+                if (author) authorsSet.add(author);
+              } else if (buildCategory === 'certified' && category === 'certified') {
+                const author = build.author.toString().trim();
+                if (author) authorsSet.add(author);
+              } else if (buildCategory === 'community' && category === 'community') {
+                const author = build.author.toString().trim();
+                if (author) authorsSet.add(author);
+              }
             }
           }
         });
@@ -432,6 +519,11 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
       if (god) {
         // Check if this god has any builds in the current category
         const hasBuildsInCategory = Array.isArray(godBuilds) && godBuilds.some(build => {
+          // For DB builds, they're always community builds
+          if (build.fromDatabase) {
+            return buildCategory === 'community';
+          }
+          // For JSON builds, use category check
           const category = getBuildCategory(build);
           if (buildCategory === 'featured') return category === 'featured';
           if (buildCategory === 'certified') return category === 'certified';
@@ -623,6 +715,15 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
         if (!Array.isArray(godBuilds) || godBuilds.length === 0) return false;
         return godBuilds.some(build => {
           if (!build) return false;
+          
+          // For DB builds, check the gamemodes array
+          if (build.fromDatabase && build.gamemodes && Array.isArray(build.gamemodes)) {
+            return build.gamemodes.some(mode => 
+              mode.toLowerCase() === selectedGamemode.toLowerCase()
+            );
+          }
+          
+          // For JSON builds, check build text
           const buildText = [
             build.notes,
             build.title,
@@ -1839,54 +1940,146 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
         {/* Certification Request Button - Only show on Certified tab */}
         {buildCategory === 'certified' && (
           <View style={styles.certificationRequestContainer}>
-            <TouchableOpacity
-              style={styles.certificationRequestButton}
-              onPress={async () => {
-                if (!currentUser) {
-                  setShowLoginModal(true);
-                  return;
-                }
-                
-                if (isRequestingCertification) return;
-                
-                setIsRequestingCertification(true);
-                try {
-                  const supabaseClient = getSupabase();
-                  if (!supabaseClient || !supabaseClient.from) {
-                    Alert.alert('Error', 'Unable to send certification request. Please try again later.');
-                    setIsRequestingCertification(false);
+            {certificationRequestStatus === 'pending' ? (
+              <View style={styles.certificationStatusContainer}>
+                <Text style={styles.certificationStatusText}>
+                  ⏳ Your certification request is pending review
+                </Text>
+                <Text style={styles.certificationStatusSubtext}>
+                  You'll be notified once it's reviewed. Please wait for a response before submitting another request.
+                </Text>
+              </View>
+            ) : certificationRequestStatus === 'approved' ? (
+              <View style={styles.certificationStatusContainer}>
+                <Text style={styles.certificationStatusText}>
+                  ✅ Your certification request has been approved!
+                </Text>
+              </View>
+            ) : certificationRequestStatus === 'rejected' ? (
+              <TouchableOpacity
+                style={styles.certificationRequestButton}
+                onPress={async () => {
+                  if (!currentUser) {
+                    setShowLoginModal(true);
                     return;
                   }
                   
-                  // Send notification to admin (you)
-                  const { error } = await supabaseClient
-                    .from('certification_requests')
-                    .insert({
-                      username: currentUser,
-                      requested_at: new Date().toISOString(),
-                      status: 'pending'
-                    });
+                  if (isRequestingCertification) return;
                   
-                  if (error) {
-                    console.error('Error requesting certification:', error);
-                    Alert.alert('Error', 'Failed to send certification request. Please try again.');
-                  } else {
-                    Alert.alert('Request Sent', 'Your certification request has been sent! We will review it and get back to you.');
+                  setIsRequestingCertification(true);
+                  try {
+                    const supabaseClient = getSupabase();
+                    if (!supabaseClient || !supabaseClient.from) {
+                      Alert.alert('Error', 'Unable to send certification request. Please try again later.');
+                      setIsRequestingCertification(false);
+                      return;
+                    }
+                    
+                    // Send notification to admin (you)
+                    const { error } = await supabaseClient
+                      .from('certification_requests')
+                      .insert({
+                        username: currentUser,
+                        requested_at: new Date().toISOString(),
+                        status: 'pending'
+                      });
+                    
+                    if (error) {
+                      console.error('Error requesting certification:', error);
+                      Alert.alert('Error', 'Failed to send certification request. Please try again.');
+                    } else {
+                      setCertificationRequestStatus('pending');
+                      Alert.alert('Request Sent', 'Your new certification request has been sent! We will review it and get back to you.');
+                    }
+                  } catch (error) {
+                    console.error('Exception requesting certification:', error);
+                    Alert.alert('Error', 'An error occurred. Please try again.');
+                  } finally {
+                    setIsRequestingCertification(false);
                   }
-                } catch (error) {
-                  console.error('Exception requesting certification:', error);
-                  Alert.alert('Error', 'An error occurred. Please try again.');
-                } finally {
-                  setIsRequestingCertification(false);
-                }
-              }}
-              activeOpacity={0.7}
-              disabled={isRequestingCertification}
-            >
-              <Text style={styles.certificationRequestButtonText}>
-                {isRequestingCertification ? 'Requesting...' : 'Request Certification'}
-              </Text>
-            </TouchableOpacity>
+                }}
+                activeOpacity={0.7}
+                disabled={isRequestingCertification}
+              >
+                <Text style={styles.certificationRequestButtonText}>
+                  {isRequestingCertification ? 'Requesting...' : 'Request Certification Again'}
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.certificationRequestButton}
+                onPress={async () => {
+                  if (!currentUser) {
+                    setShowLoginModal(true);
+                    return;
+                  }
+                  
+                  if (isRequestingCertification) return;
+                  
+                  // Check if user already has a pending request
+                  try {
+                    const supabaseClient = getSupabase();
+                    if (!supabaseClient || !supabaseClient.from) {
+                      Alert.alert('Error', 'Unable to send certification request. Please try again later.');
+                      return;
+                    }
+                    
+                    const { data: existingRequest, error: checkError } = await supabaseClient
+                      .from('certification_requests')
+                      .select('status')
+                      .eq('username', currentUser)
+                      .order('requested_at', { ascending: false })
+                      .limit(1)
+                      .single();
+                    
+                    if (!checkError && existingRequest) {
+                      if (existingRequest.status === 'pending') {
+                        Alert.alert(
+                          'Request Already Pending',
+                          'You already have a certification request pending review. Please wait for a response before submitting another request.'
+                        );
+                        setCertificationRequestStatus('pending');
+                        return;
+                      } else if (existingRequest.status === 'approved') {
+                        Alert.alert('Already Certified', 'Your certification request has already been approved!');
+                        setCertificationRequestStatus('approved');
+                        return;
+                      }
+                    }
+                    
+                    setIsRequestingCertification(true);
+                    
+                    // Send notification to admin (you)
+                    const { error } = await supabaseClient
+                      .from('certification_requests')
+                      .insert({
+                        username: currentUser,
+                        requested_at: new Date().toISOString(),
+                        status: 'pending'
+                      });
+                    
+                    if (error) {
+                      console.error('Error requesting certification:', error);
+                      Alert.alert('Error', 'Failed to send certification request. Please try again.');
+                    } else {
+                      setCertificationRequestStatus('pending');
+                      Alert.alert('Request Sent', 'Your certification request has been sent! We will review it and get back to you.');
+                    }
+                  } catch (error) {
+                    console.error('Exception requesting certification:', error);
+                    Alert.alert('Error', 'An error occurred. Please try again.');
+                  } finally {
+                    setIsRequestingCertification(false);
+                  }
+                }}
+                activeOpacity={0.7}
+                disabled={isRequestingCertification}
+              >
+                <Text style={styles.certificationRequestButtonText}>
+                  {isRequestingCertification ? 'Requesting...' : 'Request Certification'}
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         )}
         
@@ -1927,6 +2120,11 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
             <View style={styles.loadingContainer}>
               <ActivityIndicator size="large" color="#1e90ff" />
               <Text style={styles.loadingText}>Loading builds...</Text>
+            </View>
+          ) : loadingCommunityBuilds && buildCategory === 'community' ? (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#1e90ff" />
+              <Text style={styles.loadingText}>Loading community builds...</Text>
             </View>
           ) : filtered.length === 0 && buildCategory === 'community' ? (
             <View style={styles.emptyCommunityContainer}>
@@ -2107,14 +2305,23 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
               const currentBuild = allBuilds[currentBuildIdx] || (allBuilds.length > 0 ? allBuilds[0] : null);
               
               // Extract starter items
-              const starter = currentBuild && currentBuild.starting 
+              // DB builds don't have starter items, so only extract for JSON builds
+              const starter = currentBuild && !currentBuild.fromDatabase && currentBuild.starting 
                 ? currentBuild.starting 
-                : (currentBuild && currentBuild.buildsFromT1 ? currentBuild.buildsFromT1 : null);
+                : (currentBuild && !currentBuild.fromDatabase && currentBuild.buildsFromT1 ? currentBuild.buildsFromT1 : null);
               
               // Extract final items - prefer `full_build` when present
-              const finalItemsRaw = currentBuild && (currentBuild.full_build || currentBuild.fullBuild || currentBuild.components || currentBuild.final || currentBuild.items)
-                ? (currentBuild.full_build || currentBuild.fullBuild || currentBuild.components || currentBuild.final || currentBuild.items)
-                : null;
+              // For DB builds, items are already in the correct format
+              let finalItemsRaw = null;
+              if (currentBuild && currentBuild.fromDatabase) {
+                // Community build from database - items are already an array
+                finalItemsRaw = currentBuild.items && Array.isArray(currentBuild.items) ? currentBuild.items : null;
+              } else {
+                // JSON build - use existing logic
+                finalItemsRaw = currentBuild && (currentBuild.full_build || currentBuild.fullBuild || currentBuild.components || currentBuild.final || currentBuild.items)
+                  ? (currentBuild.full_build || currentBuild.fullBuild || currentBuild.components || currentBuild.final || currentBuild.items)
+                  : null;
+              }
 
               // Normalize final items: build entries may be strings or objects
               const finalItems = finalItemsRaw
@@ -4423,6 +4630,27 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '700',
     textAlign: 'center',
+  },
+  certificationStatusContainer: {
+    backgroundColor: '#0b1226',
+    padding: 16,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    alignItems: 'center',
+  },
+  certificationStatusText: {
+    color: '#e6eef8',
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  certificationStatusSubtext: {
+    color: '#94a3b8',
+    fontSize: 12,
+    textAlign: 'center',
+    lineHeight: 16,
   },
   abilityIconsRow: {
     flexDirection: 'row',
