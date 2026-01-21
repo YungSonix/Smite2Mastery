@@ -11,7 +11,9 @@ import {
   Pressable,
   Platform,
   Linking,
+  Alert,
 } from 'react-native';
+import CryptoJS from 'crypto-js';
 import { Image } from 'expo-image';
 import { useScreenDimensions } from '../hooks/useScreenDimensions';
 // Lazy load page components to reduce initial bundle size
@@ -80,6 +82,22 @@ const roleIcons = {
 
 const getRoleIcon = (role) => {
   return roleIcons[role] || null;
+};
+
+// Build category helpers
+// Featured: your own curated builds (primary authors)
+// Certified: trusted content creators / allowed authors
+// Community: everyone else
+const FEATURED_AUTHORS = ['mytharria', 'mendar'];
+const CERTIFIED_AUTHORS = [''];
+
+const getBuildCategory = (build) => {
+  const authorRaw = (build?.author || '').toString().trim();
+  if (!authorRaw) return 'community';
+  const author = authorRaw.toLowerCase();
+  if (FEATURED_AUTHORS.includes(author)) return 'featured';
+  if (CERTIFIED_AUTHORS.includes(author)) return 'certified';
+  return 'community';
 };
 
 // Patch Badge Tooltip Component
@@ -161,7 +179,7 @@ const storage = {
   },
 };
 
-function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = false, onNavigateToGod = null }) {
+function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = false, onNavigateToGod = null, onNavigateToCustomBuild = null }) {
   const [builds, setBuilds] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -177,6 +195,22 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
   const [failedItemIcons, setFailedItemIcons] = useState({}); // Track which item icons failed to load
   const [activeTab, setActiveTab] = useState(initialTab === 'guides' ? 'guides' : initialTab === 'randomizer' ? 'randomizer' : 'builds'); // 'builds', 'guides', or 'randomizer'
   const [pinnedBuilds, setPinnedBuilds] = useState(new Set()); // Track pinned builds
+  const [buildCategory, setBuildCategory] = useState('featured'); // 'featured', 'certified', 'community'
+  // Filter dropdown states
+  const [roleDropdownVisible, setRoleDropdownVisible] = useState(false);
+  const [authorDropdownVisible, setAuthorDropdownVisible] = useState(false);
+  const [godDropdownVisible, setGodDropdownVisible] = useState(false);
+  const [gamemodeDropdownVisible, setGamemodeDropdownVisible] = useState(false);
+  const [selectedAuthor, setSelectedAuthor] = useState(null);
+  const [selectedGod, setSelectedGod] = useState(null);
+  const [selectedGamemode, setSelectedGamemode] = useState(null);
+  // Login and certification states
+  const [currentUser, setCurrentUser] = useState(null);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [isRequestingCertification, setIsRequestingCertification] = useState(false);
+  const [loginUsername, setLoginUsername] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   // Randomizer state
   const [randomGod, setRandomGod] = useState(null);
   const [randomItems, setRandomItems] = useState(Array(7).fill(null));
@@ -186,6 +220,15 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
   const [selectedRandomItem, setSelectedRandomItem] = useState(null); // { item, itemName } for tooltip
   const [aspectActive, setAspectActive] = useState(false); // Track if aspect is active
   
+  // Check login status
+  useEffect(() => {
+    const checkLogin = async () => {
+      const user = await storage.getItem('currentUser');
+      setCurrentUser(user);
+    };
+    checkLogin();
+  }, []);
+
   // Load pinned builds from storage
   useEffect(() => {
     const loadPinnedBuilds = async () => {
@@ -241,10 +284,22 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
     return () => clearTimeout(timer);
   }, [query]);
 
-  // Reset build indices when role filter changes
+  // Reset build indices when filters change
   useEffect(() => {
     setSelectedBuildIndex({});
-  }, [selectedRole]);
+  }, [selectedRole, selectedAuthor, selectedGod, selectedGamemode]);
+
+  // Clear filters when build category changes
+  useEffect(() => {
+    setSelectedRole(null);
+    setSelectedAuthor(null);
+    setSelectedGod(null);
+    setSelectedGamemode(null);
+    setRoleDropdownVisible(false);
+    setAuthorDropdownVisible(false);
+    setGodDropdownVisible(false);
+    setGamemodeDropdownVisible(false);
+  }, [buildCategory]);
 
   function flattenAny(a) {
     if (!a) return [];
@@ -340,6 +395,61 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
     return pairGodsAndBuilds(builds);
   }, [builds]);
 
+  // Extract unique authors from builds in current category
+  const availableAuthors = useMemo(() => {
+    if (!pairs || pairs.length === 0) return [];
+    const authorsSet = new Set();
+    pairs.forEach(({ builds: godBuilds }) => {
+      if (Array.isArray(godBuilds)) {
+        godBuilds.forEach(build => {
+          if (build && build.author) {
+            const category = getBuildCategory(build);
+            // Only include authors that have builds in the current category
+            if (buildCategory === 'featured' && category === 'featured') {
+              const author = build.author.toString().trim();
+              if (author) authorsSet.add(author);
+            } else if (buildCategory === 'certified' && category === 'certified') {
+              const author = build.author.toString().trim();
+              if (author) authorsSet.add(author);
+            } else if (buildCategory === 'community' && category === 'community') {
+              const author = build.author.toString().trim();
+              if (author) authorsSet.add(author);
+            }
+          }
+        });
+      }
+    });
+    return Array.from(authorsSet).sort((a, b) => {
+      return a.toLowerCase().localeCompare(b.toLowerCase());
+    });
+  }, [pairs, buildCategory]);
+
+  // Extract unique god names for filtering (only gods with builds in current category)
+  const availableGods = useMemo(() => {
+    if (!pairs || pairs.length === 0) return [];
+    const godsSet = new Set();
+    pairs.forEach(({ god, builds: godBuilds }) => {
+      if (god) {
+        // Check if this god has any builds in the current category
+        const hasBuildsInCategory = Array.isArray(godBuilds) && godBuilds.some(build => {
+          const category = getBuildCategory(build);
+          if (buildCategory === 'featured') return category === 'featured';
+          if (buildCategory === 'certified') return category === 'certified';
+          if (buildCategory === 'community') return category === 'community';
+          return true;
+        });
+        
+        if (hasBuildsInCategory) {
+          const godName = god.name || god.GodName || god.title || god.displayName;
+          if (godName) godsSet.add(godName.toString().trim());
+        }
+      }
+    });
+    return Array.from(godsSet).sort((a, b) => {
+      return a.toLowerCase().localeCompare(b.toLowerCase());
+    });
+  }, [pairs, buildCategory]);
+
   // Memoize filtered results using debounced query and role filter
   const filtered = useMemo(() => {
     if (!pairs || pairs.length === 0) return [];
@@ -418,17 +528,32 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
           
           // Handle "ADC" and "Carry" as the same
           if (selectedRoleLower === 'adc') {
-            return buildText.includes('adc') || buildText.includes('carry');
+            return buildText.includes('adc') || 
+                   buildText.includes('carry') ||
+                   buildText.includes('crit-oriented adc') ||
+                   buildText.includes('shred/proc-oriented') ||
+                   buildText.includes('shred proc-oriented') ||
+                   buildText.includes('proc-oriented');
           }
           
-          // Handle "Mid" and "Middle" as the same
+          // Handle "Mid" and "Middle" as the same - also check for mage builds
+          // IMPORTANT: Exclude jungle builds explicitly
           if (selectedRoleLower === 'mid') {
-            return buildText.includes('mid') || buildText.includes('middle');
+            // Don't match if it's a jungle build
+            if (buildText.includes('jungle')) return false;
+            
+            return buildText.includes('mid') || 
+                   buildText.includes('middle') || 
+                   buildText.includes('mage') ||
+                   buildText.includes('int oriented burst mage') ||
+                   (buildText.includes('int') && (buildText.includes('mage') || buildText.includes('burst') || buildText.includes('oriented')));
           }
           
           // Handle "Support"
           if (selectedRoleLower === 'support') {
-            return buildText.includes('support');
+            return buildText.includes('support') ||
+                   buildText.includes('active item') ||
+                   buildText.includes('cooldown-oriented');
           }
           
           // Handle "Jungle"
@@ -436,7 +561,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
             return buildText.includes('jungle');
           }
           
-          // Handle "Solo" - check for solo, bruiser solo, solo bruiser, bruiser solo-lane, etc.
+          // Handle "Solo" - check for solo, bruiser solo, solo bruiser, bruiser solo-lane, bruiser warrior, etc.
           if (selectedRoleLower === 'solo') {
             const soloPatterns = [
               /\bsolo\b/i,
@@ -444,6 +569,8 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
               /\bsolo\s+bruiser/i,
               /\bbruiser\s+solo[\s-]lane/i,
               /\bsolo[\s-]lane/i,
+              /\bbruiser\s+warrior/i,
+              /\bwarrior\s+bruiser/i,
             ];
             
             for (const pattern of soloPatterns) {
@@ -454,7 +581,8 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
             
             const hasBruiser = buildText.includes('bruiser');
             const hasSolo = buildText.includes('solo');
-            if (hasBruiser && hasSolo) {
+            const hasWarrior = buildText.includes('warrior');
+            if ((hasBruiser && hasSolo) || (hasBruiser && hasWarrior)) {
               return true;
             }
             
@@ -462,6 +590,46 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
           }
           
           return buildText.includes(selectedRoleLower);
+        });
+      });
+    }
+    
+    // Filter by selected author
+    if (selectedAuthor) {
+      result = result.filter(({ pair }) => {
+        const godBuilds = pair.builds;
+        if (!Array.isArray(godBuilds) || godBuilds.length === 0) return false;
+        return godBuilds.some(build => {
+          if (!build || !build.author) return false;
+          return build.author.toString().trim() === selectedAuthor;
+        });
+      });
+    }
+    
+    // Filter by selected god
+    if (selectedGod) {
+      result = result.filter(({ pair }) => {
+        const god = pair.god;
+        if (!god) return false;
+        const godName = (god.name || god.GodName || god.title || god.displayName || '').toString().trim();
+        return godName === selectedGod;
+      });
+    }
+    
+    // Filter by selected gamemode
+    if (selectedGamemode) {
+      result = result.filter(({ pair }) => {
+        const godBuilds = pair.builds;
+        if (!Array.isArray(godBuilds) || godBuilds.length === 0) return false;
+        return godBuilds.some(build => {
+          if (!build) return false;
+          const buildText = [
+            build.notes,
+            build.title,
+            build.gamemode,
+            build.mode
+          ].filter(Boolean).join(' ').toLowerCase();
+          return buildText.includes(selectedGamemode.toLowerCase());
         });
       });
     }
@@ -476,14 +644,21 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
         const pantheon = (god.pantheon || '').toString().toLowerCase();
         return name.includes(lowerQuery) || role.includes(lowerQuery) || pantheon.includes(lowerQuery);
       });
-    } else if (!selectedRole) {
-      // If no search query and no role filter, only show first N gods for performance
+    } else if (!selectedRole && !selectedAuthor && !selectedGod && !selectedGamemode) {
+      // If no search query and no filters, only show first N gods for performance
       result = result.slice(0, initialDisplayLimit);
     }
     
+    // Sort alphabetically by god name (case-insensitive)
+    result.sort((a, b) => {
+      const aTitle = (a.pair.god?.name || a.pair.god?.GodName || a.pair.god?.title || a.pair.god?.displayName || 'Unknown').toString().toLowerCase();
+      const bTitle = (b.pair.god?.name || b.pair.god?.GodName || b.pair.god?.title || b.pair.god?.displayName || 'Unknown').toString().toLowerCase();
+      return aTitle.localeCompare(bTitle);
+    });
+    
     // Extract just the pairs after filtering/sorting
     return result.map(({ pair }) => pair);
-  }, [pairs, debouncedQuery, selectedRole, initialDisplayLimit, pinnedBuilds]);
+  }, [pairs, debouncedQuery, selectedRole, selectedAuthor, selectedGod, selectedGamemode, initialDisplayLimit, pinnedBuilds]);
 
   // Fast item lookup function using the pre-built map
   const findItem = useCallback((metaName) => {
@@ -1400,83 +1575,337 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
           value={query}
           onChangeText={setQuery}
         />
-        <View style={styles.roleFilters}>
+        {/* Build category filter */}
+        <View style={styles.buildCategoryFilters}>
           <TouchableOpacity
-            style={[styles.roleFilterButton, selectedRole === 'ADC' && styles.roleFilterButtonActive]}
-            onPress={() => {
-              const newRole = selectedRole === 'ADC' ? null : 'ADC';
-              setSelectedRole(newRole);
-            }}
+            style={[
+              styles.buildCategoryButton,
+              buildCategory === 'featured' && styles.buildCategoryButtonActive,
+            ]}
+            onPress={() => setBuildCategory('featured')}
             activeOpacity={0.7}
           >
-            <View style={styles.roleFilterButtonContent}>
-              {getRoleIcon('ADC') && (
-                <Image source={getRoleIcon('ADC')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" accessibilityLabel="ADC role icon" />
-              )}
-              <Text style={[styles.roleFilterText, selectedRole === 'ADC' && styles.roleFilterTextActive]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>ADC</Text>
-            </View>
+            <Text
+              style={[
+                styles.buildCategoryText,
+                buildCategory === 'featured' && styles.buildCategoryTextActive,
+              ]}
+              numberOfLines={1}
+            >
+              Featured
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.roleFilterButton, selectedRole === 'Solo' && styles.roleFilterButtonActive]}
-            onPress={() => {
-              const newRole = selectedRole === 'Solo' ? null : 'Solo';
-              setSelectedRole(newRole);
-            }}
+            style={[
+              styles.buildCategoryButton,
+              buildCategory === 'certified' && styles.buildCategoryButtonActive,
+            ]}
+            onPress={() => setBuildCategory('certified')}
             activeOpacity={0.7}
           >
-            <View style={styles.roleFilterButtonContent}>
-              {getRoleIcon('Solo') && (
-                <Image source={getRoleIcon('Solo')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" accessibilityLabel="Solo role icon" />
-              )}
-              <Text style={[styles.roleFilterText, selectedRole === 'Solo' && styles.roleFilterTextActive]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>Solo</Text>
-            </View>
+            <Text
+              style={[
+                styles.buildCategoryText,
+                buildCategory === 'certified' && styles.buildCategoryTextActive,
+              ]}
+              numberOfLines={1}
+            >
+              Certified
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.roleFilterButton, selectedRole === 'Support' && styles.roleFilterButtonActive]}
-            onPress={() => {
-              const newRole = selectedRole === 'Support' ? null : 'Support';
-              setSelectedRole(newRole);
-            }}
+            style={[
+              styles.buildCategoryButton,
+              buildCategory === 'community' && styles.buildCategoryButtonActive,
+            ]}
+            onPress={() => setBuildCategory('community')}
             activeOpacity={0.7}
           >
-            <View style={styles.roleFilterButtonContent}>
-              {getRoleIcon('Support') && (
-                <Image source={getRoleIcon('Support')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" accessibilityLabel="Support role icon" />
-              )}
-              <Text style={[styles.roleFilterText, selectedRole === 'Support' && styles.roleFilterTextActive]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>Support</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.roleFilterButton, selectedRole === 'Mid' && styles.roleFilterButtonActive]}
-            onPress={() => {
-              const newRole = selectedRole === 'Mid' ? null : 'Mid';
-              setSelectedRole(newRole);
-            }}
-            activeOpacity={0.7}
-          >
-            <View style={styles.roleFilterButtonContent}>
-              {getRoleIcon('Mid') && (
-                <Image source={getRoleIcon('Mid')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" accessibilityLabel="Mid role icon" />
-              )}
-              <Text style={[styles.roleFilterText, selectedRole === 'Mid' && styles.roleFilterTextActive]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>Mid</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.roleFilterButton, selectedRole === 'Jungle' && styles.roleFilterButtonActive]}
-            onPress={() => {
-              const newRole = selectedRole === 'Jungle' ? null : 'Jungle';
-              setSelectedRole(newRole);
-            }}
-            activeOpacity={0.7}
-          >
-            <View style={styles.roleFilterButtonContent}>
-              {getRoleIcon('Jungle') && (
-                <Image source={getRoleIcon('Jungle')} style={styles.roleFilterIcon} contentFit="contain" cachePolicy="memory-disk" accessibilityLabel="Jungle role icon" />
-              )}
-              <Text style={[styles.roleFilterText, selectedRole === 'Jungle' && styles.roleFilterTextActive]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>Jungle</Text>
-            </View>
+            <Text
+              style={[
+                styles.buildCategoryText,
+                buildCategory === 'community' && styles.buildCategoryTextActive,
+              ]}
+              numberOfLines={1}
+            >
+              Community
+            </Text>
           </TouchableOpacity>
         </View>
+        {/* Filter buttons row */}
+        <View style={styles.filterButtonsRow}>
+          {/* Role filter dropdown */}
+          <View style={styles.filterButtonContainer}>
+            <TouchableOpacity
+              style={[styles.filterButton, selectedRole && styles.filterButtonActive]}
+              onPress={() => {
+                setRoleDropdownVisible(!roleDropdownVisible);
+                setAuthorDropdownVisible(false);
+                setGodDropdownVisible(false);
+              }}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.filterButtonText}>
+                {selectedRole ? selectedRole : 'Role'}
+              </Text>
+              <Text style={styles.filterButtonIcon}>
+                {roleDropdownVisible ? '▼' : '▶'}
+              </Text>
+            </TouchableOpacity>
+            {roleDropdownVisible && (
+              <View style={styles.filterDropdown}>
+                <ScrollView style={styles.filterDropdownScroll} nestedScrollEnabled={true}>
+                  <TouchableOpacity
+                    style={[styles.filterOption, !selectedRole && styles.filterOptionActive]}
+                    onPress={() => {
+                      setSelectedRole(null);
+                      setRoleDropdownVisible(false);
+                    }}
+                  >
+                    <Text style={styles.filterOptionText}>All Roles</Text>
+                  </TouchableOpacity>
+                  {['ADC', 'Solo', 'Support', 'Mid', 'Jungle'].map((role) => {
+                    const roleIcon = getRoleIcon(role);
+                    return (
+                      <TouchableOpacity
+                        key={role}
+                        style={[styles.filterOption, selectedRole === role && styles.filterOptionActive]}
+                        onPress={() => {
+                          setSelectedRole(role);
+                          setRoleDropdownVisible(false);
+                        }}
+                      >
+                        {roleIcon && (
+                          <Image 
+                            source={roleIcon} 
+                            style={styles.filterOptionIcon}
+                            contentFit="contain"
+                            cachePolicy="memory-disk"
+                            accessibilityLabel={`${role} role icon`}
+                          />
+                        )}
+                        <Text style={[styles.filterOptionText, { marginLeft: roleIcon ? 10 : 0 }]}>{role}</Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </ScrollView>
+              </View>
+            )}
+          </View>
+
+          {/* Author filter dropdown */}
+          <View style={styles.filterButtonContainer}>
+            <TouchableOpacity
+              style={[styles.filterButton, selectedAuthor && styles.filterButtonActive]}
+              onPress={() => {
+                setAuthorDropdownVisible(!authorDropdownVisible);
+                setRoleDropdownVisible(false);
+                setGodDropdownVisible(false);
+              }}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.filterButtonText}>
+                {selectedAuthor ? selectedAuthor : 'Author'}
+              </Text>
+              <Text style={styles.filterButtonIcon}>
+                {authorDropdownVisible ? '▼' : '▶'}
+              </Text>
+            </TouchableOpacity>
+            {authorDropdownVisible && (
+              <View style={styles.filterDropdown}>
+                <ScrollView style={styles.filterDropdownScroll} nestedScrollEnabled={true}>
+                  <TouchableOpacity
+                    style={[styles.filterOption, !selectedAuthor && styles.filterOptionActive]}
+                    onPress={() => {
+                      setSelectedAuthor(null);
+                      setAuthorDropdownVisible(false);
+                    }}
+                  >
+                    <Text style={styles.filterOptionText}>All Authors</Text>
+                  </TouchableOpacity>
+                  {availableAuthors.map((author) => (
+                    <TouchableOpacity
+                      key={author}
+                      style={[styles.filterOption, selectedAuthor === author && styles.filterOptionActive]}
+                      onPress={() => {
+                        setSelectedAuthor(author);
+                        setAuthorDropdownVisible(false);
+                      }}
+                    >
+                      <Text style={styles.filterOptionText}>{author}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
+              </View>
+            )}
+          </View>
+
+          {/* God filter dropdown */}
+          <View style={styles.filterButtonContainer}>
+            <TouchableOpacity
+              style={[styles.filterButton, selectedGod && styles.filterButtonActive]}
+              onPress={() => {
+                setGodDropdownVisible(!godDropdownVisible);
+                setRoleDropdownVisible(false);
+                setAuthorDropdownVisible(false);
+              }}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.filterButtonText}>
+                {selectedGod ? selectedGod : 'God'}
+              </Text>
+              <Text style={styles.filterButtonIcon}>
+                {godDropdownVisible ? '▼' : '▶'}
+              </Text>
+            </TouchableOpacity>
+            {godDropdownVisible && (
+              <View style={styles.filterDropdown}>
+                <ScrollView style={styles.filterDropdownScroll} nestedScrollEnabled={true}>
+                  <TouchableOpacity
+                    style={[styles.filterOption, !selectedGod && styles.filterOptionActive]}
+                    onPress={() => {
+                      setSelectedGod(null);
+                      setGodDropdownVisible(false);
+                    }}
+                  >
+                    <Text style={styles.filterOptionText}>All Gods</Text>
+                  </TouchableOpacity>
+                  {availableGods.map((godName) => (
+                    <TouchableOpacity
+                      key={godName}
+                      style={[styles.filterOption, selectedGod === godName && styles.filterOptionActive]}
+                      onPress={() => {
+                        setSelectedGod(godName);
+                        setGodDropdownVisible(false);
+                      }}
+                    >
+                      <Text style={styles.filterOptionText}>{godName}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
+              </View>
+            )}
+          </View>
+
+          {/* Gamemode filter dropdown */}
+          <View style={styles.filterButtonContainer}>
+            <TouchableOpacity
+              style={[styles.filterButton, selectedGamemode && styles.filterButtonActive]}
+              onPress={() => {
+                setGamemodeDropdownVisible(!gamemodeDropdownVisible);
+                setRoleDropdownVisible(false);
+                setAuthorDropdownVisible(false);
+                setGodDropdownVisible(false);
+              }}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.filterButtonText}>
+                {selectedGamemode ? selectedGamemode : 'Modes'}
+              </Text>
+              <Text style={styles.filterButtonIcon}>
+                {gamemodeDropdownVisible ? '▼' : '▶'}
+              </Text>
+            </TouchableOpacity>
+            {gamemodeDropdownVisible && (
+              <View style={styles.filterDropdown}>
+                <ScrollView style={styles.filterDropdownScroll} nestedScrollEnabled={true}>
+                  <TouchableOpacity
+                    style={[styles.filterOption, !selectedGamemode && styles.filterOptionActive]}
+                    onPress={() => {
+                      setSelectedGamemode(null);
+                      setGamemodeDropdownVisible(false);
+                    }}
+                  >
+                    <Text style={styles.filterOptionText}>All Modes</Text>
+                  </TouchableOpacity>
+                  {['Joust', 'Dual', 'Arena', 'Conquest', 'Assault'].map((mode) => (
+                    <TouchableOpacity
+                      key={mode}
+                      style={[styles.filterOption, selectedGamemode === mode && styles.filterOptionActive]}
+                      onPress={() => {
+                        setSelectedGamemode(mode);
+                        setGamemodeDropdownVisible(false);
+                      }}
+                    >
+                      <Text style={styles.filterOptionText}>{mode}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
+              </View>
+            )}
+          </View>
+        </View>
+        
+        {/* Certification Request Button - Only show on Certified tab */}
+        {buildCategory === 'certified' && (
+          <View style={styles.certificationRequestContainer}>
+            <TouchableOpacity
+              style={styles.certificationRequestButton}
+              onPress={async () => {
+                if (!currentUser) {
+                  setShowLoginModal(true);
+                  return;
+                }
+                
+                if (isRequestingCertification) return;
+                
+                setIsRequestingCertification(true);
+                try {
+                  const supabaseClient = getSupabase();
+                  if (!supabaseClient || !supabaseClient.from) {
+                    Alert.alert('Error', 'Unable to send certification request. Please try again later.');
+                    setIsRequestingCertification(false);
+                    return;
+                  }
+                  
+                  // Send notification to admin (you)
+                  const { error } = await supabaseClient
+                    .from('certification_requests')
+                    .insert({
+                      username: currentUser,
+                      requested_at: new Date().toISOString(),
+                      status: 'pending'
+                    });
+                  
+                  if (error) {
+                    console.error('Error requesting certification:', error);
+                    Alert.alert('Error', 'Failed to send certification request. Please try again.');
+                  } else {
+                    Alert.alert('Request Sent', 'Your certification request has been sent! We will review it and get back to you.');
+                  }
+                } catch (error) {
+                  console.error('Exception requesting certification:', error);
+                  Alert.alert('Error', 'An error occurred. Please try again.');
+                } finally {
+                  setIsRequestingCertification(false);
+                }
+              }}
+              activeOpacity={0.7}
+              disabled={isRequestingCertification}
+            >
+              <Text style={styles.certificationRequestButtonText}>
+                {isRequestingCertification ? 'Requesting...' : 'Request Certification'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
+        
+        {/* Post Your Build Button - Only show on Community tab */}
+        {buildCategory === 'community' && (
+          <View style={styles.certificationRequestContainer}>
+            <TouchableOpacity
+              style={styles.postYourBuildButton}
+              onPress={() => {
+                if (onNavigateToCustomBuild) {
+                  onNavigateToCustomBuild();
+                }
+              }}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.postYourBuildButtonText}>Post Your Build</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
 
       <View style={styles.content}>
@@ -1499,6 +1928,22 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
               <ActivityIndicator size="large" color="#1e90ff" />
               <Text style={styles.loadingText}>Loading builds...</Text>
             </View>
+          ) : filtered.length === 0 && buildCategory === 'community' ? (
+            <View style={styles.emptyCommunityContainer}>
+              <Text style={styles.emptyCommunityText}>No community builds yet</Text>
+              <Text style={styles.emptyCommunitySubtext}>Be the first to share a build with the community!</Text>
+              <TouchableOpacity
+                style={styles.createFirstBuildButton}
+                onPress={() => {
+                  if (onNavigateToCustomBuild) {
+                    onNavigateToCustomBuild();
+                  }
+                }}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.createFirstBuildButtonText}>Create First Build</Text>
+              </TouchableOpacity>
+            </View>
           ) : (
           <ScrollView 
             contentContainerStyle={styles.cardGrid}
@@ -1519,6 +1964,20 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
               
               // Store original indices before filtering/sorting
               let buildsWithIndices = allBuilds.map((build, origIdx) => ({ build, origIdx }));
+
+              // Filter builds by selected category (Featured / Top / Community)
+              buildsWithIndices = buildsWithIndices.filter(({ build }) => {
+                const category = getBuildCategory(build);
+                if (buildCategory === 'featured') return category === 'featured';
+                if (buildCategory === 'certified') return category === 'certified';
+                if (buildCategory === 'community') return category === 'community';
+                return true;
+              });
+
+              // Skip rendering this god if no builds in this category
+              if (buildsWithIndices.length === 0) {
+                return null;
+              }
               
               // Filter builds by selected role if a role is selected
               if (selectedRole) {
@@ -1537,17 +1996,32 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                   
                   // Handle "ADC" and "Carry" as the same
                   if (selectedRoleLower === 'adc') {
-                    return buildText.includes('adc') || buildText.includes('carry');
+                    return buildText.includes('adc') || 
+                           buildText.includes('carry') ||
+                           buildText.includes('crit-oriented adc') ||
+                           buildText.includes('shred/proc-oriented') ||
+                           buildText.includes('shred proc-oriented') ||
+                           buildText.includes('proc-oriented');
                   }
                   
-                  // Handle "Mid" and "Middle" as the same
+                  // Handle "Mid" and "Middle" as the same - also check for mage builds
+                  // IMPORTANT: Exclude jungle builds explicitly
                   if (selectedRoleLower === 'mid') {
-                    return buildText.includes('mid') || buildText.includes('middle');
+                    // Don't match if it's a jungle build
+                    if (buildText.includes('jungle')) return false;
+                    
+                    return buildText.includes('mid') || 
+                           buildText.includes('middle') || 
+                           buildText.includes('mage') ||
+                           buildText.includes('int oriented burst mage') ||
+                           (buildText.includes('int') && (buildText.includes('mage') || buildText.includes('burst') || buildText.includes('oriented')));
                   }
                   
                   // Handle "Support"
                   if (selectedRoleLower === 'support') {
-                    return buildText.includes('support');
+                    return buildText.includes('support') ||
+                           buildText.includes('active item') ||
+                           buildText.includes('cooldown-oriented');
                   }
                   
                   // Handle "Jungle"
@@ -1555,11 +2029,13 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                     return buildText.includes('jungle');
                   }
                   
-                  // Handle "Solo" - check for solo, bruiser solo, solo bruiser, bruiser solo-lane, etc.
+                  // Handle "Solo" - check for solo, bruiser solo, solo bruiser, bruiser solo-lane, bruiser warrior, etc.
                   if (selectedRoleLower === 'solo') {
-                    // Check for various solo patterns: "solo", "bruiser solo", "solo bruiser", "solo-lane", "solo lane", "bruiser solo-lane", etc.
+                    // Check for various solo patterns: "solo", "bruiser solo", "solo bruiser", "solo-lane", "solo lane", "bruiser solo-lane", "bruiser warrior", etc.
                     const soloPatterns = [
                       /\bsolo\b/i,                    // "solo" as a word
+                      /\bbruiser\s+warrior/i,        // "bruiser warrior" (fixed pattern)
+                      /\bwarrior\s+bruiser/i,        // "warrior bruiser"
                       /\bbruiser\s+solo/i,            // "bruiser solo"
                       /\bsolo\s+bruiser/i,            // "solo bruiser"
                       /\bbruiser\s+solo[\s-]lane/i,   // "bruiser solo-lane" or "bruiser solo lane"
@@ -1573,10 +2049,11 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                       }
                     }
                     
-                    // Also check if build text contains both "bruiser" and "solo" (in any order)
+                    // Also check if build text contains both "bruiser" and "solo" or "bruiser" and "warrior" (in any order)
                     const hasBruiser = buildText.includes('bruiser');
+                    const hasWarrior = buildText.includes('warrior');
                     const hasSolo = buildText.includes('solo');
-                    if (hasBruiser && hasSolo) {
+                    if ((hasBruiser && hasSolo) || (hasBruiser && hasWarrior)) {
                       return true;
                     }
                     
@@ -2262,6 +2739,14 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
 
                       {currentBuild && currentBuild.notes && (
                         <Text style={styles.buildTitle}>{currentBuild.notes}</Text>
+                      )}
+                      {currentBuild && currentBuild.author && (
+                        <Text style={[
+                          styles.buildAuthor,
+                          CERTIFIED_AUTHORS.includes(currentBuild.author.toString().trim().toLowerCase()) && styles.buildAuthorCertified
+                        ]}>
+                          By {currentBuild.author}
+                        </Text>
                       )}
                     </View>
 
@@ -3363,6 +3848,8 @@ const styles = StyleSheet.create({
   },
   controls: {
     marginBottom: 12,
+    zIndex: 20,
+    position: 'relative',
   },
   search: {
     backgroundColor: '#06202f',
@@ -3371,52 +3858,132 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 8,
   },
-  roleFilters: {
+  filterButtonsRow: {
     flexDirection: 'row',
     gap: 6,
-    flexWrap: 'nowrap',
-    justifyContent: 'space-between',
+    marginBottom: 8,
+    flexWrap: 'wrap',
   },
-  roleFilterButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 6,
-    borderRadius: 8,
+  filterButtonContainer: {
+    position: 'relative',
+    zIndex: 10,
+    flex: 1,
+    minWidth: 80,
+    maxWidth: '48%',
+  },
+  filterButton: {
     backgroundColor: '#06202f',
-    borderWidth: 1,
-    borderColor: '#1e3a5f',
+    paddingHorizontal: 8,
+    paddingVertical: 10,
+    borderRadius: 8,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 1,
-    minWidth: 0,
-    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    minWidth: 80,
+    position: 'relative',
   },
-  roleFilterButtonActive: {
+  filterButtonActive: {
     backgroundColor: '#1e90ff',
     borderColor: '#1e90ff',
   },
-  roleFilterButtonContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 3,
-    flexShrink: 1,
-  },
-  roleFilterIcon: {
-    width: 14,
-    height: 14,
-    resizeMode: 'contain',
-    flexShrink: 0,
-  },
-  roleFilterText: {
-    color: '#94a3b8',
-    fontSize: 12,
+  filterButtonText: {
+    color: '#e6eef8',
+    fontSize: 11,
     fontWeight: '600',
     textAlign: 'center',
+    flex: 1,
     flexShrink: 1,
   },
-  roleFilterTextActive: {
+  filterButtonIcon: {
+    color: '#e6eef8',
+    fontSize: 9,
+    width: 10,
+    textAlign: 'right',
+    marginLeft: 4,
+    flexShrink: 0,
+  },
+  filterDropdown: {
+    position: 'absolute',
+    top: '100%',
+    left: 0,
+    right: 0,
+    marginTop: 4,
+    backgroundColor: '#0b1226',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    maxHeight: 200,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+    zIndex: 1000,
+  },
+  filterDropdownScroll: {
+    maxHeight: 200,
+  },
+  filterOption: {
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#1e3a5f',
+  },
+  filterOptionActive: {
+    backgroundColor: '#1e90ff',
+  },
+  filterOptionText: {
+    color: '#e6eef8',
+    fontSize: 12,
+    fontWeight: '500',
+  },
+  filterOptionIcon: {
+    width: 16,
+    height: 16,
+    resizeMode: 'contain',
+  },
+  buildCategoryFilters: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 8,
+    justifyContent: 'space-between',
+  },
+  buildCategoryButton: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 10,
+    backgroundColor: '#06202f',
+    borderWidth: 2,
+    borderColor: '#1e3a5f',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minWidth: 0,
+  },
+  buildCategoryButtonActive: {
+    backgroundColor: '#1e90ff',
+    borderColor: '#1e90ff',
+    shadowColor: '#1e90ff',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  buildCategoryText: {
+    color: '#94a3b8',
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+    letterSpacing: 0.5,
+  },
+  buildCategoryTextActive: {
     color: '#ffffff',
     fontWeight: '700',
+    fontSize: 15,
   },
   credRow: {
     flexDirection: 'row',
@@ -3437,7 +4004,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   btnText: { color: '#fff', fontWeight: '700' },
-  content: { flex: 1, marginTop: 8 },
+  content: { flex: 1, marginTop: 8, zIndex: 0 },
   side: { width: 0, marginRight: 0 },
   sideTitle: { color: '#cbd5e1', fontWeight: '700', marginBottom: 8 },
   itemList: { display: 'none' },
@@ -3822,6 +4389,41 @@ const styles = StyleSheet.create({
     borderLeftColor: '#1e90ff',
     lineHeight: 20,
   },
+  buildAuthor: {
+    color: '#94a3b8',
+    fontSize: 12,
+    fontWeight: '500',
+    marginTop: 4,
+    marginBottom: 4,
+  },
+  buildAuthorCertified: {
+    color: '#10b981',
+    fontWeight: '600',
+  },
+  certificationRequestContainer: {
+    marginTop: 8,
+    marginBottom: 12,
+    alignItems: 'center',
+  },
+  certificationRequestButton: {
+    backgroundColor: '#1e90ff',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#0ea5e9',
+    shadowColor: '#1e90ff',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  certificationRequestButtonText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
   abilityIconsRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -4169,6 +4771,139 @@ const styles = StyleSheet.create({
     color: '#64748b',
     fontSize: 6,
     lineHeight: 8,
+    textAlign: 'center',
+  },
+  loginModalContainer: {
+    backgroundColor: '#0b1226',
+    borderRadius: 12,
+    padding: 24,
+    width: '90%',
+    maxWidth: 400,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  loginModalTitle: {
+    color: '#e6eef8',
+    fontSize: 24,
+    fontWeight: '700',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  loginModalSubtitle: {
+    color: '#94a3b8',
+    fontSize: 14,
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  loginInput: {
+    backgroundColor: '#06202f',
+    color: '#e6eef8',
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    fontSize: 14,
+  },
+  loginModalButtons: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 8,
+  },
+  loginCancelButton: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 8,
+    backgroundColor: '#1e3a5f',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loginCancelButtonText: {
+    color: '#e6eef8',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  loginConfirmButton: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 8,
+    backgroundColor: '#1e90ff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loginConfirmButtonDisabled: {
+    opacity: 0.6,
+  },
+  loginConfirmButtonText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  loginRegisterLink: {
+    marginTop: 16,
+    alignItems: 'center',
+  },
+  loginRegisterText: {
+    color: '#1e90ff',
+    fontSize: 12,
+    textDecorationLine: 'underline',
+  },
+  emptyCommunityContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 40,
+    minHeight: 300,
+  },
+  emptyCommunityText: {
+    color: '#e6eef8',
+    fontSize: 20,
+    fontWeight: '700',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  emptyCommunitySubtext: {
+    color: '#94a3b8',
+    fontSize: 14,
+    marginBottom: 24,
+    textAlign: 'center',
+  },
+  createFirstBuildButton: {
+    backgroundColor: '#1e90ff',
+    paddingVertical: 14,
+    paddingHorizontal: 32,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#0ea5e9',
+    shadowColor: '#1e90ff',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  createFirstBuildButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  postYourBuildButton: {
+    backgroundColor: '#10b981',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#059669',
+    shadowColor: '#10b981',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  postYourBuildButtonText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '700',
     textAlign: 'center',
   },
 });
@@ -4689,6 +5424,10 @@ export default function App() {
               setDatabaseSubTab('gods');
               setDataPageKey(prev => prev + 1);
             }}
+            onNavigateToCustomBuild={() => {
+              setCurrentPage('custombuild');
+              setBuildsSubTab('custom');
+            }}
           />
         </View>
       )}
@@ -4703,7 +5442,12 @@ export default function App() {
       {(currentPage === 'custombuild' || (currentPage === 'builds' && buildsSubTab === 'custom')) && (
         <View style={navStyles.pageVisible} pointerEvents={(currentPage === 'custombuild' || (currentPage === 'builds' && buildsSubTab === 'custom')) ? 'auto' : 'none'}>
           <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
-            <CustomBuildPage />
+            <CustomBuildPage onNavigateToGod={(god) => {
+              setGodFromBuilds(god);
+              setCurrentPage('data');
+              setDatabaseSubTab('gods');
+              setDataPageKey(prev => prev + 1);
+            }} />
           </Suspense>
         </View>
       )}

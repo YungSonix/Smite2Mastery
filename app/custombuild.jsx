@@ -69,8 +69,12 @@ export default function CustomBuildPage({ onNavigateToGod }) {
   const [tierDropdownVisible, setTierDropdownVisible] = useState(false);
   const [showSaveBuildModal, setShowSaveBuildModal] = useState(false);
   const [showLoadBuildModal, setShowLoadBuildModal] = useState(false);
+  const [showPostToCommunityModal, setShowPostToCommunityModal] = useState(false);
   const [savedBuilds, setSavedBuilds] = useState([]);
   const [buildName, setBuildName] = useState('');
+  const [communityBuildName, setCommunityBuildName] = useState('');
+  const [isPostingToCommunity, setIsPostingToCommunity] = useState(false);
+  const [selectedGamemodes, setSelectedGamemodes] = useState(['All Modes']); // Default to "All Modes"
   // Randomizer state
   const [godRerolls, setGodRerolls] = useState(3);
   const [itemRerolls, setItemRerolls] = useState(3);
@@ -1170,6 +1174,40 @@ export default function CustomBuildPage({ onNavigateToGod }) {
             >
               <Text style={styles.saveBuildButtonText}>Save Build to Profile</Text>
             </TouchableOpacity>
+            
+            {/* Post to Community Builds Button */}
+            <TouchableOpacity
+              style={styles.postToCommunityButton}
+              onPress={async () => {
+                const currentUser = await storage.getItem('currentUser');
+                if (!currentUser) {
+                  Alert.alert(
+                    'Not Logged In',
+                    'Please log in to post builds to the community. You can create an account or sign in from the Profile page.',
+                    [
+                      { text: 'Cancel', style: 'cancel' },
+                      { text: 'Go to Profile', onPress: () => {
+                        // Navigate to profile - this will be handled by the parent
+                        Alert.alert('Info', 'Please go to the Profile tab to sign in or create an account.');
+                      }}
+                    ]
+                  );
+                  return;
+                }
+                
+                // Check if build is complete
+                const hasItems = selectedItems.filter(Boolean).length > 0;
+                if (!hasItems) {
+                  Alert.alert('Incomplete Build', 'Please add items to your build before posting to the community.');
+                  return;
+                }
+                
+                setBuildName('');
+                setShowPostToCommunityModal(true);
+              }}
+            >
+              <Text style={styles.postToCommunityButtonText}>Post to Community Builds</Text>
+            </TouchableOpacity>
           </View>
         )}
       </ScrollView>
@@ -1730,6 +1768,208 @@ export default function CustomBuildPage({ onNavigateToGod }) {
           </Pressable>
         </Pressable>
       </Modal>
+
+      {/* Post to Community Builds Modal */}
+      <Modal
+        visible={showPostToCommunityModal}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowPostToCommunityModal(false)}
+      >
+        <Pressable 
+          style={styles.modalOverlay}
+          onPress={() => setShowPostToCommunityModal(false)}
+        >
+          <Pressable 
+            style={styles.saveBuildModal}
+            onPress={(e) => e.stopPropagation()}
+          >
+            <View style={styles.saveBuildModalHeader}>
+              <Text style={styles.saveBuildModalTitle}>Post to Community Builds</Text>
+              <TouchableOpacity
+                style={styles.modalCloseButton}
+                onPress={() => setShowPostToCommunityModal(false)}
+              >
+                <Text style={styles.modalCloseText}>✕</Text>
+              </TouchableOpacity>
+            </View>
+            
+            <Text style={styles.saveBuildModalLabel}>Build Name:</Text>
+            <TextInput
+              style={styles.saveBuildModalInput}
+              placeholder="Enter build name (e.g., 'Full-Damage STR Jungle Build')"
+              placeholderTextColor="#64748b"
+              value={communityBuildName}
+              onChangeText={setCommunityBuildName}
+              autoFocus={true}
+            />
+            
+            <Text style={styles.saveBuildModalLabel}>Gamemodes:</Text>
+            <View style={styles.gamemodeTagsContainer}>
+              {['All Modes', 'Joust', 'Dual', 'Arena', 'Conquest', 'Assault'].map((mode) => {
+                const isSelected = selectedGamemodes.includes(mode);
+                return (
+                  <TouchableOpacity
+                    key={mode}
+                    style={[
+                      styles.gamemodeTag,
+                      isSelected && styles.gamemodeTagSelected
+                    ]}
+                    onPress={() => {
+                      if (mode === 'All Modes') {
+                        // If "All Modes" is selected, clear other selections
+                        setSelectedGamemodes(['All Modes']);
+                      } else {
+                        // Remove "All Modes" if it's selected, and toggle this mode
+                        let newModes = selectedGamemodes.filter(m => m !== 'All Modes');
+                        if (isSelected) {
+                          // Deselect this mode
+                          newModes = newModes.filter(m => m !== mode);
+                          // If no modes selected, default to "All Modes"
+                          if (newModes.length === 0) {
+                            newModes = ['All Modes'];
+                          }
+                        } else {
+                          // Select this mode
+                          newModes.push(mode);
+                        }
+                        setSelectedGamemodes(newModes);
+                      }
+                    }}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={[
+                      styles.gamemodeTagText,
+                      isSelected && styles.gamemodeTagTextSelected
+                    ]}>
+                      {mode}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+            
+            <View style={styles.saveBuildModalButtons}>
+              <TouchableOpacity
+                style={[styles.saveBuildModalButton, styles.saveBuildModalButtonCancel]}
+                onPress={() => {
+                  setShowPostToCommunityModal(false);
+                  setCommunityBuildName('');
+                  setSelectedGamemodes(['All Modes']);
+                }}
+              >
+                <Text style={styles.saveBuildModalButtonText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.saveBuildModalButton, styles.saveBuildModalButtonSave, isPostingToCommunity && styles.saveBuildModalButtonDisabled]}
+                onPress={async () => {
+                  if (!communityBuildName.trim()) {
+                    Alert.alert('Error', 'Please enter a build name.');
+                    return;
+                  }
+
+                  const currentUser = await storage.getItem('currentUser');
+                  if (!currentUser) {
+                    Alert.alert('Not Logged In', 'Please log in to post builds to the community.');
+                    setShowPostToCommunityModal(false);
+                    return;
+                  }
+
+                  setIsPostingToCommunity(true);
+                  
+                  try {
+                    // Import supabase
+                    const { supabase } = require('../config/supabase');
+                    
+                    // Prepare gamemodes - if "All Modes" is selected, store all modes, otherwise store selected modes
+                    const gamemodesToSave = selectedGamemodes.includes('All Modes')
+                      ? ['Joust', 'Dual', 'Arena', 'Conquest', 'Assault']
+                      : selectedGamemodes;
+                    
+                    // Prepare build data for community
+                    const buildData = {
+                      name: communityBuildName.trim(),
+                      god: selectedGod.name || selectedGod.GodName || selectedGod.title || selectedGod.displayName,
+                      godInternalName: selectedGod.internalName || selectedGod.GodName,
+                      godIcon: selectedGod.icon || selectedGod.GodIcon,
+                      items: selectedItems.filter(Boolean).map(item => ({
+                        name: item.name || item.internalName,
+                        internalName: item.internalName,
+                        icon: item.icon,
+                      })),
+                      relic: selectedRelic ? {
+                        name: selectedRelic.name || selectedRelic.internalName,
+                        internalName: selectedRelic.internalName,
+                        icon: selectedRelic.icon,
+                      } : null,
+                      godLevel,
+                      aspectActive: aspectActive && selectedGod.aspect ? true : false,
+                      author: currentUser,
+                      notes: communityBuildName.trim(),
+                      gamemodes: gamemodesToSave,
+                      createdAt: new Date().toISOString(),
+                    };
+
+                    // Post to community builds table
+                    const { data, error } = await supabase
+                      .from('community_builds')
+                      .insert({
+                        username: currentUser,
+                        build_name: communityBuildName.trim(),
+                        god_name: buildData.god,
+                        god_internal_name: buildData.godInternalName,
+                        items: buildData.items,
+                        relic: buildData.relic,
+                        god_level: godLevel,
+                        aspect_active: buildData.aspectActive,
+                        notes: communityBuildName.trim(),
+                        gamemodes: gamemodesToSave,
+                        created_at: new Date().toISOString(),
+                      });
+
+                    if (error) {
+                      console.error('Error posting to community:', error);
+                      if (error.code === 'MISSING_CONFIG') {
+                        Alert.alert(
+                          'Development Mode', 
+                          'Supabase is not configured in development. In production, your builds will be saved properly. This is normal for Expo development.'
+                        );
+                        // Still show success in dev mode so user knows the flow works
+                        setShowPostToCommunityModal(false);
+                        setCommunityBuildName('');
+                        setSelectedGamemodes(['All Modes']);
+                        setIsPostingToCommunity(false);
+                        Alert.alert('Success (Dev Mode)', 'Build posted! In production, this will be saved to the database.');
+                      } else {
+                        Alert.alert('Error', `Failed to post build: ${error.message || 'Please try again.'}`);
+                      }
+                      setIsPostingToCommunity(false);
+                      return;
+                    }
+
+                    setShowPostToCommunityModal(false);
+                    setCommunityBuildName('');
+                    setSelectedGamemodes(['All Modes']);
+                    setIsPostingToCommunity(false);
+                    Alert.alert('Success', 'Build posted to community builds!');
+                  } catch (error) {
+                    console.error('Exception posting to community:', error);
+                    Alert.alert('Error', 'An error occurred while posting. Please try again.');
+                    setIsPostingToCommunity(false);
+                  }
+                }}
+                disabled={isPostingToCommunity}
+              >
+                {isPostingToCommunity ? (
+                  <ActivityIndicator color="#ffffff" />
+                ) : (
+                  <Text style={styles.saveBuildModalButtonText}>Post</Text>
+                )}
+              </TouchableOpacity>
+            </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
     </View>
   );
 }
@@ -2126,6 +2366,31 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
   },
+  postToCommunityButton: {
+    backgroundColor: '#10b981',
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginTop: 12,
+    borderWidth: 2,
+    borderColor: '#059669',
+    shadowColor: '#10b981',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  postToCommunityButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  saveBuildModalButtonDisabled: {
+    opacity: 0.6,
+  },
   loadBuildButton: {
     backgroundColor: '#10b981',
     padding: 16,
@@ -2437,6 +2702,33 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 16,
     fontWeight: '600',
+  },
+  gamemodeTagsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 20,
+  },
+  gamemodeTag: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 6,
+    backgroundColor: '#0f1724',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  gamemodeTagSelected: {
+    backgroundColor: '#1e90ff',
+    borderColor: '#1e90ff',
+  },
+  gamemodeTagText: {
+    color: '#94a3b8',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  gamemodeTagTextSelected: {
+    color: '#ffffff',
+    fontWeight: '700',
   },
   filterContainer: {
     paddingHorizontal: 16,

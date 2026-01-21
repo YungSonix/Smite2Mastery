@@ -292,30 +292,512 @@ const gameModes = [
 ];
 
 // Gameplay Mechanics data structure - SMITE 2 specific
+const mechanicsCategories = [
+  {
+    id: 'combat-gameplay',
+    name: 'Combat & Gameplay',
+    subcategories: [
+      { id: 'combat-damage', name: 'Combat & Damage', count: 9 },
+      { id: 'counterplay', name: 'Counterplay', count: 0 },
+      { id: 'health-healing', name: 'Health & Healing', count: 6 },
+      { id: 'buffs-debuffs', name: 'Buffs & Debuffs', count: 2 },
+      { id: 'crowd-control', name: 'Crowd Control', count: 15 },
+      { id: 'god-abilities', name: 'God Abilities', count: 12 },
+      { id: 'movement', name: 'Movement', count: 1 },
+      { id: 'statistics', name: 'Statistics', count: 4 },
+    ]
+  },
+  {
+    id: 'map-objectives',
+    name: 'Map & Objectives',
+    subcategories: [
+      { id: 'structures', name: 'Structures', count: 4 },
+      { id: 'minions', name: 'Minions', count: 1 },
+      { id: 'jungle', name: 'Jungle', count: 2 },
+      { id: 'game-modes', name: 'Game Modes', count: 6 },
+    ]
+  },
+  {
+    id: 'progression-systems',
+    name: 'Progression & Systems',
+    subcategories: [
+      { id: 'economy', name: 'Economy & Progression', count: 6 },
+      { id: 'items-system', name: 'Items System', count: 8 },
+      { id: 'player-systems', name: 'Player Systems', count: 13 },
+      { id: 'cosmetics', name: 'Cosmetics', count: 6 },
+    ]
+  },
+  {
+    id: 'reference',
+    name: 'Reference & UI',
+    subcategories: [
+      { id: 'terminology', name: 'Terminology', count: 80 },
+      { id: 'ui-interface', name: 'UI & Interface', count: 2 },
+    ]
+  }
+];
+
+// Legacy structure for backward compatibility
 const gameplayMechanics = {
-  subcategories: [
-    { id: 'combat-damage', name: 'Combat & Damage', count: 9 },
-    { id: 'statistics', name: 'Statistics', count: 4 },
-    { id: 'health-healing', name: 'Health & Healing', count: 6 },
-    { id: 'buffs-debuffs', name: 'Buffs & Debuffs', count: 2 },
-    { id: 'crowd-control', name: 'Crowd Control', count: 15 },
-    { id: 'god-abilities', name: 'God Abilities', count: 12 },
-    { id: 'movement', name: 'Movement', count: 1 },
-    { id: 'structures', name: 'Structures', count: 4 },
-    { id: 'minions', name: 'Minions', count: 1 },
-    { id: 'jungle', name: 'Jungle', count: 2 },
-    { id: 'ui-interface', name: 'UI & Interface', count: 2 },
-    { id: 'economy', name: 'Economy & Progression', count: 6 },
-    { id: 'game-modes', name: 'Game Modes', count: 6 },
-    { id: 'player-systems', name: 'Player Systems', count: 13 },
-    { id: 'cosmetics', name: 'Cosmetics', count: 6 },
-    { id: 'terminology', name: 'Terminology', count: 80 },
-    { id: 'items-system', name: 'Items System', count: 8 },
-  ],
+  subcategories: mechanicsCategories.flatMap(cat => cat.subcategories),
   mechanics: [
     // Mechanics will be added here
   ]
 };
+
+// Counterplay Icon Tooltip Component
+function CounterplayIconTooltip({ icon, name, ability, item, onClose, getLocalGodAsset }) {
+  return (
+    <Modal
+      visible={true}
+      transparent={true}
+      animationType="fade"
+      onRequestClose={onClose}
+    >
+      <Pressable style={styles.tooltipOverlay} onPress={onClose}>
+        <View style={styles.counterplayTooltipContent}>
+          <TouchableOpacity style={styles.tooltipCloseButton} onPress={onClose}>
+            <Text style={styles.tooltipCloseText}>✕</Text>
+          </TouchableOpacity>
+          
+          {ability ? (
+            // God ability tooltip
+            <>
+              <View style={styles.counterplayTooltipHeader}>
+                {ability.icon && (() => {
+                  const localIcon = getLocalGodAsset(ability.icon);
+                  return localIcon ? (
+                    <Image source={localIcon} style={styles.counterplayTooltipIcon} contentFit="cover" cachePolicy="memory-disk" />
+                  ) : null;
+                })()}
+                <View style={styles.counterplayTooltipTitleContainer}>
+                  <Text style={styles.counterplayTooltipTitle}>{name}</Text>
+                  <Text style={styles.counterplayTooltipSubtitle}>{ability.name}</Text>
+                </View>
+              </View>
+              <Text style={styles.counterplayTooltipText}>
+                {ability.shortDesc || ability.description || 'No description available.'}
+              </Text>
+              {ability.valueKeys && ability.valueKeys['Healing Reduction %'] && (
+                <Text style={styles.counterplayTooltipStat}>
+                  Healing Reduction: {ability.valueKeys['Healing Reduction %'][0]}%
+                </Text>
+              )}
+              {ability.valueKeys && ability.valueKeys['Healing Reduction'] && (
+                <Text style={styles.counterplayTooltipStat}>
+                  Healing Reduction: {ability.valueKeys['Healing Reduction'][0]}%
+                </Text>
+              )}
+            </>
+          ) : item ? (
+            // Item tooltip
+            <>
+              <View style={styles.counterplayTooltipHeader}>
+                {icon}
+                <Text style={styles.counterplayTooltipTitle}>{name}</Text>
+              </View>
+              <Text style={styles.counterplayTooltipText}>
+                {item.description || item.shortDesc || item.passive || 'No description available.'}
+              </Text>
+            </>
+          ) : (
+            // Generic tooltip
+            <>
+              <View style={styles.counterplayTooltipHeader}>
+                {icon}
+                <Text style={styles.counterplayTooltipTitle}>{name}</Text>
+              </View>
+            </>
+          )}
+        </View>
+      </Pressable>
+    </Modal>
+  );
+}
+
+// Counterplay Content Component
+function CounterplayContent({ gods, items, getLocalGodAsset, getLocalItemIcon }) {
+  const [tooltipData, setTooltipData] = useState(null);
+  const [failedItemIcons, setFailedItemIcons] = useState({}); // Track which item icons failed to load (for fallback)
+
+  // Helper function to find god by name (case-insensitive, flexible matching)
+  const findGodByName = (godName) => {
+    if (!gods || !Array.isArray(gods)) return null;
+    const searchName = godName.toLowerCase().trim();
+    return gods.find(god => {
+      const name = (god.name || god.GodName || god.title || god.displayName || '').toString().toLowerCase();
+      return name === searchName || name.includes(searchName) || searchName.includes(name);
+    });
+  };
+
+  // Helper function to find item by name (case-insensitive, flexible matching with exact name mapping)
+  const findItemByName = (itemName) => {
+    if (!items || !Array.isArray(items)) return null;
+    const searchName = itemName.toLowerCase().trim();
+    
+    // Map common names to exact names from builds.json
+    const nameMap = {
+      'protectionOfItus': 'avengingBlade',
+      'brawlers': 'Brawler\'s Beat Stick',
+      'brawlers ruin': 'Brawler\'s Beat Stick',
+      'Contagion': 'Contagion',
+      'divine': 'Divine Ruin',
+      'divine ruin': 'Divine Ruin',
+      'qins': 'Qin\'s Blade',
+      'qin\'s': 'Qin\'s Blade',
+      'stygian anchor': 'Stygian Anchor',
+      'mystical': 'Mystical Mail',
+      'mystical mail': 'Mystical Mail',
+      'shield splitter': 'Shield Splitter',
+      'lernean bow': 'Lernaean Bow',
+      'lernean': 'Lernaean Bow',
+      'erosion': 'Erosion',
+      'soul reaver': 'Soul Reaver',
+      'heartseeker': 'Heartseeker',
+      'ancile': 'Ancile',
+      'leviathan\'s hide': 'Leviathan\'s Hide',
+      'leviathans hide': 'Leviathan\'s Hide',
+      'pharaoh curse': 'Pharaoh\'s Curse',
+      'pharaoh\'s curse': 'Pharaoh\'s Curse',
+      'nemean': 'Hide of the Nemean Lion',
+      'nemean lion': 'Hide of the Nemean Lion',
+      'spectral': 'Spectral Armor',
+      'spectral armor': 'Spectral Armor',
+      'executioner': 'The Executioner',
+      'titans bane': 'Titan\'s Bane',
+      'titan\'s bane': 'Titan\'s Bane',
+      'obsidian shard': 'Obsidian Shard',
+      'totem of death': 'Totem of Death',
+      'arondight': 'Arondight',
+      'shell': 'Shell of Rebuke',
+      'shell of rebuke': 'Shell of Rebuke',
+      'helm of darkness': 'Helm of Darkness',
+      'asclepius': 'Rod Of Asclepius',
+      'rod of asclepius': 'Rod Of Asclepius',
+      'magi': 'Magi\'s Cloak',
+      'magi\'s cloak': 'Magi\'s Cloak',
+      'purification beads': 'Purification Beads',
+      'talisman of purification': 'Talisman of Purification',
+      'hussar wings': 'Hussar\'s Wings',
+      'hussar\'s wings': 'Hussar\'s Wings',
+      'stampede': 'Stampede',
+      'mantle of discord': 'Mantle Of Discord',
+      'mantle': 'Mantle Of Discord',
+      'circes hexstone': 'Circes Hexstone',
+      'avatar parashu': 'Avatar\'s Parashu',
+      'avatar\'s parashu': 'Avatar\'s Parashu',
+      'dreamers idol': 'Dreamer\'s Idol',
+      'dreamer\'s idol': 'Dreamer\'s Idol',
+    };
+    
+    const mappedName = nameMap[searchName];
+    const exactName = mappedName || itemName;
+    const exactLower = exactName.toLowerCase();
+    
+    return items.find(item => {
+      // Check both name and internalName
+      const displayName = (item.name || '').toString().toLowerCase();
+      const internalName = (item.internalName || '').toString().toLowerCase();
+      
+      // Try exact match first
+      if (displayName === exactLower || internalName === exactLower) {
+        return true;
+      }
+      
+      // Try partial matches
+      if (displayName.includes(exactLower) || exactLower.includes(displayName)) {
+        return true;
+      }
+      
+      if (internalName.includes(exactLower) || exactLower.includes(internalName)) {
+        return true;
+      }
+      
+      return false;
+    });
+  };
+
+  // Find anti-heal ability for a god
+  const findAntiHealAbility = (god) => {
+    if (!god) return null;
+    
+    // Check passive first (it's often the anti-heal source)
+    if (god.passive) {
+      const desc = (god.passive.shortDesc || god.passive.description || '').toLowerCase();
+      const hasHealingReduction = (desc.includes('reduce') && desc.includes('heal')) ||
+                                 desc.includes('healing reduction') ||
+                                 desc.includes('reduced by') && desc.includes('heal') ||
+                                 (god.passive.valueKeys && (
+                                   god.passive.valueKeys['Healing Reduction %'] ||
+                                   god.passive.valueKeys['Healing Reduction']
+                                 ));
+      
+      if (hasHealingReduction) {
+        return god.passive;
+      }
+    }
+    
+    // Check all abilities
+    if (god.abilities) {
+      for (const [key, ability] of Object.entries(god.abilities)) {
+        if (key === 'passive' || key.startsWith('A')) {
+          const desc = (ability.shortDesc || ability.description || '').toLowerCase();
+          const hasHealingReduction = (desc.includes('reduce') && desc.includes('heal')) ||
+                                     desc.includes('healing reduction') ||
+                                     desc.includes('reduced by') && desc.includes('heal') ||
+                                     (ability.valueKeys && (
+                                       ability.valueKeys['Healing Reduction %'] ||
+                                       ability.valueKeys['Healing Reduction']
+                                     ));
+          
+          if (hasHealingReduction) {
+            return ability;
+          }
+        }
+      }
+    }
+    
+    return null;
+  };
+
+  // Render god icon with tooltip
+  const renderGodIcon = (godName) => {
+    const god = findGodByName(godName);
+    if (!god) return null;
+    const godIcon = god.icon || god.GodIcon || (god.abilities && god.abilities.A01 && god.abilities.A01.icon);
+    const localIcon = godIcon ? getLocalGodAsset(godIcon) : null;
+    const ability = findAntiHealAbility(god);
+    
+    const iconElement = localIcon ? (
+      <Image 
+        source={localIcon} 
+        style={styles.counterplayIcon}
+        contentFit="cover"
+        cachePolicy="memory-disk"
+        transition={0}
+      />
+    ) : (
+      <View style={styles.counterplayIconFallback}>
+        <Text style={styles.counterplayIconFallbackText}>{godName.charAt(0)}</Text>
+      </View>
+    );
+    
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          if (ability) {
+            setTooltipData({
+              type: 'god',
+              name: godName,
+              icon: iconElement,
+              ability: ability,
+              god: god
+            });
+          }
+        }}
+        activeOpacity={0.7}
+      >
+        {iconElement}
+      </TouchableOpacity>
+    );
+  };
+
+  // Render item icon with tooltip
+  const renderItemIcon = (itemName) => {
+    const item = findItemByName(itemName);
+    if (!item) return null;
+    const itemIcon = item.icon;
+    const localIcon = itemIcon ? getLocalItemIcon(itemIcon) : null;
+    
+    const iconElement = localIcon ? (() => {
+      const imageSource = localIcon.primary || localIcon;
+      const fallbackSource = localIcon.fallback;
+      const iconKey = `counterplay-${item.internalName || item.name || itemName}`;
+      const useFallback = failedItemIcons[iconKey];
+      
+      if (fallbackSource && !useFallback) {
+        // Has fallback - try primary first, then fallback on error
+        return (
+          <Image 
+            source={imageSource} 
+            style={styles.counterplayIcon}
+            contentFit="cover"
+            cachePolicy="memory-disk"
+            transition={0}
+            onError={() => {
+              setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+            }}
+          />
+        );
+      }
+      
+      if (fallbackSource && useFallback) {
+        // Use fallback (original case)
+        return (
+          <Image 
+            source={fallbackSource} 
+            style={styles.counterplayIcon}
+            contentFit="cover"
+            cachePolicy="memory-disk"
+            transition={0}
+          />
+        );
+      }
+      
+      // No fallback, just use primary
+      return (
+        <Image 
+          source={imageSource} 
+          style={styles.counterplayIcon}
+          contentFit="cover"
+          cachePolicy="memory-disk"
+          transition={0}
+        />
+      );
+    })() : (
+      <View style={styles.counterplayIconFallback}>
+        <Text style={styles.counterplayIconFallbackText}>{itemName.charAt(0)}</Text>
+      </View>
+    );
+    
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          setTooltipData({
+            type: 'item',
+            name: item.name || itemName,
+            icon: iconElement,
+            item: item
+          });
+        }}
+        activeOpacity={0.7}
+      >
+        {iconElement}
+      </TouchableOpacity>
+    );
+  };
+
+  // Render icon list
+  const renderIconList = (names, renderIcon) => {
+    return (
+      <View style={styles.counterplayIconList}>
+        {names.map((name, idx) => {
+          const icon = renderIcon(name.trim());
+          return icon ? (
+            <View key={idx} style={styles.counterplayIconWrapper}>
+              {icon}
+            </View>
+          ) : null;
+        })}
+      </View>
+    );
+  };
+
+  // Counterplay data with exact names
+  const antiHealGods = ['Agni', 'Artio', 'Ares', 'Bacchus', 'Chaac', 'Cerberus', 'Izanami', 'Jormungandr', 'Medusa', 'Odin', 'Osiris', 'Sobek', 'Xbalanque', 'Fenrir'];
+  const antiHealItems = ['avengingBlade', 'BrawlersBeatstick', 'Contagion', 'DivineRuin', 'QinsBlade', 'StygianAnchor'];
+  const antiShieldItems = ['Mystical Mail', 'Shield Splitter', 'Lernaean Bow', 'Erosion'];
+  const antiShieldGods = ['Yemoja'];
+  const antiHealthItems = ['Soul Reaver', 'Heartseeker', 'Qin\'s Blade'];
+  const antiAutoAttackItems = ['Ancile', 'Leviathan\'s Hide', 'Pharaoh\'s Curse', 'Hide of the Nemean Lion', 'Spectral Armor'];
+  const antiProtectionItems = ['The Executioner', 'Titan\'s Bane', 'Obsidian Shard', 'Totem of Death'];
+  const antiStealthItems = ['Arondight'];
+  const antiStealthGods = ['Jormungandr', 'Hou Yi'];
+  const antiWallsItems = ['Shell of Rebuke', 'Helm of Darkness'];
+  const antiDebuffItems = ['Rod Of Asclepius'];
+  const antiCCItems = ['Magi\'s Cloak', 'Purification Beads', 'Talisman of Purification', 'Hussar\'s Wings', 'Stampede', 'Mantle Of Discord', 'Circes Hexstone', 'Avatar\'s Parashu', 'Dreamer\'s Idol'];
+
+  return (
+    <>
+      <ScrollView style={styles.counterplayScroll}>
+        {/* Anti Heal Gods */}
+        <View style={styles.counterplaySection}>
+          <Text style={styles.counterplaySectionTitle}>Enemy Gods with Healing?</Text>
+          <Text style={styles.counterplaySectionSubtitle}>Play these gods:</Text>
+          {renderIconList(antiHealGods, renderGodIcon)}
+        </View>
+
+      {/* Anti Heal Items */}
+      <View style={styles.counterplaySection}>
+        <Text style={styles.counterplaySectionTitle}>Anti Heal Items</Text>
+        {renderIconList(antiHealItems, renderItemIcon)}
+      </View>
+
+      {/* Anti Shield Items */}
+      <View style={styles.counterplaySection}>
+        <Text style={styles.counterplaySectionTitle}>Anti Shield Items</Text>
+        {renderIconList(antiShieldItems, renderItemIcon)}
+        {antiShieldGods.length > 0 && (
+          <>
+            <Text style={styles.counterplaySectionSubtitle}>Plus these gods:</Text>
+            {renderIconList(antiShieldGods, renderGodIcon)}
+          </>
+        )}
+      </View>
+
+      {/* Anti Health Items */}
+      <View style={styles.counterplaySection}>
+        <Text style={styles.counterplaySectionTitle}>Anti Health Items</Text>
+        {renderIconList(antiHealthItems, renderItemIcon)}
+      </View>
+
+      {/* Anti Auto Attack Items */}
+      <View style={styles.counterplaySection}>
+        <Text style={styles.counterplaySectionTitle}>Anti Auto Attack Items</Text>
+        {renderIconList(antiAutoAttackItems, renderItemIcon)}
+      </View>
+
+      {/* Anti Protection Items */}
+      <View style={styles.counterplaySection}>
+        <Text style={styles.counterplaySectionTitle}>Anti Protection Items</Text>
+        {renderIconList(antiProtectionItems, renderItemIcon)}
+      </View>
+
+      {/* Anti Stealth Items */}
+      <View style={styles.counterplaySection}>
+        <Text style={styles.counterplaySectionTitle}>Anti Stealth Items</Text>
+        {renderIconList(antiStealthItems, renderItemIcon)}
+        {antiStealthGods.length > 0 && (
+          <>
+            <Text style={styles.counterplaySectionSubtitle}>Plus these gods:</Text>
+            {renderIconList(antiStealthGods, renderGodIcon)}
+          </>
+        )}
+      </View>
+
+      {/* Anti Player Made Walls */}
+      <View style={styles.counterplaySection}>
+        <Text style={styles.counterplaySectionTitle}>Anti Player Made Walls</Text>
+        {renderIconList(antiWallsItems, renderItemIcon)}
+      </View>
+
+      {/* Anti Debuffs */}
+      <View style={styles.counterplaySection}>
+        <Text style={styles.counterplaySectionTitle}>Anti Debuffs</Text>
+        {renderIconList(antiDebuffItems, renderItemIcon)}
+      </View>
+
+        {/* Anti CC */}
+        <View style={styles.counterplaySection}>
+          <Text style={styles.counterplaySectionTitle}>Anti CC Items</Text>
+          {renderIconList(antiCCItems, renderItemIcon)}
+        </View>
+      </ScrollView>
+      
+      {/* Tooltip Modal */}
+      {tooltipData && (
+        <CounterplayIconTooltip
+          icon={tooltipData.icon}
+          name={tooltipData.name}
+          ability={tooltipData.ability}
+          item={tooltipData.item}
+          onClose={() => setTooltipData(null)}
+          getLocalGodAsset={getLocalGodAsset}
+        />
+      )}
+    </>
+  );
+}
 
 // Patch Badge Tooltip Component (defined outside to avoid recreation)
 function PatchBadgeTooltip({ changeType, version, entityType, badgeStyle, textStyle, overlayStyle, contentStyle, tooltipTextStyle, closeButtonStyle, closeTextStyle }) {
@@ -411,6 +893,8 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedMechanicCategory, setSelectedMechanicCategory] = useState(null);
   const [mechanicCategoryDropdownVisible, setMechanicCategoryDropdownVisible] = useState(false);
+  const [selectedMainCategory, setSelectedMainCategory] = useState(null);
+  const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [gamemodesDescriptionExpanded, setGamemodesDescriptionExpanded] = useState(false);
   const [conquestSectionsExpanded, setConquestSectionsExpanded] = useState({
     battleground: false,
@@ -478,6 +962,8 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
       setGamemodesDescriptionExpanded(false);
       setSelectedMechanicCategory(null);
       setMechanicCategoryDropdownVisible(false);
+      setSelectedMainCategory(null);
+      setSelectedSubcategory(null);
       setConquestSectionsExpanded({
         battleground: false,
         threeLanes: false,
@@ -677,34 +1163,19 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
 
   // Memoize card width style calculation based on screen width
   const getCardWidthStyle = useCallback(() => {
-    if (SCREEN_WIDTH >= 1400) {
-      return IS_WEB 
-        ? { position: 'relative', width: 'calc(16.666% - 8.34px)', minWidth: 140, maxWidth: 160 } // 6 per row
-        : { position: 'relative', width: '16%', minWidth: 140 }; // 6 per row
-    } else if (SCREEN_WIDTH >= 1100) {
-      return IS_WEB
-        ? { position: 'relative', width: 'calc(20% - 8px)', minWidth: 130, maxWidth: 150 } // 5 per row
-        : { position: 'relative', width: '19%', minWidth: 130 }; // 5 per row
-    } else if (SCREEN_WIDTH >= 900) {
-      return IS_WEB
-        ? { position: 'relative', width: 'calc(25% - 7.5px)', minWidth: 120, maxWidth: 140 } // 4 per row
-        : { position: 'relative', width: '24%', minWidth: 120 }; // 4 per row
-    } else {
-      // Mobile and tablets up to 900px: 3 per row (includes 600px and 390px devices)
-      // For web, use calc for precise 3 per row
-      // For native, calculate percentage to ensure 3 per row
-      return IS_WEB
-        ? { position: 'relative', width: 'calc(33.333% - 8px)', minWidth: 0, maxWidth: 'none', flexShrink: 0 } // 3 per row
-        : (() => {
-            const padding = 40; // 20px on each side
-            const gaps = 24; // 12px gap * 2 gaps for 3 items
-            const availableWidth = SCREEN_WIDTH - padding;
-            const itemWidth = (availableWidth - gaps) / 3;
-            const itemWidthPercent = (itemWidth / SCREEN_WIDTH) * 100;
-            return { position: 'relative', width: `${itemWidthPercent}%`, minWidth: 0, flex: 0, flexShrink: 0, maxWidth: 'none' }; // 3 per row
-          })()
-    }
-  }, [SCREEN_WIDTH]);
+    // Show 3 cards per row on mobile when showing skins, 4 otherwise. Always 4 on web.
+    return IS_WEB
+      ? { position: 'relative', width: 'calc(25% - 9px)', minWidth: 0, maxWidth: 'none', flexShrink: 0 } // 4 per row
+      : (() => {
+          const padding = 40; // 20px on each side
+          const cardsPerRow = showGodSkins ? 3 : 4; // 3 per row when showing skins for wider cards
+          const gaps = 12 * (cardsPerRow - 1); // 12px gap * number of gaps
+          const availableWidth = SCREEN_WIDTH - padding;
+          const itemWidth = (availableWidth - gaps) / cardsPerRow;
+          const itemWidthPercent = (itemWidth / SCREEN_WIDTH) * 100;
+          return { position: 'relative', width: `${itemWidthPercent}%`, minWidth: 0, flex: 0, flexShrink: 0, maxWidth: 'none' };
+        })()
+  }, [SCREEN_WIDTH, showGodSkins]);
 
   // Filter gods
   const filteredGods = useMemo(() => {
@@ -723,9 +1194,16 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
         return name.includes(query);
       });
     } else {
-      // Show only first 20 when no search (but still respect pantheon filter)
+      // Show only first 80 when no search (but still respect pantheon filter)
       result = result.slice(0, 80);
     }
+    
+    // Sort alphabetically by name
+    result = result.sort((a, b) => {
+      const nameA = (a.name || a.GodName || a.title || a.displayName || '').toString().toLowerCase();
+      const nameB = (b.name || b.GodName || b.title || b.displayName || '').toString().toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
     
     return result;
   }, [gods, searchQuery, selectedPantheon]);
@@ -1082,6 +1560,70 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
         </View>
       )}
 
+      {/* Main Category Navigation Buttons - shown only for mechanics tab */}
+      {selectedTab === 'mechanics' && !isDetailPageOpen && (
+        <View style={styles.mechanicsCategoryNavContainer}>
+          <View style={styles.mainCategoryButtons}>
+            {mechanicsCategories.map((category) => (
+              <TouchableOpacity
+                key={category.id}
+                style={[
+                  styles.mainCategoryButton,
+                  selectedMainCategory === category.id && styles.mainCategoryButtonActive
+                ]}
+                onPress={() => {
+                  if (selectedMainCategory === category.id) {
+                    setSelectedMainCategory(null);
+                    setSelectedSubcategory(null);
+                  } else {
+                    setSelectedMainCategory(category.id);
+                    setSelectedSubcategory(null);
+                  }
+                }}
+              >
+                <Text style={[
+                  styles.mainCategoryButtonText,
+                  selectedMainCategory === category.id && styles.mainCategoryButtonTextActive
+                ]}>
+                  {category.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          
+          {/* Subcategory Buttons - shown when main category is selected */}
+          {selectedMainCategory && (
+            <View style={styles.subcategoryButtons}>
+              {mechanicsCategories
+                .find(cat => cat.id === selectedMainCategory)
+                ?.subcategories.map((subcategory) => (
+                  <TouchableOpacity
+                    key={subcategory.id}
+                    style={[
+                      styles.subcategoryButton,
+                      selectedSubcategory === subcategory.id && styles.subcategoryButtonActive
+                    ]}
+                    onPress={() => {
+                      if (selectedSubcategory === subcategory.id) {
+                        setSelectedSubcategory(null);
+                      } else {
+                        setSelectedSubcategory(subcategory.id);
+                      }
+                    }}
+                  >
+                    <Text style={[
+                      styles.subcategoryButtonText,
+                      selectedSubcategory === subcategory.id && styles.subcategoryButtonTextActive
+                    ]}>
+                      {subcategory.name}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+            </View>
+          )}
+        </View>
+      )}
+
       {(selectedTab === 'gods' || selectedTab === 'items' || selectedTab === 'mechanics') && !isDetailPageOpen && (
       <View style={styles.controls}>
 
@@ -1257,55 +1799,6 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                 )}
               </View>
             </>
-          )}
-          {selectedTab === 'mechanics' && (
-            <View style={styles.filterButtonContainer}>
-              <TouchableOpacity
-                style={[styles.filterButton, selectedMechanicCategory && styles.filterButtonActive]}
-                onPress={() => {
-                  setMechanicCategoryDropdownVisible(!mechanicCategoryDropdownVisible);
-                }}
-              >
-                <Text style={styles.filterButtonText}>
-                  {selectedMechanicCategory ? gameplayMechanics.subcategories.find(c => c.id === selectedMechanicCategory)?.name || selectedMechanicCategory : 'Category'}
-                </Text>
-                <Text style={styles.filterButtonIcon}>
-                  {mechanicCategoryDropdownVisible ? '▼' : '▶'}
-                </Text>
-              </TouchableOpacity>
-              {mechanicCategoryDropdownVisible && (
-                <View style={styles.pantheonDropdown}>
-                  <ScrollView style={styles.pantheonDropdownScroll} nestedScrollEnabled={true}>
-                    <TouchableOpacity
-                      style={[styles.pantheonOption, !selectedMechanicCategory && styles.pantheonOptionActive]}
-                      onPress={() => {
-                        setSelectedMechanicCategory(null);
-                        setMechanicCategoryDropdownVisible(false);
-                      }}
-                    >
-                      <Text style={styles.pantheonOptionText}>All Categories</Text>
-                    </TouchableOpacity>
-                    {gameplayMechanics.subcategories.map((category) => {
-                      const categoryMechanics = mechanicsByCategory[category.id] || [];
-                      return (
-                        <TouchableOpacity
-                          key={category.id}
-                          style={[styles.pantheonOption, selectedMechanicCategory === category.id && styles.pantheonOptionActive]}
-                          onPress={() => {
-                            setSelectedMechanicCategory(category.id);
-                            setMechanicCategoryDropdownVisible(false);
-                          }}
-                        >
-                          <Text style={styles.pantheonOptionText}>
-                            {category.name} ({categoryMechanics.length})
-                          </Text>
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </ScrollView>
-                </View>
-              )}
-            </View>
           )}
           {(selectedTab === 'gods' || selectedTab === 'mechanics') && (
             <>
@@ -5010,7 +5503,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                 const cardWidthStyle = getCardWidthStyle();
                 
                 return (
-                  <View key={uniqueKey} style={cardWidthStyle}>
+                  <View key={uniqueKey} style={[cardWidthStyle, IS_WEB && { maxWidth: '100%', boxSizing: 'border-box' }]}>
                     <TouchableOpacity
                       style={[styles.card, showGodSkins && styles.cardWithSkin]}
                       onPress={() => {
@@ -5476,34 +5969,34 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                   </Text>
                 </Text>
                 <Text style={styles.gamemodesIntroText}>
-                  Browse by category or search for specific mechanics to learn more about how the game works.
+                  Select a category above to browse mechanics by topic.
                 </Text>
               </View>
-              <View style={styles.grid}>
-                {filteredMechanics.map((mechanic) => {
-                  const categoryName = gameplayMechanics.subcategories.find(c => c.id === mechanic.category)?.name || 'Other';
-                  return (
-                    <TouchableOpacity
-                      key={mechanic.id}
-                      style={styles.card}
-                      onPress={() => {
-                        setSelectedMechanic(mechanic);
-                        setTimeout(() => {
-                          scrollViewRef.current?.scrollTo({ y: 0, animated: false });
-                        }, 100);
-                      }}
-                    >
-                      <View style={styles.cardIconFallback}>
-                        <Text style={styles.cardIconFallbackText}>{mechanic.name.charAt(0)}</Text>
-                      </View>
-                      <Text style={styles.cardText} numberOfLines={1}>{mechanic.name}</Text>
-                      <Text style={[styles.cardText, { fontSize: 10, color: '#94a3b8', marginTop: 2 }]} numberOfLines={1}>
-                        {categoryName}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                })}
-              </View>
+              {selectedSubcategory ? (
+                <View style={styles.mechanicsContentArea}>
+                  {selectedSubcategory === 'counterplay' ? (
+                    <CounterplayContent gods={gods} items={allItems} getLocalGodAsset={getLocalGodAsset} getLocalItemIcon={getLocalItemIcon} />
+                  ) : (
+                    <Text style={styles.mechanicsContentPlaceholder}>
+                      Content for {mechanicsCategories
+                        .find(cat => cat.id === selectedMainCategory)
+                        ?.subcategories.find(sub => sub.id === selectedSubcategory)?.name || 'selected subcategory'} will appear here.
+                    </Text>
+                  )}
+                </View>
+              ) : selectedMainCategory ? (
+                <View style={styles.mechanicsContentArea}>
+                  <Text style={styles.mechanicsContentPlaceholder}>
+                    Select a subcategory to view mechanics.
+                  </Text>
+                </View>
+              ) : (
+                <View style={styles.mechanicsContentArea}>
+                  <Text style={styles.mechanicsContentPlaceholder}>
+                    Select a category above to get started.
+                  </Text>
+                </View>
+              )}
             </View>
           ) : (
             <View>
@@ -5643,6 +6136,10 @@ const styles = StyleSheet.create({
   controls: {
     paddingHorizontal: 20,
     marginBottom: 12,
+    ...(IS_WEB && {
+      position: 'relative',
+      zIndex: 100,
+    }),
   },
   tabBar: {
     flexDirection: 'row',
@@ -5709,6 +6206,182 @@ const styles = StyleSheet.create({
   filterButtonIcon: {
     color: '#e6eef8',
     fontSize: 8,
+  },
+  mechanicsCategoryNavContainer: {
+    paddingHorizontal: 20,
+    marginBottom: 12,
+  },
+  mainCategoryButtons: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 12,
+  },
+  mainCategoryButton: {
+    backgroundColor: '#06202f',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    flex: 1,
+    minWidth: '22%',
+    alignItems: 'center',
+  },
+  mainCategoryButtonActive: {
+    backgroundColor: '#1e90ff',
+    borderColor: '#1e90ff',
+  },
+  mainCategoryButtonText: {
+    color: '#e6eef8',
+    fontSize: 10,
+    fontWeight: '600',
+  },
+  mainCategoryButtonTextActive: {
+    color: '#ffffff',
+  },
+  subcategoryButtons: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+    marginTop: 8,
+  },
+  subcategoryButton: {
+    backgroundColor: '#06202f',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  subcategoryButtonActive: {
+    backgroundColor: '#1e90ff',
+    borderColor: '#1e90ff',
+  },
+  subcategoryButtonText: {
+    color: '#e6eef8',
+    fontSize: 11,
+    fontWeight: '500',
+  },
+  subcategoryButtonTextActive: {
+    color: '#ffffff',
+  },
+  mechanicsContentArea: {
+    minHeight: 200,
+    padding: 20,
+    backgroundColor: '#0b1226',
+    borderRadius: 8,
+    marginTop: 16,
+    marginBottom: 24,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  mechanicsContentPlaceholder: {
+    color: '#94a3b8',
+    fontSize: 14,
+    textAlign: 'center',
+    fontStyle: 'italic',
+  },
+  counterplayScroll: {
+    flex: 1,
+  },
+  counterplaySection: {
+    marginBottom: 24,
+  },
+  counterplaySectionTitle: {
+    color: '#f8fafc',
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 8,
+  },
+  counterplaySectionSubtitle: {
+    color: '#94a3b8',
+    fontSize: 14,
+    marginBottom: 12,
+    fontStyle: 'italic',
+  },
+  counterplayIconList: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginTop: 8,
+  },
+  counterplayIconWrapper: {
+    marginRight: 8,
+    marginBottom: 8,
+  },
+  counterplayIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 6,
+  },
+  counterplayIconFallback: {
+    width: 48,
+    height: 48,
+    borderRadius: 6,
+    backgroundColor: '#06202f',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  counterplayIconFallbackText: {
+    color: '#e6eef8',
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  counterplayTooltipContent: {
+    backgroundColor: '#0b1226',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    paddingRight: 40,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    maxWidth: 400,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+    position: 'relative',
+  },
+  counterplayTooltipHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  counterplayTooltipTitleContainer: {
+    flex: 1,
+    marginLeft: 12,
+  },
+  counterplayTooltipTitle: {
+    color: '#f8fafc',
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 4,
+  },
+  counterplayTooltipSubtitle: {
+    color: '#94a3b8',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  counterplayTooltipIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 8,
+  },
+  counterplayTooltipText: {
+    color: '#e6eef8',
+    fontSize: 14,
+    lineHeight: 20,
+    marginBottom: 8,
+  },
+  counterplayTooltipStat: {
+    color: '#1e90ff',
+    fontSize: 14,
+    fontWeight: '600',
+    marginTop: 8,
   },
   statOptionIcon: {
     width: 20,
@@ -5780,6 +6453,12 @@ const styles = StyleSheet.create({
     ...(IS_WEB && {
       maxWidth: '100%',
       paddingHorizontal: 10,
+      boxSizing: 'border-box',
+      overflow: 'visible',
+      justifyContent: 'flex-start',
+    }),
+    ...(!IS_WEB && {
+      justifyContent: 'center',
     }),
   },
   card: {
@@ -5788,17 +6467,29 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 8,
     alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 1,
     borderColor: '#1e3a5f',
     position: 'relative',
+    minHeight: 90,
+    maxWidth: '100%',
+    boxSizing: 'border-box',
+    flexDirection: 'column',
   },
   cardWithSkin: {
-    width: '48%',
-    padding: 2,
-    minHeight: 360,
+    width: '100%',
+    padding: 4,
     backgroundColor: '#0b1226',
     overflow: 'hidden',
     position: 'relative',
+    borderRadius: 12,
+    maxWidth: '100%',
+    boxSizing: 'border-box',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    ...(!IS_WEB && {
+      padding: 2,
+    }),
   },
   patchBadge: {
     position: 'absolute',
@@ -5880,13 +6571,13 @@ const styles = StyleSheet.create({
   cardIcon: {
     width: 56,
     height: 56,
-    borderRadius: 8,
+    borderRadius: 6,
     marginBottom: 6,
+    alignSelf: 'center',
   },
   cardIconSkin: {
     width: '100%',
-    aspectRatio: 0.6,
-    minHeight: 340,
+    aspectRatio: 16/9, // 1920x1080 default aspect ratio
     borderRadius: 12,
     alignSelf: 'center',
     marginBottom: 4,
@@ -5895,11 +6586,12 @@ const styles = StyleSheet.create({
   cardIconFallback: {
     width: 56,
     height: 56,
-    borderRadius: 8,
+    borderRadius: 6,
     backgroundColor: '#0f1724',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 6,
+    alignSelf: 'center',
   },
   cardIconFallbackText: {
     color: '#e6eef8',
@@ -5910,6 +6602,7 @@ const styles = StyleSheet.create({
     color: '#e6eef8',
     fontSize: 11,
     textAlign: 'center',
+    fontWeight: '500',
   },
   godPinButton: {
     position: 'absolute',
@@ -5981,14 +6674,16 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   modalGodIcon: {
-    width: 56,
-    height: 56,
+    width: 32,
+    height: 32,
     borderRadius: 8,
+    alignSelf: 'center',
   },
   modalGodIconFallback: {
-    width: 56,
-    height: 56,
+    width: 32,
+    height: 32,
     borderRadius: 8,
+    alignSelf: 'center',
     backgroundColor: '#0f1724',
     alignItems: 'center',
     justifyContent: 'center',
@@ -6002,6 +6697,7 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 8,
+    alignSelf: 'center',
   },
   modalItemIconFallback: {
     width: 56,
@@ -6010,6 +6706,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0f1724',
     alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'center',
   },
   modalItemIconFallbackText: {
     color: '#e6eef8',
