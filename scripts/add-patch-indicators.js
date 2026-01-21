@@ -72,7 +72,13 @@ function clearOldPatches(item, patchVersion) {
     item.patchChanges = {};
     if (currentPatchChanges.length > 0) {
       item.patchChanges[patchVersion] = currentPatchChanges;
+    } else {
+      // If no changes in current patch, clear latestPatchChange
+      delete item.latestPatchChange;
     }
+  } else {
+    // If no patchChanges at all, clear latestPatchChange
+    delete item.latestPatchChange;
   }
 }
 

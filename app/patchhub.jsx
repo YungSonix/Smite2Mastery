@@ -280,6 +280,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
 
   // Static patch file mapping (required for React Native bundle)
   const patchFiles = {
+    26: require('../Patch Notes/patchnotesob26.json'),
     25: require('../Patch Notes/patchnotesob25.json'),
     24: require('../Patch Notes/patchnotesob24.json'),
     23: require('../Patch Notes/patchnotesob23.json'),    
@@ -302,7 +303,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
 
   // Function to aggregate changes across all patches from lastPatchNumber to latest
   const generateCatchUp = (lastPatchNumber) => {
-    if (lastPatchNumber >= 25) {
+    if (lastPatchNumber >= 26) {
       setCatchUpData({
         summary: "You're already on the latest patch! No changes to catch up on.",
         gods: { new: [], buffed: [], nerfed: [], shifted: [] },
@@ -463,11 +464,8 @@ export default function PatchHubPage({ subTab = 'simple' }) {
       result.summary =
         `Since OB${lastPatchNumber}, there have been ` +
         `${godCounts.new} new god${godCounts.new !== 1 ? 's' : ''}, ` +
-        `${godCounts.newAspects} new Aspect${godCounts.newAspects !== 1 ? 's' : ''}, ` +
         `${godCounts.buffed} god${godCounts.buffed !== 1 ? 's' : ''} buffed, ` +
-        `${godCounts.buffedAspects} Aspect${godCounts.buffedAspects !== 1 ? 's' : ''} buffed, ` +
         `${godCounts.nerfed} god${godCounts.nerfed !== 1 ? 's' : ''} nerfed` +
-        `${godCounts.nerfedAspects} Aspect${godCounts.nerfedAspects !== 1 ? 's' : ''} nerfed, ` +
         `${godCounts.shifted > 0 ? `, ${godCounts.shifted} god${godCounts.shifted !== 1 ? 's' : ''} shifted` : ''}` +
         `, ${itemCount} item${itemCount !== 1 ? 's' : ''} changed` +
         `${newItemCount > 0 ? ` (${newItemCount} new)` : ''}` +
@@ -618,7 +616,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
     InteractionManager.runAfterInteractions(() => {
       setTimeout(() => {
         try {
-          const patchNotes = require('../Patch Notes/patchnotesob25.json');
+          const patchNotes = require('../Patch Notes/patchnotesob26.json');
           const builds = require('./data/builds.json');
           
           if (isMounted) {
