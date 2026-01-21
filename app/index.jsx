@@ -245,9 +245,22 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
             
             if (!error && data) {
               setCertificationRequestStatus(data.status); // 'pending', 'approved', 'rejected'
+              // Also save to local storage for persistence
+              await storage.setItem(`certificationStatus_${user}`, data.status);
             } else if (error && error.code !== 'PGRST116') {
               // PGRST116 = no rows found, which is fine
+              // Check local storage as fallback
+              const cachedStatus = await storage.getItem(`certificationStatus_${user}`);
+              if (cachedStatus) {
+                setCertificationRequestStatus(cachedStatus);
+              }
               console.error('Error checking certification status:', error);
+            } else {
+              // No rows found - check local storage as fallback
+              const cachedStatus = await storage.getItem(`certificationStatus_${user}`);
+              if (cachedStatus) {
+                setCertificationRequestStatus(cachedStatus);
+              }
             }
           }
         } catch (err) {
@@ -306,7 +319,11 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
 
   // Load community builds from Supabase when Community tab is active
   useEffect(() => {
-    if (buildCategory !== 'community') return;
+    if (buildCategory !== 'community') {
+      // Clear DB builds when switching away from community tab
+      setCommunityBuildsFromDB([]);
+      return;
+    }
     
     let isMounted = true;
     setLoadingCommunityBuilds(true);
@@ -315,31 +332,34 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
       try {
         const supabaseClient = getSupabase();
         if (!supabaseClient || !supabaseClient.from) {
+          console.log('⚠️ Supabase client not available');
           if (isMounted) {
             setLoadingCommunityBuilds(false);
           }
           return;
         }
         
+        console.log('🔄 Loading community builds from Supabase...');
         const { data, error } = await supabaseClient
           .from('community_builds')
           .select('*')
           .order('created_at', { ascending: false });
         
         if (error) {
-          console.error('Error loading community builds:', error);
+          console.error('❌ Error loading community builds:', error);
           if (isMounted) {
             setLoadingCommunityBuilds(false);
           }
           return;
         }
         
+        console.log(`✅ Loaded ${data?.length || 0} community builds from database`);
         if (isMounted && data) {
           setCommunityBuildsFromDB(data || []);
           setLoadingCommunityBuilds(false);
         }
       } catch (err) {
-        console.error('Exception loading community builds:', err);
+        console.error('❌ Exception loading community builds:', err);
         if (isMounted) {
           setLoadingCommunityBuilds(false);
         }
@@ -467,11 +487,102 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
     return pairs;
   }
 
+  // Transform community builds from DB into the same format as JSON builds
+  const transformedCommunityBuilds = useMemo(() => {
+    if (!builds || communityBuildsFromDB.length === 0) return null;
+    
+    // Group community builds by god
+    const godMap = new Map();
+    
+    communityBuildsFromDB.forEach((dbBuild) => {
+      const godInternalName = dbBuild.god_internal_name || dbBuild.god_name;
+      if (!godInternalName) return;
+      
+      // Find the god in the builds.json data
+      const allGods = flattenAny(builds.gods);
+      // Normalize god names for matching (remove _Item suffix, handle variations)
+      const normalizedDbName = godInternalName.toLowerCase().replace(/_item$/, '');
+      let god = allGods.find(g => {
+        const gInternalName = (g.internalName || g.GodName || '').toLowerCase();
+        const gName = (g.name || '').toLowerCase();
+        return gInternalName === normalizedDbName || 
+               gInternalName === godInternalName.toLowerCase() ||
+               gName === normalizedDbName ||
+               gName === (dbBuild.god_name || '').toLowerCase();
+      });
+      
+      // If god not found, create a minimal god object
+      if (!god) {
+        god = {
+          name: dbBuild.god_name,
+          GodName: dbBuild.god_name,
+          internalName: dbBuild.god_internal_name || dbBuild.god_name,
+          icon: null,
+        };
+      }
+      
+      // Transform the build to match JSON format
+      const transformedBuild = {
+        notes: dbBuild.build_name || dbBuild.notes || '',
+        title: dbBuild.build_name || '',
+        author: dbBuild.username || 'Unknown',
+        items: dbBuild.items || [],
+        relic: dbBuild.relic || null,
+        godLevel: dbBuild.god_level || 20,
+        aspectActive: dbBuild.aspect_active || false,
+        gamemodes: dbBuild.gamemodes || [],
+        createdAt: dbBuild.created_at,
+        // Mark as community build from DB
+        fromDatabase: true,
+      };
+      
+      if (!godMap.has(godInternalName)) {
+        godMap.set(godInternalName, {
+          god: { ...god },
+          builds: []
+        });
+      }
+      
+      godMap.get(godInternalName).builds.push(transformedBuild);
+    });
+    
+    return Array.from(godMap.values());
+  }, [builds, communityBuildsFromDB]);
+
   // Memoize pairs to avoid recalculating on every render
   const pairs = useMemo(() => {
     if (!builds) return [];
-    return pairGodsAndBuilds(builds);
-  }, [builds]);
+    const jsonPairs = pairGodsAndBuilds(builds);
+    
+    // If we're on community tab and have DB builds, merge them
+    if (buildCategory === 'community' && transformedCommunityBuilds && transformedCommunityBuilds.length > 0) {
+      // Merge DB builds with JSON builds, prioritizing DB builds for the same god
+      const mergedPairs = [...jsonPairs];
+      
+      transformedCommunityBuilds.forEach((dbPair) => {
+        const existingIndex = mergedPairs.findIndex(p => {
+          const godName = p.god?.internalName || p.god?.GodName || '';
+          const dbGodName = dbPair.god?.internalName || dbPair.god?.GodName || '';
+          return godName.toLowerCase() === dbGodName.toLowerCase();
+        });
+        
+        if (existingIndex >= 0) {
+          // Merge builds for existing god
+          mergedPairs[existingIndex].builds = [
+            ...dbPair.builds, // DB builds first
+            ...mergedPairs[existingIndex].builds.filter(b => !b.fromDatabase) // Then JSON builds
+          ];
+        } else {
+          // Add new god with DB builds
+          mergedPairs.push(dbPair);
+        }
+      });
+      
+      return mergedPairs;
+    }
+    
+    return jsonPairs;
+  }, [builds, buildCategory, transformedCommunityBuilds]);
 
   // Extract unique authors from builds in current category
   const availableAuthors = useMemo(() => {
@@ -1919,7 +2030,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                   >
                     <Text style={styles.filterOptionText}>All Modes</Text>
                   </TouchableOpacity>
-                  {['Joust', 'Dual', 'Arena', 'Conquest', 'Assault'].map((mode) => (
+                  {['Joust', 's', 'Arena', 'Conquest', 'Assault'].map((mode) => (
                     <TouchableOpacity
                       key={mode}
                       style={[styles.filterOption, selectedGamemode === mode && styles.filterOptionActive]}
@@ -1989,6 +2100,8 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                       Alert.alert('Error', 'Failed to send certification request. Please try again.');
                     } else {
                       setCertificationRequestStatus('pending');
+                      // Save to local storage for persistence
+                      await storage.setItem(`certificationStatus_${currentUser}`, 'pending');
                       Alert.alert('Request Sent', 'Your new certification request has been sent! We will review it and get back to you.');
                     }
                   } catch (error) {
@@ -2039,10 +2152,14 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                           'You already have a certification request pending review. Please wait for a response before submitting another request.'
                         );
                         setCertificationRequestStatus('pending');
+                        // Save to local storage for persistence
+                        await storage.setItem(`certificationStatus_${currentUser}`, 'pending');
                         return;
                       } else if (existingRequest.status === 'approved') {
                         Alert.alert('Already Certified', 'Your certification request has already been approved!');
                         setCertificationRequestStatus('approved');
+                        // Save to local storage for persistence
+                        await storage.setItem(`certificationStatus_${currentUser}`, 'approved');
                         return;
                       }
                     }
@@ -2063,6 +2180,8 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                       Alert.alert('Error', 'Failed to send certification request. Please try again.');
                     } else {
                       setCertificationRequestStatus('pending');
+                      // Save to local storage for persistence
+                      await storage.setItem(`certificationStatus_${currentUser}`, 'pending');
                       Alert.alert('Request Sent', 'Your certification request has been sent! We will review it and get back to you.');
                     }
                   } catch (error) {
@@ -2083,20 +2202,60 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
           </View>
         )}
         
-        {/* Post Your Build Button - Only show on Community tab */}
+        {/* Post Your Build Button and Refresh - Only show on Community tab */}
         {buildCategory === 'community' && (
           <View style={styles.certificationRequestContainer}>
-            <TouchableOpacity
-              style={styles.postYourBuildButton}
-              onPress={() => {
-                if (onNavigateToCustomBuild) {
-                  onNavigateToCustomBuild();
-                }
-              }}
-              activeOpacity={0.7}
-            >
-              <Text style={styles.postYourBuildButtonText}>Post Your Build</Text>
-            </TouchableOpacity>
+            <View style={styles.communityButtonsRow}>
+              <TouchableOpacity
+                style={[styles.postYourBuildButton, styles.communityButton]}
+                onPress={() => {
+                  if (onNavigateToCustomBuild) {
+                    onNavigateToCustomBuild();
+                  }
+                }}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.postYourBuildButtonText}>Post Your Build</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.refreshCommunityButton, styles.communityButton]}
+                onPress={async () => {
+                  setLoadingCommunityBuilds(true);
+                  try {
+                    const supabaseClient = getSupabase();
+                    if (!supabaseClient || !supabaseClient.from) {
+                      Alert.alert('Error', 'Unable to refresh builds. Please try again later.');
+                      setLoadingCommunityBuilds(false);
+                      return;
+                    }
+                    
+                    const { data, error } = await supabaseClient
+                      .from('community_builds')
+                      .select('*')
+                      .order('created_at', { ascending: false });
+                    
+                    if (error) {
+                      console.error('Error refreshing community builds:', error);
+                      Alert.alert('Error', 'Failed to refresh builds. Please try again.');
+                    } else {
+                      setCommunityBuildsFromDB(data || []);
+                      Alert.alert('Success', `Loaded ${data?.length || 0} community builds!`);
+                    }
+                  } catch (err) {
+                    console.error('Exception refreshing community builds:', err);
+                    Alert.alert('Error', 'An error occurred while refreshing builds.');
+                  } finally {
+                    setLoadingCommunityBuilds(false);
+                  }
+                }}
+                activeOpacity={0.7}
+                disabled={loadingCommunityBuilds}
+              >
+                <Text style={styles.refreshCommunityButtonText}>
+                  {loadingCommunityBuilds ? 'Loading...' : '🔄 Refresh'}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       </View>
@@ -5134,6 +5293,60 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'center',
   },
+  communityButtonsRow: {
+    flexDirection: 'row',
+    gap: 12,
+    width: '100%',
+  },
+  communityButton: {
+    flex: 1,
+  },
+  refreshCommunityButton: {
+    backgroundColor: '#64748b',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#475569',
+    shadowColor: '#64748b',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  refreshCommunityButtonText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  communityButtonsRow: {
+    flexDirection: 'row',
+    gap: 12,
+    width: '100%',
+  },
+  communityButton: {
+    flex: 1,
+  },
+  refreshCommunityButton: {
+    backgroundColor: '#64748b',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#475569',
+    shadowColor: '#64748b',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  refreshCommunityButtonText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
 });
 
 // Main App Component with Navigation
@@ -5310,6 +5523,7 @@ export default function App() {
       };
     }
   }, []);
+
 
   const [currentPage, setCurrentPage] = useState('homepage');
   const [godFromBuilds, setGodFromBuilds] = useState(null);

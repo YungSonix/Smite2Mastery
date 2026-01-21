@@ -23,24 +23,30 @@ import { useScreenDimensions } from '../hooks/useScreenDimensions';
 // ============================================================================
 
 const APP_VERSION_CONFIG = {
-  currentVersion: '2.0.0', // Current app version
-  previousVersion: '1.1.0', // Previous version (for comparison)
+  currentVersion: '2.1.0', // Current app version
+  previousVersion: '2.0.0', // Previous version (for comparison)
   updateNotes: [
-    'Updated all pages.',
-    'Added new features and improvements.',
-    'New God builder page.',
-    'Custom Profiles page.',
-    'Added scaling to god pages.',
-    'Gods slider is now draggable.',
-    'Added new channels to Guides section.',
-    'Improved Web performance.',
-    'Fixed some bugs and accessibility issues.',
+    'Added new Custom Builds page.',
+    'Added new Community Builds page.',
+    'Added new Certification Builds page.',
   ], 
 };
 
 // Version History - Add new versions here when releasing updates
 // The current version will automatically be added to this list when you update APP_VERSION_CONFIG
 const VERSION_HISTORY = [
+  {
+    version: '2.0.0',
+    date: '2026-01-21', // Format: YYYY-MM-DD
+    updateNotes: [
+      'Gods slider now draggable.',
+      'Added new channels to Guides section',
+      'Updated home page.',
+      'Made improvements while in a god/item page.',
+      'Improved Web performance.',
+      'Fixed some bugs.',
+    ],
+  },
   {
     version: '1.1.0',
     date: '2025-12-09', // Format: YYYY-MM-DD
@@ -175,17 +181,34 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
   useEffect(() => {
     const checkForAppUpdate = async () => {
       try {
+        // Add a small delay to ensure AsyncStorage is ready (especially on mobile)
+        await new Promise(resolve => setTimeout(resolve, Platform.OS === 'web' ? 100 : 500));
+        
         const lastSeenVersion = await AsyncStorage.getItem('lastSeenAppVersion');
         const currentVersion = APP_VERSION_CONFIG.currentVersion;
         
+        console.log('Update check - Last seen version:', lastSeenVersion, 'Current version:', currentVersion);
+        
         // If we haven't seen this version before, or it's different from last seen, show popup
         if (!lastSeenVersion || lastSeenVersion !== currentVersion) {
+          console.log('Showing update popup for version:', currentVersion);
           setShowUpdatePopup(true);
-          // Store that we've seen this version
-          await AsyncStorage.setItem('lastSeenAppVersion', currentVersion);
         }
       } catch (error) {
         console.error('Error checking app version:', error);
+        // On error, still try to show the popup (better to show it than not)
+        // Only if we can't read storage, assume first launch and show popup
+        try {
+          const currentVersion = APP_VERSION_CONFIG.currentVersion;
+          const lastSeenVersion = await AsyncStorage.getItem('lastSeenAppVersion');
+          if (!lastSeenVersion) {
+            setShowUpdatePopup(true);
+          }
+        } catch (retryError) {
+          console.error('Retry error:', retryError);
+          // Last resort: show popup anyway if storage is completely broken
+          setShowUpdatePopup(true);
+        }
       }
     };
     
@@ -579,7 +602,17 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
         visible={showUpdatePopup}
         transparent={true}
         animationType="fade"
-        onRequestClose={() => setShowUpdatePopup(false)}
+        onRequestClose={async () => {
+          setShowUpdatePopup(false);
+          // Store that we've seen this version AFTER user dismisses the popup
+          try {
+            const currentVersion = APP_VERSION_CONFIG.currentVersion;
+            await AsyncStorage.setItem('lastSeenAppVersion', currentVersion);
+            console.log('Saved version to storage (back button):', currentVersion);
+          } catch (error) {
+            console.error('Error saving version to storage:', error);
+          }
+        }}
       >
         <View style={styles.modalOverlay}>
           <View style={styles.updatePopupContainer}>
@@ -587,7 +620,17 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
               <Text style={styles.updatePopupTitle}>App Updated</Text>
               <TouchableOpacity
                 style={styles.updatePopupCloseButton}
-                onPress={() => setShowUpdatePopup(false)}
+                onPress={async () => {
+                  setShowUpdatePopup(false);
+                  // Store that we've seen this version AFTER user dismisses the popup
+                  try {
+                    const currentVersion = APP_VERSION_CONFIG.currentVersion;
+                    await AsyncStorage.setItem('lastSeenAppVersion', currentVersion);
+                    console.log('Saved version to storage (close button):', currentVersion);
+                  } catch (error) {
+                    console.error('Error saving version to storage:', error);
+                  }
+                }}
               >
                 <Text style={styles.updatePopupCloseText}>✕</Text>
               </TouchableOpacity>
@@ -608,7 +651,18 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
             </View>
             <TouchableOpacity
               style={styles.updatePopupButton}
-              onPress={() => setShowUpdatePopup(false)}
+              onPress={async () => {
+                setShowUpdatePopup(false);
+                // Store that we've seen this version AFTER user dismisses the popup
+                // This ensures they see it even if app closes before saving
+                try {
+                  const currentVersion = APP_VERSION_CONFIG.currentVersion;
+                  await AsyncStorage.setItem('lastSeenAppVersion', currentVersion);
+                  console.log('Saved version to storage:', currentVersion);
+                } catch (error) {
+                  console.error('Error saving version to storage:', error);
+                }
+              }}
               activeOpacity={0.7}
             >
               <Text style={styles.updatePopupButtonText}>Got it!</Text>
