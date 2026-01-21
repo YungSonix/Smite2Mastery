@@ -198,7 +198,9 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
   const [buildCategory, setBuildCategory] = useState('featured'); // 'featured', 'certified', 'community'
   // Community builds from Supabase
   const [communityBuildsFromDB, setCommunityBuildsFromDB] = useState([]);
+  const [certifiedBuildsFromDB, setCertifiedBuildsFromDB] = useState([]);
   const [loadingCommunityBuilds, setLoadingCommunityBuilds] = useState(false);
+  const [loadingCertifiedBuilds, setLoadingCertifiedBuilds] = useState(false);
   // Filter dropdown states
   const [roleDropdownVisible, setRoleDropdownVisible] = useState(false);
   const [authorDropdownVisible, setAuthorDropdownVisible] = useState(false);
@@ -318,55 +320,91 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
   }, []);
 
   // Load community builds from Supabase when Community tab is active
+  // Load certified builds from Supabase when Certified tab is active
   useEffect(() => {
+    // Clear DB builds when switching away from their respective tabs
     if (buildCategory !== 'community') {
-      // Clear DB builds when switching away from community tab
       setCommunityBuildsFromDB([]);
+    }
+    if (buildCategory !== 'certified') {
+      setCertifiedBuildsFromDB([]);
+    }
+    
+    if (buildCategory !== 'community' && buildCategory !== 'certified') {
       return;
     }
     
     let isMounted = true;
-    setLoadingCommunityBuilds(true);
     
-    const loadCommunityBuilds = async () => {
+    const loadBuilds = async () => {
       try {
         const supabaseClient = getSupabase();
         if (!supabaseClient || !supabaseClient.from) {
           console.log('⚠️ Supabase client not available');
           if (isMounted) {
             setLoadingCommunityBuilds(false);
+            setLoadingCertifiedBuilds(false);
           }
           return;
         }
         
-        console.log('🔄 Loading community builds from Supabase...');
-        const { data, error } = await supabaseClient
-          .from('community_builds')
-          .select('*')
-          .order('created_at', { ascending: false });
-        
-        if (error) {
-          console.error('❌ Error loading community builds:', error);
-          if (isMounted) {
+        // Load community builds
+        if (buildCategory === 'community') {
+          setLoadingCommunityBuilds(true);
+          console.log('🔄 Loading community builds from Supabase...');
+          const { data, error } = await supabaseClient
+            .from('community_builds')
+            .select('*')
+            .order('created_at', { ascending: false });
+          
+          if (error) {
+            console.error('❌ Error loading community builds:', error);
+            if (isMounted) {
+              setLoadingCommunityBuilds(false);
+            }
+            return;
+          }
+          
+          console.log(`✅ Loaded ${data?.length || 0} community builds from database`);
+          if (isMounted && data) {
+            setCommunityBuildsFromDB(data || []);
             setLoadingCommunityBuilds(false);
           }
-          return;
         }
         
-        console.log(`✅ Loaded ${data?.length || 0} community builds from database`);
-        if (isMounted && data) {
-          setCommunityBuildsFromDB(data || []);
-          setLoadingCommunityBuilds(false);
+        // Load certified builds
+        if (buildCategory === 'certified') {
+          setLoadingCertifiedBuilds(true);
+          console.log('🔄 Loading certified builds from Supabase...');
+          const { data: certifiedData, error: certifiedError } = await supabaseClient
+            .from('certified_builds')
+            .select('*')
+            .order('created_at', { ascending: false });
+          
+          if (certifiedError) {
+            console.error('❌ Error loading certified builds:', certifiedError);
+            if (isMounted) {
+              setLoadingCertifiedBuilds(false);
+            }
+            return;
+          }
+          
+          console.log(`✅ Loaded ${certifiedData?.length || 0} certified builds from database`);
+          if (isMounted && certifiedData) {
+            setCertifiedBuildsFromDB(certifiedData || []);
+            setLoadingCertifiedBuilds(false);
+          }
         }
       } catch (err) {
-        console.error('❌ Exception loading community builds:', err);
+        console.error('❌ Exception loading builds:', err);
         if (isMounted) {
           setLoadingCommunityBuilds(false);
+          setLoadingCertifiedBuilds(false);
         }
       }
     };
     
-    loadCommunityBuilds();
+    loadBuilds();
     
     return () => {
       isMounted = false;
@@ -527,13 +565,20 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
         title: dbBuild.build_name || '',
         author: dbBuild.username || 'Unknown',
         items: dbBuild.items || [],
+        startingItems: dbBuild.starting_items || [],
         relic: dbBuild.relic || null,
         godLevel: dbBuild.god_level || 20,
         aspectActive: dbBuild.aspect_active || false,
         gamemodes: dbBuild.gamemodes || [],
+        abilityLevelingOrder: dbBuild.ability_leveling_order || [],
+        startingAbilityOrder: dbBuild.starting_ability_order || [],
+        itemSwaps: dbBuild.item_swaps || [],
+        roles: dbBuild.roles || [],
+        tips: dbBuild.tips || '',
         createdAt: dbBuild.created_at,
         // Mark as community build from DB
         fromDatabase: true,
+        databaseCategory: 'community',
       };
       
       if (!godMap.has(godInternalName)) {
@@ -549,16 +594,85 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
     return Array.from(godMap.values());
   }, [builds, communityBuildsFromDB]);
 
+  // Transform certified builds from DB into the same format as JSON builds
+  const transformedCertifiedBuilds = useMemo(() => {
+    if (!builds || certifiedBuildsFromDB.length === 0) return null;
+    
+    // Group certified builds by god
+    const godMap = new Map();
+    
+    certifiedBuildsFromDB.forEach((dbBuild) => {
+      const godInternalName = dbBuild.god_internal_name || dbBuild.god_name;
+      if (!godInternalName) return;
+      
+      // Find the god in the builds.json data
+      const allGods = flattenAny(builds.gods);
+      // Normalize god names for matching (remove _Item suffix, handle variations)
+      const normalizedDbName = godInternalName.toLowerCase().replace(/_item$/, '');
+      let god = allGods.find(g => {
+        const gInternalName = (g.internalName || g.GodName || '').toLowerCase();
+        const gName = (g.name || '').toLowerCase();
+        return gInternalName === normalizedDbName || 
+               gInternalName === godInternalName.toLowerCase() ||
+               gName === normalizedDbName ||
+               gName === (dbBuild.god_name || '').toLowerCase();
+      });
+      
+      // If god not found, create a minimal god object
+      if (!god) {
+        god = {
+          name: dbBuild.god_name,
+          GodName: dbBuild.god_name,
+          internalName: dbBuild.god_internal_name || dbBuild.god_name,
+          icon: null,
+        };
+      }
+      
+      // Transform the build to match JSON format
+      const transformedBuild = {
+        notes: dbBuild.build_name || dbBuild.notes || '',
+        title: dbBuild.build_name || '',
+        author: dbBuild.username || 'Unknown',
+        items: dbBuild.items || [],
+        startingItems: dbBuild.starting_items || [],
+        relic: dbBuild.relic || null,
+        godLevel: dbBuild.god_level || 20,
+        aspectActive: dbBuild.aspect_active || false,
+        gamemodes: dbBuild.gamemodes || [],
+        abilityLevelingOrder: dbBuild.ability_leveling_order || [],
+        startingAbilityOrder: dbBuild.starting_ability_order || [],
+        itemSwaps: dbBuild.item_swaps || [],
+        roles: dbBuild.roles || [],
+        tips: dbBuild.tips || '',
+        createdAt: dbBuild.created_at,
+        // Mark as certified build from DB
+        fromDatabase: true,
+        databaseCategory: 'certified',
+      };
+      
+      if (!godMap.has(godInternalName)) {
+        godMap.set(godInternalName, {
+          god: { ...god },
+          builds: []
+        });
+      }
+      
+      godMap.get(godInternalName).builds.push(transformedBuild);
+    });
+    
+    return Array.from(godMap.values());
+  }, [builds, certifiedBuildsFromDB]);
+
   // Memoize pairs to avoid recalculating on every render
   const pairs = useMemo(() => {
     if (!builds) return [];
     const jsonPairs = pairGodsAndBuilds(builds);
     
-    // If we're on community tab and have DB builds, merge them
+    // Merge DB builds based on current category
+    let mergedPairs = [...jsonPairs];
+    
+    // Merge community builds if on community tab
     if (buildCategory === 'community' && transformedCommunityBuilds && transformedCommunityBuilds.length > 0) {
-      // Merge DB builds with JSON builds, prioritizing DB builds for the same god
-      const mergedPairs = [...jsonPairs];
-      
       transformedCommunityBuilds.forEach((dbPair) => {
         const existingIndex = mergedPairs.findIndex(p => {
           const godName = p.god?.internalName || p.god?.GodName || '';
@@ -570,19 +684,39 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
           // Merge builds for existing god
           mergedPairs[existingIndex].builds = [
             ...dbPair.builds, // DB builds first
-            ...mergedPairs[existingIndex].builds.filter(b => !b.fromDatabase) // Then JSON builds
+            ...mergedPairs[existingIndex].builds.filter(b => !b.fromDatabase || b.databaseCategory !== 'community') // Then other builds
           ];
         } else {
           // Add new god with DB builds
           mergedPairs.push(dbPair);
         }
       });
-      
-      return mergedPairs;
     }
     
-    return jsonPairs;
-  }, [builds, buildCategory, transformedCommunityBuilds]);
+    // Merge certified builds if on certified tab
+    if (buildCategory === 'certified' && transformedCertifiedBuilds && transformedCertifiedBuilds.length > 0) {
+      transformedCertifiedBuilds.forEach((dbPair) => {
+        const existingIndex = mergedPairs.findIndex(p => {
+          const godName = p.god?.internalName || p.god?.GodName || '';
+          const dbGodName = dbPair.god?.internalName || dbPair.god?.GodName || '';
+          return godName.toLowerCase() === dbGodName.toLowerCase();
+        });
+        
+        if (existingIndex >= 0) {
+          // Merge builds for existing god
+          mergedPairs[existingIndex].builds = [
+            ...dbPair.builds, // DB builds first
+            ...mergedPairs[existingIndex].builds.filter(b => !b.fromDatabase || b.databaseCategory !== 'certified') // Then other builds
+          ];
+        } else {
+          // Add new god with DB builds
+          mergedPairs.push(dbPair);
+        }
+      });
+    }
+    
+    return mergedPairs;
+  }, [builds, buildCategory, transformedCommunityBuilds, transformedCertifiedBuilds]);
 
   // Extract unique authors from builds in current category
   const availableAuthors = useMemo(() => {
@@ -592,9 +726,12 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
       if (Array.isArray(godBuilds)) {
         godBuilds.forEach(build => {
           if (build && build.author) {
-            // For DB builds, they're always community builds
+            // For DB builds, check their category
             if (build.fromDatabase) {
-              if (buildCategory === 'community') {
+              if (build.databaseCategory === 'community' && buildCategory === 'community') {
+                const author = build.author.toString().trim();
+                if (author) authorsSet.add(author);
+              } else if (build.databaseCategory === 'certified' && buildCategory === 'certified') {
                 const author = build.author.toString().trim();
                 if (author) authorsSet.add(author);
               }
@@ -630,9 +767,11 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
       if (god) {
         // Check if this god has any builds in the current category
         const hasBuildsInCategory = Array.isArray(godBuilds) && godBuilds.some(build => {
-          // For DB builds, they're always community builds
+          // For DB builds, check their category
           if (build.fromDatabase) {
-            return buildCategory === 'community';
+            if (build.databaseCategory === 'community') return buildCategory === 'community';
+            if (build.databaseCategory === 'certified') return buildCategory === 'certified';
+            return false;
           }
           // For JSON builds, use category check
           const category = getBuildCategory(build);
@@ -2256,6 +2395,50 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                 </Text>
               </TouchableOpacity>
             </View>
+          </View>
+        )}
+        
+        {/* Refresh Button for Certified tab */}
+        {buildCategory === 'certified' && (
+          <View style={styles.certificationRequestContainer}>
+            <TouchableOpacity
+              style={[styles.refreshCommunityButton, styles.communityButton]}
+              onPress={async () => {
+                setLoadingCertifiedBuilds(true);
+                try {
+                  const supabaseClient = getSupabase();
+                  if (!supabaseClient || !supabaseClient.from) {
+                    Alert.alert('Error', 'Unable to refresh builds. Please try again later.');
+                    setLoadingCertifiedBuilds(false);
+                    return;
+                  }
+                  
+                  const { data, error } = await supabaseClient
+                    .from('certified_builds')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                  
+                  if (error) {
+                    console.error('Error refreshing certified builds:', error);
+                    Alert.alert('Error', 'Failed to refresh builds. Please try again.');
+                  } else {
+                    setCertifiedBuildsFromDB(data || []);
+                    Alert.alert('Success', `Loaded ${data?.length || 0} certified builds!`);
+                  }
+                } catch (err) {
+                  console.error('Exception refreshing certified builds:', err);
+                  Alert.alert('Error', 'An error occurred while refreshing builds.');
+                } finally {
+                  setLoadingCertifiedBuilds(false);
+                }
+              }}
+              activeOpacity={0.7}
+              disabled={loadingCertifiedBuilds}
+            >
+              <Text style={styles.refreshCommunityButtonText}>
+                {loadingCertifiedBuilds ? 'Loading...' : '🔄 Refresh'}
+              </Text>
+            </TouchableOpacity>
           </View>
         )}
       </View>
