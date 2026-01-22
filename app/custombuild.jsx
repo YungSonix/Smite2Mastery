@@ -111,22 +111,44 @@ export default function CustomBuildPage({ onNavigateToGod }) {
             .select('status')
             .eq('username', currentUser)
             .order('requested_at', { ascending: false })
-            .limit(1)
-            .single();
+            .limit(1);
           
-          if (!error && data && data.status === 'approved') {
+          // Handle both single() and array results
+          let status = null;
+          if (!error && data) {
+            if (Array.isArray(data) && data.length > 0) {
+              status = data[0].status;
+            } else if (data && data.status) {
+              status = data.status;
+            }
+          }
+          
+          if (status === 'approved') {
             setIsUserCertified(true);
             // Also save to local storage
             await storage.setItem(`certificationStatus_${currentUser}`, 'approved');
+            console.log('✅ User is certified:', currentUser);
           } else {
+            setIsUserCertified(false);
+            // Update local storage with current status
+            if (status) {
+              await storage.setItem(`certificationStatus_${currentUser}`, status);
+            }
             // Check local storage as fallback
             const cachedStatus = await storage.getItem(`certificationStatus_${currentUser}`);
-            setIsUserCertified(cachedStatus === 'approved');
+            if (cachedStatus === 'approved') {
+              setIsUserCertified(true);
+            }
           }
         } catch (err) {
+          console.error('Error checking certification in custombuild:', err);
           // Check local storage as fallback
           const cachedStatus = await storage.getItem(`certificationStatus_${currentUser}`);
-          setIsUserCertified(cachedStatus === 'approved');
+          if (cachedStatus === 'approved') {
+            setIsUserCertified(true);
+          } else {
+            setIsUserCertified(false);
+          }
         }
       } catch (error) {
         console.error('Error checking certification status:', error);
@@ -135,8 +157,8 @@ export default function CustomBuildPage({ onNavigateToGod }) {
     
     checkCertificationStatus();
     
-    // Refresh certification status every 30 seconds
-    const interval = setInterval(checkCertificationStatus, 30000);
+    // Refresh certification status every 10 seconds (more frequent for faster updates)
+    const interval = setInterval(checkCertificationStatus, 10000);
     
     return () => clearInterval(interval);
   }, []);
@@ -2714,7 +2736,7 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                       aspectActive: aspectActive && selectedGod.aspect ? true : false,
                       author: currentUser,
                       notes: buildTips.trim() || certifiedBuildName.trim(),
-                      tips: buildTips.trim(),
+                      tips: buildTips.trim() || null,
                       abilityLevelingOrder: abilityLevelingOrder,
                       startingAbilityOrder: startingAbilityOrder,
                       itemSwaps: itemSwaps.map(swap => ({
@@ -2740,7 +2762,7 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                         god_level: godLevel,
                         aspect_active: buildData.aspectActive,
                         notes: buildData.notes || buildData.tips || certifiedBuildName.trim(),
-                        tips: buildData.tips,
+                        tips: (buildData.tips && buildData.tips.trim()) || null,
                         ability_leveling_order: buildData.abilityLevelingOrder,
                         starting_ability_order: buildData.startingAbilityOrder,
                         item_swaps: buildData.itemSwaps,
@@ -2944,7 +2966,7 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                       aspectActive: aspectActive && selectedGod.aspect ? true : false,
                       author: currentUser,
                       notes: buildTips.trim() || communityBuildName.trim(),
-                      tips: buildTips.trim(),
+                      tips: buildTips.trim() || null,
                       abilityLevelingOrder: abilityLevelingOrder,
                       itemSwaps: itemSwaps.map(swap => ({
                         item: swap.item,
@@ -2972,7 +2994,7 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                         god_level: godLevel,
                         aspect_active: buildData.aspectActive,
                         notes: buildData.notes || buildData.tips || communityBuildName.trim(),
-                        tips: buildData.tips,
+                        tips: (buildData.tips && buildData.tips.trim()) || null,
                         ability_leveling_order: buildData.abilityLevelingOrder,
                         starting_ability_order: buildData.startingAbilityOrder,
                         item_swaps: buildData.itemSwaps,

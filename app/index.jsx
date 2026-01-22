@@ -242,13 +242,23 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
               .select('status')
               .eq('username', user)
               .order('requested_at', { ascending: false })
-              .limit(1)
-              .single();
+              .limit(1);
             
+            // Handle both single() and array results
+            let status = null;
             if (!error && data) {
-              setCertificationRequestStatus(data.status); // 'pending', 'approved', 'rejected'
+              if (Array.isArray(data) && data.length > 0) {
+                status = data[0].status;
+              } else if (data && data.status) {
+                status = data.status;
+              }
+            }
+            
+            if (status) {
+              setCertificationRequestStatus(status); // 'pending', 'approved', 'rejected'
               // Also save to local storage for persistence
-              await storage.setItem(`certificationStatus_${user}`, data.status);
+              await storage.setItem(`certificationStatus_${user}`, status);
+              console.log('✅ Certification status updated:', status, 'for user:', user);
             } else if (error && error.code !== 'PGRST116') {
               // PGRST116 = no rows found, which is fine
               // Check local storage as fallback
