@@ -1,0 +1,737 @@
+{
+    "patchName": "Open Beta 27 - The Great Teacher Update",
+    "releaseDate": "01-30-26",
+    "summary": "Chiron ported to SMITE 2. New Reign of the Archfiend event featuring The Archfiend Saga Kukulkan. Joust visual update with improved lighting and textures. Ranked reset with SR squish. New Multiqueue (Beta) feature. Multiple god buffs and item balance changes.",
+    "gods": [
+      {
+        "type": "god",
+        "name": "Chiron",
+        "changeType": "new",
+        "changes": [
+          {
+            "section": "General",
+            "description": [
+              "Ranged Basic Attacks",
+              "Damage Type: Physical",
+              "Scaling Type: Strength Scaling"
+            ]
+          },
+          {
+            "section": "Passive",
+            "abilityName": "Herbal Medicine",
+            "abilityNumber": "(P)",
+            "description": [
+              "Gain a charge every 12 seconds. Each time you use an ability, consume a charge to throw a poultice to an injured ally, applying a heal over time.",
+              "Healed Allies also gain Strength and Intelligence for a duration",
+              "Poultices prioritize the ally with the lowest health in range."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Training Exercise",
+            "abilityNumber": "(1)",
+            "description": [
+              "Deploy a constellation, granting Crowd Control immunity to teammates in the area. After a 1 second delay, it explodes dealing Physical Damage to all enemies in the area."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Masterful Shot",
+            "abilityNumber": "(2)",
+            "description": [
+              "Chiron applies Target Mark when he damages enemies with abilities, reducing their physical protections by 10%. Activating this ability fires a seeking arrows toward all marked targets, dealing Physical Damage and slowing them.",
+              "Once Chiron has 250 Strength he is able to fire a second larger arrow in a targeted area, dealing 100% of initial damage, plus 15% bonus damage per hit by masterful shot, up to 4 targets.",
+              "Once Chiron has 2.5 attack speed, Masterful Shot becomes Masterful Flurry. Firing 3 arrows with lower scaling quickly at each target, which proc basic attack item effects."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Giddyup!",
+            "abilityNumber": "(3)",
+            "description": [
+              "Gallop forward dealing Physical Damage to enemies, knocking up minions, and kicking enemy gods behind you.",
+              "Chiron is displacement immune while charging",
+              "Chiron may fire basic attacks and Masterful Shot while charging."
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Centaurus",
+            "abilityNumber": "(4)",
+            "description": [
+              "Transform into a constellation, lowering movement speed but gaining the ability to fire three long distance arrows that pass through walls dealing Physical Damage to all enemies they hit.",
+              "If Chiron would be killed during this ability, he does not die until he runs out of time or shots.",
+              "If Chiron would have died, but killed an enemy with his ability, he is returned to life with health equal to the damage dealt instead.",
+              "Chiron can fire Masterful Shot during this ability"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Aspect of the Heroic Tutor",
+            "releaseDate": "January 30th",
+            "description": [
+              "Release Date: January 30th",
+              "Chiron's Target Mark now only applies to one target and he passively copies 10% of damage done to that target, dealing it again as physical damage.",
+              "Training Exercise boosts allies Strength and Intelligence when it applies to CC immunity and again when it bursts.",
+              "Centaurus has less damage scaling, but slows enemies and grants allies it hits an attack speed buff as well as a shield and .5 seconds of CC immunity."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Bacchus",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Chug",
+            "abilityNumber": "(1)",
+            "description": [
+              "Increased Damage Scaling: 35% of Protections -> 50%"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Belch of the Gods",
+            "abilityNumber": "(3)",
+            "description": [
+              "Increased Damage per tick: 25/40/55/70/85 -> 30/45/60/75/90"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Princess Bari",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Reverent Steps",
+            "abilityNumber": "(3)",
+            "description": [
+              "Now grants Attack Speed if this successfully damages a god.",
+              "15/17.5/20/22.5/25% for 5s.",
+              "Mystic Surge increases this Attack Speed bonus to 25/27.5/30/32.5/35% for 5s."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Discordia",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Passive",
+            "abilityName": "Contest of the Gods",
+            "abilityNumber": "(P)",
+            "description": [
+              "Changed the symbols associated to each buff to be more consistent/thematic: Delta (Regen), Omega (Intelligence), Sigma (Lifesteal)",
+              "Decreased Intelligence Per Level: 1.5 -> 1",
+              "Decreased Lifesteal: 20% -> 15%"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Erratic Behavior",
+            "abilityNumber": "(3)",
+            "description": [
+              "Increased Cooldown: 13s -> 14s",
+              "Decreased Non-Ultimate Ability Cooldown Reduction per tick: 0.5/0.75/1/1.25/1.5s -> 0.4/0.6/0.8/1/1.2s",
+              "Decreased Ultimate Ability Cooldown Reduction per tick: 0.4s"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Kali",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Nimble Strike",
+            "abilityNumber": "(1)",
+            "description": [
+              "Increased Damage: 70/125/180/235/290 -> 85/140/195/250/305"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Lash",
+            "abilityNumber": "(2)",
+            "description": [
+              "Increased Damage Scaling: 20% Strength + 25% Intelligence -> 30% Strength + 35% Intelligence"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Destruction",
+            "abilityNumber": "(4)",
+            "description": [
+              "Increased Damage: 12/15/18/21/24 -> 16/19/22/25/28"
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of Unbound Destruction",
+            "abilityName": "Marked for Death",
+            "abilityNumber": "(P)",
+            "description": [
+              "Increased Damage: 12 -> 20",
+              "Increased Damage Scaling: 6 per level -> 8 per level"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Kukulkan",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of the Squall",
+            "abilityName": "Zephyr",
+            "abilityNumber": "(1)",
+            "description": [
+              "Decreased Slow: 20/25/30/35/40% -> 10/15/20/25/30%"
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of the Squall",
+            "abilityName": "Slipstream",
+            "abilityNumber": "(2)",
+            "description": [
+              "Removed: Protection buff",
+              "Decreased Protection Reduction: 10/15/20/25/30 -> 5/10/15/20/25"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Medusa",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Viper Shot",
+            "abilityNumber": "(1)",
+            "description": [
+              "Decreased Damage Over Time: 12/19/26/33/40 -> 10/15/20/25/30"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Merlin",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Vortex",
+            "abilityNumber": "(1)",
+            "description": [
+              "Decreased Cooldown: 16/15/14/13/12s -> 14/13.5/13/12.5/12s"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Radiate",
+            "abilityNumber": "(2a)",
+            "description": [
+              "Increased Damage: 10/17/24/31/38 -> 12/19/26/33/40"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Dragonfire",
+            "abilityNumber": "(2b)",
+            "description": [
+              "Increased Damage: 8/11/14/17/20 -> 12/15/18/21/24",
+              "Increased Damage Scaling: 15% -> 20%"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Nut",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Convergence",
+            "abilityNumber": "(1)",
+            "description": [
+              "(Aspect Only) Decreased Inner Damage: 50/55/60/65/70% -> 40/45/50/55/60%"
+            ]
+          },
+          {
+            "section": "Aspect",
+            "aspectName": "Aspect of the Cosmos",
+            "description": [
+              "Removed Base Damage Bonus: 10% -> 0%",
+              "Decreased Damage Mitigation Per Stack: 0.75% -> 0.5%",
+              "This decreased the Maximum Damage Mitigation from 15% -> 10%.",
+              "Fixed an issue where you could consume more than a single stack to heal.",
+              "Fixed an issue where dying would consume all stacks immediately and heal for each stack consumed."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Sun Wukong",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Master's Will",
+            "abilityNumber": "(2)",
+            "description": [
+              "Increased Damage: 90/140/190/240/290 -> 90/150/210/270/330"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Ullr",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Bladed Arrow",
+            "abilityNumber": "(1)",
+            "description": [
+              "No longer goes through walls"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Ymir",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "Ability",
+            "abilityName": "Frost Breath",
+            "abilityNumber": "(3)",
+            "description": [
+              "Increased Damage 50/85/120/155/190 -> 65/100/135/170/205"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Shards of Ice",
+            "abilityNumber": "(4)",
+            "description": [
+              "Decreased Cooldown: 90/85/80/75/70s -> 70s",
+              "Increased Damage dealt when used early: 35% -> 50%"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "god",
+        "name": "Zeus",
+        "changeType": "buff",
+        "changes": [
+          {
+            "section": "General",
+            "description": [
+              "Bug Fix: Detonate was unable to stun targets that were damage immune"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Thunderclap",
+            "abilityNumber": "(2)",
+            "description": [
+              "Increased Attack Speed: 20/22.5/25/27.5/30% -> 30%"
+            ]
+          },
+          {
+            "section": "Ability",
+            "abilityName": "Lightning Storm",
+            "abilityNumber": "(4)",
+            "description": [
+              "Increased Damage: 100/130/160/190/220 -> 120/150/180/210/240"
+            ]
+          }
+        ]
+      }
+    ],
+    "items": [
+      {
+        "type": "item",
+        "name": "Arondight",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Increased Strength: 55 -> 65"
+          },
+          {
+            "description": "Increased Reveal Damage Proc Base: 30 -> 50"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Blood-bound Book",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Increased Intelligence: 60 -> 70"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Dwarven Plate",
+        "changeType": "shift",
+        "changes": [
+          {
+            "description": "Increased Physical Protection: 35 -> 40"
+          },
+          {
+            "description": "Increased Magical Protection: 35 -> 40"
+          },
+          {
+            "description": "Decreased 'Lower' Protection Increase: 12.5% -> 10%"
+          },
+          {
+            "description": "Increased 'Higher' Protection Increase: 25% -> 30%"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Eye of Erebus",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Now reveals targets hit for the duration of the slow."
+          },
+          {
+            "description": "Increased Radius: 3m -> 5m"
+          },
+          {
+            "description": "Increased Health: 250 -> 350"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Gluttonous Grimoire",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Increased Intelligence: 40 -> 55"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Heartseeker",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "description": "Decreased Strength Scaling: 2.5% -> 2%"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Hydra's Lament",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "description": "Decreased bonus damage for Ranged characters only: 30% -> 20%"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Jade Scepter",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Increased Intelligence: 90 -> 100"
+          },
+          {
+            "description": "Increased Health: 150 -> 250"
+          },
+          {
+            "description": "NEW: Any god hit will now be knocked back towards the caster. If the caster was also hit, they will be knocked back in the direction the caster was hit."
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Jotunn's Revenge",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Increased Mana: 0 -> 250"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Pendulum Blade",
+        "changeType": "buff",
+        "changes": [
+          {
+            "description": "Decreased Cost: 2800 -> 2600"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Sanguine Lash",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "description": "Removed Lifesteal On Use: 5% -> 0%"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Sphere of Negation",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "description": "Decreased Magical Protection: 60 -> 50"
+          },
+          {
+            "description": "Decreased Shield Gained every 3s: 2.5% -> 2% of Max Health"
+          },
+          {
+            "description": "Decreased Maximum Shield: 15% -> 14% of Max Health"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "The Crusher",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "description": "Decreased Strength: 60 -> 50"
+          },
+          {
+            "description": "Decreased Subsequent Hits: 50% -> 33%"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "The Reaper",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "description": "Decreased Lifesteal: 10% -> 7.5%"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Time Lock Aegis",
+        "changeType": "nerf",
+        "changes": [
+          {
+            "description": "Decreased Duration: 3s -> 2.25s"
+          },
+          {
+            "description": "Decreased Regen: 30s -> 15s worth of Regen"
+          },
+          {
+            "description": "Decreased Cooldown Reduction: 10s -> 7.5s"
+          }
+        ]
+      },
+      {
+        "type": "item",
+        "name": "Typhon's Heart",
+        "changeType": "shift",
+        "changes": [
+          {
+            "description": "Increased Intelligence: 50 -> 80"
+          },
+          {
+            "description": "Decreased Lifesteal: 12.5% -> 7.5%"
+          }
+        ]
+      }
+    ],
+    "gameModes": [
+      {
+        "type": "gameMode",
+        "name": "General",
+        "changeType": "balance",
+        "changes": [
+          {
+            "feature": "Fountain Interaction",
+            "description": [
+              "Entering the fountain now cleanses regen effects from potions and chalices. (Using a potion while inside the fountain will still grant you Health/Mana regen. It will only be removed if you leave and re-enter.)"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "gameMode",
+        "name": "Multiqueue (Beta)",
+        "changeType": "new",
+        "changes": [
+          {
+            "feature": "Multiqueue Feature",
+            "description": [
+              "A new tile in Classic allows players to join the Multiqueue (Beta) queue, which will queue you for Conquest, Arena, and Joust simultaneously. You will be placed in the first available good match in those three queues.",
+              "Parties up to 3 may join this queue.",
+              "If you play One More Round, you will be requeued for Multiqueue (Beta), not for the mode you just played.",
+              "This may help players in low-population regions to find matches more quickly.",
+              "If the underlying tech performs well, this will be expanded in future updates to allow players to multiqueue for player-defined groups of modes."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "gameMode",
+        "name": "Joust",
+        "changeType": "balance",
+        "changes": [
+          {
+            "feature": "Visual Update",
+            "description": [
+              "Joust has received a large-scale visual update, affecting lighting, textures, and more",
+              "Full lighting revamp",
+              "Newly shadowed Jungle areas",
+              "More detailed material & texture updates",
+              "A dynamic sky that changes based on your position in the map",
+              "Subtle mood fog in Jungle spaces (disabled on Low settings)",
+              "Wet ground on Chaos side (disabled on Low settings)",
+              "Ambient critters to bring the map to life (disabled on Low settings)"
+            ]
+          },
+          {
+            "feature": "Lane Objectives",
+            "description": [
+              "Lane objectives now show the stun duration of the objective debuff",
+              "The objective debuff now switches to the Phoenix if the debuff is still active when the Phoenix respawns."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "gameMode",
+        "name": "Assault",
+        "changeType": "balance",
+        "changes": [
+          {
+            "description": "Artio is now considered a Tier 1 Healer in Random Draft"
+          }
+        ]
+      },
+      {
+        "type": "gameMode",
+        "name": "Conquest",
+        "changeType": "balance",
+        "changes": [
+          {
+            "description": "Floating trees are now firmly attached to the ground"
+          }
+        ]
+      }
+    ],
+    "bugFixes": [
+      {
+        "type": "gameplay",
+        "description": "Fixed an issue where Titans were targeting Gods while minions were in range"
+      },
+      {
+        "type": "gameplay",
+        "description": "Fixed an issue where God Bots could get stuck on Fire Giant doors in Conquest"
+      },
+      {
+        "type": "ui",
+        "description": "Fixed an issue where the Titan minimap icon did not show that it was being debuffed in Joust"
+      },
+      {
+        "type": "consumables",
+        "description": "Health and Mana regen effects from consumable potions and chalices are now removed upon entering the Fountain"
+      }
+    ],
+    "qualityOfLife": [
+      {
+        "type": "feature",
+        "name": "Daily Quests",
+        "changeType": "improvement",
+        "description": [
+          "Daily Quests have been reviewed and corrected to give correct XP",
+          "Note: Now if you are unable to gain Wandering Market XP when you complete a Daily Quest you will instead get 150 Account XP.",
+          "New Daily Quests added: Get to Level 20 in (1 || 3) Matches, Use Global Emotes (5 || 15) times, Use Jump stamp (10 || 30) times, Heal (10K || 30K) in the Fountain, Use a non-default skin in (1 || 3) Matches.",
+          "Note: Weekly Quests will still not give Coins until you are below Coin Cap."
+        ]
+      },
+      {
+        "type": "feature",
+        "name": "Reporting Options",
+        "changeType": "new",
+        "description": [
+          "New Reporting Option: 'Not Playing Assigned Role'",
+          "If a player ignores their role assignment in Conquest, use this option to report them.",
+          "Note: Playing off-meta God picks or trying a new build is not necessarily not playing the assigned role. However if a Solo laner is in Mid lane, if a Jungler is not Jungling, if a Support is behaving like a laner – those sorts of things qualify as 'Not Playing Assigned Role.'"
+        ]
+      },
+      {
+        "type": "feature",
+        "name": "Aspect Ability Descriptions",
+        "changeType": "improvement",
+        "description": [
+          "Selecting an Aspect in the God tab now updates Ability descriptions to reflect what the Aspect does"
+        ]
+      },
+      {
+        "type": "feature",
+        "name": "Red Dot Notifications",
+        "changeType": "improvement",
+        "description": [
+          "Red Dot Notifications are Easier to Clear",
+          "If you visit a tab with notifications, all notifications for that tab are cleared upon leaving the tab.",
+          "As an example, if you have a notification on a Jump Stamp, the Profile Loadout would have a red dot. If you click the Profile Loadouts, then back out of Profile Loadout, the red dot would be cleared.",
+          "Similarly, if an Anhur skin has a red dot, you can click on the Gods tab, then click on Anhur, then back out of Anhur and all red dots under Anhur would be cleared."
+        ]
+      },
+      {
+        "type": "feature",
+        "name": "Ranked Reset",
+        "changeType": "improvement",
+        "description": [
+          "There will be a harder SR reset than normal, with increased variance (so people will move more)",
+          "We are looking at the top player, and squishing them down to 3000 SR. Everyone else gets proportionally 'squished' according to that.",
+          "So if the top person is 6600SR (this is pretty close to the actual amount); they go to 3000SR.",
+          "A person who is 3300SR would get squished to 1500SR.",
+          "And then on the back end we are raising variance.",
+          "We also might be adjusting gain/loss for this next split, as in how fast people can move up and down; but we are locking that in."
+        ]
+      },
+      {
+        "type": "feature",
+        "name": "Performance Optimizations",
+        "changeType": "improvement",
+        "description": [
+          "Recall and run animations received a polish pass.",
+          "Further HUD Performance Optimizations."
+        ]
+      }
+    ]
+  }

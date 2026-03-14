@@ -1,6 +1,6 @@
 # Security Measures
 
-This document outlines the security measures implemented in the SMITE 2 Mastery app to protect user data and privacy.
+This document outlines the security measures implemented in the Smite Scroll app to protect user data and privacy.
 
 ## Privacy-First Architecture
 
