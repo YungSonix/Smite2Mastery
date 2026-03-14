@@ -260,6 +260,11 @@ export default function AbilityGamePage({ onBack = null }) {
         submitBestStreak(newStreak);
       }
 
+      try {
+        const { awardChallenge } = require('../lib/shopChallenges');
+        awardChallenge('ability_win').catch(() => {});
+      } catch (_) {}
+
       // Immediately move to the next random ability
       const nextTarget = pickRandomAbilityTarget();
       setTarget(nextTarget);

@@ -13,10 +13,11 @@ import {
   Alert,
   Dimensions,
 } from 'react-native';
+import CryptoJS from 'crypto-js';
 import { Image } from 'expo-image';
 // Lazy load builds.json to prevent startup crash
 let localBuilds = null;
-import { getLocalItemIcon, getLocalGodAsset, getSkinImage } from './localIcons';
+import { getLocalItemIcon, getLocalGodAsset, getSkinImage, getRoleIcon } from './localIcons';
 
 // Import supabase lazily to avoid module load errors on mobile
 let supabase = null;
@@ -191,17 +192,8 @@ const statIcons = {
   'Basic Damage': require('./data/Icons/Stat Icons/HUD_Stats_Icon_BasicAttackPower.png'),
 };
 
-// Role icons
-const roleIcons = {
-  'ADC': require('./data/Icons/Role Icons/T_GodRole_Carry_Small.png'),
-  'Solo': require('./data/Icons/Role Icons/T_GodRole_Solo_Small.png'),
-  'Support': require('./data/Icons/Role Icons/T_GodRole_Support.png'),
-  'Mid': require('./data/Icons/Role Icons/T_GodRole_Mid_Small.png'),
-  'Jungle': require('./data/Icons/Role Icons/T_GodRole_Jungle.png'),
-};
-
 // Pantheon icon mapping (local files)
-  const pantheonIcons = {
+const pantheonIcons = {
   'Greek': require('./data/Icons/Pantheon Icons/Greek.png'),
   'Roman': require('./data/Icons/Pantheon Icons/Roman.png'),
   'Egyptian': require('./data/Icons/Pantheon Icons/Egyptian.png'),
@@ -861,24 +853,19 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
   const [dataLoading, setDataLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTab, setSelectedTab] = useState(initialTab); // 'gods', 'items', 'gamemodes', or 'mechanics'
-  const [pinnedGods, setPinnedGods] = useState(new Set());
   const [currentUser, setCurrentUser] = useState(null);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [loginUsername, setLoginUsername] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   
-  // Load pinned gods state
+  // Load current user for login modal
   useEffect(() => {
-    const loadPinnedGods = async () => {
+    const loadUser = async () => {
       const user = await storage.getItem('currentUser');
       setCurrentUser(user);
-      if (user) {
-        const pinnedGodsData = await storage.getItem(`pinnedGods_${user}`);
-        if (pinnedGodsData) {
-          const pinned = JSON.parse(pinnedGodsData);
-          const godNames = new Set(pinned.map(g => g.name || g.GodName));
-          setPinnedGods(godNames);
-        }
-      }
     };
-    loadPinnedGods();
+    loadUser();
   }, []);
   
   // Sync selectedTab with initialTab when it changes
@@ -2629,7 +2616,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                       </Text>
                       <View style={styles.godPageRolesList}>
                         {possibleRoles.map((role, idx) => {
-                          const roleIcon = roleIcons[role];
+                          const roleIcon = getRoleIcon(role);
                           return (
                             <React.Fragment key={role}>
                               <View style={styles.godPageRoleItem}>
@@ -5537,178 +5524,6 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                           closeTextStyle={styles.tooltipCloseText}
                         />
                       )}
-                      {/* Pin button */}
-                      <TouchableOpacity
-                        style={styles.godPinButton}
-                        onPress={async (e) => {
-                          e.stopPropagation();
-                          if (!currentUser) {
-                            Alert.alert('Not Logged In', 'Please log in to your profile to pin gods.');
-                            return;
-                          }
-                          
-                          const godName = god.name || god.GodName || god.title || god.displayName;
-                          const isPinned = pinnedGods.has(godName);
-                          
-                          console.log('🔧 Pin/Unpin god action:', {
-                            godName,
-                            isPinned,
-                            currentUser,
-                            hasSupabase: !!getSupabase(),
-                            supabaseType: typeof supabase,
-                            supabaseFrom: supabase?.from ? 'has from method' : 'missing from method',
-                          });
-                          
-                          if (!supabase || !supabase.from) {
-                            console.error('❌ Supabase is not available! Cannot sync to Supabase.');
-                          }
-                          
-                          try {
-                            const pinnedGodsData = await storage.getItem(`pinnedGods_${currentUser}`);
-                            const pinnedGodsList = pinnedGodsData ? JSON.parse(pinnedGodsData) : [];
-                            
-                            console.log('📋 Current pinned gods list:', pinnedGodsList.length);
-                            
-                            if (isPinned) {
-                              // Unpin
-                              const updated = pinnedGodsList.filter(g => (g.name || g.GodName) !== godName);
-                              await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(updated));
-                              setPinnedGods(prev => {
-                                const next = new Set(prev);
-                                next.delete(godName);
-                                return next;
-                              });
-                              
-                              // Sync to Supabase - get existing data first to preserve other fields
-                              const supabaseClient = getSupabase();
-                              if (!supabaseClient || !supabaseClient.from) {
-                                console.error('❌ Supabase not available, skipping sync');
-                                return;
-                              }
-                              
-                              try {
-                                console.log('🔄 Fetching existing data from Supabase for unpin...');
-                                const { data: existingData, error: fetchError } = await supabaseClient
-                                  .from('user_data')
-                                  .select('pinned_builds, pinned_gods, saved_builds')
-                                  .eq('username', currentUser)
-                                  .single();
-                                
-                                if (fetchError && fetchError.code !== 'PGRST116') {
-                                  console.error('❌ Error fetching existing data:', fetchError);
-                                }
-                                
-                                console.log('💾 Upserting to Supabase with updated pinned_gods:', {
-                                  username: currentUser,
-                                  pinned_gods_count: updated.length,
-                                  existing_pinned_builds: existingData?.pinned_builds?.length || 0,
-                                  existing_saved_builds: existingData?.saved_builds?.length || 0,
-                                });
-                                
-                                const { error } = await supabaseClient
-                                  .from('user_data')
-                                  .upsert({
-                                    username: currentUser,
-                                    pinned_builds: existingData?.pinned_builds || [],
-                                    pinned_gods: updated,
-                                    saved_builds: existingData?.saved_builds || [],
-                                    updated_at: new Date().toISOString(),
-                                  }, {
-                                    onConflict: 'username'
-                                  });
-                                
-                                if (error) {
-                                  if (error.code === 'MISSING_CONFIG') {
-                                    console.log('⚠️ Supabase not configured, skipping sync');
-                                  } else {
-                                    console.error('❌ Error syncing unpinned god to Supabase:', error);
-                                  }
-                                } else {
-                                  console.log('✅ Unpinned god synced to Supabase successfully');
-                                }
-                              } catch (supabaseError) {
-                                console.error('❌ Exception syncing to Supabase:', supabaseError);
-                              }
-                            } else {
-                              // Pin
-                              const newPinnedGod = {
-                                name: god.name || god.GodName,
-                                GodName: god.GodName,
-                                internalName: god.internalName,
-                                icon: god.icon || god.GodIcon,
-                              };
-                              pinnedGodsList.push(newPinnedGod);
-                              await storage.setItem(`pinnedGods_${currentUser}`, JSON.stringify(pinnedGodsList));
-                              setPinnedGods(prev => new Set(prev).add(godName));
-                              
-                              // Sync to Supabase - get existing data first to preserve other fields
-                              const supabaseClient = getSupabase();
-                              if (!supabaseClient || !supabaseClient.from) {
-                                console.error('❌ Supabase not available, skipping sync');
-                                return;
-                              }
-                              
-                              try {
-                                console.log('🔄 Fetching existing data from Supabase for pin...');
-                                const { data: existingData, error: fetchError } = await supabaseClient
-                                  .from('user_data')
-                                  .select('pinned_builds, pinned_gods, saved_builds')
-                                  .eq('username', currentUser)
-                                  .single();
-                                
-                                if (fetchError && fetchError.code !== 'PGRST116') {
-                                  console.error('❌ Error fetching existing data:', fetchError);
-                                }
-                                
-                                console.log('💾 Upserting to Supabase with new pinned god:', {
-                                  username: currentUser,
-                                  pinned_gods_count: pinnedGodsList.length,
-                                  new_god: newPinnedGod.name,
-                                  existing_pinned_builds: existingData?.pinned_builds?.length || 0,
-                                  existing_saved_builds: existingData?.saved_builds?.length || 0,
-                                });
-                                
-                                const { error } = await supabaseClient
-                                  .from('user_data')
-                                  .upsert({
-                                    username: currentUser,
-                                    pinned_builds: existingData?.pinned_builds || [],
-                                    pinned_gods: pinnedGodsList,
-                                    saved_builds: existingData?.saved_builds || [],
-                                    updated_at: new Date().toISOString(),
-                                  }, {
-                                    onConflict: 'username'
-                                  });
-                                
-                                if (error) {
-                                  if (error.code === 'MISSING_CONFIG') {
-                                    console.log('⚠️ Supabase not configured, skipping sync');
-                                  } else {
-                                    console.error('❌ Error syncing pinned god to Supabase:', error);
-                                  }
-                                } else {
-                                  console.log('✅ Pinned god synced to Supabase successfully:', pinnedGodsList.length, 'total gods');
-                                }
-                              } catch (supabaseError) {
-                                console.error('❌ Exception syncing to Supabase:', supabaseError);
-                              }
-                            }
-                          } catch (error) {
-                            console.error('❌ Error pinning/unpinning god:', error);
-                            console.error('Error details:', {
-                              message: error.message,
-                              stack: error.stack,
-                              currentUser,
-                              godName,
-                            });
-                            Alert.alert('Error', 'Failed to pin/unpin god. Please try again.');
-                          }
-                        }}
-                      >
-                        <Text style={styles.godPinButtonText}>
-                          {pinnedGods.has(god.name || god.GodName || god.title || god.displayName) ? '📌' : '📍'}
-                        </Text>
-                      </TouchableOpacity>
                     {showGodSkins && god.skins && typeof god.skins === 'object' && Object.keys(god.skins).length > 0 ? (() => {
                       // Find base/default skin - look for "default" or "base" type, or use first skin
                       let baseSkin = null;
@@ -6603,20 +6418,6 @@ const styles = StyleSheet.create({
     fontSize: 11,
     textAlign: 'center',
     fontWeight: '500',
-  },
-  godPinButton: {
-    position: 'absolute',
-    top: 4,
-    left: 4,
-    zIndex: 11,
-    padding: 4,
-    borderRadius: 4,
-    backgroundColor: 'rgba(15, 23, 42, 0.8)',
-    borderWidth: 1,
-    borderColor: '#1e3a5f',
-  },
-  godPinButtonText: {
-    fontSize: 16,
   },
   modalOverlay: {
     flex: 1,
@@ -8150,6 +7951,114 @@ detailListItemText: {
     fontSize: 12,
     lineHeight: 16,
     padding: 8,
+  },
+  // Login Modal Styles (matching profile.jsx for consistency)
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    ...(IS_WEB && {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: 1000,
+    }),
+  },
+  modalContainer: {
+    backgroundColor: '#0b1226',
+    borderRadius: 16,
+    padding: 24,
+    width: '90%',
+    maxWidth: 400,
+    borderWidth: 2,
+    borderColor: '#1e90ff',
+    ...(IS_WEB && {
+      maxHeight: '90vh',
+      overflowY: 'auto',
+      boxShadow: '0 10px 40px rgba(0, 0, 0, 0.5)',
+    }),
+  },
+  modalTitle: {
+    color: '#7dd3fc',
+    fontSize: 24,
+    fontWeight: '700',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  input: {
+    backgroundColor: '#0f1724',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 16,
+    color: '#e6eef8',
+    fontSize: 16,
+    ...(IS_WEB && {
+      outline: 'none',
+      minHeight: 44,
+    }),
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 8,
+  },
+  cancelButton: {
+    flex: 1,
+    backgroundColor: '#1e3a5f',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    ...(IS_WEB && {
+      cursor: 'pointer',
+      minHeight: 44,
+      transition: 'background-color 0.2s',
+    }),
+  },
+  cancelButtonText: {
+    color: '#cbd5e1',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  confirmButton: {
+    flex: 1,
+    backgroundColor: '#1e90ff',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 44,
+    ...(IS_WEB && {
+      cursor: 'pointer',
+      transition: 'background-color 0.2s',
+    }),
+  },
+  confirmButtonDisabled: {
+    opacity: 0.6,
+    ...(IS_WEB && {
+      cursor: 'not-allowed',
+    }),
+  },
+  confirmButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+    textAlign: 'center',
+    includeFontPadding: false,
+    textAlignVertical: 'center',
+  },
+  loginRegisterLink: {
+    marginTop: 16,
+    alignItems: 'center',
+  },
+  loginRegisterText: {
+    color: '#1e90ff',
+    fontSize: 12,
+    textDecorationLine: 'underline',
   },
 });
 

@@ -87,12 +87,9 @@ baronsamedi: 'baron',
  nuwa:'nuWa',
  cabrakan: 'cab',
  cerberus: 'cerb',
- artio:'artioDruid',
- ullr:'ullrAxe',
- ullr:'ullrBow',
- merlin:'merlinFire',
- merlin:'merlinIce',
- merlin:'merlinArcane',
+ artio: 'artioDruid',
+ ullr: 'ullrAxe',
+ merlin: 'merlinFire',
 };
 
 // Gods that have multiple forms/stances with different ability icons
@@ -153,11 +150,6 @@ export function getRemoteGodIconByName(godName) {
   if (!baseName) return null;
   const filename = `${baseName}Image.webp`;
   const uri = createImageUri(GOD_ICONS_PATH, filename);
-
-  if (__DEV__) {
-    console.log('Loading god icon by name:', godName, '->', uri.uri);
-  }
-
   return uri;
 }
 
@@ -210,6 +202,31 @@ export function getGodAbilityIcon(godName, abilityKey, variant) {
   return uri;
 }
 
+// Card art / wallpaper by god name - for Prophecy TCG etc.
+// Wallpapers: https://github.com/YungSonix/Smite2Mastery/tree/master/app/data/Icons/Wallpapers
+// Filenames are Title_Case.webp (e.g. Athena.webp, Baron_Samedi.webp)
+const WALLPAPER_NAME_OVERRIDES = {
+  baronsamedi: 'Baron_Samedi',
+  sunwukong: 'Sun_Wukong',
+  // add others if repo uses different spelling
+};
+
+export function getWallpaperByGodName(godName) {
+  if (!godName) return null;
+  const normalized = String(godName).trim().toLowerCase().replace(/\s+/g, '');
+  const override = WALLPAPER_NAME_OVERRIDES[normalized];
+  if (override) {
+    return createImageUri(SKINS_PATH, override + '.webp');
+  }
+  const titleCase = String(godName)
+    .trim()
+    .split(/\s+/)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join('_');
+  const filename = titleCase + '.webp';
+  return createImageUri(SKINS_PATH, filename);
+}
+
 // Skin/wallpaper lookup - loads from GitHub repo
 // Skins are in app/data/Icons/Wallpapers folder
 export function getSkinImage(skinPath) {
@@ -245,6 +262,19 @@ export function getSkinImage(skinPath) {
     primary: primary,
     fallback: fallback
   };
+}
+
+// Role icons (local requires) - shared by index.jsx and data.jsx
+export const ROLE_ICONS = {
+  ADC: require('./data/Icons/Role Icons/T_GodRole_Carry_Small.png'),
+  Solo: require('./data/Icons/Role Icons/T_GodRole_Solo_Small.png'),
+  Support: require('./data/Icons/Role Icons/T_GodRole_Support.png'),
+  Mid: require('./data/Icons/Role Icons/T_GodRole_Mid_Small.png'),
+  Jungle: require('./data/Icons/Role Icons/T_GodRole_Jungle.png'),
+};
+
+export function getRoleIcon(role) {
+  return ROLE_ICONS[role] || null;
 }
 
 // Dummy default export so Expo Router / navigation stops treating this as a missing-route component.

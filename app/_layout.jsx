@@ -69,7 +69,7 @@ export default function RootLayout() {
       const metaTags = {
         description: {
           name: 'description',
-          content: 'SMITE 2 Mastery - Comprehensive guides, builds, and database for SMITE 2. Find curated builds, god guides, item information, and gameplay mechanics.'
+          content: 'Smite Scroll - Comprehensive guides, builds, and database for SMITE 2. Find curated builds, god guides, item information, and gameplay mechanics.'
         },
         keywords: {
           name: 'keywords',
@@ -77,7 +77,7 @@ export default function RootLayout() {
         },
         'og:title': {
           property: 'og:title',
-          content: 'SMITE 2 Mastery - Builds, Guides & Database'
+          content: 'Smite Scroll - Builds, Guides & Database'
         },
         'og:description': {
           property: 'og:description',
@@ -93,7 +93,7 @@ export default function RootLayout() {
         },
         'twitter:title': {
           name: 'twitter:title',
-          content: 'SMITE 2 Mastery - Builds, Guides & Database'
+          content: 'Smite Scroll - Builds, Guides & Database'
         },
         'twitter:description': {
           name: 'twitter:description',

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ActivityIndicator, Text } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { conquestMapHtml } from '../data/_conquestMapHtml';
+import { conquestMapHtml } from '../lib/conquestMapHtml';
 
 export default function ConquestMap() {
   const [loading, setLoading] = useState(true);

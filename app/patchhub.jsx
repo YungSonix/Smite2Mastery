@@ -616,7 +616,7 @@ export default function PatchHubPage({ subTab = 'simple' }) {
     InteractionManager.runAfterInteractions(() => {
       setTimeout(() => {
         try {
-          const patchNotes = require('../Patch Notes/patchnotesob26.json');
+          const patchNotes = require('../Patch Notes/patchnotesob27.json');
           const builds = require('./data/builds.json');
           
           if (isMounted) {
