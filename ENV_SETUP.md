@@ -14,7 +14,7 @@ EXPO_PUBLIC_SUPABASE_KEY=sb_publishable_XpsnPbvAP_u5HwEUsmB4hw_je7iay7w
 **This is required for your web builds to work!**
 
 1. Go to [Vercel Dashboard](https://vercel.com/dashboard)
-2. Select your project: **Smite 2 Mastery**
+2. Select your project: **Smite Scroll**
 3. Go to **Settings** → **Environment Variables**
 4. Add the following variables for **ALL environments** (Production, Preview, Development):
 
@@ -39,7 +39,7 @@ EXPO_PUBLIC_SUPABASE_KEY=sb_publishable_XpsnPbvAP_u5HwEUsmB4hw_je7iay7w
 **Already configured in Expo dashboard, but verify:**
 
 1. Go to [Expo Dashboard](https://expo.dev)
-2. Select your project: **Smite 2 Mastery**
+2. Select your project: **Smite Scroll**
 3. Go to **Environment variables**
 4. Verify these variables exist for all environments:
    - `EXPO_PUBLIC_SUPABASE_URL` = `https://ofewccajgulkurtpdyoj.supabase.co`
