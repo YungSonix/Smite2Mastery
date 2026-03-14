@@ -81,6 +81,6 @@ app/data/Icons/Item Icons/
 # Keep essential icons that are required by the code
 # (Role Icons, Pantheon Icons, Stat Icons, Consumables, Vulcan Mods, Game Modes, Conquest Images are tracked)
 
-# Voice audio (large; regenerate manifest with scripts/generate-vox-manifest.js)
-app/data/VoiceAudio/
-app/data/Voice Audio/
+# Voice audio (optional; uncomment to avoid committing 16k+ files)
+# app/data/VoiceAudio/
+# app/data/Voice Audio/
