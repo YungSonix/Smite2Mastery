@@ -104,11 +104,51 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
   const [error, setError] = useState('');
   const [isComplete, setIsComplete] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [gold, setGold] = useState(0);
   const [leaderboard, setLeaderboard] = useState([]);
   const [isLoadingLeaderboard, setIsLoadingLeaderboard] = useState(false);
   const [leaderboardError, setLeaderboardError] = useState('');
 
   const maxGuesses = 6;
+
+  const calculateGoldForWin = (guessesCount, isDaily) => {
+    const used = Math.min(Math.max(guessesCount || 1, 1), maxGuesses);
+    const base = isDaily ? 80 : 50; // Daily pays a bit more than freeplay
+    const bonusPerGuess = isDaily ? 5 : 3; // Reward solving in fewer guesses
+    const bonus = Math.max(0, (maxGuesses - used) * bonusPerGuess);
+    return base + bonus;
+  };
+
+  const loadGold = async (username) => {
+    const prefix = `shop_${username || 'guest'}_`;
+    let remote = null;
+    try {
+      const { fetchUserShopData } = require('../lib/shopSupabase');
+      if (username) {
+        remote = await fetchUserShopData(username);
+      }
+    } catch (_) {}
+
+    if (remote && typeof remote.gold === 'number') {
+      setGold(remote.gold);
+      return;
+    }
+
+    let localGold = 0;
+    try {
+      if (IS_WEB && typeof window !== 'undefined' && window.localStorage) {
+        const v = window.localStorage.getItem(prefix + 'gold');
+        localGold = parseInt(v || '0', 10) || 0;
+      } else {
+        const AsyncStorage = require('@react-native-async-storage/async-storage').default;
+        const v = await AsyncStorage.getItem(prefix + 'gold');
+        localGold = parseInt(v || '0', 10) || 0;
+      }
+    } catch (_) {
+      localGold = 0;
+    }
+    setGold(localGold);
+  };
 
   const normalizedGodsByName = useMemo(() => {
     const map = new Map();
@@ -128,11 +168,15 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
 
     const init = async () => {
       try {
+        let user = null;
         if (profileHelpers?.getCurrentUser) {
-          const user = await profileHelpers.getCurrentUser();
+          user = await profileHelpers.getCurrentUser();
           if (isMounted) {
             setCurrentUser(user);
           }
+        }
+        if (isMounted) {
+          await loadGold(user);
         }
       } catch (e) {
         console.error('Failed to load current user for Wordle leaderboard:', e);
@@ -379,16 +423,42 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
     setGuessText('');
 
     const correct = normalize(found.godName) === normalize(targetGod.godName);
+    const guessesCount = nextGuesses.length;
     if (mode === 'daily') {
-      if (correct || nextGuesses.length >= maxGuesses) {
+      if (correct || guessesCount >= maxGuesses) {
         setIsComplete(true);
         // Record score for daily mode when puzzle ends
-        submitScore(nextGuesses.length);
+        submitScore(guessesCount);
+        if (correct) {
+          try {
+            const { awardChallenge, awardGold } = require('../lib/shopChallenges');
+            // Daily challenge reward (once per day)
+            awardChallenge('wordle_win').catch(() => {});
+            // Extra gold based on performance (no daily cap)
+            const goldReward = calculateGoldForWin(guessesCount, true);
+            awardGold(goldReward)
+              .then(() => {
+                setGold((prev) => prev + goldReward);
+              })
+              .catch(() => {});
+          } catch (_) {}
+        }
       }
     } else {
       // In freeplay, treat each puzzle as up to 6 guesses, then auto-reset
-      if (correct || nextGuesses.length >= maxGuesses) {
+      if (correct || guessesCount >= maxGuesses) {
         setIsComplete(true);
+        if (correct) {
+          try {
+            const { awardGold } = require('../lib/shopChallenges');
+            const goldReward = calculateGoldForWin(guessesCount, false);
+            awardGold(goldReward)
+              .then(() => {
+                setGold((prev) => prev + goldReward);
+              })
+              .catch(() => {});
+          } catch (_) {}
+        }
       }
     }
   };
@@ -448,6 +518,7 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
 
           <View style={styles.header}>
             <Text style={styles.title}>Smite 2 God Wordle</Text>
+            <Text style={styles.goldText}>Gold: {gold}</Text>
             <Text style={styles.subtitle}>
               Guess the hidden daily god by name. You have {maxGuesses} guesses.
             </Text>
@@ -713,6 +784,12 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: '800',
     marginBottom: 6,
+  },
+  goldText: {
+    color: '#facc15',
+    fontSize: 14,
+    fontWeight: '700',
+    marginBottom: 4,
   },
   subtitle: {
     color: '#cbd5e1',

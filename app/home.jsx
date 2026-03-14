@@ -75,12 +75,12 @@ const VERSION_HISTORY = [
 const NEWS_CONFIG = {
   // Latest Open Beta Patch Info
   openBeta: {
-    version: 26, // Update this number for new patches
-    title: 'Open Beta 25 - Goddess of the Strife Update', // Update this title
-    link: 'https://www.smite2.com/news/open-beta-26-update-notes/', // Update this link
-    image: 'https://webcdn.hirezstudios.com/smite2-cdn/Blog_Header_Promo_Assets_2560x695_697d21d131.png', // Update this image link
+    version: 27, // Update this number for new patches
+    title: 'Open Beta 27 - The Great Teacher Update', // Update this title
+    link: 'https://www.smite2.com/news/open-beta-27-update-notes/', // Update this link
+    image: 'https://webcdn.hirezstudios.com/smite2-cdn/Blog_Header_Promo_Assets_2560x695_1_675d416095.png', // Update this image link
     snippet: 'Read the latest SMITE 2 Open Beta update notes and patch information.',
-  },
+  }, 
   // Latest News Article
   latestNews: {
     title: 'SMITE 2 News',
@@ -1112,10 +1112,10 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
               source={require('../assets/icon.png')}
               style={styles.appIcon}
               resizeMode="contain"
-              accessibilityLabel="SMITE 2 Mastery app icon"
+              accessibilityLabel="Smite Scroll app icon"
             />
           </View>
-          <Text style={styles.appHeaderTitle}>SMITE 2 Mastery</Text>
+          <Text style={styles.appHeaderTitle}>Smite Scroll</Text>
           <Text style={styles.appHeaderSubtitle}>Your Complete SMITE 2 Companion</Text>
         </View>
 
@@ -1123,7 +1123,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>About This App</Text>
           <Text style={styles.bioText}>
-            Welcome to the SMITE 2 App! This app provides comprehensive information about all gods, abilities, items, gamemodes and so much more in SMITE 2.
+            Welcome to the Smite Scroll App! This app provides comprehensive information about all gods, abilities, items, gamemodes and so much more in SMITE 2.
           </Text>
           <Text style={styles.bioText}>
             Browse through community builds, explore the complete database of gods and items, filter by pantheons and stats, and stay up to date with the latest SMITE 2 news and patch notes.
@@ -1404,9 +1404,15 @@ const styles = StyleSheet.create({
   appHeaderTitle: {
     color: '#7dd3fc',
     fontSize: 28,
-    fontWeight: '700',
+    fontWeight: '900',
     marginBottom: 8,
     textAlign: 'center',
+    letterSpacing: 2,
+    textTransform: 'uppercase',
+    textShadowColor: 'rgba(0, 0, 0, 0.6)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 4,
+    fontFamily: Platform.OS === 'web' ? 'Arial Black, Impact, Arial, sans-serif' : Platform.OS === 'ios' ? 'Arial-BlackMT' : 'sans-serif-black',
   },
   appHeaderSubtitle: {
     color: '#cbd5e1',

@@ -13,6 +13,7 @@ import {
   Pressable,
   Alert,
 } from 'react-native';
+import CryptoJS from 'crypto-js';
 import { Image } from 'expo-image';
 import { getLocalItemIcon, getLocalGodAsset } from './localIcons';
 import { useScreenDimensions } from '../hooks/useScreenDimensions';
@@ -46,7 +47,7 @@ const storage = {
   },
 };
 
-export default function CustomBuildPage({ onNavigateToGod }) {
+export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, onEditComplete = null }) {
   // Use responsive screen dimensions
   const screenDimensions = useScreenDimensions();
   const [localBuilds, setLocalBuilds] = useState(null);
@@ -80,7 +81,7 @@ export default function CustomBuildPage({ onNavigateToGod }) {
   const [showRelicPicker, setShowRelicPicker] = useState(false);
   const [abilityLevelingOrder, setAbilityLevelingOrder] = useState([]); // Array of ability keys like ['A01', 'A02', 'A03']
   const [startingAbilityOrder, setStartingAbilityOrder] = useState(Array(5).fill(null)); // Array of 5 ability keys for first 5 levels
-  const [buildTips, setBuildTips] = useState(''); // Tips/notes text
+  const [buildTips, setBuildTips] = useState(['']); // Tips/notes array - allow multiple tips
   const [itemSwaps, setItemSwaps] = useState([]); // Array of { item: {name, icon}, reasoning: string }
   const [showSwapModal, setShowSwapModal] = useState(false);
   const [currentSwapIndex, setCurrentSwapIndex] = useState(null); // For editing swaps
@@ -92,6 +93,10 @@ export default function CustomBuildPage({ onNavigateToGod }) {
   const [showPostToCertifiedModal, setShowPostToCertifiedModal] = useState(false);
   const [certifiedBuildName, setCertifiedBuildName] = useState('');
   const [isPostingToCertified, setIsPostingToCertified] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [loginUsername, setLoginUsername] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   
   // Check certification status on mount and periodically
   useEffect(() => {
@@ -106,6 +111,30 @@ export default function CustomBuildPage({ onNavigateToGod }) {
         // Check from Supabase
         try {
           const { supabase } = require('../config/supabase');
+          
+          // First, check if user has any approved request (once approved, always approved)
+          const { data: approvedData, error: approvedError } = await supabase
+            .from('certification_requests')
+            .select('status')
+            .eq('username', currentUser)
+            .eq('status', 'approved')
+            .limit(1);
+          
+          // If user has an approved request, they're approved regardless of newer pending requests
+          // Supabase returns an array, so check if array has items
+          const hasApprovedRequest = !approvedError && approvedData && (
+            (Array.isArray(approvedData) && approvedData.length > 0) || 
+            (approvedData && approvedData.status === 'approved')
+          );
+          
+          if (hasApprovedRequest) {
+            setIsUserCertified(true);
+            await storage.setItem(`certificationStatus_${currentUser}`, 'approved');
+            console.log('✅ User is certified (has approved request):', currentUser, 'data:', approvedData);
+            return;
+          }
+          
+          // Otherwise, check the most recent request
           const { data, error } = await supabase
             .from('certification_requests')
             .select('status')
@@ -261,6 +290,109 @@ export default function CustomBuildPage({ onNavigateToGod }) {
     };
   }, []);
 
+  // Load build data when editing
+  useEffect(() => {
+    if (buildToEdit && localBuilds) {
+      // Find the god
+      const allGods = flattenAny(localBuilds.gods);
+      const godInternalName = buildToEdit.god?.internalName || buildToEdit.god?.GodName || buildToEdit.god?.name;
+      if (godInternalName) {
+        const god = allGods.find(g => {
+          const gInternalName = (g.internalName || g.GodName || '').toLowerCase();
+          return gInternalName === godInternalName.toLowerCase();
+        });
+        if (god) {
+          setSelectedGod(god);
+        }
+      }
+
+      // Load items
+      if (buildToEdit.items && Array.isArray(buildToEdit.items)) {
+        const itemsArray = [...buildToEdit.items];
+        while (itemsArray.length < 7) {
+          itemsArray.push(null);
+        }
+        setSelectedItems(itemsArray.slice(0, 7));
+      }
+
+      // Load starting items
+      if (buildToEdit.startingItems && Array.isArray(buildToEdit.startingItems)) {
+        const startingItemsArray = [...buildToEdit.startingItems];
+        while (startingItemsArray.length < 5) {
+          startingItemsArray.push(null);
+        }
+        setStartingItems(startingItemsArray.slice(0, 5));
+      }
+
+      // Load relic
+      if (buildToEdit.relic) {
+        setSelectedRelic(buildToEdit.relic);
+      }
+
+      // Load roles
+      if (buildToEdit.roles && Array.isArray(buildToEdit.roles)) {
+        setSelectedRoles(buildToEdit.roles);
+      }
+
+      // Load ability leveling order
+      if (buildToEdit.abilityLevelingOrder && Array.isArray(buildToEdit.abilityLevelingOrder)) {
+        setAbilityLevelingOrder(buildToEdit.abilityLevelingOrder);
+      }
+
+      // Load starting ability order
+      if (buildToEdit.startingAbilityOrder && Array.isArray(buildToEdit.startingAbilityOrder)) {
+        const orderArray = [...buildToEdit.startingAbilityOrder];
+        while (orderArray.length < 5) {
+          orderArray.push(null);
+        }
+        setStartingAbilityOrder(orderArray.slice(0, 5));
+      }
+
+      // Load tips
+      if (buildToEdit.tips) {
+        const tipsArray = typeof buildToEdit.tips === 'string' 
+          ? buildToEdit.tips.split('\n').filter(t => t.trim())
+          : buildToEdit.tips;
+        setBuildTips(tipsArray.length > 0 ? tipsArray : ['']);
+      }
+
+      // Load item swaps
+      if (buildToEdit.itemSwaps && Array.isArray(buildToEdit.itemSwaps)) {
+        setItemSwaps(buildToEdit.itemSwaps);
+      }
+
+      // Load gamemodes
+      if (buildToEdit.gamemodes && Array.isArray(buildToEdit.gamemodes)) {
+        setSelectedGamemodes(buildToEdit.gamemodes);
+      }
+
+      // Load god level and aspect
+      if (buildToEdit.godLevel) {
+        setGodLevel(buildToEdit.godLevel);
+      }
+      if (buildToEdit.aspectActive !== undefined) {
+        setAspectActive(buildToEdit.aspectActive);
+      }
+
+      // Set build names - check multiple possible fields
+      const buildName = buildToEdit.title || buildToEdit.build_name || buildToEdit.name || buildToEdit.notes || '';
+      if (buildName) {
+        if (buildToEdit.databaseCategory === 'contributor') {
+          setCertifiedBuildName(buildName);
+        } else if (buildToEdit.databaseCategory === 'community') {
+          setCommunityBuildName(buildName);
+        } else {
+          // If no category specified, check databaseTable
+          if (buildToEdit.databaseTable === 'contributor_builds') {
+            setCertifiedBuildName(buildName);
+          } else if (buildToEdit.databaseTable === 'community_builds') {
+            setCommunityBuildName(buildName);
+          }
+        }
+      }
+    }
+  }, [buildToEdit, localBuilds]);
+
   function flattenAny(a) {
     if (!a) return [];
     if (!Array.isArray(a)) return [a];
@@ -312,6 +444,7 @@ export default function CustomBuildPage({ onNavigateToGod }) {
 
   // Filter items for picker
   const filteredItems = useMemo(() => {
+    if (!items || !Array.isArray(items)) return [];
     let result = items;
     
     // Auto-filter for starter slots - only show starter items
@@ -1365,20 +1498,95 @@ export default function CustomBuildPage({ onNavigateToGod }) {
           </View>
         )}
 
+        {/* Role Selection */}
+        {selectedGod && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Role Selection</Text>
+            <Text style={styles.sectionSubtitle}>Select up to 4 roles this build can be played in</Text>
+            <View style={styles.roleContainer}>
+              {['Mid', 'Solo', 'ADC', 'Support', 'Jungle'].map((role) => {
+                const isSelected = selectedRoles.includes(role);
+                const isDisabled = !isSelected && selectedRoles.length >= 4;
+                return (
+                  <TouchableOpacity
+                    key={role}
+                    style={[
+                      styles.roleButton,
+                      isSelected && styles.roleButtonSelected,
+                      isDisabled && styles.roleButtonDisabled
+                    ]}
+                    onPress={() => {
+                      if (isSelected) {
+                        // Remove role
+                        setSelectedRoles(prev => prev.filter(r => r !== role));
+                      } else if (!isDisabled) {
+                        // Add role (max 4)
+                        setSelectedRoles(prev => [...prev, role]);
+                      }
+                    }}
+                    disabled={isDisabled}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={[
+                      styles.roleButtonText,
+                      isSelected && styles.roleButtonTextSelected,
+                      isDisabled && styles.roleButtonTextDisabled
+                    ]}>
+                      {role}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </View>
+        )}
+
         {/* Build Tips */}
         {selectedGod && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Build Tips & Notes</Text>
-            <TextInput
-              style={styles.buildTipsInput}
-              placeholder="Add tips, strategies, or notes for this build..."
-              placeholderTextColor="#64748b"
-              value={buildTips}
-              onChangeText={setBuildTips}
-              multiline={true}
-              numberOfLines={4}
-              textAlignVertical="top"
-            />
+            <View style={styles.tipsHeader}>
+              <Text style={styles.sectionTitle}>Build Tips & Notes</Text>
+              <TouchableOpacity
+                style={styles.addTipButton}
+                onPress={() => setBuildTips([...buildTips, ''])}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.addTipButtonText}>+ Add Tip</Text>
+              </TouchableOpacity>
+            </View>
+            {buildTips.map((tip, tipIndex) => (
+              <View key={tipIndex} style={styles.tipInputContainer}>
+                <View style={styles.tipInputHeader}>
+                  <Text style={styles.tipNumber}>Tip {tipIndex + 1}</Text>
+                  {buildTips.length > 1 && (
+                    <TouchableOpacity
+                      style={styles.removeTipButton}
+                      onPress={() => {
+                        const newTips = buildTips.filter((_, i) => i !== tipIndex);
+                        setBuildTips(newTips);
+                      }}
+                      activeOpacity={0.7}
+                    >
+                      <Text style={styles.removeTipButtonText}>✕</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+                <TextInput
+                  style={styles.buildTipsInput}
+                  placeholder={`Tip ${tipIndex + 1}: Add tip, strategy, or note...`}
+                  placeholderTextColor="#64748b"
+                  value={tip}
+                  onChangeText={(text) => {
+                    const newTips = [...buildTips];
+                    newTips[tipIndex] = text;
+                    setBuildTips(newTips);
+                  }}
+                  multiline={true}
+                  numberOfLines={3}
+                  textAlignVertical="top"
+                />
+              </View>
+            ))}
           </View>
         )}
 
@@ -1604,14 +1812,81 @@ export default function CustomBuildPage({ onNavigateToGod }) {
               <Text style={styles.saveBuildButtonText}>Save Build to Profile</Text>
             </TouchableOpacity>
             
-            {/* Post to Certified Builds Button - Only show if user is certified */}
-            {isUserCertified && (
+            {/* Update Build (direct) - when editing a contributor build, one tap saves to Supabase */}
+            {isUserCertified && buildToEdit?.databaseTable === 'contributor_builds' && buildToEdit?.databaseId && (
               <TouchableOpacity
                 style={[styles.postToCommunityButton, styles.postToCertifiedButton]}
                 onPress={async () => {
                   const currentUser = await storage.getItem('currentUser');
                   if (!currentUser) {
-                    Alert.alert('Not Logged In', 'Please log in to post certified builds.');
+                    setShowLoginModal(true);
+                    return;
+                  }
+                  const hasItems = selectedItems.filter(Boolean).length > 0;
+                  if (!hasItems) {
+                    Alert.alert('Incomplete Build', 'Please add items to your build before updating.');
+                    return;
+                  }
+                  try {
+                    const { supabase } = require('../config/supabase');
+                    const gamemodesToSave = (buildToEdit.gamemodes && Array.isArray(buildToEdit.gamemodes) && buildToEdit.gamemodes.length > 0)
+                      ? buildToEdit.gamemodes
+                      : ['Joust', 'Duel', 'Arena', 'Conquest', 'Assault'];
+                    const nameToSave = (buildToEdit.build_name || buildToEdit.name || certifiedBuildName || buildName || '').trim() || 'My Build';
+                    const updatePayload = {
+                      build_name: nameToSave,
+                      god_name: selectedGod.name || selectedGod.GodName || selectedGod.title || selectedGod.displayName,
+                      god_internal_name: selectedGod.internalName || selectedGod.GodName,
+                      items: selectedItems.filter(Boolean).map(item => ({ name: item.name || item.internalName, internalName: item.internalName, icon: item.icon })),
+                      starting_items: startingItems.filter(Boolean).map(item => ({ name: item.name || item.internalName, internalName: item.internalName, icon: item.icon })),
+                      relic: selectedRelic ? { name: selectedRelic.name || selectedRelic.internalName, internalName: selectedRelic.internalName, icon: selectedRelic.icon } : null,
+                      god_level: godLevel,
+                      aspect_active: aspectActive && selectedGod.aspect ? true : false,
+                      notes: (buildTips.filter(t => t && t.trim()).join('\n') || nameToSave).trim(),
+                      tips: (buildTips.filter(t => t && t.trim()).join('\n') || '').trim() || null,
+                      ability_leveling_order: abilityLevelingOrder,
+                      starting_ability_order: startingAbilityOrder,
+                      item_swaps: itemSwaps.map(swap => ({ item: swap.item, reasoning: swap.reasoning })),
+                      roles: selectedRoles,
+                      gamemodes: gamemodesToSave,
+                      updated_at: new Date().toISOString(),
+                    };
+                    // Use RPC so update works when RLS blocks direct UPDATE (e.g. custom login without Supabase Auth)
+                    const result = await supabase.rpc('update_contributor_build', {
+                      build_id: String(buildToEdit.databaseId),
+                      request_username: currentUser,
+                      payload: updatePayload,
+                    });
+                    if (result.error) {
+                      console.error('Contributor build update error:', result.error.code, result.error.message, result.error.details);
+                      Alert.alert('Update failed', result.error.message || 'Could not save to server. Run supabase_update_contributor_build_rpc.sql in Supabase SQL Editor if you use custom login.');
+                      return;
+                    }
+                    const updated = Array.isArray(result.data) ? result.data[0] : result.data;
+                    if (!updated) {
+                      console.error('Contributor build update: no row returned. Run supabase_update_contributor_build_rpc.sql in Supabase SQL Editor.');
+                      Alert.alert('Update failed', 'No rows were updated. Run the SQL in supabase_update_contributor_build_rpc.sql in your Supabase project.');
+                      return;
+                    }
+                    if (onEditComplete) onEditComplete();
+                    Alert.alert('Success', 'Your contributor build has been updated.');
+                  } catch (err) {
+                    console.error('Exception updating contributor build:', err);
+                    Alert.alert('Error', err?.message || 'An error occurred. Please try again.');
+                  }
+                }}
+              >
+                <Text style={styles.postToCommunityButtonText}>Update Build</Text>
+              </TouchableOpacity>
+            )}
+            {/* Post to Contributor Builds Button - Only show if user is certified (or when not editing contributor) */}
+            {isUserCertified && !(buildToEdit?.databaseTable === 'contributor_builds' && buildToEdit?.databaseId) && (
+              <TouchableOpacity
+                style={[styles.postToCommunityButton, styles.postToCertifiedButton]}
+                onPress={async () => {
+                  const currentUser = await storage.getItem('currentUser');
+                  if (!currentUser) {
+                    setShowLoginModal(true);
                     return;
                   }
                   
@@ -1622,11 +1897,18 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                     return;
                   }
                   
-                  setCertifiedBuildName('');
+                  // Pre-fill when editing existing contributor build
+                  if (buildToEdit?.databaseTable === 'contributor_builds') {
+                    setCertifiedBuildName(buildToEdit.build_name || buildToEdit.name || '');
+                    setSelectedGamemodes(Array.isArray(buildToEdit.gamemodes) && buildToEdit.gamemodes.length > 0 ? buildToEdit.gamemodes : ['All Modes']);
+                  } else {
+                    setCertifiedBuildName('');
+                    setSelectedGamemodes(['All Modes']);
+                  }
                   setShowPostToCertifiedModal(true);
                 }}
               >
-                <Text style={styles.postToCommunityButtonText}>Post to Certified Builds</Text>
+                <Text style={styles.postToCommunityButtonText}>Post to Contributor Builds</Text>
               </TouchableOpacity>
             )}
             
@@ -1983,7 +2265,8 @@ export default function CustomBuildPage({ onNavigateToGod }) {
               value={itemSearchQuery}
               onChangeText={setItemSearchQuery}
             />
-            <ScrollView style={styles.modalContent}>
+            <View style={styles.modalContentScrollWrapper}>
+              <ScrollView style={styles.modalContentScroll} contentContainerStyle={styles.modalContentScrollContent}>
               {filteredItems.map((item, index) => {
                 const name = item.name || item.internalName || 'Unknown';
                 const icon = item.icon || item.internalName;
@@ -2050,6 +2333,7 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                 );
               })}
             </ScrollView>
+            </View>
           </View>
         </View>
       </Modal>
@@ -2602,7 +2886,7 @@ export default function CustomBuildPage({ onNavigateToGod }) {
         </Pressable>
       </Modal>
 
-      {/* Post to Certified Builds Modal */}
+      {/* Post to Contributor Builds Modal */}
       <Modal
         visible={showPostToCertifiedModal}
         transparent={true}
@@ -2618,7 +2902,7 @@ export default function CustomBuildPage({ onNavigateToGod }) {
             onPress={(e) => e.stopPropagation()}
           >
             <View style={styles.saveBuildModalHeader}>
-              <Text style={styles.saveBuildModalTitle}>Post to Certified Builds</Text>
+              <Text style={styles.saveBuildModalTitle}>Post to Contributor Builds</Text>
               <TouchableOpacity
                 style={styles.modalCloseButton}
                 onPress={() => setShowPostToCertifiedModal(false)}
@@ -2639,7 +2923,7 @@ export default function CustomBuildPage({ onNavigateToGod }) {
             
             <Text style={styles.saveBuildModalLabel}>Gamemodes:</Text>
             <View style={styles.gamemodeTagsContainer}>
-              {['All Modes', 'Joust', 'Dual', 'Arena', 'Conquest', 'Assault'].map((mode) => {
+              {['All Modes', 'Joust', 'Duel', 'Arena', 'Conquest', 'Assault'].map((mode) => {
                 const isSelected = selectedGamemodes.includes(mode);
                 return (
                   <TouchableOpacity
@@ -2698,8 +2982,8 @@ export default function CustomBuildPage({ onNavigateToGod }) {
 
                   const currentUser = await storage.getItem('currentUser');
                   if (!currentUser) {
-                    Alert.alert('Not Logged In', 'Please log in to post certified builds.');
                     setShowPostToCertifiedModal(false);
+                    setShowLoginModal(true);
                     return;
                   }
 
@@ -2709,7 +2993,7 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                     const { supabase } = require('../config/supabase');
                     
                     const gamemodesToSave = selectedGamemodes.includes('All Modes')
-                      ? ['Joust', 'Dual', 'Arena', 'Conquest', 'Assault']
+                      ? ['Joust', 'Duel', 'Arena', 'Conquest', 'Assault']
                       : selectedGamemodes;
                     
                     const buildData = {
@@ -2735,8 +3019,8 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                       godLevel,
                       aspectActive: aspectActive && selectedGod.aspect ? true : false,
                       author: currentUser,
-                      notes: buildTips.trim() || certifiedBuildName.trim(),
-                      tips: buildTips.trim() || null,
+                      notes: buildTips.filter(t => t && t.trim()).join('\n') || certifiedBuildName.trim(),
+                      tips: buildTips.filter(t => t && t.trim()).join('\n') || null,
                       abilityLevelingOrder: abilityLevelingOrder,
                       startingAbilityOrder: startingAbilityOrder,
                       itemSwaps: itemSwaps.map(swap => ({
@@ -2749,30 +3033,54 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                       isCertified: true,
                     };
 
-                    const { data, error } = await supabase
-                      .from('certified_builds')
-                      .insert({
-                        username: currentUser,
-                        build_name: certifiedBuildName.trim(),
-                        god_name: buildData.god,
-                        god_internal_name: buildData.godInternalName,
-                        items: buildData.items,
-                        starting_items: buildData.startingItems,
-                        relic: buildData.relic,
-                        god_level: godLevel,
-                        aspect_active: buildData.aspectActive,
-                        notes: buildData.notes || buildData.tips || certifiedBuildName.trim(),
-                        tips: (buildData.tips && buildData.tips.trim()) || null,
-                        ability_leveling_order: buildData.abilityLevelingOrder,
-                        starting_ability_order: buildData.startingAbilityOrder,
-                        item_swaps: buildData.itemSwaps,
-                        roles: buildData.roles,
-                        gamemodes: gamemodesToSave,
-                        created_at: new Date().toISOString(),
+                    // Check if we're editing an existing build
+                    const isEditing = buildToEdit && buildToEdit.databaseId && buildToEdit.databaseTable === 'contributor_builds';
+                    
+                    const updateData = {
+                      build_name: certifiedBuildName.trim(),
+                      god_name: buildData.god,
+                      god_internal_name: buildData.godInternalName,
+                      items: buildData.items,
+                      starting_items: buildData.startingItems,
+                      relic: buildData.relic,
+                      god_level: godLevel,
+                      aspect_active: buildData.aspectActive,
+                      notes: buildData.notes || buildData.tips || certifiedBuildName.trim(),
+                      tips: (buildData.tips && buildData.tips.trim()) || null,
+                      ability_leveling_order: buildData.abilityLevelingOrder,
+                      starting_ability_order: buildData.startingAbilityOrder,
+                      item_swaps: buildData.itemSwaps,
+                      roles: buildData.roles,
+                      gamemodes: gamemodesToSave,
+                      updated_at: new Date().toISOString(),
+                    };
+
+                    let data, error;
+                    if (isEditing) {
+                      // Use RPC so update works when RLS blocks direct UPDATE (e.g. custom login)
+                      const result = await supabase.rpc('update_contributor_build', {
+                        build_id: String(buildToEdit.databaseId),
+                        request_username: currentUser,
+                        payload: updateData,
                       });
+                      error = result.error;
+                      const rpcRows = Array.isArray(result.data) ? result.data : (result.data ? [result.data] : []);
+                      data = rpcRows[0] ?? null;
+                    } else {
+                      // Insert new build
+                      const result = await supabase
+                        .from('contributor_builds')
+                        .insert({
+                          username: currentUser,
+                          ...updateData,
+                          created_at: new Date().toISOString(),
+                        });
+                      data = result.data;
+                      error = result.error;
+                    }
 
                     if (error) {
-                      console.error('Error posting to certified builds:', error);
+                      console.error('Error posting to contributor builds:', error.code, error.message, error.details);
                       if (error.code === 'MISSING_CONFIG') {
                         Alert.alert(
                           'Development Mode', 
@@ -2784,8 +3092,14 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                         setIsPostingToCertified(false);
                         Alert.alert('Success (Dev Mode)', 'Build posted! In production, this will be saved to the database.');
                       } else {
-                        Alert.alert('Error', `Failed to post build: ${error.message || 'Please try again.'}`);
+                        Alert.alert('Update failed', error.message || 'Could not save to server. Check console for details.');
                       }
+                      setIsPostingToCertified(false);
+                      return;
+                    }
+                    if (isEditing && data == null) {
+                      console.error('Contributor build update: no row returned. Run supabase_update_contributor_build_rpc.sql in Supabase SQL Editor.');
+                      Alert.alert('Update failed', 'No rows were updated. Run the SQL in supabase_update_contributor_build_rpc.sql in your Supabase project.');
                       setIsPostingToCertified(false);
                       return;
                     }
@@ -2794,9 +3108,12 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                     setCertifiedBuildName('');
                     setSelectedGamemodes(['All Modes']);
                     setIsPostingToCertified(false);
-                    Alert.alert('Success', 'Your certified build has been posted!');
+                    
+                    if (onEditComplete) onEditComplete();
+                    
+                    Alert.alert('Success', `Your contributor build has been ${isEditing ? 'updated' : 'posted'}!`);
                   } catch (error) {
-                    console.error('Exception posting to certified builds:', error);
+                    console.error('Exception posting to contributor builds:', error);
                     Alert.alert('Error', 'An error occurred. Please try again.');
                     setIsPostingToCertified(false);
                   }
@@ -2806,7 +3123,9 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                 {isPostingToCertified ? (
                   <ActivityIndicator size="small" color="#ffffff" />
                 ) : (
-                  <Text style={styles.saveBuildModalButtonText}>Post Build</Text>
+                  <Text style={styles.saveBuildModalButtonText}>
+                    {buildToEdit && buildToEdit.databaseId && buildToEdit.databaseTable === 'contributor_builds' ? 'Update Build' : 'Post Build'}
+                  </Text>
                 )}
               </TouchableOpacity>
             </View>
@@ -2830,7 +3149,9 @@ export default function CustomBuildPage({ onNavigateToGod }) {
             onPress={(e) => e.stopPropagation()}
           >
             <View style={styles.saveBuildModalHeader}>
-              <Text style={styles.saveBuildModalTitle}>Post to Community Builds</Text>
+              <Text style={styles.saveBuildModalTitle}>
+                {buildToEdit && buildToEdit.databaseTable === 'community_builds' ? 'Edit Community Build' : 'Post to Community Builds'}
+              </Text>
               <TouchableOpacity
                 style={styles.modalCloseButton}
                 onPress={() => setShowPostToCommunityModal(false)}
@@ -2851,7 +3172,7 @@ export default function CustomBuildPage({ onNavigateToGod }) {
             
             <Text style={styles.saveBuildModalLabel}>Gamemodes:</Text>
             <View style={styles.gamemodeTagsContainer}>
-              {['All Modes', 'Joust', 'Dual', 'Arena', 'Conquest', 'Assault'].map((mode) => {
+              {['All Modes', 'Joust', 'Duel', 'Arena', 'Conquest', 'Assault'].map((mode) => {
                 const isSelected = selectedGamemodes.includes(mode);
                 return (
                   <TouchableOpacity
@@ -2915,8 +3236,8 @@ export default function CustomBuildPage({ onNavigateToGod }) {
 
                   const currentUser = await storage.getItem('currentUser');
                   if (!currentUser) {
-                    Alert.alert('Not Logged In', 'Please log in to post builds to the community.');
                     setShowPostToCommunityModal(false);
+                    setShowLoginModal(true);
                     return;
                   }
 
@@ -2928,7 +3249,7 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                     
                     // Prepare gamemodes - if "All Modes" is selected, store all modes, otherwise store selected modes
                     const gamemodesToSave = selectedGamemodes.includes('All Modes')
-                      ? ['Joust', 'Dual', 'Arena', 'Conquest', 'Assault']
+                      ? ['Joust', 'Duel', 'Arena', 'Conquest', 'Assault']
                       : selectedGamemodes;
                     
                     // Check if user is certified (for posting to certified builds)
@@ -2965,50 +3286,76 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                       godLevel,
                       aspectActive: aspectActive && selectedGod.aspect ? true : false,
                       author: currentUser,
-                      notes: buildTips.trim() || communityBuildName.trim(),
-                      tips: buildTips.trim() || null,
+                      notes: buildTips.filter(t => t && t.trim()).join('\n') || communityBuildName.trim(),
+                      tips: buildTips.filter(t => t && t.trim()).join('\n') || null,
+                      startingItems: startingItems.filter(Boolean).map(item => ({
+                        name: item.name || item.internalName,
+                        internalName: item.internalName,
+                        icon: item.icon,
+                      })),
                       abilityLevelingOrder: abilityLevelingOrder,
+                      startingAbilityOrder: startingAbilityOrder,
                       itemSwaps: itemSwaps.map(swap => ({
                         item: swap.item,
                         reasoning: swap.reasoning,
                       })),
+                      roles: selectedRoles,
                       gamemodes: gamemodesToSave,
                       createdAt: new Date().toISOString(),
                       isCertified: isCertified,
                     };
 
-                    // For now, all builds go to community_builds
-                    // Certified builds will be filtered by author in index.jsx
-                    // In the future, you can create a separate certified_builds table
-                    // Post to community builds table with additional metadata
-                    const { data, error } = await supabase
-                      .from('community_builds')
-                      .insert({
-                        username: currentUser,
-                        build_name: communityBuildName.trim(),
-                        god_name: buildData.god,
-                        god_internal_name: buildData.godInternalName,
-                        items: buildData.items,
-                        starting_items: buildData.startingItems,
-                        relic: buildData.relic,
-                        god_level: godLevel,
-                        aspect_active: buildData.aspectActive,
-                        notes: buildData.notes || buildData.tips || communityBuildName.trim(),
-                        tips: (buildData.tips && buildData.tips.trim()) || null,
-                        ability_leveling_order: buildData.abilityLevelingOrder,
-                        starting_ability_order: buildData.startingAbilityOrder,
-                        item_swaps: buildData.itemSwaps,
-                        roles: buildData.roles,
-                        gamemodes: gamemodesToSave,
-                        created_at: new Date().toISOString(),
-                      });
+                    // Check if we're editing an existing build
+                    const isEditing = buildToEdit && buildToEdit.databaseId && buildToEdit.databaseTable === 'community_builds';
+                    
+                    const updateData = {
+                      build_name: communityBuildName.trim(),
+                      god_name: buildData.god,
+                      god_internal_name: buildData.godInternalName,
+                      items: buildData.items,
+                      starting_items: buildData.startingItems,
+                      relic: buildData.relic,
+                      god_level: godLevel,
+                      aspect_active: buildData.aspectActive,
+                      notes: buildData.notes || buildData.tips || communityBuildName.trim(),
+                      tips: (buildData.tips && buildData.tips.trim()) || null,
+                      ability_leveling_order: buildData.abilityLevelingOrder,
+                      starting_ability_order: buildData.startingAbilityOrder,
+                      item_swaps: buildData.itemSwaps,
+                      roles: buildData.roles,
+                      gamemodes: gamemodesToSave,
+                      updated_at: new Date().toISOString(),
+                    };
+
+                    let data, error;
+                    if (isEditing) {
+                      // Update existing build
+                      const result = await supabase
+                        .from('community_builds')
+                        .update(updateData)
+                        .eq('id', buildToEdit.databaseId)
+                        .eq('username', currentUser); // Ensure user owns the build
+                      data = result.data;
+                      error = result.error;
+                    } else {
+                      // Insert new build
+                      const result = await supabase
+                        .from('community_builds')
+                        .insert({
+                          username: currentUser,
+                          ...updateData,
+                          created_at: new Date().toISOString(),
+                        });
+                      data = result.data;
+                      error = result.error;
+                    }
 
                     if (error) {
                       console.error('Error posting to community:', error);
                       if (error.code === 'MISSING_CONFIG') {
                         Alert.alert(
                           'Development Mode', 
-                          'Supabase is not configured in development. In production, your builds will be saved properly. This is normal for Expo development.'
+                          'Supabase is not configured in development. In proaction, your builds will be saved properly. This is normal for Expo development.'
                         );
                         // Still show success in dev mode so user knows the flow works
                         setShowPostToCommunityModal(false);
@@ -3027,7 +3374,14 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                     setCommunityBuildName('');
                     setSelectedGamemodes(['All Modes']);
                     setIsPostingToCommunity(false);
-                    Alert.alert('Success', 'Build posted to community builds!');
+                    
+                    // Clear buildToEdit if we were editing
+                    const isEditingCommunity = buildToEdit && buildToEdit.databaseId && buildToEdit.databaseTable === 'community_builds';
+                    if (isEditingCommunity && onEditComplete) {
+                      onEditComplete();
+                    }
+                    
+                    Alert.alert('Success', `Your community build has been ${isEditingCommunity ? 'updated' : 'posted'}!`);
                   } catch (error) {
                     console.error('Exception posting to community:', error);
                     Alert.alert('Error', 'An error occurred while posting. Please try again.');
@@ -3039,10 +3393,173 @@ export default function CustomBuildPage({ onNavigateToGod }) {
                 {isPostingToCommunity ? (
                   <ActivityIndicator color="#ffffff" />
                 ) : (
-                  <Text style={styles.saveBuildModalButtonText}>Post</Text>
+                  <Text style={styles.saveBuildModalButtonText}>
+                    {buildToEdit && buildToEdit.databaseId && buildToEdit.databaseTable === 'community_builds' ? 'Update Build' : 'Post Build'}
+                  </Text>
                 )}
               </TouchableOpacity>
             </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
+
+      {/* Login Modal */}
+      <Modal
+        visible={showLoginModal}
+        transparent={true}
+        animationType={IS_WEB ? "fade" : "slide"}
+        onRequestClose={() => {
+          setShowLoginModal(false);
+          setLoginUsername('');
+          setLoginPassword('');
+        }}
+      >
+        <Pressable
+          style={styles.loginModalOverlay}
+          onPress={() => {
+            setShowLoginModal(false);
+            setLoginUsername('');
+            setLoginPassword('');
+          }}
+        >
+          <Pressable style={styles.loginModalContainer} onPress={(e) => e.stopPropagation()}>
+            <Text style={styles.loginModalTitle}>Sign In</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Username"
+              placeholderTextColor="#64748b"
+              value={loginUsername}
+              onChangeText={setLoginUsername}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              placeholderTextColor="#64748b"
+              secureTextEntry
+              value={loginPassword}
+              onChangeText={setLoginPassword}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+            <View style={styles.modalButtons}>
+              <TouchableOpacity
+                style={styles.cancelButton}
+                onPress={() => {
+                  setShowLoginModal(false);
+                  setLoginUsername('');
+                  setLoginPassword('');
+                }}
+              >
+                <Text style={styles.cancelButtonText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.confirmButton, isLoggingIn && styles.confirmButtonDisabled]}
+                onPress={async () => {
+                  if (!loginUsername.trim() || !loginPassword.trim()) {
+                    Alert.alert('Error', 'Please enter both username and password');
+                    return;
+                  }
+                  
+                  setIsLoggingIn(true);
+                  try {
+                    const hashPassword = (password) => {
+                      return CryptoJS.SHA256(password).toString();
+                    };
+                    
+                    const passwordHash = hashPassword(loginPassword);
+                    
+                    // Try Supabase first
+                    try {
+                      const { supabase } = require('../config/supabase');
+                      const { data, error } = await supabase
+                        .from('app_users')
+                        .select('username, password_hash')
+                        .eq('username', loginUsername.trim())
+                        .single();
+                      
+                      if (error || !data) {
+                        // Try local storage as fallback
+                        const localUser = await storage.getItem(`user_${loginUsername.trim()}`);
+                        if (localUser) {
+                          const userData = JSON.parse(localUser);
+                          if (userData.password_hash === passwordHash) {
+                            await storage.setItem('currentUser', loginUsername.trim());
+                            setShowLoginModal(false);
+                            setLoginUsername('');
+                            setLoginPassword('');
+                            Alert.alert('Success', 'Logged in successfully!');
+                            setIsLoggingIn(false);
+                            if (IS_WEB && typeof window !== 'undefined') {
+                              window.location.reload();
+                            }
+                            return;
+                          }
+                        }
+                        Alert.alert('Error', 'Invalid username or password');
+                      } else if (data && data.password_hash === passwordHash) {
+                        await storage.setItem('currentUser', loginUsername.trim());
+                        setShowLoginModal(false);
+                        setLoginUsername('');
+                        setLoginPassword('');
+                        Alert.alert('Success', 'Logged in successfully!');
+                        setIsLoggingIn(false);
+                        if (IS_WEB && typeof window !== 'undefined') {
+                          window.location.reload();
+                        }
+                        return;
+                      } else {
+                        Alert.alert('Error', 'Invalid username or password');
+                      }
+                    } catch (supabaseError) {
+                      // Try local storage as fallback
+                      const localUser = await storage.getItem(`user_${loginUsername.trim()}`);
+                      if (localUser) {
+                        const userData = JSON.parse(localUser);
+                        if (userData.password_hash === passwordHash) {
+                          await storage.setItem('currentUser', loginUsername.trim());
+                          setShowLoginModal(false);
+                          setLoginUsername('');
+                          setLoginPassword('');
+                          Alert.alert('Success', 'Logged in successfully!');
+                          setIsLoggingIn(false);
+                          if (IS_WEB && typeof window !== 'undefined') {
+                            window.location.reload();
+                          }
+                          return;
+                        }
+                      }
+                      Alert.alert('Error', 'Invalid username or password');
+                    }
+                  } catch (error) {
+                    console.error('Login error:', error);
+                    Alert.alert('Error', 'An error occurred during login. Please try again.');
+                  } finally {
+                    setIsLoggingIn(false);
+                  }
+                }}
+                disabled={isLoggingIn}
+              >
+                {isLoggingIn ? (
+                  <ActivityIndicator color="#ffffff" />
+                ) : (
+                  <Text style={styles.confirmButtonText}>Sign In</Text>
+                )}
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              style={styles.loginRegisterLink}
+              onPress={() => {
+                Alert.alert(
+                  'Create Account',
+                  'To create an account, please go to the Profile page in the More section.',
+                  [{ text: 'OK' }]
+                );
+              }}
+            >
+              <Text style={styles.loginRegisterText}>Don't have an account? Create one in Profile</Text>
+            </TouchableOpacity>
           </Pressable>
         </Pressable>
       </Modal>
@@ -3649,7 +4166,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     width: '95%',
     maxWidth: 800,
-    maxHeight: '85%',
+    maxHeight: IS_WEB ? '85%' : '75%', // Shorter on mobile so container isn't too long
+    ...(!IS_WEB && { height: '75%' }), // Fixed height on mobile so content scrolls inside
     borderWidth: 1,
     borderColor: '#1e3a5f',
     ...(IS_WEB && {
@@ -3696,6 +4214,18 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     padding: 16,
+  },
+  modalContentScroll: {
+    flex: 1,
+    minHeight: 0,
+    padding: 16,
+  },
+  modalContentScrollWrapper: {
+    flex: 1,
+    minHeight: 0,
+  },
+  modalContentScrollContent: {
+    paddingBottom: 24,
   },
   godPickerItem: {
     flexDirection: 'row',
@@ -4037,6 +4567,54 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   // Build Tips Styles
+  tipsHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  addTipButton: {
+    backgroundColor: '#1e90ff',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#0ea5e9',
+  },
+  addTipButtonText: {
+    color: '#ffffff',
+    fontSize: IS_WEB ? 13 : 12,
+    fontWeight: '600',
+  },
+  tipInputContainer: {
+    marginBottom: 12,
+  },
+  tipInputHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+  tipNumber: {
+    color: '#7dd3fc',
+    fontSize: IS_WEB ? 13 : 12,
+    fontWeight: '600',
+  },
+  removeTipButton: {
+    backgroundColor: '#ef4444',
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#dc2626',
+  },
+  removeTipButtonText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '700',
+  },
   buildTipsInput: {
     backgroundColor: '#0f1724',
     borderRadius: 8,
@@ -4343,5 +4921,113 @@ const styles = StyleSheet.create({
     color: '#64748b',
     fontSize: IS_WEB ? 32 : 28,
     fontWeight: '300',
+  },
+  // Login Modal Styles (matching profile.jsx for consistency) - unique names so they don't override picker modals
+  loginModalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    ...(IS_WEB && {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: 1000,
+    }),
+  },
+  loginModalContainer: {
+    backgroundColor: '#0b1226',
+    borderRadius: 16,
+    padding: 24,
+    width: '90%',
+    maxWidth: 400,
+    borderWidth: 2,
+    borderColor: '#1e90ff',
+    ...(IS_WEB && {
+      maxHeight: '90vh',
+      overflowY: 'auto',
+      boxShadow: '0 10px 40px rgba(0, 0, 0, 0.5)',
+    }),
+  },
+  loginModalTitle: {
+    color: '#7dd3fc',
+    fontSize: 24,
+    fontWeight: '700',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  input: {
+    backgroundColor: '#0f1724',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 16,
+    color: '#e6eef8',
+    fontSize: 16,
+    ...(IS_WEB && {
+      outline: 'none',
+      minHeight: 44,
+    }),
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 8,
+  },
+  cancelButton: {
+    flex: 1,
+    backgroundColor: '#1e3a5f',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    ...(IS_WEB && {
+      cursor: 'pointer',
+      minHeight: 44,
+      transition: 'background-color 0.2s',
+    }),
+  },
+  cancelButtonText: {
+    color: '#cbd5e1',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  confirmButton: {
+    flex: 1,
+    backgroundColor: '#1e90ff',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 44,
+    ...(IS_WEB && {
+      cursor: 'pointer',
+      transition: 'background-color 0.2s',
+    }),
+  },
+  confirmButtonDisabled: {
+    opacity: 0.6,
+    ...(IS_WEB && {
+      cursor: 'not-allowed',
+    }),
+  },
+  confirmButtonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '700',
+    textAlign: 'center',
+    includeFontPadding: false,
+    textAlignVertical: 'center',
+  },
+  loginRegisterLink: {
+    marginTop: 16,
+    alignItems: 'center',
+  },
+  loginRegisterText: {
+    color: '#1e90ff',
+    fontSize: 12,
+    textDecorationLine: 'underline',
   },
 });

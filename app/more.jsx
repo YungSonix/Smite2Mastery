@@ -9,18 +9,42 @@ import {
   ActivityIndicator,
   Linking,
 } from 'react-native';
+import { WebView } from 'react-native-webview';
 
 const IS_WEB = Platform.OS === 'web';
+
+// Featured Twitch channels for the More page.
+// These are the channels that can appear in the Featured Streamers section.
+const FEATURED_TWITCH_CHANNELS = [
+  'changebest',
+  'thebiackeye',
+  'bigggtony',
+];
+const DEFAULT_TWITCH_CHANNEL = FEATURED_TWITCH_CHANNELS[0];
 import { useScreenDimensions } from '../hooks/useScreenDimensions';
 const WordlePage = lazy(() => import('./wordle'));
 const AbilityGamePage = lazy(() => import('./ability'));
+const ProphecyPage = lazy(() => import('./prophecy'));
 const ProfilePage = lazy(() => import('./profile'));
+const ShopPage = lazy(() => import('./shop'));
 
-export default function MorePage({ activeTab = 'minigames', onNavigateToBuilds, onNavigateToGod, onNavigateToCustomBuild, onNavigateToMyBuilds }) {
+export default function MorePage({ activeTab = 'minigames', currentUsername = null, onNavigateToBuilds, onNavigateToGod, onNavigateToCustomBuild, onNavigateToMyBuilds, viewUsername = null, onNavigateBack = null, onSwitchToProfile = null }) {
   // Use responsive screen dimensions
   const screenDimensions = useScreenDimensions();
-  
   const [selectedGame, setSelectedGame] = useState(null);
+  const [selectedTool, setSelectedTool] = useState(null);
+  const [featuredChannelIndex, setFeaturedChannelIndex] = useState(0);
+
+  const featuredChannel =
+    FEATURED_TWITCH_CHANNELS[featuredChannelIndex] ?? DEFAULT_TWITCH_CHANNEL;
+
+  if (activeTab === 'tools' && selectedTool === 'player-lookup') {
+    return (
+      <PlayerLookupScreen
+        onBack={() => setSelectedTool(null)}
+      />
+    );
+  }
 
   // If a game is selected, show it
   if (selectedGame === 'god-wordle') {
@@ -51,6 +75,39 @@ export default function MorePage({ activeTab = 'minigames', onNavigateToBuilds, 
     );
   }
 
+  if (selectedGame === 'prophecy') {
+    return (
+      <Suspense
+        fallback={
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#c8922a" />
+          </View>
+        }
+      >
+        <ProphecyPage onBack={() => setSelectedGame(null)} />
+      </Suspense>
+    );
+  }
+
+  if (activeTab === 'shop') {
+    return (
+      <Suspense
+        fallback={
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#f59e0b" />
+          </View>
+        }
+      >
+        <ShopPage
+          currentUsername={currentUsername}
+          onNavigateToProfile={onSwitchToProfile}
+          onNavigateToWordle={() => setSelectedGame('god-wordle')}
+          onNavigateToAbility={() => setSelectedGame('guess-ability')}
+        />
+      </Suspense>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView 
@@ -63,6 +120,59 @@ export default function MorePage({ activeTab = 'minigames', onNavigateToBuilds, 
           
           {activeTab === 'minigames' && (
             <>
+              {/* Featured Streamers — Sponsored slot (buy "Featured Streamer" in Shop) */}
+              <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Featured Streamers</Text>
+                <Text style={styles.sectionNote}>
+                  Support streamers. Unlock "Featured Streamer" in the Shop to get your Twitch here.
+                </Text>
+                <View style={styles.featuredStreamerCard}>
+                  {IS_WEB && typeof window !== 'undefined' ? (
+                    <iframe
+                      title="Featured Twitch"
+                      src={`https://player.twitch.tv/?channel=${featuredChannel}&parent=${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}`}
+                      style={styles.twitchIframe}
+                      frameBorder="0"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <WebView
+                      source={{
+                        uri: `https://player.twitch.tv/?channel=${featuredChannel}&parent=localhost`,
+                      }}
+                      style={styles.twitchIframe}
+                      allowsInlineMediaPlayback
+                      mediaPlaybackRequiresUserAction={false}
+                    />
+                  )}
+                </View>
+                <View style={styles.twitchChannelSelector}>
+                  {FEATURED_TWITCH_CHANNELS.map((channel, index) => {
+                    const isActive = channel === featuredChannel;
+                    return (
+                      <TouchableOpacity
+                        key={channel}
+                        style={[
+                          styles.twitchChannelPill,
+                          isActive && styles.twitchChannelPillActive,
+                        ]}
+                        onPress={() => setFeaturedChannelIndex(index)}
+                        activeOpacity={0.8}
+                      >
+                        <Text
+                          style={[
+                            styles.twitchChannelPillText,
+                            isActive && styles.twitchChannelPillTextActive,
+                          ]}
+                        >
+                          {channel}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              </View>
+
               {/* Mini Games Section */}
               <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Mini Games</Text>
@@ -87,6 +197,14 @@ export default function MorePage({ activeTab = 'minigames', onNavigateToBuilds, 
                     <Text style={styles.cardTitle}>Guess the Ability</Text>
                     <Text style={styles.cardDescription}>Guess the god and ability (1-4).</Text>
                   </TouchableOpacity>
+                  <TouchableOpacity 
+                    style={styles.card} 
+                    onPress={() => setSelectedGame('prophecy')}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={styles.cardTitle}>Prophecy</Text>
+                    <Text style={styles.cardDescription}>Card battle with Smite 2 gods. Deploy, attack, win.</Text>
+                  </TouchableOpacity>
                   <TouchableOpacity style={styles.card} onPress={() => { /* No action, TBD */ }}>
                     <Text style={styles.cardTitle}>Guess the Skin (TBD)</Text>
                     <Text style={styles.cardDescription}>Coming Soon</Text>
@@ -108,11 +226,13 @@ export default function MorePage({ activeTab = 'minigames', onNavigateToBuilds, 
               </View>
             }>
               <ProfilePage 
-                key={`profile-${activeTab}`}
+                key={`profile-${activeTab}-${viewUsername || 'self'}`}
                 onNavigateToBuilds={onNavigateToBuilds} 
                 onNavigateToGod={onNavigateToGod}
                 onNavigateToCustomBuild={onNavigateToCustomBuild}
                 onNavigateToMyBuilds={onNavigateToMyBuilds}
+                viewUsername={viewUsername}
+                onNavigateBack={onNavigateBack}
               />
             </Suspense>
           )}
@@ -122,17 +242,21 @@ export default function MorePage({ activeTab = 'minigames', onNavigateToBuilds, 
               {/* Tools Section */}
               <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Tools</Text>
-            <View style={styles.grid}>
-              <TouchableOpacity style={styles.card} onPress={() => {}}>
-                <Text style={styles.cardTitle}>Team Comp Builder</Text>
-                <Text style={styles.cardDescription}>Build team compositions</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.card} onPress={() => {}}>
-                <Text style={styles.cardTitle}>Damage Calculator</Text>
-                <Text style={styles.cardDescription}>Coming soon</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+                <View style={styles.grid}>
+                  <View style={[styles.card, styles.cardDisabled]}>
+                    <Text style={styles.cardTitle}>Player Lookup</Text>
+                    <Text style={styles.cardDescription}>Coming when API access is available.</Text>
+                  </View>
+                  <TouchableOpacity style={styles.card} onPress={() => {}}>
+                    <Text style={styles.cardTitle}>Team Comp Builder</Text>
+                    <Text style={styles.cardDescription}>Build team compositions</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.card} onPress={() => {}}>
+                    <Text style={styles.cardTitle}>Damage Calculator</Text>
+                    <Text style={styles.cardDescription}>Coming soon</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
           
           {/* External Links Section */} 
           <View style={styles.section}>
@@ -158,6 +282,7 @@ export default function MorePage({ activeTab = 'minigames', onNavigateToBuilds, 
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -200,11 +325,72 @@ const styles = StyleSheet.create({
     marginTop: 8,
     textAlign: 'center',
   },
+  featuredStreamerCard: {
+    backgroundColor: '#0b1226',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    overflow: 'hidden',
+    marginTop: 8,
+    minHeight: 220,
+  },
+  twitchIframe: {
+    width: '100%',
+    height: 220,
+    border: 0,
+  },
+  twitchChannelSelector: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 8,
+  },
+  twitchChannelPill: {
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    backgroundColor: '#020617',
+  },
+  twitchChannelPillActive: {
+    borderColor: '#a855f7',
+    backgroundColor: '#1e293b',
+  },
+  twitchChannelPillText: {
+    color: '#94a3b8',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  twitchChannelPillTextActive: {
+    color: '#f97316',
+  },
+  twitchPlaceholder: {
+    height: 220,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  twitchPlaceholderText: {
+    color: '#7dd3fc',
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  twitchPlaceholderSub: {
+    color: '#64748b',
+    fontSize: 13,
+  },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: IS_WEB ? 12 : 8,
     justifyContent: 'center',
+  },
+  cardDisabled: {
+    opacity: 0.7,
   },
   card: {
     backgroundColor: '#0b1226',
@@ -239,6 +425,199 @@ const styles = StyleSheet.create({
     color: '#94a3b8',
     fontSize: IS_WEB ? 12 : 11,
     textAlign: 'center',
+  },
+  inputBox: {
+    backgroundColor: '#0b1226',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    color: '#e5e7eb',
+    fontSize: 14,
+  },
+  lookupButton: {
+    flex: 1,
+    backgroundColor: '#1e90ff',
+    borderRadius: 8,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: '#0ea5e9',
+    alignItems: 'center',
+  },
+  lookupButtonText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  playerStatsCard: {
+    backgroundColor: '#0b1226',
+    borderRadius: 12,
+    padding: 14,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  playerStatsTitle: {
+    color: '#7dd3fc',
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 4,
+  },
+  playerStatsSubtitle: {
+    color: '#94a3b8',
+    fontSize: 12,
+    marginBottom: 8,
+  },
+  playerStatsSectionTitle: {
+    color: '#93c5fd',
+    fontSize: 13,
+    fontWeight: '700',
+    marginBottom: 4,
+  },
+  playerStatsLine: {
+    color: '#e5e7eb',
+    fontSize: 12,
+    marginBottom: 2,
+  },
+  overviewKpiRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+    marginTop: 6,
+    marginBottom: 4,
+  },
+  overviewKpi: {
+    minWidth: 72,
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+    backgroundColor: '#0f172a',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  overviewKpiLabel: {
+    color: '#94a3b8',
+    fontSize: 10,
+    marginBottom: 2,
+  },
+  overviewKpiValue: {
+    color: '#7dd3fc',
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  overviewKpiSub: {
+    color: '#64748b',
+    fontSize: 10,
+    marginTop: 2,
+  },
+  matchesSummaryRow: {
+    marginTop: 12,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#1e293b',
+  },
+  matchesSummaryLabel: {
+    color: '#94a3b8',
+    fontSize: 11,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  matchesSummaryText: {
+    color: '#cbd5e1',
+    fontSize: 12,
+  },
+  lookupTabBar: {
+    flexDirection: 'row',
+    gap: 6,
+    marginTop: 8,
+    marginBottom: 4,
+  },
+  lookupTab: {
+    flex: 1,
+    paddingVertical: 8,
+    paddingHorizontal: 6,
+    borderRadius: 8,
+    backgroundColor: '#0f172a',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    alignItems: 'center',
+  },
+  lookupTabActive: {
+    backgroundColor: '#1e3a5f',
+    borderColor: '#7dd3fc',
+  },
+  lookupTabText: {
+    color: '#94a3b8',
+    fontSize: 11,
+    fontWeight: '600',
+  },
+  lookupTabTextActive: {
+    color: '#7dd3fc',
+  },
+  godRowWrap: {
+    gap: 6,
+  },
+  godRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 4,
+  },
+  lookupGodIcon: {
+    width: 32,
+    height: 32,
+    borderRadius: 6,
+    backgroundColor: '#1e293b',
+  },
+  lookupGodIconSmall: {
+    width: 28,
+    height: 28,
+    borderRadius: 6,
+    backgroundColor: '#1e293b',
+  },
+  lookupGodIconPlaceholder: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  lookupGodIconPlaceholderText: {
+    color: '#64748b',
+    fontSize: 14,
+  },
+  lookupGodIconPlaceholderTextSmall: {
+    color: '#64748b',
+    fontSize: 12,
+  },
+  godRowText: {
+    flex: 1,
+  },
+  matchBlock: {
+    marginBottom: 10,
+    paddingBottom: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1e293b',
+  },
+  matchRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 8,
+  },
+  matchRowText: {
+    flex: 1,
+  },
+  buildRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 4,
+  },
+  buildLabel: {
+    color: '#94a3b8',
+    fontSize: 11,
+    marginRight: 4,
+  },
+  buildItems: {
+    color: '#cbd5e1',
+    fontSize: 11,
+    flex: 1,
   },
   loadingContainer: {
     flex: 1,
