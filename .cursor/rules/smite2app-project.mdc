@@ -1,0 +1,132 @@
+---
+description: Smite 2 app — full project context, goals/progress, and agent workflow so the agent never forgets
+alwaysApply: true
+---
+
+# Smite 2 App — Project Rules
+
+## Agent workflow (do this every time)
+
+1. **Before implementing**: Read this rule file and **read `GOALS.md`** (project root). Use both as source of truth.
+2. **When the user asks for a change**: Infer related surfaces. Example: "update the menu" means update the nav/menu in `app/index.jsx`.
+3. **After implementing**: Update **`GOALS.md`** — mark completed items, add to "Recent progress" only for **major** features/releases (one line per major item); for minor bugs or small tweaks, one short line at most, no depth. If you added new screens or conventions, update this rule file too so future turns never forget.
+
+---
+
+## Project identity
+
+- **Name**: Smite 2 companion app (smitescroll). Cross-platform (iOS, Android, web) via **Expo** and **React Native**.
+- **Routing**: File-based with **Expo Router**. Only files under `app/` that export a default component are routes; put non-route modules in `lib/` or project root to avoid route warnings.
+
+## Tech stack
+
+- **UI**: React Native, Expo SDK ~54, `expo-router`, `expo-image`, `react-native-safe-area-context`, `useScreenDimensions` from `hooks/useScreenDimensions`.
+- **Storage**: `AsyncStorage` (or `window.localStorage` on web). Reuse existing key patterns (e.g. `shop_${username}_gold`, `currentUser`, `pinnedBuilds_${user}`).
+- **Backend**: **Supabase** via `config/supabase.js`. Always guard with try/catch and fallback when config is missing (mock or null).
+- **Platform**: Use `Platform.OS === 'web'` / `IS_WEB` for web-only behavior (font stacks, iframes, maxWidth layout).
+
+---
+
+## Full app surface (entirety of the app)
+
+### Main navigation (`app/index.jsx`)
+
+- **State**: `currentPage` ('homepage' | 'data' | 'builds' | 'patchhub' | 'more' | 'custombuild'), plus `databaseSubTab`, `buildsSubTab`, `patchHubSubTab`, `moreSubTab`.
+- **Top nav bar**: Database, Builds, Home, Patch Hub, More.
+- **Sub-bars**:
+  - **Data**: Gods, Items, Game Modes, Mechanics.
+  - **Builds**: Builds (Featured/Contributors/Community), Custom Builder, Randomizer, My Builds, Tierlist.
+  - **Patch Hub**: Simple Summary, Catch Me Up, Archive.
+  - **More**: Minigames, Profile, Shop, Tools (e.g. Player Lookup).
+- **Menu / nav changes**: When the user says "update the menu" or adds a new section, edit `app/index.jsx` (navBar and subNavBar TouchableOpacity blocks and the corresponding rendered page).
+
+### Home (`app/home.jsx`)
+
+- Version and news config: `APP_VERSION_CONFIG`, `VERSION_HISTORY`, `NEWS_CONFIG`. Update when a new patch or app version ships.
+- Guides, update status, links. Entry point for the app.
+
+### Builds and gods
+
+- **Builds list**: `BuildsPage` in `app/index.jsx` — loads `app/data/builds.json`, pairs gods with builds. Categories: Featured (FEATURED_AUTHORS), Contributors (Supabase `contributor_builds`), Community (Supabase `community_builds`). Pinning, login, certification request flow.
+- **God builds data**: `app/data/builds.json` — array of gods; each god has `builds[]`, abilities, **baseStats** (per-level stats), etc. Items and gods come from here.
+- **Custom builder**: `app/custombuild.jsx` — pick god, items (7 + 5 starting), relic, aspect, roles, gamemodes; baseStats + item stats combined; save/build name; post to community.
+- **My Builds**: `app/mybuilds.jsx` — saved builds, load into custom builder, contributor builds.
+- **Tierlist**: `app/tierlist.jsx` — tier list of gods (e.g. S/A/B/C/D/F); uses `app/data/builds.json`; persist per user.
+- **Randomizer**: Inside BuildsPage in `app/index.jsx` — random god, random items, relic, aspect, rerolls.
+
+### Database / stats / items / skins
+
+- **Data page**: `app/data.jsx` — tabs Gods, Items, Game Modes, Mechanics. Uses `app/data/builds.json`. God detail: abilities, **baseStats** (expandable), items, skins.
+- **God stats**: Each god in builds.json can have `baseStats` — object keyed by stat name (e.g. MaxHealth, PhysicalProtection); values often have per-level or formula. Custom build and data pages compute total stats (baseStats + item stats).
+- **Items**: From builds.json (flattened from gods' build items). Icons via `app/localIcons.js` — `getLocalItemIcon(iconPath)`.
+- **Skins**: God skins/wallpapers — `app/localIcons.js` exports `getSkinImage`; skin assets from GitHub (e.g. Wallpapers). Used in data.jsx and anywhere god skins are shown.
+- **Icons**: `app/localIcons.js` — god icons (`getLocalGodAsset`, `getRemoteGodIconByName`), item icons, skins; GITHUB_BASE, GOD_ICONS_PATH, ITEM_ICONS_PATH, SKINS_PATH.
+
+### Patch Hub
+
+- **Patch Hub**: `app/patchhub.jsx` — patch notes, simple summary, catch-up, archive. Patch data may be JSON or config in project (e.g. `Patch Notes/` folder). Link to official Smite 2 patch notes.
+
+### More section
+
+- **More**: `app/more.jsx` — `activeTab`: 'minigames' | 'profile' | 'shop' | 'tools'. Renders Featured Streamers (Twitch), minigames (God Wordle, Guess the Ability), Shop, Profile, Tools (e.g. Player Lookup).
+- **God Wordle**: `app/wordle.jsx` — daily/free mode, guess god by name; feedback by Pantheon, Role, Attack Type, etc. Gold: `awardChallenge('wordle_win')` + `awardGold(amount)` by performance. Show **Gold** in header. Uses `Smite2Gods.json` (root).
+- **Guess the Ability**: `app/ability.jsx` — ability minigame; award gold via `awardChallenge('ability_win')` (or equivalent).
+- **Smite Wars (Prophecy TCG)**: `app/prophecy.jsx` — full-screen Smite 2 card-battle mode with Leader select, deck-driven battle loop, in-screen Deck Builder, card shop, and VOX hooks. Launch from More minigames; core card data in `lib/prophecyData.js`; deck rules/archetype/avg-cost logic in `lib/prophecyDeck.js`. Combat follows deterministic keyword logic (Taunt/Brawler/Backstab/Ranged), per-unit cast abilities (including SPELL_SURGE cost reduction), end-of-round status ticking, and STR/INT item compatibility with per-unit item slots. Deck Builder includes persistent 6-slot saves and share-code import/export. Start hub includes Home, Tutorial, Story Mode, Collection, Profile, and Store. Prophecy supports Supabase auth/session plus account sync for profile, collection, saved decks, and pack purchases, with starter-pack grant via RPC/trigger. Card cosmetics use a visual metadata layer (`style`, `foil`, foil accent, card back id, optional skin variant art) that is presentation-only and should not modify gameplay stats.
+- **Shop**: `app/shop.jsx` — daily rotation, name effects, fonts, titles; Gold, challenges tab, leaderboard; `lib/shopData.js`, `lib/shopChallenges.js`, `lib/shopSupabase.js`.
+- **Profile**: `app/profile.jsx` — display name, appearance (banners, name effects, fonts, titles from shop), gold display, builds; profileHelpers (e.g. `getCurrentUser`); Supabase for profile + shop_owned/gold.
+
+### Other screens
+
+- **Conquest Map**: `app/ConquestMap.jsx` — used from Data (Game Modes) or elsewhere.
+- **Player profiles**: `app/playerprofiles.jsx` — view other users' profiles.
+- **Privacy**: `app/privacy.jsx` — privacy policy / legal.
+- **ErrorBoundary**: `app/ErrorBoundary.jsx` — error boundary for the app.
+
+---
+
+## Goals and progress (in files, not in the app)
+
+- **Location**: **`GOALS.md`** in the project root. This is a **file** for tracking goals and progress — not any UI inside the app.
+- **You (user)**: Add goals as checklists in `GOALS.md`. The agent reads and updates this file.
+- **Agent**: Before starting work, read `GOALS.md`. When you complete or partially complete a task, update `GOALS.md` — check off items (`- [x]`), under "Recent progress" log only **major** work (new screens, big refactors, new systems); for minor bugs or small fixes, one brief line at most. ’s 
+---
+
+## Critical paths and modules
+
+| Purpose | Location |
+|--------|----------|
+| Main nav, pages, sub-tabs | `app/index.jsx` (currentPage, *SubTab state, navBar, subNavBar) |
+| Builds/gods/items/baseStats | `app/data/builds.json` |
+| God list (Wordle) | `Smite2Gods.json` (project root) |
+| Icons (god, item, skin, role) | `app/localIcons.js` — `getRoleIcon`, `ROLE_ICONS` |
+| Conquest map HTML | `lib/conquestMapHtml.js` |
+| Shop data (items, rarities, challenges) | `lib/shopData.js` |
+| Shop gold/challenge awarding | `lib/shopChallenges.js` — `awardChallenge(conditionKey)`, `awardGold(amount)` |
+| Supabase shop sync | `lib/shopSupabase.js` |
+| Prophecy card pools and enums | `lib/prophecyData.js` |
+| Prophecy deck validation/archetype/curve | `lib/prophecyDeck.js` |
+| Profile / current user | `app/profile.jsx`, profileHelpers; `app/index.jsx` `currentUser` state |
+| Version/news config | `app/home.jsx` — APP_VERSION_CONFIG, VERSION_HISTORY, NEWS_CONFIG |
+
+---
+
+## Shop and gold system
+
+- **Currency**: Gold only. Earned via daily login, challenges, minigame wins. Persist in Supabase `user_data` (gold, total_gold_earned, shop_owned).
+- **Challenges**: `lib/shopData.js` CHALLENGES; award via `awardChallenge(conditionKey)` (repeatable vs one-time). Variable amounts via `awardGold(amount)` in minigames.
+- **New shop items**: Add to SHOP_ITEM_POOL; for fonts add to PROFILE_FONT_FAMILY_MAP (`app/profile.jsx`) and SHOP_FONT_FAMILY_MAP (`app/shop.jsx`).
+
+---
+
+## Conventions
+
+- **React**: Functional components, hooks; import `useCallback` when used.
+- **Supabase**: Lazy-load or require in try/catch; app must run without config.
+- **No API routes**: Do not add API routes or external data APIs unless the user explicitly asks.
+- **Scripts**: `package.json` (start, android, ios, web, verify-icons, check-env); `scripts/` or `.scripts/` or root for ad-hoc scripts. Env: ENV_SETUP.md, check-env. SQL: `supabase/` folder.
+
+---
+
+## Main prompt (bundle)
+
+When implementing anything: (1) Read this rule file and **`GOALS.md`**; apply them. (2) Update the correct part of the app (builds, stats, skins, database, patch hub, tier list, custom build, my builds, more, shop, profile, wordle, ability, menu). (3) If the user mentions menu or navigation, update `app/index.jsx` nav/sub-nav. (4) Keep shop and profile in sync with Supabase; show gold where relevant; use `lib` helpers for gold; keep non-routes out of `app/`; maintain Supabase fallbacks. (5) After completing work, update **`GOALS.md`** (check off done items; "Recent progress" = major items only, minor bugs = one short line). If you added new features or conventions, update this rule file too so the agent never forgets.

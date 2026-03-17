@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 
 /**
- * Verification script to ensure all required icon files are tracked in git
- * Run this before building to verify everything is in place
+ * Verification script to ensure all required icon files are tracked in git.
+ * Run this before building to verify everything is in place.
  */
 
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+
+const projectRoot = path.resolve(__dirname, '..');
 
 // Required icon files based on code analysis
 const requiredIcons = {
@@ -57,7 +59,7 @@ const requiredIcons = {
     'T_StatIcon_Strength.png',
     'T_StatIcon_Crit.png',
   ],
-  'Consumables': [
+  Consumables: [
     'Consumable_Barons_Brew.png',
     'Consumable_Eyes_of_the_Jungle.png',
     'Consumable_Obsidian_Dagger.png',
@@ -95,31 +97,31 @@ const requiredIcons = {
 };
 
 let allPassed = true;
-const basePath = path.join(__dirname, 'app', 'data', 'Icons');
+const basePath = path.join(projectRoot, 'app', 'data', 'Icons');
 
-console.log('🔍 Verifying required icon files...\n');
+console.log('Verifying required icon files...\n');
 
 // Check if files exist locally
 for (const [category, files] of Object.entries(requiredIcons)) {
-  console.log(`📁 Checking ${category}:`);
+  console.log(`Checking ${category}:`);
   const categoryPath = path.join(basePath, category);
-  
+
   for (const file of files) {
     const filePath = path.join(categoryPath, file);
-    const relativePath = path.relative(process.cwd(), filePath);
+    const relativePath = path.relative(projectRoot, filePath);
     const exists = fs.existsSync(filePath);
-    
+
     if (!exists) {
-      console.log(`  ❌ MISSING: ${relativePath}`);
+      console.log(`  MISSING: ${relativePath}`);
       allPassed = false;
     } else {
       // Check if tracked in git
       try {
         const gitPath = `app/data/Icons/${category}/${file}`;
-        execSync(`git ls-files --error-unmatch "${gitPath}"`, { stdio: 'ignore' });
-        console.log(`  ✅ ${file}`);
+        execSync(`git ls-files --error-unmatch "${gitPath}"`, { stdio: 'ignore', cwd: projectRoot });
+        console.log(`  OK: ${file}`);
       } catch (error) {
-        console.log(`  ⚠️  EXISTS but NOT TRACKED in git: ${relativePath}`);
+        console.log(`  EXISTS but NOT TRACKED in git: ${relativePath}`);
         allPassed = false;
       }
     }
@@ -128,43 +130,26 @@ for (const [category, files] of Object.entries(requiredIcons)) {
 }
 
 // Check .gitignore configuration
-console.log('📋 Checking .gitignore configuration...');
-const gitignorePath = path.join(__dirname, '.gitignore');
+console.log('Checking .gitignore configuration...');
+const gitignorePath = path.join(projectRoot, '.gitignore');
 const gitignoreContent = fs.readFileSync(gitignorePath, 'utf8');
 
-const shouldIgnore = [
-  'app/data/Icons/God Info/',
-  'app/data/Icons/Item Icons/',
-  'app/data/Icons/Wallpapers/',
-];
-
-const shouldNotIgnore = [
-  'app/data/Icons/Role Icons/',
-  'app/data/Icons/Pantheon Icons/',
-  'app/data/Icons/Stat Icons/',
-  'app/data/Icons/Consumables/',
-  'app/data/Icons/Vulcan Mods/',
-  'app/data/Icons/Game Modes/',
-  'app/data/Icons/Conquest Images/',
-];
+const shouldIgnore = ['app/data/Icons/God Info/', 'app/data/Icons/Item Icons/', 'app/data/Icons/Wallpapers/'];
 
 for (const pattern of shouldIgnore) {
   if (gitignoreContent.includes(pattern)) {
-    console.log(`  ✅ Correctly ignoring: ${pattern}`);
+    console.log(`  OK ignore: ${pattern}`);
   } else {
-    console.log(`  ⚠️  Should ignore but not found: ${pattern}`);
+    console.log(`  Missing ignore rule: ${pattern}`);
   }
 }
 
 console.log('');
-
-// Final summary
 console.log('='.repeat(50));
 if (allPassed) {
-  console.log('✅ All checks passed! Build should succeed.');
+  console.log('All checks passed.');
   process.exit(0);
-} else {
-  console.log('❌ Some checks failed. Please fix the issues above.');
-  process.exit(1);
 }
 
+console.log('Some checks failed. Please fix the issues above.');
+process.exit(1);
