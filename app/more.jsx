@@ -28,7 +28,7 @@ const ProphecyPage = lazy(() => import('./prophecy'));
 const ProfilePage = lazy(() => import('./profile'));
 const ShopPage = lazy(() => import('./shop'));
 
-export default function MorePage({ activeTab = 'minigames', currentUsername = null, onNavigateToBuilds, onNavigateToGod, onNavigateToCustomBuild, onNavigateToMyBuilds, viewUsername = null, onNavigateBack = null, onSwitchToProfile = null }) {
+export default function MorePage({ activeTab = 'minigames', currentUsername = null, onNavigateToBuilds, onNavigateToGod, onNavigateToCustomBuild, onNavigateToMyBuilds, viewUsername = null, onNavigateBack = null, onSwitchToProfile = null, onOpenSmiteWars = null }) {
   // Use responsive screen dimensions
   const screenDimensions = useScreenDimensions();
   const [selectedGame, setSelectedGame] = useState(null);
@@ -84,7 +84,7 @@ export default function MorePage({ activeTab = 'minigames', currentUsername = nu
           </View>
         }
       >
-        <ProphecyPage onBack={() => setSelectedGame(null)} />
+        <ProphecyPage onBack={() => setSelectedGame(null)} gameTitle="Smite Wars" />
       </Suspense>
     );
   }
@@ -199,11 +199,14 @@ export default function MorePage({ activeTab = 'minigames', currentUsername = nu
                   </TouchableOpacity>
                   <TouchableOpacity 
                     style={styles.card} 
-                    onPress={() => setSelectedGame('prophecy')}
+                    onPress={() => {
+                      if (typeof onOpenSmiteWars === 'function') onOpenSmiteWars();
+                      else setSelectedGame('prophecy');
+                    }}
                     activeOpacity={0.7}
                   >
-                    <Text style={styles.cardTitle}>Prophecy</Text>
-                    <Text style={styles.cardDescription}>Card battle with Smite 2 gods. Deploy, attack, win.</Text>
+                    <Text style={styles.cardTitle}>Smite Wars</Text>
+                    <Text style={styles.cardDescription}>Full-screen card war with Smite 2 gods. Deploy, attack, win.</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.card} onPress={() => { /* No action, TBD */ }}>
                     <Text style={styles.cardTitle}>Guess the Skin (TBD)</Text>

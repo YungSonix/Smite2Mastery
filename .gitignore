@@ -36,6 +36,7 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+tsconfig.json
 
 # generated native folders
 /ios
@@ -66,6 +67,9 @@ Git/
 *.txt
 !public/**/*.txt
 
+# Local planning/progress notes
+GOALS.md
+
 # Backup and temporary files
 *.backup
 *.bak
@@ -77,6 +81,7 @@ Git/
 app/data/Icons/God Info/
 app/data/Icons/Wallpapers/
 app/data/Icons/Item Icons/
+/tsconfig.json
 
 # Keep essential icons that are required by the code
 # (Role Icons, Pantheon Icons, Stat Icons, Consumables, Vulcan Mods, Game Modes, Conquest Images are tracked)

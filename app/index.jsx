@@ -25,6 +25,7 @@ const CustomBuildPage = lazy(() => import('./custombuild'));
 const PlayerProfilesPage = lazy(() => import('./playerprofiles'));
 const PatchHubPage = lazy(() => import('./patchhub'));
 const MorePage = lazy(() => import('./more'));
+const SmiteWarsPage = lazy(() => import('./prophecy'));
 const WordlePage = lazy(() => import('./wordle'));
 const MyBuildsPage = lazy(() => import('./mybuilds'));
 const TierlistPage = lazy(() => import('./tierlist'));
@@ -7116,6 +7117,22 @@ export default function App() {
     storage.getItem('currentUser').then((u) => setCurrentUser(u || null));
   }, []);
 
+  if (currentPage === 'smitewars') {
+    return (
+      <View style={navStyles.outerContainer}>
+        <Suspense fallback={<ActivityIndicator size="large" color="#c8922a" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
+          <SmiteWarsPage
+            gameTitle="Smite Wars"
+            onBack={() => {
+              setCurrentPage('more');
+              setMoreSubTab('minigames');
+            }}
+          />
+        </Suspense>
+      </View>
+    );
+  }
+
  
 
   return (
@@ -7537,6 +7554,7 @@ export default function App() {
             currentUsername={currentUser}
             viewUsername={viewingUserProfile}
             onSwitchToProfile={() => setMoreSubTab('profile')}
+            onOpenSmiteWars={() => setCurrentPage('smitewars')}
             onNavigateBack={() => {
               setCurrentPage('builds');
               setViewingUserProfile(null);

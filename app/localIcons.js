@@ -3,7 +3,9 @@
 const GITHUB_BASE = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img';
 
 // Item icons - returns { uri: '...' } format for React Native Image
-const ITEM_ICONS_PATH = `${GITHUB_BASE}/Item%20Icons`;
+const ITEM_ICONS_PATH = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/master/app/data/Icons/Item%20Icons';
+// Filled/solid variant (same repo; use when filled style desired)
+const ITEM_ICONS_FILLED_PATH = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/master/app/data/Icons/Item%20Icons%20Filled';
 
 // God assets path - try directly in God Info folder first
 // If images are in a subfolder, update this path accordingly
@@ -22,31 +24,34 @@ function createImageUri(basePath, filename) {
 
 // Item icon lookup - returns object with both lowercase and original case options
 // Tries lowercase first, then falls back to original case
-export function getLocalItemIcon(iconPath) {
+// options.filled: use Item Icons Filled folder when true
+export function getLocalItemIcon(iconPath, options = {}) {
   if (!iconPath) return null;
   const base = iconPath.split('/').pop() || '';
   if (!base) return null;
-  
+
+  const basePath = options.filled ? ITEM_ICONS_FILLED_PATH : ITEM_ICONS_PATH;
+
   const lowercaseBase = base.toLowerCase();
   const originalBase = base;
-  
+
   // If they're the same, just return single URI
   if (lowercaseBase === originalBase) {
-    const uri = createImageUri(ITEM_ICONS_PATH, lowercaseBase);
+    const uri = createImageUri(basePath, lowercaseBase);
     if (__DEV__) {
       console.log('Loading item icon:', base, 'from:', uri.uri);
     }
     return uri;
   }
-  
+
   // Return both options: try lowercase first, then original case
-  const primary = createImageUri(ITEM_ICONS_PATH, lowercaseBase);
-  const fallback = createImageUri(ITEM_ICONS_PATH, originalBase);
-  
+  const primary = createImageUri(basePath, lowercaseBase);
+  const fallback = createImageUri(basePath, originalBase);
+
   if (__DEV__) {
     console.log('Loading item icon:', base, '-> trying lowercase:', primary.uri, 'or original:', fallback.uri);
   }
-  
+
   return {
     primary: primary,
     fallback: fallback

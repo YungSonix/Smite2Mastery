@@ -10,8 +10,11 @@
     "web": "expo start --web",
     "eas-install": "npm ci",
     "prebuild": "npm run eas-install",
-    "verify-icons": "node verify-icons.js",
-    "check-env": "node scripts/check-env.js"
+    "verify-icons": "node scripts/verify-icons.js",
+    "check-env": "node scripts/check-env.js",
+    "generate:god-abilities": "node scripts/generate-god-abilities-reference.js",
+    "list-missing-voice": "node scripts/list-missing-voice-gods.js",
+    "check-voice-audio": "node scripts/check-voice-audio.js"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",
@@ -20,7 +23,7 @@
     "@vercel/analytics": "^1.6.1",
     "crypto-js": "^4.2.0",
     "expo": "~54.0.33",
-    "expo-av": "~16.0.8",
+    "expo-audio": "~1.1.1",
     "expo-constants": "~18.0.13",
     "expo-dev-client": "~6.0.20",
     "expo-image": "^3.0.11",
@@ -40,6 +43,8 @@
   },
   "private": true,
   "devDependencies": {
-    "sharp": "^0.34.5"
+    "@types/react": "~19.1.10",
+    "sharp": "^0.34.5",
+    "typescript": "~5.9.2"
   }
 }
