@@ -10,6 +10,7 @@ import {
   Linking,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { DEFAULT_TAB_STATE, EXTERNAL_LINKS, REMOTE_BASE_URLS } from '../config';
 
 const IS_WEB = Platform.OS === 'web';
 
@@ -28,7 +29,7 @@ const ProphecyPage = lazy(() => import('./prophecy'));
 const ProfilePage = lazy(() => import('./profile'));
 const ShopPage = lazy(() => import('./shop'));
 
-export default function MorePage({ activeTab = 'minigames', currentUsername = null, onNavigateToBuilds, onNavigateToGod, onNavigateToCustomBuild, onNavigateToMyBuilds, viewUsername = null, onNavigateBack = null, onSwitchToProfile = null, onOpenSmiteWars = null }) {
+export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUsername = null, onNavigateToBuilds, onNavigateToGod, onNavigateToCustomBuild, onNavigateToMyBuilds, viewUsername = null, onNavigateBack = null, onSwitchToProfile = null, onOpenSmiteWars = null }) {
   // Use responsive screen dimensions
   const screenDimensions = useScreenDimensions();
   const [selectedGame, setSelectedGame] = useState(null);
@@ -130,7 +131,7 @@ export default function MorePage({ activeTab = 'minigames', currentUsername = nu
                   {IS_WEB && typeof window !== 'undefined' ? (
                     <iframe
                       title="Featured Twitch"
-                      src={`https://player.twitch.tv/?channel=${featuredChannel}&parent=${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}`}
+                      src={`${REMOTE_BASE_URLS.TWITCH_PLAYER}/?channel=${featuredChannel}&parent=${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}`}
                       style={styles.twitchIframe}
                       frameBorder="0"
                       allowFullScreen
@@ -138,7 +139,7 @@ export default function MorePage({ activeTab = 'minigames', currentUsername = nu
                   ) : (
                     <WebView
                       source={{
-                        uri: `https://player.twitch.tv/?channel=${featuredChannel}&parent=localhost`,
+                        uri: `${REMOTE_BASE_URLS.TWITCH_PLAYER}/?channel=${featuredChannel}&parent=localhost`,
                       }}
                       style={styles.twitchIframe}
                       allowsInlineMediaPlayback
@@ -268,7 +269,7 @@ export default function MorePage({ activeTab = 'minigames', currentUsername = nu
               <TouchableOpacity 
                 style={styles.card} 
                 onPress={() => {
-                  Linking.openURL('https://tracker.gg/smite2').catch((err) => {
+                  Linking.openURL(EXTERNAL_LINKS.TRACKER_SMITE2_HOME).catch((err) => {
                     console.error('Failed to open Tracker.gg:', err);
                   });
                 }}

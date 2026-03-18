@@ -54,6 +54,7 @@ import CryptoJS from 'crypto-js';
 import { useScreenDimensions } from '../hooks/useScreenDimensions';
 import { getLocalItemIcon, getLocalGodAsset } from './localIcons';
 import ColorPicker from 'react-native-wheel-color-picker';
+import { EXTERNAL_LINKS, ICON_PATHS, REMOTE_BASE_URLS } from '../config';
 
 // Calculate dynamic font size based on text length and optional screen width (for responsive layout)
 const getProfileNameFontSize = (text, screenWidth) => {
@@ -83,7 +84,7 @@ const getProfileNameFontSize = (text, screenWidth) => {
 };
 
 // Preferred roles metadata (used for selection & display)
-const ROLE_ICON_BASE_URL = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/master/app/data/Icons/Role%20Icons';
+const ROLE_ICON_BASE_URL = ICON_PATHS.ROLE_ICONS;
 const ROLE_ICON_URLS = {
   ADC: `${ROLE_ICON_BASE_URL}/T_GodRole_Carry_Small.png`,
   Jungle: `${ROLE_ICON_BASE_URL}/T_GodRole_Jungle.png`,
@@ -157,7 +158,7 @@ const CUSTOM_COLOR_SWATCHES = [
   '#94A3B8', '#64748B', '#475569', '#334155', '#1E293B', '#0F172A',
 ];
 
-const PROFILE_BANNER_BASE_URL = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Profile%20Banner';
+const PROFILE_BANNER_BASE_URL = ICON_PATHS.PROFILE_BANNERS;
 const PROFILE_BANNER_PRESETS = [
   { key: 'none', label: 'None', image: null },
   { key: 'achilles', label: 'Achilles', image: `${PROFILE_BANNER_BASE_URL}/achilles.webp` },
@@ -186,8 +187,8 @@ const PROFILE_BANNER_PRESETS = [
   { key: 'the-morrigan', label: 'The Morrigan', image: `${PROFILE_BANNER_BASE_URL}/the-morrigan.jpg` },
 ];
 
-const BADGE_BASE_URL = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Badges';
-const BADGES_API_URL = 'https://api.github.com/repos/YungSonix/Smite2Mastery/contents/img/Badges';
+const BADGE_BASE_URL = ICON_PATHS.BADGES;
+const BADGES_API_URL = EXTERNAL_LINKS.BADGES_API;
 const PROFILE_BADGE_FILES = [
   '60px-Achilles-MasteryBadge.png',
   '60px-Agni-MasteryBadge.png',
@@ -1128,7 +1129,7 @@ const getGodIconUrl = (godName) => {
   if (!godName) return null;
   const normalizedName = godName.toString().toLowerCase().trim();
   const encodedName = encodeURIComponent(normalizedName);
-  return `https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Icons/${encodedName}.png`;
+  return `${REMOTE_BASE_URLS.GITHUB_RAW_MAIN_IMG}/God%20Icons/${encodedName}.png`;
 };
 
 const IS_WEB = Platform.OS === 'web';
@@ -2764,7 +2765,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     
     const baseUrl = IS_WEB && typeof window !== 'undefined' 
       ? window.location.origin 
-      : 'https://smite2app.com'; // Replace with your actual domain
+      : REMOTE_BASE_URLS.APP_PUBLIC_DOMAIN;
     
     const profileUrl = `${baseUrl}/profile/${currentUser}`;
     
@@ -2808,7 +2809,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     
     const baseUrl = IS_WEB && typeof window !== 'undefined' 
       ? window.location.origin 
-      : 'https://smite2app.com'; // Replace with your actual domain
+      : REMOTE_BASE_URLS.APP_PUBLIC_DOMAIN;
     
     const profileUrl = `${baseUrl}/profile/${viewingUser}`;
     const message = `Check out ${viewingUser}'s Smite 2 profile: ${profileUrl}`;
@@ -2849,7 +2850,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   const handleShareBuild = async (build, buildType = 'community') => {
     const baseUrl = IS_WEB && typeof window !== 'undefined' 
       ? window.location.origin 
-      : 'https://smite2app.com'; // Replace with your actual domain
+      : REMOTE_BASE_URLS.APP_PUBLIC_DOMAIN;
     
     const buildId = build.databaseId || build.id || `${build.god_name || build.god || 'build'}-${Date.now()}`;
     const buildUrl = `${baseUrl}/build/${buildType}/${buildId}`;

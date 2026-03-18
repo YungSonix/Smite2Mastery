@@ -17,6 +17,13 @@ import {
 import CryptoJS from 'crypto-js';
 import { Image } from 'expo-image';
 import { useScreenDimensions } from '../hooks/useScreenDimensions';
+import {
+  BUILD_AUTHORS,
+  DEFAULT_TAB_STATE,
+  PAGE_KEYS,
+  REMOTE_BASE_URLS,
+  STORAGE_KEYS,
+} from '../config';
 import { getRoleIcon } from './localIcons';
 // Lazy load page components to reduce initial bundle size
 const HomePage = lazy(() => import('./home'));
@@ -79,8 +86,8 @@ const getSupabase = () => {
 // Featured: your own curated builds (primary authors)
 // Contributors: trusted content creators / allowed authors
 // Community: everyone else
-const FEATURED_AUTHORS = ['mytharria', 'mendar'];
-const CONTRIBUTORS_AUTHORS = [''];
+const FEATURED_AUTHORS = BUILD_AUTHORS.FEATURED;
+const CONTRIBUTORS_AUTHORS = BUILD_AUTHORS.CONTRIBUTORS;
 
 const getBuildCategory = (build) => {
   const authorRaw = (build?.author || '').toString().trim();
@@ -96,7 +103,7 @@ const getGodIconUrl = (godName) => {
   if (!godName) return null;
   const normalizedName = godName.toString().toLowerCase().trim();
   const encodedName = encodeURIComponent(normalizedName);
-  return `https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Icons/${encodedName}.png`;
+  return `${REMOTE_BASE_URLS.GITHUB_RAW_MAIN_IMG}/God%20Icons/${encodedName}.png`;
 };
 
 // Patch Badge Tooltip Component
@@ -942,7 +949,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
     
     const baseUrl = IS_WEB && typeof window !== 'undefined' 
       ? window.location.origin 
-      : 'https://smite2app.com'; // Replace with your actual domain
+      : REMOTE_BASE_URLS.APP_PUBLIC_DOMAIN;
     
     const buildId = build.databaseId || build.id || `${build.god_name || build.god || 'build'}-${Date.now()}`;
     const buildUrl = `${baseUrl}/build/${type}/${buildId}`;
@@ -7100,21 +7107,21 @@ export default function App() {
   }, []);
 
 
-  const [currentPage, setCurrentPage] = useState('homepage');
+  const [currentPage, setCurrentPage] = useState(PAGE_KEYS.HOME);
   const [godFromBuilds, setGodFromBuilds] = useState(null);
   const [expandAbilities, setExpandAbilities] = useState(false);
   const [dataPageKey, setDataPageKey] = useState(0);
   const [buildToEdit, setBuildToEdit] = useState(null); // Build data for editing
   const [mybuildsRefreshKey, setMybuildsRefreshKey] = useState(0); // Increment after contributor edit so My Builds remounts and reloads
   // Sub-navigation states
-  const [databaseSubTab, setDatabaseSubTab] = useState('gods'); // 'gods', 'items', 'gamemodes', 'mechanics'
-  const [buildsSubTab, setBuildsSubTab] = useState('featured'); // 'featured', 'contributors', 'community', 'all', 'guides', 'custom', 'mybuilds', 'tierlist'
-  const [patchHubSubTab, setPatchHubSubTab] = useState('simple'); // 'simple', 'catchup', 'archive'
-  const [moreSubTab, setMoreSubTab] = useState('minigames'); // 'minigames', 'profile', 'shop', 'tools'
+  const [databaseSubTab, setDatabaseSubTab] = useState(DEFAULT_TAB_STATE.data); // 'gods', 'items', 'gamemodes', 'mechanics'
+  const [buildsSubTab, setBuildsSubTab] = useState(DEFAULT_TAB_STATE.builds); // 'featured', 'contributors', 'community', 'all', 'guides', 'custom', 'mybuilds', 'tierlist'
+  const [patchHubSubTab, setPatchHubSubTab] = useState(DEFAULT_TAB_STATE.patchHub); // 'simple', 'catchup', 'archive'
+  const [moreSubTab, setMoreSubTab] = useState(DEFAULT_TAB_STATE.more); // 'minigames', 'profile', 'shop', 'tools'
   const [viewingUserProfile, setViewingUserProfile] = useState(null); // Username of user profile to view
   const [currentUser, setCurrentUser] = useState(null); // Logged-in username for Shop/Profile (read from storage)
   useEffect(() => {
-    storage.getItem('currentUser').then((u) => setCurrentUser(u || null));
+    storage.getItem(STORAGE_KEYS.CURRENT_USER).then((u) => setCurrentUser(u || null));
   }, []);
 
   if (currentPage === 'smitewars') {

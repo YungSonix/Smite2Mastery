@@ -16,6 +16,7 @@ import {
 import { Image } from 'expo-image';
 import { getLocalItemIcon, getLocalGodAsset } from './localIcons';
 import { useScreenDimensions } from '../hooks/useScreenDimensions';
+import { DEFAULT_TAB_STATE } from '../config';
 
 const IS_WEB = Platform.OS === 'web';
 
@@ -58,10 +59,10 @@ const storage = {
   },
 };
 
-export default function PatchHubPage({ subTab = 'simple' }) {
+export default function PatchHubPage({ subTab = DEFAULT_TAB_STATE.patchHub }) {
   // Use responsive screen dimensions
   const screenDimensions = useScreenDimensions();
-  const [selectedLastPatch, setSelectedLastPatch] = useState(25); // Default to OB25 (latest)
+  const [selectedLastPatch, setSelectedLastPatch] = useState(DEFAULT_TAB_STATE.patchHubLastPatch); // Default to OB25 (latest)
   const [catchUpData, setCatchUpData] = useState(null);
   const [catchUpLoading, setCatchUpLoading] = useState(false);
   const [showPatchPicker, setShowPatchPicker] = useState(false);

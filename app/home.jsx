@@ -17,92 +17,15 @@ import * as Updates from 'expo-updates';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PrivacyPage from './privacy';
 import { useScreenDimensions } from '../hooks/useScreenDimensions';
-
-// ============================================================================
-// EASY CONFIGURATION - Just update these values when a new patch releases!
-// ============================================================================
-
-const APP_VERSION_CONFIG = {
-  currentVersion: '2.1.0', // Current app version
-  previousVersion: '2.0.0', // Previous version (for comparison)
-  updateNotes: [
-    'Added new Custom Builds page.',
-    'Added new Community Builds page.',
-    'Added new Certification Builds page.',
-  ], 
-};
-
-// Version History - Add new versions here when releasing updates
-// The current version will automatically be added to this list when you update APP_VERSION_CONFIG
-const VERSION_HISTORY = [
-  {
-    version: '2.0.0',
-    date: '2026-01-21', // Format: YYYY-MM-DD
-    updateNotes: [
-      'Gods slider now draggable.',
-      'Added new channels to Guides section',
-      'Updated home page.',
-      'Made improvements while in a god/item page.',
-      'Improved Web performance.',
-      'Fixed some bugs.',
-    ],
-  },
-  {
-    version: '1.1.0',
-    date: '2025-12-09', // Format: YYYY-MM-DD
-    updateNotes: [
-      'Gods slider now draggable.',
-      'Added new channels to Guides section',
-      'Updated home page.',
-      'Made improvements while in a god/item page.',
-      'Improved Web performance.',
-      'Fixed some bugs.',
-    ],
-  },
-  {
-    version: '1.0.0',
-    date: '2025-12-07', // Format: YYYY-MM-DD
-    updateNotes: [
-      'Initial release of the SMITE 2 App.',
-
-      'Added app review form and bug report form.',
-      'Added update status section to the home page.',
-    ],
-  },
- 
-];
-
-const NEWS_CONFIG = {
-  // Latest Open Beta Patch Info
-  openBeta: {
-    version: 27, // Update this number for new patches
-    title: 'Open Beta 27 - The Great Teacher Update', // Update this title
-    link: 'https://www.smite2.com/news/open-beta-27-update-notes/', // Update this link
-    image: 'https://webcdn.hirezstudios.com/smite2-cdn/Blog_Header_Promo_Assets_2560x695_1_675d416095.png', // Update this image link
-    snippet: 'Read the latest SMITE 2 Open Beta update notes and patch information.',
-  }, 
-  // Latest News Article
-  latestNews: {
-    title: 'SMITE 2 News',
-    link: 'https://www.smite2.com/news',
-    image: 'https://webcdn.hirezstudios.com/smite2-cdn/BLOG_Header_SMITE_2_2560x695_6f634f8313.jpg',
-    snippet: 'Stay updated with the latest SMITE 2 news, patch notes, and updates.',
-  },
-};
-
-// ============================================================================
-// BUG REPORT CONFIGURATION
-// ============================================================================
-// To set up Formspree (free service that sends emails directly):
-// 1. Go to https://formspree.io and create a free account
-// 2. Create a new form and set the recipient email to your yungsonix email
-// 3. Get your form endpoint (e.g., https://formspree.io/f/YOUR_FORM_ID)
-// 4. Replace the BUG_REPORT_ENDPOINT below with your Formspree endpoint
-// Formspree will send emails directly to your configured email address
-const BUG_REPORT_ENDPOINT = 'https://formspree.io/f/xqarlgol'; // Replace with your Formspree endpoint
-const APP_REVIEW_ENDPOINT = 'https://formspree.io/f/meoyzvyg'; // App Review Form endpoint
-const MISSING_OUTDATED_ENDPOINT = 'https://formspree.io/f/xdkqlezy'; // Missing/Outdated Feature Report endpoint
-// ============================================================================
+import {
+  APP_VERSION_CONFIG,
+  EXTERNAL_LINKS,
+  FORM_ENDPOINTS,
+  NETWORK_TIMINGS_MS,
+  NEWS_CONFIG,
+  STORAGE_KEYS,
+  VERSION_HISTORY,
+} from '../config';
 
 export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
   // Use responsive screen dimensions
@@ -182,9 +105,11 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
     const checkForAppUpdate = async () => {
       try {
         // Add a small delay to ensure AsyncStorage is ready (especially on mobile)
-        await new Promise(resolve => setTimeout(resolve, Platform.OS === 'web' ? 100 : 500));
+        await new Promise((resolve) =>
+          setTimeout(resolve, Platform.OS === 'web' ? NETWORK_TIMINGS_MS.WEB_INIT_DELAY : NETWORK_TIMINGS_MS.NATIVE_INIT_DELAY)
+        );
         
-        const lastSeenVersion = await AsyncStorage.getItem('lastSeenAppVersion');
+        const lastSeenVersion = await AsyncStorage.getItem(STORAGE_KEYS.LAST_SEEN_APP_VERSION);
         const currentVersion = APP_VERSION_CONFIG.currentVersion;
         
         console.log('Update check - Last seen version:', lastSeenVersion, 'Current version:', currentVersion);
@@ -200,7 +125,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
         // Only if we can't read storage, assume first launch and show popup
         try {
           const currentVersion = APP_VERSION_CONFIG.currentVersion;
-          const lastSeenVersion = await AsyncStorage.getItem('lastSeenAppVersion');
+          const lastSeenVersion = await AsyncStorage.getItem(STORAGE_KEYS.LAST_SEEN_APP_VERSION);
           if (!lastSeenVersion) {
             setShowUpdatePopup(true);
           }
@@ -370,7 +295,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
         'App Version': APP_VERSION_CONFIG.currentVersion,
       };
 
-      const response = await fetch(MISSING_OUTDATED_ENDPOINT, {
+      const response = await fetch(FORM_ENDPOINTS.MISSING_OR_OUTDATED, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -464,7 +389,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
         'Other apps or sites used': appReviewData.otherApps.trim(),
       };
 
-      const response = await fetch(APP_REVIEW_ENDPOINT, {
+      const response = await fetch(FORM_ENDPOINTS.APP_REVIEW, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -533,7 +458,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
         'Additional Notes': bugReportData.additional.trim() || 'None',
       };
 
-      const response = await fetch(BUG_REPORT_ENDPOINT, {
+      const response = await fetch(FORM_ENDPOINTS.BUG_REPORT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -607,7 +532,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
           // Store that we've seen this version AFTER user dismisses the popup
           try {
             const currentVersion = APP_VERSION_CONFIG.currentVersion;
-            await AsyncStorage.setItem('lastSeenAppVersion', currentVersion);
+            await AsyncStorage.setItem(STORAGE_KEYS.LAST_SEEN_APP_VERSION, currentVersion);
             console.log('Saved version to storage (back button):', currentVersion);
           } catch (error) {
             console.error('Error saving version to storage:', error);
@@ -625,7 +550,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
                   // Store that we've seen this version AFTER user dismisses the popup
                   try {
                     const currentVersion = APP_VERSION_CONFIG.currentVersion;
-                    await AsyncStorage.setItem('lastSeenAppVersion', currentVersion);
+                    await AsyncStorage.setItem(STORAGE_KEYS.LAST_SEEN_APP_VERSION, currentVersion);
                     console.log('Saved version to storage (close button):', currentVersion);
                   } catch (error) {
                     console.error('Error saving version to storage:', error);
@@ -657,7 +582,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
                 // This ensures they see it even if app closes before saving
                 try {
                   const currentVersion = APP_VERSION_CONFIG.currentVersion;
-                  await AsyncStorage.setItem('lastSeenAppVersion', currentVersion);
+                  await AsyncStorage.setItem(STORAGE_KEYS.LAST_SEEN_APP_VERSION, currentVersion);
                   console.log('Saved version to storage:', currentVersion);
                 } catch (error) {
                   console.error('Error saving version to storage:', error);
@@ -1161,7 +1086,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.heroButton}
-                onPress={() => openArticleLink('https://www.smite2.com/news/')}
+                onPress={() => openArticleLink(EXTERNAL_LINKS.SMITE2_NEWS_HOME_TRAILING)}
                 activeOpacity={0.7}
               >
                 <Text style={styles.heroButtonText}>Show Latest Smite 2 News →</Text>
@@ -1929,28 +1854,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#1e3a5f',
     backgroundColor: '#0f1724',
-  },
-  // App Review Form Button Styles
-  // Legacy appReviewButton - kept for backward compatibility but not used in new layout
-  appReviewButton: {
-    backgroundColor: '#10b981',
-    padding: 16,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginTop: 12,
-    borderWidth: 1,
-    borderColor: '#10b981',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 8,
-  },
-  appReviewButtonIcon: {
-    fontSize: 20,
-  },
-  appReviewButtonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '700',
   },
   // Bug Report Modal Styles
   bugReportModalContainer: {
