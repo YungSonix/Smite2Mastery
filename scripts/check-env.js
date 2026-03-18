@@ -5,10 +5,8 @@
  * Run with: node scripts/check-env.js
  */
 
-const requiredVars = [
-  'EXPO_PUBLIC_SUPABASE_URL',
-  'EXPO_PUBLIC_SUPABASE_KEY'
-];
+const { REQUIRED_SUPABASE_ENV_VARS, OUTPUT } = require('../config/scriptConfig.cjs');
+const requiredVars = REQUIRED_SUPABASE_ENV_VARS;
 
 console.log('🔍 Checking Supabase environment variables...\n');
 
@@ -23,7 +21,7 @@ requiredVars.forEach(varName => {
   results[varName] = {
     present: isPresent,
     length: length,
-    preview: isPresent ? (value.substring(0, 20) + '...') : 'MISSING'
+    preview: isPresent ? (value.substring(0, OUTPUT.PREVIEW_LENGTH) + '...') : 'MISSING'
   };
   
   if (!isPresent) {
@@ -33,7 +31,7 @@ requiredVars.forEach(varName => {
 
 // Display results
 console.log('Results:');
-console.log('─'.repeat(60));
+console.log('─'.repeat(OUTPUT.DIVIDER_WIDTH));
 requiredVars.forEach(varName => {
   const result = results[varName];
   const status = result.present ? '✅' : '❌';
