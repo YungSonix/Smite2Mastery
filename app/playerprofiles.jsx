@@ -9,6 +9,7 @@ import {
   Linking,
   Alert,
 } from 'react-native';
+import { REMOTE_BASE_URLS } from '../config';
 
 export default function PlayerProfilesPage() {
   const [platform, setPlatform] = useState('steam');
@@ -29,7 +30,7 @@ export default function PlayerProfilesPage() {
     }
     
     // Build the tracker.gg URL
-    const url = `https://tracker.gg/smite2/profile/${platform}/${userId.trim()}/overview?gamemode=conquest&season=3`;
+    const url = `${REMOTE_BASE_URLS.TRACKER_GG_SMITE2}/profile/${platform}/${userId.trim()}/overview?gamemode=conquest&season=3`;
     
     try {
       const supported = await Linking.canOpenURL(url);

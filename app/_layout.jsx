@@ -5,6 +5,7 @@ import { useEffect, useMemo } from 'react';
 import * as Updates from 'expo-updates';
 import { Platform } from 'react-native';
 import { Analytics } from '@vercel/analytics/react';
+import { RESOURCE_HINT_DOMAINS } from '../config';
 
 // Global error handler for unhandled promise rejections and errors
 const setupGlobalErrorHandlers = () => {
@@ -117,11 +118,7 @@ export default function RootLayout() {
       });
 
       // Add resource hints for external domains (improves performance)
-      const externalDomains = [
-        'https://raw.githubusercontent.com',
-        'https://yt3.googleusercontent.com',
-        'https://yt3.ggpht.com'
-      ];
+      const externalDomains = RESOURCE_HINT_DOMAINS;
 
       externalDomains.forEach(domain => {
         let link = document.querySelector(`link[rel="preconnect"][href="${domain}"]`);

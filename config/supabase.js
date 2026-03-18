@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 import Constants from 'expo-constants';
+import { CONSOLE_STYLES, ENV_KEYS, SUPABASE_CONFIG } from '../config';
 
 // Get Supabase credentials from environment variables
 // Falls back to hardcoded values if env vars are not available
@@ -14,16 +15,16 @@ const getEnvVar = (value) => {
 };
 
 const SUPABASE_URL = 
-  getEnvVar(process.env.EXPO_PUBLIC_SUPABASE_URL) || 
+  getEnvVar(process.env[ENV_KEYS.EXPO_PUBLIC_SUPABASE_URL]) || 
   getEnvVar(Constants.expoConfig?.extra?.supabaseUrl) || 
   getEnvVar(Constants.manifest?.extra?.supabaseUrl) ||
-  'https://ofewccajgulkurtpdyoj.supabase.co'; // Fallback value - ALWAYS use this if env vars fail
+  SUPABASE_CONFIG.FALLBACK_URL;
   
 const SUPABASE_ANON_KEY = 
-  getEnvVar(process.env.EXPO_PUBLIC_SUPABASE_KEY) || 
+  getEnvVar(process.env[ENV_KEYS.EXPO_PUBLIC_SUPABASE_KEY]) || 
   getEnvVar(Constants.expoConfig?.extra?.supabaseKey) || 
   getEnvVar(Constants.manifest?.extra?.supabaseKey) ||
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9mZXdjY2FqZ3Vsa3VydHBkeW9qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU0ODA0MzYsImV4cCI6MjA4MTA1NjQzNn0.iKxzUpSsvGhEwrFMBkhjcawZvKuAm-OJpdnKLZpL3a0'; // Fallback value - ALWAYS use this if env vars fail
+  SUPABASE_CONFIG.FALLBACK_ANON_KEY;
 
 // Create a storage adapter that works on both web and native
 const storageAdapter = Platform.OS === 'web' 
@@ -54,21 +55,21 @@ const hasValidCredentials = SUPABASE_URL &&
                             SUPABASE_ANON_KEY && 
                             typeof SUPABASE_URL === 'string' &&
                             typeof SUPABASE_ANON_KEY === 'string' &&
-                            SUPABASE_URL.length > 10 && // At least a valid URL length
-                            SUPABASE_ANON_KEY.length > 10 && // At least a valid key length
+                            SUPABASE_URL.length > SUPABASE_CONFIG.MIN_URL_LENGTH &&
+                            SUPABASE_ANON_KEY.length > SUPABASE_CONFIG.MIN_KEY_LENGTH &&
                             SUPABASE_URL.startsWith('http') && // Must be a valid URL
                             !SUPABASE_URL.includes('undefined') &&
                             !SUPABASE_ANON_KEY.includes('undefined');
 
 // Force use of fallback values if validation fails (shouldn't happen, but safety check)
 // ALWAYS ensure we have valid credentials - use fallback if needed
-const FALLBACK_URL = 'https://ofewccajgulkurtpdyoj.supabase.co';
-const FALLBACK_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9mZXdjY2FqZ3Vsa3VydHBkeW9qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU0ODA0MzYsImV4cCI6MjA4MTA1NjQzNn0.iKxzUpSsvGhEwrFMBkhjcawZvKuAm-OJpdnKLZpL3a0';
+const FALLBACK_URL = SUPABASE_CONFIG.FALLBACK_URL;
+const FALLBACK_KEY = SUPABASE_CONFIG.FALLBACK_ANON_KEY;
 
-const finalUrl = (hasValidCredentials && SUPABASE_URL && SUPABASE_URL.length > 10 && SUPABASE_URL.startsWith('http')) 
+const finalUrl = (hasValidCredentials && SUPABASE_URL && SUPABASE_URL.length > SUPABASE_CONFIG.MIN_URL_LENGTH && SUPABASE_URL.startsWith('http')) 
   ? SUPABASE_URL 
   : FALLBACK_URL;
-const finalKey = (hasValidCredentials && SUPABASE_ANON_KEY && SUPABASE_ANON_KEY.length > 10)
+const finalKey = (hasValidCredentials && SUPABASE_ANON_KEY && SUPABASE_ANON_KEY.length > SUPABASE_CONFIG.MIN_KEY_LENGTH)
   ? SUPABASE_ANON_KEY 
   : FALLBACK_KEY;
 
@@ -76,14 +77,19 @@ const finalKey = (hasValidCredentials && SUPABASE_ANON_KEY && SUPABASE_ANON_KEY.
 // Log on both web and native, but more detailed on web
 const hasUrl = !!SUPABASE_URL && SUPABASE_URL.length > 0;
 const hasKey = !!SUPABASE_ANON_KEY && SUPABASE_ANON_KEY.length > 0;
-const fromEnv = !!(process.env.EXPO_PUBLIC_SUPABASE_URL && process.env.EXPO_PUBLIC_SUPABASE_URL.trim());
+const fromEnv = !!(process.env[ENV_KEYS.EXPO_PUBLIC_SUPABASE_URL] && process.env[ENV_KEYS.EXPO_PUBLIC_SUPABASE_URL].trim());
 const urlPreview = SUPABASE_URL ? SUPABASE_URL.substring(0, 30) + '...' : 'MISSING';
 const keyPreview = SUPABASE_ANON_KEY ? SUPABASE_ANON_KEY.substring(0, 30) + '...' : 'MISSING';
-const willUseRealClient = (finalUrl && finalKey && finalUrl.length > 10 && finalKey.length > 10);
+const willUseRealClient = (
+  finalUrl &&
+  finalKey &&
+  finalUrl.length > SUPABASE_CONFIG.MIN_URL_LENGTH &&
+  finalKey.length > SUPABASE_CONFIG.MIN_KEY_LENGTH
+);
 
 if (Platform.OS === 'web' && typeof window !== 'undefined') {
   // Detailed logging for web
-  console.log('%c🔧 Supabase Config Check', 'color: #1e90ff; font-weight: bold; font-size: 14px;', {
+  console.log('%c🔧 Supabase Config Check', CONSOLE_STYLES.SUPABASE_CHECK, {
     hasUrl,
     hasKey,
     urlLength: SUPABASE_URL?.length || 0,
@@ -99,7 +105,7 @@ if (Platform.OS === 'web' && typeof window !== 'undefined') {
   });
   
   if (!willUseRealClient) {
-    console.error('%c❌ Supabase credentials are invalid!', 'color: #ef4444; font-weight: bold;');
+    console.error('%c❌ Supabase credentials are invalid!', CONSOLE_STYLES.SUPABASE_ERROR);
     console.error('💡 URL:', finalUrl || 'MISSING', `(${finalUrl?.length || 0} chars)`);
     console.error('💡 KEY:', finalKey ? 'Present (' + finalKey.length + ' chars)' : 'MISSING');
     console.error('💡 Original URL:', SUPABASE_URL || 'MISSING', `(${SUPABASE_URL?.length || 0} chars)`);
@@ -107,7 +113,7 @@ if (Platform.OS === 'web' && typeof window !== 'undefined') {
     console.error('💡 hasValidCredentials:', hasValidCredentials);
     console.error('💡 Make sure EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_KEY are set in Vercel for Production environment');
   } else {
-    console.log('%c✅ Supabase Client Initialized', 'color: #10b981; font-weight: bold; font-size: 14px;');
+    console.log('%c✅ Supabase Client Initialized', CONSOLE_STYLES.SUPABASE_SUCCESS);
     console.log('✅ Using URL:', finalUrl.substring(0, 40) + '...');
     console.log('✅ Using KEY:', finalKey.substring(0, 40) + '...');
     console.log('✅ Client ready for use');

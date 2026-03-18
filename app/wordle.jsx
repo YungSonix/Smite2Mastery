@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -119,7 +119,7 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
     return base + bonus;
   };
 
-  const loadGold = async (username) => {
+  const loadGold = useCallback(async (username) => {
     const prefix = `shop_${username || 'guest'}_`;
     let remote = null;
     try {
@@ -148,7 +148,41 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
       localGold = 0;
     }
     setGold(localGold);
-  };
+  }, []);
+
+  const fetchLeaderboard = useCallback(async (slot) => {
+    if (!supabase) return;
+
+    setIsLoadingLeaderboard(true);
+    setLeaderboardError('');
+
+    try {
+      const { data, error } = await supabase
+        .from('wordle_scores')
+        .select('username, guesses, slot, created_at')
+        .eq('slot', slot)
+        .order('guesses', { ascending: true })
+        .order('created_at', { ascending: true })
+        .limit(50);
+
+      if (error) {
+        if (error.code === 'MISSING_CONFIG') {
+          // Supabase not configured; silently ignore and use local-only mode
+          return;
+        }
+        console.error('Failed to load Wordle leaderboard:', error);
+        setLeaderboardError('Failed to load leaderboard.');
+        return;
+      }
+
+      setLeaderboard(data || []);
+    } catch (e) {
+      console.error('Error loading Wordle leaderboard:', e);
+      setLeaderboardError('Failed to load leaderboard.');
+    } finally {
+      setIsLoadingLeaderboard(false);
+    }
+  }, []);
 
   const normalizedGodsByName = useMemo(() => {
     const map = new Map();
@@ -191,42 +225,7 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
     return () => {
       isMounted = false;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const fetchLeaderboard = async (slot) => {
-    if (!supabase) return;
-
-    setIsLoadingLeaderboard(true);
-    setLeaderboardError('');
-
-    try {
-      const { data, error } = await supabase
-        .from('wordle_scores')
-        .select('username, guesses, slot, created_at')
-        .eq('slot', slot)
-        .order('guesses', { ascending: true })
-        .order('created_at', { ascending: true })
-        .limit(50);
-
-      if (error) {
-        if (error.code === 'MISSING_CONFIG') {
-          // Supabase not configured; silently ignore and use local-only mode
-          return;
-        }
-        console.error('Failed to load Wordle leaderboard:', error);
-        setLeaderboardError('Failed to load leaderboard.');
-        return;
-      }
-
-      setLeaderboard(data || []);
-    } catch (e) {
-      console.error('Error loading Wordle leaderboard:', e);
-      setLeaderboardError('Failed to load leaderboard.');
-    } finally {
-      setIsLoadingLeaderboard(false);
-    }
-  };
+  }, [fetchLeaderboard, loadGold]);
 
   const submitScore = async (guessesCount) => {
     if (!supabase || !currentUser) return;

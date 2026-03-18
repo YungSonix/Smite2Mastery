@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -139,34 +139,7 @@ export default function AbilityGamePage({ onBack = null }) {
     return GODS.filter((g) => normalize(g.godName).includes(term)).slice(0, 8);
   }, [guessGodText]);
 
-  // Load current user and leaderboard on mount
-  useEffect(() => {
-    let isMounted = true;
-
-    const init = async () => {
-      try {
-        if (profileHelpers?.getCurrentUser) {
-          const user = await profileHelpers.getCurrentUser();
-          if (isMounted) {
-            setCurrentUser(user);
-          }
-        }
-      } catch (e) {
-        console.error('Failed to load current user for Ability leaderboard:', e);
-      }
-
-      await fetchLeaderboard();
-    };
-
-    init();
-
-    return () => {
-      isMounted = false;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const fetchLeaderboard = async () => {
+  const fetchLeaderboard = useCallback(async () => {
     if (!supabase) return;
 
     setIsLoadingLeaderboard(true);
@@ -197,7 +170,33 @@ export default function AbilityGamePage({ onBack = null }) {
     } finally {
       setIsLoadingLeaderboard(false);
     }
-  };
+  }, []);
+
+  // Load current user and leaderboard on mount
+  useEffect(() => {
+    let isMounted = true;
+
+    const init = async () => {
+      try {
+        if (profileHelpers?.getCurrentUser) {
+          const user = await profileHelpers.getCurrentUser();
+          if (isMounted) {
+            setCurrentUser(user);
+          }
+        }
+      } catch (e) {
+        console.error('Failed to load current user for Ability leaderboard:', e);
+      }
+
+      await fetchLeaderboard();
+    };
+
+    init();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [fetchLeaderboard]);
 
   const submitBestStreak = async (newBest) => {
     if (!supabase || !currentUser || !newBest || newBest <= 0) return;

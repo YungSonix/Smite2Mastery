@@ -1,19 +1,9 @@
-// Remote image URLs from GitHub
-// Base URL for all icons - updated to match actual repo structure
-const GITHUB_BASE = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img';
+import { ICON_PATHS } from '../config';
 
-// Item icons - returns { uri: '...' } format for React Native Image
-const ITEM_ICONS_PATH = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/master/app/data/Icons/Item%20Icons';
-// Filled/solid variant (same repo; use when filled style desired)
-const ITEM_ICONS_FILLED_PATH = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/master/app/data/Icons/Item%20Icons%20Filled';
-
-// God assets path - try directly in God Info folder first
-// If images are in a subfolder, update this path accordingly
-const GOD_ICONS_PATH = `${GITHUB_BASE}/God%20Info`;
-
-// Skin/wallpaper path - wallpapers are in app/data/Icons/Wallpapers folder
-// Note: Wallpapers must be in the GitHub repo for this to work in production
-const SKINS_PATH = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/master/app/data/Icons/Wallpapers';
+const ITEM_ICONS_PATH = ICON_PATHS.ITEM_ICONS;
+const ITEM_ICONS_FILLED_PATH = ICON_PATHS.ITEM_ICONS_FILLED;
+const GOD_ICONS_PATH = ICON_PATHS.GOD_ICONS;
+const SKINS_PATH = ICON_PATHS.SKINS;
 
 // Helper to create URI object for React Native Image
 function createImageUri(basePath, filename) {
@@ -130,8 +120,7 @@ export function godHasVariants(godName) {
   return godName in GOD_VARIANTS;
 }
 
-// God asset lookup - uses the filename that is passed in
-// (kept for legacy callers that already know the exact filename)
+// God asset lookup that resolves a direct icon filename.
 export function getLocalGodAsset(iconPath) {
   if (!iconPath) return null;
   const base = iconPath.split('/').pop() || '';

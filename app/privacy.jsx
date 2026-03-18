@@ -7,10 +7,11 @@ import {
   TouchableOpacity,
   Linking,
 } from 'react-native';
+import { EXTERNAL_LINKS } from '../config';
 
 export default function PrivacyPage() {
   const openPrivacyPolicy = () => {
-    Linking.openURL('https://www.termsfeed.com/live/39fa5ec6-7ecb-4684-b2e2-99a6b1e4cde3').catch((err) => {
+    Linking.openURL(EXTERNAL_LINKS.TERMS_POLICY).catch((err) => {
       console.error('Failed to open Privacy Policy:', err);
     });
   };

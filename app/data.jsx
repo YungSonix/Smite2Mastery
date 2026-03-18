@@ -18,6 +18,7 @@ import { Image } from 'expo-image';
 // Lazy load builds.json to prevent startup crash
 let localBuilds = null;
 import { getLocalItemIcon, getLocalGodAsset, getSkinImage, getRoleIcon } from './localIcons';
+import { REMOTE_BASE_URLS } from '../config';
 
 // Import supabase lazily to avoid module load errors on mobile
 let supabase = null;
@@ -329,12 +330,10 @@ const mechanicsCategories = [
   }
 ];
 
-// Legacy structure for backward compatibility
+// Shared mechanics data model used by filters and detail views.
 const gameplayMechanics = {
   subcategories: mechanicsCategories.flatMap(cat => cat.subcategories),
-  mechanics: [
-    // Mechanics will be added here
-  ]
+  mechanics: []
 };
 
 // Counterplay Icon Tooltip Component
@@ -5756,7 +5755,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                       />
                     ) : itemIcon ? (
                       <Image 
-                        source={{ uri: `https://www.smitecalculator.pro${itemIcon}` }} 
+                        source={{ uri: `${REMOTE_BASE_URLS.SMITE_CALCULATOR}${itemIcon}` }} 
                         style={styles.cardIcon}
                         contentFit="cover"
                         cachePolicy="memory-disk"
