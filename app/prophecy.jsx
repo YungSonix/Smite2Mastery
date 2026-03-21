@@ -723,6 +723,9 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   const [showBattleTip, setShowBattleTip] = useState(false);
   const [itemTargetCard, setItemTargetCard] = useState(null);
   const [itemTargetIid, setItemTargetIid] = useState(null);
+  const [targetPicker, setTargetPicker] = useState(null);
+  const [battleIntroOverlay, setBattleIntroOverlay] = useState(null);
+  const [showHandHelp, setShowHandHelp] = useState(false);
   const [collectionQuery, setCollectionQuery] = useState('');
   const [collectionPantheon, setCollectionPantheon] = useState('all');
   const [collectionCost, setCollectionCost] = useState('all');
@@ -747,6 +750,8 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   const [playPreviewCard, setPlayPreviewCard] = useState(null);
   const tipTimeoutRef = useRef(null);
   const combatFxTimersRef = useRef({ hit: null, damage: null, death: null, deploy: null, preview: null });
+  const battleIntroTimersRef = useRef([]);
+  const handHelpTimerRef = useRef(null);
   const inspectTiltX = useRef(new Animated.Value(0)).current;
   const inspectTiltY = useRef(new Animated.Value(0)).current;
   const inspectTranslate = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
@@ -764,6 +769,16 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   const [deckSlots, setDeckSlots] = useState(() => Array.from({ length: DECK_SLOT_COUNT }, () => null));
   const [deckShareCodeInput, setDeckShareCodeInput] = useState('');
   const [deckShareNotice, setDeckShareNotice] = useState('');
+  const clearBattleIntroTimers = useCallback(() => {
+    if (!battleIntroTimersRef.current.length) return;
+    battleIntroTimersRef.current.forEach((id) => clearTimeout(id));
+    battleIntroTimersRef.current = [];
+  }, []);
+  const scheduleBattleIntroTimer = useCallback((fn, delayMs) => {
+    const id = setTimeout(fn, delayMs);
+    battleIntroTimersRef.current.push(id);
+  }, []);
+  const isBattleInteractionLocked = !!battleIntroOverlay;
   const triggerHitFx = useCallback((targetKey) => {
     if (!targetKey) return;
     if (combatFxTimersRef.current.hit) clearTimeout(combatFxTimersRef.current.hit);
@@ -797,6 +812,15 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     setPlayPreviewCard(card);
     combatFxTimersRef.current.preview = setTimeout(() => setPlayPreviewCard(null), 1400);
   }, []);
+  useEffect(() => {
+    return () => {
+      clearBattleIntroTimers();
+      if (handHelpTimerRef.current) {
+        clearTimeout(handHelpTimerRef.current);
+        handHelpTimerRef.current = null;
+      }
+    };
+  }, [clearBattleIntroTimers]);
   const inspectCardWidth = Math.min(300, Math.max(220, Math.floor(screenW * 0.62)));
   const inspectCardHeight = 372;
   const inspectRotateX = inspectTiltX.interpolate({
@@ -1350,12 +1374,20 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
       eGrave: [],
       pTraps: [],
     });
+    clearBattleIntroTimers();
     setScreen('battle');
-    setTimeout(() => {
+    setBattleIntroOverlay({ player: leader.name, enemy: el.name, phase: 'ready', startedAt: Date.now() });
+    scheduleBattleIntroTimer(() => {
       playVOX(leader.name, 'intro');
-      setTimeout(() => playVOX(el.name, 'intro'), 650);
-    }, 200);
-  }, [buildStarterDeck]);
+      setBattleIntroOverlay((prev) => (prev ? { ...prev, phase: 'active' } : prev));
+    }, 220);
+    scheduleBattleIntroTimer(() => {
+      playVOX(el.name, 'intro');
+    }, 3600);
+    scheduleBattleIntroTimer(() => {
+      setBattleIntroOverlay(null);
+    }, 8200);
+  }, [buildStarterDeck, clearBattleIntroTimers, scheduleBattleIntroTimer]);
 
   const startTutorialBattle = useCallback(() => {
     const leader = PROPHECY_LEADERS.find((l) => l.id === 'Athena') || PROPHECY_LEADERS[0];
@@ -1386,10 +1418,16 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     });
   }, [newGame]);
 
-  const deploy = useCallback((iid, itemTargetIidArg = null) => {
+  const deploy = useCallback((iid, itemTargetIidArg = null, spellTargetArg = null) => {
     let deployedIid = null;
     let deployedCardPreview = null;
     let introVoiceName = null;
+    let purchaseVoiceName = null;
+    let spellTargetHitKey = null;
+    let spellDamageAmount = 0;
+    let spellDeathTargetKey = null;
+    let spellDeathLabel = '';
+    let spellTargetDeathName = null;
     setG((prev) => {
       if (!prev) return prev;
       const idx = prev.hand.findIndex((c) => c.iid === iid);
@@ -1422,6 +1460,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
           };
         });
         deployedCardPreview = cloneObj(c);
+        purchaseVoiceName = target?.name || null;
         return {
           ...prev,
           hand,
@@ -1433,11 +1472,55 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
       if (cardType === CARD_TYPE.SPELL) {
         introVoiceName = c.baseGodName || null;
         deployedCardPreview = cloneObj(c);
+        const targetChoice = spellTargetArg || {};
+        const spellDamage = Math.max(6, Number(c.damage || 14));
+        let eField = [...prev.eField];
+        let eHp = prev.eHp;
+        let eGrave = [...(prev.eGrave || [])];
+        let gold = prev.gold;
+        let logLine = `${c.name} cast`;
+        if (targetChoice.isLeader || !eField.length) {
+          eHp = Math.max(0, eHp - spellDamage);
+          spellTargetHitKey = 'enemy_leader';
+          spellDamageAmount = spellDamage;
+          if (eHp <= 0) {
+            spellDeathTargetKey = 'enemy_leader';
+            spellDeathLabel = prev.el.name;
+            spellTargetDeathName = prev.el.name;
+          }
+          logLine = `${c.name} strikes ${prev.el.name} for ${spellDamage}.`;
+        } else {
+          const target = eField.find((u) => u.iid === targetChoice.targetIid);
+          if (target) {
+            const nextHp = target.hp - spellDamage;
+            eField = eField.map((u) => (u.iid === target.iid ? { ...u, hp: nextHp } : u));
+            spellTargetHitKey = `enemy_${target.iid}`;
+            spellDamageAmount = spellDamage;
+            logLine = `${c.name} hits ${target.name} for ${spellDamage}.`;
+            if (nextHp <= 0) {
+              eField = eField.filter((u) => u.iid !== target.iid);
+              eGrave.push({ ...target, hp: 0, diedTurn: prev.turn });
+              gold += GOLD_PER_RARITY[target.rarity] ?? 1;
+              spellDeathTargetKey = `enemy_${target.iid}`;
+              spellDeathLabel = target.name;
+              spellTargetDeathName = target.name;
+            }
+          } else {
+            eHp = Math.max(0, eHp - spellDamage);
+            spellTargetHitKey = 'enemy_leader';
+            spellDamageAmount = spellDamage;
+            logLine = `${c.name} strikes ${prev.el.name} for ${spellDamage}.`;
+          }
+        }
         return {
           ...prev,
           hand,
           mana: prev.mana - cost,
-          log: [...prev.log, `${c.name} cast: ${c.description || 'Spell resolves.'}`],
+          eField,
+          eHp,
+          eGrave,
+          gold,
+          log: [...prev.log, logLine],
         };
       }
 
@@ -1482,15 +1565,31 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     });
     if (deployedIid) triggerDeployFx(deployedIid);
     if (deployedCardPreview) triggerPlayPreview(deployedCardPreview);
+    if (spellTargetHitKey && spellDamageAmount > 0) triggerDamageFx(spellTargetHitKey, spellDamageAmount);
+    if (spellDeathTargetKey) {
+      triggerDeathFx(spellDeathTargetKey, spellDeathLabel || 'Defeated');
+      if (spellTargetDeathName) playVOX(spellTargetDeathName, 'death');
+    }
+    if (purchaseVoiceName) playVOX(purchaseVoiceName, 'purchase');
     if (introVoiceName) playVOX(introVoiceName, 'intro');
-  }, [triggerDeployFx, triggerPlayPreview]);
+  }, [triggerDamageFx, triggerDeathFx, triggerDeployFx, triggerPlayPreview]);
 
   const selectAtk = useCallback((iid) => {
     setG((prev) => (prev ? { ...prev, atker: iid } : prev));
   }, []);
 
-  const castAbility = useCallback((iid) => {
+  const abilityNeedsEnemyTarget = useCallback((unit) => {
+    const type = String(getAbilityDisplay(unit)?.mechanics?.type || '').toLowerCase();
+    return type === 'assassin_execute' || type === 'mage_burst' || type === 'hunter_volley';
+  }, []);
+
+  const castAbility = useCallback((iid, targetArg = null) => {
     let casterName = null;
+    let abilityHitTargetKey = null;
+    let abilityDamageAmount = 0;
+    let abilityDeathTargetKey = null;
+    let abilityDeathLabel = '';
+    let abilityDeathName = null;
     setG((prev) => {
       if (!prev) return prev;
       const caster = prev.pField.find((u) => u.iid === iid);
@@ -1503,6 +1602,10 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
       const abilityName = abilityDisplay.name;
       const cost = getAbilityCost(caster);
       if (prev.mana < cost) return { ...prev, log: [...prev.log, `Not enough mana for ${abilityName}.`] };
+      const requiresTarget = abilityNeedsEnemyTarget(caster);
+      if (requiresTarget && !targetArg) {
+        return { ...prev, log: [...prev.log, `Choose a target for ${abilityName}.`] };
+      }
 
       casterName = caster.name;
       let pField = [...prev.pField];
@@ -1533,48 +1636,84 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
           return { ...u, status_effects: [...effects, { type: 'EMPOWERED', value: 0, duration_turns: 1 }] };
         });
       } else if (tpl.type === 'assassin_execute') {
-        const target = [...eField].sort((a, b) => a.hp - b.hp)[0];
+        const target = targetArg?.isLeader ? null : eField.find((u) => u.iid === targetArg?.targetIid);
         if (target) {
           const damage = Number(tpl.valueA || 14);
           const nextHp = target.hp - damage;
           eField = eField.map((u) => (u.iid === target.iid ? { ...u, hp: nextHp } : u));
+          abilityHitTargetKey = `enemy_${target.iid}`;
+          abilityDamageAmount = damage;
           log.push(`${target.name} takes ${damage} from ${abilityName}.`);
-          if (nextHp <= 0) killEnemy(target, nextHp);
+          if (nextHp <= 0) {
+            abilityDeathTargetKey = `enemy_${target.iid}`;
+            abilityDeathLabel = target.name;
+            abilityDeathName = target.name;
+            killEnemy(target, nextHp);
+          }
         } else {
           const damage = Math.max(8, Number(tpl.valueA || 14) - 2);
           eHp = Math.max(0, eHp - damage);
+          abilityHitTargetKey = 'enemy_leader';
+          abilityDamageAmount = damage;
+          if (eHp <= 0) {
+            abilityDeathTargetKey = 'enemy_leader';
+            abilityDeathLabel = prev.el.name;
+            abilityDeathName = prev.el.name;
+          }
           log.push(`${prev.el.name} takes ${damage} from ${abilityName}.`);
         }
       } else if (tpl.type === 'mage_burst') {
-        if (eField.length) {
+        const target = targetArg?.isLeader ? null : eField.find((u) => u.iid === targetArg?.targetIid);
+        if (target) {
           const damage = Number(tpl.valueA || 10);
-          const nextEnemies = [];
-          eField.forEach((enemy) => {
-            const nextHp = enemy.hp - damage;
-            if (nextHp <= 0) {
-              killEnemy(enemy, nextHp);
-            } else {
-              nextEnemies.push({ ...enemy, hp: nextHp });
-            }
-          });
-          eField = nextEnemies;
-          log.push(`Arcane damage hits all enemy units for ${damage}.`);
+          const nextHp = target.hp - damage;
+          eField = eField.map((u) => (u.iid === target.iid ? { ...u, hp: nextHp } : u));
+          abilityHitTargetKey = `enemy_${target.iid}`;
+          abilityDamageAmount = damage;
+          log.push(`${target.name} takes ${damage} from ${abilityName}.`);
+          if (nextHp <= 0) {
+            abilityDeathTargetKey = `enemy_${target.iid}`;
+            abilityDeathLabel = target.name;
+            abilityDeathName = target.name;
+            killEnemy(target, nextHp);
+          }
         } else {
           const damage = Number(tpl.valueA || 10);
           eHp = Math.max(0, eHp - damage);
+          abilityHitTargetKey = 'enemy_leader';
+          abilityDamageAmount = damage;
+          if (eHp <= 0) {
+            abilityDeathTargetKey = 'enemy_leader';
+            abilityDeathLabel = prev.el.name;
+            abilityDeathName = prev.el.name;
+          }
           log.push(`${prev.el.name} takes ${damage} from ${abilityName}.`);
         }
       } else if (tpl.type === 'hunter_volley') {
-        const target = eField[0];
+        const target = targetArg?.isLeader ? null : eField.find((u) => u.iid === targetArg?.targetIid);
         if (target) {
           const damage = Number(tpl.valueA || 9);
           const nextHp = target.hp - damage;
           eField = eField.map((u) => (u.iid === target.iid ? { ...u, hp: nextHp } : u));
+          abilityHitTargetKey = `enemy_${target.iid}`;
+          abilityDamageAmount = damage;
           log.push(`${target.name} takes ${damage} from ${abilityName}.`);
-          if (nextHp <= 0) killEnemy(target, nextHp);
+          if (nextHp <= 0) {
+            abilityDeathTargetKey = `enemy_${target.iid}`;
+            abilityDeathLabel = target.name;
+            abilityDeathName = target.name;
+            killEnemy(target, nextHp);
+          }
         } else {
           const damage = Math.max(6, Number(tpl.valueA || 9) - 2);
           eHp = Math.max(0, eHp - damage);
+          abilityHitTargetKey = 'enemy_leader';
+          abilityDamageAmount = damage;
+          if (eHp <= 0) {
+            abilityDeathTargetKey = 'enemy_leader';
+            abilityDeathLabel = prev.el.name;
+            abilityDeathName = prev.el.name;
+          }
           log.push(`${prev.el.name} takes ${damage} from ${abilityName}.`);
         }
       }
@@ -1598,8 +1737,13 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
         log,
       };
     });
+    if (abilityHitTargetKey && abilityDamageAmount > 0) triggerDamageFx(abilityHitTargetKey, abilityDamageAmount);
+    if (abilityDeathTargetKey) {
+      triggerDeathFx(abilityDeathTargetKey, abilityDeathLabel || 'Defeated');
+      if (abilityDeathName) playVOX(abilityDeathName, 'death');
+    }
     if (casterName) playVOX(casterName, 'intro');
-  }, []);
+  }, [abilityNeedsEnemyTarget, triggerDamageFx, triggerDeathFx]);
 
   const doAttack = useCallback((targetIid, isLeader) => {
     let attackerIid = null;
@@ -1736,10 +1880,13 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
       setAttackAnimating(attackerIid);
       setTimeout(() => setAttackAnimating(null), 450);
       if (attackerName) playVOX(attackerName, 'gruntAttack');
-      if (enemyLeaderHit) playVOX(enemyLeaderName || '', 'grunthit');
-      if (enemyUnitKilled) playVOX(attackerName || '', 'kill');
-      if (attackerDied) playVOX(attackerDied, 'grunthit');
-      if (enemyLeaderKilledByAttack) playVOX(attackerName || '', 'victory');
+      if (enemyLeaderHit && !enemyLeaderKilledByAttack) setTimeout(() => playVOX(enemyLeaderName || '', 'grunthit'), 180);
+      if (enemyUnitKilled) setTimeout(() => playVOX(enemyUnitKilled, 'death'), 240);
+      if (attackerDied) setTimeout(() => playVOX(attackerDied, 'death'), 300);
+      if (enemyLeaderKilledByAttack) {
+        setTimeout(() => playVOX(enemyLeaderName || '', 'death'), 240);
+        setTimeout(() => playVOX(attackerName || '', 'victory'), 700);
+      }
     }
     if (hitTargetKey) triggerHitFx(hitTargetKey);
     if (damageTargetKey && damageAmount > 0) triggerDamageFx(damageTargetKey, damageAmount);
@@ -1821,7 +1968,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
               targetDied = true;
               pField = pField.filter((u) => u.iid !== target.iid);
               pGrave.push({ ...target, hp: 0, diedTurn: prev.turn });
-              playVOX(eu.name, 'kill');
+              playVOX(target.name, 'death');
             }
 
             // Player unit counters unless enemy unit has RANGED.
@@ -1836,7 +1983,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                   eField = eField.filter((u) => u.iid !== eu.iid);
                   eGrave.push({ ...eu, hp: 0, diedTurn: prev.turn });
                   gold += GOLD_PER_RARITY[eu.rarity] ?? 1;
-                  playVOX(prev.pl.name, 'kill');
+                  playVOX(eu.name, 'death');
                 }
               }
             }
@@ -1856,7 +2003,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                   eField = eField.filter((u) => u.iid !== eu.iid);
                   eGrave.push({ ...target, hp: 0, diedTurn: prev.turn });
                   gold += GOLD_PER_RARITY[target.rarity] ?? 1;
-                  playVOX(prev.pl.name, 'kill');
+                  playVOX(eu.name, 'death');
                 }
               }
               return;
@@ -1974,6 +2121,54 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
       });
     }, 400);
   }, [generateRandomCard, triggerPlayPreview]);
+  const openTargetPickerForAttack = useCallback((sourceIid) => {
+    if (!G || isBattleInteractionLocked) return;
+    const source = (G.pField || []).find((u) => u.iid === sourceIid);
+    if (!source) return;
+    setTargetPicker({
+      mode: 'attack',
+      sourceIid,
+      sourceName: source.name,
+      title: `${source.name} Attack Target`,
+    });
+  }, [G, isBattleInteractionLocked]);
+  const openTargetPickerForAbility = useCallback((sourceIid) => {
+    if (!G || isBattleInteractionLocked) return;
+    const source = (G.pField || []).find((u) => u.iid === sourceIid);
+    if (!source) return;
+    setTargetPicker({
+      mode: 'ability',
+      sourceIid,
+      sourceName: source.name,
+      title: `${source.name} Ability Target`,
+    });
+  }, [G, isBattleInteractionLocked]);
+  const openTargetPickerForSpell = useCallback((card) => {
+    if (!card || !G || isBattleInteractionLocked) return;
+    setTargetPicker({
+      mode: 'spell',
+      sourceIid: card.iid,
+      sourceName: card.name,
+      title: `${card.name} Spell Target`,
+    });
+  }, [G, isBattleInteractionLocked]);
+  const resolveTargetSelection = useCallback((targetChoice) => {
+    if (!targetPicker) return;
+    const mode = targetPicker.mode;
+    const sourceIid = targetPicker.sourceIid;
+    setTargetPicker(null);
+    if (mode === 'attack') {
+      doAttack(targetChoice?.isLeader ? 'leader' : targetChoice?.targetIid, !!targetChoice?.isLeader);
+      return;
+    }
+    if (mode === 'ability') {
+      castAbility(sourceIid, targetChoice);
+      return;
+    }
+    if (mode === 'spell') {
+      deploy(sourceIid, null, targetChoice);
+    }
+  }, [castAbility, deploy, doAttack, targetPicker]);
 
   useEffect(() => {
     if (!G || screen !== 'battle') return;
@@ -2040,6 +2235,34 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     if (!G || screen !== 'battle') return;
     if (G.eHp <= 0 || G.pHp <= 0) setScreen('gameover');
   }, [G?.eHp, G?.pHp, screen, G]);
+  useEffect(() => {
+    if (screen !== 'battle' || !battleIntroOverlay) return;
+    const fallbackId = setTimeout(() => {
+      setBattleIntroOverlay(null);
+      clearBattleIntroTimers();
+    }, 9800);
+    return () => clearTimeout(fallbackId);
+  }, [battleIntroOverlay, clearBattleIntroTimers, screen]);
+  useEffect(() => {
+    if (screen !== 'battle' || !G) {
+      setShowHandHelp(false);
+      if (handHelpTimerRef.current) {
+        clearTimeout(handHelpTimerRef.current);
+        handHelpTimerRef.current = null;
+      }
+      return;
+    }
+    setShowHandHelp(true);
+    if (handHelpTimerRef.current) clearTimeout(handHelpTimerRef.current);
+    handHelpTimerRef.current = setTimeout(() => {
+      setShowHandHelp(false);
+      handHelpTimerRef.current = null;
+    }, 5000);
+  }, [screen, G?.pl?.name, G?.el?.name]);
+  useEffect(() => {
+    if (screen === 'battle') return;
+    setTargetPicker(null);
+  }, [screen]);
 
   useEffect(() => {
     if (!G || screen !== 'battle') return;
@@ -2060,11 +2283,11 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   useEffect(() => {
     if (!G || screen !== 'gameover') return;
     if (G.eHp <= 0) {
-      playVOX(G.pl.name, 'victory');
-      playVOX(G.el.name, 'defeat');
+      playVOX(G.el.name, 'death');
+      setTimeout(() => playVOX(G.pl.name, 'victory'), 380);
     } else if (G.pHp <= 0) {
-      playVOX(G.el.name, 'victory');
-      playVOX(G.pl.name, 'defeat');
+      playVOX(G.pl.name, 'death');
+      setTimeout(() => playVOX(G.el.name, 'victory'), 380);
     }
   }, [screen, G]);
   useEffect(() => {
@@ -3786,6 +4009,10 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     })();
     const enemyFrontUnits = G.eField.filter((u) => normalizeFieldRow(u.row) === ROW_FRONT);
     const playerFrontUnits = G.pField.filter((u) => normalizeFieldRow(u.row) === ROW_FRONT);
+    const targetOptions = [
+      { key: 'leader', isLeader: true, name: G.el.name, hp: Math.max(0, G.eHp), maxHp: G.eMaxHp },
+      ...((G.eField || []).map((u) => ({ key: u.iid, targetIid: u.iid, isLeader: false, name: u.name, hp: Math.max(0, u.hp), maxHp: u.maxHp || u.bHp || u.hp }))),
+    ];
 
     return (
       <View style={[styles.container, { paddingTop: safeTop, paddingBottom: safeBottom }]}>
@@ -3817,14 +4044,21 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
             </View>
           )}
           <View style={[styles.battleBoard, isSmallPhone && { paddingVertical: 2, paddingHorizontal: 4 }]}>
-          <Text style={[styles.zoneLabel, isTinyPhone && { marginTop: 2, marginBottom: 2 }]}>⚔ Enemy</Text>
+          <Text style={[styles.zoneLabel, isTinyPhone && { marginTop: 2, marginBottom: 2 }]}>Enemy</Text>
           <TouchableOpacity
             style={[
               styles.leaderDisplay,
               isSmallPhone && { padding: 4 },
               hitFx?.targetKey === 'enemy_leader' && styles.hitFlashBorder,
             ]}
-            onPress={() => (G.atker ? doAttack('leader', true) : playVOX(G.el.name, 'intro'))}
+            onPress={() => {
+              if (isBattleInteractionLocked) return;
+              if (G.atker) {
+                openTargetPickerForAttack(G.atker);
+                return;
+              }
+              playVOX(G.el.name, 'intro');
+            }}
             onLongPress={() => openCardInspect(G.el, 'Enemy Leader')}
             delayLongPress={180}
             activeOpacity={1}
@@ -3835,16 +4069,23 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
             <View style={styles.leaderDisplayIcon}>{renderLeaderIcon(G.el.name, leaderIconSize)}</View>
             <View style={styles.leaderDisplayInfo}>
               <Text style={[styles.leaderDisplayName, isTinyPhone && { fontSize: 9 }]}>{G.el.name}  <Text style={styles.leaderTag}>LDR</Text></Text>
-              <View style={[styles.leaderHpBadge, isTinyPhone && { minWidth: 34, height: 16, borderRadius: 8 }]}>
-                <Image source={{ uri: STAT_ICONS.health }} style={styles.leaderHpBadgeImg} contentFit="cover" />
-                <Text style={[styles.fieldStatBadgeText, isTinyPhone && styles.fieldStatBadgeTextTiny, G.eHp <= G.eMaxHp * 0.25 && styles.leaderHpCritical]}>
-                  {`${Math.max(0, G.eHp)}/${G.eMaxHp}`}
+              <View style={styles.leaderHpCompact}>
+                <View style={[styles.leaderHpBadge, isTinyPhone && styles.leaderHpBadgeTiny]}>
+                  <Image source={{ uri: STAT_ICONS.health }} style={[styles.leaderHpBadgeImg, { tintColor: STAT_HP_TINT }]} contentFit="cover" />
+                  <Text style={[styles.fieldStatBadgeText, isTinyPhone && styles.fieldStatBadgeTextTiny, G.eHp <= G.eMaxHp * 0.25 && styles.leaderHpCritical]}>
+                    {Math.max(0, G.eHp)}
+                  </Text>
+                </View>
+                <Text style={[styles.leaderHpMaxText, isTinyPhone && styles.leaderHpMaxTextTiny, G.eHp <= G.eMaxHp * 0.25 && styles.leaderHpCritical]}>
+                  {`/${G.eMaxHp}`}
                 </Text>
               </View>
             </View>
             {damageFx?.targetKey === 'enemy_leader' && <FloatCombatText key={damageFx.key} text={`-${damageFx.amount}`} />}
             {deathFx?.targetKey === 'enemy_leader' && <FloatCombatText key={deathFx.key} text={deathFx.label || 'Defeated'} kind="death" />}
           </TouchableOpacity>
+          <View style={styles.enemyRowsMirror}>
+          <View>
           <Text style={[styles.rowLabel, styles.rowLabelEnemy]}>Enemy Front Row</Text>
           <View style={[styles.fieldRow, { gap: boardGap }, isSmallPhone && { paddingVertical: 1, minHeight: isTinyPhone ? 46 : 52 }]}>
             {Array.from({ length: MAX_FIELD }).map((_, idx) => {
@@ -3852,7 +4093,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
               if (!u) {
                 return (
                   <View key={`enemy_front_empty_${idx}`} style={[styles.slotOutline, { width: boardCardW + (isTinyPhone ? 2 : 6), height: boardCardH + 24 }]}>
-                    <Text style={styles.slotWatermark}>⚔</Text>
+                    <Text style={styles.slotWatermark}>+</Text>
                   </View>
                 );
               }
@@ -3865,7 +4106,14 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                     styles.fieldUnitEnemy,
                     hitFx?.targetKey === `enemy_${u.iid}` && styles.hitFlashBorder,
                   ]}
-                  onPress={() => (G.atker ? doAttack(u.iid, false) : playVOX(u.name, 'intro'))}
+                  onPress={() => {
+                    if (isBattleInteractionLocked) return;
+                    if (G.atker) {
+                      openTargetPickerForAttack(G.atker);
+                      return;
+                    }
+                    playVOX(u.name, 'intro');
+                  }}
                   onLongPress={() => openCardInspect(u, `Enemy Front Slot ${idx + 1}`)}
                   delayLongPress={180}
                   activeOpacity={0.9}
@@ -3879,13 +4127,18 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                   <View style={styles.fieldUnitCardArt}>{renderCardArt(u, boardCardW, boardCardH, 4, false, `field_enemy_front_${u.iid || u.id}`)}</View>
                   <Text style={[styles.fieldUnitName, isTinyPhone && { fontSize: 7 }, { color: getPantheonColor(u.pantheon) }]} numberOfLines={1}>{u.name}</Text>
                   <View style={styles.fieldUnitStats}>
-                    <View style={[styles.fieldStatBadge, isTinyPhone && styles.fieldStatBadgeTiny]}>
-                      <Image source={{ uri: STAT_ICONS.health }} style={[styles.fieldStatBadgeImg, isTinyPhone && styles.fieldStatBadgeImgTiny, { tintColor: STAT_HP_TINT }]} contentFit="contain" />
-                      <Text style={[styles.fieldStatBadgeText, isTinyPhone && styles.fieldStatBadgeTextTiny]}>{u.hp}</Text>
+                    <View style={styles.fieldUnitHpCluster}>
+                      <View style={[styles.fieldStatBadge, isTinyPhone && styles.fieldStatBadgeTiny]}>
+                        <Image source={{ uri: STAT_ICONS.health }} style={[styles.fieldStatBadgeImg, isTinyPhone && styles.fieldStatBadgeImgTiny, { tintColor: STAT_HP_TINT }]} contentFit="contain" />
+                        <Text style={[styles.fieldStatBadgeText, isTinyPhone && styles.fieldStatBadgeTextTiny]}>{u.hp}</Text>
+                      </View>
+                      <View style={styles.fieldUnitMiniBarBg}>
+                        <View style={[styles.fieldUnitMiniBarFill, { width: `${Math.max(0, Math.min(100, (Math.max(0, u.hp) / Math.max(1, u.maxHp || u.bHp || 1)) * 100))}%` }]} />
+                      </View>
                     </View>
-                    <View style={[styles.fieldStatBadge, isTinyPhone && styles.fieldStatBadgeTiny]}>
-                      <Image source={{ uri: STAT_ICONS.strength }} style={[styles.fieldStatBadgeImg, isTinyPhone && styles.fieldStatBadgeImgTiny, { tintColor: STAT_ATK_TINT }]} contentFit="contain" />
-                      <Text style={[styles.fieldStatBadgeText, isTinyPhone && styles.fieldStatBadgeTextTiny]}>{computeUnitAttack(u)}</Text>
+                    <View style={[styles.fieldUnitAtkPill, isTinyPhone && styles.fieldUnitAtkPillTiny]}>
+                      <Image source={{ uri: STAT_ICONS.strength }} style={[styles.fieldStatIcon, isTinyPhone && styles.fieldStatIconTiny, { tintColor: STAT_ATK_TINT }]} contentFit="contain" />
+                      <Text style={[styles.fieldUnitAtkText, isTinyPhone && styles.fieldUnitAtkTextTiny]}>{computeUnitAttack(u)}</Text>
                     </View>
                   </View>
                   {damageFx?.targetKey === `enemy_${u.iid}` && <FloatCombatText key={damageFx.key} text={`-${damageFx.amount}`} />}
@@ -3894,13 +4147,17 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
               );
             })}
           </View>
+          </View>
+          <View>
           <Text style={[styles.rowLabel, styles.rowLabelEnemy]}>Enemy Spell/Trap Row</Text>
           <View style={[styles.fieldRow, { gap: boardGap }, isSmallPhone && { paddingVertical: 1, minHeight: isTinyPhone ? 44 : 50 }]}>
             {Array.from({ length: SMITE_WARS_SYSTEM.MAX_TRAPS_ACTIVE }).map((_, idx) => (
               <View key={`enemy_back_slot_${idx}`} style={[styles.slotOutline, styles.slotOutlineSpell, { width: boardCardW + (isTinyPhone ? 2 : 6), height: boardCardH + 16 }]}>
-                <Text style={styles.slotWatermark}>✦</Text>
+                <Text style={styles.slotWatermark}>+</Text>
               </View>
             ))}
+          </View>
+          </View>
           </View>
           <View style={styles.midInfoRow}>
             <Text style={[styles.synergyLine, isTinyPhone && { fontSize: 7 }]}>
@@ -3951,7 +4208,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
               if (!u) {
                 return (
                   <View key={`player_front_empty_${idx}`} style={[styles.slotOutline, { width: boardCardW + (isTinyPhone ? 2 : 6), height: boardCardH + 24 }]}>
-                    <Text style={styles.slotWatermark}>⚔</Text>
+                    <Text style={styles.slotWatermark}>+</Text>
                   </View>
                 );
               }
@@ -3966,10 +4223,12 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                     hitFx?.targetKey === `player_${u.iid}` && styles.hitFlashBorder,
                   ]}
                   onPress={() => {
+                    if (isBattleInteractionLocked) return;
                     if (G.atker === u.iid) {
                       selectAtk(null);
                     } else if (!G.attackedIds[u.iid]) {
                       selectAtk(u.iid);
+                      openTargetPickerForAttack(u.iid);
                     } else {
                       playVOX(u.name, 'intro');
                     }
@@ -3987,13 +4246,18 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                   <View style={styles.fieldUnitCardArt}>{renderCardArt(u, boardCardW, boardCardH, 4, false, `field_player_front_${u.iid || u.id}`)}</View>
                   <Text style={[styles.fieldUnitName, isTinyPhone && { fontSize: 7 }, { color: getPantheonColor(u.pantheon) }]} numberOfLines={1}>{u.name}</Text>
                   <View style={styles.fieldUnitStats}>
-                    <View style={[styles.fieldStatBadge, isTinyPhone && styles.fieldStatBadgeTiny]}>
-                      <Image source={{ uri: STAT_ICONS.health }} style={[styles.fieldStatBadgeImg, isTinyPhone && styles.fieldStatBadgeImgTiny, { tintColor: STAT_HP_TINT }]} contentFit="contain" />
-                      <Text style={[styles.fieldStatBadgeText, isTinyPhone && styles.fieldStatBadgeTextTiny]}>{u.hp}</Text>
+                    <View style={styles.fieldUnitHpCluster}>
+                      <View style={[styles.fieldStatBadge, isTinyPhone && styles.fieldStatBadgeTiny]}>
+                        <Image source={{ uri: STAT_ICONS.health }} style={[styles.fieldStatBadgeImg, isTinyPhone && styles.fieldStatBadgeImgTiny, { tintColor: STAT_HP_TINT }]} contentFit="contain" />
+                        <Text style={[styles.fieldStatBadgeText, isTinyPhone && styles.fieldStatBadgeTextTiny]}>{u.hp}</Text>
+                      </View>
+                      <View style={styles.fieldUnitMiniBarBg}>
+                        <View style={[styles.fieldUnitMiniBarFill, { width: `${Math.max(0, Math.min(100, (Math.max(0, u.hp) / Math.max(1, u.maxHp || u.bHp || 1)) * 100))}%` }]} />
+                      </View>
                     </View>
-                    <View style={[styles.fieldStatBadge, isTinyPhone && styles.fieldStatBadgeTiny]}>
-                      <Image source={{ uri: STAT_ICONS.strength }} style={[styles.fieldStatBadgeImg, isTinyPhone && styles.fieldStatBadgeImgTiny, { tintColor: STAT_ATK_TINT }]} contentFit="contain" />
-                      <Text style={[styles.fieldStatBadgeText, isTinyPhone && styles.fieldStatBadgeTextTiny]}>{computeUnitAttack(u)}</Text>
+                    <View style={[styles.fieldUnitAtkPill, isTinyPhone && styles.fieldUnitAtkPillTiny]}>
+                      <Image source={{ uri: STAT_ICONS.strength }} style={[styles.fieldStatIcon, isTinyPhone && styles.fieldStatIconTiny, { tintColor: STAT_ATK_TINT }]} contentFit="contain" />
+                      <Text style={[styles.fieldUnitAtkText, isTinyPhone && styles.fieldUnitAtkTextTiny]}>{computeUnitAttack(u)}</Text>
                     </View>
                   </View>
                   {u.rank > 1 && <View style={styles.rankBadge}><Text style={styles.rankBadgeText}>{u.rank}</Text></View>}
@@ -4013,7 +4277,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
               if (!trap) {
                 return (
                   <View key={`player_back_slot_${idx}`} style={[styles.slotOutline, styles.slotOutlineSpell, { width: boardCardW + (isTinyPhone ? 2 : 6), height: boardCardH + 16 }]}>
-                    <Text style={styles.slotWatermark}>✦</Text>
+                    <Text style={styles.slotWatermark}>+</Text>
                   </View>
                 );
               }
@@ -4040,7 +4304,10 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
           <View style={styles.battleBottomHud}>
           <TouchableOpacity
             style={[styles.leaderDisplay, styles.leaderDisplayAlly, isSmallPhone && { padding: 4 }]}
-            onPress={() => playVOX(G.pl.name, 'intro')}
+            onPress={() => {
+              if (isBattleInteractionLocked) return;
+              playVOX(G.pl.name, 'intro');
+            }}
             onLongPress={() => openCardInspect(G.pl, 'Allied Leader')}
             delayLongPress={180}
             activeOpacity={1}
@@ -4051,20 +4318,25 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
             <View style={styles.leaderDisplayIcon}>{renderLeaderIcon(G.pl.name, playerLeaderIconSize)}</View>
             <View style={styles.leaderDisplayInfo}>
               <Text style={[styles.leaderDisplayName, isTinyPhone && { fontSize: 9 }]}>{G.pl.name}  <Text style={styles.leaderTag}>LDR</Text></Text>
-              <View style={[styles.leaderHpBadge, isTinyPhone && { minWidth: 34, height: 16, borderRadius: 8 }]}>
-                <Image source={{ uri: STAT_ICONS.health }} style={styles.leaderHpBadgeImg} contentFit="cover" />
-                <Text style={[styles.fieldStatBadgeText, isTinyPhone && styles.fieldStatBadgeTextTiny, G.pHp <= G.pMaxHp * 0.25 && styles.leaderHpCritical]}>
-                  {`${Math.max(0, G.pHp)}/${G.pMaxHp}`}
+              <View style={styles.leaderHpCompact}>
+                <View style={[styles.leaderHpBadge, isTinyPhone && styles.leaderHpBadgeTiny]}>
+                  <Image source={{ uri: STAT_ICONS.health }} style={[styles.leaderHpBadgeImg, { tintColor: STAT_HP_TINT }]} contentFit="cover" />
+                  <Text style={[styles.fieldStatBadgeText, isTinyPhone && styles.fieldStatBadgeTextTiny, G.pHp <= G.pMaxHp * 0.25 && styles.leaderHpCritical]}>
+                    {Math.max(0, G.pHp)}
+                  </Text>
+                </View>
+                <Text style={[styles.leaderHpMaxText, isTinyPhone && styles.leaderHpMaxTextTiny, G.pHp <= G.pMaxHp * 0.25 && styles.leaderHpCritical]}>
+                  {`/${G.pMaxHp}`}
                 </Text>
               </View>
             </View>
           </TouchableOpacity>
           <View style={[styles.handWrap, isSmallPhone && { paddingVertical: 3, paddingHorizontal: 4 }]}>
             <View style={styles.handHeaderRow}>
-              <Text style={[styles.handLabel, isTinyPhone && { fontSize: 7, marginBottom: 2 }]}>Your Hand — Tap to Play • Hold to Inspect</Text>
+              <Text style={[styles.handLabel, isTinyPhone && { fontSize: 7, marginBottom: 2 }]}>{showHandHelp ? 'Your Hand — Tap to Play • Hold to Inspect' : 'Your Hand'}</Text>
               <Text style={styles.handDeckCount}>{`Deck ${G.deck?.length || 0}`}</Text>
             </View>
-            <Text style={styles.handRuleText}>God cards summon in front row slots. Trap cards set into 4 back-row slots. Spells cast instantly. Items let you pick an allied god to buff.</Text>
+            {showHandHelp && <Text style={styles.handRuleText}>God cards summon in front row slots. Trap cards set into 4 back-row slots. Spells cast instantly. Items let you pick an allied god to buff.</Text>}
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={[styles.handScroll, isTinyPhone && { gap: 4, paddingBottom: 2 }]}>
             {G.hand.map((c) => {
               const canAfford = G.mana >= c.cost;
@@ -4076,9 +4348,14 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                   key={c.iid}
                   style={[styles.handCard, { width: handCardW }, can && styles.handCardPlay]}
                   onPress={() => {
+                    if (isBattleInteractionLocked) return;
                     if (!canAfford) return;
                     if (needsGodTarget) {
                       showTip('Items can only be played when you have at least one god on the field.');
+                      return;
+                    }
+                    if ((c.cardType || CARD_TYPE.GOD) === CARD_TYPE.SPELL) {
+                      openTargetPickerForSpell(c);
                       return;
                     }
                     if ((c.cardType || CARD_TYPE.GOD) === CARD_TYPE.ITEM) {
@@ -4136,9 +4413,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
           </View>
           <View style={[styles.actionBar, isSmallPhone && { padding: 4, gap: 3 }]}>
             <View style={styles.manaRow}>
-              {Array.from({ length: Math.min(G.maxMana, 10) }).map((_, i) => (
-                <View key={i} style={[styles.manaDot, i < G.mana && styles.manaDotFull]} />
-              ))}
+              <Text style={styles.manaIcon}>🔮</Text>
               <Text style={styles.manaCountText}>{`${G.mana}/${G.maxMana}`}</Text>
             </View>
             <TouchableOpacity
@@ -4151,8 +4426,16 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                 })(),
                 !(G.atker && !G.abilityUsedIds?.[G.atker]) && styles.abilityBtnDisabled,
               ]}
-              onPress={() => G.atker && castAbility(G.atker)}
-              disabled={!(G.atker && !G.abilityUsedIds?.[G.atker])}
+              onPress={() => {
+                if (isBattleInteractionLocked || !G.atker) return;
+                const selected = G.pField.find((u) => u.iid === G.atker);
+                if (selected && abilityNeedsEnemyTarget(selected)) {
+                  openTargetPickerForAbility(G.atker);
+                  return;
+                }
+                castAbility(G.atker);
+              }}
+              disabled={isBattleInteractionLocked || !(G.atker && !G.abilityUsedIds?.[G.atker])}
             >
               {(() => {
                 const unit = G.pField.find((u) => u.iid === G.atker);
@@ -4185,6 +4468,56 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
             </View>
         </View>
         )}
+        {battleIntroOverlay && (
+          <View style={styles.battleStartOverlay}>
+            <View style={styles.battleStartPanel}>
+              <Text style={styles.battleStartText}>Battle Begins</Text>
+              <View style={styles.battleStartVsRow}>
+                <View style={styles.battleStartLeaderCol}>
+                  {renderLeaderIcon(battleIntroOverlay.player, 56)}
+                  <Text style={styles.battleStartLeaderName} numberOfLines={1}>{battleIntroOverlay.player}</Text>
+                </View>
+                <Text style={styles.battleStartVsText}>VS</Text>
+                <View style={styles.battleStartLeaderCol}>
+                  {renderLeaderIcon(battleIntroOverlay.enemy, 56)}
+                  <Text style={styles.battleStartLeaderName} numberOfLines={1}>{battleIntroOverlay.enemy}</Text>
+                </View>
+              </View>
+              <Text style={styles.battleStartSubText}>{battleIntroOverlay.phase === 'active' ? 'Fight!' : 'Get Ready'}</Text>
+            </View>
+          </View>
+        )}
+        <Modal
+          visible={!!targetPicker}
+          transparent
+          animationType="fade"
+          onRequestClose={() => setTargetPicker(null)}
+        >
+          <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={() => setTargetPicker(null)}>
+            <TouchableOpacity activeOpacity={1} onPress={() => {}} style={styles.itemTargetPanel}>
+              <Text style={styles.shopPanelTitle}>{targetPicker?.title || 'Choose Target'}</Text>
+              <Text style={styles.itemTargetSubtitle}>Select enemy god to hit</Text>
+              <ScrollView style={styles.itemTargetList} contentContainerStyle={{ gap: 6 }}>
+                {targetOptions.map((target) => (
+                  <TouchableOpacity
+                    key={target.key}
+                    style={styles.itemTargetRow}
+                    onPress={() => resolveTargetSelection(target)}
+                  >
+                    {renderLeaderIcon(target.name, 24)}
+                    <View style={{ flex: 1 }}>
+                      <Text style={styles.itemTargetName}>{target.isLeader ? `${target.name} (Leader)` : target.name}</Text>
+                      <Text style={styles.itemTargetMeta}>{`HP ${target.hp}/${target.maxHp}`}</Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+              <TouchableOpacity style={[styles.btnOutline, { marginTop: 10 }]} onPress={() => setTargetPicker(null)}>
+                <Text style={styles.btnOutlineText}>Cancel</Text>
+              </TouchableOpacity>
+            </TouchableOpacity>
+          </TouchableOpacity>
+        </Modal>
         <Modal
           visible={!!itemTargetIid && !!itemTargetCard}
           transparent
@@ -4567,13 +4900,19 @@ const styles = StyleSheet.create({
   fieldStatBadgeTiny: { width: 18, height: 18, borderRadius: 9 },
   fieldStatBadgeImg: { width: 24, height: 24, position: 'absolute', left: 0, top: 0, borderRadius: 12 },
   fieldStatBadgeImgTiny: { width: 18, height: 18, position: 'absolute', left: 0, top: 0, borderRadius: 9 },
-  fieldStatBadgeText: { fontSize: 8, fontWeight: '800', color: '#fff', zIndex: 1, textShadowColor: 'rgba(0,0,0,0.9)', textShadowOffset: { width: 0, height: 1 }, textShadowRadius: 1, includeFontPadding: false, textAlignVertical: 'center' },
-  fieldStatBadgeTextTiny: { fontSize: 6 },
+  fieldStatBadgeText: { fontSize: 7, fontWeight: '800', color: '#fff', zIndex: 1, textShadowColor: 'rgba(0,0,0,0.9)', textShadowOffset: { width: 0, height: 1 }, textShadowRadius: 1, includeFontPadding: false, textAlignVertical: 'center' },
+  fieldStatBadgeTextTiny: { fontSize: 5 },
   fieldStatIcon: { width: 12, height: 12 },
   fieldStatIconTiny: { width: 10, height: 10 },
   leaderHpIcon: { width: 14, height: 14 },
-  leaderHpBadge: { minWidth: 42, height: 18, borderRadius: 9, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 4, marginTop: 2, alignSelf: 'flex-start' },
+  leaderHpBarWrap: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 2, width: '100%' },
+  leaderHpBarWrapTiny: { gap: 3 },
+  leaderHpBadge: { minWidth: 24, height: 18, borderRadius: 9, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 4, alignSelf: 'flex-start' },
+  leaderHpBadgeTiny: { minWidth: 20, height: 16, borderRadius: 8, paddingHorizontal: 3 },
   leaderHpBadgeImg: { position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', borderRadius: 9 },
+  leaderHpCompact: { flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 2 },
+  leaderHpMaxText: { color: '#d5f7dc', fontSize: 8, fontWeight: '700' },
+  leaderHpMaxTextTiny: { fontSize: 7 },
   confirmWrap: { padding: 10 },
   confirmBtn: { maxWidth: '100%' },
   battleBoard: { flex: 1, width: '100%', alignItems: 'center', paddingHorizontal: 6, paddingVertical: 4 },
@@ -4586,7 +4925,7 @@ const styles = StyleSheet.create({
   slotOutlineSpell: { borderColor: 'rgba(130,170,255,0.5)' },
   slotFilled: { borderStyle: 'solid', backgroundColor: BGC, padding: 4, alignItems: 'center', justifyContent: 'center' },
   slotIndexText: { color: '#8ea8d6', fontSize: 6, marginTop: 2, marginBottom: 2, textAlign: 'center' },
-  slotWatermark: { color: 'rgba(132,154,195,0.28)', fontSize: 13, textAlign: 'center', marginTop: 4 },
+  slotWatermark: { color: 'rgba(132,154,195,0.52)', fontSize: 16, textAlign: 'center', marginTop: 2, fontWeight: '700' },
   trapFaceDownCard: { flex: 1, width: '100%', borderRadius: 4, borderWidth: 1, borderColor: 'rgba(140,170,255,0.55)', backgroundColor: 'rgba(10,14,32,0.92)', alignItems: 'center', justifyContent: 'center', paddingVertical: 2 },
   trapFaceDownLogo: { width: 14, height: 14, opacity: 0.9 },
   trapFaceDownText: { marginTop: 2, fontSize: 6, color: '#a8c7ff', letterSpacing: 0.5, fontWeight: '700' },
@@ -4600,10 +4939,12 @@ const styles = StyleSheet.create({
   leaderHpSimpleCompact: { fontSize: 9 },
   leaderHpCritical: { color: '#ffd0d0', shadowColor: '#ff4d4d', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.7, shadowRadius: 6 },
   hpBarWrap: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 2 },
-  hpBarBg: { flex: 1, height: 4, backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: 2, overflow: 'hidden' },
-  hpBarFill: { height: '100%', backgroundColor: STAT_HP_TINT, borderRadius: 2 },
-  hpBarText: { fontSize: 9, color: '#f7d7d7', minWidth: 42, textAlign: 'right', includeFontPadding: false, textAlignVertical: 'center' },
+  hpBarBg: { flex: 1, height: 5, backgroundColor: 'rgba(24,38,23,0.4)', borderRadius: 3, overflow: 'hidden', borderWidth: 1, borderColor: 'rgba(92,201,119,0.35)' },
+  hpBarFill: { height: '100%', backgroundColor: STAT_HP_TINT, borderRadius: 3 },
+  hpBarText: { fontSize: 8, color: '#d5f7dc', minWidth: 28, textAlign: 'right', includeFontPadding: false, textAlignVertical: 'center', fontWeight: '700' },
+  hpBarTextTiny: { fontSize: 7, minWidth: 24 },
   hpBarFillAlly: { backgroundColor: '#58a6ff' },
+  enemyRowsMirror: { width: '100%', flexDirection: 'column-reverse' },
   fieldRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 5, minHeight: 56, paddingVertical: 2, justifyContent: 'center', alignSelf: 'center', width: '96%' },
   fieldUnit: { width: 58, backgroundColor: BGC, borderWidth: 1, borderColor: 'rgba(200,146,42,0.3)', borderRadius: 6, padding: 3, alignItems: 'center', position: 'relative' },
   fieldUnitEnemy: { borderColor: 'rgba(192,48,48,0.3)' },
@@ -4619,7 +4960,14 @@ const styles = StyleSheet.create({
   rarityIconImgSmall: { width: '100%', height: 10 },
   fieldUnitCardArt: { marginBottom: 2, overflow: 'hidden', borderRadius: 4 },
   fieldUnitName: { fontSize: 8, color: '#f0e8d0', maxWidth: 52, textAlign: 'center' },
-  fieldUnitStats: { flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginTop: 2 },
+  fieldUnitStats: { flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginTop: 2, alignItems: 'center', gap: 3 },
+  fieldUnitHpCluster: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 2, minWidth: 0 },
+  fieldUnitMiniBarBg: { flex: 1, height: 4, borderRadius: 3, backgroundColor: 'rgba(24,38,23,0.42)', borderWidth: 1, borderColor: 'rgba(92,201,119,0.35)', overflow: 'hidden' },
+  fieldUnitMiniBarFill: { height: '100%', borderRadius: 3, backgroundColor: STAT_HP_TINT },
+  fieldUnitAtkPill: { minWidth: 26, height: 16, borderRadius: 8, paddingHorizontal: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 2, backgroundColor: 'rgba(55,26,26,0.68)', borderWidth: 1, borderColor: 'rgba(224,96,96,0.6)' },
+  fieldUnitAtkPillTiny: { minWidth: 22, height: 14, borderRadius: 7, paddingHorizontal: 3, gap: 1 },
+  fieldUnitAtkText: { color: '#ffd7d7', fontSize: 8, fontWeight: '800', includeFontPadding: false, textAlignVertical: 'center' },
+  fieldUnitAtkTextTiny: { fontSize: 7 },
   fieldUnitHp: { fontSize: 9, color: '#f06060' },
   fieldUnitAtk: { fontSize: 9, color: GOLD_L },
   rankBadge: { position: 'absolute', top: -2, right: -2, width: 14, height: 14, borderRadius: 7, backgroundColor: GOLD, alignItems: 'center', justifyContent: 'center' },
@@ -4676,11 +5024,20 @@ const styles = StyleSheet.create({
   battleTipWrap: { position: 'absolute', left: 0, right: 0, top: '34%', alignItems: 'center', paddingHorizontal: 18, zIndex: 25 },
   battleTipBubble: { backgroundColor: 'rgba(9,8,16,0.95)', borderWidth: 1, borderColor: 'rgba(200,146,42,0.38)', borderRadius: 10, paddingVertical: 10, paddingHorizontal: 12, maxWidth: 360 },
   battleTipText: { color: '#efe3cc', fontSize: 10, lineHeight: 15, textAlign: 'center' },
+  battleStartOverlay: { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, backgroundColor: 'rgba(2,3,8,0.76)', alignItems: 'center', justifyContent: 'center', zIndex: 30, paddingHorizontal: 14 },
+  battleStartPanel: { width: '100%', maxWidth: 380, borderWidth: 1, borderColor: 'rgba(200,146,42,0.44)', borderRadius: 14, backgroundColor: 'rgba(11,12,24,0.96)', paddingVertical: 14, paddingHorizontal: 12, alignItems: 'center' },
+  battleStartText: { color: GOLD_L, fontSize: 14, fontWeight: '800', letterSpacing: 0.4, marginBottom: 10 },
+  battleStartVsRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' },
+  battleStartLeaderCol: { alignItems: 'center', justifyContent: 'center', maxWidth: '38%' },
+  battleStartLeaderName: { color: '#f1ead7', fontSize: 11, marginTop: 5, fontWeight: '700' },
+  battleStartVsText: { color: '#f3c046', fontSize: 24, fontWeight: '900', marginHorizontal: 6 },
+  battleStartSubText: { color: '#9dc7ff', fontSize: 10, marginTop: 10, fontWeight: '700' },
   floatCombatText: { fontSize: 8, fontWeight: '800', paddingVertical: 2, paddingHorizontal: 6, backgroundColor: 'rgba(9,8,16,0.82)', borderRadius: 999, borderWidth: 1, borderColor: 'rgba(255,160,160,0.75)', overflow: 'hidden' },
-  manaRow: { flexDirection: 'row', gap: 3, alignItems: 'center' },
+  manaRow: { flexDirection: 'row', gap: 4, alignItems: 'center' },
+  manaIcon: { fontSize: 12, lineHeight: 12 },
   manaDot: { width: 11, height: 11, borderRadius: 5.5, backgroundColor: 'rgba(30,70,200,0.2)', borderWidth: 1, borderColor: 'rgba(30,70,200,0.4)' },
   manaDotFull: { backgroundColor: '#4488ff', borderColor: '#88aaff' },
-  manaCountText: { color: '#a9c8ff', fontSize: 9, marginLeft: 4, fontWeight: '700' },
+  manaCountText: { color: '#a9c8ff', fontSize: 9, fontWeight: '700' },
   itemTargetPanel: { backgroundColor: BGC, width: '94%', maxWidth: 360, borderRadius: 12, borderWidth: 1, borderColor: 'rgba(200,146,42,0.35)', padding: 12, maxHeight: '78%' },
   itemTargetSubtitle: { color: '#9dc7ff', fontSize: 10, textAlign: 'center', marginTop: -6, marginBottom: 10 },
   itemTargetList: { maxHeight: 260 },

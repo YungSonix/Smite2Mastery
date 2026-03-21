@@ -46,6 +46,7 @@ tsconfig.json
 .scripts/
 update-builds.js
 app/data/builds.json.backup
+app/data/builds.json.pre-wallpaper-import-*
 
 # Build/deployment
 .vercel
@@ -79,7 +80,6 @@ GOALS.md
 # Ignore large asset directories (contains thousands of game asset images)
 # These are loaded from GitHub CDN, so they don't need to be in the repo
 app/data/Icons/God Info/
-app/data/Icons/Wallpapers/
 app/data/Icons/Item Icons/
 /tsconfig.json
 
@@ -87,5 +87,4 @@ app/data/Icons/Item Icons/
 # (Role Icons, Pantheon Icons, Stat Icons, Consumables, Vulcan Mods, Game Modes, Conquest Images are tracked)
 
 # Voice audio (optional; uncomment to avoid committing 16k+ files)
-# app/data/VoiceAudio/
 # app/data/Voice Audio/
