@@ -14,7 +14,9 @@
     "check-env": "node scripts/check-env.js",
     "generate:god-abilities": "node scripts/generate-god-abilities-reference.js",
     "list-missing-voice": "node scripts/list-missing-voice-gods.js",
-    "check-voice-audio": "node scripts/check-voice-audio.js"
+    "check-voice-audio": "node scripts/check-voice-audio.js",
+    "import-wallpapers": "node scripts/import-wallpapers-to-builds.js",
+    "import-wallpapers:audit": "node scripts/import-wallpapers-to-builds.js --audit"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",

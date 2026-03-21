@@ -96,6 +96,12 @@ const GOD_VARIANTS = {
   // Add more multi-form gods here as needed (e.g., Hel, Tyr, King Arthur, Cu Chulainn)
 };
 
+// Some exported icon files use exact names without the "Image" suffix.
+const GOD_ICON_FILENAME_OVERRIDES = {
+  houyi: 'HouYi.webp',
+  thanatos: 'Thana.webp',
+};
+
 function getGodIconBaseName(godName) {
   if (!godName) return null;
   const normalized = String(godName)
@@ -140,6 +146,11 @@ export function getLocalGodAsset(iconPath) {
 // Example: "Achilles" -> "achillesImage.webp"
 export function getRemoteGodIconByName(godName) {
   if (!godName) return null;
+  const normalized = String(godName).trim().toLowerCase().replace(/\s+/g, '');
+  const filenameOverride = GOD_ICON_FILENAME_OVERRIDES[normalized];
+  if (filenameOverride) {
+    return createImageUri(GOD_ICONS_PATH, filenameOverride);
+  }
   const baseName = getGodIconBaseName(godName);
   if (!baseName) return null;
   const filename = `${baseName}Image.webp`;

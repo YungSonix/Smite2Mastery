@@ -59,7 +59,7 @@ alwaysApply: true
 - **Data page**: `app/data.jsx` — tabs Gods, Items, Game Modes, Mechanics. Uses `app/data/builds.json`. God detail: abilities, **baseStats** (expandable), items, skins.
 - **God stats**: Each god in builds.json can have `baseStats` — object keyed by stat name (e.g. MaxHealth, PhysicalProtection); values often have per-level or formula. Custom build and data pages compute total stats (baseStats + item stats).
 - **Items**: From builds.json (flattened from gods' build items). Icons via `app/localIcons.js` — `getLocalItemIcon(iconPath)`.
-- **Skins**: God skins/wallpapers — `app/localIcons.js` exports `getSkinImage`; skin assets from GitHub (e.g. Wallpapers). Used in data.jsx and anywhere god skins are shown.
+- **Skins**: God skins/wallpapers — `app/localIcons.js` exports `getSkinImage`; skin assets live in `app/data/Icons/Wallpapers` (tracked in git). Used in data.jsx and anywhere god skins are shown. Bulk-merge wallpaper files into each god’s `skins` map with `npm run import-wallpapers` (`scripts/import-wallpapers-to-builds.js`; use `--write` after a dry-run).
 - **Icons**: `app/localIcons.js` — god icons (`getLocalGodAsset`, `getRemoteGodIconByName`), item icons, skins; GITHUB_BASE, GOD_ICONS_PATH, ITEM_ICONS_PATH, SKINS_PATH.
 
 ### Patch Hub
@@ -123,7 +123,7 @@ alwaysApply: true
 - **React**: Functional components, hooks; import `useCallback` when used.
 - **Supabase**: Lazy-load or require in try/catch; app must run without config.
 - **No API routes**: Do not add API routes or external data APIs unless the user explicitly asks.
-- **Scripts**: `package.json` (start, android, ios, web, verify-icons, check-env); `scripts/` or `.scripts/` or root for ad-hoc scripts. Env: ENV_SETUP.md, check-env. SQL: `supabase/` folder.
+- **Scripts**: `package.json` (start, android, ios, web, verify-icons, check-env, import-wallpapers); `scripts/` or `.scripts/` or root for ad-hoc scripts. Env: ENV_SETUP.md, check-env. SQL: `supabase/` folder.
 
 ---
 

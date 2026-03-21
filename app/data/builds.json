@@ -6001,7 +6001,7 @@
                 "icon": "/icons/SunderingEcho.webp",
                 "internalName": "SunderingEcho",
                 "name": "Sundering Echo",
-                "passive": "Adaptive Stat: +20 STR / +35 INT (based on highest stat) On Use: Bleed Enemies, dealing 25 (+4 per Level) True Damage 3 times over 4s. Jungle Monsters/Bosses take 50 (+8 per Level) instead.\nEnemies who die explode, applying this effect to nearby enemies.\nOver 3s\n+7.5% Stats from Items\nCooldown: 120s, -30s if used on Jungle Bosses or Jungle Camps\nYou can own up to 3 active items at once",
+                "passive": "Adaptive Stat: +20 STR / +35 INT (based on highest stat) On Use: Bleed Enemies, dealing 25 (+4 per Level) True Damage 5 times over 4s. Jungle Monsters/Bosses take 50 (+8 per Level) instead.\nEnemies who die explode, applying this effect to nearby enemies.\nOver 3s\n+7.5% Stats from Items\nCooldown: 120s, -30s if used on Jungle Bosses or Jungle Camps\nYou can own up to 3 active items at once",
                 "stats": {
                     "Strength": 25,
                     "Intelligence": 45
@@ -7300,6 +7300,16 @@
                         "type": "",
                         "price": {
                             "diamonds": "0"
+                        }
+                    },
+                    "SoulPiercerAchilles": {
+                        "name": "Soul Piercer Achilles",
+                        "skin": "/icons/Wallpapers/340px-Soul_Piercer_Achilles.jpg",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
                         }
                     }
                 },
@@ -9620,6 +9630,26 @@
                             "diamonds": "",
                             "gemsdia": ""
                         }
+                    },
+                    "AladdinSmite2PatchartDefaultSocial1920x1080": {
+                        "name": "Smite2 Patchart Default Social 1920x1080 Aladdin",
+                        "skin": "/icons/Wallpapers/Aladdin_smite2_patchart_default_social_1920x1080_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "AladdinWinterWishSplash": {
+                        "name": "Winter Wish Splash Aladdin",
+                        "skin": "/icons/Wallpapers/Aladdin_Winter Wish_Splash.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -10547,6 +10577,26 @@
                             "diamonds": "",
                             "gemsdia": ""
                         }
+                    },
+                    "AmaterasuHonorRoll": {
+                        "name": "Honor Roll Amaterasu",
+                        "skin": "/icons/Wallpapers/Amaterasu_Honor_Roll_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "AmaterasuWallpaper": {
+                        "name": "Wallpaper Amaterasu",
+                        "skin": "/icons/Wallpapers/Amaterasu_wallpaper.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -11426,6 +11476,36 @@
                             "diamonds": "",
                             "gemsdia": ""
                         }
+                    },
+                    "Anhurs2Debonhair": {
+                        "name": "Debonhair Anhur",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AnhurS2_Debonhair.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Anhurs2Ironfang": {
+                        "name": "Iron Fang Anhur",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AnhurS2_IronFang.jpg",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "AnhurDukedandelyons": {
+                        "name": "Duke Dande Lyons Anhur",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_Anhur_DukeDandeLyons.jpg",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -11940,6 +12020,96 @@
                         "price": {
                             "diamonds": "0"
                         }
+                    },
+                    "Anubiss2Blighthound": {
+                        "name": "Blight Hound Anubis",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AnubisS2_BlightHound.jpg",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Anubiss2Enbalmed": {
+                        "name": "Enbalmed Anubis",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AnubisS2_Enbalmed.jpg",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Anubiss2Festiveknitwit": {
+                        "name": "Festive Knit Wit Anubis",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AnubisS2_FestiveKnitWit.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Anubiss2Senkosage": {
+                        "name": "Senko Sage Anubis",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AnubisS2_SenkoSage.jpg",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "AnubisS2FestiveknitwitHollyBerry": {
+                        "name": "S2 Festive Knit Wit — Holly Berry Anubis",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_Anubis_S2_FestiveKnitWit_-_Holly_Berry.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "AnubisS2FestiveknitwitKrampus": {
+                        "name": "S2 Festive Knit Wit — Krampus Anubis",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_Anubis_S2_FestiveKnitWit_-_Krampus.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "AnubisReindeerSplashPrisms": {
+                        "name": "Reindeer Splash Prisms Anubis",
+                        "skin": "/icons/Wallpapers/Anubis_Reindeer_Splash_Prisms.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "AnubisReindeerSplashPrisms2": {
+                        "name": "Reindeer Splash Prisms2 Anubis",
+                        "skin": "/icons/Wallpapers/Anubis_Reindeer_Splash_Prisms2.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "AnubisReindeerSplashPrisms3": {
+                        "name": "Reindeer Splash Prisms3 Anubis",
+                        "skin": "/icons/Wallpapers/Anubis_Reindeer_Splash_Prisms3.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -12414,6 +12584,66 @@
                     "ElvenclericSplash1920x1080": {
                         "name": "Elvencleric Splash 1920 X 1080",
                         "skin": "/icons/Wallpapers/Aphrodite_elvencleric_splash_1920x1080.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Aphrodites2BeachbabeAquasplash": {
+                        "name": "Beach Babe — Aqua Splash Aphrodite",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AphroditeS2_BeachBabe_-_AquaSplash.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Aphrodites2BeachbabeMidnightcove": {
+                        "name": "Beach Babe — Midnight Cove Aphrodite",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AphroditeS2_BeachBabe_-_MidnightCove.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Aphrodites2BeachbabeWhitesands": {
+                        "name": "Beach Babe — White Sands Aphrodite",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AphroditeS2_BeachBabe_-_WhiteSands.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Aphrodites2YulecheerDarknoel": {
+                        "name": "Yule Cheer — Dark Noel Aphrodite",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AphroditeS2_YuleCheer_-_DarkNoel.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Aphrodites2YulecheerMistletoe": {
+                        "name": "Yule Cheer — Mistletoe Aphrodite",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AphroditeS2_YuleCheer_-_Mistletoe.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Aphrodites2YulecheerSnowfall": {
+                        "name": "Yule Cheer — Snowfall Aphrodite",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AphroditeS2_YuleCheer_-_Snowfall.png",
                         "type": "",
                         "price": {
                             "gems": "",
@@ -13260,6 +13490,56 @@
                     "BitBlasterRgbSurge": {
                         "name": "Bit Blaster Rgb Surge",
                         "skin": "/icons/Wallpapers/Apollo_bit_blaster_rgb_surge_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Apollos2BitblasterOvercharged": {
+                        "name": "Bit Blaster Overcharged Apollo",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_ApolloS2_BitBlaster-_Overcharged.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Apollos2BitblasterRgbsurge": {
+                        "name": "Bit Blaster Rgbsurge Apollo",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_ApolloS2_BitBlaster-_RGBSurge.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Apollos2BitblasterMechacore": {
+                        "name": "Bit Blaster — Mecha Core Apollo",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_ApolloS2_BitBlaster_-_MechaCore.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Apollos2BitblasterNullexe": {
+                        "name": "Bit Blaster — Nullexe Apollo",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_ApolloS2_BitBlaster_-_Nullexe.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "ApolloDefault": {
+                        "name": "Default Apollo",
+                        "skin": "/icons/Wallpapers/Apollo_default.webp",
                         "type": "",
                         "price": {
                             "gems": "",
@@ -14227,6 +14507,56 @@
                         "price": {
                             "diamonds": "0"
                         }
+                    },
+                    "Aress2Corebreaker": {
+                        "name": "Corebreaker Ares",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AresS2_Corebreaker.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Aress2CorebreakerForgedwarrior": {
+                        "name": "Corebreaker — Forged Warrior Ares",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AresS2_Corebreaker_-_ForgedWarrior.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Aress2CorebreakerGildedtreasure": {
+                        "name": "Corebreaker — Gilded Treasure Ares",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AresS2_Corebreaker_-_GildedTreasure.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Aress2CorebreakerObsidianoath": {
+                        "name": "Corebreaker — Obsidian Oath Ares",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AresS2_Corebreaker_-_ObsidianOath.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Aress2Gleamingdefender": {
+                        "name": "Gleaming Defender Ares",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AresS2_GleamingDefender.jpg",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -15182,6 +15512,116 @@
                             "diamonds": "",
                             "gemsdia": ""
                         }
+                    },
+                    "FletchedFaunArtemis": {
+                        "name": "Fletched Faun Artemis",
+                        "skin": "/icons/Wallpapers/340px-Fletched_Faun_Artemis.jpg",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Artemiss2Arcticmonarch": {
+                        "name": "Arctic Monarch Artemis",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_ArtemisS2_ArcticMonarch.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Artemiss2ArcticmonarchAstralempress": {
+                        "name": "Arctic Monarch — Astral Empress Artemis",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_ArtemisS2_ArcticMonarch_-_AstralEmpress.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Artemiss2ArcticmonarchBlackice": {
+                        "name": "Arctic Monarch — Black Ice Artemis",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_ArtemisS2_ArcticMonarch_-_BlackIce.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Artemiss2ArcticmonarchEmberherald": {
+                        "name": "Arctic Monarch — Ember Herald Artemis",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_ArtemisS2_ArcticMonarch_-_EmberHerald.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Artemiss2ArcticmonarchNeonmirage": {
+                        "name": "Arctic Monarch — Neon Mirage Artemis",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_ArtemisS2_ArcticMonarch_-_NeonMirage.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Artemiss2Winterschampion": {
+                        "name": "Winters Champion Artemis",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_ArtemisS2_WintersChampion.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Artemiss2WinterschampionAstralempress": {
+                        "name": "Winters Champion — Astral Empress Artemis",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_ArtemisS2_WintersChampion_-_AstralEmpress.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Artemiss2WinterschampionBlackice": {
+                        "name": "Winters Champion — Black Ice Artemis",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_ArtemisS2_WintersChampion_-_BlackIce.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Artemiss2WinterschampionEmberherald": {
+                        "name": "Winters Champion — Ember Herald Artemis",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_ArtemisS2_WintersChampion_-_EmberHerald.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Artemiss2WinterschampionNeonmirage": {
+                        "name": "Winters Champion — Neon Mirage Artemis",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_ArtemisS2_WintersChampion_-_NeonMirage.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -16130,6 +16570,16 @@
                             "diamonds": "",
                             "gemsdia": ""
                         }
+                    },
+                    "AthenaMysticguardian": {
+                        "name": "Mystic Guardian Athena",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_Athena_MysticGuardian.jpg",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -16622,6 +17072,46 @@
                     "Cyberclaw": {
                         "name": "Cyberclaw",
                         "skin": "/icons/Wallpapers/Awilix_cyberclaw.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Awilixs2Felinefashion": {
+                        "name": "Feline Fashion Awilix",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AwilixS2_FelineFashion.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Awilixs2FelinefashionCatburglar": {
+                        "name": "Feline Fashion — Cat Burglar Awilix",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AwilixS2_FelineFashion_-_CatBurglar.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Awilixs2FelinefashionPurrplepassion": {
+                        "name": "Feline Fashion — Purrple Passion Awilix",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AwilixS2_FelineFashion_-_PurrplePassion.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Awilixs2FelinefashionSnowfallchic": {
+                        "name": "Feline Fashion — Snowfall Chic Awilix",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_AwilixS2_FelineFashion_-_SnowfallChic.png",
                         "type": "",
                         "price": {
                             "gems": "",
@@ -17568,6 +18058,16 @@
                     "SirCroakus": {
                         "name": "Sir Croakus",
                         "skin": "/icons/Wallpapers/Bacchus_sir_croakus_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "SirCroakusBacchus": {
+                        "name": "Sir Croakus Bacchus",
+                        "skin": "/icons/Wallpapers/340px-Sir_Croakus_Bacchus.jpg",
                         "type": "",
                         "price": {
                             "gems": "",
@@ -18560,6 +19060,26 @@
                         "type": "Base Skin",
                         "price": {
                             "diamonds": "0"
+                        }
+                    },
+                    "BaronsamediNecrotechSplash1920x1080": {
+                        "name": "Necrotech Splash 1920x1080 Baron Samedi",
+                        "skin": "/icons/Wallpapers/baronsamedi_necrotech_splash_1920x1080_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "WallpaperImmortalhonorGingersnapbaronsamedi3840x2160009": {
+                        "name": "Wallpaper Immortalhonor Gingersnapbaronsamedi 3840x2160 009 Baron Samedi",
+                        "skin": "/icons/Wallpapers/wallpaper_immortalhonor_gingersnapbaronsamedi_3840x2160_009.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
                         }
                     }
                 },
@@ -19680,6 +20200,16 @@
                             "diamonds": "",
                             "gemsdia": ""
                         }
+                    },
+                    "BellonaMisssenshi": {
+                        "name": "Miss Senshi Bellona",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_Bellona_MissSenshi.jpg",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -20737,6 +21267,136 @@
                             "diamonds": "",
                             "gemsdia": ""
                         }
+                    },
+                    "NerdRageCabrakan": {
+                        "name": "Nerd Rage Cabrakan",
+                        "skin": "/icons/Wallpapers/340px-Nerd_Rage_Cabrakan.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Cabrakans2Fatloki": {
+                        "name": "Fat Loki Cabrakan",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_CabrakanS2_FatLoki.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Cabrakans2FatlokiGrimmariachi": {
+                        "name": "Fat Loki — Grim Mariachi Cabrakan",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_CabrakanS2_FatLoki_-_GrimMariachi.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Cabrakans2FatlokiJoki": {
+                        "name": "Fat Loki — Joki Cabrakan",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_CabrakanS2_FatLoki_-_Joki.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Cabrakans2FatlokiLokicharms": {
+                        "name": "Fat Loki — Loki Charms Cabrakan",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_CabrakanS2_FatLoki_-_LokiCharms.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Cabrakans2NerdrageAssistant": {
+                        "name": "Nerd Rage — Assistant Cabrakan",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_CabrakanS2_NerdRage_-_Assistant.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Cabrakans2NerdrageDatalogger": {
+                        "name": "Nerd Rage — Data Logger Cabrakan",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_CabrakanS2_NerdRage_-_DataLogger.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Cabrakans2NerdrageLorez": {
+                        "name": "Nerd Rage — Lo Rez Cabrakan",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_CabrakanS2_NerdRage_-_LoRez.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Cabrakans2NerdrageNeowave": {
+                        "name": "Nerd Rage — Neowave Cabrakan",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_CabrakanS2_NerdRage_-_Neowave.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "PsdCabrakanFatlokiPrisms": {
+                        "name": "Fat Loki Prisms Cabrakan",
+                        "skin": "/icons/Wallpapers/PSD_Cabrakan_FatLoki_Prisms.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "PsdCabrakanFatlokiPrisms1": {
+                        "name": "Fat Loki Prisms1 Cabrakan",
+                        "skin": "/icons/Wallpapers/PSD_Cabrakan_FatLoki_Prisms1.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "PsdCabrakanFatlokiPrisms2": {
+                        "name": "Fat Loki Prisms2 Cabrakan",
+                        "skin": "/icons/Wallpapers/PSD_Cabrakan_FatLoki_Prisms2.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "PsdCabrakanFatlokiPrisms3": {
+                        "name": "Fat Loki Prisms3 Cabrakan",
+                        "skin": "/icons/Wallpapers/PSD_Cabrakan_FatLoki_Prisms3.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -21650,16 +22310,16 @@
                     "stances": [],
                     "builds": [
                         {
-                            "author": "Mytharria",
-                            "last_edit": "12 Mar 2026",
+                            "author": "Mendar",
+                            "last_edit": "18 Mar 2026",
                             "based_on_patch": "Open BETA 30",
                             "starting": [
-                                "Bluestone Pendant",
+                                "Bumba's Cudgel",
                                 "Axe",
                                 "Health Potion"
                             ],
                             "full_build": [
-                                "Bluestone Brooch",
+                                "Bumba's Hammer",
                                 "Pendulum Blade",
                                 "Hydra's Lament",
                                 "Oath-Sworn Spear",
@@ -21761,16 +22421,16 @@
                         ]
                     },
                     {
-                        "author": "Mytharria",
-                        "last_edit": "12 Mar 2026",
+                        "author": "Mendar",
+                        "last_edit": "18 Mar 2026",
                         "based_on_patch": "Open BETA 30",
                         "starting": [
-                            "Bluestone Pendant",
+                            "Bumba's Cudgel",
                             "Axe",
                             "Health Potion"
                         ],
                         "full_build": [
-                            "Bluestone Brooch",
+                            "Bumba's Hammer",
                             "Pendulum Blade",
                             "Hydra's Lament",
                             "Oath-Sworn Spear",
@@ -22753,6 +23413,16 @@
                             "diamonds": "",
                             "gemsdia": ""
                         }
+                    },
+                    "TSkincardChaacAbyssalhunter": {
+                        "name": "Abyssal Hunter Chaac",
+                        "skin": "/icons/Wallpapers/t_SkinCard_Chaac_AbyssalHunter.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -23618,6 +24288,46 @@
                     "ShadowSentry": {
                         "name": "Shadow Sentry",
                         "skin": "/icons/Wallpapers/Cerberus_shadow_sentry_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "InfiniteOverseerCerberus": {
+                        "name": "Infinite Overseer Cerberus",
+                        "skin": "/icons/Wallpapers/340px-Infinite_Overseer_Cerberus.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Cerberuss2InfiniteoverseerAbysswalker": {
+                        "name": "Infinite Overseer — Abyss Walker Cerberus",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_CerberusS2_InfiniteOverseer_-_AbyssWalker.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Cerberuss2InfiniteoverseerForestguardian": {
+                        "name": "Infinite Overseer — Forest Guardian Cerberus",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_CerberusS2_InfiniteOverseer_-_ForestGuardian.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Cerberuss2InfiniteoverseerObsidiansupernova": {
+                        "name": "Infinite Overseer — Obsidian Supernova Cerberus",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_CerberusS2_InfiniteOverseer_-_ObsidianSupernova.png",
                         "type": "",
                         "price": {
                             "gems": "",
@@ -24627,6 +25337,56 @@
                             "diamonds": "",
                             "gemsdia": ""
                         }
+                    },
+                    "CupidBigheadSplash": {
+                        "name": "Big Head Splash Cupid",
+                        "skin": "/icons/Wallpapers/Cupid_BigHead_Splash.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "CupidCosplayThanatosPrisms1": {
+                        "name": "Cosplay Thanatos Prisms (1) Cupid",
+                        "skin": "/icons/Wallpapers/Cupid_Cosplay Thanatos_Prisms (1).webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "CupidCosplayThanatosPrisms2": {
+                        "name": "Cosplay Thanatos Prisms (2) Cupid",
+                        "skin": "/icons/Wallpapers/Cupid_Cosplay Thanatos_Prisms (2).webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "CupidCosplayThanatosPrisms3": {
+                        "name": "Cosplay Thanatos Prisms (3) Cupid",
+                        "skin": "/icons/Wallpapers/Cupid_Cosplay Thanatos_Prisms (3).webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "CupidCosplayThanatosPrisms": {
+                        "name": "Cosplay Thanatos Prisms Cupid",
+                        "skin": "/icons/Wallpapers/Cupid_Cosplay Thanatos_Prisms.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -25457,12 +26217,92 @@
                         "price": {
                             "diamonds": "0"
                         }
+                    },
+                    "Dajis2Devilpunk": {
+                        "name": "Devil Punk Da Ji",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_DaJiS2_DevilPunk.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Dajis2DevilpunkBloodgoldoni": {
+                        "name": "Devil Punk — Bloodgold Oni Da Ji",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_DaJiS2_DevilPunk_-_BloodgoldOni.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Dajis2DevilpunkJadekoi": {
+                        "name": "Devil Punk — Jade Koi Da Ji",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_DaJiS2_DevilPunk_-_JadeKoi.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Dajis2DevilpunkSoulflare": {
+                        "name": "Devil Punk — Soulflare Da Ji",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_DaJiS2_DevilPunk_-_Soulflare.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Dajis2Vixen": {
+                        "name": "Vixen Da Ji",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_DaJiS2_Vixen.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "TDaJiS2Default": {
+                        "name": "Default Da Ji",
+                        "skin": "/icons/Wallpapers/340px-T_Da_Ji(S2)_Default.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "TSkincardDajiVixen": {
+                        "name": "Vixen Da Ji",
+                        "skin": "/icons/Wallpapers/t_SkinCard_Daji_Vixen.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "VixenDaJi": {
+                        "name": "Vixen Da Ji",
+                        "skin": "/icons/Wallpapers/Vixen_Da_Ji.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
                     {
                         "author": "Mendar",
-                        "last_edit": "11 Mar 2026",
+                        "last_edit": "18 Mar 2026",
                         "based_on_patch": "Open BETA 30",
                         "starting": [
                             "Bumba's Cudgel",
@@ -25479,7 +26319,7 @@
                             "Titan's Bane"
                         ],
                         "notes": "Full-Damage STR Jungle Build",
-                        "starting_relic": "Purification Beads",
+                        "starting_relic": "Blink Rune",
                         "final_relic": "Purification Beads",
                         "starting_abilities": [
                             "A01",
@@ -27241,6 +28081,66 @@
                             "diamonds": "",
                             "gemsdia": ""
                         }
+                    },
+                    "ButlerOfTheBinsDanzaburou": {
+                        "name": "Butler of the Bins Danzaburou",
+                        "skin": "/icons/Wallpapers/180px-Butler_of_the_Bins_Danzaburou.jpg",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Danzaburous2Polarprankster": {
+                        "name": "Polar Prankster Danzaburou",
+                        "skin": "/icons/Wallpapers/180px-SkinArt_DanzaburouS2_PolarPrankster.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "DanzaburouPolarpranksterCard": {
+                        "name": "Polar Prankster Card Danzaburou",
+                        "skin": "/icons/Wallpapers/Danzaburou_PolarPrankster_Card.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "DanzaburouPolarpranksterCard1": {
+                        "name": "Polar Prankster Card1 Danzaburou",
+                        "skin": "/icons/Wallpapers/Danzaburou_PolarPrankster_Card1.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "DanzaburouPolarpranksterCard2": {
+                        "name": "Polar Prankster Card2 Danzaburou",
+                        "skin": "/icons/Wallpapers/Danzaburou_PolarPrankster_Card2.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "DanzaburouPolarpranksterCard3": {
+                        "name": "Polar Prankster Card3 Danzaburou",
+                        "skin": "/icons/Wallpapers/Danzaburou_PolarPrankster_Card3.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -27996,6 +28896,26 @@
                         "type": "Base Skin",
                         "price": {
                             "diamonds": "0"
+                        }
+                    },
+                    "Esets2Crimsonmist": {
+                        "name": "Crimson Mist Eset",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_EsetS2_CrimsonMist.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "TEsetS2Default": {
+                        "name": "Default Eset",
+                        "skin": "/icons/Wallpapers/340px-T_Eset(S2)_Default.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
                         }
                     }
                 },
@@ -28980,12 +29900,22 @@
                             "diamonds": "",
                             "gemsdia": ""
                         }
+                    },
+                    "FenrirWallpaper": {
+                        "name": "Wallpaper Fenrir",
+                        "skin": "/icons/Wallpapers/Fenrir_wallpaper_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
                     {
                         "author": "Mendar",
-                        "last_edit": "12 Mar 2026",
+                        "last_edit": "18 Mar 2026",
                         "based_on_patch": "Open BETA 30",
                         "starting": [
                             "Bumba's Golden Dagger",
@@ -29001,7 +29931,7 @@
                             "Brawler's Beat Stick",
                             "Magi's Cloak"
                         ],
-                        "notes": "Bruiser-AA jungle build",
+                        "notes": "Bruiser jungle build",
                         "starting_relic": "Purification Beads",
                         "final_relic": "Purification Beads",
                         "starting_abilities": [
@@ -29852,6 +30782,26 @@
                             "diamonds": "",
                             "gemsdia": ""
                         }
+                    },
+                    "GuanUnicornGuanYu": {
+                        "name": "Guan Unicorn Guan Yu",
+                        "skin": "/icons/Wallpapers/guan_unicorn_guan_yu_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "GuanYu": {
+                        "name": "Guan Yu",
+                        "skin": "/icons/Wallpapers/guan_yu_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -30672,6 +31622,96 @@
                     "PlushieYellow011": {
                         "name": "Plushie Yellow 011",
                         "skin": "/icons/Wallpapers/Ganesha_plushie_yellow_011.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "GuidingLightGanesha": {
+                        "name": "Guiding Light Ganesha",
+                        "skin": "/icons/Wallpapers/340px-Guiding_Light_Ganesha.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "PlushieGanesha": {
+                        "name": "Plushie Ganesha",
+                        "skin": "/icons/Wallpapers/340px-Plushie_Ganesha.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Ganeshas2PlushieGreen": {
+                        "name": "Plushie — Green Ganesha",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_GaneshaS2_Plushie_-_Green.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Ganeshas2PlushieIndigo": {
+                        "name": "Plushie — Indigo Ganesha",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_GaneshaS2_Plushie_-_Indigo.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Ganeshas2PlushieOrange": {
+                        "name": "Plushie — Orange Ganesha",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_GaneshaS2_Plushie_-_Orange.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Ganeshas2PlushieRed": {
+                        "name": "Plushie — Red Ganesha",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_GaneshaS2_Plushie_-_Red.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Ganeshas2PlushieViolet": {
+                        "name": "Plushie — Violet Ganesha",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_GaneshaS2_Plushie_-_Violet.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Ganeshas2PlushieYellow": {
+                        "name": "Plushie — Yellow Ganesha",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_GaneshaS2_Plushie_-_Yellow.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "GaneshaDefault": {
+                        "name": "Default Ganesha",
+                        "skin": "/icons/Wallpapers/Ganesha_default.webp",
                         "type": "",
                         "price": {
                             "gems": "",
@@ -32944,6 +33984,16 @@
                             "diamonds": "",
                             "gemsdia": ""
                         }
+                    },
+                    "HecateLunarHex": {
+                        "name": "Lunar Hex Hecate",
+                        "skin": "/icons/Wallpapers/Hecate_lunar_hex.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -33737,7 +34787,7 @@
                 "builds": [
                     {
                         "author": "Mendar",
-                        "last_edit": "12 Mar 2026",
+                        "last_edit": "18 Mar 2026",
                         "based_on_patch": "Open BETA 30",
                         "starting": [
                             "Bumba's Cudgel",
@@ -34486,6 +35536,14 @@
                         "price": {
                             "diamonds": "0"
                         }
+                    },
+                    "Houyi": {
+                        "name": "Base Hou Yi",
+                        "skin": "/icons/Wallpapers/hou_yi.webp",
+                        "type": "Base Skin",
+                        "price": {
+                            "diamonds": "0"
+                        }
                     }
                 },
                 "builds": [
@@ -35012,6 +36070,66 @@
                         "type": "Base Skin",
                         "price": {
                             "diamonds": "0"
+                        }
+                    },
+                    "HighHonorMulan": {
+                        "name": "High Honor Hua Mulan",
+                        "skin": "/icons/Wallpapers/high_honor_mulan_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "HuamulanSmite2PatchartDefaultSocial1920x1080": {
+                        "name": "Smite2 Patchart Default Social 1920x1080 Hua Mulan",
+                        "skin": "/icons/Wallpapers/HuaMulan_smite2_patchart_default_social_1920x1080_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "MulanSentaiCardPrisms1": {
+                        "name": "Sentai Card Prisms1 Hua Mulan",
+                        "skin": "/icons/Wallpapers/mulan_sentai_card_prisms1_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "MulanSentaiCardPrisms2": {
+                        "name": "Sentai Card Prisms2 Hua Mulan",
+                        "skin": "/icons/Wallpapers/mulan_sentai_card_prisms2_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "MulanSentaiCardPrisms3": {
+                        "name": "Sentai Card Prisms3 Hua Mulan",
+                        "skin": "/icons/Wallpapers/mulan_sentai_card_prisms3_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "MulanSentaiCardPrisms4009": {
+                        "name": "Sentai Card Prisms4 009 Hua Mulan",
+                        "skin": "/icons/Wallpapers/mulan_sentai_card_prisms4_009.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
                         }
                     }
                 },
@@ -35925,6 +37043,26 @@
                         "price": {
                             "diamonds": "0"
                         }
+                    },
+                    "ArcaneApeHunBatz": {
+                        "name": "Arcane Ape Hun Batz",
+                        "skin": "/icons/Wallpapers/arcane_ape_hun_batz.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "ShadowHowlerHunBatz010": {
+                        "name": "Shadow Howler Hun Batz",
+                        "skin": "/icons/Wallpapers/shadow_howler_hun_batz_010.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -36448,6 +37586,26 @@
                             "diamonds": "",
                             "gemsdia": ""
                         }
+                    },
+                    "IzanamiWallpaper": {
+                        "name": "Wallpaper Izanami",
+                        "skin": "/icons/Wallpapers/Izanami_wallpaper_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "TSkincardIzanamiCybergeisha": {
+                        "name": "Cyber Geisha Izanami",
+                        "skin": "/icons/Wallpapers/t_SkinCard_Izanami_CyberGeisha.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -36836,6 +37994,56 @@
                         "type": "Base Skin",
                         "price": {
                             "diamonds": "0"
+                        }
+                    },
+                    "Januss2Jandroid": {
+                        "name": "Jandroid Janus",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_JanusS2_Jandroid.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Januss2JandroidOvergrown": {
+                        "name": "Jandroid — Overgrown Janus",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_JanusS2_Jandroid_-_Overgrown.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Januss2JandroidPAL": {
+                        "name": "Jandroid — P.a.l. Janus",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_JanusS2_Jandroid_-_P.A.L..png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Januss2JandroidPunkBot": {
+                        "name": "Jandroid — Punk Bot Janus",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_JanusS2_Jandroid_-_Punk_Bot.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Janus2": {
+                        "name": "Janus",
+                        "skin": "/icons/Wallpapers/Janus_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
                         }
                     }
                 },
@@ -37250,6 +38458,26 @@
                         "type": "Base Skin",
                         "price": {
                             "diamonds": "0"
+                        }
+                    },
+                    "BumblebeeJingWei": {
+                        "name": "Bumblebee Jing Wei",
+                        "skin": "/icons/Wallpapers/bumblebee_jing_wei.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "JingweiPoolpartySplash1920x1200": {
+                        "name": "Poolparty Splash 1920x1200 Jing Wei",
+                        "skin": "/icons/Wallpapers/jingwei_poolparty_splash_1920x1200_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
                         }
                     }
                 },
@@ -37989,6 +39217,56 @@
                         "type": "Base Skin",
                         "price": {
                             "diamonds": "0"
+                        }
+                    },
+                    "Jormungandrs2Worldkitty": {
+                        "name": "World Kitty Jormungandr",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_JormungandrS2_WorldKitty.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "JormungandrS2WorldkittyBaron": {
+                        "name": "S2 World Kitty — Baron Jormungandr",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_Jormungandr_S2_WorldKitty_-_Baron.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "JormungandrS2WorldkittyGinger": {
+                        "name": "S2 World Kitty — Ginger Jormungandr",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_Jormungandr_S2_WorldKitty_-_Ginger.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "JormungandrS2WorldkittySnowball": {
+                        "name": "S2 World Kitty — Snowball Jormungandr",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_Jormungandr_S2_WorldKitty_-_Snowball.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Jorm013": {
+                        "name": "013 Jormungandr",
+                        "skin": "/icons/Wallpapers/jorm_013.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
                         }
                     }
                 },
@@ -38823,6 +40101,16 @@
                     "ChefSSpecialStormtide": {
                         "name": "Chef S Special Stormtide",
                         "skin": "/icons/Wallpapers/Khepri_chef_s_special_stormtide_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "KhepriWallpaper": {
+                        "name": "Wallpaper Khepri",
+                        "skin": "/icons/Wallpapers/Khepri_wallpaper_.webp",
                         "type": "",
                         "price": {
                             "gems": "",
@@ -39698,6 +40986,16 @@
                     "TrophyHunterGoldenIdol": {
                         "name": "Trophy Hunter Golden Idol",
                         "skin": "/icons/Wallpapers/Kali_trophy_hunter_golden_idol_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Kali2": {
+                        "name": "Kali",
+                        "skin": "/icons/Wallpapers/Kali_.webp",
                         "type": "",
                         "price": {
                             "gems": "",
@@ -41602,6 +42900,56 @@
                         "price": {
                             "diamonds": "0"
                         }
+                    },
+                    "Lokis2Joki": {
+                        "name": "Joki Loki",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_LokiS2_Joki.jpg",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Lokis2Lokicharms": {
+                        "name": "Loki Charms",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_LokiS2_LokiCharms.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Lokis2LokicharmsDapperdandy": {
+                        "name": "Loki Charms — Dapper Dandy",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_LokiS2_LokiCharms_-_DapperDandy.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Lokis2LokicharmsMastermagician": {
+                        "name": "Loki Charms — Master Magician",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_LokiS2_LokiCharms_-_MasterMagician.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Lokis2LokicharmsRazzledazzle": {
+                        "name": "Loki Charms — Razzle Dazzle",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_LokiS2_LokiCharms_-_RazzleDazzle.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -42467,6 +43815,24 @@
                     "010": {
                         "name": "010",
                         "skin": "/icons/Wallpapers/Mercury_010.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Mercury2": {
+                        "name": "Base Mercury",
+                        "skin": "/icons/Wallpapers/Mecury.webp",
+                        "type": "Base Skin",
+                        "price": {
+                            "diamonds": "0"
+                        }
+                    },
+                    "MercuryHellsfurySplash": {
+                        "name": "Hells Fury Splash Mercury",
+                        "skin": "/icons/Wallpapers/Mercury_HellsFury_Splash.webp",
                         "type": "",
                         "price": {
                             "gems": "",
@@ -44610,43 +45976,7 @@
                     ],
                     "isStanceSwitcher": false,
                     "stances": [],
-                    "builds": [
-                        {
-                            "author": "Mendar",
-                            "last_edit": "7 Mar 2026",
-                            "based_on_patch": "Open BETA 30",
-                            "starting": [
-                                "Bluestone Pendant",
-                                "Axe",
-                                "Health Potion"
-                            ],
-                            "full_build": [
-                                "Bluestone Brooch",
-                                "Pendulum Blade",
-                                "Barbed Carver",
-                                "Oath-Sworn Spear",
-                                "Heartseeker",
-                                "Titan's Bane",
-                                "Blinking Abyss"
-                            ],
-                            "notes": "Full damage STR-based jungle build with **__Aspect of Rage.__** ",
-                            "starting_relic": "Purification Beads",
-                            "final_relic": "Purification Beads",
-                            "starting_abilities": [
-                                "A01",
-                                "A02",
-                                "A03",
-                                "A01",
-                                "A04"
-                            ],
-                            "ability_max_order": [
-                                "A01",
-                                "A02",
-                                "A04",
-                                "A03"
-                            ]
-                        }
-                    ],
+                    "builds": [],
                     "tips": []
                 },
                 "guides": [
@@ -44690,9 +46020,54 @@
                             "diamonds": "",
                             "gemsdia": ""
                         }
+                    },
+                    "MordredWallpaper": {
+                        "name": "Wallpaper Mordred",
+                        "skin": "/icons/Wallpapers/Mordred_wallpaper_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
+                    {
+                        "author": "Mendar",
+                        "last_edit": "18 Mar 2026",
+                        "based_on_patch": "Open BETA 30",
+                        "starting": [
+                            "Bumba's Cudgel",
+                            "Axe",
+                            "Health Potion"
+                        ],
+                        "full_build": [
+                            "Bumba's Hammer",
+                            "Shield Splitter",
+                            "Pendulum Blade",
+                            "Sundering Echo",
+                            "Gladiator's Shield",
+                            "Genji's Guard",
+                            "Brawler's Beat Stick"
+                        ],
+                        "notes": "Brusiser STR-based jungle build ",
+                        "starting_relic": "Purification Beads",
+                        "final_relic": "Purification Beads",
+                        "starting_abilities": [
+                            "A01",
+                            "A02",
+                            "A03",
+                            "A01",
+                            "A04"
+                        ],
+                        "ability_max_order": [
+                            "A01",
+                            "A02",
+                            "A04",
+                            "A03"
+                        ]
+                    },
                     {
                         "author": "Mytharria",
                         "last_edit": "15 Mar 2026",
@@ -44725,41 +46100,6 @@
                             "A04",
                             "A01",
                             "A02",
-                            "A03"
-                        ]
-                    },
-                    {
-                        "author": "Mendar",
-                        "last_edit": "7 Mar 2026",
-                        "based_on_patch": "Open BETA 30",
-                        "starting": [
-                            "Bluestone Pendant",
-                            "Axe",
-                            "Health Potion"
-                        ],
-                        "full_build": [
-                            "Bluestone Brooch",
-                            "Pendulum Blade",
-                            "Barbed Carver",
-                            "Oath-Sworn Spear",
-                            "Heartseeker",
-                            "Titan's Bane",
-                            "Blinking Abyss"
-                        ],
-                        "notes": "Full damage STR-based jungle build with **__Aspect of Rage.__** ",
-                        "starting_relic": "Purification Beads",
-                        "final_relic": "Purification Beads",
-                        "starting_abilities": [
-                            "A01",
-                            "A02",
-                            "A03",
-                            "A01",
-                            "A04"
-                        ],
-                        "ability_max_order": [
-                            "A01",
-                            "A02",
-                            "A04",
                             "A03"
                         ]
                     }
@@ -47339,6 +48679,46 @@
                             "diamonds": "",
                             "gemsdia": ""
                         }
+                    },
+                    "BadBunnyNuWa": {
+                        "name": "Bad Bunny Nu Wa",
+                        "skin": "/icons/Wallpapers/bad_bunny_nu_wa.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "BunnyBlissNuWa": {
+                        "name": "Bunny Bliss Nu Wa",
+                        "skin": "/icons/Wallpapers/bunny_bliss_nu_wa_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "NuwaDarkdominionSplash": {
+                        "name": "Darkdominion Splash Nu Wa",
+                        "skin": "/icons/Wallpapers/NuWa_darkdominion_splash_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "NuwaPlayfulbunnyCard009": {
+                        "name": "Playfulbunny Card 009 Nu Wa",
+                        "skin": "/icons/Wallpapers/NuWa_playfulbunny_card_009.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -48626,6 +50006,86 @@
                         "price": {
                             "diamonds": "0"
                         }
+                    },
+                    "OsirisDarkknightCard": {
+                        "name": "Dark Knight Card Osiris",
+                        "skin": "/icons/Wallpapers/Osiris_DarkKnight_Card.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "OsirisDarkknightCard1": {
+                        "name": "Dark Knight Card1 Osiris",
+                        "skin": "/icons/Wallpapers/Osiris_DarkKnight_Card1.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "OsirisDarkknightCard2": {
+                        "name": "Dark Knight Card2 Osiris",
+                        "skin": "/icons/Wallpapers/Osiris_DarkKnight_Card2.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "OsirisDarkknightCard3": {
+                        "name": "Dark Knight Card3 Osiris",
+                        "skin": "/icons/Wallpapers/Osiris_DarkKnight_Card3.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "OsirisWhiteknightCard": {
+                        "name": "White Knight Card Osiris",
+                        "skin": "/icons/Wallpapers/Osiris_WhiteKnight_Card.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "OsirisWhiteknightCard1": {
+                        "name": "White Knight Card1 Osiris",
+                        "skin": "/icons/Wallpapers/Osiris_WhiteKnight_Card1.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "OsirisWhiteknightCard2": {
+                        "name": "White Knight Card2 Osiris",
+                        "skin": "/icons/Wallpapers/Osiris_WhiteKnight_Card2.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "OsirisWhiteknightCard3": {
+                        "name": "White Knight Card3 Osiris",
+                        "skin": "/icons/Wallpapers/Osiris_WhiteKnight_Card3.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -49526,6 +50986,16 @@
                             "diamonds": "",
                             "gemsdia": ""
                         }
+                    },
+                    "PeleSkin00fCard": {
+                        "name": "Skin00f Card Pele",
+                        "skin": "/icons/Wallpapers/Pele_Skin00F_Card.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -50368,8 +51838,8 @@
                 },
                 "builds": [
                     {
-                        "author": "Mytharria",
-                        "last_edit": "12 Mar 2026",
+                        "author": "Mendar",
+                        "last_edit": "18 Mar 2026",
                         "based_on_patch": "Open BETA 30",
                         "starting": [
                             "Sands Of Time",
@@ -50378,8 +51848,8 @@
                         ],
                         "full_build": [
                             "Pendulum Of The Ages",
-                            "Doom Orb",
                             "Spear of Desolation",
+                            "Staff of Myrddin",
                             "Nimble Ring",
                             "Rod of Tahuti",
                             "Obsidian Shard",
@@ -50794,6 +52264,16 @@
                         "type": "Epic",
                         "price": {
                             "diamonds": "1200"
+                        }
+                    },
+                    "PrincessBari": {
+                        "name": "Princess Bari",
+                        "skin": "/icons/Wallpapers/princess_bari_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
                         }
                     }
                 },
@@ -52532,6 +54012,46 @@
                         "type": "Base Skin",
                         "price": {
                             "diamonds": "0"
+                        }
+                    },
+                    "RamaSacredarrowPrismsCard": {
+                        "name": "Sacred Arrow Prisms Card Rama",
+                        "skin": "/icons/Wallpapers/Rama_SacredArrow_Prisms_Card.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "RamaSacredarrowPrismsCard1": {
+                        "name": "Sacred Arrow Prisms Card1 Rama",
+                        "skin": "/icons/Wallpapers/Rama_SacredArrow_Prisms_Card1.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "RamaSacredarrowPrismsCard2": {
+                        "name": "Sacred Arrow Prisms Card2 Rama",
+                        "skin": "/icons/Wallpapers/Rama_SacredArrow_Prisms_Card2.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "RamaSacredarrowPrismsCard3": {
+                        "name": "Sacred Arrow Prisms Card3 Rama",
+                        "skin": "/icons/Wallpapers/Rama_SacredArrow_Prisms_Card3.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
                         }
                     }
                 },
@@ -54866,6 +56386,16 @@
                         "price": {
                             "gems": "1000"
                         }
+                    },
+                    "StumbleBladeSusanoWithPrisms": {
+                        "name": "Stumble Bladewith Prisms Susano",
+                        "skin": "/icons/Wallpapers/Stumble Blade Susano_with Prisms.jpg",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -55654,6 +57184,66 @@
                         "price": {
                             "diamonds": "0"
                         }
+                    },
+                    "SunwukongDarklordPrism": {
+                        "name": "Dark Lord Prism Sun Wukong",
+                        "skin": "/icons/Wallpapers/SunWukong_DarkLord_PRISM.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "SunwukongDarklordPrism1": {
+                        "name": "Dark Lord Prism1 Sun Wukong",
+                        "skin": "/icons/Wallpapers/SunWukong_DarkLord_PRISM1.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "SunwukongDarklordPrism2": {
+                        "name": "Dark Lord Prism2 Sun Wukong",
+                        "skin": "/icons/Wallpapers/SunWukong_DarkLord_PRISM2.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "SunwukongDarklordPrism3": {
+                        "name": "Dark Lord Prism3 Sun Wukong",
+                        "skin": "/icons/Wallpapers/SunWukong_DarkLord_PRISM3.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "SunwukongStreetkingSplash014": {
+                        "name": "Streetking Splash 014 Sun Wukong",
+                        "skin": "/icons/Wallpapers/sunwukong_streetking_splash_014.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "SunWukong015": {
+                        "name": "015 Sun Wukong",
+                        "skin": "/icons/Wallpapers/sun_wukong_015.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -56428,6 +58018,26 @@
                     "ScyllaTrashgoblin": {
                         "name": "Scylla Trashgoblin",
                         "skin": "/icons/Wallpapers/Scylla_TrashGoblin.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Scylla2": {
+                        "name": "Scylla",
+                        "skin": "/icons/Wallpapers/Scylla_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "ScyllaWinterCard": {
+                        "name": "Winter Card Scylla",
+                        "skin": "/icons/Wallpapers/Scylla_Winter_Card.webp",
                         "type": "",
                         "price": {
                             "gems": "",
@@ -58924,6 +60534,14 @@
                             "diamonds": "1200",
                             "gemsdia": "600 + 💎600"
                         }
+                    },
+                    "Themorrigan": {
+                        "name": "Base The Morrigan",
+                        "skin": "/icons/Wallpapers/morriganImage.webp",
+                        "type": "Base Skin",
+                        "price": {
+                            "diamonds": "0"
+                        }
                     }
                 },
                 "builds": [
@@ -59765,6 +61383,14 @@
                     "Tsukuyomi": {
                         "name": "Base Tsukuyomi",
                         "skin": "/icons/Wallpapers/Tsukuyomi.webp",
+                        "type": "Base Skin",
+                        "price": {
+                            "diamonds": "0"
+                        }
+                    },
+                    "Tsukuyomi2": {
+                        "name": "Base Tsukuyomi",
+                        "skin": "/icons/Wallpapers/tsukuyomi.webp",
                         "type": "Base Skin",
                         "price": {
                             "diamonds": "0"
@@ -63016,6 +64642,46 @@
                         "price": {
                             "diamonds": "0"
                         }
+                    },
+                    "XbalanqueDarkestknightPrisms": {
+                        "name": "Darkest Knight Prisms Xbalanque",
+                        "skin": "/icons/Wallpapers/Xbalanque_DarkestKnight_Prisms.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "XbalanqueDarkestknightPrisms1": {
+                        "name": "Darkest Knight Prisms1 Xbalanque",
+                        "skin": "/icons/Wallpapers/Xbalanque_DarkestKnight_Prisms1.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "XbalanqueDarkestknightPrisms2": {
+                        "name": "Darkest Knight Prisms2 Xbalanque",
+                        "skin": "/icons/Wallpapers/Xbalanque_DarkestKnight_Prisms2.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "XbalanqueDarkestknightPrisms3": {
+                        "name": "Darkest Knight Prisms3 Xbalanque",
+                        "skin": "/icons/Wallpapers/Xbalanque_DarkestKnight_Prisms3.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 },
                 "builds": [
@@ -63984,6 +65650,26 @@
                         "type": "Epic",
                         "price": {
                             "gems": "1000",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "DawnSpiritYempja": {
+                        "name": "Dawn Spirit Yemoja",
+                        "skin": "/icons/Wallpapers/Dawn Spirit Yempja.jpg",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "DawnSpiritYempja2": {
+                        "name": "Dawn Spirit Yemoja",
+                        "skin": "/icons/Wallpapers/dawn_spirit_yempja_.webp",
+                        "type": "",
+                        "price": {
+                            "gems": "",
                             "diamonds": "",
                             "gemsdia": ""
                         }
@@ -65788,6 +67474,66 @@
                         "type": "Base Skin",
                         "price": {
                             "diamonds": "0"
+                        }
+                    },
+                    "Discordias2Oblivionqueen": {
+                        "name": "Oblivion Queen Discordia",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_DiscordiaS2_OblivionQueen.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Discordias2OblivionqueenGlitterbomb": {
+                        "name": "Oblivion Queen — Glitter Bomb Discordia",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_DiscordiaS2_OblivionQueen_-_GlitterBomb.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Discordias2OblivionqueenRisingember": {
+                        "name": "Oblivion Queen — Rising Ember Discordia",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_DiscordiaS2_OblivionQueen_-_RisingEmber.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Discordias2OblivionqueenStarryvoid": {
+                        "name": "Oblivion Queen — Starry Void Discordia",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_DiscordiaS2_OblivionQueen_-_StarryVoid.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "Discordias2Rebellious": {
+                        "name": "Rebellious Discordia",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_DiscordiaS2_Rebellious.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
+                    },
+                    "TDiscordiaS2Default": {
+                        "name": "Default Discordia",
+                        "skin": "/icons/Wallpapers/340px-T_Discordia(S2)_Default.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
                         }
                     }
                 },
@@ -67943,6 +69689,18 @@
                         "Buff Duration": [
                             5
                         ]
+                    }
+                },
+                "skins": {
+                    "Chirons2Sagittarius": {
+                        "name": "Sagittarius Chiron",
+                        "skin": "/icons/Wallpapers/340px-SkinArt_ChironS2_Sagittarius.png",
+                        "type": "",
+                        "price": {
+                            "gems": "",
+                            "diamonds": "",
+                            "gemsdia": ""
+                        }
                     }
                 }
             },
