@@ -12,13 +12,27 @@ import {
   Platform,
   Pressable,
   Alert,
+  PanResponder,
 } from 'react-native';
 import CryptoJS from 'crypto-js';
 import { Image } from 'expo-image';
-import { getLocalItemIcon, getLocalGodAsset } from './localIcons';
+import { getLocalItemIcon, getLocalGodAsset, getRoleIcon } from './localIcons';
 import { useScreenDimensions } from '../hooks/useScreenDimensions';
+import { flattenBuildsGods } from '../lib/normalizeBuildsGod';
+import { computeItemPassiveBonuses } from '../lib/customBuildItemPassives';
+import { getBasicAttackPowerCoefficients } from '../lib/basicAttackScaling';
+import {
+  getDiscordBotSharedBuildPayload,
+  saveDiscordBotSharedBuildPayload,
+} from '../lib/discordBotSharedBuildSupabase';
+import { GOLD_ICON } from '../lib/imageGrabber';
 
 const IS_WEB = Platform.OS === 'web';
+
+const BUILDER_ROLE_OPTIONS = ['Mid', 'Solo', 'ADC', 'Support', 'Jungle'];
+
+/** Avoid repeating certification success logs when `checkCertificationStatus` runs on an interval */
+const certifiedStatusLogOnce = new Set();
 
 // Storage helper
 const storage = {
@@ -45,18 +59,184 @@ const storage = {
       // Ignore
     }
   },
+  async removeItem(key) {
+    if (IS_WEB && typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.removeItem(key);
+      return;
+    }
+    try {
+      const AsyncStorage = require('@react-native-async-storage/async-storage').default;
+      await AsyncStorage.removeItem(key);
+    } catch (e) {
+      // Ignore
+    }
+  },
 };
 
-export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, onEditComplete = null }) {
+const CUSTOM_BUILDER_PRESET_KEY = 'customBuilderPreset';
+
+function normItemKey(s) {
+  return String(s || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '');
+}
+
+/** Merge saved slot refs with full `builds.json` items so stats/passives resolve. */
+function resolveEquipRef(ref, catalog) {
+  if (!ref || typeof ref !== 'object') return null;
+  if (ref.stats && typeof ref.stats === 'object') return ref;
+  const a = String(ref.internalName || '').toLowerCase().trim();
+  const b = String(ref.name || '').toLowerCase().trim();
+  const an = normItemKey(ref.internalName);
+  const bn = normItemKey(ref.name);
+  for (const it of catalog) {
+    const i = String(it.internalName || '').toLowerCase().trim();
+    const n = String(it.name || '').toLowerCase().trim();
+    if (a && i === a) return it;
+    if (b && n === b) return it;
+    if (an && normItemKey(it.internalName) === an) return it;
+    if (bn && normItemKey(it.name) === bn) return it;
+  }
+  return ref;
+}
+
+function resolveRelicRef(ref, relicCatalog) {
+  if (!ref || typeof ref !== 'object') return null;
+  if (ref.stats && typeof ref.stats === 'object') return ref;
+  const a = String(ref.internalName || '').toLowerCase().trim();
+  const b = String(ref.name || '').toLowerCase().trim();
+  const an = normItemKey(ref.internalName);
+  const bn = normItemKey(ref.name);
+  for (const it of relicCatalog) {
+    const i = String(it.internalName || '').toLowerCase().trim();
+    const n = String(it.name || '').toLowerCase().trim();
+    if (a && i === a) return it;
+    if (b && n === b) return it;
+    if (an && normItemKey(it.internalName) === an) return it;
+    if (bn && normItemKey(it.name) === bn) return it;
+  }
+  return ref;
+}
+
+async function persistCustomBuilderPresetObject(obj) {
+  try {
+    await storage.setItem(CUSTOM_BUILDER_PRESET_KEY, JSON.stringify(obj));
+  } catch (e) {
+    console.error('persist custom builder preset', e);
+  }
+}
+
+/** Bump when default Morgan items change so stored presets can migrate. */
+const CUSTOM_BUILDER_PRESET_VERSION = 2;
+
+/** Lightweight refs — `applyBuildSnapshot` resolves to full items from `builds.json`. */
+const DEFAULT_MORGAN_PRESET_ITEM_REFS = [
+  { internalName: 'PendulumOfTheAges', name: 'Pendulum Of The Ages' },
+  { internalName: 'EldritchOrb', name: 'Rod of Tahuti' },
+  { internalName: 'EvolvedBookOfThoth', name: 'Evolved Book of Thoth' },
+  { internalName: 'GemOfFocus', name: 'Gem of Focus' },
+  { internalName: 'BalorsEye', name: 'Obsidian Shard' },
+  { internalName: 'SoulDevourer', name: 'Soul Reaver' },
+  { internalName: 'DivineRuin', name: 'Divine Ruin' },
+];
+
+/** First-open / empty preset: Morgan + sample full build (same internalNames as data). */
+const DEFAULT_CUSTOM_BUILDER_PRESET = {
+  _presetVersion: CUSTOM_BUILDER_PRESET_VERSION,
+  godInternalName: 'MorganLeFay_Item',
+  god: 'Morgan Le Fay',
+  godLevel: 20,
+  items: DEFAULT_MORGAN_PRESET_ITEM_REFS,
+  startingItems: [],
+};
+
+function stripInternalItemSuffix(s) {
+  return String(s || '').replace(/_item$/i, '');
+}
+
+function isMorganPresetGod(savedBuild) {
+  if (!savedBuild) return false;
+  const g = String(savedBuild.godInternalName || '').toLowerCase();
+  if (stripInternalItemSuffix(g).replace(/[^a-z0-9]/g, '').includes('morganlefay')) return true;
+  const n = String(savedBuild.god || '').toLowerCase();
+  return n.includes('morgan') && n.includes('fay');
+}
+
+function countSnapshotItems(savedBuild) {
+  if (!savedBuild?.items || !Array.isArray(savedBuild.items)) return 0;
+  return savedBuild.items.filter(Boolean).length;
+}
+
+/** Older stored Morgan presets (god only) get default items; stamps `_presetVersion`. */
+function maybeUpgradeMorganPresetItems(savedBuild) {
+  if (!savedBuild) return { build: savedBuild, persist: false };
+  const ver = Number(savedBuild._presetVersion) || 0;
+  if (ver >= CUSTOM_BUILDER_PRESET_VERSION) {
+    return { build: savedBuild, persist: false };
+  }
+  if (!isMorganPresetGod(savedBuild)) {
+    return { build: savedBuild, persist: false };
+  }
+  const nItems = countSnapshotItems(savedBuild);
+  if (nItems > 0) {
+    return {
+      build: { ...savedBuild, _presetVersion: CUSTOM_BUILDER_PRESET_VERSION },
+      persist: true,
+    };
+  }
+  return {
+    build: {
+      ...savedBuild,
+      items: DEFAULT_MORGAN_PRESET_ITEM_REFS,
+      _presetVersion: CUSTOM_BUILDER_PRESET_VERSION,
+    },
+    persist: true,
+  };
+}
+
+function resolveGodFromSnapshot(godList, savedBuild) {
+  if (!savedBuild || !Array.isArray(godList) || !godList.length) return null;
+  const want = String(savedBuild.godInternalName || '').toLowerCase().trim();
+  const wantName = String(savedBuild.god || '').toLowerCase().trim();
+  const norm = (x) => String(x || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  if (want) {
+    let g = godList.find((x) => (x.internalName || '').toLowerCase() === want);
+    if (g) return g;
+    const w = stripInternalItemSuffix(want);
+    g = godList.find((x) => stripInternalItemSuffix((x.internalName || '').toLowerCase()) === w);
+    if (g) return g;
+  }
+  if (wantName) {
+    return (
+      godList.find((x) => {
+        const n = (x.name || x.GodName || x.title || '').toString().toLowerCase().trim();
+        return n === wantName || norm(n) === norm(wantName);
+      }) || null
+    );
+  }
+  return null;
+}
+
+export default function CustomBuildPage({
+  onNavigateToGod,
+  buildToEdit = null,
+  onEditComplete = null,
+  /** UUID from `/discord-build/[token]` — Supabase table `discord_bot_shared_builds` */
+  botSharedDraftToken = null,
+}) {
   // Use responsive screen dimensions
   const screenDimensions = useScreenDimensions();
+  const layoutGodRoleInline = screenDimensions.width >= 640;
   const [localBuilds, setLocalBuilds] = useState(null);
   const [dataLoading, setDataLoading] = useState(true);
   const [selectedGod, setSelectedGod] = useState(null);
   const [godLevel, setGodLevel] = useState(20);
   const [selectedItems, setSelectedItems] = useState(Array(7).fill(null));
   const [startingItems, setStartingItems] = useState(Array(5).fill(null)); // 5 starting item slots
-  const [selectedRelic, setSelectedRelic] = useState(null);
+  const [startingRelic, setStartingRelic] = useState(null);
+  const [finalRelic, setFinalRelic] = useState(null);
+  /** 'starting' | 'final' | null — which relic slot the picker is for */
+  const [relicPickerTarget, setRelicPickerTarget] = useState(null);
   const [aspectActive, setAspectActive] = useState(false);
   const [selectedRoles, setSelectedRoles] = useState([]); // Array of selected roles (max 4)
   const [showGodPicker, setShowGodPicker] = useState(false);
@@ -78,9 +258,14 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
   const [communityBuildName, setCommunityBuildName] = useState('');
   const [isPostingToCommunity, setIsPostingToCommunity] = useState(false);
   const [selectedGamemodes, setSelectedGamemodes] = useState(['All Modes']); // Default to "All Modes"
-  const [showRelicPicker, setShowRelicPicker] = useState(false);
   const [abilityLevelingOrder, setAbilityLevelingOrder] = useState([]); // Array of ability keys like ['A01', 'A02', 'A03']
   const [startingAbilityOrder, setStartingAbilityOrder] = useState(Array(5).fill(null)); // Array of 5 ability keys for first 5 levels
+  /** 'starting' | 'max' — single section tabs for ability level UI */
+  const [abilityOrderTab, setAbilityOrderTab] = useState('starting');
+  /** 'tips' | 'swaps' — Build Tips & Notes sub-section */
+  const [buildNotesTab, setBuildNotesTab] = useState('tips');
+  /** Expandable total stats under Select God */
+  const [godStatsExpanded, setGodStatsExpanded] = useState(false);
   const [buildTips, setBuildTips] = useState(['']); // Tips/notes array - allow multiple tips
   const [itemSwaps, setItemSwaps] = useState([]); // Array of { item: {name, icon}, reasoning: string }
   const [showSwapModal, setShowSwapModal] = useState(false);
@@ -97,9 +282,12 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  
+  const [botDraftHydrating, setBotDraftHydrating] = useState(() => !!botSharedDraftToken);
+  const [botDraftSavePending, setBotDraftSavePending] = useState(false);
+
   // Check certification status on mount and periodically
   useEffect(() => {
+    if (botSharedDraftToken) return undefined;
     const checkCertificationStatus = async () => {
       try {
         const currentUser = await storage.getItem('currentUser');
@@ -130,7 +318,10 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
           if (hasApprovedRequest) {
             setIsUserCertified(true);
             await storage.setItem(`certificationStatus_${currentUser}`, 'approved');
-            console.log('✅ User is certified (has approved request):', currentUser, 'data:', approvedData);
+            if (!certifiedStatusLogOnce.has(currentUser)) {
+              certifiedStatusLogOnce.add(currentUser);
+              console.log('✅ User is certified (has approved request):', currentUser, 'data:', approvedData);
+            }
             return;
           }
           
@@ -156,7 +347,10 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
             setIsUserCertified(true);
             // Also save to local storage
             await storage.setItem(`certificationStatus_${currentUser}`, 'approved');
-            console.log('✅ User is certified:', currentUser);
+            if (!certifiedStatusLogOnce.has(currentUser)) {
+              certifiedStatusLogOnce.add(currentUser);
+              console.log('✅ User is certified:', currentUser);
+            }
           } else {
             setIsUserCertified(false);
             // Update local storage with current status
@@ -188,9 +382,9 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
     
     // Refresh certification status every 10 seconds (more frequent for faster updates)
     const interval = setInterval(checkCertificationStatus, 10000);
-    
+
     return () => clearInterval(interval);
-  }, []);
+  }, [botSharedDraftToken]);
   
   // Randomizer state
   const [godRerolls, setGodRerolls] = useState(3);
@@ -213,69 +407,6 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
           if (isMounted) {
             setLocalBuilds(data);
             setDataLoading(false);
-            
-            // Check if we need to load a saved build
-            try {
-              const savedBuildStr = IS_WEB && typeof window !== 'undefined' && window.localStorage
-                ? window.localStorage.getItem('loadSavedBuild')
-                : await storage.getItem('loadSavedBuild');
-              
-              if (savedBuildStr) {
-                const savedBuild = JSON.parse(savedBuildStr);
-                if (savedBuild.godInternalName) {
-                  const allGods = flattenAny(data.gods);
-                  const god = allGods.find(g => (g.internalName || '').toLowerCase() === (savedBuild.godInternalName || '').toLowerCase());
-                  if (god) {
-                    setSelectedGod(god);
-                  }
-                }
-                if (savedBuild.items && Array.isArray(savedBuild.items)) {
-                  // Ensure we have 7 slots
-                  const itemsArray = [...savedBuild.items];
-                  while (itemsArray.length < 7) {
-                    itemsArray.push(null);
-                  }
-                  setSelectedItems(itemsArray.slice(0, 7));
-                }
-                if (savedBuild.startingItems && Array.isArray(savedBuild.startingItems)) {
-                  // Ensure we have 5 slots
-                  const startingItemsArray = [...savedBuild.startingItems];
-                  while (startingItemsArray.length < 5) {
-                    startingItemsArray.push(null);
-                  }
-                  setStartingItems(startingItemsArray.slice(0, 5));
-                }
-                if (savedBuild.roles && Array.isArray(savedBuild.roles)) {
-                  setSelectedRoles(savedBuild.roles);
-                }
-                if (savedBuild.abilityLevelingOrder && Array.isArray(savedBuild.abilityLevelingOrder)) {
-                  setAbilityLevelingOrder(savedBuild.abilityLevelingOrder);
-                }
-                if (savedBuild.startingAbilityOrder && Array.isArray(savedBuild.startingAbilityOrder)) {
-                  // Ensure we have exactly 5 slots
-                  const orderArray = [...savedBuild.startingAbilityOrder];
-                  while (orderArray.length < 5) {
-                    orderArray.push(null);
-                  }
-                  setStartingAbilityOrder(orderArray.slice(0, 5));
-                }
-                if (savedBuild.godLevel) {
-                  setGodLevel(savedBuild.godLevel);
-                }
-                if (savedBuild.aspectActive !== undefined) {
-                  setAspectActive(savedBuild.aspectActive);
-                }
-                
-                // Clear the saved build flag
-                if (IS_WEB && typeof window !== 'undefined' && window.localStorage) {
-                  window.localStorage.removeItem('loadSavedBuild');
-                } else {
-                  await storage.removeItem('loadSavedBuild');
-                }
-              }
-            } catch (e) {
-              console.error('Error loading saved build:', e);
-            }
           }
         } catch (err) {
           if (isMounted) {
@@ -294,7 +425,7 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
   useEffect(() => {
     if (buildToEdit && localBuilds) {
       // Find the god
-      const allGods = flattenAny(localBuilds.gods);
+      const allGods = flattenBuildsGods(localBuilds.gods);
       const godInternalName = buildToEdit.god?.internalName || buildToEdit.god?.GodName || buildToEdit.god?.name;
       if (godInternalName) {
         const god = allGods.find(g => {
@@ -324,10 +455,10 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
         setStartingItems(startingItemsArray.slice(0, 5));
       }
 
-      // Load relic
-      if (buildToEdit.relic) {
-        setSelectedRelic(buildToEdit.relic);
-      }
+      const sr = buildToEdit.starting_relic || buildToEdit.startingRelic;
+      const fr = buildToEdit.final_relic || buildToEdit.finalRelic;
+      setStartingRelic(sr || null);
+      setFinalRelic(fr || buildToEdit.relic || null);
 
       // Load roles
       if (buildToEdit.roles && Array.isArray(buildToEdit.roles)) {
@@ -399,8 +530,14 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
     return a.flat(Infinity).filter(Boolean);
   }
 
-  const gods = localBuilds ? flattenAny(localBuilds.gods) : [];
-  const allItems = localBuilds ? flattenAny(localBuilds.items) : [];
+  const gods = useMemo(
+    () => (localBuilds ? flattenBuildsGods(localBuilds.gods) : []),
+    [localBuilds]
+  );
+  const allItems = useMemo(
+    () => (localBuilds ? flattenAny(localBuilds.items) : []),
+    [localBuilds]
+  );
 
   // Filter to only actual item objects
   const items = useMemo(() => {
@@ -417,6 +554,156 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
       return item.relic === true;
     });
   }, [allItems]);
+
+  const applyBuildSnapshot = useCallback(
+    (savedBuild) => {
+      if (!savedBuild || !localBuilds) return;
+      const godList = flattenBuildsGods(localBuilds.gods);
+      const god = resolveGodFromSnapshot(godList, savedBuild);
+      if (god) setSelectedGod(god);
+      if (savedBuild.items && Array.isArray(savedBuild.items)) {
+        const itemsArray = savedBuild.items.map((r) => resolveEquipRef(r, items));
+        while (itemsArray.length < 7) itemsArray.push(null);
+        setSelectedItems(itemsArray.slice(0, 7));
+      }
+      if (savedBuild.startingItems && Array.isArray(savedBuild.startingItems)) {
+        const startingItemsArray = savedBuild.startingItems.map((r) => resolveEquipRef(r, items));
+        while (startingItemsArray.length < 5) startingItemsArray.push(null);
+        setStartingItems(startingItemsArray.slice(0, 5));
+      }
+      if (savedBuild.roles && Array.isArray(savedBuild.roles)) {
+        setSelectedRoles(savedBuild.roles);
+      }
+      if (savedBuild.abilityLevelingOrder && Array.isArray(savedBuild.abilityLevelingOrder)) {
+        setAbilityLevelingOrder(savedBuild.abilityLevelingOrder);
+      }
+      if (savedBuild.startingAbilityOrder && Array.isArray(savedBuild.startingAbilityOrder)) {
+        const orderArray = [...savedBuild.startingAbilityOrder];
+        while (orderArray.length < 5) orderArray.push(null);
+        setStartingAbilityOrder(orderArray.slice(0, 5));
+      }
+      if (savedBuild.godLevel != null && savedBuild.godLevel !== '') {
+        const gl = Number(savedBuild.godLevel);
+        if (Number.isFinite(gl)) setGodLevel(Math.min(20, Math.max(1, Math.round(gl))));
+      }
+      if (savedBuild.aspectActive !== undefined) {
+        setAspectActive(savedBuild.aspectActive);
+      }
+      const sr = savedBuild.startingRelic || savedBuild.starting_relic;
+      const fr = savedBuild.finalRelic || savedBuild.final_relic || savedBuild.relic;
+      setStartingRelic(sr ? resolveRelicRef(sr, relics) : null);
+      setFinalRelic(fr ? resolveRelicRef(fr, relics) : null);
+      if (savedBuild.gamemodes && Array.isArray(savedBuild.gamemodes)) {
+        setSelectedGamemodes(savedBuild.gamemodes);
+      }
+      if (savedBuild.tips !== undefined) {
+        const tipsArray =
+          typeof savedBuild.tips === 'string'
+            ? savedBuild.tips.split('\n').filter((t) => t.trim())
+            : savedBuild.tips;
+        if (Array.isArray(tipsArray)) {
+          setBuildTips(tipsArray.length > 0 ? tipsArray : ['']);
+        }
+      }
+      if (savedBuild.itemSwaps && Array.isArray(savedBuild.itemSwaps)) {
+        setItemSwaps(savedBuild.itemSwaps);
+      }
+    },
+    [localBuilds, items, relics]
+  );
+
+  const customBuilderPresetHydratedRef = useRef(false);
+
+  useEffect(() => {
+    if (!localBuilds || buildToEdit) return;
+    if (botSharedDraftToken) return;
+    if (customBuilderPresetHydratedRef.current) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const loadOneStr =
+          IS_WEB && typeof window !== 'undefined' && window.localStorage
+            ? window.localStorage.getItem('loadSavedBuild')
+            : await storage.getItem('loadSavedBuild');
+        let presetStr = null;
+        if (!loadOneStr) {
+          presetStr =
+            IS_WEB && typeof window !== 'undefined' && window.localStorage
+              ? window.localStorage.getItem(CUSTOM_BUILDER_PRESET_KEY)
+              : await storage.getItem(CUSTOM_BUILDER_PRESET_KEY);
+        }
+        const rawStr = loadOneStr || presetStr;
+        let savedBuild;
+        let seededDefault = false;
+        let presetMigrated = false;
+        if (rawStr) {
+          savedBuild = JSON.parse(rawStr);
+          const up = maybeUpgradeMorganPresetItems(savedBuild);
+          savedBuild = up.build;
+          presetMigrated = up.persist;
+        } else {
+          savedBuild = {
+            ...DEFAULT_CUSTOM_BUILDER_PRESET,
+            items: DEFAULT_MORGAN_PRESET_ITEM_REFS.map((r) => ({ ...r })),
+          };
+          seededDefault = true;
+        }
+        if (cancelled) return;
+        applyBuildSnapshot(savedBuild);
+        if (!cancelled) {
+          customBuilderPresetHydratedRef.current = true;
+        }
+        if (loadOneStr) {
+          await persistCustomBuilderPresetObject(savedBuild);
+          if (IS_WEB && typeof window !== 'undefined' && window.localStorage) {
+            window.localStorage.removeItem('loadSavedBuild');
+          } else {
+            await storage.removeItem('loadSavedBuild');
+          }
+        } else if (seededDefault || presetMigrated) {
+          await persistCustomBuilderPresetObject(savedBuild);
+        }
+      } catch (e) {
+        console.error('Error restoring custom builder preset:', e);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [localBuilds, buildToEdit, applyBuildSnapshot, botSharedDraftToken]);
+
+  useEffect(() => {
+    if (!botSharedDraftToken || !localBuilds || buildToEdit) return undefined;
+    let cancelled = false;
+    (async () => {
+      setBotDraftHydrating(true);
+      try {
+        const { data, error } = await getDiscordBotSharedBuildPayload(botSharedDraftToken);
+        if (cancelled) return;
+        if (error) {
+          console.warn('Discord bot draft fetch:', error?.message || error);
+        } else if (data && typeof data === 'object' && Object.keys(data).length > 0) {
+          applyBuildSnapshot(data);
+        }
+      } catch (e) {
+        if (!cancelled) console.warn('Discord bot draft fetch exception:', e);
+      } finally {
+        if (!cancelled) {
+          customBuilderPresetHydratedRef.current = true;
+          setBotDraftHydrating(false);
+        }
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [botSharedDraftToken, localBuilds, buildToEdit, applyBuildSnapshot]);
+
+  useEffect(() => {
+    if (buildToEdit) {
+      customBuilderPresetHydratedRef.current = false;
+    }
+  }, [buildToEdit]);
 
   // Extract unique stats from items
   const availableStats = useMemo(() => {
@@ -589,31 +876,37 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
         locationX = Math.max(0, Math.min(sliderTrackWidth, locationX));
       }
       const percentage = Math.max(0, Math.min(1, locationX / sliderTrackWidth));
-      const newLevel = Math.round(1 + percentage * 19);
+      const newLevel = 1 + percentage * 19;
       setGodLevel(Math.max(1, Math.min(20, newLevel)));
     }
   }, [sliderTrackWidth, sliderTrackLayout, IS_WEB]);
 
-  const handleMouseMove = useCallback((e) => {
-    if (!isDragging || !IS_WEB) return;
-    e.preventDefault();
-    e.stopPropagation();
-    if (sliderTrackRef.current && sliderTrackWidth > 0) {
+  const applyGodLevelFromWebClientX = useCallback(
+    (clientX) => {
+      if (!sliderTrackRef.current || sliderTrackWidth <= 0) return;
       try {
-        const element = sliderTrackRef.current;
-        if (element && typeof element.getBoundingClientRect === 'function') {
-          const rect = element.getBoundingClientRect();
-          const clientX = e.clientX;
-          const locationX = Math.max(0, Math.min(sliderTrackWidth, clientX - rect.left));
-          const percentage = Math.max(0, Math.min(1, locationX / sliderTrackWidth));
-          const newLevel = Math.round(1 + percentage * 19);
-          setGodLevel(Math.max(1, Math.min(20, newLevel)));
-        }
-      } catch (err) {
-        // Ignore errors
+        const el = sliderTrackRef.current;
+        const rect = typeof el.getBoundingClientRect === 'function' ? el.getBoundingClientRect() : null;
+        if (!rect) return;
+        const x = Math.max(0, Math.min(sliderTrackWidth, clientX - rect.left));
+        const pct = Math.max(0, Math.min(1, x / sliderTrackWidth));
+        setGodLevel(Math.max(1, Math.min(20, 1 + pct * 19)));
+      } catch (_) {
+        /* ignore */
       }
-    }
-  }, [isDragging, sliderTrackWidth, IS_WEB]);
+    },
+    [sliderTrackWidth]
+  );
+
+  const handleMouseMove = useCallback(
+    (e) => {
+      if (!isDragging || !IS_WEB) return;
+      e.preventDefault();
+      e.stopPropagation();
+      applyGodLevelFromWebClientX(e.clientX);
+    },
+    [isDragging, IS_WEB, applyGodLevelFromWebClientX]
+  );
 
   const handleMouseUp = useCallback(() => {
     if (IS_WEB && isDragging) {
@@ -638,36 +931,79 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
     }
   }, [isDragging, IS_WEB, handleMouseMove, handleMouseUp]);
 
-  // Calculate base stats at max level (always level 20)
+  // Base god stats scale with godLevel (fractional 1–20 while dragging) using per-stat data
   const baseStats = useMemo(() => {
+    const readNum = (statData, key) => {
+      const v = statData[key];
+      if (v === undefined || v === null || v === '') return NaN;
+      const n = Number(v);
+      return Number.isFinite(n) ? n : NaN;
+    };
+
+    /** Interpolate each stat from its own level keys (1/20 only, or many), else rate+1. */
+    const getBaseStatValueForLevel = (statData, level) => {
+      const lv = Math.max(1, Math.min(20, Number(level) || 20));
+      const levelKeys = Object.keys(statData)
+        .filter((k) => /^\d+$/.test(k))
+        .map((k) => parseInt(k, 10))
+        .filter((n) => n >= 1 && n <= 20)
+        .sort((a, b) => a - b);
+
+      if (levelKeys.length >= 2) {
+        const first = levelKeys[0];
+        const last = levelKeys[levelKeys.length - 1];
+        if (lv <= first) return readNum(statData, String(first));
+        if (lv >= last) return readNum(statData, String(last));
+        let i = 0;
+        while (i < levelKeys.length - 1 && levelKeys[i + 1] < lv) {
+          i += 1;
+        }
+        const lo = levelKeys[i];
+        const hi = levelKeys[i + 1];
+        const vLo = readNum(statData, String(lo));
+        const vHi = readNum(statData, String(hi));
+        if (Number.isFinite(vLo) && Number.isFinite(vHi)) {
+          const t = (lv - lo) / (hi - lo);
+          return vLo + t * (vHi - vLo);
+        }
+      } else if (levelKeys.length === 1) {
+        const v = readNum(statData, String(levelKeys[0]));
+        if (Number.isFinite(v)) return v;
+      }
+
+      const v1 = readNum(statData, '1');
+      const rate = readNum(statData, 'rate');
+      if (Number.isFinite(v1) && Number.isFinite(rate)) {
+        return v1 + (lv - 1) * rate;
+      }
+      const v20 = readNum(statData, '20');
+      if (Number.isFinite(v1) && Number.isFinite(v20)) {
+        const t = (lv - 1) / 19;
+        return v1 + (v20 - v1) * t;
+      }
+      return Number.isFinite(v1) ? v1 : 0;
+    };
+
     const stats = {};
-    
+
     if (selectedGod && selectedGod.baseStats) {
       Object.keys(selectedGod.baseStats).forEach((statKey) => {
         const statData = selectedGod.baseStats[statKey];
         if (statData && typeof statData === 'object') {
-          // Always use level 20 stats (max level)
-          const statValue = statData['20'] || 0;
-          // Keep decimal precision for key combat stats like protections, attack speed, and basic damage.
-          // Other stats can be rounded to whole numbers for readability.
-          if (
-            statKey === 'PhysicalProtection' ||
-            statKey === 'MagicalProtection' ||
-            statKey === 'BaseAttackSpeed' ||
-            statKey === 'BasicDamage' ||
-            statKey === 'AttackSpeedPercent'
-          ) {
-            stats[statKey] = statValue;
+          const statValue = getBaseStatValueForLevel(statData, godLevel);
+          const n = Number(statValue);
+          if (statKey === 'BaseAttackSpeed' || statKey === 'AttackSpeedPercent') {
+            stats[statKey] = Number.isFinite(n) ? n : 0;
           } else {
-            stats[statKey] = Math.round(statValue);
+            stats[statKey] = Math.round(n);
           }
         } else if (statData !== null && statData !== undefined) {
-          // If it's a direct value (not an object), use it as is
-          stats[statKey] = statData;
+          const n = Number(statData);
+          stats[statKey] = Number.isFinite(n) ? Math.round(n) : statData;
         }
       });
     }
-    
+
     return stats;
   }, [selectedGod, godLevel]);
 
@@ -684,7 +1020,7 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
       'Magical Protection': 'MagicalProtection',
       'Physical Power': 'BasicDamage',
       'Magical Power': 'BasicDamage',
-      // Strength remains its own stat; we also add it into BasicDamage separately
+      // Rare legacy keys; total Attack Damage still uses STR/INT scaling from god.basic when present
       // Treat item attack speed as percent bonus that applies on top of base
       'Attack Speed': 'AttackSpeedPercent',
       'AttackSpeed': 'AttackSpeedPercent',
@@ -700,45 +1036,57 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
   const totalStats = useMemo(() => {
     const stats = { ...baseStats };
     
-    // Add item stats with normalized keys
-    selectedItems.forEach((item) => {
+    const addItemStats = (item) => {
       if (item && item.stats) {
         Object.keys(item.stats).forEach((itemKey) => {
           const normalizedKey = normalizeStatKey(itemKey);
           stats[normalizedKey] = (stats[normalizedKey] || 0) + (item.stats[itemKey] || 0);
         });
       }
-    });
+    };
+    startingItems.forEach(addItemStats);
+    selectedItems.forEach(addItemStats);
 
-    // Let Strength also contribute directly to Basic Attack Damage.
-    // This keeps Strength visible as its own stat while ensuring BasicDamage reflects STR from items.
-    const totalStrength = stats.Strength || 0;
-    if (totalStrength) {
-      stats.BasicDamage = (stats.BasicDamage || 0) + totalStrength;
-    }
-    
-    // Round stats for display where appropriate, but keep key combat stats as decimals
-    Object.keys(stats).forEach((key) => {
-      if (
-        key === 'PhysicalProtection' ||
-        key === 'MagicalProtection' ||
-        key === 'BaseAttackSpeed' ||
-        key === 'BasicDamage' ||
-        key === 'AttackSpeedPercent'
-      ) {
-        // Keep these with decimal precision for accurate comparison (attack speed, basic damage, protections)
-        stats[key] = stats[key] || 0;
-      } else {
-        stats[key] = Math.round(stats[key] || 0);
+    const equippedForPassives = [...startingItems, ...selectedItems].filter(Boolean);
+    const passiveBonuses = computeItemPassiveBonuses(equippedForPassives);
+    Object.keys(passiveBonuses).forEach((k) => {
+      const add = passiveBonuses[k];
+      if (typeof add === 'number' && Number.isFinite(add) && add !== 0) {
+        stats[k] = (stats[k] || 0) + add;
       }
     });
+
+    Object.keys(stats).forEach((key) => {
+      if (key === 'BaseAttackSpeed' || key === 'AttackSpeedPercent') return;
+      const v = stats[key];
+      if (typeof v === 'number' && Number.isFinite(v)) {
+        stats[key] = Math.round(v);
+      }
+    });
+
+    // Total basic / attack damage: flat (god BasicDamage + item flat bonuses) + STR/INT scaling from god.basic.
+    const flatAttack =
+      (stats.BasicDamage || 0) +
+      (stats['Attack Damage'] || 0) +
+      (stats['Basic Damage'] || 0);
+    const strPow = stats.Strength || 0;
+    const intPow = stats.Intelligence || 0;
+    const { strength: strCoeff, intelligence: intCoeff } = getBasicAttackPowerCoefficients(selectedGod);
+    if (strCoeff !== 0 || intCoeff !== 0) {
+      stats.BasicDamage = Math.round(flatAttack + strPow * strCoeff + intPow * intCoeff);
+    } else {
+      // No scaling data: preserve prior behavior (Strength adds flat to basics).
+      stats.BasicDamage = Math.round(flatAttack + strPow);
+    }
+    delete stats['Attack Damage'];
+    delete stats['Basic Damage'];
 
     // Combine base attack speed and total attack speed percent into a single effective Attack Speed stat.
     const baseAS = stats.BaseAttackSpeed || 0;
     const bonusASPercent = stats.AttackSpeedPercent || 0; // already in % units, e.g. 29.12
     if (baseAS) {
       const effectiveAS = baseAS * (1 + bonusASPercent / 100);
-      stats.AttackSpeedEffective = effectiveAS;
+      stats.AttackSpeedEffective = Number(effectiveAS.toFixed(2));
     }
 
     // We keep AttackSpeedPercent internally for possible future use, but we don't need to
@@ -748,64 +1096,31 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
     delete stats.BaseAttackSpeed;
     
     return stats;
-  }, [baseStats, selectedItems]);
+  }, [baseStats, selectedItems, startingItems, selectedGod]);
 
   // Calculate Effective Health Points
-  // Using the formula from smitecalculator:
-  // EHP = Health * (1 + (1 - ((100 * 100) / (Protection + 100) / 100)))
-  // Note: Order of operations matters - division is left-to-right
+  // EHP vs one damage type (no pen): Health * (100 + Prot) / 100 — same as Health / (100/(100+Prot))
   const effectiveHealth = useMemo(() => {
-    // Get HP - check multiple possible keys
     const hp = totalStats.MaxHealth || totalStats.Health || 0;
-    
-    // Get Physical Protection - use the exact value from totalStats (may be decimal)
     const physicalProtection = totalStats.PhysicalProtection || 0;
-    
-    // Get Magical Protection - use the exact value from totalStats (may be decimal)
     const magicalProtection = totalStats.MagicalProtection || 0;
-    
-    // Physical Effective Health using smitecalculator formula
-    // EHP = Health * (1 + (1 - ((100 * 100) / (Protection + 100) / 100)))
-    // Division is left-to-right: (100*100) / (prot+100) / 100
-    const phpInner = (100 * 100) / (physicalProtection + 100) / 100;
-    const php = hp * (1 + (1 - phpInner));
-    
-    // Magical Effective Health using smitecalculator formula
-    // EHP = Health * (1 + (1 - ((100 * 100) / (Protection + 100) / 100)))
-    // Division is left-to-right: (100*100) / (prot+100) / 100
-    const ehpInner = (100 * 100) / (magicalProtection + 100) / 100;
-    const ehp = hp * (1 + (1 - ehpInner));
-    
-    // Debug logging to help diagnose the 5-number difference
-    // Check if there's any difference in how protections are being used
-    if (__DEV__) {
-      console.log('EHP Calculation Debug:', {
-        hp,
-        physicalProtection,
-        magicalProtection,
-        phpInner,
-        ehpInner,
-        php: Math.round(php),
-        ehp: Math.round(ehp),
-        phpRaw: php,
-        ehpRaw: ehp,
-        phpFormula: `HP * (1 + (1 - ((100*100)/(${physicalProtection}+100)/100)))`,
-        ehpFormula: `HP * (1 + (1 - ((100*100)/(${magicalProtection}+100)/100)))`,
-      });
-    }
-    
-    return {
-      PHP: Math.round(php),
-      EHP: Math.round(ehp),
-    };
+
+    const php = Math.round((hp * (physicalProtection + 100)) / 100);
+    const ehp = Math.round((hp * (magicalProtection + 100)) / 100);
+
+    return { PHP: php, EHP: ehp };
   }, [totalStats]);
 
-  // Calculate total gold cost
+  // Build header gold: final slots + relics only (starting items are free for display)
   const totalGold = useMemo(() => {
-    return selectedItems.reduce((sum, item) => {
-      return sum + (item && item.totalCost ? item.totalCost : 0);
-    }, 0);
-  }, [selectedItems]);
+    let sum = 0;
+    selectedItems.forEach((item) => {
+      if (item && item.totalCost) sum += item.totalCost;
+    });
+    if (startingRelic?.totalCost) sum += startingRelic.totalCost;
+    if (finalRelic?.totalCost) sum += finalRelic.totalCost;
+    return sum;
+  }, [selectedItems, startingRelic, finalRelic]);
 
   const selectItem = (item, index) => {
     // Check if this is for a swap (index 999)
@@ -848,6 +1163,40 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
     setSelectedItemInfo(null);
   };
 
+  const clearAllBuildItemsAndRelics = useCallback(() => {
+    setStartingItems(Array(5).fill(null));
+    setSelectedItems(Array(7).fill(null));
+    setStartingRelic(null);
+    setFinalRelic(null);
+    setSelectedItemInfo(null);
+  }, []);
+
+  const updateGodLevelFromTrackX = useCallback(
+    (locationX) => {
+      const w = sliderTrackWidth;
+      if (!w || w <= 0) return;
+      const pct = Math.max(0, Math.min(1, locationX / w));
+      setGodLevel(Math.max(1, Math.min(20, 1 + pct * 19)));
+    },
+    [sliderTrackWidth]
+  );
+
+  const godLevelTrackPan = useMemo(
+    () =>
+      PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
+        onMoveShouldSetPanResponder: () => true,
+        onPanResponderTerminationRequest: () => false,
+        onPanResponderGrant: (evt) => {
+          updateGodLevelFromTrackX(evt.nativeEvent.locationX);
+        },
+        onPanResponderMove: (evt) => {
+          updateGodLevelFromTrackX(evt.nativeEvent.locationX);
+        },
+      }),
+    [updateGodLevelFromTrackX]
+  );
+
   const showItemInfo = (item, index) => {
     setSelectedItemInfo({ item, index });
   };
@@ -862,8 +1211,56 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
   const godName = selectedGod ? (selectedGod.name || selectedGod.GodName || selectedGod.title || selectedGod.displayName || 'Unknown') : 'Select God';
   const godIcon = selectedGod && (selectedGod.icon || selectedGod.GodIcon || (selectedGod.abilities && selectedGod.abilities.A01 && selectedGod.abilities.A01.icon));
 
+  /** Shared item icon for build slots (full-size or compact side-by-side layout). */
+  const renderItemIconOnly = (item, iconKey, compact, relicCompactSlot = false) => {
+    if (!item) return null;
+    const useRelicMobile = relicCompactSlot && compact && !IS_WEB;
+    const iconStyle = compact
+      ? useRelicMobile
+        ? styles.compactRelicSlotIcon
+        : styles.compactItemIcon
+      : styles.itemIcon;
+    const phStyle = compact
+      ? useRelicMobile
+        ? styles.compactRelicSlotPh
+        : styles.compactItemPh
+      : styles.itemIconPlaceholder;
+    const phTextStyle = compact ? styles.compactItemPhText : styles.itemIconPlaceholderText;
+    const localIcon = getLocalItemIcon(item.icon || item.internalName);
+    if (!localIcon) {
+      return (
+        <View style={phStyle}>
+          <Text style={phTextStyle}>?</Text>
+        </View>
+      );
+    }
+    const imageSource = localIcon.primary || localIcon;
+    const fallbackSource = localIcon.fallback;
+    const useFallback = failedItemIcons[iconKey];
+    if (fallbackSource && !useFallback) {
+      return (
+        <Image
+          source={imageSource}
+          style={iconStyle}
+          resizeMode="cover"
+          onError={() => {
+            setFailedItemIcons((prev) => ({ ...prev, [iconKey]: true }));
+          }}
+        />
+      );
+    }
+    if (fallbackSource && useFallback) {
+      return <Image source={fallbackSource} style={iconStyle} resizeMode="cover" />;
+    }
+    return <Image source={imageSource} style={iconStyle} resizeMode="cover" />;
+  };
+
+  const relicToPayload = (r) =>
+    r ? { name: r.name || r.internalName, internalName: r.internalName, icon: r.icon } : null;
+
   // Stat display names
   const statDisplayNames = {
+    BasicDamage: 'Attack Damage',
     health: 'Health',
     mana: 'Mana',
     physicalProtection: 'Physical Protection',
@@ -879,6 +1276,105 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
     lifesteal: 'Lifesteal',
     cooldownReduction: 'Cooldown Reduction',
     critChance: 'Critical Strike Chance',
+    PercentMagicalPenetration: '% Magical Penetration',
+    PercentPhysicalPenetration: '% Physical Penetration',
+  };
+
+  const renderTotalStatsGrid = () => {
+    const statOrder = [
+      'AttackSpeedEffective',
+      'BasicDamage',
+      'MaxHealth',
+      'HealthPerSecond',
+      'MaxMana',
+      'ManaPerSecond',
+      'PhysicalProtection',
+      'MagicalProtection',
+    ];
+    const allStats = Object.keys(totalStats).filter(
+      (key) => (totalStats[key] !== 0 || baseStats[key]) && key !== 'BaseAttackSpeed'
+    );
+    const orderedStats = statOrder.filter((key) => allStats.includes(key));
+    const remainingStats = allStats.filter((key) => !statOrder.includes(key)).sort();
+    const finalStats = [];
+    orderedStats.forEach((statKey) => {
+      finalStats.push(statKey);
+      if (statKey === 'PhysicalProtection' && (totalStats.MaxHealth || totalStats.Health)) {
+        finalStats.push('__PhysicalEHP__');
+      }
+      if (statKey === 'MagicalProtection' && (totalStats.MaxHealth || totalStats.Health)) {
+        finalStats.push('__MagicalEHP__');
+      }
+    });
+    finalStats.push(...remainingStats);
+
+    return finalStats.map((statKey) => {
+      if (statKey === '__PhysicalEHP__') {
+        return (
+          <View key="PhysicalEHP" style={styles.statItem}>
+            <Text style={[styles.statLabel, { color: '#ef4444' }]}>Physical EHP</Text>
+            <Text style={[styles.statValue, { color: '#ef4444' }]}>
+              {effectiveHealth.PHP.toLocaleString()}
+            </Text>
+          </View>
+        );
+      }
+      if (statKey === '__MagicalEHP__') {
+        return (
+          <View key="MagicalEHP" style={styles.statItem}>
+            <Text style={[styles.statLabel, { color: '#a855f7' }]}>Magical EHP</Text>
+            <Text style={[styles.statValue, { color: '#a855f7' }]}>
+              {effectiveHealth.EHP.toLocaleString()}
+            </Text>
+          </View>
+        );
+      }
+      let statColor = '#94a3b8';
+      const statName = (statDisplayNames[statKey] || statKey).toLowerCase();
+      const statKeyLower = statKey.toLowerCase();
+      if (statName.includes('health') || statKeyLower.includes('health') || statName.includes('hp5') || statKeyLower.includes('healthper')) {
+        statColor = '#22c55e';
+      } else if (statName.includes('mana') || statKeyLower.includes('mana') || statName.includes('mp5') || statKeyLower.includes('manaper')) {
+        statColor = '#3b82f6';
+      } else if (statName.includes('physical protection') || statKeyLower.includes('physicalprotection')) {
+        statColor = '#ef4444';
+      } else if (statName.includes('magical protection') || statKeyLower.includes('magicalprotection')) {
+        statColor = '#a855f7';
+      } else if (statName.includes('physical power') || statKeyLower.includes('basicdamage')) {
+        statColor = '#f97316';
+      } else if (statName.includes('magical power') || statKeyLower.includes('magicalpower')) {
+        statColor = '#ec4899';
+      } else if (statName.includes('attack speed') || statKeyLower.includes('attackspeed') || statKeyLower.includes('baseattackspeed')) {
+        statColor = '#f97316';
+      } else if (statName.includes('movement speed') || statKeyLower.includes('movementspeed')) {
+        statColor = '#10b981';
+      } else if (statName.includes('penetration') || statKeyLower.includes('penetration')) {
+        statColor = '#ef4444';
+      } else if (statName.includes('lifesteal') || statKeyLower.includes('lifesteal')) {
+        statColor = '#84cc16';
+      } else if (statName.includes('cooldown') || statKeyLower.includes('cooldown')) {
+        statColor = '#0ea5e9';
+      } else if (statName.includes('critical') || statKeyLower.includes('critical') || statName.includes('crit')) {
+        statColor = '#f97316';
+      } else if (statName.includes('strength') || statKeyLower.includes('strength')) {
+        statColor = '#facc15';
+      } else if (statName.includes('intelligence') || statKeyLower.includes('intelligence')) {
+        statColor = '#a855f7';
+      }
+      const raw = totalStats[statKey];
+      let displayValue = raw;
+      if (statKey === 'AttackSpeedEffective') {
+        displayValue = typeof raw === 'number' && Number.isFinite(raw) ? raw.toFixed(2) : raw;
+      } else if (typeof raw === 'number' && Number.isFinite(raw)) {
+        displayValue = Math.round(raw);
+      }
+      return (
+        <View key={statKey} style={styles.statItem}>
+          <Text style={[styles.statLabel, { color: statColor }]}>{statDisplayNames[statKey] || statKey}</Text>
+          <Text style={[styles.statValue, { color: statColor }]}>{displayValue}</Text>
+        </View>
+      );
+    });
   };
 
   // Load saved builds
@@ -900,7 +1396,48 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
     loadSavedBuilds();
   }, []);
 
-  if (dataLoading) {
+  const renderBuilderRoleChips = () =>
+    BUILDER_ROLE_OPTIONS.map((role) => {
+      const isSelected = selectedRoles.includes(role);
+      const isDisabled = !isSelected && selectedRoles.length >= 4;
+      const iconSrc = getRoleIcon(role);
+      return (
+        <TouchableOpacity
+          key={role}
+          style={[
+            styles.inlineRoleChip,
+            isSelected && styles.inlineRoleChipSelected,
+            isDisabled && styles.inlineRoleChipDisabled,
+          ]}
+          onPress={() => {
+            if (isSelected) {
+              setSelectedRoles((prev) => prev.filter((r) => r !== role));
+            } else if (!isDisabled) {
+              setSelectedRoles((prev) => [...prev, role]);
+            }
+          }}
+          disabled={isDisabled}
+          activeOpacity={1}
+          accessibilityLabel={`${role} role${isSelected ? ', selected' : ''}`}
+        >
+          {iconSrc ? (
+            <Image source={iconSrc} style={styles.inlineRoleChipIcon} contentFit="contain" />
+          ) : null}
+          <Text
+            style={[
+              styles.inlineRoleChipText,
+              isSelected && styles.inlineRoleChipTextSelected,
+              isDisabled && styles.inlineRoleChipTextDisabled,
+            ]}
+            numberOfLines={1}
+          >
+            {role}
+          </Text>
+        </TouchableOpacity>
+      );
+    });
+
+  if (dataLoading || (botSharedDraftToken && botDraftHydrating)) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#1e90ff" />
@@ -912,890 +1449,997 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
-        {/* Load Saved Build Button */}
-        <View style={styles.section}>
-          <TouchableOpacity
-            style={styles.loadBuildButton}
-            onPress={() => setShowLoadBuildModal(true)}
-          >
-            <Text style={styles.loadBuildButtonText}>Load Saved Build</Text>
-          </TouchableOpacity>
-        </View>
+        {botSharedDraftToken ? (
+          <View style={styles.section}>
+            <View style={styles.botDraftBanner}>
+              <Text style={styles.botDraftBannerTitle}>Discord bot draft</Text>
+              <Text style={styles.botDraftBannerText}>
+                This page is only for people with the link. Edits are not posted to community builds — use Save to
+                sync JSON for your bot to read from Supabase.
+              </Text>
+            </View>
+          </View>
+        ) : null}
 
-        {/* God Selection */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Select God</Text>
-          <View style={styles.godSelectorContainer}>
+        {/* Load Saved Build Button */}
+        {!botSharedDraftToken ? (
+          <View style={styles.section}>
             <TouchableOpacity
-              style={styles.godSelector}
-              onPress={() => setShowGodPicker(true)}
-              activeOpacity={0.7}
+              style={styles.loadBuildButton}
+              onPress={() => setShowLoadBuildModal(true)}
             >
-              {godIcon ? (
-                <Image
-                  source={getLocalGodAsset(godIcon)}
-                  style={styles.godIcon}
-                  resizeMode="cover"
-                  accessibilityLabel={selectedGod ? `${selectedGod.name || selectedGod.GodName || 'God'} icon` : 'God icon'}
-                />
-              ) : (
-                <View style={styles.godIconPlaceholder}>
-                  <Text style={styles.godIconPlaceholderText}>?</Text>
-                </View>
-              )}
-              <Text style={styles.godNameText}>{godName}</Text>
+              <Text style={styles.loadBuildButtonText}>Load Saved Build</Text>
             </TouchableOpacity>
-            {/* Aspect Slot */}
-            {selectedGod && selectedGod.aspect && (
+          </View>
+        ) : null}
+
+        {/* God Selection + roles (roles when a god is selected) */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Select God / Role</Text>
+          {selectedGod ? (
+            <Text style={styles.godRoleSubtitle} numberOfLines={2}>
+              Select up to 4 roles this build can be played in
+            </Text>
+          ) : null}
+          <View style={styles.godRoleBlock}>
+            <View
+              style={[
+                styles.godSelectorContainer,
+                selectedGod && layoutGodRoleInline && styles.godSelectorContainerInline,
+              ]}
+            >
               <TouchableOpacity
                 style={[
-                  styles.aspectSlotButton,
-                  aspectActive && styles.aspectSlotButtonActive
+                  styles.godSelector,
+                  selectedGod && layoutGodRoleInline && styles.godSelectorWhenInline,
                 ]}
-                onPress={() => setAspectActive(!aspectActive)}
+                onPress={() => setShowGodPicker(true)}
                 activeOpacity={0.7}
               >
-                {(() => {
-                  const aspectIcon = selectedGod.aspect.icon;
-                  if (aspectIcon) {
-                    const localIcon = getLocalGodAsset(aspectIcon);
-                    if (localIcon) {
-                      return (
-                        <Image
-                          source={localIcon}
-                          style={styles.aspectSlotIcon}
-                          resizeMode="cover"
-                        />
-                      );
-                    }
-                  }
-                  return (
-                    <View style={styles.aspectSlotIconPlaceholder}>
-                      <Text style={styles.aspectSlotIconPlaceholderText}>A</Text>
-                    </View>
-                  );
-                })()}
-                <Text style={styles.aspectSlotLabel}>Aspect</Text>
-                {aspectActive && (
-                  <View style={styles.aspectActiveIndicatorSmall}>
-                    <Text style={styles.aspectActiveTextSmall}>✓</Text>
+                {godIcon ? (
+                  <Image
+                    source={getLocalGodAsset(godIcon)}
+                    style={styles.godIcon}
+                    resizeMode="cover"
+                    accessibilityLabel={selectedGod ? `${selectedGod.name || selectedGod.GodName || 'God'} icon` : 'God icon'}
+                  />
+                ) : (
+                  <View style={styles.godIconPlaceholder}>
+                    <Text style={styles.godIconPlaceholderText}>?</Text>
                   </View>
                 )}
+                <Text style={styles.godNameText}>{godName}</Text>
               </TouchableOpacity>
-            )}
-          </View>
-        </View>
-
-        {/* Starting Items */}
-        {selectedGod && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Starting Items</Text>
-            {/* Starter item on its own row */}
-            <View style={styles.starterStartingItemRow}>
-              <View style={styles.startingItemSlot}>
-                <Text style={styles.starterItemLabel}>Starter</Text>
+              {selectedGod && layoutGodRoleInline ? (
+                <View style={styles.inlineRoleCluster}>{renderBuilderRoleChips()}</View>
+              ) : null}
+              {/* Aspect Slot */}
+              {selectedGod && selectedGod.aspect && (
                 <TouchableOpacity
-                  style={styles.startingItemSlotButton}
-                  onPress={() => {
-                    if (startingItems[0]) {
-                      showItemInfo(startingItems[0], 100);
-                    } else {
-                      setShowItemPicker(100);
-                    }
-                  }}
+                  style={[
+                    styles.aspectSlotButton,
+                    aspectActive && styles.aspectSlotButtonActive,
+                  ]}
+                  onPress={() => setAspectActive(!aspectActive)}
                   activeOpacity={0.7}
                 >
-                  {startingItems[0] ? (
-                    <>
-                      {(() => {
-                        const localIcon = getLocalItemIcon(startingItems[0].icon || startingItems[0].internalName);
-                        if (!localIcon) {
-                          return (
-                            <View style={styles.startingItemIconPlaceholder}>
-                              <Text style={styles.startingItemIconPlaceholderText}>?</Text>
-                            </View>
-                          );
-                        }
-                        
-                        const imageSource = localIcon.primary || localIcon;
-                        const fallbackSource = localIcon.fallback;
-                        const iconKey = `starting-item-${startingItems[0].internalName || startingItems[0].name}-0`;
-                        const useFallback = failedItemIcons[iconKey];
-                        
-                        if (fallbackSource && !useFallback) {
-                          return (
-                            <Image
-                              source={imageSource}
-                              style={styles.startingItemIcon}
-                              resizeMode="cover"
-                              onError={() => {
-                                setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
-                              }}
-                            />
-                          );
-                        }
-                        
-                        if (fallbackSource && useFallback) {
-                          return (
-                            <Image
-                              source={fallbackSource}
-                              style={styles.startingItemIcon}
-                              resizeMode="cover"
-                            />
-                          );
-                        }
-                        
+                  {(() => {
+                    const aspectIcon = selectedGod.aspect.icon;
+                    if (aspectIcon) {
+                      const localIcon = getLocalGodAsset(aspectIcon);
+                      if (localIcon) {
                         return (
                           <Image
-                            source={imageSource}
-                            style={styles.startingItemIcon}
+                            source={localIcon}
+                            style={styles.aspectSlotIcon}
                             resizeMode="cover"
                           />
                         );
-                      })()}
-                      <Text style={styles.startingItemName} numberOfLines={2}>
-                        {startingItems[0].name || startingItems[0].internalName}
-                      </Text>
-                    </>
-                  ) : (
-                    <View style={styles.startingItemSlotPlaceholder}>
-                      <Text style={styles.startingItemSlotPlaceholderText}>+</Text>
+                      }
+                    }
+                    return (
+                      <View style={styles.aspectSlotIconPlaceholder}>
+                        <Text style={styles.aspectSlotIconPlaceholderText}>A</Text>
+                      </View>
+                    );
+                  })()}
+                  <Text style={styles.aspectSlotLabel}>Aspect</Text>
+                  {aspectActive && (
+                    <View style={styles.aspectActiveIndicatorSmall}>
+                      <Text style={styles.aspectActiveTextSmall}>✓</Text>
                     </View>
                   )}
                 </TouchableOpacity>
-              </View>
+              )}
             </View>
-            {/* Rest of starting items (4 on one row) */}
-            <View style={styles.startingItemsContainer}>
-              {startingItems.slice(1).map((item, index) => (
-                <View key={index + 1} style={styles.startingItemSlot}>
+            {selectedGod && !layoutGodRoleInline ? (
+              <ScrollView
+                horizontal
+                nestedScrollEnabled
+                showsHorizontalScrollIndicator={false}
+                style={styles.inlineRoleScroll}
+                contentContainerStyle={styles.inlineRoleScrollContent}
+              >
+                {renderBuilderRoleChips()}
+              </ScrollView>
+            ) : null}
+          </View>
+          {selectedGod && (
+            <View style={styles.godStatsExpandableWrap}>
+              <TouchableOpacity
+                style={styles.godStatsExpandHeader}
+                onPress={() => setGodStatsExpanded((v) => !v)}
+                activeOpacity={0.7}
+              >
+                <View style={styles.godStatsExpandHeaderTitleWrap}>
+                  <Text style={styles.godStatsExpandHeaderTitle}>Total stats</Text>
+                  <Text style={styles.godStatsExpandHeaderMeta}> Lv {Math.round(godLevel)}</Text>
+                </View>
+                <Text style={styles.godStatsExpandChevron}>{godStatsExpanded ? '▲' : '▼'}</Text>
+              </TouchableOpacity>
+              {godStatsExpanded ? (
+                <View style={styles.statsExpandedBody}>
+                  <View style={styles.statsEmbedLevelBlock}>
+                    <Text style={styles.statsEmbedLevelHeading}>Base level (1-20) — drag track or use +/-</Text>
+                    <View style={styles.statsEmbedLevelRow}>
+                      <TouchableOpacity
+                        style={[
+                          styles.statsEmbedLevelBtn,
+                          Math.round(godLevel) <= 1 && styles.statsEmbedLevelBtnDisabled,
+                        ]}
+                        onPress={() => setGodLevel((g) => Math.max(1, Math.round(g) - 1))}
+                        disabled={Math.round(godLevel) <= 1}
+                        activeOpacity={0.7}
+                      >
+                        <Text style={styles.statsEmbedLevelBtnText}>−</Text>
+                      </TouchableOpacity>
+                      <View
+                        ref={sliderTrackRef}
+                        style={styles.statsEmbedSliderHit}
+                        onLayout={(e) => setSliderTrackWidth(e.nativeEvent.layout.width)}
+                        {...(!IS_WEB ? godLevelTrackPan.panHandlers : {})}
+                        {...(IS_WEB
+                          ? {
+                              onMouseDown: (e) => {
+                                e.preventDefault?.();
+                                applyGodLevelFromWebClientX(e.clientX);
+                                setIsDragging(true);
+                              },
+                            }
+                          : {})}
+                      >
+                        <View style={styles.statsEmbedSliderRail} pointerEvents="none">
+                          <View
+                            style={[
+                              styles.statsEmbedSliderFill,
+                              { width: `${((godLevel - 1) / 19) * 100}%` },
+                            ]}
+                          />
+                          <View
+                            style={[
+                              styles.statsEmbedSliderThumb,
+                              { left: `${((godLevel - 1) / 19) * 100}%` },
+                            ]}
+                          />
+                        </View>
+                      </View>
+                      <TouchableOpacity
+                        style={[
+                          styles.statsEmbedLevelBtn,
+                          Math.round(godLevel) >= 20 && styles.statsEmbedLevelBtnDisabled,
+                        ]}
+                        onPress={() => setGodLevel((g) => Math.min(20, Math.round(g) + 1))}
+                        disabled={Math.round(godLevel) >= 20}
+                        activeOpacity={0.7}
+                      >
+                        <Text style={styles.statsEmbedLevelBtnText}>+</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                  <View style={styles.statsGrid}>{renderTotalStatsGrid()}</View>
+                </View>
+              ) : null}
+            </View>
+          )}
+        </View>
+
+        {/* Starting items + Final build (side by side when a god is selected; compact slots) */}
+        <View style={styles.section}>
+          <View style={styles.buildSectionToolbar}>
+            <TouchableOpacity
+              style={styles.buildClearAllBtnInline}
+              onPress={clearAllBuildItemsAndRelics}
+              activeOpacity={0.7}
+              accessibilityLabel="Clear all starting items, final build items, and relics"
+            >
+              {IS_WEB ? (
+                <Text style={styles.buildClearAllBtnLabelWeb}>Clear all</Text>
+              ) : (
+                <Text style={styles.buildClearAllBtnEmoji}>🗑</Text>
+              )}
+            </TouchableOpacity>
+          </View>
+          <View style={styles.buildItemsHeaderRow}>
+            <Text style={styles.buildItemsHeaderTitle}>Build</Text>
+            <View style={styles.buildItemsHeaderGold}>
+              <Image source={GOLD_ICON} style={styles.buildItemsHeaderGoldIcon} contentFit="contain" />
+              <Text style={styles.buildItemsHeaderGoldText}>
+                {totalGold.toLocaleString()} gold
+              </Text>
+            </View>
+          </View>
+          {!selectedGod ? (
+            <>
+              <Text style={styles.sectionTitle}>Final build</Text>
+              <View style={styles.starterItemRow}>
+                <View style={styles.itemSlot}>
+                  <Text style={styles.starterItemLabel}>S</Text>
                   <TouchableOpacity
-                    style={styles.startingItemSlotButton}
+                    style={styles.itemSlotButton}
                     onPress={() => {
-                      if (item) {
-                        showItemInfo(item, index + 101); // Use offset to distinguish from regular items (101-104)
-                      } else {
-                        setShowItemPicker(index + 101); // Use offset for starting items (101-104)
-                      }
+                      if (selectedItems[0]) showItemInfo(selectedItems[0], 0);
+                      else setShowItemPicker(0);
                     }}
                     activeOpacity={0.7}
                   >
-                    {item ? (
+                    {selectedItems[0] ? (
                       <>
-                        {(() => {
-                          const localIcon = getLocalItemIcon(item.icon || item.internalName);
-                          if (!localIcon) {
-                            return (
-                              <View style={styles.startingItemIconPlaceholder}>
-                                <Text style={styles.startingItemIconPlaceholderText}>?</Text>
-                              </View>
-                            );
-                          }
-                          
-                          const imageSource = localIcon.primary || localIcon;
-                          const fallbackSource = localIcon.fallback;
-                          const iconKey = `starting-item-${item.internalName || item.name}-${index}`;
-                          const useFallback = failedItemIcons[iconKey];
-                          
-                          if (fallbackSource && !useFallback) {
-                            return (
-                              <Image
-                                source={imageSource}
-                                style={styles.startingItemIcon}
-                                resizeMode="cover"
-                                onError={() => {
-                                  setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
-                                }}
-                              />
-                            );
-                          }
-                          
-                          if (fallbackSource && useFallback) {
-                            return (
-                              <Image
-                                source={fallbackSource}
-                                style={styles.startingItemIcon}
-                                resizeMode="cover"
-                              />
-                            );
-                          }
-                          
-                          return (
-                            <Image
-                              source={imageSource}
-                              style={styles.startingItemIcon}
-                              resizeMode="cover"
-                            />
-                          );
-                        })()}
-                        <Text style={styles.startingItemName} numberOfLines={2}>
-                          {item.name || item.internalName}
+                        {renderItemIconOnly(
+                          selectedItems[0],
+                          `item-${selectedItems[0].internalName || selectedItems[0].name}-0`,
+                          false
+                        )}
+                        <Text style={styles.itemName} numberOfLines={2}>
+                          {selectedItems[0].name || selectedItems[0].internalName}
                         </Text>
                       </>
                     ) : (
-                      <View style={styles.startingItemSlotPlaceholder}>
-                        <Text style={styles.startingItemSlotPlaceholderText}>+</Text>
+                      <View style={styles.itemSlotPlaceholder}>
+                        <Text style={styles.itemSlotPlaceholderText}>+</Text>
+                        <Text style={styles.itemSlotNumber}>S</Text>
                       </View>
                     )}
                   </TouchableOpacity>
                 </View>
-              ))}
-            </View>
-          </View>
-        )}
-
-        {/* Item Slots */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Build Items</Text>
-          {/* Starter Item - First item on its own row */}
-          <View style={styles.starterItemRow}>
-            <View style={styles.itemSlot}>
-              <Text style={styles.starterItemLabel}>Starter</Text>
-              <TouchableOpacity
-                style={styles.itemSlotButton}
-                onPress={() => {
-                  if (selectedItems[0]) {
-                    showItemInfo(selectedItems[0], 0);
-                  } else {
-                    setShowItemPicker(0);
-                  }
-                }}
-                activeOpacity={0.7}
-              >
-                {selectedItems[0] ? (
-                  <>
-                    {(() => {
-                      const localIcon = getLocalItemIcon(selectedItems[0].icon || selectedItems[0].internalName);
-                      if (!localIcon) {
-                        return (
-                          <View style={styles.itemIconPlaceholder}>
-                            <Text style={styles.itemIconPlaceholderText}>?</Text>
-                          </View>
-                        );
-                      }
-                      
-                      const imageSource = localIcon.primary || localIcon;
-                      const fallbackSource = localIcon.fallback;
-                      const iconKey = `item-${selectedItems[0].internalName || selectedItems[0].name}-0`;
-                      const useFallback = failedItemIcons[iconKey];
-                      
-                      if (fallbackSource && !useFallback) {
-                        return (
-                          <Image
-                            source={imageSource}
-                            style={styles.itemIcon}
-                            resizeMode="cover"
-                            onError={() => {
-                              setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
-                            }}
-                          />
-                        );
-                      }
-                      
-                      if (fallbackSource && useFallback) {
-                        return (
-                          <Image
-                            source={fallbackSource}
-                            style={styles.itemIcon}
-                            resizeMode="cover"
-                          />
-                        );
-                      }
-                      
-                      return (
-                        <Image
-                          source={imageSource}
-                          style={styles.itemIcon}
-                          resizeMode="cover"
-                        />
-                      );
-                    })()}
-                    <Text style={styles.itemName} numberOfLines={2}>
-                      {selectedItems[0].name || selectedItems[0].internalName}
-                    </Text>
-                  </>
-                ) : (
-                  <View style={styles.itemSlotPlaceholder}>
-                    <Text style={styles.itemSlotPlaceholderText}>+</Text>
-                    <Text style={styles.itemSlotNumber}>1</Text>
-                  </View>
-                )}
-              </TouchableOpacity>
-            </View>
-          </View>
-          {/* Rest of the items */}
-          <View style={styles.itemSlotsContainer}>
-            {selectedItems.slice(1).map((item, index) => (
-              <View key={index + 1} style={styles.itemSlot}>
-                <TouchableOpacity
-                  style={styles.itemSlotButton}
-                  onPress={() => {
-                    if (item) {
-                      showItemInfo(item, index + 1);
-                    } else {
-                      setShowItemPicker(index + 1);
-                    }
-                  }}
-                  activeOpacity={0.7}
-                >
-                  {item ? (
-                    <>
-                      {(() => {
-                        const localIcon = getLocalItemIcon(item.icon || item.internalName);
-                        if (!localIcon) {
-                          return (
-                            <View style={styles.itemIconPlaceholder}>
-                              <Text style={styles.itemIconPlaceholderText}>?</Text>
-                            </View>
-                          );
-                        }
-                        
-                        const imageSource = localIcon.primary || localIcon;
-                        const fallbackSource = localIcon.fallback;
-                        const iconKey = `item-${item.internalName || item.name}-${index}`;
-                        const useFallback = failedItemIcons[iconKey];
-                        
-                        if (fallbackSource && !useFallback) {
-                          return (
-                            <Image
-                              source={imageSource}
-                              style={styles.itemIcon}
-                              resizeMode="cover"
-                              onError={() => {
-                                setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
-                              }}
-                            />
-                          );
-                        }
-                        
-                        if (fallbackSource && useFallback) {
-                          return (
-                            <Image
-                              source={fallbackSource}
-                              style={styles.itemIcon}
-                              resizeMode="cover"
-                            />
-                          );
-                        }
-                        
-                        return (
-                          <Image
-                            source={imageSource}
-                            style={styles.itemIcon}
-                            resizeMode="cover"
-                          />
-                        );
-                      })()}
-                      <Text style={styles.itemName} numberOfLines={2}>
-                        {item.name || item.internalName}
-                      </Text>
-                    </>
-                  ) : (
-                    <View style={styles.itemSlotPlaceholder}>
-                      <Text style={styles.itemSlotPlaceholderText}>+</Text>
-                      <Text style={styles.itemSlotNumber}>{index + 1}</Text>
-                    </View>
-                  )}
-                </TouchableOpacity>
               </View>
-            ))}
-          </View>
-        </View>
-
-        {/* Relic Selection */}
-        {selectedGod && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Relic</Text>
-            <TouchableOpacity
-              style={styles.relicSlot}
-              onPress={() => setShowRelicPicker(true)}
-              activeOpacity={0.7}
-            >
-              {selectedRelic ? (
-                <>
-                  {(() => {
-                    const localIcon = getLocalItemIcon(selectedRelic.icon || selectedRelic.internalName);
-                    if (!localIcon) {
-                      return (
-                        <View style={styles.relicIconPlaceholder}>
-                          <Text style={styles.relicIconPlaceholderText}>?</Text>
-                        </View>
-                      );
-                    }
-                    
-                    const imageSource = localIcon.primary || localIcon;
-                    const fallbackSource = localIcon.fallback;
-                    const iconKey = `relic-${selectedRelic.internalName || selectedRelic.name}`;
-                    const useFallback = failedItemIcons[iconKey];
-                    
-                    if (fallbackSource && !useFallback) {
-                      return (
-                        <Image
-                          source={imageSource}
-                          style={styles.relicIcon}
-                          resizeMode="cover"
-                          onError={() => {
-                            setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
-                          }}
-                        />
-                      );
-                    }
-                    
-                    if (fallbackSource && useFallback) {
-                      return (
-                        <Image
-                          source={fallbackSource}
-                          style={styles.relicIcon}
-                          resizeMode="cover"
-                        />
-                      );
-                    }
-                    
-                    return (
-                      <Image
-                        source={imageSource}
-                        style={styles.relicIcon}
-                        resizeMode="cover"
-                      />
-                    );
-                  })()}
-                  <Text style={styles.relicName}>{selectedRelic.name || selectedRelic.internalName}</Text>
-                  <TouchableOpacity
-                    style={styles.removeRelicButton}
-                    onPress={(e) => {
-                      e.stopPropagation();
-                      setSelectedRelic(null);
-                    }}
-                  >
-                    <Text style={styles.removeRelicButtonText}>✕</Text>
-                  </TouchableOpacity>
-                </>
-              ) : (
-                <>
-                  <View style={styles.relicIconPlaceholder}>
-                    <Text style={styles.relicIconPlaceholderText}>+</Text>
-                  </View>
-                  <Text style={styles.relicPlaceholderText}>Select Relic</Text>
-                </>
-              )}
-            </TouchableOpacity>
-          </View>
-        )}
-
-        {/* Starting Ability Order (First 5 Levels) */}
-        {selectedGod && selectedGod.abilities && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Starting Ability Order (Levels 1-5)</Text>
-            <Text style={styles.sectionSubtitle}>Select which ability to level at each of the first 5 levels</Text>
-            <View style={styles.startingAbilityOrderContainer}>
-              {[1, 2, 3, 4, 5].map((level) => {
-                const abilityKey = startingAbilityOrder[level - 1];
-                const ability = abilityKey ? selectedGod.abilities[abilityKey] : null;
-                return (
-                  <View key={level} style={styles.startingAbilityLevelSlot}>
-                    <Text style={styles.startingAbilityLevelLabel}>Level {level}</Text>
+              <View style={styles.itemSlotsContainer}>
+                {selectedItems.slice(1).map((item, index) => (
+                  <View key={index + 1} style={styles.itemSlot}>
                     <TouchableOpacity
-                      style={[
-                        styles.startingAbilitySlotButton,
-                        ability && styles.startingAbilitySlotButtonSelected
-                      ]}
+                      style={styles.itemSlotButton}
                       onPress={() => {
-                        // Set which level we're editing and show ability picker modal
-                        setCurrentStartingAbilityLevel(level - 1);
-                        setShowStartingAbilityPicker(true);
+                        if (item) showItemInfo(item, index + 1);
+                        else setShowItemPicker(index + 1);
                       }}
                       activeOpacity={0.7}
                     >
-                      {ability ? (
+                      {item ? (
                         <>
-                          {ability.icon && (
-                            <Image
-                              source={getLocalGodAsset(ability.icon)}
-                              style={styles.startingAbilityIcon}
-                              resizeMode="cover"
-                            />
-                          )}
-                          <Text style={styles.startingAbilityName} numberOfLines={1}>
-                            {ability.name || abilityKey}
+                          {renderItemIconOnly(item, `item-${item.internalName || item.name}-${index}`, false)}
+                          <Text style={styles.itemName} numberOfLines={2}>
+                            {item.name || item.internalName}
                           </Text>
                         </>
                       ) : (
-                        <>
-                          <View style={styles.startingAbilityIconPlaceholder}>
-                            <Text style={styles.startingAbilityIconPlaceholderText}>?</Text>
-                          </View>
-                          <Text style={styles.startingAbilityPlaceholderText}>Select</Text>
-                        </>
+                        <View style={styles.itemSlotPlaceholder}>
+                          <Text style={styles.itemSlotPlaceholderText}>+</Text>
+                          <Text style={styles.itemSlotNumber}>{index + 1}</Text>
+                        </View>
                       )}
                     </TouchableOpacity>
                   </View>
-                );
-              })}
-            </View>
-            {startingAbilityOrder.some(ability => ability !== null) && (
-              <TouchableOpacity
-                style={styles.clearAbilityOrderButton}
-                onPress={() => setStartingAbilityOrder(Array(5).fill(null))}
-              >
-                <Text style={styles.clearAbilityOrderText}>Clear Order</Text>
-              </TouchableOpacity>
-            )}
-          </View>
-        )}
-
-        {/* Max Ability Leveling Order */}
-        {selectedGod && selectedGod.abilities && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Max Ability Leveling Order</Text>
-            <Text style={styles.sectionSubtitle}>Tap abilities in the order you want to level them</Text>
-            <View style={styles.abilityLevelingContainerSingleRow}>
-              {Object.keys(selectedGod.abilities).map((abilityKey) => {
-                const ability = selectedGod.abilities[abilityKey];
-                const orderIndex = abilityLevelingOrder.indexOf(abilityKey);
-                const isSelected = orderIndex !== -1;
-                return (
-                  <TouchableOpacity
-                    key={abilityKey}
-                    style={[
-                      styles.abilityLevelingButtonSmall,
-                      isSelected && styles.abilityLevelingButtonSelected
-                    ]}
-                    onPress={() => {
-                      if (isSelected) {
-                        // Remove from order
-                        setAbilityLevelingOrder(prev => prev.filter(k => k !== abilityKey));
-                      } else {
-                        // Add to order
-                        setAbilityLevelingOrder(prev => [...prev, abilityKey]);
-                      }
-                    }}
-                    activeOpacity={0.7}
-                  >
-                    {ability.icon && (
-                      <Image
-                        source={getLocalGodAsset(ability.icon)}
-                        style={styles.abilityLevelingIconSmall}
-                        resizeMode="cover"
-                      />
-                    )}
-                    {isSelected && (
-                      <View style={styles.abilityLevelingOrderBadgeSmall}>
-                        <Text style={styles.abilityLevelingOrderTextSmall}>{orderIndex + 1}</Text>
-                      </View>
-                    )}
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-            {abilityLevelingOrder.length > 0 && (
-              <TouchableOpacity
-                style={styles.clearAbilityOrderButton}
-                onPress={() => setAbilityLevelingOrder([])}
-              >
-                <Text style={styles.clearAbilityOrderText}>Clear Order</Text>
-              </TouchableOpacity>
-            )}
-          </View>
-        )}
-
-        {/* Role Selection */}
-        {selectedGod && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Role Selection</Text>
-            <Text style={styles.sectionSubtitle}>Select up to 4 roles this build can be played in</Text>
-            <View style={styles.roleContainer}>
-              {['Mid', 'Solo', 'ADC', 'Support', 'Jungle'].map((role) => {
-                const isSelected = selectedRoles.includes(role);
-                const isDisabled = !isSelected && selectedRoles.length >= 4;
-                return (
-                  <TouchableOpacity
-                    key={role}
-                    style={[
-                      styles.roleButton,
-                      isSelected && styles.roleButtonSelected,
-                      isDisabled && styles.roleButtonDisabled
-                    ]}
-                    onPress={() => {
-                      if (isSelected) {
-                        // Remove role
-                        setSelectedRoles(prev => prev.filter(r => r !== role));
-                      } else if (!isDisabled) {
-                        // Add role (max 4)
-                        setSelectedRoles(prev => [...prev, role]);
-                      }
-                    }}
-                    disabled={isDisabled}
-                    activeOpacity={0.7}
-                  >
-                    <Text style={[
-                      styles.roleButtonText,
-                      isSelected && styles.roleButtonTextSelected,
-                      isDisabled && styles.roleButtonTextDisabled
-                    ]}>
-                      {role}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-          </View>
-        )}
-
-        {/* Build Tips */}
-        {selectedGod && (
-          <View style={styles.section}>
-            <View style={styles.tipsHeader}>
-              <Text style={styles.sectionTitle}>Build Tips & Notes</Text>
-              <TouchableOpacity
-                style={styles.addTipButton}
-                onPress={() => setBuildTips([...buildTips, ''])}
-                activeOpacity={0.7}
-              >
-                <Text style={styles.addTipButtonText}>+ Add Tip</Text>
-              </TouchableOpacity>
-            </View>
-            {buildTips.map((tip, tipIndex) => (
-              <View key={tipIndex} style={styles.tipInputContainer}>
-                <View style={styles.tipInputHeader}>
-                  <Text style={styles.tipNumber}>Tip {tipIndex + 1}</Text>
-                  {buildTips.length > 1 && (
+                ))}
+              </View>
+            </>
+          ) : (
+            <>
+            <View style={styles.itemsBuildTwoColumn}>
+              <View style={styles.itemsBuildColumnStart}>
+                <Text style={[styles.sectionTitleInline, IS_WEB && styles.sectionTitleInlineCenterWeb]}>
+                  Starting items
+                </Text>
+                <View style={styles.compactStarterRow}>
+                  <View style={styles.compactStarterSlotWrap}>
                     <TouchableOpacity
-                      style={styles.removeTipButton}
+                      style={styles.compactSlotButton}
                       onPress={() => {
-                        const newTips = buildTips.filter((_, i) => i !== tipIndex);
-                        setBuildTips(newTips);
+                        const item = startingItems[0];
+                        if (item) showItemInfo(item, 100);
+                        else setShowItemPicker(100);
                       }}
                       activeOpacity={0.7}
                     >
-                      <Text style={styles.removeTipButtonText}>✕</Text>
+                      {startingItems[0] ? (
+                        <>
+                          {renderItemIconOnly(
+                            startingItems[0],
+                            `starting-item-${startingItems[0].internalName || startingItems[0].name}-0`,
+                            true
+                          )}
+                          <Text style={styles.compactItemName} numberOfLines={1}>
+                            {startingItems[0].name || startingItems[0].internalName}
+                          </Text>
+                        </>
+                      ) : (
+                        <View style={styles.compactSlotPlaceholder}>
+                          <Text style={styles.compactSlotPlus}>+</Text>
+                          <Text style={styles.compactSlotHint}>S</Text>
+                        </View>
+                      )}
                     </TouchableOpacity>
-                  )}
+                  </View>
                 </View>
-                <TextInput
-                  style={styles.buildTipsInput}
-                  placeholder={`Tip ${tipIndex + 1}: Add tip, strategy, or note...`}
-                  placeholderTextColor="#64748b"
-                  value={tip}
-                  onChangeText={(text) => {
-                    const newTips = [...buildTips];
-                    newTips[tipIndex] = text;
-                    setBuildTips(newTips);
-                  }}
-                  multiline={true}
-                  numberOfLines={3}
-                  textAlignVertical="top"
-                />
+                <View style={styles.compactStartingGrid}>
+                  {startingItems.slice(1).map((item, i) => {
+                    const index = i + 1;
+                    return (
+                      <View key={`st-${index}`} style={styles.compactStartingSlot}>
+                        <TouchableOpacity
+                          style={styles.compactSlotButton}
+                          onPress={() => {
+                            if (item) showItemInfo(item, 100 + index);
+                            else setShowItemPicker(100 + index);
+                          }}
+                          activeOpacity={0.7}
+                        >
+                          {item ? (
+                            <>
+                              {renderItemIconOnly(
+                                item,
+                                `starting-item-${item.internalName || item.name}-${index}`,
+                                true
+                              )}
+                              <Text style={styles.compactItemName} numberOfLines={1}>
+                                {item.name || item.internalName}
+                              </Text>
+                            </>
+                          ) : (
+                            <View style={styles.compactSlotPlaceholder}>
+                              <Text style={styles.compactSlotPlus}>+</Text>
+                              <Text style={styles.compactSlotHint}>{i + 1}</Text>
+                            </View>
+                          )}
+                        </TouchableOpacity>
+                      </View>
+                    );
+                  })}
+                </View>
+                <View style={styles.relicBlockInColumn}>
+                  <Text style={[styles.sectionTitleInline, styles.relicSectionLabel]} numberOfLines={1}>
+                    Starting relic
+                  </Text>
+                  <View style={styles.compactStarterRow}>
+                    <View style={styles.compactStarterSlotWrap}>
+                      <TouchableOpacity
+                        style={styles.compactSlotButton}
+                        onPress={() => setRelicPickerTarget('starting')}
+                        activeOpacity={0.7}
+                      >
+                        {startingRelic ? (
+                          <>
+                            {renderItemIconOnly(
+                              startingRelic,
+                              `starting-relic-${startingRelic.internalName || startingRelic.name}`,
+                              true,
+                              true
+                            )}
+                            <Text style={styles.compactItemName} numberOfLines={1}>
+                              {startingRelic.name || startingRelic.internalName}
+                            </Text>
+                            <TouchableOpacity
+                              style={styles.compactRelicRemoveOverlay}
+                              onPress={(e) => {
+                                e.stopPropagation?.();
+                                setStartingRelic(null);
+                              }}
+                            >
+                              <Text style={styles.removeRelicButtonText}>✕</Text>
+                            </TouchableOpacity>
+                          </>
+                        ) : (
+                          <View style={styles.compactSlotPlaceholder}>
+                            <Text style={styles.compactSlotPlus}>+</Text>
+                          </View>
+                        )}
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
               </View>
-            ))}
+              <View style={styles.itemsBuildDivider} />
+              <View style={styles.itemsBuildColumnFinal}>
+                <Text style={[styles.sectionTitleInline, IS_WEB && styles.sectionTitleInlineCenterWeb]}>
+                  Final build
+                </Text>
+                {IS_WEB ? (
+                  <View style={styles.compactFinalBuildWeb}>
+                    <View style={styles.compactFinalGridWebRowSingle}>
+                      <View style={styles.compactFinalSlotWeb}>
+                        <TouchableOpacity
+                          style={styles.compactSlotButton}
+                          onPress={() => {
+                            const item0 = selectedItems[0];
+                            if (item0) showItemInfo(item0, 0);
+                            else setShowItemPicker(0);
+                          }}
+                          activeOpacity={0.7}
+                        >
+                          {selectedItems[0] ? (
+                            <>
+                              {renderItemIconOnly(
+                                selectedItems[0],
+                                `item-${selectedItems[0].internalName || selectedItems[0].name}-0`,
+                                true
+                              )}
+                              <Text style={styles.compactItemName} numberOfLines={1}>
+                                {selectedItems[0].name || selectedItems[0].internalName}
+                              </Text>
+                            </>
+                          ) : (
+                            <View style={styles.compactSlotPlaceholder}>
+                              <Text style={styles.compactSlotPlus}>+</Text>
+                              <Text style={styles.compactSlotHint}>S</Text>
+                            </View>
+                          )}
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                    <View style={styles.compactFinalGridWeb}>
+                      {selectedItems.slice(1, 4).map((item, i) => {
+                        const index = i + 1;
+                        return (
+                          <View key={`fiw-r2-${index}`} style={styles.compactFinalSlotWeb}>
+                            <TouchableOpacity
+                              style={styles.compactSlotButton}
+                              onPress={() => {
+                                if (item) showItemInfo(item, index);
+                                else setShowItemPicker(index);
+                              }}
+                              activeOpacity={0.7}
+                            >
+                              {item ? (
+                                <>
+                                  {renderItemIconOnly(
+                                    item,
+                                    `item-${item.internalName || item.name}-${index}`,
+                                    true
+                                  )}
+                                  <Text style={styles.compactItemName} numberOfLines={1}>
+                                    {item.name || item.internalName}
+                                  </Text>
+                                </>
+                              ) : (
+                                <View style={styles.compactSlotPlaceholder}>
+                                  <Text style={styles.compactSlotPlus}>+</Text>
+                                  <Text style={styles.compactSlotHint}>{index}</Text>
+                                </View>
+                              )}
+                            </TouchableOpacity>
+                          </View>
+                        );
+                      })}
+                    </View>
+                    <View style={styles.compactFinalGridWeb}>
+                      {selectedItems.slice(4, 7).map((item, i) => {
+                        const index = i + 4;
+                        return (
+                          <View key={`fiw-r3-${index}`} style={styles.compactFinalSlotWeb}>
+                            <TouchableOpacity
+                              style={styles.compactSlotButton}
+                              onPress={() => {
+                                if (item) showItemInfo(item, index);
+                                else setShowItemPicker(index);
+                              }}
+                              activeOpacity={0.7}
+                            >
+                              {item ? (
+                                <>
+                                  {renderItemIconOnly(
+                                    item,
+                                    `item-${item.internalName || item.name}-${index}`,
+                                    true
+                                  )}
+                                  <Text style={styles.compactItemName} numberOfLines={1}>
+                                    {item.name || item.internalName}
+                                  </Text>
+                                </>
+                              ) : (
+                                <View style={styles.compactSlotPlaceholder}>
+                                  <Text style={styles.compactSlotPlus}>+</Text>
+                                  <Text style={styles.compactSlotHint}>{index}</Text>
+                                </View>
+                              )}
+                            </TouchableOpacity>
+                          </View>
+                        );
+                      })}
+                    </View>
+                  </View>
+                ) : (
+                  <>
+                    <View style={styles.compactStarterRow}>
+                      <View style={styles.compactStarterSlotWrap}>
+                        <TouchableOpacity
+                          style={styles.compactSlotButton}
+                          onPress={() => {
+                            const item = selectedItems[0];
+                            if (item) showItemInfo(item, 0);
+                            else setShowItemPicker(0);
+                          }}
+                          activeOpacity={0.7}
+                        >
+                          {selectedItems[0] ? (
+                            <>
+                              {renderItemIconOnly(
+                                selectedItems[0],
+                                `item-${selectedItems[0].internalName || selectedItems[0].name}-0`,
+                                true
+                              )}
+                              <Text style={styles.compactItemName} numberOfLines={1}>
+                                {selectedItems[0].name || selectedItems[0].internalName}
+                              </Text>
+                            </>
+                          ) : (
+                            <View style={styles.compactSlotPlaceholder}>
+                              <Text style={styles.compactSlotPlus}>+</Text>
+                              <Text style={styles.compactSlotHint}>S</Text>
+                            </View>
+                          )}
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                    <View style={styles.compactFinalGrid}>
+                      {selectedItems.slice(1).map((item, i) => {
+                        const index = i + 1;
+                        return (
+                          <View key={`fi-${index}`} style={styles.compactFinalSlot}>
+                            <TouchableOpacity
+                              style={styles.compactSlotButton}
+                              onPress={() => {
+                                if (item) showItemInfo(item, index);
+                                else setShowItemPicker(index);
+                              }}
+                              activeOpacity={0.7}
+                            >
+                              {item ? (
+                                <>
+                                  {renderItemIconOnly(item, `item-${item.internalName || item.name}-${index}`, true)}
+                                  <Text style={styles.compactItemName} numberOfLines={1}>
+                                    {item.name || item.internalName}
+                                  </Text>
+                                </>
+                              ) : (
+                                <View style={styles.compactSlotPlaceholder}>
+                                  <Text style={styles.compactSlotPlus}>+</Text>
+                                  <Text style={styles.compactSlotHint}>{i + 1}</Text>
+                                </View>
+                              )}
+                            </TouchableOpacity>
+                          </View>
+                        );
+                      })}
+                    </View>
+                  </>
+                )}
+                <View style={styles.relicBlockInColumn}>
+                  <Text style={[styles.sectionTitleInline, styles.relicSectionLabel]} numberOfLines={1}>
+                    Final relic
+                  </Text>
+                  <View style={styles.compactStarterRow}>
+                    <View style={styles.compactStarterSlotWrap}>
+                      <TouchableOpacity
+                        style={styles.compactSlotButton}
+                        onPress={() => setRelicPickerTarget('final')}
+                        activeOpacity={0.7}
+                      >
+                        {finalRelic ? (
+                          <>
+                            {renderItemIconOnly(
+                              finalRelic,
+                              `final-relic-${finalRelic.internalName || finalRelic.name}`,
+                              true,
+                              true
+                            )}
+                            <Text style={styles.compactItemName} numberOfLines={1}>
+                              {finalRelic.name || finalRelic.internalName}
+                            </Text>
+                            <TouchableOpacity
+                              style={styles.compactRelicRemoveOverlay}
+                              onPress={(e) => {
+                                e.stopPropagation?.();
+                                setFinalRelic(null);
+                              }}
+                            >
+                              <Text style={styles.removeRelicButtonText}>✕</Text>
+                            </TouchableOpacity>
+                          </>
+                        ) : (
+                          <View style={styles.compactSlotPlaceholder}>
+                            <Text style={styles.compactSlotPlus}>+</Text>
+                          </View>
+                        )}
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+            </>
+          )}
+        </View>
+
+        {selectedGod && selectedGod.abilities && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Ability leveling</Text>
+            <View style={styles.abilityOrderTabRow}>
+              <TouchableOpacity
+                style={[styles.abilityOrderTab, abilityOrderTab === 'starting' && styles.abilityOrderTabActive]}
+                onPress={() => setAbilityOrderTab('starting')}
+                activeOpacity={0.7}
+              >
+                <Text
+                  style={[
+                    styles.abilityOrderTabText,
+                    abilityOrderTab === 'starting' && styles.abilityOrderTabTextActive,
+                  ]}
+                >
+                  Starting (1-5)
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.abilityOrderTab, abilityOrderTab === 'max' && styles.abilityOrderTabActive]}
+                onPress={() => setAbilityOrderTab('max')}
+                activeOpacity={0.7}
+              >
+                <Text
+                  style={[
+                    styles.abilityOrderTabText,
+                    abilityOrderTab === 'max' && styles.abilityOrderTabTextActive,
+                  ]}
+                >
+                  Max order
+                </Text>
+              </TouchableOpacity>
+            </View>
+            {abilityOrderTab === 'starting' ? (
+              <>
+                <Text style={styles.sectionSubtitle}>
+                  Select which ability to level at each of the first 5 levels
+                </Text>
+                <View style={styles.startingAbilityOrderContainer}>
+                  {[1, 2, 3, 4, 5].map((level) => {
+                    const abilityKey = startingAbilityOrder[level - 1];
+                    const ability = abilityKey ? selectedGod.abilities[abilityKey] : null;
+                    return (
+                      <View key={level} style={styles.startingAbilityLevelSlot}>
+                        <Text style={styles.startingAbilityLevelLabel}>Level {level}</Text>
+                        <TouchableOpacity
+                          style={[
+                            styles.startingAbilitySlotButton,
+                            ability && styles.startingAbilitySlotButtonSelected,
+                          ]}
+                          onPress={() => {
+                            setCurrentStartingAbilityLevel(level - 1);
+                            setShowStartingAbilityPicker(true);
+                          }}
+                          activeOpacity={0.7}
+                        >
+                          {ability ? (
+                            <>
+                              {ability.icon && (
+                                <Image
+                                  source={getLocalGodAsset(ability.icon)}
+                                  style={styles.startingAbilityIcon}
+                                  resizeMode="cover"
+                                />
+                              )}
+                              <Text style={styles.startingAbilityName} numberOfLines={1}>
+                                {ability.name || abilityKey}
+                              </Text>
+                            </>
+                          ) : (
+                            <>
+                              <View style={styles.startingAbilityIconPlaceholder}>
+                                <Text style={styles.startingAbilityIconPlaceholderText}>?</Text>
+                              </View>
+                              <Text style={styles.startingAbilityPlaceholderText}>Select</Text>
+                            </>
+                          )}
+                        </TouchableOpacity>
+                      </View>
+                    );
+                  })}
+                </View>
+                {startingAbilityOrder.some((a) => a !== null) && (
+                  <TouchableOpacity
+                    style={styles.clearAbilityOrderButton}
+                    onPress={() => setStartingAbilityOrder(Array(5).fill(null))}
+                  >
+                    <Text style={styles.clearAbilityOrderText}>Clear Order</Text>
+                  </TouchableOpacity>
+                )}
+              </>
+            ) : (
+              <>
+                <Text style={styles.sectionSubtitle}>
+                  Tap abilities in the order you want to level them
+                </Text>
+                <View style={styles.abilityLevelingContainerSingleRow}>
+                  {Object.keys(selectedGod.abilities).map((abilityKey) => {
+                    const ability = selectedGod.abilities[abilityKey];
+                    const orderIndex = abilityLevelingOrder.indexOf(abilityKey);
+                    const isSelected = orderIndex !== -1;
+                    return (
+                      <TouchableOpacity
+                        key={abilityKey}
+                        style={[
+                          styles.abilityLevelingButtonSmall,
+                          isSelected && styles.abilityLevelingButtonSelected,
+                        ]}
+                        onPress={() => {
+                          if (isSelected) {
+                            setAbilityLevelingOrder((prev) => prev.filter((k) => k !== abilityKey));
+                          } else {
+                            setAbilityLevelingOrder((prev) => [...prev, abilityKey]);
+                          }
+                        }}
+                        activeOpacity={0.7}
+                      >
+                        {ability.icon && (
+                          <Image
+                            source={getLocalGodAsset(ability.icon)}
+                            style={styles.abilityLevelingIconSmall}
+                            resizeMode="cover"
+                          />
+                        )}
+                        {isSelected && (
+                          <View style={styles.abilityLevelingOrderBadgeSmall}>
+                            <Text style={styles.abilityLevelingOrderTextSmall}>{orderIndex + 1}</Text>
+                          </View>
+                        )}
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+                {abilityLevelingOrder.length > 0 && (
+                  <TouchableOpacity
+                    style={styles.clearAbilityOrderButton}
+                    onPress={() => setAbilityLevelingOrder([])}
+                  >
+                    <Text style={styles.clearAbilityOrderText}>Clear Order</Text>
+                  </TouchableOpacity>
+                )}
+              </>
+            )}
           </View>
         )}
 
-        {/* Item Swaps */}
+        {/* Build Tips & Notes + Item Swaps (tabbed, same pattern as Ability leveling) */}
         {selectedGod && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Item Swaps</Text>
-            <Text style={styles.sectionSubtitle}>Add alternative items and explain when to use them</Text>
-            {itemSwaps.map((swap, index) => (
-              <View key={index} style={styles.swapItem}>
-                {swap.item && (
-                  <Image
-                    source={getLocalItemIcon(swap.item.icon || swap.item.internalName)}
-                    style={styles.swapItemIcon}
-                    resizeMode="cover"
-                  />
-                )}
-                <View style={styles.swapItemContent}>
-                  <Text style={styles.swapItemName}>
-                    {swap.item ? (swap.item.name || swap.item.internalName) : 'No item selected'}
-                  </Text>
-                  {swap.reasoning && (
-                    <Text style={styles.swapItemReasoning}>{swap.reasoning}</Text>
-                  )}
-                </View>
-                <View style={styles.swapItemActions}>
+            <Text style={styles.sectionTitle}>Build Tips & Notes</Text>
+            <View style={styles.abilityOrderTabRow}>
+              <TouchableOpacity
+                style={[styles.abilityOrderTab, buildNotesTab === 'tips' && styles.abilityOrderTabActive]}
+                onPress={() => setBuildNotesTab('tips')}
+                activeOpacity={0.7}
+              >
+                <Text
+                  style={[
+                    styles.abilityOrderTabText,
+                    buildNotesTab === 'tips' && styles.abilityOrderTabTextActive,
+                  ]}
+                >
+                  Tips
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.abilityOrderTab, buildNotesTab === 'swaps' && styles.abilityOrderTabActive]}
+                onPress={() => setBuildNotesTab('swaps')}
+                activeOpacity={0.7}
+              >
+                <Text
+                  style={[
+                    styles.abilityOrderTabText,
+                    buildNotesTab === 'swaps' && styles.abilityOrderTabTextActive,
+                  ]}
+                >
+                  Item swaps
+                </Text>
+              </TouchableOpacity>
+            </View>
+            {buildNotesTab === 'tips' ? (
+              <>
+                <Text style={styles.sectionSubtitle}>
+                  Strategy, lane notes, or general build advice
+                </Text>
+                <View style={styles.tipsHeader}>
                   <TouchableOpacity
-                    style={styles.editSwapButton}
-                    onPress={() => {
-                      setCurrentSwapIndex(index);
-                      setSwapItem(swap.item);
-                      setSwapReasoning(swap.reasoning || '');
-                      setShowSwapModal(true);
-                    }}
+                    style={styles.addTipButton}
+                    onPress={() => setBuildTips([...buildTips, ''])}
+                    activeOpacity={0.7}
                   >
-                    <Text style={styles.editSwapButtonText}>Edit</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.deleteSwapButton}
-                    onPress={() => {
-                      setItemSwaps(prev => prev.filter((_, i) => i !== index));
-                    }}
-                  >
-                    <Text style={styles.deleteSwapButtonText}>✕</Text>
+                    <Text style={styles.addTipButtonText}>+ Add Tip</Text>
                   </TouchableOpacity>
                 </View>
-              </View>
-            ))}
-            <TouchableOpacity
-              style={styles.addSwapButton}
-              onPress={() => {
-                setCurrentSwapIndex(null);
-                setSwapItem(null);
-                setSwapReasoning('');
-                setShowSwapModal(true);
-              }}
-            >
-              <Text style={styles.addSwapButtonText}>+ Add Swap</Text>
-            </TouchableOpacity>
+                {buildTips.map((tip, tipIndex) => (
+                  <View key={tipIndex} style={styles.tipInputContainer}>
+                    <View style={styles.tipInputHeader}>
+                      <Text style={styles.tipNumber}>Tip {tipIndex + 1}</Text>
+                      {buildTips.length > 1 && (
+                        <TouchableOpacity
+                          style={styles.removeTipButton}
+                          onPress={() => {
+                            const newTips = buildTips.filter((_, i) => i !== tipIndex);
+                            setBuildTips(newTips);
+                          }}
+                          activeOpacity={0.7}
+                        >
+                          <Text style={styles.removeTipButtonText}>✕</Text>
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                    <TextInput
+                      style={styles.buildTipsInput}
+                      placeholder={`Tip ${tipIndex + 1}: Add tip, strategy, or note...`}
+                      placeholderTextColor="#64748b"
+                      value={tip}
+                      onChangeText={(text) => {
+                        const newTips = [...buildTips];
+                        newTips[tipIndex] = text;
+                        setBuildTips(newTips);
+                      }}
+                      multiline={true}
+                      numberOfLines={3}
+                      textAlignVertical="top"
+                    />
+                  </View>
+                ))}
+              </>
+            ) : (
+              <>
+                <Text style={styles.sectionSubtitle}>
+                  Add alternative items and explain when to use them
+                </Text>
+                {itemSwaps.map((swap, index) => (
+                  <View key={index} style={styles.swapItem}>
+                    {swap.item && (
+                      <Image
+                        source={getLocalItemIcon(swap.item.icon || swap.item.internalName)}
+                        style={styles.swapItemIcon}
+                        resizeMode="cover"
+                      />
+                    )}
+                    <View style={styles.swapItemContent}>
+                      <Text style={styles.swapItemName}>
+                        {swap.item ? (swap.item.name || swap.item.internalName) : 'No item selected'}
+                      </Text>
+                      {swap.reasoning && (
+                        <Text style={styles.swapItemReasoning}>{swap.reasoning}</Text>
+                      )}
+                    </View>
+                    <View style={styles.swapItemActions}>
+                      <TouchableOpacity
+                        style={styles.editSwapButton}
+                        onPress={() => {
+                          setCurrentSwapIndex(index);
+                          setSwapItem(swap.item);
+                          setSwapReasoning(swap.reasoning || '');
+                          setShowSwapModal(true);
+                        }}
+                      >
+                        <Text style={styles.editSwapButtonText}>Edit</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.deleteSwapButton}
+                        onPress={() => {
+                          setItemSwaps((prev) => prev.filter((_, i) => i !== index));
+                        }}
+                      >
+                        <Text style={styles.deleteSwapButtonText}>✕</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                ))}
+                <TouchableOpacity
+                  style={styles.addSwapButton}
+                  onPress={() => {
+                    setCurrentSwapIndex(null);
+                    setSwapItem(null);
+                    setSwapReasoning('');
+                    setShowSwapModal(true);
+                  }}
+                >
+                  <Text style={styles.addSwapButtonText}>+ Add Swap</Text>
+                </TouchableOpacity>
+              </>
+            )}
           </View>
         )}
 
-        {/* Stats Summary */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Total Stats</Text>
-          <View style={styles.statsGrid}>
-            {(() => {
-              // Define the order we want stats to appear
-              const statOrder = [
-                'AttackSpeedEffective',
-                'BasicDamage',
-                'MaxHealth',
-                'HealthPerSecond',
-                'MaxMana',
-                'ManaPerSecond',
-                'PhysicalProtection',
-                'MagicalProtection',
-              ];
-              
-              // Get all stats and filter, but hide internal-only keys like BaseAttackSpeed
-              const allStats = Object.keys(totalStats)
-                .filter(key => (totalStats[key] !== 0 || baseStats[key]) && key !== 'BaseAttackSpeed');
-              
-              // Separate ordered stats and remaining stats
-              const orderedStats = statOrder.filter(key => allStats.includes(key));
-              const remainingStats = allStats
-                .filter(key => !statOrder.includes(key))
-                .sort();
-              
-              // Build the final stat list with EHP inserted after protections
-              const finalStats = [];
-              
-              orderedStats.forEach((statKey) => {
-                finalStats.push(statKey);
-                
-                // Insert Physical EHP right after PhysicalProtection
-                if (statKey === 'PhysicalProtection' && (totalStats.MaxHealth || totalStats.Health)) {
-                  finalStats.push('__PhysicalEHP__');
+        {/* Save Build Button — profile / community (hidden on bot draft link page) */}
+        {selectedGod && botSharedDraftToken ? (
+          <View style={styles.section}>
+            <TouchableOpacity
+              style={[
+                styles.postToCommunityButton,
+                { backgroundColor: '#059669', borderColor: '#34d399' },
+                botDraftSavePending && styles.saveBuildModalButtonDisabled,
+              ]}
+              disabled={botDraftSavePending}
+              onPress={async () => {
+                const hasItems = selectedItems.filter(Boolean).length > 0;
+                if (!hasItems) {
+                  Alert.alert('Incomplete build', 'Add at least one final item before saving.');
+                  return;
                 }
-                
-                // Insert Magical EHP right after MagicalProtection
-                if (statKey === 'MagicalProtection' && (totalStats.MaxHealth || totalStats.Health)) {
-                  finalStats.push('__MagicalEHP__');
-                }
-              });
-              
-              // Add remaining stats
-              finalStats.push(...remainingStats);
-              
-              return finalStats.map((statKey) => {
-                // Handle EHP placeholders
-                if (statKey === '__PhysicalEHP__') {
-                  return (
-                    <View key="PhysicalEHP" style={styles.statItem}>
-                      <Text style={[styles.statLabel, { color: '#ef4444' }]}>
-                        Physical EHP
-                      </Text>
-                      <Text style={[styles.statValue, { color: '#ef4444' }]}>
-                        {effectiveHealth.PHP.toLocaleString()}
-                      </Text>
-                    </View>
+                setBotDraftSavePending(true);
+                try {
+                  const tipsJoined = buildTips.filter((t) => t && t.trim()).join('\n');
+                  const payload = {
+                    name: (buildName || '').trim() || selectedGod.name || selectedGod.GodName || 'Draft build',
+                    god: selectedGod.name || selectedGod.GodName || selectedGod.title || selectedGod.displayName,
+                    godInternalName: selectedGod.internalName || selectedGod.GodName,
+                    godIcon: selectedGod.icon || selectedGod.GodIcon,
+                    items: selectedItems.filter(Boolean).map((item) => ({
+                      name: item.name || item.internalName,
+                      internalName: item.internalName,
+                      icon: item.icon,
+                    })),
+                    startingItems: startingItems.filter(Boolean).map((item) => ({
+                      name: item.name || item.internalName,
+                      internalName: item.internalName,
+                      icon: item.icon,
+                    })),
+                    roles: selectedRoles,
+                    abilityLevelingOrder,
+                    startingAbilityOrder,
+                    godLevel: Math.round(godLevel),
+                    aspectActive: aspectActive && selectedGod.aspect ? true : false,
+                    updatedAt: new Date().toISOString(),
+                    relic: relicToPayload(finalRelic),
+                    startingRelic: relicToPayload(startingRelic),
+                    finalRelic: relicToPayload(finalRelic),
+                    starting_relic: relicToPayload(startingRelic),
+                    final_relic: relicToPayload(finalRelic),
+                    gamemodes: selectedGamemodes,
+                    tips: tipsJoined || null,
+                    itemSwaps: itemSwaps.map((swap) => ({
+                      item: swap.item,
+                      reasoning: swap.reasoning,
+                    })),
+                  };
+                  const { data: ok, error } = await saveDiscordBotSharedBuildPayload(
+                    botSharedDraftToken,
+                    payload
                   );
+                  if (error) {
+                    Alert.alert('Save failed', error.message || String(error));
+                    return;
+                  }
+                  if (!ok) {
+                    Alert.alert(
+                      'Save failed',
+                      'No row for this link. Create the draft in Supabase first (bot INSERT with this token), then try again.'
+                    );
+                    return;
+                  }
+                  Alert.alert('Saved', 'Draft stored for your Discord bot to pull from Supabase.');
+                } catch (e) {
+                  Alert.alert('Save failed', e?.message || String(e));
+                } finally {
+                  setBotDraftSavePending(false);
                 }
-                
-                if (statKey === '__MagicalEHP__') {
-                  return (
-                    <View key="MagicalEHP" style={styles.statItem}>
-                      <Text style={[styles.statLabel, { color: '#a855f7' }]}>
-                        Magical EHP
-                      </Text>
-                      <Text style={[styles.statValue, { color: '#a855f7' }]}>
-                        {effectiveHealth.EHP.toLocaleString()}
-                      </Text>
-                    </View>
-                  );
-                }
-                
-                // Regular stat
-                // Color code stat labels based on stat type
-                let statColor = '#94a3b8'; // default gray
-                const statName = (statDisplayNames[statKey] || statKey).toLowerCase();
-                const statKeyLower = statKey.toLowerCase();
-                
-                if (statName.includes('health') || statKeyLower.includes('health') || statName.includes('hp5') || statKeyLower.includes('healthper')) {
-                  statColor = '#22c55e'; // green
-                } else if (statName.includes('mana') || statKeyLower.includes('mana') || statName.includes('mp5') || statKeyLower.includes('manaper')) {
-                  statColor = '#3b82f6'; // blue
-                } else if (statName.includes('physical protection') || statKeyLower.includes('physicalprotection')) {
-                  statColor = '#ef4444'; // red
-                } else if (statName.includes('magical protection') || statKeyLower.includes('magicalprotection')) {
-                  statColor = '#a855f7'; // purple
-                } else if (statName.includes('physical power') || statKeyLower.includes('basicdamage')) {
-                  statColor = '#f97316'; // orange
-                } else if (statName.includes('magical power') || statKeyLower.includes('magicalpower')) {
-                  statColor = '#ec4899'; // pink
-                } else if (statName.includes('attack speed') || statKeyLower.includes('attackspeed') || statKeyLower.includes('baseattackspeed')) {
-                  statColor = '#f97316'; // orange
-                } else if (statName.includes('movement speed') || statKeyLower.includes('movementspeed')) {
-                  statColor = '#10b981'; // emerald
-                } else if (statName.includes('penetration') || statKeyLower.includes('penetration')) {
-                  statColor = '#ef4444'; // red
-                } else if (statName.includes('lifesteal') || statKeyLower.includes('lifesteal')) {
-                  statColor = '#84cc16'; // lime
-                } else if (statName.includes('cooldown') || statKeyLower.includes('cooldown')) {
-                  statColor = '#0ea5e9'; // sky blue
-                } else if (statName.includes('critical') || statKeyLower.includes('critical') || statName.includes('crit')) {
-                  statColor = '#f97316'; // orange
-                } else if (statName.includes('strength') || statKeyLower.includes('strength')) {
-                  statColor = '#facc15'; // yellow
-                } else if (statName.includes('intelligence') || statKeyLower.includes('intelligence')) {
-                  statColor = '#a855f7'; // purple
-                }
-                
-                // Display rounded value for protections, but keep decimals for attack speed and basic damage
-                let displayValue = totalStats[statKey];
-                if (statKey === 'PhysicalProtection' || statKey === 'MagicalProtection') {
-                  displayValue = Math.round(displayValue);
-                } else if (
-                  statKey === 'BaseAttackSpeed' ||
-                  statKey === 'AttackSpeedEffective' ||
-                  statKey === 'BasicDamage'
-                ) {
-                  // Show up to 3 decimal places for these key stats
-                  displayValue = Number(displayValue.toFixed(3));
-                }
-                
-                return (
-                  <View key={statKey} style={styles.statItem}>
-                    <Text style={[styles.statLabel, { color: statColor }]}>
-                      {statDisplayNames[statKey] || statKey}
-                    </Text>
-                    <Text style={[styles.statValue, { color: statColor }]}>{displayValue}</Text>
-                  </View>
-                );
-              });
-            })()}
+              }}
+            >
+              <Text style={styles.postToCommunityButtonText}>
+                {botDraftSavePending ? 'Saving…' : 'Save to bot draft (Supabase)'}
+              </Text>
+            </TouchableOpacity>
           </View>
-        </View>
+        ) : null}
 
-        {/* Gold Cost */}
-        <View style={styles.section}>
-          <View style={styles.goldContainer}>
-            <Text style={styles.goldLabel}>Total Gold Cost:</Text>
-            <Text style={styles.goldValue}>{totalGold.toLocaleString()}</Text>
-          </View>
-        </View>
-
-        {/* Save Build Button */}
-        {selectedGod && (
+        {selectedGod && !botSharedDraftToken ? (
           <View style={styles.section}>
             <TouchableOpacity
               style={styles.saveBuildButton}
@@ -1839,8 +2483,10 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
                       god_internal_name: selectedGod.internalName || selectedGod.GodName,
                       items: selectedItems.filter(Boolean).map(item => ({ name: item.name || item.internalName, internalName: item.internalName, icon: item.icon })),
                       starting_items: startingItems.filter(Boolean).map(item => ({ name: item.name || item.internalName, internalName: item.internalName, icon: item.icon })),
-                      relic: selectedRelic ? { name: selectedRelic.name || selectedRelic.internalName, internalName: selectedRelic.internalName, icon: selectedRelic.icon } : null,
-                      god_level: godLevel,
+                      relic: relicToPayload(finalRelic),
+                      starting_relic: relicToPayload(startingRelic),
+                      final_relic: relicToPayload(finalRelic),
+                      god_level: Math.round(godLevel),
                       aspect_active: aspectActive && selectedGod.aspect ? true : false,
                       notes: (buildTips.filter(t => t && t.trim()).join('\n') || nameToSave).trim(),
                       tips: (buildTips.filter(t => t && t.trim()).join('\n') || '').trim() || null,
@@ -1946,7 +2592,7 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
               <Text style={styles.postToCommunityButtonText}>Post to Community Builds</Text>
             </TouchableOpacity>
           </View>
-        )}
+        ) : null}
       </ScrollView>
 
       {/* Item Info Modal */}
@@ -2046,6 +2692,13 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
                     })}
                   </View>
                 )}
+
+                {selectedItemInfo.item.passive ? (
+                  <View style={styles.itemInfoPassive}>
+                    <Text style={styles.itemInfoStatsTitle}>Passive</Text>
+                    <Text style={styles.itemInfoPassiveText}>{String(selectedItemInfo.item.passive).trim()}</Text>
+                  </View>
+                ) : null}
                 
                 {selectedItemInfo.item.totalCost && (
                   <View style={styles.itemInfoCost}>
@@ -2150,14 +2803,16 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
           <View style={styles.modalContainer}>
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>
-                {showItemPicker === 999 
-                  ? 'Select Item for Swap' 
+                {showItemPicker === 999
+                  ? 'Select Item for Swap'
                   : showItemPicker === 0
-                  ? 'Select Starter Item'
+                  ? 'Select Final Build (S)'
                   : showItemPicker === 100
-                  ? 'Select Starter Item'
+                  ? 'Select Starting (S)'
                   : showItemPicker >= 101 && showItemPicker < 105
-                  ? `Select Starting Item (Slot ${showItemPicker - 100 + 1}) `
+                  ? `Select Starting Item (${showItemPicker - 100})`
+                  : showItemPicker !== null && showItemPicker >= 1 && showItemPicker <= 6
+                  ? `Select Item (${showItemPicker})`
                   : showItemPicker !== null
                   ? `Select Item (Slot ${showItemPicker + 1})`
                   : 'Select Item'}
@@ -2366,27 +3021,8 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
                     style={styles.savedBuildItem}
                     onPress={async () => {
                       try {
-                        // Load the build data
-                        if (build.godInternalName) {
-                          const allGods = flattenAny(localBuilds.gods);
-                          const god = allGods.find(g => (g.internalName || '').toLowerCase() === (build.godInternalName || '').toLowerCase());
-                          if (god) {
-                            setSelectedGod(god);
-                          }
-                        }
-                        if (build.items && Array.isArray(build.items)) {
-                          const itemsArray = [...build.items];
-                          while (itemsArray.length < 7) {
-                            itemsArray.push(null);
-                          }
-                          setSelectedItems(itemsArray.slice(0, 7));
-                        }
-                        if (build.godLevel) {
-                          setGodLevel(build.godLevel);
-                        }
-                        if (build.aspectActive !== undefined) {
-                          setAspectActive(build.aspectActive);
-                        }
+                        applyBuildSnapshot(build);
+                        await persistCustomBuilderPresetObject(build);
                         setShowLoadBuildModal(false);
                       } catch (e) {
                         console.error('Error loading build:', e);
@@ -2480,9 +3116,14 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
                     roles: selectedRoles,
                     abilityLevelingOrder: abilityLevelingOrder,
                     startingAbilityOrder: startingAbilityOrder,
-                    godLevel,
+                    godLevel: Math.round(godLevel),
                     aspectActive: aspectActive && selectedGod.aspect ? true : false,
                     createdAt: new Date().toISOString(),
+                    relic: relicToPayload(finalRelic),
+                    startingRelic: relicToPayload(startingRelic),
+                    finalRelic: relicToPayload(finalRelic),
+                    starting_relic: relicToPayload(startingRelic),
+                    final_relic: relicToPayload(finalRelic),
                   };
 
                   try {
@@ -2528,6 +3169,7 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
                     
                     setShowSaveBuildModal(false);
                     setBuildName('');
+                    await persistCustomBuilderPresetObject(buildData);
                     Alert.alert('Success', 'Build saved to your profile!');
                   } catch (error) {
                     console.error('❌ Error saving build:', error);
@@ -2544,22 +3186,24 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
 
       {/* Relic Picker Modal */}
       <Modal
-        visible={showRelicPicker}
+        visible={relicPickerTarget !== null}
         transparent={true}
         animationType="slide"
         onRequestClose={() => {
-          setShowRelicPicker(false);
+          setRelicPickerTarget(null);
           setItemSearchQuery('');
         }}
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContainer}>
             <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>Select Relic</Text>
+              <Text style={styles.modalTitle}>
+                {relicPickerTarget === 'starting' ? 'Select Starting Relic' : 'Select Final Relic'}
+              </Text>
               <TouchableOpacity
                 style={styles.modalCloseButton}
                 onPress={() => {
-                  setShowRelicPicker(false);
+                  setRelicPickerTarget(null);
                   setItemSearchQuery('');
                 }}
               >
@@ -2593,8 +3237,9 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
                       key={index}
                       style={styles.itemPickerItem}
                       onPress={() => {
-                        setSelectedRelic(relic);
-                        setShowRelicPicker(false);
+                        if (relicPickerTarget === 'starting') setStartingRelic(relic);
+                        else if (relicPickerTarget === 'final') setFinalRelic(relic);
+                        setRelicPickerTarget(null);
                         setItemSearchQuery('');
                       }}
                     >
@@ -3011,11 +3656,9 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
                         internalName: item.internalName,
                         icon: item.icon,
                       })),
-                      relic: selectedRelic ? {
-                        name: selectedRelic.name || selectedRelic.internalName,
-                        internalName: selectedRelic.internalName,
-                        icon: selectedRelic.icon,
-                      } : null,
+                      relic: relicToPayload(finalRelic),
+                      starting_relic: relicToPayload(startingRelic),
+                      final_relic: relicToPayload(finalRelic),
                       godLevel,
                       aspectActive: aspectActive && selectedGod.aspect ? true : false,
                       author: currentUser,
@@ -3043,7 +3686,9 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
                       items: buildData.items,
                       starting_items: buildData.startingItems,
                       relic: buildData.relic,
-                      god_level: godLevel,
+                      starting_relic: buildData.starting_relic,
+                      final_relic: buildData.final_relic,
+                      god_level: Math.round(godLevel),
                       aspect_active: buildData.aspectActive,
                       notes: buildData.notes || buildData.tips || certifiedBuildName.trim(),
                       tips: (buildData.tips && buildData.tips.trim()) || null,
@@ -3278,12 +3923,10 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
                         internalName: item.internalName,
                         icon: item.icon,
                       })),
-                      relic: selectedRelic ? {
-                        name: selectedRelic.name || selectedRelic.internalName,
-                        internalName: selectedRelic.internalName,
-                        icon: selectedRelic.icon,
-                      } : null,
-                      godLevel,
+                      relic: relicToPayload(finalRelic),
+                      starting_relic: relicToPayload(startingRelic),
+                      final_relic: relicToPayload(finalRelic),
+                      godLevel: Math.round(godLevel),
                       aspectActive: aspectActive && selectedGod.aspect ? true : false,
                       author: currentUser,
                       notes: buildTips.filter(t => t && t.trim()).join('\n') || communityBuildName.trim(),
@@ -3315,7 +3958,9 @@ export default function CustomBuildPage({ onNavigateToGod, buildToEdit = null, o
                       items: buildData.items,
                       starting_items: buildData.startingItems,
                       relic: buildData.relic,
-                      god_level: godLevel,
+                      starting_relic: buildData.starting_relic,
+                      final_relic: buildData.final_relic,
+                      god_level: Math.round(godLevel),
                       aspect_active: buildData.aspectActive,
                       notes: buildData.notes || buildData.tips || communityBuildName.trim(),
                       tips: (buildData.tips && buildData.tips.trim()) || null,
@@ -3576,7 +4221,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    padding: 16,
+    padding: IS_WEB ? 16 : 12,
     ...(IS_WEB && {
       maxWidth: 1200,
       alignSelf: 'center',
@@ -3595,28 +4240,403 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   section: {
-    marginBottom: IS_WEB ? 24 : 16,
+    marginBottom: IS_WEB ? 20 : 12,
     backgroundColor: '#0b1226',
-    borderRadius: IS_WEB ? 12 : 8,
-    padding: IS_WEB ? 16 : 12,
+    borderRadius: IS_WEB ? 10 : 8,
+    padding: IS_WEB ? 14 : 10,
     borderWidth: 1,
     borderColor: '#1e3a5f',
   },
   sectionTitle: {
     color: '#7dd3fc',
-    fontSize: IS_WEB ? 20 : 16,
+    fontSize: IS_WEB ? 18 : 15,
     fontWeight: '700',
-    marginBottom: IS_WEB ? 12 : 8,
+    marginBottom: IS_WEB ? 10 : 6,
+  },
+  sectionTitleInline: {
+    color: '#7dd3fc',
+    fontSize: IS_WEB ? 15 : 13,
+    fontWeight: '700',
+    marginBottom: IS_WEB ? 8 : 6,
+  },
+  sectionTitleInlineCenterWeb: {
+    alignSelf: 'stretch',
+    textAlign: 'center',
+  },
+  itemsBuildTwoColumn: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: IS_WEB ? 12 : 8,
+    width: '100%',
+  },
+  itemsBuildDivider: {
+    width: 1,
+    alignSelf: 'stretch',
+    backgroundColor: '#1e3a5f',
+    marginVertical: 2,
+    opacity: 0.9,
+    flexShrink: 0,
+  },
+  itemsBuildColumnStart: {
+    flex: 1,
+    minWidth: 0,
+    ...(IS_WEB && { alignItems: 'center' }),
+  },
+  itemsBuildColumnFinal: {
+    flex: 1,
+    minWidth: 0,
+    ...(IS_WEB && { alignItems: 'center' }),
+  },
+  relicSectionLabel: {
+    width: '100%',
+    textAlign: 'center',
+  },
+  relicBlockInColumn: {
+    marginTop: IS_WEB ? 10 : 8,
+    width: '100%',
+    alignItems: 'center',
+  },
+  compactStarterRow: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: IS_WEB ? 6 : 4,
+  },
+  compactStarterSlotWrap: {
+    width: '40%',
+    minWidth: 56,
+    maxWidth: 96,
+    ...(IS_WEB && {
+      width: 92,
+      minWidth: 92,
+      maxWidth: 92,
+    }),
+  },
+  compactStartingGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: IS_WEB ? 'center' : 'flex-start',
+    ...(IS_WEB
+      ? {
+          alignSelf: 'center',
+          justifyContent: 'center',
+          width: 92 * 4 + 10 * 3,
+          maxWidth: '100%',
+          columnGap: 10,
+          rowGap: 10,
+        }
+      : { gap: 4 }),
+  },
+  compactFinalGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: IS_WEB ? 6 : 4,
+    justifyContent: IS_WEB ? 'center' : 'flex-start',
+  },
+  /** Web: Final build stack — row of 1 (starter S) + row of 3 + row of 3. */
+  compactFinalBuildWeb: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    width: '100%',
+    flexDirection: 'column',
+    gap: 14,
+    marginBottom: IS_WEB ? 10 : 4,
+  },
+  compactFinalGridWebRowSingle: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+  },
+  compactFinalGridWeb: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    alignSelf: 'center',
+    width: IS_WEB ? 112 * 3 + 14 * 2 : '100%',
+    maxWidth: '100%',
+    columnGap: 14,
+    rowGap: 14,
+  },
+  compactFinalSlotWeb: {
+    ...(IS_WEB && {
+      width: 112,
+      minWidth: 112,
+      maxWidth: 112,
+      flexGrow: 0,
+      flexShrink: 0,
+    }),
+  },
+  compactStartingSlot: {
+    width: '23%',
+    minWidth: 48,
+    maxWidth: 76,
+    ...(IS_WEB && {
+      width: 92,
+      minWidth: 92,
+      maxWidth: 92,
+      flexGrow: 0,
+      flexShrink: 0,
+    }),
+  },
+  compactFinalSlot: {
+    width: '30%',
+    minWidth: 48,
+    maxWidth: 78,
+  },
+  compactSlotButton: {
+    position: 'relative',
+    aspectRatio: 1,
+    backgroundColor: '#0f1724',
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: IS_WEB ? 4 : 2,
+    width: '100%',
+    overflow: 'hidden',
+    ...(IS_WEB && { cursor: 'pointer' }),
+  },
+  compactItemIcon: {
+    width: '86%',
+    height: '52%',
+    borderRadius: 3,
+    alignSelf: 'center',
+  },
+  compactItemPh: {
+    width: '86%',
+    height: '52%',
+    backgroundColor: '#1e3a5f',
+    borderRadius: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  /** Compact relic tiles — extra small on native so art fits with label. */
+  compactRelicSlotIcon: {
+    width: IS_WEB ? '64%' : '46%',
+    height: IS_WEB ? '38%' : '24%',
+    borderRadius: 3,
+    alignSelf: 'center',
+  },
+  compactRelicSlotPh: {
+    width: IS_WEB ? '64%' : '46%',
+    height: IS_WEB ? '38%' : '24%',
+    backgroundColor: '#1e3a5f',
+    borderRadius: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  compactItemPhText: {
+    color: '#64748b',
+    fontSize: IS_WEB ? 13 : 10,
+    fontWeight: '700',
+  },
+  compactItemName: {
+    color: '#94a3b8',
+    fontSize: IS_WEB ? 7 : 6,
+    textAlign: 'center',
+    marginTop: 1,
+    lineHeight: IS_WEB ? 9 : 8,
+    width: '100%',
+    paddingHorizontal: 1,
+  },
+  compactSlotPlaceholder: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    minHeight: 28,
+  },
+  compactSlotPlus: {
+    color: '#475569',
+    fontSize: IS_WEB ? 20 : 17,
+    fontWeight: '300',
+  },
+  compactSlotHint: {
+    color: '#64748b',
+    fontSize: 9,
+    marginTop: 1,
+    fontWeight: '700',
+  },
+  godStatsExpandableWrap: {
+    marginTop: IS_WEB ? 12 : 10,
+    paddingTop: IS_WEB ? 12 : 10,
+    borderTopWidth: 1,
+    borderTopColor: '#1e3a5f',
+  },
+  godStatsExpandHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: IS_WEB ? 4 : 2,
+    ...(IS_WEB && { cursor: 'pointer' }),
+  },
+  godStatsExpandHeaderTitleWrap: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    flexWrap: 'wrap',
+    marginRight: 8,
+  },
+  godStatsExpandHeaderTitle: {
+    color: '#7dd3fc',
+    fontSize: IS_WEB ? 16 : 14,
+    fontWeight: '700',
+  },
+  godStatsExpandHeaderMeta: {
+    color: '#94a3b8',
+    fontSize: IS_WEB ? 13 : 12,
+    fontWeight: '600',
+  },
+  godStatsExpandChevron: {
+    color: '#94a3b8',
+    fontSize: IS_WEB ? 16 : 14,
+    fontWeight: '700',
+  },
+  statsExpandedBody: {
+    marginTop: IS_WEB ? 8 : 6,
+  },
+  statsEmbedLevelBlock: {
+    marginBottom: IS_WEB ? 10 : 8,
+    paddingBottom: IS_WEB ? 10 : 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1e3a5f',
+  },
+  statsEmbedLevelHeading: {
+    color: '#64748b',
+    fontSize: IS_WEB ? 11 : 10,
+    fontWeight: '600',
+    marginBottom: IS_WEB ? 6 : 5,
+  },
+  statsEmbedLevelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: IS_WEB ? 6 : 5,
+  },
+  statsEmbedLevelBtn: {
+    width: IS_WEB ? 28 : 26,
+    height: IS_WEB ? 28 : 26,
+    borderRadius: IS_WEB ? 14 : 13,
+    backgroundColor: '#1e3a5f',
+    borderWidth: 1,
+    borderColor: '#334155',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  statsEmbedLevelBtnDisabled: {
+    opacity: 0.35,
+  },
+  statsEmbedLevelBtnText: {
+    color: '#facc15',
+    fontSize: IS_WEB ? 16 : 15,
+    fontWeight: '700',
+    lineHeight: IS_WEB ? 16 : 15,
+  },
+  statsEmbedSliderHit: {
+    flex: 1,
+    minHeight: IS_WEB ? 40 : 44,
+    justifyContent: 'center',
+    ...(IS_WEB && { cursor: 'pointer', touchAction: 'none' }),
+  },
+  statsEmbedSliderRail: {
+    height: IS_WEB ? 6 : 5,
+    borderRadius: 3,
+    backgroundColor: '#1e293b',
+    width: '100%',
+    position: 'relative',
+    overflow: 'visible',
+  },
+  statsEmbedSliderFill: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    bottom: 0,
+    backgroundColor: '#facc15',
+    borderRadius: 3,
+  },
+  statsEmbedSliderThumb: {
+    position: 'absolute',
+    left: 0,
+    top: '50%',
+    width: IS_WEB ? 15 : 14,
+    height: IS_WEB ? 15 : 14,
+    borderRadius: IS_WEB ? 8 : 7,
+    marginTop: IS_WEB ? -7.5 : -7,
+    marginLeft: IS_WEB ? -7.5 : -7,
+    backgroundColor: '#facc15',
+    borderWidth: 2,
+    borderColor: '#ffffff',
+  },
+  compactRelicRemoveOverlay: {
+    position: 'absolute',
+    top: 2,
+    right: 2,
+    zIndex: 2,
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    backgroundColor: 'rgba(15, 23, 36, 0.85)',
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#334155',
+  },
+  abilityOrderTabRow: {
+    flexDirection: 'row',
+    gap: IS_WEB ? 8 : 6,
+    marginBottom: IS_WEB ? 10 : 8,
+  },
+  abilityOrderTab: {
+    flex: 1,
+    paddingVertical: IS_WEB ? 10 : 8,
+    paddingHorizontal: IS_WEB ? 12 : 8,
+    borderRadius: 8,
+    backgroundColor: '#0f1724',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    alignItems: 'center',
+    ...(IS_WEB && { cursor: 'pointer' }),
+  },
+  abilityOrderTabActive: {
+    backgroundColor: '#0c2d4a',
+    borderColor: '#38bdf8',
+  },
+  abilityOrderTabText: {
+    color: '#94a3b8',
+    fontSize: IS_WEB ? 14 : 12,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  abilityOrderTabTextActive: {
+    color: '#7dd3fc',
   },
   sectionSubtitle: {
     color: '#94a3b8',
     fontSize: IS_WEB ? 14 : 12,
     marginBottom: 12,
   },
-  // God Selection
+  // God Selection + compact role chips
+  godRoleBlock: {
+    width: '100%',
+    gap: IS_WEB ? 8 : 6,
+  },
+  godRoleSubtitle: {
+    color: '#94a3b8',
+    fontSize: IS_WEB ? 12 : 11,
+    fontWeight: '500',
+    marginTop: -2,
+    marginBottom: IS_WEB ? 8 : 6,
+    lineHeight: IS_WEB ? 16 : 15,
+  },
   godSelectorContainer: {
     flexDirection: 'row',
-    gap: 12,
+    gap: IS_WEB ? 8 : 6,
+    alignItems: 'center',
+    width: '100%',
+  },
+  godSelectorContainerInline: {
+    flexWrap: 'nowrap',
     alignItems: 'center',
   },
   godSelector: {
@@ -3624,124 +4644,173 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#0f1724',
     borderRadius: 8,
-    padding: IS_WEB ? 12 : 10,
+    padding: IS_WEB ? 8 : 6,
     borderWidth: 1,
     borderColor: '#1e3a5f',
-    minHeight: IS_WEB ? 70 : 60,
+    minHeight: IS_WEB ? 52 : 46,
     flex: 1,
     ...(IS_WEB && {
       cursor: 'pointer',
       transition: 'all 0.2s ease',
     }),
   },
-  godIcon: {
-    width: IS_WEB ? 50 : 45,
-    height: IS_WEB ? 50 : 45,
+  godSelectorWhenInline: {
+    flex: 1,
+    minWidth: 96,
+    minHeight: IS_WEB ? 52 : 46,
+  },
+  inlineRoleCluster: {
+    flex: 1,
+    minWidth: 0,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: IS_WEB ? 5 : 4,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    alignContent: 'center',
+  },
+  inlineRoleScroll: {
+    width: '100%',
+    flexGrow: 0,
+  },
+  inlineRoleScrollContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: IS_WEB ? 6 : 5,
+    paddingVertical: 2,
+    paddingRight: 2,
+  },
+  inlineRoleChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingVertical: IS_WEB ? 5 : 4,
+    paddingHorizontal: IS_WEB ? 8 : 6,
     borderRadius: 6,
-    marginRight: IS_WEB ? 12 : 10,
+    borderWidth: 2,
+    borderColor: '#334155',
+    backgroundColor: '#0f1724',
+    flexShrink: 0,
+    ...(IS_WEB && { cursor: 'pointer' }),
+  },
+  inlineRoleChipSelected: {
+    backgroundColor: '#0c4a6e',
+    borderColor: '#38bdf8',
+  },
+  inlineRoleChipDisabled: {
+    opacity: 0.45,
+  },
+  inlineRoleChipIcon: {
+    width: IS_WEB ? 15 : 14,
+    height: IS_WEB ? 15 : 14,
+  },
+  inlineRoleChipText: {
+    color: '#e2e8f0',
+    fontSize: IS_WEB ? 11 : 10,
+    fontWeight: '600',
+  },
+  inlineRoleChipTextSelected: {
+    color: '#f8fafc',
+    fontWeight: '600',
+  },
+  inlineRoleChipTextDisabled: {
+    color: '#64748b',
+  },
+  godIcon: {
+    width: IS_WEB ? 38 : 34,
+    height: IS_WEB ? 38 : 34,
+    borderRadius: 6,
+    marginRight: IS_WEB ? 8 : 6,
     flexShrink: 0,
   },
   godIconPlaceholder: {
-    width: IS_WEB ? 50 : 45,
-    height: IS_WEB ? 50 : 45,
+    width: IS_WEB ? 38 : 34,
+    height: IS_WEB ? 38 : 34,
     borderRadius: 6,
     backgroundColor: '#1e3a5f',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: IS_WEB ? 12 : 10,
+    marginRight: IS_WEB ? 8 : 6,
     flexShrink: 0,
   },
   godIconPlaceholderText: {
     color: '#64748b',
-    fontSize: IS_WEB ? 20 : 18,
+    fontSize: IS_WEB ? 17 : 15,
     fontWeight: '700',
   },
   godNameText: {
     color: '#e6eef8',
-    fontSize: IS_WEB ? 16 : 14,
+    fontSize: IS_WEB ? 14 : 13,
     fontWeight: '600',
     flex: 1,
-    paddingRight: 8,
+    paddingRight: 6,
   },
-  // Level Slider
-  levelContainer: {
-    marginTop: 8,
-  },
-  levelSliderContainer: {
+  buildSectionToolbar: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
-    marginBottom: 8,
+    marginBottom: IS_WEB ? 8 : 6,
+    ...(IS_WEB && {
+      alignSelf: 'stretch',
+      width: '100%',
+      justifyContent: 'flex-start',
+    }),
   },
-  levelSliderTrack: {
-    flex: 1,
-    height: IS_WEB ? 12 : 8,
-    backgroundColor: '#ffffff',
-    borderRadius: 4,
-    position: 'relative',
-    cursor: IS_WEB ? 'pointer' : 'default',
-  },
-  levelSliderFill: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    height: '100%',
-    backgroundColor: '#facc15',
-    borderRadius: 4,
-  },
-  levelSliderFillActive: {
-    backgroundColor: '#fbbf24',
-    shadowColor: '#facc15',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.6,
-    shadowRadius: 4,
-  },
-  levelSliderThumb: {
-    position: 'absolute',
-    top: IS_WEB ? -10 : -8,
-    width: IS_WEB ? 28 : 24,
-    height: IS_WEB ? 28 : 24,
-    borderRadius: IS_WEB ? 14 : 12,
-    backgroundColor: '#facc15',
-    borderWidth: 2,
-    borderColor: '#ffffff',
-    marginLeft: IS_WEB ? -14 : -12,
-  },
-  levelSliderThumbDragging: {
-    transform: [{ translateX: IS_WEB ? -17 : -14 }, { scale: 1.3 }],
-    backgroundColor: '#fbbf24',
-    borderColor: '#ffffff',
-    borderWidth: 3,
-    shadowColor: '#facc15',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.8,
-    shadowRadius: 8,
-  },
-  levelSliderButton: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: '#1e3a5f',
-    borderWidth: 2,
-    borderColor: '#1e3a5f',
-    justifyContent: 'center',
+  buildItemsHeaderRow: {
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginBottom: IS_WEB ? 12 : 10,
+    paddingHorizontal: IS_WEB ? 2 : 0,
+    gap: 12,
   },
-  levelSliderButtonDisabled: {
-    opacity: 0.4,
-    borderColor: '#1e3a5f',
+  buildItemsHeaderTitle: {
+    color: '#7dd3fc',
+    fontSize: IS_WEB ? 20 : 18,
+    fontWeight: '800',
+    letterSpacing: 0.4,
   },
-  levelSliderButtonText: {
-    color: '#facc15',
-    fontSize: 20,
+  buildItemsHeaderGold: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: IS_WEB ? 8 : 6,
+    flexShrink: 0,
+  },
+  buildItemsHeaderGoldIcon: {
+    width: IS_WEB ? 22 : 20,
+    height: IS_WEB ? 22 : 20,
+  },
+  buildItemsHeaderGoldText: {
+    color: '#fbbf24',
+    fontSize: IS_WEB ? 16 : 15,
     fontWeight: '700',
-    lineHeight: 20,
   },
-  levelSliderLabel: {
-    color: '#cbd5e1',
-    fontSize: 14,
-    textAlign: 'center',
-    marginTop: 4,
+  buildClearAllBtnInline: {
+    paddingVertical: IS_WEB ? 8 : 5,
+    paddingHorizontal: IS_WEB ? 14 : 7,
+    borderRadius: 8,
+    backgroundColor: 'rgba(15, 23, 36, 0.96)',
+    borderWidth: 1,
+    borderColor: '#334155',
+    ...(IS_WEB && {
+      cursor: 'pointer',
+      backgroundColor: '#0f172a',
+      borderColor: '#7dd3fc',
+      borderWidth: 1,
+      minWidth: 88,
+      alignItems: 'center',
+      justifyContent: 'center',
+    }),
+  },
+  buildClearAllBtnLabelWeb: {
+    color: '#7dd3fc',
+    fontSize: 13,
+    fontWeight: '700',
+    letterSpacing: 0.3,
+  },
+  buildClearAllBtnEmoji: {
+    fontSize: IS_WEB ? 17 : 15,
+    lineHeight: IS_WEB ? 19 : 17,
   },
   // Item Slots
   starterItemRow: {
@@ -3816,15 +4885,16 @@ const styles = StyleSheet.create({
   },
   // Aspect Slot in God Selector
   aspectSlotButton: {
-    width: IS_WEB ? 100 : 80,
+    width: IS_WEB ? 72 : 64,
     aspectRatio: 1,
+    flexShrink: 0,
     backgroundColor: '#0f1724',
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#1e3a5f',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 8,
+    padding: IS_WEB ? 6 : 5,
     position: 'relative',
     overflow: 'hidden',
     ...(IS_WEB && {
@@ -4010,6 +5080,24 @@ const styles = StyleSheet.create({
   saveBuildModalButtonDisabled: {
     opacity: 0.6,
   },
+  botDraftBanner: {
+    backgroundColor: '#0c2d4a',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#38bdf8',
+    padding: IS_WEB ? 12 : 10,
+  },
+  botDraftBannerTitle: {
+    color: '#7dd3fc',
+    fontSize: IS_WEB ? 16 : 15,
+    fontWeight: '800',
+    marginBottom: 6,
+  },
+  botDraftBannerText: {
+    color: '#94a3b8',
+    fontSize: IS_WEB ? 13 : 12,
+    lineHeight: IS_WEB ? 18 : 17,
+  },
   loadBuildButton: {
     backgroundColor: '#10b981',
     padding: 16,
@@ -4112,6 +5200,17 @@ const styles = StyleSheet.create({
     color: '#7dd3fc',
     fontSize: 14,
     fontWeight: '600',
+  },
+  itemInfoPassive: {
+    marginBottom: 16,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#1e3a5f',
+  },
+  itemInfoPassiveText: {
+    color: '#cbd5e1',
+    fontSize: 13,
+    lineHeight: 19,
   },
   itemInfoCost: {
     marginBottom: 16,
@@ -4469,11 +5568,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 12,
   },
-  relicIconPlaceholderText: {
-    color: '#64748b',
-    fontSize: IS_WEB ? 24 : 20,
-    fontWeight: '700',
-  },
   relicName: {
     color: '#e6eef8',
     fontSize: IS_WEB ? 16 : 14,
@@ -4569,7 +5663,7 @@ const styles = StyleSheet.create({
   // Build Tips Styles
   tipsHeader: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     marginBottom: 12,
   },
@@ -4808,42 +5902,6 @@ const styles = StyleSheet.create({
     color: '#64748b',
     fontSize: IS_WEB ? 10 : 9,
     textAlign: 'center',
-  },
-  // Role Selection Styles
-  roleContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: IS_WEB ? 10 : 8,
-  },
-  roleButton: {
-    backgroundColor: '#0f1724',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#1e3a5f',
-    paddingVertical: IS_WEB ? 10 : 8,
-    paddingHorizontal: IS_WEB ? 16 : 14,
-    minWidth: IS_WEB ? 90 : 80,
-  },
-  roleButtonSelected: {
-    backgroundColor: '#1e90ff',
-    borderColor: '#0ea5e9',
-    borderWidth: 2,
-  },
-  roleButtonDisabled: {
-    opacity: 0.5,
-  },
-  roleButtonText: {
-    color: '#cbd5e1',
-    fontSize: IS_WEB ? 14 : 12,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  roleButtonTextSelected: {
-    color: '#ffffff',
-    fontWeight: '700',
-  },
-  roleButtonTextDisabled: {
-    color: '#64748b',
   },
   // Starting Items Styles
   starterStartingItemRow: {

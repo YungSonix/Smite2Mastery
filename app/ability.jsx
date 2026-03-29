@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator,
 } from 'react-native';
+import { COLORS } from '../lib/themeColors';
 import { Image } from 'expo-image';
 import { getGodAbilityIcon } from './localIcons';
 
@@ -349,7 +350,7 @@ export default function AbilityGamePage({ onBack = null }) {
                   value={guessGodText}
                   onChangeText={setGuessGodText}
                   placeholder="Type a god name (e.g. Achilles)"
-                  placeholderTextColor="#64748b"
+                  placeholderTextColor={COLORS.slate500}
                   autoCapitalize="words"
                   autoCorrect={false}
                   onSubmitEditing={handleSubmitGuess}
@@ -419,7 +420,7 @@ export default function AbilityGamePage({ onBack = null }) {
 
             {isLoadingLeaderboard ? (
               <View style={styles.leaderboardLoading}>
-                <ActivityIndicator color="#1e90ff" />
+                <ActivityIndicator color={COLORS.brandBlue} />
               </View>
             ) : leaderboard.length === 0 ? (
               <Text style={styles.leaderboardEmptyText}>
@@ -466,7 +467,7 @@ export default function AbilityGamePage({ onBack = null }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#071024',
+    backgroundColor: COLORS.bgVoid,
   },
   scrollContent: {
     padding: 20,
@@ -478,7 +479,7 @@ const styles = StyleSheet.create({
     }),
   },
   backButton: {
-    backgroundColor: '#1e90ff',
+    backgroundColor: COLORS.brandBlue,
     paddingVertical: 8,
     paddingHorizontal: 14,
     borderRadius: 8,
@@ -486,7 +487,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   backButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 14,
     fontWeight: '700',
   },
@@ -494,18 +495,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    color: '#facc15',
+    color: COLORS.statStrength,
     fontSize: 28,
     fontWeight: '800',
     marginBottom: 6,
   },
   subtitle: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 14,
     marginBottom: 4,
   },
   subtitleSmall: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: 12,
   },
   streakRow: {
@@ -514,15 +515,15 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   streakText: {
-    color: '#e5e7eb',
+    color: COLORS.gray200,
     fontSize: 14,
     fontWeight: '600',
   },
   abilityCard: {
-    backgroundColor: '#020617',
+    backgroundColor: COLORS.void2,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#1e293b',
+    borderColor: COLORS.slate800,
     padding: 16,
     alignItems: 'center',
     justifyContent: 'center',
@@ -537,12 +538,12 @@ const styles = StyleSheet.create({
     width: IS_WEB ? 200 : 150,
     height: IS_WEB ? 200 : 150,
     borderRadius: 16,
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     alignItems: 'center',
     justifyContent: 'center',
   },
   abilityIconFallbackText: {
-    color: '#e5e7eb',
+    color: COLORS.gray200,
     fontSize: 40,
     fontWeight: '800',
   },
@@ -550,18 +551,18 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   inputLabel: {
-    color: '#e5e7eb',
+    color: COLORS.gray200,
     marginBottom: 6,
     fontWeight: '600',
   },
   input: {
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     paddingVertical: 10,
     paddingHorizontal: 12,
-    color: '#e5e7eb',
+    color: COLORS.gray200,
     fontSize: 14,
   },
   abilityButtonsRow: {
@@ -574,36 +575,36 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     alignItems: 'center',
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
   },
   abilityButtonSelected: {
-    backgroundColor: '#1e90ff',
-    borderColor: '#38bdf8',
+    backgroundColor: COLORS.brandBlue,
+    borderColor: COLORS.skyBright,
   },
   abilityButtonText: {
-    color: '#e5e7eb',
+    color: COLORS.gray200,
     fontSize: 16,
     fontWeight: '600',
   },
   abilityButtonTextSelected: {
-    color: '#ffffff',
+    color: COLORS.white,
   },
   errorBox: {
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#b91c1c',
+    borderColor: COLORS.red700,
     padding: 12,
     marginBottom: 12,
   },
   errorText: {
-    color: '#fecaca',
+    color: COLORS.red200,
     fontSize: 12,
   },
   feedbackText: {
-    color: '#bbf7d0',
+    color: COLORS.greenSoft,
     fontSize: 14,
     marginTop: 6,
     marginBottom: 10,
@@ -611,23 +612,23 @@ const styles = StyleSheet.create({
   submitButton: {
     paddingVertical: 10,
     paddingHorizontal: 16,
-    backgroundColor: '#22c55e',
+    backgroundColor: COLORS.statHealth,
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 16,
   },
   submitButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 14,
     fontWeight: '700',
   },
   suggestionBox: {
     marginTop: 8,
-    backgroundColor: '#020617',
+    backgroundColor: COLORS.void2,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#1e293b',
+    borderColor: COLORS.slate800,
     maxHeight: 220,
     overflow: 'hidden',
   },
@@ -635,29 +636,29 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 8,
     borderBottomWidth: 1,
-    borderBottomColor: '#0b1226',
+    borderBottomColor: COLORS.bgDeep,
   },
   suggestionText: {
-    color: '#e5e7eb',
+    color: COLORS.gray200,
     fontSize: IS_WEB ? 13 : 11,
     fontWeight: '500',
   },
   leaderboardContainer: {
     marginTop: 16,
-    backgroundColor: '#020617',
+    backgroundColor: COLORS.void2,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     padding: 12,
   },
   leaderboardTitle: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 16,
     fontWeight: '700',
     marginBottom: 4,
   },
   leaderboardSubtitle: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: 12,
     marginBottom: 8,
   },
@@ -666,7 +667,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   leaderboardEmptyText: {
-    color: '#64748b',
+    color: COLORS.slate500,
     fontSize: 12,
     fontStyle: 'italic',
     paddingVertical: 8,
@@ -679,31 +680,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 6,
     borderBottomWidth: 1,
-    borderBottomColor: '#0b1226',
+    borderBottomColor: COLORS.bgDeep,
   },
   leaderboardRowYou: {
-    backgroundColor: '#0b1120',
+    backgroundColor: COLORS.voidPanel,
   },
   leaderboardRank: {
     width: 24,
     textAlign: 'center',
-    color: '#e5e7eb',
+    color: COLORS.gray200,
     fontSize: 12,
     fontWeight: '700',
   },
   leaderboardUsername: {
     flex: 1,
-    color: '#e5e7eb',
+    color: COLORS.gray200,
     fontSize: 12,
   },
   leaderboardUsernameYou: {
-    color: '#a5b4fc',
+    color: COLORS.indigoLight,
     fontWeight: '700',
   },
   leaderboardStreak: {
     minWidth: 90,
     textAlign: 'right',
-    color: '#facc15',
+    color: COLORS.statStrength,
     fontSize: 12,
     fontWeight: '600',
   },

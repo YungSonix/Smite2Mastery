@@ -505,6 +505,15 @@ begin
     execute 'create policy contributor_builds_owner_write on public.contributor_builds for all to public using (username = public.current_app_username()) with check (username = public.current_app_username())';
   end if;
 
+  if to_regclass('public.community_guides') is not null
+     and exists (select 1 from information_schema.columns where table_schema = 'public' and table_name = 'community_guides' and column_name = 'username') then
+    execute 'alter table public.community_guides enable row level security';
+    execute 'drop policy if exists community_guides_read_all on public.community_guides';
+    execute 'create policy community_guides_read_all on public.community_guides for select to public using (true)';
+    execute 'drop policy if exists community_guides_owner_write on public.community_guides';
+    execute 'create policy community_guides_owner_write on public.community_guides for all to public using (username = public.current_app_username()) with check (username = public.current_app_username())';
+  end if;
+
   if to_regclass('public.certification_requests') is not null
      and exists (select 1 from information_schema.columns where table_schema = 'public' and table_name = 'certification_requests' and column_name = 'username') then
     execute 'alter table public.certification_requests enable row level security';

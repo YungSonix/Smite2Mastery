@@ -9,6 +9,7 @@ import {
   Linking,
   Alert,
 } from 'react-native';
+import { COLORS } from '../lib/themeColors';
 import { REMOTE_BASE_URLS } from '../config';
 
 export default function PlayerProfilesPage() {
@@ -96,7 +97,7 @@ export default function PlayerProfilesPage() {
           <TextInput
             style={styles.searchInput}
             placeholder="Enter User ID (e.g., 76561198065516498)"
-            placeholderTextColor="#64748b"
+            placeholderTextColor={COLORS.slate500}
             value={userId}
             onChangeText={setUserId}
             autoCapitalize="none"
@@ -135,30 +136,30 @@ export default function PlayerProfilesPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0a0e1a',
+    backgroundColor: COLORS.void8,
   },
   header: {
     padding: 20,
     paddingTop: 20,
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#1e3a5f',
+    borderBottomColor: COLORS.surfaceNavy,
   },
   title: {
     fontSize: 28,
     fontWeight: '800',
-    color: '#e2e8f0',
+    color: COLORS.slate200,
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 14,
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontWeight: '500',
     textAlign: 'center',
   },
   searchSection: {
     padding: 20,
-    backgroundColor: '#0a0e1a',
+    backgroundColor: COLORS.void8,
     position: 'relative',
     zIndex: 10,
   },
@@ -180,7 +181,7 @@ const styles = StyleSheet.create({
   platformButton: {
     paddingVertical: 12,
     paddingHorizontal: 16,
-    backgroundColor: '#1a1f2e',
+    backgroundColor: COLORS.void9,
     borderRadius: 8,
     borderWidth: 2,
     borderColor: '#B8FF12',
@@ -196,7 +197,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '100%',
     left: 0,
-    backgroundColor: '#1a1f2e',
+    backgroundColor: COLORS.void9,
     borderRadius: 8,
     borderWidth: 2,
     borderColor: '#B8FF12',
@@ -219,7 +220,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2a3a2a',
   },
   platformOptionText: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 14,
     fontWeight: '500',
   },
@@ -231,11 +232,11 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 12,
     paddingHorizontal: 16,
-    backgroundColor: '#1a1f2e',
+    backgroundColor: COLORS.void9,
     borderRadius: 8,
     borderWidth: 2,
     borderColor: '#3a4a4a',
-    color: '#e2e8f0',
+    color: COLORS.slate200,
     fontSize: 14,
   },
   searchButton: {
@@ -247,7 +248,7 @@ const styles = StyleSheet.create({
     borderColor: '#B8FF12',
   },
   searchButtonText: {
-    color: '#0a0e1a',
+    color: COLORS.void8,
     fontSize: 14,
     fontWeight: '700',
   },
@@ -258,26 +259,26 @@ const styles = StyleSheet.create({
     padding: 40,
   },
   placeholderText: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 16,
     textAlign: 'center',
     lineHeight: 24,
     marginBottom: 12,
   },
   placeholderSubtext: {
-    color: '#64748b',
+    color: COLORS.slate500,
     fontSize: 14,
     textAlign: 'center',
     fontStyle: 'italic',
   },
   trademarkFooter: {
     padding: 1,
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderTopWidth: 1,
-    borderTopColor: '#1e3a5f',
+    borderTopColor: COLORS.surfaceNavy,
   },
   trademarkText: {
-    color: '#64748b',
+    color: COLORS.slate500,
     fontSize: 6,
     lineHeight: 8,
     textAlign: 'center',

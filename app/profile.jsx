@@ -52,6 +52,7 @@ try {
 }
 import CryptoJS from 'crypto-js';
 import { useScreenDimensions } from '../hooks/useScreenDimensions';
+import { flattenBuildsGods } from '../lib/normalizeBuildsGod';
 import { getLocalItemIcon, getLocalGodAsset } from './localIcons';
 import ColorPicker from 'react-native-wheel-color-picker';
 import { EXTERNAL_LINKS, ICON_PATHS, REMOTE_BASE_URLS } from '../config';
@@ -1337,7 +1338,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   // Get all gods from builds.json (like data.jsx and tierlist.jsx)
   const allGods = useMemo(() => {
     if (!buildsData) return [];
-    return flattenAny(buildsData.gods);
+    return flattenBuildsGods(buildsData.gods);
   }, [buildsData]);
 
   // Profile icon picker: use profileIconGods.json (all PFPs in repo, including unreleased) then Smite2Gods/builds
@@ -1397,7 +1398,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   }, [buildsData]);
 
   const allBuildsGods = useMemo(() => {
-    return buildsData ? flattenAny(buildsData.gods) : [];
+    return buildsData ? flattenBuildsGods(buildsData.gods) : [];
   }, [buildsData]);
 
   const findItemByName = (itemName) => {

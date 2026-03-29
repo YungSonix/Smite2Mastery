@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { COLORS } from '../lib/themeColors';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -66,7 +67,7 @@ class ErrorBoundary extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#071024',
+    backgroundColor: COLORS.bgVoid,
     padding: 20,
   },
   scrollContent: {
@@ -77,46 +78,46 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#ef4444',
+    color: COLORS.danger,
     marginBottom: 16,
     textAlign: 'center',
   },
   message: {
     fontSize: 16,
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     marginBottom: 24,
     textAlign: 'center',
     lineHeight: 24,
   },
   errorDetails: {
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     padding: 16,
     borderRadius: 8,
     marginBottom: 24,
     width: '100%',
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   errorTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     marginBottom: 8,
   },
   errorText: {
     fontSize: 12,
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontFamily: 'monospace',
   },
   button: {
-    backgroundColor: '#1e90ff',
+    backgroundColor: COLORS.brandBlue,
     padding: 16,
     borderRadius: 8,
     minWidth: 200,
     alignItems: 'center',
   },
   buttonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: '700',
   },

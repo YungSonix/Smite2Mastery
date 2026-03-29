@@ -16,6 +16,7 @@ import {
 import { Image } from 'expo-image';
 import { getLocalItemIcon, getLocalGodAsset } from './localIcons';
 import { useScreenDimensions } from '../hooks/useScreenDimensions';
+import { flattenBuildsGods } from '../lib/normalizeBuildsGod';
 import { DEFAULT_TAB_STATE } from '../config';
 
 const IS_WEB = Platform.OS === 'web';
@@ -733,13 +734,7 @@ export default function PatchHubPage({ subTab = DEFAULT_TAB_STATE.patchHub }) {
   const findGodByName = useMemo(() => {
     if (!buildsData) return () => null;
     
-    const flattenAny = (a) => {
-      if (!a) return [];
-      if (!Array.isArray(a)) return [a];
-      return a.flat(Infinity).filter(Boolean);
-    };
-    
-    const gods = flattenAny(buildsData.gods);
+    const gods = flattenBuildsGods(buildsData.gods);
     const godMap = new Map();
     
     gods.forEach(god => {

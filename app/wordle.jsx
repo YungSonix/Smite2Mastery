@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator,
 } from 'react-native';
+import { COLORS } from '../lib/themeColors';
 import { Image } from 'expo-image';
 import { getLocalGodAsset, getRemoteGodIconByName } from './localIcons';
 
@@ -551,7 +552,7 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
                   value={guessText}
                   onChangeText={setGuessText}
                   placeholder="Type a god name (e.g. Achilles)"
-                  placeholderTextColor="#64748b"
+                  placeholderTextColor={COLORS.slate500}
                   autoCapitalize="words"
                   autoCorrect={false}
                   onSubmitEditing={handleSubmitGuess}
@@ -634,9 +635,9 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
                       const fb = feedback[key];
                       let bgColor = 'transparent';
                       if (fb) {
-                        if (fb.color === 'green') bgColor = '#166534';
-                        else if (fb.color === 'yellow') bgColor = '#854d0e';
-                        else bgColor = '#7f1d1d';
+                        if (fb.color === 'green') bgColor = COLORS.wordleTileGreen;
+                        else if (fb.color === 'yellow') bgColor = COLORS.wordleTileYellow;
+                        else bgColor = COLORS.wordleTileMiss;
                       }
                       return (
                         <View key={key} style={[styles.tableCell, styles.tableCellStat, { backgroundColor: bgColor }]}>
@@ -703,7 +704,7 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
 
               {isLoadingLeaderboard ? (
                 <View style={styles.leaderboardLoading}>
-                  <ActivityIndicator color="#1e90ff" />
+                  <ActivityIndicator color={COLORS.brandBlue} />
                 </View>
               ) : leaderboard.length === 0 ? (
                 <Text style={styles.leaderboardEmptyText}>
@@ -751,7 +752,7 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#071024',
+    backgroundColor: COLORS.bgVoid,
   },
   scrollContent: {
     padding: 20,
@@ -763,7 +764,7 @@ const styles = StyleSheet.create({
     }),
   },
   backButton: {
-    backgroundColor: '#1e90ff',
+    backgroundColor: COLORS.brandBlue,
     paddingVertical: 8,
     paddingHorizontal: 14,
     borderRadius: 8,
@@ -771,7 +772,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   backButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 14,
     fontWeight: '700',
   },
@@ -779,31 +780,31 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 28,
     fontWeight: '800',
     marginBottom: 6,
   },
   goldText: {
-    color: '#facc15',
+    color: COLORS.statStrength,
     fontSize: 14,
     fontWeight: '700',
     marginBottom: 4,
   },
   subtitle: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 14,
     marginBottom: 4,
   },
   subtitleSmall: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: 12,
   },
   inputSection: {
     marginBottom: 16,
   },
   inputLabel: {
-    color: '#e5e7eb',
+    color: COLORS.gray200,
     marginBottom: 6,
     fontWeight: '600',
   },
@@ -814,62 +815,62 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     paddingVertical: 10,
     paddingHorizontal: 12,
-    color: '#e5e7eb',
+    color: COLORS.gray200,
     fontSize: 14,
   },
   submitButton: {
     paddingVertical: 10,
     paddingHorizontal: 16,
-    backgroundColor: '#1e90ff',
+    backgroundColor: COLORS.brandBlue,
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
   submitButtonDisabled: {
-    backgroundColor: '#1e3a5f',
+    backgroundColor: COLORS.surfaceNavy,
   },
   submitButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 14,
     fontWeight: '700',
   },
   errorBox: {
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#b91c1c',
+    borderColor: COLORS.red700,
     padding: 12,
     marginBottom: 12,
   },
   errorText: {
-    color: '#fecaca',
+    color: COLORS.red200,
     fontSize: 12,
   },
   tableContainer: {
     marginTop: 16,
     borderWidth: 1,
-    borderColor: '#1e293b',
+    borderColor: COLORS.slate800,
     borderRadius: 12,
     overflow: 'hidden',
-    backgroundColor: '#020617',
+    backgroundColor: COLORS.void2,
   },
   tableHeaderRow: {
     flexDirection: 'row',
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderBottomWidth: 1,
-    borderBottomColor: '#1e293b',
+    borderBottomColor: COLORS.slate800,
   },
   tableHeaderCell: {
     flex: 1,
     paddingVertical: IS_WEB ? 8 : 4,
     paddingHorizontal: IS_WEB ? 6 : 3,
-    color: '#e5e7eb',
+    color: COLORS.gray200,
     fontSize: IS_WEB ? 11 : 9,
     fontWeight: '700',
     textAlign: 'center',
@@ -883,7 +884,7 @@ const styles = StyleSheet.create({
   tableRow: {
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderBottomColor: '#0f172a',
+    borderBottomColor: COLORS.slate900,
   },
   tableCell: {
     flex: 1,
@@ -903,49 +904,49 @@ const styles = StyleSheet.create({
     minWidth: IS_WEB ? 60 : 45,
   },
   tableCellStatText: {
-    color: '#e5e7eb',
+    color: COLORS.gray200,
     fontSize: IS_WEB ? 10 : 8,
   },
   resultBox: {
     marginTop: 16,
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderRadius: 12,
     padding: 16,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     alignItems: 'center',
   },
   resultTextSuccess: {
-    color: '#bbf7d0',
+    color: COLORS.greenSoft,
     fontSize: 16,
     fontWeight: '700',
     marginBottom: 10,
     textAlign: 'center',
   },
   resultTextFailure: {
-    color: '#fecaca',
+    color: COLORS.red200,
     fontSize: 16,
     fontWeight: '700',
     marginBottom: 10,
     textAlign: 'center',
   },
   resetButton: {
-    backgroundColor: '#1e90ff',
+    backgroundColor: COLORS.brandBlue,
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 999,
   },
   resetButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 14,
     fontWeight: '700',
   },
   suggestionBox: {
     marginTop: 8,
-    backgroundColor: '#020617',
+    backgroundColor: COLORS.void2,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#1e293b',
+    borderColor: COLORS.slate800,
     maxHeight: 220,
     overflow: 'hidden',
   },
@@ -955,7 +956,7 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 8,
     borderBottomWidth: 1,
-    borderBottomColor: '#0b1226',
+    borderBottomColor: COLORS.bgDeep,
   },
   suggestionIcon: {
     width: IS_WEB ? 32 : 26,
@@ -967,37 +968,37 @@ const styles = StyleSheet.create({
     width: IS_WEB ? 32 : 26,
     height: IS_WEB ? 32 : 26,
     borderRadius: IS_WEB ? 16 : 13,
-    backgroundColor: '#1e293b',
+    backgroundColor: COLORS.slate800,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 8,
   },
   suggestionIconFallbackText: {
-    color: '#e5e7eb',
+    color: COLORS.gray200,
     fontSize: 14,
     fontWeight: '700',
   },
   suggestionText: {
-    color: '#e5e7eb',
+    color: COLORS.gray200,
     fontSize: IS_WEB ? 13 : 11,
     fontWeight: '500',
   },
   leaderboardContainer: {
     marginTop: 16,
-    backgroundColor: '#020617',
+    backgroundColor: COLORS.void2,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     padding: 12,
   },
   leaderboardTitle: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 16,
     fontWeight: '700',
     marginBottom: 4,
   },
   leaderboardSubtitle: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: 12,
     marginBottom: 8,
   },
@@ -1006,7 +1007,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   leaderboardEmptyText: {
-    color: '#64748b',
+    color: COLORS.slate500,
     fontSize: 12,
     fontStyle: 'italic',
     paddingVertical: 8,
@@ -1019,31 +1020,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 6,
     borderBottomWidth: 1,
-    borderBottomColor: '#0b1226',
+    borderBottomColor: COLORS.bgDeep,
   },
   leaderboardRowYou: {
-    backgroundColor: '#0b1120',
+    backgroundColor: COLORS.voidPanel,
   },
   leaderboardRank: {
     width: 24,
     textAlign: 'center',
-    color: '#e5e7eb',
+    color: COLORS.gray200,
     fontSize: 12,
     fontWeight: '700',
   },
   leaderboardUsername: {
     flex: 1,
-    color: '#e5e7eb',
+    color: COLORS.gray200,
     fontSize: 12,
   },
   leaderboardUsernameYou: {
-    color: '#a5b4fc',
+    color: COLORS.indigoLight,
     fontWeight: '700',
   },
   leaderboardGuesses: {
     minWidth: 70,
     textAlign: 'right',
-    color: '#facc15',
+    color: COLORS.statStrength,
     fontSize: 12,
     fontWeight: '600',
   },

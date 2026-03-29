@@ -12,12 +12,13 @@ import {
   Platform,
   Alert,
   Dimensions,
+  InteractionManager,
 } from 'react-native';
 import CryptoJS from 'crypto-js';
 import { Image } from 'expo-image';
 // Lazy load builds.json to prevent startup crash
 let localBuilds = null;
-import { getLocalItemIcon, getLocalGodAsset, getSkinImage, getRoleIcon } from './localIcons';
+import { getLocalItemIcon, getLocalGodAsset, getSkinImage, getRoleIcon, PANTHEON_ICONS } from './localIcons';
 import { REMOTE_BASE_URLS } from '../config';
 
 // Import supabase lazily to avoid module load errors on mobile
@@ -95,23 +96,17 @@ const IS_WEB = Platform.OS === 'web';
 
 // Import reusable screen dimensions hook
 import { useScreenDimensions } from '../hooks/useScreenDimensions';
-
-// Import game mode icons
-const gameModeIcons = {
-  'conquest': require('./data/Icons/Game Modes/Conquest/conquestmap.webp'),
-  'arena': require('./data/Icons/Game Modes/Arena/ArenaCA1Update.webp'),
-  'joust': require('./data/Icons/Game Modes/Joust/Joust_Minimap_F2P.webp'),
-  'duel': require('./data/Icons/Game Modes/Duel/Duel_Minimap_F2P.webp'),
-  'assault': require('./data/Icons/Game Modes/Assault/t_Assault_F2P.webp'),
-};
-
-// Import buff icons
-const buffIcons = {
-  'Caustic': require('./data/Icons/Game Modes/Conquest/CausticBuff.webp'),
-  'Primal': require('./data/Icons/Game Modes/Conquest/PrimalBuff.webp'),
-  'Inspiration': require('./data/Icons/Game Modes/Conquest/InspirationBuff.webp'),
-  'Pathfinder': require('./data/Icons/Game Modes/Conquest/PathfinderBuff.webp'),
-};
+import { flattenBuildsGods } from '../lib/normalizeBuildsGod';
+import {
+  GAME_MODE_ICONS as gameModeIcons,
+  BUFF_ICONS as buffIcons,
+  TOWER_ICONS as towerIcons,
+  PHOENIX_ICONS as phoenixIcons,
+  TITAN_ICONS as titanIcons,
+  CONSUMABLE_ICONS as consumableIcons,
+  VULCAN_MOD_ICONS as vulcanModItemIcons,
+  STAT_ICONS as statIcons,
+} from '../lib/imageGrabber';
 
 // Buff colors
 const buffColors = {
@@ -120,118 +115,9 @@ const buffColors = {
   'Inspiration': '#a855f7', // Purple
   'Pathfinder': '#eab308', // Yellow
 };
-const towerIcons = {
-  'Tower': require('./data/Icons/Game Modes/Conquest/Towers.webp'),
-};
-const phoenixIcons = {
-  'Phoenix': require('./data/Icons/Game Modes/Conquest/Phoenix.webp'),
-};
-const titanIcons = {
-  'Titan': require('./data/Icons/Game Modes/Conquest/Titan.webp'),
-};
-// Import consumable icons
-const consumableIcons = {
-  'Baron\'s Brew': require('./data/Icons/Consumables/Consumable_Barons_Brew.png'),
-  'Eyes of the Jungle': require('./data/Icons/Consumables/Consumable_Eyes_of_the_Jungle.png'),
-  'Obsidian Dagger': require('./data/Icons/Consumables/Consumable_Obsidian_Dagger.png'),
-  'Vision Ward': require('./data/Icons/Consumables/Consumable_Vision_Ward.png'),
-  'Sentry Ward': require('./data/Icons/Consumables/Consumable_Sentry_Ward.png'),
-  'Warding Chalice': require('./data/Icons/Consumables/Consumable_Warding_Chalice.png'),
-  'Elixir of Strength': require('./data/Icons/Consumables/Consumable_Elixir_of_Strength.png'),
-  'Elixir of Intelligence': require('./data/Icons/Consumables/Consumable_Elixir_of_Intelligence.png'),
-};
 
-// Import Vulcan mod icons for items
-const vulcanModItemIcons = {
-  'Alternator Mod (Set One - Requires Level 1)': require('./data/Icons/Vulcan Mods/GodSpecific_Vulcan_Alternator_Mod.png'),
-  'Dual Mod (Set One - Requires Level 1)': require('./data/Icons/Vulcan Mods/GodSpecific_Vulcan_Dual_Mod.png'),
-  'Effeciency Mod (Set One - Requires Level 1)': require('./data/Icons/Vulcan Mods/GodSpecific_Vulcan_Efficiency_Mod.png'),
-  'Resonator Mod (Set Two - Requires Level 7)': require('./data/Icons/Vulcan Mods/GodSpecific_Vulcan_Resonator_Mod.png'),
-  'Thermal Mod (Set Two - Requires Level 7)': require('./data/Icons/Vulcan Mods/GodSpecific_Vulcan_Thermal_Mod.png'),
-  'Shrapnel Mod (Set Two - Requires Level 7)': require('./data/Icons/Vulcan Mods/GodSpecific_Vulcan_Shrapnel_Mod.png'),
-  'Masterwork Mod (Set Three  - Requires Level 14)': require('./data/Icons/Vulcan Mods/GodSpecific_Vulcan_Masterwork_Mod.png'),
-  'Surplus Mod (Set Three  - Requires Level 14)': require('./data/Icons/Vulcan Mods/GodSpecific_Vulcan_Surplus_Mod.png'),
-  'Seismic Mod (Set Three  - Requires Level 14)': require('./data/Icons/Vulcan Mods/GodSpecific_Vulcan_Seismic_Mod.png'),
-};
-
-// Import stat icons
-const statIcons = {
-  'BasicAttackPower': require('./data/Icons/Stat Icons/HUD_Stats_Icon_BasicAttackPower.png'),
-  'Active': require('./data/Icons/Stat Icons/T_StatIcon_Active.png'),
-  'AttackSpeed': require('./data/Icons/Stat Icons/T_StatIcon_AttackSpeed.png'),
-  'Attack Speed': require('./data/Icons/Stat Icons/T_StatIcon_AttackSpeed.png'),
-  'Consumable': require('./data/Icons/Stat Icons/T_StatIcon_Consumable.png'),
-  'Cooldown Rate': require('./data/Icons/Stat Icons/T_StatIcon_Cooldown.png'),
-  'Cooldown': require('./data/Icons/Stat Icons/T_StatIcon_Cooldown.png'),
-  'HealReduction': require('./data/Icons/Stat Icons/T_StatIcon_HealReduction.png'),
-  'Health': require('./data/Icons/Stat Icons/T_StatIcon_Health.png'),
-  'MaxHealth': require('./data/Icons/Stat Icons/T_StatIcon_Health.png'),
-  'HP5': require('./data/Icons/Stat Icons/T_StatIcon_HealthRegen.png'),
-  'Health Regen': require('./data/Icons/Stat Icons/T_StatIcon_HealthRegen.png'),
-  'Intelligence': require('./data/Icons/Stat Icons/T_StatIcon_Intelligence.png'),
-  'Lifesteal': require('./data/Icons/Stat Icons/T_StatIcon_Lifesteal.png'),
-  'MagicalProtection': require('./data/Icons/Stat Icons/T_StatIcon_MagicalProt.png'),
-  'Magical Protection': require('./data/Icons/Stat Icons/T_StatIcon_MagicalProt.png'),
-  'Mana': require('./data/Icons/Stat Icons/T_StatIcon_Mana.png'),
-  'MaxMana': require('./data/Icons/Stat Icons/T_StatIcon_Mana.png'),
-  'MP5': require('./data/Icons/Stat Icons/T_StatIcon_ManaRegen.png'),
-  'Mana Regen': require('./data/Icons/Stat Icons/T_StatIcon_ManaRegen.png'),
-  'Mana Regeneration': require('./data/Icons/Stat Icons/T_StatIcon_ManaRegen.png'),
-  'MovementSpeed': require('./data/Icons/Stat Icons/T_StatIcon_MovementSpeed.png'),
-  'Movement Speed': require('./data/Icons/Stat Icons/T_StatIcon_MovementSpeed.png'),
-  'Passive': require('./data/Icons/Stat Icons/T_StatIcon_Passive.png'),
-  'Penetration': require('./data/Icons/Stat Icons/T_StatIcon_Pen.png'),
-  'PhysicalProtection': require('./data/Icons/Stat Icons/T_StatIcon_PhysicalProt.png'),
-  'Physical Protection': require('./data/Icons/Stat Icons/T_StatIcon_PhysicalProt.png'),
-  'Starter': require('./data/Icons/Stat Icons/T_StatIcon_Starter.png'),
-  'Strength': require('./data/Icons/Stat Icons/T_StatIcon_Strength.png'),
-  'Critical Chance': require('./data/Icons/Stat Icons/T_StatIcon_Crit.png'),
-  'CriticalChance': require('./data/Icons/Stat Icons/T_StatIcon_Crit.png'),
-  'Criticial Chance': require('./data/Icons/Stat Icons/T_StatIcon_Crit.png'),
-  'Critical Damage': require('./data/Icons/Stat Icons/T_StatIcon_Crit.png'),
-  'Basic Attack Damage': require('./data/Icons/Stat Icons/HUD_Stats_Icon_BasicAttackPower.png'),
-  'Basic Damage': require('./data/Icons/Stat Icons/HUD_Stats_Icon_BasicAttackPower.png'),
-};
-
-// Pantheon icon mapping (local files)
-const pantheonIcons = {
-  'Greek': require('./data/Icons/Pantheon Icons/Greek.png'),
-  'Roman': require('./data/Icons/Pantheon Icons/Roman.png'),
-  'Egyptian': require('./data/Icons/Pantheon Icons/Egyptian.png'),
-  'Norse': require('./data/Icons/Pantheon Icons/Norse.png'),  
-  'Chinese': require('./data/Icons/Pantheon Icons/Chinese.png'),
-  'Tales of Arabia': require('./data/Icons/Pantheon Icons/Tales of Arabia.png'),
-  'Korean': require('./data/Icons/Pantheon Icons/Korean.png'),
-  'Hindu': require('./data/Icons/Pantheon Icons/Hindu.png'),
-  'Mayan': require('./data/Icons/Pantheon Icons/Maya.png'), // File is "Maya.png" but pantheon name is "Mayan"
-  'Celtic': require('./data/Icons/Pantheon Icons/Celtic.png'),
-  'Japanese': require('./data/Icons/Pantheon Icons/Japanese.png'),
-  'Voodoo': require('./data/Icons/Pantheon Icons/Voodoo.png'),
-  'Yoruba': require('./data/Icons/Pantheon Icons/Yoruba.png'),
-  'Polynesian': require('./data/Icons/Pantheon Icons/Polynesian.png'),
-  'Arthurian': require('./data/Icons/Pantheon Icons/Arthurian.png'),
-  // Note: Slavic, Babalonian, and Great Old Ones don't have corresponding files
-  // They will fall back to null and won't display an icon
-};
-
-// Import Vulcan mod icons
-let vulcanModIcons = {};
-try {
-  vulcanModIcons = {
-    'Alternator Mod (Set One - Requires Level 1)': require('./data/Icons/Vulcan Mods/GodSpecific_Vulcan_Alternator_Mod.png'),
-    'Dual Mod (Set One - Requires Level 1)': require('./data/Icons/Vulcan Mods/GodSpecific_Vulcan_Dual_Mod.png'),
-    'Effeciency Mod (Set One - Requires Level 1)': require('./data/Icons/Vulcan Mods/GodSpecific_Vulcan_Efficiency_Mod.png'),
-    'Resonator Mod (Set Two - Requires Level 7)': require('./data/Icons/Vulcan Mods/GodSpecific_Vulcan_Resonator_Mod.png'),
-    'Thermal Mod (Set Two - Requires Level 7)': require('./data/Icons/Vulcan Mods/GodSpecific_Vulcan_Thermal_Mod.png'),
-    'Shrapnel Mod (Set Two - Requires Level 7)': require('./data/Icons/Vulcan Mods/GodSpecific_Vulcan_Shrapnel_Mod.png'),
-    'Masterwork Mod (Set Three  - Requires Level 14)': require('./data/Icons/Vulcan Mods/GodSpecific_Vulcan_Masterwork_Mod.png'),
-    'Surplus Mod (Set Three  - Requires Level 14)': require('./data/Icons/Vulcan Mods/GodSpecific_Vulcan_Surplus_Mod.png'),
-    'Seismic Mod (Set Three  - Requires Level 14)': require('./data/Icons/Vulcan Mods/GodSpecific_Vulcan_Seismic_Mod.png'),
-  };
-        } catch (error) {
-  console.warn('Could not load Vulcan mod icons:', error);
-  vulcanModIcons = {};
-}
+const pantheonIcons = PANTHEON_ICONS;
+const vulcanModIcons = vulcanModItemIcons;
 
 // Game modes data
 const gameModes = [
@@ -844,6 +730,67 @@ function PatchBadgeTooltip({ changeType, version, entityType, badgeStyle, textSt
   );
 }
 
+/** Display order for Database items tab: all starters together, then tier 1–3, then everything else (A–Z within each bucket). */
+function getDataPageItemListSortKey(item) {
+  if (!item || typeof item !== 'object') return { bucket: 99, name: '' };
+  const name = (item.name || item.internalName || '').toString().toLowerCase();
+  const isStarter =
+    item.starter === true ||
+    (item.name && item.name.toString().toLowerCase().includes('starter'));
+  if (isStarter) return { bucket: 0, name };
+  const t = item.tier;
+  if (t === 1) return { bucket: 1, name };
+  if (t === 2) return { bucket: 2, name };
+  if (t === 3) return { bucket: 3, name };
+  return { bucket: 4, name };
+}
+
+function compareDataPageItemsForList(a, b) {
+  const ka = getDataPageItemListSortKey(a);
+  const kb = getDataPageItemListSortKey(b);
+  if (ka.bucket !== kb.bucket) return ka.bucket - kb.bucket;
+  return ka.name.localeCompare(kb.name);
+}
+
+function isDataPageStarterItem(item) {
+  if (!item || typeof item !== 'object') return false;
+  return (
+    item.starter === true ||
+    (item.name && item.name.toString().toLowerCase().includes('starter'))
+  );
+}
+
+/** Matches Items tier filter "Consumable"; excludes starters so they stay under Starters. */
+function isDataPageConsumableSectionItem(item) {
+  if (!item || typeof item !== 'object') return false;
+  if (isDataPageStarterItem(item)) return false;
+  const n = (item.name || '').toString().toLowerCase();
+  return (
+    item.consumable === true ||
+    (item.active === true && item.stepCost && !item.tier) ||
+    (item.name && n.includes('consumable'))
+  );
+}
+
+function getDataPageItemSectionId(item) {
+  if (!item || typeof item !== 'object') return 'other';
+  if (isDataPageStarterItem(item)) return 'starters';
+  if (isDataPageConsumableSectionItem(item)) return 'consumables';
+  if (item.tier === 1) return 'tier1';
+  if (item.tier === 2) return 'tier2';
+  if (item.tier === 3) return 'tier3';
+  return 'other';
+}
+
+const DATA_PAGE_ITEM_SECTION_ROWS = [
+  { id: 'starters', title: 'Starters' },
+  { id: 'tier1', title: 'Tier 1' },
+  { id: 'tier2', title: 'Tier 2' },
+  { id: 'tier3', title: 'Tier 3' },
+  { id: 'consumables', title: 'Consumables' },
+  { id: 'other', title: 'Relics, actives & other' },
+];
+
 export default function DataPage({ initialSelectedGod = null, initialExpandAbilities = false, onBackToBuilds = null, initialTab = 'gods' }) {
   // Get responsive screen dimensions
   const screenDimensions = useScreenDimensions();
@@ -966,30 +913,30 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     }
   }, []);
 
-  // Lazy load the builds data after the UI has rendered (only once)
+  // Lazy load builds.json after transitions settle so Database opens without jank.
   useEffect(() => {
-    // Only load if data isn't already loaded
     if (builds !== null) {
       return;
     }
-    
+
     let isMounted = true;
-    
-    // Load immediately without delay
-        try {
-          const data = require('./data/builds.json');
-          if (isMounted) {
-            setBuilds(data);
-            setDataLoading(false);
-          }
-        } catch (err) {
-          if (isMounted) {
-            setDataLoading(false);
-          }
+    const task = InteractionManager.runAfterInteractions(() => {
+      try {
+        const data = require('./data/builds.json');
+        if (isMounted) {
+          setBuilds(data);
+          setDataLoading(false);
         }
-    
+      } catch (err) {
+        if (isMounted) {
+          setDataLoading(false);
+        }
+      }
+    });
+
     return () => {
       isMounted = false;
+      task?.cancel?.();
     };
   }, []); // Empty deps - only run once on mount
   
@@ -1089,6 +1036,14 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
   const [statDropdownVisible, setStatDropdownVisible] = useState(false);
   const [selectedTier, setSelectedTier] = useState(null);
   const [tierDropdownVisible, setTierDropdownVisible] = useState(false);
+  const [itemsTabSectionExpanded, setItemsTabSectionExpanded] = useState({
+    starters: true,
+    tier1: true,
+    tier2: true,
+    tier3: true,
+    consumables: true,
+    other: false,
+  });
   const [abilitySectionsExpanded, setAbilitySectionsExpanded] = useState({
     scales: false,
     description: false,
@@ -1101,7 +1056,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     return a.flat(Infinity).filter(Boolean);
   }
 
-  const gods = builds ? flattenAny(builds.gods) : [];
+  const gods = builds ? flattenBuildsGods(builds.gods) : [];
   const allItems = builds ? flattenAny(builds.items) : [];
   
   // Extract unique pantheons
@@ -1117,20 +1072,15 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
   
   // Filter to only actual item objects (must have name or internalName)
   // Include all items including consumables (they have active, stepCost, etc.)
-  // Sort items alphabetically by name
+  // Sort: starters grouped first, then tier 1–3, then other items; A–Z within each group
   const items = useMemo(() => {
     const filtered = allItems.filter((item) => {
       if (!item || typeof item !== 'object') return false;
       // Include items that have name, internalName, active property, or consumable property
       return (item.name || item.internalName || item.active === true || item.consumable === true);
     });
-    
-    // Sort alphabetically by name
-    return filtered.sort((a, b) => {
-      const nameA = (a.name || a.internalName || '').toString().toLowerCase();
-      const nameB = (b.name || b.internalName || '').toString().toLowerCase();
-      return nameA.localeCompare(nameB);
-    });
+
+    return [...filtered].sort(compareDataPageItemsForList);
   }, [allItems]);
 
   // Extract unique stats from items
@@ -1140,6 +1090,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     items.forEach((item) => {
       if (item && item.stats && typeof item.stats === 'object') {
         Object.keys(item.stats).forEach((stat) => {
+          if (stat === 'N/A' || stat === 'n/a') return;
           statSet.add(stat);
         });
       }
@@ -1166,32 +1117,46 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
   // Filter gods
   const filteredGods = useMemo(() => {
     let result = gods;
-    
+
     // Apply pantheon filter
     if (selectedPantheon) {
       result = result.filter((god) => god.pantheon === selectedPantheon);
     }
-    
-    // Apply search filter
+
+    const godSortName = (god) =>
+      (god.name || god.GodName || god.title || god.displayName || '').toString().toLowerCase();
+    // Sort A–Z before limiting, so the default "first 80" are the first 80 alphabetically
+    result = [...result].sort((a, b) => godSortName(a).localeCompare(godSortName(b)));
+
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      result = result.filter((god) => {
-        const name = (god.name || god.GodName || god.title || god.displayName || '').toString().toLowerCase();
-        return name.includes(query);
-      });
+      result = result.filter((god) => godSortName(god).includes(query));
     } else {
       // Show only first 80 when no search (but still respect pantheon filter)
       result = result.slice(0, 80);
     }
-    
-    // Sort alphabetically by name
-    result = result.sort((a, b) => {
-      const nameA = (a.name || a.GodName || a.title || a.displayName || '').toString().toLowerCase();
-      const nameB = (b.name || b.GodName || b.title || b.displayName || '').toString().toLowerCase();
-      return nameA.localeCompare(nameB);
-    });
-    
-    return result;
+
+    // Guard against accidental duplicate god entries in source data.
+    const seenGodKeys = new Set();
+    const deduped = [];
+    for (let i = 0; i < result.length; i++) {
+      const god = result[i];
+      const canonical = (
+        god.internalName ||
+        god.key ||
+        god.name ||
+        god.GodName ||
+        god.title ||
+        god.displayName ||
+        ''
+      ).toString().trim().toLowerCase();
+      const dedupeKey = canonical || `${(god.name || god.GodName || 'unknown').toString().toLowerCase()}-${i}`;
+      if (seenGodKeys.has(dedupeKey)) continue;
+      seenGodKeys.add(dedupeKey);
+      deduped.push(god);
+    }
+
+    return deduped;
   }, [gods, searchQuery, selectedPantheon]);
 
   // Filter items
@@ -1288,13 +1253,161 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
         
         return false;
       });
-    } else {
-      // Show only first 30 when no search (but still respect stat and tier filters)
-      result = result.slice(0, 230);
     }
-    
+
     return result;
   }, [items, searchQuery, selectedStat, selectedTier]);
+
+  const itemsBySection = useMemo(() => {
+    const buckets = {
+      starters: [],
+      tier1: [],
+      tier2: [],
+      tier3: [],
+      consumables: [],
+      other: [],
+    };
+    for (let i = 0; i < filteredItems.length; i++) {
+      const item = filteredItems[i];
+      if (!item || typeof item !== 'object') continue;
+      const sid = getDataPageItemSectionId(item);
+      buckets[sid].push(item);
+    }
+    return buckets;
+  }, [filteredItems]);
+
+  const toggleItemsTabSection = useCallback((sectionId) => {
+    setItemsTabSectionExpanded((prev) => ({
+      ...prev,
+      [sectionId]: !prev[sectionId],
+    }));
+  }, []);
+
+  const renderItemsTabItemCard = useCallback(
+    (item, rowKey) => {
+      if (!item || typeof item !== 'object') return null;
+      const name = (item.name || item.internalName || 'Unknown').toString();
+      const itemIcon = item.icon || null;
+      const consumableIcon = consumableIcons[name] || null;
+      const localItemIcon = getLocalItemIcon(itemIcon);
+      const modIcon = vulcanModItemIcons[name] || null;
+      const uniqueKey = rowKey;
+      const cardWidthStyle = getCardWidthStyle();
+
+      return (
+        <View style={cardWidthStyle}>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => {
+              startTransition(() => {
+                setSelectedItem(item);
+              });
+            }}
+            activeOpacity={0.7}
+          >
+            {item.latestPatchChange && (
+              <PatchBadgeTooltip
+                changeType={item.latestPatchChange.type}
+                version={item.latestPatchChange.version || 'latest'}
+                entityType="item"
+                badgeStyle={[
+                  styles.patchBadge,
+                  styles[`patchBadge${item.latestPatchChange.type.charAt(0).toUpperCase() + item.latestPatchChange.type.slice(1)}`],
+                ]}
+                textStyle={styles.patchBadgeText}
+                overlayStyle={styles.tooltipOverlay}
+                contentStyle={styles.tooltipContent}
+                tooltipTextStyle={styles.tooltipText}
+                closeButtonStyle={styles.tooltipCloseButton}
+                closeTextStyle={styles.tooltipCloseText}
+              />
+            )}
+            {modIcon ? (
+              <Image
+                source={modIcon}
+                style={styles.cardIcon}
+                contentFit="cover"
+                cachePolicy="memory-disk"
+                transition={0}
+                accessibilityLabel={`${name} mod icon`}
+              />
+            ) : localItemIcon ? (
+              (() => {
+                const imageSource = localItemIcon.primary || localItemIcon;
+                const fallbackSource = localItemIcon.fallback;
+                const itemKey = `${uniqueKey}-icon`;
+                const useFallback = failedItemIcons[itemKey];
+
+                if (fallbackSource && !useFallback) {
+                  return (
+                    <Image
+                      source={imageSource}
+                      style={styles.cardIcon}
+                      contentFit="cover"
+                      cachePolicy="memory-disk"
+                      transition={0}
+                      accessibilityLabel={`${name} item icon`}
+                      onError={() => {
+                        setFailedItemIcons((prev) => ({ ...prev, [itemKey]: true }));
+                      }}
+                    />
+                  );
+                }
+
+                if (fallbackSource && useFallback) {
+                  return (
+                    <Image
+                      source={fallbackSource}
+                      style={styles.cardIcon}
+                      contentFit="cover"
+                      cachePolicy="memory-disk"
+                      transition={0}
+                      accessibilityLabel={`${name} item icon`}
+                    />
+                  );
+                }
+
+                return (
+                  <Image
+                    source={imageSource}
+                    style={styles.cardIcon}
+                    contentFit="cover"
+                    cachePolicy="memory-disk"
+                    transition={0}
+                    accessibilityLabel={`${name} item icon`}
+                  />
+                );
+              })()
+            ) : consumableIcon ? (
+              <Image
+                source={consumableIcon}
+                style={styles.cardIcon}
+                contentFit="cover"
+                cachePolicy="memory-disk"
+                transition={0}
+              />
+            ) : itemIcon ? (
+              <Image
+                source={{ uri: `${REMOTE_BASE_URLS.SMITE_CALCULATOR}${itemIcon}` }}
+                style={styles.cardIcon}
+                contentFit="cover"
+                cachePolicy="memory-disk"
+                transition={0}
+              />
+            ) : (
+              <View style={styles.cardIconFallback}>
+                <Text style={styles.cardIconFallbackText}>{name.charAt(0)}</Text>
+              </View>
+            )}
+            <Text style={styles.cardText} numberOfLines={1}>
+              {name}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      );
+    },
+    [getCardWidthStyle, failedItemIcons]
+  );
 
   // Handle slider movement for both web and mobile
   const handleSliderMove = useCallback((event) => {
@@ -1433,15 +1546,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
           // Linear interpolation between level 1 and 20
           const levelProgress = (godLevel - 1) / 19; // 0 at level 1, 1 at level 20
           const statValue = level1 + (level20 - level1) * levelProgress;
-          // Keep decimal precision for key combat stats like protections, attack speed, and basic damage.
-          // Other stats can be rounded to whole numbers for readability.
-          if (
-            statKey === 'PhysicalProtection' ||
-            statKey === 'MagicalProtection' ||
-            statKey === 'BaseAttackSpeed' ||
-            statKey === 'BasicDamage' ||
-            statKey === 'AttackSpeedPercent'
-          ) {
+          if (statKey === 'BaseAttackSpeed' || statKey === 'AttackSpeedPercent') {
             stats[statKey] = statValue;
           } else {
             stats[statKey] = Math.round(statValue);
@@ -1454,7 +1559,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
       const bonusASPercent = stats.AttackSpeedPercent || 0;
       if (baseAS) {
         const effectiveAS = baseAS * (1 + bonusASPercent / 100);
-        stats.AttackSpeedEffective = effectiveAS;
+        stats.AttackSpeedEffective = Number(effectiveAS.toFixed(2));
       }
 
       // We don't need to show raw BaseAttackSpeed or AttackSpeedPercent in the UI; we only surface effective Attack Speed.
@@ -1465,23 +1570,19 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     return stats;
   }, [selectedGod, godLevel]);
 
-  // Effective Health calculation for base stats (similar to custombuild page)
+  // Effective Health calculation for base stats (same as custombuild)
+  // EHP vs one damage type (no pen): Health * (100 + Prot) / 100
   const baseEffectiveHealth = useMemo(() => {
     const hp = baseStatsAtLevel.MaxHealth || baseStatsAtLevel.Health || 0;
     const physicalProtection = baseStatsAtLevel.PhysicalProtection || 0;
     const magicalProtection = baseStatsAtLevel.MagicalProtection || 0;
 
-    // Same formula/order as custombuild:
-    // EHP = Health * (1 + (1 - ((100 * 100) / (Protection + 100) / 100)))
-    const phpInner = (100 * 100) / (physicalProtection + 100) / 100;
-    const php = hp * (1 + (1 - phpInner));
-
-    const ehpInner = (100 * 100) / (magicalProtection + 100) / 100;
-    const ehp = hp * (1 + (1 - ehpInner));
+    const php = Math.round((hp * (physicalProtection + 100)) / 100);
+    const ehp = Math.round((hp * (magicalProtection + 100)) / 100);
 
     return {
-      PHP: Math.round(php || 0),
-      EHP: Math.round(ehp || 0),
+      PHP: php || 0,
+      EHP: ehp || 0,
     };
   }, [baseStatsAtLevel]);
 
@@ -1625,6 +1726,15 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                   }}
                   disabled={!!selectedGod}
                 >
+                  {selectedPantheon && pantheonIcons[selectedPantheon] ? (
+                    <Image
+                      source={pantheonIcons[selectedPantheon]}
+                      style={styles.pantheonFilterButtonIcon}
+                      contentFit="contain"
+                      cachePolicy="memory-disk"
+                      accessibilityLabel={`${selectedPantheon} pantheon`}
+                    />
+                  ) : null}
                   <Text style={styles.filterButtonText}>
                     {selectedPantheon ? selectedPantheon : 'Filter'}
                   </Text>
@@ -1645,7 +1755,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         <Text style={styles.pantheonOptionText}>All Pantheons</Text>
                       </TouchableOpacity>
                       {pantheons.map((pantheon) => {
-                        const pantheonIcon = pantheonIcons[pantheon];
+                        const rowIcon = pantheonIcons[pantheon];
                         return (
                           <TouchableOpacity
                             key={pantheon}
@@ -1655,15 +1765,16 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               setPantheonDropdownVisible(false);
                             }}
                           >
-                            {pantheonIcon && (
-                              <Image 
-                                source={pantheonIcon} 
-                                style={styles.pantheonOptionIcon}
-                                resizeMode="contain"
-                                accessibilityLabel={`${pantheon} pantheon icon`}
+                            {rowIcon ? (
+                              <Image
+                                source={rowIcon}
+                                style={styles.pantheonFilterRowIcon}
+                                contentFit="contain"
+                                cachePolicy="memory-disk"
+                                accessibilityLabel={`${pantheon} pantheon`}
                               />
-                            )}
-                            <Text style={[styles.pantheonOptionText, { marginLeft: pantheonIcon ? 10 : 0 }]}>{pantheon}</Text>
+                            ) : null}
+                            <Text style={styles.pantheonOptionText}>{pantheon}</Text>
                           </TouchableOpacity>
                         );
                       })}
@@ -2485,9 +2596,9 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
           'Unknown': { primary: '#7f8c8d', secondary: '#5d6d7e', accent: '#95a5a6' },
         };
         
-        const pantheonIcon = pantheonIcons[pantheon] || null;
         const colors = pantheonColors[pantheon] || pantheonColors['Unknown'];
-        
+        const pantheonIconSource = pantheonIcons[pantheon] || null;
+
         return (
           <View style={[styles.godPageContainer, { backgroundColor: colors.secondary + '15' }]}>
             <View style={[styles.godPageHeader, { backgroundColor: colors.primary + '20', borderBottomColor: colors.accent + '40' }]}>
@@ -2552,15 +2663,17 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                   )}
                   {(pantheon || godType) && (
                     <View style={styles.godPageMetaInfo}>
-                  {pantheon && (
+                      {pantheon && (
                         <>
-                      {pantheonIcon && (
-                        <Image 
-                          source={pantheonIcon} 
-                              style={styles.godPageMetaIcon}
-                          resizeMode="contain"
-                        />
-                      )}
+                          {pantheonIconSource ? (
+                            <Image
+                              source={pantheonIconSource}
+                              style={styles.godPageMetaPantheonIconOnly}
+                              contentFit="contain"
+                              cachePolicy="memory-disk"
+                              accessibilityLabel={`${pantheon} pantheon`}
+                            />
+                          ) : null}
                           <Text style={[styles.godPageMetaText, { color: colors.accent + 'AA' }]}>
                             {pantheon}
                           </Text>
@@ -2568,8 +2681,8 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                       )}
                       {pantheon && godType && (
                         <Text style={[styles.godPageMetaText, { color: colors.accent + 'AA' }]}> • </Text>
-                  )}
-                  {godType && (
+                      )}
+                      {godType && (
                         <Text style={[styles.godPageMetaText, { color: colors.accent + 'AA' }]}>
                           {godType}
                         </Text>
@@ -3074,12 +3187,13 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                           else if (statKey === 'MovementSpeed' || statKey === 'Movement Speed') statColor = '#8b5cf6';
 
                           let displayValue = statValue;
-                          if (
-                            statKey === 'AttackSpeedEffective' ||
-                            statKey === 'BaseAttackSpeed' ||
-                            statKey === 'BasicDamage'
-                          ) {
-                            displayValue = Number(displayValue).toFixed(3);
+                          if (statKey === 'AttackSpeedEffective') {
+                            displayValue =
+                              typeof statValue === 'number' && Number.isFinite(statValue)
+                                ? statValue.toFixed(2)
+                                : statValue;
+                          } else if (typeof statValue === 'number' && Number.isFinite(statValue)) {
+                            displayValue = Math.round(statValue);
                           }
 
                           return (
@@ -5483,7 +5597,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
               {filteredGods.map((god, idx) => {
                 const name = (god.name || god.GodName || god.title || god.displayName || 'Unknown').toString();
                 const godIcon = (god.icon || god.GodIcon || (god.abilities && god.abilities.A01 && god.abilities.A01.icon)) || null;
-                const uniqueKey = name + (god.GodName || god.name || idx);
+                const uniqueKey = `${(god.internalName || god.key || god.GodName || god.name || name).toString()}-${idx}`;
                 
                 // Use memoized card width style
                 const cardWidthStyle = getCardWidthStyle();
@@ -5645,129 +5759,37 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
               })}
             </View>
           ) : selectedTab === 'items' ? (
-            <View style={styles.grid}>
-              {filteredItems.map((item, idx) => {
-                if (!item || typeof item !== 'object') return null;
-                const name = (item.name || item.internalName || 'Unknown').toString();
-                const itemIcon = item.icon || null;
-                const consumableIcon = consumableIcons[name] || null;
-                const localItemIcon = getLocalItemIcon(itemIcon);
-                const modIcon = vulcanModItemIcons[name] || null;
-                const uniqueKey = (item.internalName || item.name || name) + idx;
-                
-                // Use memoized card width style
-                const cardWidthStyle = getCardWidthStyle();
-                
+            <View style={styles.itemsTabSectionsWrap}>
+              {DATA_PAGE_ITEM_SECTION_ROWS.map(({ id, title }) => {
+                const list = itemsBySection[id];
+                if (!list || list.length === 0) return null;
+                const expanded = itemsTabSectionExpanded[id];
                 return (
-                  <View key={uniqueKey} style={cardWidthStyle}>
+                  <View key={id} style={styles.itemsTabSection}>
                     <TouchableOpacity
-                      style={styles.card}
-                      onPress={() => {
-                        // Use startTransition for instant UI feedback
-                        startTransition(() => {
-                          setSelectedItem(item);
-                        });
-                      }}
+                      style={styles.itemsTabSectionHeader}
+                      onPress={() => toggleItemsTabSection(id)}
                       activeOpacity={0.7}
+                      accessibilityRole="button"
+                      accessibilityState={{ expanded }}
+                      accessibilityLabel={`${expanded ? 'Collapse' : 'Expand'} ${title}`}
                     >
-                    {/* Patch indicator badge */}
-                    {item.latestPatchChange && (
-                      <PatchBadgeTooltip
-                        changeType={item.latestPatchChange.type}
-                        version={item.latestPatchChange.version || 'latest'}
-                        entityType="item"
-                        badgeStyle={[styles.patchBadge, styles[`patchBadge${item.latestPatchChange.type.charAt(0).toUpperCase() + item.latestPatchChange.type.slice(1)}`]]}
-                        textStyle={styles.patchBadgeText}
-                        overlayStyle={styles.tooltipOverlay}
-                        contentStyle={styles.tooltipContent}
-                        tooltipTextStyle={styles.tooltipText}
-                        closeButtonStyle={styles.tooltipCloseButton}
-                        closeTextStyle={styles.tooltipCloseText}
-                      />
-                    )}
-                    {modIcon ? (
-                      <Image 
-                        source={modIcon} 
-                        style={styles.cardIcon}
-                        contentFit="cover"
-                        cachePolicy="memory-disk"
-                        transition={0}
-                        accessibilityLabel={`${name} mod icon`}
-                      />
-                    ) : localItemIcon ? (
-                      (() => {
-                        // Handle both single URI and primary/fallback object
-                        const imageSource = localItemIcon.primary || localItemIcon;
-                        const fallbackSource = localItemIcon.fallback;
-                        const itemKey = `${uniqueKey}-icon`;
-                        const useFallback = failedItemIcons[itemKey];
-                        
-                        if (fallbackSource && !useFallback) {
-                          // Has fallback - try primary first, then fallback on error
-                          return (
-                            <Image 
-                              source={imageSource}
-                              style={styles.cardIcon}
-                              contentFit="cover"
-                              cachePolicy="memory-disk"
-                              transition={0}
-                              accessibilityLabel={`${name} item icon`}
-                              onError={() => {
-                                setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
-                              }}
-                            />
-                          );
-                        }
-                        
-                        if (fallbackSource && useFallback) {
-                          // Use fallback after primary failed
-                          return (
-                            <Image 
-                              source={fallbackSource}
-                              style={styles.cardIcon}
-                              contentFit="cover"
-                              cachePolicy="memory-disk"
-                              transition={0}
-                              accessibilityLabel={`${name} item icon`}
-                            />
-                          );
-                        }
-                        
-                        // Single URI - use directly
-                        return (
-                          <Image 
-                            source={imageSource}
-                            style={styles.cardIcon}
-                            contentFit="cover"
-                            cachePolicy="memory-disk"
-                            transition={0}
-                            accessibilityLabel={`${name} item icon`}
-                          />
-                        );
-                      })()
-                    ) : consumableIcon ? (
-                      <Image 
-                        source={consumableIcon} 
-                        style={styles.cardIcon}
-                        contentFit="cover"
-                        cachePolicy="memory-disk"
-                        transition={0}
-                      />
-                    ) : itemIcon ? (
-                      <Image 
-                        source={{ uri: `${REMOTE_BASE_URLS.SMITE_CALCULATOR}${itemIcon}` }} 
-                        style={styles.cardIcon}
-                        contentFit="cover"
-                        cachePolicy="memory-disk"
-                        transition={0}
-                      />
-                    ) : (
-                      <View style={styles.cardIconFallback}>
-                        <Text style={styles.cardIconFallbackText}>{name.charAt(0)}</Text>
-                      </View>
-                    )}
-                    <Text style={styles.cardText} numberOfLines={1}>{name}</Text>
+                      <Text style={styles.itemsTabSectionArrow}>{expanded ? '▼' : '▶'}</Text>
+                      <Text style={styles.itemsTabSectionTitle}>{title}</Text>
+                      <Text style={styles.itemsTabSectionCount}>({list.length})</Text>
                     </TouchableOpacity>
+                    {expanded ? (
+                      <View style={styles.grid}>
+                        {list.map((item, idx) => {
+                          const rowKey = `${id}-${(item.internalName || item.name || 'item')}-${idx}`;
+                          return (
+                            <React.Fragment key={rowKey}>
+                              {renderItemsTabItemCard(item, rowKey)}
+                            </React.Fragment>
+                          );
+                        })}
+                      </View>
+                    ) : null}
                   </View>
                 );
               })}
@@ -6274,6 +6296,44 @@ const styles = StyleSheet.create({
     ...(!IS_WEB && {
       justifyContent: 'center',
     }),
+  },
+  itemsTabSectionsWrap: {
+    width: '100%',
+    paddingBottom: 8,
+  },
+  itemsTabSection: {
+    width: '100%',
+    marginBottom: 8,
+  },
+  itemsTabSectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    marginBottom: 8,
+    backgroundColor: '#0f1a35',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    width: '100%',
+    ...(IS_WEB && { maxWidth: '100%', boxSizing: 'border-box' }),
+  },
+  itemsTabSectionArrow: {
+    color: '#7dd3fc',
+    fontSize: 14,
+    width: 22,
+    fontWeight: '700',
+  },
+  itemsTabSectionTitle: {
+    flex: 1,
+    color: '#e2e8f0',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  itemsTabSectionCount: {
+    color: '#94a3b8',
+    fontSize: 13,
+    fontWeight: '600',
   },
   card: {
     width: '100%',
@@ -7236,10 +7296,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 3,
   },
-  godPageMetaIcon: {
-    width: 12,
-    height: 12,
-    marginRight: 3,
+  /* Plain pantheon glyph next to meta text — no badge box (Builds cards keep the framed pin) */
+  godPageMetaPantheonIconOnly: {
+    width: 18,
+    height: 18,
+    marginRight: 6,
+  },
+  pantheonFilterRowIcon: {
+    width: 22,
+    height: 22,
+    marginRight: 8,
+  },
+  pantheonFilterButtonIcon: {
+    width: 14,
+    height: 14,
+    marginRight: 2,
   },
   godPageMetaText: {
     fontSize: 11,
@@ -7274,33 +7345,6 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '500',
     letterSpacing: 0.3,
-  },
-  pantheonBadge: {
-    alignSelf: 'flex-start',
-    paddingHorizontal: 12,
-    paddingVertical: 4,
-    borderRadius: 12,
-    marginTop: 4,
-    marginRight: 8,
-  },
-  pantheonBadgeText: {
-    fontSize: 12,
-    fontWeight: '700',
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-  },
-  pantheonIcon: {
-    width: 20,
-    height: 20,
-  },
-  godInfoPantheonIcon: {
-    width: 24,
-    height: 24,
-    marginLeft: 8,
-  },
-  pantheonOptionIcon: {
-    width: 24,
-    height: 24,
   },
   typeBadge: {
     alignSelf: 'flex-start',
