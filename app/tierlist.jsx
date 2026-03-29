@@ -8,20 +8,13 @@ import {
   TextInput,
   Platform,
   ActivityIndicator,
+  InteractionManager,
 } from 'react-native';
 import { Image } from 'expo-image';
 import { getLocalGodAsset, getLocalItemIcon } from './localIcons';
+import { flattenBuildsGods } from '../lib/normalizeBuildsGod';
 
 const IS_WEB = Platform.OS === 'web';
-
-// Load builds data (gods and items come from here, like data.jsx)
-let BUILDS_DATA = null;
-try {
-  BUILDS_DATA = require('./data/builds.json');
-} catch (e) {
-  console.error('Failed to load builds.json:', e);
-  BUILDS_DATA = null;
-}
 
 // Helper function to flatten nested arrays (like data.jsx)
 function flattenAny(a) {
@@ -65,6 +58,24 @@ export default function TierlistPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTier, setSelectedTier] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [buildsData, setBuildsData] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    const task = InteractionManager.runAfterInteractions(() => {
+      try {
+        const data = require('./data/builds.json');
+        if (!cancelled) setBuildsData(data);
+      } catch (e) {
+        console.error('Failed to load builds.json:', e);
+        if (!cancelled) setBuildsData(null);
+      }
+    });
+    return () => {
+      cancelled = true;
+      task?.cancel?.();
+    };
+  }, []);
 
   // Load saved tierlist from storage
   useEffect(() => {
@@ -105,20 +116,17 @@ export default function TierlistPage() {
   // Get available entities (gods or tier 3 items) - load from builds.json like data.jsx
   const availableEntities = useMemo(() => {
     if (mode === 'gods') {
-      // Load gods from builds.json (like data.jsx)
-      if (!BUILDS_DATA) return [];
-      const gods = flattenAny(BUILDS_DATA.gods);
+      if (!buildsData) return [];
+      const gods = flattenBuildsGods(buildsData.gods);
       return gods;
-    } else {
-      // Get tier 3 items from builds.json
-      if (!BUILDS_DATA) return [];
-      const allItems = flattenAny(BUILDS_DATA.items);
-      return allItems.filter(item => {
-        if (!item || typeof item !== 'object') return false;
-        return item.tier === 3 || item.Tier === 3;
-      });
     }
-  }, [mode]);
+    if (!buildsData) return [];
+    const allItems = flattenAny(buildsData.items);
+    return allItems.filter(item => {
+      if (!item || typeof item !== 'object') return false;
+      return item.tier === 3 || item.Tier === 3;
+    });
+  }, [mode, buildsData]);
 
   // Filter entities by search query
   const filteredEntities = useMemo(() => {
@@ -223,11 +231,13 @@ export default function TierlistPage() {
     }
   };
 
-  if (loading) {
+  if (loading || buildsData === null) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#1e90ff" />
-        <Text style={styles.loadingText}>Loading tierlist...</Text>
+        <Text style={styles.loadingText}>
+          {loading ? 'Loading tierlists...' : 'Loading gods and items...'}
+        </Text>
       </View>
     );
   }
@@ -235,7 +245,7 @@ export default function TierlistPage() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Tierlist</Text>
+        <Text style={styles.title}>Personal tierlists</Text>
         
         {/* Mode selector */}
         <View style={styles.modeSelector}>

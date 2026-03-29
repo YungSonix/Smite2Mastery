@@ -16,6 +16,7 @@ import CryptoJS from 'crypto-js';
 import { Image } from 'expo-image';
 import { getLocalItemIcon, getLocalGodAsset } from './localIcons';
 import { useScreenDimensions } from '../hooks/useScreenDimensions';
+import { flattenBuildsGods } from '../lib/normalizeBuildsGod';
 
 const IS_WEB = Platform.OS === 'web';
 
@@ -443,7 +444,7 @@ export default function MyBuildsPage({ onEditBuild = null }) {
     const godName = build.god_name || build.god || 'Unknown';
     const godInternalName = build.god_internal_name || build.godInternalName;
     const godIcon = build.godIcon || (buildsData && (() => {
-      const gods = flattenAny(buildsData.gods);
+      const gods = flattenBuildsGods(buildsData.gods);
       const god = gods.find(g => 
         (g.name || g.GodName || '').toLowerCase() === godName.toLowerCase() ||
         (g.internalName || g.GodName || '').toLowerCase() === (godInternalName || '').toLowerCase()
@@ -589,7 +590,7 @@ export default function MyBuildsPage({ onEditBuild = null }) {
                 roles: build.roles || [],
                 tips: build.tips || '',
                 god: buildsData ? (() => {
-                  const gods = flattenAny(buildsData.gods);
+                  const gods = flattenBuildsGods(buildsData.gods);
                   return gods.find(g => 
                     (g.name || g.GodName || '').toLowerCase() === godName.toLowerCase() ||
                     (g.internalName || g.GodName || '').toLowerCase() === (godInternalName || '').toLowerCase()

@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   Linking,
 } from 'react-native';
+import { COLORS } from '../lib/themeColors';
 import { WebView } from 'react-native-webview';
 import { DEFAULT_TAB_STATE, EXTERNAL_LINKS, REMOTE_BASE_URLS } from '../config';
 
@@ -53,7 +54,7 @@ export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUs
       <Suspense
         fallback={
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="#1e90ff" />
+            <ActivityIndicator size="large" color={COLORS.brandBlue} />
           </View>
         }
       >
@@ -67,7 +68,7 @@ export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUs
       <Suspense
         fallback={
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="#1e90ff" />
+            <ActivityIndicator size="large" color={COLORS.brandBlue} />
           </View>
         }
       >
@@ -81,7 +82,7 @@ export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUs
       <Suspense
         fallback={
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="#c8922a" />
+            <ActivityIndicator size="large" color={COLORS.goldAccent} />
           </View>
         }
       >
@@ -95,7 +96,7 @@ export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUs
       <Suspense
         fallback={
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="#f59e0b" />
+            <ActivityIndicator size="large" color={COLORS.amber} />
           </View>
         }
       >
@@ -226,7 +227,7 @@ export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUs
           {activeTab === 'profile' && (
             <Suspense fallback={
               <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#1e90ff" />
+                <ActivityIndicator size="large" color={COLORS.brandBlue} />
               </View>
             }>
               <ProfilePage 
@@ -291,7 +292,7 @@ export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUs
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#071024',
+    backgroundColor: COLORS.bgVoid,
   },
   scrollView: {
     flex: 1,
@@ -308,7 +309,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 28,
     fontWeight: '700',
     marginBottom: 24,
@@ -317,23 +318,23 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   sectionTitle: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 22,
     fontWeight: '700',
     marginBottom: 16,
   },
   sectionNote: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: 14,
     fontStyle: 'italic',
     marginTop: 8,
     textAlign: 'center',
   },
   featuredStreamerCard: {
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     overflow: 'hidden',
     marginTop: 8,
     minHeight: 220,
@@ -356,20 +357,20 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 999,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
-    backgroundColor: '#020617',
+    borderColor: COLORS.surfaceNavy,
+    backgroundColor: COLORS.void2,
   },
   twitchChannelPillActive: {
-    borderColor: '#a855f7',
-    backgroundColor: '#1e293b',
+    borderColor: COLORS.purple,
+    backgroundColor: COLORS.slate800,
   },
   twitchChannelPillText: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: 12,
     fontWeight: '600',
   },
   twitchChannelPillTextActive: {
-    color: '#f97316',
+    color: COLORS.orange,
   },
   twitchPlaceholder: {
     height: 220,
@@ -378,13 +379,13 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   twitchPlaceholderText: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 4,
   },
   twitchPlaceholderSub: {
-    color: '#64748b',
+    color: COLORS.slate500,
     fontSize: 13,
   },
   grid: {
@@ -397,11 +398,11 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   card: {
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderRadius: 12,
     padding: IS_WEB ? 16 : 10,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     alignItems: 'center',
     marginBottom: IS_WEB ? 12 : 8,
     ...(IS_WEB
@@ -419,67 +420,67 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   cardTitle: {
-    color: '#e6eef8',
+    color: COLORS.textLight,
     fontSize: IS_WEB ? 16 : 14,
     fontWeight: '700',
     marginBottom: 4,
     textAlign: 'center',
   },
   cardDescription: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: IS_WEB ? 12 : 11,
     textAlign: 'center',
   },
   inputBox: {
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 10,
-    color: '#e5e7eb',
+    color: COLORS.gray200,
     fontSize: 14,
   },
   lookupButton: {
     flex: 1,
-    backgroundColor: '#1e90ff',
+    backgroundColor: COLORS.brandBlue,
     borderRadius: 8,
     paddingVertical: 10,
     borderWidth: 1,
-    borderColor: '#0ea5e9',
+    borderColor: COLORS.sky,
     alignItems: 'center',
   },
   lookupButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 14,
     fontWeight: '700',
   },
   playerStatsCard: {
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderRadius: 12,
     padding: 14,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   playerStatsTitle: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 18,
     fontWeight: '700',
     marginBottom: 4,
   },
   playerStatsSubtitle: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: 12,
     marginBottom: 8,
   },
   playerStatsSectionTitle: {
-    color: '#93c5fd',
+    color: COLORS.skyMuted,
     fontSize: 13,
     fontWeight: '700',
     marginBottom: 4,
   },
   playerStatsLine: {
-    color: '#e5e7eb',
+    color: COLORS.gray200,
     fontSize: 12,
     marginBottom: 2,
   },
@@ -494,23 +495,23 @@ const styles = StyleSheet.create({
     minWidth: 72,
     paddingVertical: 6,
     paddingHorizontal: 8,
-    backgroundColor: '#0f172a',
+    backgroundColor: COLORS.slate900,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   overviewKpiLabel: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: 10,
     marginBottom: 2,
   },
   overviewKpiValue: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 14,
     fontWeight: '700',
   },
   overviewKpiSub: {
-    color: '#64748b',
+    color: COLORS.slate500,
     fontSize: 10,
     marginTop: 2,
   },
@@ -518,16 +519,16 @@ const styles = StyleSheet.create({
     marginTop: 12,
     paddingTop: 10,
     borderTopWidth: 1,
-    borderTopColor: '#1e293b',
+    borderTopColor: COLORS.slate800,
   },
   matchesSummaryLabel: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: 11,
     fontWeight: '600',
     marginBottom: 4,
   },
   matchesSummaryText: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 12,
   },
   lookupTabBar: {
@@ -541,22 +542,22 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 6,
     borderRadius: 8,
-    backgroundColor: '#0f172a',
+    backgroundColor: COLORS.slate900,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     alignItems: 'center',
   },
   lookupTabActive: {
-    backgroundColor: '#1e3a5f',
-    borderColor: '#7dd3fc',
+    backgroundColor: COLORS.surfaceNavy,
+    borderColor: COLORS.skySoft,
   },
   lookupTabText: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: 11,
     fontWeight: '600',
   },
   lookupTabTextActive: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
   },
   godRowWrap: {
     gap: 6,
@@ -571,24 +572,24 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 6,
-    backgroundColor: '#1e293b',
+    backgroundColor: COLORS.slate800,
   },
   lookupGodIconSmall: {
     width: 28,
     height: 28,
     borderRadius: 6,
-    backgroundColor: '#1e293b',
+    backgroundColor: COLORS.slate800,
   },
   lookupGodIconPlaceholder: {
     alignItems: 'center',
     justifyContent: 'center',
   },
   lookupGodIconPlaceholderText: {
-    color: '#64748b',
+    color: COLORS.slate500,
     fontSize: 14,
   },
   lookupGodIconPlaceholderTextSmall: {
-    color: '#64748b',
+    color: COLORS.slate500,
     fontSize: 12,
   },
   godRowText: {
@@ -598,7 +599,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingBottom: 8,
     borderBottomWidth: 1,
-    borderBottomColor: '#1e293b',
+    borderBottomColor: COLORS.slate800,
   },
   matchRow: {
     flexDirection: 'row',
@@ -614,12 +615,12 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   buildLabel: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: 11,
     marginRight: 4,
   },
   buildItems: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 11,
     flex: 1,
   },
@@ -627,7 +628,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#071024',
+    backgroundColor: COLORS.bgVoid,
   },
 });
 

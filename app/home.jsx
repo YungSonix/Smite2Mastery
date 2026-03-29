@@ -13,6 +13,7 @@ import {
   TextInput,
   Platform,
 } from 'react-native';
+import { COLORS } from '../lib/themeColors';
 import * as Updates from 'expo-updates';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PrivacyPage from './privacy';
@@ -242,15 +243,15 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
   const getUpdateStatusColor = () => {
     switch (updateStatus) {
       case 'success':
-        return '#10b981'; // green
+        return COLORS.success; // green
       case 'up-to-date':
-        return '#10b981'; // green
+        return COLORS.success; // green
       case 'error':
-        return '#ef4444'; // red
+        return COLORS.danger; // red
       case 'available':
-        return '#f59e0b'; // orange
+        return COLORS.amber; // orange
       default:
-        return '#7dd3fc'; // blue
+        return COLORS.skySoft; // blue
     }
   };
 
@@ -627,7 +628,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
               <TextInput
                 style={[styles.bugReportInput, styles.bugReportTextArea]}
                 placeholder="Describe the bug or crash you encountered..."
-                placeholderTextColor="#64748b"
+                placeholderTextColor={COLORS.slate500}
                 value={bugReportData.description}
                 onChangeText={(text) => setBugReportData({ ...bugReportData, description: text })}
                 multiline
@@ -639,7 +640,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
               <TextInput
                 style={styles.bugReportInput}
                 placeholder="e.g., iPhone 14, Samsung Galaxy S23"
-                placeholderTextColor="#64748b"
+                placeholderTextColor={COLORS.slate500}
                 value={bugReportData.device}
                 onChangeText={(text) => setBugReportData({ ...bugReportData, device: text })}
               />
@@ -648,7 +649,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
               <TextInput
                 style={styles.bugReportInput}
                 placeholder="e.g., iOS 17.0, Android 13"
-                placeholderTextColor="#64748b"
+                placeholderTextColor={COLORS.slate500}
                 value={bugReportData.os}
                 onChangeText={(text) => setBugReportData({ ...bugReportData, os: text })}
               />
@@ -657,7 +658,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
               <TextInput
                 style={[styles.bugReportInput, styles.bugReportTextArea]}
                 placeholder="1. \n2. \n3."
-                placeholderTextColor="#64748b"
+                placeholderTextColor={COLORS.slate500}
                 value={bugReportData.steps}
                 onChangeText={(text) => setBugReportData({ ...bugReportData, steps: text })}
                 multiline
@@ -671,7 +672,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
               <TextInput
                 style={[styles.bugReportInput, styles.bugReportTextArea]}
                 placeholder="Any other relevant information..."
-                placeholderTextColor="#64748b"
+                placeholderTextColor={COLORS.slate500}
                 value={bugReportData.additional}
                 onChangeText={(text) => setBugReportData({ ...bugReportData, additional: text })}
                 multiline
@@ -700,7 +701,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
                 disabled={submittingBugReport}
               >
                 {submittingBugReport ? (
-                  <ActivityIndicator size="small" color="#ffffff" />
+                  <ActivityIndicator size="small" color={COLORS.white} />
                 ) : (
                   <Text style={styles.bugReportSubmitButtonText}>Submit Report</Text>
                 )}
@@ -779,7 +780,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
               <TextInput
                 style={[styles.missingOutdatedInput, styles.missingOutdatedTextArea]}
                 placeholder="Describe what is missing or outdated..."
-                placeholderTextColor="#64748b"
+                placeholderTextColor={COLORS.slate500}
                 value={missingOutdatedData.description}
                 onChangeText={(text) => setMissingOutdatedData({ ...missingOutdatedData, description: text })}
                 multiline
@@ -808,7 +809,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
                 disabled={submittingMissingOutdated}
               >
                 {submittingMissingOutdated ? (
-                  <ActivityIndicator size="small" color="#ffffff" />
+                  <ActivityIndicator size="small" color={COLORS.white} />
                 ) : (
                   <Text style={styles.missingOutdatedSubmitButtonText}>Submit Report</Text>
                 )}
@@ -879,7 +880,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
               <TextInput
                 style={[styles.appReviewInput, styles.appReviewTextArea]}
                 placeholder="Describe anything that felt confusing..."
-                placeholderTextColor="#64748b"
+                placeholderTextColor={COLORS.slate500}
                 value={appReviewData.confusing}
                 onChangeText={(text) => setAppReviewData({ ...appReviewData, confusing: text })}
                 multiline
@@ -893,7 +894,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
               <TextInput
                 style={[styles.appReviewInput, styles.appReviewTextArea]}
                 placeholder="Tell us what you like most..."
-                placeholderTextColor="#64748b"
+                placeholderTextColor={COLORS.slate500}
                 value={appReviewData.likeMost}
                 onChangeText={(text) => setAppReviewData({ ...appReviewData, likeMost: text })}
                 multiline
@@ -937,7 +938,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
               <TextInput
                 style={[styles.appReviewInput, styles.appReviewTextArea]}
                 placeholder="Describe any loading issues..."
-                placeholderTextColor="#64748b"
+                placeholderTextColor={COLORS.slate500}
                 value={appReviewData.loadingIssues}
                 onChangeText={(text) => setAppReviewData({ ...appReviewData, loadingIssues: text })}
                 multiline
@@ -981,7 +982,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
               <TextInput
                 style={[styles.appReviewInput, styles.appReviewTextArea]}
                 placeholder="Tell us one feature you'd like to see..."
-                placeholderTextColor="#64748b"
+                placeholderTextColor={COLORS.slate500}
                 value={appReviewData.wishFeature}
                 onChangeText={(text) => setAppReviewData({ ...appReviewData, wishFeature: text })}
                 multiline
@@ -995,7 +996,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
               <TextInput
                 style={[styles.appReviewInput, styles.appReviewTextArea]}
                 placeholder="Share other apps or sites you use..."
-                placeholderTextColor="#64748b"
+                placeholderTextColor={COLORS.slate500}
                 value={appReviewData.otherApps}
                 onChangeText={(text) => setAppReviewData({ ...appReviewData, otherApps: text })}
                 multiline
@@ -1020,7 +1021,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
                 disabled={submittingAppReview}
               >
                 {submittingAppReview ? (
-                  <ActivityIndicator size="small" color="#ffffff" />
+                  <ActivityIndicator size="small" color={COLORS.white} />
                 ) : (
                   <Text style={styles.appReviewSubmitButtonText}>Submit Feedback</Text>
                 )}
@@ -1056,6 +1057,47 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
           <Text style={styles.bioText}>
             Whether you're looking for the perfect build for your favorite god or researching item stats, this app has everything you need to enhance your SMITE 2 experience.
           </Text>
+        </View>
+
+        {/* Quick links — same look as main app nav destinations */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Jump to</Text>
+          <Text style={[styles.bioText, { marginBottom: 16 }]}>
+            Open a main section of the app in one tap.
+          </Text>
+          <View style={styles.quickLinksContainer}>
+            {[
+              { key: 'data', label: 'Database', icon: '📚', page: 'data' },
+              { key: 'builds', label: 'Builds', icon: '⚔️', page: 'builds' },
+              { key: 'patchhub', label: 'Patch Hub', icon: '📜', page: 'patchhub' },
+              { key: 'custombuild', label: 'Custom Builder', icon: '🛠️', page: 'custombuild' },
+              { key: 'more', label: 'More', icon: '⋯', page: 'more' },
+            ].map((item) => (
+              <TouchableOpacity
+                key={item.key}
+                style={[
+                  styles.quickLinkCard,
+                  {
+                    minWidth: Math.max(100, (screenDimensions.width - 80) / 3),
+                    maxWidth: Platform.OS === 'web' ? 200 : undefined,
+                  },
+                ]}
+                onPress={() => {
+                  if (!setCurrentPage) return;
+                  if (item.page === 'patchhub' && setPatchHubSubTab) {
+                    setPatchHubSubTab('simple');
+                  }
+                  setCurrentPage(item.page);
+                }}
+                activeOpacity={0.85}
+                accessibilityRole="button"
+                accessibilityLabel={`Open ${item.label}`}
+              >
+                <Text style={styles.quickLinkIcon}>{item.icon}</Text>
+                <Text style={styles.quickLinkText}>{item.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
 
         {/* Hero Banner with Latest Patch */}
@@ -1127,7 +1169,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
               activeOpacity={0.7}
             >
               {checkingUpdate || downloadingUpdate ? (
-                <ActivityIndicator size="small" color="#ffffff" />
+                <ActivityIndicator size="small" color={COLORS.white} />
               ) : (
                 <Text style={styles.updateButtonIcon}>🔄</Text>
               )}
@@ -1269,7 +1311,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
 const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
-    backgroundColor: '#071024',
+    backgroundColor: COLORS.bgVoid,
   },
   outerScrollView: {
     flex: 1,
@@ -1279,7 +1321,7 @@ const styles = StyleSheet.create({
   },
   container: {
     minHeight: '100%',
-    backgroundColor: '#071024',
+    backgroundColor: COLORS.bgVoid,
     ...(Platform.OS === 'web' && {
       maxWidth: 1200,
       alignSelf: 'center',
@@ -1302,21 +1344,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 32,
     padding: 24,
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   appIconContainer: {
     width: 120,
     height: 120,
     borderRadius: 24,
-    backgroundColor: '#0f1724',
+    backgroundColor: COLORS.bgElevated,
     padding: 12,
     marginBottom: 16,
     borderWidth: 2,
-    borderColor: '#1e90ff',
-    shadowColor: '#1e90ff',
+    borderColor: COLORS.brandBlue,
+    shadowColor: COLORS.brandBlue,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
@@ -1327,7 +1369,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   appHeaderTitle: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 28,
     fontWeight: '900',
     marginBottom: 8,
@@ -1340,7 +1382,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'web' ? 'Arial Black, Impact, Arial, sans-serif' : Platform.OS === 'ios' ? 'Arial-BlackMT' : 'sans-serif-black',
   },
   appHeaderSubtitle: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 16,
     textAlign: 'center',
     opacity: 0.9,
@@ -1348,32 +1390,32 @@ const styles = StyleSheet.create({
   section: {
     marginBottom: 32,
     padding: 20,
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   subSectionTitle: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 20,
     fontWeight: '700',
     marginTop: 16,
     marginBottom: 12,
   },
   sectionTitle: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 24,
     fontWeight: '700',
     marginBottom: 16,
   },
   bioText: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 16,
     lineHeight: 24,
     marginBottom: 12,
   },
   newsDescription: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 16,
     lineHeight: 24,
     marginBottom: 20,
@@ -1384,26 +1426,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   loadingText: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 16,
     marginTop: 16,
   },
   newsButton: {
-    backgroundColor: '#1e90ff',
+    backgroundColor: COLORS.brandBlue,
     padding: 16,
     borderRadius: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#1e90ff',
+    borderColor: COLORS.brandBlue,
   },
   newsButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 18,
     fontWeight: '700',
     marginBottom: 4,
   },
   newsButtonSubtext: {
-    color: '#e6eef8',
+    color: COLORS.textLight,
     fontSize: 12,
     opacity: 0.8,
   },
@@ -1411,27 +1453,27 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   articleCard: {
-    backgroundColor: '#0f1724',
+    backgroundColor: COLORS.bgElevated,
     borderRadius: 8,
     marginBottom: 16,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   articleImage: {
     width: '100%',
     height: 180,
-    backgroundColor: '#1e3a5f',
+    backgroundColor: COLORS.surfaceNavy,
   },
   articleImagePlaceholder: {
     width: '100%',
     height: 180,
-    backgroundColor: '#1e3a5f',
+    backgroundColor: COLORS.surfaceNavy,
     justifyContent: 'center',
     alignItems: 'center',
   },
   articleImagePlaceholderText: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 24,
     fontWeight: '700',
   },
@@ -1439,24 +1481,24 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   articleDate: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: 12,
     marginBottom: 8,
   },
   articleTitle: {
-    color: '#e6eef8',
+    color: COLORS.textLight,
     fontSize: 18,
     fontWeight: '700',
     marginBottom: 8,
   },
   articleSnippet: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 14,
     lineHeight: 20,
     marginBottom: 8,
   },
   readMore: {
-    color: '#1e90ff',
+    color: COLORS.brandBlue,
     fontSize: 14,
     fontWeight: '600',
     marginTop: 4,
@@ -1464,41 +1506,41 @@ const styles = StyleSheet.create({
   fullNewsContainer: {
     marginTop: 24,
     padding: 16,
-    backgroundColor: '#0f1724',
+    backgroundColor: COLORS.bgElevated,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   webViewTitle: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 18,
     fontWeight: '700',
     marginBottom: 12,
     textAlign: 'center',
   },
   fullNewsButton: {
-    backgroundColor: '#1e90ff',
+    backgroundColor: COLORS.brandBlue,
     padding: 16,
     borderRadius: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#1e90ff',
+    borderColor: COLORS.brandBlue,
   },
   fullNewsButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: '700',
   },
   trademarkFooter: {
     marginTop: 32,
     padding: 16,
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   trademarkText: {
-    color: '#64748b',
+    color: COLORS.slate500,
     fontSize: 10,
     lineHeight: 16,
     textAlign: 'center',
@@ -1508,8 +1550,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#1e3a5f',
-    backgroundColor: '#0b1226',
+    borderBottomColor: COLORS.surfaceNavy,
+    backgroundColor: COLORS.bgDeep,
   },
   backButton: {
     paddingVertical: 8,
@@ -1517,21 +1559,21 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   backButtonText: {
-    color: '#1e90ff',
+    color: COLORS.brandBlue,
     fontSize: 16,
     fontWeight: '600',
   },
   privacyButton: {
-    backgroundColor: '#1e90ff',
+    backgroundColor: COLORS.brandBlue,
     padding: 16,
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 12,
     borderWidth: 1,
-    borderColor: '#1e90ff',
+    borderColor: COLORS.brandBlue,
   },
   privacyButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: '700',
   },
@@ -1541,10 +1583,10 @@ const styles = StyleSheet.create({
   updateStatusContainer: {
     marginBottom: 10,
     padding: 8,
-    backgroundColor: '#0f1724',
+    backgroundColor: COLORS.bgElevated,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   updateStatusText: {
     fontSize: 12,
@@ -1561,11 +1603,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#0066cc',
+    backgroundColor: COLORS.linkBlue,
     padding: 10,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: '#0066cc',
+    borderColor: COLORS.linkBlue,
     minWidth: 120,
     gap: 6,
   },
@@ -1573,14 +1615,14 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   updateButtonDownload: {
-    backgroundColor: '#10b981',
-    borderColor: '#10b981',
+    backgroundColor: COLORS.success,
+    borderColor: COLORS.success,
   },
   updateButtonIcon: {
     fontSize: 16,
   },
   updateButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 12,
     fontWeight: '700',
   },
@@ -1595,14 +1637,14 @@ const styles = StyleSheet.create({
   viewUpdateNotesButton: {
     marginTop: 12,
     padding: 12,
-    backgroundColor: '#0f1724',
+    backgroundColor: COLORS.bgElevated,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     alignItems: 'center',
   },
   viewUpdateNotesButtonText: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 14,
     fontWeight: '600',
   },
@@ -1615,14 +1657,14 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   updatePopupContainer: {
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: '#1e90ff',
+    borderColor: COLORS.brandBlue,
     width: '100%',
     maxWidth: 400,
     padding: 20,
-    shadowColor: '#000',
+    shadowColor: COLORS.black,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
@@ -1635,10 +1677,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingBottom: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#1e3a5f',
+    borderBottomColor: COLORS.surfaceNavy,
   },
   updatePopupTitle: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 24,
     fontWeight: '700',
   },
@@ -1646,12 +1688,12 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#1e3a5f',
+    backgroundColor: COLORS.surfaceNavy,
     alignItems: 'center',
     justifyContent: 'center',
   },
   updatePopupCloseText: {
-    color: '#e6eef8',
+    color: COLORS.textLight,
     fontSize: 18,
     fontWeight: '700',
     lineHeight: 20,
@@ -1660,7 +1702,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   updatePopupVersion: {
-    color: '#1e90ff',
+    color: COLORS.brandBlue,
     fontSize: 18,
     fontWeight: '700',
     marginBottom: 16,
@@ -1670,7 +1712,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   updateNotesTitle: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 16,
     fontWeight: '700',
     marginBottom: 12,
@@ -1681,28 +1723,28 @@ const styles = StyleSheet.create({
     paddingLeft: 4,
   },
   updateNoteBullet: {
-    color: '#1e90ff',
+    color: COLORS.brandBlue,
     fontSize: 16,
     fontWeight: '700',
     marginRight: 8,
     width: 20,
   },
   updateNoteText: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 14,
     lineHeight: 20,
     flex: 1,
   },
   updatePopupButton: {
-    backgroundColor: '#0066cc',
+    backgroundColor: COLORS.linkBlue,
     padding: 14,
     borderRadius: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#0066cc',
+    borderColor: COLORS.linkBlue,
   },
   updatePopupButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: '700',
   },
@@ -1713,18 +1755,18 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
   },
   bugReportItem: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 14,
     lineHeight: 22,
     marginBottom: 4,
   },
   bugReportButton: {
-    backgroundColor: '#ef4444',
+    backgroundColor: COLORS.danger,
     padding: 16,
     borderRadius: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#ef4444',
+    borderColor: COLORS.danger,
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 8,
@@ -1733,7 +1775,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   bugReportButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: '700',
   },
@@ -1747,12 +1789,12 @@ const styles = StyleSheet.create({
   feedbackSectionToggle: {
     padding: 8,
     borderRadius: 6,
-    backgroundColor: '#0f1724',
+    backgroundColor: COLORS.bgElevated,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   feedbackSectionToggleText: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 12,
     fontWeight: '600',
   },
@@ -1768,9 +1810,9 @@ const styles = StyleSheet.create({
   expandableSectionToggle: {
     padding: 8,
     borderRadius: 6,
-    backgroundColor: '#0f1724',
+    backgroundColor: COLORS.bgElevated,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     ...(Platform.OS === 'web' && {
       cursor: 'pointer',
       minHeight: 36,
@@ -1779,7 +1821,7 @@ const styles = StyleSheet.create({
     }),
   },
   expandableSectionToggleText: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 12,
     fontWeight: '600',
   },
@@ -1787,12 +1829,12 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   feedbackButton: {
-    backgroundColor: '#ea580c',
+    backgroundColor: COLORS.orange600,
     padding: 16,
     borderRadius: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#ea580c',
+    borderColor: COLORS.orange600,
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 8,
@@ -1801,17 +1843,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   feedbackButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: '700',
   },
   appFeedbackButton: {
-    backgroundColor: '#10b981',
+    backgroundColor: COLORS.success,
     padding: 16,
     borderRadius: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#10b981',
+    borderColor: COLORS.success,
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 8,
@@ -1820,19 +1862,19 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   appFeedbackButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: '700',
   },
   // Report Missing or Outdated Button Styles
   reportMissingButton: {
-    backgroundColor: '#ea580c',
+    backgroundColor: COLORS.orange600,
     padding: 16,
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 12,
     borderWidth: 1,
-    borderColor: '#f97316',
+    borderColor: COLORS.orange,
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 8,
@@ -1841,7 +1883,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   reportMissingButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: '700',
   },
@@ -1852,21 +1894,21 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#1e3a5f',
-    backgroundColor: '#0f1724',
+    borderColor: COLORS.surfaceNavy,
+    backgroundColor: COLORS.bgElevated,
   },
   // Bug Report Modal Styles
   bugReportModalContainer: {
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: '#ef4444',
+    borderColor: COLORS.danger,
     width: '95%',
     maxWidth: 600,
     height: '90%',
     maxHeight: '90%',
     margin: 10,
-    shadowColor: '#000',
+    shadowColor: COLORS.black,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
@@ -1880,10 +1922,10 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#1e3a5f',
+    borderBottomColor: COLORS.surfaceNavy,
   },
   bugReportModalTitle: {
-    color: '#ef4444',
+    color: COLORS.danger,
     fontSize: 22,
     fontWeight: '700',
     flex: 1,
@@ -1892,13 +1934,13 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#1e3a5f',
+    backgroundColor: COLORS.surfaceNavy,
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 12,
   },
   bugReportModalCloseText: {
-    color: '#e6eef8',
+    color: COLORS.textLight,
     fontSize: 18,
     fontWeight: '700',
     lineHeight: 20,
@@ -1909,22 +1951,22 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   bugReportFieldLabel: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 14,
     fontWeight: '600',
     marginBottom: 8,
     marginTop: 12,
   },
   requiredStar: {
-    color: '#ef4444',
+    color: COLORS.danger,
   },
   bugReportInput: {
-    backgroundColor: '#0f1724',
+    backgroundColor: COLORS.bgElevated,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     borderRadius: 8,
     padding: 12,
-    color: '#e6eef8',
+    color: COLORS.textLight,
     fontSize: 14,
     marginBottom: 4,
   },
@@ -1933,7 +1975,7 @@ const styles = StyleSheet.create({
     paddingTop: 12,
   },
   bugReportInfoText: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: 12,
     marginTop: 16,
     marginBottom: 8,
@@ -1944,36 +1986,36 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: '#1e3a5f',
+    borderTopColor: COLORS.surfaceNavy,
     gap: 12,
   },
   bugReportCancelButton: {
     flex: 1,
-    backgroundColor: '#1e3a5f',
+    backgroundColor: COLORS.surfaceNavy,
     padding: 14,
     borderRadius: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   bugReportCancelButtonText: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 16,
     fontWeight: '600',
   },
   bugReportSubmitButton: {
     flex: 1,
-    backgroundColor: '#ef4444',
+    backgroundColor: COLORS.danger,
     padding: 14,
     borderRadius: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#ef4444',
+    borderColor: COLORS.danger,
     flexDirection: 'row',
     justifyContent: 'center',
   },
   bugReportSubmitButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: '700',
   },
@@ -1982,16 +2024,16 @@ const styles = StyleSheet.create({
   },
   // App Review Modal Styles
   appReviewModalContainer: {
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: '#10b981',
+    borderColor: COLORS.success,
     width: '95%',
     maxWidth: 600,
     height: '90%',
     maxHeight: '90%',
     margin: 10,
-    shadowColor: '#000',
+    shadowColor: COLORS.black,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
@@ -2005,10 +2047,10 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#1e3a5f',
+    borderBottomColor: COLORS.surfaceNavy,
   },
   appReviewModalTitle: {
-    color: '#10b981',
+    color: COLORS.success,
     fontSize: 22,
     fontWeight: '700',
     flex: 1,
@@ -2017,13 +2059,13 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#1e3a5f',
+    backgroundColor: COLORS.surfaceNavy,
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 12,
   },
   appReviewModalCloseText: {
-    color: '#e6eef8',
+    color: COLORS.textLight,
     fontSize: 18,
     fontWeight: '700',
     lineHeight: 20,
@@ -2034,19 +2076,19 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   appReviewFieldLabel: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 14,
     fontWeight: '600',
     marginBottom: 8,
     marginTop: 16,
   },
   appReviewInput: {
-    backgroundColor: '#0f1724',
+    backgroundColor: COLORS.bgElevated,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     borderRadius: 8,
     padding: 12,
-    color: '#e6eef8',
+    color: COLORS.textLight,
     fontSize: 14,
     marginBottom: 4,
   },
@@ -2058,9 +2100,9 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   appReviewDropdownButton: {
-    backgroundColor: '#0f1724',
+    backgroundColor: COLORS.bgElevated,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     borderRadius: 8,
     padding: 12,
     flexDirection: 'row',
@@ -2068,15 +2110,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   appReviewDropdownText: {
-    color: '#e6eef8',
+    color: COLORS.textLight,
     fontSize: 14,
     flex: 1,
   },
   appReviewPlaceholder: {
-    color: '#64748b',
+    color: COLORS.slate500,
   },
   appReviewDropdownArrow: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 12,
     marginLeft: 8,
   },
@@ -2092,9 +2134,9 @@ const styles = StyleSheet.create({
   appReviewScaleButton: {
     flex: 1,
     maxWidth: 30,
-    backgroundColor: '#0f1724',
+    backgroundColor: COLORS.bgElevated,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     borderRadius: 4,
     padding: 4,
     alignItems: 'center',
@@ -2102,25 +2144,25 @@ const styles = StyleSheet.create({
     minHeight: 28,
   },
   appReviewScaleButtonActive: {
-    backgroundColor: '#10b981',
-    borderColor: '#10b981',
+    backgroundColor: COLORS.success,
+    borderColor: COLORS.success,
   },
   appReviewScaleButtonText: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 12,
     fontWeight: '600',
   },
   appReviewScaleButtonTextActive: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontWeight: '700',
   },
   appReviewScaleLabel: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: 12,
     textAlign: 'center',
   },
   appReviewScaleValue: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 12,
     fontWeight: '600',
     textAlign: 'center',
@@ -2131,36 +2173,36 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: '#1e3a5f',
+    borderTopColor: COLORS.surfaceNavy,
     gap: 12,
   },
   appReviewCancelButton: {
     flex: 1,
-    backgroundColor: '#1e3a5f',
+    backgroundColor: COLORS.surfaceNavy,
     padding: 14,
     borderRadius: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   appReviewCancelButtonText: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 16,
     fontWeight: '600',
   },
   appReviewSubmitButton: {
     flex: 1,
-    backgroundColor: '#10b981',
+    backgroundColor: COLORS.success,
     padding: 14,
     borderRadius: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#10b981',
+    borderColor: COLORS.success,
     flexDirection: 'row',
     justifyContent: 'center',
   },
   appReviewSubmitButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: '700',
   },
@@ -2182,23 +2224,23 @@ const styles = StyleSheet.create({
     marginTop: 12,
     padding: 10,
     borderRadius: 6,
-    backgroundColor: '#0f1724',
+    backgroundColor: COLORS.bgElevated,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     alignItems: 'center',
   },
   versionHistoryToggleText: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 14,
     fontWeight: '600',
   },
   versionCard: {
-    backgroundColor: '#0f1724',
+    backgroundColor: COLORS.bgElevated,
     borderRadius: 8,
     padding: 16,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   versionCardHeader: {
     flexDirection: 'row',
@@ -2208,12 +2250,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   versionNumber: {
-    color: '#1e90ff',
+    color: COLORS.brandBlue,
     fontSize: 18,
     fontWeight: '700',
   },
   versionDate: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: 12,
     fontStyle: 'italic',
   },
@@ -2226,20 +2268,20 @@ const styles = StyleSheet.create({
     paddingLeft: 4,
   },
   versionNoteBullet: {
-    color: '#1e90ff',
+    color: COLORS.brandBlue,
     fontSize: 16,
     fontWeight: '700',
     marginRight: 8,
     width: 20,
   },
   versionNoteText: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 14,
     lineHeight: 20,
     flex: 1,
   },
   noVersionsText: {
-    color: '#64748b',
+    color: COLORS.slate500,
     fontSize: 14,
     fontStyle: 'italic',
     textAlign: 'center',
@@ -2247,16 +2289,16 @@ const styles = StyleSheet.create({
   },
   // Missing/Outdated Feature Modal Styles
   missingOutdatedModalContainer: {
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: '#ea580c',
+    borderColor: COLORS.orange600,
     width: '95%',
     maxWidth: 600,
     height: '90%',
     maxHeight: '90%',
     margin: 10,
-    shadowColor: '#000',
+    shadowColor: COLORS.black,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
@@ -2270,10 +2312,10 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#1e3a5f',
+    borderBottomColor: COLORS.surfaceNavy,
   },
   missingOutdatedModalTitle: {
-    color: '#ea580c',
+    color: COLORS.orange600,
     fontSize: 22,
     fontWeight: '700',
     flex: 1,
@@ -2282,13 +2324,13 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#1e3a5f',
+    backgroundColor: COLORS.surfaceNavy,
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 12,
   },
   missingOutdatedModalCloseText: {
-    color: '#e6eef8',
+    color: COLORS.textLight,
     fontSize: 18,
     fontWeight: '700',
     lineHeight: 20,
@@ -2299,7 +2341,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   missingOutdatedFieldLabel: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 14,
     fontWeight: '600',
     marginBottom: 8,
@@ -2312,34 +2354,34 @@ const styles = StyleSheet.create({
   },
   missingOutdatedOptionButton: {
     flex: 1,
-    backgroundColor: '#0f1724',
+    backgroundColor: COLORS.bgElevated,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     borderRadius: 8,
     padding: 16,
     alignItems: 'center',
     justifyContent: 'center',
   },
   missingOutdatedOptionButtonActive: {
-    backgroundColor: '#ea580c',
-    borderColor: '#ea580c',
+    backgroundColor: COLORS.orange600,
+    borderColor: COLORS.orange600,
   },
   missingOutdatedOptionText: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 14,
     fontWeight: '600',
   },
   missingOutdatedOptionTextActive: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontWeight: '700',
   },
   missingOutdatedInput: {
-    backgroundColor: '#0f1724',
+    backgroundColor: COLORS.bgElevated,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     borderRadius: 8,
     padding: 12,
-    color: '#e6eef8',
+    color: COLORS.textLight,
     fontSize: 14,
     marginBottom: 4,
   },
@@ -2348,7 +2390,7 @@ const styles = StyleSheet.create({
     paddingTop: 12,
   },
   missingOutdatedInfoText: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: 12,
     marginTop: 16,
     marginBottom: 8,
@@ -2359,36 +2401,36 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: '#1e3a5f',
+    borderTopColor: COLORS.surfaceNavy,
     gap: 12,
   },
   missingOutdatedCancelButton: {
     flex: 1,
-    backgroundColor: '#1e3a5f',
+    backgroundColor: COLORS.surfaceNavy,
     padding: 14,
     borderRadius: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   missingOutdatedCancelButtonText: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 16,
     fontWeight: '600',
   },
   missingOutdatedSubmitButton: {
     flex: 1,
-    backgroundColor: '#ea580c',
+    backgroundColor: COLORS.orange600,
     padding: 14,
     borderRadius: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#ea580c',
+    borderColor: COLORS.orange600,
     flexDirection: 'row',
     justifyContent: 'center',
   },
   missingOutdatedSubmitButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: '700',
   },
@@ -2401,7 +2443,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
     backgroundColor: 'transparent',
   },
   heroImage: {
@@ -2416,19 +2458,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   heroContent: {
-    backgroundColor: '#071024',
+    backgroundColor: COLORS.bgVoid,
     padding: Platform.OS === 'web' ? 24 : 20,
     borderTopWidth: 2,
-    borderTopColor: '#1e90ff',
+    borderTopColor: COLORS.brandBlue,
   },
   heroTitle: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: Platform.OS === 'web' ? 28 : 24,
     fontWeight: '700',
     marginBottom: 8,
   },
   heroSubtitle: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: Platform.OS === 'web' ? 18 : 16,
     marginBottom: 20,
   },
@@ -2438,20 +2480,20 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   heroButton: {
-    backgroundColor: '#1e90ff',
+    backgroundColor: COLORS.brandBlue,
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
     alignSelf: 'flex-start',
     borderWidth: 1,
-    borderColor: '#1e90ff',
+    borderColor: COLORS.brandBlue,
     ...(Platform.OS === 'web' && {
       cursor: 'pointer',
       minHeight: 44,
       transition: 'background-color 0.2s, transform 0.1s',
       userSelect: 'none',
       ':hover': {
-        backgroundColor: '#0066cc',
+        backgroundColor: COLORS.linkBlue,
         transform: 'scale(1.02)',
       },
       ':active': {
@@ -2460,7 +2502,7 @@ const styles = StyleSheet.create({
     }),
   },
   heroButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: '700',
   },
@@ -2473,26 +2515,26 @@ const styles = StyleSheet.create({
   quickLinkCard: {
     flex: 1,
     minWidth: '30%',
-    backgroundColor: '#0f1724',
+    backgroundColor: COLORS.bgElevated,
     borderRadius: 8,
     padding: 16,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   quickLinkIcon: {
     fontSize: 32,
     marginBottom: 8,
   },
   quickLinkText: {
-    color: '#e6eef8',
+    color: COLORS.textLight,
     fontSize: 14,
     fontWeight: '600',
     textAlign: 'center',
   },
   // Catch Me Up Button
   catchMeUpButton: {
-    backgroundColor: '#1e90ff',
+    backgroundColor: COLORS.brandBlue,
     padding: 16,
     borderRadius: 8,
     alignItems: 'center',
@@ -2504,10 +2546,10 @@ const styles = StyleSheet.create({
     }),
     marginTop: 12,
     borderWidth: 1,
-    borderColor: '#1e90ff',
+    borderColor: COLORS.brandBlue,
   },
   catchMeUpButtonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: '700',
   },

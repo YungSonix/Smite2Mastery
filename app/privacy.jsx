@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Linking,
 } from 'react-native';
+import { COLORS } from '../lib/themeColors';
 import { EXTERNAL_LINKS } from '../config';
 
 export default function PrivacyPage() {
@@ -170,7 +171,7 @@ export default function PrivacyPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#071024',
+    backgroundColor: COLORS.bgVoid,
   },
   scrollView: {
     flex: 1,
@@ -182,25 +183,25 @@ const styles = StyleSheet.create({
   section: {
     marginBottom: 24,
     padding: 20,
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   sectionTitle: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 28,
     fontWeight: '700',
     marginBottom: 16,
   },
   subsectionTitle: {
-    color: '#1e90ff',
+    color: COLORS.brandBlue,
     fontSize: 20,
     fontWeight: '700',
     marginBottom: 12,
   },
   bodyText: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 16,
     lineHeight: 24,
     marginBottom: 16,
@@ -210,13 +211,13 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
   },
   securityTitle: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontSize: 16,
     fontWeight: '700',
     marginBottom: 6,
   },
   securityText: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 14,
     lineHeight: 20,
   },
@@ -224,36 +225,36 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   listItem: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 14,
     lineHeight: 22,
     marginBottom: 8,
     paddingLeft: 8,
   },
   button: {
-    backgroundColor: '#1e90ff',
+    backgroundColor: COLORS.brandBlue,
     padding: 16,
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 12,
     borderWidth: 1,
-    borderColor: '#1e90ff',
+    borderColor: COLORS.brandBlue,
   },
   buttonText: {
-    color: '#ffffff',
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: '700',
   },
   emailLink: {
     marginTop: 8,
     padding: 12,
-    backgroundColor: '#0f1724',
+    backgroundColor: COLORS.bgElevated,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   emailLinkText: {
-    color: '#1e90ff',
+    color: COLORS.brandBlue,
     fontSize: 16,
     fontWeight: '600',
     textAlign: 'center',
@@ -261,30 +262,30 @@ const styles = StyleSheet.create({
   discordContainer: {
     marginTop: 12,
     padding: 12,
-    backgroundColor: '#0f1724',
+    backgroundColor: COLORS.bgElevated,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   discordText: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     fontSize: 16,
     lineHeight: 24,
     marginBottom: 8,
   },
   discordLabel: {
-    color: '#7dd3fc',
+    color: COLORS.skySoft,
     fontWeight: '600',
   },
   discordNote: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: 14,
     lineHeight: 20,
     marginTop: 8,
     fontStyle: 'italic',
   },
   updateDate: {
-    color: '#94a3b8',
+    color: COLORS.slate400,
     fontSize: 12,
     fontStyle: 'italic',
     marginTop: 8,
@@ -292,13 +293,13 @@ const styles = StyleSheet.create({
   trademarkFooter: {
     marginTop: 16,
     padding: 16,
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: COLORS.surfaceNavy,
   },
   trademarkText: {
-    color: '#64748b',
+    color: COLORS.slate500,
     fontSize: 10,
     lineHeight: 16,
     textAlign: 'center',

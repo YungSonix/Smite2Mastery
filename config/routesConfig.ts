@@ -22,6 +22,9 @@ export const BUILDS_SUBTABS = {
   RANDOMIZER: 'randomizer',
   CUSTOM: 'custom',
   MY_BUILDS: 'mybuilds',
+  /** Replaces legacy tierlist tab — Guides hub in Builds. */
+  GUIDES: 'guides',
+  /** @deprecated Use GUIDES; kept for any persisted tab strings. */
   TIERLIST: 'tierlist',
 } as const;
 

@@ -16,12 +16,13 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Image } from 'expo-image';
-import { useAudioPlayer, setAudioModeAsync } from 'expo-audio';
+import { useAudioPlayer, setAudioModeAsync, createAudioPlayer } from 'expo-audio';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CryptoJS from 'crypto-js';
-import { getWallpaperByGodName, getRemoteGodIconByName, getLocalItemIcon, getSkinImage, getGodAbilityIcon } from './localIcons';
+import { getWallpaperByGodName, getRemoteGodIconByName, getLocalGodAsset, getLocalItemIcon, getSkinImage, getGodAbilityIcon, PANTHEON_ICONS } from './localIcons';
 import buildsData from './data/builds.json';
+import { flattenBuildsGods } from '../lib/normalizeBuildsGod';
 import { playVOX } from '../lib/prophecyAudio';
 import { getClassPoolKey, getPooledAbility, getPooledUltimate } from '../src/data/abilityPools';
 import {
@@ -39,6 +40,7 @@ import {
   getCardsByRarity,
   getUnitsByRarity,
   rollCardVisuals,
+  getProphecyCardShowcaseBody,
 } from '../lib/prophecyData';
 import {
   buildSmartStarterDeck,
@@ -47,6 +49,7 @@ import {
   getDeckCostCurve,
   validateDeck,
 } from '../lib/prophecyDeck';
+import { GOLD_ICON, STAT_ICONS as BUNDLED_STAT_ICONS, PROPHECY_PACK_MYSTERY } from '../lib/imageGrabber';
 import { GOD_ABILITY_REFERENCE } from '../lib/godAbilities';
 let supabase;
 try {
@@ -90,7 +93,7 @@ const MUTED = '#7a6a50';
 const BG = '#0a0a12';
 const BGC = '#1a1828';
 const BGC2 = '#221f35';
-const RARITY_COLORS = { common: '#889090', uncommon: '#3a9a30', rare: '#2060c0', epic: '#8020c0', legendary: '#c05010' };
+const RARITY_COLORS = { common: '#9aa3ad', uncommon: '#45b04a', rare: '#4d8eff', epic: '#b373ff', legendary: '#f6a445' };
 const PANTHEON_COLORS = {
   Olympian: '#9ca3af',
   Greek: '#9ca3af',
@@ -137,6 +140,28 @@ function getRarityWord(rarity) {
 function getRarityColor(rarity) {
   return RARITY_COLORS[String(rarity || 'common').toLowerCase()] || RARITY_COLORS.common;
 }
+function hexToRgba(hexColor, alpha = 1) {
+  const hex = String(hexColor || '').replace('#', '');
+  if (hex.length !== 6) return `rgba(255,255,255,${alpha})`;
+  const r = parseInt(hex.slice(0, 2), 16);
+  const g = parseInt(hex.slice(2, 4), 16);
+  const b = parseInt(hex.slice(4, 6), 16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+function getGuaranteeTone(bucket) {
+  const key = String(bucket || 'common').toLowerCase();
+  const rarityKey = key === 'epic_or_higher'
+    ? 'epic'
+    : key === 'rare_or_higher' || key === 'rare_or_less'
+      ? 'rare'
+      : key;
+  const color = getRarityColor(rarityKey);
+  return {
+    border: hexToRgba(color, 0.72),
+    bg: hexToRgba(color, 0.22),
+    text: hexToRgba(color, 0.96),
+  };
+}
 const RARITY_ICONS_BASE = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/master/app/data/Icons/Rarity%20Icons';
 const RARITY_ICON_FILES = { common: 'Common.png', uncommon: 'Uncommon.png', rare: 'Rare.png', epic: 'Epic.png', legendary: 'Legendary.png', free: 'Free.png' };
 function getRarityIconUri(rarity) {
@@ -144,10 +169,19 @@ function getRarityIconUri(rarity) {
   return `${RARITY_ICONS_BASE}/${file}`;
 }
 function getCardDisplayName(card) {
-  if (card?.name) return card.name;
+  if (card?.name) {
+    const cleaned = String(card.name)
+      .replace(/\s*\[foil\]\s*$/i, '')
+      .replace(/^foil\s+/i, '')
+      .trim();
+    if (cleaned) return cleaned;
+  }
   const id = String(card?.id || '').replace(/^(item_|trap_)/i, '').trim();
   if (!id) return 'Card';
   return id.charAt(0).toUpperCase() + id.slice(1).toLowerCase().replace(/_([a-z])/gi, (_, c) => ' ' + c.toUpperCase());
+}
+function normalizeAssetLookupKey(value) {
+  return String(value || '').toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 function getFoilLabel(foil) {
   if (foil === CARD_FOIL_TIER.DIVINE_FOIL) return 'Relic Gleam';
@@ -176,8 +210,8 @@ function getCardVisuals(card) {
       foil_accent: forced === CARD_FOIL_TIER.MYTHIC ? CARD_FOIL_TIER.PRISMATIC : base.foil_accent,
       variant_type: card?.isAlternativeCard ? 'foil_alternative_card' : 'foil_card',
       variant_name: card?.isAlternativeCard
-        ? `Foil ${card?.altVariantName || card?.name || 'Alternative'}`
-        : `Foil ${card?.name || 'Card'}`,
+        ? `Radiant ${card?.altVariantName || card?.name || 'Alternative'}`
+        : `Radiant ${card?.name || 'Card'}`,
       skin_path: card?.altSkinPath || null,
     };
   }
@@ -278,10 +312,15 @@ const STAT_ICONS = {
 };
 const STAT_ATK_TINT = '#e06060';
 const STAT_HP_TINT = '#22c055';
+const STAT_MANA_TINT = '#5eb3ff';
 const STAT_DEF_TINT = '#3498db';
 const PROFILE_BANNER_BASE_URL = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Profile%20Banner';
 const PROFILE_GOD_ICON_BASE_URL = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Icons';
 const SMITE_SCROLL_LOGO = require('../assets/icon.png');
+const PROPHECY_MANA_ICON = BUNDLED_STAT_ICONS.Mana;
+const PROPHECY_PACK_ICON = PROPHECY_PACK_MYSTERY;
+const TIMER_TICK_URL = 'https://actions.google.com/sounds/v1/alarms/beep_short.ogg';
+const PACK_SEAL_TRIGGER = 0.82;
 
 function cloneObj(o) {
   return JSON.parse(JSON.stringify(o));
@@ -306,32 +345,138 @@ const SPELL_CARDS = PROPHECY_SPELL_CARDS;
 function normalizeFieldRow(rowValue) {
   return rowValue === ROW_BACK ? ROW_BACK : ROW_FRONT;
 }
-const PANTHEON_ICONS = {
-  Greek: require('./data/Icons/Pantheon Icons/Greek.png'),
-  Roman: require('./data/Icons/Pantheon Icons/Roman.png'),
-  Egyptian: require('./data/Icons/Pantheon Icons/Egyptian.png'),
-  Norse: require('./data/Icons/Pantheon Icons/Norse.png'),
-  Chinese: require('./data/Icons/Pantheon Icons/Chinese.png'),
-  'Tales of Arabia': require('./data/Icons/Pantheon Icons/Tales of Arabia.png'),
-  Korean: require('./data/Icons/Pantheon Icons/Korean.png'),
-  Hindu: require('./data/Icons/Pantheon Icons/Hindu.png'),
-  Mayan: require('./data/Icons/Pantheon Icons/Maya.png'),
-  Celtic: require('./data/Icons/Pantheon Icons/Celtic.png'),
-  Japanese: require('./data/Icons/Pantheon Icons/Japanese.png'),
-  Voodoo: require('./data/Icons/Pantheon Icons/Voodoo.png'),
-  Yoruba: require('./data/Icons/Pantheon Icons/Yoruba.png'),
-  Polynesian: require('./data/Icons/Pantheon Icons/Polynesian.png'),
-  Arthurian: require('./data/Icons/Pantheon Icons/Arthurian.png'),
-  Olympian: require('./data/Icons/Pantheon Icons/Greek.png'),
-  Asgardian: require('./data/Icons/Pantheon Icons/Norse.png'),
-  Eastern: require('./data/Icons/Pantheon Icons/Chinese.png'),
-  Underworld: require('./data/Icons/Pantheon Icons/Greek.png'),
-};
 const CARD_PACKS = [
-  { id: 'daily', name: 'Daily Pack', costGold: 0, cards: 3, desc: 'Free once per run: 2 Common + 1 Uncommon', guarantee: ['common', 'common', 'uncommon'] },
-  { id: 'warrior', name: 'Warrior Pack', costGold: 500, cards: 5, desc: '3 Common, 1 Uncommon, 1 Random up to Rare', guarantee: ['common', 'common', 'common', 'uncommon', 'rare_or_less'] },
-  { id: 'divine', name: 'Divine Pack', costGold: 1200, cards: 5, desc: '2 Uncommon guaranteed, higher power mix', guarantee: ['uncommon', 'uncommon', 'rare_or_higher', 'rare_or_higher', 'epic_or_higher'] },
-  { id: 'prophecy', name: 'Prophecy Pack', costGold: 2200, cards: 8, desc: '3 Rare guaranteed, 1 Epic+', guarantee: ['rare', 'rare', 'rare', 'epic_or_higher'] },
+  {
+    id: 'daily',
+    name: 'Daily Pack',
+    costGold: 0,
+    cards: 3,
+    desc: 'Free once per run: 2 Common + 1 Uncommon',
+    guarantee: ['common', 'common', 'uncommon'],
+    icon: PROPHECY_PACK_ICON,
+    packTint: '#b9beca',
+    packAccent: '#7f8da8',
+    tags: ['Daily', 'Starter'],
+  },
+  {
+    id: 'warrior',
+    name: 'Warrior Pack',
+    costGold: 500,
+    cards: 5,
+    desc: '3 Common, 1 Uncommon, 1 Random up to Rare',
+    guarantee: ['common', 'common', 'common', 'uncommon', 'rare_or_less'],
+    icon: PROPHECY_PACK_ICON,
+    packTint: '#d59f3b',
+    packAccent: '#c8922a',
+    tags: ['Balanced', 'All Types'],
+    poolFilter: { cardTypes: [CARD_TYPE.GOD, CARD_TYPE.ITEM, CARD_TYPE.SPELL, CARD_TYPE.TRAP] },
+  },
+  {
+    id: 'divine',
+    name: 'Divine Pack',
+    costGold: 1200,
+    cards: 5,
+    desc: '2 Uncommon guaranteed, higher power mix',
+    guarantee: ['uncommon', 'uncommon', 'rare_or_higher', 'rare_or_higher', 'epic_or_higher'],
+    icon: PROPHECY_PACK_ICON,
+    packTint: '#f2cd65',
+    packAccent: '#f0c060',
+    tags: ['Premium', 'Power Spike'],
+    poolFilter: { cardTypes: [CARD_TYPE.GOD, CARD_TYPE.ITEM, CARD_TYPE.SPELL, CARD_TYPE.TRAP] },
+  },
+  {
+    id: 'prophecy',
+    name: 'Prophecy Pack',
+    costGold: 2200,
+    cards: 8,
+    desc: '3 Rare guaranteed, 1 Epic+',
+    guarantee: ['rare', 'rare', 'rare', 'epic_or_higher'],
+    icon: PROPHECY_PACK_ICON,
+    packTint: '#a188f9',
+    packAccent: '#8f66f4',
+    tags: ['Chase Pack', 'High Rarity'],
+    poolFilter: { cardTypes: [CARD_TYPE.GOD, CARD_TYPE.ITEM, CARD_TYPE.SPELL, CARD_TYPE.TRAP] },
+  },
+  {
+    id: 'god_armory',
+    name: 'God Armory Pack',
+    costGold: 900,
+    cards: 5,
+    desc: 'God cards only with a strong Rare+ chance.',
+    guarantee: ['common', 'uncommon', 'rare_or_higher'],
+    icon: PROPHECY_PACK_ICON,
+    packTint: '#f0c060',
+    packAccent: '#de9b2f',
+    tags: ['Gods Only'],
+    poolFilter: { cardTypes: [CARD_TYPE.GOD] },
+  },
+  {
+    id: 'relic_satchel',
+    name: 'Relic Satchel',
+    costGold: 760,
+    cards: 5,
+    desc: 'Item-focused pulls for better deck tech.',
+    guarantee: ['common', 'common', 'uncommon', 'rare_or_less'],
+    icon: PROPHECY_PACK_ICON,
+    packTint: '#77b7ff',
+    packAccent: '#4a92e4',
+    tags: ['Items Only'],
+    poolFilter: { cardTypes: [CARD_TYPE.ITEM] },
+  },
+  {
+    id: 'arcane_scrolls',
+    name: 'Arcane Scrolls Pack',
+    costGold: 850,
+    cards: 5,
+    desc: 'Spell-only rolls with elevated Rare+ odds.',
+    guarantee: ['uncommon', 'uncommon', 'rare_or_higher', 'rare_or_higher'],
+    icon: PROPHECY_PACK_ICON,
+    packTint: '#c191ff',
+    packAccent: '#8d56d9',
+    tags: ['Spells Only'],
+    poolFilter: { cardTypes: [CARD_TYPE.SPELL] },
+  },
+  {
+    id: 'battle_reliquary',
+    name: 'Battle Reliquary',
+    costGold: 1450,
+    cards: 6,
+    desc: 'Mixed gods, items, and spells for full-deck upgrades.',
+    guarantee: ['uncommon', 'rare', 'rare_or_higher', 'epic_or_higher'],
+    icon: PROPHECY_PACK_ICON,
+    packTint: '#f59e5a',
+    packAccent: '#d97a27',
+    tags: ['God+Item+Spell'],
+    poolFilter: { cardTypes: [CARD_TYPE.GOD, CARD_TYPE.ITEM, CARD_TYPE.SPELL] },
+  },
+  {
+    id: 'egyptian_dynasty',
+    name: 'Egyptian Dynasty Pack',
+    costGold: 1200,
+    cards: 5,
+    desc: 'Egyptian god focus with premium rarity lanes.',
+    guarantee: ['uncommon', 'rare', 'rare_or_higher', 'epic_or_higher'],
+    icon: PROPHECY_PACK_ICON,
+    packTint: '#f8d86a',
+    packAccent: '#e3b93f',
+    tags: ['Theme Pack', 'Egyptian'],
+    poolFilter: { cardTypes: [CARD_TYPE.GOD] },
+    pantheon: 'Egyptian',
+  },
+  {
+    id: 'asgardian_storm',
+    name: 'Asgardian Storm Pack',
+    costGold: 1200,
+    cards: 5,
+    desc: 'Asgardian/Norse god bundle tuned for pressure decks.',
+    guarantee: ['uncommon', 'rare', 'rare_or_higher', 'epic_or_higher'],
+    icon: PROPHECY_PACK_ICON,
+    packTint: '#a0ccff',
+    packAccent: '#6aa6ef',
+    tags: ['Theme Pack', 'Asgardian'],
+    poolFilter: { cardTypes: [CARD_TYPE.GOD] },
+    pantheon: 'Asgardian',
+  },
 ];
 const SMITE_WARS_SYSTEM = {
   STARTING_HAND_SIZE: 5,
@@ -358,6 +503,55 @@ const TUTORIAL_REWARD_PACK = {
   desc: 'Reward for completing tutorial',
   guarantee: ['common', 'uncommon', 'rare_or_less'],
 };
+/** In-battle banner copy; keep in sync with `docs/smite-wars-tutorial-voice-script.md` (BATTLE blocks). */
+const TUTORIAL_BATTLE_HINTS = {
+  1:
+    'Step 1 — Summon to the field.\nDeploy at least one god from your hand. Tap a card; mana pays the cost. If the battle log complains, you need more mana or a different play. Get a unit on the board—nobody wins a war with an empty front line.',
+  2:
+    'Step 2 — From Main to Battle.\nPress End Phase, then tap one of your gods and a highlighted enemy. Highlights are legal targets. Tip: the front row usually blocks the back row unless you use keywords like Backstab or Ranged.',
+  3:
+    'Step 3 — Wisdom, then pace.\nIn Main phase, use your class ability on a friendly unit, then End Phase and End Turn. One ability per god per turn; the timer keeps even immortals moving.',
+  4:
+    'Finale — Close the underworld account.\nReduce Hades’ Leader HP to zero. You know the rhythm now: develop the board, attack in Battle, respect Taunt, and don’t let him stabilize.',
+};
+/** Scrollable home modal; mirrors voice script structure in docs/smite-wars-tutorial-voice-script.md */
+const FULL_TUTORIAL_SECTIONS = [
+  {
+    title: 'Welcome, mortal strategist',
+    body:
+      'Smite Wars is a 1v1 card battle: you and a rival Leader each deploy gods, items, traps, and spells. Win by dropping the enemy Leader to 0 HP. The top hub tabs are Play, Story, Collection, Profile, and Store—treat them like rooms in Olympus: each has a job.',
+  },
+  {
+    title: 'Play home — your command tent',
+    body:
+      'Begin Battle picks any Leader and starts a normal fight. How to Play is the cheat-sheet rules. Deck Builder is where you forge a 30-card deck (six save slots, share codes). Tutorial drops you into a guided match as Athena versus Hades with on-screen steps—do it once to earn bonus gold and a reward pack.',
+  },
+  {
+    title: 'Battle layout — what you are looking at',
+    body:
+      'Your Leader portrait and HP sit on your side; the enemy’s on the far side. Rows are front and back—units in front usually take the hits first. Your hand is along the bottom; mana and turn info live near the top. The scroll icon opens recent battle log lines. A 30-second timer ticks each turn—plan before it runs out.',
+  },
+  {
+    title: 'Phases — Main, then Battle, then end the turn',
+    body:
+      'Main Phase: play gods, attach items to friendly gods, set traps, and use each god’s class ability once. Battle Phase: pick one of your gods, then choose a legal target (board highlights show what you can hit). End Phase ends the current phase; End Turn passes to the opponent. You must flow Main → Battle properly—don’t skip straight to lunch.',
+  },
+  {
+    title: 'Keywords — mythic fine print',
+    body:
+      'Classes bring combat rules: Taunt forces enemies to notice the loud defender; Brawler hits harder; Backstab punishes back-row hiding; Spell Surge discounts spell mana; Ranged can shoot past the front line in some matchups. Status effects like burn and poison tick at the end of rounds—read the log if numbers mysteriously move.',
+  },
+  {
+    title: 'Guided tutorial — four beats',
+    body:
+      'Step 1: deploy a god. Step 2: End Phase, select your attacker, hit a highlighted enemy. Step 3: use your class ability in Main, then End Phase and End Turn. Step 4: keep playing until Hades’ Leader HP hits zero. Skip Tutorial returns you to the hub if you already know the pantheon gossip.',
+  },
+  {
+    title: 'After victory — grow the empire',
+    body:
+      'Story Mode chapters grant gold for scripted duels. Store spends gold on packs (open cards one by one or skip to reveal all). Collection tracks owned cards and Leaders with search and filters. Profile syncs when you use your Smite Scroll account. Revisit Tutorial anytime from Play home to practice.',
+  },
+];
 const AUTH_PROFILE_XP_PER_LEVEL = 100;
 const GUARANTEE_LABELS = {
   common: 'Common',
@@ -399,7 +593,7 @@ function toPoolClassName(cls) {
 }
 function classKeywordFor(unit) {
   const explicit = String(unit?.keyword || '').trim().toUpperCase();
-  if (explicit === 'TAUNT' || explicit === 'BRAWLER' || explicit === 'BACKSTAB' || explicit === 'SPELL_SURGE' || explicit === 'RANGED') {
+  if (explicit === 'TAUNT' || explicit === 'BRAWLER' || explicit === 'BACKSTAB' || explicit === 'SPELL_SURGE' || explicit === 'RANGED' || explicit === 'PIERCING') {
     return explicit;
   }
   const c = normalizeClass(unit?.cls);
@@ -438,6 +632,27 @@ function hasStatus(unit, statusType) {
 }
 function findTauntUnits(units) {
   return (units || []).filter((u) => hasKeyword(u, 'TAUNT'));
+}
+function getLegalAttackTargets(game, attacker) {
+  if (!game || !attacker) return { canHitLeader: false, unitIds: [] };
+  const eField = game.eField || [];
+  const firstAttackThisTurn = !game.attackedIds?.[attacker.iid];
+  const backstabActive = hasKeyword(attacker, 'BACKSTAB') && firstAttackThisTurn;
+  const canBypassLeaderGuard = hasKeyword(attacker, 'PIERCING');
+  const tauntEnemies = findTauntUnits(eField);
+  const enemyFrontUnits = eField.filter((u) => normalizeFieldRow(u.row) === ROW_FRONT);
+  const enemyFrontGodUnits = enemyFrontUnits.filter((u) => (u.cardType || CARD_TYPE.GOD) === CARD_TYPE.GOD);
+  let allowedUnits = [...eField];
+  if (tauntEnemies.length && !backstabActive) {
+    const tauntIds = new Set(tauntEnemies.map((u) => u.iid));
+    allowedUnits = eField.filter((u) => tauntIds.has(u.iid));
+  } else if (enemyFrontUnits.length && !backstabActive) {
+    allowedUnits = eField.filter((u) => normalizeFieldRow(u.row) === ROW_FRONT);
+  }
+  return {
+    canHitLeader: enemyFrontGodUnits.length === 0 || canBypassLeaderGuard,
+    unitIds: allowedUnits.map((u) => u.iid),
+  };
 }
 function getAbilityMechanicsTemplate(unit) {
   const cls = normalizeClass(unit?.cls);
@@ -704,6 +919,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   const [selLeader, setSelLeader] = useState(null);
   const [G, setG] = useState(null);
   const [htpVisible, setHtpVisible] = useState(false);
+  const [fullTutorialVisible, setFullTutorialVisible] = useState(false);
   const [shopVisible, setShopVisible] = useState(false);
   const [deckBuilderVisible, setDeckBuilderVisible] = useState(false);
   const [leaderInfoVisible, setLeaderInfoVisible] = useState(false);
@@ -717,7 +933,11 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   const [devOwnershipView, setDevOwnershipView] = useState('dev'); // dev | standard
   const [packOpenCards, setPackOpenCards] = useState([]);
   const [packOpenVisible, setPackOpenVisible] = useState(false);
+  const [packOpenPhase, setPackOpenPhase] = useState('rip'); // rip | reveal
   const [packRevealCue, setPackRevealCue] = useState('');
+  const [packRevealMode, setPackRevealMode] = useState('sequential'); // sequential | all
+  const [packRevealIndex, setPackRevealIndex] = useState(0);
+  const [lastOpenedPack, setLastOpenedPack] = useState(null);
   const [dailyClaimed, setDailyClaimed] = useState(false);
   const [battleTip, setBattleTip] = useState('');
   const [showBattleTip, setShowBattleTip] = useState(false);
@@ -725,6 +945,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   const [itemTargetIid, setItemTargetIid] = useState(null);
   const [targetPicker, setTargetPicker] = useState(null);
   const [battleIntroOverlay, setBattleIntroOverlay] = useState(null);
+  const [turnSeconds, setTurnSeconds] = useState(30);
   const [showHandHelp, setShowHandHelp] = useState(false);
   const [collectionQuery, setCollectionQuery] = useState('');
   const [collectionPantheon, setCollectionPantheon] = useState('all');
@@ -751,7 +972,14 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   const tipTimeoutRef = useRef(null);
   const combatFxTimersRef = useRef({ hit: null, damage: null, death: null, deploy: null, preview: null });
   const battleIntroTimersRef = useRef([]);
+  const turnTimerRef = useRef(null);
+  const turnAutoEndedRef = useRef(false);
+  const turnTickPlayerRef = useRef(null);
+  const turnTickCleanupRef = useRef(null);
+  const lastTickSecondRef = useRef(null);
   const handHelpTimerRef = useRef(null);
+  const packRipProgress = useRef(new Animated.Value(0)).current;
+  const packRipStartRef = useRef(0);
   const inspectTiltX = useRef(new Animated.Value(0)).current;
   const inspectTiltY = useRef(new Animated.Value(0)).current;
   const inspectTranslate = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
@@ -769,6 +997,17 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   const [deckSlots, setDeckSlots] = useState(() => Array.from({ length: DECK_SLOT_COUNT }, () => null));
   const [deckShareCodeInput, setDeckShareCodeInput] = useState('');
   const [deckShareNotice, setDeckShareNotice] = useState('');
+  const clearTurnTickPlayer = useCallback(() => {
+    if (turnTickCleanupRef.current) {
+      clearTimeout(turnTickCleanupRef.current);
+      turnTickCleanupRef.current = null;
+    }
+    if (turnTickPlayerRef.current) {
+      try { turnTickPlayerRef.current.pause(); } catch (_) {}
+      try { turnTickPlayerRef.current.remove(); } catch (_) {}
+      turnTickPlayerRef.current = null;
+    }
+  }, []);
   const clearBattleIntroTimers = useCallback(() => {
     if (!battleIntroTimersRef.current.length) return;
     battleIntroTimersRef.current.forEach((id) => clearTimeout(id));
@@ -815,12 +1054,17 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   useEffect(() => {
     return () => {
       clearBattleIntroTimers();
+      if (turnTimerRef.current) {
+        clearInterval(turnTimerRef.current);
+        turnTimerRef.current = null;
+      }
+      clearTurnTickPlayer();
       if (handHelpTimerRef.current) {
         clearTimeout(handHelpTimerRef.current);
         handHelpTimerRef.current = null;
       }
     };
-  }, [clearBattleIntroTimers]);
+  }, [clearBattleIntroTimers, clearTurnTickPlayer]);
   const inspectCardWidth = Math.min(300, Math.max(220, Math.floor(screenW * 0.62)));
   const inspectCardHeight = 372;
   const inspectRotateX = inspectTiltX.interpolate({
@@ -915,7 +1159,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   const deckCurve = useMemo(() => getDeckCostCurve(customDeck), [customDeck]);
   const starterPool = useMemo(() => {
     const basePool = [...PROPHECY_UNITS, ...ITEM_CARDS, ...TRAP_CARDS, ...SPELL_CARDS];
-    const gods = Array.isArray(buildsData?.gods) ? buildsData.gods.flat(Infinity).filter(Boolean) : [];
+    const gods = flattenBuildsGods(buildsData?.gods);
     const godCardByName = {};
     PROPHECY_UNITS.forEach((card) => {
       if ((card?.cardType || CARD_TYPE.GOD) !== CARD_TYPE.GOD) return;
@@ -1033,6 +1277,107 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     const losses = savedDeckRows.reduce((sum, d) => sum + Number(d?.losses || 0), 0);
     return { totalCardsOwned, totalDecksCreated, wins, losses };
   }, [ownedTotalCount, savedDeckRows]);
+  const visiblePackOpenCards = useMemo(() => {
+    if (packRevealMode === 'all') return packOpenCards;
+    const currentIdx = packRevealIndex - 1;
+    if (currentIdx < 0 || currentIdx >= packOpenCards.length) return [];
+    return [packOpenCards[currentIdx]];
+  }, [packOpenCards, packRevealIndex, packRevealMode]);
+  const canRevealNextPackCard = useMemo(
+    () => packRevealMode !== 'all' && packRevealIndex < packOpenCards.length,
+    [packOpenCards.length, packRevealIndex, packRevealMode]
+  );
+  const closePackReveal = useCallback(() => {
+    setPackOpenVisible(false);
+    setPackOpenPhase('rip');
+    setLastOpenedPack(null);
+    setPackRevealMode('sequential');
+    setPackRevealIndex(0);
+    packRipProgress.setValue(0);
+  }, [packRipProgress]);
+  const revealNextPackCard = useCallback(() => {
+    setPackRevealIndex((prev) => Math.min(packOpenCards.length, prev + 1));
+  }, [packOpenCards.length]);
+  const skipPackReveal = useCallback(() => {
+    setPackRevealMode('all');
+    setPackRevealIndex(packOpenCards.length);
+  }, [packOpenCards.length]);
+  const finishPackRip = useCallback(() => {
+    Animated.timing(packRipProgress, {
+      toValue: 1,
+      duration: 180,
+      useNativeDriver: true,
+    }).start(() => {
+      setPackOpenPhase('reveal');
+    });
+  }, [packRipProgress]);
+  const resetPackRip = useCallback(() => {
+    Animated.spring(packRipProgress, {
+      toValue: 0,
+      useNativeDriver: true,
+      friction: 9,
+      tension: 80,
+    }).start();
+  }, [packRipProgress]);
+  const packRipPanResponder = useMemo(
+    () =>
+      PanResponder.create({
+        onStartShouldSetPanResponder: () => packOpenVisible && packOpenPhase === 'rip',
+        onStartShouldSetPanResponderCapture: () => packOpenVisible && packOpenPhase === 'rip',
+        onMoveShouldSetPanResponder: (_, gestureState) =>
+          packOpenVisible && packOpenPhase === 'rip' && (Math.abs(gestureState.dx) > 2 || Math.abs(gestureState.dy) > 2),
+        onPanResponderGrant: () => {
+          packRipProgress.stopAnimation((v) => {
+            packRipStartRef.current = Number.isFinite(v) ? v : 0;
+          });
+        },
+        onPanResponderMove: (_, gestureState) => {
+          const next = Math.max(0, Math.min(1, packRipStartRef.current + (gestureState.dx / 220)));
+          packRipProgress.setValue(next);
+        },
+        onPanResponderRelease: () => {
+          packRipProgress.stopAnimation((v) => {
+            if ((v || 0) >= PACK_SEAL_TRIGGER) finishPackRip();
+            else resetPackRip();
+          });
+        },
+        onPanResponderTerminate: () => {
+          packRipProgress.stopAnimation((v) => {
+            if ((v || 0) >= PACK_SEAL_TRIGGER) finishPackRip();
+            else resetPackRip();
+          });
+        },
+      }),
+    [finishPackRip, packOpenPhase, packOpenVisible, packRipProgress, resetPackRip]
+  );
+  const packRipGlowOpacity = packRipProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0.18, 0.95],
+  });
+  const packSealCoreScale = packRipProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 1.12],
+  });
+  const packSealCoreOpacity = packRipProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0.22],
+  });
+  const packSealRuneScale = packRipProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 1.28],
+  });
+  const packSealRuneOpacity = packRipProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0.82, 0.18],
+  });
+  const packRipHintOpacity = packRipProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0.15],
+  });
+  const packSealLightSweep = packRipProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-110, 110],
+  });
   const profileGodIconSource = useMemo(() => {
     const godName = profileData?.profile_god_icon;
     if (!godName) return null;
@@ -1053,7 +1398,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   }, [profileData?.profile_banner, profileBannerUseJpg]);
   const skinPoolByGod = useMemo(() => {
     const out = {};
-    const gods = Array.isArray(buildsData?.gods) ? buildsData.gods.flat(Infinity).filter(Boolean) : [];
+    const gods = flattenBuildsGods(buildsData?.gods);
     gods.forEach((god) => {
       const godName = String(god?.name || '').trim();
       if (!godName) return;
@@ -1075,6 +1420,28 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
         })
         .filter(Boolean);
       if (list.length) out[godName] = list;
+    });
+    return out;
+  }, []);
+  const buildsGodByName = useMemo(() => {
+    const out = {};
+    const gods = flattenBuildsGods(buildsData?.gods);
+    gods.forEach((god) => {
+      const normalized = normalizeAssetLookupKey(god?.name);
+      if (normalized && !out[normalized]) out[normalized] = god;
+    });
+    return out;
+  }, []);
+  const buildsItemIconByLookup = useMemo(() => {
+    const out = {};
+    const items = Array.isArray(buildsData?.items) ? buildsData.items.flat(Infinity).filter(Boolean) : [];
+    items.forEach((item) => {
+      const iconPath = item?.icon;
+      if (!iconPath) return;
+      const keys = [item?.name, item?.internalName].map((value) => normalizeAssetLookupKey(value)).filter(Boolean);
+      keys.forEach((key) => {
+        if (!out[key]) out[key] = iconPath;
+      });
     });
     return out;
   }, []);
@@ -1361,6 +1728,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
       atker: null,
       attackedIds: {},
       abilityUsedIds: {},
+      turnPhase: 'main',
       log: ['Battle begins! Defeat ' + el.name + '!', 'Front row blocks back-row attacks unless your unit has BACKSTAB.'],
       mode: options?.mode || 'normal',
       storyChapterId: options?.storyChapterId || null,
@@ -1575,7 +1943,13 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   }, [triggerDamageFx, triggerDeathFx, triggerDeployFx, triggerPlayPreview]);
 
   const selectAtk = useCallback((iid) => {
-    setG((prev) => (prev ? { ...prev, atker: iid } : prev));
+    setG((prev) => {
+      if (!prev) return prev;
+      if (iid && (prev.turnPhase || 'main') !== 'battle') {
+        return { ...prev, atker: null, log: [...prev.log, 'Enter Battle phase to attack.'] };
+      }
+      return { ...prev, atker: iid };
+    });
   }, []);
 
   const abilityNeedsEnemyTarget = useCallback((unit) => {
@@ -1764,6 +2138,9 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     let counterDeathLabel = '';
     setG((prev) => {
       if (!prev) return prev;
+      if ((prev.turnPhase || 'main') !== 'battle') {
+        return { ...prev, atker: null, log: [...prev.log, 'Enter Battle phase before attacking.'] };
+      }
       const att = prev.pField.find((u) => u.iid === prev.atker);
       if (!att) return { ...prev, atker: null };
       if (hasStatus(att, 'STUNNED')) {
@@ -1784,9 +2161,11 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
       let eGrave = [...(prev.eGrave || [])];
       const tauntEnemies = findTauntUnits(eField);
       const enemyFrontUnits = eField.filter((u) => normalizeFieldRow(u.row) === ROW_FRONT);
+      const enemyFrontGodUnits = enemyFrontUnits.filter((u) => (u.cardType || CARD_TYPE.GOD) === CARD_TYPE.GOD);
+      const canBypassLeaderGuard = hasKeyword(att, 'PIERCING');
 
-      if (isLeader && enemyFrontUnits.length) {
-        return { ...prev, atker: null, log: [...prev.log, 'Front row units protect the enemy Leader. Clear front row first.'] };
+      if (isLeader && enemyFrontGodUnits.length && !canBypassLeaderGuard) {
+        return { ...prev, atker: null, log: [...prev.log, 'Enemy front-row gods protect the Leader. Clear them first.'] };
       }
       if (!isLeader && tauntEnemies.length && !backstabActive) {
         const targetIsTaunt = tauntEnemies.some((u) => u.iid === targetIid);
@@ -1896,6 +2275,12 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   }, [triggerDamageFx, triggerDeathFx, triggerHitFx]);
 
   const endTurn = useCallback(() => {
+    turnAutoEndedRef.current = true;
+    if (turnTimerRef.current) {
+      clearInterval(turnTimerRef.current);
+      turnTimerRef.current = null;
+    }
+    clearTurnTickPlayer();
     setG((prev) => {
       if (!prev) return prev;
       let eField = [...prev.eField];
@@ -1919,7 +2304,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
         eField = eField.filter((u) => u.hp > 0);
         eHp = Math.max(0, eHp - 10);
       }
-      return { ...prev, atker: null, eField, eHp, eGrave };
+      return { ...prev, atker: null, turnPhase: 'main', eField, eHp, eGrave };
     });
     setTimeout(() => {
       setG((prev) => {
@@ -2113,6 +2498,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
           log,
           attackedIds: {},
           abilityUsedIds: {},
+          turnPhase: 'main',
           susanoCombo: 0,
           pTraps,
           pGrave,
@@ -2120,29 +2506,75 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
         };
       });
     }, 400);
-  }, [generateRandomCard, triggerPlayPreview]);
+  }, [generateRandomCard, triggerPlayPreview, clearTurnTickPlayer]);
+  useEffect(() => {
+    if (screen !== 'battle' || !G) return;
+    setTurnSeconds(30);
+    lastTickSecondRef.current = null;
+    turnAutoEndedRef.current = false;
+  }, [screen, G?.turn]);
+  useEffect(() => {
+    if (screen !== 'battle' || !G || isBattleInteractionLocked) return;
+    if (turnTimerRef.current) clearInterval(turnTimerRef.current);
+    turnTimerRef.current = setInterval(() => {
+      setTurnSeconds((prev) => {
+        if (prev <= 1) {
+          if (!turnAutoEndedRef.current) {
+            turnAutoEndedRef.current = true;
+            endTurn();
+          }
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => {
+      if (turnTimerRef.current) {
+        clearInterval(turnTimerRef.current);
+        turnTimerRef.current = null;
+      }
+    };
+  }, [screen, G?.turn, isBattleInteractionLocked, endTurn]);
+  useEffect(() => {
+    if (screen !== 'battle' || isBattleInteractionLocked || !musicUnlocked) return;
+    if (turnSeconds <= 0) return;
+    if (lastTickSecondRef.current === turnSeconds) return;
+    lastTickSecondRef.current = turnSeconds;
+    clearTurnTickPlayer();
+    try {
+      const player = createAudioPlayer({ uri: TIMER_TICK_URL }, { updateInterval: 200 });
+      player.volume = 0.22;
+      turnTickPlayerRef.current = player;
+      player.play();
+      turnTickCleanupRef.current = setTimeout(() => {
+        clearTurnTickPlayer();
+      }, 900);
+    } catch (_) {}
+  }, [screen, turnSeconds, isBattleInteractionLocked, musicUnlocked, clearTurnTickPlayer]);
   const openTargetPickerForAttack = useCallback((sourceIid) => {
     if (!G || isBattleInteractionLocked) return;
+    if ((G.turnPhase || 'main') !== 'battle') return;
     const source = (G.pField || []).find((u) => u.iid === sourceIid);
     if (!source) return;
-    setTargetPicker({
-      mode: 'attack',
-      sourceIid,
-      sourceName: source.name,
-      title: `${source.name} Attack Target`,
-    });
-  }, [G, isBattleInteractionLocked]);
+    if (G.attackedIds?.[sourceIid]) return;
+    selectAtk(sourceIid);
+  }, [G, isBattleInteractionLocked, selectAtk]);
   const openTargetPickerForAbility = useCallback((sourceIid) => {
     if (!G || isBattleInteractionLocked) return;
     const source = (G.pField || []).find((u) => u.iid === sourceIid);
     if (!source) return;
+    if (targetPicker?.mode === 'ability_board' && targetPicker?.sourceIid === sourceIid) {
+      setTargetPicker(null);
+      return;
+    }
     setTargetPicker({
-      mode: 'ability',
+      mode: 'ability_board',
       sourceIid,
       sourceName: source.name,
       title: `${source.name} Ability Target`,
     });
-  }, [G, isBattleInteractionLocked]);
+    showTip('Select a highlighted enemy target.');
+  }, [G, isBattleInteractionLocked, showTip, targetPicker?.mode, targetPicker?.sourceIid]);
   const openTargetPickerForSpell = useCallback((card) => {
     if (!card || !G || isBattleInteractionLocked) return;
     setTargetPicker({
@@ -2157,18 +2589,55 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     const mode = targetPicker.mode;
     const sourceIid = targetPicker.sourceIid;
     setTargetPicker(null);
-    if (mode === 'attack') {
-      doAttack(targetChoice?.isLeader ? 'leader' : targetChoice?.targetIid, !!targetChoice?.isLeader);
-      return;
-    }
-    if (mode === 'ability') {
+    if (mode === 'ability' || mode === 'ability_board') {
       castAbility(sourceIid, targetChoice);
       return;
     }
     if (mode === 'spell') {
       deploy(sourceIid, null, targetChoice);
     }
-  }, [castAbility, deploy, doAttack, targetPicker]);
+  }, [castAbility, deploy, targetPicker]);
+  const setTurnPhase = useCallback((phase) => {
+    setG((prev) => {
+      if (!prev) return prev;
+      if (phase !== 'main' && phase !== 'battle') return prev;
+      if ((prev.turnPhase || 'main') === 'battle' && phase === 'main') return prev;
+      if ((prev.turnPhase || 'main') === phase) return prev;
+      return {
+        ...prev,
+        turnPhase: phase,
+        atker: null,
+        log: [...prev.log, phase === 'battle' ? 'Battle phase started.' : 'Main phase ready.'],
+      };
+    });
+  }, []);
+  const backToProphecyHome = useCallback(() => {
+    if (turnTimerRef.current) {
+      clearInterval(turnTimerRef.current);
+      turnTimerRef.current = null;
+    }
+    clearTurnTickPlayer();
+    clearBattleIntroTimers();
+    setBattleIntroOverlay(null);
+    setTargetPicker(null);
+    setItemTargetCard(null);
+    setItemTargetIid(null);
+    setShopVisible(false);
+    setDeckBuilderVisible(false);
+    setInspectCard(null);
+    setPlayPreviewCard(null);
+    setTurnSeconds(30);
+    setG(null);
+    setScreen('start');
+    setHubTab('home');
+  }, [clearBattleIntroTimers, clearTurnTickPlayer]);
+  const exitProphecyGame = useCallback(() => {
+    if (onBack) {
+      onBack();
+      return;
+    }
+    backToProphecyHome();
+  }, [onBack, backToProphecyHome]);
 
   useEffect(() => {
     if (!G || screen !== 'battle') return;
@@ -2187,6 +2656,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   }, []);
 
   const buyCard = useCallback((id) => {
+    let purchasedCardPreview = null;
     setG((prev) => {
       if (!prev) return prev;
       const u = prev.shop.find((x) => x.id === id);
@@ -2196,6 +2666,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
       if ((u.cardType || CARD_TYPE.GOD) !== CARD_TYPE.GOD) {
         const c = cloneObj(u);
         c.iid = uid();
+        purchasedCardPreview = cloneObj(c);
         return {
           ...prev,
           gold: prev.gold - cost,
@@ -2217,10 +2688,12 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
             atk: Math.round(u.bAtk * m),
           };
         });
+        purchasedCardPreview = cloneObj({ ...exist, rank: Math.min(5, (exist.rank || 1) + 1) });
         return { ...prev, gold: prev.gold - cost, pField, log: [...prev.log, u.name + ' ranked up!'] };
       }
       const c = cloneObj(u);
       c.iid = uid();
+      purchasedCardPreview = cloneObj(c);
       return {
         ...prev,
         gold: prev.gold - cost,
@@ -2228,8 +2701,9 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
         log: [...prev.log, u.name + ' added to deck!'],
       };
     });
+    if (purchasedCardPreview) triggerPlayPreview(purchasedCardPreview);
     setShopVisible(false);
-  }, []);
+  }, [triggerPlayPreview]);
 
   useEffect(() => {
     if (!G || screen !== 'battle') return;
@@ -2369,6 +2843,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     const godName = String(rawGodName)
       .replace(/\s*\[foil\]\s*$/i, '')
       .trim();
+    const buildsGod = buildsGodByName[normalizeAssetLookupKey(godName)] || null;
     const skinPath = card?.visuals?.skin_path || card?.altSkinPath || null;
     if (skinPath) {
       const skinImage = getSkinImage(skinPath);
@@ -2380,11 +2855,35 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
       }
       if (skinImage?.uri) return skinImage;
     }
+    if (buildsGod?.skins && typeof buildsGod.skins === 'object') {
+      const skinEntries = Object.entries(buildsGod.skins)
+        .map(([key, value]) => ({ key, value }))
+        .filter((entry) => !!entry?.value?.skin);
+      if (skinEntries.length) {
+        const targetName = normalizeAssetLookupKey(godName);
+        const fromBase = skinEntries.find((entry) => {
+          const skinName = normalizeAssetLookupKey(entry?.value?.name || entry?.key || '');
+          return skinName.includes('base') || skinName === targetName;
+        }) || skinEntries[0];
+        const skinImage = getSkinImage(fromBase?.value?.skin);
+        if (skinImage?.primary || skinImage?.fallback) {
+          const primarySource = skinImage?.primary || skinImage;
+          const fallbackSource = skinImage?.fallback || null;
+          if (failedSkinArts[artKey] && fallbackSource) return fallbackSource;
+          return primarySource;
+        }
+        if (skinImage?.uri) return skinImage;
+      }
+    }
+    if (buildsGod?.icon) {
+      const godIcon = getLocalGodAsset(buildsGod.icon);
+      if (godIcon?.uri) return godIcon;
+    }
     const wallpaper = getWallpaperByGodName(godName);
     if (wallpaper?.uri) return wallpaper;
     const icon = getRemoteGodIconByName(godName);
     return icon?.uri ? { uri: icon.uri } : icon;
-  }, [failedSkinArts]);
+  }, [buildsGodByName, failedSkinArts]);
 
   // Full card art: fillContainer = true for collection (art fills frame, no empty space)
   const renderCardArt = (card, width, height, rounded = 4, fillContainer = false, artKey = null) => {
@@ -2447,7 +2946,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     const normalizeToken = (v) => String(v || '').toLowerCase().replace(/[^a-z0-9]/g, '');
     const godAliases = {
       jw: 'Jing Wei',
-      pos: 'Poseidon',
+      pose: 'Poseidon',
       disc: 'Discordia',
       hunbatz: 'Hun Batz',
       daji: 'Da Ji',
@@ -2456,6 +2955,8 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
       art: 'Artemis',
       thana: 'Thanatos',
       jorm: 'Jormungandr',
+      hades: 'Hades',
+      thana: 'Thanatos',
     };
 
     const godToken = normalizeToken(godTokenRaw);
@@ -2521,8 +3022,20 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   const getSpecialCardIconForKey = useCallback((card, iconKey) => {
     const byAbilitySource = getGodAbilityIconFromSource(card?.iconSource);
     if (byAbilitySource?.uri) return byAbilitySource;
+    const itemLookup = [
+      card?.internalName,
+      card?.name,
+      String(card?.id || '').replace(/^item_/i, ''),
+    ]
+      .map((value) => normalizeAssetLookupKey(value))
+      .filter(Boolean);
+    const itemPathFromBuilds = itemLookup.map((key) => buildsItemIconByLookup[key]).find(Boolean);
+    if (itemPathFromBuilds) {
+      const fromBuilds = getItemIconForKey(itemPathFromBuilds, iconKey);
+      if (fromBuilds) return fromBuilds;
+    }
     return getItemIconForKey(card?.iconPath, iconKey);
-  }, [getGodAbilityIconFromSource, getItemIconForKey]);
+  }, [buildsItemIconByLookup, getGodAbilityIconFromSource, getItemIconForKey]);
 
   const markItemIconFailed = useCallback((iconKey) => {
     setFailedItemIcons((prev) => (prev[iconKey] ? prev : { ...prev, [iconKey]: true }));
@@ -2555,8 +3068,13 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     const cardType = card?.cardType || CARD_TYPE.GOD;
     const pantheonIcon = PANTHEON_ICONS[card?.pantheon] || null;
     const isGod = cardType === CARD_TYPE.GOD;
-    const atkValue = isGod ? card.bAtk : card.atkBoost || card.damage || 0;
-    const defValue = isGod ? Math.round((card.bHp || 0) / 120) : Math.max(1, Math.round((card.cost || 1) / 2));
+    const isItem = cardType === CARD_TYPE.ITEM;
+    const itemAtk = isItem ? Number(card.atkBoost) || 0 : 0;
+    const itemHp = isItem ? Number(card.hpBoost) || 0 : 0;
+    const itemShowAtk = isItem && itemAtk > 0;
+    const itemShowHp = isItem && itemHp > 0;
+    const itemShowAtkZero = isItem && !itemShowAtk && !itemShowHp;
+    const itemFooterDual = isItem && !(itemShowAtk && itemShowHp);
     const visuals = getCardVisuals(card);
     const pantheonVisual = getPantheonVisualProfile(card?.pantheon);
     const finishLabels = getVisualFinishLabels(visuals);
@@ -2609,7 +3127,9 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
           <View style={styles.showcaseBanner}>
             <View style={styles.showcaseBannerLeft}>
               {pantheonIcon ? (
-                <Image source={pantheonIcon} style={styles.showcasePantheonIcon} contentFit="contain" />
+                <View style={styles.showcasePantheonBadge}>
+                  <Image source={pantheonIcon} style={styles.showcasePantheonIcon} contentFit="contain" cachePolicy="memory-disk" />
+                </View>
               ) : (
                 <View style={styles.showcasePantheonDot} />
               )}
@@ -2619,7 +3139,10 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
             </View>
             <View style={styles.showcaseBannerRight}>
               <Image source={{ uri: getRarityIconUri(card.rarity) }} style={styles.showcaseRarityIcon} contentFit="contain" />
-              <Text style={styles.showcaseCostTag}>{`Cost ${card.cost || 0}`}</Text>
+              <View style={styles.showcaseBannerCostRow}>
+                <Image source={PROPHECY_MANA_ICON} style={[styles.showcaseBannerManaIcon, { tintColor: STAT_MANA_TINT }]} contentFit="contain" />
+                <Text style={styles.showcaseCostTag}>{card.cost || 0}</Text>
+              </View>
             </View>
           </View>
 
@@ -2684,7 +3207,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                 return `${ability.name} · ${ultimate.name}`;
               })() : (card.ability?.name || getCardTypeLabel(card))}
             </Text>
-            <Text style={styles.showcaseAbilityBody} numberOfLines={3}>
+            <Text style={styles.showcaseAbilityBody} numberOfLines={isGod ? 3 : 4}>
               {isGod
                 ? (() => {
                   const ability = getAbilityDisplay(card);
@@ -2693,35 +3216,93 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                   const ultimateLine = `${ultimate.name}${ultimate.pips ? ` (${ultimate.pips} pips)` : ''}: ${ultimate.description}`;
                   return `${abilityLine}\n${ultimateLine}`;
                 })()
-                : (card.description || card.ability?.description || card.passive?.description || `Use this ${getCardTypeLabel(card).toLowerCase()} to swing tempo instantly.`)}
+                : (getProphecyCardShowcaseBody(card) || 'Card effect.')}
             </Text>
-            <Text style={styles.showcaseFlavor} numberOfLines={2}>
-              {card.flavor || card.description || `"${card.name} enters the war and bends destiny."`}
-            </Text>
+            {isGod ? (
+              <Text style={styles.showcaseFlavor} numberOfLines={2}>
+                {card.flavor || card.description || `"${card.name} enters the war and bends destiny."`}
+              </Text>
+            ) : card.flavor ? (
+              <Text style={styles.showcaseFlavor} numberOfLines={2}>{card.flavor}</Text>
+            ) : null}
           </View>
 
-          <View style={styles.showcaseStatsFooter}>
-            <View style={styles.showcaseStatCol}>
-              <Text style={styles.showcaseStatLabel}>ATK</Text>
-              <View style={styles.showcaseStatGem}>
-                <Image source={{ uri: STAT_ICONS.strength }} style={[styles.showcaseStatIcon, { tintColor: STAT_ATK_TINT }]} contentFit="contain" />
-                <Text style={styles.showcaseGemText}>{atkValue}</Text>
+          <View
+            style={[
+              styles.showcaseStatsFooter,
+              !isGod && (isItem ? (itemFooterDual ? styles.showcaseStatsFooterDual : null) : styles.showcaseStatsFooterCostOnly),
+            ]}
+          >
+            {isGod ? (
+              <>
+                <View style={styles.showcaseStatCol}>
+                  <Text style={styles.showcaseStatLabel}>ATK</Text>
+                  <View style={styles.showcaseStatGem}>
+                    <Image source={{ uri: STAT_ICONS.strength }} style={[styles.showcaseStatIcon, { tintColor: STAT_ATK_TINT }]} contentFit="contain" />
+                    <Text style={styles.showcaseGemText}>{card.bAtk}</Text>
+                  </View>
+                </View>
+                <View style={[styles.showcaseStatCol, styles.showcaseCenterStat]}>
+                  <Text style={styles.showcaseStatLabel}>HP</Text>
+                  <View style={styles.showcaseStatGem}>
+                    <Image source={{ uri: STAT_ICONS.health }} style={[styles.showcaseStatIconSmall, { tintColor: STAT_HP_TINT }]} contentFit="contain" />
+                    <Text style={styles.showcaseGemText}>{card.bHp}</Text>
+                  </View>
+                </View>
+                <View style={styles.showcaseStatCol}>
+                  <Text style={styles.showcaseStatLabel}>DEF</Text>
+                  <View style={styles.showcaseStatGem}>
+                    <Image source={{ uri: STAT_ICONS.physicalProt }} style={[styles.showcaseStatIcon, { tintColor: STAT_DEF_TINT }]} contentFit="contain" />
+                    <Text style={styles.showcaseGemText}>{Math.round((card.bHp || 0) / 120)}</Text>
+                  </View>
+                </View>
+              </>
+            ) : isItem ? (
+              <>
+                {itemShowAtk ? (
+                  <View style={styles.showcaseStatCol}>
+                    <Text style={styles.showcaseStatLabel}>ATK</Text>
+                    <View style={styles.showcaseStatGem}>
+                      <Image source={{ uri: STAT_ICONS.strength }} style={[styles.showcaseStatIcon, { tintColor: STAT_ATK_TINT }]} contentFit="contain" />
+                      <Text style={styles.showcaseGemText}>{itemAtk}</Text>
+                    </View>
+                  </View>
+                ) : null}
+                {itemShowHp ? (
+                  <View style={[styles.showcaseStatCol, itemShowAtk && itemShowHp ? styles.showcaseCenterStat : null]}>
+                    <Text style={styles.showcaseStatLabel}>HP</Text>
+                    <View style={styles.showcaseStatGem}>
+                      <Image source={{ uri: STAT_ICONS.health }} style={[styles.showcaseStatIconSmall, { tintColor: STAT_HP_TINT }]} contentFit="contain" />
+                      <Text style={styles.showcaseGemText}>{itemHp}</Text>
+                    </View>
+                  </View>
+                ) : null}
+                {itemShowAtkZero ? (
+                  <View style={styles.showcaseStatCol}>
+                    <Text style={styles.showcaseStatLabel}>ATK</Text>
+                    <View style={styles.showcaseStatGem}>
+                      <Image source={{ uri: STAT_ICONS.strength }} style={[styles.showcaseStatIcon, { tintColor: STAT_ATK_TINT }]} contentFit="contain" />
+                      <Text style={styles.showcaseGemText}>0</Text>
+                    </View>
+                  </View>
+                ) : null}
+                <View style={[styles.showcaseStatCol, itemFooterDual ? styles.showcaseCenterStat : null]}>
+                  <Text style={styles.showcaseStatLabel}>Cost</Text>
+                  <View style={styles.showcaseStatGem}>
+                    <Image source={PROPHECY_MANA_ICON} style={[styles.showcaseStatIconSmall, { tintColor: STAT_MANA_TINT }]} contentFit="contain" />
+                    <Text style={styles.showcaseGemText}>{card.cost || 0}</Text>
+                  </View>
+                </View>
+              </>
+            ) : (
+              <View style={styles.showcaseStatCol}>
+                <Text style={styles.showcaseStatLabel}>Cost</Text>
+                <View style={styles.showcaseStatGem}>
+                  <Image source={PROPHECY_MANA_ICON} style={[styles.showcaseStatIconSmall, { tintColor: STAT_MANA_TINT }]} contentFit="contain" />
+                  <Text style={styles.showcaseGemText}>{card.cost || 0}</Text>
+                </View>
               </View>
-            </View>
-            <View style={[styles.showcaseStatCol, styles.showcaseCenterStat]}>
-              <Text style={styles.showcaseStatLabel}>HP</Text>
-              <View style={styles.showcaseStatGem}>
-                <Image source={{ uri: STAT_ICONS.health }} style={[styles.showcaseStatIconSmall, { tintColor: STAT_HP_TINT }]} contentFit="contain" />
-                <Text style={styles.showcaseGemText}>{isGod ? card.bHp : card.cost || 0}</Text>
-              </View>
-            </View>
-            <View style={styles.showcaseStatCol}>
-              <Text style={styles.showcaseStatLabel}>DEF</Text>
-              <View style={styles.showcaseStatGem}>
-                <Image source={{ uri: STAT_ICONS.physicalProt }} style={[styles.showcaseStatIcon, { tintColor: STAT_DEF_TINT }]} contentFit="contain" />
-                <Text style={styles.showcaseGemText}>{defValue}</Text>
-              </View>
-            </View>
+            )}
           </View>
         </View>
         {!compactView ? (
@@ -2743,7 +3324,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                 </Text>
               ) : (
                 <Text style={styles.showcaseCollectorSubTextAlt} numberOfLines={1}>
-                  {card?.isAlternativeCard && card?.altVariantName ? `Variant: ${card.altVariantName}` : card?.isFoilCard ? 'Variant: Foil' : 'Variant: Base'}
+                  {card?.isAlternativeCard && card?.altVariantName ? `Variant: ${card.altVariantName}` : card?.isFoilCard ? 'Variant: Radiant' : 'Variant: Base'}
                 </Text>
               )}
             </View>
@@ -2751,7 +3332,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
         ) : null}
       </TouchableOpacity>
     );
-  }, [getCardTypeLabel, renderCardArt, getSpecialCardIconForKey, markItemIconFailed, playVOX, resetInspectTilt]);
+  }, [getCardTypeLabel, renderCardArt, getSpecialCardIconForKey, markItemIconFailed, playVOX, resetInspectTilt, getProphecyCardShowcaseBody]);
 
   const showTip = useCallback((text) => {
     if (tipTimeoutRef.current) clearTimeout(tipTimeoutRef.current);
@@ -2784,19 +3365,54 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     setDbOwnedCards((prev) => (Object.keys(prev).length ? prev : {}));
   }, [customDeck, currentUser]);
 
+  const normalizePantheonKey = useCallback((pantheon) => {
+    const key = String(pantheon || '').trim().toLowerCase();
+    if (!key) return '';
+    if (key === 'olympian' || key === 'greek') return 'olympian';
+    if (key === 'asgardian' || key === 'norse') return 'asgardian';
+    if (key === 'eastern' || key === 'chinese') return 'eastern';
+    return key;
+  }, []);
+
+  const doesCardMatchPackFilter = useCallback((card, poolFilter, pantheon) => {
+    if (!card) return false;
+    const allowedTypes = Array.isArray(poolFilter?.cardTypes)
+      ? poolFilter.cardTypes.map((type) => String(type || '').toLowerCase())
+      : [];
+    if (allowedTypes.length) {
+      const cardType = String(card?.cardType || CARD_TYPE.GOD).toLowerCase();
+      if (!allowedTypes.includes(cardType)) return false;
+    }
+    if (pantheon) {
+      const targetPantheon = normalizePantheonKey(pantheon);
+      const cardPantheon = normalizePantheonKey(card?.pantheon);
+      if (targetPantheon && targetPantheon !== cardPantheon) return false;
+    }
+    return true;
+  }, [normalizePantheonKey]);
+
   const getCardsByBucket = useCallback(
-    (bucket) => {
+    (bucket, packOptions = null) => {
       const all = starterPool;
-      if (bucket === 'rare_or_less') return all.filter((c) => (rarityIndex[c.rarity] ?? 0) <= (rarityIndex.rare ?? 2));
-      if (bucket === 'rare_or_higher') return all.filter((c) => (rarityIndex[c.rarity] ?? 0) >= (rarityIndex.rare ?? 2));
-      if (bucket === 'epic_or_higher') return all.filter((c) => (rarityIndex[c.rarity] ?? 0) >= (rarityIndex.epic ?? 3));
-      return all.filter((c) => c.rarity === bucket);
+      let basePool = [];
+      if (bucket === 'rare_or_less') {
+        basePool = all.filter((c) => (rarityIndex[c.rarity] ?? 0) <= (rarityIndex.rare ?? 2));
+      } else if (bucket === 'rare_or_higher') {
+        basePool = all.filter((c) => (rarityIndex[c.rarity] ?? 0) >= (rarityIndex.rare ?? 2));
+      } else if (bucket === 'epic_or_higher') {
+        basePool = all.filter((c) => (rarityIndex[c.rarity] ?? 0) >= (rarityIndex.epic ?? 3));
+      } else {
+        basePool = all.filter((c) => c.rarity === bucket);
+      }
+      if (!packOptions?.poolFilter && !packOptions?.pantheon) return basePool;
+      const filteredPool = basePool.filter((card) => doesCardMatchPackFilter(card, packOptions?.poolFilter, packOptions?.pantheon));
+      return filteredPool.length ? filteredPool : basePool;
     },
-    [starterPool, rarityIndex]
+    [doesCardMatchPackFilter, rarityIndex, starterPool]
   );
 
-  const pullRandomFrom = useCallback((bucket) => {
-    const pool = getCardsByBucket(bucket);
+  const pullRandomFrom = useCallback((bucket, packOptions = null) => {
+    const pool = getCardsByBucket(bucket, packOptions);
     if (!pool.length) return null;
     return cloneObj(pool[Math.floor(Math.random() * pool.length)]);
   }, [getCardsByBucket]);
@@ -2815,8 +3431,8 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
       if (nextVisuals.foil === CARD_FOIL_TIER.MYTHIC) nextVisuals.foil_accent = CARD_FOIL_TIER.PRISMATIC;
       nextVisuals.variant_type = card?.isAlternativeCard ? 'foil_alternative_card' : 'foil_card';
       nextVisuals.variant_name = card?.isAlternativeCard
-        ? `Foil ${card?.altVariantName || card?.name || 'Alternative'}`
-        : `Foil ${card?.name || 'Card'}`;
+        ? `Radiant ${card?.altVariantName || card?.name || 'Alternative'}`
+        : `Radiant ${card?.name || 'Card'}`;
       nextVisuals.skin_path = card?.altSkinPath || nextVisuals.skin_path || null;
       return { ...card, visuals: nextVisuals };
     }
@@ -2844,15 +3460,16 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     if (pack.costGold > metaGold) return;
 
     const cards = [];
+    const packOptions = { poolFilter: pack.poolFilter, pantheon: pack.pantheon };
     const guarantee = Array.isArray(pack.guarantee) ? pack.guarantee : [];
     guarantee.forEach((bucket) => {
-      const card = pullRandomFrom(bucket);
+      const card = pullRandomFrom(bucket, packOptions);
       if (card) cards.push(card);
     });
     while (cards.length < pack.cards) {
       const roll = Math.random();
       const bucket = roll < 0.55 ? 'common' : roll < 0.8 ? 'uncommon' : roll < 0.94 ? 'rare' : roll < 0.995 ? 'epic' : 'legendary';
-      const card = pullRandomFrom(bucket);
+      const card = pullRandomFrom(bucket, packOptions);
       if (card) cards.push(card);
     }
 
@@ -2896,6 +3513,17 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     });
     setPackRevealCue(getPackRevealCue(topRarity?.rarity || 'common'));
     setPackOpenCards(visualCards);
+    setLastOpenedPack({
+      id: pack.id,
+      name: pack.name,
+      icon: pack.icon || PROPHECY_PACK_ICON,
+      packTint: pack.packTint || '#b9beca',
+      packAccent: pack.packAccent || '#7f8da8',
+    });
+    setPackOpenPhase('rip');
+    setPackRevealMode('sequential');
+    setPackRevealIndex(1);
+    packRipProgress.setValue(0);
     setPackOpenVisible(true);
     if (currentUser) {
       const spent = Number(pack.costGold || 0);
@@ -3173,7 +3801,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     const collectionClassOptions = ['all', ...Array.from(new Set(cardsForCollection.map((c) => getCardClassLabel(c)))).sort((a, b) => a.localeCompare(b))];
     const collectionTypeOptions = ['all', 'God', 'Trap', 'Spell', 'Item'];
     const collectionRarityOptions = ['all', 'Common', 'Uncommon', 'Rare', 'Epic', 'Legendary'];
-    const collectionVariantOptions = ['all', 'Base Cards', 'Alternative Cards', 'Foil Cards', 'Standard', 'Relic Gleam', 'Pantheon Blessing', 'Ascended Full Art', 'Godforged', 'Ascendant Prism'];
+    const collectionVariantOptions = ['all', 'Base Cards', 'Alternative Cards', 'Radiant Cards', 'Standard', 'Relic Gleam', 'Pantheon Blessing', 'Ascended Full Art', 'Godforged', 'Ascendant Prism'];
     const query = collectionQuery.trim().toLowerCase();
     const filteredCards = cardsForCollection.filter((card) => {
       if (query && !String(card.name || '').toLowerCase().includes(query)) return false;
@@ -3189,8 +3817,8 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
       if (collectionFoil !== 'all') {
         if (collectionFoil === 'Base Cards' && (card?.isAlternativeCard || card?.isFoilCard)) return false;
         if (collectionFoil === 'Alternative Cards' && !card?.isAlternativeCard) return false;
-        if (collectionFoil === 'Foil Cards' && !card?.isFoilCard) return false;
-        if (collectionFoil === 'Base Cards' || collectionFoil === 'Alternative Cards' || collectionFoil === 'Foil Cards') return true;
+        if (collectionFoil === 'Radiant Cards' && !card?.isFoilCard) return false;
+        if (collectionFoil === 'Base Cards' || collectionFoil === 'Alternative Cards' || collectionFoil === 'Radiant Cards') return true;
         const labels = getVisualFinishLabels(getCardVisuals(card));
         if (!labels.includes(collectionFoil)) return false;
       }
@@ -3259,6 +3887,9 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
             </TouchableOpacity>
             <TouchableOpacity style={styles.btnOutline} onPress={() => { unlockMusic(); setHtpVisible(true); }} activeOpacity={0.9}>
               <Text style={styles.btnOutlineText}>How to Play</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.btnOutline, { marginTop: 8 }]} onPress={() => { unlockMusic(); setFullTutorialVisible(true); }} activeOpacity={0.9}>
+              <Text style={styles.btnOutlineText}>Full Tutorial Guide</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.btnOutline, { marginTop: 8 }]} onPress={() => { unlockMusic(); setDeckBuilderVisible(true); }} activeOpacity={0.9}>
               <Text style={styles.btnOutlineText}>Deck Builder</Text>
@@ -3646,29 +4277,75 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
         {hubTab === 'packshop' && (
           <View style={styles.collectionRoot}>
             <Text style={styles.collectionTitle}>Card Pack Shop</Text>
+            <Text style={styles.collectionSub}>Open packs for gods, items, spells, and themed collections.</Text>
             <View style={styles.shopHeroCard}>
-              <Text style={styles.shopHeroTitle}>{`Gold Balance: ${metaGold}`}</Text>
+              <View style={styles.shopHeroGoldRow}>
+                <Image source={GOLD_ICON} style={styles.shopHeroGoldIcon} contentFit="contain" />
+                <Text style={styles.shopHeroGoldValue}>{Number(metaGold)}</Text>
+              </View>
+              <Text style={styles.shopHeroTitle}>Gold Balance</Text>
               <Text style={styles.shopHeroSub}>{`${affordablePacks} pack option(s) available right now`}</Text>
             </View>
             <ScrollView style={styles.packList} contentContainerStyle={styles.packListContent} showsVerticalScrollIndicator={false}>
               {CARD_PACKS.map((pack) => {
                 const blocked = pack.id === 'daily' ? dailyClaimed : metaGold < pack.costGold;
-                const costLabel = pack.costGold === 0 ? 'Free' : `${pack.costGold} Gold`;
+                const packAccent = pack.packAccent || 'rgba(200,146,42,0.25)';
                 return (
-                  <View key={pack.id} style={[styles.packCard, blocked && styles.packCardBlocked]}>
-                    <View style={{ flex: 1 }}>
-                      <Text style={styles.packName}>{pack.name}</Text>
+                  <View key={pack.id} style={[styles.packCard, { borderColor: packAccent }, blocked && styles.packCardBlocked]}>
+                    <View style={styles.packArtWrap}>
+                      <Image
+                        source={pack.icon || PROPHECY_PACK_ICON}
+                        style={[styles.packArtImage, pack.packTint ? { tintColor: pack.packTint } : null]}
+                        contentFit="contain"
+                      />
+                    </View>
+                    <View style={styles.packInfoCol}>
+                      <View style={styles.packNameRow}>
+                        <Text style={styles.packName}>{pack.name}</Text>
+                        {Array.isArray(pack.tags) && pack.tags.length ? (
+                          <View style={styles.packTagRow}>
+                            {pack.tags.slice(0, 2).map((tag) => (
+                              <View key={`${pack.id}_${tag}`} style={[styles.packTagChip, { borderColor: hexToRgba(pack.packAccent || GOLD, 0.7) }]}>
+                                <Text style={styles.packTagText}>{tag}</Text>
+                              </View>
+                            ))}
+                          </View>
+                        ) : null}
+                      </View>
                       <Text style={styles.packDesc}>{pack.desc}</Text>
                       <View style={styles.packChipRow}>
-                        <View style={styles.packCostChip}><Text style={styles.packCostChipText}>{costLabel}</Text></View>
+                        <View style={[styles.packCostChip, pack.costGold === 0 && styles.packCostChipFree]}>
+                          {pack.costGold === 0 ? (
+                            <Text style={[styles.packCostChipText, styles.packCostChipTextFree]}>Free</Text>
+                          ) : (
+                            <>
+                              <Image source={GOLD_ICON} style={styles.packCostChipIcon} contentFit="contain" />
+                              <Text style={styles.packCostChipText}>{pack.costGold}</Text>
+                            </>
+                          )}
+                        </View>
                         <View style={styles.packCountChip}><Text style={styles.packCountChipText}>{`${pack.cards} cards`}</Text></View>
                       </View>
                       <View style={styles.packGuaranteeRow}>
-                        {(pack.guarantee || []).slice(0, 3).map((bucket, idx) => (
-                          <View key={`${pack.id}_g_${idx}`} style={styles.packGuaranteeChip}>
-                            <Text style={styles.packGuaranteeText}>{GUARANTEE_LABELS[bucket] || bucket}</Text>
-                          </View>
-                        ))}
+                        {(pack.guarantee || []).slice(0, 3).map((bucket, idx) => {
+                          const tone = getGuaranteeTone(bucket);
+                          return (
+                            <View
+                              key={`${pack.id}_g_${idx}`}
+                              style={[
+                                styles.packGuaranteeChip,
+                                {
+                                  backgroundColor: tone.bg,
+                                  borderColor: tone.border,
+                                },
+                              ]}
+                            >
+                              <Text style={[styles.packGuaranteeText, { color: tone.text }]}>
+                                {GUARANTEE_LABELS[bucket] || bucket}
+                              </Text>
+                            </View>
+                          );
+                        })}
                       </View>
                       <Text style={styles.packStatusText}>{blocked ? (pack.id === 'daily' ? 'Daily pack already claimed.' : 'Not enough gold yet.') : 'Ready to open.'}</Text>
                     </View>
@@ -3681,18 +4358,80 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
             </ScrollView>
           </View>
         )}
-        <Modal visible={packOpenVisible} transparent animationType="fade">
-          <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={() => setPackOpenVisible(false)}>
-            <View style={styles.packRevealPanel}>
-              <Text style={styles.shopPanelTitle}>Pack Opened</Text>
-              <Text style={styles.packRevealCue}>{packRevealCue || 'Cards acquired.'}</Text>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.packRevealRow}>
-                {packOpenCards.map((card, idx) => renderShowcaseCard(card, `opened_${idx}`, effectiveOwnedCards[card.id] || 0))}
-              </ScrollView>
-              <TouchableOpacity style={styles.btnOutline} onPress={() => setPackOpenVisible(false)}>
-                <Text style={styles.btnOutlineText}>Close</Text>
-              </TouchableOpacity>
-            </View>
+        <Modal visible={packOpenVisible} transparent animationType="fade" onRequestClose={closePackReveal}>
+          <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={closePackReveal}>
+            <TouchableOpacity style={styles.packRevealPanel} activeOpacity={1} onPress={(e) => e.stopPropagation()}>
+              {packOpenPhase === 'rip' ? (
+                <>
+                  <Text style={styles.shopPanelTitle}>Invoke Divine Seal</Text>
+                  <Text style={styles.packRevealCue}>
+                    {`${lastOpenedPack?.name || 'Mystery Pack'} · Channel divine power`}
+                  </Text>
+                  <View style={styles.packRipStage}>
+                    <Animated.View style={[styles.packRipGlow, { opacity: packRipGlowOpacity }]} />
+                    <Animated.View style={[styles.packSealRuneOuter, { opacity: packSealRuneOpacity, transform: [{ scale: packSealRuneScale }] }]} />
+                    <Animated.View style={[styles.packSealRuneInner, { opacity: packSealRuneOpacity, transform: [{ scale: packSealRuneScale }] }]} />
+                    <Animated.View
+                      style={[
+                        styles.packRipPouch,
+                        {
+                          borderColor: lastOpenedPack?.packAccent || '#7f8da8',
+                          opacity: packSealCoreOpacity,
+                          transform: [{ scale: packSealCoreScale }],
+                        },
+                      ]}
+                      {...packRipPanResponder.panHandlers}
+                    >
+                      <View style={[styles.packSealAccent, { backgroundColor: lastOpenedPack?.packTint || '#b9beca' }]} />
+                      <Image source={lastOpenedPack?.icon || PROPHECY_PACK_ICON} style={styles.packSealImage} contentFit="cover" />
+                      <Animated.View style={[styles.packSealLightSweep, { transform: [{ translateX: packSealLightSweep }] }]} />
+                    </Animated.View>
+                    <Animated.Text style={[styles.packRipHint, { opacity: packRipHintOpacity }]}>
+                      Slide right to unseal the blessing
+                    </Animated.Text>
+                  </View>
+                </>
+              ) : (
+                <>
+                  <Text style={styles.shopPanelTitle}>Pack Opened</Text>
+                  <Text style={styles.packRevealCue}>{packRevealCue || 'Cards acquired.'}</Text>
+                  <Text style={styles.packRevealProgress}>
+                    {`${Math.min(packOpenCards.length, packRevealIndex)}/${packOpenCards.length} revealed`}
+                  </Text>
+                  {packRevealMode === 'all' ? (
+                    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.packRevealAllList}>
+                      {packOpenCards.map((card, idx) => (
+                        <View key={`opened_all_${idx}`} style={styles.packRevealAllCardWrap}>
+                          {renderShowcaseCard(card, `opened_all_${idx}`, effectiveOwnedCards[card.id] || 0)}
+                        </View>
+                      ))}
+                    </ScrollView>
+                  ) : (
+                    <View style={styles.packRevealSingle}>
+                      {visiblePackOpenCards.map((card, idx) => renderShowcaseCard(card, `opened_${idx}`, effectiveOwnedCards[card.id] || 0))}
+                    </View>
+                  )}
+                  <View style={styles.packRevealActions}>
+                    {canRevealNextPackCard ? (
+                      <TouchableOpacity style={styles.packSkipBtn} onPress={skipPackReveal}>
+                        <Text style={styles.packSkipText}>Skip</Text>
+                      </TouchableOpacity>
+                    ) : (
+                      <View style={styles.packRevealActionSpacer} />
+                    )}
+                    {canRevealNextPackCard ? (
+                      <TouchableOpacity style={styles.packNextBtn} onPress={revealNextPackCard}>
+                        <Text style={styles.packNextText}>Next</Text>
+                      </TouchableOpacity>
+                    ) : (
+                      <TouchableOpacity style={styles.packCloseBtn} onPress={closePackReveal}>
+                        <Text style={styles.btnOutlineText}>Close</Text>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                </>
+              )}
+            </TouchableOpacity>
           </TouchableOpacity>
         </Modal>
         <Modal visible={!!inspectCard} transparent animationType="fade" onRequestClose={() => setInspectCard(null)}>
@@ -3766,7 +4505,8 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                 <Text style={styles.htpBody}>1v1 turn-based battle. Each side has a Smite 2 Leader and units. Reduce the enemy Leader HP to 0 to win.</Text>
                 <Text style={styles.htpSection}>Order of Play</Text>
                 <Text style={styles.htpBody}>• Start of game: both players begin with 5 cards and 3 mana.</Text>
-                <Text style={styles.htpBody}>• Main phase: deploy units, set traps, equip items, cast one ability per unit, and attack once per unit.</Text>
+                <Text style={styles.htpBody}>• Main phase (30s timer): deploy units, set traps, equip items, and cast one ability per unit.</Text>
+                <Text style={styles.htpBody}>• Battle phase (same turn): select one of your gods, then attack highlighted legal enemy targets.</Text>
                 <Text style={styles.htpBody}>• Combat follows class keywords: Taunt, Brawler, Backstab, Spell Surge, and Ranged.</Text>
                 <Text style={styles.htpBody}>• End of round: burn/poison status effects tick down and deal damage before expiring.</Text>
                 <Text style={styles.htpSection}>Collection & Filters</Text>
@@ -3774,12 +4514,30 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                 <Text style={styles.htpSection}>Deck Builder & Share</Text>
                 <Text style={styles.htpBody}>Decks must be 30 cards. Save up to 6 deck slots, generate share codes, and import codes from other players.</Text>
                 <Text style={styles.htpSection}>Modes</Text>
-                <Text style={styles.htpBody}>• Tutorial teaches deploy, attack flow, and ability timing.</Text>
+                <Text style={styles.htpBody}>• Tutorial (Play home) teaches deploy, Battle-phase attacks, and ability timing; use Full Tutorial Guide for the complete walkthrough.</Text>
                 <Text style={styles.htpBody}>• Story Mode has chapters with fixed enemies and gold rewards.</Text>
                 <Text style={styles.htpSection}>Collection Growth</Text>
                 <Text style={styles.htpBody}>Open packs in Pack Shop, earn story rewards, and refine your deck with new gods, items, and traps.</Text>
               </ScrollView>
               <TouchableOpacity style={styles.btnOutline} onPress={() => setHtpVisible(false)}><Text style={styles.btnOutlineText}>Got It!</Text></TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+        </Modal>
+        <Modal visible={fullTutorialVisible} transparent animationType="fade">
+          <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={() => setFullTutorialVisible(false)}>
+            <View style={styles.htpPanel} onStartShouldSetResponder={() => true}>
+              <Text style={styles.htpTitle}>{`${gameTitle} — Full Tutorial`}</Text>
+              <ScrollView style={[styles.htpScroll, { maxHeight: screenH * 0.62 }]} showsVerticalScrollIndicator>
+                {FULL_TUTORIAL_SECTIONS.map((sec) => (
+                  <View key={sec.title}>
+                    <Text style={styles.htpSection}>{sec.title}</Text>
+                    <Text style={styles.htpBody}>{sec.body}</Text>
+                  </View>
+                ))}
+              </ScrollView>
+              <TouchableOpacity style={styles.btnOutline} onPress={() => setFullTutorialVisible(false)}>
+                <Text style={styles.btnOutlineText}>Close</Text>
+              </TouchableOpacity>
             </View>
           </TouchableOpacity>
         </Modal>
@@ -4002,6 +4760,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
 
   // —— Battle
   if (screen === 'battle' && G) {
+    const currentTurnPhase = G.turnPhase || 'main';
     const shopList = G.shop?.length ? G.shop : (() => {
       const maxR = Math.min(Math.floor(G.turn / 2), RARITY_ORDER.length - 1);
       const avail = getUnitsByRarity(maxR).map((u) => ({ ...u, cardType: CARD_TYPE.GOD }));
@@ -4009,6 +4768,13 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     })();
     const enemyFrontUnits = G.eField.filter((u) => normalizeFieldRow(u.row) === ROW_FRONT);
     const playerFrontUnits = G.pField.filter((u) => normalizeFieldRow(u.row) === ROW_FRONT);
+    const selectedAttacker = G.atker ? G.pField.find((u) => u.iid === G.atker) : null;
+    const legalAttackTargets = selectedAttacker ? getLegalAttackTargets(G, selectedAttacker) : null;
+    const legalAttackTargetSet = new Set(legalAttackTargets?.unitIds || []);
+    const canAttackLeader = !!legalAttackTargets?.canHitLeader;
+    const isBattlePhase = currentTurnPhase === 'battle';
+    const turnOwner = G.turn % 2 === 0 ? 'Enemy' : 'Player';
+    const isAbilityTargeting = targetPicker?.mode === 'ability_board';
     const targetOptions = [
       { key: 'leader', isLeader: true, name: G.el.name, hp: Math.max(0, G.eHp), maxHp: G.eMaxHp },
       ...((G.eField || []).map((u) => ({ key: u.iid, targetIid: u.iid, isLeader: false, name: u.name, hp: Math.max(0, u.hp), maxHp: u.maxHp || u.bHp || u.hp }))),
@@ -4016,25 +4782,38 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
 
     return (
       <View style={[styles.container, { paddingTop: safeTop, paddingBottom: safeBottom }]}>
-        {onBack && (
-          <TouchableOpacity
-            style={[
-              styles.battleBackBtn,
-              { top: safeTop + 4 },
-              isTinyPhone && { top: safeTop + 2, left: 6, paddingVertical: 4, paddingHorizontal: 6 },
-            ]}
-            onPress={onBack}
-          >
-            <Text style={styles.battleBackBtnText}>← Back</Text>
-          </TouchableOpacity>
-        )}
         <View style={styles.battleScaleShell}>
         <View style={[styles.battleScaleRoot, { transform: [{ scale: battleScale }] }]}>
-          <View style={[styles.topbar, isSmallPhone && { paddingVertical: 4, paddingHorizontal: 8 }]}>
-            <Text style={[styles.topbarTurn, isTinyPhone && { fontSize: 9 }]}>Turn {G.turn}</Text>
+          <View style={[styles.topbar, styles.battleTopbar, isSmallPhone && { paddingVertical: 4, paddingHorizontal: 8 }]}>
+            <View style={styles.battleTopbarNav}>
+              <TouchableOpacity style={styles.battleTopbarBtn} onPress={backToProphecyHome}>
+                <Text style={styles.battleTopbarBtnText}>Back</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.battleTopbarBtn, styles.battleTopbarBtnExit]} onPress={exitProphecyGame}>
+                <Text style={[styles.battleTopbarBtnText, styles.battleTopbarBtnExitText]}>Exit</Text>
+              </TouchableOpacity>
+            </View>
+            <Text
+              style={[
+                styles.topbarTurn,
+                styles.battleTopbarTurn,
+                turnOwner === 'Enemy' ? styles.battleTopbarTurnEnemy : styles.battleTopbarTurnPlayer,
+                isTinyPhone && { fontSize: 9 },
+                turnSeconds <= 10 && styles.battleTopbarTurnUrgent,
+              ]}
+              numberOfLines={1}
+            >
+              {`Turn: ${turnOwner} ${isBattlePhase ? 'Battle' : 'Main'} - ${turnSeconds}s`}
+            </Text>
             <View style={[styles.resRow, isTinyPhone && { gap: 4 }]}>
-              <View style={styles.rpill}><Text style={styles.rpillLabel}>💎</Text><Text style={styles.rpillVal}>{G.gold}</Text></View>
-              <View style={styles.rpill}><Text style={styles.rpillLabel}>🔮</Text><Text style={styles.rpillVal}>{G.mana}/{G.maxMana}</Text></View>
+              <View style={styles.rpill}>
+                <Image source={GOLD_ICON} style={styles.rpillIcon} contentFit="contain" />
+                <Text style={styles.rpillVal}>{G.gold}</Text>
+              </View>
+              <View style={styles.rpill}>
+                <Image source={PROPHECY_MANA_ICON} style={[styles.rpillIcon, styles.rpillIconMana]} contentFit="contain" />
+                <Text style={styles.rpillVal}>{G.mana}/{G.maxMana}</Text>
+              </View>
               <View style={styles.rpill}><Text style={styles.rpillLabel}>☠</Text><Text style={styles.rpillVal}>{(G.pGrave?.length || 0)}/{(G.eGrave?.length || 0)}</Text></View>
             </View>
           </View>
@@ -4049,12 +4828,26 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
             style={[
               styles.leaderDisplay,
               isSmallPhone && { padding: 4 },
+              selectedAttacker && isBattlePhase && canAttackLeader && styles.attackTargetHighlight,
+              isAbilityTargeting && styles.abilityTargetHighlight,
               hitFx?.targetKey === 'enemy_leader' && styles.hitFlashBorder,
             ]}
             onPress={() => {
               if (isBattleInteractionLocked) return;
+              if (isAbilityTargeting) {
+                resolveTargetSelection({ key: 'leader', isLeader: true });
+                return;
+              }
               if (G.atker) {
-                openTargetPickerForAttack(G.atker);
+                if (!isBattlePhase) {
+                  showTip('Enter Battle phase before attacking.');
+                  return;
+                }
+                if (!canAttackLeader) {
+                  showTip('Enemy front-row gods protect the leader.');
+                  return;
+                }
+                doAttack('leader', true);
                 return;
               }
               playVOX(G.el.name, 'intro');
@@ -4072,13 +4865,10 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
               <View style={styles.leaderHpCompact}>
                 <View style={[styles.leaderHpBadge, isTinyPhone && styles.leaderHpBadgeTiny]}>
                   <Image source={{ uri: STAT_ICONS.health }} style={[styles.leaderHpBadgeImg, { tintColor: STAT_HP_TINT }]} contentFit="cover" />
-                  <Text style={[styles.fieldStatBadgeText, isTinyPhone && styles.fieldStatBadgeTextTiny, G.eHp <= G.eMaxHp * 0.25 && styles.leaderHpCritical]}>
+                  <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.fieldStatBadgeText, styles.leaderHpBadgeText, isTinyPhone && styles.leaderHpBadgeTextTiny, G.eHp <= G.eMaxHp * 0.25 && styles.leaderHpCritical]}>
                     {Math.max(0, G.eHp)}
                   </Text>
                 </View>
-                <Text style={[styles.leaderHpMaxText, isTinyPhone && styles.leaderHpMaxTextTiny, G.eHp <= G.eMaxHp * 0.25 && styles.leaderHpCritical]}>
-                  {`/${G.eMaxHp}`}
-                </Text>
               </View>
             </View>
             {damageFx?.targetKey === 'enemy_leader' && <FloatCombatText key={damageFx.key} text={`-${damageFx.amount}`} />}
@@ -4104,12 +4894,26 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                     styles.fieldUnit,
                     { width: boardCardW + (isTinyPhone ? 2 : 6), padding: isTinyPhone ? 2 : 3 },
                     styles.fieldUnitEnemy,
+                    selectedAttacker && isBattlePhase && legalAttackTargetSet.has(u.iid) && styles.attackTargetHighlight,
+                    isAbilityTargeting && styles.abilityTargetHighlight,
                     hitFx?.targetKey === `enemy_${u.iid}` && styles.hitFlashBorder,
                   ]}
                   onPress={() => {
                     if (isBattleInteractionLocked) return;
+                    if (isAbilityTargeting) {
+                      resolveTargetSelection({ key: u.iid, targetIid: u.iid, isLeader: false, name: u.name });
+                      return;
+                    }
                     if (G.atker) {
-                      openTargetPickerForAttack(G.atker);
+                      if (!isBattlePhase) {
+                        showTip('Enter Battle phase before attacking.');
+                        return;
+                      }
+                      if (!legalAttackTargetSet.has(u.iid)) {
+                        showTip('That target is blocked this attack.');
+                        return;
+                      }
+                      doAttack(u.iid, false);
                       return;
                     }
                     playVOX(u.name, 'intro');
@@ -4176,13 +4980,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
           {G.mode === 'tutorial' && (
             <View style={styles.tutorialHintBox}>
               <Text style={styles.tutorialHintText}>
-                {G.tutorialStep === 1
-                  ? 'Tutorial: Deploy at least one unit from your hand.'
-                  : G.tutorialStep === 2
-                    ? 'Tutorial: Select your unit, then attack a valid enemy target.'
-                    : G.tutorialStep === 3
-                      ? 'Tutorial: Use your class ability, then press End Turn.'
-                      : 'Tutorial: Great work. Finish the enemy leader to complete training.'}
+                {TUTORIAL_BATTLE_HINTS[G.tutorialStep] || TUTORIAL_BATTLE_HINTS[1]}
               </Text>
               <TouchableOpacity
                 style={styles.tutorialSkipBtn}
@@ -4224,10 +5022,15 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                   ]}
                   onPress={() => {
                     if (isBattleInteractionLocked) return;
+                    if (!isBattlePhase) {
+                      const isSameUnit = G.atker === u.iid;
+                      setG((prev) => (prev ? { ...prev, atker: isSameUnit ? null : u.iid } : prev));
+                      if (!isSameUnit) showTip(`${u.name} selected. Tap Ability to cast.`);
+                      return;
+                    }
                     if (G.atker === u.iid) {
                       selectAtk(null);
                     } else if (!G.attackedIds[u.iid]) {
-                      selectAtk(u.iid);
                       openTargetPickerForAttack(u.iid);
                     } else {
                       playVOX(u.name, 'intro');
@@ -4321,13 +5124,10 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
               <View style={styles.leaderHpCompact}>
                 <View style={[styles.leaderHpBadge, isTinyPhone && styles.leaderHpBadgeTiny]}>
                   <Image source={{ uri: STAT_ICONS.health }} style={[styles.leaderHpBadgeImg, { tintColor: STAT_HP_TINT }]} contentFit="cover" />
-                  <Text style={[styles.fieldStatBadgeText, isTinyPhone && styles.fieldStatBadgeTextTiny, G.pHp <= G.pMaxHp * 0.25 && styles.leaderHpCritical]}>
+                  <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.fieldStatBadgeText, styles.leaderHpBadgeText, isTinyPhone && styles.leaderHpBadgeTextTiny, G.pHp <= G.pMaxHp * 0.25 && styles.leaderHpCritical]}>
                     {Math.max(0, G.pHp)}
                   </Text>
                 </View>
-                <Text style={[styles.leaderHpMaxText, isTinyPhone && styles.leaderHpMaxTextTiny, G.pHp <= G.pMaxHp * 0.25 && styles.leaderHpCritical]}>
-                  {`/${G.pMaxHp}`}
-                </Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -4349,6 +5149,10 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                   style={[styles.handCard, { width: handCardW }, can && styles.handCardPlay]}
                   onPress={() => {
                     if (isBattleInteractionLocked) return;
+                    if (currentTurnPhase !== 'main') {
+                      showTip('Card play is only available in Main phase.');
+                      return;
+                    }
                     if (!canAfford) return;
                     if (needsGodTarget) {
                       showTip('Items can only be played when you have at least one god on the field.');
@@ -4369,7 +5173,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                   delayLongPress={180}
                   activeOpacity={0.9}
                 >
-                  <TouchableOpacity style={styles.infoBtn} onPress={() => openCardInspect(c, 'Hand')}>
+                  <TouchableOpacity style={styles.infoBtnHand} onPress={() => openCardInspect(c, 'Hand')}>
                     <Text style={styles.infoBtnText}>i</Text>
                   </TouchableOpacity>
                   <View style={[styles.rarityIconWrap, { height: 10, marginBottom: 1 }]}>
@@ -4412,51 +5216,84 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
             </ScrollView>
           </View>
           <View style={[styles.actionBar, isSmallPhone && { padding: 4, gap: 3 }]}>
-            <View style={styles.manaRow}>
-              <Text style={styles.manaIcon}>🔮</Text>
-              <Text style={styles.manaCountText}>{`${G.mana}/${G.maxMana}`}</Text>
+            <View style={styles.actionRowTop}>
+              <TouchableOpacity
+                style={[
+                  styles.endBtn,
+                  styles.endBtnTop,
+                  currentTurnPhase === 'main' ? styles.endBtnMain : styles.endBtnBattle,
+                ]}
+                onPress={() => {
+                  if (isBattleInteractionLocked) return;
+                  if (currentTurnPhase === 'main') {
+                    setTurnPhase('battle');
+                    return;
+                  }
+                  endTurn();
+                }}
+              >
+                <Text style={[styles.endBtnText, currentTurnPhase === 'main' ? styles.endBtnTextMain : styles.endBtnTextBattle]}>
+                  {currentTurnPhase === 'main' ? 'End Phase ›' : 'End Turn ›'}
+                </Text>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              style={[
-                styles.abilityBtn,
-                (() => {
+            <View style={styles.actionRowBottom}>
+              <View style={styles.manaRow}>
+                <Image source={PROPHECY_MANA_ICON} style={styles.manaIconImage} contentFit="contain" />
+                <Text style={styles.manaCountText}>{`${G.mana}/${G.maxMana}`}</Text>
+              </View>
+              <TouchableOpacity
+                style={[
+                  styles.abilityBtn,
+                  styles.abilityBtnBottom,
+                  (() => {
+                    const unit = G.pField.find((u) => u.iid === G.atker);
+                    const theme = getAbilityTheme(unit);
+                    return { backgroundColor: theme.bg, borderColor: theme.border };
+                  })(),
+                  (!(G.atker && !G.abilityUsedIds?.[G.atker]) || currentTurnPhase !== 'main') && styles.abilityBtnDisabled,
+                ]}
+                onPress={() => {
+                  if (isBattleInteractionLocked || !G.atker) return;
+                  if (currentTurnPhase !== 'main') return;
+                  const selected = G.pField.find((u) => u.iid === G.atker);
+                  if (selected && abilityNeedsEnemyTarget(selected)) {
+                    openTargetPickerForAbility(G.atker);
+                    return;
+                  }
+                  castAbility(G.atker);
+                }}
+                disabled={isBattleInteractionLocked || !(G.atker && !G.abilityUsedIds?.[G.atker]) || currentTurnPhase !== 'main'}
+              >
+                {(() => {
                   const unit = G.pField.find((u) => u.iid === G.atker);
+                  const display = unit ? getAbilityDisplay(unit) : null;
                   const theme = getAbilityTheme(unit);
-                  return { backgroundColor: theme.bg, borderColor: theme.border };
-                })(),
-                !(G.atker && !G.abilityUsedIds?.[G.atker]) && styles.abilityBtnDisabled,
-              ]}
-              onPress={() => {
-                if (isBattleInteractionLocked || !G.atker) return;
-                const selected = G.pField.find((u) => u.iid === G.atker);
-                if (selected && abilityNeedsEnemyTarget(selected)) {
-                  openTargetPickerForAbility(G.atker);
-                  return;
-                }
-                castAbility(G.atker);
-              }}
-              disabled={isBattleInteractionLocked || !(G.atker && !G.abilityUsedIds?.[G.atker])}
-            >
-              {(() => {
-                const unit = G.pField.find((u) => u.iid === G.atker);
-                const display = unit ? getAbilityDisplay(unit) : null;
-                const theme = getAbilityTheme(unit);
-                return (
-                  <View style={styles.abilityBtnRow}>
-                    {!!display?.iconUri && <Image source={display.iconUri} style={styles.abilityBtnIcon} contentFit="cover" />}
-                    <Text style={[styles.abilityBtnText, { color: theme.text }]}>
-                      {unit ? `${display.name} (${getAbilityCost(unit)})` : 'Select God Ability'}
-                    </Text>
-                  </View>
-                );
-              })()}
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.shopBtn} onPress={() => { refreshShop(); setShopVisible(true); }}>
-              <Text style={styles.shopBtnText}>⚗ Shop</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.endBtn} onPress={endTurn}>
-              <Text style={styles.endBtnText}>End Turn ›</Text>
-            </TouchableOpacity>
+                  return (
+                    <View style={styles.abilityBtnRow}>
+                      {!!display?.iconUri && <Image source={display.iconUri} style={styles.abilityBtnIcon} contentFit="cover" />}
+                      <Text style={[styles.abilityBtnText, { color: theme.text }]}>
+                        {unit ? `${display.name} (${getAbilityCost(unit)})` : 'Ability'}
+                      </Text>
+                    </View>
+                  );
+                })()}
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.shopBtn, styles.shopBtnCompact, currentTurnPhase !== 'main' && styles.phaseActionDisabled]}
+                onPress={() => {
+                  if (currentTurnPhase !== 'main') {
+                    showTip('Shop is available in Main phase.');
+                    return;
+                  }
+                  refreshShop();
+                  setShopVisible(true);
+                }}
+                accessibilityLabel="Shop"
+              >
+                <Image source={GOLD_ICON} style={styles.shopBtnIcon} contentFit="contain" />
+              </TouchableOpacity>
+            </View>
           </View>
           </View>
         </View>
@@ -4488,7 +5325,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
           </View>
         )}
         <Modal
-          visible={!!targetPicker}
+          visible={!!targetPicker && targetPicker?.mode === 'spell'}
           transparent
           animationType="fade"
           onRequestClose={() => setTargetPicker(null)}
@@ -4496,7 +5333,9 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
           <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={() => setTargetPicker(null)}>
             <TouchableOpacity activeOpacity={1} onPress={() => {}} style={styles.itemTargetPanel}>
               <Text style={styles.shopPanelTitle}>{targetPicker?.title || 'Choose Target'}</Text>
-              <Text style={styles.itemTargetSubtitle}>Select enemy god to hit</Text>
+              <Text style={styles.itemTargetSubtitle}>
+                Select enemy target for spell
+              </Text>
               <ScrollView style={styles.itemTargetList} contentContainerStyle={{ gap: 6 }}>
                 {targetOptions.map((target) => (
                   <TouchableOpacity
@@ -4599,7 +5438,10 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                         )}
                       </View>
                       <Text style={[styles.shopUnitName, { color: getPantheonColor(u.pantheon) }]} numberOfLines={1}>{getCardDisplayName(u)}</Text>
-                      <Text style={styles.shopUnitCost}>💎{cost}</Text>
+                      <View style={styles.shopUnitCostRow}>
+                        <Image source={GOLD_ICON} style={styles.shopUnitCostIcon} contentFit="contain" />
+                        <Text style={styles.shopUnitCost}>{cost}</Text>
+                      </View>
                       {(u.cardType || CARD_TYPE.GOD) === CARD_TYPE.GOD ? (
                         <Text style={styles.shopUnitStats}>❤{u.bHp} ⚔{u.bAtk}</Text>
                       ) : (
@@ -4753,29 +5595,62 @@ const styles = StyleSheet.create({
   filterChipTextActive: { color: GOLD_L, fontWeight: '700' },
   collectionGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start', alignSelf: 'stretch', gap: 6, paddingBottom: 12 },
   shopHeroCard: { backgroundColor: 'rgba(22,20,34,0.86)', borderWidth: 1, borderColor: 'rgba(200,146,42,0.28)', borderRadius: 12, paddingVertical: 9, paddingHorizontal: 10, marginBottom: 8 },
-  shopHeroTitle: { color: GOLD_L, fontSize: 12, fontWeight: '700' },
-  shopHeroSub: { color: MUTED, fontSize: 10, marginTop: 3 },
+  shopHeroGoldRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6 },
+  shopHeroGoldIcon: { width: 16, height: 16 },
+  shopHeroGoldValue: { color: GOLD_L, fontSize: 18, fontWeight: '900', letterSpacing: 0.5 },
+  shopHeroTitle: { color: '#bfa67f', fontSize: 10, fontWeight: '700', textAlign: 'center', marginTop: 1 },
+  shopHeroSub: { color: MUTED, fontSize: 10, marginTop: 3, textAlign: 'center' },
   packList: { flex: 1 },
   packListContent: { gap: 8, paddingHorizontal: 2, paddingBottom: 14 },
-  packCard: { flexDirection: 'row', gap: 8, alignItems: 'center', backgroundColor: 'rgba(23,21,36,0.95)', borderWidth: 1, borderColor: 'rgba(200,146,42,0.25)', borderRadius: 10, padding: 10 },
+  packCard: { flexDirection: 'row', gap: 10, alignItems: 'center', backgroundColor: 'rgba(23,21,36,0.95)', borderWidth: 1, borderColor: 'rgba(200,146,42,0.25)', borderRadius: 12, paddingVertical: 10, paddingHorizontal: 10 },
   packCardBlocked: { opacity: 0.5 },
+  packArtWrap: { width: 64, height: 84, borderRadius: 10, borderWidth: 1, borderColor: 'rgba(200,146,42,0.4)', backgroundColor: 'rgba(8,8,14,0.8)', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
+  packArtImage: { width: 52, height: 72 },
+  packInfoCol: { flex: 1 },
+  packNameRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 6 },
   packName: { color: GOLD_L, fontSize: 12, fontWeight: '700' },
+  packTagRow: { flexDirection: 'row', gap: 4 },
+  packTagChip: { borderRadius: 999, borderWidth: 1, backgroundColor: 'rgba(15,14,24,0.82)', paddingVertical: 2, paddingHorizontal: 7 },
+  packTagText: { color: '#e5d4b2', fontSize: 8, fontWeight: '700' },
   packDesc: { color: MUTED, fontSize: 10, marginTop: 2 },
   packChipRow: { flexDirection: 'row', gap: 6, marginTop: 6, flexWrap: 'wrap' },
-  packCostChip: { backgroundColor: 'rgba(36,74,165,0.2)', borderWidth: 1, borderColor: 'rgba(126,170,255,0.45)', borderRadius: 999, paddingVertical: 3, paddingHorizontal: 8 },
-  packCostChipText: { color: '#abd0ff', fontSize: 9, fontWeight: '700' },
+  packCostChip: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: 'rgba(200,146,42,0.2)', borderWidth: 1, borderColor: 'rgba(240,192,96,0.58)', borderRadius: 999, paddingVertical: 3, paddingHorizontal: 8 },
+  packCostChipFree: { backgroundColor: 'rgba(140,160,184,0.2)', borderColor: 'rgba(184,208,232,0.58)' },
+  packCostChipIcon: { width: 11, height: 11 },
+  packCostChipText: { color: '#f4dfa9', fontSize: 9, fontWeight: '700' },
+  packCostChipTextFree: { color: '#d8e8ff' },
   packCountChip: { backgroundColor: 'rgba(200,146,42,0.16)', borderWidth: 1, borderColor: 'rgba(200,146,42,0.45)', borderRadius: 999, paddingVertical: 3, paddingHorizontal: 8 },
   packCountChipText: { color: '#f0d8a0', fontSize: 9, fontWeight: '700' },
   packGuaranteeRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginTop: 6 },
-  packGuaranteeChip: { backgroundColor: 'rgba(58,154,48,0.16)', borderWidth: 1, borderColor: 'rgba(84,190,72,0.34)', borderRadius: 999, paddingVertical: 2, paddingHorizontal: 7 },
-  packGuaranteeText: { color: '#a4dda2', fontSize: 8 },
+  packGuaranteeChip: { borderWidth: 1, borderRadius: 999, paddingVertical: 2, paddingHorizontal: 7 },
+  packGuaranteeText: { fontSize: 8, fontWeight: '700' },
   packStatusText: { color: '#97856a', fontSize: 9, marginTop: 6 },
   packOpenBtn: { backgroundColor: GOLD, borderColor: GOLD_L, borderWidth: 1, borderRadius: 5, paddingVertical: 7, paddingHorizontal: 12 },
   packOpenBtnBlocked: { backgroundColor: '#444', borderColor: '#666' },
   packOpenText: { color: '#060606', fontWeight: '700', fontSize: 10, letterSpacing: 0.4 },
   packRevealPanel: { backgroundColor: BGC, width: '100%', maxWidth: 460, borderTopLeftRadius: 12, borderTopRightRadius: 12, padding: 12, paddingBottom: 18, maxHeight: '86%' },
   packRevealCue: { color: '#b9cbff', fontSize: 10, textAlign: 'center', marginTop: -4, marginBottom: 8 },
+  packRevealProgress: { color: '#cab58a', fontSize: 10, textAlign: 'center', marginBottom: 8 },
   packRevealRow: { gap: 10, paddingBottom: 10 },
+  packRevealSingle: { alignItems: 'center', justifyContent: 'center', paddingBottom: 10, minHeight: 340 },
+  packRevealAllList: { paddingBottom: 10, alignItems: 'center', gap: 8 },
+  packRevealAllCardWrap: { width: 128, alignItems: 'center' },
+  packRipStage: { alignItems: 'center', justifyContent: 'center', paddingTop: 8, paddingBottom: 12, minHeight: 320 },
+  packRipGlow: { position: 'absolute', width: 250, height: 250, borderRadius: 125, backgroundColor: 'rgba(241,191,82,0.42)' },
+  packSealRuneOuter: { position: 'absolute', width: 228, height: 228, borderRadius: 114, borderWidth: 2, borderColor: 'rgba(244,212,140,0.45)' },
+  packSealRuneInner: { position: 'absolute', width: 172, height: 172, borderRadius: 86, borderWidth: 1, borderColor: 'rgba(130,175,255,0.4)' },
+  packRipPouch: { width: 184, height: 246, borderRadius: 16, borderWidth: 1, backgroundColor: '#070b14', overflow: 'hidden', position: 'relative', justifyContent: 'center', alignItems: 'center' },
+  packSealAccent: { position: 'absolute', left: 0, right: 0, height: 13, top: 20, opacity: 0.9, zIndex: 2 },
+  packSealImage: { width: 152, height: 214, opacity: 0.95 },
+  packSealLightSweep: { position: 'absolute', top: 0, bottom: 0, width: 44, backgroundColor: 'rgba(248,224,152,0.32)', shadowColor: '#ffd889', shadowOpacity: 1, shadowRadius: 10 },
+  packRipHint: { marginTop: 16, color: '#dcc896', fontSize: 10, fontWeight: '700', letterSpacing: 0.25 },
+  packRevealActions: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 6, gap: 10 },
+  packRevealActionSpacer: { flex: 1 },
+  packSkipBtn: { flex: 1, borderWidth: 1, borderColor: '#7a5510', borderRadius: 6, paddingVertical: 8, alignItems: 'center', backgroundColor: 'rgba(18,17,30,0.84)' },
+  packSkipText: { color: '#f4d089', fontSize: 11, fontWeight: '700' },
+  packNextBtn: { flex: 1, borderWidth: 1, borderColor: GOLD_L, borderRadius: 6, paddingVertical: 8, alignItems: 'center', backgroundColor: GOLD },
+  packNextText: { color: '#060606', fontSize: 11, fontWeight: '800' },
+  packCloseBtn: { flex: 1, borderWidth: 1, borderColor: '#7a5510', borderRadius: 6, paddingVertical: 8, alignItems: 'center', backgroundColor: 'transparent' },
   showcaseCardWrap: { width: 108, alignItems: 'center', overflow: 'visible', position: 'relative' },
   showcaseOuterFoilHalo: { position: 'absolute', top: 4, left: -6, right: -6, bottom: 26, borderRadius: 14 },
   showcaseFrame: { marginTop: 8, width: '100%', borderRadius: 10, backgroundColor: '#3c2a0c', borderWidth: 1, borderColor: '#7a5818', overflow: 'hidden' },
@@ -4783,9 +5658,20 @@ const styles = StyleSheet.create({
   showcaseFrameLegendary: { borderWidth: 2, borderColor: '#f2be58' },
   showcaseFrameFullArt: { borderWidth: 1, borderColor: '#d6b36b' },
   showcaseBanner: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#0f0c04', borderBottomWidth: 1, borderBottomColor: 'rgba(160,110,20,0.5)', paddingHorizontal: 6, paddingVertical: 4 },
-  showcaseBannerLeft: { flexDirection: 'row', alignItems: 'center', flex: 1, gap: 2 },
+  showcaseBannerLeft: { flexDirection: 'row', alignItems: 'center', flex: 1, gap: 4 },
   showcaseBannerRight: { flexDirection: 'row', alignItems: 'center', gap: 2 },
-  showcasePantheonIcon: { width: 14, height: 14 },
+  showcasePantheonBadge: {
+    width: 24,
+    height: 24,
+    borderRadius: 6,
+    padding: 2,
+    backgroundColor: 'rgba(0, 0, 0, 0.72)',
+    borderWidth: 1.5,
+    borderColor: 'rgba(220, 175, 90, 0.65)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  showcasePantheonIcon: { width: 18, height: 18 },
   showcasePantheonDot: { width: 10, height: 10, borderRadius: 5, backgroundColor: '#9a7020' },
   showcaseBannerText: { color: 'rgba(220,175,90,0.8)', fontSize: 10, letterSpacing: 0.3, flex: 1, fontWeight: '700' },
   showcaseRarityPip: { width: 8, height: 8, borderRadius: 4 },
@@ -4814,7 +5700,11 @@ const styles = StyleSheet.create({
   showcaseAbilityName: { color: 'rgba(210,175,70,0.95)', fontSize: 9, fontWeight: '700', textTransform: 'uppercase' },
   showcaseAbilityBody: { color: 'rgba(185,155,90,0.9)', fontSize: 9, lineHeight: 12, marginTop: 0 },
   showcaseFlavor: { color: 'rgba(155,120,70,0.8)', fontSize: 8, textAlign: 'center', marginTop: 2, fontStyle: 'italic' },
+  showcaseBannerCostRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  showcaseBannerManaIcon: { width: 13, height: 13 },
   showcaseStatsFooter: { flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', paddingHorizontal: 6, paddingTop: 4, paddingBottom: 5, backgroundColor: '#100b05', borderTopWidth: 1, borderTopColor: 'rgba(120,80,20,0.35)' },
+  showcaseStatsFooterDual: { justifyContent: 'space-around' },
+  showcaseStatsFooterCostOnly: { justifyContent: 'center' },
   showcaseStatCol: { alignItems: 'center', justifyContent: 'flex-end' },
   showcaseStatLabel: { fontSize: 7, fontWeight: '700', color: 'rgba(200,170,100,0.85)', letterSpacing: 0.3, marginBottom: 0, textTransform: 'uppercase' },
   showcaseStatGem: { width: 22, height: 22, borderRadius: 11, alignItems: 'center', justifyContent: 'center', position: 'relative' },
@@ -4858,9 +5748,21 @@ const styles = StyleSheet.create({
   topbarBackText: { color: MUTED, fontSize: 9 },
   topbarBackExit: { backgroundColor: '#7a1d1d', borderColor: '#e07878' },
   topbarBackExitText: { color: '#ffe9e9', fontWeight: '700', letterSpacing: 0.3 },
+  battleTopbar: { gap: 6 },
+  battleTopbarNav: { flexDirection: 'row', alignItems: 'center', gap: 4, width: 90 },
+  battleTopbarBtn: { borderWidth: 1, borderColor: 'rgba(130,190,255,0.35)', backgroundColor: 'rgba(18,31,58,0.9)', paddingVertical: 3, paddingHorizontal: 6, borderRadius: 5 },
+  battleTopbarBtnText: { color: '#d7ebff', fontSize: 9, fontWeight: '700' },
+  battleTopbarBtnExit: { borderColor: '#e07878', backgroundColor: '#7a1d1d' },
+  battleTopbarBtnExitText: { color: '#ffe9e9' },
+  battleTopbarTurn: { flex: 1, textAlign: 'center', color: '#d4e6ff', fontWeight: '700' },
+  battleTopbarTurnPlayer: { color: '#9fe2a0' },
+  battleTopbarTurnEnemy: { color: '#ffb3b3' },
+  battleTopbarTurnUrgent: { color: '#ffd5a8' },
   resRow: { flexDirection: 'row', gap: 6 },
   rpill: { flexDirection: 'row', alignItems: 'center', gap: 3, backgroundColor: 'rgba(200,146,42,0.1)', borderWidth: 1, borderColor: 'rgba(200,146,42,0.2)', borderRadius: 8, paddingVertical: 2, paddingHorizontal: 6 },
   rpillLabel: { fontSize: 10 },
+  rpillIcon: { width: 12, height: 12 },
+  rpillIconMana: { tintColor: '#5eb3ff' },
   rpillVal: { color: GOLD_L, fontWeight: '600', fontSize: 10 },
   leaderHeader: { paddingVertical: 8, paddingHorizontal: 12, alignItems: 'center' },
   leaderHeaderTitle: { fontSize: 13, color: GOLD, letterSpacing: 1, textTransform: 'uppercase' },
@@ -4907,9 +5809,11 @@ const styles = StyleSheet.create({
   leaderHpIcon: { width: 14, height: 14 },
   leaderHpBarWrap: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 2, width: '100%' },
   leaderHpBarWrapTiny: { gap: 3 },
-  leaderHpBadge: { minWidth: 24, height: 18, borderRadius: 9, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 4, alignSelf: 'flex-start' },
-  leaderHpBadgeTiny: { minWidth: 20, height: 16, borderRadius: 8, paddingHorizontal: 3 },
+  leaderHpBadge: { minWidth: 21, height: 16, borderRadius: 8, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 3, alignSelf: 'flex-start' },
+  leaderHpBadgeTiny: { minWidth: 18, height: 14, borderRadius: 7, paddingHorizontal: 2 },
   leaderHpBadgeImg: { position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', borderRadius: 9 },
+  leaderHpBadgeText: { fontSize: 6 },
+  leaderHpBadgeTextTiny: { fontSize: 5 },
   leaderHpCompact: { flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: 2 },
   leaderHpMaxText: { color: '#d5f7dc', fontSize: 8, fontWeight: '700' },
   leaderHpMaxTextTiny: { fontSize: 7 },
@@ -4949,9 +5853,11 @@ const styles = StyleSheet.create({
   fieldUnit: { width: 58, backgroundColor: BGC, borderWidth: 1, borderColor: 'rgba(200,146,42,0.3)', borderRadius: 6, padding: 3, alignItems: 'center', position: 'relative' },
   fieldUnitEnemy: { borderColor: 'rgba(192,48,48,0.3)' },
   fieldUnitSel: { borderColor: GOLD, shadowColor: GOLD, shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.4, shadowRadius: 6, elevation: 4 },
+  attackTargetHighlight: { borderColor: '#7cc4ff', shadowColor: '#7cc4ff', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.55, shadowRadius: 8, elevation: 5 },
   fieldUnitTgt: { borderColor: '#c03030', shadowColor: '#c03030', shadowOpacity: 0.4, shadowRadius: 6 },
   hitFlashBorder: { borderColor: '#ff7f7f', shadowColor: '#ff7f7f', shadowOpacity: 0.5, shadowRadius: 8 },
   infoBtn: { position: 'absolute', top: -6, right: -6, width: 16, height: 16, borderRadius: 8, backgroundColor: 'rgba(25,45,88,0.95)', borderWidth: 1, borderColor: '#9cc4ff', alignItems: 'center', justifyContent: 'center', zIndex: 8 },
+  infoBtnHand: { position: 'absolute', bottom: -6, right: -5, width: 16, height: 16, borderRadius: 8, backgroundColor: 'rgba(25,45,88,0.95)', borderWidth: 1, borderColor: '#9cc4ff', alignItems: 'center', justifyContent: 'center', zIndex: 8 },
   infoBtnLeader: { position: 'absolute', top: -6, right: -6, width: 17, height: 17, borderRadius: 8.5, backgroundColor: 'rgba(25,45,88,0.95)', borderWidth: 1, borderColor: '#9cc4ff', alignItems: 'center', justifyContent: 'center', zIndex: 8 },
   infoBtnText: { color: '#e8f2ff', fontSize: 9, fontWeight: '700', lineHeight: 10 },
   rarityBar: { height: 2, borderRadius: 1, marginBottom: 2, width: '100%' },
@@ -5003,8 +5909,11 @@ const styles = StyleSheet.create({
   handCardStats: { flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginTop: 2 },
   handEffectText: { fontSize: 8, color: '#b8c6ff', width: '100%', textAlign: 'center' },
   handConstraintText: { marginTop: 2, fontSize: 7, color: '#ffd3d3', textAlign: 'center' },
-  actionBar: { flexDirection: 'row', alignItems: 'center', gap: 4, padding: 5, backgroundColor: 'rgba(10,10,18,0.95)', borderTopWidth: 1, borderTopColor: 'rgba(200,146,42,0.1)' },
+  actionBar: { gap: 4, padding: 5, backgroundColor: 'rgba(10,10,18,0.95)', borderTopWidth: 1, borderTopColor: 'rgba(200,146,42,0.1)' },
+  actionRowTop: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  actionRowBottom: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   abilityBtn: { backgroundColor: 'rgba(36,90,146,0.58)', borderWidth: 1, borderColor: 'rgba(132,186,255,0.45)', paddingVertical: 6, paddingHorizontal: 8, borderRadius: 4, maxWidth: 160 },
+  abilityBtnBottom: { flex: 1, maxWidth: undefined },
   abilityBtnDisabled: { opacity: 0.45 },
   abilityBtnRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   abilityBtnIcon: { width: 14, height: 14, borderRadius: 3 },
@@ -5035,6 +5944,7 @@ const styles = StyleSheet.create({
   floatCombatText: { fontSize: 8, fontWeight: '800', paddingVertical: 2, paddingHorizontal: 6, backgroundColor: 'rgba(9,8,16,0.82)', borderRadius: 999, borderWidth: 1, borderColor: 'rgba(255,160,160,0.75)', overflow: 'hidden' },
   manaRow: { flexDirection: 'row', gap: 4, alignItems: 'center' },
   manaIcon: { fontSize: 12, lineHeight: 12 },
+  manaIconImage: { width: 12, height: 12, tintColor: '#5eb3ff' },
   manaDot: { width: 11, height: 11, borderRadius: 5.5, backgroundColor: 'rgba(30,70,200,0.2)', borderWidth: 1, borderColor: 'rgba(30,70,200,0.4)' },
   manaDotFull: { backgroundColor: '#4488ff', borderColor: '#88aaff' },
   manaCountText: { color: '#a9c8ff', fontSize: 9, fontWeight: '700' },
@@ -5045,9 +5955,23 @@ const styles = StyleSheet.create({
   itemTargetName: { color: '#f0e8d0', fontSize: 10, fontWeight: '700' },
   itemTargetMeta: { color: '#b8c6ff', fontSize: 9, marginTop: 1 },
   shopBtn: { backgroundColor: 'rgba(74,56,112,0.6)', borderWidth: 1, borderColor: 'rgba(122,95,170,0.4)', paddingVertical: 6, paddingHorizontal: 8, borderRadius: 4 },
+  shopBtnCompact: { minWidth: 34, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 0 },
+  shopBtnContent: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  shopBtnIcon: { width: 12, height: 12 },
   shopBtnText: { color: '#b090e0', fontSize: 10 },
-  endBtn: { flex: 1, backgroundColor: GOLD, borderWidth: 1, borderColor: GOLD_L, paddingVertical: 6, borderRadius: 4, alignItems: 'center' },
-  endBtnText: { color: '#060606', fontSize: 11, fontWeight: '700' },
+  phaseActionDisabled: { opacity: 0.55 },
+  phaseBtn: { backgroundColor: 'rgba(16,62,110,0.6)', borderWidth: 1, borderColor: 'rgba(124,196,255,0.5)', paddingVertical: 6, paddingHorizontal: 8, borderRadius: 4 },
+  phaseBtnActive: { backgroundColor: 'rgba(200,146,42,0.24)', borderColor: 'rgba(240,192,96,0.65)' },
+  phaseBtnText: { color: '#b8ddff', fontSize: 9, fontWeight: '700' },
+  phaseBtnTextActive: { color: '#f0d090' },
+  endBtn: { flex: 1, borderWidth: 1, paddingVertical: 6, borderRadius: 4, alignItems: 'center' },
+  endBtnTop: { flex: 2 },
+  endBtnMain: { backgroundColor: 'rgba(26,87,160,0.85)', borderColor: 'rgba(122,196,255,0.85)' },
+  endBtnBattle: { backgroundColor: 'rgba(155,74,30,0.9)', borderColor: 'rgba(240,164,95,0.9)' },
+  endBtnText: { fontSize: 11, fontWeight: '700' },
+  endBtnTextMain: { color: '#dff1ff' },
+  endBtnTextBattle: { color: '#fff1de' },
+  abilityTargetHighlight: { borderColor: '#ffa85f', shadowColor: '#ffa85f', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.6, shadowRadius: 9, elevation: 6 },
   playerLeaderBar: { flexDirection: 'row', alignItems: 'center', gap: 6, padding: 4, backgroundColor: 'rgba(18,17,30,0.85)', borderTopWidth: 1, borderTopColor: 'rgba(200,146,42,0.15)' },
   playerLeaderSimple: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 8, paddingTop: 2, paddingBottom: 2 },
   playerLeaderSimpleName: { color: GOLD, fontSize: 10, fontWeight: '600' },
@@ -5064,7 +5988,9 @@ const styles = StyleSheet.create({
   shopUnitArt: { marginBottom: 2, overflow: 'hidden', borderRadius: 4 },
   shopSpecialIcon: { width: 36, height: 36, borderRadius: 4 },
   shopUnitName: { fontSize: 7, color: MUTED, marginBottom: 2 },
-  shopUnitCost: { fontSize: 8, color: '#88aaff', marginBottom: 1 },
+  shopUnitCostRow: { flexDirection: 'row', alignItems: 'center', gap: 3, marginBottom: 1 },
+  shopUnitCostIcon: { width: 10, height: 10 },
+  shopUnitCost: { fontSize: 8, color: '#88aaff' },
   shopUnitStats: { fontSize: 7, color: MUTED },
   deckPanel: { backgroundColor: BGC, width: '100%', maxWidth: 460, borderTopLeftRadius: 12, borderTopRightRadius: 12, padding: 12, paddingBottom: 18, maxHeight: '86%' },
   deckMetaText: { color: GOLD_L, fontSize: 11, textAlign: 'center', marginBottom: 6 },
@@ -5102,7 +6028,7 @@ const styles = StyleSheet.create({
   storyPlayBtnLocked: { borderColor: 'rgba(120,120,120,0.35)', backgroundColor: 'rgba(80,80,80,0.2)' },
   storyPlayText: { color: GOLD, fontSize: 10, fontWeight: '700' },
   tutorialHintBox: { width: '96%', borderWidth: 1, borderColor: 'rgba(132,186,255,0.45)', backgroundColor: 'rgba(25,38,65,0.85)', borderRadius: 8, paddingVertical: 4, paddingHorizontal: 8, marginTop: 2, marginBottom: 2 },
-  tutorialHintText: { color: '#d7ebff', fontSize: 9, textAlign: 'center' },
+  tutorialHintText: { color: '#d7ebff', fontSize: 10, lineHeight: 15, textAlign: 'center' },
   tutorialSkipBtn: { marginTop: 6, alignSelf: 'center', borderWidth: 1, borderColor: 'rgba(255,255,255,0.35)', borderRadius: 999, paddingVertical: 4, paddingHorizontal: 10, backgroundColor: 'rgba(12,19,36,0.75)' },
   tutorialSkipText: { color: '#ffe6be', fontSize: 9, fontWeight: '700' },
   deckPoolRow: { gap: 6, paddingHorizontal: 2, paddingBottom: 6 },

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ActivityIndicator, Text } from 'react-native';
+import { COLORS } from '../lib/themeColors';
 import { WebView } from 'react-native-webview';
 import { conquestMapHtml } from '../lib/conquestMapHtml';
 
@@ -67,7 +68,7 @@ export default function ConquestMap() {
         }}
         renderLoading={() => (
           <View style={[styles.container, styles.centerContent]}>
-            <ActivityIndicator size="large" color="#1e90ff" />
+            <ActivityIndicator size="large" color={COLORS.brandBlue} />
             <Text style={styles.loadingText}>Loading map...</Text>
           </View>
         )}
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: 700,
-    backgroundColor: '#0b1226',
+    backgroundColor: COLORS.bgDeep,
     marginVertical: 20,
     borderRadius: 12,
     overflow: 'hidden',
@@ -95,12 +96,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   loadingText: {
-    color: '#cbd5e1',
+    color: COLORS.slate300,
     marginTop: 10,
     fontSize: 16,
   },
   errorText: {
-    color: '#ef4444',
+    color: COLORS.danger,
     fontSize: 16,
     textAlign: 'center',
     padding: 20,

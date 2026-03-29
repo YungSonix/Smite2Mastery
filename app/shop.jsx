@@ -19,6 +19,7 @@ import {
   DAILY_GOLD_AMOUNT,
 } from '../lib/shopData';
 import { fetchUserShopData, updateUserShopData, fetchLeaderboard } from '../lib/shopSupabase';
+import { GOLD_ICON } from '../lib/imageGrabber';
 
 const IS_WEB = Platform.OS === 'web';
 
@@ -409,7 +410,7 @@ export default function ShopPage({ currentUsername = null, onNavigateToProfile, 
       <View style={styles.goldRow}>
         <View style={styles.goldBadge}>
           <Image
-            source={require('./data/Icons/Stat Icons/goldIcon.png')}
+            source={GOLD_ICON}
             style={styles.goldIcon}
             contentFit="contain"
           />

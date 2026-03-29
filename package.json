@@ -16,7 +16,9 @@
     "list-missing-voice": "node scripts/list-missing-voice-gods.js",
     "check-voice-audio": "node scripts/check-voice-audio.js",
     "import-wallpapers": "node scripts/import-wallpapers-to-builds.js",
-    "import-wallpapers:audit": "node scripts/import-wallpapers-to-builds.js --audit"
+    "import-wallpapers:audit": "node scripts/import-wallpapers-to-builds.js --audit",
+    "web-inspect:on": "node scripts/toggle-web-inspect.js on",
+    "web-inspect:off": "node scripts/toggle-web-inspect.js off"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",

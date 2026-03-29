@@ -1,7 +1,8 @@
+import { COLORS } from '../lib/themeColors';
 export const BRAND_COLORS = {
-  PRIMARY_BLUE: '#1e90ff',
-  SUCCESS_GREEN: '#10b981',
-  ERROR_RED: '#ef4444',
+  PRIMARY_BLUE: COLORS.brandBlue,
+  SUCCESS_GREEN: COLORS.success,
+  ERROR_RED: COLORS.danger,
 } as const;
 
 export const CONSOLE_STYLES = {

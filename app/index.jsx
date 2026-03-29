@@ -13,6 +13,7 @@ import {
   Linking,
   Alert,
   Share,
+  InteractionManager,
 } from 'react-native';
 import CryptoJS from 'crypto-js';
 import { Image } from 'expo-image';
@@ -24,7 +25,8 @@ import {
   REMOTE_BASE_URLS,
   STORAGE_KEYS,
 } from '../config';
-import { getRoleIcon } from './localIcons';
+import { normalizeBuildsGod, flattenBuildsGods } from '../lib/normalizeBuildsGod';
+import { getLocalGodAsset, getLocalItemIcon, getPantheonBorderColor, getPantheonIcon, getRoleIcon } from './localIcons';
 // Lazy load page components to reduce initial bundle size
 const HomePage = lazy(() => import('./home'));
 const DataPage = lazy(() => import('./data'));
@@ -36,11 +38,12 @@ const SmiteWarsPage = lazy(() => import('./prophecy'));
 const WordlePage = lazy(() => import('./wordle'));
 const MyBuildsPage = lazy(() => import('./mybuilds'));
 const TierlistPage = lazy(() => import('./tierlist'));
+const GuidesPage = lazy(() => import('../lib/guidesPage'));
 // Lazy load the large JSON to prevent startup crash
 let localBuilds = null;
 
 const IS_WEB = Platform.OS === 'web';
-import { getLocalItemIcon, getLocalGodAsset } from './localIcons';
+const WEB_INSPECT_LOCK_ENABLED = String(process.env.EXPO_PUBLIC_WEB_INSPECT_LOCK ?? 'true').toLowerCase() === 'true';
 
 // Import supabase lazily to avoid module load errors on mobile
 let supabase = null;
@@ -96,6 +99,44 @@ const getBuildCategory = (build) => {
   if (FEATURED_AUTHORS.includes(author)) return 'featured';
   if (CONTRIBUTORS_AUTHORS.includes(author)) return 'contributors';
   return 'community';
+};
+
+/** UI label for build patch (e.g. Open BETA 30 → OB 30) */
+const formatBuildPatchLabel = (raw) => {
+  if (raw == null || raw === '') return '';
+  return String(raw)
+    .trim()
+    .replace(/\bOpen\s+B(?:ETA|eta)\b/gi, 'OB')
+    .replace(/\bOpen\s+Beta\b/gi, 'OB')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+};
+
+const resolveRelicItemMeta = (findItem, raw) => {
+  const relicName =
+    typeof raw === 'string'
+      ? raw.trim()
+      : (raw && (raw.name || raw.internalName || '')) || '';
+  if (!relicName) return { meta: null, lookupName: '' };
+  const tries = [
+    relicName,
+    relicName.replace(/\s+/g, ''),
+    relicName
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((p) => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase())
+      .join(''),
+  ];
+  for (const t of tries) {
+    if (!t) continue;
+    try {
+      const meta = findItem(t);
+      if (meta) return { meta, lookupName: relicName };
+    } catch (_) {
+      /* ignore */
+    }
+  }
+  return { meta: null, lookupName: relicName };
 };
 
 // God icon URL for contributor PFPs (matches profile.jsx)
@@ -185,7 +226,17 @@ const storage = {
   },
 };
 
-function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = false, onNavigateToGod = null, onNavigateToCustomBuild = null, initialBuildCategory = 'featured', onNavigateToUserProfile = null }) {
+function BuildsPage({
+  onGodIconPress,
+  initialTab = 'builds',
+  hideInternalTabs = false,
+  onNavigateToGod = null,
+  onNavigateToCustomBuild = null,
+  initialBuildCategory = 'featured',
+  onNavigateToUserProfile = null,
+  hubMode = 'browse',
+  onHubModeChange = () => {},
+}) {
   const [builds, setBuilds] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -200,9 +251,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
   const [selectedTip, setSelectedTip] = useState(null); // { tip, tipIndex, godIndex }
   const [failedItemIcons, setFailedItemIcons] = useState({}); // Track which item icons failed to load
   const [activeTab, setActiveTab] = useState(initialTab === 'randomizer' ? 'randomizer' : 'builds'); // 'builds' or 'randomizer'
-  const [pinnedBuilds, setPinnedBuilds] = useState(new Set()); // Track pinned builds
-  const [expandedCardSections, setExpandedCardSections] = useState({}); // { [`${idx}-${buildIdx}-leveling`]: true, ... } app-only collapse
-  const [tipsSwapsTab, setTipsSwapsTab] = useState({}); // { [`${idx}-${buildIdx}`]: 'tips' | 'swaps' } for contributor/community
+  const [expandedCardSections, setExpandedCardSections] = useState({}); // item swaps (native), ability order: true = expanded; omitted = collapsed
   const [levelingTab, setLevelingTab] = useState({}); // { [`${idx}-${buildIdx}`]: 'start' | 'max' } for contributor/community
   const [buildCategory, setBuildCategory] = useState(initialBuildCategory); // 'featured', 'contributors', 'community', 'all'
   // Community builds from Supabase
@@ -258,18 +307,14 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
             
             // If user has an approved request, they're approved regardless of newer pending requests
             // Supabase returns an array, so check if array has items
-            console.log('🔍 Checking approved request for user:', user, 'approvedData:', approvedData, 'approvedError:', approvedError);
             const hasApprovedRequest = !approvedError && approvedData && (
               (Array.isArray(approvedData) && approvedData.length > 0) || 
               (approvedData && approvedData.status === 'approved')
             );
             
-            console.log('🔍 hasApprovedRequest:', hasApprovedRequest);
-            
             if (hasApprovedRequest) {
               setCertificationRequestStatus('approved');
               await storage.setItem(`certificationStatus_${user}`, 'approved');
-              console.log('✅ Certification status updated: approved (user has approved request)', 'for user:', user, 'data:', approvedData);
             } else {
               // Otherwise, check the most recent request
               const { data, error } = await supabaseClient
@@ -293,7 +338,6 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                 setCertificationRequestStatus(status); // 'pending', 'approved', 'rejected'
                 // Also save to local storage for persistence
                 await storage.setItem(`certificationStatus_${user}`, status);
-                console.log('✅ Certification status updated:', status, 'for user:', user);
               } else if (error && error.code !== 'PGRST116') {
                 // PGRST116 = no rows found, which is fine
                 // Check local storage as fallback
@@ -319,49 +363,40 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
     checkLogin();
   }, []);
   
-  // Load pinned builds from storage
+  // Sync activeTab with initialTab when it changes (e.g. sub-nav Randomizer)
   useEffect(() => {
-    const loadPinnedBuilds = async () => {
-      const currentUser = await storage.getItem('currentUser');
-      if (currentUser) {
-        const pinnedBuildsData = await storage.getItem(`pinnedBuilds_${currentUser}`);
-        if (pinnedBuildsData) {
-          const pinned = JSON.parse(pinnedBuildsData);
-          const buildKeys = new Set(pinned.map(b => b.buildKey));
-          setPinnedBuilds(buildKeys);
-        }
-      }
-    };
-    loadPinnedBuilds();
-  }, []);
-  
-  // Sync activeTab with initialTab when it changes
-  useEffect(() => {
-    if (initialTab === 'builds') {
-      setActiveTab(initialTab);
+    if (initialTab === 'randomizer') {
+      setActiveTab('randomizer');
+    } else {
+      setActiveTab('builds');
     }
   }, [initialTab]);
 
-  // Lazy load the builds data immediately
+  const showTierlists =
+    activeTab !== 'randomizer' &&
+    ((hideInternalTabs && hubMode === 'tierlists' && activeTab === 'builds') ||
+      (!hideInternalTabs && activeTab === 'tierlists'));
+
+  // Defer parsing large builds.json until after navigation/animations finish (smoother tab open).
   useEffect(() => {
     let isMounted = true;
-    
-    // Load immediately without delay
-    try {
-      const data = require('./data/builds.json');
-      if (isMounted) {
-        setBuilds(data);
-        setLoading(false);
+    const task = InteractionManager.runAfterInteractions(() => {
+      try {
+        const data = require('./data/builds.json');
+        if (isMounted) {
+          setBuilds(data);
+          setLoading(false);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setError('Failed to load builds data');
+          setLoading(false);
+        }
       }
-    } catch (err) {
-      if (isMounted) {
-        setError('Failed to load builds data');
-        setLoading(false);
-      }
-    }
-    
+    });
     return () => {
       isMounted = false;
+      task?.cancel?.();
     };
   }, []);
 
@@ -386,7 +421,6 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
       try {
         const supabaseClient = getSupabase();
         if (!supabaseClient || !supabaseClient.from) {
-          console.log('⚠️ Supabase client not available');
           if (isMounted) {
             setLoadingCommunityBuilds(false);
             setLoadingContributorsBuilds(false);
@@ -397,7 +431,6 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
         // Load community builds
         if (buildCategory === 'community') {
           setLoadingCommunityBuilds(true);
-          console.log('🔄 Loading community builds from Supabase...');
           const { data, error } = await supabaseClient
             .from('community_builds')
             .select('*')
@@ -411,7 +444,6 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
             return;
           }
           
-          console.log(`✅ Loaded ${data?.length || 0} community builds from database`);
           if (isMounted && data) {
             setCommunityBuildsFromDB(data || []);
             setLoadingCommunityBuilds(false);
@@ -421,7 +453,6 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
         // Load contributors builds (from contributor_builds table)
         if (buildCategory === 'contributors') {
           setLoadingContributorsBuilds(true);
-          console.log('🔄 Loading contributors builds from Supabase...');
           const { data: contributorsData, error: contributorsError } = await supabaseClient
             .from('contributor_builds')
             .select('*')
@@ -435,18 +466,9 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
             return;
           }
           
-          console.log(`✅ Loaded ${contributorsData?.length || 0} contributors builds from database`);
           if (contributorsData && contributorsData.length > 0) {
-            console.log('📦 Contributors builds data:', contributorsData.map(b => ({ 
-              id: b.id, 
-              username: b.username, 
-              build_name: b.build_name, 
-              god_name: b.god_name 
-            })));
-            // Extract unique usernames from contributors builds
             const usernames = new Set(contributorsData.map(b => b.username).filter(Boolean));
             setContributorsUsers(usernames);
-            console.log('✅ Contributors users:', Array.from(usernames));
           }
           if (isMounted && contributorsData) {
             setContributorsBuildsFromDB(contributorsData || []);
@@ -534,7 +556,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
     return a.flat(Infinity).filter(Boolean);
   }
 
-  const gods = builds ? flattenAny(builds.gods) : [];
+  const gods = builds ? flattenBuildsGods(builds.gods) : [];
   const items = builds ? flattenAny(builds.items) : [];
 
   // Create a fast lookup map for items to avoid expensive recursive searches
@@ -605,9 +627,9 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
     for (let gi = 0; gi < groups.length; gi++) {
       const gGroup = Array.isArray(groups[gi]) ? groups[gi] : (gi === 0 && !Array.isArray(groups[0]) ? [groups] : []);
       for (let j = 0; j < gGroup.length; j++) {
-        const god = gGroup[j] || null;
-        if (god) {
-          // Extract builds array from god object
+        const rawGod = gGroup[j] || null;
+        if (rawGod) {
+          const god = normalizeBuildsGod(rawGod);
           const godBuilds = (god.builds && Array.isArray(god.builds)) ? god.builds : [];
           pairs.push({ god, builds: godBuilds });
         }
@@ -628,7 +650,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
       if (!godInternalName) return;
       
       // Find the god in the builds.json data
-      const allGods = flattenAny(builds.gods);
+      const allGods = flattenBuildsGods(builds.gods);
       // Normalize god names for matching (remove _Item suffix, handle variations)
       const normalizedDbName = godInternalName.toLowerCase().replace(/_item$/, '');
       let god = allGods.find(g => {
@@ -659,6 +681,12 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
         items: dbBuild.items || [],
         startingItems: dbBuild.starting_items || [],
         relic: dbBuild.relic || null,
+        starting_relic: dbBuild.starting_relic || null,
+        final_relic: dbBuild.final_relic || null,
+        last_edit: dbBuild.last_edit || null,
+        based_on_patch: dbBuild.based_on_patch || null,
+        starting_abilities: dbBuild.starting_abilities || null,
+        ability_max_order: dbBuild.ability_max_order || null,
         godLevel: dbBuild.god_level || 20,
         aspectActive: dbBuild.aspect_active || false,
         gamemodes: dbBuild.gamemodes || [],
@@ -690,9 +718,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
 
   // Transform contributors builds from DB into the same format as JSON builds
   const transformedContributorsBuilds = useMemo(() => {
-    console.log('🔄 Transforming contributors builds, count:', contributorsBuildsFromDB.length);
     if (!builds || contributorsBuildsFromDB.length === 0) {
-      console.log('⚠️ No contributors builds to transform');
       return null;
     }
     
@@ -704,7 +730,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
       if (!godInternalName) return;
       
       // Find the god in the builds.json data
-      const allGods = flattenAny(builds.gods);
+      const allGods = flattenBuildsGods(builds.gods);
       // Normalize god names for matching (remove _Item suffix, handle variations)
       const normalizedDbName = godInternalName.toLowerCase().replace(/_item$/, '');
       let god = allGods.find(g => {
@@ -735,6 +761,12 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
         items: dbBuild.items || [],
         startingItems: dbBuild.starting_items || [],
         relic: dbBuild.relic || null,
+        starting_relic: dbBuild.starting_relic || null,
+        final_relic: dbBuild.final_relic || null,
+        last_edit: dbBuild.last_edit || null,
+        based_on_patch: dbBuild.based_on_patch || null,
+        starting_abilities: dbBuild.starting_abilities || null,
+        ability_max_order: dbBuild.ability_max_order || null,
         godLevel: dbBuild.god_level || 20,
         aspectActive: dbBuild.aspect_active || false,
         gamemodes: dbBuild.gamemodes || [],
@@ -761,15 +793,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
       godMap.get(godInternalName).builds.push(transformedBuild);
     });
     
-    const result = Array.from(godMap.values());
-    console.log('✅ Transformed contributors builds into', result.length, 'god pairs');
-    if (result.length > 0) {
-      console.log('📋 Contributors build pairs:', result.map(p => ({
-        god: p.god?.name || p.god?.GodName,
-        buildCount: p.builds?.length || 0
-      })));
-    }
-    return result;
+    return Array.from(godMap.values());
   }, [builds, contributorsBuildsFromDB, contributorsUserData]);
 
   // Memoize pairs to avoid recalculating on every render
@@ -835,13 +859,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
     }
     
     // Merge contributors builds if on contributors tab
-    console.log('🔍 Checking contributors builds merge - buildCategory:', buildCategory, 'transformedContributorsBuilds:', transformedContributorsBuilds?.length || 0);
     if (buildCategory === 'contributors' && transformedContributorsBuilds && transformedContributorsBuilds.length > 0) {
-      console.log('✅ Merging', transformedContributorsBuilds.length, 'contributors build pairs');
-      console.log('📦 Contributors pairs to merge:', transformedContributorsBuilds.map(p => ({
-        god: p.god?.name || p.god?.GodName,
-        builds: p.builds?.length || 0
-      })));
       transformedContributorsBuilds.forEach((dbPair) => {
         const existingIndex = mergedPairs.findIndex(p => {
           const godName = p.god?.internalName || p.god?.GodName || '';
@@ -862,11 +880,6 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
       });
     }
     
-    console.log('📊 Final merged pairs count:', mergedPairs.length, 'for category:', buildCategory);
-    if (buildCategory === 'contributors') {
-      const contributorsBuildCount = mergedPairs.reduce((sum, p) => sum + (p.builds?.filter(b => b.databaseCategory === 'contributors' || getBuildCategory(b) === 'contributors').length || 0), 0);
-      console.log('📊 Total contributors builds in merged pairs:', contributorsBuildCount);
-    }
     return mergedPairs;
   }, [builds, buildCategory, transformedCommunityBuilds, transformedContributorsBuilds]);
 
@@ -1019,31 +1032,6 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
     
     // Store pairs with original indices before filtering/sorting
     let result = categoryFilteredPairs.map((pair, origIdx) => ({ pair, origIdx }));
-    
-    // Sort pairs to prioritize pinned builds - pinned builds appear first
-    result = result.sort((a, b) => {
-      const aBuilds = Array.isArray(a.pair.builds) ? a.pair.builds : [];
-      const bBuilds = Array.isArray(b.pair.builds) ? b.pair.builds : [];
-      
-      // Check if any builds in pair a are pinned (using original index)
-      const aHasPinned = aBuilds.some((build, buildIdx) => {
-        const aTitle = (a.pair.god?.name || a.pair.god?.GodName || 'Unknown');
-        const buildKey = `${aTitle}-${a.origIdx}-${buildIdx}`;
-        return pinnedBuilds.has(buildKey);
-      });
-      
-      // Check if any builds in pair b are pinned (using original index)
-      const bHasPinned = bBuilds.some((build, buildIdx) => {
-        const bTitle = (b.pair.god?.name || b.pair.god?.GodName || 'Unknown');
-        const buildKey = `${bTitle}-${b.origIdx}-${buildIdx}`;
-        return pinnedBuilds.has(buildKey);
-      });
-      
-      // Pinned pairs come first
-      if (aHasPinned && !bHasPinned) return -1;
-      if (!aHasPinned && bHasPinned) return 1;
-      return 0;
-    });
     
     // Filter by role if selected
     if (selectedRole) {
@@ -1220,27 +1208,22 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
         const pantheon = (god.pantheon || '').toString().toLowerCase();
         return name.includes(lowerQuery) || role.includes(lowerQuery) || pantheon.includes(lowerQuery);
       });
-    } else if (!selectedRole && !selectedAuthor && !selectedGod && (!selectedGamemodes || selectedGamemodes.length === 0)) {
-      // If no search query and no filters, only show first N gods for performance
-      result = result.slice(0, initialDisplayLimit);
     }
-    
-    // Sort alphabetically by god name (case-insensitive)
+
+    // Sort alphabetically by god name (case-insensitive) before capping the default list
     result.sort((a, b) => {
       const aTitle = (a.pair.god?.name || a.pair.god?.GodName || a.pair.god?.title || a.pair.god?.displayName || 'Unknown').toString().toLowerCase();
       const bTitle = (b.pair.god?.name || b.pair.god?.GodName || b.pair.god?.title || b.pair.god?.displayName || 'Unknown').toString().toLowerCase();
       return aTitle.localeCompare(bTitle);
     });
+
+    if (!lowerQuery && !selectedRole && !selectedAuthor && !selectedGod && (!selectedGamemodes || selectedGamemodes.length === 0)) {
+      result = result.slice(0, initialDisplayLimit);
+    }
     
     // Extract just the pairs after filtering/sorting
-    const finalResult = result.map(({ pair }) => pair);
-    console.log('🔍 Filtered result count:', finalResult.length, 'for category:', buildCategory);
-    if (buildCategory === 'contributors' && finalResult.length > 0) {
-      const totalBuilds = finalResult.reduce((sum, p) => sum + (p.builds?.length || 0), 0);
-      console.log('📊 Total builds in filtered result:', totalBuilds);
-    }
-    return finalResult;
-  }, [pairs, buildCategory, debouncedQuery, selectedRole, selectedAuthor, selectedGod, selectedGamemodes, initialDisplayLimit, pinnedBuilds]);
+    return result.map(({ pair }) => pair);
+  }, [pairs, buildCategory, debouncedQuery, selectedRole, selectedAuthor, selectedGod, selectedGamemodes, initialDisplayLimit]);
 
   // Fast item lookup function using the pre-built map
   const findItem = useCallback((metaName) => {
@@ -1332,12 +1315,12 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[styles.tabButton, activeTab === 'guides' && styles.tabButtonActive]}
-              onPress={() => setActiveTab('guides')}
+              style={[styles.tabButton, activeTab === 'tierlists' && styles.tabButtonActive]}
+              onPress={() => setActiveTab('tierlists')}
               activeOpacity={0.7}
             >
-              <Text style={[styles.tabButtonText, activeTab === 'guides' && styles.tabButtonTextActive]}>
-                Guides
+              <Text style={[styles.tabButtonText, activeTab === 'tierlists' && styles.tabButtonTextActive]}>
+                Tierlists
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -1365,10 +1348,33 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
         )}
       </View>
 
+      {hideInternalTabs && activeTab === 'builds' && (
+        <View style={styles.buildsHubRow}>
+          <TouchableOpacity
+            style={[styles.tabButton, hubMode === 'browse' && styles.tabButtonActive]}
+            onPress={() => onHubModeChange('browse')}
+            activeOpacity={0.7}
+          >
+            <Text style={[styles.tabButtonText, hubMode === 'browse' && styles.tabButtonTextActive]}>
+              Browse builds
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.tabButton, hubMode === 'tierlists' && styles.tabButtonActive]}
+            onPress={() => onHubModeChange('tierlists')}
+            activeOpacity={0.7}
+          >
+            <Text style={[styles.tabButtonText, hubMode === 'tierlists' && styles.tabButtonTextActive]}>
+              Tierlists
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
       {activeTab === 'randomizer' ? (
         <ScrollView 
           style={styles.guidesContainer} 
-          contentContainerStyle={styles.guidesContentContainer}
+          contentContainerStyle={[styles.guidesContentContainer, randomizerStyles.randomizerContentContainer]}
           showsVerticalScrollIndicator={false}
         >
           {/* Randomizer Section */}
@@ -1479,117 +1485,120 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
               </TouchableOpacity>
             </View>
 
-            {/* God Randomizer */}
             <View style={randomizerStyles.randomizerSection}>
-              <Text style={randomizerStyles.randomizerTitle}>Random God</Text>
-              <View style={randomizerStyles.randomizerGodContainer}>
-                {randomGod ? (
-                  <>
-                    <TouchableOpacity
-                      style={randomizerStyles.randomizerGodCard}
-                      onPress={() => {
-                        if (randomGod) {
-                          if (onNavigateToGod) {
-                            onNavigateToGod(randomGod);
-                          } else if (onGodIconPress) {
-                            onGodIconPress(randomGod);
+              <Text style={randomizerStyles.randomizerTitle}>Randomizer</Text>
+              <View style={randomizerStyles.randomizerCombinedTopContent}>
+                <View style={randomizerStyles.randomizerCombinedGodColumn}>
+                  <Text style={randomizerStyles.randomizerSubtitle}>God:</Text>
+                  <View style={randomizerStyles.randomizerGodContainer}>
+                  {randomGod ? (
+                    <>
+                      <TouchableOpacity
+                        style={randomizerStyles.randomizerGodCard}
+                        onPress={() => {
+                          if (randomGod) {
+                            if (onNavigateToGod) {
+                              onNavigateToGod(randomGod);
+                            } else if (onGodIconPress) {
+                              onGodIconPress(randomGod);
+                            }
                           }
-                        }
-                      }}
-                      activeOpacity={0.7}
-                    >
-                      <Image
-                        source={getLocalGodAsset(randomGod.icon || randomGod.GodIcon || (randomGod.abilities && randomGod.abilities.A01 && randomGod.abilities.A01.icon))}
-                        style={randomizerStyles.randomizerGodIcon}
-                        resizeMode="cover"
-                      />
-                      <Text style={randomizerStyles.randomizerGodName}>
-                        {randomGod.name || randomGod.GodName || randomGod.title || randomGod.displayName || 'Unknown'}
-                      </Text>
-                    </TouchableOpacity>
-                    
-                    {/* Aspect Slot */}
-                    {randomGod.aspect && (
-                      <View
-                        style={[
-                          randomizerStyles.randomizerAspectSlot,
-                          aspectActive && randomizerStyles.randomizerAspectSlotActive
-                        ]}
+                        }}
+                        activeOpacity={0.7}
                       >
-                        {randomGod.aspect.icon ? (
-                          <Image
-                            source={getLocalGodAsset(randomGod.aspect.icon)}
-                            style={randomizerStyles.randomizerAspectIcon}
-                            resizeMode="cover"
-                          />
-                        ) : (
-                          <View style={randomizerStyles.randomizerAspectIconPlaceholder}>
-                            <Text style={randomizerStyles.randomizerAspectIconPlaceholderText}>A</Text>
-                          </View>
-                        )}
-                        <Text style={randomizerStyles.randomizerAspectName} numberOfLines={2}>
-                          {randomGod.aspect.name || 'Aspect'}
+                        <Image
+                          source={getLocalGodAsset(randomGod.icon || randomGod.GodIcon || (randomGod.abilities && randomGod.abilities.A01 && randomGod.abilities.A01.icon))}
+                          style={randomizerStyles.randomizerGodIcon}
+                          contentFit="cover"
+                        />
+                        <Text style={randomizerStyles.randomizerGodName}>
+                          {randomGod.name || randomGod.GodName || randomGod.title || randomGod.displayName || 'Unknown'}
                         </Text>
-                        {aspectActive && (
-                          <View style={randomizerStyles.randomizerAspectActiveIndicator}>
-                            <Text style={randomizerStyles.randomizerAspectActiveText}>✓</Text>
-                          </View>
-                        )}
-                      </View>
-                    )}
-                  </>
-                ) : (
-                  <View style={randomizerStyles.randomizerGodPlaceholder}>
-                    <Text style={randomizerStyles.randomizerPlaceholderText}>No God Selected</Text>
-                  </View>
-                )}
-              </View>
-              <View style={randomizerStyles.randomizerButtonRow}>
-                <TouchableOpacity
-                  style={[randomizerStyles.randomizerButton, godRerolls === 0 && randomizerStyles.randomizerButtonDisabled]}
-                  onPress={() => {
-                    if (godRerolls > 0 && gods.length > 0) {
-                      const randomIndex = Math.floor(Math.random() * gods.length);
-                      const newGod = gods[randomIndex];
-                      setRandomGod(newGod);
-                      // Randomly activate aspect if god has one
-                      if (newGod && newGod.aspect) {
-                        setAspectActive(Math.random() > 0.5); // 50% chance to be active
-                      } else {
-                        setAspectActive(false);
+                      </TouchableOpacity>
+                      
+                      {/* Aspect Slot */}
+                      {randomGod.aspect && (
+                        <View
+                          style={[
+                            randomizerStyles.randomizerAspectSlot,
+                            aspectActive && randomizerStyles.randomizerAspectSlotActive
+                          ]}
+                        >
+                          {randomGod.aspect.icon ? (
+                            <Image
+                              source={getLocalGodAsset(randomGod.aspect.icon)}
+                              style={randomizerStyles.randomizerAspectIcon}
+                              contentFit="cover"
+                            />
+                          ) : (
+                            <View style={randomizerStyles.randomizerAspectIconPlaceholder}>
+                              <Text style={randomizerStyles.randomizerAspectIconPlaceholderText}>A</Text>
+                            </View>
+                          )}
+                          <Text style={randomizerStyles.randomizerAspectName} numberOfLines={2}>
+                            {randomGod.aspect.name || 'Aspect'}
+                          </Text>
+                          {aspectActive && (
+                            <View style={randomizerStyles.randomizerAspectActiveIndicator}>
+                              <Text style={randomizerStyles.randomizerAspectActiveText}>✓</Text>
+                            </View>
+                          )}
+                        </View>
+                      )}
+                    </>
+                  ) : (
+                    <View style={randomizerStyles.randomizerGodPlaceholder}>
+                      <Text style={randomizerStyles.randomizerPlaceholderText}>No God Selected</Text>
+                    </View>
+                  )}
+                </View>
+                <View style={randomizerStyles.randomizerButtonRow}>
+                  <TouchableOpacity
+                    style={[randomizerStyles.randomizerButton, godRerolls === 0 && randomizerStyles.randomizerButtonDisabled]}
+                    onPress={() => {
+                      if (godRerolls > 0 && gods.length > 0) {
+                        const randomIndex = Math.floor(Math.random() * gods.length);
+                        const newGod = gods[randomIndex];
+                        setRandomGod(newGod);
+                        // Randomly activate aspect if god has one
+                        if (newGod && newGod.aspect) {
+                          setAspectActive(Math.random() > 0.5); // 50% chance to be active
+                        } else {
+                          setAspectActive(false);
+                        }
+                        setGodRerolls(godRerolls - 1);
                       }
-                      setGodRerolls(godRerolls - 1);
-                    }
-                  }}
-                  disabled={godRerolls === 0}
-                >
-                  <Text style={randomizerStyles.randomizerButtonText}>
-                    Randomize God {godRerolls > 0 ? `(${godRerolls} left)` : '(No rerolls)'}
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[randomizerStyles.randomizerResetButton]}
-                  onPress={() => {
-                    setGodRerolls(3);
-                    setRandomGod(null);
-                    setAspectActive(false);
-                  }}
-                >
-                  <Text style={randomizerStyles.randomizerResetButtonText}>Reset</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+                    }}
+                    disabled={godRerolls === 0}
+                  >
+                    <Text style={randomizerStyles.randomizerButtonText}>
+                      Randomize God {godRerolls > 0 ? `(${godRerolls} left)` : '(No rerolls)'}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[randomizerStyles.randomizerResetButton]}
+                    onPress={() => {
+                      setGodRerolls(3);
+                      setRandomGod(null);
+                      setAspectActive(false);
+                    }}
+                  >
+                    <Text style={randomizerStyles.randomizerResetButtonText}>Reset</Text>
+                  </TouchableOpacity>
+                </View>
+                </View>
 
-            {/* Items Randomizer */}
-            <View style={randomizerStyles.randomizerSection}>
-              <Text style={randomizerStyles.randomizerTitle}>Random Build</Text>
+                <View style={randomizerStyles.randomizerCombinedBuildColumn}>
+                <Text style={randomizerStyles.randomizerSubtitle}>Build:</Text>
               
-              {/* Starter Item */}
+              {/* Starter + Relic Row */}
               <View style={randomizerStyles.randomizerStarterSection}>
-                <Text style={randomizerStyles.randomizerSubtitle}>Starter:</Text>
-                <View style={randomizerStyles.randomizerStarterContainer}>
-                  {randomItems[0] ? (
-                    <View style={randomizerStyles.randomizerItemSlotWrapper}>
+                <Text style={randomizerStyles.randomizerSubtitle}>Starter + Relic:</Text>
+                <View style={randomizerStyles.randomizerStarterRelicRow}>
+                  <View style={randomizerStyles.randomizerStarterRelicCell}>
+                    <Text style={randomizerStyles.randomizerSlotLabel}>Starter</Text>
+                    {randomItems[0] ? (
+                    <View style={[randomizerStyles.randomizerItemSlotWrapper, randomizerStyles.randomizerStarterRelicSlotWrapper]}>
                       <TouchableOpacity
                         style={randomizerStyles.randomizerItemSlot}
                         onPress={() => {
@@ -1619,7 +1628,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                             <Image
                               source={imageSource}
                               style={randomizerStyles.randomizerItemIcon}
-                              resizeMode="cover"
+                              contentFit="cover"
                               onError={() => {
                                 setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
                               }}
@@ -1631,7 +1640,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                             <Image
                               source={fallbackSource}
                               style={randomizerStyles.randomizerItemIcon}
-                              resizeMode="cover"
+                              contentFit="cover"
                             />
                           );
                         }
@@ -1639,7 +1648,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                           <Image
                             source={imageSource}
                             style={randomizerStyles.randomizerItemIcon}
-                            resizeMode="cover"
+                            contentFit="cover"
                           />
                         );
                       })()}
@@ -1669,10 +1678,136 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                       </TouchableOpacity>
                     </View>
                   ) : (
-                    <View style={randomizerStyles.randomizerItemPlaceholder}>
-                      <Text style={randomizerStyles.randomizerItemPlaceholderText}>+</Text>
+                    <View style={[randomizerStyles.randomizerItemSlotWrapper, randomizerStyles.randomizerStarterRelicSlotWrapper]}>
+                      <View style={randomizerStyles.randomizerItemSlot}>
+                        <View style={randomizerStyles.randomizerItemPlaceholder}>
+                          <Text style={randomizerStyles.randomizerItemPlaceholderText}>+</Text>
+                        </View>
+                      </View>
+                      <TouchableOpacity
+                        style={randomizerStyles.randomizerItemRandomizeButton}
+                        onPress={() => {
+                          const starterItems = items.filter(item => {
+                            if (!item || typeof item !== 'object') return false;
+                            return item.starter === true && (item.name || item.internalName);
+                          });
+                          if (starterItems.length > 0) {
+                            const randomIndex = Math.floor(Math.random() * starterItems.length);
+                            const newItems = [...randomItems];
+                            newItems[0] = starterItems[randomIndex];
+                            setRandomItems(newItems);
+                          }
+                        }}
+                        activeOpacity={0.7}
+                      >
+                        <Text style={randomizerStyles.randomizerItemRandomizeButtonText}>RR</Text>
+                      </TouchableOpacity>
                     </View>
                   )}
+                  </View>
+                  <View style={randomizerStyles.randomizerStarterRelicCell}>
+                    <Text style={randomizerStyles.randomizerSlotLabel}>Relic</Text>
+                    {randomRelic ? (
+                    <View style={[randomizerStyles.randomizerItemSlotWrapper, randomizerStyles.randomizerStarterRelicSlotWrapper]}>
+                      <TouchableOpacity
+                        style={randomizerStyles.randomizerItemSlot}
+                        onPress={() => {
+                          if (randomRelic) {
+                            setSelectedRandomItem({ item: randomRelic, itemName: randomRelic.name || randomRelic.internalName || 'Unknown' });
+                          }
+                        }}
+                        activeOpacity={0.7}
+                      >
+                        {(() => {
+                          const localIcon = getLocalItemIcon(randomRelic.icon || randomRelic.internalName);
+                          if (!localIcon) {
+                            return (
+                              <View style={randomizerStyles.randomizerItemIconPlaceholder}>
+                                <Text style={randomizerStyles.randomizerItemIconPlaceholderText}>?</Text>
+                              </View>
+                            );
+                          }
+                          const imageSource = localIcon.primary || localIcon;
+                          const fallbackSource = localIcon.fallback;
+                          const iconKey = `random-relic-${randomRelic.internalName || randomRelic.name}`;
+                          const useFallback = failedItemIcons[iconKey];
+
+                          if (fallbackSource && !useFallback) {
+                            return (
+                              <Image
+                                source={imageSource}
+                                style={randomizerStyles.randomizerItemIcon}
+                                contentFit="cover"
+                                onError={() => {
+                                  setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+                                }}
+                              />
+                            );
+                          }
+                          if (fallbackSource && useFallback) {
+                            return (
+                              <Image
+                                source={fallbackSource}
+                                style={randomizerStyles.randomizerItemIcon}
+                                contentFit="cover"
+                              />
+                            );
+                          }
+                          return (
+                            <Image
+                              source={imageSource}
+                              style={randomizerStyles.randomizerItemIcon}
+                              contentFit="cover"
+                            />
+                          );
+                        })()}
+                        <Text style={randomizerStyles.randomizerItemName} numberOfLines={2}>
+                          {randomRelic.name || randomRelic.internalName}
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={randomizerStyles.randomizerItemRandomizeButton}
+                        onPress={() => {
+                          const relics = items.filter(item => {
+                            if (!item || typeof item !== 'object') return false;
+                            return item.relic === true;
+                          });
+                          if (relics.length > 0) {
+                            const randomIndex = Math.floor(Math.random() * relics.length);
+                            setRandomRelic(relics[randomIndex]);
+                          }
+                        }}
+                        activeOpacity={0.7}
+                      >
+                        <Text style={randomizerStyles.randomizerItemRandomizeButtonText}>RR</Text>
+                      </TouchableOpacity>
+                    </View>
+                  ) : (
+                    <View style={[randomizerStyles.randomizerItemSlotWrapper, randomizerStyles.randomizerStarterRelicSlotWrapper]}>
+                      <View style={randomizerStyles.randomizerItemSlot}>
+                        <View style={randomizerStyles.randomizerItemPlaceholder}>
+                          <Text style={randomizerStyles.randomizerItemPlaceholderText}>+</Text>
+                        </View>
+                      </View>
+                      <TouchableOpacity
+                        style={randomizerStyles.randomizerItemRandomizeButton}
+                        onPress={() => {
+                          const relics = items.filter(item => {
+                            if (!item || typeof item !== 'object') return false;
+                            return item.relic === true;
+                          });
+                          if (relics.length > 0) {
+                            const randomIndex = Math.floor(Math.random() * relics.length);
+                            setRandomRelic(relics[randomIndex]);
+                          }
+                        }}
+                        activeOpacity={0.7}
+                      >
+                        <Text style={randomizerStyles.randomizerItemRandomizeButtonText}>RR</Text>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                  </View>
                 </View>
               </View>
 
@@ -1712,7 +1847,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                 <Image
                                   source={imageSource}
                                   style={randomizerStyles.randomizerItemIcon}
-                                  resizeMode="cover"
+                                  contentFit="cover"
                                   onError={() => {
                                     setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
                                   }}
@@ -1724,7 +1859,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                 <Image
                                   source={fallbackSource}
                                   style={randomizerStyles.randomizerItemIcon}
-                                  resizeMode="cover"
+                                  contentFit="cover"
                                 />
                               );
                             }
@@ -1732,7 +1867,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                               <Image
                                 source={imageSource}
                                 style={randomizerStyles.randomizerItemIcon}
-                                resizeMode="cover"
+                                contentFit="cover"
                               />
                             );
                           })()}
@@ -1887,110 +2022,25 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                   onPress={() => {
                     setItemRerolls(3);
                     setRandomItems(Array(7).fill(null));
-                  }}
-                >
-                  <Text style={randomizerStyles.randomizerResetButtonText}>Reset</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            {/* Relic Randomizer */}
-            <View style={randomizerStyles.randomizerSection}>
-              <Text style={randomizerStyles.randomizerTitle}>Random Relic</Text>
-              <View style={randomizerStyles.randomizerRelicContainer}>
-                {randomRelic ? (
-                  <TouchableOpacity
-                    style={randomizerStyles.randomizerRelicSlot}
-                    onPress={() => {
-                      if (randomRelic) {
-                        setSelectedRandomItem({ item: randomRelic, itemName: randomRelic.name || randomRelic.internalName || 'Unknown' });
-                      }
-                    }}
-                    activeOpacity={0.7}
-                  >
-                    {(() => {
-                      const localIcon = getLocalItemIcon(randomRelic.icon || randomRelic.internalName);
-                      if (!localIcon) {
-                        return (
-                          <View style={randomizerStyles.randomizerItemIconPlaceholder}>
-                            <Text style={randomizerStyles.randomizerItemIconPlaceholderText}>?</Text>
-                          </View>
-                        );
-                      }
-                      const imageSource = localIcon.primary || localIcon;
-                      const fallbackSource = localIcon.fallback;
-                      const iconKey = `random-relic-${randomRelic.internalName || randomRelic.name}`;
-                      const useFallback = failedItemIcons[iconKey];
-                      
-                      if (fallbackSource && !useFallback) {
-                        return (
-                          <Image
-                            source={imageSource}
-                            style={randomizerStyles.randomizerItemIcon}
-                            resizeMode="cover"
-                            onError={() => {
-                              setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
-                            }}
-                          />
-                        );
-                      }
-                      if (fallbackSource && useFallback) {
-                        return (
-                          <Image
-                            source={fallbackSource}
-                            style={randomizerStyles.randomizerItemIcon}
-                            resizeMode="cover"
-                          />
-                        );
-                      }
-                      return (
-                        <Image
-                          source={imageSource}
-                          style={randomizerStyles.randomizerItemIcon}
-                          resizeMode="cover"
-                        />
-                      );
-                    })()}
-                    <Text style={randomizerStyles.randomizerItemName} numberOfLines={2}>
-                      {randomRelic.name || randomRelic.internalName}
-                    </Text>
-                  </TouchableOpacity>
-                ) : (
-                  <View style={randomizerStyles.randomizerRelicPlaceholder}>
-                    <Text style={randomizerStyles.randomizerPlaceholderText}>No Relic Selected</Text>
-                  </View>
-                )}
-              </View>
-              <View style={randomizerStyles.randomizerButtonRow}>
-                <TouchableOpacity
-                  style={randomizerStyles.randomizerButton}
-                  onPress={() => {
-                    // Filter relics
-                    const relics = items.filter(item => {
-                      if (!item || typeof item !== 'object') return false;
-                      return item.relic === true;
-                    });
-                    
-                    if (relics.length > 0) {
-                      const randomIndex = Math.floor(Math.random() * relics.length);
-                      setRandomRelic(relics[randomIndex]);
-                    }
-                  }}
-                >
-                  <Text style={randomizerStyles.randomizerButtonText}>Randomize Relic</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[randomizerStyles.randomizerResetButton]}
-                  onPress={() => {
                     setRandomRelic(null);
                   }}
                 >
                   <Text style={randomizerStyles.randomizerResetButtonText}>Reset</Text>
                 </TouchableOpacity>
               </View>
+                </View>
+              </View>
             </View>
           </View>
         </ScrollView>
+      ) : showTierlists ? (
+        <Suspense
+          fallback={
+            <ActivityIndicator size="large" color="#1e90ff" style={{ padding: 24, alignSelf: 'center' }} />
+          }
+        >
+          <TierlistPage />
+        </Suspense>
       ) : (
         <>
       <View style={styles.controls}>
@@ -2061,10 +2111,10 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
           </View>
         {/* Filter buttons row */}
         <View style={styles.filterButtonsRow}>
-          {/* Role filter dropdown */}
-          <View style={styles.filterButtonContainer}>
+          {/* Role filter dropdown — wider column so labels like "Support" aren’t clipped */}
+          <View style={[styles.filterButtonContainer, styles.filterButtonContainerRole]}>
             <TouchableOpacity
-              style={[styles.filterButton, selectedRole && styles.filterButtonActive]}
+              style={[styles.filterButton, styles.filterButtonRole, selectedRole && styles.filterButtonActive]}
             onPress={() => {
                 setRoleDropdownVisible(!roleDropdownVisible);
                 setAuthorDropdownVisible(false);
@@ -2072,7 +2122,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
             }}
             activeOpacity={0.7}
           >
-              <Text style={styles.filterButtonText}>
+              <Text style={[styles.filterButtonText, styles.filterButtonTextRole]} numberOfLines={1}>
                 {selectedRole ? selectedRole : 'Role'}
               </Text>
               <Text style={styles.filterButtonIcon}>
@@ -2080,7 +2130,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
               </Text>
             </TouchableOpacity>
             {roleDropdownVisible && (
-              <View style={styles.filterDropdown}>
+              <View style={[styles.filterDropdown, styles.filterDropdownRole]}>
                 <ScrollView style={styles.filterDropdownScroll} nestedScrollEnabled={true}>
                   <TouchableOpacity
                     style={[styles.filterOption, !selectedRole && styles.filterOptionActive]}
@@ -2111,7 +2161,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                             accessibilityLabel={`${role} role icon`}
                           />
                         )}
-                        <Text style={[styles.filterOptionText, { marginLeft: roleIcon ? 10 : 0 }]}>{role}</Text>
+                        <Text style={[styles.filterOptionText, styles.filterOptionTextRole, { marginLeft: roleIcon ? 7 : 0 }]}>{role}</Text>
           </TouchableOpacity>
                     );
                   })}
@@ -2377,8 +2427,6 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                           .eq('username', currentUser)
                           .eq('status', 'approved')
                           .limit(1);
-                        
-                        console.log('🔄 Manual refresh - approvedData:', approvedData, 'error:', approvedError);
                         
                         if (!approvedError && approvedData && (
                           (Array.isArray(approvedData) && approvedData.length > 0) || 
@@ -2851,19 +2899,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                 }
               }
               
-              // Sort builds to prioritize pinned builds within each god (using original indices)
-              buildsWithIndices.sort((a, b) => {
-                const buildKeyA = `${title}-${idx}-${a.origIdx}`;
-                const buildKeyB = `${title}-${idx}-${b.origIdx}`;
-                const aIsPinned = pinnedBuilds.has(buildKeyA);
-                const bIsPinned = pinnedBuilds.has(buildKeyB);
-                
-                if (aIsPinned && !bIsPinned) return -1;
-                if (!aIsPinned && bIsPinned) return 1;
-                return 0;
-              });
-              
-              // Extract just the builds array after sorting
+              // Extract builds array (order preserved from filtering)
               allBuilds = buildsWithIndices.map(item => item.build);
               
               // Skip rendering if no builds match the filter
@@ -2885,35 +2921,37 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
               
               const currentBuild = allBuilds[currentBuildIdx] || (allBuilds.length > 0 ? allBuilds[0] : null);
               
-              // Check if current build has startOrder (don't show if it doesn't exist)
-              const currentBuildHasStartOrder = currentBuild && 
-                currentBuild.startingAbilityOrder && 
-                Array.isArray(currentBuild.startingAbilityOrder) && 
-                currentBuild.startingAbilityOrder.length > 0;
-              
-              // Debug: Log build data for community builds
-              if (currentBuild && currentBuild.fromDatabase && currentBuild.databaseCategory === 'community') {
-                console.log('🔍 Community Build Data:', {
-                  hasStartingItems: !!currentBuild.startingItems,
-                  startingItemsLength: currentBuild.startingItems?.length || 0,
-                  startingItems: currentBuild.startingItems,
-                  hasRoles: !!currentBuild.roles,
-                  rolesLength: currentBuild.roles?.length || 0,
-                  roles: currentBuild.roles,
-                  hasTips: !!currentBuild.tips,
-                  tips: currentBuild.tips,
-                  hasAbilityLevelingOrder: !!currentBuild.abilityLevelingOrder,
-                  abilityLevelingOrder: currentBuild.abilityLevelingOrder,
-                  hasStartingAbilityOrder: !!currentBuild.startingAbilityOrder,
-                  startingAbilityOrder: currentBuild.startingAbilityOrder,
-                });
-              }
-              
-              // Extract starter items
-              // DB builds don't have starter items, so only extract for JSON builds
-              const starter = currentBuild && !currentBuild.fromDatabase && currentBuild.starting 
-                ? currentBuild.starting 
-                : (currentBuild && !currentBuild.fromDatabase && currentBuild.buildsFromT1 ? currentBuild.buildsFromT1 : null);
+              // Starter row: JSON `starting` / `buildsFromT1`, or DB `startingItems` (same UI as featured)
+              const starterRowNames = (() => {
+                if (!currentBuild) return null;
+                let raw = null;
+                if (!currentBuild.fromDatabase) {
+                  if (Array.isArray(currentBuild.starting) && currentBuild.starting.length > 0) {
+                    raw = currentBuild.starting;
+                  } else if (Array.isArray(currentBuild.buildsFromT1) && currentBuild.buildsFromT1.length > 0) {
+                    raw = currentBuild.buildsFromT1;
+                  }
+                }
+                if (
+                  (!raw || raw.length === 0) &&
+                  Array.isArray(currentBuild.startingItems) &&
+                  currentBuild.startingItems.length > 0
+                ) {
+                  raw = currentBuild.startingItems;
+                }
+                if (!raw || raw.length === 0) return null;
+                const names = raw
+                  .map((entry) =>
+                    typeof entry === 'string'
+                      ? entry
+                      : entry && typeof entry === 'object'
+                        ? entry.name || entry.internalName || ''
+                        : ''
+                  )
+                  .map((s) => (s && String(s).trim()) || '')
+                  .filter(Boolean);
+                return names.length > 0 ? names : null;
+              })();
               
               // Extract final items - prefer `full_build` when present
               // For DB builds, items are already in the correct format
@@ -2952,19 +2990,34 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                   currentBuild.lane,
                   currentBuild.name
                 ].filter(Boolean).join(' ').toLowerCase();
-                
-                // Use word boundaries to avoid false matches (e.g., "support" in "supportive")
-                // Check in order of specificity (more specific first)
-                if (buildText.includes('support') && !buildText.includes('supportive')) {
+
+                // Lane hints from free text (tags, titles). Order: support/jungle first, then mid
+                // (mage / INT-oriented) before solo (bruiser/warrior) so "bruiser mage" counts as mid.
+                const hasSupportLaneWord = /\b(support|supp)\b/.test(buildText);
+                const hasMidLaneHint =
+                  buildText.includes('mid') ||
+                  buildText.includes('middle') ||
+                  buildText.includes('mage') ||
+                  /int[-_\s]*oriented/.test(buildText) ||
+                  (/\bint\b/.test(buildText) &&
+                    (buildText.includes('burst') ||
+                      buildText.includes('oriented') ||
+                      buildText.includes('mage')));
+                const hasSoloLaneHint =
+                  buildText.includes('solo') ||
+                  buildText.includes('bruiser') ||
+                  buildText.includes('warrior');
+
+                if (hasSupportLaneWord) {
                   currentRoleLower = 'support';
                 } else if (buildText.includes('jungle')) {
                   currentRoleLower = 'jungle';
-                } else if (buildText.includes('solo')) {
-                  currentRoleLower = 'solo';
+                } else if (hasMidLaneHint) {
+                  currentRoleLower = 'mid';
                 } else if (buildText.includes('adc') || buildText.includes('carry')) {
                   currentRoleLower = 'adc';
-                } else if (buildText.includes('mid') || buildText.includes('middle')) {
-                  currentRoleLower = 'mid';
+                } else if (hasSoloLaneHint) {
+                  currentRoleLower = 'solo';
                 }
               }
               
@@ -2977,48 +3030,56 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
               if (!currentRoleLower && role) {
                 const roleLower = role.toLowerCase();
                 if (roleLower.includes('adc') || roleLower.includes('carry')) currentRoleLower = 'adc';
-                else if (roleLower.includes('solo')) currentRoleLower = 'solo';
-                else if (roleLower.includes('support')) currentRoleLower = 'support';
-                else if (roleLower.includes('mid') || roleLower.includes('middle')) currentRoleLower = 'mid';
-                else if (roleLower.includes('jungle')) currentRoleLower = 'jungle';
+                else if (/\b(support|supp)\b/.test(roleLower) || roleLower.includes('guardian')) {
+                  currentRoleLower = 'support';
+                } else if (roleLower.includes('jungle')) currentRoleLower = 'jungle';
+                else if (
+                  roleLower.includes('mid') ||
+                  roleLower.includes('middle') ||
+                  roleLower.includes('mage')
+                ) {
+                  currentRoleLower = 'mid';
+                } else if (
+                  roleLower.includes('solo') ||
+                  roleLower.includes('bruiser') ||
+                  roleLower.includes('warrior')
+                ) {
+                  currentRoleLower = 'solo';
+                }
               }
 
               // Use build's own data first, then fall back to extracting from god tips
               let levelingOrder = null;
               let startOrder = null;
               
-              // Check if build has its own ability leveling order
-              if (currentBuild && currentBuild.abilityLevelingOrder && Array.isArray(currentBuild.abilityLevelingOrder) && currentBuild.abilityLevelingOrder.length > 0) {
-                // Build has its own leveling order - use it directly
-                levelingOrder = currentBuild.abilityLevelingOrder.map(key => {
+              const maxOrderSource =
+                currentBuild &&
+                ((Array.isArray(currentBuild.ability_max_order) && currentBuild.ability_max_order.length > 0 && currentBuild.ability_max_order) ||
+                  (Array.isArray(currentBuild.abilityLevelingOrder) && currentBuild.abilityLevelingOrder.length > 0 && currentBuild.abilityLevelingOrder) ||
+                  null);
+              if (maxOrderSource) {
+                levelingOrder = maxOrderSource.map(key => {
                   // Convert ability key (A01, A02, etc.) to number (1, 2, etc.)
                   if (typeof key === 'string' && key.startsWith('A0')) {
                     return parseInt(key.substring(2));
                   }
                   return typeof key === 'number' ? key : parseInt(key);
                 }).filter(num => !isNaN(num) && num >= 1 && num <= 4);
-                
-                // Debug log for community builds
-                if (currentBuild.fromDatabase && currentBuild.databaseCategory === 'community') {
-                  console.log('✅ Using build abilityLevelingOrder:', levelingOrder);
-                }
               }
               
-              // Check if build has its own starting ability order
-              if (currentBuild && currentBuild.startingAbilityOrder && Array.isArray(currentBuild.startingAbilityOrder) && currentBuild.startingAbilityOrder.length > 0) {
-                // Build has its own starting order - use it directly
-                startOrder = currentBuild.startingAbilityOrder.map(key => {
+              const startOrderSource =
+                currentBuild &&
+                ((Array.isArray(currentBuild.starting_abilities) && currentBuild.starting_abilities.length > 0 && currentBuild.starting_abilities) ||
+                  (Array.isArray(currentBuild.startingAbilityOrder) && currentBuild.startingAbilityOrder.length > 0 && currentBuild.startingAbilityOrder) ||
+                  null);
+              if (startOrderSource) {
+                startOrder = startOrderSource.map(key => {
                   // Convert ability key (A01, A02, etc.) to number (1, 2, etc.)
                   if (typeof key === 'string' && key.startsWith('A0')) {
                     return parseInt(key.substring(2));
                   }
                   return typeof key === 'number' ? key : parseInt(key);
                 }).filter(num => !isNaN(num) && num >= 1 && num <= 4);
-                
-                // Debug log for community builds
-                if (currentBuild.fromDatabase && currentBuild.databaseCategory === 'community') {
-                  console.log('✅ Using build startingAbilityOrder:', startOrder);
-                }
               }
               
               // Only extract from god tips if build doesn't have its own data
@@ -3279,8 +3340,8 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                 'ADC': { bg: '#2d1a3d', border: '#A855F7', accent: '#A855F7' },
                 'Solo': { bg: '#1a2a3d', border: '#3B82F6', accent: '#3B82F6' },
                 'Support': { bg: '#1a2d24', border: '#10B981', accent: '#10B981' },
-                'Mid': { bg: '#3d1a1a', border: '#EF4444', accent: '#EF4444' },
-                'Jungle': { bg: '#2d251a', border: '#FBBF24', accent: '#F59E0B' },
+                'Mid': { bg: '#3d1a1a', border: '#e60808', accent: '#EF4444' },
+                'Jungle': { bg: '#1a1410', border: '#C2410C', accent: '#EA580C' },
               };
               
               // Determine role for card styling
@@ -3288,15 +3349,52 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
               if (!cardRole && role) {
                 const roleLower = role.toLowerCase();
                 if (roleLower.includes('adc') || roleLower.includes('carry')) cardRole = 'ADC';
-                else if (roleLower.includes('solo')) cardRole = 'Solo';
-                else if (roleLower.includes('support')) cardRole = 'Support';
-                else if (roleLower.includes('mid') || roleLower.includes('Middle')) cardRole = 'Mid';
-                else if (roleLower.includes('jungle')) cardRole = 'Jungle';
+                else if (/\b(support|supp)\b/.test(roleLower) || roleLower.includes('guardian')) {
+                  cardRole = 'Support';
+                } else if (roleLower.includes('jungle')) cardRole = 'Jungle';
+                else if (
+                  roleLower.includes('mid') ||
+                  roleLower.includes('middle') ||
+                  roleLower.includes('mage')
+                ) {
+                  cardRole = 'Mid';
+                } else if (
+                  roleLower.includes('solo') ||
+                  roleLower.includes('bruiser') ||
+                  roleLower.includes('warrior')
+                ) {
+                  cardRole = 'Solo';
+                }
               }
               
               const cardColors = cardRole && roleColors[cardRole] 
                 ? roleColors[cardRole] 
                 : { bg: '#0b1226', border: '#1e3a5f', accent: '#ffffff' };
+
+              // Gold build-summary stripe: use lane inferred from build text (currentRoleLower) so it
+              // matches the actual build when god.role is generic (e.g. Warrior). RN/Web often ignores
+              // borders on Text, so the stripe is applied on a wrapping View below.
+              const buildStripeRoleKey =
+                currentRoleLower === 'adc'
+                  ? 'ADC'
+                  : currentRoleLower === 'solo'
+                    ? 'Solo'
+                    : currentRoleLower === 'support'
+                      ? 'Support'
+                      : currentRoleLower === 'mid'
+                        ? 'Mid'
+                        : currentRoleLower === 'jungle'
+                          ? 'Jungle'
+                          : '';
+              const buildSummaryStripeColor =
+                buildStripeRoleKey && roleColors[buildStripeRoleKey]
+                  ? roleColors[buildStripeRoleKey].border
+                  : cardColors.border;
+
+              const pantheonName = god?.pantheon ? String(god.pantheon).trim() : '';
+              const pantheonIconSource = getPantheonIcon(pantheonName);
+              const pantheonBorderHex = getPantheonBorderColor(pantheonName);
+              const godPortraitBorder = pantheonName ? pantheonBorderHex : `${cardColors.border}99`;
               
               // Alternate card styling for visual variety
               const isEven = idx % 2 === 0;
@@ -3326,228 +3424,143 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                     }}>
                       <View style={styles.cardContent}>
                         <View style={[styles.cardLeft, { borderRightWidth: 2, borderRightColor: cardColors.border + '30', paddingRight: 12, marginRight: 12 }]}>
-                          <TouchableOpacity 
-                            onPress={(e) => {
-                              e.stopPropagation();
-                              if (onGodIconPress && god) {
-                                onGodIconPress(god);
-                              }
-                            }}
-                            activeOpacity={0.7}
-                          >
-                            <View style={{ position: 'relative' }}>
+                          <View style={styles.buildCardGodPortraitWrap}>
+                            <TouchableOpacity
+                              onPress={(e) => {
+                                e.stopPropagation();
+                                if (onGodIconPress && god) {
+                                  onGodIconPress(god);
+                                }
+                              }}
+                              activeOpacity={0.7}
+                            >
                               {godIcon ? (() => {
                                 const localIcon = getLocalGodAsset(godIcon);
                                 if (localIcon) {
                                   return (
-                                    <View style={[styles.godIconContainer, { borderColor: cardColors.border + '60' }]}>
-                                      <Image 
-                                        source={localIcon} 
+                                    <View style={[styles.godIconContainer, { borderColor: godPortraitBorder, marginBottom: 0 }]}>
+                                      <Image
+                                        source={localIcon}
                                         style={styles.godIcon}
                                         contentFit="cover"
                                         cachePolicy="memory-disk"
                                         transition={0}
                                         accessibilityLabel={`${title} icon`}
-                                        placeholderContentFit="cover"
-                                        recyclingKey={`god-${title}`}
+                                        recyclingKey={localIcon.uri || `god-${title}`}
                                       />
                                     </View>
                                   );
                                 }
-                                // Fallback to text if local icon not found
                                 return (
-                                  <View style={[styles.godFallback, { borderColor: cardColors.border + '60' }]}>
+                                  <View style={[styles.godFallback, { borderColor: godPortraitBorder, marginBottom: 0 }]}>
                                     <Text style={[styles.godFallbackText, { color: cardColors.accent }]}>{title.charAt(0)}</Text>
                                   </View>
                                 );
                               })() : (
-                                <View style={[styles.godFallback, { borderColor: cardColors.border + '60' }]}>
+                                <View style={[styles.godFallback, { borderColor: godPortraitBorder, marginBottom: 0 }]}>
                                   <Text style={[styles.godFallbackText, { color: cardColors.accent }]}>{title.charAt(0)}</Text>
                                 </View>
                               )}
-                              {/* Patch indicator badge */}
-                              {god && god.latestPatchChange && (
-                                <PatchBadgeTooltip
-                                  changeType={god.latestPatchChange.type}
-                                  version={god.latestPatchChange.version || 'latest'}
-                                  entityType="god"
-                                  badgeStyle={[styles.patchBadge, styles[`patchBadge${god.latestPatchChange.type.charAt(0).toUpperCase() + god.latestPatchChange.type.slice(1)}`]]}
-                                  textStyle={styles.patchBadgeText}
-                                  overlayStyle={styles.tooltipOverlay}
-                                  contentStyle={styles.tooltipContent}
-                                  tooltipTextStyle={styles.tooltipText}
-                                  closeButtonStyle={styles.tooltipCloseButton}
-                                  closeTextStyle={styles.tooltipCloseText}
+                            </TouchableOpacity>
+                            {pantheonIconSource ? (
+                              <View style={styles.buildCardPantheonBadge} pointerEvents="none">
+                                <Image
+                                  source={pantheonIconSource}
+                                  style={styles.buildCardPantheonOverlay}
+                                  contentFit="contain"
+                                  cachePolicy="memory-disk"
+                                  accessibilityLabel={pantheonName ? `${pantheonName} pantheon` : 'Pantheon'}
                                 />
-                              )}
-                            </View>
-                          </TouchableOpacity>
+                              </View>
+                            ) : null}
+                            {god && god.latestPatchChange && (
+                              <PatchBadgeTooltip
+                                changeType={god.latestPatchChange.type}
+                                version={god.latestPatchChange.version || 'latest'}
+                                entityType="god"
+                                badgeStyle={[styles.patchBadge, styles[`patchBadge${god.latestPatchChange.type.charAt(0).toUpperCase() + god.latestPatchChange.type.slice(1)}`]]}
+                                textStyle={styles.patchBadgeText}
+                                overlayStyle={styles.tooltipOverlay}
+                                contentStyle={styles.tooltipContent}
+                                tooltipTextStyle={styles.tooltipText}
+                                closeButtonStyle={styles.tooltipCloseButton}
+                                closeTextStyle={styles.tooltipCloseText}
+                              />
+                            )}
+                          </View>
                         </View>
 
                         <View style={styles.cardBody}>
                           <View style={styles.cardHeaderRow}>
-                            <View style={{ flex: 1 }}>
+                            <View style={{ flex: 1, minWidth: 0 }}>
                               <Text style={[styles.cardTitle, { color: cardColors.accent }]}>{title}</Text>
                               {role && (
                                 <View style={[styles.roleBadge, { backgroundColor: cardColors.border + '20', borderColor: cardColors.border + '50', alignSelf: 'flex-start', marginTop: 6 }]}>
                                   <Text style={[styles.roleBadgeText, { color: cardColors.accent }]}>{role}</Text>
                                 </View>
                               )}
+                              {currentBuild && (currentBuild.notes || currentBuild.title) && (
+                                <View
+                                  style={[
+                                    styles.buildTitleUnderNameBox,
+                                    { borderLeftColor: buildSummaryStripeColor },
+                                  ]}
+                                >
+                                  <Text style={styles.buildTitleUnderNameText} numberOfLines={4}>
+                                    {String((currentBuild.notes || currentBuild.title || '').trim())}
+                                  </Text>
+                                </View>
+                              )}
+                              {(currentBuild && (currentBuild.based_on_patch || currentBuild.author)) ? (
+                                <View style={styles.buildCardMetaRow}>
+                                  {!!currentBuild.based_on_patch && (
+                                    <View style={[styles.buildPatchChip, styles.buildPatchChipInline]}>
+                                      <Text style={styles.buildPatchChipText}>
+                                        {formatBuildPatchLabel(currentBuild.based_on_patch)}
+                                      </Text>
+                                    </View>
+                                  )}
+                                  {currentBuild.author ? (
+                                    <View style={styles.buildAuthorInlineRow}>
+                                      <TouchableOpacity
+                                        onPress={(e) => {
+                                          e?.stopPropagation?.();
+                                          if (onNavigateToUserProfile) {
+                                            onNavigateToUserProfile(currentBuild.author.toString().trim());
+                                          }
+                                        }}
+                                        activeOpacity={0.7}
+                                      >
+                                        <Text
+                                          style={[
+                                            styles.buildAuthor,
+                                            styles.buildAuthorInline,
+                                            (CONTRIBUTORS_AUTHORS.includes((currentBuild.author || '').toString().trim().toLowerCase()) ||
+                                              contributorsUsers.has((currentBuild.author || '').toString().trim())) && styles.buildAuthorContributors,
+                                            { textDecorationLine: 'underline' },
+                                          ]}
+                                        >
+                                          By {currentBuild.authorDisplayName || currentBuild.author}
+                                        </Text>
+                                      </TouchableOpacity>
+                                      {(buildCategory === 'contributors' || buildCategory === 'community') && (
+                                        <TouchableOpacity
+                                          style={styles.buildShareButton}
+                                          onPress={(e) => {
+                                            e?.stopPropagation?.();
+                                            handleShareBuild(currentBuild);
+                                          }}
+                                          activeOpacity={0.7}
+                                        >
+                                          <Text style={styles.buildShareButtonText}>Share</Text>
+                                        </TouchableOpacity>
+                                      )}
+                                    </View>
+                                  ) : null}
+                                </View>
+                              ) : null}
                             </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-                              <TouchableOpacity
-                                onPress={async (e) => {
-                                  e.stopPropagation();
-                                  const currentUser = await storage.getItem('currentUser');
-                                  if (!currentUser) {
-                                    setShowLoginModal(true);
-                                    return;
-                                  }
-                                  
-                                  const buildKey = `${title}-${idx}-${currentBuildIdx}`;
-                                  const isPinned = pinnedBuilds.has(buildKey);
-                                  
-                                  try {
-                                    console.log('🔧 Pin/Unpin build action:', {
-                                      buildKey,
-                                      godName: title,
-                                      isPinned,
-                                      currentUser,
-                                      hasSupabase: !!getSupabase(),
-                                    });
-                                    
-                                    const pinnedBuildsData = await storage.getItem(`pinnedBuilds_${currentUser}`);
-                                    const pinned = pinnedBuildsData ? JSON.parse(pinnedBuildsData) : [];
-                                    
-                                    console.log('📋 Current pinned builds list:', pinned.length);
-                                    
-                                    if (isPinned) {
-                                      // Unpin
-                                      const updated = pinned.filter(b => b.buildKey !== buildKey);
-                                      await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(updated));
-                                      setPinnedBuilds(prev => {
-                                        const next = new Set(prev);
-                                        next.delete(buildKey);
-                                        return next;
-                                      });
-                                      
-                                      // Sync to Supabase - get existing data first to preserve other fields
-                                      const supabaseClient = getSupabase();
-                                      if (!supabaseClient || !supabaseClient.from) {
-                                        console.error('❌ Supabase not available, skipping sync');
-                                        return;
-                                      }
-                                      
-                                      try {
-                                        console.log('🔄 Syncing unpinned build to Supabase...');
-                                        const { data: existingData, error: fetchError } = await supabaseClient
-                                          .from('user_data')
-                                          .select('pinned_builds, pinned_gods, saved_builds')
-                                          .eq('username', currentUser)
-                                          .single();
-                                        
-                                        if (fetchError && fetchError.code !== 'PGRST116') {
-                                          console.error('❌ Error fetching existing data:', fetchError);
-                                        }
-                                        
-                                        const { error } = await supabaseClient
-                                          .from('user_data')
-                                          .upsert({
-                                            username: currentUser,
-                                            pinned_builds: updated,
-                                            pinned_gods: existingData?.pinned_gods || [],
-                                            saved_builds: existingData?.saved_builds || [],
-                                            updated_at: new Date().toISOString(),
-                                          }, {
-                                            onConflict: 'username'
-                                          });
-                                        
-                                        if (error) {
-                                          if (error.code === 'MISSING_CONFIG') {
-                                            console.log('⚠️ Supabase not configured, skipping sync');
-                                          } else {
-                                            console.error('❌ Error syncing unpinned build to Supabase:', error);
-                                          }
-                                        } else {
-                                          console.log('✅ Unpinned build synced to Supabase successfully');
-                                        }
-                                      } catch (supabaseError) {
-                                        console.error('❌ Exception syncing to Supabase:', supabaseError);
-                                      }
-                                    } else {
-                                      // Pin
-                                      const newPinnedBuild = {
-                                        buildKey,
-                                        godName: title,
-                                        godInternalName: god?.internalName || god?.GodName,
-                                        role: role || 'Unknown',
-                                        buildTitle: currentBuild?.notes || currentBuild?.title || `${role || 'Build'} Build`,
-                                        build: currentBuild,
-                                        pinnedAt: new Date().toISOString(),
-                                      };
-                                      pinned.push(newPinnedBuild);
-                                      await storage.setItem(`pinnedBuilds_${currentUser}`, JSON.stringify(pinned));
-                                      setPinnedBuilds(prev => new Set(prev).add(buildKey));
-                                      
-                                      // Sync to Supabase - get existing data first to preserve other fields
-                                      const supabaseClient = getSupabase();
-                                      if (!supabaseClient || !supabaseClient.from) {
-                                        console.error('❌ Supabase not available, skipping sync');
-                                        return;
-                                      }
-                                      
-                                      try {
-                                        console.log('🔄 Syncing pinned build to Supabase...', {
-                                          buildKey,
-                                          godName: title,
-                                          totalPinned: pinned.length,
-                                        });
-                                        const { data: existingData, error: fetchError } = await supabaseClient
-                                          .from('user_data')
-                                          .select('pinned_builds, pinned_gods, saved_builds')
-                                          .eq('username', currentUser)
-                                          .single();
-                                        
-                                        if (fetchError && fetchError.code !== 'PGRST116') {
-                                          console.error('❌ Error fetching existing data:', fetchError);
-                                        }
-                                        
-                                        const { error } = await supabaseClient
-                                          .from('user_data')
-                                          .upsert({
-                                            username: currentUser,
-                                            pinned_builds: pinned,
-                                            pinned_gods: existingData?.pinned_gods || [],
-                                            saved_builds: existingData?.saved_builds || [],
-                                            updated_at: new Date().toISOString(),
-                                          }, {
-                                            onConflict: 'username'
-                                          });
-                                        
-                                        if (error) {
-                                          if (error.code === 'MISSING_CONFIG') {
-                                            console.log('⚠️ Supabase not configured, skipping sync');
-                                          } else {
-                                            console.error('❌ Error syncing pinned build to Supabase:', error);
-                                          }
-                                        } else {
-                                          console.log('✅ Pinned build synced to Supabase successfully:', pinned.length, 'total builds');
-                                        }
-                                      } catch (supabaseError) {
-                                        console.error('❌ Exception syncing to Supabase:', supabaseError);
-                                      }
-                                    }
-                                  } catch (error) {
-                                    console.error('Error pinning/unpinning build:', error);
-                                    Alert.alert('Error', 'Failed to pin/unpin build. Please try again.');
-                                  }
-                                }}
-                                style={styles.pinButton}
-                              >
-                                <Text style={styles.pinButtonText}>
-                                  {pinnedBuilds.has(`${title}-${idx}-${currentBuildIdx}`) ? '📌' : '📍'}
-                                </Text>
-                              </TouchableOpacity>
+                            <View style={{ flexDirection: 'row', alignItems: 'flex-start', paddingTop: 2 }}>
                               {isExpanded ? (
                                 <Text style={styles.expandIndicator}>▼</Text>
                               ) : (
@@ -3585,45 +3598,6 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                         </View>
                       )}
 
-                      {currentBuild && currentBuild.notes && (
-                        <Text style={styles.buildTitle}>{currentBuild.notes}</Text>
-                      )}
-                      {currentBuild && currentBuild.author && (
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-                          <TouchableOpacity
-                            onPress={() => {
-                              if (onNavigateToUserProfile) {
-                                onNavigateToUserProfile(currentBuild.author.toString().trim());
-                              }
-                            }}
-                            activeOpacity={0.7}
-                          >
-                            <Text
-                              style={[
-                                styles.buildAuthor,
-                                (CONTRIBUTORS_AUTHORS.includes((currentBuild.author || '').toString().trim().toLowerCase()) || 
-                                 contributorsUsers.has((currentBuild.author || '').toString().trim())) && styles.buildAuthorContributors,
-                                { textDecorationLine: 'underline' }
-                              ]}
-                            >
-                              By {currentBuild.authorDisplayName || currentBuild.author}
-                            </Text>
-                          </TouchableOpacity>
-                          {/* Share button - only show for contributor and community builds */}
-                          {(buildCategory === 'contributors' || buildCategory === 'community') && (
-                            <TouchableOpacity
-                              style={styles.buildShareButton}
-                              onPress={(e) => {
-                                e.stopPropagation();
-                                handleShareBuild(currentBuild);
-                              }}
-                              activeOpacity={0.7}
-                            >
-                              <Text style={styles.buildShareButtonText}>Share</Text>
-                            </TouchableOpacity>
-                          )}
-                        </View>
-                      )}
                       {/* Display roles if build has them */}
                       {currentBuild && currentBuild.roles && Array.isArray(currentBuild.roles) && currentBuild.roles.length > 0 && (
                         <View style={styles.buildRolesContainer}>
@@ -3642,15 +3616,85 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                     {isExpanded && (
                       <View style={styles.cardExpandedContent}>
 
-                        {/* Contributor/Community: single expandable section with Start Order | Max Order tabs */}
-                        {(buildCategory === 'contributors' || buildCategory === 'community') && (() => {
+                        {/* Ability order + Tips: Start | Max | Tips */}
+                        {(() => {
                           const hasStart = startAbilities && startAbilities.length > 0 && startOrder && startOrder.length > 0;
                           const hasMax = levelingAbilities && levelingAbilities.length > 0;
-                          if (!hasStart && !hasMax) return null;
-                          const sectionKey = `leveling-${idx}-${currentBuildIdx}`;
-                          const isOpen = IS_WEB || expandedCardSections[sectionKey] !== false;
+                          const hasBuildTipsText =
+                            currentBuild &&
+                            currentBuild.tips &&
+                            String(currentBuild.tips).trim().length > 0;
+                          const godTipsNonLeveling =
+                            god && god.tips && Array.isArray(god.tips)
+                              ? god.tips.filter(
+                                  (tip) =>
+                                    tip &&
+                                    tip.title &&
+                                    !tip.title.toLowerCase().includes('leveling')
+                                )
+                              : [];
+                          const hasAbilityTips =
+                            !!hasBuildTipsText || godTipsNonLeveling.length > 0;
+                          if (!hasStart && !hasMax && !hasAbilityTips) return null;
+                          const abilityOrderSectionKey = `abilityOrder-${idx}-${currentBuildIdx}`;
+                          const isAbilityOrderOpen = expandedCardSections[abilityOrderSectionKey] === true;
                           const tabKey = `leveling-${idx}-${currentBuildIdx}`;
-                          const activeTab = levelingTab[tabKey] || (hasStart ? 'start' : 'max');
+                          const defaultTab = hasStart
+                            ? 'start'
+                            : hasMax
+                              ? 'max'
+                              : 'tips';
+                          let abilityOrderTab = levelingTab[tabKey] || defaultTab;
+                          if (abilityOrderTab === 'start' && !hasStart) {
+                            abilityOrderTab = hasMax ? 'max' : 'tips';
+                          }
+                          if (abilityOrderTab === 'max' && !hasMax) {
+                            abilityOrderTab = hasStart ? 'start' : 'tips';
+                          }
+                          if (abilityOrderTab === 'tips' && !hasAbilityTips) {
+                            abilityOrderTab = hasStart ? 'start' : 'max';
+                          }
+
+                          const tipLinesForPanel = hasBuildTipsText
+                            ? String(currentBuild.tips)
+                                .split(/\n+/)
+                                .filter((line) => line.trim().length > 0)
+                            : godTipsNonLeveling;
+
+                          const tipsTabContent =
+                            tipLinesForPanel.length > 0 ? (
+                              <View style={styles.tipButtonsContainer}>
+                                {tipLinesForPanel.map((tipLine, tipIdx) => {
+                                  const tipObj =
+                                    typeof tipLine === 'string'
+                                      ? {
+                                          title: `Tip ${tipIdx + 1}`,
+                                          value: tipLine.trim(),
+                                        }
+                                      : tipLine;
+                                  return (
+                                    <TouchableOpacity
+                                      key={tipIdx}
+                                      style={styles.tipButton}
+                                      onPress={() =>
+                                        startTransition(() =>
+                                          setSelectedTip({
+                                            tip: tipObj,
+                                            tipIndex: tipIdx + 1,
+                                            godIndex: idx,
+                                          })
+                                        )
+                                      }
+                                      activeOpacity={0.7}
+                                    >
+                                      <Text style={styles.tipButtonText}>
+                                        {tipIdx + 1}
+                                      </Text>
+                                    </TouchableOpacity>
+                                  );
+                                })}
+                              </View>
+                            ) : null;
 
                           const startContent = hasStart ? (
                             <View style={styles.levelingOrderIcons}>
@@ -3660,13 +3704,37 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                 const isLast = ai === startAbilities.slice(0, 5).length - 1;
                                 const isFirst = ai === 0;
                                 return (
-                                  <React.Fragment key={`${idx}-${currentBuildIdx}-start-${ai}-${key}`}>
+                                  <React.Fragment key={`${idx}-start-${ai}-${key}`}>
                                     <TouchableOpacity style={styles.levelingOrderIconWrapper} onPress={(e) => { e.stopPropagation(); if (ability && typeof ability === 'object') startTransition(() => setSelectedAbility({ godIndex: idx, abilityKey: key, ability, abilityName })); }} activeOpacity={0.7}>
-                                      {aIconPath ? (() => {
-                                        const localIcon = getLocalGodAsset(aIconPath);
-                                        if (localIcon) return <Image source={localIcon} style={styles.levelingOrderIcon} contentFit="cover" cachePolicy="memory-disk" transition={0} accessibilityLabel={`${abilityName} ability icon`} />;
-                                        return <View style={styles.levelingOrderIconFallback}><Text style={styles.levelingOrderIconFallbackText}>{abilityName.charAt(0) || key.charAt(key.length - 1)}</Text></View>;
-                                      })() : <View style={styles.levelingOrderIconFallback}><Text style={styles.levelingOrderIconFallbackText}>{abilityName.charAt(0) || key.charAt(key.length - 1)}</Text></View>}
+                                      <View style={styles.levelingOrderIconOuter}>
+                                        <View style={styles.levelingOrderIconInner}>
+                                          {aIconPath ? (() => {
+                                            const localIcon = getLocalGodAsset(aIconPath);
+                                            if (localIcon) {
+                                              return (
+                                                <Image
+                                                  source={localIcon}
+                                                  style={styles.levelingOrderIconFramed}
+                                                  contentFit="cover"
+                                                  cachePolicy="memory-disk"
+                                                  transition={0}
+                                                  recyclingKey={localIcon.uri}
+                                                  accessibilityLabel={`${abilityName} ability icon`}
+                                                />
+                                              );
+                                            }
+                                            return (
+                                              <View style={styles.levelingOrderIconFallbackFramed}>
+                                                <Text style={styles.levelingOrderIconFallbackText}>{abilityName.charAt(0) || key.charAt(key.length - 1)}</Text>
+                                              </View>
+                                            );
+                                          })() : (
+                                            <View style={styles.levelingOrderIconFallbackFramed}>
+                                              <Text style={styles.levelingOrderIconFallbackText}>{abilityName.charAt(0) || key.charAt(key.length - 1)}</Text>
+                                            </View>
+                                          )}
+                                        </View>
+                                      </View>
                                       {isFirst && <View style={styles.levelingOrderFirstBadge}><Text style={styles.levelingOrderFirstBadgeText}>1st</Text></View>}
                                       {!isFirst && <Text style={styles.levelingOrderNumber}>{ai + 1}</Text>}
                                     </TouchableOpacity>
@@ -3685,13 +3753,37 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                 const isLast = ai === levelingAbilities.slice(0, 4).length - 1;
                                 const isFirst = ai === 0;
                                 return (
-                                  <React.Fragment key={`${idx}-${currentBuildIdx}-leveling-${ai}-${key}`}>
+                                  <React.Fragment key={`${idx}-max-${ai}-${key}`}>
                                     <TouchableOpacity style={styles.levelingOrderIconWrapper} onPress={(e) => { e.stopPropagation(); if (ability && typeof ability === 'object') startTransition(() => setSelectedAbility({ godIndex: idx, abilityKey: key, ability, abilityName })); }} activeOpacity={0.7}>
-                                      {aIconPath ? (() => {
-                                        const localIcon = getLocalGodAsset(aIconPath);
-                                        if (localIcon) return <Image source={localIcon} style={styles.levelingOrderIcon} contentFit="cover" cachePolicy="memory-disk" transition={0} accessibilityLabel={`${abilityName} ability icon`} />;
-                                        return <View style={styles.levelingOrderIconFallback}><Text style={styles.levelingOrderIconFallbackText}>{abilityName.charAt(0) || key.charAt(key.length - 1)}</Text></View>;
-                                      })() : <View style={styles.levelingOrderIconFallback}><Text style={styles.levelingOrderIconFallbackText}>{abilityName.charAt(0) || key.charAt(key.length - 1)}</Text></View>}
+                                      <View style={styles.levelingOrderIconOuter}>
+                                        <View style={styles.levelingOrderIconInner}>
+                                          {aIconPath ? (() => {
+                                            const localIcon = getLocalGodAsset(aIconPath);
+                                            if (localIcon) {
+                                              return (
+                                                <Image
+                                                  source={localIcon}
+                                                  style={styles.levelingOrderIconFramed}
+                                                  contentFit="cover"
+                                                  cachePolicy="memory-disk"
+                                                  transition={0}
+                                                  recyclingKey={localIcon.uri}
+                                                  accessibilityLabel={`${abilityName} ability icon`}
+                                                />
+                                              );
+                                            }
+                                            return (
+                                              <View style={styles.levelingOrderIconFallbackFramed}>
+                                                <Text style={styles.levelingOrderIconFallbackText}>{abilityName.charAt(0) || key.charAt(key.length - 1)}</Text>
+                                              </View>
+                                            );
+                                          })() : (
+                                            <View style={styles.levelingOrderIconFallbackFramed}>
+                                              <Text style={styles.levelingOrderIconFallbackText}>{abilityName.charAt(0) || key.charAt(key.length - 1)}</Text>
+                                            </View>
+                                          )}
+                                        </View>
+                                      </View>
                                       {isFirst && <View style={styles.levelingOrderFirstBadge}><Text style={styles.levelingOrderFirstBadgeText}>1st</Text></View>}
                                       {!isFirst && <Text style={styles.levelingOrderNumber}>{ai + 1}</Text>}
                                     </TouchableOpacity>
@@ -3702,100 +3794,80 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                             </View>
                           ) : null;
 
+                          const toggleAbilityOrderOpen = () => {
+                            setExpandedCardSections((prev) => ({
+                              ...prev,
+                              [abilityOrderSectionKey]: !isAbilityOrderOpen,
+                            }));
+                          };
+
                           return (
-                            <View style={styles.levelingOrderContainer} key={sectionKey}>
-                              <TouchableOpacity onPress={() => setExpandedCardSections(prev => ({ ...prev, [sectionKey]: !isOpen }))} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: isOpen ? 8 : 0 }}>
-                                <Text style={styles.levelingOrderLabel}>Start Order / Max Order</Text>
-                                <Text style={{ color: '#7dd3fc', fontSize: 12 }}>{isOpen ? '▼' : '▶'}</Text>
-                              </TouchableOpacity>
-                              {isOpen && (
+                            <Pressable
+                              key={`leveling-${idx}`}
+                              style={({ pressed }) => [
+                                styles.levelingOrderContainer,
+                                pressed && styles.levelingOrderContainerPressed,
+                              ]}
+                              onPress={toggleAbilityOrderOpen}
+                              accessibilityRole="button"
+                              accessibilityLabel={isAbilityOrderOpen ? 'Collapse ability order' : 'Expand ability order'}
+                              accessibilityState={{ expanded: isAbilityOrderOpen }}
+                            >
+                              <View
+                                style={[
+                                  styles.abilityOrderHeaderRow,
+                                  isAbilityOrderOpen && styles.abilityOrderHeaderRowOpen,
+                                ]}
+                                pointerEvents="none"
+                              >
+                                <Text style={styles.abilityOrderHeader}>Ability order</Text>
+                                <Text style={styles.abilityOrderChevron}>{isAbilityOrderOpen ? '▼' : '▶'}</Text>
+                              </View>
+                              {isAbilityOrderOpen ? (
                                 <>
-                                  <View style={{ flexDirection: 'row', gap: 8, marginBottom: 10 }}>
-                                    <TouchableOpacity onPress={() => setLevelingTab(prev => ({ ...prev, [tabKey]: 'start' }))} style={[styles.tipsSwapsButton, activeTab === 'start' && styles.tipsSwapsButtonActive]} disabled={!hasStart}>
-                                      <Text style={[styles.tipsSwapsButtonText, activeTab === 'start' && styles.tipsSwapsButtonTextActive]}>Start Order</Text>
+                                  <View style={styles.abilityOrderTabsRow}>
+                                    <TouchableOpacity
+                                      onPress={() => setLevelingTab((prev) => ({ ...prev, [tabKey]: 'start' }))}
+                                      style={[styles.abilityOrderTabBtn, abilityOrderTab === 'start' && styles.abilityOrderTabBtnActive]}
+                                      disabled={!hasStart}
+                                    >
+                                      <Text style={[styles.abilityOrderTabBtnText, abilityOrderTab === 'start' && styles.abilityOrderTabBtnTextActive]}>
+                                        Start (Lv 1-5)
+                                      </Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => setLevelingTab(prev => ({ ...prev, [tabKey]: 'max' }))} style={[styles.tipsSwapsButton, activeTab === 'max' && styles.tipsSwapsButtonActive]} disabled={!hasMax}>
-                                      <Text style={[styles.tipsSwapsButtonText, activeTab === 'max' && styles.tipsSwapsButtonTextActive]}>Max Order</Text>
+                                    <TouchableOpacity
+                                      onPress={() => setLevelingTab((prev) => ({ ...prev, [tabKey]: 'max' }))}
+                                      style={[styles.abilityOrderTabBtn, abilityOrderTab === 'max' && styles.abilityOrderTabBtnActive]}
+                                      disabled={!hasMax}
+                                    >
+                                      <Text style={[styles.abilityOrderTabBtnText, abilityOrderTab === 'max' && styles.abilityOrderTabBtnTextActive]}>
+                                        Max priority
+                                      </Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                      onPress={() => setLevelingTab((prev) => ({ ...prev, [tabKey]: 'tips' }))}
+                                      style={[styles.abilityOrderTabBtn, abilityOrderTab === 'tips' && styles.abilityOrderTabBtnActive]}
+                                      disabled={!hasAbilityTips}
+                                    >
+                                      <Text style={[styles.abilityOrderTabBtnText, abilityOrderTab === 'tips' && styles.abilityOrderTabBtnTextActive]}>
+                                        Tips
+                                      </Text>
                                     </TouchableOpacity>
                                   </View>
-                                  {activeTab === 'start' ? startContent : maxContent}
+                                  {abilityOrderTab === 'start' && hasStart
+                                    ? startContent
+                                    : abilityOrderTab === 'max' && hasMax
+                                      ? maxContent
+                                      : abilityOrderTab === 'tips' && hasAbilityTips
+                                        ? tipsTabContent
+                                        : null}
                                 </>
+                              ) : (
+                                <Text style={styles.abilityOrderCollapsedHint} pointerEvents="none">
+                                  Tap anywhere here to show start order, max priority, and tips
+                                </Text>
                               )}
-                            </View>
-                          );
-                        })()}
-
-                        {/* Non-contributor/community: separate Start Order and Max Order sections */}
-                        {(buildCategory !== 'contributors' && buildCategory !== 'community') && startAbilities && startAbilities.length > 0 && startOrder && startOrder.length > 0 && (() => {
-                          const sectionKey = `leveling-${idx}-${currentBuildIdx}`;
-                          const isSectionOpen = IS_WEB || expandedCardSections[sectionKey] !== false;
-                          return (
-                          <React.Fragment key={`start-order-${idx}-${currentBuildIdx}`}>
-                          <View style={styles.levelingOrderContainer}>
-                            {IS_WEB ? <Text style={styles.levelingOrderLabel}>Start Order (First 5 Levels):</Text> : (
-                              <TouchableOpacity onPress={() => setExpandedCardSections(prev => ({ ...prev, [sectionKey]: !isSectionOpen }))} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: isSectionOpen ? 8 : 0 }}>
-                                <Text style={styles.levelingOrderLabel}>Start Order (First 5 Levels):</Text>
-                                <Text style={{ color: '#7dd3fc', fontSize: 12 }}>{isSectionOpen ? '▼' : '▶'}</Text>
-                              </TouchableOpacity>
-                            )}
-                            {isSectionOpen ? (
-                            <View style={styles.levelingOrderIcons}>
-                              {startAbilities.slice(0, 5).map(({ key, ability }, ai) => {
-                                const aIconPath = ability && ability.icon ? ability.icon : null;
-                                const abilityName = ability.name || ability.key || key;
-                                const isLast = ai === startAbilities.slice(0, 5).length - 1;
-                                const isFirst = ai === 0;
-                                return (
-                                  <React.Fragment key={`${idx}-${currentBuildIdx}-start-${ai}-${key}`}>
-                                    <TouchableOpacity style={styles.levelingOrderIconWrapper} onPress={(e) => { e.stopPropagation(); if (ability && typeof ability === 'object') startTransition(() => setSelectedAbility({ godIndex: idx, abilityKey: key, ability, abilityName })); }} activeOpacity={0.7}>
-                                      {aIconPath ? (() => { const localIcon = getLocalGodAsset(aIconPath); if (localIcon) return <Image source={localIcon} style={styles.levelingOrderIcon} contentFit="cover" cachePolicy="memory-disk" transition={0} accessibilityLabel={`${abilityName} ability icon`} />; return <View style={styles.levelingOrderIconFallback}><Text style={styles.levelingOrderIconFallbackText}>{abilityName.charAt(0) || key.charAt(key.length - 1)}</Text></View>; })() : <View style={styles.levelingOrderIconFallback}><Text style={styles.levelingOrderIconFallbackText}>{abilityName.charAt(0) || key.charAt(key.length - 1)}</Text></View>}
-                                      {isFirst && <View style={styles.levelingOrderFirstBadge}><Text style={styles.levelingOrderFirstBadgeText}>1st</Text></View>}
-                                      {!isFirst && <Text style={styles.levelingOrderNumber}>{ai + 1}</Text>}
-                                    </TouchableOpacity>
-                                    {!isLast && <Text style={styles.levelingOrderArrow}>→</Text>}
-                                  </React.Fragment>
-                                );
-                              })}
-                            </View>
-                            ) : null}
-                          </View>
-                          </React.Fragment>
-                          );
-                        })()}
-                        {(buildCategory !== 'contributors' && buildCategory !== 'community') && levelingAbilities && levelingAbilities.length > 0 && (() => {
-                          const sectionKeyMax = `levelingMax-${idx}-${currentBuildIdx}`;
-                          const isSectionOpenMax = IS_WEB || expandedCardSections[sectionKeyMax] !== false;
-                          return (
-                          <React.Fragment key={`max-order-${idx}-${currentBuildIdx}`}>
-                          <View style={styles.levelingOrderContainer}>
-                            {IS_WEB ? <Text style={styles.levelingOrderLabel}>Max Order:</Text> : (
-                              <TouchableOpacity onPress={() => setExpandedCardSections(prev => ({ ...prev, [sectionKeyMax]: !isSectionOpenMax }))} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: isSectionOpenMax ? 8 : 0 }}>
-                                <Text style={styles.levelingOrderLabel}>Max Order:</Text>
-                                <Text style={{ color: '#7dd3fc', fontSize: 12 }}>{isSectionOpenMax ? '▼' : '▶'}</Text>
-                              </TouchableOpacity>
-                            )}
-                            {isSectionOpenMax ? (
-                            <View style={styles.levelingOrderIcons}>
-                              {levelingAbilities.slice(0, 4).map(({ key, ability }, ai) => {
-                                const aIconPath = ability && ability.icon ? ability.icon : null;
-                                const abilityName = ability.name || ability.key || key;
-                                const isLast = ai === levelingAbilities.slice(0, 4).length - 1;
-                                const isFirst = ai === 0;
-                                return (
-                                  <React.Fragment key={`${idx}-${currentBuildIdx}-leveling-${ai}-${key}`}>
-                                    <TouchableOpacity style={styles.levelingOrderIconWrapper} onPress={(e) => { e.stopPropagation(); if (ability && typeof ability === 'object') startTransition(() => setSelectedAbility({ godIndex: idx, abilityKey: key, ability, abilityName })); }} activeOpacity={0.7}>
-                                      {aIconPath ? (() => { const localIcon = getLocalGodAsset(aIconPath); if (localIcon) return <Image source={localIcon} style={styles.levelingOrderIcon} contentFit="cover" cachePolicy="memory-disk" transition={0} accessibilityLabel={`${abilityName} ability icon`} />; return <View style={styles.levelingOrderIconFallback}><Text style={styles.levelingOrderIconFallbackText}>{abilityName.charAt(0) || key.charAt(key.length - 1)}</Text></View>; })() : <View style={styles.levelingOrderIconFallback}><Text style={styles.levelingOrderIconFallbackText}>{abilityName.charAt(0) || key.charAt(key.length - 1)}</Text></View>}
-                                      {isFirst && <View style={styles.levelingOrderFirstBadge}><Text style={styles.levelingOrderFirstBadgeText}>1st</Text></View>}
-                                      {!isFirst && <Text style={styles.levelingOrderNumber}>{ai + 1}</Text>}
-                                    </TouchableOpacity>
-                                    {!isLast && <Text style={styles.levelingOrderArrow}>→</Text>}
-                                  </React.Fragment>
-                                );
-                              })}
-                            </View>
-                            ) : null}
-                          </View>
-                          </React.Fragment>
+                            </Pressable>
                           );
                         })()}
 
@@ -3852,135 +3924,15 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                           </View>
                         )}
 
-                      {/* Starting Items Section - Show if build has starting items */}
-                      {currentBuild && currentBuild.startingItems && Array.isArray(currentBuild.startingItems) && currentBuild.startingItems.length > 0 && (
-                        <View style={styles.buildRow}>
-                          <Text style={styles.buildLabel}>Starting Items</Text>
-                          <View style={styles.buildIcons}>
-                            {currentBuild.startingItems.map((item, si) => {
-                              // Handle both string (item name) and object (item object) formats
-                              const itemName = typeof item === 'string' ? item : (item.name || item.internalName || '');
-                              if (!itemName) return null;
-                              
-                              let meta = null;
-                              try {
-                                meta = findItem(itemName);
-                              } catch (e) {
-                                console.log('Error finding starting item:', e);
-                              }
-                              const localIcon = meta && meta.icon ? getLocalItemIcon(meta.icon) : null;
-                              return (
-                                <TouchableOpacity
-                                  key={si}
-                                  style={styles.smallIconSlot}
-                                  onPress={(e) => {
-                                    e.stopPropagation();
-                                    startTransition(() => {
-                                      setSelectedItem({ item: meta, itemName: itemName });
-                                    });
-                                  }}
-                                >
-                                  <View style={styles.iconWithBadgeWrapper}>
-                                    {localIcon ? (() => {
-                                      const imageSource = localIcon.primary || localIcon;
-                                      const fallbackSource = localIcon.fallback;
-                                      const itemKey = `starting-${itemName}-${si}`;
-                                      const useFallback = failedItemIcons[itemKey];
-                                      
-                                      if (fallbackSource && !useFallback) {
-                                        return (
-                                          <View style={styles.iconOuterBorder}>
-                                            <View style={styles.iconInnerBorder}>
-                                              <Image 
-                                                source={imageSource}
-                                                style={styles.smallIconImg}
-                                                contentFit="cover"
-                                                cachePolicy="memory-disk"
-                                                transition={0}
-                                                accessibilityLabel={`${itemName} item icon`}
-                                                onError={() => {
-                                                  setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
-                                                }}
-                                              />
-                                            </View>
-                                          </View>
-                                        );
-                                      }
-                                      
-                                      if (fallbackSource && useFallback) {
-                                        return (
-                                          <View style={styles.iconOuterBorder}>
-                                            <View style={styles.iconInnerBorder}>
-                                              <Image 
-                                                source={fallbackSource}
-                                                style={styles.smallIconImg}
-                                                contentFit="cover"
-                                                cachePolicy="memory-disk"
-                                                transition={0}
-                                                accessibilityLabel={`${itemName} item icon`}
-                                              />
-                                            </View>
-                                          </View>
-                                        );
-                                      }
-                                      
-                                      return (
-                                        <View style={styles.iconOuterBorder}>
-                                          <View style={styles.iconInnerBorder}>
-                                            <Image 
-                                              source={imageSource}
-                                              style={styles.smallIconImg}
-                                              contentFit="cover"
-                                              cachePolicy="memory-disk"
-                                              transition={0}
-                                              accessibilityLabel={`${itemName} item icon`}
-                                            />
-                                          </View>
-                                        </View>
-                                      );
-                                    })() : (
-                                      <View style={styles.iconOuterBorder}>
-                                        <View style={styles.iconInnerBorder}>
-                                          <Text style={styles.smallIconText}>{itemName}</Text>
-                                        </View>
-                                      </View>
-                                    )}
-                                    <View style={styles.itemNumberBadge}>
-                                      <Text style={styles.itemNumberBadgeText}>{si + 1}</Text>
-                                    </View>
-                                    {meta && meta.latestPatchChange && (
-                                      <PatchBadgeTooltip
-                                        changeType={meta.latestPatchChange.type}
-                                        version={meta.latestPatchChange.version || 'latest'}
-                                        entityType="item"
-                                        badgeStyle={[styles.patchBadge, styles.patchBadgeSmall, styles[`patchBadge${meta.latestPatchChange.type.charAt(0).toUpperCase() + meta.latestPatchChange.type.slice(1)}`]]}
-                                        textStyle={styles.patchBadgeText}
-                                        overlayStyle={styles.tooltipOverlay}
-                                        contentStyle={styles.tooltipContent}
-                                        tooltipTextStyle={styles.tooltipText}
-                                        closeButtonStyle={styles.tooltipCloseButton}
-                                        closeTextStyle={styles.tooltipCloseText}
-                                      />
-                                    )}
-                                  </View>
-                                </TouchableOpacity>
-                              );
-                            })}
-                          </View>
-                          </View>
-                        )}
-
-                      {starter && (
+                      {starterRowNames && (
                         <View style={styles.buildRow}>
                           <Text style={styles.buildLabel}>Starter</Text>
                           <View style={styles.buildIcons}>
-                              {Array.isArray(starter) && starter.map((s, si) => {
+                              {starterRowNames.map((s, si) => {
                               let meta = null;
                               try {
                                 meta = findItem(s);
-                              } catch (e) {
-                                console.log('Error finding starter item:', e);
-                              }
+                              } catch (_) {}
                               const localIcon = meta && meta.icon ? getLocalItemIcon(meta.icon) : null;
                               return (
                                   <TouchableOpacity
@@ -4012,6 +3964,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                                   contentFit="cover"
                                                   cachePolicy="memory-disk"
                                                   transition={0}
+                                                  recyclingKey={imageSource.uri}
                                                   accessibilityLabel={`${s} item icon`}
                                                   onError={() => {
                                                     setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
@@ -4033,6 +3986,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                                   contentFit="cover"
                                                   cachePolicy="memory-disk"
                                                   transition={0}
+                                                  recyclingKey={fallbackSource.uri}
                                                   accessibilityLabel={`${s} item icon`}
                                                 />
                                               </View>
@@ -4050,6 +4004,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                                 contentFit="cover"
                                                 cachePolicy="memory-disk"
                                                 transition={0}
+                                                recyclingKey={imageSource.uri}
                                                 accessibilityLabel={`${s} item icon`}
                                               />
                                             </View>
@@ -4098,9 +4053,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                             let meta = null;
                             try {
                               meta = findItem(f);
-                            } catch (e) {
-                              console.log('Error finding item:', e);
-                            }
+                            } catch (_) {}
                             const localIcon = meta && meta.icon ? getLocalItemIcon(meta.icon) : null;
                             return (
                                 <TouchableOpacity
@@ -4132,6 +4085,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                             contentFit="cover"
                                             cachePolicy="memory-disk"
                                             transition={0}
+                                            recyclingKey={imageSource.uri}
                                             onError={() => {
                                               setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
                                             }}
@@ -4152,6 +4106,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                             contentFit="cover"
                                             cachePolicy="memory-disk"
                                             transition={0}
+                                            recyclingKey={fallbackSource.uri}
                                             accessibilityLabel={`${f} item icon`}
                                           />
                                         </View>
@@ -4169,6 +4124,7 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                           contentFit="cover"
                                           cachePolicy="memory-disk"
                                           transition={0}
+                                          recyclingKey={imageSource.uri}
                                           accessibilityLabel={`${f} item icon`}
                                         />
                                       </View>
@@ -4208,300 +4164,196 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                         </View>
                       </View>
 
-                      {/* Relic Section */}
-                      {currentBuild && currentBuild.relic && (
-                        <View style={[styles.buildRow, { marginTop: 8 }]}>
-                          <Text style={styles.buildLabel}>Relic</Text>
-                          <View style={styles.buildIcons}>
-                            {(() => {
-                              const relic = currentBuild.relic;
-                              const relicName = typeof relic === 'string' ? relic : (relic.name || relic.internalName || '');
-                              if (!relicName) return null;
-                              
-                              let meta = null;
-                              try {
-                                meta = findItem(relicName);
-                              } catch (e) {
-                                console.log('Error finding relic:', e);
-                              }
-                              const localIcon = meta && meta.icon ? getLocalItemIcon(meta.icon) : null;
-                              
-                              return (
-                                <TouchableOpacity
-                                  style={styles.iconWrap}
-                                  onPress={(e) => {
-                                    e.stopPropagation();
-                                    startTransition(() => {
-                                      setSelectedItem({ item: meta, itemName: relicName });
-                                    });
-                                  }}
-                                >
-                                  <View style={{ position: 'relative' }}>
-                                    {localIcon ? (() => {
-                                      const imageSource = localIcon.primary || localIcon;
-                                      const fallbackSource = localIcon.fallback;
-                                      const itemKey = `relic-${relicName}`;
-                                      const useFallback = failedItemIcons[itemKey];
-                                      
-                                      if (fallbackSource && !useFallback) {
-                                        return (
-                                          <View style={styles.iconOuterBorder}>
-                                            <View style={styles.iconInnerBorder}>
-                                              <Image 
-                                                source={imageSource}
-                                                style={styles.smallIconImg}
-                                                contentFit="cover"
-                                                cachePolicy="memory-disk"
-                                                transition={0}
-                                                accessibilityLabel={`${relicName} relic icon`}
-                                                onError={() => {
-                                                  setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
-                                                }}
-                                              />
-                                            </View>
-                                          </View>
-                                        );
-                                      }
-                                      
-                                      if (fallbackSource && useFallback) {
-                                        return (
-                                          <View style={styles.iconOuterBorder}>
-                                            <View style={styles.iconInnerBorder}>
-                                              <Image 
-                                                source={fallbackSource}
-                                                style={styles.smallIconImg}
-                                                contentFit="cover"
-                                                cachePolicy="memory-disk"
-                                                transition={0}
-                                                accessibilityLabel={`${relicName} relic icon`}
-                                              />
-                                            </View>
-                                          </View>
-                                        );
-                                      }
-                                      
+                      {/* Relics: one row — Starter → Final (or single Relic) */}
+                      {currentBuild &&
+                        (() => {
+                          const sr = currentBuild.starting_relic || currentBuild.startingRelic;
+                          const fr = currentBuild.final_relic || currentBuild.finalRelic;
+                          const legacy = currentBuild.relic;
+                          const srS = sr && String(sr).trim();
+                          const frS = fr && String(fr).trim();
+                          const hasLegacy =
+                            legacy &&
+                            (typeof legacy === 'string'
+                              ? legacy.trim()
+                              : legacy.name || legacy.internalName);
+                          const onlyOneRelic = !srS && !frS && !!hasLegacy;
+                          const startSlotRaw = onlyOneRelic ? null : srS ? sr : null;
+                          const endSlotRaw = onlyOneRelic
+                            ? legacy
+                            : frS
+                              ? fr
+                              : srS && hasLegacy && !frS
+                                ? legacy
+                                : null;
+                          if (!startSlotRaw && !endSlotRaw) return null;
+
+                          const renderRelicTouchable = (raw, slotId) => {
+                            const { meta, lookupName } = resolveRelicItemMeta(findItem, raw);
+                            if (!lookupName) return null;
+                            const localIcon = meta && meta.icon ? getLocalItemIcon(meta.icon) : null;
+                            const itemKey = `relic-${idx}-${slotId}-${lookupName}`;
+                            return (
+                              <TouchableOpacity
+                                style={styles.iconWrap}
+                                onPress={(e) => {
+                                  e.stopPropagation();
+                                  startTransition(() => {
+                                    setSelectedItem({ item: meta, itemName: lookupName });
+                                  });
+                                }}
+                              >
+                                <View style={{ position: 'relative' }}>
+                                  {localIcon ? (() => {
+                                    const imageSource = localIcon.primary || localIcon;
+                                    const fallbackSource = localIcon.fallback;
+                                    const useFallback = failedItemIcons[itemKey];
+                                    if (fallbackSource && !useFallback) {
                                       return (
                                         <View style={styles.iconOuterBorder}>
                                           <View style={styles.iconInnerBorder}>
-                                            <Image 
+                                            <Image
                                               source={imageSource}
                                               style={styles.smallIconImg}
                                               contentFit="cover"
                                               cachePolicy="memory-disk"
                                               transition={0}
-                                              accessibilityLabel={`${relicName} relic icon`}
+                                              recyclingKey={imageSource.uri}
+                                              accessibilityLabel={`${lookupName} relic icon`}
+                                              onError={() => {
+                                                setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
+                                              }}
                                             />
                                           </View>
                                         </View>
                                       );
-                                    })() : (
+                                    }
+                                    if (fallbackSource && useFallback) {
+                                      return (
+                                        <View style={styles.iconOuterBorder}>
+                                          <View style={styles.iconInnerBorder}>
+                                            <Image
+                                              source={fallbackSource}
+                                              style={styles.smallIconImg}
+                                              contentFit="cover"
+                                              cachePolicy="memory-disk"
+                                              transition={0}
+                                              recyclingKey={fallbackSource.uri}
+                                              accessibilityLabel={`${lookupName} relic icon`}
+                                            />
+                                          </View>
+                                        </View>
+                                      );
+                                    }
+                                    return (
                                       <View style={styles.iconOuterBorder}>
-                                        <View style={[styles.iconInnerBorder, styles.iconFallback]}>
-                                          <Text style={styles.iconFallbackText}>{relicName}</Text>
+                                        <View style={styles.iconInnerBorder}>
+                                          <Image
+                                            source={imageSource}
+                                            style={styles.smallIconImg}
+                                            contentFit="cover"
+                                            cachePolicy="memory-disk"
+                                            transition={0}
+                                            recyclingKey={imageSource.uri}
+                                            accessibilityLabel={`${lookupName} relic icon`}
+                                          />
                                         </View>
                                       </View>
-                                    )}
-                                    {/* Patch indicator badge for relic */}
-                                    {meta && meta.latestPatchChange && (
-                                      <PatchBadgeTooltip
-                                        changeType={meta.latestPatchChange.type}
-                                        version={meta.latestPatchChange.version || 'latest'}
-                                        entityType="item"
-                                        badgeStyle={[styles.patchBadge, styles.patchBadgeSmall, styles[`patchBadge${meta.latestPatchChange.type.charAt(0).toUpperCase() + meta.latestPatchChange.type.slice(1)}`]]}
-                                        textStyle={styles.patchBadgeText}
-                                        overlayStyle={styles.tooltipOverlay}
-                                        contentStyle={styles.tooltipContent}
-                                        tooltipTextStyle={styles.tooltipText}
-                                        closeButtonStyle={styles.tooltipCloseButton}
-                                        closeTextStyle={styles.tooltipCloseText}
-                                      />
-                                    )}
-                                  </View>
-                                </TouchableOpacity>
-                              );
-                            })()}
-                          </View>
-                        </View>
-                      )}
-
-                        {/* Contributor/Community: single expandable section with Build Tips | Item Swaps tabs */}
-                        {(buildCategory === 'contributors' || buildCategory === 'community') && (() => {
-                          const hasTips = currentBuild && currentBuild.tips && String(currentBuild.tips).trim().length > 0;
-                          const hasGodTips = god && god.tips && Array.isArray(god.tips) && god.tips.filter(tip => tip && tip.title && !tip.title.toLowerCase().includes('leveling')).length > 0;
-                          const hasSwaps = currentBuild && currentBuild.itemSwaps && currentBuild.itemSwaps.length > 0;
-                          const showCombined = hasTips || hasGodTips || hasSwaps;
-                          if (!showCombined) return null;
-
-                          const sectionKey = `tipsSwaps-${idx}-${currentBuildIdx}`;
-                          const isOpen = IS_WEB || expandedCardSections[sectionKey] !== false;
-                          const tabKey = `${idx}-${currentBuildIdx}`;
-                          const activeTab = tipsSwapsTab[tabKey] || (hasTips || hasGodTips ? 'tips' : 'swaps');
-
-                          const tipLines = hasTips
-                            ? String(currentBuild.tips).split(/\n+/).filter(line => line.trim().length > 0)
-                            : (hasGodTips ? god.tips.filter(tip => tip && tip.title && !tip.title.toLowerCase().includes('leveling')) : []);
-                          const tipsLabel = hasTips ? 'Build Tips' : 'Tips';
-
-                          const tipsContent = tipLines.length > 0 ? (
-                            <View style={styles.tipButtonsContainer}>
-                              {tipLines.map((tipLine, tipIdx) => {
-                                const tipObj = typeof tipLine === 'string'
-                                  ? { title: `Tip ${tipIdx + 1}`, value: tipLine.trim() }
-                                  : tipLine;
-                                return (
-                                  <TouchableOpacity
-                                    key={tipIdx}
-                                    style={styles.tipButton}
-                                    onPress={() => startTransition(() => setSelectedTip({ tip: tipObj, tipIndex: tipIdx + 1, godIndex: idx }))}
-                                    activeOpacity={0.7}
-                                  >
-                                    <Text style={styles.tipButtonText}>{tipIdx + 1}</Text>
-                                  </TouchableOpacity>
-                                );
-                              })}
-                            </View>
-                          ) : null;
-
-                          const swapsContent = hasSwaps ? (
-                            <>
-                              {currentBuild.itemSwaps.map((swap, swapIdx) => {
-                                const rawItem = typeof swap.item === 'string' ? { name: swap.item } : swap.item;
-                                const itemName = rawItem && (rawItem.name || rawItem.internalName);
-                                const iconPath = rawItem && (rawItem.icon || rawItem.internalName || rawItem.name);
-                                const isUrl = typeof iconPath === 'string' && (iconPath.startsWith('http://') || iconPath.startsWith('https://'));
-                                let iconEl = null;
-                                if (isUrl && rawItem && rawItem.icon) {
-                                  iconEl = <Image source={{ uri: rawItem.icon }} style={{ width: 32, height: 32, borderRadius: 4 }} contentFit="cover" />;
-                                } else if (itemName) {
-                                  try {
-                                    const meta = findItem(itemName);
-                                    const li = meta && meta.icon ? getLocalItemIcon(meta.icon) : null;
-                                    if (li) iconEl = <Image source={li.primary || li} style={{ width: 32, height: 32, borderRadius: 4 }} contentFit="cover" />;
-                                  } catch (_) {}
-                                }
-                                if (!iconEl && !isUrl && iconPath) {
-                                  const localIcon = getLocalItemIcon(iconPath);
-                                  if (localIcon) iconEl = <Image source={localIcon.primary || localIcon} style={{ width: 32, height: 32, borderRadius: 4 }} contentFit="cover" />;
-                                }
-                                if (!iconEl && itemName) {
-                                  iconEl = <View style={[styles.levelingOrderIconFallback, { width: 32, height: 32, borderRadius: 4 }]}><Text style={styles.levelingOrderIconFallbackText}>{itemName.charAt(0)}</Text></View>;
-                                }
-                                return (
-                                  <View key={swapIdx} style={styles.tipItem}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 10 }}>
-                                      {iconEl}
-                                      <View style={{ flex: 1 }}>
-                                        {itemName && <Text style={styles.tipTitle}>{itemName}</Text>}
-                                        {swap.reasoning && <Text style={styles.tipValue}>{swap.reasoning}</Text>}
+                                    );
+                                  })() : (
+                                    <View style={styles.iconOuterBorder}>
+                                      <View style={[styles.iconInnerBorder, styles.iconFallback]}>
+                                        <Text style={styles.iconFallbackText}>{lookupName}</Text>
                                       </View>
                                     </View>
-                                  </View>
-                                );
-                              })}
-                            </>
-                          ) : null;
+                                  )}
+                                  {meta && meta.latestPatchChange && (
+                                    <PatchBadgeTooltip
+                                      changeType={meta.latestPatchChange.type}
+                                      version={meta.latestPatchChange.version || 'latest'}
+                                      entityType="item"
+                                      badgeStyle={[styles.patchBadge, styles.patchBadgeSmall, styles[`patchBadge${meta.latestPatchChange.type.charAt(0).toUpperCase() + meta.latestPatchChange.type.slice(1)}`]]}
+                                      textStyle={styles.patchBadgeText}
+                                      overlayStyle={styles.tooltipOverlay}
+                                      contentStyle={styles.tooltipContent}
+                                      tooltipTextStyle={styles.tooltipText}
+                                      closeButtonStyle={styles.tooltipCloseButton}
+                                      closeTextStyle={styles.tooltipCloseText}
+                                    />
+                                  )}
+                                </View>
+                              </TouchableOpacity>
+                            );
+                          };
 
                           return (
-                            <View style={styles.expand}>
-                              <TouchableOpacity
-                                onPress={() => setExpandedCardSections(prev => ({ ...prev, [sectionKey]: !isOpen }))}
-                                style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: isOpen ? 10 : 0 }}
-                              >
-                                <Text style={styles.expandTitle}>Build Tips / Item Swaps</Text>
-                                <Text style={{ color: '#7dd3fc', fontSize: 14 }}>{isOpen ? '▼' : '▶'}</Text>
-                              </TouchableOpacity>
-                              {isOpen && (
-                                <>
-                                  <View style={{ flexDirection: 'row', gap: 8, marginBottom: 12 }}>
-                                    <TouchableOpacity
-                                      onPress={() => setTipsSwapsTab(prev => ({ ...prev, [tabKey]: 'tips' }))}
-                                      style={[styles.tipsSwapsButton, activeTab === 'tips' && styles.tipsSwapsButtonActive]}
-                                    >
-                                      <Text style={[styles.tipsSwapsButtonText, activeTab === 'tips' && styles.tipsSwapsButtonTextActive]}>{tipsLabel}</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                      onPress={() => setTipsSwapsTab(prev => ({ ...prev, [tabKey]: 'swaps' }))}
-                                      style={[styles.tipsSwapsButton, activeTab === 'swaps' && styles.tipsSwapsButtonActive]}
-                                    >
-                                      <Text style={[styles.tipsSwapsButtonText, activeTab === 'swaps' && styles.tipsSwapsButtonTextActive]}>Item Swaps</Text>
-                                    </TouchableOpacity>
+                            <View style={[styles.buildRow, styles.buildRelicsRowWithLabel, { marginTop: 8 }]}>
+                              <Text style={[styles.buildLabel, styles.buildLabelRelicsInline]}>Relics</Text>
+                              <View style={styles.buildRelicsInlineRow}>
+                                {onlyOneRelic ? (
+                                  <View style={styles.relicInlineGroup}>
+                                    <Text style={styles.relicInlineTag}>Relic</Text>
+                                    {renderRelicTouchable(endSlotRaw, 'one')}
                                   </View>
-                                  {activeTab === 'tips' ? tipsContent : swapsContent}
-                                </>
-                              )}
+                                ) : (
+                                  <>
+                                    {startSlotRaw ? (
+                                      <View style={styles.relicInlineGroup}>
+                                        <Text style={styles.relicInlineTag}>Starter</Text>
+                                        {renderRelicTouchable(startSlotRaw, 'st')}
+                                      </View>
+                                    ) : null}
+                                    {endSlotRaw ? (
+                                      <>
+                                        {startSlotRaw ? (
+                                          <View style={styles.relicArrowAlign}>
+                                            <Text style={styles.relicInlineArrow}>→</Text>
+                                          </View>
+                                        ) : null}
+                                        <View style={styles.relicInlineGroup}>
+                                          <Text style={styles.relicInlineTag}>
+                                            {frS ? 'Final' : 'Relic'}
+                                          </Text>
+                                          {renderRelicTouchable(endSlotRaw, 'end')}
+                                        </View>
+                                      </>
+                                    ) : null}
+                                  </>
+                                )}
+                              </View>
                             </View>
                           );
                         })()}
 
-                        {/* Non-contributor/community: show Build Tips and Item Swaps as separate sections */}
-                        {(buildCategory !== 'contributors' && buildCategory !== 'community') && (() => {
-                          const tipsSectionKey = `tips-${idx}-${currentBuildIdx}`;
-                          const isTipsOpen = IS_WEB || expandedCardSections[tipsSectionKey] !== false;
-                          const renderTipsHeader = (title) => IS_WEB ? <Text style={styles.expandTitle}>{title}</Text> : (
-                            <TouchableOpacity onPress={() => setExpandedCardSections(prev => ({ ...prev, [tipsSectionKey]: !isTipsOpen }))} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: isTipsOpen ? 12 : 0 }}>
-                              <Text style={styles.expandTitle}>{title}</Text>
-                              <Text style={{ color: '#7dd3fc', fontSize: 14 }}>{isTipsOpen ? '▼' : '▶'}</Text>
-                            </TouchableOpacity>
-                          );
-                          const buildTips = currentBuild && currentBuild.tips ? currentBuild.tips : null;
-                          if (buildTips && buildTips.trim()) {
-                            const tipLines = buildTips.split(/\n+/).filter(line => line.trim().length > 0);
-                            if (tipLines.length > 0) {
-                              return (
-                                <View style={styles.expand}>
-                                  {renderTipsHeader('Build Tips')}
-                                  {isTipsOpen && (
-                                    <View style={styles.tipButtonsContainer}>
-                                      {tipLines.map((tipLine, tipIdx) => {
-                                        const tipObj = { title: `Tip ${tipIdx + 1}`, value: tipLine.trim() };
-                                        return (
-                                          <TouchableOpacity key={tipIdx} style={styles.tipButton} onPress={() => startTransition(() => setSelectedTip({ tip: tipObj, tipIndex: tipIdx + 1, godIndex: idx }))} activeOpacity={0.7}>
-                                            <Text style={styles.tipButtonText}>{tipIdx + 1}</Text>
-                                          </TouchableOpacity>
-                                        );
-                                      })}
-                                    </View>
-                                  )}
-                                </View>
-                              );
-                            }
-                          }
-                          if (god && god.tips && Array.isArray(god.tips)) {
-                            const filteredTips = god.tips.filter(tip => tip && tip.title && !tip.title.toLowerCase().includes('leveling'));
-                            return filteredTips.length > 0 ? (
-                              <View style={styles.expand}>
-                                {renderTipsHeader('Tips')}
-                                {isTipsOpen && (
-                                  <View style={styles.tipButtonsContainer}>
-                                    {filteredTips.map((tip, tipIdx) => (
-                                      <TouchableOpacity key={tipIdx} style={styles.tipButton} onPress={() => startTransition(() => setSelectedTip({ tip, tipIndex: tipIdx + 1, godIndex: idx }))} activeOpacity={0.7}>
-                                        <Text style={styles.tipButtonText}>{tipIdx + 1}</Text>
-                                      </TouchableOpacity>
-                                    ))}
-                                  </View>
-                                )}
-                              </View>
-                            ) : null;
-                          }
-                          return null;
-                        })()}
-                        {(buildCategory !== 'contributors' && buildCategory !== 'community') && currentBuild && currentBuild.itemSwaps && currentBuild.itemSwaps.length > 0 && (() => {
+                        {/* Item Swaps: same expand UI as featured; contrib/community use string or object swap.item */}
+                        {currentBuild && currentBuild.itemSwaps && currentBuild.itemSwaps.length > 0 && (() => {
                           const sectionKey = `itemSwaps-${idx}-${currentBuildIdx}`;
                           const isSectionOpen = IS_WEB || expandedCardSections[sectionKey] !== false;
                           const content = currentBuild.itemSwaps.map((swap, swapIdx) => {
-                            const itemName = swap.item && (swap.item.name || swap.item.internalName);
-                            const iconPath = swap.item && (swap.item.icon || swap.item.internalName || swap.item.name);
+                            const rawItem = typeof swap.item === 'string' ? { name: swap.item } : swap.item;
+                            const itemName = rawItem && (rawItem.name || rawItem.internalName);
+                            const iconPath = rawItem && (rawItem.icon || rawItem.internalName || rawItem.name);
                             const isUrl = typeof iconPath === 'string' && (iconPath.startsWith('http://') || iconPath.startsWith('https://'));
-                            const localIcon = !isUrl && iconPath ? getLocalItemIcon(iconPath) : null;
                             let iconEl = null;
-                            if (swap.item && (isUrl || localIcon)) {
-                              iconEl = isUrl ? <Image source={{ uri: swap.item.icon }} style={{ width: 32, height: 32, borderRadius: 4 }} contentFit="cover" /> : <Image source={localIcon.primary || localIcon} style={{ width: 32, height: 32, borderRadius: 4 }} contentFit="cover" />;
+                            if (isUrl && rawItem && rawItem.icon) {
+                              iconEl = <Image source={{ uri: rawItem.icon }} style={{ width: 32, height: 32, borderRadius: 4 }} contentFit="cover" />;
                             } else if (itemName) {
                               try {
                                 const meta = findItem(itemName);
                                 const li = meta && meta.icon ? getLocalItemIcon(meta.icon) : null;
                                 if (li) iconEl = <Image source={li.primary || li} style={{ width: 32, height: 32, borderRadius: 4 }} contentFit="cover" />;
                               } catch (_) {}
+                            }
+                            if (!iconEl && !isUrl && iconPath) {
+                              const localIcon = getLocalItemIcon(iconPath);
+                              if (localIcon) iconEl = <Image source={localIcon.primary || localIcon} style={{ width: 32, height: 32, borderRadius: 4 }} contentFit="cover" />;
+                            }
+                            if (!iconEl && itemName) {
+                              iconEl = (
+                                <View style={[styles.levelingOrderIconFallback, { width: 32, height: 32, borderRadius: 4 }]}>
+                                  <Text style={styles.levelingOrderIconFallbackText}>{itemName.charAt(0)}</Text>
+                                </View>
+                              );
                             }
                             return (
                               <View key={swapIdx} style={styles.tipItem}>
@@ -4524,7 +4376,10 @@ function BuildsPage({ onGodIconPress, initialTab = 'builds', hideInternalTabs = 
                                 </>
                               ) : (
                                 <>
-                                  <TouchableOpacity onPress={() => setExpandedCardSections(prev => ({ ...prev, [sectionKey]: !isSectionOpen }))} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: isSectionOpen ? 12 : 0 }}>
+                                  <TouchableOpacity
+                                    onPress={() => setExpandedCardSections(prev => ({ ...prev, [sectionKey]: !isSectionOpen }))}
+                                    style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: isSectionOpen ? 12 : 0 }}
+                                  >
                                     <Text style={styles.expandTitle}>Item Swaps</Text>
                                     <Text style={{ color: '#7dd3fc', fontSize: 14 }}>{isSectionOpen ? '▼' : '▶'}</Text>
                                   </TouchableOpacity>
@@ -5440,6 +5295,15 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontWeight: '700',
   },
+  buildsHubRow: {
+    flexDirection: 'row',
+    marginTop: 4,
+    marginBottom: 10,
+    paddingHorizontal: 12,
+    gap: 8,
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+  },
   guidesContainer: {
     flex: 1,
     backgroundColor: '#071024',
@@ -5609,28 +5473,50 @@ const styles = StyleSheet.create({
   },
   filterButtonsRow: {
     flexDirection: 'row',
-    gap: 6,
-    marginBottom: 8,
+    gap: 4,
+    marginBottom: 6,
     flexWrap: 'wrap',
   },
   filterButtonContainer: {
     position: 'relative',
     zIndex: 10,
     flex: 1,
-    minWidth: 80,
+    minWidth: 68,
     maxWidth: '48%',
+  },
+  filterButtonContainerRole: {
+    minWidth: 128,
+    flexGrow: 1.15,
+    maxWidth: 178,
+    zIndex: 11,
+  },
+  filterButtonRole: {
+    minWidth: 118,
+    paddingHorizontal: 6,
+  },
+  filterButtonTextRole: {
+    flex: 0,
+    flexGrow: 0,
+    flexShrink: 0,
+  },
+  filterDropdownRole: {
+    minWidth: 148,
+    alignSelf: 'stretch',
+  },
+  filterOptionTextRole: {
+    flexShrink: 0,
   },
   filterButton: {
     backgroundColor: '#06202f',
-    paddingHorizontal: 8,
-    paddingVertical: 10,
-    borderRadius: 8,
+    paddingHorizontal: 6,
+    paddingVertical: 6,
+    borderRadius: 6,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: '#1e3a5f',
-    minWidth: 80,
+    minWidth: 68,
     position: 'relative',
   },
   filterButtonActive: {
@@ -5639,7 +5525,7 @@ const styles = StyleSheet.create({
   },
   filterButtonText: {
     color: '#e6eef8',
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '600',
     textAlign: 'center',
     flex: 1,
@@ -5647,10 +5533,10 @@ const styles = StyleSheet.create({
   },
   filterButtonIcon: {
     color: '#e6eef8',
-    fontSize: 9,
-    width: 10,
+    fontSize: 8,
+    width: 9,
     textAlign: 'right',
-    marginLeft: 4,
+    marginLeft: 3,
     flexShrink: 0,
   },
   filterDropdown: {
@@ -5658,12 +5544,12 @@ const styles = StyleSheet.create({
     top: '100%',
     left: 0,
     right: 0,
-    marginTop: 4,
+    marginTop: 3,
     backgroundColor: '#0b1226',
-    borderRadius: 8,
+    borderRadius: 6,
     borderWidth: 1,
     borderColor: '#1e3a5f',
-    maxHeight: 200,
+    maxHeight: 176,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
@@ -5672,11 +5558,11 @@ const styles = StyleSheet.create({
     zIndex: 1000,
   },
   filterDropdownScroll: {
-    maxHeight: 200,
+    maxHeight: 176,
   },
   filterOption: {
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,
@@ -5687,13 +5573,12 @@ const styles = StyleSheet.create({
   },
   filterOptionText: {
     color: '#e6eef8',
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '500',
   },
   filterOptionIcon: {
-    width: 16,
-    height: 16,
-    resizeMode: 'contain',
+    width: 14,
+    height: 14,
   },
   buildCategoryFilters: {
     flexDirection: 'row',
@@ -5776,7 +5661,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 16,
     padding: 16,
-    overflow: 'hidden',
+    /* visible so pantheon pin can sit outside the portrait corner */
+    overflow: 'visible',
   },
   cardContent: {
     flexDirection: 'row',
@@ -5787,13 +5673,14 @@ const styles = StyleSheet.create({
   cardExpandedContent: {
     paddingLeft: 12,
     paddingRight: 12,
-    paddingTop: 8,
+    paddingTop: 4,
   },
   cardHeaderRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
-    marginBottom: 12,
+    marginBottom: 8,
+    gap: 8,
   },
   cardTitle: { 
     color: '#e6eef8', 
@@ -5802,18 +5689,10 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     flex: 1,
   },
-  pinButton: {
-    padding: 4,
-    borderRadius: 4,
-  },
-  pinButtonText: {
-    fontSize: 18,
-  },
   expandIndicator: {
     color: '#94a3b8',
     fontSize: 16,
     fontWeight: '700',
-    marginLeft: 8,
   },
   roleBadge: {
     marginTop: 8,
@@ -5881,7 +5760,6 @@ const styles = StyleSheet.create({
   iconImg: { 
     width: 38, 
     height: 38, 
-    resizeMode: 'cover' 
   },
   iconFallback: { 
     width: 38,
@@ -5913,7 +5791,7 @@ const styles = StyleSheet.create({
   iconWithBadgeWrapper: {
     position: 'relative',
     borderWidth: 1.5,
-    borderColor: 'rgba(250, 204, 21, 0.6)',
+    borderColor: 'rgba(226, 198, 83, 0.31)',
     borderRadius: 10,
     padding: 2,
   },
@@ -5939,12 +5817,41 @@ const styles = StyleSheet.create({
   smallIconImg: { 
     width: 32, 
     height: 32, 
-    resizeMode: 'cover' 
   },
-  cardLeft: { 
-    width: 90, 
-    alignItems: 'center', 
+  cardLeft: {
+    alignItems: 'flex-start',
     justifyContent: 'flex-start',
+  },
+  /* Wrap positions pantheon badge outside the god frame (overflow visible on card) */
+  buildCardGodPortraitWrap: {
+    position: 'relative',
+    alignSelf: 'flex-start',
+    overflow: 'visible',
+  },
+  /* Pantheon mark — sits on the god frame border (top-left), slightly inside/outside the corner */
+  buildCardPantheonBadge: {
+    position: 'absolute',
+    top: -7,
+    left: -7,
+    zIndex: 4,
+    width: 26,
+    height: 26,
+    borderRadius: 7,
+    padding: 2,
+    backgroundColor: 'rgba(3, 7, 18, 0.92)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.48)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 4,
+  },
+  buildCardPantheonOverlay: {
+    width: 18,
+    height: 18,
   },
   godIconContainer: {
     width: 80,
@@ -6156,26 +6063,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
   },
-  tipsSwapsButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#1e3a5f',
-    backgroundColor: '#0f1724',
-  },
-  tipsSwapsButtonActive: {
-    borderColor: '#7dd3fc',
-    backgroundColor: '#0c4a6e',
-  },
-  tipsSwapsButtonText: {
-    color: '#94a3b8',
-    fontSize: 13,
-    fontWeight: '700',
-  },
-  tipsSwapsButtonTextActive: {
-    color: '#e0f2fe',
-  },
   abilityRow: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: 8 },
   abilityIcon: { width: 44, height: 44, borderRadius: 6 },
   abilityIconFallback: { width: 44, height: 44, borderRadius: 6, backgroundColor: '#0f1724', alignItems: 'center', justifyContent: 'center' },
@@ -6219,19 +6106,46 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontWeight: '700',
   },
-  buildTitle: {
-    color: '#ffffff',
-    fontSize: 15,
-    fontWeight: '700',
+  /* Build summary under god name — lighter straw gold so it doesn’t read like Jungle lane amber */
+  buildTitleUnderNameBox: {
     marginTop: 8,
-    marginBottom: 12,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    backgroundColor: '#9b760b',
-    borderRadius: 10,
+    marginBottom: 0,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    backgroundColor: '#c5a63d',
+    borderRadius: 8,
     borderLeftWidth: 4,
-    borderLeftColor: '#1e90ff',
-    lineHeight: 20,
+    alignSelf: 'stretch',
+    overflow: 'hidden',
+  },
+  buildTitleUnderNameText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '700',
+    lineHeight: 19,
+  },
+  buildCardMetaRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    columnGap: 10,
+    rowGap: 6,
+    marginTop: 8,
+  },
+  buildPatchChipInline: {
+    marginTop: 0,
+    marginBottom: 0,
+  },
+  buildAuthorInlineRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 8,
+    flexShrink: 1,
+  },
+  buildAuthorInline: {
+    marginTop: 0,
+    marginBottom: 0,
   },
   buildShareButton: {
     paddingHorizontal: 8,
@@ -6258,6 +6172,71 @@ const styles = StyleSheet.create({
   buildAuthorContributors: {
     color: '#10b981',
     fontWeight: '600',
+  },
+  buildPatchChip: {
+    alignSelf: 'flex-start',
+    marginTop: 8,
+    marginBottom: 2,
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    borderRadius: 6,
+    backgroundColor: '#020617',
+    borderWidth: 1,
+    borderColor: '#166534',
+  },
+  buildPatchChipText: {
+    color: '#4ade80',
+    fontSize: 12,
+    fontWeight: '800',
+    letterSpacing: 0.4,
+    textShadowColor: 'rgba(74, 222, 128, 0.35)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 4,
+  },
+  buildRelicsRowWithLabel: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    columnGap: 10,
+    rowGap: 6,
+  },
+  buildLabelRelicsInline: {
+    marginBottom: 0,
+    alignSelf: 'center',
+  },
+  buildRelicsInlineRow: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    gap: 8,
+    minWidth: 120,
+  },
+  relicInlineGroup: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 4,
+  },
+  relicInlineTag: {
+    color: '#94a3b8',
+    fontSize: 10,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 0.4,
+  },
+  relicArrowAlign: {
+    minHeight: 58,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 2,
+  },
+  relicInlineArrow: {
+    color: '#7dd3fc',
+    fontSize: 15,
+    fontWeight: '700',
+    lineHeight: 20,
+    textAlign: 'center',
+    includeFontPadding: false,
   },
   certificationRequestContainer: {
     marginTop: 8,
@@ -6320,7 +6299,6 @@ const styles = StyleSheet.create({
   abilityIconCompact: {
     width: 48,
     height: 48,
-    resizeMode: 'cover',
   },
   abilityIconFallbackCompact: {
     width: 48,
@@ -6606,11 +6584,72 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#1e3a5f',
   },
+  levelingOrderContainerPressed: {
+    opacity: 0.92,
+    borderColor: '#2d4a6f',
+  },
   levelingOrderLabel: {
     color: '#7dd3fc',
     fontSize: 12,
     fontWeight: '700',
     marginBottom: 8,
+  },
+  abilityOrderHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 0,
+  },
+  abilityOrderHeaderRowOpen: {
+    marginBottom: 10,
+  },
+  abilityOrderHeader: {
+    color: '#7dd3fc',
+    fontSize: 13,
+    fontWeight: '800',
+    letterSpacing: 0.6,
+    textTransform: 'uppercase',
+    flex: 1,
+  },
+  abilityOrderChevron: {
+    color: '#7dd3fc',
+    fontSize: 14,
+    fontWeight: '700',
+    marginLeft: 8,
+  },
+  abilityOrderCollapsedHint: {
+    color: '#64748b',
+    fontSize: 12,
+    fontWeight: '600',
+    marginTop: 4,
+    lineHeight: 16,
+  },
+  abilityOrderTabsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 6,
+    marginBottom: 4,
+  },
+  abilityOrderTabBtn: {
+    paddingVertical: 5,
+    paddingHorizontal: 9,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    backgroundColor: '#0f1724',
+  },
+  abilityOrderTabBtnActive: {
+    borderColor: '#7dd3fc',
+    backgroundColor: '#0c4a6e',
+  },
+  abilityOrderTabBtnText: {
+    color: '#94a3b8',
+    fontSize: 11,
+    fontWeight: '700',
+  },
+  abilityOrderTabBtnTextActive: {
+    color: '#e0f2fe',
   },
   levelingOrderIcons: {
     flexDirection: 'row',
@@ -6628,10 +6667,37 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
   },
-  levelingOrderIcon: {
-    width: 36,
-    height: 36,
+  /* Ability order icons: framed like build item icons, compact */
+  levelingOrderIconOuter: {
+    width: 40,
+    height: 40,
+    borderRadius: 8,
+    padding: 2,
+    backgroundColor: '#1e3a5f',
+    borderWidth: 1,
+    borderColor: '#2a4a6a',
+  },
+  levelingOrderIconInner: {
+    flex: 1,
+    width: '100%',
     borderRadius: 6,
+    overflow: 'hidden',
+    backgroundColor: '#071024',
+    borderWidth: 1,
+    borderColor: '#0f1724',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  levelingOrderIconFramed: {
+    width: '100%',
+    height: '100%',
+  },
+  levelingOrderIconFallbackFramed: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#0f1724',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   levelingOrderIconFallback: {
     width: 36,
@@ -6958,9 +7024,9 @@ export default function App() {
     }
   }, []);
 
-  // Disable browser inspection on web
+  // Optionally disable browser inspection on web (toggled via EXPO_PUBLIC_WEB_INSPECT_LOCK)
   useEffect(() => {
-    if (IS_WEB && typeof document !== 'undefined' && typeof window !== 'undefined') {
+    if (IS_WEB && WEB_INSPECT_LOCK_ENABLED && typeof document !== 'undefined' && typeof window !== 'undefined') {
       // Disable right-click context menu
       const handleContextMenu = (e) => {
         e.preventDefault();
@@ -7115,7 +7181,9 @@ export default function App() {
   const [mybuildsRefreshKey, setMybuildsRefreshKey] = useState(0); // Increment after contributor edit so My Builds remounts and reloads
   // Sub-navigation states
   const [databaseSubTab, setDatabaseSubTab] = useState(DEFAULT_TAB_STATE.data); // 'gods', 'items', 'gamemodes', 'mechanics'
-  const [buildsSubTab, setBuildsSubTab] = useState(DEFAULT_TAB_STATE.builds); // 'featured', 'contributors', 'community', 'all', 'guides', 'custom', 'mybuilds', 'tierlist'
+  const [buildsSubTab, setBuildsSubTab] = useState(DEFAULT_TAB_STATE.builds);
+  /** Under Builds: browse featured/contributors/community vs embedded tierlists */
+  const [buildsHubMode, setBuildsHubMode] = useState('browse');
   const [patchHubSubTab, setPatchHubSubTab] = useState(DEFAULT_TAB_STATE.patchHub); // 'simple', 'catchup', 'archive'
   const [moreSubTab, setMoreSubTab] = useState(DEFAULT_TAB_STATE.more); // 'minigames', 'profile', 'shop', 'tools'
   const [viewingUserProfile, setViewingUserProfile] = useState(null); // Username of user profile to view
@@ -7280,6 +7348,7 @@ export default function App() {
             ]}
             onPress={() => {
               startTransition(() => {
+                setBuildsHubMode('browse');
                 setBuildsSubTab('featured');
                 setCurrentPage('builds');
               });
@@ -7296,6 +7365,7 @@ export default function App() {
             style={[navStyles.subNavButton, (buildsSubTab === 'custom' || currentPage === 'custombuild') && navStyles.subNavButtonActive]}
             onPress={() => {
               startTransition(() => {
+                setBuildsHubMode('browse');
                 setBuildsSubTab('custom');
                 setCurrentPage('custombuild');
               });
@@ -7309,6 +7379,7 @@ export default function App() {
             style={[navStyles.subNavButton, buildsSubTab === 'randomizer' && navStyles.subNavButtonActive]}
             onPress={() => {
               startTransition(() => {
+                setBuildsHubMode('browse');
                 setBuildsSubTab('randomizer');
                 setCurrentPage('builds');
               });
@@ -7322,6 +7393,7 @@ export default function App() {
             style={[navStyles.subNavButton, buildsSubTab === 'mybuilds' && navStyles.subNavButtonActive]}
             onPress={() => {
               startTransition(() => {
+                setBuildsHubMode('browse');
                 setBuildsSubTab('mybuilds');
                 setCurrentPage('builds');
               });
@@ -7332,16 +7404,17 @@ export default function App() {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[navStyles.subNavButton, buildsSubTab === 'tierlist' && navStyles.subNavButtonActive]}
+            style={[navStyles.subNavButton, buildsSubTab === 'guides' && navStyles.subNavButtonActive]}
             onPress={() => {
               startTransition(() => {
-                setBuildsSubTab('tierlist');
+                setBuildsHubMode('browse');
+                setBuildsSubTab('guides');
                 setCurrentPage('builds');
               });
             }}
           >
-            <Text style={[navStyles.subNavButtonText, buildsSubTab === 'tierlist' && navStyles.subNavButtonTextActive]}>
-              Tierlist
+            <Text style={[navStyles.subNavButtonText, buildsSubTab === 'guides' && navStyles.subNavButtonTextActive]}>
+              Guides
             </Text>
           </TouchableOpacity>
         </View>
@@ -7463,7 +7536,6 @@ export default function App() {
               setGodFromBuilds(null); 
               setExpandAbilities(false);
               setCurrentPage('builds');
-              setBuildsSubTab('community');
             }} 
           />
         </Suspense>
@@ -7476,6 +7548,8 @@ export default function App() {
             key={`builds-page-${buildsSubTab}`}
             initialTab={buildsSubTab === 'randomizer' ? 'randomizer' : 'builds'}
             hideInternalTabs={true}
+            hubMode={buildsHubMode}
+            onHubModeChange={setBuildsHubMode}
             initialBuildCategory={buildsSubTab === 'featured' ? 'featured' : buildsSubTab === 'contributors' ? 'contributors' : buildsSubTab === 'community' ? 'community' : 'featured'}
             onGodIconPress={(god, shouldExpandAbilities = false) => { 
               setGodFromBuilds(god); 
@@ -7516,11 +7590,23 @@ export default function App() {
         </Suspense>
       )}
       
-      {/* Tierlist page - now part of builds category */}
-      {currentPage === 'builds' && buildsSubTab === 'tierlist' && (
-        <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
-          <TierlistPage />
-        </Suspense>
+      {currentPage === 'builds' && buildsSubTab === 'guides' && (
+        <View style={navStyles.pageVisible} pointerEvents="auto">
+          <Suspense
+            fallback={
+              <ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />
+            }
+          >
+            <GuidesPage
+              currentUsername={currentUser || ''}
+              onOpenBuildsContributors={() => {
+                setBuildsSubTab('contributors');
+                setBuildsHubMode('browse');
+                setCurrentPage('builds');
+              }}
+            />
+          </Suspense>
+        </View>
       )}
       
       {/* Custom Build page */}
@@ -7576,12 +7662,7 @@ export default function App() {
                 try {
                   const buildsData = require('./data/builds.json');
                   if (buildsData && buildsData.gods) {
-                    function flattenAny(a) {
-                      if (!a) return [];
-                      if (!Array.isArray(a)) return [a];
-                      return a.flat(Infinity).filter(Boolean);
-                    }
-                    const allGods = flattenAny(buildsData.gods);
+                    const allGods = flattenBuildsGods(buildsData.gods);
                     const god = allGods.find(g => (g.internalName || '').toLowerCase() === (godInternalName || '').toLowerCase());
                     if (god) {
                       setGodFromBuilds(god);
@@ -7598,12 +7679,7 @@ export default function App() {
                 try {
                   const buildsData = require('./data/builds.json');
                   if (buildsData && buildsData.gods) {
-                    function flattenAny(a) {
-                      if (!a) return [];
-                      if (!Array.isArray(a)) return [a];
-                      return a.flat(Infinity).filter(Boolean);
-                    }
-                    const allGods = flattenAny(buildsData.gods);
+                    const allGods = flattenBuildsGods(buildsData.gods);
                     const god = allGods.find(g => (g.internalName || '').toLowerCase() === (godInternalName || '').toLowerCase());
                     if (god) {
                       setGodFromBuilds(god);
@@ -7642,39 +7718,63 @@ export default function App() {
 
 // Randomizer styles
 const randomizerStyles = StyleSheet.create({
+  randomizerContentContainer: {
+    paddingHorizontal: 6,
+    paddingTop: 10,
+    paddingBottom: 14,
+  },
   randomizerContainer: {
-    padding: 16,
+    paddingHorizontal: 0,
+    paddingVertical: 10,
     backgroundColor: '#071024',
+    width: '100%',
+    alignSelf: 'stretch',
+  },
+  randomizerCombinedTopContent: {
+    flexDirection: IS_WEB ? 'row' : 'column',
+    alignItems: 'stretch',
+    gap: 12,
+  },
+  randomizerCombinedGodColumn: {
+    flex: IS_WEB ? 0.8 : 1,
+  },
+  randomizerCombinedBuildColumn: {
+    flex: 1,
   },
   randomizerSection: {
     backgroundColor: '#0b1226',
     borderRadius: 12,
-    padding: 16,
+    padding: 12,
     marginBottom: 16,
     borderWidth: 1,
     borderColor: '#1e3a5f',
   },
   randomizerTitle: {
     color: '#7dd3fc',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '700',
-    marginBottom: 16,
+    marginBottom: 12,
     textAlign: 'center',
   },
   randomizerGodContainer: {
     alignItems: 'center',
-    marginBottom: 16,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    gap: 6,
+    marginBottom: 12,
   },
   randomizerGodCard: {
     backgroundColor: '#0f1724',
     borderRadius: 12,
-    padding: 20,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#1e3a5f',
-    minWidth: 200,
-    width: '100%',
-    maxWidth: 300,
+    minWidth: 116,
+    width: 132,
+    maxWidth: 132,
     ...(IS_WEB && {
       cursor: 'pointer',
       transition: 'border-color 0.2s, transform 0.1s',
@@ -7685,16 +7785,16 @@ const randomizerStyles = StyleSheet.create({
     }),
   },
   randomizerGodIcon: {
-    width: 100,
-    height: 100,
+    width: 62,
+    height: 62,
     borderRadius: 8,
-    marginBottom: 12,
-    borderWidth: 2,
+    marginBottom: 6,
+    borderWidth: 1,
     borderColor: '#1e3a5f',
   },
   randomizerGodName: {
     color: '#e6eef8',
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: '600',
     textAlign: 'center',
   },
@@ -7712,18 +7812,38 @@ const randomizerStyles = StyleSheet.create({
     fontSize: 16,
   },
   randomizerStarterSection: {
-    marginBottom: 20,
+    marginBottom: 14,
   },
   randomizerSubtitle: {
     color: '#94a3b8',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
-    marginBottom: 12,
+    marginBottom: 8,
     textAlign: 'center',
   },
   randomizerStarterContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  randomizerStarterRelicRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    width: '100%',
+    gap: 10,
+  },
+  randomizerStarterRelicCell: {
+    width: '48%',
+    alignItems: 'center',
+  },
+  randomizerStarterRelicSlotWrapper: {
+    width: '66%',
+  },
+  randomizerSlotLabel: {
+    color: '#94a3b8',
+    fontSize: 12,
+    fontWeight: '700',
+    marginBottom: 6,
   },
   randomizerItemsSection: {
     marginBottom: 16,
@@ -7731,10 +7851,11 @@ const randomizerStyles = StyleSheet.create({
   randomizerItemsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: IS_WEB ? 8 : 6,
-    justifyContent: 'center',
-    alignItems: 'center',
+    rowGap: IS_WEB ? 10 : 8,
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
     marginBottom: 16,
+    width: '100%',
     ...(IS_WEB && {
       maxWidth: '100%',
     }),
@@ -7743,11 +7864,12 @@ const randomizerStyles = StyleSheet.create({
     position: 'relative',
     alignItems: 'center',
     justifyContent: 'center',
+    width: '31.5%',
   },
   randomizerItemSlot: {
-    width: IS_WEB ? 90 : 80,
-    maxWidth: IS_WEB ? 90 : 80,
-    minWidth: IS_WEB ? 90 : 80,
+    width: '100%',
+    maxWidth: '100%',
+    minWidth: 0,
     aspectRatio: 1,
     backgroundColor: '#0f1724',
     borderRadius: 8,
@@ -7755,7 +7877,7 @@ const randomizerStyles = StyleSheet.create({
     borderColor: '#1e3a5f',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: IS_WEB ? 8 : 6,
+    padding: IS_WEB ? 8 : 7,
     flexShrink: 0,
     flexGrow: 0,
     ...(IS_WEB && {
@@ -7830,32 +7952,6 @@ const randomizerStyles = StyleSheet.create({
     fontSize: 10,
     marginTop: 4,
   },
-  randomizerRelicContainer: {
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  randomizerRelicSlot: {
-    width: 120,
-    aspectRatio: 1,
-    backgroundColor: '#0f1724',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#1e3a5f',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 8,
-  },
-  randomizerRelicPlaceholder: {
-    width: 120,
-    aspectRatio: 1,
-    backgroundColor: '#0f1724',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#1e3a5f',
-    borderStyle: 'dashed',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   randomizerButtonRow: {
     flexDirection: 'row',
     gap: 8,
@@ -7905,13 +8001,12 @@ const randomizerStyles = StyleSheet.create({
     fontWeight: '600',
   },
   randomizerAspectSlot: {
-    marginTop: 16,
-    width: 120,
+    width: 84,
     backgroundColor: '#0f1724',
     borderRadius: 8,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: '#1e3a5f',
-    padding: 12,
+    padding: 7,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
@@ -7931,35 +8026,35 @@ const randomizerStyles = StyleSheet.create({
     elevation: 8,
   },
   randomizerAspectIcon: {
-    width: 60,
-    height: 60,
+    width: 38,
+    height: 38,
     borderRadius: 6,
-    marginBottom: 8,
+    marginBottom: 5,
     borderWidth: 1,
     borderColor: '#1e3a5f',
   },
   randomizerAspectIconPlaceholder: {
-    width: 60,
-    height: 60,
+    width: 38,
+    height: 38,
     borderRadius: 6,
     backgroundColor: '#1e3a5f',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 6,
     borderWidth: 1,
     borderColor: '#0f1724',
   },
   randomizerAspectIconPlaceholderText: {
     color: '#64748b',
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: '700',
   },
   randomizerAspectName: {
     color: '#cbd5e1',
-    fontSize: 11,
+    fontSize: 9,
     textAlign: 'center',
     fontWeight: '600',
-    lineHeight: 14,
+    lineHeight: 11,
   },
   randomizerAspectActiveIndicator: {
     position: 'absolute',

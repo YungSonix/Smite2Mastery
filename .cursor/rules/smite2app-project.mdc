@@ -21,7 +21,7 @@ alwaysApply: true
 ## Tech stack
 
 - **UI**: React Native, Expo SDK ~54, `expo-router`, `expo-image`, `react-native-safe-area-context`, `useScreenDimensions` from `hooks/useScreenDimensions`.
-- **Storage**: `AsyncStorage` (or `window.localStorage` on web). Reuse existing key patterns (e.g. `shop_${username}_gold`, `currentUser`, `pinnedBuilds_${user}`).
+- **Storage**: `AsyncStorage` (or `window.localStorage` on web). Reuse existing key patterns (e.g. `shop_${username}_gold`, `currentUser`, `pinnedBuilds_${user}`, `customBuilderPreset`, one-shot `loadSavedBuild`).
 - **Backend**: **Supabase** via `config/supabase.js`. Always guard with try/catch and fallback when config is missing (mock or null).
 - **Platform**: Use `Platform.OS === 'web'` / `IS_WEB` for web-only behavior (font stacks, iframes, maxWidth layout).
 
@@ -31,11 +31,11 @@ alwaysApply: true
 
 ### Main navigation (`app/index.jsx`)
 
-- **State**: `currentPage` ('homepage' | 'data' | 'builds' | 'patchhub' | 'more' | 'custombuild'), plus `databaseSubTab`, `buildsSubTab`, `patchHubSubTab`, `moreSubTab`.
+- **State**: `currentPage` ('homepage' | 'data' | 'builds' | 'patchhub' | 'more' | 'custombuild'), plus `databaseSubTab`, `buildsSubTab`, `buildsHubMode` ('browse' | 'tierlists' under Builds), `patchHubSubTab`, `moreSubTab`.
 - **Top nav bar**: Database, Builds, Home, Patch Hub, More.
 - **Sub-bars**:
   - **Data**: Gods, Items, Game Modes, Mechanics.
-  - **Builds**: Builds (Featured/Contributors/Community), Custom Builder, Randomizer, My Builds, Tierlist.
+  - **Builds**: Builds (browse + **Tierlists** hub segment), Custom Builder, Randomizer, My Builds, **Guides** (`lib/guidesPage.jsx` — Featured vs Community tabs; Supabase `community_guides` + `supabase/community_guides.sql`).
   - **Patch Hub**: Simple Summary, Catch Me Up, Archive.
   - **More**: Minigames, Profile, Shop, Tools (e.g. Player Lookup).
 - **Menu / nav changes**: When the user says "update the menu" or adds a new section, edit `app/index.jsx` (navBar and subNavBar TouchableOpacity blocks and the corresponding rendered page).
@@ -49,16 +49,17 @@ alwaysApply: true
 
 - **Builds list**: `BuildsPage` in `app/index.jsx` — loads `app/data/builds.json`, pairs gods with builds. Categories: Featured (FEATURED_AUTHORS), Contributors (Supabase `contributor_builds`), Community (Supabase `community_builds`). Pinning, login, certification request flow.
 - **God builds data**: `app/data/builds.json` — array of gods; each god has `builds[]`, abilities, **baseStats** (per-level stats), etc. Items and gods come from here.
-- **Custom builder**: `app/custombuild.jsx` — pick god, items (7 + 5 starting), relic, aspect, roles, gamemodes; baseStats + item stats combined; save/build name; post to community.
+- **Custom builder**: `app/custombuild.jsx` — pick god, items (7 + 5 starting), relic, aspect, roles, gamemodes; **Select God / Role**: up to 4 roles as compact chips (role icon via `getRoleIcon` in `localIcons.js` + label) in the god row when width ≥640px, else a horizontal scroll row under the god row; baseStats + item stats + modeled item passives via `lib/customBuildItemPassives.js` (Thoth, Tahuti, Pendulum, Obsidian/Titan % pen); **Attack Damage** from `lib/basicAttackScaling.js` (god `basic.scales` + flat); save/build name; post to community.
 - **My Builds**: `app/mybuilds.jsx` — saved builds, load into custom builder, contributor builds.
-- **Tierlist**: `app/tierlist.jsx` — tier list of gods (e.g. S/A/B/C/D/F); uses `app/data/builds.json`; persist per user.
+- **Tierlists**: `app/tierlist.jsx` — personal S–F tiers for gods and tier-3 items; embedded from **Builds** via `buildsHubMode` / internal **Tierlists** tab.
+- **Guides (current state)**: previous guides reader/creator/Supabase stack was intentionally removed for a clean restart. Keep Builds -> Guides as a lightweight placeholder until new guide files and flows are reintroduced.
 - **Randomizer**: Inside BuildsPage in `app/index.jsx` — random god, random items, relic, aspect, rerolls.
 
 ### Database / stats / items / skins
 
-- **Data page**: `app/data.jsx` — tabs Gods, Items, Game Modes, Mechanics. Uses `app/data/builds.json`. God detail: abilities, **baseStats** (expandable), items, skins.
+- **Data page**: `app/data.jsx` — tabs Gods, Items, Game Modes, Mechanics. Uses `app/data/builds.json`. God detail: abilities, **baseStats** (expandable), items, skins. **Pantheon**: use plain `Image` next to pantheon name (filter rows + god meta) — **no** dark rounded badge container; the framed pantheon **pin on the portrait** is **Builds-only** (`app/index.jsx`).
 - **God stats**: Each god in builds.json can have `baseStats` — object keyed by stat name (e.g. MaxHealth, PhysicalProtection); values often have per-level or formula. Custom build and data pages compute total stats (baseStats + item stats).
-- **Items**: From builds.json (flattened from gods' build items). Icons via `app/localIcons.js` — `getLocalItemIcon(iconPath)`.
+- **Items**: From builds.json top-level `items` (and god builds). **`items` shape**: array of tier columns `[[starters A–Z], [tier1…], [tier2…], [tier3…], [other…]?]` — always use `flattenAny(builds.items)` for one list (see `.scripts/update-builds.js`). Icons via `app/localIcons.js` — `getLocalItemIcon(iconPath)`.
 - **Skins**: God skins/wallpapers — `app/localIcons.js` exports `getSkinImage`; skin assets live in `app/data/Icons/Wallpapers` (tracked in git). Used in data.jsx and anywhere god skins are shown. Bulk-merge wallpaper files into each god’s `skins` map with `npm run import-wallpapers` (`scripts/import-wallpapers-to-builds.js`; use `--write` after a dry-run).
 - **Icons**: `app/localIcons.js` — god icons (`getLocalGodAsset`, `getRemoteGodIconByName`), item icons, skins; GITHUB_BASE, GOD_ICONS_PATH, ITEM_ICONS_PATH, SKINS_PATH.
 
@@ -71,12 +72,13 @@ alwaysApply: true
 - **More**: `app/more.jsx` — `activeTab`: 'minigames' | 'profile' | 'shop' | 'tools'. Renders Featured Streamers (Twitch), minigames (God Wordle, Guess the Ability), Shop, Profile, Tools (e.g. Player Lookup).
 - **God Wordle**: `app/wordle.jsx` — daily/free mode, guess god by name; feedback by Pantheon, Role, Attack Type, etc. Gold: `awardChallenge('wordle_win')` + `awardGold(amount)` by performance. Show **Gold** in header. Uses `Smite2Gods.json` (root).
 - **Guess the Ability**: `app/ability.jsx` — ability minigame; award gold via `awardChallenge('ability_win')` (or equivalent).
-- **Smite Wars (Prophecy TCG)**: `app/prophecy.jsx` — full-screen Smite 2 card-battle mode with Leader select, deck-driven battle loop, in-screen Deck Builder, card shop, and VOX hooks. Launch from More minigames; core card data in `lib/prophecyData.js`; deck rules/archetype/avg-cost logic in `lib/prophecyDeck.js`. Combat follows deterministic keyword logic (Taunt/Brawler/Backstab/Ranged), per-unit cast abilities (including SPELL_SURGE cost reduction), end-of-round status ticking, and STR/INT item compatibility with per-unit item slots. Deck Builder includes persistent 6-slot saves and share-code import/export. Start hub includes Home, Tutorial, Story Mode, Collection, Profile, and Store. Prophecy supports Supabase auth/session plus account sync for profile, collection, saved decks, and pack purchases, with starter-pack grant via RPC/trigger. Card cosmetics use a visual metadata layer (`style`, `foil`, foil accent, card back id, optional skin variant art) that is presentation-only and should not modify gameplay stats.
+- **Smite Wars (Prophecy TCG)**: `app/prophecy.jsx` — full-screen Smite 2 card-battle mode with Leader select, deck-driven battle loop, in-screen Deck Builder, card shop, and VOX hooks. Launch from More minigames; core card data in `lib/prophecyData.js`; deck rules/archetype/avg-cost logic in `lib/prophecyDeck.js`. Combat follows deterministic keyword logic (Taunt/Brawler/Backstab/Ranged), per-unit cast abilities (including SPELL_SURGE cost reduction), end-of-round status ticking, and STR/INT item compatibility with per-unit item slots. Deck Builder includes persistent 6-slot saves and share-code import/export. Start hub includes Home, Tutorial, Story Mode, Collection, Profile, and Store. **Full Tutorial Guide** (Play home) and in-battle `TUTORIAL_BATTLE_HINTS` align with `docs/smite-wars-tutorial-voice-script.md` for VO. Prophecy supports Supabase auth/session plus account sync for profile, collection, saved decks, and pack purchases, with starter-pack grant via RPC/trigger. Card cosmetics use a visual metadata layer (`style`, `foil`, foil accent, card back id, optional skin variant art) that is presentation-only and should not modify gameplay stats.
 - **Shop**: `app/shop.jsx` — daily rotation, name effects, fonts, titles; Gold, challenges tab, leaderboard; `lib/shopData.js`, `lib/shopChallenges.js`, `lib/shopSupabase.js`.
 - **Profile**: `app/profile.jsx` — display name, appearance (banners, name effects, fonts, titles from shop), gold display, builds; profileHelpers (e.g. `getCurrentUser`); Supabase for profile + shop_owned/gold.
 
 ### Other screens
 
+- **Discord bot draft (secret link)**: `app/discord-build/[token].jsx` — same UI as custom builder (`CustomBuildPage` with `botSharedDraftToken`) plus Add Build / View Builds tabs; loads/saves JSON via Supabase RPCs on `discord_bot_shared_builds` (`supabase/discord_bot_shared_builds.sql`). Not in main nav; bot pre-INSERTs `token` (uuid), clients UPDATE `payload` via RPC only.
 - **Conquest Map**: `app/ConquestMap.jsx` — used from Data (Game Modes) or elsewhere.
 - **Player profiles**: `app/playerprofiles.jsx` — view other users' profiles.
 - **Privacy**: `app/privacy.jsx` — privacy policy / legal.
@@ -96,15 +98,20 @@ alwaysApply: true
 | Purpose | Location |
 |--------|----------|
 | Main nav, pages, sub-tabs | `app/index.jsx` (currentPage, *SubTab state, navBar, subNavBar) |
+| Normalize gods (`baseKit` + `baseInformation` → flat kit) | `lib/normalizeBuildsGod.js` — `normalizeBuildsGod`, `flattenBuildsGods` (use when flattening `builds.gods`) |
+| Custom build item passives (subset) | `lib/customBuildItemPassives.js` — `computeItemPassiveBonuses` |
+| Basic attack damage scaling (STR/INT from `basic.scales`) | `lib/basicAttackScaling.js` — `getBasicAttackPowerCoefficients` |
 | Builds/gods/items/baseStats | `app/data/builds.json` |
 | God list (Wordle) | `Smite2Gods.json` (project root) |
-| Icons (god, item, skin, role) | `app/localIcons.js` — `getRoleIcon`, `ROLE_ICONS` |
+| Icons (god, item, skin, role) | `app/localIcons.js` — `getRoleIcon`, `ROLE_ICONS` (bundled role/pantheon PNGs from `lib/imageGrabber.js`) |
+| Bundled static icons (stats, game modes, consumables, Vulcan mods, gold, Prophecy pack) | `lib/imageGrabber.js` — `STAT_ICONS`, `GAME_MODE_ICONS`, `GOLD_ICON`, etc. (Metro needs string-literal `require` paths) |
 | Conquest map HTML | `lib/conquestMapHtml.js` |
 | Shop data (items, rarities, challenges) | `lib/shopData.js` |
 | Shop gold/challenge awarding | `lib/shopChallenges.js` — `awardChallenge(conditionKey)`, `awardGold(amount)` |
 | Supabase shop sync | `lib/shopSupabase.js` |
-| Prophecy card pools and enums | `lib/prophecyData.js` |
+| Prophecy card pools and enums | `lib/prophecyData.js` (spell/trap `summary` + `getProphecyCardShowcaseBody` / `formatProphecyItemSummary` for collection/showcase copy) |
 | Prophecy deck validation/archetype/curve | `lib/prophecyDeck.js` |
+| Guides (community_guides) | `lib/guidesPage.jsx`, `lib/guidesSupabase.js`, `hooks/useGuideContributorAccess.js`, `supabase/community_guides.sql` |
 | Profile / current user | `app/profile.jsx`, profileHelpers; `app/index.jsx` `currentUser` state |
 | Version/news config | `app/home.jsx` — APP_VERSION_CONFIG, VERSION_HISTORY, NEWS_CONFIG |
 

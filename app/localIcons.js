@@ -1,20 +1,30 @@
 import { ICON_PATHS } from '../config';
+import { ROLE_ICONS, PANTHEON_ICON_FILES } from '../lib/imageGrabber';
 
 const ITEM_ICONS_PATH = ICON_PATHS.ITEM_ICONS;
 const ITEM_ICONS_FILLED_PATH = ICON_PATHS.ITEM_ICONS_FILLED;
 const GOD_ICONS_PATH = ICON_PATHS.GOD_ICONS;
 const SKINS_PATH = ICON_PATHS.SKINS;
 
-// Helper to create URI object for React Native Image
+// Stable `{ uri }` instances so expo-image does not treat every render as a new source (avoids refetch/flash).
+const uriSourceCache = new Map();
+
 function createImageUri(basePath, filename) {
-  // URL encode the filename (spaces become %20, etc.)
   const encodedFilename = encodeURIComponent(filename);
-  return { uri: `${basePath}/${encodedFilename}` };
+  const uri = `${basePath}/${encodedFilename}`;
+  let cached = uriSourceCache.get(uri);
+  if (!cached) {
+    cached = { uri, cacheKey: uri };
+    uriSourceCache.set(uri, cached);
+  }
+  return cached;
 }
 
 // Item icon lookup - returns object with both lowercase and original case options
 // Tries lowercase first, then falls back to original case
 // options.filled: use Item Icons Filled folder when true
+const itemIconResultCache = new Map();
+
 export function getLocalItemIcon(iconPath, options = {}) {
   if (!iconPath) return null;
   const base = iconPath.split('/').pop() || '';
@@ -24,28 +34,21 @@ export function getLocalItemIcon(iconPath, options = {}) {
 
   const lowercaseBase = base.toLowerCase();
   const originalBase = base;
+  const resultCacheKey = `${basePath}|${lowercaseBase}|${originalBase}`;
+  const cachedResult = itemIconResultCache.get(resultCacheKey);
+  if (cachedResult) return cachedResult;
 
-  // If they're the same, just return single URI
+  let result;
   if (lowercaseBase === originalBase) {
-    const uri = createImageUri(basePath, lowercaseBase);
-    if (__DEV__) {
-      console.log('Loading item icon:', base, 'from:', uri.uri);
-    }
-    return uri;
+    result = createImageUri(basePath, lowercaseBase);
+  } else {
+    result = {
+      primary: createImageUri(basePath, lowercaseBase),
+      fallback: createImageUri(basePath, originalBase),
+    };
   }
-
-  // Return both options: try lowercase first, then original case
-  const primary = createImageUri(basePath, lowercaseBase);
-  const fallback = createImageUri(basePath, originalBase);
-
-  if (__DEV__) {
-    console.log('Loading item icon:', base, '-> trying lowercase:', primary.uri, 'or original:', fallback.uri);
-  }
-
-  return {
-    primary: primary,
-    fallback: fallback
-  };
+  itemIconResultCache.set(resultCacheKey, result);
+  return result;
 }
 
 // Optional overrides for god icon base names when GitHub uses a shortened name.
@@ -132,13 +135,7 @@ export function getLocalGodAsset(iconPath) {
   const base = iconPath.split('/').pop() || '';
   if (!base) return null;
   
-  const uri = createImageUri(GOD_ICONS_PATH, base);
-  
-  if (__DEV__) {
-    console.log('Loading god asset (by path):', base, 'from:', uri.uri);
-  }
-  
-  return uri;
+  return createImageUri(GOD_ICONS_PATH, base);
 }
 
 // God icon lookup by god name only – matches GitHub naming like "achillesImage.webp"
@@ -154,8 +151,7 @@ export function getRemoteGodIconByName(godName) {
   const baseName = getGodIconBaseName(godName);
   if (!baseName) return null;
   const filename = `${baseName}Image.webp`;
-  const uri = createImageUri(GOD_ICONS_PATH, filename);
-  return uri;
+  return createImageUri(GOD_ICONS_PATH, filename);
 }
 
 // Ability icon lookup for a god, using suffixes like One/Two/Three/Four/Passive/Aspect
@@ -198,13 +194,7 @@ export function getGodAbilityIcon(godName, abilityKey, variant) {
   const variantPart = variant ? String(variant).trim() : '';
 
   const filename = `${baseName}${variantPart}${suffix}.webp`;
-  const uri = createImageUri(GOD_ICONS_PATH, filename);
-
-  if (__DEV__) {
-    console.log('Loading ability icon:', godName, abilityKey, variant ? `(${variant})` : '', '->', uri.uri);
-  }
-
-  return uri;
+  return createImageUri(GOD_ICONS_PATH, filename);
 }
 
 // Card art / wallpaper by god name - for Prophecy TCG etc.
@@ -269,17 +259,117 @@ export function getSkinImage(skinPath) {
   };
 }
 
-// Role icons (local requires) - shared by index.jsx and data.jsx
-export const ROLE_ICONS = {
-  ADC: require('./data/Icons/Role Icons/T_GodRole_Carry_Small.png'),
-  Solo: require('./data/Icons/Role Icons/T_GodRole_Solo_Small.png'),
-  Support: require('./data/Icons/Role Icons/T_GodRole_Support.png'),
-  Mid: require('./data/Icons/Role Icons/T_GodRole_Mid_Small.png'),
-  Jungle: require('./data/Icons/Role Icons/T_GodRole_Jungle.png'),
-};
+// Role / pantheon bundled icons: `lib/imageGrabber.js`
+export { ROLE_ICONS };
 
 export function getRoleIcon(role) {
   return ROLE_ICONS[role] || null;
+}
+
+/** Smite god pantheons + Prophecy/display aliases (Olympian → Greek, etc.) */
+export const PANTHEON_ICONS = {
+  ...PANTHEON_ICON_FILES,
+  Mayan: PANTHEON_ICON_FILES.Maya,
+  Olympian: PANTHEON_ICON_FILES.Greek,
+  Asgardian: PANTHEON_ICON_FILES.Norse,
+  Eastern: PANTHEON_ICON_FILES.Chinese,
+  Underworld: PANTHEON_ICON_FILES.Greek,
+};
+
+// Border / portrait accents (build cards, Data, etc.) — canonical palette
+const PANTHEON_BORDER_HEX = {
+  Arthurian: '#931725',
+  Babylonian: '#5939DD',
+  Celtic: '#32A92C',
+  Chinese: '#FF2100',
+  Egyptian: '#DE981E',
+  'Great Old Ones': '#0C0A0E',
+  Greek: '#0FA7F5',
+  Hindu: '#CC2380',
+  Japanese: '#FFABCD',
+  Korean: '#0047A0',
+  Maya: '#739A32',
+  Norse: '#6DB8E4',
+  Polynesian: '#00FFFC',
+  Roman: '#EAD650',
+  Slavic: '#E7EFF0',
+  'Tales of Arabia': '#46287C',
+  Voodoo: '#742BA0',
+  Yoruba: '#FF8625',
+  Mayan: '#739A32',
+  Olympian: '#0FA7F5',
+  Asgardian: '#6DB8E4',
+  Eastern: '#FF2100',
+  Underworld: '#0FA7F5',
+};
+
+function normalizePantheonKey(pantheon) {
+  if (!pantheon) return null;
+  const raw = String(pantheon).trim();
+  if (!raw) return null;
+  const exact = Object.keys(PANTHEON_ICONS).find((k) => k === raw);
+  if (exact) return exact;
+  const lower = raw.toLowerCase();
+  return Object.keys(PANTHEON_ICONS).find((k) => k.toLowerCase() === lower) || null;
+}
+
+function hexToRgb(hex) {
+  const h = String(hex).replace('#', '');
+  if (h.length !== 6) return { r: 100, g: 116, b: 139 };
+  return {
+    r: parseInt(h.slice(0, 2), 16),
+    g: parseInt(h.slice(2, 4), 16),
+    b: parseInt(h.slice(4, 6), 16),
+  };
+}
+
+function rgbToHex(r, g, b) {
+  const c = (n) => Math.max(0, Math.min(255, Math.round(n)));
+  return `#${c(r).toString(16).padStart(2, '0')}${c(g).toString(16).padStart(2, '0')}${c(b).toString(16).padStart(2, '0')}`;
+}
+
+function mixRgb(a, b, t) {
+  return {
+    r: a.r + (b.r - a.r) * t,
+    g: a.g + (b.g - a.g) * t,
+    b: a.b + (b.b - a.b) * t,
+  };
+}
+
+/**
+ * Portrait ring color: lifted from the icon's canonical hue so it reads clearly on dark cards
+ * and doesn't blend into the pantheon glyph. Light colors get a slight edge-darken instead.
+ */
+function pantheonAccentBorderHex(canonicalHex) {
+  const rgb = hexToRgb(canonicalHex);
+  const lum = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
+  const white = { r: 255, g: 255, b: 255 };
+  /** Slate rim — separates very light accents from pastel icons */
+  const rim = { r: 56, g: 78, b: 112 };
+
+  if (lum > 0.72) {
+    const m = mixRgb(rgb, rim, 0.22);
+    return rgbToHex(m.r, m.g, m.b);
+  }
+  if (lum < 0.12) {
+    const m = mixRgb(rgb, white, 0.42);
+    return rgbToHex(m.r, m.g, m.b);
+  }
+  const m = mixRgb(rgb, white, 0.26);
+  return rgbToHex(m.r, m.g, m.b);
+}
+
+export function getPantheonIcon(pantheon) {
+  const key = normalizePantheonKey(pantheon);
+  return key ? PANTHEON_ICONS[key] : null;
+}
+
+export function getPantheonBorderColor(pantheon) {
+  const key = normalizePantheonKey(pantheon);
+  if (key && PANTHEON_BORDER_HEX[key]) {
+    return pantheonAccentBorderHex(PANTHEON_BORDER_HEX[key]);
+  }
+  return '#64748b';
 }
 
 // Dummy default export so Expo Router / navigation stops treating this as a missing-route component.
