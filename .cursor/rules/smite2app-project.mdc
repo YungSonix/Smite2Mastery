@@ -127,6 +127,7 @@ alwaysApply: true
 
 ## Conventions
 
+- **UI / floating chrome**: New modals, tooltips, and sheets should match the existing Database tooltip theme (`kitAbilityTooltipCard` in `app/data.jsx`: cyan border `rgba(125, 211, 252, 0.42)`, dark card `rgba(8, 12, 22, 0.98)`, panels `#0b1220` / `#1e3a5f`, accents `#7dd3fc`). See **`GOALS.md` → UI consistency** for full tokens and close-button placement. Avoid unrelated palettes unless the user requests them.
 - **React**: Functional components, hooks; import `useCallback` when used.
 - **Supabase**: Lazy-load or require in try/catch; app must run without config.
 - **No API routes**: Do not add API routes or external data APIs unless the user explicitly asks.

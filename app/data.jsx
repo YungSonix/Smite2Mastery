@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect, useRef, Suspense, lazy, startTransition } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useLayoutEffect, useRef, Suspense, lazy, startTransition } from 'react';
 import {
   StyleSheet,
   Text,
@@ -13,12 +13,24 @@ import {
   Alert,
   Dimensions,
   InteractionManager,
+  ImageBackground,
 } from 'react-native';
 import CryptoJS from 'crypto-js';
 import { Image } from 'expo-image';
 // Lazy load builds.json to prevent startup crash
 let localBuilds = null;
-import { getLocalItemIcon, getLocalGodAsset, getSkinImage, getRoleIcon, PANTHEON_ICONS } from './localIcons';
+import {
+  getLocalItemIcon,
+  getLocalGodAsset,
+  getSkinImage,
+  getRoleIcon,
+  PANTHEON_ICONS,
+  getPantheonBackdrop,
+  getPantheonBorderColor,
+} from './localIcons';
+import { getGodSpecializationEntry } from '../lib/godSpecializations';
+import { AlignedBulletLines, tightenMultilineGameText } from '../lib/alignedBulletText';
+import SkinShowcasePanel from '../lib/SkinShowcasePanel';
 import { REMOTE_BASE_URLS } from '../config';
 
 // Import supabase lazily to avoid module load errors on mobile
@@ -97,6 +109,7 @@ const IS_WEB = Platform.OS === 'web';
 // Import reusable screen dimensions hook
 import { useScreenDimensions } from '../hooks/useScreenDimensions';
 import { flattenBuildsGods } from '../lib/normalizeBuildsGod';
+import { playVOX, resetVoxForNavigation } from '../lib/prophecyAudio';
 import {
   GAME_MODE_ICONS as gameModeIcons,
   BUFF_ICONS as buffIcons,
@@ -118,6 +131,103 @@ const buffColors = {
 
 const pantheonIcons = PANTHEON_ICONS;
 const vulcanModIcons = vulcanModItemIcons;
+
+const KIT_ABILITY_TOOLTIP_BODY_MAX = 520;
+const KIT_TOOLTIP_LEVELS = [1, 2, 3, 4, 5];
+const KIT_TOOLTIP_CARD_WIDTH = 340;
+const KIT_TOOLTIP_CARD_HEIGHT = 430;
+
+function buildKitAbilityTooltipBody(ability) {
+  if (!ability || typeof ability !== 'object') return '';
+  const desc = ability.shortDesc || ability.description || '';
+  let text = String(desc).trim();
+  if (ability.scales) {
+    const scales = String(ability.scales).trim();
+    if (scales) {
+      const clip = scales.length > 160 ? `${scales.slice(0, 160)}…` : scales;
+      text = text ? `${text}\nScales:\n${clip}` : `Scales:\n${clip}`;
+    }
+  }
+  text = tightenMultilineGameText(text);
+  if (text.length > KIT_ABILITY_TOOLTIP_BODY_MAX) {
+    return `${text.slice(0, KIT_ABILITY_TOOLTIP_BODY_MAX)}…`;
+  }
+  return text || 'No description available.';
+}
+
+function buildKitPassiveTooltipBody(passive) {
+  if (!passive || typeof passive !== 'object') return '';
+  const parts = [];
+  if (passive.name) parts.push(String(passive.name));
+  if (passive.shortDesc) parts.push(String(passive.shortDesc).trim());
+  if (passive.shortDescAspect) parts.push(String(passive.shortDescAspect).trim());
+  let text = parts.filter(Boolean).join('\n\n');
+  if (text.length > KIT_ABILITY_TOOLTIP_BODY_MAX) {
+    return `${text.slice(0, KIT_ABILITY_TOOLTIP_BODY_MAX)}…`;
+  }
+  return text || 'No description available.';
+}
+
+function buildKitAspectTooltipBody(aspect) {
+  if (!aspect || typeof aspect !== 'object') return '';
+  const rawName = aspect.name ? String(aspect.name).replace(/\*\*__|__\*\*/g, '') : '';
+  const desc = aspect.description ? String(aspect.description).trim() : '';
+  let text = rawName && desc ? `${rawName}\n\n${desc}` : rawName || desc;
+  if (text.length > KIT_ABILITY_TOOLTIP_BODY_MAX) {
+    return `${text.slice(0, KIT_ABILITY_TOOLTIP_BODY_MAX)}…`;
+  }
+  return text || 'No description available.';
+}
+
+function toLevelValueArray(raw) {
+  if (Array.isArray(raw)) return raw.filter((v) => v !== null && v !== undefined && String(v).trim() !== '');
+  if (raw === null || raw === undefined) return [];
+  const text = String(raw).trim();
+  if (!text) return [];
+  if (text.includes('/')) {
+    return text
+      .split('/')
+      .map((part) => part.trim())
+      .filter(Boolean);
+  }
+  return [raw];
+}
+
+function getLevelValue(raw, levelIndex) {
+  const arr = toLevelValueArray(raw);
+  if (arr.length === 0) return null;
+  const idx = Math.max(0, Math.min(levelIndex, arr.length - 1));
+  return arr[idx];
+}
+
+function extractLeadingNumber(raw) {
+  const match = String(raw ?? '').match(/-?\d+(\.\d+)?/);
+  return match ? Number(match[0]) : NaN;
+}
+
+function formatIncreaseFromBase(raw, levelIndex) {
+  if (levelIndex <= 0) return null;
+  const base = getLevelValue(raw, 0);
+  const current = getLevelValue(raw, levelIndex);
+  const baseNum = extractLeadingNumber(base);
+  const currentNum = extractLeadingNumber(current);
+  if (!Number.isFinite(baseNum) || !Number.isFinite(currentNum)) return null;
+  const delta = currentNum - baseNum;
+  const rounded = Math.abs(delta) >= 10 || Number.isInteger(delta) ? Math.round(delta) : Number(delta.toFixed(2));
+  return `${rounded >= 0 ? '+' : ''}${rounded}`;
+}
+
+function formatAbilityStatKey(statKey) {
+  const raw = String(statKey || '')
+    .replace(/_/g, ' ')
+    .trim();
+  if (!raw) return '';
+  return raw
+    .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+    .replace(/([A-Z])([A-Z][a-z])/g, '$1 $2')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
 
 // Game modes data
 const gameModes = [
@@ -795,6 +905,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
   // Get responsive screen dimensions
   const screenDimensions = useScreenDimensions();
   const SCREEN_WIDTH = screenDimensions.width;
+  const SCREEN_HEIGHT = screenDimensions.height;
   const [builds, setBuilds] = useState(null);
   const [dataLoading, setDataLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -843,8 +954,34 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
   const [bossLevel, setBossLevel] = useState(0);
   const [expandedBosses, setExpandedBosses] = useState({});
   const scrollViewRef = useRef(null);
+  /** When true, god select VOX was already fired from grid `onPress` (before startTransition). */
+  const skipLayoutGodVoxRef = useRef(false);
+  /** Tracks last god we opened VOX for — used to reset audio only when leaving detail, not on initial list. */
+  const prevGodForSelectVoxRef = useRef(null);
   // Track if we came from builds page (only true if initialSelectedGod was set on mount)
   const [cameFromBuilds] = useState(!!initialSelectedGod && !!onBackToBuilds);
+
+  const fireGodSelectVox = useCallback((god) => {
+    if (!god) return;
+    const d = String(god.name || god.GodName || '').trim();
+    if (!d) return;
+    if (Platform.OS !== 'web') {
+      try {
+        const { setAudioModeAsync } = require('expo-audio');
+        setAudioModeAsync({
+          playsInSilentMode: true,
+          shouldPlayInBackground: false,
+          interruptionMode: 'duckOthers',
+        }).catch(() => {});
+      } catch (_) {
+        /* ignore */
+      }
+    }
+    const opts = god.key ? { godKey: god.key } : {};
+    setTimeout(() => {
+      playVOX(d, 'select', opts);
+    }, 0);
+  }, []);
   
   // Hide scrollbars on web
   useEffect(() => {
@@ -885,11 +1022,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
       setSkinsExpanded(false);
       setSelectedSkin(null);
       setLoreExpanded(false);
-      setAbilitiesExpanded(false);
-      setAspectExpanded(false);
-      setPassiveExpanded(false);
-      setSelectedAbility(null);
-      setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
+      setKitExpanded(false);
       setBaseStatsExpanded(false);
       setGodLevel(1);
       setGamemodesDescriptionExpanded(false);
@@ -944,9 +1077,9 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
   useEffect(() => {
     if (initialSelectedGod) {
       setSelectedGod(initialSelectedGod);
-      // If expandAbilities is true, expand the abilities section
+      // If expandAbilities is true, expand the kit section
       if (initialExpandAbilities) {
-        setAbilitiesExpanded(true);
+        setKitExpanded(true);
       }
       // Reset level and base stats when god changes
       setGodLevel(1);
@@ -959,13 +1092,44 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     if (selectedGod) {
       setGodLevel(1);
       setBaseStatsExpanded(false);
+      setSkinsExpanded(false);
+      setSelectedSkin(null);
       // Close all dropdowns when a god is selected
       setPantheonDropdownVisible(false);
       setStatDropdownVisible(false);
       setTierDropdownVisible(false);
       setMechanicCategoryDropdownVisible(false);
+    } else {
+      setSkinsExpanded(false);
+      setSelectedSkin(null);
     }
   }, [selectedGod]);
+
+  const godSelectVoicePayload = useMemo(() => {
+    if (selectedTab !== 'gods' || !selectedGod) return null;
+    const displayName = (selectedGod.name || selectedGod.GodName || '').trim();
+    if (!displayName) return null;
+    return { displayName, godKey: selectedGod.key };
+  }, [selectedTab, selectedGod?.key, selectedGod?.internalName, selectedGod?.name, selectedGod?.GodName]);
+
+  useLayoutEffect(() => {
+    if (!godSelectVoicePayload) {
+      skipLayoutGodVoxRef.current = false;
+      if (prevGodForSelectVoxRef.current != null) {
+        resetVoxForNavigation();
+      }
+      prevGodForSelectVoxRef.current = null;
+      return;
+    }
+    if (!selectedGod) return;
+    if (skipLayoutGodVoxRef.current) {
+      skipLayoutGodVoxRef.current = false;
+      prevGodForSelectVoxRef.current = selectedGod;
+      return;
+    }
+    prevGodForSelectVoxRef.current = selectedGod;
+    fireGodSelectVox(selectedGod);
+  }, [godSelectVoicePayload, selectedGod, fireGodSelectVox]);
 
   // Scroll to top when game mode is selected
   useEffect(() => {
@@ -1015,20 +1179,21 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
       }, 100);
     }
   }, [selectedTab, selectedGod, selectedItem, selectedMechanic, selectedGameMode]);
-  const [selectedAbility, setSelectedAbility] = useState(null); // { abilityKey, ability, abilityName }
   const [skinsExpanded, setSkinsExpanded] = useState(false);
   const [selectedSkin, setSelectedSkin] = useState(null);
   const [failedItemIcons, setFailedItemIcons] = useState({}); // Track which item icons failed to load (for fallback)
   const [loreExpanded, setLoreExpanded] = useState(false);
-  const [abilitiesExpanded, setAbilitiesExpanded] = useState(false);
-  const [aspectExpanded, setAspectExpanded] = useState(false);
-  const [passiveExpanded, setPassiveExpanded] = useState(false);
+  const [kitExpanded, setKitExpanded] = useState(false);
   const [baseStatsExpanded, setBaseStatsExpanded] = useState(false);
   const [godLevel, setGodLevel] = useState(1);
   const [sliderTrackWidth, setSliderTrackWidth] = useState(300);
   const [sliderTrackLayout, setSliderTrackLayout] = useState({ x: 0, y: 0, width: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const sliderTrackRef = useRef(null);
+  const [kitAbilityTooltip, setKitAbilityTooltip] = useState(null);
+  const kitSlotMeasureRefs = useRef({});
+  const kitTooltipHoverOutTimer = useRef(null);
+  const kitTooltipOpenSlotIdRef = useRef(null);
   const [selectedPantheon, setSelectedPantheon] = useState(null);
   const [pantheonDropdownVisible, setPantheonDropdownVisible] = useState(false);
   const [showGodSkins, setShowGodSkins] = useState(false); // Toggle between icons and base skins
@@ -1044,12 +1209,80 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     consumables: true,
     other: false,
   });
-  const [abilitySectionsExpanded, setAbilitySectionsExpanded] = useState({
-    scales: false,
-    description: false,
-    stats: false,
-  });
-  
+  const clearKitAbilityTooltip = useCallback(() => {
+    kitTooltipOpenSlotIdRef.current = null;
+    if (kitTooltipHoverOutTimer.current) {
+      clearTimeout(kitTooltipHoverOutTimer.current);
+      kitTooltipHoverOutTimer.current = null;
+    }
+    setKitAbilityTooltip(null);
+  }, []);
+
+  const scheduleClearKitTooltip = useCallback(() => {
+    if (!IS_WEB) return;
+    if (kitTooltipHoverOutTimer.current) clearTimeout(kitTooltipHoverOutTimer.current);
+    kitTooltipHoverOutTimer.current = setTimeout(() => {
+      setKitAbilityTooltip(null);
+      kitTooltipHoverOutTimer.current = null;
+    }, 140);
+  }, []);
+
+  const cancelClearKitTooltip = useCallback(() => {
+    if (kitTooltipHoverOutTimer.current) {
+      clearTimeout(kitTooltipHoverOutTimer.current);
+      kitTooltipHoverOutTimer.current = null;
+    }
+  }, []);
+
+  const showKitAbilityTooltipForSlot = useCallback((slotId, payload) => {
+    if (!payload || !payload.body) return;
+    const node = kitSlotMeasureRefs.current[slotId];
+    if (!node) return;
+    kitTooltipOpenSlotIdRef.current = slotId;
+    requestAnimationFrame(() => {
+      node.measureInWindow((x, y, width, height) => {
+        setKitAbilityTooltip({
+          slotId,
+          x,
+          y,
+          width,
+          height,
+          levelIndex: 0,
+          ...payload,
+        });
+      });
+    });
+  }, []);
+
+  const toggleKitAbilityTooltip = useCallback(
+    (slotId, payload) => {
+      if (kitTooltipOpenSlotIdRef.current === slotId) {
+        kitTooltipOpenSlotIdRef.current = null;
+        clearKitAbilityTooltip();
+        return;
+      }
+      showKitAbilityTooltipForSlot(slotId, payload);
+    },
+    [clearKitAbilityTooltip, showKitAbilityTooltipForSlot]
+  );
+
+  useLayoutEffect(() => {
+    kitTooltipOpenSlotIdRef.current = kitAbilityTooltip?.slotId ?? null;
+  }, [kitAbilityTooltip]);
+
+  useEffect(() => {
+    return () => {
+      if (kitTooltipHoverOutTimer.current) {
+        clearTimeout(kitTooltipHoverOutTimer.current);
+        kitTooltipHoverOutTimer.current = null;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    clearKitAbilityTooltip();
+  }, [selectedGod, kitExpanded, clearKitAbilityTooltip]);
+
   function flattenAny(a) {
     if (!a) return [];
     if (!Array.isArray(a)) return [a];
@@ -1830,7 +2063,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                 <Image 
                                   source={statIcon} 
                                   style={styles.statOptionIcon}
-                                  resizeMode="contain"
+                                  contentFit="contain"
                                   accessibilityLabel={`${stat} stat icon`}
                                 />
                               )}
@@ -2597,166 +2830,228 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
         };
         
         const colors = pantheonColors[pantheon] || pantheonColors['Unknown'];
+        const kitAbilityBorderColor = getPantheonBorderColor(pantheon);
         const pantheonIconSource = pantheonIcons[pantheon] || null;
+        const godDisplayName =
+          selectedGod.name || selectedGod.GodName || selectedGod.title || 'Unknown God';
+        const pantheonBackdrop = getPantheonBackdrop(pantheon);
+        const specializationEntry = getGodSpecializationEntry(selectedGod);
+        const godHeaderFallbackStyle = {
+          backgroundColor: colors.primary + '12',
+          borderBottomColor: 'rgba(148, 163, 184, 0.28)',
+        };
 
-        return (
-          <View style={[styles.godPageContainer, { backgroundColor: colors.secondary + '15' }]}>
-            <View style={[styles.godPageHeader, { backgroundColor: colors.primary + '20', borderBottomColor: colors.accent + '40' }]}>
-              <TouchableOpacity 
+        const godHeaderBody = (
+          <>
+              <TouchableOpacity
                 style={styles.backButton}
                 onPress={() => {
-                  // Only go back to builds if we came from builds page
                   if (cameFromBuilds && onBackToBuilds) {
                     onBackToBuilds();
                   } else {
-                    // Otherwise, just clear the selected god and stay on data page
                     setSelectedGod(null);
                     setSkinsExpanded(false);
                     setSelectedSkin(null);
                     setLoreExpanded(false);
-                    setAbilitiesExpanded(false);
-                    setAspectExpanded(false);
-                    setPassiveExpanded(false);
-                    setSelectedAbility(null);
-                    setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
+                    setKitExpanded(false);
                   }
                 }}
               >
                 <Text style={styles.backButtonText}>← Back</Text>
               </TouchableOpacity>
-              <View style={styles.godPageTitleContainer}>
-                <View style={[styles.modalIconContainer, styles.godPageIconContainer, { borderColor: colors.accent + '60', borderWidth: 2, borderRadius: 10 }]}>
+              <View style={styles.godPageHero}>
+                <View style={styles.godPageHeroRow}>
+                <View
+                  style={[
+                    styles.godPageIconRing,
+                    { borderColor: colors.accent + '50', backgroundColor: colors.primary + '18' },
+                  ]}
+                >
                   {(() => {
-                    const godIcon = selectedGod.icon || selectedGod.GodIcon || (selectedGod.abilities && selectedGod.abilities.A01 && selectedGod.abilities.A01.icon);
+                    const godIcon =
+                      selectedGod.icon ||
+                      selectedGod.GodIcon ||
+                      (selectedGod.abilities && selectedGod.abilities.A01 && selectedGod.abilities.A01.icon);
                     const localIcon = godIcon ? getLocalGodAsset(godIcon) : null;
                     if (localIcon) {
                       return (
-                      <Image 
-                          source={localIcon} 
-                        style={styles.godPageIcon}
-                        contentFit="cover"
-                        cachePolicy="memory-disk"
-                        transition={0}
-                        accessibilityLabel={`${selectedGod.name || selectedGod.GodName || selectedGod.title || 'God'} icon`}
-                      />
+                        <Image
+                          source={localIcon}
+                          style={styles.godPageIconLarge}
+                          contentFit="cover"
+                          cachePolicy="memory-disk"
+                          transition={0}
+                          accessibilityLabel={`${godDisplayName} icon`}
+                        />
                       );
                     }
-                    // No remote fallback here: if there's no local asset configured yet,
-                    // show the letter fallback instead of loading from smitecalculator.
                     return (
-                      <View style={[styles.godPageIconFallback, { backgroundColor: colors.primary + '30' }]}>
-                        <Text style={[styles.godPageIconFallbackText, { color: colors.accent }]}>
-                          {(selectedGod.name || selectedGod.GodName || selectedGod.title || 'U').charAt(0)}
+                      <View style={[styles.godPageIconFallbackLarge, { backgroundColor: colors.primary + '35' }]}>
+                        <Text style={[styles.godPageIconFallbackTextLarge, { color: colors.accent }]}>
+                          {godDisplayName.charAt(0)}
                         </Text>
                       </View>
                     );
                   })()}
                 </View>
-                <View style={styles.godPageTitleWrapper}>
-                  <Text style={[styles.godPageTitle, { color: colors.accent }]}>
-                    {selectedGod.name || selectedGod.GodName || selectedGod.title || 'Unknown God'}
+                <View style={styles.godPageTitleBlock}>
+                  <Text
+                    style={styles.godPageTitle}
+                    numberOfLines={2}
+                    adjustsFontSizeToFit
+                    minimumFontScale={0.78}
+                  >
+                    {godDisplayName}
                   </Text>
-                  {selectedGod.subText && (
-                    <Text style={[styles.godPageSubtext, { color: colors.accent + 'CC' }]}>
+                  {selectedGod.subText ? (
+                    <Text style={styles.godPageEpithet} numberOfLines={2}>
                       {selectedGod.subText}
                     </Text>
-                  )}
-                  {(pantheon || godType) && (
-                    <View style={styles.godPageMetaInfo}>
-                      {pantheon && (
-                        <>
+                  ) : null}
+                  {(pantheon || godType) ? (
+                    <View style={styles.godPageChipRow}>
+                      {pantheon ? (
+                        <View style={[styles.godPageChip, styles.godPageChipMuted]}>
                           {pantheonIconSource ? (
                             <Image
                               source={pantheonIconSource}
-                              style={styles.godPageMetaPantheonIconOnly}
+                              style={styles.godPageChipPantheonIcon}
                               contentFit="contain"
                               cachePolicy="memory-disk"
                               accessibilityLabel={`${pantheon} pantheon`}
                             />
                           ) : null}
-                          <Text style={[styles.godPageMetaText, { color: colors.accent + 'AA' }]}>
+                          <Text style={styles.godPageChipText} numberOfLines={1}>
                             {pantheon}
                           </Text>
-                        </>
-                      )}
-                      {pantheon && godType && (
-                        <Text style={[styles.godPageMetaText, { color: colors.accent + 'AA' }]}> • </Text>
-                      )}
-                      {godType && (
-                        <Text style={[styles.godPageMetaText, { color: colors.accent + 'AA' }]}>
-                          {godType}
-                        </Text>
-                      )}
+                        </View>
+                      ) : null}
+                      {godType ? (
+                        <View style={[styles.godPageChip, styles.godPageChipMuted]}>
+                          <Text style={styles.godPageChipText} numberOfLines={1}>
+                            {godType}
+                          </Text>
+                        </View>
+                      ) : null}
                     </View>
-                  )}
-                  {scalingTypes.length > 0 && (
-                    <View style={styles.godPageRolesContainer}>
-                      <Text style={[styles.godPageRolesLabel, { color: colors.accent + 'AA' }]}>
-                        Scaling:
-                      </Text>
-                      <View style={styles.godPageRolesList}>
-                        {scalingTypes.map((scaleType, idx) => {
-                          const scaleIcon = scaleType === 'STR' ? statIcons['Strength'] : statIcons['Intelligence'];
+                  ) : null}
+                  {specializationEntry ? (
+                    <View style={styles.godPageSpecBlock}>
+                      <Text style={styles.godPageSpecSectionLabel}>Specializations</Text>
+                      <View style={styles.godPageChipRow}>
+                        {specializationEntry.specs.map((tag) => (
+                          <View key={tag} style={[styles.godPageMiniChip, styles.godPageMiniChipMuted]}>
+                            <Text style={styles.godPageMiniChipText} numberOfLines={1}>
+                              {tag}
+                            </Text>
+                          </View>
+                        ))}
+                        {specializationEntry.rangeType ? (
+                          <View style={[styles.godPageMiniChip, styles.godPageCombatChip]}>
+                            <Text style={styles.godPageMiniChipText} numberOfLines={1}>
+                              {specializationEntry.rangeType}
+                            </Text>
+                          </View>
+                        ) : null}
+                        {specializationEntry.damageType ? (
+                          <View style={[styles.godPageMiniChip, styles.godPageCombatChip]}>
+                            <Text style={styles.godPageMiniChipText} numberOfLines={1}>
+                              {specializationEntry.damageType}
+                            </Text>
+                          </View>
+                        ) : null}
+                      </View>
+                    </View>
+                  ) : null}
+                  {scalingTypes.length > 0 ? (
+                    <View style={styles.godPageSpecBlock}>
+                      <Text style={styles.godPageSpecSectionLabel}>Scaling</Text>
+                      <View style={styles.godPageChipRow}>
+                        {scalingTypes.map((scaleType) => {
+                          const scaleIcon =
+                            scaleType === 'STR' ? statIcons['Strength'] : statIcons['Intelligence'];
                           return (
-                            <React.Fragment key={scaleType}>
-                              <View style={styles.godPageRoleItem}>
-                                {scaleIcon && (
-                                  <Image 
-                                    source={scaleIcon} 
-                                    style={styles.godPageRoleIcon}
-                                    resizeMode="contain"
-                                    accessibilityLabel={`${scaleType === 'STR' ? 'Strength' : 'Intelligence'} scaling icon`}
-                                  />
-                                )}
-                                <Text style={[styles.godPageRoleText, { color: colors.accent + 'AA' }]}>
-                                  {scaleType}
-                                </Text>
-                              </View>
-                              {idx < scalingTypes.length - 1 && (
-                                <Text style={[styles.godPageRoleText, { color: colors.accent + 'AA' }]}> • </Text>
-                              )}
-                            </React.Fragment>
+                            <View key={scaleType} style={[styles.godPageMiniChip, styles.godPageMiniChipMuted]}>
+                              {scaleIcon ? (
+                                <Image
+                                  source={scaleIcon}
+                                  style={styles.godPageMiniChipIcon}
+                                  contentFit="contain"
+                                  accessibilityLabel={
+                                    scaleType === 'STR' ? 'Strength scaling' : 'Intelligence scaling'
+                                  }
+                                />
+                              ) : null}
+                              <Text style={styles.godPageMiniChipText}>{scaleType}</Text>
+                            </View>
                           );
                         })}
                       </View>
                     </View>
-                  )}
-                  {possibleRoles.length > 0 && (
-                    <View style={styles.godPageRolesContainer}>
-                      <Text style={[styles.godPageRolesLabel, { color: colors.accent + 'AA' }]}>
-                        Possible Roles:
-                      </Text>
-                      <View style={styles.godPageRolesList}>
-                        {possibleRoles.map((role, idx) => {
+                  ) : null}
+                  {possibleRoles.length > 0 ? (
+                    <View style={styles.godPageSpecBlock}>
+                      <Text style={styles.godPageSpecSectionLabel}>Roles</Text>
+                      <View style={styles.godPageChipRow}>
+                        {possibleRoles.map((role) => {
                           const roleIcon = getRoleIcon(role);
                           return (
-                            <React.Fragment key={role}>
-                              <View style={styles.godPageRoleItem}>
-                                {roleIcon && (
-                                  <Image 
-                                    source={roleIcon} 
-                                    style={styles.godPageRoleIcon}
-                                    resizeMode="contain"
-                                    accessibilityLabel={`${role} role icon`}
-                                  />
-                                )}
-                                <Text style={[styles.godPageRoleText, { color: colors.accent + 'AA' }]}>
-                                  {role}
-                                </Text>
-                              </View>
-                              {idx < possibleRoles.length - 1 && (
-                                <Text style={[styles.godPageRoleText, { color: colors.accent + 'AA' }]}> • </Text>
-                              )}
-                            </React.Fragment>
+                            <View key={role} style={[styles.godPageMiniChip, styles.godPageMiniChipMuted]}>
+                              {roleIcon ? (
+                                <Image
+                                  source={roleIcon}
+                                  style={styles.godPageMiniChipIcon}
+                                  contentFit="contain"
+                                  accessibilityLabel={`${role} role`}
+                                />
+                              ) : null}
+                              <Text style={styles.godPageMiniChipText}>{role}</Text>
+                            </View>
                           );
                         })}
                       </View>
                     </View>
-                  )}
+                  ) : null}
                 </View>
                 </View>
-            </View>
+              </View>
+          </>
+        );
+
+        return (
+          <View style={[styles.godPageContainer, { backgroundColor: colors.secondary + '15' }]}>
+            {pantheonBackdrop ? (
+              <ImageBackground
+                source={pantheonBackdrop}
+                style={[styles.godPageHeader, styles.godPageHeaderBackdrop]}
+                resizeMode="cover"
+              >
+                <View style={[styles.godPageHeaderContent, styles.godPageHeaderBackdropTint]}>
+                  {godHeaderBody}
+                </View>
+              </ImageBackground>
+            ) : (
+              <View style={[styles.godPageHeader, godHeaderFallbackStyle]}>
+                <View style={styles.godPageHeaderContent}>{godHeaderBody}</View>
+              </View>
+            )}
           <ScrollView style={styles.godPageBody} scrollEnabled={!isDragging}>
+            {selectedGod.loreShort && (
+              <View style={styles.modalSection}>
+                <TouchableOpacity
+                  style={styles.skinsHeader}
+                  onPress={() => setLoreExpanded(!loreExpanded)}
+                >
+                  <Text style={styles.modalSectionTitle}>Lore</Text>
+                  <Text style={styles.skinsToggleText}>
+                    {loreExpanded ? '▼' : '▶'}
+                  </Text>
+                </TouchableOpacity>
+                {loreExpanded && (
+                  <Text style={styles.modalText}>{selectedGod.loreShort}</Text>
+                )}
+              </View>
+            )}
             {/* Base Stats Section */}
             {selectedGod.baseStats && typeof selectedGod.baseStats === 'object' && Object.keys(selectedGod.baseStats).length > 0 && (
               <View style={styles.modalSection}>
@@ -3211,15 +3506,209 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                 )}
               </View>
             )}
+            {(selectedGod.abilities || selectedGod.aspect || selectedGod.passive) && (
+              <View style={styles.modalSection}>
+                <TouchableOpacity
+                  style={styles.skinsHeader}
+                  onPress={() => setKitExpanded(!kitExpanded)}
+                >
+                  <Text style={styles.modalSectionTitle}>Kit</Text>
+                  <Text style={styles.skinsToggleText}>
+                    {kitExpanded ? '▼' : '▶'}
+                  </Text>
+                </TouchableOpacity>
+                {kitExpanded && (
+                  <>
+                    {selectedGod.abilities && (
+                      <>
+                        <Text style={styles.itemInfoSectionTitle}>Abilities</Text>
+                        <ScrollView
+                          horizontal
+                          showsHorizontalScrollIndicator={false}
+                          style={styles.abilityIconsRow}
+                          contentContainerStyle={styles.abilityIconsRowContent}
+                          pointerEvents="box-none"
+                          onScrollBeginDrag={clearKitAbilityTooltip}
+                        >
+                          {selectedGod.passive ? (
+                            <View
+                              ref={(node) => {
+                                if (node) kitSlotMeasureRefs.current['kit-passive'] = node;
+                                else delete kitSlotMeasureRefs.current['kit-passive'];
+                              }}
+                              collapsable={false}
+                              style={styles.abilityIconWithLabel}
+                            >
+                              <Pressable
+                                style={({ pressed }) => [
+                                  styles.abilityIconButton,
+                                  { borderColor: kitAbilityBorderColor },
+                                  pressed && styles.abilityIconButtonPressed,
+                                ]}
+                                onPress={() =>
+                                  toggleKitAbilityTooltip(
+                                    'kit-passive',
+                                    {
+                                      title: 'Passive',
+                                      icon: selectedGod.passive?.icon || null,
+                                      body: buildKitPassiveTooltipBody(selectedGod.passive),
+                                    }
+                                  )
+                                }
+                                accessibilityRole="button"
+                                accessibilityLabel="Passive"
+                                accessibilityHint="Tap to show or hide ability summary."
+                              >
+                                {selectedGod.passive.icon ? (() => {
+                                  const localIcon = getLocalGodAsset(selectedGod.passive.icon);
+                                  if (localIcon) {
+                                    return <Image source={localIcon} style={styles.abilityIconCompact} contentFit="cover" cachePolicy="memory-disk" transition={200} accessibilityLabel="Passive ability icon" />;
+                                  }
+                                  return (
+                                    <View style={styles.abilityIconFallbackCompact}>
+                                      <Text style={styles.abilityIconFallbackTextCompact}>P</Text>
+                                    </View>
+                                  );
+                                })() : (
+                                  <View style={styles.abilityIconFallbackCompact}>
+                                    <Text style={styles.abilityIconFallbackTextCompact}>P</Text>
+                                  </View>
+                                )}
+                              </Pressable>
+                              <Text style={styles.abilityIconLabel}>P</Text>
+                            </View>
+                          ) : null}
+                          {Object.keys(selectedGod.abilities)
+                            .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+                            .map((key, index) => {
+                            const ability = selectedGod.abilities[key];
+                            const abilityIconPath = ability && ability.icon ? ability.icon : null;
+                            const abilityName = ability.name || ability.key || key;
+                            const abilitySlotLabel = index === 3 ? 'Ultimate' : String(index + 1);
+                            const kitSlotId = `kit-ability-${key}`;
+                            return (
+                              <View
+                                key={key}
+                                ref={(node) => {
+                                  if (node) kitSlotMeasureRefs.current[kitSlotId] = node;
+                                  else delete kitSlotMeasureRefs.current[kitSlotId];
+                                }}
+                                collapsable={false}
+                                style={styles.abilityIconWithLabel}
+                              >
+                                <Pressable
+                                  style={({ pressed }) => [
+                                    styles.abilityIconButton,
+                                    { borderColor: kitAbilityBorderColor },
+                                    pressed && styles.abilityIconButtonPressed,
+                                  ]}
+                                  onPress={() => {
+                                    if (ability && typeof ability === 'object') {
+                                      toggleKitAbilityTooltip(kitSlotId, {
+                                        title: abilityName,
+                                        icon: ability.icon || null,
+                                        body: buildKitAbilityTooltipBody(ability),
+                                        valueKeys:
+                                          ability.valueKeys && typeof ability.valueKeys === 'object'
+                                            ? ability.valueKeys
+                                            : null,
+                                      });
+                                    }
+                                  }}
+                                  accessibilityRole="button"
+                                  accessibilityLabel={abilityName}
+                                  accessibilityHint="Tap to show or hide ability summary."
+                                >
+                                  {abilityIconPath ? (() => {
+                                    const localIcon = getLocalGodAsset(abilityIconPath);
+                                    if (localIcon) {
+                                      return <Image source={localIcon} style={styles.abilityIconCompact} contentFit="cover" cachePolicy="memory-disk" transition={200} accessibilityLabel={`${abilityName} ability icon`} />;
+                                    }
+                                    return (
+                                      <View style={styles.abilityIconFallbackCompact}>
+                                        <Text style={styles.abilityIconFallbackTextCompact}>{abilityName.charAt(0)}</Text>
+                                      </View>
+                                    );
+                                  })() : (
+                                    <View style={styles.abilityIconFallbackCompact}>
+                                      <Text style={styles.abilityIconFallbackTextCompact}>{abilityName.charAt(0)}</Text>
+                                    </View>
+                                  )}
+                                </Pressable>
+                                <Text style={styles.abilityIconLabel}>{abilitySlotLabel}</Text>
+                              </View>
+                            );
+                          })}
+                          {selectedGod.aspect ? (
+                            <View
+                              ref={(node) => {
+                                if (node) kitSlotMeasureRefs.current['kit-aspect'] = node;
+                                else delete kitSlotMeasureRefs.current['kit-aspect'];
+                              }}
+                              collapsable={false}
+                              style={styles.abilityIconWithLabel}
+                            >
+                              <Pressable
+                                style={({ pressed }) => [
+                                  styles.abilityIconButton,
+                                  { borderColor: kitAbilityBorderColor },
+                                  pressed && styles.abilityIconButtonPressed,
+                                ]}
+                                onPress={() =>
+                                  toggleKitAbilityTooltip(
+                                    'kit-aspect',
+                                    {
+                                      title: 'Aspect',
+                                      icon: selectedGod.aspect?.icon || null,
+                                      body: buildKitAspectTooltipBody(selectedGod.aspect),
+                                    }
+                                  )
+                                }
+                                accessibilityRole="button"
+                                accessibilityLabel="Aspect"
+                                accessibilityHint="Tap to show or hide ability summary."
+                              >
+                                {selectedGod.aspect.icon ? (() => {
+                                  const localIcon = getLocalGodAsset(selectedGod.aspect.icon);
+                                  if (localIcon) {
+                                    return <Image source={localIcon} style={styles.abilityIconCompact} contentFit="cover" cachePolicy="memory-disk" transition={200} accessibilityLabel="Aspect icon" />;
+                                  }
+                                  return (
+                                    <View style={styles.abilityIconFallbackCompact}>
+                                      <Text style={styles.abilityIconFallbackTextCompact}>A</Text>
+                                    </View>
+                                  );
+                                })() : (
+                                  <View style={styles.abilityIconFallbackCompact}>
+                                    <Text style={styles.abilityIconFallbackTextCompact}>A</Text>
+                                  </View>
+                                )}
+                              </Pressable>
+                              <Text style={styles.abilityIconLabel}>Aspect</Text>
+                            </View>
+                          ) : null}
+                        </ScrollView>
+                      </>
+                    )}
+                  </>
+                )}
+              </View>
+            )}
             {/* Skins Section */}
             {selectedGod.skins && typeof selectedGod.skins === 'object' && Object.keys(selectedGod.skins).length > 0 && (
               <View style={styles.modalSection}>
                 <TouchableOpacity
                   style={styles.skinsHeader}
                   onPress={() => {
-                    setSkinsExpanded(!skinsExpanded);
                     if (skinsExpanded) {
+                      setSkinsExpanded(false);
                       setSelectedSkin(null);
+                    } else {
+                      const keys = Object.keys(selectedGod.skins);
+                      setSkinsExpanded(true);
+                      setSelectedSkin((prev) =>
+                        prev && selectedGod.skins[prev] ? prev : keys[0]
+                      );
                     }
                   }}
                 >
@@ -3228,556 +3717,232 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                     {skinsExpanded ? '▼' : '▶'}
                   </Text>
                 </TouchableOpacity>
-                {skinsExpanded && (
-                  <View style={styles.skinsContainer}>
-                    {Object.keys(selectedGod.skins).map((skinKey) => {
-                      const skin = selectedGod.skins[skinKey];
-                      const skinName = skin.name || skinKey;
-                      return (
-                        <TouchableOpacity
-                          key={skinKey}
-                          style={[
-                            styles.skinButton,
-                            selectedSkin === skinKey && styles.skinButtonActive
-                          ]}
-                          onPress={() => setSelectedSkin(selectedSkin === skinKey ? null : skinKey)}
-                        >
-                          <Text style={styles.skinButtonText}>{skinName}</Text>
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
-                )}
-                {skinsExpanded && selectedSkin && selectedGod.skins[selectedSkin] && (
-                  <View style={styles.selectedSkinContainer}>
-                    <Text style={styles.selectedSkinName}>
-                      {selectedGod.skins[selectedSkin].name || selectedSkin}
-                    </Text>
-                    {selectedGod.skins[selectedSkin].skin && (() => {
-                      const skinPath = selectedGod.skins[selectedSkin].skin;
-                      const skinImage = getSkinImage(skinPath);
-                      
-                      if (skinImage) {
-                        // Handle both single URI and primary/fallback object
-                        const imageSource = skinImage.primary || skinImage;
-                        const fallbackSource = skinImage.fallback;
-                        const skinKey = `skin-detail-${selectedSkin}-${skinPath}`;
-                        const useFallback = failedItemIcons[skinKey];
-                        
-                        if (fallbackSource && !useFallback) {
-                          // Has fallback - try primary first, then fallback on error
-                          return (
-                            <Image
-                              key={`skin-${selectedSkin}-${skinPath}`}
-                              source={imageSource}
-                              style={styles.selectedSkinImage}
-                              contentFit="contain"
-                              cachePolicy="memory-disk"
-                              transition={0}
-                              accessibilityLabel={`${selectedGod.skins[selectedSkin].name || selectedSkin} skin image`}
-                              onError={() => {
-                                setFailedItemIcons(prev => ({ ...prev, [skinKey]: true }));
-                              }}
-                            />
-                          );
-                        }
-                        
-                        if (fallbackSource && useFallback) {
-                          // Use fallback after primary failed
-                          return (
-                            <Image
-                              key={`skin-${selectedSkin}-${skinPath}`}
-                              source={fallbackSource}
-                              style={styles.selectedSkinImage}
-                              contentFit="contain"
-                              cachePolicy="memory-disk"
-                              transition={0}
-                              accessibilityLabel={`${selectedGod.skins[selectedSkin].name || selectedSkin} skin image`}
-                            />
-                          );
-                        }
-                        
-                        // Single URI - use directly
-                        return (
-                          <Image
-                            key={`skin-${selectedSkin}-${skinPath}`}
-                            source={imageSource}
-                            style={styles.selectedSkinImage}
-                            contentFit="contain"
-                            cachePolicy="memory-disk"
-                            transition={0}
-                            accessibilityLabel={`${selectedGod.skins[selectedSkin].name || selectedSkin} skin image`}
-                          />
-                        );
+                {skinsExpanded &&
+                  selectedSkin &&
+                  selectedGod.skins[selectedSkin] && (
+                    <SkinShowcasePanel
+                      godIconPath={
+                        selectedGod.icon ||
+                        selectedGod.GodIcon ||
+                        (selectedGod.abilities &&
+                          selectedGod.abilities.A01 &&
+                          selectedGod.abilities.A01.icon) ||
+                        null
                       }
-                      
-                      return null;
-                    })()}
-                    {selectedGod.skins[selectedSkin].type && (
-                      <Text style={styles.selectedSkinType}>
-                        Type: {selectedGod.skins[selectedSkin].type}
-                      </Text>
-                    )}
-                  </View>
-                )}
-              </View>
-            )}
-            {selectedGod.loreShort && (
-              <View style={styles.modalSection}>
-                <TouchableOpacity
-                  style={styles.skinsHeader}
-                  onPress={() => setLoreExpanded(!loreExpanded)}
-                >
-                  <Text style={styles.modalSectionTitle}>Lore</Text>
-                  <Text style={styles.skinsToggleText}>
-                    {loreExpanded ? '▼' : '▶'}
-                  </Text>
-                </TouchableOpacity>
-                {loreExpanded && (
-                  <Text style={styles.modalText}>{selectedGod.loreShort}</Text>
-                )}
-              </View>
-            )}
-            {selectedGod.abilities && (
-              <View style={styles.modalSection}>
-                <TouchableOpacity
-                  style={styles.skinsHeader}
-                  onPress={() => setAbilitiesExpanded(!abilitiesExpanded)}
-                >
-                  <Text style={styles.modalSectionTitle}>Abilities</Text>
-                  <Text style={styles.skinsToggleText}>
-                    {abilitiesExpanded ? '▼' : '▶'}
-                  </Text>
-                </TouchableOpacity>
-                {abilitiesExpanded && (
-                  <View style={styles.abilityIconsRow} pointerEvents="box-none">
-                    {Object.keys(selectedGod.abilities).map((key) => {
-                      const ability = selectedGod.abilities[key];
-                      const abilityIconPath = ability && ability.icon ? ability.icon : null;
-                      const abilityName = ability.name || ability.key || key;
-                      return (
-                        <TouchableOpacity
-                          key={key}
-                          style={styles.abilityIconButton}
-                          activeOpacity={0.7}
-                          onPress={() => {
-                            if (ability && typeof ability === 'object') {
-                              setTimeout(() => {
-                                setSelectedAbility({ abilityKey: key, ability: ability, abilityName });
-                                setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
-                              }, 50);
-                            }
-                          }}
-                        >
-                          {abilityIconPath ? (() => {
-                            const localIcon = getLocalGodAsset(abilityIconPath);
-                            if (localIcon) {
-                              return <Image source={localIcon} style={styles.abilityIconCompact} contentFit="cover" cachePolicy="memory-disk" transition={200} accessibilityLabel={`${abilityName} ability icon`} />;
-                            }
-                            return (
-                              <View style={styles.abilityIconFallbackCompact}>
-                                <Text style={styles.abilityIconFallbackTextCompact}>{abilityName.charAt(0)}</Text>
-                              </View>
-                            );
-                          })() : (
-                            <View style={styles.abilityIconFallbackCompact}>
-                              <Text style={styles.abilityIconFallbackTextCompact}>{abilityName.charAt(0)}</Text>
-                            </View>
-                          )}
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
-                )}
-              </View>
-            )}
-            {selectedGod.aspect && (
-              <View style={styles.modalSection}>
-                <TouchableOpacity
-                  style={styles.skinsHeader}
-                  onPress={() => setAspectExpanded(!aspectExpanded)}
-                >
-                  <Text style={styles.modalSectionTitle}>Aspect</Text>
-                  <Text style={styles.skinsToggleText}>
-                    {aspectExpanded ? '▼' : '▶'}
-                  </Text>
-                </TouchableOpacity>
-                {aspectExpanded && (
-                  <View style={styles.aspectContainer}>
-                    <View style={styles.aspectRow}>
-                      {selectedGod.aspect.icon ? (() => {
-                        const iconPath = selectedGod.aspect.icon;
-                        const localIcon = getLocalGodAsset(iconPath);
-                        if (localIcon) {
-                          return (
-                        <Image 
-                              source={localIcon} 
-                          style={styles.aspectIcon}
-                          resizeMode="cover"
-                          cachePolicy="memory-disk"
-                          transition={0}
-                        />
-                          );
-                        }
-                        return (
-                          <View style={styles.aspectIconFallback}>
-                            <Text style={styles.aspectIconFallbackText}>A</Text>
-                          </View>
-                        );
-                      })() : (
-                        <View style={styles.aspectIconFallback}>
-                          <Text style={styles.aspectIconFallbackText}>A</Text>
-                        </View>
-                      )}
-                      <View style={styles.aspectInfo}>
-                        <Text style={styles.aspectName}>
-                          {selectedGod.aspect.name ? selectedGod.aspect.name.replace(/\*\*__|__\*\*/g, '') : 'Aspect'}
-                        </Text>
-                        {selectedGod.aspect.description && (
-                          <Text style={styles.modalText}>{selectedGod.aspect.description}</Text>
-                        )}
-                      </View>
-                    </View>
-                  </View>
-                )}
-              </View>
-            )}
-            {selectedGod.passive && (
-              <View style={styles.modalSection}>
-                <TouchableOpacity
-                  style={styles.skinsHeader}
-                  onPress={() => setPassiveExpanded(!passiveExpanded)}
-                >
-                  <Text style={styles.modalSectionTitle}>Passive</Text>
-                  <Text style={styles.skinsToggleText}>
-                    {passiveExpanded ? '▼' : '▶'}
-                  </Text>
-                </TouchableOpacity>
-                {passiveExpanded && selectedGod.passive && (
-                  <View style={styles.passiveContainer}>
-                    {selectedGod.passive.icon && (() => {
-                      const iconPath = selectedGod.passive.icon;
-                      const localIcon = getLocalGodAsset(iconPath);
-                      if (localIcon) {
-                        return (
-                          <View style={styles.passiveIconContainer}>
-                            <Image 
-                              source={localIcon} 
-                              style={styles.passiveIcon}
-                              resizeMode="cover"
-                            />
-                          </View>
-                        );
-                      }
-                      return (
-                        <View style={styles.passiveIconContainer}>
-                          <View style={styles.passiveIconFallback}>
-                            <Text style={styles.passiveIconFallbackText}>P</Text>
-                          </View>
-                        </View>
-                      );
-                    })()}
-                    {selectedGod.passive.name && (
-                      <Text style={styles.passiveName}>
-                        {selectedGod.passive.name}
-                      </Text>
-                    )}
-                    {selectedGod.passive.shortDesc && (
-                      <Text style={styles.modalText}>{String(selectedGod.passive.shortDesc)}</Text>
-                    )}
-                    {selectedGod.passive.shortDescAspect && (
-                      <Text style={[styles.modalText, { marginTop: 8, fontStyle: 'italic' }]}>
-                        {String(selectedGod.passive.shortDescAspect)}
-                      </Text>
-                    )}
-                    {/* Vulcan Mods Display */}
-                    {selectedGod.passive && selectedGod.passive.valueKeys && typeof selectedGod.passive.valueKeys === 'object' && 
-                     Object.keys(selectedGod.passive.valueKeys).some(key => key && key.includes('Mod')) && (
-                      <View style={styles.vulcanModsContainer}>
-                        <Text style={styles.vulcanModsTitle}>Mods</Text>
-                        {/* Set One Mods */}
-                        {Object.keys(selectedGod.passive.valueKeys || {}).filter(key => key && key.includes('Set One')).map((modKey) => {
-                          try {
-                            const modValue = selectedGod.passive.valueKeys[modKey];
-                            const modIcon = vulcanModIcons[modKey];
-                            return (
-                              <View key={modKey} style={styles.vulcanModItem}>
-                                {modIcon && (
-                                  <Image 
-                                    source={modIcon} 
-                                    style={styles.vulcanModIcon}
-                                    resizeMode="contain"
-                                    onError={() => {}}
-                                  />
-                                )}
-                                <View style={styles.vulcanModInfo}>
-                                  <Text style={styles.vulcanModName}>{modKey || 'Unknown Mod'}</Text>
-                                  {Array.isArray(modValue) && modValue[0] && typeof modValue[0] === 'string' && (
-                                    <Text style={styles.modalText}>{modValue[0].trim()}</Text>
-                                  )}
-                                  {Array.isArray(modValue) && modValue[0] && typeof modValue[0] !== 'string' && (
-                                    <Text style={styles.modalText}>{String(modValue[0])}</Text>
-                                  )}
-                                </View>
-                              </View>
-                            );
-                          } catch (error) {
-                            console.log('Error rendering mod:', modKey, error);
-                            return null;
-                          }
-                        })}
-                        {/* Set Two Mods */}
-                        {Object.keys(selectedGod.passive.valueKeys || {}).filter(key => key && key.includes('Set Two')).map((modKey) => {
-                          try {
-                            const modValue = selectedGod.passive.valueKeys[modKey];
-                            const modIcon = vulcanModIcons[modKey];
-                            return (
-                              <View key={modKey} style={styles.vulcanModItem}>
-                                {modIcon && (
-                                  <Image 
-                                    source={modIcon} 
-                                    style={styles.vulcanModIcon}
-                                    resizeMode="contain"
-                                    onError={() => {}}
-                                  />
-                                )}
-                                <View style={styles.vulcanModInfo}>
-                                  <Text style={styles.vulcanModName}>{modKey || 'Unknown Mod'}</Text>
-                                  {Array.isArray(modValue) && modValue[0] && typeof modValue[0] === 'string' && (
-                                    <Text style={styles.modalText}>{modValue[0].trim()}</Text>
-                                  )}
-                                  {Array.isArray(modValue) && modValue[0] && typeof modValue[0] !== 'string' && (
-                                    <Text style={styles.modalText}>{String(modValue[0])}</Text>
-                                  )}
-                                </View>
-                              </View>
-                            );
-                          } catch (error) {
-                            console.log('Error rendering mod:', modKey, error);
-                            return null;
-                          }
-                        })}
-                        {/* Set Three Mods */}
-                        {Object.keys(selectedGod.passive.valueKeys || {}).filter(key => key && key.includes('Set Three')).map((modKey) => {
-                          try {
-                            const modValue = selectedGod.passive.valueKeys[modKey];
-                            const modIcon = vulcanModIcons[modKey];
-                            return (
-                              <View key={modKey} style={styles.vulcanModItem}>
-                                {modIcon && (
-                                  <Image 
-                                    source={modIcon} 
-                                    style={styles.vulcanModIcon}
-                                    resizeMode="contain"
-                                    onError={() => {}}
-                                  />
-                                )}
-                                <View style={styles.vulcanModInfo}>
-                                  <Text style={styles.vulcanModName}>{modKey || 'Unknown Mod'}</Text>
-                                  {Array.isArray(modValue) && modValue[0] && typeof modValue[0] === 'string' && (
-                                    <Text style={styles.modalText}>{modValue[0].trim()}</Text>
-                                  )}
-                                  {Array.isArray(modValue) && modValue[0] && typeof modValue[0] !== 'string' && (
-                                    <Text style={styles.modalText}>{String(modValue[0])}</Text>
-                                  )}
-                                </View>
-                              </View>
-                            );
-                          } catch (error) {
-                            console.log('Error rendering mod:', modKey, error);
-                            return null;
-                          }
-                        })}
-                      </View>
-                    )}
-                    {/* Other valueKeys (non-mods) */}
-                    {selectedGod.passive && selectedGod.passive.valueKeys && typeof selectedGod.passive.valueKeys === 'object' && 
-                     Object.keys(selectedGod.passive.valueKeys).filter(key => key && !key.includes('Mod')).length > 0 && (
-                      <View style={styles.passiveStatsContainer}>
-                        {Object.keys(selectedGod.passive.valueKeys).filter(key => key && !key.includes('Mod')).map((statKey) => {
-                          try {
-                            const statValue = selectedGod.passive.valueKeys[statKey];
-                            if (!statValue || (Array.isArray(statValue) && statValue.length === 0)) return null;
-                            return (
-                              <View key={statKey} style={styles.passiveStatRow}>
-                                <Text style={styles.passiveStatLabel}>{String(statKey)}:</Text>
-                                <Text style={styles.passiveStatValue}>
-                                  {Array.isArray(statValue) ? statValue.join(', ') : String(statValue)}
-                                </Text>
-                              </View>
-                            );
-                          } catch (error) {
-                            console.log('Error rendering stat:', statKey, error);
-                            return null;
-                          }
-                        })}
-                      </View>
-                    )}
-                  </View>
-                )}
+                      skinsRecord={selectedGod.skins}
+                      skinKeysOrdered={Object.keys(selectedGod.skins)}
+                      selectedSkinKey={selectedSkin}
+                      onSelectSkinKey={(key) => setSelectedSkin(key)}
+                      onRequestClose={() => {
+                        setSkinsExpanded(false);
+                        setSelectedSkin(null);
+                      }}
+                    />
+                  )}
               </View>
             )}
           </ScrollView>
 
-          {/* Ability Detail Page - appears as overlay when ability is selected */}
-          {selectedAbility && selectedAbility.ability && (
-            <View style={styles.abilityPageOverlay}>
-              <View style={styles.abilityPageContainer}>
-                <View style={styles.abilityPageHeader}>
-                  <TouchableOpacity 
-                    style={styles.backButton}
-                    onPress={() => {
-                      setSelectedAbility(null);
-                      setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
-                    }}
-                  >
-                    <Text style={styles.backButtonText}>← Back</Text>
-                  </TouchableOpacity>
-                  <View style={styles.abilityPageTitleContainer}>
-                    <View style={styles.abilityTooltipIconContainer}>
-                      {selectedAbility.ability.icon ? (() => {
-                        const iconPath = selectedAbility.ability.icon;
-                        const localIcon = getLocalGodAsset(iconPath);
-                        if (localIcon) {
-                          return (
-                        <Image 
-                              source={localIcon} 
-                          style={styles.abilityTooltipIcon}
-                          contentFit="cover"
-                          cachePolicy="memory-disk"
-                          transition={0}
-                            />
-                          );
-                        }
-                        return (
-                          <View style={styles.abilityTooltipIconFallback}>
-                            <Text style={styles.abilityTooltipIconFallbackText}>
-                              {(selectedAbility.abilityName || 'A').charAt(0)}
-                            </Text>
-                          </View>
-                        );
-                      })() : (
-                        <View style={styles.abilityTooltipIconFallback}>
-                          <Text style={styles.abilityTooltipIconFallbackText}>
-                            {(selectedAbility.abilityName || 'A').charAt(0)}
-                          </Text>
+          {kitAbilityTooltip ? (() => {
+            const tip = kitAbilityTooltip;
+            const cardW = Math.min(KIT_TOOLTIP_CARD_WIDTH, SCREEN_WIDTH - 20);
+            const cardH = Math.min(KIT_TOOLTIP_CARD_HEIGHT, SCREEN_HEIGHT - 72);
+            const selectedLevelIndex = Number.isFinite(tip.levelIndex) ? tip.levelIndex : 0;
+            const hasValueKeys =
+              tip.valueKeys && typeof tip.valueKeys === 'object' && Object.keys(tip.valueKeys).length > 0;
+            const top = Math.max(36, (SCREEN_HEIGHT - cardH) / 2);
+            const left = Math.max(10, (SCREEN_WIDTH - cardW) / 2);
+            return (
+              <Modal
+                transparent
+                visible
+                animationType="none"
+                onRequestClose={clearKitAbilityTooltip}
+              >
+                <View style={styles.kitAbilityTooltipOverlayRoot} pointerEvents="box-none">
+                  <Pressable
+                    style={StyleSheet.absoluteFillObject}
+                    onPress={clearKitAbilityTooltip}
+                    accessibilityLabel="Dismiss ability preview"
+                  />
+                  <View style={[styles.kitAbilityTooltipCardWrap, { top, left, width: cardW, height: cardH }]}>
+                    <View
+                      style={[styles.kitAbilityTooltipCard, { borderColor: kitAbilityBorderColor }]}
+                      onHoverIn={cancelClearKitTooltip}
+                      onHoverOut={() => {
+                        if (IS_WEB) scheduleClearKitTooltip();
+                      }}
+                    >
+                    <View style={styles.kitAbilityTooltipHeader}>
+                      <View style={styles.kitAbilityTooltipHeaderLeft}>
+                        <View style={styles.kitAbilityTooltipIconWrap}>
+                          {tip.icon ? (() => {
+                            const localIcon = getLocalGodAsset(tip.icon);
+                            if (localIcon) {
+                              return (
+                                <Image
+                                  source={localIcon}
+                                  style={styles.kitAbilityTooltipIcon}
+                                  contentFit="cover"
+                                  cachePolicy="memory-disk"
+                                  transition={100}
+                                />
+                              );
+                            }
+                            return (
+                              <View style={styles.kitAbilityTooltipIconFallback}>
+                                <Text style={styles.kitAbilityTooltipIconFallbackText}>
+                                  {String(tip.title || 'A').charAt(0)}
+                                </Text>
+                              </View>
+                            );
+                          })() : (
+                            <View style={styles.kitAbilityTooltipIconFallback}>
+                              <Text style={styles.kitAbilityTooltipIconFallbackText}>
+                                {String(tip.title || 'A').charAt(0)}
+                              </Text>
+                            </View>
+                          )}
                         </View>
-                      )}
-                    </View>
-                    <Text style={styles.abilityPageTitle}>{selectedAbility.abilityName || 'Ability'}</Text>
-                  </View>
-                </View>
-                <ScrollView style={styles.abilityPageBody}>
-                  {selectedAbility.ability.scales && (
-                    <View style={styles.abilityTooltipSection}>
-                      <TouchableOpacity
-                        style={styles.abilityTooltipSectionHeader}
-                        onPress={() => setAbilitySectionsExpanded({
-                          ...abilitySectionsExpanded,
-                          scales: !abilitySectionsExpanded.scales
-                        })}
-                      >
-                        <Text style={styles.abilityTooltipSectionTitle}>Scales</Text>
-                        <Text style={styles.abilityTooltipSectionToggle}>
-                          {abilitySectionsExpanded.scales ? '▼' : '▶'}
-                        </Text>
-                      </TouchableOpacity>
-                      {abilitySectionsExpanded.scales && (
-                        <ScrollView 
-                          style={styles.abilityTooltipScrollContent}
-                          nestedScrollEnabled={true}
-                          showsVerticalScrollIndicator={true}
-                          scrollEnabled={true}
-                          pointerEvents="auto"
-                        >
-                          <Text style={styles.abilityTooltipScales}>
-                            {String(selectedAbility.ability.scales)}
-                          </Text>
-                        </ScrollView>
-                      )}
-                    </View>
-                  )}
-                  
-                  {(selectedAbility.ability.shortDesc || selectedAbility.ability.description) && (
-                    <View style={styles.abilityTooltipSection}>
-                      <TouchableOpacity
-                        style={styles.abilityTooltipSectionHeader}
-                        onPress={() => setAbilitySectionsExpanded({
-                          ...abilitySectionsExpanded,
-                          description: !abilitySectionsExpanded.description
-                        })}
-                      >
-                        <Text style={styles.abilityTooltipSectionTitle}>Description</Text>
-                        <Text style={styles.abilityTooltipSectionToggle}>
-                          {abilitySectionsExpanded.description ? '▼' : '▶'}
-                        </Text>
-                      </TouchableOpacity>
-                      {abilitySectionsExpanded.description && (
-                        <ScrollView 
-                          style={styles.abilityTooltipScrollContent}
-                          nestedScrollEnabled={true}
-                          showsVerticalScrollIndicator={true}
-                          scrollEnabled={true}
-                          pointerEvents="auto"
-                        >
-                          <Text style={styles.abilityTooltipDescription}>
-                            {selectedAbility.ability.shortDesc 
-                              ? String(selectedAbility.ability.shortDesc)
-                              : String(selectedAbility.ability.description)}
-                          </Text>
-                        </ScrollView>
-                      )}
-                    </View>
-                  )}
-
-                  {selectedAbility.ability.valueKeys && typeof selectedAbility.ability.valueKeys === 'object' && Object.keys(selectedAbility.ability.valueKeys).length > 0 && (
-                    <View style={styles.abilityTooltipSection}>
-                      <TouchableOpacity
-                        style={styles.abilityTooltipSectionHeader}
-                        onPress={() => setAbilitySectionsExpanded({
-                          ...abilitySectionsExpanded,
-                          stats: !abilitySectionsExpanded.stats
-                        })}
-                      >
-                        <Text style={styles.abilityTooltipSectionTitle}>Stats</Text>
-                        <Text style={styles.abilityTooltipSectionToggle}>
-                          {abilitySectionsExpanded.stats ? '▼' : '▶'}
-                        </Text>
-                      </TouchableOpacity>
-                      {abilitySectionsExpanded.stats && (
-                        <ScrollView 
-                          style={styles.abilityTooltipScrollContent}
-                          nestedScrollEnabled={true}
-                          showsVerticalScrollIndicator={true}
-                          scrollEnabled={true}
-                          pointerEvents="auto"
-                        >
-                          <View style={styles.abilityTooltipStats}>
-                            {Object.keys(selectedAbility.ability.valueKeys).map((statKey) => {
-                              try {
-                                const statValue = selectedAbility.ability.valueKeys[statKey];
-                                if (!statValue || (Array.isArray(statValue) && statValue.length === 0)) return null;
-                                return (
-                                  <View key={statKey} style={styles.abilityTooltipStatRow}>
-                                    <Text style={styles.abilityTooltipStatLabel}>{String(statKey)}:</Text>
-                                    <Text style={styles.abilityTooltipStatValue}>
-                                      {Array.isArray(statValue) ? statValue.join(', ') : String(statValue)}
-                                    </Text>
-                                  </View>
-                                );
-                              } catch (e) {
-                                return null;
+                        <View style={styles.kitAbilityTooltipTitleWrap}>
+                          <Text style={styles.kitAbilityTooltipTitle}>{tip.title}</Text>
+                          {hasValueKeys ? (
+                            <Text style={styles.kitAbilityTooltipSubTitle}>Level scaling preview</Text>
+                          ) : null}
+                        </View>
+                      </View>
+                      <View style={styles.kitAbilityTooltipHeaderRight}>
+                        {hasValueKeys ? (
+                          <View style={styles.kitAbilityLevelStepperTopRight}>
+                            <TouchableOpacity
+                              style={styles.kitAbilityLevelStepperBtn}
+                              onPress={() =>
+                                setKitAbilityTooltip((prev) =>
+                                  prev ? { ...prev, levelIndex: Math.max(0, (prev.levelIndex ?? 0) - 1) } : prev
+                                )
                               }
+                              disabled={selectedLevelIndex <= 0}
+                              activeOpacity={0.7}
+                            >
+                              <Text
+                                style={[
+                                  styles.kitAbilityLevelStepperText,
+                                  selectedLevelIndex <= 0 && styles.kitAbilityLevelStepperTextDisabled,
+                                ]}
+                              >
+                                -
+                              </Text>
+                            </TouchableOpacity>
+                            <Text style={styles.kitAbilityLevelCurrentText}>{KIT_TOOLTIP_LEVELS[selectedLevelIndex]}</Text>
+                            <TouchableOpacity
+                              style={styles.kitAbilityLevelStepperBtn}
+                              onPress={() =>
+                                setKitAbilityTooltip((prev) =>
+                                  prev
+                                    ? {
+                                        ...prev,
+                                        levelIndex: Math.min(
+                                          KIT_TOOLTIP_LEVELS.length - 1,
+                                          (prev.levelIndex ?? 0) + 1
+                                        ),
+                                      }
+                                    : prev
+                                )
+                              }
+                              disabled={selectedLevelIndex >= KIT_TOOLTIP_LEVELS.length - 1}
+                              activeOpacity={0.7}
+                            >
+                              <Text
+                                style={[
+                                  styles.kitAbilityLevelStepperText,
+                                  selectedLevelIndex >= KIT_TOOLTIP_LEVELS.length - 1 &&
+                                    styles.kitAbilityLevelStepperTextDisabled,
+                                ]}
+                              >
+                                +
+                              </Text>
+                            </TouchableOpacity>
+                          </View>
+                        ) : null}
+                      </View>
+                    </View>
+                    <View style={styles.kitAbilityDescSection}>
+                      <Text style={styles.kitAbilitySectionLabel}>Description</Text>
+                      <ScrollView
+                        style={styles.kitAbilityDescScroll}
+                        contentContainerStyle={styles.kitAbilityDescScrollContent}
+                        nestedScrollEnabled
+                        keyboardShouldPersistTaps="handled"
+                        scrollEnabled
+                        showsVerticalScrollIndicator
+                      >
+                        <AlignedBulletLines
+                          text={tip.body}
+                          textStyle={styles.kitAbilityTooltipBody}
+                          bulletMarkWidth={12}
+                          bulletGap={4}
+                        />
+                      </ScrollView>
+                    </View>
+                    {hasValueKeys ? (
+                      <View style={styles.kitAbilityStatsSection}>
+                        <Text style={styles.kitAbilitySectionLabel}>Stat Values</Text>
+                        <ScrollView
+                          style={styles.kitAbilityTooltipScroll}
+                          contentContainerStyle={styles.kitAbilityStatsScrollContent}
+                          nestedScrollEnabled
+                          keyboardShouldPersistTaps="handled"
+                          scrollEnabled
+                          showsVerticalScrollIndicator
+                        >
+                          <View style={styles.kitAbilityStatsBlock}>
+                            {Object.entries(tip.valueKeys).map(([key, rawValue]) => {
+                              if (String(key || '').replace(/\s+/g, '').toLowerCase() === 'radiuscheat') return null;
+                              const levelValue = getLevelValue(rawValue, selectedLevelIndex);
+                              if (levelValue === null || levelValue === undefined || String(levelValue).trim() === '') return null;
+                              const delta = formatIncreaseFromBase(rawValue, selectedLevelIndex);
+                              return (
+                                <View key={`tip-stat-${key}`} style={styles.kitAbilityStatRow}>
+                                  <Text style={styles.kitAbilityStatLabel}>
+                                    {formatAbilityStatKey(key)}
+                                  </Text>
+                                  <View style={styles.kitAbilityStatValueWrap}>
+                                    <Text style={styles.kitAbilityStatValue}>
+                                      {String(levelValue)}
+                                    </Text>
+                                    {delta ? (
+                                      <Text style={styles.kitAbilityStatDelta}>
+                                        {delta}
+                                      </Text>
+                                    ) : null}
+                                  </View>
+                                </View>
+                              );
                             })}
                           </View>
                         </ScrollView>
-                      )}
+                      </View>
+                    ) : null}
+                    <Text style={styles.kitAbilityTooltipHint}>
+                      Tap ×, outside, or the same icon again to close.
+                    </Text>
                     </View>
-                  )}
-                </ScrollView>
-              </View>
-            </View>
-          )}
+                    <TouchableOpacity
+                      style={[styles.kitAbilityTooltipCloseCornerBtn, { borderColor: kitAbilityBorderColor }]}
+                      onPress={clearKitAbilityTooltip}
+                      activeOpacity={0.75}
+                      accessibilityRole="button"
+                      accessibilityLabel="Close ability preview"
+                      hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                    >
+                      <Text style={styles.kitAbilityTooltipCloseCornerText}>×</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </Modal>
+            );
+          })() : null}
+
         </View>
         );
       })() : selectedMechanic && selectedTab === 'mechanics' ? (
@@ -5607,17 +5772,17 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                     <TouchableOpacity
                       style={[styles.card, showGodSkins && styles.cardWithSkin]}
                       onPress={() => {
-                        // Use startTransition for instant UI feedback, then update state
+                        const displayName = (god.name || god.GodName || '').trim();
+                        if (displayName) {
+                          skipLayoutGodVoxRef.current = true;
+                          fireGodSelectVox(god);
+                        }
                         startTransition(() => {
-                        setSelectedGod(god);
-                        setSkinsExpanded(false);
-                        setSelectedSkin(null);
-                        setLoreExpanded(false);
-                        setAbilitiesExpanded(false);
-                        setAspectExpanded(false);
-                        setPassiveExpanded(false);
-                        setSelectedAbility(null);
-                        setAbilitySectionsExpanded({ scales: false, description: false, stats: false });
+                          setSelectedGod(god);
+                          setSkinsExpanded(false);
+                          setSelectedSkin(null);
+                          setLoreExpanded(false);
+                          setKitExpanded(false);
                         });
                       }}
                       activeOpacity={0.7}
@@ -6573,45 +6738,290 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 24,
   },
-  modalAbilityIcon: {
-    width: 56,
-    height: 56,
-    borderRadius: 8,
+  abilityIconsRow: {
+    marginTop: 8,
+    maxHeight: 72,
   },
-  modalAbilityIconFallback: {
-    width: 56,
-    height: 56,
+  abilityIconsRowContent: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    flexGrow: 1,
+    justifyContent: 'center',
+    gap: 5,
+    paddingVertical: 2,
+    paddingHorizontal: 2,
+    minWidth: '100%',
+  },
+  abilityIconButton: {
+    width: 42,
+    height: 42,
     borderRadius: 8,
+    overflow: 'hidden',
+    backgroundColor: 'rgba(8, 12, 22, 0.88)',
+    borderWidth: 2,
+  },
+  abilityIconButtonPressed: {
+    opacity: 0.88,
+  },
+  kitAbilityTooltipOverlayRoot: {
+    flex: 1,
+    backgroundColor: 'rgba(3, 7, 18, 0.42)',
+  },
+  kitAbilityTooltipCardWrap: {
+    position: 'absolute',
+    zIndex: 4,
+    elevation: 10,
+    overflow: 'visible',
+  },
+  kitAbilityTooltipCard: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(8, 12, 22, 0.98)',
+    borderWidth: 1,
+    borderColor: 'rgba(125, 211, 252, 0.42)',
+    borderRadius: 10,
+    padding: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.35,
+    shadowRadius: 8,
+    overflow: 'hidden',
+  },
+  kitAbilityTooltipHeader: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    gap: 8,
+    marginBottom: 8,
+  },
+  kitAbilityTooltipHeaderLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+    minWidth: 0,
+    gap: 8,
+  },
+  kitAbilityTooltipIconWrap: {
+    width: 36,
+    height: 36,
+    borderRadius: 8,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    backgroundColor: '#0b1220',
+  },
+  kitAbilityTooltipIcon: {
+    width: '100%',
+    height: '100%',
+  },
+  kitAbilityTooltipIconFallback: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  kitAbilityTooltipIconFallbackText: {
+    color: '#e2e8f0',
+    fontSize: 14,
+    fontWeight: '800',
+  },
+  kitAbilityTooltipTitleWrap: {
+    flex: 1,
+    minWidth: 0,
+  },
+  kitAbilityTooltipTitle: {
+    color: '#f1f5f9',
+    fontWeight: '800',
+    fontSize: 15,
+  },
+  kitAbilityTooltipSubTitle: {
+    marginTop: 2,
+    color: '#7dd3fc',
+    fontSize: 9,
+    fontWeight: '700',
+    letterSpacing: 0.2,
+  },
+  kitAbilityTooltipHeaderRight: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 6,
+    flexShrink: 0,
+  },
+  kitAbilityTooltipCloseCornerBtn: {
+    position: 'absolute',
+    top: -14,
+    right: -14,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: '#1e3a5f',
+    borderWidth: 1,
+    borderColor: 'rgba(125, 211, 252, 0.42)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 20,
+    elevation: 14,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 4,
+  },
+  kitAbilityTooltipCloseCornerText: {
+    color: '#e6eef8',
+    fontSize: 22,
+    fontWeight: '700',
+    lineHeight: 24,
+    marginTop: -2,
+  },
+  kitAbilitySectionLabel: {
+    color: '#93c5fd',
+    fontSize: 9,
+    fontWeight: '800',
+    letterSpacing: 0.2,
+    marginBottom: 2,
+  },
+  kitAbilityLevelStepperTopRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    borderRadius: 8,
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+    backgroundColor: '#0b1220',
+  },
+  kitAbilityLevelStepperBtn: {
+    width: 18,
+    height: 18,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
     backgroundColor: '#0f1724',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  modalAbilityIconFallbackText: {
-    color: '#e6eef8',
-    fontWeight: '700',
-    fontSize: 24,
+  kitAbilityLevelStepperText: {
+    color: '#cbd5e1',
+    fontSize: 11,
+    fontWeight: '800',
+    lineHeight: 12,
   },
-  abilityIconsRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-    marginTop: 8,
+  kitAbilityLevelStepperTextDisabled: {
+    color: '#64748b',
   },
-  abilityIconButton: {
-    width: 48,
-    height: 48,
+  kitAbilityLevelCurrentText: {
+    color: '#7dd3fc',
+    fontSize: 11,
+    fontWeight: '800',
+    lineHeight: 12,
+    minWidth: 14,
+    textAlign: 'center',
+  },
+  kitAbilityDescSection: {
+    marginBottom: 6,
+  },
+  kitAbilityDescScroll: {
+    height: 118,
+    marginHorizontal: -2,
+  },
+  kitAbilityDescScrollContent: {
+    paddingHorizontal: 2,
+    paddingVertical: 2,
+  },
+  kitAbilityStatsSection: {
+    marginBottom: 4,
+    height: 148,
+    minHeight: 148,
+  },
+  kitAbilityTooltipScroll: {
+    flex: 1,
+    minHeight: 0,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
     borderRadius: 8,
-    overflow: 'hidden',
-    backgroundColor: '#071024',
+    backgroundColor: '#0b1220',
+  },
+  kitAbilityStatsScrollContent: {
+    paddingBottom: 8,
+  },
+  kitAbilityStatsBlock: {
+    paddingHorizontal: 6,
+    paddingVertical: 4,
+  },
+  kitAbilityStatRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    gap: 6,
+    paddingVertical: 2,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1e293b',
+  },
+  kitAbilityStatLabel: {
+    color: '#cbd5e1',
+    fontSize: 9,
+    fontWeight: '600',
+    flex: 1,
+    minWidth: 0,
+    paddingRight: 4,
+    flexWrap: 'wrap',
+  },
+  kitAbilityStatValueWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    gap: 4,
+    maxWidth: '46%',
+    flexShrink: 1,
+    minWidth: 0,
+  },
+  kitAbilityStatValue: {
+    color: '#f8fafc',
+    fontSize: 9,
+    fontWeight: '800',
+    textAlign: 'right',
+    flexShrink: 1,
+    minWidth: 0,
+    flexWrap: 'wrap',
+  },
+  kitAbilityStatDelta: {
+    color: '#67e8f9',
+    fontSize: 8,
+    fontWeight: '700',
+    flexShrink: 0,
+  },
+  kitAbilityTooltipBody: {
+    color: '#cbd5e1',
+    fontSize: 11,
+    lineHeight: 14,
+  },
+  kitAbilityTooltipHint: {
+    color: '#64748b',
+    fontSize: 10,
+    marginTop: 8,
+    fontWeight: '600',
+    letterSpacing: 0.2,
+  },
+  abilityIconWithLabel: {
+    alignItems: 'center',
+    flexShrink: 0,
+  },
+  abilityIconLabel: {
+    marginTop: 4,
+    color: '#94a3b8',
+    fontSize: 10,
+    fontWeight: '700',
+    letterSpacing: 0.2,
   },
   abilityIconCompact: {
-    width: 48,
-    height: 48,
-    resizeMode: 'cover',
+    width: 42,
+    height: 42,
   },
   abilityIconFallbackCompact: {
-    width: 48,
-    height: 48,
+    width: 42,
+    height: 42,
     backgroundColor: '#0f1724',
     alignItems: 'center',
     justifyContent: 'center',
@@ -6705,52 +7115,6 @@ const styles = StyleSheet.create({
     color: '#cbd5e1',
     fontSize: 12,
     lineHeight: 18,
-  },
-  aspectName: {
-    color: '#e6eef8',
-    fontSize: 16,
-    fontWeight: '700',
-    marginBottom: 8,
-  },
-  aspectContainer: {
-    marginTop: 8,
-    marginBottom: 8,
-    backgroundColor: '#061028',
-    borderRadius: 8,
-    padding: 12,
-    borderWidth: 1,
-    borderColor: '#1e3a5f',
-  },
-  aspectRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-  },
-  aspectIcon: {
-    width: 56,
-    height: 56,
-    borderRadius: 8,
-    marginRight: 12,
-    borderWidth: 2,
-    borderColor: '#1e3a5f',
-  },
-  aspectIconFallback: {
-    width: 56,
-    height: 56,
-    borderRadius: 8,
-    backgroundColor: '#0f1724',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-    borderWidth: 2,
-    borderColor: '#1e3a5f',
-  },
-  aspectIconFallbackText: {
-    color: '#e6eef8',
-    fontWeight: '700',
-    fontSize: 24,
-  },
-  aspectInfo: {
-    flex: 1,
   },
   passiveContainer: {
     marginTop: 8,
@@ -6848,156 +7212,6 @@ const styles = StyleSheet.create({
     color: '#cbd5e1',
     fontSize: 11,
   },
-  abilityTooltipOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1000,
-  },
-  abilityTooltipBackdrop: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    zIndex: 1,
-  },
-  abilityTooltip: {
-    backgroundColor: '#0b1226',
-    borderRadius: 12,
-    padding: 16,
-    width: '85%',
-    maxWidth: 350,
-    maxHeight: '75%',
-    borderWidth: 2,
-    borderColor: '#1e90ff',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 10,
-    flexShrink: 1,
-    overflow: 'hidden',
-    zIndex: 2,
-    position: 'relative',
-  },
-  abilityTooltipHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-    paddingBottom: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#1e3a5f',
-  },
-  abilityTooltipIconContainer: {
-    marginRight: 10,
-  },
-  abilityTooltipIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: 8,
-  },
-  abilityTooltipIconFallback: {
-    width: 44,
-    height: 44,
-    borderRadius: 8,
-    backgroundColor: '#0f1724',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  abilityTooltipIconFallbackText: {
-    color: '#e6eef8',
-    fontWeight: '700',
-    fontSize: 20,
-  },
-  abilityTooltipTitle: {
-    flex: 1,
-    color: '#e6eef8',
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  abilityTooltipClose: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: '#1e3a5f',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  abilityTooltipCloseText: {
-    color: '#e6eef8',
-    fontSize: 20,
-    fontWeight: '700',
-    lineHeight: 24,
-  },
-  abilityTooltipBody: {
-    maxHeight: 500,
-    flexShrink: 1,
-  },
-  abilityTooltipSection: {
-    marginBottom: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#1e3a5f',
-    paddingBottom: 8,
-  },
-  abilityTooltipSectionHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 8,
-  },
-  abilityTooltipSectionTitle: {
-    color: '#7dd3fc',
-    fontSize: 14,
-    fontWeight: '700',
-  },
-  abilityTooltipSectionToggle: {
-    color: '#7dd3fc',
-    fontSize: 12,
-    fontWeight: '700',
-  },
-  abilityTooltipScrollContent: {
-    maxHeight: 200,
-    marginTop: 8,
-  },
-  abilityTooltipScales: {
-    color: '#7dd3fc',
-    fontSize: 13,
-    fontWeight: '600',
-    marginBottom: 10,
-  },
-  abilityTooltipDescription: {
-    color: '#cbd5e1',
-    fontSize: 13,
-    lineHeight: 18,
-    marginBottom: 12,
-  },
-  abilityTooltipStats: {
-    marginTop: 8,
-  },
-  abilityTooltipStatRow: {
-    flexDirection: 'row',
-    marginBottom: 6,
-    paddingBottom: 6,
-    borderBottomWidth: 1,
-    borderBottomColor: '#1e3a5f',
-  },
-  abilityTooltipStatLabel: {
-    color: '#94a3b8',
-    fontSize: 11,
-    fontWeight: '600',
-    minWidth: 100,
-  },
-  abilityTooltipStatValue: {
-    color: '#e6eef8',
-    fontSize: 11,
-    flex: 1,
-  },
   skinsHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -7008,56 +7222,6 @@ const styles = StyleSheet.create({
     color: '#7dd3fc',
     fontSize: 14,
     fontWeight: '700',
-  },
-  skinsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-    marginTop: 8,
-    marginBottom: 12,
-  },
-  skinButton: {
-    backgroundColor: '#1e3a5f',
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 6,
-    borderWidth: 1,
-    borderColor: '#1e3a5f',
-  },
-  skinButtonActive: {
-    backgroundColor: '#1e90ff',
-    borderColor: '#1e90ff',
-  },
-  skinButtonText: {
-    color: '#cbd5e1',
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  selectedSkinContainer: {
-    marginTop: 12,
-    padding: 12,
-    backgroundColor: '#0f1724',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#1e3a5f',
-    alignItems: 'center',
-  },
-  selectedSkinName: {
-    color: '#e6eef8',
-    fontSize: 16,
-    fontWeight: '700',
-    marginBottom: 12,
-  },
-  selectedSkinImage: {
-    width: '100%',
-    height: 200,
-    borderRadius: 8,
-    marginBottom: 8,
-  },
-  selectedSkinType: {
-    color: '#94a3b8',
-    fontSize: 12,
-    fontStyle: 'italic',
   },
   baseStatsContent: {
     marginTop: 12,
@@ -7225,82 +7389,170 @@ const styles = StyleSheet.create({
     backgroundColor: '#071024',
   },
   godPageHeader: {
-    paddingTop: 12,
-    paddingHorizontal: 16,
-    paddingBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#1e3a5f',
-    backgroundColor: '#0b1226',
-    zIndex: 10,
-    elevation: 5,
     width: '100%',
     position: 'relative',
+    zIndex: 10,
+    elevation: 4,
+    overflow: 'hidden',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'rgba(148, 163, 184, 0.32)',
+    backgroundColor: '#0a0f1a',
+  },
+  godPageHeaderContent: {
+    paddingTop: 2,
+    paddingHorizontal: 12,
+    paddingBottom: 6,
+  },
+  godPageHeaderBackdrop: {
+    backgroundColor: '#030712',
+    borderBottomColor: 'rgba(255, 255, 255, 0.12)',
+  },
+  godPageHeaderBackdropTint: {
+    backgroundColor: 'rgba(3, 7, 18, 0.48)',
   },
   backButton: {
-    marginBottom: 8,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    marginBottom: 0,
+    paddingVertical: 2,
+    paddingHorizontal: 0,
     alignSelf: 'flex-start',
   },
   backButtonText: {
-    color: '#1e90ff',
-    fontSize: 14,
+    color: '#38bdf8',
+    fontSize: 13,
     fontWeight: '600',
   },
-  godPageTitleContainer: {
+  godPageHero: {
+    width: '100%',
+    alignItems: 'stretch',
+  },
+  godPageHeroRow: {
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
+    gap: 10,
   },
-  godPageIconContainer: {
-    marginRight: 10,
+  godPageIconRing: {
+    width: 54,
+    height: 54,
+    borderRadius: 12,
+    borderWidth: 1,
+    overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
   },
-  godPageIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: 8,
+  godPageIconLarge: {
+    width: 52,
+    height: 52,
+    borderRadius: 11,
   },
-  godPageIconFallback: {
-    width: 44,
-    height: 44,
-    borderRadius: 8,
-    backgroundColor: '#0f1724',
+  godPageIconFallbackLarge: {
+    width: 52,
+    height: 52,
+    borderRadius: 11,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  godPageIconFallbackText: {
+  godPageIconFallbackTextLarge: {
     color: '#e6eef8',
-    fontWeight: '700',
-    fontSize: 20,
+    fontWeight: '800',
+    fontSize: 22,
   },
-  godPageTitleWrapper: {
+  godPageTitleBlock: {
     flex: 1,
-    marginLeft: 10,
+    minWidth: 0,
+    alignItems: 'stretch',
   },
   godPageTitle: {
-    color: '#e6eef8',
-    fontSize: 20,
+    color: '#f1f5f9',
+    fontSize: 17,
     fontWeight: '800',
-    marginBottom: 4,
-    letterSpacing: 0.5,
+    lineHeight: 21,
+    marginBottom: 2,
+    letterSpacing: 0.12,
+    textAlign: 'left',
   },
-  godPageSubtext: {
-    color: '#cbd5e1',
-    fontSize: 13,
+  godPageEpithet: {
+    color: '#94a3b8',
+    fontSize: 12,
     fontWeight: '500',
-    marginTop: 2,
+    lineHeight: 16,
     fontStyle: 'italic',
+    textAlign: 'left',
+    marginBottom: 5,
+    paddingHorizontal: 0,
   },
-  godPageMetaInfo: {
+  godPageChipRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    gap: 4,
+    marginTop: 0,
+  },
+  godPageSpecBlock: {
+    width: '100%',
+    marginTop: 5,
+  },
+  godPageSpecSectionLabel: {
+    fontSize: 9,
+    fontWeight: '700',
+    letterSpacing: 1.2,
+    textTransform: 'uppercase',
+    color: '#64748b',
+    marginBottom: 4,
+  },
+  godPageCombatChip: {
+    backgroundColor: 'rgba(12, 24, 42, 0.9)',
+    borderColor: 'rgba(125, 211, 252, 0.22)',
+  },
+  godPageChip: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 3,
+    paddingVertical: 2,
+    paddingHorizontal: 7,
+    borderRadius: 999,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(255, 255, 255, 0.14)',
+    maxWidth: '100%',
   },
-  /* Plain pantheon glyph next to meta text — no badge box (Builds cards keep the framed pin) */
-  godPageMetaPantheonIconOnly: {
-    width: 18,
-    height: 18,
-    marginRight: 6,
+  godPageChipMuted: {
+    backgroundColor: 'rgba(8, 12, 22, 0.88)',
+  },
+  godPageChipPantheonIcon: {
+    width: 12,
+    height: 12,
+    marginRight: 4,
+  },
+  godPageChipText: {
+    fontSize: 10,
+    fontWeight: '600',
+    letterSpacing: 0.12,
+    flexShrink: 1,
+    color: '#f1f5f9',
+  },
+  godPageMiniChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+    borderRadius: 999,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(255, 255, 255, 0.14)',
+    gap: 2,
+  },
+  godPageMiniChipIcon: {
+    width: 10,
+    height: 10,
+  },
+  godPageMiniChipText: {
+    fontSize: 9,
+    fontWeight: '600',
+    letterSpacing: 0.08,
+    color: '#e2e8f0',
+  },
+  godPageMiniChipMuted: {
+    backgroundColor: 'rgba(8, 12, 22, 0.82)',
   },
   pantheonFilterRowIcon: {
     width: 22,
@@ -7311,40 +7563,6 @@ const styles = StyleSheet.create({
     width: 14,
     height: 14,
     marginRight: 2,
-  },
-  godPageMetaText: {
-    fontSize: 11,
-    fontWeight: '500',
-    letterSpacing: 0.3,
-  },
-  godPageRolesContainer: {
-    marginTop: 4,
-  },
-  godPageRolesLabel: {
-    fontSize: 11,
-    fontWeight: '600',
-    marginBottom: 4,
-    letterSpacing: 0.3,
-  },
-  godPageRolesList: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-  },
-  godPageRoleItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 2,
-  },
-  godPageRoleIcon: {
-    width: 12,
-    height: 12,
-    marginRight: 4,
-  },
-  godPageRoleText: {
-    fontSize: 11,
-    fontWeight: '500',
-    letterSpacing: 0.3,
   },
   typeBadge: {
     alignSelf: 'flex-start',
@@ -7662,45 +7880,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
   },
-  // Ability page overlay styles
-  abilityPageOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#071024',
-    zIndex: 1000,
-  },
-  abilityPageContainer: {
-    flex: 1,
-    backgroundColor: '#071024',
-  },
-  abilityPageHeader: {
-    paddingTop: 20,
-    paddingHorizontal: 20,
-    paddingBottom: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#1e3a5f',
-    backgroundColor: '#0b1226',
-  },
-  abilityPageTitleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 12,
-  },
-  abilityPageTitle: {
-    flex: 1,
-    color: '#e6eef8',
-    fontSize: 20,
-    fontWeight: '700',
-    marginLeft: 12,
-  },
-  abilityPageBody: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 16,
-  },
   // Gamemodes styles
   gamemodesIntro: {
     padding: 20,
@@ -7961,7 +8140,6 @@ detailListItemText: {
   detailListItemIcon: {
     width: 20,
     height: 20,
-    resizeMode: 'contain',
     marginRight: 6,
     marginLeft: 0,
     flexShrink: 0,
