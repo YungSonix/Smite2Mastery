@@ -31,6 +31,7 @@ import {
 import { getGodSpecializationEntry } from '../lib/godSpecializations';
 import { AlignedBulletLines, tightenMultilineGameText } from '../lib/alignedBulletText';
 import SkinShowcasePanel from '../lib/SkinShowcasePanel';
+import { getVisibleSkinKeys } from '../lib/skinShowcaseHelpers';
 import { REMOTE_BASE_URLS } from '../config';
 
 // Import supabase lazily to avoid module load errors on mobile
@@ -3704,10 +3705,12 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                       setSkinsExpanded(false);
                       setSelectedSkin(null);
                     } else {
-                      const keys = Object.keys(selectedGod.skins);
+                      const keys = getVisibleSkinKeys(selectedGod.skins);
                       setSkinsExpanded(true);
                       setSelectedSkin((prev) =>
-                        prev && selectedGod.skins[prev] ? prev : keys[0]
+                        prev && selectedGod.skins[prev] && !selectedGod.skins[prev].hideFromSkinList
+                          ? prev
+                          : keys[0] || null
                       );
                     }
                   }}
@@ -3719,7 +3722,8 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                 </TouchableOpacity>
                 {skinsExpanded &&
                   selectedSkin &&
-                  selectedGod.skins[selectedSkin] && (
+                  selectedGod.skins[selectedSkin] &&
+                  !selectedGod.skins[selectedSkin].hideFromSkinList && (
                     <SkinShowcasePanel
                       godIconPath={
                         selectedGod.icon ||
@@ -3730,7 +3734,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         null
                       }
                       skinsRecord={selectedGod.skins}
-                      skinKeysOrdered={Object.keys(selectedGod.skins)}
+                      skinKeysOrdered={getVisibleSkinKeys(selectedGod.skins)}
                       selectedSkinKey={selectedSkin}
                       onSelectSkinKey={(key) => setSelectedSkin(key)}
                       onRequestClose={() => {

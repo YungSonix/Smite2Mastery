@@ -1,4 +1,4 @@
-import { ICON_PATHS } from '../config';
+import { ICON_PATHS, REMOTE_BASE_URLS } from '../config';
 import { ROLE_ICONS, PANTHEON_ICON_FILES, PANTHEON_BACKDROP_FILES } from '../lib/imageGrabber';
 
 const ITEM_ICONS_PATH = ICON_PATHS.ITEM_ICONS;
@@ -6,8 +6,20 @@ const ITEM_ICONS_FILLED_PATH = ICON_PATHS.ITEM_ICONS_FILLED;
 const GOD_ICONS_PATH = ICON_PATHS.GOD_ICONS;
 const SKINS_PATH = ICON_PATHS.SKINS;
 
+/** Repo-relative paths under `app/data/NewGodSkins/` (PNG) — resolved to GitHub raw URLs. */
+const NEW_GOD_SKINS_PREFIX = 'app/data/NewGodSkins/';
+
 // Stable `{ uri }` instances so expo-image does not treat every render as a new source (avoids refetch/flash).
 const uriSourceCache = new Map();
+
+function createFullUriSource(uri) {
+  let cached = uriSourceCache.get(uri);
+  if (!cached) {
+    cached = { uri, cacheKey: uri };
+    uriSourceCache.set(uri, cached);
+  }
+  return cached;
+}
 
 function createImageUri(basePath, filename) {
   const encodedFilename = encodeURIComponent(filename);
@@ -223,13 +235,29 @@ export function getWallpaperByGodName(godName) {
 }
 
 // Skin/wallpaper lookup - loads from GitHub repo
-// Skins are in app/data/Icons/Wallpapers folder
+// Skins are in app/data/Icons/Wallpapers folder, or `app/data/NewGodSkins/...` PNGs on master.
 export function getSkinImage(skinPath) {
   if (!skinPath) return null;
-  
+
+  const raw = String(skinPath).trim().replace(/\\/g, '/');
+  if (/^https?:\/\//i.test(raw)) {
+    return createFullUriSource(raw);
+  }
+
+  const normalized = raw.replace(/^\/+/, '');
+  if (normalized.toLowerCase().startsWith(NEW_GOD_SKINS_PREFIX.toLowerCase())) {
+    const uri =
+      `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/` +
+      normalized
+        .split('/')
+        .map((seg) => encodeURIComponent(seg))
+        .join('/');
+    return createFullUriSource(uri);
+  }
+
   // Skin paths are like: /icons/Wallpapers/Achilles.webp
   // Extract just the filename (e.g., "Achilles.webp")
-  const filename = skinPath.split('/').pop() || '';
+  const filename = raw.split('/').pop() || '';
   if (!filename) return null;
   
   // Try both lowercase and original case for GitHub URLs

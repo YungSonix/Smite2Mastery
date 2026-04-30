@@ -79,15 +79,25 @@ export default function SkinShowcasePanel({
   const [mainView, setMainView] = useState('card');
   const [variantIdx, setVariantIdx] = useState(0);
 
+  const godFallbackSource = useMemo(() => (godIconPath ? getLocalGodAsset(godIconPath) : null), [godIconPath]);
+
+  const baseSkin = skinsRecord && selectedSkinKey ? skinsRecord[selectedSkinKey] : null;
+  /** Prism / style overlays: index 0 in the bar is always `baseSkin`; index 1+ merges `variantOverlays[idx - 1]`. */
+  const variantOverlays = useMemo(() => parseSkinVariants(baseSkin), [baseSkin]);
+  const prismSlotCount = 1 + variantOverlays.length;
+  const mergedSkin = useMemo(() => {
+    if (!baseSkin) return {};
+    if (variantIdx === 0) return baseSkin;
+    return mergeSkinVariant(baseSkin, variantOverlays[variantIdx - 1]);
+  }, [baseSkin, variantOverlays, variantIdx]);
+
   useEffect(() => {
     setVariantIdx(0);
   }, [selectedSkinKey]);
 
-  const godFallbackSource = useMemo(() => (godIconPath ? getLocalGodAsset(godIconPath) : null), [godIconPath]);
-
-  const baseSkin = skinsRecord && selectedSkinKey ? skinsRecord[selectedSkinKey] : null;
-  const variants = useMemo(() => parseSkinVariants(baseSkin), [baseSkin]);
-  const mergedSkin = useMemo(() => mergeSkinVariant(baseSkin, variants[variantIdx]), [baseSkin, variants, variantIdx]);
+  useEffect(() => {
+    if (variantIdx >= prismSlotCount) setVariantIdx(0);
+  }, [variantIdx, prismSlotCount]);
 
   const cardPath = getSkinCardArtPath(mergedSkin);
   const modelPath = getSkinModelViewPath(mergedSkin);
@@ -172,21 +182,47 @@ export default function SkinShowcasePanel({
           </TouchableOpacity>
         </View>
 
-        {variants.length > 1 ? (
+        {variantOverlays.length > 0 ? (
           <View style={styles.variantBar}>
-            <Text style={styles.variantBarLabel}>Styles</Text>
+            <Text style={styles.variantBarLabel}>
+              {baseSkin?.variantBarLabel || baseSkin?.variant_bar_label || 'Prisms'}
+            </Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.variantChips}>
-              {variants.map((_, i) => (
-                <TouchableOpacity
-                  key={`variant-${i}`}
-                  style={[styles.variantChip, i === variantIdx && styles.variantChipActive]}
-                  onPress={() => setVariantIdx(i)}
-                  accessibilityRole="button"
-                  accessibilityLabel={`Style ${i + 1}`}
-                >
-                  <Text style={[styles.variantChipText, i === variantIdx && styles.variantChipTextActive]}>{i + 1}</Text>
-                </TouchableOpacity>
-              ))}
+              {Array.from({ length: prismSlotCount }, (_, i) => {
+                const slotSkin =
+                  i === 0 ? baseSkin : mergeSkinVariant(baseSkin, variantOverlays[i - 1]);
+                const thumbPath = getSkinThumbPath(slotSkin);
+                const resolvedThumb = thumbPath ? getSkinImage(thumbPath) : null;
+                const thumbSrc = pickImageSource(resolvedThumb) || godFallbackSource;
+                const label =
+                  i === 0
+                    ? 'Default'
+                    : String(variantOverlays[i - 1]?.name || `Prism ${i}`).trim() || `Prism ${i}`;
+                return (
+                  <TouchableOpacity
+                    key={`prism-slot-${i}`}
+                    style={[styles.variantPrismRing, i === variantIdx && styles.variantPrismRingActive]}
+                    onPress={() => setVariantIdx(i)}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${label}${i === variantIdx ? ', selected' : ''}`}
+                    accessibilityState={{ selected: i === variantIdx }}
+                  >
+                    {thumbSrc ? (
+                      <Image
+                        source={thumbSrc}
+                        style={styles.variantPrismImage}
+                        contentFit="cover"
+                        cachePolicy="memory-disk"
+                        transition={0}
+                      />
+                    ) : (
+                      <View style={[styles.variantPrismImage, styles.variantPrismFallback]}>
+                        <Text style={styles.variantPrismFallbackText}>{label.charAt(0)}</Text>
+                      </View>
+                    )}
+                  </TouchableOpacity>
+                );
+              })}
             </ScrollView>
           </View>
         ) : null}
@@ -447,6 +483,44 @@ const styles = StyleSheet.create({
   },
   variantChipTextActive: {
     color: ACCENT_SKY,
+  },
+  variantPrismRing: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    borderWidth: 2,
+    borderColor: PANEL_BORDER,
+    padding: 2,
+    backgroundColor: '#0f1724',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
+  variantPrismRingActive: {
+    borderColor: '#d4a24a',
+    borderWidth: 3,
+    padding: 1,
+    shadowColor: '#d4a24a',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.45,
+    shadowRadius: 6,
+    elevation: 4,
+  },
+  variantPrismImage: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    overflow: 'hidden',
+    backgroundColor: '#030712',
+  },
+  variantPrismFallback: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  variantPrismFallbackText: {
+    color: ACCENT_SKY,
+    fontSize: 14,
+    fontWeight: '800',
   },
   pickerLabel: {
     marginTop: 14,
