@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { Image } from 'expo-image';
 import { useScreenDimensions } from '../hooks/useScreenDimensions';
@@ -65,8 +65,7 @@ function ShowcaseHeroImage({ path, godFallbackUri, style, accessibilityLabel }) 
 }
 
 /**
- * Inline skin showcase (strip + hero + footer) for god detail — matches kit-tooltip chrome.
- * Optional `onRequestClose` renders corner × (e.g. collapse Skins section).
+ * God-detail skin preview — layout tuned to avoid wiki-style patterns (picker-under-hero, segments, name header).
  */
 export default function SkinShowcasePanel({
   godIconPath,
@@ -101,85 +100,37 @@ export default function SkinShowcasePanel({
 
   const mediaHeight = Math.min(340, Math.round(SCREEN_HEIGHT * 0.42));
 
-  const toggleMainView = useCallback(() => {
-    setMainView((v) => (v === 'card' ? 'model' : 'card'));
-  }, []);
+  const displayName = mergedSkin?.name || selectedSkinKey || 'Skin';
+  const typeLine =
+    mergedSkin && mergedSkin.type && String(mergedSkin.type).trim()
+      ? String(mergedSkin.type).trim()
+      : null;
 
   if (!skinsRecord || !skinKeysOrdered?.length || !selectedSkinKey || !baseSkin) return null;
 
   return (
     <View style={[styles.embedWrap, onRequestClose ? styles.embedWrapWithClose : null]}>
       <View style={styles.sheet}>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.stripScroll}
-          contentContainerStyle={styles.stripContent}
-        >
-          {skinKeysOrdered.map((key) => {
-            const s = skinsRecord[key];
-            const thumbPath = getSkinThumbPath(s);
-            const selected = key === selectedSkinKey;
-            const resolvedThumb = thumbPath ? getSkinImage(thumbPath) : null;
-            const thumbSrc = pickImageSource(resolvedThumb) || godFallbackSource;
-
-            return (
-              <TouchableOpacity
-                key={key}
-                style={[styles.stripItem, selected && styles.stripItemSelected]}
-                onPress={() => onSelectSkinKey(key)}
-                accessibilityRole="button"
-                accessibilityLabel={`Skin ${s?.name || key}${selected ? ', selected' : ''}`}
-              >
-                {thumbSrc ? (
-                  <Image
-                    source={thumbSrc}
-                    style={styles.stripImage}
-                    contentFit="cover"
-                    cachePolicy="memory-disk"
-                    transition={0}
-                  />
-                ) : (
-                  <View style={[styles.stripImage, styles.stripFallback]}>
-                    <Text style={styles.stripFallbackText}>{(s?.name || key || '?').charAt(0)}</Text>
-                  </View>
-                )}
-              </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
+        <View style={styles.previewHeader}>
+          <View style={styles.previewHeaderText}>
+            <Text style={styles.previewKicker}>Skin preview</Text>
+            <Text style={styles.previewTitle} numberOfLines={2}>
+              {displayName}
+            </Text>
+            {typeLine ? (
+              <Text style={styles.previewMeta} numberOfLines={1}>
+                {typeLine}
+              </Text>
+            ) : null}
+          </View>
+        </View>
 
         <View style={[styles.mediaBlock, { height: mediaHeight }]}>
-          <TouchableOpacity
-            style={styles.viewModelBtn}
-            onPress={toggleMainView}
-            accessibilityRole="button"
-            accessibilityLabel={mainView === 'card' ? 'View model or gameplay image' : 'View card art'}
-          >
-            <Text style={styles.viewModelBtnText}>{mainView === 'card' ? 'VIEW MODEL' : 'VIEW CARD'}</Text>
-          </TouchableOpacity>
-
-          {variants.length > 1 ? (
-            <View style={styles.variantRow}>
-              {variants.map((_, i) => (
-                <TouchableOpacity
-                  key={`variant-${i}`}
-                  style={[styles.variantDotOuter, i === variantIdx && styles.variantDotOuterActive]}
-                  onPress={() => setVariantIdx(i)}
-                  accessibilityRole="button"
-                  accessibilityLabel={`Variant ${i + 1}`}
-                >
-                  <View style={[styles.variantDotInner, i === variantIdx && styles.variantDotInnerActive]} />
-                </TouchableOpacity>
-              ))}
-            </View>
-          ) : null}
-
           <View style={styles.heroInner}>
             {!heroPath || modelPlaceholder ? (
               <View style={styles.placeholderBox}>
                 <Text style={styles.placeholderTitle}>
-                  {modelPlaceholder ? 'Model / gameplay' : 'Card art'}
+                  {modelPlaceholder ? 'Loadout preview' : 'Splash art'}
                 </Text>
                 <Text style={styles.placeholderHint}>
                   {modelPlaceholder
@@ -193,17 +144,96 @@ export default function SkinShowcasePanel({
                 path={heroPath}
                 godFallbackUri={godFallbackSource}
                 style={styles.heroImage}
-                accessibilityLabel={`${baseSkin?.name || selectedSkinKey} ${mainView === 'model' ? 'model' : 'card art'}`}
+                accessibilityLabel={`${displayName} ${mainView === 'model' ? 'loadout' : 'splash'}`}
               />
             )}
           </View>
         </View>
 
-        <View style={styles.footer}>
-          <Text style={styles.skinTitle}>
-            {(mergedSkin?.name || selectedSkinKey || 'Skin').toUpperCase()}
-          </Text>
+        <View style={styles.segmentTrack}>
+          <TouchableOpacity
+            style={[styles.segmentBtn, mainView === 'card' && styles.segmentBtnActive]}
+            onPress={() => setMainView('card')}
+            accessibilityRole="button"
+            accessibilityState={{ selected: mainView === 'card' }}
+            accessibilityLabel="Splash art"
+          >
+            <Text style={[styles.segmentBtnText, mainView === 'card' && styles.segmentBtnTextActive]}>Splash</Text>
+          </TouchableOpacity>
+          <View style={styles.segmentDivider} />
+          <TouchableOpacity
+            style={[styles.segmentBtn, mainView === 'model' && styles.segmentBtnActive]}
+            onPress={() => setMainView('model')}
+            accessibilityRole="button"
+            accessibilityState={{ selected: mainView === 'model' }}
+            accessibilityLabel="Loadout preview"
+          >
+            <Text style={[styles.segmentBtnText, mainView === 'model' && styles.segmentBtnTextActive]}>Loadout</Text>
+          </TouchableOpacity>
         </View>
+
+        {variants.length > 1 ? (
+          <View style={styles.variantBar}>
+            <Text style={styles.variantBarLabel}>Styles</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.variantChips}>
+              {variants.map((_, i) => (
+                <TouchableOpacity
+                  key={`variant-${i}`}
+                  style={[styles.variantChip, i === variantIdx && styles.variantChipActive]}
+                  onPress={() => setVariantIdx(i)}
+                  accessibilityRole="button"
+                  accessibilityLabel={`Style ${i + 1}`}
+                >
+                  <Text style={[styles.variantChipText, i === variantIdx && styles.variantChipTextActive]}>{i + 1}</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        ) : null}
+
+        <Text style={styles.pickerLabel}>Other skins</Text>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.pickerScroll}
+          contentContainerStyle={styles.pickerContent}
+        >
+          {skinKeysOrdered.map((key) => {
+            const s = skinsRecord[key];
+            const label = s?.name || key;
+            const thumbPath = getSkinThumbPath(s);
+            const selected = key === selectedSkinKey;
+            const resolvedThumb = thumbPath ? getSkinImage(thumbPath) : null;
+            const thumbSrc = pickImageSource(resolvedThumb) || godFallbackSource;
+
+            return (
+              <TouchableOpacity
+                key={key}
+                style={[styles.skinPill, selected && styles.skinPillSelected]}
+                onPress={() => onSelectSkinKey(key)}
+                accessibilityRole="button"
+                accessibilityLabel={`Skin ${label}${selected ? ', selected' : ''}`}
+              >
+                {thumbSrc ? (
+                  <Image
+                    source={thumbSrc}
+                    style={styles.skinPillThumb}
+                    contentFit="cover"
+                    cachePolicy="memory-disk"
+                    transition={0}
+                  />
+                ) : (
+                  <View style={[styles.skinPillThumb, styles.skinPillThumbFallback]}>
+                    <Text style={styles.skinPillThumbLetter}>{label.charAt(0)}</Text>
+                  </View>
+                )}
+                <Text style={[styles.skinPillLabel, selected && styles.skinPillLabelSelected]} numberOfLines={1}>
+                  {label}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
       </View>
 
       {onRequestClose ? (
@@ -239,7 +269,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: BORDER_CYAN,
-    paddingTop: 12,
+    paddingTop: 10,
     paddingHorizontal: 12,
     paddingBottom: 14,
     overflow: 'hidden',
@@ -276,112 +306,52 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     marginTop: -2,
   },
-  stripScroll: {
-    flexGrow: 0,
-    marginBottom: 12,
-    maxHeight: 52,
+  previewHeader: {
+    marginBottom: 10,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: PANEL_BORDER,
   },
-  stripContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    paddingHorizontal: 4,
-    minWidth: '100%',
+  previewHeaderText: {
+    paddingRight: 8,
   },
-  stripItem: {
-    width: 44,
-    height: 44,
-    borderRadius: 8,
-    overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: PANEL_BORDER,
-    backgroundColor: PANEL_BG,
-  },
-  stripItemSelected: {
-    borderColor: ACCENT_SKY,
-    borderWidth: 2,
-  },
-  stripImage: {
-    width: '100%',
-    height: '100%',
-  },
-  stripFallback: {
-    backgroundColor: PANEL_BG,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  stripFallbackText: {
-    color: ACCENT_SKY,
+  previewKicker: {
+    color: LABEL_SOFT,
+    fontSize: 10,
     fontWeight: '800',
-    fontSize: 16,
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+    marginBottom: 4,
+  },
+  previewTitle: {
+    color: TEXT_PRIMARY,
+    fontSize: 18,
+    fontWeight: '700',
+    lineHeight: 22,
+  },
+  previewMeta: {
+    marginTop: 4,
+    color: TEXT_MUTED,
+    fontSize: 12,
+    fontWeight: '600',
   },
   mediaBlock: {
     width: '100%',
     backgroundColor: '#030712',
     borderWidth: 1,
     borderColor: PANEL_BORDER,
-    borderRadius: 8,
-    position: 'relative',
+    borderTopLeftRadius: 4,
+    borderTopRightRadius: 4,
+    borderBottomLeftRadius: 14,
+    borderBottomRightRadius: 14,
     overflow: 'hidden',
-  },
-  viewModelBtn: {
-    position: 'absolute',
-    top: 8,
-    right: 8,
-    zIndex: 5,
-    paddingVertical: 5,
-    paddingHorizontal: 8,
-    borderWidth: 1,
-    borderColor: PANEL_BORDER,
-    borderRadius: 8,
-    backgroundColor: PANEL_BG,
-  },
-  viewModelBtnText: {
-    color: ACCENT_SKY,
-    fontSize: 9,
-    fontWeight: '800',
-    letterSpacing: 0.5,
-  },
-  variantRow: {
-    position: 'absolute',
-    bottom: 10,
-    left: 10,
-    zIndex: 5,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  variantDotOuter: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    borderWidth: 1,
-    borderColor: PANEL_BORDER,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(8, 12, 22, 0.9)',
-  },
-  variantDotOuterActive: {
-    borderColor: ACCENT_SKY,
-    borderWidth: 2,
-    transform: [{ scale: 1.08 }],
-  },
-  variantDotInner: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: '#334155',
-  },
-  variantDotInnerActive: {
-    backgroundColor: ACCENT_SKY,
   },
   heroInner: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 8,
-    paddingVertical: 36,
+    paddingHorizontal: 6,
+    paddingVertical: 28,
   },
   heroImage: {
     width: '100%',
@@ -397,7 +367,7 @@ const styles = StyleSheet.create({
     color: LABEL_SOFT,
     fontSize: 12,
     fontWeight: '800',
-    letterSpacing: 0.6,
+    letterSpacing: 0.4,
     marginBottom: 8,
     textAlign: 'center',
   },
@@ -407,18 +377,138 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     textAlign: 'center',
   },
-  footer: {
+  segmentTrack: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
     marginTop: 12,
-    paddingTop: 12,
-    borderTopWidth: 1,
-    borderTopColor: PANEL_BORDER,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: PANEL_BORDER,
+    backgroundColor: PANEL_BG,
+    overflow: 'hidden',
+  },
+  segmentBtn: {
+    flex: 1,
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  segmentBtnActive: {
+    backgroundColor: 'rgba(125, 211, 252, 0.12)',
+  },
+  segmentDivider: {
+    width: 1,
+    backgroundColor: PANEL_BORDER,
+  },
+  segmentBtnText: {
+    color: TEXT_MUTED,
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  segmentBtnTextActive: {
+    color: ACCENT_SKY,
+  },
+  variantBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 12,
+    gap: 10,
+  },
+  variantBarLabel: {
+    color: TEXT_MUTED,
+    fontSize: 11,
+    fontWeight: '700',
+    width: 52,
+  },
+  variantChips: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingRight: 4,
+  },
+  variantChip: {
+    minWidth: 36,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: PANEL_BORDER,
+    backgroundColor: '#0f1724',
     alignItems: 'center',
   },
-  skinTitle: {
-    color: TEXT_PRIMARY,
-    fontSize: 17,
+  variantChipActive: {
+    borderColor: ACCENT_SKY,
+    backgroundColor: 'rgba(125, 211, 252, 0.1)',
+  },
+  variantChipText: {
+    color: TEXT_MUTED,
+    fontSize: 12,
     fontWeight: '800',
-    letterSpacing: 1,
-    textAlign: 'center',
+  },
+  variantChipTextActive: {
+    color: ACCENT_SKY,
+  },
+  pickerLabel: {
+    marginTop: 14,
+    marginBottom: 8,
+    color: TEXT_MUTED,
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 0.3,
+  },
+  pickerScroll: {
+    flexGrow: 0,
+  },
+  pickerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingBottom: 2,
+  },
+  skinPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    maxWidth: 200,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    paddingRight: 12,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: PANEL_BORDER,
+    backgroundColor: '#0f1724',
+    gap: 8,
+  },
+  skinPillSelected: {
+    borderColor: ACCENT_SKY,
+    backgroundColor: 'rgba(125, 211, 252, 0.08)',
+  },
+  skinPillThumb: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: PANEL_BORDER,
+  },
+  skinPillThumbFallback: {
+    backgroundColor: PANEL_BG,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  skinPillThumbLetter: {
+    color: ACCENT_SKY,
+    fontSize: 12,
+    fontWeight: '800',
+  },
+  skinPillLabel: {
+    flex: 1,
+    flexShrink: 1,
+    color: TEXT_MUTED,
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  skinPillLabelSelected: {
+    color: TEXT_PRIMARY,
+    fontWeight: '700',
   },
 });
