@@ -26,6 +26,7 @@ import {
   STORAGE_KEYS,
 } from '../config';
 import { normalizeBuildsGod, flattenBuildsGods } from '../lib/normalizeBuildsGod';
+import { AlignedBulletLines } from '../lib/alignedBulletText';
 import { getLocalGodAsset, getLocalItemIcon, getPantheonBorderColor, getPantheonIcon, getRoleIcon } from './localIcons';
 // Lazy load page components to reduce initial bundle size
 const HomePage = lazy(() => import('./home'));
@@ -82,6 +83,23 @@ const getSupabase = () => {
     };
     supabaseInitialized = true;
     return supabase;
+  }
+};
+
+/** RN/Expo often omits object details after `console.error('…', err)` — use this for one readable line. */
+const formatSupabaseError = (e) => {
+  if (e == null) return 'unknown error';
+  if (typeof e === 'string') return e;
+  const parts = [
+    e.message || e.error_description || e.msg,
+    e.code ? `[${e.code}]` : null,
+    e.details ? String(e.details).slice(0, 200) : null,
+  ].filter(Boolean);
+  if (parts.length) return parts.join(' ');
+  try {
+    return JSON.stringify(e);
+  } catch {
+    return String(e);
   }
 };
 
@@ -304,11 +322,23 @@ function BuildsPage({
               .eq('username', user)
               .eq('status', 'approved')
               .limit(1);
-            
+
+            if (approvedError) {
+              const cachedStatus = await storage.getItem(`certificationStatus_${user}`);
+              if (cachedStatus) setCertificationRequestStatus(cachedStatus);
+              if (__DEV__) {
+                console.warn(
+                  '[certification] could not query certification_requests:',
+                  formatSupabaseError(approvedError)
+                );
+              }
+              return;
+            }
+
             // If user has an approved request, they're approved regardless of newer pending requests
             // Supabase returns an array, so check if array has items
-            const hasApprovedRequest = !approvedError && approvedData && (
-              (Array.isArray(approvedData) && approvedData.length > 0) || 
+            const hasApprovedRequest = approvedData && (
+              (Array.isArray(approvedData) && approvedData.length > 0) ||
               (approvedData && approvedData.status === 'approved')
             );
             
@@ -345,7 +375,12 @@ function BuildsPage({
                 if (cachedStatus) {
                   setCertificationRequestStatus(cachedStatus);
                 }
-                console.error('Error checking certification status:', error);
+                if (__DEV__) {
+                  console.warn(
+                    '[certification] status check failed (using cache if any):',
+                    formatSupabaseError(error)
+                  );
+                }
               } else {
                 // No rows found - check local storage as fallback
                 const cachedStatus = await storage.getItem(`certificationStatus_${user}`);
@@ -356,7 +391,9 @@ function BuildsPage({
             }
           }
         } catch (err) {
-          console.error('Exception checking certification status:', err);
+          if (__DEV__) {
+            console.warn('[certification] exception:', formatSupabaseError(err));
+          }
         }
       }
     };
@@ -4933,31 +4970,27 @@ function BuildsPage({
                   bounces={true}
                   nestedScrollEnabled={true}
                 >
-                  {selectedAbility.ability && selectedAbility.ability.scales && (
-                    <View style={styles.modalSection}>
-                      <Text style={styles.modalSectionTitle}>Scales</Text>
-                      <ScrollView 
-                        nestedScrollEnabled={true}
-                        showsVerticalScrollIndicator={true}
-                        style={{ maxHeight: 200 }}
-                      >
-                        <Text style={styles.modalScales}>{String(selectedAbility.ability.scales)}</Text>
-                      </ScrollView>
-                    </View>
-                  )}
-                  
-                  {(selectedAbility.ability && (selectedAbility.ability.shortDesc || selectedAbility.ability.description)) && (
-                    <View style={styles.modalSection}>
-                      <Text style={styles.modalSectionTitle}>Description</Text>
-                      <ScrollView 
-                        nestedScrollEnabled={true}
-                        showsVerticalScrollIndicator={true}
-                        style={{ maxHeight: 300 }}
-                      >
-                        <Text style={styles.modalDescription}>
-                          {selectedAbility.ability.shortDesc || selectedAbility.ability.description}
-                        </Text>
-                      </ScrollView>
+                  {selectedAbility.ability &&
+                    ((selectedAbility.ability.shortDesc || selectedAbility.ability.description) ||
+                      selectedAbility.ability.scales) && (
+                    <View style={styles.modalAbilityNarrative}>
+                      {(selectedAbility.ability.shortDesc || selectedAbility.ability.description) ? (
+                        <AlignedBulletLines
+                          text={selectedAbility.ability.shortDesc || selectedAbility.ability.description}
+                          textStyle={styles.modalAbilityDescription}
+                          bulletMarkWidth={14}
+                        />
+                      ) : null}
+                      {selectedAbility.ability.scales ? (
+                        <>
+                          <Text style={styles.modalAbilityScalesLabel}>Scales</Text>
+                          <AlignedBulletLines
+                            text={String(selectedAbility.ability.scales)}
+                            textStyle={styles.modalAbilityScalesBody}
+                            bulletMarkWidth={13}
+                          />
+                        </>
+                      ) : null}
                     </View>
                   )}
 
@@ -6411,6 +6444,29 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     marginBottom: 8,
+  },
+  modalAbilityNarrative: {
+    marginBottom: 12,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1e3a5f',
+  },
+  modalAbilityDescription: {
+    color: '#cbd5e1',
+    fontSize: 14,
+    lineHeight: 18,
+  },
+  modalAbilityScalesLabel: {
+    marginTop: 6,
+    color: '#7dd3fc',
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  modalAbilityScalesBody: {
+    marginTop: 2,
+    color: '#94a3b8',
+    fontSize: 13,
+    lineHeight: 17,
   },
   modalScales: {
     color: '#cbd5e1',

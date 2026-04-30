@@ -1,0 +1,79 @@
+Achilles: Tank, Brawler, Lockdown, Execute | Melee | Physical
+Agni: Nuker, Burst Damage, Sniper | Ranged | Magical
+Aladdin: Slayer, Mobility, Burst Damage | Melee | Magical
+Amaterasu: Tank, Buffs, Brawler | Melee | Physical
+Anhur: Sharpshooter | Ranged | Physical
+Anubis: Nuker | Ranged | Magical
+Aphrodite: Buffs, Healing, Sustain | Ranged | Magical
+Apollo: Global, Constant Damage | Ranged | Physical
+Ares: Tank, Buffs, Lockdown | Melee | Magical
+Artemis: Sharpshooter, Lockdown | Ranged | Physical
+Artio: Brawler, Lockdown | Melee | Magical
+Athena: Tank, Lockdown, Global | Melee | Magical
+Awilix: Slayer, Mobile | Melee | Physical
+Bacchus: Tank, Lockdown, Mobile | Melee | Magical
+Baron Samedi: Healing | Ranged | Magical
+Bellona: Tank, Brawler, Lockdown | Melee | Physical
+Cabrakan: Tank, Area Control, Lockdown | Melee | Magical
+Cerberus: Tank, Area Control, Pressure | Melee | Magical
+Chaac: Tank, Nuker, Lockdown | Melee | Physical
+Charon: Tank, Global, Mobility | Ranged | Magical
+Cernunnos: Sharpshooter, Nuker, Lockdown | Ranged | Physical
+Chiron: Sharpshooter, Nuker | Ranged | Physical
+Cupid: Healing | Ranged | Physical
+Da Ji: Mobility, Burst Damage | Melee | Physical
+Danzaburou: Sharpshooter, Nuker, Lockdown, Slayer | Ranged | Physical
+Discordia: Nuker, Burst Damage | Ranged | Magical
+Eset: Nuker, Buffs, Burst Damage | Ranged | Magical
+Fenrir: Slayer, Lockdown, Mobile | Melee | Physical
+Ganesha: Tank, Buffs, Area Control | Melee | Magical
+Geb: Tank, Area Control | Melee | Magical
+Gilgamesh: Brawler, Constant Damage | Melee | Physical
+Guan Yu: Brawler, Pressure, Healing | Melee | Physical
+Hades: Nuker, Lockdown, Mobile | Ranged | Magical
+Hecate: Nuker, Buffs, Lockdown | Ranged | Magical
+Hercules: Tank, Brawler, Lockdown | Melee | Physical
+Hua Mulan: Tank, Brawler, Pressure | Melee | Physical
+Hou Yi: Constant Damage | Ranged | Physical
+Hun Batz: Slayer, Mobile | Melee | Physical
+Izanami: Constant Damage, Pressure, Burst Damage | Ranged | Physical
+Ishtar: Sharpshooter, Constant Damage | Ranged | Physical
+Janus: Burst Damage | Ranged | Magical
+Jing Wei: Sharpshooter, Mobile | Ranged | Physical
+Jormungandr: Tank, Area Control, Global, Constant Damage | Melee | Magical
+Kali: Pressure, Constant Damage, Sustain | Melee | Physical
+Khepri: Tank, Buffs, Lockdown | Melee | Magical
+Kukulkan: Nuker | Ranged | Magical
+Loki: Slayer, Stealth | Melee | Physical
+Medusa: Lockdown, Pressure, Burst Damage | Ranged | Physical
+Mercury: Mobile, Burst Damage | Melee | Physical
+Merlin: Nuker, Burst Damage | Ranged | Magical
+Morgan Le Fay: Nuker, Burst Damage | Ranged | Magical
+Nemesis: Constant Damage, Mobile | Melee | Physical
+Neith: Sharpshooter, Nuker, Global | Ranged | Physical
+Nu Wa: Nuker, Global, Stealth | Ranged | Magical
+Nut: Sharpshooter, Nuker, Area Control | Ranged | Physical
+Odin: Tank, Mobile | Melee | Physical
+Osiris: Brawler, Constant Damage | Melee | Physical
+Pele: Slayer, Mobile, Burst Damage | Melee | Physical
+Poseidon: Nuker, Area Control | Ranged | Magical
+Princess Bari: Sharpshooter, Constant Damage, Mobile | Ranged | Physical
+Ra: Buffs, Healing, Sniper | Ranged | Magical
+Rama: Sharpshooter, Global, Sniper | Ranged | Physical
+Ratatoskr: Slayer, Global, Mobile | Melee | Physical
+Scylla: Nuker, Burst Damage | Ranged | Magical
+Sobek: Tank, Lockdown, Execute | Melee | Magical
+Sol: Sharpshooter, Nuker | Ranged | Magical
+Sun Wukong: Pressure | Melee | Physical
+Susano: Slayer, Lockdown, Mobile | Melee | Physical
+Sylvanus: Tank, Healing | Ranged | Magical
+The Morrigan: Nuker, Slayer, Stealth | Ranged | Magical
+Thanatos: Slayer, Global, Execute, Mobile | Melee | Physical
+Thor: Slayer, Global, Mobile | Melee | Physical
+Tsukuyomi: Slayer, Constant Damage, Mobile | Melee | Physical
+Ullr: Lockdown, Pressure, Burst Damage | Ranged | Physical
+Vulcan: Nuker, Pressure, Burst Damage | Ranged | Magical
+Xbalanque: Global, Constant Damage, Mobile | Ranged | Physical
+Yemoja: Tank, Healing | Ranged | Magical
+Ymir: Tank, Brawler, Lockdown | Melee | Magical
+Zeus: Sharpshooter, Nuker | Ranged | Magical

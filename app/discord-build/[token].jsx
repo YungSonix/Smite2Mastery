@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, Platform, Pressable } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, Platform, Pressable, Dimensions } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Image } from 'expo-image';
 import CustomBuildPage from '../custombuild';
@@ -63,6 +63,57 @@ function getHoverStatColor(statName) {
   return '#e2e8f0';
 }
 
+const LEVEL_BUTTONS = [1, 2, 3, 4, 5];
+const ITEM_TOOLTIP_WIDTH = 286;
+const ABILITY_TOOLTIP_WIDTH = 320;
+
+function toLevelValueArray(raw) {
+  if (Array.isArray(raw)) return raw.filter((v) => v !== null && v !== undefined && String(v).trim() !== '');
+  if (raw === null || raw === undefined) return [];
+  const text = String(raw).trim();
+  if (!text) return [];
+  if (text.includes('/')) {
+    return text
+      .split('/')
+      .map((part) => part.trim())
+      .filter(Boolean);
+  }
+  return [raw];
+}
+
+function getLevelValue(raw, levelIndex) {
+  const arr = toLevelValueArray(raw);
+  if (arr.length === 0) return null;
+  const idx = Math.max(0, Math.min(levelIndex, arr.length - 1));
+  return arr[idx];
+}
+
+function extractLeadingNumber(raw) {
+  const match = String(raw ?? '').match(/-?\d+(\.\d+)?/);
+  return match ? Number(match[0]) : NaN;
+}
+
+function formatIncreaseFromBase(raw, levelIndex) {
+  if (levelIndex <= 0) return null;
+  const base = getLevelValue(raw, 0);
+  const current = getLevelValue(raw, levelIndex);
+  const baseNum = extractLeadingNumber(base);
+  const currentNum = extractLeadingNumber(current);
+  if (!Number.isFinite(baseNum) || !Number.isFinite(currentNum)) return null;
+  const delta = currentNum - baseNum;
+  const rounded = Math.abs(delta) >= 10 || Number.isInteger(delta) ? Math.round(delta) : Number(delta.toFixed(2));
+  return `${rounded >= 0 ? '+' : ''}${rounded}`;
+}
+
+function getTooltipPosition(pageX, pageY, cardWidth) {
+  const { width, height } = Dimensions.get('window');
+  const x = Number.isFinite(pageX) ? pageX : 0;
+  const y = Number.isFinite(pageY) ? pageY : 0;
+  const safeLeft = Math.max(10, Math.min(width - cardWidth - 10, x + 14));
+  const safeTop = Math.max(10, Math.min(height - 310, y - 26));
+  return { left: safeLeft, top: safeTop };
+}
+
 export default function DiscordBotDraftBuildScreen() {
   const router = useRouter();
   const { token } = useLocalSearchParams();
@@ -75,6 +126,7 @@ export default function DiscordBotDraftBuildScreen() {
   const [reloadTick, setReloadTick] = useState(0);
   const [failedPreviewIconKeys, setFailedPreviewIconKeys] = useState({});
   const [hoverItemCard, setHoverItemCard] = useState(null);
+  const [hoverAbilityCard, setHoverAbilityCard] = useState(null);
 
   if (!t || !UUID_RE.test(t)) {
     return (
@@ -100,17 +152,37 @@ export default function DiscordBotDraftBuildScreen() {
     if (Platform.OS !== 'web') return;
     const pageX = e?.nativeEvent?.pageX;
     const pageY = e?.nativeEvent?.pageY;
+    const pos = getTooltipPosition(pageX, pageY, ITEM_TOOLTIP_WIDTH);
     setHoverItemCard({
       key,
       item,
-      x: Number.isFinite(pageX) ? pageX : 0,
-      y: Number.isFinite(pageY) ? pageY : 0,
+      x: pos.left,
+      y: pos.top,
     });
   }, []);
 
   const closeHoverItemCard = useCallback((key) => {
     if (Platform.OS !== 'web') return;
     setHoverItemCard((prev) => (prev?.key === key ? null : prev));
+  }, []);
+
+  const openHoverAbilityCard = useCallback((ability, key, e) => {
+    if (Platform.OS !== 'web' || !ability) return;
+    const pageX = e?.nativeEvent?.pageX;
+    const pageY = e?.nativeEvent?.pageY;
+    const pos = getTooltipPosition(pageX, pageY, ABILITY_TOOLTIP_WIDTH);
+    setHoverAbilityCard({
+      key,
+      ability,
+      levelIndex: 0,
+      x: pos.left,
+      y: pos.top,
+    });
+  }, []);
+
+  const closeHoverAbilityCard = useCallback((key) => {
+    if (Platform.OS !== 'web') return;
+    setHoverAbilityCard((prev) => (prev?.key === key ? null : prev));
   }, []);
 
   const renderPreviewItemIcon = useCallback(
@@ -232,6 +304,12 @@ export default function DiscordBotDraftBuildScreen() {
         A03: abilities?.A03?.icon || null,
         A04: abilities?.A04?.icon || null,
       };
+      const abilityDetails = {
+        A01: abilities?.A01 || null,
+        A02: abilities?.A02 || null,
+        A03: abilities?.A03 || null,
+        A04: abilities?.A04 || null,
+      };
 
       return {
         token: String(row?.token || ''),
@@ -257,6 +335,7 @@ export default function DiscordBotDraftBuildScreen() {
           : [],
         totalGold,
         abilityIconMap,
+        abilityDetails,
       };
     });
   }, [buildRows, godCatalog, itemCatalog]);
@@ -434,7 +513,22 @@ export default function DiscordBotDraftBuildScreen() {
                         const abilityNumber = toAbilityOrderLabels([abilityKey])[0] || abilityKey;
                         return (
                           <View key={`${row.token}-mo-${idx}-${abilityKey}`} style={styles.orderStep}>
-                            <View style={styles.orderAbilityIconWrap}>
+                            <Pressable
+                              style={styles.orderAbilityIconWrap}
+                              onHoverIn={(e) =>
+                                openHoverAbilityCard(
+                                  row.abilityDetails?.[abilityKey],
+                                  `${row.token}-ability-mo-${idx}-${abilityKey}`,
+                                  e
+                                )
+                              }
+                              onHoverOut={() => closeHoverAbilityCard(`${row.token}-ability-mo-${idx}-${abilityKey}`)}
+                              title={
+                                Platform.OS === 'web' && row.abilityDetails?.[abilityKey]?.name
+                                  ? row.abilityDetails?.[abilityKey]?.name
+                                  : undefined
+                              }
+                            >
                               {abilityIconPath ? (
                                 <Image
                                   source={getLocalGodAsset(abilityIconPath)}
@@ -446,7 +540,7 @@ export default function DiscordBotDraftBuildScreen() {
                               ) : (
                                 <Text style={styles.orderAbilityFallback}>{abilityNumber}</Text>
                               )}
-                            </View>
+                            </Pressable>
                             {idx < row.abilityLevelingOrder.length - 1 ? (
                               <Text style={styles.orderArrow}>›</Text>
                             ) : null}
@@ -468,7 +562,22 @@ export default function DiscordBotDraftBuildScreen() {
                         const abilityNumber = toAbilityOrderLabels([abilityKey])[0] || abilityKey;
                         return (
                           <View key={`${row.token}-so-${idx}-${abilityKey}`} style={styles.orderStep}>
-                            <View style={styles.orderAbilityIconWrap}>
+                            <Pressable
+                              style={styles.orderAbilityIconWrap}
+                              onHoverIn={(e) =>
+                                openHoverAbilityCard(
+                                  row.abilityDetails?.[abilityKey],
+                                  `${row.token}-ability-so-${idx}-${abilityKey}`,
+                                  e
+                                )
+                              }
+                              onHoverOut={() => closeHoverAbilityCard(`${row.token}-ability-so-${idx}-${abilityKey}`)}
+                              title={
+                                Platform.OS === 'web' && row.abilityDetails?.[abilityKey]?.name
+                                  ? row.abilityDetails?.[abilityKey]?.name
+                                  : undefined
+                              }
+                            >
                               {abilityIconPath ? (
                                 <Image
                                   source={getLocalGodAsset(abilityIconPath)}
@@ -480,7 +589,7 @@ export default function DiscordBotDraftBuildScreen() {
                               ) : (
                                 <Text style={styles.orderAbilityFallback}>{abilityNumber}</Text>
                               )}
-                            </View>
+                            </Pressable>
                             {idx < arr.length - 1 ? <Text style={styles.orderArrow}>›</Text> : null}
                           </View>
                         );
@@ -585,8 +694,8 @@ export default function DiscordBotDraftBuildScreen() {
           style={[
             styles.hoverDetailCard,
             {
-              left: Math.max(12, hoverItemCard.x + 14),
-              top: Math.max(12, hoverItemCard.y - 24),
+              left: hoverItemCard.x,
+              top: hoverItemCard.y,
             },
           ]}
           pointerEvents="none"
@@ -623,6 +732,107 @@ export default function DiscordBotDraftBuildScreen() {
           <Text style={styles.hoverDetailCost}>
             Cost: {(Number(hoverItemCard.item?.totalCost) || 0).toLocaleString()} Gold
           </Text>
+        </View>
+      ) : null}
+      {Platform.OS === 'web' && hoverAbilityCard?.ability ? (
+        <View
+          style={[
+            styles.hoverAbilityCard,
+            {
+              left: hoverAbilityCard.x,
+              top: hoverAbilityCard.y,
+            },
+          ]}
+          pointerEvents="auto"
+        >
+          <View style={styles.hoverAbilityHeader}>
+            <View style={styles.hoverAbilityIconWrap}>
+              {hoverAbilityCard.ability?.icon ? (
+                <Image
+                  source={getLocalGodAsset(hoverAbilityCard.ability.icon)}
+                  style={styles.hoverAbilityIcon}
+                  contentFit="cover"
+                />
+              ) : (
+                <View style={styles.hoverAbilityIconFallback}>
+                  <Text style={styles.hoverAbilityIconFallbackText}>A</Text>
+                </View>
+              )}
+            </View>
+            <View style={styles.hoverAbilityTitleWrap}>
+              <Text style={styles.hoverAbilityTitle} numberOfLines={1}>
+                {hoverAbilityCard.ability?.name || 'Ability'}
+              </Text>
+              <Text style={styles.hoverAbilityHint}>Pick a level to preview scaling</Text>
+            </View>
+          </View>
+
+          <View style={styles.hoverAbilityLevelsRow}>
+            {LEVEL_BUTTONS.map((level, idx) => {
+              const isActive = hoverAbilityCard.levelIndex === idx;
+              const firstStatValue = hoverAbilityCard.ability?.valueKeys
+                ? Object.values(hoverAbilityCard.ability.valueKeys)[0]
+                : null;
+              const levelIncrease = formatIncreaseFromBase(firstStatValue, idx);
+              return (
+                <TouchableOpacity
+                  key={`lv-${level}`}
+                  style={[styles.hoverAbilityLevelBtn, isActive && styles.hoverAbilityLevelBtnActive]}
+                  onPress={() => setHoverAbilityCard((prev) => (prev ? { ...prev, levelIndex: idx } : prev))}
+                  activeOpacity={0.8}
+                >
+                  <Text style={[styles.hoverAbilityLevelText, isActive && styles.hoverAbilityLevelTextActive]}>
+                    L{level}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.hoverAbilityLevelDelta,
+                      isActive && styles.hoverAbilityLevelTextActive,
+                    ]}
+                    numberOfLines={1}
+                  >
+                    {levelIncrease || '\u2014'}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+
+          {hoverAbilityCard.ability?.valueKeys &&
+          typeof hoverAbilityCard.ability.valueKeys === 'object' &&
+          Object.keys(hoverAbilityCard.ability.valueKeys).length > 0 ? (
+            <ScrollView style={styles.hoverAbilityStatsWrap}>
+              {Object.entries(hoverAbilityCard.ability.valueKeys).map(([statKey, rawValue]) => {
+                const levelValue = getLevelValue(rawValue, hoverAbilityCard.levelIndex);
+                if (levelValue === null || levelValue === undefined || String(levelValue).trim() === '') return null;
+                const delta = formatIncreaseFromBase(rawValue, hoverAbilityCard.levelIndex);
+                return (
+                  <View key={`ability-stat-${statKey}`} style={styles.hoverAbilityStatRow}>
+                    <Text style={styles.hoverAbilityStatLabel} numberOfLines={1}>
+                      {statKey}
+                    </Text>
+                    <View style={styles.hoverAbilityStatValueWrap}>
+                      <Text style={styles.hoverAbilityStatValue} numberOfLines={1}>
+                        {String(levelValue)}
+                      </Text>
+                      {delta ? (
+                        <Text style={styles.hoverAbilityStatDelta} numberOfLines={1}>
+                          {delta}
+                        </Text>
+                      ) : null}
+                    </View>
+                  </View>
+                );
+              })}
+            </ScrollView>
+          ) : (
+            <Text style={styles.hoverAbilityEmpty}>No level-based stat values available.</Text>
+          )}
+          {hoverAbilityCard.ability?.shortDesc || hoverAbilityCard.ability?.description ? (
+            <Text style={styles.hoverAbilityDesc} numberOfLines={3}>
+              {String(hoverAbilityCard.ability.shortDesc || hoverAbilityCard.ability.description)}
+            </Text>
+          ) : null}
         </View>
       ) : null}
     </View>
@@ -910,7 +1120,7 @@ const styles = StyleSheet.create({
   hoverDetailCard: {
     position: 'fixed',
     width: 286,
-    maxHeight: 420,
+    maxHeight: 340,
     overflow: 'hidden',
     backgroundColor: '#03112a',
     borderColor: '#0ea5e9',
@@ -926,19 +1136,19 @@ const styles = StyleSheet.create({
   },
   hoverDetailTitle: {
     color: '#7dd3fc',
-    fontSize: 24,
-    lineHeight: 28,
+    fontSize: 16,
+    lineHeight: 20,
     fontWeight: '800',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   hoverDetailIcon: {
-    width: 72,
-    height: 72,
+    width: 52,
+    height: 52,
     borderRadius: 8,
   },
   hoverDetailIconWrap: {
-    width: 72,
-    height: 72,
+    width: 52,
+    height: 52,
     borderRadius: 8,
     overflow: 'hidden',
     marginBottom: 8,
@@ -946,10 +1156,10 @@ const styles = StyleSheet.create({
     borderColor: '#1e3a5f',
   },
   hoverDetailSection: {
-    marginBottom: 8,
+    marginBottom: 6,
     borderTopWidth: 1,
     borderTopColor: '#1e3a5f',
-    paddingTop: 7,
+    paddingTop: 6,
   },
   hoverStatRow: {
     flexDirection: 'row',
@@ -961,33 +1171,180 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
   },
   hoverDetailStatLabel: {
-    fontSize: 13,
-    lineHeight: 18,
+    fontSize: 12,
+    lineHeight: 16,
     fontWeight: '600',
   },
   hoverDetailStatValue: {
-    fontSize: 13,
-    lineHeight: 18,
+    fontSize: 12,
+    lineHeight: 16,
     fontWeight: '800',
   },
   hoverDetailPassiveLabel: {
     color: '#f8fafc',
-    fontSize: 16,
-    lineHeight: 20,
+    fontSize: 13,
+    lineHeight: 16,
     fontWeight: '800',
     marginBottom: 4,
   },
   hoverDetailPassiveText: {
     color: '#cbd5e1',
-    fontSize: 13,
-    lineHeight: 18,
+    fontSize: 12,
+    lineHeight: 16,
   },
   hoverDetailCost: {
     color: '#fbbf24',
-    fontSize: 19,
-    lineHeight: 24,
+    fontSize: 14,
+    lineHeight: 18,
     fontWeight: '800',
-    marginTop: 4,
+    marginTop: 2,
+  },
+  hoverAbilityCard: {
+    position: 'fixed',
+    width: ABILITY_TOOLTIP_WIDTH,
+    maxHeight: 380,
+    backgroundColor: '#03112a',
+    borderColor: '#0ea5e9',
+    borderWidth: 2,
+    borderRadius: 12,
+    padding: 10,
+    zIndex: 10000,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.42,
+    shadowRadius: 14,
+    elevation: 12,
+  },
+  hoverAbilityHeader: {
+    flexDirection: 'row',
+    gap: 8,
+    alignItems: 'center',
+    marginBottom: 7,
+  },
+  hoverAbilityIconWrap: {
+    width: 38,
+    height: 38,
+    borderRadius: 8,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#334155',
+    backgroundColor: '#0f172a',
+  },
+  hoverAbilityIcon: {
+    width: '100%',
+    height: '100%',
+  },
+  hoverAbilityIconFallback: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#0f172a',
+  },
+  hoverAbilityIconFallbackText: {
+    color: '#cbd5e1',
+    fontSize: 15,
+    fontWeight: '800',
+  },
+  hoverAbilityTitleWrap: {
+    flex: 1,
+    minWidth: 0,
+  },
+  hoverAbilityTitle: {
+    color: '#7dd3fc',
+    fontSize: 15,
+    lineHeight: 18,
+    fontWeight: '800',
+  },
+  hoverAbilityHint: {
+    color: '#94a3b8',
+    fontSize: 11,
+    lineHeight: 13,
+    marginTop: 2,
+  },
+  hoverAbilityLevelsRow: {
+    flexDirection: 'row',
+    gap: 6,
+    marginBottom: 8,
+  },
+  hoverAbilityLevelBtn: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#334155',
+    borderRadius: 7,
+    backgroundColor: '#0f172a',
+    paddingVertical: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  hoverAbilityLevelBtnActive: {
+    borderColor: '#38bdf8',
+    backgroundColor: '#0c2d4a',
+  },
+  hoverAbilityLevelText: {
+    color: '#cbd5e1',
+    fontSize: 11,
+    fontWeight: '800',
+    lineHeight: 13,
+  },
+  hoverAbilityLevelTextActive: {
+    color: '#7dd3fc',
+  },
+  hoverAbilityLevelDelta: {
+    color: '#94a3b8',
+    fontSize: 10,
+    fontWeight: '700',
+    lineHeight: 12,
+  },
+  hoverAbilityStatsWrap: {
+    maxHeight: 230,
+    borderTopWidth: 1,
+    borderTopColor: '#1e3a5f',
+    paddingTop: 6,
+  },
+  hoverAbilityStatRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 8,
+    paddingVertical: 4,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1e293b',
+  },
+  hoverAbilityStatLabel: {
+    color: '#cbd5e1',
+    fontSize: 11,
+    fontWeight: '600',
+    flex: 1,
+  },
+  hoverAbilityStatValueWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  hoverAbilityStatValue: {
+    color: '#f8fafc',
+    fontSize: 11,
+    fontWeight: '800',
+  },
+  hoverAbilityStatDelta: {
+    color: '#67e8f9',
+    fontSize: 10,
+    fontWeight: '700',
+  },
+  hoverAbilityEmpty: {
+    color: '#94a3b8',
+    fontSize: 11,
+    lineHeight: 15,
+    marginBottom: 6,
+  },
+  hoverAbilityDesc: {
+    marginTop: 6,
+    borderTopWidth: 1,
+    borderTopColor: '#1e3a5f',
+    paddingTop: 6,
+    color: '#cbd5e1',
+    fontSize: 11,
+    lineHeight: 15,
   },
   centered: {
     flex: 1,

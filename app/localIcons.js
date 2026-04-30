@@ -1,5 +1,5 @@
 import { ICON_PATHS } from '../config';
-import { ROLE_ICONS, PANTHEON_ICON_FILES } from '../lib/imageGrabber';
+import { ROLE_ICONS, PANTHEON_ICON_FILES, PANTHEON_BACKDROP_FILES } from '../lib/imageGrabber';
 
 const ITEM_ICONS_PATH = ICON_PATHS.ITEM_ICONS;
 const ITEM_ICONS_FILLED_PATH = ICON_PATHS.ITEM_ICONS_FILLED;
@@ -276,6 +276,16 @@ export const PANTHEON_ICONS = {
   Underworld: PANTHEON_ICON_FILES.Greek,
 };
 
+/** Bundled pantheon header images (subset of pantheons have `Backdrop/` art). */
+export const PANTHEON_BACKDROPS = {
+  ...PANTHEON_BACKDROP_FILES,
+  Mayan: PANTHEON_BACKDROP_FILES.Maya,
+  Olympian: PANTHEON_BACKDROP_FILES.Greek,
+  Asgardian: PANTHEON_BACKDROP_FILES.Norse,
+  Eastern: PANTHEON_BACKDROP_FILES.Chinese,
+  Underworld: PANTHEON_BACKDROP_FILES.Greek,
+};
+
 // Border / portrait accents (build cards, Data, etc.) — canonical palette
 const PANTHEON_BORDER_HEX = {
   Arthurian: '#931725',
@@ -362,6 +372,20 @@ function pantheonAccentBorderHex(canonicalHex) {
 export function getPantheonIcon(pantheon) {
   const key = normalizePantheonKey(pantheon);
   return key ? PANTHEON_ICONS[key] : null;
+}
+
+/**
+ * God page header backdrop for a pantheon string (matches `PANTHEON_ICONS` normalization).
+ * Returns null when no bundled backdrop exists (e.g. Celtic, Korean, Polynesian, Slavic).
+ */
+export function getPantheonBackdrop(pantheon) {
+  let p = pantheon;
+  if (String(p || '').trim().toLowerCase() === 'babalonian') {
+    p = 'Babylonian';
+  }
+  const key = normalizePantheonKey(p);
+  if (!key) return null;
+  return PANTHEON_BACKDROPS[key] ?? null;
 }
 
 export function getPantheonBorderColor(pantheon) {
