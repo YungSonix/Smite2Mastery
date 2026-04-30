@@ -18,6 +18,8 @@
     "check-voice-audio": "node scripts/check-voice-audio.js",
     "import-wallpapers": "node scripts/import-wallpapers-to-builds.js",
     "import-wallpapers:audit": "node scripts/import-wallpapers-to-builds.js --audit",
+    "sync-newgodskins": "node scripts/sync-newgodskins-to-builds.js",
+    "sync-newgodskins:write": "node scripts/sync-newgodskins-to-builds.js --write",
     "web-inspect:on": "node scripts/toggle-web-inspect.js on",
     "web-inspect:off": "node scripts/toggle-web-inspect.js off"
   },
