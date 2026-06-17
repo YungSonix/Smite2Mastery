@@ -7060,7 +7060,27 @@
                                 "gemsdia": ""
                             },
                             "cardArt": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/t_SkinCard_Aphrodite_BeachBabe.png",
-                            "icon": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/t_SkinPortrait_Aphrodite_BeachBabe.png"
+                            "icon": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/t_SkinPortrait_Aphrodite_BeachBabe.png",
+                            "variants": [
+                                {
+                                    "name": "Prism B",
+                                    "cardArt": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/Prisms/t_SkinCard_Aphrodite_Prisim_B.png",
+                                    "skin": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/Prisms/t_SkinCard_Aphrodite_Prisim_B.png",
+                                    "icon": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/Prisms/t_SkinPortrait_Aphrodite_Beach_Prisim_B.png"
+                                },
+                                {
+                                    "name": "Prism C",
+                                    "cardArt": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/Prisms/t_SkinCard_Aphrodite_Prisim_C.png",
+                                    "skin": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/Prisms/t_SkinCard_Aphrodite_Prisim_C.png",
+                                    "icon": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/Prisms/t_SkinPortrait_Aphrodite_Beach_Prisim_C.png"
+                                },
+                                {
+                                    "name": "Prism D",
+                                    "cardArt": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/Prisms/t_SkinCard_Aphrodite_Prisim_D.png",
+                                    "skin": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/Prisms/t_SkinCard_Aphrodite_Prisim_D.png",
+                                    "icon": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/Prisms/t_SkinPortrait_Aphrodite_Beach_Prisim_D.png"
+                                }
+                            ]
                         },
                         "BeachBabeMidnightCove": {
                             "name": "Beach Babe Midnight Cove",
@@ -8032,7 +8052,33 @@
                                 "gemsdia": ""
                             },
                             "cardArt": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/t_SkinCard_Apollo_BitBlaster.png",
-                            "icon": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/t_SkinPortrait_Apollo_BitBlaster.png"
+                            "icon": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/t_SkinPortrait_Apollo_BitBlaster.png",
+                            "variants": [
+                                {
+                                    "name": "Prism A",
+                                    "cardArt": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_A.png",
+                                    "skin": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_A.png",
+                                    "icon": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinPortrait_Apollo_BitBlaster_Prisim_A.png"
+                                },
+                                {
+                                    "name": "Prism B",
+                                    "cardArt": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_B.png",
+                                    "skin": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_B.png",
+                                    "icon": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinPortrait_Apollo_BitBlaster_Prisim_B.png"
+                                },
+                                {
+                                    "name": "Prism C",
+                                    "cardArt": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_C.png",
+                                    "skin": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_C.png",
+                                    "icon": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinPortrait_Apollo_BitBlaster_Prisim_C.png"
+                                },
+                                {
+                                    "name": "Prism D",
+                                    "cardArt": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_D.png",
+                                    "skin": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_D.png",
+                                    "icon": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinPortrait_Apollo_BitBlaster_Prisim_D.png"
+                                }
+                            ]
                         },
                         "BitBlasterNullExe": {
                             "name": "Bit Blaster Null Exe",
@@ -8066,18 +8112,6 @@
                                 "gemsdia": ""
                             },
                             "hideFromSkinList": true
-                        },
-                        "Prisms": {
-                            "name": "Prisms",
-                            "skin": "app/data/NewGodSkins/Apollo/Skins/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_A.png",
-                            "type": "",
-                            "price": {
-                                "gems": "",
-                                "diamonds": "",
-                                "gemsdia": ""
-                            },
-                            "cardArt": "app/data/NewGodSkins/Apollo/Skins/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_A.png",
-                            "icon": "app/data/NewGodSkins/Apollo/Skins/Prisms/t_SkinPortrait_Apollo_BitBlaster_Prisim_A.png"
                         }
                     }
                 },
@@ -34697,7 +34731,33 @@
                                 "gemsdia": ""
                             },
                             "cardArt": "app/data/NewGodSkins/Khepri/Skins/02/t_SkinCard_Khepri_ChefSpecial.png",
-                            "icon": "app/data/NewGodSkins/Khepri/Skins/02/t_SkinPortrait_Khepri_ChefSpecial.png"
+                            "icon": "app/data/NewGodSkins/Khepri/Skins/02/t_SkinPortrait_Khepri_ChefSpecial.png",
+                            "variants": [
+                                {
+                                    "name": "Prism 1",
+                                    "cardArt": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_01.png",
+                                    "skin": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_01.png",
+                                    "icon": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinPortrait_Khepri_Chef_Prisim_01.png"
+                                },
+                                {
+                                    "name": "Prism 2",
+                                    "cardArt": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_02.png",
+                                    "skin": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_02.png",
+                                    "icon": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinPortrait_Khepri_Chef_Prisim_02.png"
+                                },
+                                {
+                                    "name": "Prism 3",
+                                    "cardArt": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_03.png",
+                                    "skin": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_03.png",
+                                    "icon": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinPortrait_Khepri_Chef_Prisim_03.png"
+                                },
+                                {
+                                    "name": "Prism 4",
+                                    "cardArt": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_04.png",
+                                    "skin": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_04.png",
+                                    "icon": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinPortrait_Khepri_Chef_Prisim_04.png"
+                                }
+                            ]
                         },
                         "ChefSSpecialBeachBlue": {
                             "name": "Chef S Special Beach Blue",
@@ -50569,7 +50629,33 @@
                                 "gemsdia": ""
                             },
                             "cardArt": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/t_SkinCard_Cabrakan_NerdRage.png",
-                            "icon": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/t_GodPortrait_Cabrakan_NerdRage.png"
+                            "icon": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/t_GodPortrait_Cabrakan_NerdRage.png",
+                            "variants": [
+                                {
+                                    "name": "Prism A",
+                                    "cardArt": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinCard_Cabrakan_Prisim_A.png",
+                                    "skin": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinCard_Cabrakan_Prisim_A.png",
+                                    "icon": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinPortrait_Cabrakan_Prisim_A.png"
+                                },
+                                {
+                                    "name": "Prism B",
+                                    "cardArt": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinCard_Cabrakan_Prisim_B.png",
+                                    "skin": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinCard_Cabrakan_Prisim_B.png",
+                                    "icon": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinPortrait_Cabrakan_Prisim_B.png"
+                                },
+                                {
+                                    "name": "Prism C",
+                                    "cardArt": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinCard_Cabrakan_Prisim_C.png",
+                                    "skin": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinCard_Cabrakan_Prisim_C.png",
+                                    "icon": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinPortrait_Cabrakan_Prisim_C.png"
+                                },
+                                {
+                                    "name": "Prism D",
+                                    "cardArt": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinCard_Cabrakan_Prisim_D.png",
+                                    "skin": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinCard_Cabrakan_Prisim_D.png",
+                                    "icon": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinPortrait_Cabrakan_Prisim_D.png"
+                                }
+                            ]
                         },
                         "NerdRageAssistant010": {
                             "name": "Nerd Rage Assistant 010",
@@ -50646,18 +50732,6 @@
                                     "icon": "app/data/NewGodSkins/Cabrakan/Skins/FatLoki/t_GodPortrait_Cabrakan_FatLoki_Prism03.png"
                                 }
                             ]
-                        },
-                        "Prisms": {
-                            "name": "Prisms",
-                            "skin": "app/data/NewGodSkins/Cabrakan/Skins/Prisms/t_SkinCard_Cabrakan_Prisim_A.png",
-                            "type": "",
-                            "price": {
-                                "gems": "",
-                                "diamonds": "",
-                                "gemsdia": ""
-                            },
-                            "cardArt": "app/data/NewGodSkins/Cabrakan/Skins/Prisms/t_SkinCard_Cabrakan_Prisim_A.png",
-                            "icon": "app/data/NewGodSkins/Cabrakan/Skins/Prisms/t_SkinPortrait_Cabrakan_Prisim_A.png"
                         }
                     }
                 },
@@ -69512,7 +69586,33 @@
                                 "gemsdia": ""
                             },
                             "cardArt": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/t_SkinCard_Vulcan_Emberlord_Base.png",
-                            "icon": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/t_SkinPortrait_Vulcan_Emberlord_Base.png"
+                            "icon": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/t_SkinPortrait_Vulcan_Emberlord_Base.png",
+                            "variants": [
+                                {
+                                    "name": "Prism A",
+                                    "cardArt": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinCard_Vulcan_Emberlord_T4_Prisim_A.png",
+                                    "skin": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinCard_Vulcan_Emberlord_T4_Prisim_A.png",
+                                    "icon": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinPortrait_Vulcan_Emberlord_T4_Prisim_A.png"
+                                },
+                                {
+                                    "name": "Prism B",
+                                    "cardArt": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinCard_Vulcan_Emberlord_T4_Prisim_B.png",
+                                    "skin": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinCard_Vulcan_Emberlord_T4_Prisim_B.png",
+                                    "icon": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinPortrait_Vulcan_Emberlord_T4_Prisim_B.png"
+                                },
+                                {
+                                    "name": "Prism C",
+                                    "cardArt": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinCard_Vulcan_Emberlord_T4_Prisim_C.png",
+                                    "skin": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinCard_Vulcan_Emberlord_T4_Prisim_C.png",
+                                    "icon": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinPortrait_Vulcan_Emberlord_T4_Prisim_C.png"
+                                },
+                                {
+                                    "name": "Prism D",
+                                    "cardArt": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinCard_Vulcan_Emberlord_T4_Prisim_D.png",
+                                    "skin": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinCard_Vulcan_Emberlord_T4_Prisim_D.png",
+                                    "icon": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinPortrait_Vulcan_Emberlord_T4_Prisim_D.png"
+                                }
+                            ]
                         },
                         "EmberlordPyreforgedTyntVulcan009": {
                             "name": "Emberlord Pyreforged Tynt Vulcan 009",
