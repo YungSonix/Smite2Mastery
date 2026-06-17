@@ -1,0 +1,35 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "Icons_NeZha_Passive",
+    "Flags": "RF_Public | RF_Standalone | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/NeZha/Abilities/Icons_NeZha_Passive",
+    "Properties": {
+      "ImportedSize": {
+        "X": 64,
+        "Y": 64
+      },
+      "LightingGuid": "35185A6F-4A634F2C-028B61B7-F6F4AA65",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI"
+    },
+    "SizeX": 64,
+    "SizeY": 64,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT1",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 2048,
+          "SizeOnDisk": 2048,
+          "OffsetInFile": "0x71"
+        },
+        "SizeX": 64,
+        "SizeY": 64,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSVMeter_2_Frame",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Guan_Yu/PSVMeter/t_PSVMeter_2_Frame",
+    "Properties": {
+      "ImportedSize": {
+        "X": 196,
+        "Y": 208
+      },
+      "LightingGuid": "EAAC3900-4738E042-F9F9C5B2-94163602",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "SRGB": false,
+      "NeverStream": true
+    },
+    "SizeX": 196,
+    "SizeY": 208,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 163072,
+          "SizeOnDisk": 163072,
+          "OffsetInFile": "0x7E"
+        },
+        "SizeX": 196,
+        "SizeY": 208,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

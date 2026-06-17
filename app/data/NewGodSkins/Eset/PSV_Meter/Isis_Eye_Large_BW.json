@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "Isis_Eye_Large_BW",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Eset/PSV_Meter/Isis_Eye_Large_BW",
+    "Properties": {
+      "ImportedSize": {
+        "X": 224,
+        "Y": 172
+      },
+      "LightingGuid": "295BF824-4D4C69CF-20211489-B3FB46E0",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 224,
+    "SizeY": 172,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 154112,
+          "SizeOnDisk": 154112,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 224,
+        "SizeY": 172,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

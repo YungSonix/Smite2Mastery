@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_HUD_Kali_Targeted_Empty",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Kali/HUD/t_HUD_Kali_Targeted_Empty",
+    "Properties": {
+      "ImportedSize": {
+        "X": 36,
+        "Y": 36
+      },
+      "LightingGuid": "A555F0AC-42E7A3BD-0D1F8CBC-32A860BB",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 36,
+    "SizeY": 36,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 1296,
+          "SizeOnDisk": 1296,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 36,
+        "SizeY": 36,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

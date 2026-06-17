@@ -1,0 +1,35 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PassiveMeter_Hecate_ActivePip",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/t_PassiveMeter_Hecate_ActivePip",
+    "Properties": {
+      "ImportedSize": {
+        "X": 32,
+        "Y": 32
+      },
+      "LightingGuid": "9F3206D6-4FD74510-6668B6B8-9CB5E5F9",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI"
+    },
+    "SizeX": 32,
+    "SizeY": 32,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 1024,
+          "SizeOnDisk": 1024,
+          "OffsetInFile": "0x71"
+        },
+        "SizeX": 32,
+        "SizeY": 32,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

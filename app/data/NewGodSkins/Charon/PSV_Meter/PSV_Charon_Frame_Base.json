@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "PSV_Charon_Frame_Base",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Charon/PSV_Meter/PSV_Charon_Frame_Base",
+    "Properties": {
+      "ImportedSize": {
+        "X": 228,
+        "Y": 200
+      },
+      "LightingGuid": "D71B5E60-46DC2AF5-6FE17F96-735F6907",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 228,
+    "SizeY": 200,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 182400,
+          "SizeOnDisk": 182400,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 228,
+        "SizeY": 200,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

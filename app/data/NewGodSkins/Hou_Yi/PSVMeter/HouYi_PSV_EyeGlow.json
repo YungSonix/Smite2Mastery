@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "HouYi_PSV_EyeGlow",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Hou_Yi/PSVMeter/HouYi_PSV_EyeGlow",
+    "Properties": {
+      "ImportedSize": {
+        "X": 12,
+        "Y": 16
+      },
+      "LightingGuid": "DD84DB2D-445E1681-E4660792-0494EDFD",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 12,
+    "SizeY": 16,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 768,
+          "SizeOnDisk": 768,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 12,
+        "SizeY": 16,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

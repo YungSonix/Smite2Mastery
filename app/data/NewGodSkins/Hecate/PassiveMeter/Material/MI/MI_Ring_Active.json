@@ -1,0 +1,68 @@
+[
+  {
+    "Type": "MaterialInstanceConstant",
+    "Name": "MI_Ring_Active",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'MaterialInstanceConstant'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/Material/MI/MI_Ring_Active",
+    "Properties": {
+      "Parent": {
+        "ObjectName": "Material'M_Ring'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/Material/M/M_Ring.0"
+      },
+      "bHasStaticPermutationResource": true,
+      "ScalarParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "RefractionDepthBias",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "00000000-00000000-00000000-00000000"
+        }
+      ],
+      "VectorParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "ActiveColor",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 1.0,
+            "G": 0.4,
+            "B": 0.0,
+            "A": 0.592,
+            "Hex": "97FFAA00"
+          },
+          "ExpressionGUID": "91F5FAD4-44A3C035-FCB3BDA2-1114A660"
+        }
+      ],
+      "BasePropertyOverrides": {
+        "BlendMode": "EBlendMode::BLEND_Additive",
+        "ShadingModel": "EMaterialShadingModel::MSM_Unlit",
+        "OpacityMaskClipValue": 0.3333
+      },
+      "StaticParametersRuntime": {
+        "StaticSwitchParameters": [
+          {
+            "Value": true,
+            "ParameterInfo": {
+              "Name": "IsItActive?",
+              "Association": "EMaterialParameterAssociation::GlobalParameter",
+              "Index": -1
+            },
+            "bOverride": true,
+            "ExpressionGUID": "74E22373-4D2A055B-6DCD48A5-0538B0F8"
+          }
+        ]
+      },
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedData": {
+      "ParentLayerIndexRemap": []
+    }
+  }
+]

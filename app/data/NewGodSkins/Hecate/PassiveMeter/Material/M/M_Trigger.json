@@ -1,0 +1,283 @@
+[
+  {
+    "Type": "Material",
+    "Name": "M_Trigger",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Material'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/Material/M/M_Trigger",
+    "Properties": {
+      "MaterialDomain": "EMaterialDomain::MD_UI",
+      "BlendMode": "EBlendMode::BLEND_Additive",
+      "bCanMaskedBeAssumedOpaque": true,
+      "PixelDepthOffsetMode": "EPixelDepthOffsetMode::PDOM_Legacy",
+      "StateId": "FB3DB74A-4890E549-F9B7ED95-857CCFDB",
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedExpressionData": {
+      "RuntimeEntries": {
+        "ParameterInfoSet": [
+          {
+            "Name": "TriggerDonut1Size",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "TriggerDonut1Blur",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "TriggerDonut1Multiply",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "TriggerDonut2Size",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "TriggerDonut2Blur",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "TriggerDonut2Multiply",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "SmallCircleMaskSize",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "SmallCircleMaskBlur",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "SmallCircleContrast",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "smokeMaskSize",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "smokeMaskBlur",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "smokeTransparency",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          }
+        ]
+      },
+      "RuntimeEntries[1]": {
+        "ParameterInfoSet": [
+          {
+            "Name": "TriggerDonut1Color",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "TriggerDonut2Color",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          }
+        ]
+      },
+      "RuntimeEntries[2]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[3]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[4]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[5]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[6]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[7]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[8]": {
+        "ParameterInfoSet": []
+      },
+      "ScalarPrimitiveDataIndexValues": [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      "VectorPrimitiveDataIndexValues": [
+        -1,
+        -1
+      ],
+      "ScalarValues": [
+        0.5,
+        0.3,
+        0.0,
+        0.5,
+        0.3,
+        0.0,
+        0.1,
+        0.2,
+        1.0,
+        0.001,
+        1.0,
+        0.0
+      ],
+      "StaticSwitchValues": [],
+      "DynamicSwitchValues": [],
+      "VectorValues": [
+        {
+          "R": 1.0,
+          "G": 1.0,
+          "B": 1.0,
+          "A": 1.0,
+          "Hex": "FFFFFF"
+        },
+        {
+          "R": 1.0,
+          "G": 1.0,
+          "B": 1.0,
+          "A": 1.0,
+          "Hex": "FFFFFF"
+        }
+      ],
+      "DoubleVectorValues": [],
+      "TextureValues": [],
+      "TextureCollectionValues": [],
+      "FontValues": [],
+      "FontPageValues": [],
+      "RuntimeVirtualTextureValues": [],
+      "SparseVolumeTextureValues": [],
+      "ReferencedTextures": [
+        {
+          "ObjectName": "Texture2D'T_MSK1'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/MaterialPatterns/T_MSK1.0"
+        }
+      ],
+      "ReferencedTextureCollections": [],
+      "FunctionInfos": [
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        },
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        },
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        },
+        {
+          "StateId": "5E28F255-4817E6E7-2D027C9A-2F7126C6",
+          "Function": {
+            "ObjectName": "MaterialFunction'VectorToRadialValue'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions02/Utility/VectorToRadialValue.0"
+          }
+        },
+        {
+          "StateId": "42FB52C9-4B6E464D-2D6CB2B5-E6A65899",
+          "Function": {
+            "ObjectName": "MaterialFunction'ExponentialDensity'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions01/Density/ExponentialDensity.0"
+          }
+        },
+        {
+          "StateId": "42FB52C9-4B6E464D-2D6CB2B5-E6A65899",
+          "Function": {
+            "ObjectName": "MaterialFunction'ExponentialDensity'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions01/Density/ExponentialDensity.0"
+          }
+        },
+        {
+          "StateId": "235C8133-44D704CA-0297108A-59B9F710",
+          "Function": {
+            "ObjectName": "MaterialFunction'RadialGradientExponential'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions01/Gradient/RadialGradientExponential.0"
+          }
+        },
+        {
+          "StateId": "2104FB0F-4E063922-A080A092-8F775CEB",
+          "Function": {
+            "ObjectName": "MaterialFunction'Contrast_Preserve_Color'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions01/ImageAdjustment/Contrast_Preserve_Color.0"
+          }
+        },
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        }
+      ],
+      "FunctionInfosStateCRC": 325250731,
+      "ParameterCollectionInfos": [],
+      "GrassTypes": [],
+      "MaterialLayers": {
+        "Layers": [],
+        "Blends": [],
+        "Tree": {
+          "Nodes": [],
+          "Payloads": [],
+          "Root": -1
+        }
+      },
+      "DynamicParameterNames": [],
+      "QualityLevelsUsed": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "bHasMaterialLayers": false,
+      "bHasRuntimeVirtualTextureOutput": false,
+      "bHasFirstPersonOutput": false,
+      "bHasSceneColor": false,
+      "bHasPerInstanceCustomData": false,
+      "bHasPerInstanceRandom": false,
+      "bHasVertexInterpolator": false,
+      "bHasCustomizedUVs": false,
+      "bHasMeshPaintTexture": false,
+      "PropertyConnectedMask": 3
+    },
+    "ReferencedTextures": [
+      {
+        "ObjectName": "Texture2D'T_MSK1'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/MaterialPatterns/T_MSK1.0"
+      }
+    ]
+  }
+]
