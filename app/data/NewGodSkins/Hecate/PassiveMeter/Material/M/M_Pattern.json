@@ -1,0 +1,216 @@
+[
+  {
+    "Type": "Material",
+    "Name": "M_Pattern",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Material'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/Material/M/M_Pattern",
+    "Properties": {
+      "MaterialDomain": "EMaterialDomain::MD_UI",
+      "BlendMode": "EBlendMode::BLEND_Additive",
+      "bCanMaskedBeAssumedOpaque": true,
+      "PixelDepthOffsetMode": "EPixelDepthOffsetMode::PDOM_Legacy",
+      "StateId": "5EC26A0D-40B297D9-BB1A649B-D4FAC70B",
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedExpressionData": {
+      "RuntimeEntries": {
+        "ParameterInfoSet": [
+          {
+            "Name": "RampUp",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "Test",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "Multiplier",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          }
+        ]
+      },
+      "RuntimeEntries[1]": {
+        "ParameterInfoSet": [
+          {
+            "Name": "patternColor",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          }
+        ]
+      },
+      "RuntimeEntries[2]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[3]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[4]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[5]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[6]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[7]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[8]": {
+        "ParameterInfoSet": []
+      },
+      "ScalarPrimitiveDataIndexValues": [
+        -1,
+        -1,
+        -1
+      ],
+      "VectorPrimitiveDataIndexValues": [
+        -1
+      ],
+      "ScalarValues": [
+        1.0,
+        0.0,
+        1.0
+      ],
+      "StaticSwitchValues": [],
+      "DynamicSwitchValues": [],
+      "VectorValues": [
+        {
+          "R": 1.0,
+          "G": 1.0,
+          "B": 1.0,
+          "A": 1.0,
+          "Hex": "FFFFFF"
+        }
+      ],
+      "DoubleVectorValues": [],
+      "TextureValues": [],
+      "TextureCollectionValues": [],
+      "FontValues": [],
+      "FontPageValues": [],
+      "RuntimeVirtualTextureValues": [],
+      "SparseVolumeTextureValues": [],
+      "ReferencedTextures": [
+        {
+          "ObjectName": "Texture2D't_PassiveMeter_Hecate_ACTIVE_PATTERN'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/t_PassiveMeter_Hecate_ACTIVE_PATTERN.0"
+        },
+        {
+          "ObjectName": "Texture2D't_PassiveMeter_Hecate_InActive_PATTERN'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/t_PassiveMeter_Hecate_InActive_PATTERN.0"
+        },
+        {
+          "ObjectName": "Texture2D't_PATTERN_MSK'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/t_PATTERN_MSK.0"
+        }
+      ],
+      "ReferencedTextureCollections": [],
+      "FunctionInfos": [
+        {
+          "StateId": "8B16DA82-48B8344D-4F5AC9A9-2816FAD0",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_LinearTime'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/Time/MF_UI_LinearTime.0"
+          }
+        },
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        },
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UIMaterialLab/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        },
+        {
+          "StateId": "8B16DA82-48B8344D-4F5AC9A9-2816FAD0",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_LinearTime'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/Time/MF_UI_LinearTime.0"
+          }
+        },
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UIMaterialLab/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        },
+        {
+          "StateId": "DDAF1091-4EF9ADB2-6EFCC0B6-972F81B3",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_Scale'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/Transforms/MF_UI_Scale.0"
+          }
+        },
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        },
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        }
+      ],
+      "FunctionInfosStateCRC": 2545045765,
+      "ParameterCollectionInfos": [],
+      "GrassTypes": [],
+      "MaterialLayers": {
+        "Layers": [],
+        "Blends": [],
+        "Tree": {
+          "Nodes": [],
+          "Payloads": [],
+          "Root": -1
+        }
+      },
+      "DynamicParameterNames": [],
+      "QualityLevelsUsed": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "bHasMaterialLayers": false,
+      "bHasRuntimeVirtualTextureOutput": false,
+      "bHasFirstPersonOutput": false,
+      "bHasSceneColor": false,
+      "bHasPerInstanceCustomData": false,
+      "bHasPerInstanceRandom": false,
+      "bHasVertexInterpolator": false,
+      "bHasCustomizedUVs": false,
+      "bHasMeshPaintTexture": false,
+      "PropertyConnectedMask": 3
+    },
+    "ReferencedTextures": [
+      {
+        "ObjectName": "Texture2D't_PassiveMeter_Hecate_ACTIVE_PATTERN'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/t_PassiveMeter_Hecate_ACTIVE_PATTERN.0"
+      },
+      {
+        "ObjectName": "Texture2D't_PassiveMeter_Hecate_InActive_PATTERN'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/t_PassiveMeter_Hecate_InActive_PATTERN.0"
+      },
+      {
+        "ObjectName": "Texture2D't_PATTERN_MSK'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/t_PATTERN_MSK.0"
+      }
+    ]
+  }
+]

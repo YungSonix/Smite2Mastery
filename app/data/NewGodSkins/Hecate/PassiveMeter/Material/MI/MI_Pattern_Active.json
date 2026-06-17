@@ -1,0 +1,71 @@
+[
+  {
+    "Type": "MaterialInstanceConstant",
+    "Name": "MI_Pattern_Active",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'MaterialInstanceConstant'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/Material/MI/MI_Pattern_Active",
+    "Properties": {
+      "Parent": {
+        "ObjectName": "MaterialInstanceConstant'MI_Pattern'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/Material/MI/MI_Pattern.0"
+      },
+      "ScalarParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "RampUp",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.0,
+          "ExpressionGUID": "4E0D6C30-4EC9D4B0-6B9FDAB5-DBA3FCC6"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "Multiplier",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.182146,
+          "ExpressionGUID": "63D6B6FB-403DC8E0-59C786B2-C7BE3D8C"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "RefractionDepthBias",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "00000000-00000000-00000000-00000000"
+        }
+      ],
+      "VectorParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "patternColor",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 0.728,
+            "G": 0.568784,
+            "B": 1.0,
+            "A": 1.0,
+            "Hex": "DEC7FF"
+          },
+          "ExpressionGUID": "B70BDEF6-40F7438D-6F21339F-7E53D101"
+        }
+      ],
+      "BasePropertyOverrides": {
+        "BlendMode": "EBlendMode::BLEND_Additive",
+        "ShadingModel": "EMaterialShadingModel::MSM_Unlit",
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedData": {
+      "ParentLayerIndexRemap": []
+    }
+  }
+]

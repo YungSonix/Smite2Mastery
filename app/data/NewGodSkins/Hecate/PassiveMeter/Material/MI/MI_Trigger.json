@@ -1,0 +1,81 @@
+[
+  {
+    "Type": "MaterialInstanceConstant",
+    "Name": "MI_Trigger",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'MaterialInstanceConstant'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/Material/MI/MI_Trigger",
+    "Properties": {
+      "Parent": {
+        "ObjectName": "Material'M_Trigger'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/Material/M/M_Trigger.0"
+      },
+      "ScalarParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "SmallCircleContrast",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.0,
+          "ExpressionGUID": "A8EA381C-4BDA3E35-7863EBBB-AE281749"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "SmallCircleMaskBlur",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "D3EDE332-4C11E8B0-FA8A7592-59F2AE37"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "SmallCircleMaskSize",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.196,
+          "ExpressionGUID": "58F2ECB9-407616E0-F01DDE86-78F04B93"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "smokeMaskBlur",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.0,
+          "ExpressionGUID": "F0C3AD41-4226E3EC-39EC82B1-E8523989"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "smokeMaskSize",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.001,
+          "ExpressionGUID": "E33C912D-4B252126-B0C8C2AD-2FDE0083"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "RefractionDepthBias",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "00000000-00000000-00000000-00000000"
+        }
+      ],
+      "BasePropertyOverrides": {
+        "BlendMode": "EBlendMode::BLEND_Additive",
+        "ShadingModel": "EMaterialShadingModel::MSM_Unlit",
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedData": {
+      "ParentLayerIndexRemap": []
+    }
+  }
+]

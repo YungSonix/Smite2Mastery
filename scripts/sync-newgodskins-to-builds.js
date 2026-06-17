@@ -4,7 +4,9 @@
  *   `app/data/NewGodSkins/...` (loaded via `getSkinImage` → GitHub raw).
  *
  * Also:
- * - **Prisms**: `Skins/{Skin}/Prisms/*_Prism_*.png` (or prism files in the skin root) → `variants[]` overlays.
+ * - **Prisms**: `*_Prism_*.png` in the skin folder **or** under `Skins/{Skin}/Prisms/` → `variants[]` overlays.
+ * - **Tier-tint files** (e.g. Artemis Frostwarden): under `Prisms/` only, names like
+ *   `t_SkinCard_*_T1_B.png` / `t_SkinIcon_*_T2_A.png` (no `_Prism_` substring) → one chip per `T{tier}_{letter}`.
  * - **Folder inference**: skin keys that do not match a folder name (e.g. typos) can still resolve using
  *   display `name` tokens (e.g. "Ravenstrike" → `Skins/Ravenstrike`).
  * - **Duplicate keys** pointing at the same folder (legacy per-prism rows) → keep one canonical row, set
@@ -13,8 +15,11 @@
  *   name inference) gets a new stub entry so assets can sync. The folder `Mastery` is never a separate skin row.
  * - **Mastery**: files in `Skins/Mastery/` (portraits / optional shared `*Card*Mastery*` card) are merged into
  *   the **base** skin’s `variants[]` (like prisms; portrait-only tiers are OK — splash falls back to base card).
+ * - **Palette prisms**: filenames ending in `_P1.png`…`_P4.png` (e.g. Mystic Guardian) become variant chips like
+ *   `_Prism_*` files. **`SKIN_FOLDER_REMAP`**: map canonical `builds.json` skin key → on-disk folder (e.g. MysticGuardian → `02A`);
+ *   duplicate JSON rows named after the disk folder are removed on each run.
  *
- * Usage: `node scripts/sync-newgodskins-to-builds.js` (dry-run) or `--write`
+ * - **Preserves** existing `type`, `price`, and `variants[]` when disk has no prism files (only updates paths from matched folders).
  */
 'use strict';
 
@@ -23,6 +28,73 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..', 'app', 'data', 'NewGodSkins');
 const BUILDS = path.join(__dirname, '..', 'app', 'data', 'builds.json');
+
+/**
+ * When the on-disk skin folder name (e.g. internal `02A`) does not match `builds.json` skin key
+ * (e.g. `MysticGuardian`), map canonical key → folder name so assets + prisms sync to one row.
+ */
+const STATIC_SKIN_FOLDER_REMAP = {
+  Athena: {
+    MysticGuardian: '02A',
+  },
+};
+
+const AUDIT_BATCH_REMAP_FILES = [2, 3, 4, 5, 6, 7].map((n) =>
+  path.join(__dirname, `skin-sync-audit-batch-${n}.json`)
+);
+
+function deepCloneObject(value) {
+  return JSON.parse(JSON.stringify(value || {}));
+}
+
+function isPlainObject(value) {
+  return value && typeof value === 'object' && !Array.isArray(value);
+}
+
+function hasAlphaNum(str) {
+  return /[a-z0-9]/i.test(String(str || ''));
+}
+
+function mergeRemapInto(target, remapLike) {
+  if (!isPlainObject(remapLike)) return;
+  for (const [godKey, map] of Object.entries(remapLike)) {
+    if (!hasAlphaNum(godKey) || !isPlainObject(map)) continue;
+    if (!target[godKey]) target[godKey] = {};
+    for (const [skinKey, folder] of Object.entries(map)) {
+      if (!hasAlphaNum(skinKey) || !hasAlphaNum(folder)) continue;
+      target[godKey][skinKey] = String(folder);
+    }
+  }
+}
+
+function loadAuditRemaps() {
+  const merged = deepCloneObject(STATIC_SKIN_FOLDER_REMAP);
+  for (const file of AUDIT_BATCH_REMAP_FILES) {
+    if (!fs.existsSync(file)) continue;
+    try {
+      const raw = fs.readFileSync(file, 'utf8');
+      const parsed = JSON.parse(raw);
+      if (!isPlainObject(parsed)) continue;
+      mergeRemapInto(merged, parsed.SKIN_FOLDER_REMAP);
+      mergeRemapInto(merged, parsed.skinFolderRemap);
+      mergeRemapInto(merged, parsed.skinFolderRemapSuggestions);
+      mergeRemapInto(merged, parsed.remap);
+      if (Array.isArray(parsed.gods)) {
+        for (const godEntry of parsed.gods) {
+          if (!isPlainObject(godEntry)) continue;
+          const godFolder = String(godEntry.godFolder || '').trim();
+          if (!hasAlphaNum(godFolder)) continue;
+          mergeRemapInto(merged, { [godFolder]: godEntry.suggestedRemaps });
+        }
+      }
+    } catch {
+      // Ignore malformed audit files to keep sync resilient.
+    }
+  }
+  return merged;
+}
+
+const SKIN_FOLDER_REMAP = loadAuditRemaps();
 
 function listFiles(dir) {
   try {
@@ -44,24 +116,51 @@ function listSubdirs(dir) {
   }
 }
 
+function hasNamedToken(filename, token) {
+  return new RegExp(`(?:^|_)${token}(?:_|\\.|$)`, 'i').test(String(filename));
+}
+
+function isSkinCardFile(filename) {
+  return hasNamedToken(filename, 'SkinCard');
+}
+
+function isSkinPortraitFile(filename) {
+  return hasNamedToken(filename, 'SkinPortrait');
+}
+
+function isSkinIconFile(filename) {
+  return hasNamedToken(filename, 'SkinIcon');
+}
+
+function isGodPortraitFile(filename) {
+  return hasNamedToken(filename, 'GodPortrait') || /t_GodPortrait_/i.test(String(filename));
+}
+
 function pickCard(files) {
   const godCard = files.find((x) => /^t_GodCard_/i.test(x));
   if (godCard) return godCard;
-  const baseSkinCard = files.find((x) => /t_SkinCard_/i.test(x) && /_Base\./i.test(x));
+  const baseSkinCard = files.find((x) => isSkinCardFile(x) && /_Base\./i.test(x));
   if (baseSkinCard) return baseSkinCard;
-  const noPrism = files.find((x) => /t_SkinCard_/i.test(x) && !/Prism/i.test(x));
+  const noPrism = files.find((x) => isSkinCardFile(x) && !/Prism/i.test(x));
   if (noPrism) return noPrism;
-  return files.find((x) => /t_SkinCard_/i.test(x)) || null;
+  return files.find((x) => isSkinCardFile(x)) || null;
 }
 
-/** Icons for the default (non-prism) skin card — prism-only filenames are skipped. */
+/** Icons for the default row — skip `_Prism_*` and numeric `_P1`… palette files so base uses neutral portrait. */
 function pickIconBase(files) {
-  const skinIcon = files.find((x) => /t_SkinIcon_/i.test(x) && !/Prism/i.test(x));
-  if (skinIcon) return skinIcon;
-  const skinPortrait = files.find((x) => /t_SkinPortrait_/i.test(x) && !/Prism/i.test(x));
-  if (skinPortrait) return skinPortrait;
+  const noPrism = (x) => !/Prism/i.test(x);
+  const noPalette = (x) => !/_P\d+\.(png|webp)$/i.test(x);
+
+  const godPort = files.find((x) => isGodPortraitFile(x) && noPrism(x) && noPalette(x));
+  if (godPort) return godPort;
+  const skinIconN = files.find((x) => isSkinIconFile(x) && noPrism(x) && noPalette(x));
+  if (skinIconN) return skinIconN;
+  const skinPortraitN = files.find((x) => isSkinPortraitFile(x) && noPrism(x) && noPalette(x));
+  if (skinPortraitN) return skinPortraitN;
   return (
-    files.find((x) => /t_GodPortrait_/i.test(x)) ||
+    files.find((x) => isSkinIconFile(x) && noPrism(x)) ||
+    files.find((x) => isSkinPortraitFile(x) && noPrism(x)) ||
+    files.find((x) => isGodPortraitFile(x)) ||
     files.find((x) => /t_GodMini_/i.test(x)) ||
     null
   );
@@ -70,9 +169,9 @@ function pickIconBase(files) {
 /** Icons inside a prism group (filenames are usually *_Prism_*.png). */
 function pickIconPrism(files) {
   return (
-    files.find((x) => /t_SkinIcon_/i.test(x)) ||
-    files.find((x) => /t_SkinPortrait_/i.test(x)) ||
-    files.find((x) => /t_GodPortrait_/i.test(x)) ||
+    files.find((x) => isSkinIconFile(x)) ||
+    files.find((x) => isSkinPortraitFile(x)) ||
+    files.find((x) => isGodPortraitFile(x)) ||
     null
   );
 }
@@ -140,7 +239,21 @@ function findGodFolderOnDisk(god, diskGods) {
   );
 }
 
+function resolveRemappedSkinDir(godFolder, skinKey) {
+  const godMap = SKIN_FOLDER_REMAP[godFolder];
+  if (!godMap || !godMap[skinKey]) return null;
+  const want = godMap[skinKey];
+  const skinsRoot = path.join(ROOT, godFolder, 'Skins');
+  if (!fs.existsSync(skinsRoot)) return null;
+  const dirs = listSubdirs(skinsRoot);
+  const hit = dirs.find((d) => d.toLowerCase() === String(want).toLowerCase());
+  return hit ? path.join(skinsRoot, hit) : null;
+}
+
 function resolveSkinAssetDir(godFolder, skinKey, skinEntry) {
+  const remapped = resolveRemappedSkinDir(godFolder, skinKey);
+  if (remapped) return remapped;
+
   const skinsRoot = path.join(ROOT, godFolder, 'Skins');
   let sub = matchSkinSubdir(skinsRoot, skinKey);
   if (!sub) sub = inferSkinSubdir(skinsRoot, skinKey, skinEntry);
@@ -159,8 +272,29 @@ function resolveSkinAssetDir(godFolder, skinKey, skinEntry) {
 }
 
 function extractPrismId(filename) {
-  const m = String(filename).match(/_Prism_([A-Za-z0-9]+)/i);
+  const m = String(filename).match(/_Prism[_-]?([A-Za-z0-9]+)/i);
   return m ? m[1] : null;
+}
+
+function extractNumberedVariantId(filename) {
+  const name = String(filename);
+  if (!/(SkinCard|SkinPortrait|SkinIcon|GodPortrait)/i.test(name)) return null;
+  if (/_T\d+_[A-Z]\.(png|webp)$/i.test(name)) return null;
+  if (/_P\d+\.(png|webp)$/i.test(name)) return null;
+  if (/_Base\.(png|webp)$/i.test(name)) return null;
+  const m = name.match(/_(\d{1,2})\.(png|webp)$/i);
+  return m ? String(parseInt(m[1], 10)) : null;
+}
+
+/**
+ * Artemis-style prism folder: `..._T1_B.png`, `..._T2_A.png` (tier + style letter), no `_Prism_` in the name.
+ * Only matched when `tierLetterInPrismsSubdir` is true (files scanned from `Skins/{Skin}/Prisms/`).
+ */
+function extractTierLetterStyleId(filename, tierLetterInPrismsSubdir) {
+  if (!tierLetterInPrismsSubdir) return null;
+  const m = String(filename).match(/_T(\d+)_([A-Z])\.(png|webp)$/i);
+  if (!m) return null;
+  return `${parseInt(m[1], 10)}_${m[2].toUpperCase()}`;
 }
 
 function findPrismsDirName(skinDir) {
@@ -168,25 +302,63 @@ function findPrismsDirName(skinDir) {
   return subs.find((d) => /^prisms?$/i.test(d)) || null;
 }
 
-function collectPrismPairsById(skinDir) {
-  const byId = new Map();
-  function pushPair(id, dir, name) {
-    if (!byId.has(id)) byId.set(id, []);
-    byId.get(id).push({ dir, name });
+/** e.g. `_Prism_B` → `prism:B`; `.../Prisms/..._T1_B` → `tierstyle:1_B`; `_P2.png` → `palette:2` */
+function variantGroupKeyFromFilename(filename, tierLetterInPrismsSubdir) {
+  const prism = extractPrismId(filename);
+  if (prism) return `prism:${prism}`;
+  const tierId = extractTierLetterStyleId(filename, tierLetterInPrismsSubdir);
+  if (tierId) return `tierstyle:${tierId}`;
+  const numbered = extractNumberedVariantId(filename);
+  if (numbered) return `numbered:${numbered}`;
+  const m = String(filename).match(/_P(\d+)\.(png|webp)$/i);
+  if (m) return `palette:${m[1]}`;
+  return null;
+}
+
+/** Match icon/card/god portrait to the same variant key as the chosen card (multi-variant folders). */
+function pairVariantKeyFromFilename(filename, tierLetterInPrismsSubdir) {
+  const p = extractPrismId(filename);
+  if (p) return `prism:${p}`;
+  const tierId = extractTierLetterStyleId(filename, tierLetterInPrismsSubdir);
+  if (tierId) return `tierstyle:${tierId}`;
+  const numbered = extractNumberedVariantId(filename);
+  if (numbered) return `numbered:${numbered}`;
+  const m = String(filename).match(/_P(\d+)\.(png|webp)$/i);
+  if (m) return `palette:${m[1]}`;
+  return null;
+}
+
+function pickIconForVariant(names, cardName, tierLetterInPrismsSubdirForCard) {
+  if (!cardName) return pickIconPrism(names);
+  const cardKey = pairVariantKeyFromFilename(cardName, tierLetterInPrismsSubdirForCard);
+  if (!cardKey) return pickIconPrism(names);
+  const hit = names.find(
+    (n) =>
+      (isSkinIconFile(n) || isGodPortraitFile(n) || isSkinPortraitFile(n)) &&
+      pairVariantKeyFromFilename(n, tierLetterInPrismsSubdirForCard) === cardKey
+  );
+  return hit || pickIconPrism(names);
+}
+
+function collectVariantPairsById(skinDir) {
+  const byKey = new Map();
+  function pushPair(key, dir, name) {
+    if (!byKey.has(key)) byKey.set(key, []);
+    byKey.get(key).push({ dir, name });
   }
   for (const name of listFiles(skinDir)) {
-    const id = extractPrismId(name);
-    if (id) pushPair(id, skinDir, name);
+    const key = variantGroupKeyFromFilename(name, false);
+    if (key) pushPair(key, skinDir, name);
   }
   const pName = findPrismsDirName(skinDir);
   if (pName) {
     const pDir = path.join(skinDir, pName);
     for (const name of listFiles(pDir)) {
-      const id = extractPrismId(name);
-      if (id) pushPair(id, pDir, name);
+      const key = variantGroupKeyFromFilename(name, true);
+      if (key) pushPair(key, pDir, name);
     }
   }
-  return byId;
+  return byKey;
 }
 
 function sortPrismIds(ids) {
@@ -200,11 +372,44 @@ function sortPrismIds(ids) {
   return [...ids].sort((a, b) => rank(a) - rank(b) || String(a).localeCompare(String(b)));
 }
 
-function pickIconFallbackFromPrisms(byId, projectRoot) {
-  for (const id of sortPrismIds([...byId.keys()])) {
-    const pairs = byId.get(id);
+function sortTierStyleKeys(keys) {
+  const tierKeys = keys.filter((k) => k.startsWith('tierstyle:'));
+  return tierKeys.sort((a, b) => {
+    const ra = a.slice('tierstyle:'.length);
+    const rb = b.slice('tierstyle:'.length);
+    const ma = ra.match(/^(\d+)_([A-Z])$/);
+    const mb = rb.match(/^(\d+)_([A-Z])$/);
+    if (ma && mb) {
+      const d = parseInt(ma[1], 10) - parseInt(mb[1], 10);
+      if (d !== 0) return d;
+      return ma[2].localeCompare(mb[2]);
+    }
+    return ra.localeCompare(rb);
+  });
+}
+
+function sortVariantGroupKeys(keys) {
+  const palettes = keys
+    .filter((k) => k.startsWith('palette:'))
+    .sort((a, b) => parseInt(a.split(':')[1], 10) - parseInt(b.split(':')[1], 10));
+  const tierStyles = sortTierStyleKeys(keys);
+  const numbered = keys
+    .filter((k) => k.startsWith('numbered:'))
+    .sort((a, b) => parseInt(a.split(':')[1], 10) - parseInt(b.split(':')[1], 10));
+  const prismKeys = keys.filter((k) => k.startsWith('prism:'));
+  const prismIds = prismKeys.map((k) => k.split(':')[1]);
+  const sortedPrismIds = sortPrismIds(prismIds);
+  const prisms = sortedPrismIds.map((id) => `prism:${id}`).filter((k) => keys.includes(k));
+  return [...palettes, ...tierStyles, ...numbered, ...prisms];
+}
+
+function pickIconFallbackFromVariants(byKey, projectRoot) {
+  for (const mapKey of sortVariantGroupKeys([...byKey.keys()])) {
+    const pairs = byKey.get(mapKey);
     const names = pairs.map((p) => p.name);
-    const iconName = pickIconPrism(names);
+    const cardName = pickCard(names);
+    const tierLetterHere = mapKey.startsWith('tierstyle:');
+    const iconName = pickIconForVariant(names, cardName, tierLetterHere);
     if (iconName) {
       const dir = pairs.find((p) => p.name === iconName).dir;
       return relFromDir(projectRoot, dir, iconName);
@@ -214,18 +419,37 @@ function pickIconFallbackFromPrisms(byId, projectRoot) {
 }
 
 function buildVariantOverlays(skinDir, projectRoot, baseCardPath, baseIconPath) {
-  const byId = collectPrismPairsById(skinDir);
-  if (byId.size === 0) return [];
+  const byKey = collectVariantPairsById(skinDir);
+  if (byKey.size === 0) return [];
 
   const overlays = [];
-  for (const id of sortPrismIds([...byId.keys()])) {
-    const pairs = byId.get(id);
+  for (const mapKey of sortVariantGroupKeys([...byKey.keys()])) {
+    const pairs = byKey.get(mapKey);
     const names = pairs.map((p) => p.name);
     const cardName = pickCard(names);
-    const iconName = pickIconPrism(names);
+    const tierLetterHere = mapKey.startsWith('tierstyle:');
+    const iconName = pickIconForVariant(names, cardName, tierLetterHere);
     const fullName = pickFullBody(names);
 
-    const o = { name: `Prism ${String(id).toUpperCase()}` };
+    const colon = mapKey.indexOf(':');
+    const kind = colon >= 0 ? mapKey.slice(0, colon) : '';
+    const rawId = colon >= 0 ? mapKey.slice(colon + 1) : mapKey;
+    let variantLabel;
+    if (kind === 'tierstyle') {
+      const m = String(rawId).match(/^(\d+)_([A-Z])$/);
+      variantLabel = m ? `Prism T${m[1]} ${m[2]}` : `Prism ${rawId}`;
+    } else if (kind === 'numbered') {
+      const n = parseInt(String(rawId), 10);
+      variantLabel = Number.isNaN(n) ? `Prism ${rawId}` : `Prism ${n}`;
+    } else if (kind === 'prism') {
+      const n = parseInt(String(rawId), 10);
+      variantLabel = Number.isNaN(n) ? `Prism ${String(rawId).toUpperCase()}` : `Prism ${n}`;
+    } else {
+      variantLabel = `Prism P${rawId}`;
+    }
+    const o = {
+      name: variantLabel,
+    };
     if (cardName) {
       const dir = pairs.find((p) => p.name === cardName).dir;
       const cardPath = relFromDir(projectRoot, dir, cardName);
@@ -268,16 +492,25 @@ function prettifyFolderName(folder) {
     .trim();
 }
 
-/** Any existing skin row already maps to this `Skins/{folderName}` directory. */
-function isFolderCoveredByExistingSkin(skinsRoot, skins, folderName) {
+/** Any existing skin row already resolves to this `Skins/{folderName}` directory (includes remaps). */
+function isFolderCoveredByExistingSkin(godFolder, skinsRoot, skins, folderName) {
   for (const skinKey of Object.keys(skins)) {
     const entry = skins[skinKey];
     if (!entry || typeof entry !== 'object') continue;
-    let sub = matchSkinSubdir(skinsRoot, skinKey);
-    if (!sub) sub = inferSkinSubdir(skinsRoot, skinKey, entry);
-    if (sub === folderName) return true;
+    const resolved = resolveSkinAssetDir(godFolder, skinKey, entry);
+    if (!resolved) continue;
+    const sub = path.basename(resolved);
+    if (sub === folderName || sub.toLowerCase() === String(folderName).toLowerCase()) return true;
   }
   return false;
+}
+
+function diskFolderIsOnlyRemapTarget(godFolder, folderName) {
+  const m = SKIN_FOLDER_REMAP[godFolder];
+  if (!m) return false;
+  return Object.values(m).some(
+    (v) => v === folderName || String(v).toLowerCase() === String(folderName).toLowerCase()
+  );
 }
 
 /**
@@ -290,7 +523,10 @@ function discoverMissingSkinFolders(godFolder, skins) {
   let added = 0;
   for (const d of listSubdirs(skinsRoot)) {
     if (/^mastery$/i.test(d)) continue;
-    if (isFolderCoveredByExistingSkin(skinsRoot, skins, d)) continue;
+    // Prism asset folders are merged into parent skin variants[], not separate picker rows.
+    if (/^pris[ie]ms$/i.test(d)) continue;
+    if (diskFolderIsOnlyRemapTarget(godFolder, d)) continue;
+    if (isFolderCoveredByExistingSkin(godFolder, skinsRoot, skins, d)) continue;
     if (skins[d]) continue;
     skins[d] = {
       name: prettifyFolderName(d),
@@ -301,6 +537,60 @@ function discoverMissingSkinFolders(godFolder, skins) {
     added += 1;
   }
   return added;
+}
+
+/**
+ * When `Default/` has base assets but no skin row resolves there as Base Skin, add or retag a stub
+ * so the main sync loop wires `t_GodCard_*` / `t_GodPortrait_*` / `T_GodFull_*` paths.
+ */
+function ensureDefaultBaseSkinStub(godFolder, skins, god) {
+  const defaultDir = path.join(ROOT, godFolder, 'Default');
+  if (!fs.existsSync(defaultDir)) return 0;
+
+  const files = listFiles(defaultDir);
+  if (!pickCard(files) && !pickIconBase(files)) return 0;
+
+  for (const skinKey of Object.keys(skins)) {
+    const entry = skins[skinKey];
+    if (!entry || typeof entry !== 'object') continue;
+    const type = String(entry.type || '');
+    const nm = String(entry.name || '');
+    const isBase =
+      /base skin/i.test(type) ||
+      /\bbase\b/i.test(nm) ||
+      skinKey === godFolder ||
+      String(skinKey).toLowerCase() === String(godFolder).toLowerCase();
+    if (!isBase) continue;
+    const dir = resolveSkinAssetDir(godFolder, skinKey, entry);
+    if (dir && path.resolve(dir) === path.resolve(defaultDir)) return 0;
+  }
+
+  const display = String(god.name || god.GodName || godFolder).trim();
+  const compactDisplay = display.replace(/\s+/g, '');
+  let baseKey = godFolder;
+  if (skins[baseKey] && !/base skin/i.test(String(skins[baseKey].type || ''))) {
+    if (!skins[compactDisplay]) baseKey = compactDisplay;
+    else if (!skins[display]) baseKey = display;
+  }
+
+  if (!skins[baseKey]) {
+    skins[baseKey] = {
+      name: display,
+      skin: '',
+      type: 'Base Skin',
+      price: { diamonds: '0' },
+    };
+    return 1;
+  }
+
+  const entry = skins[baseKey];
+  if (!/base skin/i.test(String(entry.type || ''))) {
+    entry.type = 'Base Skin';
+    if (!entry.name) entry.name = display;
+    if (!entry.price) entry.price = { diamonds: '0' };
+    return 1;
+  }
+  return 0;
 }
 
 function findBaseSkinKey(skins, godFolder, god) {
@@ -427,6 +717,9 @@ function main() {
   let hiddenDupes = 0;
   let discoveredSkinStubs = 0;
   let godsWithMasteryVariants = 0;
+  let prunedRemappedDuplicateSkinKeys = 0;
+  let ensuredDefaultBaseStubs = 0;
+  const skippedGods = new Set();
 
   for (const god of gods) {
     const skins = god.baseInformation && god.baseInformation.skins;
@@ -434,10 +727,22 @@ function main() {
     const godFolder = findGodFolderOnDisk(god, diskGods);
     if (!godFolder) {
       skipped += Object.keys(skins).length;
+      skippedGods.add(String(god.name || god.GodName || god.internalName || 'Unknown'));
       continue;
     }
 
+    const godRemap = SKIN_FOLDER_REMAP[godFolder];
+    if (godRemap) {
+      for (const diskFolder of new Set(Object.values(godRemap))) {
+        if (skins[diskFolder]) {
+          delete skins[diskFolder];
+          prunedRemappedDuplicateSkinKeys += 1;
+        }
+      }
+    }
+
     discoveredSkinStubs += discoverMissingSkinFolders(godFolder, skins);
+    ensuredDefaultBaseStubs += ensureDefaultBaseSkinStub(godFolder, skins, god);
 
     /** @type {Map<string, { skinKey: string, entry: object }[]>} */
     const dirGroups = new Map();
@@ -477,6 +782,7 @@ function main() {
     for (const { skinKey, entry, dir } of resolutions) {
       if (!dir) {
         skipped += 1;
+        skippedGods.add(String(god.name || god.GodName || god.internalName || godFolder));
         continue;
       }
       if (entry.hideFromSkinList || entry.hide_from_skin_list) {
@@ -492,13 +798,14 @@ function main() {
         iconRel = posixJoin(relDir, iconBaseName);
       }
 
-      const byPrism = collectPrismPairsById(dir);
+      const byVariants = collectVariantPairsById(dir);
       if (!iconRel) {
-        iconRel = pickIconFallbackFromPrisms(byPrism, projectRoot);
+        iconRel = pickIconFallbackFromVariants(byVariants, projectRoot);
       }
 
       if (!cardFile && !iconRel) {
         skipped += 1;
+        skippedGods.add(String(god.name || god.GodName || god.internalName || godFolder));
         continue;
       }
 
@@ -523,9 +830,8 @@ function main() {
       if (overlays.length > 0) {
         entry.variants = overlays;
         prismGroups += 1;
-      } else {
-        delete entry.variants;
       }
+      // If disk has no prism files, keep existing variants (do not wipe on failed/partial folder match).
 
       updated += 1;
     }
@@ -553,6 +859,9 @@ function main() {
         hiddenDuplicateSkinRows: hiddenDupes,
         discoveredSkinStubsFromDisk: discoveredSkinStubs,
         godsWithMasteryVariantsOnBase: godsWithMasteryVariants,
+        prunedRemappedDuplicateSkinKeys,
+        ensuredDefaultBaseStubs,
+        skippedGodsCount: skippedGods.size,
         write,
       },
       null,

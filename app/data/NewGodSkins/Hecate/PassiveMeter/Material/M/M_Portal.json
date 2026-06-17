@@ -1,0 +1,510 @@
+[
+  {
+    "Type": "Material",
+    "Name": "M_Portal",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Material'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/Material/M/M_Portal",
+    "Properties": {
+      "MaterialDomain": "EMaterialDomain::MD_UI",
+      "BlendMode": "EBlendMode::BLEND_Translucent",
+      "bCanMaskedBeAssumedOpaque": true,
+      "PixelDepthOffsetMode": "EPixelDepthOffsetMode::PDOM_Legacy",
+      "StateId": "D28BAD4E-45CF660C-76EE059F-951AF5F9",
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedExpressionData": {
+      "RuntimeEntries": {
+        "ParameterInfoSet": [
+          {
+            "Name": "Speed",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "undulation2",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "ExpandVisibility",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "LargeCircleMaskSize",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "LargeCircleMaskBlur",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "SmallCircleMaskSize",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "SmallCircleMaskBlur",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "LargeCircleContrast",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "SmallCircleContrast",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "ExpandingHoleSpeed",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "RampUp",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "undulation",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "colorsphereMultiply",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "colorsphereMultiplyB",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "1",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "2",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "UndulationSpeed",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "ActiveCoreContrast",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "ActiveCoreContrastMAsk",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          }
+        ]
+      },
+      "RuntimeEntries[1]": {
+        "ParameterInfoSet": [
+          {
+            "Name": "PortalColor1",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "Expanding_Color1",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "Expanding_Color2",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "PortalColor2",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "PortalColorB1",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "PortalColorB2",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          }
+        ]
+      },
+      "RuntimeEntries[2]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[3]": {
+        "ParameterInfoSet": [
+          {
+            "Name": "Portal",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          }
+        ]
+      },
+      "RuntimeEntries[4]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[5]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[6]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[7]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[8]": {
+        "ParameterInfoSet": []
+      },
+      "ScalarPrimitiveDataIndexValues": [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      "VectorPrimitiveDataIndexValues": [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      "ScalarValues": [
+        1.0,
+        1.2,
+        0.0,
+        0.5,
+        0.2,
+        0.1,
+        0.2,
+        1.0,
+        1.0,
+        -0.2,
+        1.0,
+        0.2,
+        1.0,
+        1.0,
+        0.5,
+        0.1,
+        0.5,
+        0.0,
+        0.0
+      ],
+      "StaticSwitchValues": [],
+      "DynamicSwitchValues": [],
+      "VectorValues": [
+        {
+          "R": 0.821981,
+          "G": 0.08906,
+          "B": 0.947917,
+          "A": 1.0,
+          "Hex": "EA54FA"
+        },
+        {
+          "R": 1.0,
+          "G": 1.0,
+          "B": 1.0,
+          "A": 1.0,
+          "Hex": "FFFFFF"
+        },
+        {
+          "R": 0.5,
+          "G": 0.5,
+          "B": 0.5,
+          "A": 1.0,
+          "Hex": "BCBCBC"
+        },
+        {
+          "R": 0.0,
+          "G": 0.0,
+          "B": 0.0,
+          "A": 1.0,
+          "Hex": "000000"
+        },
+        {
+          "R": 1.0,
+          "G": 1.0,
+          "B": 1.0,
+          "A": 1.0,
+          "Hex": "FFFFFF"
+        },
+        {
+          "R": 1.0,
+          "G": 1.0,
+          "B": 1.0,
+          "A": 1.0,
+          "Hex": "FFFFFF"
+        }
+      ],
+      "DoubleVectorValues": [],
+      "TextureValues": [
+        {
+          "AssetPathName": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/t_PassiveMeter_Hecate_InActivePortal.t_PassiveMeter_Hecate_InActivePortal",
+          "SubPathString": ""
+        }
+      ],
+      "TextureCollectionValues": [],
+      "FontValues": [],
+      "FontPageValues": [],
+      "RuntimeVirtualTextureValues": [],
+      "SparseVolumeTextureValues": [],
+      "ReferencedTextures": [
+        {
+          "ObjectName": "Texture2D'T_Clouds_02'",
+          "ObjectPath": "/Game/VFX/Textures/Noise/T_Clouds_02.0"
+        },
+        {
+          "ObjectName": "Texture2D'T_MSK1'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/MaterialPatterns/T_MSK1.0"
+        },
+        {
+          "ObjectName": "Texture2D't_PassiveMeter_Hecate_InActivePortal'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/t_PassiveMeter_Hecate_InActivePortal.0"
+        },
+        {
+          "ObjectName": "Texture2D't_PassiveMeter_Hecate_ActivePortal'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/t_PassiveMeter_Hecate_ActivePortal.0"
+        }
+      ],
+      "ReferencedTextureCollections": [],
+      "FunctionInfos": [
+        {
+          "StateId": "E572D701-496E6D38-CC53A5BD-C450B0ED",
+          "Function": {
+            "ObjectName": "MaterialFunction'CustomRotator'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions02/Texturing/CustomRotator.0"
+          }
+        },
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        },
+        {
+          "StateId": "2C1DDB6E-406BC9FC-1D4141A1-7C82122A",
+          "Function": {
+            "ObjectName": "MaterialFunction'BreakOutFloat2Components'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions02/Utility/BreakOutFloat2Components.0"
+          }
+        },
+        {
+          "StateId": "7623E07F-447E53C7-49A835AD-C053F006",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_Translate'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/Transforms/MF_UI_Translate.0"
+          }
+        },
+        {
+          "StateId": "2C1DDB6E-406BC9FC-1D4141A1-7C82122A",
+          "Function": {
+            "ObjectName": "MaterialFunction'BreakOutFloat2Components'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions02/Utility/BreakOutFloat2Components.0"
+          }
+        },
+        {
+          "StateId": "7623E07F-447E53C7-49A835AD-C053F006",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_Translate'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/Transforms/MF_UI_Translate.0"
+          }
+        },
+        {
+          "StateId": "DDAF1091-4EF9ADB2-6EFCC0B6-972F81B3",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_Scale'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/Transforms/MF_UI_Scale.0"
+          }
+        },
+        {
+          "StateId": "5E28F255-4817E6E7-2D027C9A-2F7126C6",
+          "Function": {
+            "ObjectName": "MaterialFunction'VectorToRadialValue'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions02/Utility/VectorToRadialValue.0"
+          }
+        },
+        {
+          "StateId": "E572D701-496E6D38-CC53A5BD-C450B0ED",
+          "Function": {
+            "ObjectName": "MaterialFunction'CustomRotator'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions02/Texturing/CustomRotator.0"
+          }
+        },
+        {
+          "StateId": "2C1DDB6E-406BC9FC-1D4141A1-7C82122A",
+          "Function": {
+            "ObjectName": "MaterialFunction'BreakOutFloat2Components'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions02/Utility/BreakOutFloat2Components.0"
+          }
+        },
+        {
+          "StateId": "7623E07F-447E53C7-49A835AD-C053F006",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_Translate'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/Transforms/MF_UI_Translate.0"
+          }
+        },
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        },
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        },
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        },
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        },
+        {
+          "StateId": "5E28F255-4817E6E7-2D027C9A-2F7126C6",
+          "Function": {
+            "ObjectName": "MaterialFunction'VectorToRadialValue'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions02/Utility/VectorToRadialValue.0"
+          }
+        },
+        {
+          "StateId": "42FB52C9-4B6E464D-2D6CB2B5-E6A65899",
+          "Function": {
+            "ObjectName": "MaterialFunction'ExponentialDensity'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions01/Density/ExponentialDensity.0"
+          }
+        },
+        {
+          "StateId": "42FB52C9-4B6E464D-2D6CB2B5-E6A65899",
+          "Function": {
+            "ObjectName": "MaterialFunction'ExponentialDensity'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions01/Density/ExponentialDensity.0"
+          }
+        },
+        {
+          "StateId": "235C8133-44D704CA-0297108A-59B9F710",
+          "Function": {
+            "ObjectName": "MaterialFunction'RadialGradientExponential'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions01/Gradient/RadialGradientExponential.0"
+          }
+        },
+        {
+          "StateId": "2104FB0F-4E063922-A080A092-8F775CEB",
+          "Function": {
+            "ObjectName": "MaterialFunction'Contrast_Preserve_Color'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions01/ImageAdjustment/Contrast_Preserve_Color.0"
+          }
+        },
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        },
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        }
+      ],
+      "FunctionInfosStateCRC": 758068191,
+      "ParameterCollectionInfos": [],
+      "GrassTypes": [],
+      "MaterialLayers": {
+        "Layers": [],
+        "Blends": [],
+        "Tree": {
+          "Nodes": [],
+          "Payloads": [],
+          "Root": -1
+        }
+      },
+      "DynamicParameterNames": [],
+      "QualityLevelsUsed": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "bHasMaterialLayers": false,
+      "bHasRuntimeVirtualTextureOutput": false,
+      "bHasFirstPersonOutput": false,
+      "bHasSceneColor": false,
+      "bHasPerInstanceCustomData": false,
+      "bHasPerInstanceRandom": false,
+      "bHasVertexInterpolator": false,
+      "bHasCustomizedUVs": false,
+      "bHasMeshPaintTexture": false,
+      "PropertyConnectedMask": 3
+    },
+    "ReferencedTextures": [
+      {
+        "ObjectName": "Texture2D't_PassiveMeter_Hecate_ActivePortal'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/t_PassiveMeter_Hecate_ActivePortal.0"
+      },
+      {
+        "ObjectName": "Texture2D't_PassiveMeter_Hecate_InActivePortal'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/t_PassiveMeter_Hecate_InActivePortal.0"
+      },
+      {
+        "ObjectName": "Texture2D'T_MSK1'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/MaterialPatterns/T_MSK1.0"
+      },
+      {
+        "ObjectName": "Texture2D'T_Clouds_02'",
+        "ObjectPath": "/Game/VFX/Textures/Noise/T_Clouds_02.0"
+      }
+    ]
+  }
+]

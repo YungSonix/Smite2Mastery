@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "PSV_MLF_ActiveCountFrame",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/MorganLeFay/PassiveMeter/PSV_MLF_ActiveCountFrame",
+    "Properties": {
+      "ImportedSize": {
+        "X": 148,
+        "Y": 88
+      },
+      "LightingGuid": "F388211A-499CA145-932985A6-8B9CDC62",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 148,
+    "SizeY": 88,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 52096,
+          "SizeOnDisk": 52096,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 148,
+        "SizeY": 88,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "Type": "Material",
+    "Name": "MAT_KaliFrameShape",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Material'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Kali/PSVMeter/MAT_KaliFrameShape",
+    "Properties": {
+      "MaterialDomain": "EMaterialDomain::MD_UI",
+      "BlendMode": "EBlendMode::BLEND_Translucent",
+      "bCanMaskedBeAssumedOpaque": true,
+      "PixelDepthOffsetMode": "EPixelDepthOffsetMode::PDOM_Legacy",
+      "StateId": "1CA7FE33-4FC0CDAC-72035FB8-98419446",
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedExpressionData": {
+      "RuntimeEntries": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[1]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[2]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[3]": {
+        "ParameterInfoSet": [
+          {
+            "Name": "Mask",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          }
+        ]
+      },
+      "RuntimeEntries[4]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[5]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[6]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[7]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[8]": {
+        "ParameterInfoSet": []
+      },
+      "ScalarPrimitiveDataIndexValues": [],
+      "VectorPrimitiveDataIndexValues": [],
+      "ScalarValues": [],
+      "StaticSwitchValues": [],
+      "DynamicSwitchValues": [],
+      "VectorValues": [],
+      "DoubleVectorValues": [],
+      "TextureValues": [
+        {
+          "AssetPathName": "/Game/UI/Textures/ArtAssets/Gods/Kali/PSVMeter/t_PSVMeter_Kali_Mask.t_PSVMeter_Kali_Mask",
+          "SubPathString": ""
+        }
+      ],
+      "TextureCollectionValues": [],
+      "FontValues": [],
+      "FontPageValues": [],
+      "RuntimeVirtualTextureValues": [],
+      "SparseVolumeTextureValues": [],
+      "ReferencedTextures": [
+        {
+          "ObjectName": "Texture2D't_PSVMeter_Kali_Mask'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Kali/PSVMeter/t_PSVMeter_Kali_Mask.0"
+        },
+        {
+          "ObjectName": "Texture2D'PSV_Aphrodite_Mask'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Aphrodite/Passive/PSV_Aphrodite_Mask.0"
+        }
+      ],
+      "ReferencedTextureCollections": [],
+      "FunctionInfos": [],
+      "FunctionInfosStateCRC": 4294967295,
+      "ParameterCollectionInfos": [],
+      "GrassTypes": [],
+      "MaterialLayers": {
+        "Layers": [],
+        "Blends": [],
+        "Tree": {
+          "Nodes": [],
+          "Payloads": [],
+          "Root": -1
+        }
+      },
+      "DynamicParameterNames": [],
+      "QualityLevelsUsed": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "bHasMaterialLayers": false,
+      "bHasRuntimeVirtualTextureOutput": false,
+      "bHasFirstPersonOutput": false,
+      "bHasSceneColor": false,
+      "bHasPerInstanceCustomData": false,
+      "bHasPerInstanceRandom": false,
+      "bHasVertexInterpolator": false,
+      "bHasCustomizedUVs": false,
+      "bHasMeshPaintTexture": false,
+      "PropertyConnectedMask": 3
+    },
+    "ReferencedTextures": [
+      {
+        "ObjectName": "Texture2D'PSV_Aphrodite_Mask'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Aphrodite/Passive/PSV_Aphrodite_Mask.0"
+      },
+      {
+        "ObjectName": "Texture2D't_PSVMeter_Kali_Mask'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Kali/PSVMeter/t_PSVMeter_Kali_Mask.0"
+      }
+    ]
+  }
+]

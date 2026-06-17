@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSVMeter_Kali_Mask",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Kali/PSVMeter/t_PSVMeter_Kali_Mask",
+    "Properties": {
+      "ImportedSize": {
+        "X": 176,
+        "Y": 192
+      },
+      "LightingGuid": "E37C5DD7-416765AC-9545B5A2-177F439E",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 176,
+    "SizeY": 192,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 33792,
+          "SizeOnDisk": 33792,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 176,
+        "SizeY": 192,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

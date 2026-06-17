@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "03",
+    "Flags": "RF_Public | RF_Standalone | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/MorganLeFay/PassiveMeter/03",
+    "Properties": {
+      "ImportedSize": {
+        "X": 87,
+        "Y": 42
+      },
+      "LightingGuid": "26765820-4F810F67-C9F63FA2-0ED8A2E1",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 87,
+    "SizeY": 42,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 14616,
+          "SizeOnDisk": 14616,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 87,
+        "SizeY": 42,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

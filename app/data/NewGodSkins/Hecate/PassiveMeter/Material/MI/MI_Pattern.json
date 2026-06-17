@@ -1,0 +1,80 @@
+[
+  {
+    "Type": "MaterialInstanceConstant",
+    "Name": "MI_Pattern",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'MaterialInstanceConstant'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/Material/MI/MI_Pattern",
+    "Properties": {
+      "Parent": {
+        "ObjectName": "Material'M_Pattern'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/Material/M/M_Pattern.0"
+      },
+      "ScalarParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "RampUp",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "4E0D6C30-4EC9D4B0-6B9FDAB5-DBA3FCC6"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "Multiplier",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.0,
+          "ExpressionGUID": "63D6B6FB-403DC8E0-59C786B2-C7BE3D8C"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "Test",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": -0.072,
+          "ExpressionGUID": "1620DEE9-4BDE8DE7-2CBF47B7-EE620168"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "RefractionDepthBias",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "00000000-00000000-00000000-00000000"
+        }
+      ],
+      "VectorParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "patternColor",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 5.857049,
+            "G": 0.93421,
+            "B": 0.1,
+            "A": 0.216,
+            "Hex": "37FFF859"
+          },
+          "ExpressionGUID": "B70BDEF6-40F7438D-6F21339F-7E53D101"
+        }
+      ],
+      "BasePropertyOverrides": {
+        "BlendMode": "EBlendMode::BLEND_Additive",
+        "ShadingModel": "EMaterialShadingModel::MSM_Unlit",
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedData": {
+      "ParentLayerIndexRemap": []
+    }
+  }
+]

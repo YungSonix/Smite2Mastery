@@ -1,0 +1,313 @@
+[
+  {
+    "Type": "MaterialInstanceConstant",
+    "Name": "MI_Portal",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'MaterialInstanceConstant'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/Material/MI/MI_Portal",
+    "Properties": {
+      "Parent": {
+        "ObjectName": "Material'M_Portal'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/Material/M/M_Portal.0"
+      },
+      "ScalarParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "1",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 182.56041,
+          "ExpressionGUID": "B67CCB85-435D612D-14D57A81-2EAEE908"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "2",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.1,
+          "ExpressionGUID": "A53EBA59-43409F68-148CA98F-66AF3718"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "LargeCircleContrast",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.501053,
+          "ExpressionGUID": "485B2673-4E9B6422-A777D5A4-9B1EBD96"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "LargeCircleMaskBlur",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.707295,
+          "ExpressionGUID": "FBB2D62B-4D8BA477-B0872CB8-674BCC41"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "LargeCircleMaskSize",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": -0.044,
+          "ExpressionGUID": "1FA519F5-4C8B43F7-A5A090B0-1B4AE0BD"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "SmallCircleContrast",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 5.282461,
+          "ExpressionGUID": "99692B1D-41ACF44D-1137CD88-AD336DDF"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "SmallCircleMaskBlur",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "05C92336-4C693E78-D69CE9B6-1CDA0F0E"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "SmallCircleMaskSize",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.251458,
+          "ExpressionGUID": "AAC6AEC4-407CA239-98A66AAD-A349B1F7"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "RampUp",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "5C316A36-4FEA6566-343D5886-36E51F48"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "ActiveCoreContrast",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "EB865B37-49BC2248-9FF3DEBD-1D471799"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "ActiveCoreContrastMAsk",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": -1.697305,
+          "ExpressionGUID": "24C82D9C-4A806E3B-7884F4B4-8D1FFD61"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "ExpandingHoleSpeed",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": -0.44,
+          "ExpressionGUID": "0EE7F94E-4A5FE9D4-646801AB-76F327A6"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "ExpandVisibility",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.3,
+          "ExpressionGUID": "31DF6556-4BA26D5E-334193AB-16CE74F9"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "Speed",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.2,
+          "ExpressionGUID": "828A45ED-420E7404-553130BB-4E08A51D"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "UndulationSpeed",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.2,
+          "ExpressionGUID": "56E725F6-4B2FDECA-4D6F2886-56454A83"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "colorsphereMultiply",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 2.0,
+          "ExpressionGUID": "9942F523-40E424EB-56FC2F8B-EB49C640"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "colorsphereMultiplyB",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.0,
+          "ExpressionGUID": "9BD0102A-44BF07E5-43E5F8AC-1854C70C"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "undulation",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.08,
+          "ExpressionGUID": "7BB9B0CF-462DFB63-A6D201BA-9A15E371"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "undulation2",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.0,
+          "ExpressionGUID": "DAFD72F1-44CC194E-307E0B80-F6BBD5B1"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "RefractionDepthBias",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "00000000-00000000-00000000-00000000"
+        }
+      ],
+      "VectorParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "Expanding_Color1",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 0.581254,
+            "G": 0.581254,
+            "B": 0.581254,
+            "A": 1.0,
+            "Hex": "C9C9C9"
+          },
+          "ExpressionGUID": "B6C1C374-4CDC498D-0BE7CC8C-57A8A739"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "Expanding_Color2",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 0.0,
+            "G": 0.0,
+            "B": 0.0,
+            "A": 0.0,
+            "Hex": "000000"
+          },
+          "ExpressionGUID": "CA2CD760-4325D757-43FED481-4A6383E1"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "PortalColor1",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 0.056,
+            "G": 0.0,
+            "B": 0.25,
+            "A": 1.0,
+            "Hex": "430089"
+          },
+          "ExpressionGUID": "2C49A0B0-429366C3-C39CC6BD-F967A9D6"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "PortalColor2",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 0.0,
+            "G": 0.01,
+            "B": 0.2,
+            "A": 1.1,
+            "Hex": "00197C"
+          },
+          "ExpressionGUID": "7C1AD337-45023DF9-38B94194-236C2909"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "PortalColorB1",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 0.0,
+            "G": 0.0,
+            "B": 0.024,
+            "A": 1.0,
+            "Hex": "00002B"
+          },
+          "ExpressionGUID": "6F086F84-43F55CEF-3BFE45A6-B80E9E10"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "PortalColorB2",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 0.0,
+            "G": 0.005,
+            "B": 0.144,
+            "A": 1.0,
+            "Hex": "000F6A"
+          },
+          "ExpressionGUID": "697BA707-45E65CC5-A7E8EE85-EE7F7859"
+        }
+      ],
+      "TextureParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "Portal",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "ObjectName": "Texture2D't_PassiveMeter_Hecate_InActivePortal'",
+            "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Hecate/PassiveMeter/t_PassiveMeter_Hecate_InActivePortal.0"
+          },
+          "ExpressionGUID": "ECF1ED26-4D3F56A2-80C459BA-0A67B223"
+        }
+      ],
+      "BasePropertyOverrides": {
+        "BlendMode": "EBlendMode::BLEND_Translucent",
+        "ShadingModel": "EMaterialShadingModel::MSM_Unlit",
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedData": {
+      "ParentLayerIndexRemap": []
+    }
+  }
+]

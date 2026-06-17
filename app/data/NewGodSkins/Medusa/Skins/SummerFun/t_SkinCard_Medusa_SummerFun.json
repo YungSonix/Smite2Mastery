@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_SkinCard_Medusa_SummerFun",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Medusa/Skins/SummerFun/t_SkinCard_Medusa_SummerFun",
+    "Properties": {
+      "ImportedSize": {
+        "X": 404,
+        "Y": 600
+      },
+      "LightingGuid": "C0A8B4CE-4E8B446D-53AC7088-DF0B0F54",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 404,
+    "SizeY": 600,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 242400,
+          "SizeOnDisk": 242400,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 404,
+        "SizeY": 600,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_SkinPortrait_BaronSamedi_NanoMancer",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/BaronSamedi/Skins/NanoMancer/t_SkinPortrait_BaronSamedi_NanoMancer",
+    "Properties": {
+      "ImportedSize": {
+        "X": 256,
+        "Y": 254
+      },
+      "LightingGuid": "6F7B9C04-4BAD5F58-5D75BDBC-54F4C4EA",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 256,
+    "SizeY": 254,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 260096,
+          "SizeOnDisk": 260096,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 256,
+        "SizeY": 254,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

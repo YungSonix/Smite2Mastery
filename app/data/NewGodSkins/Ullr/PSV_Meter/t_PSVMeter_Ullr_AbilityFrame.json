@@ -1,0 +1,35 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSVMeter_Ullr_AbilityFrame",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Ullr/PSV_Meter/t_PSVMeter_Ullr_AbilityFrame",
+    "Properties": {
+      "ImportedSize": {
+        "X": 64,
+        "Y": 64
+      },
+      "LightingGuid": "2021F42B-48880017-6A42A0A0-D1658287",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI"
+    },
+    "SizeX": 64,
+    "SizeY": 64,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 4096,
+          "SizeOnDisk": 4096,
+          "OffsetInFile": "0x71"
+        },
+        "SizeX": 64,
+        "SizeY": 64,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

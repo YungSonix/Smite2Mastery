@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Ra_Pip_01_Glow",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Ra/PassiveMeter/t_PSV_Ra_Pip_01_Glow",
+    "Properties": {
+      "ImportedSize": {
+        "X": 112,
+        "Y": 68
+      },
+      "LightingGuid": "29D9254C-4123CA1D-0F59EA8B-08348C15",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 112,
+    "SizeY": 68,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 30464,
+          "SizeOnDisk": 30464,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 112,
+        "SizeY": 68,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

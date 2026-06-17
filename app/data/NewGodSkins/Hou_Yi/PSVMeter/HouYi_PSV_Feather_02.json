@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "HouYi_PSV_Feather_02",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Hou_Yi/PSVMeter/HouYi_PSV_Feather_02",
+    "Properties": {
+      "ImportedSize": {
+        "X": 22,
+        "Y": 52
+      },
+      "LightingGuid": "BD181221-4ED1BFBC-CF0DD39A-EFAC0B5A",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 22,
+    "SizeY": 52,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 4576,
+          "SizeOnDisk": 4576,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 22,
+        "SizeY": 52,
+        "SizeZ": 1
+      }
+    ]
+  }
+]
