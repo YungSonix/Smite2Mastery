@@ -19,6 +19,8 @@
  *   `_Prism_*` files. **`SKIN_FOLDER_REMAP`**: map canonical `builds.json` skin key → on-disk folder (e.g. MysticGuardian → `02A`);
  *   duplicate JSON rows named after the disk folder are removed on each run.
  *
+ * - **God-level prism folders**: loose `Skins/Prisms` or `Skins/Prisims` (sibling of skin folders) are
+ *   rehomed into `Skins/{ParentSkin}/Prisms/` using filename tokens; orphan `Prisms` JSON rows are removed.
  * - **Preserves** existing `type`, `price`, and `variants[]` when disk has no prism files (only updates paths from matched folders).
  */
 'use strict';
@@ -272,7 +274,7 @@ function resolveSkinAssetDir(godFolder, skinKey, skinEntry) {
 }
 
 function extractPrismId(filename) {
-  const m = String(filename).match(/_Prism[_-]?([A-Za-z0-9]+)/i);
+  const m = String(filename).match(/_Pris[i]?m[_-]?([A-Za-z0-9]+)/i);
   return m ? m[1] : null;
 }
 
@@ -300,6 +302,144 @@ function extractTierLetterStyleId(filename, tierLetterInPrismsSubdir) {
 function findPrismsDirName(skinDir) {
   const subs = listSubdirs(skinDir);
   return subs.find((d) => /^prisms?$/i.test(d)) || null;
+}
+
+/**
+ * When prism PNGs sit in `Skins/Prisms` (sibling of skin folders) instead of
+ * `Skins/{Skin}/Prisms`, infer the parent skin from the filename and move them.
+ */
+const GOD_LEVEL_PRISM_PARENT_BY_GOD = {
+  Cabrakan: 'NerdRage',
+};
+
+function extractSkinSlugFromPrismFilename(filename, godFolder) {
+  const base = path.basename(filename, path.extname(filename));
+  let s = base.replace(/^t_(?:SkinCard|SkinPortrait|SkinIcon|GodPortrait)_/i, '');
+  const godEsc = String(godFolder).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  s = s.replace(new RegExp(`^${godEsc}_`, 'i'), '');
+  s = s.replace(/_T\d+_Pris[i]?m_[A-Za-z0-9]+$/i, '');
+  s = s.replace(/_Pris[i]?m_[A-Za-z0-9]+$/i, '');
+  s = s.replace(/_Prism\d+$/i, '');
+  s = s.trim();
+  if (/^pris[i]?m(_[a-z0-9]+)?$/i.test(s)) return '';
+  return s;
+}
+
+function matchSkinDirBySiblingPrismId(skinsRoot, filename) {
+  const prismId = extractPrismId(filename);
+  if (!prismId) return null;
+  const dirs = listSubdirs(skinsRoot).filter(
+    (d) => !/^mastery$/i.test(d) && !/^pris[i]?ms?$/i.test(d)
+  );
+  for (const d of dirs) {
+    const prismDir = path.join(skinsRoot, d, 'Prisms');
+    if (!fs.existsSync(prismDir)) continue;
+    const hits = listFiles(prismDir).some((f) => extractPrismId(f) === prismId);
+    if (hits) return d;
+  }
+  return null;
+}
+
+function matchSkinDirForPrismSlug(skinsRoot, slug, godFolder, filename) {
+  const dirs = listSubdirs(skinsRoot).filter(
+    (d) => !/^mastery$/i.test(d) && !/^pris[i]?ms?$/i.test(d)
+  );
+  if (!slug) {
+    const fallback = GOD_LEVEL_PRISM_PARENT_BY_GOD[godFolder];
+    if (fallback && dirs.some((d) => d.toLowerCase() === fallback.toLowerCase())) {
+      return dirs.find((d) => d.toLowerCase() === fallback.toLowerCase());
+    }
+    return matchSkinDirBySiblingPrismId(skinsRoot, filename);
+  }
+  let hit = dirs.find((d) => d.toLowerCase() === slug.toLowerCase());
+  if (hit) return hit;
+  hit = dirs.find(
+    (d) =>
+      d.toLowerCase().includes(slug.toLowerCase()) || slug.toLowerCase().includes(d.toLowerCase())
+  );
+  if (hit) return hit;
+  const slugLower = slug.toLowerCase();
+  for (const d of dirs) {
+    const files = listFiles(path.join(skinsRoot, d));
+    if (files.some((f) => f.toLowerCase().includes(slugLower))) return d;
+  }
+  return null;
+}
+
+function findGodLevelPrismDir(skinsRoot) {
+  for (const d of listSubdirs(skinsRoot)) {
+    if (/^pris[i]?ms?$/i.test(d)) return path.join(skinsRoot, d);
+  }
+  return null;
+}
+
+function rehomeGodLevelPrismFolders(godFolder) {
+  const skinsRoot = path.join(ROOT, godFolder, 'Skins');
+  const looseDir = findGodLevelPrismDir(skinsRoot);
+  if (!looseDir) return { movedFiles: 0, targetFolders: [] };
+
+  const files = listFiles(looseDir);
+  if (files.length === 0) {
+    try {
+      fs.rmdirSync(looseDir);
+    } catch {
+      // ignore
+    }
+    return { movedFiles: 0, targetFolders: [] };
+  }
+
+  const byTarget = new Map();
+  for (const name of files) {
+    const slug = extractSkinSlugFromPrismFilename(name, godFolder);
+    const targetSkin = matchSkinDirForPrismSlug(skinsRoot, slug, godFolder, name);
+    if (!targetSkin) continue;
+    if (!byTarget.has(targetSkin)) byTarget.set(targetSkin, []);
+    byTarget.get(targetSkin).push(name);
+  }
+
+  let movedFiles = 0;
+  const targetFolders = [];
+  for (const [targetSkin, names] of byTarget) {
+    const destDir = path.join(skinsRoot, targetSkin, 'Prisms');
+    if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
+    targetFolders.push(targetSkin);
+    for (const name of names) {
+      const src = path.join(looseDir, name);
+      const dest = path.join(destDir, name);
+      if (fs.existsSync(dest)) {
+        try {
+          fs.unlinkSync(src);
+        } catch {
+          // ignore
+        }
+        continue;
+      }
+      fs.renameSync(src, dest);
+      movedFiles += 1;
+    }
+  }
+
+  const remaining = listFiles(looseDir);
+  if (remaining.length === 0) {
+    try {
+      fs.rmdirSync(looseDir);
+    } catch {
+      // ignore
+    }
+  }
+
+  return { movedFiles, targetFolders: [...new Set(targetFolders)] };
+}
+
+function stripOrphanPrismSkinKeys(skins) {
+  let removed = 0;
+  for (const key of [...Object.keys(skins)]) {
+    if (/^pris[i]?ms?$/i.test(key)) {
+      delete skins[key];
+      removed += 1;
+    }
+  }
+  return removed;
 }
 
 /** e.g. `_Prism_B` → `prism:B`; `.../Prisms/..._T1_B` → `tierstyle:1_B`; `_P2.png` → `palette:2` */
@@ -524,7 +664,7 @@ function discoverMissingSkinFolders(godFolder, skins) {
   for (const d of listSubdirs(skinsRoot)) {
     if (/^mastery$/i.test(d)) continue;
     // Prism asset folders are merged into parent skin variants[], not separate picker rows.
-    if (/^pris[ie]ms$/i.test(d)) continue;
+    if (/^pris[i]?ms?$/i.test(d)) continue;
     if (diskFolderIsOnlyRemapTarget(godFolder, d)) continue;
     if (isFolderCoveredByExistingSkin(godFolder, skinsRoot, skins, d)) continue;
     if (skins[d]) continue;
@@ -718,6 +858,9 @@ function main() {
   let discoveredSkinStubs = 0;
   let godsWithMasteryVariants = 0;
   let prunedRemappedDuplicateSkinKeys = 0;
+  let prunedOrphanPrismSkinKeys = 0;
+  let rehomedGodLevelPrismFiles = 0;
+  const rehomedGodLevelPrismTargets = [];
   let ensuredDefaultBaseStubs = 0;
   const skippedGods = new Set();
 
@@ -730,6 +873,11 @@ function main() {
       skippedGods.add(String(god.name || god.GodName || god.internalName || 'Unknown'));
       continue;
     }
+
+    const rehome = rehomeGodLevelPrismFolders(godFolder);
+    rehomedGodLevelPrismFiles += rehome.movedFiles;
+    for (const t of rehome.targetFolders) rehomedGodLevelPrismTargets.push(`${godFolder}/${t}`);
+    prunedOrphanPrismSkinKeys += stripOrphanPrismSkinKeys(skins);
 
     const godRemap = SKIN_FOLDER_REMAP[godFolder];
     if (godRemap) {
@@ -860,6 +1008,9 @@ function main() {
         discoveredSkinStubsFromDisk: discoveredSkinStubs,
         godsWithMasteryVariantsOnBase: godsWithMasteryVariants,
         prunedRemappedDuplicateSkinKeys,
+        prunedOrphanPrismSkinKeys,
+        rehomedGodLevelPrismFiles,
+        rehomedGodLevelPrismTargets,
         ensuredDefaultBaseStubs,
         skippedGodsCount: skippedGods.size,
         write,
