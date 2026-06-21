@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_SkinPortrait_Vulcan_Emberlord_T4_Prisim_B",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Vulcan/Skins/Prisims/t_SkinPortrait_Vulcan_Emberlord_T4_Prisim_B",
+    "Properties": {
+      "ImportedSize": {
+        "X": 256,
+        "Y": 256
+      },
+      "LightingGuid": "5EC659DF-4460CD01-6C3DE7AE-56F4D5D3",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI"
+    },
+    "SizeX": 256,
+    "SizeY": 256,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 262144,
+          "SizeOnDisk": 262144,
+          "OffsetInFile": "0x78"
+        },
+        "SizeX": 256,
+        "SizeY": 256,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

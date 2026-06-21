@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_SkinCard_Sobek_LilBites",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Sobek/Skins/LilBites/t_SkinCard_Sobek_LilBites",
+    "Properties": {
+      "ImportedSize": {
+        "X": 404,
+        "Y": 600
+      },
+      "LightingGuid": "C5048892-43420A7E-05C8579A-00BA50A5",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 404,
+    "SizeY": 600,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 242400,
+          "SizeOnDisk": 242400,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 404,
+        "SizeY": 600,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

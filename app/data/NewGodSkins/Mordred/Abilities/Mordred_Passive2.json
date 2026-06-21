@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "Mordred_Passive2",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Mordred/Abilities/Mordred_Passive2",
+    "Properties": {
+      "ImportedSize": {
+        "X": 2000,
+        "Y": 2000
+      },
+      "LightingGuid": "552AFB35-4DB473AF-9DFD9591-F3A22692",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 2000,
+    "SizeY": 2000,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT1",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 2000000,
+          "SizeOnDisk": 2000000,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 2000,
+        "SizeY": 2000,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

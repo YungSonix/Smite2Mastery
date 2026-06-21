@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSVMeter_Jorm_FillLIne",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Jormungandr/PSV_Meter/t_PSVMeter_Jorm_FillLIne",
+    "Properties": {
+      "ImportedSize": {
+        "X": 128,
+        "Y": 20
+      },
+      "LightingGuid": "0A0E68AA-45B8C9EE-0EBEC685-15BAB97C",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 128,
+    "SizeY": 20,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 10240,
+          "SizeOnDisk": 10240,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 128,
+        "SizeY": 20,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

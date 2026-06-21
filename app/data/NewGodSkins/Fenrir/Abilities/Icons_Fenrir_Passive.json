@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "Icons_Fenrir_Passive",
+    "Flags": "RF_Public | RF_Standalone | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Fenrir/Abilities/Icons_Fenrir_Passive",
+    "Properties": {
+      "ImportedSize": {
+        "X": 128,
+        "Y": 128
+      },
+      "LightingGuid": "34C93985-4A91F9BE-F23B429D-074B81F8",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 128,
+    "SizeY": 128,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 16384,
+          "SizeOnDisk": 16384,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 128,
+        "SizeY": 128,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

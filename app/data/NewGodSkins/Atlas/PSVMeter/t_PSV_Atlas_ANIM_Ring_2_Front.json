@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Atlas_ANIM_Ring_2_Front",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Atlas/PSVMeter/t_PSV_Atlas_ANIM_Ring_2_Front",
+    "Properties": {
+      "ImportedSize": {
+        "X": 96,
+        "Y": 92
+      },
+      "LightingGuid": "18D51323-4B4B3FD9-FD0323B0-999543AD",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 96,
+    "SizeY": 92,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 35328,
+          "SizeOnDisk": 35328,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 96,
+        "SizeY": 92,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

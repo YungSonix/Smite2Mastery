@@ -1,0 +1,38 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_JingWei_BIRD_3",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/JingWei/PassiveMeter/t_JingWei_BIRD_3",
+    "Properties": {
+      "AddressX": "TextureAddress::TA_Clamp",
+      "AddressY": "TextureAddress::TA_Clamp",
+      "ImportedSize": {
+        "X": 432,
+        "Y": 432
+      },
+      "LightingGuid": "85D0A95D-4A7954C2-A0254A9B-4CF9EA11",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 432,
+    "SizeY": 432,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 186624,
+          "SizeOnDisk": 186624,
+          "OffsetInFile": "0x76"
+        },
+        "SizeX": 432,
+        "SizeY": 432,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

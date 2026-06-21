@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_HUD_GodPassive_Susano_Meter_Energy",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Susano/UniqueGodUI/T_HUD_GodPassive_Susano_Meter_Energy",
+    "Properties": {
+      "ImportedSize": {
+        "X": 128,
+        "Y": 128
+      },
+      "LightingGuid": "6FCE4749-4DBADD1E-06241180-886B57C9",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 128,
+    "SizeY": 128,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 16384,
+          "SizeOnDisk": 16384,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 128,
+        "SizeY": 128,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

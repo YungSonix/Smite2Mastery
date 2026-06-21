@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "PSV_Gilga_Quest",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Gilgamesh/PSV_Meter/PSV_Gilga_Quest",
+    "Properties": {
+      "ImportedSize": {
+        "X": 45,
+        "Y": 45
+      },
+      "LightingGuid": "6AEAA545-4B9923F6-DA4C8D9D-D4C47193",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 45,
+    "SizeY": 45,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 8100,
+          "SizeOnDisk": 8100,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 45,
+        "SizeY": 45,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

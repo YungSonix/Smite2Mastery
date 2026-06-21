@@ -1,0 +1,35 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_GodPortrait_Cabrakan_FatLoki_Prism02",
+    "Flags": "RF_Public | RF_Standalone | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Cabrakan/Skins/FatLoki/t_GodPortrait_Cabrakan_FatLoki_Prism02",
+    "Properties": {
+      "ImportedSize": {
+        "X": 256,
+        "Y": 256
+      },
+      "LightingGuid": "5F68C0A1-4A1CA7FF-8E54C19C-0E9A745D",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI"
+    },
+    "SizeX": 256,
+    "SizeY": 256,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT1",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 32768,
+          "SizeOnDisk": 32768,
+          "OffsetInFile": "0x71"
+        },
+        "SizeX": 256,
+        "SizeY": 256,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

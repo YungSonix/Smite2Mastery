@@ -1,0 +1,107 @@
+{
+  "pantheon": "Tales of Arabia",
+  "gods": [
+    {
+      "godName": "Aladdin",
+      "internalName": "Aladdin_Item",
+      "skins": [
+        {
+          "skinKey": "Aladdin",
+          "skinName": "Base Aladdin",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Aladdin/Default/t_GodCard_Aladdin.png",
+            "cardArt": "app/data/NewGodSkins/Aladdin/Default/t_GodCard_Aladdin.png",
+            "icon": "app/data/NewGodSkins/Aladdin/Default/t_GodPortrait_Aladdin.png",
+            "inGame": "app/data/NewGodSkins/Aladdin/Default/t_GodFull_Aladdin.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Aladdin/Skins/Mastery/t_SkinPortrait_Aladdin_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Aladdin/Skins/Mastery/t_Aladdin_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Aladdin/Skins/Mastery/t_Aladdin_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Aladdin/Skins/Mastery/t_SkinPortrait_Aladdin_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Aladdin/Skins/Mastery/t_Aladdin_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Aladdin/Skins/Mastery/t_Aladdin_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Aladdin/Skins/Mastery/t_SkinPortrait_Aladdin_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Aladdin/Skins/Mastery/t_Aladdin_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Aladdin/Skins/Mastery/t_Aladdin_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Aladdin/Skins/Mastery/t_SkinPortrait_Aladdin_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Aladdin/Skins/Mastery/t_Aladdin_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Aladdin/Skins/Mastery/t_Aladdin_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "SilentWish",
+          "skinName": "Silent Wish",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Aladdin/Skins/SilentWish/t_SkinCard_Aladdin_SilentWish.png",
+            "cardArt": "app/data/NewGodSkins/Aladdin/Skins/SilentWish/t_SkinCard_Aladdin_SilentWish.png",
+            "icon": "app/data/NewGodSkins/Aladdin/Skins/SilentWish/t_SkinPortrait_Aladdin_SilentWish.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "WinterWish",
+          "skinName": "Winter Wish",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Aladdin/Skins/WinterWish/t_SkinCard_Aladdin_WinterWish.png",
+            "cardArt": "app/data/NewGodSkins/Aladdin/Skins/WinterWish/t_SkinCard_Aladdin_WinterWish.png",
+            "icon": "app/data/NewGodSkins/Aladdin/Skins/WinterWish/t_SkinIcon_Aladdin_WinterWish.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Chrion_Leaf03_Full",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Chiron/PSV_Meter/t_PSV_Chrion_Leaf03_Full",
+    "Properties": {
+      "ImportedSize": {
+        "X": 80,
+        "Y": 84
+      },
+      "LightingGuid": "8CFC0BF6-4C345692-08C3BEAC-F3616A2C",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 80,
+    "SizeY": 84,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 26880,
+          "SizeOnDisk": 26880,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 80,
+        "SizeY": 84,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

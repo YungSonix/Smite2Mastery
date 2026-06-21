@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Sobek_TimerFill",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Sobek/PassiveMeter/t_PSV_Sobek_TimerFill",
+    "Properties": {
+      "ImportedSize": {
+        "X": 208,
+        "Y": 64
+      },
+      "LightingGuid": "BD66B7AB-4939D12C-85F49B88-7A88FA8D",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 208,
+    "SizeY": 64,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 13312,
+          "SizeOnDisk": 13312,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 208,
+        "SizeY": 64,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

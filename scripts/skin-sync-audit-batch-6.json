@@ -1,0 +1,1175 @@
+{
+  "batch": "R-T",
+  "gods": [
+    {
+      "godFolder": "Ra",
+      "issues": [
+        "legacy splash/wallpaper builds row with no NewGodSkins folder: GentlemanSplash1920x1080"
+      ],
+      "suggestedRemaps": {
+        "Ra Merica": "RaMerica",
+        "OblivionSeer009": "OblivionSeer"
+      },
+      "skinsOnDisk": [
+        {
+          "kind": "Default",
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Ra.png",
+            "t_GodPortrait_Ra.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "Beakington",
+          "keyPngs": [
+            "t_SkinCard_Ra_Beakington.png",
+            "t_SkinPortrait_Ra_Beakington.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Mastery",
+          "folder": "Mastery",
+          "keyPngs": [],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "OblivionSeer",
+          "keyPngs": [
+            "t_SkinCard_Ra_OblivionSeer.png",
+            "t_SkinPortrait_Ra_OblivionSeer.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "Plucky",
+          "keyPngs": [
+            "t_SkinCard_Ra_Plucky_Base.png",
+            "t_SkinPortrait_Ra_Plucky_Base.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "RaMerica",
+          "keyPngs": [
+            "t_SkinCard_Ra_RaMerica.png",
+            "t_SkinPortrait_Ra_RaMerica.png"
+          ],
+          "prismFiles": []
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Ra",
+          "name": "Base Ra",
+          "type": "Base Skin",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Ra Merica",
+          "name": "Ra Merica",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "GentlemanSplash1920x1080",
+          "name": "Gentleman Splash 1920 X 1080",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "OblivionSeer009",
+          "name": "Oblivion Seer 009",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Beakington",
+          "name": "Beakington",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Plucky",
+          "name": "Plucky",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Rama",
+      "issues": [
+        "prism/palette files on disk but no variants[] on skin key: SacredArrow (8 files)"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "kind": "Default",
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Rama.png",
+            "t_GodPortrait_Rama.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Mastery",
+          "folder": "Mastery",
+          "keyPngs": [],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "SacredArrow",
+          "keyPngs": [
+            "t_GodPortrait_Rama_SacredArrow.png",
+            "t_SkinCard_Rama_SacredArrow.png"
+          ],
+          "prismFiles": [
+            "t_GodPortrait_Rama_SacredArrow_Prism01.png",
+            "t_GodPortrait_Rama_SacredArrow_Prism02.png",
+            "t_GodPortrait_Rama_SacredArrow_Prism03.png",
+            "t_GodPortrait_Rama_SacredArrow_Prism04.png",
+            "t_SkinCard_Rama_SacredArrow_Prism01.png",
+            "t_SkinCard_Rama_SacredArrow_Prism02.png",
+            "t_SkinCard_Rama_SacredArrow_Prism03.png",
+            "t_SkinCard_Rama_SacredArrow_Prism04.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Rama",
+          "name": "Base Rama",
+          "type": "Base Skin",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "SacredArrow",
+          "name": "Sacred Arrow",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Ratatoskr",
+      "issues": [
+        "prism/palette files on disk but no variants[] on skin key: ShadowRunner (6 files)"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "kind": "Default",
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Ratatoskr.png",
+            "t_GodPortrait_Ratatoskr.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "Flurry",
+          "keyPngs": [
+            "t_SkinCard_Ratatoskr_Flurry.png",
+            "t_SkinIcon_Ratatoskr_Flurry.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Mastery",
+          "folder": "Mastery",
+          "keyPngs": [
+            "t_GodCard_Ratatoskr_Mastery.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "ShadowRunner",
+          "keyPngs": [
+            "t_SkinCard_Ratatoskr_Shadowrunner.png",
+            "t_SkinPortrait_Ratatoskr_Shadowrunner.png"
+          ],
+          "prismFiles": [
+            "t_SkinCard_Ratatoskr_Shadowrunner_Prism01.png",
+            "t_SkinCard_Ratatoskr_Shadowrunner_Prism02.png",
+            "t_SkinCard_Ratatoskr_Shadowrunner_Prism03.png",
+            "t_SkinPortrait_Ratatoskr_Shadowrunner_Prism01.png",
+            "t_SkinPortrait_Ratatoskr_Shadowrunner_Prism02.png",
+            "t_SkinPortrait_Ratatoskr_Shadowrunner_Prism03.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Base Rat",
+          "name": "Base Rat",
+          "type": "Standard",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Flurry",
+          "name": "Flurry",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "ShadowRunner",
+          "name": "Shadow Runner",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Scylla",
+      "issues": [],
+      "suggestedRemaps": {
+        "ScyllaTrashgoblin": "TrashGoblin"
+      },
+      "skinsOnDisk": [
+        {
+          "kind": "Default",
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Scylla.png",
+            "t_GodPortrait_Scylla.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Mastery",
+          "folder": "Mastery",
+          "keyPngs": [],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "SnowGoblin",
+          "keyPngs": [
+            "t_SkinCard_Scylla_SnowDay.png",
+            "t_SkinIcon_Scylla_SnowDay.png"
+          ],
+          "prismFiles": [
+            "t_SkinCard_Scylla_SnowDay_P1.png",
+            "t_SkinCard_Scylla_SnowDay_P2.png",
+            "t_SkinCard_Scylla_SnowDay_P3.png",
+            "t_SkinCard_Scylla_SnowDay_P4.png",
+            "t_SkinIcon_Scylla_SnowDay_P1.png",
+            "t_SkinIcon_Scylla_SnowDay_P2.png",
+            "t_SkinIcon_Scylla_SnowDay_P3.png",
+            "t_SkinIcon_Scylla_SnowDay_P4.png"
+          ]
+        },
+        {
+          "kind": "Skin",
+          "folder": "TrashGoblin",
+          "keyPngs": [
+            "t_SkinCard_Scylla_TrashGoblin.png",
+            "t_SkinPortrait_Scylla_TrashGoblin.png"
+          ],
+          "prismFiles": []
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Scylla",
+          "name": "Base Scylla",
+          "type": "Base Skin",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "ScyllaTrashgoblin",
+          "name": "Scylla Trashgoblin",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "SnowGoblin",
+          "name": "Snow Goblin",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 4,
+          "hidden": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Sobek",
+      "issues": [
+        "legacy splash/wallpaper builds row with no NewGodSkins folder: PlushieSplashPlushieSplash1920x1080"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "kind": "Default",
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Sobek.png",
+            "t_GodPortrait_Sobek.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "LandShark",
+          "keyPngs": [
+            "t_GodCard_Sobek_LandShark.png",
+            "t_GodPortrait_Sobek_LandShark.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "LilBites",
+          "keyPngs": [
+            "t_SkinCard_Sobek_LilBites.png",
+            "t_SkinPortrait_Sobek_LilBites.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Mastery",
+          "folder": "Mastery",
+          "keyPngs": [],
+          "prismFiles": []
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Sobek",
+          "name": "Base Sobek",
+          "type": "Base Skin",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "LandShark",
+          "name": "Land Shark",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "PlushieSplashPlushieSplash1920x1080",
+          "name": "Plushie Splash Plushie Splash 1920 X 1080",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "LilBites",
+          "name": "Lil Bites",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Sol",
+      "issues": [
+        "prism content as separate visible skin key (should be variants[] on parent): VampiressPrisms",
+        "hidden legacy prism wallpaper row (OK if intentional): VampiressPrisms1",
+        "hidden legacy prism wallpaper row (OK if intentional): VampiressPrisms2",
+        "hidden legacy prism wallpaper row (OK if intentional): VampiressPrisms3",
+        "hidden legacy prism wallpaper row (OK if intentional): VampiressPrismssocial",
+        "prism/palette files on disk but no variants[] on skin key: Magnificent (6 files)"
+      ],
+      "suggestedRemaps": {
+        "TSkincardMeltdown": "Meltdown"
+      },
+      "skinsOnDisk": [
+        {
+          "kind": "Default",
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Sol.png",
+            "t_GodPortrait_Sol.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "Firefly",
+          "keyPngs": [
+            "t_SkinCard_Sol_Firefly.png",
+            "t_SkinPortrait_Sol_Firefly.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "Magnificent",
+          "keyPngs": [
+            "t_SkinCard_Sol_Magnificent_Base.png",
+            "t_SkinPortrait_Sol_Magnificent_Base.png"
+          ],
+          "prismFiles": [
+            "t_SkinCard_Sol_Magnificent_Prism02.png",
+            "t_SkinCard_Sol_Magnificent_Prism03.png",
+            "t_SkinCard_Sol_Magnificent_Prism04.png",
+            "t_SkinPortrait_Sol_Magnificent_Prism02.png",
+            "t_SkinPortrait_Sol_Magnificent_Prism03.png",
+            "t_SkinPortrait_Sol_Magnificent_Prism04.png"
+          ]
+        },
+        {
+          "kind": "Mastery",
+          "folder": "Mastery",
+          "keyPngs": [],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "Meltdown",
+          "keyPngs": [
+            "t_SkinCard_Sol_Meltdown.png",
+            "t_SkinPortrait_Sol_Meltdown.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "Vampiress",
+          "keyPngs": [
+            "t_SkinCard_Sol_Vampiress.png",
+            "t_SkinIcon_Sol_Vampiress.png"
+          ],
+          "prismFiles": [
+            "t_SkinCard_Sol_Vampiress_Prism_B.png",
+            "t_SkinCard_Sol_Vampiress_Prism_C.png",
+            "t_SkinCard_Sol_Vampiress_Prism_D.png",
+            "t_SkinCard_Sol_Vampiress_Prism_E.png",
+            "t_SkinIcon_Sol_Vampiress_Prism_B.png",
+            "t_SkinIcon_Sol_Vampiress_Prism_C.png",
+            "t_SkinIcon_Sol_Vampiress_Prism_D.png",
+            "t_SkinIcon_Sol_Vampiress_Prism_E.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Sol",
+          "name": "Base Sol",
+          "type": "Base Skin",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "TSkincardMeltdown",
+          "name": "T Skincard Meltdown",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "VampiressPrisms",
+          "name": "Vampiress Prisms",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 4,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "VampiressPrisms1",
+          "name": "Vampiress Prisms 1",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": true,
+          "emptyStub": false
+        },
+        {
+          "key": "VampiressPrisms2",
+          "name": "Vampiress Prisms 2",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": true,
+          "emptyStub": false
+        },
+        {
+          "key": "VampiressPrisms3",
+          "name": "Vampiress Prisms 3",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": true,
+          "emptyStub": false
+        },
+        {
+          "key": "VampiressPrismssocial",
+          "name": "Vampiress Prismssocial",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": true,
+          "emptyStub": false
+        },
+        {
+          "key": "Firefly",
+          "name": "Firefly",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Magnificent",
+          "name": "Magnificent",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Sun_Wukong",
+      "issues": [
+        "disk skin folder missing builds row: DarkLord",
+        "disk skin folder missing builds row: StreetKing",
+        "still using legacy wallpaper path instead of NewGodSkins Default: Sun Wukong"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "kind": "Default",
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Sun_Wukong.png",
+            "t_GodPortrait_Sun_Wukong.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "DarkLord",
+          "keyPngs": [
+            "t_SkinCard_SWK_DarkLord.png",
+            "t_SkinIcon_SWK_DarkLord.png"
+          ],
+          "prismFiles": [
+            "t_SkinCard_SWK_DarkLord_Prism01.png",
+            "t_SkinCard_SWK_DarkLord_Prism02.png",
+            "t_SkinCard_SWK_DarkLord_Prism03.png",
+            "t_SkinCard_SWK_DarkLord_Prism04.png",
+            "t_SkinIcon_SWK_DarkLord_Prism01.png",
+            "t_SkinIcon_SWK_DarkLord_Prism02.png",
+            "t_SkinIcon_SWK_DarkLord_Prism03.png",
+            "t_SkinIcon_SWK_DarkLord_Prism04.png"
+          ]
+        },
+        {
+          "kind": "Mastery",
+          "folder": "Mastery",
+          "keyPngs": [],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "StreetKing",
+          "keyPngs": [
+            "t_SkinCard_SWK_StreetKing.png",
+            "t_SkinIcon_SWK_StreetKing.png"
+          ],
+          "prismFiles": []
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Sun Wukong",
+          "name": "Base Sun Wukong",
+          "type": "Base Skin",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Susano",
+      "issues": [
+        "hidden legacy prism wallpaper row (OK if intentional): StumbleBladeWithPrisms"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "kind": "Default",
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Susano.png",
+            "t_GodPortrait_Susano.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "CursedSwordsman",
+          "keyPngs": [
+            "t_SkinCard_Susano_CursedSwordsman.png",
+            "t_SkinPortrait_Susano_CursedSwordsman.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Mastery",
+          "folder": "Mastery",
+          "keyPngs": [],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "SteelSamurai",
+          "keyPngs": [
+            "t_SkinCard_Susano_SteelSamurai.png",
+            "t_SkinPortrait_Susano_SteelSamurai.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "StumbleBlade",
+          "keyPngs": [
+            "t_SkinCard_Susano_StumbleBlade.png",
+            "t_SkinPortrait_Susano_StumbleBlade.png"
+          ],
+          "prismFiles": []
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Susano",
+          "name": "Base Susano",
+          "type": "Base Skin",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "StumbleBlade",
+          "name": "Stumble Blade",
+          "type": "Epic",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "StumbleBladeWithPrisms",
+          "name": "Stumble Blade With Prisms",
+          "type": "Epic",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": true,
+          "emptyStub": false
+        },
+        {
+          "key": "CursedSwordsman",
+          "name": "Cursed Swordsman",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "SteelSamurai",
+          "name": "Steel Samurai",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Sylvanus",
+      "issues": [
+        "prism/palette files on disk but no variants[] on skin key: Highnoon (6 files)"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "kind": "Default",
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Sylvanus.png",
+            "t_GodPortrait_Sylvanus.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "HarvestKeeper",
+          "keyPngs": [
+            "t_SkinCard_Sylvanus_HarvestKeeper.png",
+            "t_SkinIcon_Sylvanus_HarvestKeeper.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "Highnoon",
+          "keyPngs": [
+            "t_SkinCard_Sylvanus_HighNoon_Base.png",
+            "t_SkinPortrait_Sylvanus_HighNoon_Base.png"
+          ],
+          "prismFiles": [
+            "t_SkinCard_Sylvanus_HighNoon_Prism01.png",
+            "t_SkinCard_Sylvanus_HighNoon_Prism02.png",
+            "t_SkinCard_Sylvanus_HighNoon_Prism04.png",
+            "t_SkinPortrait_Sylvanus_HighNoon_Prism01.png",
+            "t_SkinPortrait_Sylvanus_HighNoon_Prism02.png",
+            "t_SkinPortrait_Sylvanus_HighNoon_Prism04.png"
+          ]
+        },
+        {
+          "kind": "Mastery",
+          "folder": "Mastery",
+          "keyPngs": [
+            "t_GodCard_Sylvanus_Mastery.png"
+          ],
+          "prismFiles": []
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Sylvanus",
+          "name": "Base Sylvanus",
+          "type": "Base Skin",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "HarvestKeeper",
+          "name": "Harvest Keeper",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Highnoon",
+          "name": "Highnoon",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Thanatos",
+      "issues": [],
+      "suggestedRemaps": {
+        "Thanatoast012": "Thanatoast"
+      },
+      "skinsOnDisk": [
+        {
+          "kind": "Default",
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Thanatos.png",
+            "t_GodPortrait_Thanatos.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "BiblicalHorror",
+          "keyPngs": [
+            "t_SkinCard_Thanatos_BiblicalHorror.png",
+            "t_SkinPortrait_Thanatos_BiblicalHorror.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "Intersteller",
+          "keyPngs": [
+            "t_SkinCard_Thanatos_Intersteller.png",
+            "t_SkinPortrait_Thanatos_Intersteller.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Mastery",
+          "folder": "Mastery",
+          "keyPngs": [],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "Thanatoast",
+          "keyPngs": [
+            "t_SkinCard_Thanatos_Thanatoast.png",
+            "t_SkinPortrait_Thanatos_Thanatoast.png"
+          ],
+          "prismFiles": []
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Thanatos",
+          "name": "Base Thanatos",
+          "type": "Base Skin",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Thanatoast012",
+          "name": "Thanatoast 012",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "BiblicalHorror",
+          "name": "Biblical Horror",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Intersteller",
+          "name": "Intersteller",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "TheMorrigan",
+      "issues": [
+        "builds skin key has no disk folder: Goth Gourmet"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "kind": "Default",
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_TheMorrigan.png",
+            "t_GodPortrait_TheMorrigan.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "GothWaitress",
+          "keyPngs": [
+            "t_SkinCard_TheMorrigan_GothWaitress.png",
+            "t_SkinPortrait_TheMorrigan_GothWaitress.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Mastery",
+          "folder": "Mastery",
+          "keyPngs": [],
+          "prismFiles": []
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "The Morrigan",
+          "name": "Base The Morrigan",
+          "type": "Base Skin",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Goth Gourmet",
+          "name": "Goth Gourmet",
+          "type": "Epic",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "GothWaitress",
+          "name": "Goth Waitress",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Thor",
+      "issues": [
+        "legacy splash/wallpaper builds row with no NewGodSkins folder: Wallpaper",
+        "builds skin key has no disk folder: GeWashington",
+        "legacy splash/wallpaper builds row with no NewGodSkins folder: FrostedfurySplash011",
+        "legacy splash/wallpaper builds row with no NewGodSkins folder: TormentorblacksmithSplash1920x1080"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "kind": "Default",
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Thor.png",
+            "t_GodPortrait_Thor.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "HellForged",
+          "keyPngs": [
+            "t_SkinCard_Thor_Hellforged.png",
+            "t_SkinPortrait_Thor_Hellforged.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Mastery",
+          "folder": "Mastery",
+          "keyPngs": [],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "Snowman",
+          "keyPngs": [
+            "t_SkinCard_Thor_Snowman.png",
+            "t_SkinPortrait_Thor_Snowman.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "ThorgeWashington",
+          "keyPngs": [
+            "t_SkinCard_Thor_ThorgeWashington.png",
+            "t_SkinPortrait_Thor_ThorgeWashington.png"
+          ],
+          "prismFiles": []
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Thor",
+          "name": "Base Thor",
+          "type": "Base Skin",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Wallpaper",
+          "name": "Wallpaper",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "GeWashington",
+          "name": "Ge Washington",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "FrostedfurySplash011",
+          "name": "Frostedfury Splash 011",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "TormentorblacksmithSplash1920x1080",
+          "name": "Tormentorblacksmith Splash 1920 X 1080",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "HellForged",
+          "name": "Hell Forged",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Snowman",
+          "name": "Snowman",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "ThorgeWashington",
+          "name": "Thorge Washington",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Tsukuyomi",
+      "issues": [
+        "prism/palette files on disk but no variants[] on skin key: SilverBullet (6 files)"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "kind": "Default",
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Tsukuyomi.png",
+            "t_GodPortrait_Tsukuyomi.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Mastery",
+          "folder": "Mastery",
+          "keyPngs": [
+            "t_GodCard_Tsukuyomi_Mastery.png"
+          ],
+          "prismFiles": []
+        },
+        {
+          "kind": "Skin",
+          "folder": "SilverBullet",
+          "keyPngs": [
+            "t_SkinCard_Tsukuyomi_SilverBullet_Base.png",
+            "t_SkinPortrait_Tsukuyomi_SilverBullet_Base.png"
+          ],
+          "prismFiles": [
+            "t_SkinCard_Tsukuyomi_SilverBullet_Prism01.png",
+            "t_SkinCard_Tsukuyomi_SilverBullet_Prism02.png",
+            "t_SkinCard_Tsukuyomi_SilverBullet_Prism03.png",
+            "t_SkinPortrait_Tsukuyomi_SilverBullet_Prism01.png",
+            "t_SkinPortrait_Tsukuyomi_SilverBullet_Prism02.png",
+            "t_SkinPortrait_Tsukuyomi_SilverBullet_Prism03.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Tsukuyomi",
+          "name": "Base Tsukuyomi",
+          "type": "Base Skin",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        },
+        {
+          "key": "SilverBullet",
+          "name": "Silver Bullet",
+          "type": "",
+          "hasPaths": true,
+          "variantCount": 0,
+          "hidden": false,
+          "emptyStub": false
+        }
+      ]
+    }
+  ]
+}

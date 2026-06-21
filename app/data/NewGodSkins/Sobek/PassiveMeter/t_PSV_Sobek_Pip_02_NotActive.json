@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Sobek_Pip_02_NotActive",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Sobek/PassiveMeter/t_PSV_Sobek_Pip_02_NotActive",
+    "Properties": {
+      "ImportedSize": {
+        "X": 100,
+        "Y": 172
+      },
+      "LightingGuid": "ECD5E2E8-4C6D631F-615423AD-B07EA6B0",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 100,
+    "SizeY": 172,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 17200,
+          "SizeOnDisk": 17200,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 100,
+        "SizeY": 172,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSVMeter_Tskuku_LightBlade_Full",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Tsukuyomi/PSVMeter/t_PSVMeter_Tskuku_LightBlade_Full",
+    "Properties": {
+      "ImportedSize": {
+        "X": 132,
+        "Y": 128
+      },
+      "LightingGuid": "7316FE43-4967130F-A63ACFA0-DA4A0B79",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 132,
+    "SizeY": 128,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 67584,
+          "SizeOnDisk": 67584,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 132,
+        "SizeY": 128,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

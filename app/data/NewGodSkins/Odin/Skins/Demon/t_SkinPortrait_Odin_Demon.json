@@ -1,0 +1,35 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_SkinPortrait_Odin_Demon",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Odin/Skins/Demon/t_SkinPortrait_Odin_Demon",
+    "Properties": {
+      "ImportedSize": {
+        "X": 256,
+        "Y": 256
+      },
+      "LightingGuid": "9B217942-44D2E10B-D55A92A7-857FD9DF",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI"
+    },
+    "SizeX": 256,
+    "SizeY": 256,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT1",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 32768,
+          "SizeOnDisk": 32768,
+          "OffsetInFile": "0x71"
+        },
+        "SizeX": 256,
+        "SizeY": 256,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

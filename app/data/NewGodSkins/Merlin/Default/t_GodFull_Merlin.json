@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_GodFull_Merlin",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Merlin/Default/t_GodFull_Merlin",
+    "Properties": {
+      "ImportedSize": {
+        "X": 720,
+        "Y": 1080
+      },
+      "LightingGuid": "DC079C4A-4E3C30C8-8F02B9B8-ACD72118",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 720,
+    "SizeY": 1080,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 777600,
+          "SizeOnDisk": 777600,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 720,
+        "SizeY": 1080,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

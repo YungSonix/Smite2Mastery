@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_TeamRoster_Pele",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Pele/Default/t_TeamRoster_Pele",
+    "Properties": {
+      "ImportedSize": {
+        "X": 128,
+        "Y": 72
+      },
+      "LightingGuid": "344374A6-4E93684B-901F2EA0-4D3EF48C",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 128,
+    "SizeY": 72,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT1",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 4608,
+          "SizeOnDisk": 4608,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 128,
+        "SizeY": 72,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

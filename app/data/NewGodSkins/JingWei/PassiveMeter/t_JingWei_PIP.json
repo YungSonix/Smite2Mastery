@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_JingWei_PIP",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/JingWei/PassiveMeter/t_JingWei_PIP",
+    "Properties": {
+      "ImportedSize": {
+        "X": 77,
+        "Y": 77
+      },
+      "LightingGuid": "41B8E171-41C77ABC-E7895B98-643A8C00",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 77,
+    "SizeY": 77,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 23716,
+          "SizeOnDisk": 23716,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 77,
+        "SizeY": 77,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

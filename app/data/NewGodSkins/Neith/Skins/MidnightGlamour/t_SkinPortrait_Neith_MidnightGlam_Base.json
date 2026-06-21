@@ -1,0 +1,35 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_SkinPortrait_Neith_MidnightGlam_Base",
+    "Flags": "RF_Public | RF_Standalone | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Neith/Skins/MidnightGlamour/t_SkinPortrait_Neith_MidnightGlam_Base",
+    "Properties": {
+      "ImportedSize": {
+        "X": 256,
+        "Y": 256
+      },
+      "LightingGuid": "C2C8DA29-4A2BED77-3082E882-40473C5E",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI"
+    },
+    "SizeX": 256,
+    "SizeY": 256,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT1",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 32768,
+          "SizeOnDisk": 32768,
+          "OffsetInFile": "0x71"
+        },
+        "SizeX": 256,
+        "SizeY": 256,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

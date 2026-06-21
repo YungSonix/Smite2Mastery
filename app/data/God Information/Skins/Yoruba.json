@@ -1,0 +1,148 @@
+{
+  "pantheon": "Yoruba",
+  "gods": [
+    {
+      "godName": "Yemoja",
+      "internalName": "Yemoja_Item",
+      "skins": [
+        {
+          "skinKey": "Yemoja",
+          "skinName": "Base Yemoja",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Yemoja/Default/t_GodCard_Yemoja.png",
+            "cardArt": "app/data/NewGodSkins/Yemoja/Default/t_GodCard_Yemoja.png",
+            "icon": "app/data/NewGodSkins/Yemoja/Default/t_GodPortrait_Yemoja.png",
+            "inGame": "app/data/NewGodSkins/Yemoja/Default/T_GodFull_Yemoja.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_SkinPortrait_Yemoja_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_SkinPortrait_Yemoja_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_SkinPortrait_Yemoja_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_SkinPortrait_Yemoja_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "DawnSpirits",
+          "skinName": "Dawn Spirits",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Yemoja/Skins/DawnSpirits/t_SkinCard_Yemoja_DawnSpirits.png",
+            "cardArt": "app/data/NewGodSkins/Yemoja/Skins/DawnSpirits/t_SkinCard_Yemoja_DawnSpirits.png",
+            "icon": "app/data/NewGodSkins/Yemoja/Skins/DawnSpirits/t_SkinPortrait_Yemoja_DawnSpirits.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "HiveQueen",
+          "skinName": "Hive Queen",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Yemoja/Skins/HiveQueen/t_SkinCard_Yemoja_HiveQueen.png",
+            "cardArt": "app/data/NewGodSkins/Yemoja/Skins/HiveQueen/t_SkinCard_Yemoja_HiveQueen.png",
+            "icon": "app/data/NewGodSkins/Yemoja/Skins/HiveQueen/t_SkinPortrait_Yemoja_HiveQueen.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "Mastermind",
+          "skinName": "Mastermind",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinCard_Yemoja_Mastermind_Base.png",
+            "cardArt": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinCard_Yemoja_Mastermind_Base.png",
+            "icon": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinPortrait_Yemoja_Mastermind_Base.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism 1",
+              "cardArt": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinCard_Yemoja_Mastermind_Prism01.png",
+              "skin": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinCard_Yemoja_Mastermind_Prism01.png",
+              "icon": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinPortrait_Yemoja_Mastermind_Prism01.png"
+            },
+            {
+              "name": "Prism 2",
+              "cardArt": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinCard_Yemoja_Mastermind_Prism02.png",
+              "skin": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinCard_Yemoja_Mastermind_Prism02.png",
+              "icon": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinPortrait_Yemoja_Mastermind_Prism02.png"
+            },
+            {
+              "name": "Prism 3",
+              "cardArt": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinCard_Yemoja_Mastermind_Prism03.png",
+              "skin": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinCard_Yemoja_Mastermind_Prism03.png",
+              "icon": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinPortrait_Yemoja_Mastermind_Prism03.png"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

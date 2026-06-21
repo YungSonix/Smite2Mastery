@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_GodCard_Chiron_Mastery",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Chiron/Skins/Mastery/t_GodCard_Chiron_Mastery",
+    "Properties": {
+      "ImportedSize": {
+        "X": 683,
+        "Y": 1024
+      },
+      "LightingGuid": "89B748C8-4350052F-0D27F5AE-DA59C9B9",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 683,
+    "SizeY": 1024,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 2797568,
+          "SizeOnDisk": 2797568,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 683,
+        "SizeY": 1024,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

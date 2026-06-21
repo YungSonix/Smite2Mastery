@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_SkinCard_Artemis_SexyEaster_PrismB",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Artemis/Skins/Easter/t_SkinCard_Artemis_SexyEaster_PrismB",
+    "Properties": {
+      "ImportedSize": {
+        "X": 400,
+        "Y": 600
+      },
+      "LightingGuid": "A9D3ECBD-40EBE3C2-90E294A7-EA82AEE4",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 400,
+    "SizeY": 600,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 960000,
+          "SizeOnDisk": 960000,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 400,
+        "SizeY": 600,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

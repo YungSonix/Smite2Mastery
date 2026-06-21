@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_FX_NeZha_Ult_HitZoneGlowPulse",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Ne_Zha/ULT_Meter/t_FX_NeZha_Ult_HitZoneGlowPulse",
+    "Properties": {
+      "ImportedSize": {
+        "X": 380,
+        "Y": 224
+      },
+      "LightingGuid": "DD4AD239-4729F739-3E8746AB-3FCE957B",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 380,
+    "SizeY": 224,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 340480,
+          "SizeOnDisk": 340480,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 380,
+        "SizeY": 224,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

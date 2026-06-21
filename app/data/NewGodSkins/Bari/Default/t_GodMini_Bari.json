@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_GodMini_Bari",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Bari/Default/t_GodMini_Bari",
+    "Properties": {
+      "ImportedSize": {
+        "X": 44,
+        "Y": 44
+      },
+      "LightingGuid": "07B71C53-4278A099-2018EEB8-FA6CA21A",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 44,
+    "SizeY": 44,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT1",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 968,
+          "SizeOnDisk": 968,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 44,
+        "SizeY": 44,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

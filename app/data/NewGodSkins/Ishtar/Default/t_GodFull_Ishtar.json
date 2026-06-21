@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_GodFull_Ishtar",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Ishtar/Default/t_GodFull_Ishtar",
+    "Properties": {
+      "ImportedSize": {
+        "X": 720,
+        "Y": 1080
+      },
+      "LightingGuid": "FF6B9B45-44255683-B4A1928D-458DF9CF",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 720,
+    "SizeY": 1080,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 3110400,
+          "SizeOnDisk": 3110400,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 720,
+        "SizeY": 1080,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

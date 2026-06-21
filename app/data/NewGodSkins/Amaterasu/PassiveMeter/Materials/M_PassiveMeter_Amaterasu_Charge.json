@@ -1,0 +1,270 @@
+[
+  {
+    "Type": "Material",
+    "Name": "M_PassiveMeter_Amaterasu_Charge",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Material'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/Materials/M_PassiveMeter_Amaterasu_Charge",
+    "Properties": {
+      "MaterialDomain": "EMaterialDomain::MD_UI",
+      "BlendMode": "EBlendMode::BLEND_Translucent",
+      "bCanMaskedBeAssumedOpaque": true,
+      "PixelDepthOffsetMode": "EPixelDepthOffsetMode::PDOM_Legacy",
+      "StateId": "FAC0EA8C-4F67414B-05AB4DAD-79402BCE",
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedExpressionData": {
+      "RuntimeEntries": {
+        "ParameterInfoSet": [
+          {
+            "Name": "Progress",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "StanceMask",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "Animate",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "Speed",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "base image intensity",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          }
+        ]
+      },
+      "RuntimeEntries[1]": {
+        "ParameterInfoSet": [
+          {
+            "Name": "color sA",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "color sB",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "color sC",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          }
+        ]
+      },
+      "RuntimeEntries[2]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[3]": {
+        "ParameterInfoSet": [
+          {
+            "Name": "Image",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          }
+        ]
+      },
+      "RuntimeEntries[4]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[5]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[6]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[7]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[8]": {
+        "ParameterInfoSet": [
+          {
+            "Name": "preview anim?",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          }
+        ]
+      },
+      "ScalarPrimitiveDataIndexValues": [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      "VectorPrimitiveDataIndexValues": [
+        -1,
+        -1,
+        -1
+      ],
+      "ScalarValues": [
+        1.0,
+        0.0,
+        1.0,
+        2.0,
+        1.0
+      ],
+      "StaticSwitchValues": [
+        true
+      ],
+      "DynamicSwitchValues": [
+        false
+      ],
+      "VectorValues": [
+        {
+          "R": 0.859375,
+          "G": 0.783666,
+          "B": 0.168285,
+          "A": 1.0,
+          "Hex": "EFE572"
+        },
+        {
+          "R": 0.921875,
+          "G": 0.395536,
+          "B": 0.065711,
+          "A": 1.0,
+          "Hex": "F6A948"
+        },
+        {
+          "R": 0.636596,
+          "G": 1.0,
+          "B": 0.352824,
+          "A": 1.0,
+          "Hex": "D1FFA0"
+        }
+      ],
+      "DoubleVectorValues": [],
+      "TextureValues": [
+        {
+          "AssetPathName": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/T_PassiveMeter_amaterasu__Benevolence_Complete.T_PassiveMeter_amaterasu__Benevolence_Complete",
+          "SubPathString": ""
+        }
+      ],
+      "TextureCollectionValues": [],
+      "FontValues": [],
+      "FontPageValues": [],
+      "RuntimeVirtualTextureValues": [],
+      "SparseVolumeTextureValues": [],
+      "ReferencedTextures": [
+        {
+          "ObjectName": "Texture2D'T_PassiveMeter_amaterasu__Benevolence_Complete'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/T_PassiveMeter_amaterasu__Benevolence_Complete.0"
+        },
+        {
+          "ObjectName": "Texture2D'T_PassiveMeter_amaterasu__DesignMasks'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/T_PassiveMeter_amaterasu__DesignMasks.0"
+        },
+        {
+          "ObjectName": "Texture2D'T_PassiveMeter_amaterasu__NeutralActive'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/T_PassiveMeter_amaterasu__NeutralActive.0"
+        }
+      ],
+      "ReferencedTextureCollections": [],
+      "FunctionInfos": [
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UIMaterialLab/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        },
+        {
+          "StateId": "2C1DDB6E-406BC9FC-1D4141A1-7C82122A",
+          "Function": {
+            "ObjectName": "MaterialFunction'BreakOutFloat2Components'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions02/Utility/BreakOutFloat2Components.0"
+          }
+        },
+        {
+          "StateId": "7623E07F-447E53C7-49A835AD-C053F006",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_Translate'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/Transforms/MF_UI_Translate.0"
+          }
+        },
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        },
+        {
+          "StateId": "DDAF1091-4EF9ADB2-6EFCC0B6-972F81B3",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_Scale'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/Transforms/MF_UI_Scale.0"
+          }
+        },
+        {
+          "StateId": "782FD17F-4DE6A779-9F3B2CA3-164547D5",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_SDF_Circle'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/SDFs/MF_UI_SDF_Circle.0"
+          }
+        },
+        {
+          "StateId": "DDAF1091-4EF9ADB2-6EFCC0B6-972F81B3",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_Scale'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/Transforms/MF_UI_Scale.0"
+          }
+        }
+      ],
+      "FunctionInfosStateCRC": 173965261,
+      "ParameterCollectionInfos": [],
+      "GrassTypes": [],
+      "MaterialLayers": {
+        "Layers": [],
+        "Blends": [],
+        "Tree": {
+          "Nodes": [],
+          "Payloads": [],
+          "Root": -1
+        }
+      },
+      "DynamicParameterNames": [],
+      "QualityLevelsUsed": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "bHasMaterialLayers": false,
+      "bHasRuntimeVirtualTextureOutput": false,
+      "bHasFirstPersonOutput": false,
+      "bHasSceneColor": false,
+      "bHasPerInstanceCustomData": false,
+      "bHasPerInstanceRandom": false,
+      "bHasVertexInterpolator": false,
+      "bHasCustomizedUVs": false,
+      "bHasMeshPaintTexture": false,
+      "PropertyConnectedMask": 3
+    },
+    "ReferencedTextures": [
+      {
+        "ObjectName": "Texture2D'T_PassiveMeter_amaterasu__Benevolence_Complete'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/T_PassiveMeter_amaterasu__Benevolence_Complete.0"
+      },
+      {
+        "ObjectName": "Texture2D'T_PassiveMeter_amaterasu__DesignMasks'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/T_PassiveMeter_amaterasu__DesignMasks.0"
+      },
+      {
+        "ObjectName": "Texture2D'T_PassiveMeter_amaterasu__NeutralActive'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/T_PassiveMeter_amaterasu__NeutralActive.0"
+      }
+    ]
+  }
+]

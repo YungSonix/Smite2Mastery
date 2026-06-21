@@ -1,0 +1,1441 @@
+{
+  "pantheon": "Egyptian",
+  "gods": [
+    {
+      "godName": "Anhur",
+      "internalName": "Anhur_Item",
+      "skins": [
+        {
+          "skinKey": "Anhur",
+          "skinName": "Base Anhur",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Anhur/Default/t_GodCard_Anhur.png",
+            "cardArt": "app/data/NewGodSkins/Anhur/Default/t_GodCard_Anhur.png",
+            "icon": "app/data/NewGodSkins/Anhur/Default/t_GodPortrait_Anhur.png",
+            "inGame": "app/data/NewGodSkins/Anhur/Default/T_GodFull_Anhur.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Angelic",
+              "icon": "app/data/NewGodSkins/Anhur/Skins/Mastery/T_Anhur_Icon_Angelic.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Anhur/Skins/Mastery/t_Anhur_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Anhur/Skins/Mastery/t_Anhur_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Demonic",
+              "icon": "app/data/NewGodSkins/Anhur/Skins/Mastery/T_Anhur_Icon_Demonic.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Anhur/Skins/Mastery/t_Anhur_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Anhur/Skins/Mastery/t_Anhur_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Anhur/Skins/Mastery/T_Anhur_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Anhur/Skins/Mastery/t_Anhur_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Anhur/Skins/Mastery/t_Anhur_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Anhur/Skins/Mastery/T_Anhur_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Anhur/Skins/Mastery/t_Anhur_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Anhur/Skins/Mastery/t_Anhur_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "DeathPanther",
+          "skinName": "Death Panther",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Anhur/Skins/DeathPanther/t_SkinCard_Anhur_DeathPanther.png",
+            "cardArt": "app/data/NewGodSkins/Anhur/Skins/DeathPanther/t_SkinCard_Anhur_DeathPanther.png",
+            "icon": "app/data/NewGodSkins/Anhur/Skins/DeathPanther/t_SkinPortrait_Anhur_DeathPanther.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "Debonhair",
+          "skinName": "Debonhair",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Anhur/Skins/Debonhair/t_SkinCard_Anhur_Debonhair_Base.png",
+            "cardArt": "app/data/NewGodSkins/Anhur/Skins/Debonhair/t_SkinCard_Anhur_Debonhair_Base.png",
+            "icon": "app/data/NewGodSkins/Anhur/Skins/Debonhair/t_SkinPortrait_Anhur_Debonhair_Base.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "DukeDanDeLyons",
+          "skinName": "Duke Dan De Lyons",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Anhur/Skins/DukeDanDeLyons/t_GodCard_DukeDanDeLyons.png",
+            "cardArt": "app/data/NewGodSkins/Anhur/Skins/DukeDanDeLyons/t_GodCard_DukeDanDeLyons.png",
+            "icon": "app/data/NewGodSkins/Anhur/Skins/DukeDanDeLyons/t_GodPortrait_DukeDanDeLyons.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    },
+    {
+      "godName": "Anubis",
+      "internalName": "Anubis_Item",
+      "skins": [
+        {
+          "skinKey": "Anubis",
+          "skinName": "Base Anubis",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Anubis/Default/t_GodCard_Anubis.png",
+            "cardArt": "app/data/NewGodSkins/Anubis/Default/t_GodCard_Anubis.png",
+            "icon": "app/data/NewGodSkins/Anubis/Default/t_GodPortrait_Anubis.png",
+            "inGame": "app/data/NewGodSkins/Anubis/Default/T_GodFull_Anubis.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Angelic",
+              "icon": "app/data/NewGodSkins/Anubis/Skins/Mastery/T_Anubis_Icon_Angelic.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Anubis/Skins/Mastery/T_Anubis_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Anubis/Skins/Mastery/T_Anubis_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Demonic",
+              "icon": "app/data/NewGodSkins/Anubis/Skins/Mastery/T_Anubis_Icon_Demonic.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Anubis/Skins/Mastery/T_Anubis_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Anubis/Skins/Mastery/T_Anubis_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Anubis/Skins/Mastery/T_Anubis_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Anubis/Skins/Mastery/T_Anubis_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Anubis/Skins/Mastery/T_Anubis_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Anubis/Skins/Mastery/T_Anubis_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Anubis/Skins/Mastery/T_Anubis_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Anubis/Skins/Mastery/T_Anubis_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "BirthdayRecolor",
+          "skinName": "Birthday Recolor",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": true,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Anubis/Skins/BirthdayRecolor/t_Anubis_BirthdayRecolorGod-Cards.png",
+            "cardArt": "app/data/NewGodSkins/Anubis/Skins/BirthdayRecolor/t_Anubis_BirthdayRecolorGod-Cards.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "DeathMage",
+          "skinName": "Death Mage",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Anubis/Skins/DeathMage/t_SkinCard_Anubis_Deathmage.png",
+            "cardArt": "app/data/NewGodSkins/Anubis/Skins/DeathMage/t_SkinCard_Anubis_Deathmage.png",
+            "icon": "app/data/NewGodSkins/Anubis/Skins/DeathMage/t_SkinPortrait_Anubis_Deathmage.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "KnitWit",
+          "skinName": "Knit Wit",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Anubis/Skins/KnitWit/t_SkinCard_Anubis_Knitwit.png",
+            "cardArt": "app/data/NewGodSkins/Anubis/Skins/KnitWit/t_SkinCard_Anubis_Knitwit.png",
+            "icon": "app/data/NewGodSkins/Anubis/Skins/KnitWit/t_GodPortrait_Anubis_Knitwit.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism 1",
+              "cardArt": "app/data/NewGodSkins/Anubis/Skins/KnitWit/t_SkinCard_Anubis_Knitwit_Prism01.png",
+              "skin": "app/data/NewGodSkins/Anubis/Skins/KnitWit/t_SkinCard_Anubis_Knitwit_Prism01.png",
+              "icon": "app/data/NewGodSkins/Anubis/Skins/KnitWit/t_GodPortrait_Anubis_Knitwit_Prism01.png"
+            },
+            {
+              "name": "Prism 2",
+              "cardArt": "app/data/NewGodSkins/Anubis/Skins/KnitWit/t_SkinCard_Anubis_Knitwit_Prism02.png",
+              "skin": "app/data/NewGodSkins/Anubis/Skins/KnitWit/t_SkinCard_Anubis_Knitwit_Prism02.png",
+              "icon": "app/data/NewGodSkins/Anubis/Skins/KnitWit/t_GodPortrait_Anubis_Knitwit_Prism02.png"
+            },
+            {
+              "name": "Prism 3",
+              "cardArt": "app/data/NewGodSkins/Anubis/Skins/KnitWit/t_SkinCard_Anubis_Knitwit_Prism03.png",
+              "skin": "app/data/NewGodSkins/Anubis/Skins/KnitWit/t_SkinCard_Anubis_Knitwit_Prism03.png",
+              "icon": "app/data/NewGodSkins/Anubis/Skins/KnitWit/t_GodPortrait_Anubis_Knitwit_Prism03.png"
+            },
+            {
+              "name": "Prism 4",
+              "cardArt": "app/data/NewGodSkins/Anubis/Skins/KnitWit/t_SkinCard_Anubis_Knitwit_Prism04.png",
+              "skin": "app/data/NewGodSkins/Anubis/Skins/KnitWit/t_SkinCard_Anubis_Knitwit_Prism04.png",
+              "icon": "app/data/NewGodSkins/Anubis/Skins/KnitWit/t_GodPortrait_Anubis_Knitwit_Prism04.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "SenkoSage",
+          "skinName": "Senko Sage",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Anubis/Skins/SenkoSage/t_Anubis_SenkoSage_SkinCard.png",
+            "cardArt": "app/data/NewGodSkins/Anubis/Skins/SenkoSage/t_Anubis_SenkoSage_SkinCard.png",
+            "icon": "app/data/NewGodSkins/Anubis/Skins/SenkoSage/t_Anubis_SenkoSage_SkinPortrait.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    },
+    {
+      "godName": "Bastet",
+      "internalName": "Bastet_Item",
+      "skins": [
+        {
+          "skinKey": "Bastet",
+          "skinName": "Base Bastet",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Bastet/Default/t_GodCard_Bastet.png",
+            "cardArt": "app/data/NewGodSkins/Bastet/Default/t_GodCard_Bastet.png",
+            "icon": "app/data/NewGodSkins/Bastet/Default/t_GodPortrait_Bastet.png",
+            "inGame": "app/data/NewGodSkins/Bastet/Default/t_GodFull_Bastet.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Bastet/Skins/Mastery/T_Bastet_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Bastet/Skins/Mastery/t_Card_Mastery_Bastet.png",
+              "skin": "app/data/NewGodSkins/Bastet/Skins/Mastery/t_Card_Mastery_Bastet.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Bastet/Skins/Mastery/T_Bastet_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Bastet/Skins/Mastery/t_Card_Mastery_Bastet.png",
+              "skin": "app/data/NewGodSkins/Bastet/Skins/Mastery/t_Card_Mastery_Bastet.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Bastet/Skins/Mastery/T_Bastet_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Bastet/Skins/Mastery/t_Card_Mastery_Bastet.png",
+              "skin": "app/data/NewGodSkins/Bastet/Skins/Mastery/t_Card_Mastery_Bastet.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Bastet/Skins/Mastery/T_Bastet_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Bastet/Skins/Mastery/t_Card_Mastery_Bastet.png",
+              "skin": "app/data/NewGodSkins/Bastet/Skins/Mastery/t_Card_Mastery_Bastet.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "godName": "Eset",
+      "internalName": "Eset",
+      "skins": [
+        {
+          "skinKey": "Eset",
+          "skinName": "Base Eset",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Eset/Default/t_GodCard_Eset.png",
+            "cardArt": "app/data/NewGodSkins/Eset/Default/t_GodCard_Eset.png",
+            "icon": "app/data/NewGodSkins/Eset/Default/t_GodPortrait_Eset.png",
+            "inGame": "app/data/NewGodSkins/Eset/Default/t_GodFull_Eset.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Eset/Skins/Mastery/T_Eset_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Eset/Skins/Mastery/T_SkinCard_Eset_Mastery.png",
+              "skin": "app/data/NewGodSkins/Eset/Skins/Mastery/T_SkinCard_Eset_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Eset/Skins/Mastery/T_Eset_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Eset/Skins/Mastery/T_SkinCard_Eset_Mastery.png",
+              "skin": "app/data/NewGodSkins/Eset/Skins/Mastery/T_SkinCard_Eset_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Eset/Skins/Mastery/T_Eset_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Eset/Skins/Mastery/T_SkinCard_Eset_Mastery.png",
+              "skin": "app/data/NewGodSkins/Eset/Skins/Mastery/T_SkinCard_Eset_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Eset/Skins/Mastery/T_Eset_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Eset/Skins/Mastery/T_SkinCard_Eset_Mastery.png",
+              "skin": "app/data/NewGodSkins/Eset/Skins/Mastery/T_SkinCard_Eset_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "CrimsonMist",
+          "skinName": "Crimson Mist",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Eset/Skins/CrimsonMist/t_SkinCard_Eset_CrimsonMist.png",
+            "cardArt": "app/data/NewGodSkins/Eset/Skins/CrimsonMist/t_SkinCard_Eset_CrimsonMist.png",
+            "icon": "app/data/NewGodSkins/Eset/Skins/CrimsonMist/t_GodPortrait_Eset_CrimsonMist.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    },
+    {
+      "godName": "Geb",
+      "internalName": "Geb_Item",
+      "skins": [
+        {
+          "skinKey": "Geb",
+          "skinName": "Base Geb",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Geb/Default/t_GodCard_Geb.png",
+            "cardArt": "app/data/NewGodSkins/Geb/Default/t_GodCard_Geb.png",
+            "icon": "app/data/NewGodSkins/Geb/Default/t_GodPortrait_Geb.png",
+            "inGame": "app/data/NewGodSkins/Geb/Default/t_GodFull_Geb.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Geb/Skins/Mastery/T_Geb_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Geb/Skins/Mastery/T_Geb_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Geb/Skins/Mastery/T_Geb_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Geb/Skins/Mastery/T_Geb_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Geb/Skins/Mastery/T_Geb_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Geb/Skins/Mastery/T_Geb_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Geb/Skins/Mastery/T_Geb_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Geb/Skins/Mastery/T_Geb_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Geb/Skins/Mastery/T_Geb_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Geb/Skins/Mastery/T_Geb_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Geb/Skins/Mastery/T_Geb_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Geb/Skins/Mastery/T_Geb_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "GEB1CombatCamo",
+          "skinName": "Geb 1 Combat Camo",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Geb/Skins/GEB1/t_SkinCard_Geb_GEB1.png",
+            "cardArt": "app/data/NewGodSkins/Geb/Skins/GEB1/t_SkinCard_Geb_GEB1.png",
+            "icon": "app/data/NewGodSkins/Geb/Skins/GEB1/t_SkinPortrait_Geb_GEB1.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism B",
+              "cardArt": "app/data/NewGodSkins/Geb/Skins/GEB1/Prisms/t_SkinCard_Geb_GEB1_Prism_B.png",
+              "skin": "app/data/NewGodSkins/Geb/Skins/GEB1/Prisms/t_SkinCard_Geb_GEB1_Prism_B.png",
+              "icon": "app/data/NewGodSkins/Geb/Skins/GEB1/Prisms/t_SkinIcon_Geb_GEB1_Prism_B.png"
+            },
+            {
+              "name": "Prism C",
+              "cardArt": "app/data/NewGodSkins/Geb/Skins/GEB1/Prisms/t_SkinCard_Geb_GEB1_Prism_C.png",
+              "skin": "app/data/NewGodSkins/Geb/Skins/GEB1/Prisms/t_SkinCard_Geb_GEB1_Prism_C.png",
+              "icon": "app/data/NewGodSkins/Geb/Skins/GEB1/Prisms/t_SkinIcon_Geb_GEB1_Prism_C.png"
+            },
+            {
+              "name": "Prism D",
+              "cardArt": "app/data/NewGodSkins/Geb/Skins/GEB1/Prisms/t_SkinCard_Geb_GEB1_Prism_D.png",
+              "skin": "app/data/NewGodSkins/Geb/Skins/GEB1/Prisms/t_SkinCard_Geb_GEB1_Prism_D.png",
+              "icon": "app/data/NewGodSkins/Geb/Skins/GEB1/Prisms/t_SkinIcon_Geb_GEB1_Prism_D.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "SpiritStone011",
+          "skinName": "Spirit Stone 011",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Geb/Skins/SpiritStone/t_SkinCard_Geb_SpiritStone.png",
+            "cardArt": "app/data/NewGodSkins/Geb/Skins/SpiritStone/t_SkinCard_Geb_SpiritStone.png",
+            "icon": "app/data/NewGodSkins/Geb/Skins/SpiritStone/t_SkinPortrait_Geb_SpiritStone.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    },
+    {
+      "godName": "Horus",
+      "internalName": "Horus_Item",
+      "skins": [
+        {
+          "skinKey": "Horus",
+          "skinName": "Base Horus",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Horus/Default/t_GodCard_Horus.png",
+            "cardArt": "app/data/NewGodSkins/Horus/Default/t_GodCard_Horus.png",
+            "icon": "app/data/NewGodSkins/Horus/Default/t_GodPortrait_Horus.png",
+            "inGame": "app/data/NewGodSkins/Horus/Default/t_GodFull_Horus.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Horus/Skins/Mastery/T_Horus_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Horus/Skins/Mastery/t_GodCard_Horus_Mastery.png",
+              "skin": "app/data/NewGodSkins/Horus/Skins/Mastery/t_GodCard_Horus_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Horus/Skins/Mastery/T_Horus_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Horus/Skins/Mastery/t_GodCard_Horus_Mastery.png",
+              "skin": "app/data/NewGodSkins/Horus/Skins/Mastery/t_GodCard_Horus_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Horus/Skins/Mastery/T_Horus_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Horus/Skins/Mastery/t_GodCard_Horus_Mastery.png",
+              "skin": "app/data/NewGodSkins/Horus/Skins/Mastery/t_GodCard_Horus_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Horus/Skins/Mastery/T_Horus_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Horus/Skins/Mastery/t_GodCard_Horus_Mastery.png",
+              "skin": "app/data/NewGodSkins/Horus/Skins/Mastery/t_GodCard_Horus_Mastery.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "godName": "Khepri",
+      "internalName": "Khepri_Item",
+      "skins": [
+        {
+          "skinKey": "Khepri",
+          "skinName": "Base Khepri",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Khepri/Default/t_GodCard_Khepri.png",
+            "cardArt": "app/data/NewGodSkins/Khepri/Default/t_GodCard_Khepri.png",
+            "icon": "app/data/NewGodSkins/Khepri/Default/t_GodPortrait_Khepri.png",
+            "inGame": "app/data/NewGodSkins/Khepri/Default/t_GodFull_Khepri.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Khepri/Skins/Mastery/t_SkinPortrait_Khepri_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Khepri/Skins/Mastery/T_Khepri_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Khepri/Skins/Mastery/T_Khepri_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Khepri/Skins/Mastery/t_SkinPortrait_Khepri_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Khepri/Skins/Mastery/T_Khepri_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Khepri/Skins/Mastery/T_Khepri_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Khepri/Skins/Mastery/t_SkinPortrait_Khepri_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Khepri/Skins/Mastery/T_Khepri_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Khepri/Skins/Mastery/T_Khepri_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Khepri/Skins/Mastery/t_SkinPortrait_Khepri_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Khepri/Skins/Mastery/T_Khepri_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Khepri/Skins/Mastery/T_Khepri_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "01a",
+          "skinName": "01a",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Khepri/Skins/01a/t_GodCard_Khepri_01A.png",
+            "cardArt": "app/data/NewGodSkins/Khepri/Skins/01a/t_GodCard_Khepri_01A.png",
+            "icon": "app/data/NewGodSkins/Khepri/Skins/01a/t_GodPortrait_Khepri_01A.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "ChefSSpecial009",
+          "skinName": "Chef SSpecial009",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Khepri/Skins/02/t_SkinCard_Khepri_ChefSpecial.png",
+            "cardArt": "app/data/NewGodSkins/Khepri/Skins/02/t_SkinCard_Khepri_ChefSpecial.png",
+            "icon": "app/data/NewGodSkins/Khepri/Skins/02/t_SkinPortrait_Khepri_ChefSpecial.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism 1",
+              "cardArt": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_01.png",
+              "skin": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_01.png",
+              "icon": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinPortrait_Khepri_Chef_Prisim_01.png"
+            },
+            {
+              "name": "Prism 2",
+              "cardArt": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_02.png",
+              "skin": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_02.png",
+              "icon": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinPortrait_Khepri_Chef_Prisim_02.png"
+            },
+            {
+              "name": "Prism 3",
+              "cardArt": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_03.png",
+              "skin": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_03.png",
+              "icon": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinPortrait_Khepri_Chef_Prisim_03.png"
+            },
+            {
+              "name": "Prism 4",
+              "cardArt": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_04.png",
+              "skin": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_04.png",
+              "icon": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinPortrait_Khepri_Chef_Prisim_04.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "godName": "Neith",
+      "internalName": "Neith_Item",
+      "skins": [
+        {
+          "skinKey": "Neith",
+          "skinName": "Base Neith",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Neith/Default/t_GodCard_Neith.png",
+            "cardArt": "app/data/NewGodSkins/Neith/Default/t_GodCard_Neith.png",
+            "icon": "app/data/NewGodSkins/Neith/Default/t_GodPortrait_Neith.png",
+            "inGame": "app/data/NewGodSkins/Neith/Default/T_GodFull_Neith.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Angelic",
+              "icon": "app/data/NewGodSkins/Neith/Skins/Mastery/T_Neith_Icon_Angelic.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Neith/Skins/Mastery/T_Neith_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Neith/Skins/Mastery/T_Neith_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Neith/Skins/Mastery/T_Neith_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Neith/Skins/Mastery/T_Neith_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Neith/Skins/Mastery/T_Neith_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Neith/Skins/Mastery/T_Neith_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Neith/Skins/Mastery/T_Neith_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Neith/Skins/Mastery/T_Neith_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Neith/Skins/Mastery/T_Neith_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Neith/Skins/Mastery/T_Neith_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Neith/Skins/Mastery/T_Neith_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "Basscannon",
+          "skinName": "Basscannon",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Neith/Skins/Basscannon/t_SkinCard_Neith_Basscannon.png",
+            "cardArt": "app/data/NewGodSkins/Neith/Skins/Basscannon/t_SkinCard_Neith_Basscannon.png",
+            "icon": "app/data/NewGodSkins/Neith/Skins/Basscannon/t_SkinPortrait_Neith_Basscannon.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "Heavenly",
+          "skinName": "Heavenly",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Neith/Skins/Heavenly/t_SkinCard_Neith_Heavenly.png",
+            "cardArt": "app/data/NewGodSkins/Neith/Skins/Heavenly/t_SkinCard_Neith_Heavenly.png",
+            "icon": "app/data/NewGodSkins/Neith/Skins/Heavenly/t_SkinPortrait_Neith_Heavenly.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "MidnightGlamour",
+          "skinName": "Midnight Glamour",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Neith/Skins/MidnightGlamour/t_SkinCard_Neith_MidnightGlam_Base.png",
+            "cardArt": "app/data/NewGodSkins/Neith/Skins/MidnightGlamour/t_SkinCard_Neith_MidnightGlam_Base.png",
+            "icon": "app/data/NewGodSkins/Neith/Skins/MidnightGlamour/t_SkinPortrait_Neith_MidnightGlam_Base.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism 1",
+              "cardArt": "app/data/NewGodSkins/Neith/Skins/MidnightGlamour/t_SkinCard_Neith_MidnightGlam_Prism01.png",
+              "skin": "app/data/NewGodSkins/Neith/Skins/MidnightGlamour/t_SkinCard_Neith_MidnightGlam_Prism01.png",
+              "icon": "app/data/NewGodSkins/Neith/Skins/MidnightGlamour/t_SkinPortrait_Neith_MidnightGlam_Prism01.png"
+            },
+            {
+              "name": "Prism 2",
+              "cardArt": "app/data/NewGodSkins/Neith/Skins/MidnightGlamour/t_SkinCard_Neith_MidnightGlam_Prism02.png",
+              "skin": "app/data/NewGodSkins/Neith/Skins/MidnightGlamour/t_SkinCard_Neith_MidnightGlam_Prism02.png",
+              "icon": "app/data/NewGodSkins/Neith/Skins/MidnightGlamour/t_SkinPortrait_Neith_MidnightGlam_Prism02.png"
+            },
+            {
+              "name": "Prism 3",
+              "cardArt": "app/data/NewGodSkins/Neith/Skins/MidnightGlamour/t_SkinCard_Neith_MidnightGlam_Prism03.png",
+              "skin": "app/data/NewGodSkins/Neith/Skins/MidnightGlamour/t_SkinCard_Neith_MidnightGlam_Prism03.png",
+              "icon": "app/data/NewGodSkins/Neith/Skins/MidnightGlamour/t_SkinPortrait_Neith_MidnightGlam_Prism03.png"
+            },
+            {
+              "name": "Prism 4",
+              "cardArt": "app/data/NewGodSkins/Neith/Skins/MidnightGlamour/t_SkinCard_Neith_MidnightGlam_Prism04.png",
+              "skin": "app/data/NewGodSkins/Neith/Skins/MidnightGlamour/t_SkinCard_Neith_MidnightGlam_Prism04.png",
+              "icon": "app/data/NewGodSkins/Neith/Skins/MidnightGlamour/t_SkinPortrait_Neith_MidnightGlam_Prism04.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "MissdiagnosisSplash1010",
+          "skinName": "Missdiagnosis Splash 1010",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Neith/Skins/MissDiagnosis/t_SkinCard_Neith_MissDiagnosis_base.png",
+            "cardArt": "app/data/NewGodSkins/Neith/Skins/MissDiagnosis/t_SkinCard_Neith_MissDiagnosis_base.png",
+            "icon": "app/data/NewGodSkins/Neith/Skins/MissDiagnosis/t_SkinIcon_Neith_MissDiagnosis_B.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "Succubus",
+          "skinName": "Succubus",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Neith/Skins/Succubus/t_Neith_Succubus_SkinCard.png",
+            "cardArt": "app/data/NewGodSkins/Neith/Skins/Succubus/t_Neith_Succubus_SkinCard.png",
+            "icon": "app/data/NewGodSkins/Neith/Skins/Succubus/t_Neith_Succubus_SkinPortrait.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    },
+    {
+      "godName": "Nut",
+      "internalName": "Nut_Item",
+      "skins": [
+        {
+          "skinKey": "Nut",
+          "skinName": "Base Nut",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Nut/Default/t_GodCard_Nut.png",
+            "cardArt": "app/data/NewGodSkins/Nut/Default/t_GodCard_Nut.png",
+            "icon": "app/data/NewGodSkins/Nut/Default/t_GodPortrait_Nut.png",
+            "inGame": "app/data/NewGodSkins/Nut/Default/t_GodFull_Nut.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Nut/Skins/Mastery/T_Nut_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Nut/Skins/Mastery/t_SkinCard_Nut_Mastery.png",
+              "skin": "app/data/NewGodSkins/Nut/Skins/Mastery/t_SkinCard_Nut_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Nut/Skins/Mastery/T_Nut_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Nut/Skins/Mastery/t_SkinCard_Nut_Mastery.png",
+              "skin": "app/data/NewGodSkins/Nut/Skins/Mastery/t_SkinCard_Nut_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Nut/Skins/Mastery/T_Nut_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Nut/Skins/Mastery/t_SkinCard_Nut_Mastery.png",
+              "skin": "app/data/NewGodSkins/Nut/Skins/Mastery/t_SkinCard_Nut_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Nut/Skins/Mastery/T_Nut_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Nut/Skins/Mastery/t_SkinCard_Nut_Mastery.png",
+              "skin": "app/data/NewGodSkins/Nut/Skins/Mastery/t_SkinCard_Nut_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "Ascended",
+          "skinName": "Ascended",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Nut/Skins/Ascended/t_SkinCard_Nut_Ascended.png",
+            "cardArt": "app/data/NewGodSkins/Nut/Skins/Ascended/t_SkinCard_Nut_Ascended.png",
+            "icon": "app/data/NewGodSkins/Nut/Skins/Ascended/t_SkinIcon_Nut_Ascended.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "FreedomJamberee",
+          "skinName": "Freedom Jamberee",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Nut/Skins/FreedomJamberee/t_SkinCard_Nut_FreedomJamberee_Base.png",
+            "cardArt": "app/data/NewGodSkins/Nut/Skins/FreedomJamberee/t_SkinCard_Nut_FreedomJamberee_Base.png",
+            "icon": "app/data/NewGodSkins/Nut/Skins/FreedomJamberee/t_SkinPortrait_Nut_FreedomJamberee_Base.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    },
+    {
+      "godName": "Osiris",
+      "internalName": "Osiris_Item",
+      "skins": [
+        {
+          "skinKey": "Osiris",
+          "skinName": "Base Osiris",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Osiris/Default/t_GodCard_Osiris.png",
+            "cardArt": "app/data/NewGodSkins/Osiris/Default/t_GodCard_Osiris.png",
+            "icon": "app/data/NewGodSkins/Osiris/Default/t_GodPortrait_Osiris.png",
+            "inGame": "app/data/NewGodSkins/Osiris/Default/t_GodFull_Osiris.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Osiris/Skins/Mastery/T_Osiris_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Osiris/Skins/Mastery/t_GodCard_Osiris_Mastery.png",
+              "skin": "app/data/NewGodSkins/Osiris/Skins/Mastery/t_GodCard_Osiris_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Osiris/Skins/Mastery/T_Osiris_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Osiris/Skins/Mastery/t_GodCard_Osiris_Mastery.png",
+              "skin": "app/data/NewGodSkins/Osiris/Skins/Mastery/t_GodCard_Osiris_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Osiris/Skins/Mastery/T_Osiris_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Osiris/Skins/Mastery/t_GodCard_Osiris_Mastery.png",
+              "skin": "app/data/NewGodSkins/Osiris/Skins/Mastery/t_GodCard_Osiris_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Osiris/Skins/Mastery/T_Osiris_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Osiris/Skins/Mastery/t_GodCard_Osiris_Mastery.png",
+              "skin": "app/data/NewGodSkins/Osiris/Skins/Mastery/t_GodCard_Osiris_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "BlackKnight",
+          "skinName": "Black Knight",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Osiris/Skins/BlackKnight/t_SkinCard_Osiris_BlackKnight.png",
+            "cardArt": "app/data/NewGodSkins/Osiris/Skins/BlackKnight/t_SkinCard_Osiris_BlackKnight.png",
+            "icon": "app/data/NewGodSkins/Osiris/Skins/BlackKnight/t_GodPortrait_Osiris_BlackKnight.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism 1",
+              "cardArt": "app/data/NewGodSkins/Osiris/Skins/BlackKnight/t_SkinCard_Osiris_BlackKnight_Prism01.png",
+              "skin": "app/data/NewGodSkins/Osiris/Skins/BlackKnight/t_SkinCard_Osiris_BlackKnight_Prism01.png",
+              "icon": "app/data/NewGodSkins/Osiris/Skins/BlackKnight/t_GodPortrait_Osiris_BlackKnight_Prism01.png"
+            },
+            {
+              "name": "Prism 2",
+              "cardArt": "app/data/NewGodSkins/Osiris/Skins/BlackKnight/t_SkinCard_Osiris_BlackKnight_Prism02.png",
+              "skin": "app/data/NewGodSkins/Osiris/Skins/BlackKnight/t_SkinCard_Osiris_BlackKnight_Prism02.png",
+              "icon": "app/data/NewGodSkins/Osiris/Skins/BlackKnight/t_GodPortrait_Osiris_BlackKnight_Prism02.png"
+            },
+            {
+              "name": "Prism 3",
+              "cardArt": "app/data/NewGodSkins/Osiris/Skins/BlackKnight/t_SkinCard_Osiris_BlackKnight_Prism03.png",
+              "skin": "app/data/NewGodSkins/Osiris/Skins/BlackKnight/t_SkinCard_Osiris_BlackKnight_Prism03.png",
+              "icon": "app/data/NewGodSkins/Osiris/Skins/BlackKnight/t_GodPortrait_Osiris_BlackKnight_Prism03.png"
+            },
+            {
+              "name": "Prism 4",
+              "cardArt": "app/data/NewGodSkins/Osiris/Skins/BlackKnight/t_SkinCard_Osiris_BlackKnight_Prism04.png",
+              "skin": "app/data/NewGodSkins/Osiris/Skins/BlackKnight/t_SkinCard_Osiris_BlackKnight_Prism04.png",
+              "icon": "app/data/NewGodSkins/Osiris/Skins/BlackKnight/t_GodPortrait_Osiris_BlackKnight_Prism04.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "NobleKnight",
+          "skinName": "Noble Knight",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Osiris/Skins/NobleKnight/t_SkinCard_Osiris_NobleKnight.png",
+            "cardArt": "app/data/NewGodSkins/Osiris/Skins/NobleKnight/t_SkinCard_Osiris_NobleKnight.png",
+            "icon": "app/data/NewGodSkins/Osiris/Skins/NobleKnight/t_GodPortrait_Osiris_NobleKnight.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism 1",
+              "cardArt": "app/data/NewGodSkins/Osiris/Skins/NobleKnight/t_SkinCard_Osiris_NobleKnight_Prism01.png",
+              "skin": "app/data/NewGodSkins/Osiris/Skins/NobleKnight/t_SkinCard_Osiris_NobleKnight_Prism01.png",
+              "icon": "app/data/NewGodSkins/Osiris/Skins/NobleKnight/t_GodPortrait_Osiris_NobleKnight_Prism01.png"
+            },
+            {
+              "name": "Prism 2",
+              "cardArt": "app/data/NewGodSkins/Osiris/Skins/NobleKnight/t_SkinCard_Osiris_NobleKnight_Prism02.png",
+              "skin": "app/data/NewGodSkins/Osiris/Skins/NobleKnight/t_SkinCard_Osiris_NobleKnight_Prism02.png",
+              "icon": "app/data/NewGodSkins/Osiris/Skins/NobleKnight/t_GodPortrait_Osiris_NobleKnight_Prism02.png"
+            },
+            {
+              "name": "Prism 3",
+              "cardArt": "app/data/NewGodSkins/Osiris/Skins/NobleKnight/t_SkinCard_Osiris_NobleKnight_Prism03.png",
+              "skin": "app/data/NewGodSkins/Osiris/Skins/NobleKnight/t_SkinCard_Osiris_NobleKnight_Prism03.png",
+              "icon": "app/data/NewGodSkins/Osiris/Skins/NobleKnight/t_GodPortrait_Osiris_NobleKnight_Prism03.png"
+            },
+            {
+              "name": "Prism 4",
+              "cardArt": "app/data/NewGodSkins/Osiris/Skins/NobleKnight/t_SkinCard_Osiris_NobleKnight_Prism04.png",
+              "skin": "app/data/NewGodSkins/Osiris/Skins/NobleKnight/t_SkinCard_Osiris_NobleKnight_Prism04.png",
+              "icon": "app/data/NewGodSkins/Osiris/Skins/NobleKnight/t_GodPortrait_Osiris_NobleKnight_Prism04.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "godName": "Ra",
+      "internalName": "Ra_Item",
+      "skins": [
+        {
+          "skinKey": "Ra",
+          "skinName": "Base Ra",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Ra/Default/t_GodCard_Ra.png",
+            "cardArt": "app/data/NewGodSkins/Ra/Default/t_GodCard_Ra.png",
+            "icon": "app/data/NewGodSkins/Ra/Default/t_GodPortrait_Ra.png",
+            "inGame": "app/data/NewGodSkins/Ra/Default/t_GodFull_Ra.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Ra/Skins/Mastery/T_Ra_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Ra/Skins/Mastery/T_Ra_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Ra/Skins/Mastery/T_Ra_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Ra/Skins/Mastery/T_Ra_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Ra/Skins/Mastery/T_Ra_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Ra/Skins/Mastery/T_Ra_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Ra/Skins/Mastery/T_Ra_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Ra/Skins/Mastery/T_Ra_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Ra/Skins/Mastery/T_Ra_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Ra/Skins/Mastery/T_Ra_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Ra/Skins/Mastery/T_Ra_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Ra/Skins/Mastery/T_Ra_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "Beakington",
+          "skinName": "Beakington",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Ra/Skins/Beakington/t_SkinCard_Ra_Beakington.png",
+            "cardArt": "app/data/NewGodSkins/Ra/Skins/Beakington/t_SkinCard_Ra_Beakington.png",
+            "icon": "app/data/NewGodSkins/Ra/Skins/Beakington/t_SkinPortrait_Ra_Beakington.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "OblivionSeer009",
+          "skinName": "Oblivion Seer 009",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Ra/Skins/OblivionSeer/t_SkinCard_Ra_OblivionSeer.png",
+            "cardArt": "app/data/NewGodSkins/Ra/Skins/OblivionSeer/t_SkinCard_Ra_OblivionSeer.png",
+            "icon": "app/data/NewGodSkins/Ra/Skins/OblivionSeer/t_SkinPortrait_Ra_OblivionSeer.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "Plucky",
+          "skinName": "Plucky",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Ra/Skins/Plucky/t_SkinCard_Ra_Plucky_Base.png",
+            "cardArt": "app/data/NewGodSkins/Ra/Skins/Plucky/t_SkinCard_Ra_Plucky_Base.png",
+            "icon": "app/data/NewGodSkins/Ra/Skins/Plucky/t_SkinPortrait_Ra_Plucky_Base.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "Ra Merica",
+          "skinName": "Ra Merica",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Ra/Skins/RaMerica/t_SkinCard_Ra_RaMerica.png",
+            "cardArt": "app/data/NewGodSkins/Ra/Skins/RaMerica/t_SkinCard_Ra_RaMerica.png",
+            "icon": "app/data/NewGodSkins/Ra/Skins/RaMerica/t_SkinPortrait_Ra_RaMerica.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    },
+    {
+      "godName": "Sobek",
+      "internalName": "Sobek_Item",
+      "skins": [
+        {
+          "skinKey": "Sobek",
+          "skinName": "Base Sobek",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Sobek/Default/t_GodCard_Sobek.png",
+            "cardArt": "app/data/NewGodSkins/Sobek/Default/t_GodCard_Sobek.png",
+            "icon": "app/data/NewGodSkins/Sobek/Default/t_GodPortrait_Sobek.png",
+            "inGame": "app/data/NewGodSkins/Sobek/Default/T_GodFull_Sobek.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Sobek/Skins/Mastery/T_Sobek_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Sobek/Skins/Mastery/T_Sobek_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Sobek/Skins/Mastery/T_Sobek_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Sobek/Skins/Mastery/T_Sobek_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Sobek/Skins/Mastery/T_Sobek_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Sobek/Skins/Mastery/T_Sobek_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Sobek/Skins/Mastery/T_Sobek_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Sobek/Skins/Mastery/T_Sobek_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Sobek/Skins/Mastery/T_Sobek_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Sobek/Skins/Mastery/T_Sobek_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Sobek/Skins/Mastery/T_Sobek_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Sobek/Skins/Mastery/T_Sobek_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "LandShark",
+          "skinName": "Land Shark",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Sobek/Skins/LandShark/t_GodCard_Sobek_LandShark.png",
+            "cardArt": "app/data/NewGodSkins/Sobek/Skins/LandShark/t_GodCard_Sobek_LandShark.png",
+            "icon": "app/data/NewGodSkins/Sobek/Skins/LandShark/t_GodPortrait_Sobek_LandShark.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "LilBites",
+          "skinName": "Lil Bites",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Sobek/Skins/LilBites/t_SkinCard_Sobek_LilBites.png",
+            "cardArt": "app/data/NewGodSkins/Sobek/Skins/LilBites/t_SkinCard_Sobek_LilBites.png",
+            "icon": "app/data/NewGodSkins/Sobek/Skins/LilBites/t_SkinPortrait_Sobek_LilBites.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    }
+  ]
+}

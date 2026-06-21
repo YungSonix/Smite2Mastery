@@ -1,5 +1,5 @@
 /**
- * Reads app/data/builds.json and lists:
+ * Reads app/data/God Information/Builds/builds.json and lists:
  * 1) All Gods (name + pantheon)
  * 2) All Items grouped by tier (Tier 1, Tier 2, Tier 3)
  * Run: node scripts/list-gods-and-items.js
@@ -8,7 +8,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const buildsPath = path.join(__dirname, '../app/data/builds.json');
+const { BUILDS_JSON: buildsPath } = require('../config/dataPaths');
 const buildsData = JSON.parse(fs.readFileSync(buildsPath, 'utf8'));
 
 function flatten(arr) {

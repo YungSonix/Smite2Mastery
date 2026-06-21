@@ -1,0 +1,13 @@
+{
+  "projectName": "Smite 2 Companion (smitescroll)",
+  "stack": "expo",
+  "accentColor": "#7dd3fc",
+  "repoJunctions": ["app", "lib", "hooks", "config", "scripts", "supabase", "docs", "public"],
+  "codeAreas": [
+    { "id": "app", "label": "App routes", "path": "app", "note": "Code/App" },
+    { "id": "lib", "label": "Shared lib", "path": "lib", "note": "Code/Lib" },
+    { "id": "hooks", "label": "Hooks", "path": "hooks", "note": "Code/Hooks" },
+    { "id": "config", "label": "Config", "path": "config", "note": "Code/Config" },
+    { "id": "data", "label": "Game data", "path": "app/data", "note": "Code/Data" }
+  ]
+}

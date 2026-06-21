@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_SkinCard_Hercules_BatterUp",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Hercules/Skins/BatterUp/t_SkinCard_Hercules_BatterUp",
+    "Properties": {
+      "ImportedSize": {
+        "X": 400,
+        "Y": 600
+      },
+      "LightingGuid": "6BE23187-431A09DB-BA7734B9-340EEC15",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 400,
+    "SizeY": 600,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT1",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 120000,
+          "SizeOnDisk": 120000,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 400,
+        "SizeY": 600,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

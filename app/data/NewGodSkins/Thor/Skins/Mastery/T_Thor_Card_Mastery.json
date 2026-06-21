@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_Thor_Card_Mastery",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Thor/Skins/Mastery/T_Thor_Card_Mastery",
+    "Properties": {
+      "ImportedSize": {
+        "X": 680,
+        "Y": 1024
+      },
+      "LightingGuid": "1A064C65-4819B8B3-0408F0BF-7A7B26AE",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 680,
+    "SizeY": 1024,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 696320,
+          "SizeOnDisk": 696320,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 680,
+        "SizeY": 1024,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

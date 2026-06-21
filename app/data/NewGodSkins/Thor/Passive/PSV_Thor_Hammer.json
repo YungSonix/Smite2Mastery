@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "PSV_Thor_Hammer",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Thor/Passive/PSV_Thor_Hammer",
+    "Properties": {
+      "ImportedSize": {
+        "X": 180,
+        "Y": 128
+      },
+      "LightingGuid": "2F190AC1-47C7EB19-4EDA0E9F-CE50433A",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 180,
+    "SizeY": 128,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 23040,
+          "SizeOnDisk": 23040,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 180,
+        "SizeY": 128,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

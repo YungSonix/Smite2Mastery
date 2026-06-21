@@ -1385,7 +1385,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   // Load builds data
   useEffect(() => {
     try {
-      const data = require('./data/builds.json');
+      const data = require('../lib/buildsData');
       setBuildsData(data);
     } catch (e) {
       console.error('Failed to load builds.json:', e);

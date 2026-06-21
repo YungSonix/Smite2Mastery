@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_SkinCard_Mastery",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/DaJi/Skins/Mastery/t_SkinCard_Mastery",
+    "Properties": {
+      "ImportedSize": {
+        "X": 680,
+        "Y": 1024
+      },
+      "LightingGuid": "DF966BA7-46A4A2EF-07B5E7B9-06884A60",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 680,
+    "SizeY": 1024,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 2785280,
+          "SizeOnDisk": 2785280,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 680,
+        "SizeY": 1024,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

@@ -40,14 +40,6 @@ export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUs
   const featuredChannel =
     FEATURED_TWITCH_CHANNELS[featuredChannelIndex] ?? DEFAULT_TWITCH_CHANNEL;
 
-  if (activeTab === 'tools' && selectedTool === 'player-lookup') {
-    return (
-      <PlayerLookupScreen
-        onBack={() => setSelectedTool(null)}
-      />
-    );
-  }
-
   // If a game is selected, show it
   if (selectedGame === 'god-wordle') {
     return (

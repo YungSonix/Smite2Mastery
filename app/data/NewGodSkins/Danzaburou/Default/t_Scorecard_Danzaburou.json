@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_Scorecard_Danzaburou",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Danzaburou/Default/t_Scorecard_Danzaburou",
+    "Properties": {
+      "ImportedSize": {
+        "X": 180,
+        "Y": 52
+      },
+      "LightingGuid": "8A03BFEB-4DFB3ABC-7CE047A2-87923CA1",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 180,
+    "SizeY": 52,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT1",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 4680,
+          "SizeOnDisk": 4680,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 180,
+        "SizeY": 52,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

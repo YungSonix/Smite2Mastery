@@ -1,0 +1,24 @@
+{
+  "sessionId": "2026-06-17-fixed-it-and-it-looks-great-whats-something-we-can-do-to-mak",
+  "round": 2,
+  "chair": {
+    "state": "done",
+    "detail": "Final Verdict delivered"
+  },
+  "members": {
+    "nala": {
+      "state": "done",
+      "detail": "Session complete"
+    },
+    "london": {
+      "state": "done",
+      "detail": "Session complete"
+    },
+    "fasa": {
+      "state": "done",
+      "detail": "Session complete"
+    }
+  },
+  "updatedAt": "2026-06-17T15:18:53.441Z",
+  "phase": null
+}

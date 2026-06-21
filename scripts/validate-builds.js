@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Load the builds.json file
-const buildsPath = path.join(__dirname, '../app/data/builds.json');
+const { BUILDS_JSON: buildsPath } = require('../config/dataPaths');
 const buildsData = JSON.parse(fs.readFileSync(buildsPath, 'utf8'));
 
 // Flatten gods array (handle nested arrays)

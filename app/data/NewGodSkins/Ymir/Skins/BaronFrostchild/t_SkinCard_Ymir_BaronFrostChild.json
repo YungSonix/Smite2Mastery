@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_SkinCard_Ymir_BaronFrostChild",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Ymir/Skins/BaronFrostchild/t_SkinCard_Ymir_BaronFrostChild",
+    "Properties": {
+      "ImportedSize": {
+        "X": 404,
+        "Y": 600
+      },
+      "LightingGuid": "C38DF6A7-48F6A2B2-00DF1399-5AE7A690",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 404,
+    "SizeY": 600,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 242400,
+          "SizeOnDisk": 242400,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 404,
+        "SizeY": 600,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

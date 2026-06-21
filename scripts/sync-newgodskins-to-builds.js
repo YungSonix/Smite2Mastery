@@ -1,6 +1,6 @@
 /**
  * Maps `app/data/NewGodSkins/{God}/Skins/{SkinFolder}/` (and `.../{God}/Default/` for base)
- * into `app/data/builds.json` skin entries using repo-relative paths:
+ * into `app/data/God Information/Builds/builds.json` skin entries using repo-relative paths:
  *   `app/data/NewGodSkins/...` (loaded via `getSkinImage` → GitHub raw).
  *
  * Also:
@@ -12,8 +12,8 @@
  * - **Duplicate keys** pointing at the same folder (legacy per-prism rows) → keep one canonical row, set
  *   `hideFromSkinList: true` on the others so the app shows a single skin with a prism strip.
  * - **Disk discovery**: each subfolder of `Skins/` that is not already represented by a skin row (by key or
- *   name inference) gets a new stub entry so assets can sync. The folder `Mastery` is never a separate skin row.
- * - **Mastery**: files in `Skins/Mastery/` (portraits / optional shared `*Card*Mastery*` card) are merged into
+ *   name inference) gets a new stub entry so assets can sync. `Mastery` / `Masteries` are never separate skin rows.
+ * - **Mastery**: files in `Skins/Mastery/` or `Skins/Masteries/` (portraits / optional shared card) merge into
  *   the **base** skin’s `variants[]` (like prisms; portrait-only tiers are OK — splash falls back to base card).
  * - **Palette prisms**: filenames ending in `_P1.png`…`_P4.png` (e.g. Mystic Guardian) become variant chips like
  *   `_Prism_*` files. **`SKIN_FOLDER_REMAP`**: map canonical `builds.json` skin key → on-disk folder (e.g. MysticGuardian → `02A`);
@@ -29,7 +29,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..', 'app', 'data', 'NewGodSkins');
-const BUILDS = path.join(__dirname, '..', 'app', 'data', 'builds.json');
+const { BUILDS_JSON: BUILDS } = require('../config/dataPaths');
 
 /**
  * When the on-disk skin folder name (e.g. internal `02A`) does not match `builds.json` skin key
@@ -38,6 +38,22 @@ const BUILDS = path.join(__dirname, '..', 'app', 'data', 'builds.json');
 const STATIC_SKIN_FOLDER_REMAP = {
   Athena: {
     MysticGuardian: '02A',
+  },
+  /** On-disk folder is HiveQueen; canonical skin row is MissSenshi (same card assets). */
+  Bellona: {
+    MissSenshi: 'HiveQueen',
+  },
+  Apollo: {
+    BitBlasterMechacore: 'BitBlaster',
+  },
+  Merlin: {
+    MagicMischief: 'MysticMischief',
+  },
+  Pele: {
+    SupernovaSplash1920x1080: 'SuperNova',
+  },
+  Danzaburou: {
+    BossmanSplash1920x1080: 'BossMan',
   },
 };
 
@@ -127,43 +143,97 @@ function isSkinCardFile(filename) {
 }
 
 function isSkinPortraitFile(filename) {
-  return hasNamedToken(filename, 'SkinPortrait');
+  const s = String(filename);
+  return (
+    hasNamedToken(s, 'SkinPortrait') ||
+    /SkinPortriat/i.test(s) ||
+    /SkinPortait/i.test(s)
+  );
 }
 
 function isSkinIconFile(filename) {
-  return hasNamedToken(filename, 'SkinIcon');
+  const s = String(filename);
+  return hasNamedToken(s, 'SkinIcon') || /t_Skin_Icon_/i.test(s);
 }
 
 function isGodPortraitFile(filename) {
   return hasNamedToken(filename, 'GodPortrait') || /t_GodPortrait_/i.test(String(filename));
 }
 
+function isRasterFile(filename) {
+  return /\.(png|webp|jpe?g)$/i.test(String(filename));
+}
+
+/** Drop UE `.json` when the same basename exists as PNG/WebP/JPEG. */
+function dedupePreferRaster(files) {
+  const byBase = new Map();
+  for (const f of files) {
+    const base = String(f).replace(/\.(png|webp|jpe?g|json)$/i, '');
+    const prev = byBase.get(base);
+    if (!prev) {
+      byBase.set(base, f);
+      continue;
+    }
+    if (isRasterFile(f) && !isRasterFile(prev)) byBase.set(base, f);
+    else if (isRasterFile(f) && isRasterFile(prev) && /\.png$/i.test(f)) byBase.set(base, f);
+  }
+  return [...byBase.values()];
+}
+
+/** When UE `.json` exports sit beside real images, always prefer the raster file. */
+function preferRasterMatch(files, predicate) {
+  const matches = files.filter(predicate);
+  if (!matches.length) return null;
+  const raster = matches.find(isRasterFile);
+  return raster || matches[0];
+}
+
+function isLikelyPortraitOrIcon(filename) {
+  return /portrait|portriat|portait|skinicon|godicon|(?:^|_)icon(?:_|\.|$)|_icon_|mini|full|scorecard|roster|team/i.test(
+    String(filename)
+  );
+}
+
 function pickCard(files) {
-  const godCard = files.find((x) => /^t_GodCard_/i.test(x));
+  const godCard = preferRasterMatch(files, (x) => /^t_GodCard_/i.test(x));
   if (godCard) return godCard;
-  const baseSkinCard = files.find((x) => isSkinCardFile(x) && /_Base\./i.test(x));
+  const baseSkinCard = preferRasterMatch(
+    files,
+    (x) => isSkinCardFile(x) && /_Base\./i.test(x)
+  );
   if (baseSkinCard) return baseSkinCard;
-  const noPrism = files.find((x) => isSkinCardFile(x) && !/Prism/i.test(x));
+  const noPrism = preferRasterMatch(files, (x) => isSkinCardFile(x) && !/Prism/i.test(x));
   if (noPrism) return noPrism;
-  return files.find((x) => isSkinCardFile(x)) || null;
+  const skinCard = preferRasterMatch(files, (x) => isSkinCardFile(x));
+  if (skinCard) return skinCard;
+  return preferRasterMatch(files, (x) => isRasterFile(x) && !isLikelyPortraitOrIcon(x));
 }
 
 /** Icons for the default row — skip `_Prism_*` and numeric `_P1`… palette files so base uses neutral portrait. */
 function pickIconBase(files) {
   const noPrism = (x) => !/Prism/i.test(x);
-  const noPalette = (x) => !/_P\d+\.(png|webp)$/i.test(x);
+  const noPalette = (x) => !/_P\d+\.(png|webp|jpe?g|json)$/i.test(x);
 
-  const godPort = files.find((x) => isGodPortraitFile(x) && noPrism(x) && noPalette(x));
+  const godPort = preferRasterMatch(
+    files,
+    (x) => isGodPortraitFile(x) && noPrism(x) && noPalette(x)
+  );
   if (godPort) return godPort;
-  const skinIconN = files.find((x) => isSkinIconFile(x) && noPrism(x) && noPalette(x));
+  const skinIconN = preferRasterMatch(
+    files,
+    (x) => isSkinIconFile(x) && noPrism(x) && noPalette(x)
+  );
   if (skinIconN) return skinIconN;
-  const skinPortraitN = files.find((x) => isSkinPortraitFile(x) && noPrism(x) && noPalette(x));
+  const skinPortraitN = preferRasterMatch(
+    files,
+    (x) => isSkinPortraitFile(x) && noPrism(x) && noPalette(x)
+  );
   if (skinPortraitN) return skinPortraitN;
   return (
-    files.find((x) => isSkinIconFile(x) && noPrism(x)) ||
-    files.find((x) => isSkinPortraitFile(x) && noPrism(x)) ||
-    files.find((x) => isGodPortraitFile(x)) ||
-    files.find((x) => /t_GodMini_/i.test(x)) ||
+    preferRasterMatch(files, (x) => isSkinIconFile(x) && noPrism(x)) ||
+    preferRasterMatch(files, (x) => isSkinPortraitFile(x) && noPrism(x)) ||
+    preferRasterMatch(files, (x) => isGodPortraitFile(x)) ||
+    preferRasterMatch(files, (x) => /t_GodMini_/i.test(x)) ||
     null
   );
 }
@@ -171,15 +241,19 @@ function pickIconBase(files) {
 /** Icons inside a prism group (filenames are usually *_Prism_*.png). */
 function pickIconPrism(files) {
   return (
-    files.find((x) => isSkinIconFile(x)) ||
-    files.find((x) => isSkinPortraitFile(x)) ||
-    files.find((x) => isGodPortraitFile(x)) ||
+    preferRasterMatch(files, (x) => isSkinIconFile(x)) ||
+    preferRasterMatch(files, (x) => isSkinPortraitFile(x)) ||
+    preferRasterMatch(files, (x) => isGodPortraitFile(x)) ||
     null
   );
 }
 
 function pickFullBody(files) {
-  return files.find((x) => /^T_GodFull_/i.test(x)) || files.find((x) => /^t_GodFull_/i.test(x)) || null;
+  return (
+    preferRasterMatch(files, (x) => /^T_GodFull_/i.test(x)) ||
+    preferRasterMatch(files, (x) => /^t_GodFull_/i.test(x)) ||
+    null
+  );
 }
 
 function posixJoin(...parts) {
@@ -329,7 +403,7 @@ function matchSkinDirBySiblingPrismId(skinsRoot, filename) {
   const prismId = extractPrismId(filename);
   if (!prismId) return null;
   const dirs = listSubdirs(skinsRoot).filter(
-    (d) => !/^mastery$/i.test(d) && !/^pris[i]?ms?$/i.test(d)
+    (d) => !isMasteryFolderName(d) && !/^pris[i]?ms?$/i.test(d)
   );
   for (const d of dirs) {
     const prismDir = path.join(skinsRoot, d, 'Prisms');
@@ -342,7 +416,7 @@ function matchSkinDirBySiblingPrismId(skinsRoot, filename) {
 
 function matchSkinDirForPrismSlug(skinsRoot, slug, godFolder, filename) {
   const dirs = listSubdirs(skinsRoot).filter(
-    (d) => !/^mastery$/i.test(d) && !/^pris[i]?ms?$/i.test(d)
+    (d) => !isMasteryFolderName(d) && !/^pris[i]?ms?$/i.test(d)
   );
   if (!slug) {
     const fallback = GOD_LEVEL_PRISM_PARENT_BY_GOD[godFolder];
@@ -486,14 +560,14 @@ function collectVariantPairsById(skinDir) {
     if (!byKey.has(key)) byKey.set(key, []);
     byKey.get(key).push({ dir, name });
   }
-  for (const name of listFiles(skinDir)) {
+  for (const name of dedupePreferRaster(listFiles(skinDir))) {
     const key = variantGroupKeyFromFilename(name, false);
     if (key) pushPair(key, skinDir, name);
   }
   const pName = findPrismsDirName(skinDir);
   if (pName) {
     const pDir = path.join(skinDir, pName);
-    for (const name of listFiles(pDir)) {
+    for (const name of dedupePreferRaster(listFiles(pDir))) {
       const key = variantGroupKeyFromFilename(name, true);
       if (key) pushPair(key, pDir, name);
     }
@@ -645,11 +719,14 @@ function isFolderCoveredByExistingSkin(godFolder, skinsRoot, skins, folderName) 
   return false;
 }
 
-function diskFolderIsOnlyRemapTarget(godFolder, folderName) {
+function diskFolderIsOnlyRemapTarget(godFolder, folderName, skins) {
   const m = SKIN_FOLDER_REMAP[godFolder];
   if (!m) return false;
-  return Object.values(m).some(
-    (v) => v === folderName || String(v).toLowerCase() === String(folderName).toLowerCase()
+  return Object.entries(m).some(
+    ([canonicalKey, diskFolder]) =>
+      skins[canonicalKey] &&
+      (diskFolder === folderName ||
+        String(diskFolder).toLowerCase() === String(folderName).toLowerCase())
   );
 }
 
@@ -662,10 +739,10 @@ function discoverMissingSkinFolders(godFolder, skins) {
   if (!fs.existsSync(skinsRoot)) return 0;
   let added = 0;
   for (const d of listSubdirs(skinsRoot)) {
-    if (/^mastery$/i.test(d)) continue;
+    if (isMasteryFolderName(d)) continue;
     // Prism asset folders are merged into parent skin variants[], not separate picker rows.
     if (/^pris[i]?ms?$/i.test(d)) continue;
-    if (diskFolderIsOnlyRemapTarget(godFolder, d)) continue;
+    if (diskFolderIsOnlyRemapTarget(godFolder, d, skins)) continue;
     if (isFolderCoveredByExistingSkin(godFolder, skinsRoot, skins, d)) continue;
     if (skins[d]) continue;
     skins[d] = {
@@ -683,6 +760,75 @@ function discoverMissingSkinFolders(godFolder, skins) {
  * When `Default/` has base assets but no skin row resolves there as Base Skin, add or retag a stub
  * so the main sync loop wires `t_GodCard_*` / `t_GodPortrait_*` / `T_GodFull_*` paths.
  */
+/** Rename mis-keyed base rows (e.g. Ah Puch keyed as `Aphrodite`) to `{GodFolder}`. */
+function fixMisnamedBaseSkinKey(godFolder, skins, god) {
+  if (!skins || typeof skins !== 'object') return 0;
+  const expected = new Set(
+    [...godFolderCandidates(god), godFolder, String(god.name || god.GodName || '').replace(/\s+/g, '')]
+      .filter(Boolean)
+      .map((k) => k.toLowerCase())
+  );
+
+  let baseKey = null;
+  let baseEntry = null;
+  for (const [k, e] of Object.entries(skins)) {
+    if (!e || typeof e !== 'object') continue;
+    const type = String(e.type || '');
+    const nm = String(e.name || '');
+    if (!/base skin/i.test(type) && !/\bbase\b/i.test(nm)) continue;
+    baseKey = k;
+    baseEntry = e;
+    break;
+  }
+  if (!baseKey || !baseEntry) return 0;
+  if (expected.has(baseKey.toLowerCase()) || expected.has(baseKey.replace(/\s+/g, '').toLowerCase())) {
+    return 0;
+  }
+  if (skins[godFolder] && baseKey !== godFolder) return 0;
+
+  skins[godFolder] = baseEntry;
+  delete skins[baseKey];
+  return 1;
+}
+
+function mirrorSkinRecord(source, target) {
+  if (!source || !target || source === target) return;
+  for (const [k, se] of Object.entries(source)) {
+    if (!se || typeof se !== 'object') continue;
+    if (!target[k]) {
+      target[k] = JSON.parse(JSON.stringify(se));
+      continue;
+    }
+    const te = target[k];
+    for (const f of ['skin', 'cardArt', 'icon', 'inGame', 'type', 'name']) {
+      if (se[f] !== undefined && se[f] !== null && String(se[f]).trim() !== '') te[f] = se[f];
+    }
+    if (se.price && typeof se.price === 'object') te.price = { ...te.price, ...se.price };
+    if (Array.isArray(se.variants) && se.variants.length > 0) te.variants = se.variants;
+    if (se.hideFromSkinList) te.hideFromSkinList = true;
+    else {
+      delete te.hideFromSkinList;
+      delete te.hide_from_skin_list;
+    }
+  }
+  for (const k of Object.keys(source)) {
+    if (!target[k]) target[k] = JSON.parse(JSON.stringify(source[k]));
+  }
+}
+
+/** Prefer `baseInformation.skins`; fall back to top-level `god.skins` for newer gods. */
+function resolveSkinsObject(god) {
+  if (!god.baseInformation || typeof god.baseInformation !== 'object') god.baseInformation = {};
+  if (god.baseInformation.skins && typeof god.baseInformation.skins === 'object') {
+    return god.baseInformation.skins;
+  }
+  if (god.skins && typeof god.skins === 'object') {
+    god.baseInformation.skins = god.skins;
+    return god.baseInformation.skins;
+  }
+  return null;
+}
+
 function ensureDefaultBaseSkinStub(godFolder, skins, god) {
   const defaultDir = path.join(ROOT, godFolder, 'Default');
   if (!fs.existsSync(defaultDir)) return 0;
@@ -756,8 +902,79 @@ function findBaseSkinKey(skins, godFolder, god) {
   return keys[0] || null;
 }
 
+function isMasteryFolderName(name) {
+  return /^master(y|ies)$/i.test(String(name || '').trim());
+}
+
+function isStandaloneMasterySkinRow(skinKey, entry) {
+  if (isMasteryFolderName(skinKey)) return true;
+  const nm = String(entry?.name || '').trim();
+  return isMasteryFolderName(nm);
+}
+
+/** Remove legacy `Mastery` / `Masteries` picker rows — assets merge onto base skin `variants[]`. */
+function stripStandaloneMasterySkinRows(skins) {
+  if (!skins || typeof skins !== 'object') return 0;
+  let removed = 0;
+  for (const skinKey of Object.keys(skins)) {
+    const entry = skins[skinKey];
+    if (!isStandaloneMasterySkinRow(skinKey, entry)) continue;
+    delete skins[skinKey];
+    removed += 1;
+  }
+  return removed;
+}
+
+function resolveMasteryDirs(godFolder) {
+  const skinsRoot = path.join(ROOT, godFolder, 'Skins');
+  const dirs = [];
+  for (const name of ['Mastery', 'Masteries']) {
+    const dir = path.join(skinsRoot, name);
+    if (fs.existsSync(dir)) dirs.push(dir);
+  }
+  return dirs;
+}
+
+function findSharedMasteryCard(files) {
+  return (
+    preferRasterMatch(files, (f) =>
+      /card.*mastery|mastery.*card|_Card_Mastery|GodCard_.*Mastery/i.test(f)
+    ) || null
+  );
+}
+
+function isMasteryTierPortraitFile(filename) {
+  const s = String(filename);
+  if (/card.*mastery|mastery.*card|_Card_Mastery|GodCard_.*Mastery/i.test(s)) return false;
+  return (
+    /t_SkinPortrait_/i.test(s) ||
+    /t_SkinIcon_/i.test(s) ||
+    /T_SkinPortrait_/i.test(s) ||
+    /T_SkinIcon_/i.test(s) ||
+    /_Icon_/i.test(s)
+  );
+}
+
+function pickPortraitOrIconForTier(tierFiles) {
+  const deduped = dedupePreferRaster(tierFiles);
+  return (
+    preferRasterMatch(deduped, (f) => /t_SkinPortrait_/i.test(f)) ||
+    preferRasterMatch(deduped, (f) => /T_SkinPortrait_/i.test(f)) ||
+    preferRasterMatch(deduped, (f) => /t_SkinIcon_/i.test(f)) ||
+    preferRasterMatch(deduped, (f) => /T_SkinIcon_/i.test(f)) ||
+    preferRasterMatch(deduped, (f) => /_Icon_/i.test(f)) ||
+    null
+  );
+}
+
 function extractMasteryTierLabel(filename, godFolder) {
-  const noExt = filename.replace(/\.png$/i, '');
+  const base = String(filename);
+  const iconTier = base.match(/_Icon_([A-Za-z]+)\./i);
+  if (iconTier) return iconTier[1];
+  const portTier = base.match(/_Portrait_[A-Za-z0-9]+_([A-Za-z]+)\./i);
+  if (portTier) return portTier[1];
+
+  const noExt = base.replace(/\.(png|webp|jpe?g|json)$/i, '');
   let rest = noExt
     .replace(/^t_SkinPortrait_/i, '')
     .replace(/^t_SkinIcon_/i, '')
@@ -765,54 +982,48 @@ function extractMasteryTierLabel(filename, godFolder) {
     .replace(/^T_SkinIcon_/i, '');
   const candidates = [...new Set([godFolder, godFolder.replace(/_/g, '')])].filter(Boolean);
   for (const g of candidates) {
-    const prefix = `${g}_`;
-    if (rest.toLowerCase().startsWith(prefix.toLowerCase())) {
-      rest = rest.slice(prefix.length);
-      break;
-    }
+    const esc = g.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    rest = rest.replace(new RegExp(`${esc}_Icon_`, 'i'), '');
+    rest = rest.replace(new RegExp(`${esc}_`, 'i'), '');
   }
+  rest = rest.replace(/^T_/i, '').replace(/^Icon_/i, '');
   const human = rest.replace(/_/g, ' ').trim();
   return human || 'Variant';
 }
 
-function findSharedMasteryCard(files) {
-  return files.find((f) => /\.png$/i.test(f) && /card.*mastery|mastery.*card|_Card_Mastery/i.test(f)) || null;
-}
-
-function pickPortraitOrIconForTier(tierFiles) {
-  return (
-    tierFiles.find((f) => /t_SkinPortrait_/i.test(f)) ||
-    tierFiles.find((f) => /t_SkinIcon_/i.test(f)) ||
-    null
-  );
-}
-
 /**
- * Variants for `Skins/Mastery/` — merged onto the base skin (chips + optional shared card art).
+ * Variants for `Skins/Mastery/` or `Skins/Masteries/` — merged onto the base skin.
  * Each object is tagged `masteryFromDisk` so the next run can replace mastery rows without dropping prism variants.
  */
 function buildMasteryFolderVariants(godFolder, projectRoot) {
-  const masteryDir = path.join(ROOT, godFolder, 'Skins', 'Mastery');
-  if (!fs.existsSync(masteryDir)) return [];
-  const files = listFiles(masteryDir).filter((f) => /\.png$/i.test(f));
-  if (files.length === 0) return [];
-
-  const sharedCardName = findSharedMasteryCard(files);
-  const sharedCardPath = sharedCardName ? relFromDir(projectRoot, masteryDir, sharedCardName) : null;
+  const masteryDirs = resolveMasteryDirs(godFolder);
+  if (!masteryDirs.length) return [];
 
   const tierMap = new Map();
-  for (const f of files) {
-    if (sharedCardName && f === sharedCardName) continue;
-    if (!/t_SkinPortrait_|t_SkinIcon_/i.test(f)) continue;
-    const label = extractMasteryTierLabel(f, godFolder);
-    if (!tierMap.has(label)) tierMap.set(label, []);
-    tierMap.get(label).push(f);
+  let sharedCardPath = null;
+
+  for (const masteryDir of masteryDirs) {
+    const files = dedupePreferRaster(listFiles(masteryDir)).filter((f) => isRasterFile(f));
+    if (!files.length) continue;
+
+    const sharedCardName = findSharedMasteryCard(files);
+    if (sharedCardName && !sharedCardPath) {
+      sharedCardPath = relFromDir(projectRoot, masteryDir, sharedCardName);
+    }
+
+    for (const f of files) {
+      if (sharedCardName && f === sharedCardName) continue;
+      if (!isMasteryTierPortraitFile(f)) continue;
+      const label = extractMasteryTierLabel(f, godFolder);
+      if (!tierMap.has(label)) tierMap.set(label, { dir: masteryDir, files: [] });
+      tierMap.get(label).files.push(f);
+    }
   }
 
   const labels = [...tierMap.keys()].sort((a, b) => a.localeCompare(b));
   const out = [];
   for (const label of labels) {
-    const tierFiles = tierMap.get(label);
+    const { dir: masteryDir, files: tierFiles } = tierMap.get(label);
     const iconName = pickPortraitOrIconForTier(tierFiles);
     if (!iconName) continue;
     const o = {
@@ -831,6 +1042,7 @@ function buildMasteryFolderVariants(godFolder, projectRoot) {
 
 function main() {
   const write = process.argv.includes('--write');
+  const PRUNE_DUPLICATE_SKIN_ROWS = process.argv.includes('--prune-duplicates');
   if (!fs.existsSync(ROOT)) {
     console.error('Missing folder:', ROOT);
     process.exit(1);
@@ -862,10 +1074,11 @@ function main() {
   let rehomedGodLevelPrismFiles = 0;
   const rehomedGodLevelPrismTargets = [];
   let ensuredDefaultBaseStubs = 0;
+  let prunedStandaloneMasteryRows = 0;
   const skippedGods = new Set();
 
   for (const god of gods) {
-    const skins = god.baseInformation && god.baseInformation.skins;
+    const skins = resolveSkinsObject(god);
     if (!skins || typeof skins !== 'object') continue;
     const godFolder = findGodFolderOnDisk(god, diskGods);
     if (!godFolder) {
@@ -881,12 +1094,29 @@ function main() {
 
     const godRemap = SKIN_FOLDER_REMAP[godFolder];
     if (godRemap) {
+      for (const [canonicalKey, diskFolder] of Object.entries(godRemap)) {
+        if (skins[canonicalKey]) continue;
+        if (!fs.existsSync(path.join(ROOT, godFolder, 'Skins', diskFolder))) continue;
+        skins[canonicalKey] = {
+          name: prettifyFolderName(canonicalKey),
+          skin: '',
+          type: '',
+          price: { gems: '', diamonds: '', gemsdia: '' },
+        };
+        discoveredSkinStubs += 1;
+      }
       for (const diskFolder of new Set(Object.values(godRemap))) {
         if (skins[diskFolder]) {
           delete skins[diskFolder];
           prunedRemappedDuplicateSkinKeys += 1;
         }
       }
+    }
+
+    fixMisnamedBaseSkinKey(godFolder, skins, god);
+    prunedStandaloneMasteryRows += stripStandaloneMasterySkinRows(skins);
+    if (god.skins && god.skins !== skins) {
+      prunedStandaloneMasteryRows += stripStandaloneMasterySkinRows(god.skins);
     }
 
     discoveredSkinStubs += discoverMissingSkinFolders(godFolder, skins);
@@ -920,6 +1150,9 @@ function main() {
         if (m.skinKey === canon) {
           delete m.entry.hideFromSkinList;
           delete m.entry.hide_from_skin_list;
+        } else if (PRUNE_DUPLICATE_SKIN_ROWS) {
+          delete skins[m.skinKey];
+          prunedRemappedDuplicateSkinKeys += 1;
         } else {
           m.entry.hideFromSkinList = true;
           hiddenDupes += 1;
@@ -937,7 +1170,7 @@ function main() {
         continue;
       }
 
-      const files = listFiles(dir);
+      const files = dedupePreferRaster(listFiles(dir));
       const cardFile = pickCard(files);
       let iconRel = null;
       const iconBaseName = pickIconBase(files);
@@ -996,6 +1229,70 @@ function main() {
         delete e.variants;
       }
     }
+
+    if (god.skins && god.skins !== skins) {
+      mirrorSkinRecord(skins, god.skins);
+      prunedStandaloneMasteryRows += stripStandaloneMasterySkinRows(god.skins);
+    }
+  }
+
+  // After sync + duplicate cleanup, discover folders that were only referenced by pruned wallpaper rows.
+  for (const god of gods) {
+    const skins = resolveSkinsObject(god);
+    if (!skins || typeof skins !== 'object') continue;
+    const godFolder = findGodFolderOnDisk(god, diskGods);
+    if (!godFolder) continue;
+    discoveredSkinStubs += discoverMissingSkinFolders(godFolder, skins);
+  }
+
+  for (const god of gods) {
+    const skins = resolveSkinsObject(god);
+    if (!skins || typeof skins !== 'object') continue;
+    const godFolder = findGodFolderOnDisk(god, diskGods);
+    if (!godFolder) continue;
+
+    for (const skinKey of Object.keys(skins)) {
+      const entry = skins[skinKey];
+      if (!entry || typeof entry !== 'object') continue;
+      if (entry.hideFromSkinList || entry.hide_from_skin_list) continue;
+      const dir = resolveSkinAssetDir(godFolder, skinKey, entry);
+      if (!dir) continue;
+      const files = dedupePreferRaster(listFiles(dir));
+      if (!pickCard(files) && !pickIconBase(files) && !pickIconFallbackFromVariants(collectVariantPairsById(dir), projectRoot)) {
+        continue;
+      }
+      if (entry.skin && String(entry.skin).trim() && entry.icon && String(entry.icon).trim()) continue;
+
+      const cardFile = pickCard(files);
+      let iconRel = null;
+      const iconBaseName = pickIconBase(files);
+      const relDir = path.relative(projectRoot, dir).split(path.sep).join('/');
+      if (iconBaseName) iconRel = posixJoin(relDir, iconBaseName);
+      const byVariants = collectVariantPairsById(dir);
+      if (!iconRel) iconRel = pickIconFallbackFromVariants(byVariants, projectRoot);
+      let cardPath = null;
+      if (cardFile) {
+        cardPath = posixJoin(relDir, cardFile);
+        entry.cardArt = cardPath;
+        entry.skin = cardPath;
+      }
+      if (iconRel) entry.icon = iconRel;
+      const fullFile = pickFullBody(files);
+      if (fullFile) entry.inGame = posixJoin(relDir, fullFile);
+      const baseCardPath = entry.cardArt ? String(entry.cardArt) : null;
+      const baseIconPath = entry.icon ? String(entry.icon) : null;
+      const overlays = buildVariantOverlays(dir, projectRoot, baseCardPath, baseIconPath);
+      if (overlays.length > 0) {
+        entry.variants = overlays;
+        prismGroups += 1;
+      }
+      updated += 1;
+    }
+
+    if (god.skins && god.skins !== skins) {
+      mirrorSkinRecord(skins, god.skins);
+      prunedStandaloneMasteryRows += stripStandaloneMasterySkinRows(god.skins);
+    }
   }
 
   console.log(
@@ -1012,6 +1309,7 @@ function main() {
         rehomedGodLevelPrismFiles,
         rehomedGodLevelPrismTargets,
         ensuredDefaultBaseStubs,
+        prunedStandaloneMasteryRows,
         skippedGodsCount: skippedGods.size,
         write,
       },

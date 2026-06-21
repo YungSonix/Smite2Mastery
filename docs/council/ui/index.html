@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Council Chamber</title>
+    <link rel="stylesheet" href="styles.css?v=__UI_VERSION__" />
+  </head>
+  <body>
+    <div class="app">
+      <div id="update-bar" class="update-bar" hidden role="status" aria-live="polite"></div>
+
+      <header class="topbar">
+        <div class="topbar-title">
+          <h1>Council Chamber</h1>
+          <p id="sync-status">Starting…</p>
+        </div>
+        <div class="topbar-actions">
+          <button type="button" class="btn-icon" id="btn-clear-view" title="Hide chat on this panel — full history stays saved" onclick="window.councilClearView(event)">Clear view</button>
+          <button type="button" class="btn-icon" id="btn-toggle-bench" title="Models" onclick="window.councilToggleBench(event)">Models ▼</button>
+        </div>
+      </header>
+      <div id="url-warning" hidden style="background:#3a2010;border:1px solid #f0a040;color:#f4faf4;padding:10px 16px;font-size:13px">
+        Open <strong>http://localhost:3939</strong> in your browser — not this HTML file. Run <code>npm run council:ui</code> first.
+      </div>
+      <!--QUEUE_BANNER-->
+
+      <details class="bench-details" id="bench-drawer">
+        <summary class="bench-details-marker" aria-hidden="true"></summary>
+        <div class="bench-drawer-body">
+          <p class="section-label">THE BENCH — tap a pill to save</p>
+          <div class="bench" id="bench"><!--BENCH_INJECT--></div>
+        </div>
+      </details>
+
+      <div id="live-activity" class="live-activity" hidden aria-live="polite"></div>
+
+      <p id="panel-trim-notice" class="panel-trim-notice" hidden role="status"></p>
+
+      <main class="chat" id="chat-feed" aria-live="polite"><!--QUEUE_FEED_INJECT--></main>
+
+      <footer class="composer">
+        <p class="composer-hint" id="composer-hint">
+          Type topic → <strong>Send</strong> — 📎, paste, or drag images here (up to 8). Or paste images in <strong>Chair</strong> Cursor chat + <code>go</code>
+        </p>
+        <div class="composer-attachments" id="composer-attachments" hidden></div>
+        <form class="composer-row" id="convene-form" action="/convene" method="POST">
+          <button type="button" class="btn btn-attach" id="btn-attach" title="Attach images (max 8)" aria-label="Attach images" onclick="window.councilAttachClick(event)">📎</button>
+          <input id="attach-input" type="file" accept="image/*" multiple hidden />
+          <input id="topic-input" name="topic" type="text" placeholder="Ask the council…" autocomplete="off" />
+          <button class="btn btn-primary" type="submit" id="btn-send">Send</button>
+        </form>
+      </footer>
+
+      <p class="footer" id="footer-version">chat v__UI_VERSION__ · if stuck, open in Chrome/Edge: http://localhost:3939</p>
+    </div>
+
+    <div id="changelog-modal" class="changelog-modal" hidden role="dialog" aria-labelledby="changelog-title" aria-modal="true">
+      <div class="changelog-backdrop"></div>
+      <div class="changelog-card">
+        <h2 id="changelog-title">What's new</h2>
+        <div id="changelog-body"></div>
+        <button type="button" class="btn btn-primary changelog-dismiss" id="changelog-dismiss">Got it</button>
+      </div>
+    </div>
+    <script>
+      window.councilState = { memberModels: {} };
+      window.__councilPanelCleared = false;
+
+      window.councilToggleBench = function (event) {
+        if (event) event.preventDefault();
+        var drawer = document.getElementById('bench-drawer');
+        var btn = document.getElementById('btn-toggle-bench');
+        if (!drawer || !btn) return false;
+        drawer.open = !drawer.open;
+        btn.textContent = drawer.open ? 'Models ▲' : 'Models ▼';
+        btn.classList.toggle('active', drawer.open);
+        btn.setAttribute('aria-expanded', drawer.open ? 'true' : 'false');
+        return false;
+      };
+
+      window.councilClearView = function (event) {
+        if (event) event.preventDefault();
+        var status = document.getElementById('sync-status');
+        if (status) {
+          status.textContent = 'Clearing…';
+          status.className = 'ok';
+        }
+        fetch('/api/panel/clear', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sessionId: null }),
+        })
+          .then(function (r) {
+            if (!r.ok) throw new Error(String(r.status));
+            return r.json();
+          })
+          .then(function () {
+            window.__councilPanelCleared = true;
+            if (typeof window.__councilFeedPollReset === 'function') window.__councilFeedPollReset();
+            var feed = document.getElementById('chat-feed');
+            if (feed) {
+              feed.innerHTML = '';
+              feed.dataset.sessionId = 'cleared';
+              delete feed.dataset.booted;
+            }
+            document.querySelectorAll('.queue-banner').forEach(function (el) {
+              el.remove();
+            });
+            var notice = document.getElementById('panel-trim-notice');
+            if (notice) {
+              notice.hidden = false;
+              notice.textContent = 'View cleared — full history saved. Ask a new topic below.';
+            }
+            if (status) {
+              status.textContent = 'View cleared';
+              status.className = 'ok';
+            }
+            var feed2 = document.getElementById('chat-feed');
+            if (feed2 && !feed2.querySelector('.msg')) {
+              feed2.dataset.booted = '1';
+              feed2.insertAdjacentHTML(
+                'beforeend',
+                '<div class="msg system"><div class="msg-row"><div class="msg-avatar" aria-hidden="true">⚖</div><div class="msg-body"><div class="msg-label">CHAIR</div><div class="bubble"><p>Type a topic below → Send — Chair opens with go (confirm in Cursor if prompted)</p></div></div></div></div>'
+              );
+            }
+          })
+          .catch(function () {
+            if (status) {
+              status.textContent = 'Clear failed — refresh page';
+              status.className = '';
+            }
+          });
+        return false;
+      };
+
+      window.councilPickModel = function (member, model, btn) {
+        var bench = document.getElementById('bench');
+        if (bench) {
+          bench.querySelectorAll('.pill[data-member="' + member + '"]').forEach(function (b) {
+            b.classList.remove('active');
+          });
+        }
+        btn.classList.add('active');
+        var status = document.getElementById('sync-status');
+        if (status) {
+          status.textContent = 'Saving…';
+          status.className = 'ok';
+        }
+        fetch('/api/model', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ member: member, model: model }),
+        })
+          .then(function (r) {
+            return r.json();
+          })
+          .then(function (data) {
+            if (!data.ok) throw new Error(data.error || 'save failed');
+            window.councilState.memberModels = data.memberModels;
+            if (status) {
+              status.textContent = 'Saved — ' + member.toUpperCase() + ' → ' + (data.pill || btn.textContent.trim());
+              status.className = 'ok';
+            }
+          })
+          .catch(function () {
+            if (status) {
+              status.textContent = 'Save failed — refresh page';
+              status.className = '';
+            }
+          });
+      };
+    </script>
+    <script>
+      (function () {
+        var s = document.getElementById('sync-status');
+        var w = document.getElementById('url-warning');
+        if (location.protocol === 'file:') {
+          s.textContent = 'Wrong URL';
+          if (w) w.hidden = false;
+        } else if (location.port !== '3939' && location.hostname === 'localhost') {
+          s.textContent = 'Use port 3939';
+          if (w) w.hidden = false;
+        } else {
+          s.textContent = 'Live';
+          s.className = 'ok';
+        }
+      })();
+    </script>
+    <script>
+      (function () {
+        function scrollBottom() {
+          var el = document.getElementById('chat-feed');
+          if (el) el.scrollTop = el.scrollHeight;
+        }
+        scrollBottom();
+        window.addEventListener('load', scrollBottom);
+        requestAnimationFrame(function () {
+          scrollBottom();
+          requestAnimationFrame(scrollBottom);
+        });
+      })();
+    </script>
+    <script>
+      window.__councilUseInlineFeedPoll = true;
+      (function () {
+        var lastContentHash = '';
+        var lastTypingHash = '';
+        var pendingFeedRefresh = false;
+        var pollMs = 250;
+        var MEMBER_INITIALS = { nala: 'N', london: 'L', fasa: 'F' };
+
+        function scrollFeed() {
+          var feed = document.getElementById('chat-feed');
+          if (feed) feed.scrollTop = feed.scrollHeight;
+        }
+
+        window.__councilFeedPollReset = function () {
+          lastContentHash = '';
+          lastTypingHash = '';
+          pendingFeedRefresh = false;
+        };
+
+        function isTypingLive(typing) {
+          if (!typing || !typing.length) return false;
+          for (var i = 0; i < typing.length; i++) {
+            var t = typing[i];
+            if (!t.speaking || !t.text || t.text === 'Thinking…' || t.text === 'Waiting…') continue;
+            if (t.text === 'Typing…' || t.text === '…') continue;
+            return true;
+          }
+          return false;
+        }
+
+        function ensureThinkBubble(feed, item) {
+          var sel = '[data-msg-key="' + item.key + '"]';
+          var el = feed.querySelector(sel);
+          if (!el) {
+            var speak = item.speaking ? ' speaking' : '';
+            var labelSuffix = item.speaking ? ' · typing…' : ' · thinking…';
+            var initial = MEMBER_INITIALS[item.member] || '?';
+            feed.insertAdjacentHTML(
+              'beforeend',
+              '<div class="msg ' +
+                item.member +
+                ' thinking' +
+                speak +
+                '" data-msg-key="' +
+                item.key +
+                '"><div class="msg-row"><div class="msg-avatar" aria-hidden="true">' +
+                initial +
+                '</div><div class="msg-body"><div class="msg-label">' +
+                item.label +
+                labelSuffix +
+                '</div><div class="bubble"><p></p></div></div></div></div>'
+            );
+            el = feed.querySelector(sel);
+          }
+          el.classList.toggle('speaking', Boolean(item.speaking));
+          var label = el.querySelector('.msg-label');
+          if (label) {
+            label.textContent = item.label + (item.speaking ? ' · typing…' : ' · thinking…');
+          }
+          return el.querySelector('.bubble p');
+        }
+
+        function patchTyping(feed, typing) {
+          if (!feed || !typing) return;
+          var activeKeys = {};
+          for (var i = 0; i < typing.length; i++) {
+            var item = typing[i];
+            activeKeys[item.key] = true;
+            var p = ensureThinkBubble(feed, item);
+            var next = item.text || (item.speaking ? 'Typing…' : 'Thinking…');
+            var cur = p.textContent || '';
+            if (next !== cur && (next.length >= cur.length || !item.speaking)) {
+              p.textContent = next;
+              scrollFeed();
+            }
+          }
+          feed.querySelectorAll('.msg.thinking[data-msg-key^="think:"]').forEach(function (el) {
+            if (!activeKeys[el.dataset.msgKey]) {
+              el.remove();
+            }
+          });
+        }
+
+        function applyFeedHtml(feed, data) {
+          if (!feed || data.feedHtml === undefined) return;
+          feed.innerHTML = data.feedHtml;
+          feed.dataset.sessionId = data.sessionId ? 'live:' + data.sessionId : 'live';
+          feed.dataset.booted = '1';
+        }
+
+        function updateChrome(data) {
+          var la = document.getElementById('live-activity');
+          if (la) {
+            la.hidden = !data.liveActive;
+            la.innerHTML = data.liveHtml || '';
+          }
+          var status = document.getElementById('sync-status');
+          if (status && data.statusLine) {
+            status.textContent = data.statusLine;
+            status.className = data.statusOk ? 'ok' : '';
+          }
+          var hint = document.getElementById('composer-hint');
+          if (hint && data.composerHint) hint.innerHTML = data.composerHint;
+          var notice = document.getElementById('panel-trim-notice');
+          if (notice) {
+            if (data.panelNotice) {
+              notice.hidden = false;
+              notice.textContent = data.panelNotice;
+            } else {
+              notice.hidden = true;
+            }
+          }
+        }
+
+        function applyFeed(data) {
+          if (!data) return;
+          if (typeof data.pollMs === 'number' && data.pollMs > 0) pollMs = data.pollMs;
+          var feed = document.getElementById('chat-feed');
+          var contentHash = data.contentHash || data.hash || '';
+          var typingHash = data.typingHash || '';
+          var typingLive = isTypingLive(data.typing);
+
+          if (feed && contentHash && contentHash !== lastContentHash) {
+            if (!typingLive) {
+              applyFeedHtml(feed, data);
+              lastContentHash = contentHash;
+              pendingFeedRefresh = false;
+            } else {
+              pendingFeedRefresh = true;
+            }
+          } else if (feed && pendingFeedRefresh && !typingLive) {
+            applyFeedHtml(feed, data);
+            lastContentHash = contentHash || lastContentHash;
+            pendingFeedRefresh = false;
+          }
+
+          if (feed && data.typing && (typingHash !== lastTypingHash || data.typing.length)) {
+            patchTyping(feed, data.typing);
+            lastTypingHash = typingHash;
+          } else if (feed && data.typing && !data.typing.length) {
+            patchTyping(feed, []);
+            lastTypingHash = '';
+          }
+
+          updateChrome(data);
+        }
+
+        function tick() {
+          fetch('/api/panel/feed')
+            .then(function (r) {
+              return r.ok ? r.json() : null;
+            })
+            .then(applyFeed)
+            .catch(function () {})
+            .finally(function () {
+              setTimeout(tick, pollMs);
+            });
+        }
+
+        if (location.protocol !== 'file:') {
+          tick();
+        }
+      })();
+    </script>
+    <script src="app.js?v=__UI_VERSION__"></script>
+  </body>
+</html>

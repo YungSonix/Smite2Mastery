@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Scylla_Crystal_04_Full",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Scylla/PSVMeter/t_PSV_Scylla_Crystal_04_Full",
+    "Properties": {
+      "ImportedSize": {
+        "X": 52,
+        "Y": 36
+      },
+      "LightingGuid": "043D7E86-4C2D84BC-D0E600AC-8366AD6D",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 52,
+    "SizeY": 36,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 7488,
+          "SizeOnDisk": 7488,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 52,
+        "SizeY": 36,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

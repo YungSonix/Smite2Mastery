@@ -1,0 +1,62 @@
+---
+description: Bug reports — always update BUGS.md and refresh Vault Kanban
+alwaysApply: false
+---
+
+# Bug reporting workflow
+
+When the **user reports a bug** (in chat, Council, or as a task):
+
+## 1. Repo board (source of truth)
+
+Edit **`BUGS.md`** at repo root:
+
+```markdown
+## Open
+
+- [ ] **Short title** — one-line repro or surface (e.g. Database → Gods)
+
+## Investigating
+
+(use when actively debugging)
+```
+
+- Use `- [ ] **Title**` format so vault sync picks it up.
+- Move to **Fixed** when shipped; one line on what was wrong.
+
+## 2. Vault mirror (Obsidian)
+
+After editing `BUGS.md`, run:
+
+```bash
+npm run vault:sync
+```
+
+This refreshes:
+- `Vault/Kanban/Bugs board.md`
+- `Vault/_generated/open-bugs.md`
+- **Dataview Dashboard** bug queries
+
+Optional: deep-dive note from **`Vault/Templates/Bug investigation`** → save under `Vault/3-Resources/Bugs/`.
+
+## 3. Council panel
+
+If the bug came from a Council convene, also run:
+
+```bash
+npm run council:write-bug "Title — repro hint"
+```
+
+That appends `BUGS.md`, runs `vault:sync`, and posts a **MOD LOG** line in the Council chat.
+
+## 4. Agent order
+
+1. Read existing **BUGS.md** — avoid duplicates; merge related reports.
+2. Add open item under **## Open** (or **Investigating** if you're starting now).
+3. **`npm run vault:sync`**
+4. Fix the bug before new features (see `agent-workflow.mdc`).
+
+## Do not
+
+- Log bugs only in chat or Vault without updating **BUGS.md**
+- Skip vault sync after board changes the user should see in Obsidian

@@ -1,0 +1,39 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Cerberus_Tongue_Curled",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Cerberus/PSV_Meter/t_PSV_Cerberus_Tongue_Curled",
+    "Properties": {
+      "AddressX": "TextureAddress::TA_Clamp",
+      "AddressY": "TextureAddress::TA_Clamp",
+      "ImportedSize": {
+        "X": 32,
+        "Y": 40
+      },
+      "LightingGuid": "BAE0D5B2-4C58B416-D818F8AA-8617C69F",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 32,
+    "SizeY": 40,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 5120,
+          "SizeOnDisk": 5120,
+          "OffsetInFile": "0x7D"
+        },
+        "SizeX": 32,
+        "SizeY": 40,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

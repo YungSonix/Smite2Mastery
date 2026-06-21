@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_PassiveMeter_NuWaCharged_Active_Lamp",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/NuWa/PassiveMeter/T_PassiveMeter_NuWaCharged_Active_Lamp",
+    "Properties": {
+      "ImportedSize": {
+        "X": 153,
+        "Y": 153
+      },
+      "LightingGuid": "35989287-48CA9C0A-7B97F4A3-EEBFB710",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 153,
+    "SizeY": 153,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 93636,
+          "SizeOnDisk": 93636,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 153,
+        "SizeY": 153,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

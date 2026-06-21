@@ -74,7 +74,7 @@ export default function MyBuildsPage({ onEditBuild = null }) {
 
   const loadBuilds = async () => {
     try {
-      const data = require('./data/builds.json');
+      const data = require('../lib/buildsData');
       setBuildsData(data);
       const user = await storage.getItem('currentUser');
       setCurrentUser(user);
@@ -443,17 +443,25 @@ export default function MyBuildsPage({ onEditBuild = null }) {
     // Get god name and icon
     const godName = build.god_name || build.god || 'Unknown';
     const godInternalName = build.god_internal_name || build.godInternalName;
-    const godIcon = build.godIcon || (buildsData && (() => {
-      const gods = flattenBuildsGods(buildsData.gods);
-      const god = gods.find(g => 
-        (g.name || g.GodName || '').toLowerCase() === godName.toLowerCase() ||
-        (g.internalName || g.GodName || '').toLowerCase() === (godInternalName || '').toLowerCase()
-      );
-      return god && (god.icon || god.GodIcon);
-    })());
-    const localGodIcon = godIcon ? getLocalGodAsset(godIcon) : null;
-    
-    // Get build name
+    const godRecord = buildsData
+      ? flattenBuildsGods(buildsData.gods).find(
+          (g) =>
+            (g.name || g.GodName || '').toLowerCase() === godName.toLowerCase() ||
+            (g.internalName || g.GodName || '').toLowerCase() === (godInternalName || '').toLowerCase()
+        )
+      : null;
+    const godIconResolved =
+      build.godIcon || (godRecord && (godRecord.icon || godRecord.GodIcon));
+    const localGodIcon = godIconResolved ? getLocalGodAsset(godIconResolved) : null;
+    const aspect =
+      godRecord && godRecord.aspect && godRecord.aspect.name ? godRecord.aspect : null;
+    const showAspectIcon =
+      aspect &&
+      aspect.icon &&
+      (build.usesAspect === true ||
+        build.aspect_active === true ||
+        build.aspectActive === true);
+    const aspectLocalIcon = showAspectIcon ? getLocalGodAsset(aspect.icon) : null;
     const buildName = build.build_name || build.name || 'Unnamed Build';
     
     // Get items (handle both database format and local format)
@@ -466,20 +474,33 @@ export default function MyBuildsPage({ onEditBuild = null }) {
       <View key={`${categoryType}-${index}`} style={styles.buildCard}>
         <View style={styles.buildHeader}>
           <View style={styles.buildHeaderLeft}>
-            {localGodIcon ? (
-              <Image
-                source={localGodIcon}
-                style={styles.godIcon}
-                contentFit="cover"
-                accessibilityLabel={`${godName} icon`}
-              />
-            ) : (
-              <View style={styles.godIconFallback}>
-                <Text style={styles.godIconFallbackText}>
-                  {godName.charAt(0)}
-                </Text>
-              </View>
-            )}
+            <View style={styles.buildGodPortraitWrap}>
+              {localGodIcon ? (
+                <Image
+                  source={localGodIcon}
+                  style={styles.godIcon}
+                  contentFit="cover"
+                  accessibilityLabel={`${godName} icon`}
+                />
+              ) : (
+                <View style={styles.godIconFallback}>
+                  <Text style={styles.godIconFallbackText}>
+                    {godName.charAt(0)}
+                  </Text>
+                </View>
+              )}
+              {showAspectIcon && aspectLocalIcon ? (
+                <View style={styles.buildAspectBadge} pointerEvents="none">
+                  <Image
+                    source={aspectLocalIcon}
+                    style={styles.buildAspectBadgeIcon}
+                    contentFit="contain"
+                    cachePolicy="memory-disk"
+                    accessibilityLabel={`${aspect.name.replace(/\*\*__|__\*\*/g, '')} aspect`}
+                  />
+                </View>
+              ) : null}
+            </View>
             <View style={styles.buildInfo}>
               <View style={styles.buildNameRow}>
                 <Text style={styles.buildName}>{buildName}</Text>
@@ -664,11 +685,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
+  buildGodPortraitWrap: {
+    position: 'relative',
+    marginRight: 12,
+    overflow: 'visible',
+  },
   godIcon: {
     width: 60,
     height: 60,
     borderRadius: 8,
-    marginRight: 12,
   },
   godIconFallback: {
     width: 60,
@@ -677,7 +702,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#1e3a5f',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 12,
+  },
+  buildAspectBadge: {
+    position: 'absolute',
+    bottom: -4,
+    right: -4,
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    padding: 2,
+    backgroundColor: 'rgba(3, 7, 18, 0.92)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.48)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buildAspectBadgeIcon: {
+    width: 16,
+    height: 16,
   },
   godIconFallbackText: {
     color: '#7dd3fc',

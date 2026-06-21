@@ -64,7 +64,7 @@ export default function TierlistPage() {
     let cancelled = false;
     const task = InteractionManager.runAfterInteractions(() => {
       try {
-        const data = require('./data/builds.json');
+        const data = require('../lib/buildsData');
         if (!cancelled) setBuildsData(data);
       } catch (e) {
         console.error('Failed to load builds.json:', e);

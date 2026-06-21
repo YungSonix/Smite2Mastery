@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_GodCard_Sobek_LandShark",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Sobek/Skins/LandShark/t_GodCard_Sobek_LandShark",
+    "Properties": {
+      "ImportedSize": {
+        "X": 400,
+        "Y": 600
+      },
+      "LightingGuid": "CA36853E-4B290F31-F40D3481-05C795CD",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 400,
+    "SizeY": 600,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 960000,
+          "SizeOnDisk": 960000,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 400,
+        "SizeY": 600,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

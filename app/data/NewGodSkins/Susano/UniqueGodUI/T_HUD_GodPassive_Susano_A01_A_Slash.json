@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_HUD_GodPassive_Susano_A01_A_Slash",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Susano/UniqueGodUI/T_HUD_GodPassive_Susano_A01_A_Slash",
+    "Properties": {
+      "ImportedSize": {
+        "X": 80,
+        "Y": 80
+      },
+      "LightingGuid": "0ABA0695-4FCFAE50-ADF32F82-B2E74CCF",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 80,
+    "SizeY": 80,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 6400,
+          "SizeOnDisk": 6400,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 80,
+        "SizeY": 80,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

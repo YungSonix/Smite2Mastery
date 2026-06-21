@@ -7,8 +7,8 @@
  * based on the latest patch changes.
  * 
  * Example:
- * node scripts/add-patch-indicators.js "2.1.0" "./app/data/builds.json"
- * node scripts/add-patch-indicators.js "2.1.0" "./app/data/builds.json" "./patchnotesob24.json"
+ * node scripts/add-patch-indicators.js "2.1.0" "./app/data/God Information/Builds/builds.json"
+ * node scripts/add-patch-indicators.js "2.1.0" "./app/data/God Information/Builds/builds.json" "./patchnotesob24.json"
  */
 
 const fs = require('fs');
@@ -144,7 +144,7 @@ async function main() {
     console.error('  2. Or create a changes.json file in the same directory as builds.json');
     console.error('');
     console.error('Example with parsed patch notes:');
-    console.error('  node scripts/add-patch-indicators.js "2.1.0" "./app/data/builds.json" "./patchnotesob24.json"');
+    console.error('  node scripts/add-patch-indicators.js "2.1.0" "./app/data/God Information/Builds/builds.json" "./patchnotesob24.json"');
     process.exit(1);
   }
   

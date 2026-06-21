@@ -1,0 +1,818 @@
+{
+  "batch": "U-Z+remaining",
+  "godsAudited": 16,
+  "totalIssues": 42,
+  "gods": [
+    {
+      "godFolder": "GuanYu",
+      "buildsGodName": "Guan Yu",
+      "issues": [
+        "builds_skin_no_disk_folder:WraithRiderGuanYu",
+        "empty_duplicate_god_folder:no_assets"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [],
+      "skinsInBuilds": [
+        "Guan_Yu",
+        "WraithRiderGuanYu"
+      ]
+    },
+    {
+      "godFolder": "Guan_Yu",
+      "buildsGodName": "Guan Yu",
+      "issues": [
+        "disk_skin_no_builds_row:01a",
+        "disk_skin_no_builds_row:Unicorn",
+        "builds_skin_no_disk_folder:WraithRiderGuanYu",
+        "duplicate_god_folder_pair:Guan_Yu+GuanYu"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Guan_Yu.png",
+            "t_GodFull_Guan_Yu.png",
+            "t_GodPortrait_Guan_Yu.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "01a",
+          "keyPngs": [
+            "T_GodCard_GuanYu_WraithRider.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "Mastery",
+          "keyPngs": [],
+          "prisms": []
+        },
+        {
+          "folder": "Unicorn",
+          "keyPngs": [
+            "T_GodCard_GuanYu_Unicorn.png",
+            "T_GodCard_GuanYu_Unicorn_Blue.png",
+            "T_GodCard_GuanYu_Unicorn_Purple.png",
+            "T_GodCard_GuanYu_Unicorn_Red.png",
+            "T_GodCard_GuanYu_Unicorn_White.png"
+          ],
+          "prisms": []
+        }
+      ],
+      "skinsInBuilds": [
+        "Guan_Yu",
+        "WraithRiderGuanYu"
+      ]
+    },
+    {
+      "godFolder": "HouYi",
+      "buildsGodName": "Hou Yi",
+      "issues": [
+        "empty_duplicate_god_folder:no_assets"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [],
+      "skinsInBuilds": [
+        "Hou Yi"
+      ]
+    },
+    {
+      "godFolder": "Hou_Yi",
+      "buildsGodName": "Hou Yi",
+      "issues": [
+        "disk_skin_no_builds_row:GleamingArcher",
+        "duplicate_god_folder_pair:Hou_Yi+HouYi"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Hou_Yi.png",
+            "t_GodFull_Hou_Yi.png",
+            "t_GodPortrait_Hou_Yi.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "GleamingArcher",
+          "keyPngs": [
+            "t_SkinCard_HouYi_GleamingArcher.png",
+            "t_SkinPortrait_HouYi_GleamingArcher.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "Mastery",
+          "keyPngs": [
+            "t_GodCard_HouYi_Mastery.png"
+          ],
+          "prisms": []
+        }
+      ],
+      "skinsInBuilds": [
+        "Hou Yi"
+      ]
+    },
+    {
+      "godFolder": "Hun_Batz",
+      "buildsGodName": "Hun Batz",
+      "issues": [],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Hun_Batz.png",
+            "t_GodFull_Hun_Batz.png",
+            "t_GodPortrait_Hun_Batz.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "ArcaneApe",
+          "keyPngs": [
+            "t_SkinCard_HunBatz_ArcaneApe.png",
+            "t_SkinPortrait_HunBatz_ArcaneApe.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "Mastery",
+          "keyPngs": [],
+          "prisms": []
+        },
+        {
+          "folder": "ShadowHowler",
+          "keyPngs": [
+            "t_SkinCard_HunBatz_ShadowHowler.png",
+            "t_SkinPortrait_HunBatz_ShadowHowler.png"
+          ],
+          "prisms": []
+        }
+      ],
+      "skinsInBuilds": [
+        "Hun Batz",
+        "ArcaneApe",
+        "ShadowHowler"
+      ]
+    },
+    {
+      "godFolder": "NeZha",
+      "buildsGodName": "Ne Zha",
+      "issues": [
+        "empty_duplicate_god_folder:no_assets"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [],
+      "skinsInBuilds": [
+        "Ne_Zha"
+      ]
+    },
+    {
+      "godFolder": "Ne_Zha",
+      "buildsGodName": "Ne Zha",
+      "issues": [
+        "duplicate_god_folder_pair:Ne_Zha+NeZha"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Ne_Zha.png",
+            "t_GodFull_Ne_Zha.png",
+            "t_GodPortrait_Ne_Zha.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "Mastery",
+          "keyPngs": [
+            "t_GodCard_NeZha_Mastery.png"
+          ],
+          "prisms": []
+        }
+      ],
+      "skinsInBuilds": [
+        "Ne_Zha"
+      ]
+    },
+    {
+      "godFolder": "NuWa",
+      "buildsGodName": "Nu Wa",
+      "issues": [
+        "key_folder_mismatch:NuwaVenstrike->Ravenstrike",
+        "key_folder_mismatch:NuwaVenstrikeBloodraven->Ravenstrike",
+        "key_folder_mismatch:NuwaVenstrikeCyberwhite->Ravenstrike",
+        "key_folder_mismatch:NuwaVenstrikeTealtempest->Ravenstrike",
+        "prisms_on_disk_not_in_variants:MysticEnchantress(6 files)"
+      ],
+      "suggestedRemaps": {
+        "NuwaVenstrike": "Ravenstrike",
+        "NuwaVenstrikeBloodraven": "Ravenstrike",
+        "NuwaVenstrikeCyberwhite": "Ravenstrike",
+        "NuwaVenstrikeTealtempest": "Ravenstrike"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_NuWa.png",
+            "T_GodFull_NuWa.png",
+            "t_GodPortrait_NuWa.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "BadBunny",
+          "keyPngs": [
+            "t_SkinCard_NuWa_BadBunny.png",
+            "t_SkinPortrait_NuWa_BadBunny.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "BunnyBliss",
+          "keyPngs": [
+            "t_SkinCard_NuWa_BunnyBliss.png",
+            "t_SkinPortrait_NuWa_BunnyBliss.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "DarkSupreme",
+          "keyPngs": [
+            "t_SkinCard_NuWa_DarkSupreme.png",
+            "t_SkinPortrait_NuWa_DarkSupreme.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "Mastery",
+          "keyPngs": [
+            "t_SkinPortrait_NuWa_Light.png",
+            "t_SkinPortrait_NuWa_Onyx.png",
+            "t_SkinPortrait_NuWa_Opal.png",
+            "t_SkinPortrait_NuWa_Shadow.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "MysticEnchantress",
+          "keyPngs": [
+            "t_SkinCard_NuWa_MysticEnchantress.png",
+            "t_SkinCard_NuWa_MysticEnchantress_Prism01.png",
+            "t_SkinCard_NuWa_MysticEnchantress_Prism02.png",
+            "t_SkinCard_NuWa_MysticEnchantress_Prism03.png",
+            "t_SkinPortrait_NuWa_MysticEnchantress.png",
+            "t_SkinPortrait_NuWa_MysticEnchantress_Prism01.png",
+            "t_SkinPortrait_NuWa_MysticEnchantress_Prism02.png",
+            "t_SkinPortrait_NuWa_MysticEnchantress_Prism03.png"
+          ],
+          "prisms": [
+            "t_SkinCard_NuWa_MysticEnchantress_Prism01.png",
+            "t_SkinCard_NuWa_MysticEnchantress_Prism02.png",
+            "t_SkinCard_NuWa_MysticEnchantress_Prism03.png",
+            "t_SkinPortrait_NuWa_MysticEnchantress_Prism01.png",
+            "t_SkinPortrait_NuWa_MysticEnchantress_Prism02.png",
+            "t_SkinPortrait_NuWa_MysticEnchantress_Prism03.png"
+          ]
+        },
+        {
+          "folder": "PlayfulBunny",
+          "keyPngs": [
+            "t_SkinCard_NuWa_PlayfulBunny.png",
+            "t_SkinPortrait_NuWa_PlayfulBunny.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "Ravenstrike",
+          "keyPngs": [
+            "t_SkinCard_NuWa_Ravenstrike.png",
+            "t_SkinPortrait_NuWa_Ravenstrike.png"
+          ],
+          "prisms": [
+            "Prisms/t_SkinCard_NuWa_Ravenstrike_Prism_B.png",
+            "Prisms/t_SkinCard_NuWa_Ravenstrike_Prism_C.png",
+            "Prisms/t_SkinCard_NuWa_Ravenstrike_Prism_D.png",
+            "Prisms/t_SkinCard_NuWa_Ravenstrike_Prism_E.png",
+            "Prisms/t_SkinIcon_NuWa_Ravenstrike_Prism_B.png",
+            "Prisms/t_SkinIcon_NuWa_Ravenstrike_Prism_C.png",
+            "Prisms/t_SkinIcon_NuWa_Ravenstrike_Prism_D.png",
+            "Prisms/t_SkinIcon_NuWa_Ravenstrike_Prism_E.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        "Nu Wa",
+        "NuwaVenstrike",
+        "NuwaVenstrikeBloodraven",
+        "NuwaVenstrikeCyberwhite",
+        "NuwaVenstrikeTealtempest",
+        "BadBunny",
+        "BunnyBliss",
+        "DarkSupreme",
+        "MysticEnchantress",
+        "PlayfulBunny"
+      ]
+    },
+    {
+      "godFolder": "Sun_Wukong",
+      "buildsGodName": "Sun Wukong",
+      "issues": [
+        "disk_skin_no_builds_row:DarkLord",
+        "disk_skin_no_builds_row:StreetKing",
+        "prisms_on_disk_no_parent_skin:DarkLord",
+        "base_skin_still_wallpaper_not_newgodskins"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Sun_Wukong.png",
+            "t_GodFull_Sun_Wukong.png",
+            "t_GodPortrait_Sun_Wukong.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "DarkLord",
+          "keyPngs": [
+            "t_SkinCard_SWK_DarkLord.png",
+            "t_SkinCard_SWK_DarkLord_Prism01.png",
+            "t_SkinCard_SWK_DarkLord_Prism02.png",
+            "t_SkinCard_SWK_DarkLord_Prism03.png",
+            "t_SkinCard_SWK_DarkLord_Prism04.png",
+            "t_SkinIcon_SWK_DarkLord.png",
+            "t_SkinIcon_SWK_DarkLord_Prism01.png",
+            "t_SkinIcon_SWK_DarkLord_Prism02.png",
+            "t_SkinIcon_SWK_DarkLord_Prism03.png",
+            "t_SkinIcon_SWK_DarkLord_Prism04.png"
+          ],
+          "prisms": [
+            "t_SkinCard_SWK_DarkLord_Prism01.png",
+            "t_SkinCard_SWK_DarkLord_Prism02.png",
+            "t_SkinCard_SWK_DarkLord_Prism03.png",
+            "t_SkinCard_SWK_DarkLord_Prism04.png",
+            "t_SkinIcon_SWK_DarkLord_Prism01.png",
+            "t_SkinIcon_SWK_DarkLord_Prism02.png",
+            "t_SkinIcon_SWK_DarkLord_Prism03.png",
+            "t_SkinIcon_SWK_DarkLord_Prism04.png"
+          ]
+        },
+        {
+          "folder": "Mastery",
+          "keyPngs": [],
+          "prisms": []
+        },
+        {
+          "folder": "StreetKing",
+          "keyPngs": [
+            "t_SkinCard_SWK_StreetKing.png",
+            "t_SkinIcon_SWK_StreetKing.png"
+          ],
+          "prisms": []
+        }
+      ],
+      "skinsInBuilds": [
+        "Sun Wukong"
+      ]
+    },
+    {
+      "godFolder": "Ullr",
+      "buildsGodName": "Ullr",
+      "issues": [
+        "key_folder_mismatch:SurvivorCardPrisms1->Survivor",
+        "key_folder_mismatch:SurvivorCardPrisms2->Survivor",
+        "key_folder_mismatch:SurvivorCardPrisms3009->Survivor",
+        "key_folder_mismatch:SurvivorCardPrisms->Survivor",
+        "prism_as_separate_skin_key:SurvivorCardPrisms1"
+      ],
+      "suggestedRemaps": {
+        "SurvivorCardPrisms1": "Survivor",
+        "SurvivorCardPrisms2": "Survivor",
+        "SurvivorCardPrisms3009": "Survivor",
+        "SurvivorCardPrisms": "Survivor"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Ullr.png",
+            "t_GodFull_Ullr.png",
+            "t_GodPortrait_Ullr.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "Mastery",
+          "keyPngs": [],
+          "prisms": []
+        },
+        {
+          "folder": "Survivor",
+          "keyPngs": [
+            "t_SkinCard_Ullr_Survivor.png",
+            "t_SkinIcon_Ullr_Survivor.png"
+          ],
+          "prisms": [
+            "Prisms/t_SkinCard_Ullr_Prism_B.png",
+            "Prisms/t_SkinCard_Ullr_Prism_C.png",
+            "Prisms/t_SkinCard_Ullr_Prism_D.png",
+            "Prisms/t_SkinCard_Ullr_Prism_E.png",
+            "Prisms/t_SkinIcon_Ullr_Prism_B.png",
+            "Prisms/t_SkinIcon_Ullr_Prism_C.png",
+            "Prisms/t_SkinIcon_Ullr_Prism_D.png",
+            "Prisms/t_SkinIcon_Ullr_Prism_E.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        "Ullr",
+        "SurvivorCardPrisms1",
+        "SurvivorCardPrisms2",
+        "SurvivorCardPrisms3009",
+        "SurvivorCardPrisms"
+      ]
+    },
+    {
+      "godFolder": "Vulcan",
+      "buildsGodName": "Vulcan",
+      "issues": [
+        "key_folder_mismatch:EmberlordAshenAscendant->Emberlord",
+        "key_folder_mismatch:EmberlordPyreforgedTyntVulcan009->Emberlord",
+        "key_folder_mismatch:EmberlordFirstFlame->Emberlord",
+        "key_folder_mismatch:EmberlordInfernoIncarnate->Emberlord"
+      ],
+      "suggestedRemaps": {
+        "EmberlordAshenAscendant": "Emberlord",
+        "EmberlordPyreforgedTyntVulcan009": "Emberlord",
+        "EmberlordFirstFlame": "Emberlord",
+        "EmberlordInfernoIncarnate": "Emberlord"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Vulcan.png",
+            "T_GodFull_Vulcan.png",
+            "t_GodPortrait_Vulcan.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "Emberlord",
+          "keyPngs": [
+            "t_SkinCard_Vulcan_Emberlord_Base.png",
+            "t_SkinCard_Vulcan_Emberlord_T2_Base.png",
+            "t_SkinCard_Vulcan_Emberlord_T3_Base.png",
+            "t_SkinCard_Vulcan_Emberlord_T4_Base.png",
+            "t_SkinPortrait_Vulcan_Emberlord_Base.png",
+            "t_SkinPortrait_Vulcan_Emberlord_T2_Base.png",
+            "t_SkinPortrait_Vulcan_Emberlord_T3_Base.png",
+            "t_SkinPortrait_Vulcan_Emberlord_T4_Base.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "Mastery",
+          "keyPngs": [],
+          "prisms": []
+        },
+        {
+          "folder": "Prisims",
+          "keyPngs": [
+            "t_SkinCard_Vulcan_Emberlord_T4_Prisim_A.png",
+            "t_SkinCard_Vulcan_Emberlord_T4_Prisim_B.png",
+            "t_SkinCard_Vulcan_Emberlord_T4_Prisim_C.png",
+            "t_SkinCard_Vulcan_Emberlord_T4_Prisim_D.png",
+            "t_SkinPortrait_Vulcan_Emberlord_T4_Prisim_A.png",
+            "t_SkinPortrait_Vulcan_Emberlord_T4_Prisim_B.png",
+            "t_SkinPortrait_Vulcan_Emberlord_T4_Prisim_C.png",
+            "t_SkinPortrait_Vulcan_Emberlord_T4_Prisim_D.png"
+          ],
+          "prisms": []
+        }
+      ],
+      "skinsInBuilds": [
+        "Vulcan",
+        "EmberlordAshenAscendant",
+        "EmberlordPyreforgedTyntVulcan009",
+        "EmberlordFirstFlame",
+        "EmberlordInfernoIncarnate",
+        "Prisims"
+      ]
+    },
+    {
+      "godFolder": "Xbalanque",
+      "buildsGodName": "Xbalanque",
+      "issues": [
+        "prisms_on_disk_not_in_variants:DarkestKnight(8 files)"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Xbalanque.png",
+            "t_GodFull_Xbalanque.png",
+            "t_GodPortrait_Xbalanque.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "DarkestKnight",
+          "keyPngs": [
+            "t_GodPortrait_Xbalanque_DarkestKnight.png",
+            "t_GodPortrait_Xbalanque_DarkestKnight_Prism01.png",
+            "t_GodPortrait_Xbalanque_DarkestKnight_Prism02.png",
+            "t_GodPortrait_Xbalanque_DarkestKnight_Prism03.png",
+            "t_GodPortrait_Xbalanque_DarkestKnight_Prism04.png",
+            "t_SkinCard_Xbalanque_DarkestKnight.png",
+            "t_SkinCard_Xbalanque_DarkestKnight_Prism01.png",
+            "t_SkinCard_Xbalanque_DarkestKnight_Prism02.png",
+            "t_SkinCard_Xbalanque_DarkestKnight_Prism03.png",
+            "t_SkinCard_Xbalanque_DarkestKnight_Prism04.png"
+          ],
+          "prisms": [
+            "t_GodPortrait_Xbalanque_DarkestKnight_Prism01.png",
+            "t_GodPortrait_Xbalanque_DarkestKnight_Prism02.png",
+            "t_GodPortrait_Xbalanque_DarkestKnight_Prism03.png",
+            "t_GodPortrait_Xbalanque_DarkestKnight_Prism04.png",
+            "t_SkinCard_Xbalanque_DarkestKnight_Prism01.png",
+            "t_SkinCard_Xbalanque_DarkestKnight_Prism02.png",
+            "t_SkinCard_Xbalanque_DarkestKnight_Prism03.png",
+            "t_SkinCard_Xbalanque_DarkestKnight_Prism04.png"
+          ]
+        },
+        {
+          "folder": "Mastery",
+          "keyPngs": [
+            "t_GodCard_Xbalanque_Mastery.png"
+          ],
+          "prisms": []
+        }
+      ],
+      "skinsInBuilds": [
+        "Xbalanque",
+        "DarkestKnight"
+      ]
+    },
+    {
+      "godFolder": "Yemoja",
+      "buildsGodName": "Yemoja",
+      "issues": [
+        "builds_skin_no_disk_folder:HiveMother",
+        "builds_skin_no_disk_folder:Masteries",
+        "prisms_on_disk_not_in_variants:Mastermind(6 files)"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Yemoja.png",
+            "T_GodFull_Yemoja.png",
+            "t_GodPortrait_Yemoja.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "DawnSpirits",
+          "keyPngs": [
+            "t_SkinCard_Yemoja_DawnSpirits.png",
+            "t_SkinPortrait_Yemoja_DawnSpirits.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "HiveQueen",
+          "keyPngs": [
+            "t_SkinCard_Yemoja_HiveQueen.png",
+            "t_SkinPortrait_Yemoja_HiveQueen.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "Masteries",
+          "keyPngs": [
+            "t_SkinPortrait_Yemoja_Light.png",
+            "t_SkinPortrait_Yemoja_Onyx.png",
+            "t_SkinPortrait_Yemoja_Opal.png",
+            "t_SkinPortrait_Yemoja_Shadow.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "Mastermind",
+          "keyPngs": [
+            "t_SkinCard_Yemoja_Mastermind_Base.png",
+            "t_SkinCard_Yemoja_Mastermind_Prism01.png",
+            "t_SkinCard_Yemoja_Mastermind_Prism02.png",
+            "t_SkinCard_Yemoja_Mastermind_Prism03.png",
+            "t_SkinPortrait_Yemoja_Mastermind_Base.png",
+            "t_SkinPortrait_Yemoja_Mastermind_Prism01.png",
+            "t_SkinPortrait_Yemoja_Mastermind_Prism02.png",
+            "t_SkinPortrait_Yemoja_Mastermind_Prism03.png"
+          ],
+          "prisms": [
+            "t_SkinCard_Yemoja_Mastermind_Prism01.png",
+            "t_SkinCard_Yemoja_Mastermind_Prism02.png",
+            "t_SkinCard_Yemoja_Mastermind_Prism03.png",
+            "t_SkinPortrait_Yemoja_Mastermind_Prism01.png",
+            "t_SkinPortrait_Yemoja_Mastermind_Prism02.png",
+            "t_SkinPortrait_Yemoja_Mastermind_Prism03.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        "Yemoja",
+        "HiveMother",
+        "DawnSpirits",
+        "HiveQueen",
+        "Masteries",
+        "Mastermind"
+      ]
+    },
+    {
+      "godFolder": "Ymir",
+      "buildsGodName": "Ymir",
+      "issues": [
+        "key_folder_mismatch:TSkincardIcecream->IceCream",
+        "key_folder_mismatch:BaronfrostchildCard1440x1920->BaronFrostchild",
+        "empty_stub:Cacodemon",
+        "empty_stub:OozeBoi"
+      ],
+      "suggestedRemaps": {
+        "TSkincardIcecream": "IceCream",
+        "BaronfrostchildCard1440x1920": "BaronFrostchild"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Ymir.png",
+            "T_GodFull_Ymir.png",
+            "t_GodPortrait_Ymir.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "BaronFrostchild",
+          "keyPngs": [
+            "t_SkinCard_Ymir_BaronFrostChild.png",
+            "t_SkinPortrait_Ymir_BaronFrostchild.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "Cacodemon",
+          "keyPngs": [
+            "t_Ymir_Cacodemon_SkinCard.png",
+            "t_Ymir_Cacodemon_SkinPortrait.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "CuteNSquishy",
+          "keyPngs": [
+            "t_SkinCard_Ymir_CuteNSquishy.png",
+            "t_SkinPortrait_Ymir_CuteNSquishy.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "IceCream",
+          "keyPngs": [
+            "t_Ymir_IceCream_SkinCard.png",
+            "t_Ymir_IceCream_SkinPortrait.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "Mastery",
+          "keyPngs": [
+            "t_SkinPortrait_Ymir_Light.png",
+            "t_SkinPortrait_Ymir_Onyx.png",
+            "t_SkinPortrait_Ymir_Opal.png",
+            "t_SkinPortrait_Ymir_Shadow.png",
+            "T_Ymir_GodCard_Mastery.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "OozeBoi",
+          "keyPngs": [
+            "t_Ymir_OozeBoi_SkinCard.png",
+            "t_Ymir_OozeBoi_SkinPortrait.png"
+          ],
+          "prisms": []
+        }
+      ],
+      "skinsInBuilds": [
+        "Ymir",
+        "TSkincardIcecream",
+        "BaronfrostchildCard1440x1920",
+        "Cacodemon",
+        "CuteNSquishy",
+        "OozeBoi"
+      ]
+    },
+    {
+      "godFolder": "Zeus",
+      "buildsGodName": "Zeus",
+      "issues": [
+        "key_folder_mismatch:TSkincardKingofhearts->KingofHearts",
+        "prisms_on_disk_not_in_variants:DarkLord(6 files)",
+        "empty_stub:T5_Instinct"
+      ],
+      "suggestedRemaps": {
+        "TSkincardKingofhearts": "KingofHearts"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "keyPngs": [
+            "t_GodCard_Zeus.png",
+            "T_GodFull_Zeus.png",
+            "t_GodPortrait_Zeus.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "DarkLord",
+          "keyPngs": [
+            "t_SkinCard_Zeus_DarkLord_Base.png",
+            "t_SkinCard_Zeus_DarkLord_Prism01.png",
+            "t_SkinCard_Zeus_DarkLord_Prism02.png",
+            "t_SkinCard_Zeus_DarkLord_Prism03.png",
+            "t_SkinPortrait_Zeus_DarkLord_Base.png",
+            "t_SkinPortrait_Zeus_DarkLord_Prism01.png",
+            "t_SkinPortrait_Zeus_DarkLord_Prism02.png",
+            "t_SkinPortrait_Zeus_DarkLord_Prism03.png"
+          ],
+          "prisms": [
+            "t_SkinCard_Zeus_DarkLord_Prism01.png",
+            "t_SkinCard_Zeus_DarkLord_Prism02.png",
+            "t_SkinCard_Zeus_DarkLord_Prism03.png",
+            "t_SkinPortrait_Zeus_DarkLord_Prism01.png",
+            "t_SkinPortrait_Zeus_DarkLord_Prism02.png",
+            "t_SkinPortrait_Zeus_DarkLord_Prism03.png"
+          ]
+        },
+        {
+          "folder": "HeavensRave",
+          "keyPngs": [
+            "t_SkinCard_Zeus_HeavensRave.png",
+            "t_SkinPortrait_Zeus_HeavensRave.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "KingofHearts",
+          "keyPngs": [
+            "t_SkinCard_Zeus_KingofHearts.png",
+            "t_SkinPortrait_Zeus_KingofHearts.png"
+          ],
+          "prisms": []
+        },
+        {
+          "folder": "Mastery",
+          "keyPngs": [],
+          "prisms": []
+        },
+        {
+          "folder": "T5_Instinct",
+          "keyPngs": [
+            "t_Zeus_Instinct_SkinCard.png",
+            "t_Zeus_Instinct_SkinPortrait.png"
+          ],
+          "prisms": []
+        }
+      ],
+      "skinsInBuilds": [
+        "Zeus",
+        "TSkincardKingofhearts",
+        "DarkLord",
+        "HeavensRave",
+        "T5_Instinct"
+      ]
+    },
+    {
+      "godFolder": "_ComingSoon",
+      "buildsGodName": null,
+      "issues": [
+        "no_builds_god_match",
+        "placeholder_folder_not_a_god"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [],
+      "skinsInBuilds": []
+    }
+  ]
+}

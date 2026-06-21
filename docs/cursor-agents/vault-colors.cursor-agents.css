@@ -1,0 +1,42 @@
+/* cursor-agents-vault-sync — merged into Vault/.obsidian/snippets/vault-colors.css */
+/* Also copied standalone to .obsidian/snippets/cursor-agents-vault.css */
+
+/* :root var injected by sync if missing: --vault-cursor-agent: #4db8e8; */
+
+/* Sidebar — Cursor agents (teal, distinct from Council purple) */
+.nav-folder-title[data-path="3-Resources/Cursor agents"]::before,
+.nav-folder-title[data-path^="3-Resources/Cursor agents/"]::before { content: "● "; color: var(--vault-cursor-agent, #4db8e8); }
+.nav-folder-title[data-path="3-Resources/Cursor agents"] .nav-folder-title-content,
+.nav-folder-title[data-path^="3-Resources/Cursor agents/"] .nav-folder-title-content { color: var(--vault-cursor-agent, #4db8e8); }
+.nav-folder-title[data-path="3-Resources/Cursor agents/skills"] .nav-folder-title-content { color: #3a8fb8; }
+
+.nav-file-title[data-path^="3-Resources/Cursor agents/"] .nav-file-title-content { color: var(--vault-cursor-agent, #4db8e8); }
+.workspace-tab-header[data-path^="3-Resources/Cursor agents/"] .workspace-tab-header-inner-title { color: var(--vault-cursor-agent, #4db8e8); }
+
+/* Callout: > [!vault-cursor-agent] */
+.callout[data-callout="vault-cursor-agent"] {
+  --callout-color: 77, 184, 232;
+  --callout-icon: lucide-bot;
+  border-left: 4px solid #4db8e8;
+  background-color: rgba(15, 42, 53, 0.45);
+}
+
+/* Agent knowledge tags */
+a.tag[href="#cursor-agent"],
+.tag[href="#cursor-agent"] { background: rgba(77, 184, 232, 0.25); color: #7ed4f5; border: 1px solid #4db8e8; }
+a.tag[href="#karpathy"],
+.tag[href="#karpathy"] { background: rgba(232, 196, 104, 0.25); color: #f0d890; border: 1px solid #e8c468; }
+a.tag[href="#open-design"],
+.tag[href="#open-design"] { background: rgba(240, 128, 96, 0.25); color: #f8b0a0; border: 1px solid #f08060; }
+a.tag[href="#voltagent"],
+.tag[href="#voltagent"] { background: rgba(184, 146, 232, 0.25); color: #d4b8f0; border: 1px solid #b892e8; }
+a.tag[href="#tailwind"],
+.tag[href="#tailwind"] { background: rgba(94, 200, 255, 0.2); color: #9ee0ff; border: 1px solid #5ec8ff; }
+a.tag[href="#design-system"],
+.tag[href="#design-system"] { background: rgba(95, 160, 133, 0.25); color: #a3d4b8; border: 1px solid #5fa085; }
+a.tag[href="#web-research"],
+.tag[href="#web-research"] { background: rgba(120, 150, 170, 0.25); color: #b0c8d8; border: 1px solid #7896aa; }
+a.tag[href="#session-log"],
+.tag[href="#session-log"] { background: rgba(138, 155, 176, 0.2); color: #b0bec8; border: 1px solid #8a9bb0; }
+a.tag[href="#context-anchor"],
+.tag[href="#context-anchor"] { background: rgba(212, 199, 106, 0.25); color: #e8e0a8; border: 1px solid #d4c76a; }

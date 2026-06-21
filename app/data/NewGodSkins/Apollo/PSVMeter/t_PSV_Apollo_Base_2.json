@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Apollo_Base_2",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Apollo/PSVMeter/t_PSV_Apollo_Base_2",
+    "Properties": {
+      "ImportedSize": {
+        "X": 197,
+        "Y": 128
+      },
+      "LightingGuid": "5FA3212C-43E9B8F7-8D47E19A-9E238A60",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 197,
+    "SizeY": 128,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 100864,
+          "SizeOnDisk": 100864,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 197,
+        "SizeY": 128,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

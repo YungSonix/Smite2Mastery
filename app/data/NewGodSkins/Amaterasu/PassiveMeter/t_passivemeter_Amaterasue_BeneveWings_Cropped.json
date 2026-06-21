@@ -1,0 +1,39 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_passivemeter_Amaterasue_BeneveWings_Cropped",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/t_passivemeter_Amaterasue_BeneveWings_Cropped",
+    "Properties": {
+      "AddressX": "TextureAddress::TA_Clamp",
+      "AddressY": "TextureAddress::TA_Clamp",
+      "ImportedSize": {
+        "X": 187,
+        "Y": 187
+      },
+      "LightingGuid": "9637BF8D-4697F117-550E8AAB-3793677C",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 187,
+    "SizeY": 187,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 139876,
+          "SizeOnDisk": 139876,
+          "OffsetInFile": "0x7D"
+        },
+        "SizeX": 187,
+        "SizeY": 187,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

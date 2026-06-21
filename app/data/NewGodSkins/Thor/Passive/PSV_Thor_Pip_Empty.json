@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "PSV_Thor_Pip_Empty",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Thor/Passive/PSV_Thor_Pip_Empty",
+    "Properties": {
+      "ImportedSize": {
+        "X": 60,
+        "Y": 48
+      },
+      "LightingGuid": "1A408FF2-46538DBC-DBB7209D-958987BD",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 60,
+    "SizeY": 48,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 2880,
+          "SizeOnDisk": 2880,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 60,
+        "SizeY": 48,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

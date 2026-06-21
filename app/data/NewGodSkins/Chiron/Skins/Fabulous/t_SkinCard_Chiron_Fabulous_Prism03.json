@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_SkinCard_Chiron_Fabulous_Prism03",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Chiron/Skins/Fabulous/t_SkinCard_Chiron_Fabulous_Prism03",
+    "Properties": {
+      "ImportedSize": {
+        "X": 400,
+        "Y": 600
+      },
+      "LightingGuid": "7F31F941-4C6DEC47-BF53668B-2BC3BC6E",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 400,
+    "SizeY": 600,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 960000,
+          "SizeOnDisk": 960000,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 400,
+        "SizeY": 600,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

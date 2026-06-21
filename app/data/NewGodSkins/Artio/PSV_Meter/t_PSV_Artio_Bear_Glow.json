@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Artio_Bear_Glow",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Artio/PSV_Meter/t_PSV_Artio_Bear_Glow",
+    "Properties": {
+      "ImportedSize": {
+        "X": 200,
+        "Y": 200
+      },
+      "LightingGuid": "897E5F79-4CCC1D21-53AAD3B6-14A8C815",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 200,
+    "SizeY": 200,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 160000,
+          "SizeOnDisk": 160000,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 200,
+        "SizeY": 200,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

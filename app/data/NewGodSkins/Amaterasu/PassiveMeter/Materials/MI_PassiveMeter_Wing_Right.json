@@ -1,0 +1,110 @@
+[
+  {
+    "Type": "MaterialInstanceConstant",
+    "Name": "MI_PassiveMeter_Wing_Right",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'MaterialInstanceConstant'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/Materials/MI_PassiveMeter_Wing_Right",
+    "Properties": {
+      "Parent": {
+        "ObjectName": "Material'M_PassiveMeter_Wings'",
+        "ObjectPath": "/Game/UI/Shared/Materials/MaterialLibrary/M_PassiveMeter_Wings.0"
+      },
+      "bHasStaticPermutationResource": true,
+      "ScalarParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "Animate",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.0,
+          "ExpressionGUID": "D85CBB18-486E1D43-11B77EA9-68DAB943"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "Speed",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 2.0,
+          "ExpressionGUID": "75FFCFC1-47068387-C0690A9B-A739E117"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "wings intensity",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.0,
+          "ExpressionGUID": "CFDA71E8-4F02553D-7747429D-E9DF6BC6"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "RefractionDepthBias",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "00000000-00000000-00000000-00000000"
+        }
+      ],
+      "VectorParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "wings color1",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 1.0,
+            "G": 0.776,
+            "B": 0.768,
+            "A": 1.0,
+            "Hex": "FFE4E3"
+          },
+          "ExpressionGUID": "B1DF83C6-4D86AA8C-9D35468C-BA1567B4"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "wings color2",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 0.84,
+            "G": 0.92,
+            "B": 0.839424,
+            "A": 1.0,
+            "Hex": "EDF6ED"
+          },
+          "ExpressionGUID": "0986DAF5-4FED77E2-98657386-E5599BBA"
+        }
+      ],
+      "BasePropertyOverrides": {
+        "BlendMode": "EBlendMode::BLEND_Translucent",
+        "ShadingModel": "EMaterialShadingModel::MSM_Unlit",
+        "OpacityMaskClipValue": 0.3333
+      },
+      "StaticParametersRuntime": {
+        "StaticSwitchParameters": [
+          {
+            "Value": false,
+            "ParameterInfo": {
+              "Name": "preview anim?",
+              "Association": "EMaterialParameterAssociation::GlobalParameter",
+              "Index": -1
+            },
+            "bOverride": true,
+            "ExpressionGUID": "4C107552-4F3139D0-2BF43981-55D2E96C"
+          }
+        ]
+      },
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedData": {
+      "ParentLayerIndexRemap": []
+    }
+  }
+]

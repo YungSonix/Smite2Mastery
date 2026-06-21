@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_SkinCard_Sylvanus_HighNoon_Prism04",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Sylvanus/Skins/Highnoon/t_SkinCard_Sylvanus_HighNoon_Prism04",
+    "Properties": {
+      "ImportedSize": {
+        "X": 385,
+        "Y": 600
+      },
+      "LightingGuid": "1981D86D-46BC6722-421FBEB8-12B37398",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 385,
+    "SizeY": 600,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 924000,
+          "SizeOnDisk": 924000,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 385,
+        "SizeY": 600,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

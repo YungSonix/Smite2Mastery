@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_Fenrir_Card_Mastery",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Fenrir/Skins/Mastery/T_Fenrir_Card_Mastery",
+    "Properties": {
+      "ImportedSize": {
+        "X": 682,
+        "Y": 1024
+      },
+      "LightingGuid": "4BF67D72-40650682-947A799E-63020CC3",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 682,
+    "SizeY": 1024,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 2793472,
+          "SizeOnDisk": 2793472,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 682,
+        "SizeY": 1024,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

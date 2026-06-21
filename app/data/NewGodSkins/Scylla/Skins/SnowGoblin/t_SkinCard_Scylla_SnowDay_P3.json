@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_SkinCard_Scylla_SnowDay_P3",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Scylla/Skins/SnowGoblin/t_SkinCard_Scylla_SnowDay_P3",
+    "Properties": {
+      "ImportedSize": {
+        "X": 400,
+        "Y": 600
+      },
+      "LightingGuid": "62FB6115-48FEB040-A1497497-F11FF9AB",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 400,
+    "SizeY": 600,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 960000,
+          "SizeOnDisk": 960000,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 400,
+        "SizeY": 600,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

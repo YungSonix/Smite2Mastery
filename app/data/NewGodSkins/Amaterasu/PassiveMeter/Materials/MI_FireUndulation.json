@@ -1,0 +1,90 @@
+[
+  {
+    "Type": "MaterialInstanceConstant",
+    "Name": "MI_FireUndulation",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'MaterialInstanceConstant'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/Materials/MI_FireUndulation",
+    "Properties": {
+      "Parent": {
+        "ObjectName": "Material'M_FireUndulation'",
+        "ObjectPath": "/Game/UI/Shared/Materials/MaterialLibrary/M_FireUndulation.0"
+      },
+      "ScalarParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "fogundulationspeed",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.5,
+          "ExpressionGUID": "F42DB41B-47F46D03-62C80680-B1086757"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "amplitude amountX",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.0,
+          "ExpressionGUID": "873450F0-4F730972-CA70E9BE-982EB455"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "amplitude amountY",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 9.911636,
+          "ExpressionGUID": "DB969E21-4F159297-19B02DB7-49B713F4"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "speed",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.35,
+          "ExpressionGUID": "23C5BABB-453563C8-13A092B5-D34A052D"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "WaveSizeX",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 2.0,
+          "ExpressionGUID": "DC46DEC2-4A5D9194-EE2B1F88-FF6C7705"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "WaveSizeY",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.0,
+          "ExpressionGUID": "B1C1C9B1-42441EC9-29BA00A8-EE6C0BE6"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "RefractionDepthBias",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "00000000-00000000-00000000-00000000"
+        }
+      ],
+      "BasePropertyOverrides": {
+        "BlendMode": "EBlendMode::BLEND_Translucent",
+        "ShadingModel": "EMaterialShadingModel::MSM_Unlit",
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedData": {
+      "ParentLayerIndexRemap": []
+    }
+  }
+]

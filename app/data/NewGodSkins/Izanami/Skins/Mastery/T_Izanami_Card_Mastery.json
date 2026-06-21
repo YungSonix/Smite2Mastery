@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_Izanami_Card_Mastery",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Izanami/Skins/Mastery/T_Izanami_Card_Mastery",
+    "Properties": {
+      "ImportedSize": {
+        "X": 680,
+        "Y": 1024
+      },
+      "LightingGuid": "9251FE78-4E7EE2AA-C91D3BAB-66CD2EDF",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 680,
+    "SizeY": 1024,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 696320,
+          "SizeOnDisk": 696320,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 680,
+        "SizeY": 1024,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

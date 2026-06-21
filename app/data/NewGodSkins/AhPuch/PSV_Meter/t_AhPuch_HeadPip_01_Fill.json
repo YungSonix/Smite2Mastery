@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_AhPuch_HeadPip_01_Fill",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/AhPuch/PSV_Meter/t_AhPuch_HeadPip_01_Fill",
+    "Properties": {
+      "ImportedSize": {
+        "X": 48,
+        "Y": 92
+      },
+      "LightingGuid": "74D6F0C0-4429D458-2331F1B3-C1C6E838",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 48,
+    "SizeY": 92,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 17664,
+          "SizeOnDisk": 17664,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 48,
+        "SizeY": 92,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

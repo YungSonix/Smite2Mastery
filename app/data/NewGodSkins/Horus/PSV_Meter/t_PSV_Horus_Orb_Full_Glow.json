@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Horus_Orb_Full_Glow",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Horus/PSV_Meter/t_PSV_Horus_Orb_Full_Glow",
+    "Properties": {
+      "ImportedSize": {
+        "X": 56,
+        "Y": 56
+      },
+      "LightingGuid": "10A90AD8-485A51EC-61F3C79C-A38C062C",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 56,
+    "SizeY": 56,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 12544,
+          "SizeOnDisk": 12544,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 56,
+        "SizeY": 56,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

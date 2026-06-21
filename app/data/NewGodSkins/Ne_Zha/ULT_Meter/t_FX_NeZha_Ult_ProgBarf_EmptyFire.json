@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_FX_NeZha_Ult_ProgBarf_EmptyFire",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Ne_Zha/ULT_Meter/t_FX_NeZha_Ult_ProgBarf_EmptyFire",
+    "Properties": {
+      "ImportedSize": {
+        "X": 880,
+        "Y": 80
+      },
+      "LightingGuid": "80AC3C76-459B6D8A-8410E4A6-E4731FDD",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 880,
+    "SizeY": 80,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 281600,
+          "SizeOnDisk": 281600,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 880,
+        "SizeY": 80,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

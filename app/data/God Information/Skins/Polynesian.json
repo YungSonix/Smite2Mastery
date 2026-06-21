@@ -1,0 +1,128 @@
+{
+  "pantheon": "Polynesian",
+  "gods": [
+    {
+      "godName": "Pele",
+      "internalName": "Pele_Item",
+      "skins": [
+        {
+          "skinKey": "Pele",
+          "skinName": "Base Pele",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Pele/Default/t_GodCard_Pele.png",
+            "cardArt": "app/data/NewGodSkins/Pele/Default/t_GodCard_Pele.png",
+            "icon": "app/data/NewGodSkins/Pele/Default/t_GodPortrait_Pele.png",
+            "inGame": "app/data/NewGodSkins/Pele/Default/T_GodFull_Pele.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Pele/Skins/Mastery/t_SkinPortrait_Pele_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Pele/Skins/Mastery/T_Pele_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Pele/Skins/Mastery/T_Pele_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Pele/Skins/Mastery/t_SkinPortrait_Pele_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Pele/Skins/Mastery/T_Pele_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Pele/Skins/Mastery/T_Pele_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Pele/Skins/Mastery/t_SkinPortrait_Pele_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Pele/Skins/Mastery/T_Pele_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Pele/Skins/Mastery/T_Pele_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Pele/Skins/Mastery/t_SkinPortrait_Pele_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Pele/Skins/Mastery/T_Pele_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Pele/Skins/Mastery/T_Pele_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "CarnivalKiss",
+          "skinName": "Carnival Kiss",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Pele/Skins/CarnivalKiss/t_GodCard_CarnivalKiss.png",
+            "cardArt": "app/data/NewGodSkins/Pele/Skins/CarnivalKiss/t_GodCard_CarnivalKiss.png",
+            "icon": "app/data/NewGodSkins/Pele/Skins/CarnivalKiss/t_GodPortrait_CarnivalKiss.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "MoonLIt",
+          "skinName": "Moon LIt",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Pele/Skins/MoonLIt/t_SkinCard_Pele_MoonLit.png",
+            "cardArt": "app/data/NewGodSkins/Pele/Skins/MoonLIt/t_SkinCard_Pele_MoonLit.png",
+            "icon": "app/data/NewGodSkins/Pele/Skins/MoonLIt/t_SkinIcon_Pele_MoonLit.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "SupernovaSplash1920x1080",
+          "skinName": "Supernova Splash 1920 X 1080",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Pele/Skins/SuperNova/SuperNova.png",
+            "cardArt": "app/data/NewGodSkins/Pele/Skins/SuperNova/SuperNova.png",
+            "icon": "app/data/NewGodSkins/Pele/Skins/SuperNova/t_SkinPortrait_Pele_SuperNova.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    }
+  ]
+}

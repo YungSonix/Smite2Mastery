@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_SkinCard_Amaterasu_Foxy",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/Skins/Foxy/t_SkinCard_Amaterasu_Foxy",
+    "Properties": {
+      "ImportedSize": {
+        "X": 404,
+        "Y": 600
+      },
+      "LightingGuid": "38B338B3-408DE06F-DD37AD9B-50697CCC",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 404,
+    "SizeY": 600,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 242400,
+          "SizeOnDisk": 242400,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 404,
+        "SizeY": 600,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

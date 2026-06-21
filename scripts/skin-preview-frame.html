@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Skin loadout frame preview (563×840)</title>
+  <style>
+    :root {
+      --frame-w: 563px;
+      --frame-h: 840px;
+      --bg: #030712;
+      --border: rgba(125, 211, 252, 0.42);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #7dd3fc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, sans-serif;
+      background: #0b1220;
+      color: var(--text);
+      padding: 24px;
+    }
+    h1 { font-size: 1.1rem; margin: 0 0 4px; color: var(--accent); }
+    p { margin: 0 0 16px; color: var(--muted); font-size: 0.9rem; line-height: 1.45; }
+    .layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      align-items: flex-start;
+    }
+    .frame-wrap {
+      flex-shrink: 0;
+    }
+    .frame-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    /* Fixed 563×840 — object-fit cover (no file crop) */
+    .skin-frame {
+      width: var(--frame-w);
+      height: var(--frame-h);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg);
+      position: relative;
+    }
+    .skin-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: var(--pos-x, 50%) var(--pos-y, 42%);
+      display: block;
+    }
+    .controls {
+      flex: 1;
+      min-width: 260px;
+      max-width: 420px;
+      background: rgba(8, 12, 22, 0.98);
+      border: 1px solid #1e3a5f;
+      border-radius: 10px;
+      padding: 16px;
+    }
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin: 12px 0 6px;
+      color: #cbd5e1;
+    }
+    input[type="text"], input[type="file"] {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #1e3a5f;
+      background: #0f1724;
+      color: var(--text);
+      font-size: 0.85rem;
+    }
+    input[type="range"] { width: 100%; }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+    button {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: rgba(125, 211, 252, 0.12);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    button:hover { filter: brightness(1.1); }
+    .compare {
+      margin-top: 20px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .compare .skin-frame { transform: scale(0.45); transform-origin: top left; margin-bottom: -460px; margin-right: -310px; }
+    .compare .frame-label { margin-top: 0; }
+    code { font-size: 0.78rem; color: #93c5fd; word-break: break-all; }
+  </style>
+</head>
+<body>
+  <h1>Skin loadout frame — 563×840 (2:3)</h1>
+  <p>
+    Same framing as the app <strong>Loadout</strong> tab: fixed portrait box, <code>object-fit: cover</code>.
+    The source file is never modified — only the viewport crops what you see.
+  </p>
+
+  <div class="layout">
+    <div class="frame-wrap">
+      <div class="frame-label">Preview · 563 × 840</div>
+      <div class="skin-frame" id="frame">
+        <img id="preview" alt="Skin preview" />
+      </div>
+    </div>
+
+    <div class="controls">
+      <label for="imagePath">Image path (repo-relative)</label>
+      <input type="text" id="imagePath" value="app/data/NewGodSkins/Achilles/Skins/SoulPiercer/Screenshot 2026-06-16 101639.png" />
+
+      <label for="filePick">Or pick a local file (e.g. loadout screenshot)</label>
+      <input type="file" id="filePick" accept="image/*" />
+
+      <label>Focal X <span id="posXVal">50</span>%</label>
+      <input type="range" id="posX" min="0" max="100" value="50" />
+
+      <label>Focal Y <span id="posYVal">42</span>%</label>
+      <input type="range" id="posY" min="0" max="100" value="42" />
+
+      <div class="row">
+        <button type="button" id="reload">Reload path</button>
+        <button type="button" id="presetAchilles">Achilles · Soul Piercer (card)</button>
+        <button type="button" id="presetSoulPiercerLoadout">Achilles · Soul Piercer (loadout)</button>
+        <button type="button" id="presetAchillesBase">Achilles · base loadout</button>
+      </div>
+
+      <p style="margin-top:16px;font-size:0.8rem;">
+        In app: <strong>Database → Achilles → Skins → Soul Piercer → Loadout</strong>.
+        Until <code>inGame</code> is set on the skin, Loadout shows a placeholder. Soul Piercer now uses
+        <code>T_GodFull_Achilles_SoulPiercer.png</code> (in-game loadout capture).
+      </p>
+      <p style="font-size:0.78rem;"><code id="resolvedUrl"></code></p>
+    </div>
+  </div>
+
+  <script>
+    const PRESETS = {
+      soulPiercer: 'app/data/NewGodSkins/Achilles/Skins/SoulPiercer/t_SkinCard_Achilles_SoulPiercer.png',
+      soulPiercerLoadout: 'app/data/NewGodSkins/Achilles/Skins/SoulPiercer/Screenshot 2026-06-16 101639.png',
+      achillesBaseLoadout: 'app/data/NewGodSkins/Achilles/Default/T_GodFull_Achilles.png',
+    };
+
+    const img = document.getElementById('preview');
+    const pathInput = document.getElementById('imagePath');
+    const filePick = document.getElementById('filePick');
+    const posX = document.getElementById('posX');
+    const posY = document.getElementById('posY');
+    const posXVal = document.getElementById('posXVal');
+    const posYVal = document.getElementById('posYVal');
+    const resolvedUrl = document.getElementById('resolvedUrl');
+    const frame = document.getElementById('frame');
+
+    function repoRootFromScript() {
+      // scripts/skin-preview-frame.html → repo root is ..
+      return new URL('../', window.location.href);
+    }
+
+    function loadFromPath(relPath) {
+      const clean = relPath.replace(/^\/+/, '').replace(/\\/g, '/');
+      const url = new URL(clean, repoRootFromScript());
+      img.src = url.href;
+      resolvedUrl.textContent = url.href;
+    }
+
+    function updateFocal() {
+      const x = posX.value;
+      const y = posY.value;
+      posXVal.textContent = x;
+      posYVal.textContent = y;
+      frame.style.setProperty('--pos-x', x + '%');
+      frame.style.setProperty('--pos-y', y + '%');
+    }
+
+    pathInput.addEventListener('change', () => loadFromPath(pathInput.value));
+    document.getElementById('reload').addEventListener('click', () => loadFromPath(pathInput.value));
+    document.getElementById('presetAchilles').addEventListener('click', () => {
+      pathInput.value = PRESETS.soulPiercer;
+      loadFromPath(PRESETS.soulPiercer);
+    });
+    document.getElementById('presetSoulPiercerLoadout').addEventListener('click', () => {
+      pathInput.value = PRESETS.soulPiercerLoadout;
+      loadFromPath(PRESETS.soulPiercerLoadout);
+    });
+    document.getElementById('presetAchillesBase').addEventListener('click', () => {
+      pathInput.value = PRESETS.achillesBaseLoadout;
+      loadFromPath(PRESETS.achillesBaseLoadout);
+    });
+    filePick.addEventListener('change', (e) => {
+      const f = e.target.files && e.target.files[0];
+      if (!f) return;
+      img.src = URL.createObjectURL(f);
+      resolvedUrl.textContent = f.name + ' (local file)';
+    });
+    posX.addEventListener('input', updateFocal);
+    posY.addEventListener('input', updateFocal);
+
+    updateFocal();
+    loadFromPath(pathInput.value);
+  </script>
+</body>
+</html>

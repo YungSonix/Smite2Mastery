@@ -7,9 +7,17 @@ alwaysApply: true
 
 ## Agent workflow (do this every time)
 
-1. **Before implementing**: Read this rule file and **read `GOALS.md`** (project root). Use both as source of truth.
-2. **When the user asks for a change**: Infer related surfaces. Example: "update the menu" means update the nav/menu in `app/index.jsx`.
-3. **After implementing**: Update **`GOALS.md`** — mark completed items, add to "Recent progress" only for **major** features/releases (one line per major item); for minor bugs or small tweaks, one short line at most, no depth. If you added new screens or conventions, update this rule file too so future turns never forget.
+1. **Session startup** (see also `agent-workflow.mdc`): `BUGS.md` → `TASKS.md` → **`GOALS.md`** → `Vault/START_HERE.md` if present.
+2. **Before implementing**: Read this rule file, **`GOALS.md`**, and `.cursor/rules/agent-knowledge.mdc` (skills + `docs/SMITE2_DESIGN.md`).
+3. **When the user asks for a change**: Infer related surfaces. Example: "update the menu" means update the nav/menu in `app/index.jsx`.
+4. **After implementing**: Update **`GOALS.md`** — mark completed items, add to "Recent progress" only for **major** features/releases (one line per major item); for minor bugs or small tweaks, one short line at most, no depth. If you added new screens or conventions, update this rule file too so future turns never forget.
+
+## Vault & Council (local)
+
+- **Vault:** `Vault/` (gitignored) — open in Obsidian; hub [[START_HERE]] via `Vault/START_HERE.md`.
+- **Sync:** `npm run vault:sync` — Kanban boards, `_generated/`, Council + Cursor agents mirror.
+- **Council:** `npm run council:ui` → http://localhost:3939 — pin Chair per `docs/council/CHAIR_SETUP.md`. Panel Send auto-wakes Chair.
+- **Port note:** default 3939 — only one project's council UI at a time (WorkOutApp or smite2app).
 
 ---
 
@@ -47,8 +55,8 @@ alwaysApply: true
 
 ### Builds and gods
 
-- **Builds list**: `BuildsPage` in `app/index.jsx` — loads `app/data/builds.json`, pairs gods with builds. Categories: Featured (FEATURED_AUTHORS), Contributors (Supabase `contributor_builds`), Community (Supabase `community_builds`). Pinning, login, certification request flow.
-- **God builds data**: `app/data/builds.json` — array of gods; each god has `builds[]`, abilities, **baseStats** (per-level stats), etc. Items and gods come from here.
+- **Builds list**: `BuildsPage` in `app/index.jsx` — loads `app/data/God Information/Builds/builds.json` via `lib/buildsData.js`, pairs gods with builds. Categories: Featured (FEATURED_AUTHORS), Contributors (Supabase `contributor_builds`), Community (Supabase `community_builds`). Pinning, login, certification request flow.
+- **God builds data**: `app/data/God Information/Builds/builds.json` — array of gods; each god has `builds[]`, abilities, **baseStats** (per-level stats), etc. Items and gods come from here. **Skins metadata**: one JSON per pantheon under `app/data/God Information/Skins/{Pantheon}.json` (gods A–Z, skins nested per god) — export/merge via `npm run export-god-skins` / `npm run merge-god-skins:write`.
 - **Custom builder**: `app/custombuild.jsx` — pick god, items (7 + 5 starting), relic, aspect, roles, gamemodes; **Select God / Role**: up to 4 roles as compact chips (role icon via `getRoleIcon` in `localIcons.js` + label) in the god row when width ≥640px, else a horizontal scroll row under the god row; baseStats + item stats + modeled item passives via `lib/customBuildItemPassives.js` (Thoth, Tahuti, Pendulum, Obsidian/Titan % pen); **Attack Damage** from `lib/basicAttackScaling.js` (god `basic.scales` + flat); save/build name; post to community.
 - **My Builds**: `app/mybuilds.jsx` — saved builds, load into custom builder, contributor builds.
 - **Tierlists**: `app/tierlist.jsx` — personal S–F tiers for gods and tier-3 items; embedded from **Builds** via `buildsHubMode` / internal **Tierlists** tab.
@@ -57,7 +65,7 @@ alwaysApply: true
 
 ### Database / stats / items / skins
 
-- **Data page**: `app/data.jsx` — tabs Gods, Items, Game Modes, Mechanics. Uses `app/data/builds.json`. God detail: abilities, **baseStats** (expandable), items, skins. **Pantheon**: use plain `Image` next to pantheon name (filter rows + god meta) — **no** dark rounded badge container; the framed pantheon **pin on the portrait** is **Builds-only** (`app/index.jsx`).
+- **Data page**: `app/data.jsx` — tabs Gods, Items, Game Modes, Mechanics. Uses `lib/buildsData.js` → `app/data/God Information/Builds/builds.json`. God detail: abilities, **baseStats** (expandable), items, skins. **Pantheon**: use plain `Image` next to pantheon name (filter rows + god meta) — **no** dark rounded badge container; the framed pantheon **pin on the portrait** is **Builds-only** (`app/index.jsx`).
 - **God stats**: Each god in builds.json can have `baseStats` — object keyed by stat name (e.g. MaxHealth, PhysicalProtection); values often have per-level or formula. Custom build and data pages compute total stats (baseStats + item stats).
 - **Items**: From builds.json top-level `items` (and god builds). **`items` shape**: array of tier columns `[[starters A–Z], [tier1…], [tier2…], [tier3…], [other…]?]` — always use `flattenAny(builds.items)` for one list (see `.scripts/update-builds.js`). Icons via `app/localIcons.js` — `getLocalItemIcon(iconPath)`.
 - **Skins**: God skins/wallpapers — `app/localIcons.js` exports `getSkinImage`; skin assets live in `app/data/Icons/Wallpapers` (tracked in git). Used in data.jsx and anywhere god skins are shown. Bulk-merge wallpaper files into each god’s `skins` map with `npm run import-wallpapers` (`scripts/import-wallpapers-to-builds.js`; use `--write` after a dry-run).
@@ -101,7 +109,8 @@ alwaysApply: true
 | Normalize gods (`baseKit` + `baseInformation` → flat kit) | `lib/normalizeBuildsGod.js` — `normalizeBuildsGod`, `flattenBuildsGods` (use when flattening `builds.gods`) |
 | Custom build item passives (subset) | `lib/customBuildItemPassives.js` — `computeItemPassiveBonuses` |
 | Basic attack damage scaling (STR/INT from `basic.scales`) | `lib/basicAttackScaling.js` — `getBasicAttackPowerCoefficients` |
-| Builds/gods/items/baseStats | `app/data/builds.json` |
+| Builds/gods/items/baseStats | `app/data/God Information/Builds/builds.json` (`lib/buildsData.js`) |
+| God skins (per pantheon JSON) | `app/data/God Information/Skins/{Pantheon}.json` · verify via `npm run skins:viewer` |
 | God list (Wordle) | `Smite2Gods.json` (project root) |
 | Icons (god, item, skin, role) | `app/localIcons.js` — `getRoleIcon`, `ROLE_ICONS` (bundled role/pantheon PNGs from `lib/imageGrabber.js`) |
 | Bundled static icons (stats, game modes, consumables, Vulcan mods, gold, Prophecy pack) | `lib/imageGrabber.js` — `STAT_ICONS`, `GAME_MODE_ICONS`, `GOLD_ICON`, etc. (Metro needs string-literal `require` paths) |
@@ -112,6 +121,10 @@ alwaysApply: true
 | Prophecy card pools and enums | `lib/prophecyData.js` (spell/trap `summary` + `getProphecyCardShowcaseBody` / `formatProphecyItemSummary` for collection/showcase copy) |
 | Prophecy deck validation/archetype/curve | `lib/prophecyDeck.js` |
 | Guides (community_guides) | `lib/guidesPage.jsx`, `lib/guidesSupabase.js`, `hooks/useGuideContributorAccess.js`, `supabase/community_guides.sql` |
+| Shared dropdown styles | `lib/uiDropdownStyles.js` — reuse before new filter/select menus |
+| Skin preview VOX | `lib/skinVox.js`, `lib/voxSkinManifest.generated.js` (metadata only; GitHub URL playback) — `npm run vox:manifest` after adding VoiceAudio |
+| Ability tooltip modal | `lib/KitAbilityTooltipModal.jsx`, `lib/kitAbilityTooltip.js` |
+| God pantheon helper | `getGodPantheon` in `lib/normalizeBuildsGod.js` |
 | Profile / current user | `app/profile.jsx`, profileHelpers; `app/index.jsx` `currentUser` state |
 | Version/news config | `app/home.jsx` — APP_VERSION_CONFIG, VERSION_HISTORY, NEWS_CONFIG |
 

@@ -52,7 +52,7 @@ node scripts/add-patch-indicators.js <patch-version> <path-to-builds.json>
 
 **Example**:
 ```bash
-node scripts/add-patch-indicators.js "2.1.0" "./app/data/builds.json"
+node scripts/add-patch-indicators.js "2.1.0" "./app/data/God Information/Builds/builds.json"
 ```
 
 **How it works**:

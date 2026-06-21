@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_Chaac_Card_Mastery",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Chaac/Skins/Mastery/T_Chaac_Card_Mastery",
+    "Properties": {
+      "ImportedSize": {
+        "X": 686,
+        "Y": 1024
+      },
+      "LightingGuid": "583839D1-4BAD0DF1-D47489A3-9CF93657",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 686,
+    "SizeY": 1024,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 2809856,
+          "SizeOnDisk": 2809856,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 686,
+        "SizeY": 1024,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

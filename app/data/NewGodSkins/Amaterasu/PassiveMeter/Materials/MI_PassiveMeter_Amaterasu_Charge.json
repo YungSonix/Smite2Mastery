@@ -1,0 +1,148 @@
+[
+  {
+    "Type": "MaterialInstanceConstant",
+    "Name": "MI_PassiveMeter_Amaterasu_Charge",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'MaterialInstanceConstant'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/Materials/MI_PassiveMeter_Amaterasu_Charge",
+    "Properties": {
+      "Parent": {
+        "ObjectName": "Material'M_PassiveMeter_Amaterasu_Charge'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/Materials/M_PassiveMeter_Amaterasu_Charge.0"
+      },
+      "bHasStaticPermutationResource": true,
+      "ScalarParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "Animate",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.0,
+          "ExpressionGUID": "94286855-4A2D3509-EDBC58BA-1D0FC4E9"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "base image intensity",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.7,
+          "ExpressionGUID": "F2C15723-49815925-4E9F0DBD-C66FB739"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "Progress",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.0,
+          "ExpressionGUID": "0AD7225E-4BA1DFFB-4B86DAB9-84E89254"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "StanceMask",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.0,
+          "ExpressionGUID": "20532B28-4AA4C327-576AAFA2-E23E4A46"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "RefractionDepthBias",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "00000000-00000000-00000000-00000000"
+        }
+      ],
+      "VectorParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "color sA",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 1.0,
+            "G": 0.848025,
+            "B": 0.211932,
+            "A": 1.676727,
+            "Hex": "FFEE7F"
+          },
+          "ExpressionGUID": "6C155319-4DE738BB-BBD5A3B5-DAFCBF1F"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "color sB",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 1.126959,
+            "G": 0.316964,
+            "B": 0.162653,
+            "A": 2.8,
+            "Hex": "FF9970"
+          },
+          "ExpressionGUID": "1292370B-45779C3E-5AC8F3BA-8C9F9A15"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "color sC",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 0.924596,
+            "G": 1.0,
+            "B": 0.352824,
+            "A": 2.098116,
+            "Hex": "F7FFA0"
+          },
+          "ExpressionGUID": "16E633FC-40FD10F7-F61E90A8-DCE550F0"
+        }
+      ],
+      "TextureParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "Image",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "ObjectName": "Texture2D'T_PassiveMeter_amaterasu_Fire_Complete'",
+            "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/T_PassiveMeter_amaterasu_Fire_Complete.0"
+          },
+          "ExpressionGUID": "60355F8B-44E342AA-44D062A1-8F8F8909"
+        }
+      ],
+      "BasePropertyOverrides": {
+        "BlendMode": "EBlendMode::BLEND_Translucent",
+        "ShadingModel": "EMaterialShadingModel::MSM_Unlit",
+        "OpacityMaskClipValue": 0.3333
+      },
+      "StaticParametersRuntime": {
+        "StaticSwitchParameters": [
+          {
+            "Value": false,
+            "ParameterInfo": {
+              "Name": "preview anim?",
+              "Association": "EMaterialParameterAssociation::GlobalParameter",
+              "Index": -1
+            },
+            "bOverride": true,
+            "ExpressionGUID": "0F88BD07-4C5A7B56-AA2F8593-C1F5C422"
+          }
+        ]
+      },
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedData": {
+      "ParentLayerIndexRemap": []
+    }
+  }
+]

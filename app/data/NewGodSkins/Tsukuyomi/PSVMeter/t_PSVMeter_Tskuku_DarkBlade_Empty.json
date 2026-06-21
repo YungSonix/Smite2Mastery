@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSVMeter_Tskuku_DarkBlade_Empty",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Tsukuyomi/PSVMeter/t_PSVMeter_Tskuku_DarkBlade_Empty",
+    "Properties": {
+      "ImportedSize": {
+        "X": 144,
+        "Y": 128
+      },
+      "LightingGuid": "59807D28-4F058CE3-07FE72A2-99A78886",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 144,
+    "SizeY": 128,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 73728,
+          "SizeOnDisk": 73728,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 144,
+        "SizeY": 128,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

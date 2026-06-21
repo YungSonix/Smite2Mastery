@@ -1,0 +1,38 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_IZI_Needle_Stacks",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Izanami/Passive/t_PSV_IZI_Needle_Stacks",
+    "Properties": {
+      "AddressX": "TextureAddress::TA_Clamp",
+      "AddressY": "TextureAddress::TA_Clamp",
+      "ImportedSize": {
+        "X": 16,
+        "Y": 84
+      },
+      "LightingGuid": "1EFBA708-470E4238-9358DB86-6D1B4C9B",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 16,
+    "SizeY": 84,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 1344,
+          "SizeOnDisk": 1344,
+          "OffsetInFile": "0x76"
+        },
+        "SizeX": 16,
+        "SizeY": 84,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

@@ -21,6 +21,7 @@ import { useScreenDimensions } from '../hooks/useScreenDimensions';
 import { flattenBuildsGods } from '../lib/normalizeBuildsGod';
 import { computeItemPassiveBonuses } from '../lib/customBuildItemPassives';
 import { getBasicAttackPowerCoefficients } from '../lib/basicAttackScaling';
+import { formatBuildStatValue } from '../lib/buildStats';
 import {
   getDiscordBotSharedBuildPayload,
   saveDiscordBotSharedBuildPayload,
@@ -403,7 +404,7 @@ export default function CustomBuildPage({
     InteractionManager.runAfterInteractions(() => {
       setTimeout(async () => {
         try {
-          const data = require('./data/builds.json');
+          const data = require('../lib/buildsData');
           if (isMounted) {
             setLocalBuilds(data);
             setDataLoading(false);
@@ -995,11 +996,11 @@ export default function CustomBuildPage({
           if (statKey === 'BaseAttackSpeed' || statKey === 'AttackSpeedPercent') {
             stats[statKey] = Number.isFinite(n) ? n : 0;
           } else {
-            stats[statKey] = Math.round(n);
+            stats[statKey] = Number.isFinite(n) ? n : 0;
           }
         } else if (statData !== null && statData !== undefined) {
           const n = Number(statData);
-          stats[statKey] = Number.isFinite(n) ? Math.round(n) : statData;
+          stats[statKey] = Number.isFinite(n) ? n : statData;
         }
       });
     }
@@ -1053,14 +1054,6 @@ export default function CustomBuildPage({
       const add = passiveBonuses[k];
       if (typeof add === 'number' && Number.isFinite(add) && add !== 0) {
         stats[k] = (stats[k] || 0) + add;
-      }
-    });
-
-    Object.keys(stats).forEach((key) => {
-      if (key === 'BaseAttackSpeed' || key === 'AttackSpeedPercent') return;
-      const v = stats[key];
-      if (typeof v === 'number' && Number.isFinite(v)) {
-        stats[key] = Math.round(v);
       }
     });
 
@@ -1362,12 +1355,7 @@ export default function CustomBuildPage({
         statColor = '#a855f7';
       }
       const raw = totalStats[statKey];
-      let displayValue = raw;
-      if (statKey === 'AttackSpeedEffective') {
-        displayValue = typeof raw === 'number' && Number.isFinite(raw) ? raw.toFixed(2) : raw;
-      } else if (typeof raw === 'number' && Number.isFinite(raw)) {
-        displayValue = Math.round(raw);
-      }
+      const displayValue = formatBuildStatValue(raw, statKey);
       return (
         <View key={statKey} style={styles.statItem}>
           <Text style={[styles.statLabel, { color: statColor }]}>{statDisplayNames[statKey] || statKey}</Text>
@@ -1532,7 +1520,8 @@ export default function CustomBuildPage({
                           <Image
                             source={localIcon}
                             style={styles.aspectSlotIcon}
-                            resizeMode="cover"
+                            contentFit="contain"
+                            cachePolicy="memory-disk"
                           />
                         );
                       }

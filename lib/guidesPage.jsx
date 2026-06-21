@@ -73,7 +73,7 @@ export default function GuidesPage({ currentUsername = '', onOpenBuildsContribut
   useEffect(() => {
     let cancelled = false;
     try {
-      const data = require('../app/data/builds.json');
+      const data = require('./buildsData');
       const gods = flattenBuildsGods(data.gods || []);
       if (!cancelled) {
         setAllGods(

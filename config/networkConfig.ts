@@ -35,6 +35,8 @@ export const ICON_PATHS = {
   ITEM_ICONS: `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/app/data/Icons/Item%20Icons`,
   ITEM_ICONS_FILLED: `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/app/data/Icons/Item%20Icons%20Filled`,
   GOD_ICONS: `${REMOTE_BASE_URLS.GITHUB_RAW_MAIN_IMG}/God%20Info`,
+  /** God aspect slot art — [Smite2Mastery `app/data/AspectIcons`](https://github.com/YungSonix/Smite2Mastery/tree/master/app/data/AspectIcons) */
+  ASPECT_ICONS: `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/app/data/AspectIcons`,
   SKINS: `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/app/data/Icons/Wallpapers`,
   VOICE_AUDIO: `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/app/data/VoiceAudio`,
   ROLE_ICONS: `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/app/data/Icons/Role%20Icons`,

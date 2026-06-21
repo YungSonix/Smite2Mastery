@@ -1,0 +1,35 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "Icons_Vulcan_A01",
+    "Flags": "RF_Public | RF_Standalone | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Vulcan/Abilities/Icons_Vulcan_A01",
+    "Properties": {
+      "ImportedSize": {
+        "X": 128,
+        "Y": 128
+      },
+      "LightingGuid": "259832A2-4DE64A90-7319359C-F8812A84",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI"
+    },
+    "SizeX": 128,
+    "SizeY": 128,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT1",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 8192,
+          "SizeOnDisk": 8192,
+          "OffsetInFile": "0x71"
+        },
+        "SizeX": 128,
+        "SizeY": 128,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

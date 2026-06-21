@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_HUD_TheMorrigan_PassiveMeter_Wings",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/TheMorrigan/PassiveMeter/T_HUD_TheMorrigan_PassiveMeter_Wings",
+    "Properties": {
+      "ImportedSize": {
+        "X": 128,
+        "Y": 96
+      },
+      "LightingGuid": "AB4ECC4B-4DF9C0B7-D4F078B2-EF72B0A2",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 128,
+    "SizeY": 96,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 12288,
+          "SizeOnDisk": 12288,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 128,
+        "SizeY": 96,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

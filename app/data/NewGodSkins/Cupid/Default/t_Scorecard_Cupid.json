@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_Scorecard_Cupid",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Cupid/Default/t_Scorecard_Cupid",
+    "Properties": {
+      "ImportedSize": {
+        "X": 180,
+        "Y": 52
+      },
+      "LightingGuid": "B7A6A029-44D470C5-C6364384-2EECDC3B",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 180,
+    "SizeY": 52,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT1",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 4680,
+          "SizeOnDisk": 4680,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 180,
+        "SizeY": 52,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

@@ -1,0 +1,39 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_PassiveMeter_amaterasu__DesignMasks",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/T_PassiveMeter_amaterasu__DesignMasks",
+    "Properties": {
+      "AddressX": "TextureAddress::TA_Clamp",
+      "AddressY": "TextureAddress::TA_Clamp",
+      "ImportedSize": {
+        "X": 147,
+        "Y": 147
+      },
+      "LightingGuid": "07E64A02-4EF9A77A-6631A69F-73F1E7FD",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 147,
+    "SizeY": 147,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 86436,
+          "SizeOnDisk": 86436,
+          "OffsetInFile": "0x7D"
+        },
+        "SizeX": 147,
+        "SizeY": 147,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

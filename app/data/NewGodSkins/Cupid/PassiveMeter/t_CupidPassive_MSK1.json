@@ -1,0 +1,38 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_CupidPassive_MSK1",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Cupid/PassiveMeter/t_CupidPassive_MSK1",
+    "Properties": {
+      "ImportedSize": {
+        "X": 160,
+        "Y": 160
+      },
+      "LightingGuid": "B017C706-4DC310DF-E1F636A7-5BDBE97B",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "SRGB": false,
+      "NeverStream": true
+    },
+    "SizeX": 160,
+    "SizeY": 160,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 102400,
+          "SizeOnDisk": 102400,
+          "OffsetInFile": "0x7E"
+        },
+        "SizeX": 160,
+        "SizeY": 160,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

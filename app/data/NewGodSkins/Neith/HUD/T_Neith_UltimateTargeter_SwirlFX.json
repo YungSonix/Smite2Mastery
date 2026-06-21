@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_Neith_UltimateTargeter_SwirlFX",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Neith/HUD/T_Neith_UltimateTargeter_SwirlFX",
+    "Properties": {
+      "ImportedSize": {
+        "X": 172,
+        "Y": 172
+      },
+      "LightingGuid": "FAA8DE9A-43D69265-C7962EA4-5CC3F9AC",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 172,
+    "SizeY": 172,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 29584,
+          "SizeOnDisk": 29584,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 172,
+        "SizeY": 172,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

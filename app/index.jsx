@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback, lazy, Suspense, startTransition } from 'react';
+import React, { useEffect, useState, useMemo, useCallback, useRef, lazy, Suspense, startTransition } from 'react';
 import {
   StyleSheet,
   Text,
@@ -25,9 +25,19 @@ import {
   REMOTE_BASE_URLS,
   STORAGE_KEYS,
 } from '../config';
-import { normalizeBuildsGod, flattenBuildsGods } from '../lib/normalizeBuildsGod';
+import { normalizeBuildsGod, flattenBuildsGods, getGodPantheon } from '../lib/normalizeBuildsGod';
 import { AlignedBulletLines } from '../lib/alignedBulletText';
+import KitAbilityTooltipModal from '../lib/KitAbilityTooltipModal';
+import { buildKitAbilityTooltipBody, buildKitAspectTooltipBody } from '../lib/kitAbilityTooltip';
 import { getLocalGodAsset, getLocalItemIcon, getPantheonBorderColor, getPantheonIcon, getRoleIcon } from './localIcons';
+import { ItemIconImage } from '../lib/ItemIconImage';
+import { GOLD_ICON } from '../lib/imageGrabber';
+import {
+  computeBuildGoldCost,
+  computeTotalBuildStats,
+  getBuildStatDisplayRows,
+} from '../lib/buildStats';
+import { resolveRandomizerDevPreload } from '../lib/randomizerDevPreload';
 // Lazy load page components to reduce initial bundle size
 const HomePage = lazy(() => import('./home'));
 const DataPage = lazy(() => import('./data'));
@@ -303,6 +313,30 @@ function BuildsPage({
   const [itemRerolls, setItemRerolls] = useState(3);
   const [selectedRandomItem, setSelectedRandomItem] = useState(null); // { item, itemName } for tooltip
   const [aspectActive, setAspectActive] = useState(false); // Track if aspect is active
+  const [randomizerStatsExpanded, setRandomizerStatsExpanded] = useState(true);
+  const { width: buildsScreenWidth } = useScreenDimensions();
+  const randomizerBoardRow = buildsScreenWidth >= 640;
+  const RANDOMIZER_GOD_LEVEL = 20;
+
+  const randomizerEquippedItems = useMemo(
+    () => randomItems.filter(Boolean),
+    [randomItems]
+  );
+
+  const randomizerBuildGold = useMemo(
+    () => computeBuildGoldCost(randomizerEquippedItems, randomRelic),
+    [randomizerEquippedItems, randomRelic]
+  );
+
+  const randomizerBuildStats = useMemo(() => {
+    if (!randomGod) return null;
+    return computeTotalBuildStats(randomGod, RANDOMIZER_GOD_LEVEL, randomizerEquippedItems);
+  }, [randomGod, randomizerEquippedItems]);
+
+  const randomizerStatRows = useMemo(() => {
+    if (!randomizerBuildStats) return [];
+    return getBuildStatDisplayRows(randomizerBuildStats.totalStats, randomizerBuildStats.baseStats);
+  }, [randomizerBuildStats]);
   
   // Check login status and certification request status
   useEffect(() => {
@@ -419,7 +453,7 @@ function BuildsPage({
     let isMounted = true;
     const task = InteractionManager.runAfterInteractions(() => {
       try {
-        const data = require('./data/builds.json');
+        const data = require('../lib/buildsData');
         if (isMounted) {
           setBuilds(data);
           setLoading(false);
@@ -651,6 +685,18 @@ function BuildsPage({
     items.forEach(addToMap);
     return map;
   }, [items]);
+
+  const randomizerDevPreloadDone = useRef(false);
+  useEffect(() => {
+    if (randomizerDevPreloadDone.current || loading || !builds) return;
+    const preload = resolveRandomizerDevPreload(gods, itemLookupMap);
+    if (!preload) return;
+    setRandomGod(preload.god);
+    setRandomItems(preload.itemSlots);
+    setRandomRelic(preload.relic);
+    setAspectActive(false);
+    randomizerDevPreloadDone.current = true;
+  }, [builds, loading, gods, itemLookupMap]);
 
   // pair gods with builds. The JSON structure has gods with a builds array property.
   // Each god object contains its own builds array.
@@ -1332,6 +1378,25 @@ function BuildsPage({
     return found || null;
   }, [itemLookupMap, items]);
 
+  const buildsAbilityTooltip = useMemo(() => {
+    if (!selectedAbility?.ability) return null;
+    const isAspect = selectedAbility.abilityKey === 'aspect';
+    const god = selectedAbility.god || pairs[selectedAbility.godIndex]?.god;
+    const pantheon = getGodPantheon(god);
+    const borderColor = pantheon ? getPantheonBorderColor(pantheon) : 'rgba(125, 211, 252, 0.42)';
+    return {
+      title: selectedAbility.abilityName || 'Ability',
+      icon: selectedAbility.ability.icon,
+      body: isAspect
+        ? buildKitAspectTooltipBody(selectedAbility.ability)
+        : buildKitAbilityTooltipBody(selectedAbility.ability),
+      valueKeys: isAspect ? null : selectedAbility.ability.valueKeys,
+      iconContentFit: isAspect ? 'contain' : 'cover',
+      borderColor,
+      levelIndex: selectedAbility.levelIndex ?? 0,
+    };
+  }, [selectedAbility, pairs]);
+
   // Data is loaded from the bundled `localBuilds` by default.
 
   return (
@@ -1416,11 +1481,12 @@ function BuildsPage({
         >
           {/* Randomizer Section */}
           <View style={randomizerStyles.randomizerContainer}>
-            {/* Main Randomize All Button */}
             <View style={randomizerStyles.randomizerSection}>
-              <TouchableOpacity
-                style={randomizerStyles.randomizeAllButton}
-                onPress={() => {
+              <View style={randomizerStyles.randomizerHeaderRow}>
+                <Text style={randomizerStyles.randomizerTitle}>Randomizer</Text>
+                <TouchableOpacity
+                  style={randomizerStyles.randomizeAllButtonCompact}
+                  onPress={() => {
                   // Randomize God (always randomize, but only decrement rerolls if available)
                   if (gods.length > 0) {
                     const randomGodIndex = Math.floor(Math.random() * gods.length);
@@ -1515,23 +1581,34 @@ function BuildsPage({
                     setRandomRelic(relics[randomRelicIndex]);
                   }
                 }}
+                activeOpacity={0.85}
               >
-                <Text style={randomizerStyles.randomizeAllButtonText}>
-                   Randomize All
-                </Text>
+                <Text style={randomizerStyles.randomizeAllButtonCompactText}>Randomize All</Text>
               </TouchableOpacity>
-            </View>
-
-            <View style={randomizerStyles.randomizerSection}>
-              <Text style={randomizerStyles.randomizerTitle}>Randomizer</Text>
-              <View style={randomizerStyles.randomizerCombinedTopContent}>
-                <View style={randomizerStyles.randomizerCombinedGodColumn}>
-                  <Text style={randomizerStyles.randomizerSubtitle}>God:</Text>
-                  <View style={randomizerStyles.randomizerGodContainer}>
+              </View>
+              <View style={randomizerStyles.randomizerBoardFrame}>
+              <View
+                style={[
+                  randomizerStyles.randomizerBoard,
+                  randomizerBoardRow ? randomizerStyles.randomizerBoardRow : randomizerStyles.randomizerBoardColumn,
+                ]}
+              >
+                <View
+                  style={[
+                    randomizerStyles.randomizerLeftPanel,
+                    randomizerBoardRow
+                      ? randomizerStyles.randomizerLeftPanelRow
+                      : randomizerStyles.randomizerLeftPanelFull,
+                  ]}
+                >
+                  <View style={randomizerStyles.randomizerGodAspectRow}>
+                    <View style={randomizerStyles.randomizerGodSlot}>
+                      <Text style={randomizerStyles.randomizerSlotLabel}>God</Text>
+                      <View style={randomizerStyles.randomizerGodSlotInner}>
                   {randomGod ? (
                     <>
                       <TouchableOpacity
-                        style={randomizerStyles.randomizerGodCard}
+                        style={randomizerStyles.randomizerGodCardFilled}
                         onPress={() => {
                           if (randomGod) {
                             if (onNavigateToGod) {
@@ -1545,99 +1622,86 @@ function BuildsPage({
                       >
                         <Image
                           source={getLocalGodAsset(randomGod.icon || randomGod.GodIcon || (randomGod.abilities && randomGod.abilities.A01 && randomGod.abilities.A01.icon))}
-                          style={randomizerStyles.randomizerGodIcon}
+                          style={randomizerStyles.randomizerGodIconLarge}
                           contentFit="cover"
                         />
-                        <Text style={randomizerStyles.randomizerGodName}>
-                          {randomGod.name || randomGod.GodName || randomGod.title || randomGod.displayName || 'Unknown'}
-                        </Text>
                       </TouchableOpacity>
-                      
-                      {/* Aspect Slot */}
-                      {randomGod.aspect && (
-                        <View
-                          style={[
-                            randomizerStyles.randomizerAspectSlot,
-                            aspectActive && randomizerStyles.randomizerAspectSlotActive
-                          ]}
-                        >
-                          {randomGod.aspect.icon ? (
-                            <Image
-                              source={getLocalGodAsset(randomGod.aspect.icon)}
-                              style={randomizerStyles.randomizerAspectIcon}
-                              contentFit="cover"
-                            />
-                          ) : (
-                            <View style={randomizerStyles.randomizerAspectIconPlaceholder}>
-                              <Text style={randomizerStyles.randomizerAspectIconPlaceholderText}>A</Text>
-                            </View>
-                          )}
-                          <Text style={randomizerStyles.randomizerAspectName} numberOfLines={2}>
-                            {randomGod.aspect.name || 'Aspect'}
-                          </Text>
-                          {aspectActive && (
-                            <View style={randomizerStyles.randomizerAspectActiveIndicator}>
-                              <Text style={randomizerStyles.randomizerAspectActiveText}>✓</Text>
-                            </View>
-                          )}
-                        </View>
-                      )}
+                      <Text style={randomizerStyles.randomizerGodName} numberOfLines={2}>
+                        {randomGod.name || randomGod.GodName || randomGod.title || randomGod.displayName || 'Unknown'}
+                      </Text>
                     </>
                   ) : (
-                    <View style={randomizerStyles.randomizerGodPlaceholder}>
-                      <Text style={randomizerStyles.randomizerPlaceholderText}>No God Selected</Text>
+                    <View style={randomizerStyles.randomizerGodPlaceholderFilled}>
+                      <Text style={randomizerStyles.randomizerPlaceholderText}>No God</Text>
                     </View>
                   )}
-                </View>
-                <View style={randomizerStyles.randomizerButtonRow}>
-                  <TouchableOpacity
-                    style={[randomizerStyles.randomizerButton, godRerolls === 0 && randomizerStyles.randomizerButtonDisabled]}
-                    onPress={() => {
-                      if (godRerolls > 0 && gods.length > 0) {
-                        const randomIndex = Math.floor(Math.random() * gods.length);
-                        const newGod = gods[randomIndex];
-                        setRandomGod(newGod);
-                        // Randomly activate aspect if god has one
-                        if (newGod && newGod.aspect) {
-                          setAspectActive(Math.random() > 0.5); // 50% chance to be active
-                        } else {
-                          setAspectActive(false);
-                        }
-                        setGodRerolls(godRerolls - 1);
-                      }
-                    }}
-                    disabled={godRerolls === 0}
-                  >
-                    <Text style={randomizerStyles.randomizerButtonText}>
-                      Randomize God {godRerolls > 0 ? `(${godRerolls} left)` : '(No rerolls)'}
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[randomizerStyles.randomizerResetButton]}
-                    onPress={() => {
-                      setGodRerolls(3);
-                      setRandomGod(null);
-                      setAspectActive(false);
-                    }}
-                  >
-                    <Text style={randomizerStyles.randomizerResetButtonText}>Reset</Text>
-                  </TouchableOpacity>
-                </View>
-                </View>
+                      </View>
+                    </View>
+                    <View style={randomizerStyles.randomizerAspectCell}>
+                      <Text style={randomizerStyles.randomizerSlotLabel}>Aspect</Text>
+                      {randomGod?.aspect ? (
+                        <>
+                          <View
+                            style={[
+                              randomizerStyles.randomizerAspectSlot,
+                              aspectActive
+                                ? randomizerStyles.randomizerAspectSlotActive
+                                : randomizerStyles.randomizerAspectSlotInactive,
+                            ]}
+                          >
+                            {randomGod.aspect.icon ? (
+                              <Image
+                                source={getLocalGodAsset(randomGod.aspect.icon)}
+                                style={[
+                                  randomizerStyles.randomizerAspectIcon,
+                                  !aspectActive && randomizerStyles.randomizerAspectIconInactive,
+                                ]}
+                                contentFit="contain"
+                              />
+                            ) : (
+                              <View
+                                style={[
+                                  randomizerStyles.randomizerAspectIconPlaceholder,
+                                  !aspectActive && randomizerStyles.randomizerAspectIconInactive,
+                                ]}
+                              >
+                                <Text style={randomizerStyles.randomizerAspectIconPlaceholderText}>A</Text>
+                              </View>
+                            )}
+                            {!aspectActive ? (
+                              <View style={randomizerStyles.randomizerAspectInactiveOverlay} pointerEvents="none" />
+                            ) : null}
+                            {aspectActive && (
+                              <View style={randomizerStyles.randomizerAspectActiveIndicator}>
+                                <Text style={randomizerStyles.randomizerAspectActiveText}>✓</Text>
+                              </View>
+                            )}
+                          </View>
+                          <Text
+                            style={[
+                              randomizerStyles.randomizerAspectName,
+                              !aspectActive && randomizerStyles.randomizerAspectNameInactive,
+                            ]}
+                            numberOfLines={2}
+                          >
+                            {randomGod.aspect.name || 'Aspect'}
+                          </Text>
+                        </>
+                      ) : (
+                        <View style={randomizerStyles.randomizerAspectEmpty}>
+                          <Text style={randomizerStyles.randomizerAspectEmptyText}>—</Text>
+                        </View>
+                      )}
+                    </View>
+                  </View>
 
-                <View style={randomizerStyles.randomizerCombinedBuildColumn}>
-                <Text style={randomizerStyles.randomizerSubtitle}>Build:</Text>
-              
-              {/* Starter + Relic Row */}
-              <View style={randomizerStyles.randomizerStarterSection}>
-                <Text style={randomizerStyles.randomizerSubtitle}>Starter + Relic:</Text>
-                <View style={randomizerStyles.randomizerStarterRelicRow}>
-                  <View style={randomizerStyles.randomizerStarterRelicCell}>
-                    <Text style={randomizerStyles.randomizerSlotLabel}>Starter</Text>
+                  <View style={randomizerStyles.randomizerStarterRelicRow}>
+                    <View style={randomizerStyles.randomizerWideSlot}>
+                      <Text style={randomizerStyles.randomizerSlotLabel}>Starter</Text>
                     {randomItems[0] ? (
-                    <View style={[randomizerStyles.randomizerItemSlotWrapper, randomizerStyles.randomizerStarterRelicSlotWrapper]}>
+                    <View style={randomizerStyles.randomizerWideSlotWrapper}>
                       <TouchableOpacity
-                        style={randomizerStyles.randomizerItemSlot}
+                        style={randomizerStyles.randomizerWideItemSlot}
                         onPress={() => {
                           if (randomItems[0]) {
                             setSelectedRandomItem({ item: randomItems[0], itemName: randomItems[0].name || randomItems[0].internalName || 'Unknown' });
@@ -1645,58 +1709,28 @@ function BuildsPage({
                         }}
                         activeOpacity={0.7}
                       >
-                      {(() => {
-                        const item = randomItems[0];
-                        const localIcon = getLocalItemIcon(item.icon || item.internalName);
-                        if (!localIcon) {
-                          return (
-                            <View style={randomizerStyles.randomizerItemIconPlaceholder}>
-                              <Text style={randomizerStyles.randomizerItemIconPlaceholderText}>?</Text>
-                            </View>
-                          );
-                        }
-                        const imageSource = localIcon.primary || localIcon;
-                        const fallbackSource = localIcon.fallback;
-                        const iconKey = `random-starter-${item.internalName || item.name}`;
-                        const useFallback = failedItemIcons[iconKey];
-                        
-                        if (fallbackSource && !useFallback) {
-                          return (
-                            <Image
-                              source={imageSource}
-                              style={randomizerStyles.randomizerItemIcon}
-                              contentFit="cover"
-                              onError={() => {
-                                setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
-                              }}
-                            />
-                          );
-                        }
-                        if (fallbackSource && useFallback) {
-                          return (
-                            <Image
-                              source={fallbackSource}
-                              style={randomizerStyles.randomizerItemIcon}
-                              contentFit="cover"
-                            />
-                          );
-                        }
-                        return (
-                          <Image
-                            source={imageSource}
-                            style={randomizerStyles.randomizerItemIcon}
-                            contentFit="cover"
-                          />
-                        );
-                      })()}
-                      <Text style={randomizerStyles.randomizerItemName} numberOfLines={2}>
+                        <View style={randomizerStyles.randomizerSlotIconWrap} pointerEvents="none">
+                      <ItemIconImage
+                        iconPath={randomItems[0].icon}
+                        internalName={randomItems[0].internalName}
+                        iconKey={`random-starter-${randomItems[0].internalName || randomItems[0].name}`}
+                        failedMap={failedItemIcons}
+                        setFailedMap={setFailedItemIcons}
+                        style={randomizerStyles.randomizerWideItemIcon}
+                        placeholder={(
+                          <View style={randomizerStyles.randomizerWideItemIconPlaceholder}>
+                            <Text style={randomizerStyles.randomizerItemIconPlaceholderText}>?</Text>
+                          </View>
+                        )}
+                      />
+                        </View>
+                      </TouchableOpacity>
+                      <Text style={randomizerStyles.randomizerWideItemName} numberOfLines={1}>
                         {randomItems[0].name || randomItems[0].internalName}
                       </Text>
-                      </TouchableOpacity>
                       <TouchableOpacity
                         style={randomizerStyles.randomizerItemRandomizeButton}
                         onPress={() => {
-                          // Randomize just the starter item
                           const starterItems = items.filter(item => {
                             if (!item || typeof item !== 'object') return false;
                             return item.starter === true && (item.name || item.internalName);
@@ -1715,10 +1749,12 @@ function BuildsPage({
                       </TouchableOpacity>
                     </View>
                   ) : (
-                    <View style={[randomizerStyles.randomizerItemSlotWrapper, randomizerStyles.randomizerStarterRelicSlotWrapper]}>
-                      <View style={randomizerStyles.randomizerItemSlot}>
-                        <View style={randomizerStyles.randomizerItemPlaceholder}>
-                          <Text style={randomizerStyles.randomizerItemPlaceholderText}>+</Text>
+                    <View style={randomizerStyles.randomizerWideSlotWrapper}>
+                      <View style={randomizerStyles.randomizerWideItemSlot}>
+                        <View style={randomizerStyles.randomizerSlotIconWrap}>
+                          <View style={randomizerStyles.randomizerItemPlaceholder}>
+                            <Text style={randomizerStyles.randomizerItemPlaceholderText}>+</Text>
+                          </View>
                         </View>
                       </View>
                       <TouchableOpacity
@@ -1741,13 +1777,13 @@ function BuildsPage({
                       </TouchableOpacity>
                     </View>
                   )}
-                  </View>
-                  <View style={randomizerStyles.randomizerStarterRelicCell}>
-                    <Text style={randomizerStyles.randomizerSlotLabel}>Relic</Text>
+                    </View>
+                    <View style={randomizerStyles.randomizerWideSlot}>
+                      <Text style={randomizerStyles.randomizerSlotLabel}>Relic</Text>
                     {randomRelic ? (
-                    <View style={[randomizerStyles.randomizerItemSlotWrapper, randomizerStyles.randomizerStarterRelicSlotWrapper]}>
+                    <View style={randomizerStyles.randomizerWideSlotWrapper}>
                       <TouchableOpacity
-                        style={randomizerStyles.randomizerItemSlot}
+                        style={randomizerStyles.randomizerWideItemSlot}
                         onPress={() => {
                           if (randomRelic) {
                             setSelectedRandomItem({ item: randomRelic, itemName: randomRelic.name || randomRelic.internalName || 'Unknown' });
@@ -1755,53 +1791,25 @@ function BuildsPage({
                         }}
                         activeOpacity={0.7}
                       >
-                        {(() => {
-                          const localIcon = getLocalItemIcon(randomRelic.icon || randomRelic.internalName);
-                          if (!localIcon) {
-                            return (
-                              <View style={randomizerStyles.randomizerItemIconPlaceholder}>
-                                <Text style={randomizerStyles.randomizerItemIconPlaceholderText}>?</Text>
-                              </View>
-                            );
-                          }
-                          const imageSource = localIcon.primary || localIcon;
-                          const fallbackSource = localIcon.fallback;
-                          const iconKey = `random-relic-${randomRelic.internalName || randomRelic.name}`;
-                          const useFallback = failedItemIcons[iconKey];
-
-                          if (fallbackSource && !useFallback) {
-                            return (
-                              <Image
-                                source={imageSource}
-                                style={randomizerStyles.randomizerItemIcon}
-                                contentFit="cover"
-                                onError={() => {
-                                  setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
-                                }}
-                              />
-                            );
-                          }
-                          if (fallbackSource && useFallback) {
-                            return (
-                              <Image
-                                source={fallbackSource}
-                                style={randomizerStyles.randomizerItemIcon}
-                                contentFit="cover"
-                              />
-                            );
-                          }
-                          return (
-                            <Image
-                              source={imageSource}
-                              style={randomizerStyles.randomizerItemIcon}
-                              contentFit="cover"
-                            />
-                          );
-                        })()}
-                        <Text style={randomizerStyles.randomizerItemName} numberOfLines={2}>
-                          {randomRelic.name || randomRelic.internalName}
-                        </Text>
+                        <View style={randomizerStyles.randomizerSlotIconWrap} pointerEvents="none">
+                        <ItemIconImage
+                          iconPath={randomRelic.icon}
+                          internalName={randomRelic.internalName}
+                          iconKey={`random-relic-${randomRelic.internalName || randomRelic.name}`}
+                          failedMap={failedItemIcons}
+                          setFailedMap={setFailedItemIcons}
+                          style={randomizerStyles.randomizerWideItemIcon}
+                          placeholder={(
+                            <View style={randomizerStyles.randomizerWideItemIconPlaceholder}>
+                              <Text style={randomizerStyles.randomizerItemIconPlaceholderText}>?</Text>
+                            </View>
+                          )}
+                        />
+                        </View>
                       </TouchableOpacity>
+                      <Text style={randomizerStyles.randomizerWideItemName} numberOfLines={1}>
+                        {randomRelic.name || randomRelic.internalName}
+                      </Text>
                       <TouchableOpacity
                         style={randomizerStyles.randomizerItemRandomizeButton}
                         onPress={() => {
@@ -1820,10 +1828,12 @@ function BuildsPage({
                       </TouchableOpacity>
                     </View>
                   ) : (
-                    <View style={[randomizerStyles.randomizerItemSlotWrapper, randomizerStyles.randomizerStarterRelicSlotWrapper]}>
-                      <View style={randomizerStyles.randomizerItemSlot}>
-                        <View style={randomizerStyles.randomizerItemPlaceholder}>
-                          <Text style={randomizerStyles.randomizerItemPlaceholderText}>+</Text>
+                    <View style={randomizerStyles.randomizerWideSlotWrapper}>
+                      <View style={randomizerStyles.randomizerWideItemSlot}>
+                        <View style={randomizerStyles.randomizerSlotIconWrap}>
+                          <View style={randomizerStyles.randomizerItemPlaceholder}>
+                            <Text style={randomizerStyles.randomizerItemPlaceholderText}>+</Text>
+                          </View>
                         </View>
                       </View>
                       <TouchableOpacity
@@ -1844,18 +1854,17 @@ function BuildsPage({
                       </TouchableOpacity>
                     </View>
                   )}
+                    </View>
                   </View>
                 </View>
-              </View>
 
-              {/* Regular Items (6 items) */}
-              <View style={randomizerStyles.randomizerItemsSection}>
-                <Text style={randomizerStyles.randomizerSubtitle}>Items:</Text>
-                <View style={randomizerStyles.randomizerItemsContainer}>
+                <View style={randomizerStyles.randomizerRightPanel}>
+                  <Text style={randomizerStyles.randomizerSlotLabel}>Items</Text>
+                <View style={randomizerStyles.randomizerItemsGrid}>
                   {randomItems.slice(1, 7).map((item, index) => (
-                    <View key={index + 1} style={randomizerStyles.randomizerItemSlotWrapper}>
+                    <View key={index + 1} style={randomizerStyles.randomizerGridItemWrapper}>
                       <TouchableOpacity
-                        style={randomizerStyles.randomizerItemSlot}
+                        style={randomizerStyles.randomizerGridItemSlot}
                         onPress={() => {
                           if (item) {
                             setSelectedRandomItem({ item, itemName: item.name || item.internalName || 'Unknown' });
@@ -1863,62 +1872,33 @@ function BuildsPage({
                         }}
                         activeOpacity={0.7}
                       >
+                        <View style={randomizerStyles.randomizerSlotIconWrap} pointerEvents="none">
                       {item ? (
-                        <>
-                          {(() => {
-                            const localIcon = getLocalItemIcon(item.icon || item.internalName);
-                            if (!localIcon) {
-                              return (
-                                <View style={randomizerStyles.randomizerItemIconPlaceholder}>
-                                  <Text style={randomizerStyles.randomizerItemIconPlaceholderText}>?</Text>
-                                </View>
-                              );
-                            }
-                            const imageSource = localIcon.primary || localIcon;
-                            const fallbackSource = localIcon.fallback;
-                            const iconKey = `random-item-${item.internalName || item.name}-${index + 1}`;
-                            const useFallback = failedItemIcons[iconKey];
-                            
-                            if (fallbackSource && !useFallback) {
-                              return (
-                                <Image
-                                  source={imageSource}
-                                  style={randomizerStyles.randomizerItemIcon}
-                                  contentFit="cover"
-                                  onError={() => {
-                                    setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
-                                  }}
-                                />
-                              );
-                            }
-                            if (fallbackSource && useFallback) {
-                              return (
-                                <Image
-                                  source={fallbackSource}
-                                  style={randomizerStyles.randomizerItemIcon}
-                                  contentFit="cover"
-                                />
-                              );
-                            }
-                            return (
-                              <Image
-                                source={imageSource}
-                                style={randomizerStyles.randomizerItemIcon}
-                                contentFit="cover"
-                              />
-                            );
-                          })()}
-                          <Text style={randomizerStyles.randomizerItemName} numberOfLines={2}>
-                            {item.name || item.internalName}
-                          </Text>
-                        </>
+                        <ItemIconImage
+                          iconPath={item.icon}
+                          internalName={item.internalName}
+                          iconKey={`random-item-${item.internalName || item.name}-${index + 1}`}
+                          failedMap={failedItemIcons}
+                          setFailedMap={setFailedItemIcons}
+                          style={randomizerStyles.randomizerGridItemIcon}
+                          placeholder={(
+                            <View style={randomizerStyles.randomizerGridItemIconPlaceholder}>
+                              <Text style={randomizerStyles.randomizerItemIconPlaceholderText}>?</Text>
+                            </View>
+                          )}
+                        />
                       ) : (
                         <View style={randomizerStyles.randomizerItemPlaceholder}>
                           <Text style={randomizerStyles.randomizerItemPlaceholderText}>+</Text>
-                          <Text style={randomizerStyles.randomizerItemNumber}>{index + 2}</Text>
                         </View>
                       )}
+                        </View>
                       </TouchableOpacity>
+                      {item ? (
+                        <Text style={randomizerStyles.randomizerGridItemName} numberOfLines={1}>
+                          {item.name || item.internalName}
+                        </Text>
+                      ) : null}
                       <TouchableOpacity
                         style={randomizerStyles.randomizerItemRandomizeButton}
                         onPress={() => {
@@ -1980,10 +1960,91 @@ function BuildsPage({
                     </View>
                   ))}
                 </View>
+                </View>
               </View>
-              <View style={randomizerStyles.randomizerButtonRow}>
+
+              {randomGod ? (
+                <View style={randomizerStyles.randomizerStatsPanel}>
+                  <TouchableOpacity
+                    style={randomizerStyles.randomizerStatsHeader}
+                    onPress={() => setRandomizerStatsExpanded((v) => !v)}
+                    activeOpacity={0.7}
+                    accessibilityRole="button"
+                    accessibilityState={{ expanded: randomizerStatsExpanded }}
+                  >
+                    <View style={randomizerStyles.randomizerStatsHeaderLeft}>
+                      <Text style={randomizerStyles.randomizerStatsTitle}>Build summary</Text>
+                      <Text style={randomizerStyles.randomizerStatsSubtitle}>
+                        Lv {RANDOMIZER_GOD_LEVEL} · items included
+                      </Text>
+                    </View>
+                    <View style={randomizerStyles.randomizerStatsGoldRow}>
+                      <Image source={GOLD_ICON} style={randomizerStyles.randomizerStatsGoldIcon} contentFit="contain" />
+                      <Text style={randomizerStyles.randomizerStatsGoldText}>
+                        {randomizerBuildGold.toLocaleString()}
+                      </Text>
+                    </View>
+                    <Text style={randomizerStyles.randomizerStatsChevron}>
+                      {randomizerStatsExpanded ? '▲' : '▼'}
+                    </Text>
+                  </TouchableOpacity>
+                  {randomizerStatsExpanded ? (
+                    <View style={randomizerStyles.randomizerStatsGrid}>
+                      {randomizerStatRows.length > 0 ? (
+                        randomizerStatRows.map((row) => (
+                          <View key={row.key} style={randomizerStyles.randomizerStatCell}>
+                            <Text style={[randomizerStyles.randomizerStatLabel, { color: row.color }]} numberOfLines={1}>
+                              {row.label}
+                            </Text>
+                            <Text style={[randomizerStyles.randomizerStatValue, { color: row.color }]}>
+                              {row.value}
+                            </Text>
+                          </View>
+                        ))
+                      ) : (
+                        <Text style={randomizerStyles.randomizerStatsEmpty}>
+                          Roll items to see total stats at level {RANDOMIZER_GOD_LEVEL}.
+                        </Text>
+                      )}
+                    </View>
+                  ) : null}
+                </View>
+              ) : null}
+
+              <View style={randomizerStyles.randomizerFooterActions}>
                 <TouchableOpacity
-                  style={[randomizerStyles.randomizerButton, itemRerolls === 0 && randomizerStyles.randomizerButtonDisabled]}
+                  style={[randomizerStyles.randomizerFooterBtn, godRerolls === 0 && randomizerStyles.randomizerButtonDisabled]}
+                  onPress={() => {
+                    if (godRerolls > 0 && gods.length > 0) {
+                      const randomIndex = Math.floor(Math.random() * gods.length);
+                      const newGod = gods[randomIndex];
+                      setRandomGod(newGod);
+                      if (newGod && newGod.aspect) {
+                        setAspectActive(Math.random() > 0.5);
+                      } else {
+                        setAspectActive(false);
+                      }
+                      setGodRerolls(godRerolls - 1);
+                    }
+                  }}
+                  disabled={godRerolls === 0}
+                >
+                  <Text style={randomizerStyles.randomizerButtonText}>
+                    God ({godRerolls})
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={randomizerStyles.randomizerFooterResetBtn}
+                  onPress={() => {
+                    setGodRerolls(3);
+                    setRandomGod(null);
+                    setAspectActive(false);
+                  }}
+                >
+                  <Text style={randomizerStyles.randomizerResetButtonText}>↺</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[randomizerStyles.randomizerFooterBtn, itemRerolls === 0 && randomizerStyles.randomizerButtonDisabled]}
                   onPress={() => {
                     if (itemRerolls > 0 && items.length > 0) {
                       // Filter starter items
@@ -2051,21 +2112,20 @@ function BuildsPage({
                   disabled={itemRerolls === 0}
                 >
                   <Text style={randomizerStyles.randomizerButtonText}>
-                    Randomize Items {itemRerolls > 0 ? `(${itemRerolls} left)` : '(No rerolls)'}
+                    Items ({itemRerolls})
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={[randomizerStyles.randomizerResetButton]}
+                  style={randomizerStyles.randomizerFooterResetBtn}
                   onPress={() => {
                     setItemRerolls(3);
                     setRandomItems(Array(7).fill(null));
                     setRandomRelic(null);
                   }}
                 >
-                  <Text style={randomizerStyles.randomizerResetButtonText}>Reset</Text>
+                  <Text style={randomizerStyles.randomizerResetButtonText}>↺</Text>
                 </TouchableOpacity>
               </View>
-                </View>
               </View>
             </View>
           </View>
@@ -3353,16 +3413,29 @@ function BuildsPage({
                   }).filter(Boolean)
                 : null;
               
-              // Check if god has an aspect and if it's mentioned in the current build
-              const aspect = god && god.aspect ? god.aspect : null;
+              // Check if god has an aspect and if the build uses it
+              const aspect =
+                god && god.aspect && god.aspect.name && String(god.aspect.name).trim()
+                  ? god.aspect
+                  : null;
               let showAspect = false;
-              if (aspect && aspect.name && currentBuild && currentBuild.notes) {
-                try {
-                  const aspectNameClean = String(aspect.name).toLowerCase().replace(/\*\*__|__\*\*/g, '').replace(/aspect of /i, '').trim();
-                  const notesLower = String(currentBuild.notes).toLowerCase();
-                  showAspect = aspectNameClean && notesLower.includes(aspectNameClean);
-                } catch (e) {
-                  showAspect = false;
+              if (aspect && currentBuild) {
+                if (currentBuild.usesAspect === true || currentBuild.aspectActive === true) {
+                  showAspect = true;
+                } else {
+                  try {
+                    const aspectNameClean = String(aspect.name)
+                      .toLowerCase()
+                      .replace(/\*\*__|__\*\*/g, '')
+                      .replace(/aspect of /i, '')
+                      .trim();
+                    const buildText = `${currentBuild.notes || ''} ${currentBuild.title || ''}`.toLowerCase();
+                    showAspect =
+                      (aspectNameClean && buildText.includes(aspectNameClean)) ||
+                      /\baspect\b/.test(buildText);
+                  } catch (e) {
+                    showAspect = false;
+                  }
                 }
               }
 
@@ -3428,7 +3501,7 @@ function BuildsPage({
                   ? roleColors[buildStripeRoleKey].border
                   : cardColors.border;
 
-              const pantheonName = god?.pantheon ? String(god.pantheon).trim() : '';
+              const pantheonName = getGodPantheon(god);
               const pantheonIconSource = getPantheonIcon(pantheonName);
               const pantheonBorderHex = getPantheonBorderColor(pantheonName);
               const godPortraitBorder = pantheonName ? pantheonBorderHex : `${cardColors.border}99`;
@@ -3510,6 +3583,25 @@ function BuildsPage({
                                 />
                               </View>
                             ) : null}
+                            {showAspect && aspect?.icon ? (() => {
+                              const aspectBadgeIcon = getLocalGodAsset(aspect.icon);
+                              if (!aspectBadgeIcon) return null;
+                              return (
+                                <View style={styles.buildCardAspectBadge} pointerEvents="none">
+                                  <Image
+                                    source={aspectBadgeIcon}
+                                    style={styles.buildCardAspectOverlay}
+                                    contentFit="contain"
+                                    cachePolicy="memory-disk"
+                                    accessibilityLabel={
+                                      aspect.name
+                                        ? `${aspect.name.replace(/\*\*__|__\*\*/g, '')} aspect`
+                                        : 'Aspect'
+                                    }
+                                  />
+                                </View>
+                              );
+                            })() : null}
                             {god && god.latestPatchChange && (
                               <PatchBadgeTooltip
                                 changeType={god.latestPatchChange.type}
@@ -3742,7 +3834,7 @@ function BuildsPage({
                                 const isFirst = ai === 0;
                                 return (
                                   <React.Fragment key={`${idx}-start-${ai}-${key}`}>
-                                    <TouchableOpacity style={styles.levelingOrderIconWrapper} onPress={(e) => { e.stopPropagation(); if (ability && typeof ability === 'object') startTransition(() => setSelectedAbility({ godIndex: idx, abilityKey: key, ability, abilityName })); }} activeOpacity={0.7}>
+                                    <TouchableOpacity style={styles.levelingOrderIconWrapper} onPress={(e) => { e.stopPropagation(); if (ability && typeof ability === 'object') startTransition(() => setSelectedAbility({ god, godIndex: idx, abilityKey: key, ability, abilityName })); }} activeOpacity={0.7}>
                                       <View style={styles.levelingOrderIconOuter}>
                                         <View style={styles.levelingOrderIconInner}>
                                           {aIconPath ? (() => {
@@ -3791,7 +3883,7 @@ function BuildsPage({
                                 const isFirst = ai === 0;
                                 return (
                                   <React.Fragment key={`${idx}-max-${ai}-${key}`}>
-                                    <TouchableOpacity style={styles.levelingOrderIconWrapper} onPress={(e) => { e.stopPropagation(); if (ability && typeof ability === 'object') startTransition(() => setSelectedAbility({ godIndex: idx, abilityKey: key, ability, abilityName })); }} activeOpacity={0.7}>
+                                    <TouchableOpacity style={styles.levelingOrderIconWrapper} onPress={(e) => { e.stopPropagation(); if (ability && typeof ability === 'object') startTransition(() => setSelectedAbility({ god, godIndex: idx, abilityKey: key, ability, abilityName })); }} activeOpacity={0.7}>
                                       <View style={styles.levelingOrderIconOuter}>
                                         <View style={styles.levelingOrderIconInner}>
                                           {aIconPath ? (() => {
@@ -3916,7 +4008,7 @@ function BuildsPage({
                                 e.stopPropagation();
                                 const aspectName = aspect.name ? aspect.name.replace(/\*\*__|__\*\*/g, '') : 'Aspect';
                                 startTransition(() => {
-                                  setSelectedAbility({ godIndex: idx, abilityKey: 'aspect', ability: aspect, abilityName: aspectName });
+                                  setSelectedAbility({ god, godIndex: idx, abilityKey: 'aspect', ability: aspect, abilityName: aspectName });
                                 });
                               }}
                             >
@@ -3928,7 +4020,7 @@ function BuildsPage({
                                     <Image 
                                       source={localIcon} 
                                       style={styles.aspectIcon}
-                                      contentFit="cover"
+                                      contentFit="contain"
                                       cachePolicy="memory-disk"
                                       transition={200}
                                       accessibilityLabel={`${aspectNameForLabel} icon`}
@@ -4905,126 +4997,20 @@ function BuildsPage({
       </Modal>
 
       {/* Ability Tooltip Modal */}
-      <Modal
-        visible={selectedAbility !== null}
-        transparent={true}
-        animationType="fade"
-        onRequestClose={() => setSelectedAbility(null)}
-      >
-        <Pressable 
-          style={styles.modalOverlay}
-          onPress={() => setSelectedAbility(null)}
-        >
-          <Pressable 
-            style={styles.modalContent}
-            onPress={(e) => e.stopPropagation()}
-          >
-            {selectedAbility && (
-              <>
-                <View style={styles.modalHeader}>
-                  <View style={styles.modalIconContainer}>
-                    {selectedAbility.ability && selectedAbility.ability.icon ? (() => {
-                      const iconPath = selectedAbility.ability.icon;
-                      const localIcon = getLocalGodAsset(iconPath);
-                      if (localIcon) {
-                        return (
-                      <Image 
-                            source={localIcon} 
-                        style={styles.modalAbilityIcon}
-                        contentFit="cover"
-                        cachePolicy="memory-disk"
-                        transition={200}
-                        accessibilityLabel={`${selectedAbility.abilityName || 'Ability'} icon`}
-                      />
-                        );
-                      }
-                      // Fallback to text if local icon not found
-                      return (
-                        <View style={styles.modalAbilityIconFallback}>
-                          <Text style={styles.modalAbilityIconFallbackText}>
-                            {selectedAbility.abilityName.charAt(0)}
-                          </Text>
-                        </View>
-                      );
-                    })() : (
-                      <View style={styles.modalAbilityIconFallback}>
-                        <Text style={styles.modalAbilityIconFallbackText}>
-                          {selectedAbility.abilityName.charAt(0)}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                  <Text style={styles.modalTitle}>{selectedAbility.abilityName}</Text>
-                  <TouchableOpacity 
-                    style={styles.modalCloseButton}
-                    onPress={() => setSelectedAbility(null)}
-                  >
-                    <Text style={styles.modalCloseButtonText}>×</Text>
-                  </TouchableOpacity>
-                </View>
-
-                <ScrollView 
-                  style={styles.modalBody}
-                  contentContainerStyle={styles.modalBodyContent}
-                  showsVerticalScrollIndicator={true}
-                  bounces={true}
-                  nestedScrollEnabled={true}
-                >
-                  {selectedAbility.ability &&
-                    ((selectedAbility.ability.shortDesc || selectedAbility.ability.description) ||
-                      selectedAbility.ability.scales) && (
-                    <View style={styles.modalAbilityNarrative}>
-                      {(selectedAbility.ability.shortDesc || selectedAbility.ability.description) ? (
-                        <AlignedBulletLines
-                          text={selectedAbility.ability.shortDesc || selectedAbility.ability.description}
-                          textStyle={styles.modalAbilityDescription}
-                          bulletMarkWidth={14}
-                        />
-                      ) : null}
-                      {selectedAbility.ability.scales ? (
-                        <>
-                          <Text style={styles.modalAbilityScalesLabel}>Scales</Text>
-                          <AlignedBulletLines
-                            text={String(selectedAbility.ability.scales)}
-                            textStyle={styles.modalAbilityScalesBody}
-                            bulletMarkWidth={13}
-                          />
-                        </>
-                      ) : null}
-                    </View>
-                  )}
-
-                  {selectedAbility.ability && selectedAbility.ability.valueKeys && typeof selectedAbility.ability.valueKeys === 'object' && Object.keys(selectedAbility.ability.valueKeys).length > 0 && (
-                    <View style={styles.modalSection}>
-                      <Text style={styles.modalSectionTitle}>Stats</Text>
-                      <ScrollView 
-                        nestedScrollEnabled={true}
-                        showsVerticalScrollIndicator={true}
-                        style={{ maxHeight: 200 }}
-                      >
-                        <View style={styles.modalStats}>
-                          {Object.keys(selectedAbility.ability.valueKeys).map((statKey) => {
-                            const statValue = selectedAbility.ability.valueKeys[statKey];
-                            if (!statValue || (Array.isArray(statValue) && statValue.length === 0)) return null;
-                            return (
-                              <View key={statKey} style={styles.modalStatRow}>
-                                <Text style={styles.modalStatLabel}>{statKey}:</Text>
-                                <Text style={styles.modalStatValue}>
-                                  {Array.isArray(statValue) ? statValue.join(', ') : String(statValue)}
-                                </Text>
-                              </View>
-                            );
-                          })}
-                        </View>
-                      </ScrollView>
-                    </View>
-                  )}
-                </ScrollView>
-              </>
-            )}
-          </Pressable>
-        </Pressable>
-      </Modal>
+      <KitAbilityTooltipModal
+        visible={buildsAbilityTooltip !== null}
+        onClose={() => setSelectedAbility(null)}
+        title={buildsAbilityTooltip?.title ?? ''}
+        icon={buildsAbilityTooltip?.icon}
+        body={buildsAbilityTooltip?.body ?? ''}
+        valueKeys={buildsAbilityTooltip?.valueKeys}
+        borderColor={buildsAbilityTooltip?.borderColor}
+        levelIndex={buildsAbilityTooltip?.levelIndex ?? 0}
+        iconContentFit={buildsAbilityTooltip?.iconContentFit ?? 'cover'}
+        onLevelIndexChange={(levelIndex) =>
+          setSelectedAbility((prev) => (prev ? { ...prev, levelIndex } : null))
+        }
+      />
 
       {/* Tip Tooltip Modal */}
       <Modal
@@ -5886,6 +5872,30 @@ const styles = StyleSheet.create({
     width: 18,
     height: 18,
   },
+  buildCardAspectBadge: {
+    position: 'absolute',
+    bottom: -5,
+    right: -5,
+    zIndex: 5,
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    padding: 3,
+    backgroundColor: 'rgba(3, 7, 18, 0.92)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.48)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    elevation: 4,
+  },
+  buildCardAspectOverlay: {
+    width: 18,
+    height: 18,
+  },
   godIconContainer: {
     width: 80,
     height: 80,
@@ -6586,6 +6596,8 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 8,
     marginRight: 12,
+    alignSelf: 'center',
+    backgroundColor: '#0f1724',
   },
   aspectIconFallback: {
     width: 48,
@@ -7716,7 +7728,7 @@ export default function App() {
               // If a god is specified, try to find and set it
               if (godInternalName) {
                 try {
-                  const buildsData = require('./data/builds.json');
+                  const buildsData = require('../lib/buildsData');
                   if (buildsData && buildsData.gods) {
                     const allGods = flattenBuildsGods(buildsData.gods);
                     const god = allGods.find(g => (g.internalName || '').toLowerCase() === (godInternalName || '').toLowerCase());
@@ -7733,7 +7745,7 @@ export default function App() {
               // Find the god and navigate to database gods page
               if (godInternalName) {
                 try {
-                  const buildsData = require('./data/builds.json');
+                  const buildsData = require('../lib/buildsData');
                   if (buildsData && buildsData.gods) {
                     const allGods = flattenBuildsGods(buildsData.gods);
                     const god = allGods.find(g => (g.internalName || '').toLowerCase() === (godInternalName || '').toLowerCase());
@@ -7776,12 +7788,12 @@ export default function App() {
 const randomizerStyles = StyleSheet.create({
   randomizerContentContainer: {
     paddingHorizontal: 6,
-    paddingTop: 10,
-    paddingBottom: 14,
+    paddingTop: 4,
+    paddingBottom: 8,
   },
   randomizerContainer: {
     paddingHorizontal: 0,
-    paddingVertical: 10,
+    paddingVertical: 4,
     backgroundColor: '#071024',
     width: '100%',
     alignSelf: 'stretch',
@@ -7791,6 +7803,223 @@ const randomizerStyles = StyleSheet.create({
     alignItems: 'stretch',
     gap: 12,
   },
+  randomizerBoardFrame: {
+    maxWidth: 320,
+    alignSelf: 'center',
+    width: '100%',
+  },
+  randomizerBoard: {
+    gap: 10,
+    alignItems: 'center',
+  },
+  randomizerBoardRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  randomizerBoardColumn: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  randomizerLeftPanel: {
+    minWidth: 0,
+    flexShrink: 0,
+  },
+  randomizerLeftPanelRow: {
+    width: 134,
+    flex: 0,
+    maxWidth: 134,
+    alignSelf: 'center',
+  },
+  randomizerLeftPanelFull: {
+    width: 134,
+    alignSelf: 'center',
+  },
+  randomizerRightPanel: {
+    width: 134,
+    flexGrow: 0,
+    flexShrink: 0,
+    alignSelf: 'center',
+    alignItems: 'center',
+  },
+  randomizerGodAspectRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    gap: 6,
+    marginBottom: 6,
+    width: 134,
+  },
+  randomizerGodSlot: {
+    width: 64,
+    flexShrink: 0,
+    alignItems: 'center',
+  },
+  randomizerGodSlotInner: {
+    alignItems: 'center',
+  },
+  randomizerAspectCell: {
+    width: 52,
+    flexShrink: 0,
+    alignItems: 'center',
+  },
+  randomizerGodCardFilled: {
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    padding: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    width: 64,
+    height: 64,
+    ...(IS_WEB && {
+      cursor: 'pointer',
+    }),
+  },
+  randomizerGodIconLarge: {
+    width: 48,
+    height: 48,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+  },
+  randomizerGodPlaceholderFilled: {
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    width: 64,
+    height: 64,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    borderStyle: 'dashed',
+  },
+  randomizerAspectEmpty: {
+    backgroundColor: '#0f1724',
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    borderStyle: 'dashed',
+    width: 52,
+    height: 52,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 4,
+  },
+  randomizerAspectEmptyText: {
+    color: '#475569',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  randomizerStarterRelicRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    width: 134,
+    gap: 6,
+    marginBottom: 6,
+  },
+  randomizerWideSlot: {
+    width: 64,
+    flexShrink: 0,
+  },
+  randomizerWideSlotWrapper: {
+    position: 'relative',
+    width: 64,
+  },
+  randomizerWideItemSlot: {
+    width: 64,
+    height: 64,
+    backgroundColor: '#0f1724',
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    overflow: 'hidden',
+    position: 'relative',
+    ...(IS_WEB && {
+      cursor: 'pointer',
+    }),
+  },
+  randomizerSlotIconWrap: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  randomizerWideItemIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 4,
+  },
+  randomizerWideItemIconPlaceholder: {
+    width: 48,
+    height: 48,
+    borderRadius: 4,
+    backgroundColor: '#1e3a5f',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  randomizerWideItemName: {
+    color: '#cbd5e1',
+    fontSize: 8,
+    fontWeight: '600',
+    textAlign: 'center',
+    lineHeight: 10,
+    width: 64,
+    marginTop: 3,
+  },
+  randomizerItemsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: 134,
+    gap: 6,
+    marginBottom: 6,
+    alignContent: 'flex-start',
+    justifyContent: 'space-between',
+  },
+  randomizerGridItemWrapper: {
+    position: 'relative',
+    width: 64,
+    alignItems: 'center',
+  },
+  randomizerGridItemSlot: {
+    width: 64,
+    height: 64,
+    backgroundColor: '#0f1724',
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    overflow: 'hidden',
+    position: 'relative',
+    ...(IS_WEB && {
+      cursor: 'pointer',
+    }),
+  },
+  randomizerGridItemIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 4,
+  },
+  randomizerGridItemIconPlaceholder: {
+    width: 48,
+    height: 48,
+    borderRadius: 4,
+    backgroundColor: '#1e3a5f',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  randomizerGridItemName: {
+    color: '#cbd5e1',
+    fontSize: 8,
+    textAlign: 'center',
+    marginTop: 3,
+    fontWeight: '500',
+    lineHeight: 10,
+    width: 64,
+  },
   randomizerCombinedGodColumn: {
     flex: IS_WEB ? 0.8 : 1,
   },
@@ -7799,18 +8028,27 @@ const randomizerStyles = StyleSheet.create({
   },
   randomizerSection: {
     backgroundColor: '#0b1226',
-    borderRadius: 12,
-    padding: 12,
-    marginBottom: 16,
+    borderRadius: 10,
+    padding: 8,
+    marginBottom: 8,
     borderWidth: 1,
     borderColor: '#1e3a5f',
+    alignItems: 'center',
+  },
+  randomizerHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 8,
+    marginBottom: 6,
+    width: '100%',
+    maxWidth: 320,
   },
   randomizerTitle: {
     color: '#7dd3fc',
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: '700',
-    marginBottom: 12,
-    textAlign: 'center',
+    flexShrink: 0,
   },
   randomizerGodContainer: {
     alignItems: 'center',
@@ -7850,22 +8088,16 @@ const randomizerStyles = StyleSheet.create({
   },
   randomizerGodName: {
     color: '#e6eef8',
-    fontSize: 12,
+    fontSize: 8,
     fontWeight: '600',
     textAlign: 'center',
-  },
-  randomizerGodPlaceholder: {
-    backgroundColor: '#0f1724',
-    borderRadius: 12,
-    padding: 40,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#1e3a5f',
-    borderStyle: 'dashed',
+    marginTop: 3,
+    width: 64,
+    lineHeight: 10,
   },
   randomizerPlaceholderText: {
     color: '#64748b',
-    fontSize: 16,
+    fontSize: 11,
   },
   randomizerStarterSection: {
     marginBottom: 14,
@@ -7881,13 +8113,6 @@ const randomizerStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  randomizerStarterRelicRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    width: '100%',
-    gap: 10,
-  },
   randomizerStarterRelicCell: {
     width: '48%',
     alignItems: 'center',
@@ -7896,10 +8121,11 @@ const randomizerStyles = StyleSheet.create({
     width: '66%',
   },
   randomizerSlotLabel: {
-    color: '#94a3b8',
-    fontSize: 12,
+    color: '#7dd3fc',
+    fontSize: 9,
     fontWeight: '700',
-    marginBottom: 6,
+    marginBottom: 2,
+    letterSpacing: 0.2,
   },
   randomizerItemsSection: {
     marginBottom: 16,
@@ -7943,15 +8169,15 @@ const randomizerStyles = StyleSheet.create({
   },
   randomizerItemRandomizeButton: {
     position: 'absolute',
-    top: -8,
-    right: -8,
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    top: -5,
+    right: -5,
+    width: 18,
+    height: 18,
+    borderRadius: 9,
     backgroundColor: '#1e90ff',
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: '#0b1226',
     zIndex: 10,
     ...(IS_WEB && {
@@ -7965,7 +8191,7 @@ const randomizerStyles = StyleSheet.create({
   },
   randomizerItemRandomizeButtonText: {
     color: '#ffffff',
-    fontSize: 12,
+    fontSize: 8,
     fontWeight: '700',
   },
   randomizerItemIcon: {
@@ -7983,7 +8209,7 @@ const randomizerStyles = StyleSheet.create({
   },
   randomizerItemIconPlaceholderText: {
     color: '#64748b',
-    fontSize: 24,
+    fontSize: 14,
     fontWeight: '700',
   },
   randomizerItemName: {
@@ -7997,26 +8223,65 @@ const randomizerStyles = StyleSheet.create({
   randomizerItemPlaceholder: {
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
+    height: '100%',
   },
   randomizerItemPlaceholderText: {
     color: '#64748b',
-    fontSize: 24,
+    fontSize: 16,
     fontWeight: '300',
   },
   randomizerItemNumber: {
     color: '#64748b',
-    fontSize: 10,
-    marginTop: 4,
+    fontSize: 8,
+    marginTop: 1,
+  },
+  randomizerFooterActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginTop: 6,
+    width: '100%',
+    maxWidth: 320,
+  },
+  randomizerFooterBtn: {
+    flex: 1,
+    backgroundColor: '#1e90ff',
+    paddingVertical: 7,
+    paddingHorizontal: 4,
+    borderRadius: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minWidth: 0,
+    ...(IS_WEB && {
+      cursor: 'pointer',
+    }),
+  },
+  randomizerFooterResetBtn: {
+    width: 34,
+    backgroundColor: '#0f1724',
+    paddingVertical: 7,
+    borderRadius: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    flexShrink: 0,
+    ...(IS_WEB && {
+      cursor: 'pointer',
+    }),
   },
   randomizerButtonRow: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 6,
+    marginTop: 2,
   },
   randomizerButton: {
     flex: 1,
     backgroundColor: '#1e90ff',
-    padding: 16,
-    borderRadius: 8,
+    paddingVertical: 7,
+    paddingHorizontal: 6,
+    borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',
     ...(IS_WEB && {
@@ -8033,19 +8298,20 @@ const randomizerStyles = StyleSheet.create({
   },
   randomizerButtonText: {
     color: '#ffffff',
-    fontSize: 14,
+    fontSize: 10,
     fontWeight: '700',
     textAlign: 'center',
   },
   randomizerResetButton: {
     backgroundColor: '#0f1724',
-    padding: 16,
-    borderRadius: 8,
+    paddingVertical: 7,
+    paddingHorizontal: 6,
+    borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: '#1e3a5f',
-    minWidth: 80,
+    minWidth: 52,
     ...(IS_WEB && {
       cursor: 'pointer',
       transition: 'background-color 0.2s, border-color 0.2s',
@@ -8053,23 +8319,29 @@ const randomizerStyles = StyleSheet.create({
   },
   randomizerResetButtonText: {
     color: '#cbd5e1',
-    fontSize: 14,
+    fontSize: 10,
     fontWeight: '600',
   },
   randomizerAspectSlot: {
-    width: 84,
+    width: 52,
+    height: 52,
     backgroundColor: '#0f1724',
-    borderRadius: 8,
+    borderRadius: 6,
     borderWidth: 1,
     borderColor: '#1e3a5f',
-    padding: 7,
+    padding: 3,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
     ...(IS_WEB && {
       cursor: 'pointer',
-      transition: 'border-color 0.2s, background-color 0.2s',
+      transition: 'border-color 0.2s, background-color 0.2s, opacity 0.2s',
     }),
+  },
+  randomizerAspectSlotInactive: {
+    backgroundColor: '#0a101c',
+    borderColor: '#334155',
+    opacity: 0.92,
   },
   randomizerAspectSlotActive: {
     backgroundColor: '#1e3a5f',
@@ -8084,41 +8356,58 @@ const randomizerStyles = StyleSheet.create({
   randomizerAspectIcon: {
     width: 38,
     height: 38,
-    borderRadius: 6,
-    marginBottom: 5,
+    borderRadius: 4,
     borderWidth: 1,
     borderColor: '#1e3a5f',
+    backgroundColor: '#0b1220',
+  },
+  randomizerAspectIconInactive: {
+    opacity: 0.45,
+    borderColor: '#475569',
+    ...(IS_WEB && {
+      filter: 'grayscale(100%)',
+    }),
+  },
+  randomizerAspectInactiveOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(71, 85, 105, 0.28)',
+    borderRadius: 4,
   },
   randomizerAspectIconPlaceholder: {
     width: 38,
     height: 38,
-    borderRadius: 6,
+    borderRadius: 4,
     backgroundColor: '#1e3a5f',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 6,
     borderWidth: 1,
     borderColor: '#0f1724',
   },
   randomizerAspectIconPlaceholderText: {
     color: '#64748b',
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: '700',
   },
   randomizerAspectName: {
     color: '#cbd5e1',
-    fontSize: 9,
+    fontSize: 7,
     textAlign: 'center',
     fontWeight: '600',
-    lineHeight: 11,
+    lineHeight: 9,
+    marginTop: 3,
+    width: 52,
+  },
+  randomizerAspectNameInactive: {
+    color: '#64748b',
+    opacity: 0.85,
   },
   randomizerAspectActiveIndicator: {
     position: 'absolute',
-    top: 4,
-    right: 4,
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    top: 1,
+    right: 1,
+    width: 14,
+    height: 14,
+    borderRadius: 7,
     backgroundColor: '#10b981',
     justifyContent: 'center',
     alignItems: 'center',
@@ -8128,8 +8417,116 @@ const randomizerStyles = StyleSheet.create({
   },
   randomizerAspectActiveText: {
     color: '#ffffff',
-    fontSize: 14,
+    fontSize: 8,
     fontWeight: '700',
+  },
+  randomizerStatsPanel: {
+    width: '100%',
+    maxWidth: 320,
+    marginTop: 8,
+    backgroundColor: '#0f1724',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    overflow: 'hidden',
+  },
+  randomizerStatsHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    ...(IS_WEB && { cursor: 'pointer' }),
+  },
+  randomizerStatsHeaderLeft: {
+    flex: 1,
+    minWidth: 0,
+  },
+  randomizerStatsTitle: {
+    color: '#7dd3fc',
+    fontSize: 11,
+    fontWeight: '700',
+  },
+  randomizerStatsSubtitle: {
+    color: '#64748b',
+    fontSize: 9,
+    marginTop: 1,
+  },
+  randomizerStatsGoldRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    flexShrink: 0,
+  },
+  randomizerStatsGoldIcon: {
+    width: 14,
+    height: 14,
+  },
+  randomizerStatsGoldText: {
+    color: '#facc15',
+    fontSize: 12,
+    fontWeight: '800',
+  },
+  randomizerStatsChevron: {
+    color: '#64748b',
+    fontSize: 10,
+    flexShrink: 0,
+  },
+  randomizerStatsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal: 8,
+    paddingBottom: 8,
+    gap: 6,
+    borderTopWidth: 1,
+    borderTopColor: '#1e3a5f',
+    paddingTop: 8,
+  },
+  randomizerStatCell: {
+    width: '48%',
+    minWidth: 0,
+    backgroundColor: '#0b1220',
+    borderRadius: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    borderWidth: 1,
+    borderColor: '#1e293b',
+  },
+  randomizerStatLabel: {
+    fontSize: 8,
+    fontWeight: '600',
+    marginBottom: 2,
+  },
+  randomizerStatValue: {
+    fontSize: 11,
+    fontWeight: '700',
+  },
+  randomizerStatsEmpty: {
+    color: '#64748b',
+    fontSize: 10,
+    textAlign: 'center',
+    width: '100%',
+    paddingVertical: 4,
+  },
+  randomizeAllButtonCompact: {
+    backgroundColor: '#10b981',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#059669',
+    flexShrink: 1,
+    ...(IS_WEB && {
+      cursor: 'pointer',
+    }),
+  },
+  randomizeAllButtonCompactText: {
+    color: '#ffffff',
+    fontSize: 12,
+    fontWeight: '800',
+    textAlign: 'center',
   },
   randomizeAllButton: {
     backgroundColor: '#10b981',

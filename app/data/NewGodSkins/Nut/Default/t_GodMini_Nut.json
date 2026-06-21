@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_GodMini_Nut",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Nut/Default/t_GodMini_Nut",
+    "Properties": {
+      "ImportedSize": {
+        "X": 44,
+        "Y": 44
+      },
+      "LightingGuid": "981B37F6-47899BF5-14764395-9B6CC1EB",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 44,
+    "SizeY": 44,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 7744,
+          "SizeOnDisk": 7744,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 44,
+        "SizeY": 44,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

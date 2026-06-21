@@ -1,0 +1,337 @@
+[
+  {
+    "Type": "Material",
+    "Name": "M_Poseidon_PassiveMeter",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Material'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Poseidon/Passive/Materials/M_Poseidon_PassiveMeter",
+    "Properties": {
+      "MaterialDomain": "EMaterialDomain::MD_UI",
+      "BlendMode": "EBlendMode::BLEND_Translucent",
+      "bCanMaskedBeAssumedOpaque": true,
+      "PixelDepthOffsetMode": "EPixelDepthOffsetMode::PDOM_Legacy",
+      "StateId": "BB3D4E57-4ADBCB11-0369619A-A9C82B98",
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedExpressionData": {
+      "RuntimeEntries": {
+        "ParameterInfoSet": [
+          {
+            "Name": "RadialX",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "circle distortion",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "distortion intensity",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "distortion power",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "twirl color opacity",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "foam circle distortion",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "foam distortion intensity",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "foam distortion power",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "radial circle distortion",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "radial distortion intensity",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "radial distortion power",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          }
+        ]
+      },
+      "RuntimeEntries[1]": {
+        "ParameterInfoSet": [
+          {
+            "Name": "twirl color",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          }
+        ]
+      },
+      "RuntimeEntries[2]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[3]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[4]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[5]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[6]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[7]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[8]": {
+        "ParameterInfoSet": []
+      },
+      "ScalarPrimitiveDataIndexValues": [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      "VectorPrimitiveDataIndexValues": [
+        -1
+      ],
+      "ScalarValues": [
+        1.0,
+        0.456,
+        2.0,
+        1.0,
+        0.2,
+        0.456,
+        1.0,
+        1.0,
+        0.456,
+        2.0,
+        1.0
+      ],
+      "StaticSwitchValues": [],
+      "DynamicSwitchValues": [],
+      "VectorValues": [
+        {
+          "R": 0.200084,
+          "G": 1.0,
+          "B": 0.890203,
+          "A": 1.0,
+          "Hex": "7CFFF3"
+        }
+      ],
+      "DoubleVectorValues": [],
+      "TextureValues": [],
+      "TextureCollectionValues": [],
+      "FontValues": [],
+      "FontPageValues": [],
+      "RuntimeVirtualTextureValues": [],
+      "SparseVolumeTextureValues": [],
+      "ReferencedTextures": [
+        {
+          "ObjectName": "Texture2D'Poseidon_Meter_Water'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Poseidon/Passive/Poseidon_Meter_Water.0"
+        },
+        {
+          "ObjectName": "Texture2D'Poseidon_Frame_Background'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Poseidon/Passive/Poseidon_Frame_Background.0"
+        },
+        {
+          "ObjectName": "Texture2D'Poseidon_FoamEnd'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Poseidon/Passive/Poseidon_FoamEnd.0"
+        },
+        {
+          "ObjectName": "Texture2D'Poseidon_Twirl'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Poseidon/Passive/Poseidon_Twirl.0"
+        },
+        {
+          "ObjectName": "Texture2D'T_GOD_Common_EFX2'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/MaterialPatterns/T_GOD_Common_EFX2.0"
+        }
+      ],
+      "ReferencedTextureCollections": [],
+      "FunctionInfos": [
+        {
+          "StateId": "5E28F255-4817E6E7-2D027C9A-2F7126C6",
+          "Function": {
+            "ObjectName": "MaterialFunction'VectorToRadialValue'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions02/Utility/VectorToRadialValue.0"
+          }
+        },
+        {
+          "StateId": "E572D701-496E6D38-CC53A5BD-C450B0ED",
+          "Function": {
+            "ObjectName": "MaterialFunction'CustomRotator'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions02/Texturing/CustomRotator.0"
+          }
+        },
+        {
+          "StateId": "DDAF1091-4EF9ADB2-6EFCC0B6-972F81B3",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_Scale'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/Transforms/MF_UI_Scale.0"
+          }
+        },
+        {
+          "StateId": "2C1DDB6E-406BC9FC-1D4141A1-7C82122A",
+          "Function": {
+            "ObjectName": "MaterialFunction'BreakOutFloat2Components'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions02/Utility/BreakOutFloat2Components.0"
+          }
+        },
+        {
+          "StateId": "7623E07F-447E53C7-49A835AD-C053F006",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_Translate'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/Transforms/MF_UI_Translate.0"
+          }
+        },
+        {
+          "StateId": "E572D701-496E6D38-CC53A5BD-C450B0ED",
+          "Function": {
+            "ObjectName": "MaterialFunction'CustomRotator'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions02/Texturing/CustomRotator.0"
+          }
+        },
+        {
+          "StateId": "DDAF1091-4EF9ADB2-6EFCC0B6-972F81B3",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_Scale'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/Transforms/MF_UI_Scale.0"
+          }
+        },
+        {
+          "StateId": "2C1DDB6E-406BC9FC-1D4141A1-7C82122A",
+          "Function": {
+            "ObjectName": "MaterialFunction'BreakOutFloat2Components'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions02/Utility/BreakOutFloat2Components.0"
+          }
+        },
+        {
+          "StateId": "7623E07F-447E53C7-49A835AD-C053F006",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_Translate'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/Transforms/MF_UI_Translate.0"
+          }
+        },
+        {
+          "StateId": "8B16DA82-48B8344D-4F5AC9A9-2816FAD0",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_LinearTime'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/Time/MF_UI_LinearTime.0"
+          }
+        },
+        {
+          "StateId": "E572D701-496E6D38-CC53A5BD-C450B0ED",
+          "Function": {
+            "ObjectName": "MaterialFunction'CustomRotator'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions02/Texturing/CustomRotator.0"
+          }
+        },
+        {
+          "StateId": "2C1DDB6E-406BC9FC-1D4141A1-7C82122A",
+          "Function": {
+            "ObjectName": "MaterialFunction'BreakOutFloat2Components'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions02/Utility/BreakOutFloat2Components.0"
+          }
+        },
+        {
+          "StateId": "7623E07F-447E53C7-49A835AD-C053F006",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_Translate'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/Transforms/MF_UI_Translate.0"
+          }
+        },
+        {
+          "StateId": "8B16DA82-48B8344D-4F5AC9A9-2816FAD0",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_LinearTime'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/Time/MF_UI_LinearTime.0"
+          }
+        },
+        {
+          "StateId": "DDAF1091-4EF9ADB2-6EFCC0B6-972F81B3",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_UI_Scale'",
+            "ObjectPath": "/Game/UI/Textures/Materials/MaterialFunctions/Transforms/MF_UI_Scale.0"
+          }
+        }
+      ],
+      "FunctionInfosStateCRC": 3224216375,
+      "ParameterCollectionInfos": [],
+      "GrassTypes": [],
+      "MaterialLayers": {
+        "Layers": [],
+        "Blends": [],
+        "Tree": {
+          "Nodes": [],
+          "Payloads": [],
+          "Root": -1
+        }
+      },
+      "DynamicParameterNames": [],
+      "QualityLevelsUsed": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "bHasMaterialLayers": false,
+      "bHasRuntimeVirtualTextureOutput": false,
+      "bHasFirstPersonOutput": false,
+      "bHasSceneColor": false,
+      "bHasPerInstanceCustomData": false,
+      "bHasPerInstanceRandom": false,
+      "bHasVertexInterpolator": false,
+      "bHasCustomizedUVs": false,
+      "bHasMeshPaintTexture": false,
+      "PropertyConnectedMask": 3
+    },
+    "ReferencedTextures": [
+      {
+        "ObjectName": "Texture2D'Poseidon_FoamEnd'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Poseidon/Passive/Poseidon_FoamEnd.0"
+      },
+      {
+        "ObjectName": "Texture2D'Poseidon_Frame_Background'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Poseidon/Passive/Poseidon_Frame_Background.0"
+      },
+      {
+        "ObjectName": "Texture2D'Poseidon_Meter_Water'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Poseidon/Passive/Poseidon_Meter_Water.0"
+      },
+      {
+        "ObjectName": "Texture2D'Poseidon_Twirl'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Poseidon/Passive/Poseidon_Twirl.0"
+      },
+      {
+        "ObjectName": "Texture2D'T_GOD_Common_EFX2'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/MaterialPatterns/T_GOD_Common_EFX2.0"
+      }
+    ]
+  }
+]

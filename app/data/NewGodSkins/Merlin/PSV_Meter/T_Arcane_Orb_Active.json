@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_Arcane_Orb_Active",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Merlin/PSV_Meter/T_Arcane_Orb_Active",
+    "Properties": {
+      "ImportedSize": {
+        "X": 108,
+        "Y": 108
+      },
+      "LightingGuid": "0A9633BB-4E69B5C6-8AC3EB9B-8906BEAA",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 108,
+    "SizeY": 108,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 11664,
+          "SizeOnDisk": 11664,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 108,
+        "SizeY": 108,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

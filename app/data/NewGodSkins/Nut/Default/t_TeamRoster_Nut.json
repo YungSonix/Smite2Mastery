@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_TeamRoster_Nut",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Nut/Default/t_TeamRoster_Nut",
+    "Properties": {
+      "ImportedSize": {
+        "X": 128,
+        "Y": 72
+      },
+      "LightingGuid": "46867EA4-4ECE2B88-82A63E98-5D43D169",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 128,
+    "SizeY": 72,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 36864,
+          "SizeOnDisk": 36864,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 128,
+        "SizeY": 72,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

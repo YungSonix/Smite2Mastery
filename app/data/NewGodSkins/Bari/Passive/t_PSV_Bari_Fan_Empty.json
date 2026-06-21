@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Bari_Fan_Empty",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Bari/Passive/t_PSV_Bari_Fan_Empty",
+    "Properties": {
+      "ImportedSize": {
+        "X": 196,
+        "Y": 128
+      },
+      "LightingGuid": "17F5F4C4-429FC912-5E0A6BA0-134C9EB2",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 196,
+    "SizeY": 128,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 100352,
+          "SizeOnDisk": 100352,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 196,
+        "SizeY": 128,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

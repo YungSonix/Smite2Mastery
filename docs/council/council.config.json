@@ -1,0 +1,81 @@
+{
+  "version": 2,
+  "panelAutoWakeChair": true,
+  "rounds": 2,
+  "pauseMsBetweenPosts": 2200,
+  "streamMsPerWord": 55,
+  "pauseBeforeRound2Ms": 4500,
+  "demoReadPauseMs": 3500,
+  "pollMsLive": 40,
+  "typeMsPerChar": 12,
+  "autoExtractVerdictTasks": true,
+  "systemPromptFile": "COUNCIL_SYSTEM.md",
+  "sharedLensFile": "identities/_shared-smite-lens.md",
+  "stressTestLensFile": "identities/_shared-stress-test.md",
+  "members": [
+    {
+      "id": "nala",
+      "name": "Nala",
+      "title": "The Contrarian (highest authority)",
+      "model": "auto",
+      "identityFile": "identities/nala.md",
+      "label": "NALA"
+    },
+    {
+      "id": "london",
+      "name": "London",
+      "title": "First principles thinker",
+      "model": "auto",
+      "identityFile": "identities/london.md",
+      "label": "LONDON"
+    },
+    {
+      "id": "fasa",
+      "name": "Fasa",
+      "title": "The expansionist",
+      "model": "auto",
+      "identityFile": "identities/fasa.md",
+      "label": "FASA"
+    }
+  ],
+  "chair": {
+    "name": "Chair",
+    "model": "auto",
+    "role": "Synthesize a Final Verdict that weighs all three perspectives. Nala's reasoning carries the most authority — quality of argument over headcount."
+  },
+  "ragPaths": [
+    "../../GOALS.md",
+    "../../BUGS.md",
+    "../../TASKS.md",
+    "../../docs/SMITE2_DESIGN.md",
+    "identities",
+    "COUNCIL_SYSTEM.md",
+    "sessions"
+  ],
+  "availableModels": [
+    {
+      "id": "auto",
+      "label": "Auto (Cursor picks)"
+    },
+    {
+      "id": "claude-4.6-sonnet-medium-thinking",
+      "label": "Claude Sonnet"
+    },
+    {
+      "id": "claude-opus-4-8-thinking-high",
+      "label": "Claude Opus"
+    },
+    {
+      "id": "composer-2.5-fast",
+      "label": "Composer"
+    },
+    {
+      "id": "gpt-5.3-codex",
+      "label": "GPT Codex"
+    },
+    {
+      "id": "gpt-5.5-medium",
+      "label": "GPT medium"
+    }
+  ]
+}

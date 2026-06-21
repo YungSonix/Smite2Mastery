@@ -1,0 +1,146 @@
+[
+  {
+    "Type": "MaterialInstanceConstant",
+    "Name": "MI_PassiveMeter_Amaterasu_FallingLeaves_Left",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'MaterialInstanceConstant'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/Materials/MI_PassiveMeter_Amaterasu_FallingLeaves_Left",
+    "Properties": {
+      "Parent": {
+        "ObjectName": "Material'M_FallingLeaves'",
+        "ObjectPath": "/Game/UI/Shared/Materials/MaterialLibrary/M_FallingLeaves.0"
+      },
+      "bHasStaticPermutationResource": true,
+      "ScalarParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "center distance control",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.36,
+          "ExpressionGUID": "B9B1A831-4CE9E207-E7B05791-BA787623"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "fade strength",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 2.0,
+          "ExpressionGUID": "648D05B4-419EC706-CBAE83BF-19FDD6AF"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "fade tightness(lower for more tightness)",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.6,
+          "ExpressionGUID": "DC03231A-43EC5EAD-8A365396-22C32EAA"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "fall angle offset",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "BB5A6F96-4AA003D3-1D1DCEB3-42C059DF"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "fall speed",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.5,
+          "ExpressionGUID": "A1D55252-4FD79045-F83A44B2-97BE1014"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "HorizontalPos",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.1,
+          "ExpressionGUID": "DF4BDB10-40195711-5DEB0FA9-8C90FE00"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "leaves scale",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.6,
+          "ExpressionGUID": "58B8864F-4698B623-907EAA9C-501B1B3D"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "LeavesAmount",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 2.0,
+          "ExpressionGUID": "6A8EE210-4C2D4362-5F4958AF-C9ACE0EE"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "rotation angle speed",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.1518,
+          "ExpressionGUID": "AC339A88-4EC27C0A-044863A0-A45DCA3F"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "RefractionDepthBias",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "00000000-00000000-00000000-00000000"
+        }
+      ],
+      "TextureParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "Image",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "ObjectName": "Texture2D't_passivemeter_Amaterasue_Leaf'",
+            "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/t_passivemeter_Amaterasue_Leaf.0"
+          },
+          "ExpressionGUID": "FD4C35FA-412D4F41-74A5D8AA-0704EE96"
+        }
+      ],
+      "BasePropertyOverrides": {
+        "BlendMode": "EBlendMode::BLEND_Translucent",
+        "ShadingModel": "EMaterialShadingModel::MSM_Unlit",
+        "OpacityMaskClipValue": 0.3333
+      },
+      "StaticParametersRuntime": {
+        "StaticSwitchParameters": [
+          {
+            "Value": true,
+            "ParameterInfo": {
+              "Name": "flip texture?",
+              "Association": "EMaterialParameterAssociation::GlobalParameter",
+              "Index": -1
+            },
+            "bOverride": true,
+            "ExpressionGUID": "EB5A9253-4FBE34DD-F4A544BB-82DF55EE"
+          }
+        ]
+      },
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedData": {
+      "ParentLayerIndexRemap": []
+    }
+  }
+]
