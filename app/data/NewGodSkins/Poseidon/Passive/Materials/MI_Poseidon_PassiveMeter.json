@@ -1,0 +1,152 @@
+[
+  {
+    "Type": "MaterialInstanceConstant",
+    "Name": "MI_Poseidon_PassiveMeter",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'MaterialInstanceConstant'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Poseidon/Passive/Materials/MI_Poseidon_PassiveMeter",
+    "Properties": {
+      "Parent": {
+        "ObjectName": "Material'M_Poseidon_PassiveMeter'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Poseidon/Passive/Materials/M_Poseidon_PassiveMeter.0"
+      },
+      "ScalarParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "circle distortion",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.456,
+          "ExpressionGUID": "8BB85CC6-4D6EBECC-ACA65199-2014E79D"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "distortion intensity",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 2.30598,
+          "ExpressionGUID": "CEE18F1C-415DD752-2FB15CA7-F6542704"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "distortion power",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.936,
+          "ExpressionGUID": "15688388-43B3B798-D00E64A3-E7309E8A"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "foam circle distortion",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": -0.548916,
+          "ExpressionGUID": "D489E092-47B077D8-05E8319F-CDF831E5"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "foam distortion intensity",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 3.024106,
+          "ExpressionGUID": "2904826C-4B4593E6-72D298AA-0D9971F5"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "foam distortion power",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.940933,
+          "ExpressionGUID": "62C5CBF0-440B096D-C63541AD-8999A2C9"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "radial circle distortion",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": -0.544,
+          "ExpressionGUID": "388C47AD-462B0CA4-696886B2-40FB95D5"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "radial distortion intensity",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 2.0,
+          "ExpressionGUID": "9CF5221D-456B7837-5B75A0BB-77A1D639"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "radial distortion power",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.0,
+          "ExpressionGUID": "0C98F6A2-42FD7218-B4671F8D-F19F94E9"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "RadialX",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "58D0C24B-4FC80649-241DC18F-36D01BCF"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "twirl color opacity",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.2,
+          "ExpressionGUID": "50E67C8F-473F7A2D-B0AF7EAC-4611A72C"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "RefractionDepthBias",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "00000000-00000000-00000000-00000000"
+        }
+      ],
+      "VectorParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "twirl color",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 0.200084,
+            "G": 1.0,
+            "B": 0.890203,
+            "A": 1.0,
+            "Hex": "7CFFF3"
+          },
+          "ExpressionGUID": "F043048F-44C98377-6D692A84-99758CF6"
+        }
+      ],
+      "BasePropertyOverrides": {
+        "BlendMode": "EBlendMode::BLEND_Translucent",
+        "ShadingModel": "EMaterialShadingModel::MSM_Unlit",
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedData": {
+      "ParentLayerIndexRemap": []
+    }
+  }
+]

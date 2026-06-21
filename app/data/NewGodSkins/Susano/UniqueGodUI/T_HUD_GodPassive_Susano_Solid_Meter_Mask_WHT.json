@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_HUD_GodPassive_Susano_Solid_Meter_Mask_WHT",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Susano/UniqueGodUI/T_HUD_GodPassive_Susano_Solid_Meter_Mask_WHT",
+    "Properties": {
+      "ImportedSize": {
+        "X": 80,
+        "Y": 80
+      },
+      "LightingGuid": "963175BF-422BA156-1E8B9CA0-105F8E5D",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 80,
+    "SizeY": 80,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 6400,
+          "SizeOnDisk": 6400,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 80,
+        "SizeY": 80,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

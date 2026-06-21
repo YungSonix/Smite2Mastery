@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "PSV_Pele_Flower_Full",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Pele/PassiveMeter/PSV_Pele_Flower_Full",
+    "Properties": {
+      "ImportedSize": {
+        "X": 48,
+        "Y": 48
+      },
+      "LightingGuid": "E8E1BF03-4A7A4682-06B1FF87-4D6C89D6",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 48,
+    "SizeY": 48,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 9216,
+          "SizeOnDisk": 9216,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 48,
+        "SizeY": 48,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

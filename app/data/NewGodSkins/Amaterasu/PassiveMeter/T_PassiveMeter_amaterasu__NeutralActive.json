@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_PassiveMeter_amaterasu__NeutralActive",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/T_PassiveMeter_amaterasu__NeutralActive",
+    "Properties": {
+      "ImportedSize": {
+        "X": 148,
+        "Y": 148
+      },
+      "LightingGuid": "02C6EDA8-44CCDC78-669739AD-3BDD0088",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 148,
+    "SizeY": 148,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 21904,
+          "SizeOnDisk": 21904,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 148,
+        "SizeY": 148,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

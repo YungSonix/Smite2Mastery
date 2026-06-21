@@ -1,0 +1,38 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "PSV_Cabrakan_Gem_02",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Cabrakan/PassiveMeter/PSV_Cabrakan_Gem_02",
+    "Properties": {
+      "AddressX": "TextureAddress::TA_Clamp",
+      "AddressY": "TextureAddress::TA_Clamp",
+      "ImportedSize": {
+        "X": 124,
+        "Y": 124
+      },
+      "LightingGuid": "A9B69C8D-4C73FEA6-E9CD89B5-4F6E7A14",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 124,
+    "SizeY": 124,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 15376,
+          "SizeOnDisk": 15376,
+          "OffsetInFile": "0x76"
+        },
+        "SizeX": 124,
+        "SizeY": 124,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

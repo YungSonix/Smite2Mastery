@@ -1,0 +1,270 @@
+[
+  {
+    "Type": "MaterialInstanceConstant",
+    "Name": "MI_TrashGoblin_Skin3_Pale",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'MaterialInstanceConstant'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Scylla/Skins/TrashGoblin/MI_TrashGoblin_Skin3_Pale",
+    "Properties": {
+      "Parent": {
+        "ObjectName": "Material'M_Recolor1x3'",
+        "ObjectPath": "/Game/UI/Shared/Materials/Recolors/Common/M_Recolor1x3.0"
+      },
+      "bHasStaticPermutationResource": true,
+      "ScalarParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "second sheen multiply",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.401753,
+          "ExpressionGUID": "A3F2444E-48EE09FE-E9FFC284-6C1380C5"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "second sheen offset",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.153051,
+          "ExpressionGUID": "51B202AB-4EB476C7-FD6DFCB7-AF063477"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "second sheen opacity",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.504,
+          "ExpressionGUID": "EE027E69-47797EA5-E1B0F5BD-83977ED0"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "second sheen power",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 7.649184,
+          "ExpressionGUID": "E92A6D87-420CE406-4A137EB2-5182B1A4"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "gloss mask multiply",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.181474,
+          "ExpressionGUID": "6002DCC6-4743D5E4-D3316A8C-83465A7D"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "gloss mask power",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.0,
+          "ExpressionGUID": "33B3D8DA-4FA232A4-F36DC997-26969DB7"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "mask curve",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 13.0,
+          "ExpressionGUID": "8B171C89-431C03F4-E18EF3AC-6E20436D"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "over all multiply",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.401753,
+          "ExpressionGUID": "E6E0FB96-41F4C0DB-E99321A0-41B4F11F"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "over all power",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.831873,
+          "ExpressionGUID": "B95B9B57-4FEFF746-FD3B4AA3-B0F61AD7"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "distortion size x",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 3.0,
+          "ExpressionGUID": "1502931C-49DDCC2A-945C5C9C-E16F7B33"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "distortion size y",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 6.0,
+          "ExpressionGUID": "63443606-446B2277-39E3C895-4C7FFAFE"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "sheen distortion amount broad",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 7.577699,
+          "ExpressionGUID": "E048A89C-411EE435-1D582C9D-01422C9B"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "sheen distortion amount details",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.4,
+          "ExpressionGUID": "3F4D4278-4F8292D8-29AB2B8C-6240B86A"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "sheen angle",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.056,
+          "ExpressionGUID": "0F6CFA01-4BEEB12D-9E151594-E1B53DA7"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "sheen end pos",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": -3.578775,
+          "ExpressionGUID": "012D23F7-4B9B81E9-0CAD49A1-682A9EE9"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "sheen start pos",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.396494,
+          "ExpressionGUID": "07C074DA-4ED0BED2-1F88CCAB-BA5D1002"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "x pos",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "978EA55C-4012BCB9-7B27CEBF-F2391A06"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "x scale",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 2.0,
+          "ExpressionGUID": "339DCEF0-4045C237-1152D7AD-0647838B"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "y scale",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.599246,
+          "ExpressionGUID": "EDB813C0-4730AF30-9E0AD490-2D678321"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "sheen pan speed",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.5,
+          "ExpressionGUID": "99CFEDE4-4735759F-15C04EB0-4F027B44"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "wait time after gloss pan",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.0,
+          "ExpressionGUID": "5C8B7DCE-4DB415DC-2DFDCCAD-8C902731"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "RefractionDepthBias",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "00000000-00000000-00000000-00000000"
+        }
+      ],
+      "VectorParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "sheen color",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 0.274659,
+            "G": 0.0,
+            "B": 0.916667,
+            "A": 24.203598,
+            "Hex": "8F00F6"
+          },
+          "ExpressionGUID": "B0B37635-416D07C7-61009CA4-507AC3CF"
+        }
+      ],
+      "TextureParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "Card Image",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "ObjectName": "Texture2D't_SkinCard_Scylla_TrashGoblin'",
+            "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Scylla/Skins/TrashGoblin/t_SkinCard_Scylla_TrashGoblin.0"
+          },
+          "ExpressionGUID": "1B8E6949-4FFF70E5-80223EA3-2F011260"
+        }
+      ],
+      "BasePropertyOverrides": {
+        "ShadingModel": "EMaterialShadingModel::MSM_Unlit",
+        "OpacityMaskClipValue": 0.3333
+      },
+      "StaticParametersRuntime": {
+        "StaticSwitchParameters": [
+          {
+            "Value": true,
+            "ParameterInfo": {
+              "Name": "sheen distortion?",
+              "Association": "EMaterialParameterAssociation::GlobalParameter",
+              "Index": -1
+            },
+            "bOverride": true,
+            "ExpressionGUID": "F27969CF-4EF0BE92-A19EF2B1-BAE2F1DB"
+          }
+        ]
+      },
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedData": {
+      "ParentLayerIndexRemap": []
+    }
+  }
+]

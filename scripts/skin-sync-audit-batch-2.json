@@ -1,0 +1,3149 @@
+{
+  "batch": "A-C",
+  "gods": [
+    {
+      "godFolder": "Achilles",
+      "buildsGodName": "Achilles",
+      "issues": [],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Achilles.png",
+            "t_GodPortrait_Achilles.png"
+          ]
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/SoulPiercer",
+          "cardFiles": [
+            "t_SkinCard_Achilles_SoulPiercer.png"
+          ],
+          "iconFiles": [
+            "t_GodPortrait_Achilles_SoulPiercer.png"
+          ],
+          "prismFiles": [
+            "t_SkinCard_Achilles_SoulPiercer_Prism_01.png",
+            "t_SkinCard_Achilles_SoulPiercer_Prism_02.png",
+            "t_SkinCard_Achilles_SoulPiercer_Prism_03.png",
+            "t_SkinIcon_Achilles_SoulPiercer_Prism_01.png",
+            "t_SkinIcon_Achilles_SoulPiercer_Prism_02.png",
+            "t_SkinIcon_Achilles_SoulPiercer_Prism_03.png"
+          ],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Achilles",
+          "name": "Base Achilles",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "SoulPiercer",
+          "name": "Soul Piercer",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 3,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Agni",
+      "buildsGodName": "Agni",
+      "issues": [
+        "builds_skin_key_folder_mismatch: InfinitedualityCardPrisms1 -> disk folder Skins/InfiniteDuality",
+        "prism_as_separate_skin_key: InfinitedualityCardPrisms1 (should be variants on canonical row for Skins/InfiniteDuality)",
+        "builds_skin_key_folder_mismatch: InfinitedualityCardPrisms2 -> disk folder Skins/InfiniteDuality",
+        "builds_skin_key_folder_mismatch: InfinitedualityCardPrisms3 -> disk folder Skins/InfiniteDuality",
+        "builds_skin_key_folder_mismatch: InfinitedualityCardPrisms4 -> disk folder Skins/InfiniteDuality"
+      ],
+      "suggestedRemaps": {
+        "InfinitedualityCardPrisms1": "InfiniteDuality",
+        "InfinitedualityCardPrisms2": "InfiniteDuality",
+        "InfinitedualityCardPrisms3": "InfiniteDuality",
+        "InfinitedualityCardPrisms4": "InfiniteDuality"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Agni.png",
+            "t_GodPortrait_Agni.png"
+          ]
+        },
+        {
+          "folder": "Skins/InfiniteDuality",
+          "cardFiles": [
+            "t_SkinCard_Agni_InfiniteDuality_Base.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Agni_InfiniteDuality_Base.png"
+          ],
+          "prismFiles": [
+            "t_SkinCard_Agni_InfiniteDuality_Prism01.png",
+            "t_SkinCard_Agni_InfiniteDuality_Prism02.png",
+            "t_SkinCard_Agni_InfiniteDuality_Prism03.png",
+            "t_SkinCard_Agni_InfiniteDuality_Prism04.png",
+            "t_SkinPortrait_Agni_InfiniteDuality_Prism01.png",
+            "t_SkinPortrait_Agni_InfiniteDuality_Prism02.png",
+            "t_SkinPortrait_Agni_InfiniteDuality_Prism03.png",
+            "t_SkinPortrait_Agni_InfiniteDuality_Prism04.png"
+          ],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Agni",
+          "name": "Base Agni",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "InfinitedualityCardPrisms1",
+          "name": "Infiniteduality Card Prisms 1",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 4,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "InfinitedualityCardPrisms2",
+          "name": "Infiniteduality Card Prisms 2",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "InfinitedualityCardPrisms3",
+          "name": "Infiniteduality Card Prisms 3",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "InfinitedualityCardPrisms4",
+          "name": "Infiniteduality Card Prisms 4",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "AhPuch",
+      "buildsGodName": "Ah Puch",
+      "issues": [],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_AhPuch.png",
+            "t_GodPortrait_AhPuch.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Aphrodite",
+          "name": "Base Ah Puch",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Aladdin",
+      "buildsGodName": "Aladdin",
+      "issues": [],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Aladdin.png",
+            "t_GodPortrait_Aladdin.png"
+          ]
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [
+            "t_SkinPortrait_Aladdin_Light.png",
+            "t_SkinPortrait_Aladdin_Onyx.png",
+            "t_SkinPortrait_Aladdin_Opal.png",
+            "t_SkinPortrait_Aladdin_Shadow.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/SilentWish",
+          "cardFiles": [
+            "t_SkinCard_Aladdin_SilentWish.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Aladdin_SilentWish.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/WinterWish",
+          "cardFiles": [
+            "t_SkinCard_Aladdin_WinterWish.png"
+          ],
+          "iconFiles": [
+            "t_SkinIcon_Aladdin_WinterWish.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Aladdin",
+          "name": "Base Aladdin",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 4,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "SilentWish",
+          "name": "Silent Wish",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "WinterWish",
+          "name": "Winter Wish",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Amaterasu",
+      "buildsGodName": "Amaterasu",
+      "issues": [
+        "builds_skin_key_folder_mismatch: CosmicwitchSplash -> disk folder Skins/CosmicWitch",
+        "builds_skin_key_folder_mismatch: FoxyCard -> disk folder Skins/Foxy"
+      ],
+      "suggestedRemaps": {
+        "CosmicwitchSplash": "CosmicWitch",
+        "FoxyCard": "Foxy",
+        "MaidOfMischief": "MaidofMischief"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Amaterasu.png",
+            "t_GodPortrait_Amaterasu.png"
+          ]
+        },
+        {
+          "folder": "Skins/CosmicWitch",
+          "cardFiles": [
+            "t_SkinCard_Amaterasu_ComsicWitch.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Amaterasu_CosmicWitch.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/DemonHunter",
+          "cardFiles": [
+            "t_SkinCard_Amaterasu_DemonHunter.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Amaterasu_DemonHunter.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Foxy",
+          "cardFiles": [
+            "t_SkinCard_Amaterasu_Foxy.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Amaterasu_Foxy.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/MaidofMischief",
+          "cardFiles": [
+            "t_SkinCard_Amaterasu_MaidofMischief.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Amaterasu_MaidofMischief.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [
+            "t_SkinPortrait_Amaterasu_Light.png",
+            "t_SkinPortrait_Amaterasu_Onyx.png",
+            "t_SkinPortrait_Amaterasu_Opal.png",
+            "t_SkinPortrait_Amaterasu_Shadow.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Amaterasu",
+          "name": "Base Amaterasu",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 4,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "CosmicwitchSplash",
+          "name": "Cosmicwitch Splash",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "FoxyCard",
+          "name": "Foxy Card",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "MaidOfMischief",
+          "name": "Maid Of Mischief",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "DemonHunter",
+          "name": "Demon Hunter",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Anhur",
+      "buildsGodName": "Anhur",
+      "issues": [],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Anhur.png",
+            "t_GodPortrait_Anhur.png"
+          ]
+        },
+        {
+          "folder": "Skins/DeathPanther",
+          "cardFiles": [
+            "t_SkinCard_Anhur_DeathPanther.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Anhur_DeathPanther.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Debonhair",
+          "cardFiles": [
+            "t_SkinCard_Anhur_Debonhair_Base.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Anhur_Debonhair_Base.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/DukeDanDeLyons",
+          "cardFiles": [
+            "t_GodCard_DukeDanDeLyons.png"
+          ],
+          "iconFiles": [
+            "t_GodPortrait_DukeDanDeLyons.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Anhur",
+          "name": "Base Anhur",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "DukeDanDeLyons",
+          "name": "Duke Dan De Lyons",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "DeathPanther",
+          "name": "Death Panther",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Debonhair",
+          "name": "Debonhair",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Anubis",
+      "buildsGodName": "Anubis",
+      "issues": [
+        "builds_skin_key_folder_mismatch: Kitsune Sage (has paths but no matching Skins/Kitsune Sage)",
+        "builds_skin_key_folder_mismatch: Blight Hound (has paths but no matching Skins/Blight Hound)"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Anubis.png",
+            "t_GodPortrait_Anubis.png"
+          ]
+        },
+        {
+          "folder": "Skins/BirthdayRecolor",
+          "cardFiles": [
+            "t_Anubis_BirthdayRecolorGod-Cards.png"
+          ],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/DeathMage",
+          "cardFiles": [
+            "t_SkinCard_Anubis_Deathmage.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Anubis_Deathmage.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/KnitWit",
+          "cardFiles": [
+            "t_SkinCard_Anubis_Knitwit.png"
+          ],
+          "iconFiles": [
+            "t_GodPortrait_Anubis_Knitwit.png"
+          ],
+          "prismFiles": [
+            "t_GodPortrait_Anubis_Knitwit_Prism01.png",
+            "t_GodPortrait_Anubis_Knitwit_Prism02.png",
+            "t_GodPortrait_Anubis_Knitwit_Prism03.png",
+            "t_GodPortrait_Anubis_Knitwit_Prism04.png",
+            "t_SkinCard_Anubis_Knitwit_Prism01.png",
+            "t_SkinCard_Anubis_Knitwit_Prism02.png",
+            "t_SkinCard_Anubis_Knitwit_Prism03.png",
+            "t_SkinCard_Anubis_Knitwit_Prism04.png"
+          ],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/SenkoSage",
+          "cardFiles": [
+            "t_Anubis_SenkoSage_SkinCard.png"
+          ],
+          "iconFiles": [
+            "t_Anubis_SenkoSage_SkinPortrait.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Kitsune Sage",
+          "name": "Kitsune Sage",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Anubis",
+          "name": "Base Anubis",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Blight Hound",
+          "name": "Blight Hound",
+          "type": "Epic",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "BirthdayRecolor",
+          "name": "Birthday Recolor",
+          "type": "",
+          "hasSkin": false,
+          "hasIcon": false,
+          "hasCardArt": false,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "DeathMage",
+          "name": "Death Mage",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "KnitWit",
+          "name": "Knit Wit",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 4,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "SenkoSage",
+          "name": "Senko Sage",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Aphrodite",
+      "buildsGodName": "Aphrodite",
+      "issues": [
+        "builds_skin_key_folder_mismatch: BeachBabeAquaSplash -> disk folder Skins/BeachBabe",
+        "builds_skin_key_folder_mismatch: BeachBabeMidnightCove -> disk folder Skins/BeachBabe",
+        "builds_skin_key_folder_mismatch: BeachBabeWhiteSands -> disk folder Skins/BeachBabe",
+        "builds_skin_key_folder_mismatch: ElvenclericSplash1920x1080 (has paths but no matching Skins/ElvenclericSplash1920x1080)",
+        "prism_as_separate_skin_key: Prisims (should be variants on canonical row for Skins/Prisims)"
+      ],
+      "suggestedRemaps": {
+        "BeachBabeAquaSplash": "BeachBabe",
+        "BeachBabeMidnightCove": "BeachBabe",
+        "BeachBabeWhiteSands": "BeachBabe"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Aphrodite.png",
+            "t_GodPortrait_Aphrodite.png"
+          ]
+        },
+        {
+          "folder": "Skins/01a",
+          "cardFiles": [
+            "t_GodCard_Aphrodite_01A.png"
+          ],
+          "iconFiles": [
+            "t_GodPortrait_Aphrodite_01A.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/BeachBabe",
+          "cardFiles": [
+            "t_SkinCard_Aphrodite_BeachBabe.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Aphrodite_BeachBabe.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/CourtCharmer",
+          "cardFiles": [
+            "t_SkinCard_Aphrodite_CourtCharmer.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Aphrodite_CourtCharmer.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Prisims",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [
+            "t_SkinCard_Aphrodite_Prisim_B.png",
+            "t_SkinCard_Aphrodite_Prisim_C.png",
+            "t_SkinCard_Aphrodite_Prisim_D.png",
+            "t_SkinPortrait_Aphrodite_Beach_Prisim_B.png",
+            "t_SkinPortrait_Aphrodite_Beach_Prisim_C.png",
+            "t_SkinPortrait_Aphrodite_Beach_Prisim_D.png"
+          ],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/YuleCheer",
+          "cardFiles": [
+            "t_SkinCard_Aphrodite_YuleCheer.png"
+          ],
+          "iconFiles": [
+            "t_GodPortrait_Aphrodite_YuleCheer.png"
+          ],
+          "prismFiles": [
+            "t_GodPortrait_Aphrodite_YuleCheer_Prism01.png",
+            "t_GodPortrait_Aphrodite_YuleCheer_Prism02.png",
+            "t_GodPortrait_Aphrodite_YuleCheer_Prism03.png",
+            "t_GodPortrait_Aphrodite_YuleCheer_Prism04.png",
+            "t_SkinCard_Aphrodite_YuleCheer_Prism01.png",
+            "t_SkinCard_Aphrodite_YuleCheer_Prism02.png",
+            "t_SkinCard_Aphrodite_YuleCheer_Prism03.png",
+            "t_SkinCard_Aphrodite_YuleCheer_Prism04.png"
+          ],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Aphrodite",
+          "name": "Base Aphrodite",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "BeachBabe",
+          "name": "Beach Babe",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "BeachBabeAquaSplash",
+          "name": "Beach Babe Aqua Splash",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "BeachBabeMidnightCove",
+          "name": "Beach Babe Midnight Cove",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "BeachBabeWhiteSands",
+          "name": "Beach Babe White Sands",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "ElvenclericSplash1920x1080",
+          "name": "Elvencleric Splash 1920 X 1080",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "01a",
+          "name": "01a",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "CourtCharmer",
+          "name": "Court Charmer",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Prisims",
+          "name": "Prisims",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "YuleCheer",
+          "name": "Yule Cheer",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 4,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Apollo",
+      "buildsGodName": "Apollo",
+      "issues": [
+        "builds_skin_key_folder_mismatch: BitBlasterMechacore -> disk folder Skins/BitBlaster",
+        "builds_skin_key_folder_mismatch: BitBlasterNullExe -> disk folder Skins/BitBlaster",
+        "builds_skin_key_folder_mismatch: BitBlasterOvercharged -> disk folder Skins/BitBlaster",
+        "builds_skin_key_folder_mismatch: BitBlasterRgbSurge -> disk folder Skins/BitBlaster",
+        "prism_as_separate_skin_key: Prisms (should be variants on canonical row for Skins/Prisms)",
+        "orphan_prisms_folder: Skins/Prisms (prisms should be variants on parent skin, not top-level folder)"
+      ],
+      "suggestedRemaps": {
+        "BitBlasterMechacore": "BitBlaster",
+        "BitBlasterNullExe": "BitBlaster",
+        "BitBlasterOvercharged": "BitBlaster",
+        "BitBlasterRgbSurge": "BitBlaster"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Apollo.png",
+            "t_GodPortrait_Apollo.png"
+          ]
+        },
+        {
+          "folder": "Skins/BitBlaster",
+          "cardFiles": [
+            "t_SkinCard_Apollo_BitBlaster.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Apollo_BitBlaster.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Prisms",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [
+            "t_SkinCard_Apollo_BitBlaster_Prisim_A.png",
+            "t_SkinCard_Apollo_BitBlaster_Prisim_B.png",
+            "t_SkinCard_Apollo_BitBlaster_Prisim_C.png",
+            "t_SkinCard_Apollo_BitBlaster_Prisim_D.png",
+            "t_SkinPortrait_Apollo_BitBlaster_Prisim_A.png",
+            "t_SkinPortrait_Apollo_BitBlaster_Prisim_B.png",
+            "t_SkinPortrait_Apollo_BitBlaster_Prisim_C.png",
+            "t_SkinPortrait_Apollo_BitBlaster_Prisim_D.png"
+          ],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Apollo",
+          "name": "Base Apollo",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "BitBlaster",
+          "name": "Bit Blaster",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "BitBlasterMechacore",
+          "name": "Bit Blaster Mechacore",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "BitBlasterNullExe",
+          "name": "Bit Blaster Null Exe",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "BitBlasterOvercharged",
+          "name": "Bit Blaster Overcharged",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "BitBlasterRgbSurge",
+          "name": "Bit Blaster Rgb Surge",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "Prisms",
+          "name": "Prisms",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Ares",
+      "buildsGodName": "Ares",
+      "issues": [],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Ares.png",
+            "t_GodPortrait_Ares.png"
+          ]
+        },
+        {
+          "folder": "Skins/Celestial",
+          "cardFiles": [
+            "t_SkinCard_Ares_Celestial.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Ares_Celestial.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/CoreBreaker",
+          "cardFiles": [
+            "t_SkinCard_Ares_CoreBreaker.png"
+          ],
+          "iconFiles": [
+            "t_SkinIcon_Ares_CoreBreaker.png"
+          ],
+          "prismFiles": [
+            "t_SkinCard_Ares_CoreBreaker_P1.png",
+            "t_SkinCard_Ares_CoreBreaker_P2.png",
+            "t_SkinCard_Ares_CoreBreaker_P3.png",
+            "t_SkinCard_Ares_CoreBreaker_P4.png",
+            "t_SkinIcon_Ares_CoreBreaker_P1.png",
+            "t_SkinIcon_Ares_CoreBreaker_P2.png",
+            "t_SkinIcon_Ares_CoreBreaker_P3.png",
+            "t_SkinIcon_Ares_CoreBreaker_P4.png"
+          ],
+          "paletteFiles": [
+            "t_SkinCard_Ares_CoreBreaker_P1.png",
+            "t_SkinCard_Ares_CoreBreaker_P2.png",
+            "t_SkinCard_Ares_CoreBreaker_P3.png",
+            "t_SkinCard_Ares_CoreBreaker_P4.png",
+            "t_SkinIcon_Ares_CoreBreaker_P1.png",
+            "t_SkinIcon_Ares_CoreBreaker_P2.png",
+            "t_SkinIcon_Ares_CoreBreaker_P3.png",
+            "t_SkinIcon_Ares_CoreBreaker_P4.png"
+          ],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/TokyoKnight",
+          "cardFiles": [
+            "t_SkinCard_Ares_TokyoKnight.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Ares_TokyoKnight.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Ares",
+          "name": "Base Ares",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Celestial",
+          "name": "Celestial",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "CoreBreaker",
+          "name": "Core Breaker",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 4,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "TokyoKnight",
+          "name": "Tokyo Knight",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Artemis",
+      "buildsGodName": "Artemis",
+      "issues": [
+        "builds_skin_key_folder_mismatch: FrostwardenSaga -> disk folder Skins/Frostwarden",
+        "builds_skin_key_folder_mismatch: FrostwardenSaga10 -> disk folder Skins/Frostwarden",
+        "builds_skin_key_folder_mismatch: FrostwardenSaga11 -> disk folder Skins/Frostwarden",
+        "builds_skin_key_folder_mismatch: FrostwardenSaga12 -> disk folder Skins/Frostwarden",
+        "builds_skin_key_folder_mismatch: FrostwardenSaga1 -> disk folder Skins/Frostwarden",
+        "builds_skin_key_folder_mismatch: FrostwardenSaga2 -> disk folder Skins/Frostwarden",
+        "builds_skin_key_folder_mismatch: FrostwardenSaga3 -> disk folder Skins/Frostwarden",
+        "builds_skin_key_folder_mismatch: FrostwardenSaga4 -> disk folder Skins/Frostwarden",
+        "builds_skin_key_folder_mismatch: FrostwardenSaga5009 -> disk folder Skins/Frostwarden",
+        "builds_skin_key_folder_mismatch: FrostwardenSaga6010 -> disk folder Skins/Frostwarden",
+        "builds_skin_key_folder_mismatch: FrostwardenSaga7011 -> disk folder Skins/Frostwarden",
+        "builds_skin_key_folder_mismatch: FrostwardenSaga8012 -> disk folder Skins/Frostwarden",
+        "builds_skin_key_folder_mismatch: FrostwardenSaga9013 -> disk folder Skins/Frostwarden"
+      ],
+      "suggestedRemaps": {
+        "FrostwardenSaga": "Frostwarden",
+        "FrostwardenSaga10": "Frostwarden",
+        "FrostwardenSaga11": "Frostwarden",
+        "FrostwardenSaga12": "Frostwarden",
+        "FrostwardenSaga1": "Frostwarden",
+        "FrostwardenSaga2": "Frostwarden",
+        "FrostwardenSaga3": "Frostwarden",
+        "FrostwardenSaga4": "Frostwarden",
+        "FrostwardenSaga5009": "Frostwarden",
+        "FrostwardenSaga6010": "Frostwarden",
+        "FrostwardenSaga7011": "Frostwarden",
+        "FrostwardenSaga8012": "Frostwarden",
+        "FrostwardenSaga9013": "Frostwarden"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Artemis.png",
+            "t_GodPortrait_Artemis.png"
+          ]
+        },
+        {
+          "folder": "Skins/Easter",
+          "cardFiles": [
+            "t_SkinCard_Artemis_SexyEaster_Base.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Artemis_SexyEaster_Base.png"
+          ],
+          "prismFiles": [
+            "t_SkinCard_Artemis_SexyEaster_PrismB.png",
+            "t_SkinCard_Artemis_SexyEaster_PrismC.png",
+            "t_SkinCard_Artemis_SexyEaster_PrismE.png",
+            "t_SkinPortrait_Artemis_SexyEaster_PrismB.png",
+            "t_SkinPortrait_Artemis_SexyEaster_PrismC.png",
+            "t_SkinPortrait_Artemis_SexyEaster_PrismE.png"
+          ],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/FletchedFaun",
+          "cardFiles": [
+            "t_SkinCard_Artemis_FletchedFaun.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Artemis_FletchedFaun.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Frostwarden",
+          "cardFiles": [
+            "t_SkinCard_Artemis_FrostWarden_T1_A.png"
+          ],
+          "iconFiles": [
+            "t_SkinIcon_Artemis_FrostWarden_T1_A.png"
+          ],
+          "prismFiles": [
+            "Prisms/t_SkinCard_Artemis_FrostWarden_T1_B.png",
+            "Prisms/t_SkinCard_Artemis_FrostWarden_T1_C.png",
+            "Prisms/t_SkinCard_Artemis_FrostWarden_T1_D.png",
+            "Prisms/t_SkinCard_Artemis_FrostWarden_T1_E.png",
+            "Prisms/t_SkinCard_Artemis_FrostWarden_T2_A.png",
+            "Prisms/t_SkinCard_Artemis_FrostWarden_T2_B.png",
+            "Prisms/t_SkinCard_Artemis_FrostWarden_T2_C.png",
+            "Prisms/t_SkinCard_Artemis_FrostWarden_T2_D.png",
+            "Prisms/t_SkinCard_Artemis_FrostWarden_T2_E.png",
+            "Prisms/t_SkinCard_Artemis_FrostWarden_T3_A.png",
+            "Prisms/t_SkinCard_Artemis_FrostWarden_T3_B.png",
+            "Prisms/t_SkinCard_Artemis_FrostWarden_T3_C.png",
+            "Prisms/t_SkinCard_Artemis_FrostWarden_T3_D.png",
+            "Prisms/t_SkinCard_Artemis_FrostWarden_T3_E.png",
+            "Prisms/t_SkinIcon_Artemis_FrostWarden_T1_B.png",
+            "Prisms/t_SkinIcon_Artemis_FrostWarden_T1_C.png",
+            "Prisms/t_SkinIcon_Artemis_FrostWarden_T1_D.png",
+            "Prisms/t_SkinIcon_Artemis_FrostWarden_T1_E.png",
+            "Prisms/t_SkinIcon_Artemis_FrostWarden_T2_A.png",
+            "Prisms/t_SkinIcon_Artemis_FrostWarden_T2_B.png",
+            "Prisms/t_SkinIcon_Artemis_FrostWarden_T2_C.png",
+            "Prisms/t_SkinIcon_Artemis_FrostWarden_T2_D.png",
+            "Prisms/t_SkinIcon_Artemis_FrostWarden_T2_E.png",
+            "Prisms/t_SkinIcon_Artemis_FrostWarden_T3_A.png",
+            "Prisms/t_SkinIcon_Artemis_FrostWarden_T3_B.png",
+            "Prisms/t_SkinIcon_Artemis_FrostWarden_T3_C.png",
+            "Prisms/t_SkinIcon_Artemis_FrostWarden_T3_D.png",
+            "Prisms/t_SkinIcon_Artemis_FrostWarden_T3_E.png"
+          ],
+          "paletteFiles": [],
+          "prismsSubdir": "Prisms"
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Artemis",
+          "name": "Base Artemis",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "FrostwardenSaga",
+          "name": "Frostwarden Saga",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 14,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "FrostwardenSaga10",
+          "name": "Frostwarden Saga 10",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "FrostwardenSaga11",
+          "name": "Frostwarden Saga 11",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "FrostwardenSaga12",
+          "name": "Frostwarden Saga 12",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "FrostwardenSaga1",
+          "name": "Frostwarden Saga 1",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "FrostwardenSaga2",
+          "name": "Frostwarden Saga 2",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "FrostwardenSaga3",
+          "name": "Frostwarden Saga 3",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "FrostwardenSaga4",
+          "name": "Frostwarden Saga 4",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "FrostwardenSaga5009",
+          "name": "Frostwarden Saga 5009",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "FrostwardenSaga6010",
+          "name": "Frostwarden Saga 6010",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "FrostwardenSaga7011",
+          "name": "Frostwarden Saga 7011",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "FrostwardenSaga8012",
+          "name": "Frostwarden Saga 8012",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "FrostwardenSaga9013",
+          "name": "Frostwarden Saga 9013",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "FletchedFaun",
+          "name": "Fletched Faun",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Easter",
+          "name": "Easter",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 3,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Artio",
+      "buildsGodName": "Artio",
+      "issues": [],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Artio.png",
+            "t_GodPortrait_Artio.png"
+          ]
+        },
+        {
+          "folder": "Skins/DenMother",
+          "cardFiles": [
+            "t_SkinCard_Artio_DenMother.png"
+          ],
+          "iconFiles": [
+            "t_SkinIcon_Artio_DenMother.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/FiendHunter",
+          "cardFiles": [
+            "t_SkinCard_Artio_FiendHunter_Base.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Artio_FiendHunter_Base.png"
+          ],
+          "prismFiles": [
+            "t_SkinCard_Artio_FiendHunter_Prism01.png",
+            "t_SkinCard_Artio_FiendHunter_Prism02.png",
+            "t_SkinCard_Artio_FiendHunter_Prism03.png",
+            "t_SkinPortrait_Artio_FiendHunter_Prism01.png",
+            "t_SkinPortrait_Artio_FiendHunter_Prism02.png",
+            "t_SkinPortrait_Artio_FiendHunter_Prism03.png"
+          ],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [
+            "t_SkinCard_Artio_Mastery.png"
+          ],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Ares",
+          "name": "Base Artio",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "DenMother",
+          "name": "Den Mother",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "FiendHunter",
+          "name": "Fiend Hunter",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 3,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Athena",
+      "buildsGodName": "Athena",
+      "issues": [],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Athena.png",
+            "t_GodPortrait_Athena.png"
+          ]
+        },
+        {
+          "folder": "Skins/02A",
+          "cardFiles": [
+            "t_GodCard_Athena_02A.png"
+          ],
+          "iconFiles": [
+            "t_GodPortrait_Athena_02A.png"
+          ],
+          "prismFiles": [
+            "t_SkinCard_Athena_Mystic_P1.png",
+            "t_SkinCard_Athena_Mystic_P2.png",
+            "t_SkinCard_Athena_Mystic_P3.png",
+            "t_SkinCard_Athena_Mystic_P4.png",
+            "t_SkinIcon_Athena_Mystic_P1.png",
+            "t_SkinIcon_Athena_Mystic_P2.png",
+            "t_SkinIcon_Athena_Mystic_P3.png",
+            "t_SkinIcon_Athena_Mystic_P4.png"
+          ],
+          "paletteFiles": [
+            "t_SkinCard_Athena_Mystic_P1.png",
+            "t_SkinCard_Athena_Mystic_P2.png",
+            "t_SkinCard_Athena_Mystic_P3.png",
+            "t_SkinCard_Athena_Mystic_P4.png",
+            "t_SkinIcon_Athena_Mystic_P1.png",
+            "t_SkinIcon_Athena_Mystic_P2.png",
+            "t_SkinIcon_Athena_Mystic_P3.png",
+            "t_SkinIcon_Athena_Mystic_P4.png"
+          ],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/ExoSuit",
+          "cardFiles": [
+            "t_SkinCard_Athena_ExoSuit.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Athena_ExoSuit.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Heartguard",
+          "cardFiles": [
+            "t_SkinCard_Athena_Heartguard.png"
+          ],
+          "iconFiles": [
+            "t_Skinportrait_Athena_Heartguard.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Athena",
+          "name": "Base Athena",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "MysticGuardian",
+          "name": "Mystic Guardian",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 4,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "ExoSuit",
+          "name": "Exo Suit",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Heartguard",
+          "name": "Heartguard",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Atlas",
+      "buildsGodName": "Atlas",
+      "issues": [],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Atlas.png",
+            "t_GodPortrait_Atlas.png"
+          ]
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [
+            "t_GodCard_Atlas_Mastery.png"
+          ],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Athena",
+          "name": "Base Atlas",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Awilix",
+      "buildsGodName": "Awilix",
+      "issues": [
+        "builds_skin_key_folder_mismatch: FelinefashionSplash1015 -> disk folder Skins/FelineFashion",
+        "builds_skin_key_folder_mismatch: FelinefashionSplash2016 -> disk folder Skins/FelineFashion",
+        "builds_skin_key_folder_mismatch: FelinefashionSplash3017 -> disk folder Skins/FelineFashion",
+        "builds_skin_key_folder_mismatch: FelinefashionSplash014 -> disk folder Skins/FelineFashion"
+      ],
+      "suggestedRemaps": {
+        "FelinefashionSplash1015": "FelineFashion",
+        "FelinefashionSplash2016": "FelineFashion",
+        "FelinefashionSplash3017": "FelineFashion",
+        "FelinefashionSplash014": "FelineFashion",
+        "Cyberclaw": "CyberClaw"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Awilix.png",
+            "t_GodPortrait_Awilix.png"
+          ]
+        },
+        {
+          "folder": "Skins/CyberClaw",
+          "cardFiles": [
+            "t_SkinCard_Awilix_CyberClaw.png"
+          ],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/FelineFashion",
+          "cardFiles": [
+            "t_SkinCard_Awilix_FelineFashion_Base.png"
+          ],
+          "iconFiles": [],
+          "prismFiles": [
+            "t_SkinCard_Awilix_FelineFashion_Prism01_Leopard.png",
+            "t_SkinCard_Awilix_FelineFashion_Prism02_Purple.png",
+            "t_SkinCard_Awilix_FelineFashion_Prism03_Panther.png",
+            "t_SkinCard_Awilix_FelineFashion_Prism04.png",
+            "t_SkinPortriat_Awilix_FelineFashion_Prism01_Leopard.png",
+            "t_SkinPortriat_Awilix_FelineFashion_Prism02_Purple.png",
+            "t_SkinPortriat_Awilix_FelineFashion_Prism03_Panther.png",
+            "t_SkinPortriat_Awilix_FelineFashion_Prism04.png"
+          ],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Awilix",
+          "name": "Base Awilix",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "FelinefashionSplash1015",
+          "name": "Feline Fashion 1",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 4,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "FelinefashionSplash2016",
+          "name": "Feline Fashion 2",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "FelinefashionSplash3017",
+          "name": "Feline Fashion 3",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "FelinefashionSplash014",
+          "name": "Feline Fashion 4",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "Cyberclaw",
+          "name": "Cyberclaw",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Bacchus",
+      "buildsGodName": "Bacchus",
+      "issues": [
+        "builds_skin_key_folder_mismatch: SirCroakus (has paths but no matching Skins/SirCroakus)"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Bacchus.png",
+            "t_GodPortrait_Bacchus.png"
+          ]
+        },
+        {
+          "folder": "Skins/CatGentleman",
+          "cardFiles": [
+            "t_SkinCard_Bacchus_CatGentleman.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Bacchus_CatGentleman.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/FrogKnight",
+          "cardFiles": [
+            "t_SkinCard_Bacchus_FrogKnight.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Bacchus_FrogKnight.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/SuperChill",
+          "cardFiles": [
+            "t_SkinCard_Bacchus_SuperChill.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Bacchus_SuperChill.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Bacchus",
+          "name": "Base Bacchus",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "SirCroakus",
+          "name": "Sir Croakus",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "CatGentleman",
+          "name": "Cat Gentleman",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "FrogKnight",
+          "name": "Frog Knight",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "SuperChill",
+          "name": "Super Chill",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Bari",
+      "buildsGodName": null,
+      "issues": [
+        "missing_builds_row: no god entry in builds.json for folder Bari"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Bari.png",
+            "t_GodPortrait_Bari.png"
+          ]
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Reaping",
+          "cardFiles": [
+            "t_SkinCard_Bari_Reaping.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Bari_Reaping.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/ShatteredVisions",
+          "cardFiles": [
+            "t_GodCard_ShatteredVisions.png"
+          ],
+          "iconFiles": [
+            "t_GodPortrait_ShatteredVisions.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": []
+    },
+    {
+      "godFolder": "BaronSamedi",
+      "buildsGodName": "Baron Samedi",
+      "issues": [],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_BaronSamedi.png",
+            "t_GodPortrait_BaronSamedi.png"
+          ]
+        },
+        {
+          "folder": "Skins/Gingersnap",
+          "cardFiles": [
+            "t_SkinCard_BaronSamedi_Gingerbread.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_BaronSamedi_Gingersnap.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Masteries",
+          "cardFiles": [],
+          "iconFiles": [
+            "t_SkinPortrait_BaronSamedi_Light.png",
+            "t_SkinPortrait_BaronSamedi_Onyx.png",
+            "t_SkinPortrait_BaronSamedi_Opal.png",
+            "t_SkinPortrait_BaronSamedi_Shadow.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/NanoMancer",
+          "cardFiles": [
+            "t_SkinCard_BaronSamedi_NanoMancer.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_BaronSamedi_NanoMancer.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Baron Samedi",
+          "name": "Base Baron Samedi",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Gingersnap",
+          "name": "Gingersnap",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Masteries",
+          "name": "Masteries",
+          "type": "",
+          "hasSkin": false,
+          "hasIcon": true,
+          "hasCardArt": false,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "NanoMancer",
+          "name": "Nano Mancer",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Bellona",
+      "buildsGodName": "Bellona",
+      "issues": [
+        "builds_skin_key_folder_mismatch: MisssenshiSplashPrisms1 (has paths but no matching Skins/MisssenshiSplashPrisms1)",
+        "builds_skin_key_folder_mismatch: MisssenshiSplashPrisms2 (has paths but no matching Skins/MisssenshiSplashPrisms2)",
+        "builds_skin_key_folder_mismatch: MisssenshiSplashPrisms3 (has paths but no matching Skins/MisssenshiSplashPrisms3)",
+        "builds_skin_key_folder_mismatch: MisssenshiSplashPrisms (has paths but no matching Skins/MisssenshiSplashPrisms)",
+        "builds_skin_key_folder_mismatch: MissSenshi (has paths but no matching Skins/MissSenshi)"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Bellona.png",
+            "t_GodPortrait_Bellona.png"
+          ]
+        },
+        {
+          "folder": "Skins/GothBarbarian",
+          "cardFiles": [
+            "t_Bellona_GothBarbarianGod-Cards.png"
+          ],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/HiveQueen",
+          "cardFiles": [
+            "t_SkinCard_Bellona_MIssShenshi.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Bellona_MIssShenshi.png"
+          ],
+          "prismFiles": [
+            "t_SkinCard_Bellona_MIssShenshi_Prism_01.png",
+            "t_SkinCard_Bellona_MIssShenshi_Prism_02.png",
+            "t_SkinCard_Bellona_MIssShenshi_Prism_03.png",
+            "t_SkinPortrait_Bellona_MIssShenshi_Prism_01.png",
+            "t_SkinPortrait_Bellona_MIssShenshi_Prism_02.png",
+            "t_SkinPortrait_Bellona_MIssShenshi_Prism_03.png"
+          ],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/JadeDragon",
+          "cardFiles": [
+            "t_SkinCard_Bellona_JadeDragon.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Bellona_JadeDragon.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Bellona",
+          "name": "Base Bellona",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "MisssenshiSplashPrisms1",
+          "name": "Misssenshi Splash Prisms 1",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "MisssenshiSplashPrisms2",
+          "name": "Misssenshi Splash Prisms 2",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "MisssenshiSplashPrisms3",
+          "name": "Misssenshi Splash Prisms 3",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "MisssenshiSplashPrisms",
+          "name": "Misssenshi Splash Prisms",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "MissSenshi",
+          "name": "Miss Senshi",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "GothBarbarian",
+          "name": "Goth Barbarian",
+          "type": "",
+          "hasSkin": false,
+          "hasIcon": false,
+          "hasCardArt": false,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "HiveQueen",
+          "name": "Hive Queen",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 3,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "JadeDragon",
+          "name": "Jade Dragon",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Cabrakan",
+      "buildsGodName": "Cabrakan",
+      "issues": [
+        "builds_skin_key_folder_mismatch: NerdRage014 -> disk folder Skins/NerdRage",
+        "builds_skin_key_folder_mismatch: NerdRageAssistant010 -> disk folder Skins/NerdRage",
+        "builds_skin_key_folder_mismatch: NerdRageDataLogger011 -> disk folder Skins/NerdRage",
+        "builds_skin_key_folder_mismatch: NerdRageLoRez012 -> disk folder Skins/NerdRage",
+        "builds_skin_key_folder_mismatch: NerdRageNeowave013 -> disk folder Skins/NerdRage",
+        "prism_as_separate_skin_key: Prisms (should be variants on canonical row for Skins/Prisms)",
+        "orphan_prisms_folder: Skins/Prisms (prisms should be variants on parent skin, not top-level folder)"
+      ],
+      "suggestedRemaps": {
+        "NerdRage014": "NerdRage",
+        "NerdRageAssistant010": "NerdRage",
+        "NerdRageDataLogger011": "NerdRage",
+        "NerdRageLoRez012": "NerdRage",
+        "NerdRageNeowave013": "NerdRage"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Cabrakan.png",
+            "t_GodPortrait_Cabrakan.png"
+          ]
+        },
+        {
+          "folder": "Skins/FatLoki",
+          "cardFiles": [
+            "t_SkinCard_Cabrakan_FatLoki.png"
+          ],
+          "iconFiles": [
+            "t_GodPortrait_Cabrakan_FatLoki.png"
+          ],
+          "prismFiles": [
+            "t_GodPortrait_Cabrakan_FatLoki_Prism01.png",
+            "t_GodPortrait_Cabrakan_FatLoki_Prism02.png",
+            "t_GodPortrait_Cabrakan_FatLoki_Prism03.png",
+            "t_SkinCard_Cabrakan_FatLoki_Prism01.png",
+            "t_SkinCard_Cabrakan_FatLoki_Prism02.png",
+            "t_SkinCard_Cabrakan_FatLoki_Prism03.png"
+          ],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/NerdRage",
+          "cardFiles": [
+            "t_SkinCard_Cabrakan_NerdRage.png"
+          ],
+          "iconFiles": [
+            "t_GodPortrait_Cabrakan_NerdRage.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Prisms",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [
+            "t_SkinCard_Cabrakan_Prisim_A.png",
+            "t_SkinCard_Cabrakan_Prisim_B.png",
+            "t_SkinCard_Cabrakan_Prisim_C.png",
+            "t_SkinCard_Cabrakan_Prisim_D.png",
+            "t_SkinPortrait_Cabrakan_Prisim_A.png",
+            "t_SkinPortrait_Cabrakan_Prisim_B.png",
+            "t_SkinPortrait_Cabrakan_Prisim_C.png",
+            "t_SkinPortrait_Cabrakan_Prisim_D.png"
+          ],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Cabrakan",
+          "name": "Base Cabrakan",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "NerdRage014",
+          "name": "Nerd Rage 014",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "NerdRageAssistant010",
+          "name": "Nerd Rage Assistant 010",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "NerdRageDataLogger011",
+          "name": "Nerd Rage Data Logger 011",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "NerdRageLoRez012",
+          "name": "Nerd Rage Lo Rez 012",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "NerdRageNeowave013",
+          "name": "Nerd Rage Neowave 013",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "FatLoki",
+          "name": "Fat Loki",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 3,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Prisms",
+          "name": "Prisms",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Cerberus",
+      "buildsGodName": "Cerberus",
+      "issues": [
+        "builds_skin_key_folder_mismatch: Default (has paths but no matching Skins/Default)",
+        "builds_skin_key_folder_mismatch: InfiniteoverseerCardPrisms1010 -> disk folder Skins/Overseer",
+        "prism_as_separate_skin_key: InfiniteoverseerCardPrisms1010 (should be variants on canonical row for Skins/Overseer)",
+        "builds_skin_key_folder_mismatch: InfiniteoverseerCardPrisms2011 -> disk folder Skins/Overseer",
+        "builds_skin_key_folder_mismatch: InfiniteoverseerCardPrisms3012 -> disk folder Skins/Overseer",
+        "builds_skin_key_folder_mismatch: InfiniteoverseerCardPrisms009 -> disk folder Skins/Overseer",
+        "builds_skin_key_folder_mismatch: ShadowSentry (has paths but no matching Skins/ShadowSentry)"
+      ],
+      "suggestedRemaps": {
+        "InfiniteoverseerCardPrisms1010": "Overseer",
+        "InfiniteoverseerCardPrisms2011": "Overseer",
+        "InfiniteoverseerCardPrisms3012": "Overseer",
+        "InfiniteoverseerCardPrisms009": "Overseer"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Cerberus.png",
+            "t_GodPortrait_Cerberus.png"
+          ]
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Overseer",
+          "cardFiles": [
+            "t_SkinCard_Cerberus_Overseer.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Cerberus_Overseer.png"
+          ],
+          "prismFiles": [
+            "Prisms/t_SkinCard_Cerberus_Overseer_Prism_B.png",
+            "Prisms/t_SkinCard_Cerberus_Overseer_Prism_C.png",
+            "Prisms/t_SkinCard_Cerberus_Overseer_Prism_D.png",
+            "Prisms/t_SkinCard_Cerberus_Overseer_Prism_E.png",
+            "Prisms/t_SkinPortrait_Cerberus_Overseer_Prism_B.png",
+            "Prisms/t_SkinPortrait_Cerberus_Overseer_Prism_C.png",
+            "Prisms/t_SkinPortrait_Cerberus_Overseer_Prism_D.png",
+            "Prisms/t_SkinPortrait_Cerberus_Overseer_Prism_E.png"
+          ],
+          "paletteFiles": [],
+          "prismsSubdir": "Prisms"
+        },
+        {
+          "folder": "Skins/ShadowSpirit",
+          "cardFiles": [
+            "t_SkinCard_Cerberus_ShadowSpirit.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Cerberus_ShadowSpirit.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Cerberus",
+          "name": "Base Cerberus",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Default",
+          "name": "Default",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "InfiniteoverseerCardPrisms1010",
+          "name": "Infiniteoverseer Card Prisms 1010",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 4,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "InfiniteoverseerCardPrisms2011",
+          "name": "Infiniteoverseer Card Prisms 2011",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "InfiniteoverseerCardPrisms3012",
+          "name": "Infiniteoverseer Card Prisms 3012",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "InfiniteoverseerCardPrisms009",
+          "name": "Infiniteoverseer Card Prisms 009",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "ShadowSentry",
+          "name": "Shadow Sentry",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "ShadowSpirit",
+          "name": "Shadow Spirit",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Cernunnos",
+      "buildsGodName": "Cernunnos",
+      "issues": [
+        "builds_skin_key_folder_mismatch: Smite2F2pOb1CrimsonstalkerSocial1920x1080Notag -> disk folder Skins/CrimsonStalker"
+      ],
+      "suggestedRemaps": {
+        "Smite2F2pOb1CrimsonstalkerSocial1920x1080Notag": "CrimsonStalker"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Cernunnos.png",
+            "t_GodPortrait_Cernunnos.png"
+          ]
+        },
+        {
+          "folder": "Skins/CrimsonStalker",
+          "cardFiles": [
+            "t_SkinCard_Cernunnos_CrimsonStalker.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Cernunnos_CrimsonStalker.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Netherware",
+          "cardFiles": [
+            "t_SkinCard_Cernunnos_Netherware.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Cernunnos_Netherware.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Cernunnos",
+          "name": "Base Cernunnos",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Smite2F2pOb1CrimsonstalkerSocial1920x1080Notag",
+          "name": "Smite 2 F 2 P Ob 1 Crimsonstalker Social 1920 X 1080 Notag",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Netherware",
+          "name": "Netherware",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Chaac",
+      "buildsGodName": "Chaac",
+      "issues": [
+        "builds_skin_key_folder_mismatch: TSkincardAbyssalhunter -> disk folder Skins/AbyssalHunter",
+        "builds_skin_key_folder_mismatch: WallpaperCharredsoul11r83840x2160 (has paths but no matching Skins/WallpaperCharredsoul11r83840x2160)",
+        "builds_skin_key_folder_mismatch: SlaughterhouseSplash1 -> disk folder Skins/Slaughterhouse",
+        "builds_skin_key_folder_mismatch: SlaughterhouseSplash2 -> disk folder Skins/Slaughterhouse",
+        "builds_skin_key_folder_mismatch: SlaughterhouseSplash3 -> disk folder Skins/Slaughterhouse",
+        "builds_skin_key_folder_mismatch: SlaughterhouseSplash4 -> disk folder Skins/Slaughterhouse",
+        "builds_skin_key_folder_mismatch: SlaughterhouseSplash5 -> disk folder Skins/Slaughterhouse"
+      ],
+      "suggestedRemaps": {
+        "TSkincardAbyssalhunter": "AbyssalHunter",
+        "SlaughterhouseSplash1": "Slaughterhouse",
+        "SlaughterhouseSplash2": "Slaughterhouse",
+        "SlaughterhouseSplash3": "Slaughterhouse",
+        "SlaughterhouseSplash4": "Slaughterhouse",
+        "SlaughterhouseSplash5": "Slaughterhouse"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Chaac.png",
+            "t_GodPortrait_Chaac.png"
+          ]
+        },
+        {
+          "folder": "Skins/AbyssalHunter",
+          "cardFiles": [
+            "t_SkinCard_Chaac_AbyssalHunter.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Chaac_AbyssalHunter.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Demon",
+          "cardFiles": [
+            "t_SkinCard_Chaac_Demon.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Chaac_Demon.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/NecroticDivinity",
+          "cardFiles": [
+            "t_Chaac_NecroticDivinity_SkinCard.png"
+          ],
+          "iconFiles": [
+            "t_Chaac_NecroticDivinity_SkinPortrait.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Slaughterhouse",
+          "cardFiles": [
+            "t_SkinCard_Chaac_Slaughterhouse.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Chaac_Slaughterhouse.png"
+          ],
+          "prismFiles": [
+            "t_SkinCard_Chaac_Slaughterhouse_-_Prism01.png",
+            "t_SkinCard_Chaac_Slaughterhouse_-_Prism02.png",
+            "t_SkinCard_Chaac_Slaughterhouse_-_Prism03.png",
+            "t_SkinCard_Chaac_Slaughterhouse_-_Prism04.png",
+            "t_SkinPortrait_Chaac_Slaughterhouse_-_Prism01.png",
+            "t_SkinPortrait_Chaac_Slaughterhouse_-_Prism02.png",
+            "t_SkinPortrait_Chaac_Slaughterhouse_-_Prism03.png",
+            "t_SkinPortrait_Chaac_Slaughterhouse_-_Prism04.png"
+          ],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Chaac",
+          "name": "Base Chaac",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "TSkincardAbyssalhunter",
+          "name": "T Skincard Abyssalhunter",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "WallpaperCharredsoul11r83840x2160",
+          "name": "Wallpaper Charredsoul 11 R 83840 X 2160",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "SlaughterhouseSplash1",
+          "name": "Slaughterhouse Splash 1",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 4,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "SlaughterhouseSplash2",
+          "name": "Slaughterhouse Splash 2",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "SlaughterhouseSplash3",
+          "name": "Slaughterhouse Splash 3",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "SlaughterhouseSplash4",
+          "name": "Slaughterhouse Splash 4",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "SlaughterhouseSplash5",
+          "name": "Slaughterhouse Splash 5",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": true,
+          "emptyStub": false
+        },
+        {
+          "key": "Demon",
+          "name": "Demon",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "NecroticDivinity",
+          "name": "Necrotic Divinity",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Charon",
+      "buildsGodName": "Charon",
+      "issues": [],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Charon.png",
+            "t_GodPortrait_Charon.png"
+          ]
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [
+            "t_GodCard_Charon_Mastery.png"
+          ],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Charon",
+          "name": "Base Charon",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Chiron",
+      "buildsGodName": "Chiron",
+      "issues": [],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Chiron.png",
+            "t_GodPortrait_Chiron.png"
+          ]
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [
+            "t_GodCard_Chiron_Mastery.png"
+          ],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Sagittarius",
+          "cardFiles": [
+            "t_SkinCard_Chiron_Sagittarius.png"
+          ],
+          "iconFiles": [
+            "t_SkinIcon_Chiron_Sagittarius.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Sagittarius",
+          "name": "Sagittarius",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Cupid",
+      "buildsGodName": "Cupid",
+      "issues": [
+        "builds_skin_key_folder_mismatch: ElfrangerSplash1920x1080 (has paths but no matching Skins/ElfrangerSplash1920x1080)"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "files": [
+            "t_GodCard_Cupid.png",
+            "t_GodPortrait_Cupid.png"
+          ]
+        },
+        {
+          "folder": "Skins/Bighead",
+          "cardFiles": [
+            "t_SkinCard_Cupid_BigHead.png"
+          ],
+          "iconFiles": [
+            "t_SkinIcon_Cupid_BigHead.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/CourtArcher",
+          "cardFiles": [
+            "t_SkinCard_Cupid_CourtArcher.png"
+          ],
+          "iconFiles": [
+            "t_SkinPortrait_Cupid_CourtArcher.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/LilThanatos",
+          "cardFiles": [
+            "t_SkinCard_Cupid_LilThan.png"
+          ],
+          "iconFiles": [
+            "t_SkinIcon_Cupid_LilThan.png"
+          ],
+          "prismFiles": [
+            "t_SkinCard_Cupid_LilThan_Prism01.png",
+            "t_SkinCard_Cupid_LilThan_Prism02.png",
+            "t_SkinCard_Cupid_LilThan_Prism03.png",
+            "t_SkinCard_Cupid_LilThan_Prism04.png",
+            "t_SkinIcon_Cupid_LilThan_Prism01.png",
+            "t_SkinIcon_Cupid_LilThan_Prism02.png",
+            "t_SkinIcon_Cupid_LilThan_Prism03.png",
+            "t_SkinIcon_Cupid_LilThan_Prism04.png"
+          ],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        },
+        {
+          "folder": "Skins/Mastery",
+          "cardFiles": [],
+          "iconFiles": [],
+          "prismFiles": [],
+          "paletteFiles": [],
+          "prismsSubdir": null
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "key": "Cupid",
+          "name": "Base Cupid",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "ElfrangerSplash1920x1080",
+          "name": "Elfranger Splash 1920 X 1080",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "Bighead",
+          "name": "Bighead",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "CourtArcher",
+          "name": "Court Archer",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 0,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        },
+        {
+          "key": "LilThanatos",
+          "name": "Lil Thanatos",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "hasCardArt": true,
+          "variantCount": 4,
+          "hideFromSkinList": false,
+          "emptyStub": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "Icons_Artio_A04B",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Artio/Abilities/Icons_Artio_A04B",
+    "Properties": {
+      "ImportedSize": {
+        "X": 127,
+        "Y": 128
+      },
+      "LightingGuid": "947C1089-47129817-E1820A9B-C07ACDE6",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 127,
+    "SizeY": 128,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 65024,
+          "SizeOnDisk": 65024,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 127,
+        "SizeY": 128,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

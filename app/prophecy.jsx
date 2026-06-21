@@ -21,7 +21,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CryptoJS from 'crypto-js';
 import { getWallpaperByGodName, getRemoteGodIconByName, getLocalGodAsset, getLocalItemIcon, getSkinImage, getGodAbilityIcon, PANTHEON_ICONS } from './localIcons';
-import buildsData from './data/builds.json';
+import buildsData from '../lib/buildsData';
 import { flattenBuildsGods } from '../lib/normalizeBuildsGod';
 import { playVOX } from '../lib/prophecyAudio';
 import { getClassPoolKey, getPooledAbility, getPooledUltimate } from '../src/data/abilityPools';

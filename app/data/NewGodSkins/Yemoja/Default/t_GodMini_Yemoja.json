@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_GodMini_Yemoja",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Yemoja/Default/t_GodMini_Yemoja",
+    "Properties": {
+      "ImportedSize": {
+        "X": 44,
+        "Y": 44
+      },
+      "LightingGuid": "652D205D-433F91D8-8545B198-1B493EDD",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 44,
+    "SizeY": 44,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT1",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 968,
+          "SizeOnDisk": 968,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 44,
+        "SizeY": 44,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_SkinCard_Fenrir_WrecktheHalls_P1",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Fenrir/Skins/WrecktheHalls/t_SkinCard_Fenrir_WrecktheHalls_P1",
+    "Properties": {
+      "ImportedSize": {
+        "X": 2400,
+        "Y": 3600
+      },
+      "LightingGuid": "20A9AC03-4D4D21BF-EEFB84B5-8D1464DB",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 2400,
+    "SizeY": 3600,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 34560000,
+          "SizeOnDisk": 34560000,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 2400,
+        "SizeY": 3600,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

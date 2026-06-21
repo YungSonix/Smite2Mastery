@@ -1,0 +1,107 @@
+{
+  "pantheon": "Voodoo",
+  "gods": [
+    {
+      "godName": "Baron Samedi",
+      "internalName": "BaronSamedi_Item",
+      "skins": [
+        {
+          "skinKey": "Baron Samedi",
+          "skinName": "Base Baron Samedi",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/BaronSamedi/Default/t_GodCard_BaronSamedi.png",
+            "cardArt": "app/data/NewGodSkins/BaronSamedi/Default/t_GodCard_BaronSamedi.png",
+            "icon": "app/data/NewGodSkins/BaronSamedi/Default/t_GodPortrait_BaronSamedi.png",
+            "inGame": "app/data/NewGodSkins/BaronSamedi/Default/T_GodFull_BaronSamedi.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_SkinPortrait_BaronSamedi_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_BaronSamedi_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_BaronSamedi_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_SkinPortrait_BaronSamedi_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_BaronSamedi_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_BaronSamedi_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_SkinPortrait_BaronSamedi_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_BaronSamedi_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_BaronSamedi_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_SkinPortrait_BaronSamedi_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_BaronSamedi_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_BaronSamedi_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "Gingersnap",
+          "skinName": "Gingersnap",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/BaronSamedi/Skins/Gingersnap/t_SkinCard_BaronSamedi_Gingerbread.png",
+            "cardArt": "app/data/NewGodSkins/BaronSamedi/Skins/Gingersnap/t_SkinCard_BaronSamedi_Gingerbread.png",
+            "icon": "app/data/NewGodSkins/BaronSamedi/Skins/Gingersnap/t_SkinPortrait_BaronSamedi_Gingersnap.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "NanoMancer",
+          "skinName": "Nano Mancer",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/BaronSamedi/Skins/NanoMancer/t_SkinCard_BaronSamedi_NanoMancer.png",
+            "cardArt": "app/data/NewGodSkins/BaronSamedi/Skins/NanoMancer/t_SkinCard_BaronSamedi_NanoMancer.png",
+            "icon": "app/data/NewGodSkins/BaronSamedi/Skins/NanoMancer/t_SkinPortrait_BaronSamedi_NanoMancer.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    }
+  ]
+}

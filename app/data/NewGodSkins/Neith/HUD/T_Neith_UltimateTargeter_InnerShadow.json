@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_Neith_UltimateTargeter_InnerShadow",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Neith/HUD/T_Neith_UltimateTargeter_InnerShadow",
+    "Properties": {
+      "ImportedSize": {
+        "X": 140,
+        "Y": 140
+      },
+      "LightingGuid": "978CF17A-494BB2E5-4B21EA98-BE645F1B",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 140,
+    "SizeY": 140,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 19600,
+          "SizeOnDisk": 19600,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 140,
+        "SizeY": 140,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

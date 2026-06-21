@@ -1,13 +1,48 @@
 import { ICON_PATHS, REMOTE_BASE_URLS } from '../config';
 import { ROLE_ICONS, PANTHEON_ICON_FILES, PANTHEON_BACKDROP_FILES } from '../lib/imageGrabber';
+import { SKIN_LOADOUT_LOCAL_BUNDLES } from '../lib/skinLoadoutLocalBundles';
+import {
+  ITEM_ICON_FILE_ALIASES,
+  ITEM_ICON_SPACED_FILES,
+  camelCaseToSpacedLabel,
+  normalizeItemIconKey,
+} from '../lib/itemIconAliases';
 
 const ITEM_ICONS_PATH = ICON_PATHS.ITEM_ICONS;
 const ITEM_ICONS_FILLED_PATH = ICON_PATHS.ITEM_ICONS_FILLED;
 const GOD_ICONS_PATH = ICON_PATHS.GOD_ICONS;
+const ASPECT_ICONS_PATH = ICON_PATHS.ASPECT_ICONS;
 const SKINS_PATH = ICON_PATHS.SKINS;
 
 /** Repo-relative paths under `app/data/NewGodSkins/` (PNG) — resolved to GitHub raw URLs. */
 const NEW_GOD_SKINS_PREFIX = 'app/data/NewGodSkins/';
+
+/** Repo-relative paths under `app/data/AspectIcons/` (webp) — same as `ICON_PATHS.ASPECT_ICONS`. */
+const ASPECT_ICONS_PREFIX = 'app/data/AspectIcons/';
+
+/**
+ * Shared aspect slot art on `master` under `app/data/AspectIcons/`
+ * ([repo tree](https://github.com/YungSonix/Smite2Mastery/tree/master/app/data/AspectIcons)).
+ * Only these basenames are loaded from that folder; per-god `apolloAspect.webp`-style files stay on `GOD_ICONS`.
+ */
+const ASPECT_POOL_FILENAMES = new Set(
+  [
+    'arrowAspect.webp',
+    'eyeAspect.webp',
+    'fatArrowAspect.webp',
+    'fatHeartAspect.webp',
+    'fistAspect.webp',
+    'handAspect.webp',
+    'heartAspect.webp',
+    'radarAspect.webp',
+    'shieldAspect.webp',
+    'stickyFootAspect.webp',
+    'stunAspect.webp',
+    'swirlAspect.webp',
+    'swordAspect.webp',
+    'swordsAspect.webp',
+  ].map((s) => s.toLowerCase())
+);
 
 // Stable `{ uri }` instances so expo-image does not treat every render as a new source (avoids refetch/flash).
 const uriSourceCache = new Map();
@@ -32,33 +67,173 @@ function createImageUri(basePath, filename) {
   return cached;
 }
 
-// Item icon lookup - returns object with both lowercase and original case options
-// Tries lowercase first, then falls back to original case
+function splitIconBasename(base) {
+  const trimmed = String(base || '').trim();
+  if (!trimmed) return { name: '', ext: '.webp' };
+  const dot = trimmed.lastIndexOf('.');
+  if (dot > 0 && dot >= trimmed.length - 5) {
+    return { name: trimmed.slice(0, dot), ext: trimmed.slice(dot) };
+  }
+  return { name: trimmed, ext: '.webp' };
+}
+
+/**
+ * Filename variants for one icon stem (PascalCase, lowerCamelCase, all-lowercase).
+ */
+function buildStemFilenameVariants(name, ext) {
+  if (!name) return [];
+  const out = [];
+  const seen = new Set();
+  const push = (filename) => {
+    const key = filename.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    out.push(filename);
+  };
+
+  push(name + ext);
+
+  if (/^[A-Z]/.test(name) && name.length > 1) {
+    push(name.charAt(0).toLowerCase() + name.slice(1) + ext);
+  }
+
+  push(name.toLowerCase() + ext);
+
+  if (/^[a-z]/.test(name) && /[A-Z]/.test(name.slice(1))) {
+    push(name.charAt(0).toUpperCase() + name.slice(1) + ext);
+  }
+
+  return out;
+}
+
+/**
+ * Ordered filename candidates for GitHub Item Icons.
+ * Priority: JSON icon basename variants → aliases → internalName variants → spaced PNG fallbacks.
+ */
+export function buildItemIconFilenameCandidates(base, internalName = '') {
+  const iconBasename = base && base.includes('/') ? base.split('/').pop() : base;
+  const { name: iconStem, ext: iconExt } = splitIconBasename(iconBasename || '');
+
+  const stems = new Set();
+  if (iconStem) stems.add(iconStem);
+  for (const raw of [internalName]) {
+    if (!raw) continue;
+    const trimmed = raw.includes('/') ? raw.split('/').pop() : raw;
+    const { name } = splitIconBasename(trimmed);
+    if (name) stems.add(name);
+  }
+  if (!stems.size) return [];
+
+  const candidates = [];
+  const seen = new Set();
+  const push = (filename) => {
+    if (!filename) return;
+    const key = filename.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    candidates.push(filename);
+  };
+
+  const pushStemVariants = (stem, exts = ['.webp', '.png', '.PNG']) => {
+    if (!stem) return;
+    const cleanStem = stem.replace(/\.[^.]+$/, '');
+    for (const ext of exts) {
+      buildStemFilenameVariants(cleanStem, ext).forEach(push);
+    }
+  };
+
+  // 1) Alias (when GitHub uses a different filename) then JSON icon path variants
+  if (iconStem) {
+    const aliasFromIcon = ITEM_ICON_FILE_ALIASES[normalizeItemIconKey(iconStem)];
+    if (aliasFromIcon) push(aliasFromIcon);
+    pushStemVariants(iconStem, iconExt ? [iconExt, '.webp', '.png', '.PNG'] : undefined);
+  }
+
+  // 2) internalName + aliases + spaced files (when icon path differs or is missing)
+  for (const stem of stems) {
+    if (stem === iconStem) continue;
+
+    const norm = normalizeItemIconKey(stem);
+    const alias = ITEM_ICON_FILE_ALIASES[norm];
+    if (alias) push(alias);
+
+    pushStemVariants(stem);
+  }
+
+  // 3) Spaced / hyphenated PNG uploads on GitHub (last resort)
+  for (const stem of stems) {
+    const norm = normalizeItemIconKey(stem);
+    const spacedFile = ITEM_ICON_SPACED_FILES[norm];
+    if (spacedFile) push(spacedFile);
+
+    const spaced = camelCaseToSpacedLabel(stem);
+    if (spaced !== stem) {
+      push(`${spaced}.png`);
+      push(`${spaced}.webp`);
+    }
+  }
+
+  return candidates;
+}
+
+/** @returns {{ uri: string, cacheKey: string }[]} */
+export function getItemIconUriChain(localIcon) {
+  if (!localIcon) return [];
+  if (localIcon.chain?.length) return localIcon.chain;
+  if (typeof localIcon === 'object' && localIcon.uri && !localIcon.primary) return [localIcon];
+  const chain = [];
+  if (localIcon.primary) chain.push(localIcon.primary);
+  else if (localIcon.uri) chain.push(localIcon);
+  if (localIcon.fallback) chain.push(localIcon.fallback);
+  if (localIcon.fallbacks?.length) chain.push(...localIcon.fallbacks);
+  return chain;
+}
+
+export function getItemIconSource(localIcon, attemptIndex = 0) {
+  const chain = getItemIconUriChain(localIcon);
+  return chain[attemptIndex] || chain[0] || null;
+}
+
+export function readItemIconAttempt(failedMap, key) {
+  const v = failedMap?.[key];
+  return typeof v === 'number' ? v : v ? 1 : 0;
+}
+
+export function bumpItemIconAttempt(setFailedMap, key, localIcon, currentAttempt) {
+  const chain = getItemIconUriChain(localIcon);
+  if (currentAttempt + 1 < chain.length && setFailedMap) {
+    setFailedMap((prev) => ({ ...prev, [key]: currentAttempt + 1 }));
+  }
+}
+
+// Item icon lookup — tries original path, lowerCamelCase, then all-lowercase (GitHub Item Icons naming).
 // options.filled: use Item Icons Filled folder when true
 const itemIconResultCache = new Map();
+const ITEM_ICON_CACHE_VERSION = 'v2';
 
 export function getLocalItemIcon(iconPath, options = {}) {
-  if (!iconPath) return null;
-  const base = iconPath.split('/').pop() || '';
+  if (!iconPath && !options.internalName) return null;
+  const base = (iconPath && iconPath.split('/').pop()) || options.internalName || '';
   if (!base) return null;
 
   const basePath = options.filled ? ITEM_ICONS_FILLED_PATH : ITEM_ICONS_PATH;
 
-  const lowercaseBase = base.toLowerCase();
-  const originalBase = base;
-  const resultCacheKey = `${basePath}|${lowercaseBase}|${originalBase}`;
+  const candidates = buildItemIconFilenameCandidates(base, options.internalName || '');
+  const resultCacheKey = `${ITEM_ICON_CACHE_VERSION}|${basePath}|${options.internalName || ''}|${candidates.join('|')}`;
   const cachedResult = itemIconResultCache.get(resultCacheKey);
   if (cachedResult) return cachedResult;
 
-  let result;
-  if (lowercaseBase === originalBase) {
-    result = createImageUri(basePath, lowercaseBase);
-  } else {
-    result = {
-      primary: createImageUri(basePath, lowercaseBase),
-      fallback: createImageUri(basePath, originalBase),
-    };
-  }
+  if (!candidates.length) return null;
+
+  const chain = candidates.map((f) => createImageUri(basePath, f));
+  const result = chain.length === 1
+    ? chain[0]
+    : {
+        primary: chain[0],
+        fallback: chain[1] || null,
+        fallbacks: chain.slice(2),
+        chain,
+      };
   itemIconResultCache.set(resultCacheKey, result);
   return result;
 }
@@ -144,9 +319,29 @@ export function godHasVariants(godName) {
 // God asset lookup that resolves a direct icon filename.
 export function getLocalGodAsset(iconPath) {
   if (!iconPath) return null;
-  const base = iconPath.split('/').pop() || '';
+  const raw = String(iconPath).trim().replace(/\\/g, '/');
+  if (/^https?:\/\//i.test(raw)) {
+    return createFullUriSource(raw);
+  }
+
+  const normalized = raw.replace(/^\/+/, '');
+  if (normalized.toLowerCase().startsWith(ASPECT_ICONS_PREFIX.toLowerCase())) {
+    const uri =
+      `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/` +
+      normalized
+        .split('/')
+        .map((seg) => encodeURIComponent(seg))
+        .join('/');
+    return createFullUriSource(uri);
+  }
+
+  const base = raw.split('/').pop() || '';
   if (!base) return null;
-  
+
+  if (/\.webp$/i.test(base) && ASPECT_POOL_FILENAMES.has(base.toLowerCase())) {
+    return createImageUri(ASPECT_ICONS_PATH, base);
+  }
+
   return createImageUri(GOD_ICONS_PATH, base);
 }
 
@@ -245,10 +440,19 @@ export function getSkinImage(skinPath) {
   }
 
   const normalized = raw.replace(/^\/+/, '');
+  const localBundle = SKIN_LOADOUT_LOCAL_BUNDLES[normalized];
+  if (localBundle) {
+    return localBundle;
+  }
   if (normalized.toLowerCase().startsWith(NEW_GOD_SKINS_PREFIX.toLowerCase())) {
+    // Data may still reference UE `.json` exports; prefer raster sibling on GitHub when present.
+    let rasterPath = normalized;
+    if (/\.json$/i.test(rasterPath)) {
+      rasterPath = rasterPath.replace(/\.json$/i, '.png');
+    }
     const uri =
       `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/` +
-      normalized
+      rasterPath
         .split('/')
         .map((seg) => encodeURIComponent(seg))
         .join('/');
@@ -406,6 +610,11 @@ export function getPantheonIcon(pantheon) {
  * God page header backdrop for a pantheon string (matches `PANTHEON_ICONS` normalization).
  * Returns null when no bundled backdrop exists (e.g. Celtic, Korean, Polynesian, Slavic).
  */
+/** God detail header: pantheon backdrop (full wide art), not god portrait/card art. */
+export function getGodPageBackdrop(_god, _godDisplayName, pantheon) {
+  return getPantheonBackdrop(pantheon);
+}
+
 export function getPantheonBackdrop(pantheon) {
   let p = pantheon;
   if (String(p || '').trim().toLowerCase() === 'babalonian') {

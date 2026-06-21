@@ -1,0 +1,118 @@
+[
+  {
+    "Type": "Material",
+    "Name": "t_FX_NeZha_Ult_HitZoneFire_01_Mat",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Material'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Ne_Zha/ULT_Meter/t_FX_NeZha_Ult_HitZoneFire_01_Mat",
+    "Properties": {
+      "MaterialDomain": "EMaterialDomain::MD_UI",
+      "BlendMode": "EBlendMode::BLEND_Translucent",
+      "bCanMaskedBeAssumedOpaque": true,
+      "StateId": "591D0210-43944566-B51D619F-3C05D179",
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedExpressionData": {
+      "RuntimeEntries": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[1]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[2]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[3]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[4]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[5]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[6]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[7]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[8]": {
+        "ParameterInfoSet": []
+      },
+      "ScalarPrimitiveDataIndexValues": [],
+      "VectorPrimitiveDataIndexValues": [],
+      "ScalarValues": [],
+      "StaticSwitchValues": [],
+      "DynamicSwitchValues": [],
+      "VectorValues": [],
+      "DoubleVectorValues": [],
+      "TextureValues": [],
+      "TextureCollectionValues": [],
+      "FontValues": [],
+      "FontPageValues": [],
+      "RuntimeVirtualTextureValues": [],
+      "SparseVolumeTextureValues": [],
+      "ReferencedTextures": [
+        {
+          "ObjectName": "Texture2D't_FX_NeZha_Ult_HitZoneFire_01'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Ne_Zha/ULT_Meter/t_FX_NeZha_Ult_HitZoneFire_01.0"
+        },
+        {
+          "ObjectName": "Texture2D'T_GOD_Common_EFX2'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/MaterialPatterns/T_GOD_Common_EFX2.0"
+        }
+      ],
+      "ReferencedTextureCollections": [],
+      "FunctionInfos": [
+        {
+          "StateId": "74EBE7B1-4CF16B17-B3AF89BE-CAF6271A",
+          "Function": {
+            "ObjectName": "MaterialFunction'MF_Distortion_Directional_Frames'",
+            "ObjectPath": "/Game/UI/Shared/Materials/MaterialFunctions/General/MF_Distortion_Directional_Frames.0"
+          }
+        }
+      ],
+      "FunctionInfosStateCRC": 3345089524,
+      "ParameterCollectionInfos": [],
+      "GrassTypes": [],
+      "MaterialLayers": {
+        "Layers": [],
+        "Blends": [],
+        "Tree": {
+          "Nodes": [],
+          "Payloads": [],
+          "Root": -1
+        }
+      },
+      "DynamicParameterNames": [],
+      "QualityLevelsUsed": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "bHasMaterialLayers": false,
+      "bHasRuntimeVirtualTextureOutput": false,
+      "bHasFirstPersonOutput": false,
+      "bHasSceneColor": false,
+      "bHasPerInstanceCustomData": false,
+      "bHasPerInstanceRandom": false,
+      "bHasVertexInterpolator": false,
+      "bHasCustomizedUVs": false,
+      "bHasMeshPaintTexture": false,
+      "PropertyConnectedMask": 35
+    },
+    "ReferencedTextures": [
+      {
+        "ObjectName": "Texture2D't_FX_NeZha_Ult_HitZoneFire_01'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/Ne_Zha/ULT_Meter/t_FX_NeZha_Ult_HitZoneFire_01.0"
+      },
+      {
+        "ObjectName": "Texture2D'T_GOD_Common_EFX2'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/MaterialPatterns/T_GOD_Common_EFX2.0"
+      }
+    ]
+  }
+]

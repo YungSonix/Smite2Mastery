@@ -1,0 +1,35 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSVMeter_Mulan_Prog_1_3_Fill",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Mulan/PSV_Meter/t_PSVMeter_Mulan_Prog_1_3_Fill",
+    "Properties": {
+      "ImportedSize": {
+        "X": 8,
+        "Y": 64
+      },
+      "LightingGuid": "097A9566-45722A8E-9BA51E99-1256CFDD",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI"
+    },
+    "SizeX": 8,
+    "SizeY": 64,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 512,
+          "SizeOnDisk": 512,
+          "OffsetInFile": "0x71"
+        },
+        "SizeX": 8,
+        "SizeY": 64,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

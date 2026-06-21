@@ -1,0 +1,824 @@
+{
+  "pantheon": "Chinese",
+  "gods": [
+    {
+      "godName": "Da Ji",
+      "internalName": "DaJi_Item",
+      "skins": [
+        {
+          "skinKey": "DaJi",
+          "skinName": "Base Da Ji",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/DaJi/Default/t_GodCard_Daji.png",
+            "cardArt": "app/data/NewGodSkins/DaJi/Default/t_GodCard_Daji.png",
+            "icon": "app/data/NewGodSkins/DaJi/Default/t_GodPortrait_Daji.png",
+            "inGame": "app/data/NewGodSkins/DaJi/Default/t_GodFull_Daji.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/DaJi/Skins/Mastery/T_Daji_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/DaJi/Skins/Mastery/t_SkinCard_Mastery.png",
+              "skin": "app/data/NewGodSkins/DaJi/Skins/Mastery/t_SkinCard_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/DaJi/Skins/Mastery/T_Daji_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/DaJi/Skins/Mastery/t_SkinCard_Mastery.png",
+              "skin": "app/data/NewGodSkins/DaJi/Skins/Mastery/t_SkinCard_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/DaJi/Skins/Mastery/T_Daji_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/DaJi/Skins/Mastery/t_SkinCard_Mastery.png",
+              "skin": "app/data/NewGodSkins/DaJi/Skins/Mastery/t_SkinCard_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/DaJi/Skins/Mastery/T_Daji_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/DaJi/Skins/Mastery/t_SkinCard_Mastery.png",
+              "skin": "app/data/NewGodSkins/DaJi/Skins/Mastery/t_SkinCard_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "Devil_Punk",
+          "skinName": "Devil Punk",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "1000"
+          },
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Classic (Traveler)",
+          "assets": {
+            "skin": "app/data/NewGodSkins/DaJi/Skins/DevilPunk/t_SkinCard_Daji_DevilPunk_Base.png",
+            "cardArt": "app/data/NewGodSkins/DaJi/Skins/DevilPunk/t_SkinCard_Daji_DevilPunk_Base.png",
+            "icon": "app/data/NewGodSkins/DaJi/Skins/DevilPunk/t_SkinPortrait_Daji_DevilPunk_Base.png"
+          },
+          "price": {
+            "diamonds": "1000"
+          },
+          "variants": [
+            {
+              "name": "Prism 1",
+              "cardArt": "app/data/NewGodSkins/DaJi/Skins/DevilPunk/t_SkinCard_Daji_DevilPunk_Prism01.png",
+              "skin": "app/data/NewGodSkins/DaJi/Skins/DevilPunk/t_SkinCard_Daji_DevilPunk_Prism01.png",
+              "icon": "app/data/NewGodSkins/DaJi/Skins/DevilPunk/t_SkinPortrait_Daji_DevilPunk_Prism01.png"
+            },
+            {
+              "name": "Prism 2",
+              "cardArt": "app/data/NewGodSkins/DaJi/Skins/DevilPunk/t_SkinCard_Daji_DevilPunk_Prism02.png",
+              "skin": "app/data/NewGodSkins/DaJi/Skins/DevilPunk/t_SkinCard_Daji_DevilPunk_Prism02.png",
+              "icon": "app/data/NewGodSkins/DaJi/Skins/DevilPunk/t_SkinPortrait_Daji_DevilPunk_Prism02.png"
+            },
+            {
+              "name": "Prism 3",
+              "cardArt": "app/data/NewGodSkins/DaJi/Skins/DevilPunk/t_SkinCard_Daji_DevilPunk_Prism03.png",
+              "skin": "app/data/NewGodSkins/DaJi/Skins/DevilPunk/t_SkinCard_Daji_DevilPunk_Prism03.png",
+              "icon": "app/data/NewGodSkins/DaJi/Skins/DevilPunk/t_SkinPortrait_Daji_DevilPunk_Prism03.png"
+            },
+            {
+              "name": "Prism 4",
+              "cardArt": "app/data/NewGodSkins/DaJi/Skins/DevilPunk/t_SkinCard_Daji_DevilPunk_Prism04.png",
+              "skin": "app/data/NewGodSkins/DaJi/Skins/DevilPunk/t_SkinCard_Daji_DevilPunk_Prism04.png",
+              "icon": "app/data/NewGodSkins/DaJi/Skins/DevilPunk/t_SkinPortrait_Daji_DevilPunk_Prism04.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "Vixen",
+          "skinName": "Vixen",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Twitch Drop",
+          "assets": {
+            "skin": "app/data/NewGodSkins/DaJi/Skins/Vixen/t_SkinCard_Daji_Vixen.png",
+            "cardArt": "app/data/NewGodSkins/DaJi/Skins/Vixen/t_SkinCard_Daji_Vixen.png",
+            "icon": "app/data/NewGodSkins/DaJi/Skins/Vixen/t_SkinPortrait_Daji_Vixen.png"
+          },
+          "price": {
+            "diamonds": "0"
+          }
+        }
+      ]
+    },
+    {
+      "godName": "Hua Mulan",
+      "internalName": "Mulan_Item",
+      "skins": [
+        {
+          "skinKey": "Hua Mulan",
+          "skinName": "Base Hua Mulan",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Mulan/Default/t_GodCard_Mulan.png",
+            "cardArt": "app/data/NewGodSkins/Mulan/Default/t_GodCard_Mulan.png",
+            "icon": "app/data/NewGodSkins/Mulan/Default/t_GodPortrait_Mulan.png",
+            "inGame": "app/data/NewGodSkins/Mulan/Default/t_GodFull_Mulan.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Mulan/Skins/Mastery/T_Mulan_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Mulan/Skins/Mastery/t_Mulan_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Mulan/Skins/Mastery/t_Mulan_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Mulan/Skins/Mastery/T_Mulan_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Mulan/Skins/Mastery/t_Mulan_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Mulan/Skins/Mastery/t_Mulan_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Mulan/Skins/Mastery/T_Mulan_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Mulan/Skins/Mastery/t_Mulan_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Mulan/Skins/Mastery/t_Mulan_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Mulan/Skins/Mastery/T_Mulan_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Mulan/Skins/Mastery/t_Mulan_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Mulan/Skins/Mastery/t_Mulan_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "HighHonor",
+          "skinName": "High Honor",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Mulan/Skins/HighHonor/t_SkinCard_Mulan_HighHonor.png",
+            "cardArt": "app/data/NewGodSkins/Mulan/Skins/HighHonor/t_SkinCard_Mulan_HighHonor.png",
+            "icon": "app/data/NewGodSkins/Mulan/Skins/HighHonor/t_SkinPortrait_Mulan_HighHonor.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "Moolan",
+          "skinName": "Moolan",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Mulan/Skins/Moolan/t_SkinCard_Mulan_Moolan_Base.png",
+            "cardArt": "app/data/NewGodSkins/Mulan/Skins/Moolan/t_SkinCard_Mulan_Moolan_Base.png",
+            "icon": "app/data/NewGodSkins/Mulan/Skins/Moolan/t_SkinPortait_Mulan_Moolan_Base.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism 1",
+              "cardArt": "app/data/NewGodSkins/Mulan/Skins/Moolan/t_SkinCard_Mulan_Moolan_Prism01.png",
+              "skin": "app/data/NewGodSkins/Mulan/Skins/Moolan/t_SkinCard_Mulan_Moolan_Prism01.png",
+              "icon": "app/data/NewGodSkins/Mulan/Skins/Moolan/t_SkinPortait_Mulan_Moolan_Prism01.png"
+            },
+            {
+              "name": "Prism 2",
+              "cardArt": "app/data/NewGodSkins/Mulan/Skins/Moolan/t_SkinCard_Mulan_Moolan_Prism02.png",
+              "skin": "app/data/NewGodSkins/Mulan/Skins/Moolan/t_SkinCard_Mulan_Moolan_Prism02.png",
+              "icon": "app/data/NewGodSkins/Mulan/Skins/Moolan/t_SkinPortait_Mulan_Moolan_Prism02.png"
+            },
+            {
+              "name": "Prism 3",
+              "cardArt": "app/data/NewGodSkins/Mulan/Skins/Moolan/t_SkinCard_Mulan_Moolan_Prism03.png",
+              "skin": "app/data/NewGodSkins/Mulan/Skins/Moolan/t_SkinCard_Mulan_Moolan_Prism03.png",
+              "icon": "app/data/NewGodSkins/Mulan/Skins/Moolan/t_SkinPortait_Mulan_Moolan_Prism03.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "MysteriousWarrior",
+          "skinName": "Mysterious Warrior",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Mulan/Skins/MysteriousWarrior/t_SkinCard_Mulan_MysteriousWarrior.png",
+            "cardArt": "app/data/NewGodSkins/Mulan/Skins/MysteriousWarrior/t_SkinCard_Mulan_MysteriousWarrior.png",
+            "icon": "app/data/NewGodSkins/Mulan/Skins/MysteriousWarrior/t_SkinPortrait_Mulan_MysteriousWarrior.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "Sentai",
+          "skinName": "Sentai",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Mulan/Skins/Sentai/t_SkinCard_Mulan_Sentai.png",
+            "cardArt": "app/data/NewGodSkins/Mulan/Skins/Sentai/t_SkinCard_Mulan_Sentai.png",
+            "icon": "app/data/NewGodSkins/Mulan/Skins/Sentai/t_SkinPortrait_Mulan_Sentai.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism B",
+              "cardArt": "app/data/NewGodSkins/Mulan/Skins/Sentai/Prisms/t_SkinCard_Mulan_Sentai_Prism_B.png",
+              "skin": "app/data/NewGodSkins/Mulan/Skins/Sentai/Prisms/t_SkinCard_Mulan_Sentai_Prism_B.png",
+              "icon": "app/data/NewGodSkins/Mulan/Skins/Sentai/Prisms/t_SkinIcon_Mulan_Sentai_Prism_B.png"
+            },
+            {
+              "name": "Prism C",
+              "cardArt": "app/data/NewGodSkins/Mulan/Skins/Sentai/Prisms/t_SkinCard_Mulan_Sentai_Prism_C.png",
+              "skin": "app/data/NewGodSkins/Mulan/Skins/Sentai/Prisms/t_SkinCard_Mulan_Sentai_Prism_C.png",
+              "icon": "app/data/NewGodSkins/Mulan/Skins/Sentai/Prisms/t_SkinIcon_Mulan_Sentai_Prism_C.png"
+            },
+            {
+              "name": "Prism D",
+              "cardArt": "app/data/NewGodSkins/Mulan/Skins/Sentai/Prisms/t_SkinCard_Mulan_Sentai_Prism_D.png",
+              "skin": "app/data/NewGodSkins/Mulan/Skins/Sentai/Prisms/t_SkinCard_Mulan_Sentai_Prism_D.png",
+              "icon": "app/data/NewGodSkins/Mulan/Skins/Sentai/Prisms/t_SkinIcon_Mulan_Sentai_Prism_D.png"
+            },
+            {
+              "name": "Prism E",
+              "cardArt": "app/data/NewGodSkins/Mulan/Skins/Sentai/Prisms/t_SkinCard_Mulan_Sentai_Prism_E.png",
+              "skin": "app/data/NewGodSkins/Mulan/Skins/Sentai/Prisms/t_SkinCard_Mulan_Sentai_Prism_E.png",
+              "icon": "app/data/NewGodSkins/Mulan/Skins/Sentai/Prisms/t_SkinIcon_Mulan_Sentai_Prism_E.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "godName": "Jing Wei",
+      "internalName": "JingWei_Item",
+      "skins": [
+        {
+          "skinKey": "Jing Wei",
+          "skinName": "Base Jing Wei",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/JingWei/Default/t_GodCard_JingWei.png",
+            "cardArt": "app/data/NewGodSkins/JingWei/Default/t_GodCard_JingWei.png",
+            "icon": "app/data/NewGodSkins/JingWei/Default/t_GodPortrait_JingWei.png",
+            "inGame": "app/data/NewGodSkins/JingWei/Default/T_GodFull_JingWei.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/JingWei/Skins/Mastery/T_JingWei_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/JingWei/Skins/Mastery/T_JingWei_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/JingWei/Skins/Mastery/T_JingWei_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/JingWei/Skins/Mastery/T_JingWei_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/JingWei/Skins/Mastery/T_JingWei_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/JingWei/Skins/Mastery/T_JingWei_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/JingWei/Skins/Mastery/T_JingWei_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/JingWei/Skins/Mastery/T_JingWei_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/JingWei/Skins/Mastery/T_JingWei_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/JingWei/Skins/Mastery/T_JingWei_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/JingWei/Skins/Mastery/T_JingWei_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/JingWei/Skins/Mastery/T_JingWei_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "BumbleBee",
+          "skinName": "Bumble Bee",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/JingWei/Skins/BumbleBee/t_SkinCard_JingWei_BumbleBee.png",
+            "cardArt": "app/data/NewGodSkins/JingWei/Skins/BumbleBee/t_SkinCard_JingWei_BumbleBee.png",
+            "icon": "app/data/NewGodSkins/JingWei/Skins/BumbleBee/t_SkinPortrait_JingWei_BumbleBee.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "CuteBat",
+          "skinName": "Cute Bat",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/JingWei/Skins/CuteBat/t_SkinCard_JingWei_CuteBat.png",
+            "cardArt": "app/data/NewGodSkins/JingWei/Skins/CuteBat/t_SkinCard_JingWei_CuteBat.png",
+            "icon": "app/data/NewGodSkins/JingWei/Skins/CuteBat/t_SkinPortrait_JingWei_CuteBat.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "DragonHeart",
+          "skinName": "Dragon Heart",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/JingWei/Skins/DragonHeart/t_SkinCard_JingWei_DragonHeart_Base.png",
+            "cardArt": "app/data/NewGodSkins/JingWei/Skins/DragonHeart/t_SkinCard_JingWei_DragonHeart_Base.png",
+            "icon": "app/data/NewGodSkins/JingWei/Skins/DragonHeart/t_SkinPortrait_JingWei_DragonHeart_Base.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism 1",
+              "cardArt": "app/data/NewGodSkins/JingWei/Skins/DragonHeart/t_SkinCard_JingWei_DragonHeart_Prism01.png",
+              "skin": "app/data/NewGodSkins/JingWei/Skins/DragonHeart/t_SkinCard_JingWei_DragonHeart_Prism01.png",
+              "icon": "app/data/NewGodSkins/JingWei/Skins/DragonHeart/t_SkinPortrait_JingWei_DragonHeart_Prism01.png"
+            },
+            {
+              "name": "Prism 2",
+              "cardArt": "app/data/NewGodSkins/JingWei/Skins/DragonHeart/t_SkinCard_JingWei_DragonHeart_Prism02.png",
+              "skin": "app/data/NewGodSkins/JingWei/Skins/DragonHeart/t_SkinCard_JingWei_DragonHeart_Prism02.png",
+              "icon": "app/data/NewGodSkins/JingWei/Skins/DragonHeart/t_SkinPortrait_JingWei_DragonHeart_Prism02.png"
+            },
+            {
+              "name": "Prism 3",
+              "cardArt": "app/data/NewGodSkins/JingWei/Skins/DragonHeart/t_SkinCard_JingWei_DragonHeart_Prism03.png",
+              "skin": "app/data/NewGodSkins/JingWei/Skins/DragonHeart/t_SkinCard_JingWei_DragonHeart_Prism03.png",
+              "icon": "app/data/NewGodSkins/JingWei/Skins/DragonHeart/t_SkinPortrait_JingWei_DragonHeart_Prism03.png"
+            },
+            {
+              "name": "Prism 4",
+              "cardArt": "app/data/NewGodSkins/JingWei/Skins/DragonHeart/t_SkinCard_JingWei_DragonHeart_Prism04.png",
+              "skin": "app/data/NewGodSkins/JingWei/Skins/DragonHeart/t_SkinCard_JingWei_DragonHeart_Prism04.png",
+              "icon": "app/data/NewGodSkins/JingWei/Skins/DragonHeart/t_SkinPortrait_JingWei_DragonHeart_Prism04.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "PoolParty",
+          "skinName": "Pool Party",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/JingWei/Skins/PoolParty/t_SkinCard_JingWei_PoolParty.png",
+            "cardArt": "app/data/NewGodSkins/JingWei/Skins/PoolParty/t_SkinCard_JingWei_PoolParty.png",
+            "icon": "app/data/NewGodSkins/JingWei/Skins/PoolParty/t_SkinPortrait_JingWei_PoolParty.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    },
+    {
+      "godName": "Ne Zha",
+      "internalName": "Ne_Zha_Item",
+      "skins": [
+        {
+          "skinKey": "Ne_Zha",
+          "skinName": "Base Ne Zha",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Ne_Zha/Default/t_GodCard_Ne_Zha.png",
+            "cardArt": "app/data/NewGodSkins/Ne_Zha/Default/t_GodCard_Ne_Zha.png",
+            "icon": "app/data/NewGodSkins/Ne_Zha/Default/t_GodPortrait_Ne_Zha.png",
+            "inGame": "app/data/NewGodSkins/Ne_Zha/Default/t_GodFull_Ne_Zha.png"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Ne_Zha/Skins/Mastery/T_Ne_Zha_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Ne_Zha/Skins/Mastery/t_GodCard_NeZha_Mastery.png",
+              "skin": "app/data/NewGodSkins/Ne_Zha/Skins/Mastery/t_GodCard_NeZha_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Ne_Zha/Skins/Mastery/T_Ne_Zha_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Ne_Zha/Skins/Mastery/t_GodCard_NeZha_Mastery.png",
+              "skin": "app/data/NewGodSkins/Ne_Zha/Skins/Mastery/t_GodCard_NeZha_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Ne_Zha/Skins/Mastery/T_Ne_Zha_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Ne_Zha/Skins/Mastery/t_GodCard_NeZha_Mastery.png",
+              "skin": "app/data/NewGodSkins/Ne_Zha/Skins/Mastery/t_GodCard_NeZha_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Ne_Zha/Skins/Mastery/T_Ne_Zha_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Ne_Zha/Skins/Mastery/t_GodCard_NeZha_Mastery.png",
+              "skin": "app/data/NewGodSkins/Ne_Zha/Skins/Mastery/t_GodCard_NeZha_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "FireLord",
+          "skinName": "Fire Lord",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Ne_Zha/Skins/FireLord/t_SkinCard_NeZha_FireLord_Base.png",
+            "cardArt": "app/data/NewGodSkins/Ne_Zha/Skins/FireLord/t_SkinCard_NeZha_FireLord_Base.png",
+            "icon": "app/data/NewGodSkins/Ne_Zha/Skins/FireLord/t_SkinPortrait_NeZha_FireLord_Base.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism 1",
+              "cardArt": "app/data/NewGodSkins/Ne_Zha/Skins/FireLord/t_SkinCard_NeZha_FireLord_Prism01.png",
+              "skin": "app/data/NewGodSkins/Ne_Zha/Skins/FireLord/t_SkinCard_NeZha_FireLord_Prism01.png",
+              "icon": "app/data/NewGodSkins/Ne_Zha/Skins/FireLord/t_SkinPortrait_NeZha_FireLord_Prism01.png"
+            },
+            {
+              "name": "Prism 2",
+              "cardArt": "app/data/NewGodSkins/Ne_Zha/Skins/FireLord/t_SkinCard_NeZha_FireLord_Prism02.png",
+              "skin": "app/data/NewGodSkins/Ne_Zha/Skins/FireLord/t_SkinCard_NeZha_FireLord_Prism02.png",
+              "icon": "app/data/NewGodSkins/Ne_Zha/Skins/FireLord/t_SkinPortrait_NeZha_FireLord_Prism02.png"
+            },
+            {
+              "name": "Prism 3",
+              "cardArt": "app/data/NewGodSkins/Ne_Zha/Skins/FireLord/t_SkinCard_NeZha_FireLord_Prism03.png",
+              "skin": "app/data/NewGodSkins/Ne_Zha/Skins/FireLord/t_SkinCard_NeZha_FireLord_Prism03.png",
+              "icon": "app/data/NewGodSkins/Ne_Zha/Skins/FireLord/t_SkinPortrait_NeZha_FireLord_Prism03.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "godName": "Nu Wa",
+      "internalName": "Nu_Wa_Item",
+      "skins": [
+        {
+          "skinKey": "Nu Wa",
+          "skinName": "Base Nu Wa",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/NuWa/Default/t_GodCard_NuWa.png",
+            "cardArt": "app/data/NewGodSkins/NuWa/Default/t_GodCard_NuWa.png",
+            "icon": "app/data/NewGodSkins/NuWa/Default/t_GodPortrait_NuWa.png",
+            "inGame": "app/data/NewGodSkins/NuWa/Default/T_GodFull_NuWa.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/NuWa/Skins/Mastery/t_SkinPortrait_NuWa_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/NuWa/Skins/Mastery/T_NuWa_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/NuWa/Skins/Mastery/T_NuWa_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/NuWa/Skins/Mastery/t_SkinPortrait_NuWa_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/NuWa/Skins/Mastery/T_NuWa_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/NuWa/Skins/Mastery/T_NuWa_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/NuWa/Skins/Mastery/t_SkinPortrait_NuWa_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/NuWa/Skins/Mastery/T_NuWa_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/NuWa/Skins/Mastery/T_NuWa_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/NuWa/Skins/Mastery/t_SkinPortrait_NuWa_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/NuWa/Skins/Mastery/T_NuWa_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/NuWa/Skins/Mastery/T_NuWa_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "BadBunny",
+          "skinName": "Bad Bunny",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/NuWa/Skins/BadBunny/t_SkinCard_NuWa_BadBunny.png",
+            "cardArt": "app/data/NewGodSkins/NuWa/Skins/BadBunny/t_SkinCard_NuWa_BadBunny.png",
+            "icon": "app/data/NewGodSkins/NuWa/Skins/BadBunny/t_SkinPortrait_NuWa_BadBunny.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "BunnyBliss",
+          "skinName": "Bunny Bliss",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/NuWa/Skins/BunnyBliss/t_SkinCard_NuWa_BunnyBliss.png",
+            "cardArt": "app/data/NewGodSkins/NuWa/Skins/BunnyBliss/t_SkinCard_NuWa_BunnyBliss.png",
+            "icon": "app/data/NewGodSkins/NuWa/Skins/BunnyBliss/t_SkinPortrait_NuWa_BunnyBliss.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "DarkSupreme",
+          "skinName": "Dark Supreme",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/NuWa/Skins/DarkSupreme/t_SkinCard_NuWa_DarkSupreme.png",
+            "cardArt": "app/data/NewGodSkins/NuWa/Skins/DarkSupreme/t_SkinCard_NuWa_DarkSupreme.png",
+            "icon": "app/data/NewGodSkins/NuWa/Skins/DarkSupreme/t_SkinPortrait_NuWa_DarkSupreme.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "MysticEnchantress",
+          "skinName": "Mystic Enchantress",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/NuWa/Skins/MysticEnchantress/t_SkinCard_NuWa_MysticEnchantress.png",
+            "cardArt": "app/data/NewGodSkins/NuWa/Skins/MysticEnchantress/t_SkinCard_NuWa_MysticEnchantress.png",
+            "icon": "app/data/NewGodSkins/NuWa/Skins/MysticEnchantress/t_SkinPortrait_NuWa_MysticEnchantress.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism 1",
+              "cardArt": "app/data/NewGodSkins/NuWa/Skins/MysticEnchantress/t_SkinCard_NuWa_MysticEnchantress_Prism01.png",
+              "skin": "app/data/NewGodSkins/NuWa/Skins/MysticEnchantress/t_SkinCard_NuWa_MysticEnchantress_Prism01.png",
+              "icon": "app/data/NewGodSkins/NuWa/Skins/MysticEnchantress/t_SkinPortrait_NuWa_MysticEnchantress_Prism01.png"
+            },
+            {
+              "name": "Prism 2",
+              "cardArt": "app/data/NewGodSkins/NuWa/Skins/MysticEnchantress/t_SkinCard_NuWa_MysticEnchantress_Prism02.png",
+              "skin": "app/data/NewGodSkins/NuWa/Skins/MysticEnchantress/t_SkinCard_NuWa_MysticEnchantress_Prism02.png",
+              "icon": "app/data/NewGodSkins/NuWa/Skins/MysticEnchantress/t_SkinPortrait_NuWa_MysticEnchantress_Prism02.png"
+            },
+            {
+              "name": "Prism 3",
+              "cardArt": "app/data/NewGodSkins/NuWa/Skins/MysticEnchantress/t_SkinCard_NuWa_MysticEnchantress_Prism03.png",
+              "skin": "app/data/NewGodSkins/NuWa/Skins/MysticEnchantress/t_SkinCard_NuWa_MysticEnchantress_Prism03.png",
+              "icon": "app/data/NewGodSkins/NuWa/Skins/MysticEnchantress/t_SkinPortrait_NuWa_MysticEnchantress_Prism03.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "NuwaVenstrike",
+          "skinName": "Nu Wa Ravenstrike)",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/NuWa/Skins/Ravenstrike/t_SkinCard_NuWa_Ravenstrike.png",
+            "cardArt": "app/data/NewGodSkins/NuWa/Skins/Ravenstrike/t_SkinCard_NuWa_Ravenstrike.png",
+            "icon": "app/data/NewGodSkins/NuWa/Skins/Ravenstrike/t_SkinPortrait_NuWa_Ravenstrike.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism B",
+              "cardArt": "app/data/NewGodSkins/NuWa/Skins/Ravenstrike/Prisms/t_SkinCard_NuWa_Ravenstrike_Prism_B.png",
+              "skin": "app/data/NewGodSkins/NuWa/Skins/Ravenstrike/Prisms/t_SkinCard_NuWa_Ravenstrike_Prism_B.png",
+              "icon": "app/data/NewGodSkins/NuWa/Skins/Ravenstrike/Prisms/t_SkinIcon_NuWa_Ravenstrike_Prism_B.png"
+            },
+            {
+              "name": "Prism C",
+              "cardArt": "app/data/NewGodSkins/NuWa/Skins/Ravenstrike/Prisms/t_SkinCard_NuWa_Ravenstrike_Prism_C.png",
+              "skin": "app/data/NewGodSkins/NuWa/Skins/Ravenstrike/Prisms/t_SkinCard_NuWa_Ravenstrike_Prism_C.png",
+              "icon": "app/data/NewGodSkins/NuWa/Skins/Ravenstrike/Prisms/t_SkinIcon_NuWa_Ravenstrike_Prism_C.png"
+            },
+            {
+              "name": "Prism D",
+              "cardArt": "app/data/NewGodSkins/NuWa/Skins/Ravenstrike/Prisms/t_SkinCard_NuWa_Ravenstrike_Prism_D.png",
+              "skin": "app/data/NewGodSkins/NuWa/Skins/Ravenstrike/Prisms/t_SkinCard_NuWa_Ravenstrike_Prism_D.png",
+              "icon": "app/data/NewGodSkins/NuWa/Skins/Ravenstrike/Prisms/t_SkinIcon_NuWa_Ravenstrike_Prism_D.png"
+            },
+            {
+              "name": "Prism E",
+              "cardArt": "app/data/NewGodSkins/NuWa/Skins/Ravenstrike/Prisms/t_SkinCard_NuWa_Ravenstrike_Prism_E.png",
+              "skin": "app/data/NewGodSkins/NuWa/Skins/Ravenstrike/Prisms/t_SkinCard_NuWa_Ravenstrike_Prism_E.png",
+              "icon": "app/data/NewGodSkins/NuWa/Skins/Ravenstrike/Prisms/t_SkinIcon_NuWa_Ravenstrike_Prism_E.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "PlayfulBunny",
+          "skinName": "Playful Bunny",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/NuWa/Skins/PlayfulBunny/t_SkinCard_NuWa_PlayfulBunny.png",
+            "cardArt": "app/data/NewGodSkins/NuWa/Skins/PlayfulBunny/t_SkinCard_NuWa_PlayfulBunny.png",
+            "icon": "app/data/NewGodSkins/NuWa/Skins/PlayfulBunny/t_SkinPortrait_NuWa_PlayfulBunny.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    }
+  ]
+}

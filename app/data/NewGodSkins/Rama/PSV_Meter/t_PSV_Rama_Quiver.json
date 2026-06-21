@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Rama_Quiver",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Rama/PSV_Meter/t_PSV_Rama_Quiver",
+    "Properties": {
+      "ImportedSize": {
+        "X": 120,
+        "Y": 120
+      },
+      "LightingGuid": "757339F6-439F0209-2443E6A4-30C55EA1",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 120,
+    "SizeY": 120,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 14400,
+          "SizeOnDisk": 14400,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 120,
+        "SizeY": 120,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

@@ -1,0 +1,188 @@
+[
+  {
+    "Type": "MaterialInstanceConstant",
+    "Name": "MI_Glow_with_initialBurst",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'MaterialInstanceConstant'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Amaterasu/PassiveMeter/Materials/MI_Glow_with_initialBurst",
+    "Properties": {
+      "Parent": {
+        "ObjectName": "Material'M_Glow_with_initialBurst'",
+        "ObjectPath": "/Game/UI/Shared/Materials/MaterialLibrary/M_Glow_with_initialBurst.0"
+      },
+      "bHasStaticPermutationResource": true,
+      "ScalarParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "Animate",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 1.0,
+          "ExpressionGUID": "89DF345C-4B4342D9-B3F2F888-5C50FD1D"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "Speed",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 2.0,
+          "ExpressionGUID": "50328E81-43BA0122-F52D9C94-D9137601"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "StanceMask",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "7F1DBA9F-41EAF020-12D4CCAA-2D046522"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "SolidOutlineGlowSize",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.403267,
+          "ExpressionGUID": "3410510E-4A03CD2D-17386E9E-EA9B19D0"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "Starburst_MaskControl",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.604256,
+          "ExpressionGUID": "83DB1597-47178609-08C16AA9-8A7EEDEA"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "RefractionDepthBias",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": 0.0,
+          "ExpressionGUID": "00000000-00000000-00000000-00000000"
+        }
+      ],
+      "VectorParameterValues": [
+        {
+          "ParameterInfo": {
+            "Name": "glowA color1",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 0.760784,
+            "G": 0.625139,
+            "B": 0.239609,
+            "A": 1.0,
+            "Hex": "E2CF86"
+          },
+          "ExpressionGUID": "C823C83C-4861E4F7-582BDCA6-775265E5"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "glowA color2",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 0.760784,
+            "G": 0.640074,
+            "B": 0.063669,
+            "A": 1.0,
+            "Hex": "E2D247"
+          },
+          "ExpressionGUID": "E0A90F9C-48E0BF49-7975D7BB-5FBC869C"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "glowB color2",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 0.760784,
+            "G": 0.187309,
+            "B": 0.096184,
+            "A": 1.0,
+            "Hex": "E27857"
+          },
+          "ExpressionGUID": "8819389C-47F12E6A-F87F6BBB-2312C1D7"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "glowBcolor1",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 0.760784,
+            "G": 0.431952,
+            "B": 0.140315,
+            "A": 1.0,
+            "Hex": "E2B069"
+          },
+          "ExpressionGUID": "A5304F20-4AC80F2C-D8D5BC89-9FEC7927"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "glowC color1",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 0.888151,
+            "G": 1.0,
+            "B": 0.370761,
+            "A": 1.0,
+            "Hex": "F2FFA4"
+          },
+          "ExpressionGUID": "2553DF2A-4C3EC841-530B2B9E-6D333B29"
+        },
+        {
+          "ParameterInfo": {
+            "Name": "glowC color2",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          "ParameterValue": {
+            "R": 0.505038,
+            "G": 1.0,
+            "B": 0.249928,
+            "A": 1.0,
+            "Hex": "BDFF89"
+          },
+          "ExpressionGUID": "4F63C1EE-4C247D42-AC450182-65D3393B"
+        }
+      ],
+      "BasePropertyOverrides": {
+        "BlendMode": "EBlendMode::BLEND_Additive",
+        "ShadingModel": "EMaterialShadingModel::MSM_Unlit",
+        "OpacityMaskClipValue": 0.3333
+      },
+      "StaticParametersRuntime": {
+        "StaticSwitchParameters": [
+          {
+            "Value": false,
+            "ParameterInfo": {
+              "Name": "preview anim?",
+              "Association": "EMaterialParameterAssociation::GlobalParameter",
+              "Index": -1
+            },
+            "bOverride": true,
+            "ExpressionGUID": "AD5F5AB3-42565A3D-EA6E5F8E-0D04B904"
+          }
+        ]
+      },
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedData": {
+      "ParentLayerIndexRemap": []
+    }
+  }
+]

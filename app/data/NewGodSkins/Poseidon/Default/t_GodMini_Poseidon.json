@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_GodMini_Poseidon",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Poseidon/Default/t_GodMini_Poseidon",
+    "Properties": {
+      "ImportedSize": {
+        "X": 44,
+        "Y": 44
+      },
+      "LightingGuid": "0058DD60-41024AEC-97721EA1-DD016794",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 44,
+    "SizeY": 44,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 1936,
+          "SizeOnDisk": 1936,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 44,
+        "SizeY": 44,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

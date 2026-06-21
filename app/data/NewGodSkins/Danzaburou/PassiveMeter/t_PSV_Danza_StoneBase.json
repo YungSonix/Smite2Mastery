@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Danza_StoneBase",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Danzaburou/PassiveMeter/t_PSV_Danza_StoneBase",
+    "Properties": {
+      "ImportedSize": {
+        "X": 172,
+        "Y": 92
+      },
+      "LightingGuid": "4F878C5E-4E24A34D-2DF16DB2-EBE56B2F",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 172,
+    "SizeY": 92,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 15824,
+          "SizeOnDisk": 15824,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 172,
+        "SizeY": 92,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

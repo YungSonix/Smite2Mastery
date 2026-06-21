@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Mercury_Frame",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Mercury/PSVMeter/t_PSV_Mercury_Frame",
+    "Properties": {
+      "ImportedSize": {
+        "X": 212,
+        "Y": 156
+      },
+      "LightingGuid": "CC055A85-47269ED5-76880DA2-E92D893C",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 212,
+    "SizeY": 156,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 132288,
+          "SizeOnDisk": 132288,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 212,
+        "SizeY": 156,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

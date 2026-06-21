@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "Osiris_BP05",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Osiris/PSV_Meter/S2_Assets/Osiris_BP05",
+    "Properties": {
+      "ImportedSize": {
+        "X": 36,
+        "Y": 92
+      },
+      "LightingGuid": "30F0902F-4CBA3A35-C986CA9A-D6B372D4",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 36,
+    "SizeY": 92,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 13248,
+          "SizeOnDisk": 13248,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 36,
+        "SizeY": 92,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

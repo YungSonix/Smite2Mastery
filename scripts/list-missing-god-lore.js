@@ -1,12 +1,12 @@
 /**
- * Lists gods that are missing lore text in app/data/builds.json.
+ * Lists gods that are missing lore text in app/data/God Information/Builds/builds.json.
  * Run: node scripts/list-missing-god-lore.js
  */
 
 const fs = require('fs');
 const path = require('path');
 
-const buildsPath = path.join(process.cwd(), 'app', 'data', 'builds.json');
+const { BUILDS_JSON: buildsPath } = require('../config/dataPaths');
 
 function flattenGods(input) {
   if (!input) return [];

@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_UGUI_Yemoja_Crystal_M_Active-1",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Yemoja/Passive/T_UGUI_Yemoja_Crystal_M_Active-1",
+    "Properties": {
+      "ImportedSize": {
+        "X": 100,
+        "Y": 180
+      },
+      "LightingGuid": "4634141F-475D8076-723BA8BD-FF9D86F8",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 100,
+    "SizeY": 180,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 18000,
+          "SizeOnDisk": 18000,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 100,
+        "SizeY": 180,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

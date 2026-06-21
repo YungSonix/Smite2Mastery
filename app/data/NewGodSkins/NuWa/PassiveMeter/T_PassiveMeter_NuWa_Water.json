@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_PassiveMeter_NuWa_Water",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/NuWa/PassiveMeter/T_PassiveMeter_NuWa_Water",
+    "Properties": {
+      "ImportedSize": {
+        "X": 61,
+        "Y": 105
+      },
+      "LightingGuid": "ABC7BAE9-47C7A896-08B69284-98BF86B6",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 61,
+    "SizeY": 105,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 25620,
+          "SizeOnDisk": 25620,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 61,
+        "SizeY": 105,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_Neith_UltimateTargeter_Glyph_ActiveFX",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Neith/HUD/T_Neith_UltimateTargeter_Glyph_ActiveFX",
+    "Properties": {
+      "ImportedSize": {
+        "X": 172,
+        "Y": 64
+      },
+      "LightingGuid": "8BABBF3B-4FE37B8C-17A287AA-AB5605E5",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 172,
+    "SizeY": 64,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 11008,
+          "SizeOnDisk": 11008,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 172,
+        "SizeY": 64,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

@@ -1,0 +1,107 @@
+{
+  "pantheon": "Korean",
+  "gods": [
+    {
+      "godName": "Princess Bari",
+      "internalName": "Bari_Item",
+      "skins": [
+        {
+          "skinKey": "Princess Bari",
+          "skinName": "Base Princess Bari",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Bari/Default/t_GodCard_Bari.png",
+            "cardArt": "app/data/NewGodSkins/Bari/Default/t_GodCard_Bari.png",
+            "icon": "app/data/NewGodSkins/Bari/Default/t_GodPortrait_Bari.png",
+            "inGame": "app/data/NewGodSkins/Bari/Default/t_GodFull_Bari.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Bari/Skins/Mastery/T_Bari_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Bari/Skins/Mastery/T_Bari_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Bari/Skins/Mastery/T_Bari_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Bari/Skins/Mastery/T_Bari_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "Reaping",
+          "skinName": "Reaping",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Bari/Skins/Reaping/t_SkinCard_Bari_Reaping.png",
+            "cardArt": "app/data/NewGodSkins/Bari/Skins/Reaping/t_SkinCard_Bari_Reaping.png",
+            "icon": "app/data/NewGodSkins/Bari/Skins/Reaping/t_SkinPortrait_Bari_Reaping.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "ShatteredVisions",
+          "skinName": "Shattered Visions",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Bari/Skins/ShatteredVisions/t_GodCard_ShatteredVisions.png",
+            "cardArt": "app/data/NewGodSkins/Bari/Skins/ShatteredVisions/t_GodCard_ShatteredVisions.png",
+            "icon": "app/data/NewGodSkins/Bari/Skins/ShatteredVisions/t_GodPortrait_ShatteredVisions.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    }
+  ]
+}

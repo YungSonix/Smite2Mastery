@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Scan app/data/Icons/Wallpapers and merge missing skin entries into app/data/builds.json.
+ * Scan app/data/Icons/Wallpapers and merge missing skin entries into app/data/God Information/Builds/builds.json.
  *
  * Usage:
  *   node scripts/import-wallpapers-to-builds.js              # dry-run (report only)
@@ -16,8 +16,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const projectRoot = path.resolve(__dirname, '..');
-const buildsPath = path.join(projectRoot, 'app', 'data', 'builds.json');
+const { PROJECT_ROOT: projectRoot, BUILDS_JSON: buildsPath } = require('../config/dataPaths');
 const wallpapersDir = path.join(projectRoot, 'app', 'data', 'Icons', 'Wallpapers');
 
 const IMAGE_EXT = new Set(['.webp', '.jpg', '.jpeg', '.png', '.gif']);

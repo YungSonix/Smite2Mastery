@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_PSV_Achilles_Armor_ProtStat",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Achilles/PSVMeter/T_PSV_Achilles_Armor_ProtStat",
+    "Properties": {
+      "ImportedSize": {
+        "X": 42,
+        "Y": 42
+      },
+      "LightingGuid": "B4FF89B8-41927920-A343A19D-2668764D",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 42,
+    "SizeY": 42,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 7056,
+          "SizeOnDisk": 7056,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 42,
+        "SizeY": 42,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

@@ -1,0 +1,674 @@
+{
+  "pantheon": "Japanese",
+  "gods": [
+    {
+      "godName": "Amaterasu",
+      "internalName": "Amaterasu_Item",
+      "skins": [
+        {
+          "skinKey": "Amaterasu",
+          "skinName": "Base Amaterasu",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Amaterasu/Default/t_GodCard_Amaterasu.png",
+            "cardArt": "app/data/NewGodSkins/Amaterasu/Default/t_GodCard_Amaterasu.png",
+            "icon": "app/data/NewGodSkins/Amaterasu/Default/t_GodPortrait_Amaterasu.png",
+            "inGame": "app/data/NewGodSkins/Amaterasu/Default/T_GodFull_Amateratsu.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/t_SkinPortrait_Amaterasu_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/T_Amaterasu_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/T_Amaterasu_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/t_SkinPortrait_Amaterasu_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/T_Amaterasu_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/T_Amaterasu_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/t_SkinPortrait_Amaterasu_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/T_Amaterasu_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/T_Amaterasu_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/t_SkinPortrait_Amaterasu_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/T_Amaterasu_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/T_Amaterasu_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "CosmicwitchSplash",
+          "skinName": "Cosmicwitch Splash",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Amaterasu/Skins/CosmicWitch/t_SkinCard_Amaterasu_ComsicWitch.png",
+            "cardArt": "app/data/NewGodSkins/Amaterasu/Skins/CosmicWitch/t_SkinCard_Amaterasu_ComsicWitch.png",
+            "icon": "app/data/NewGodSkins/Amaterasu/Skins/CosmicWitch/t_SkinPortrait_Amaterasu_CosmicWitch.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "DemonHunter",
+          "skinName": "Demon Hunter",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Amaterasu/Skins/DemonHunter/t_SkinCard_Amaterasu_DemonHunter.png",
+            "cardArt": "app/data/NewGodSkins/Amaterasu/Skins/DemonHunter/t_SkinCard_Amaterasu_DemonHunter.png",
+            "icon": "app/data/NewGodSkins/Amaterasu/Skins/DemonHunter/t_SkinPortrait_Amaterasu_DemonHunter.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "FoxyCard",
+          "skinName": "Foxy Card",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Amaterasu/Skins/Foxy/t_SkinCard_Amaterasu_Foxy.png",
+            "cardArt": "app/data/NewGodSkins/Amaterasu/Skins/Foxy/t_SkinCard_Amaterasu_Foxy.png",
+            "icon": "app/data/NewGodSkins/Amaterasu/Skins/Foxy/t_SkinPortrait_Amaterasu_Foxy.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "MaidOfMischief",
+          "skinName": "Maid Of Mischief",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Amaterasu/Skins/MaidofMischief/t_SkinCard_Amaterasu_MaidofMischief.png",
+            "cardArt": "app/data/NewGodSkins/Amaterasu/Skins/MaidofMischief/t_SkinCard_Amaterasu_MaidofMischief.png",
+            "icon": "app/data/NewGodSkins/Amaterasu/Skins/MaidofMischief/t_SkinPortrait_Amaterasu_MaidofMischief.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    },
+    {
+      "godName": "Danzaburou",
+      "internalName": "Danzaburou_Item",
+      "skins": [
+        {
+          "skinKey": "Danzaburou",
+          "skinName": "Base Danzaburou",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Danzaburou/Default/t_GodCard_Danzaburou.png",
+            "cardArt": "app/data/NewGodSkins/Danzaburou/Default/t_GodCard_Danzaburou.png",
+            "icon": "app/data/NewGodSkins/Danzaburou/Default/t_GodPortrait_Danzaburou.png",
+            "inGame": "app/data/NewGodSkins/Danzaburou/Default/T_GodFull__Danzaburou.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_SkinPortrait_Danzaburou_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_Danzaburou_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_Danzaburou_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_SkinPortrait_Danzaburou_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_Danzaburou_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_Danzaburou_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_SkinPortrait_Danzaburou_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_Danzaburou_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_Danzaburou_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_SkinPortrait_Danzaburou_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_Danzaburou_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_Danzaburou_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "BossmanSplash1920x1080",
+          "skinName": "Bossman Splash 1920 X 1080",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Danzaburou/Skins/BossMan/t_SkinCard_Danzaburou_Bossman.png",
+            "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/BossMan/t_SkinCard_Danzaburou_Bossman.png",
+            "icon": "app/data/NewGodSkins/Danzaburou/Skins/BossMan/t_SkinPortriat_Danzaburou_Bossman.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "ButlerofBins",
+          "skinName": "Butlerof Bins",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Danzaburou/Skins/ButlerofBins/t_SkinCard_Danzaburou_Butler.png",
+            "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/ButlerofBins/t_SkinCard_Danzaburou_Butler.png",
+            "icon": "app/data/NewGodSkins/Danzaburou/Skins/ButlerofBins/t_SkinPortrait_Danzaburou_Butler.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "Party_Animal",
+          "skinName": "Party Animal",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Danzaburou/Skins/Party_Animal/t_SkinCard_Danzaburou_PartyAnimal.png",
+            "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/Party_Animal/t_SkinCard_Danzaburou_PartyAnimal.png",
+            "icon": "app/data/NewGodSkins/Danzaburou/Skins/Party_Animal/t_SkinPortait_Danzaburou_PartyAnimal.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "PolarBear",
+          "skinName": "Polar Bear",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinCard_Danza_PolarBear.png",
+            "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinCard_Danza_PolarBear.png",
+            "icon": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinIcon_Danza_PolarBear.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism P1",
+              "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinCard_Danza_PolarBear_P1.png",
+              "skin": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinCard_Danza_PolarBear_P1.png",
+              "icon": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinIcon_Danza_PolarBear_P1.png"
+            },
+            {
+              "name": "Prism P2",
+              "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinCard_Danza_PolarBear_P2.png",
+              "skin": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinCard_Danza_PolarBear_P2.png",
+              "icon": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinIcon_Danza_PolarBear_P2.png"
+            },
+            {
+              "name": "Prism P3",
+              "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinCard_Danza_PolarBear_P3.png",
+              "skin": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinCard_Danza_PolarBear_P3.png",
+              "icon": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinIcon_Danza_PolarBear_P3.png"
+            },
+            {
+              "name": "Prism P4",
+              "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinCard_Danza_PolarBear_P4.png",
+              "skin": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinCard_Danza_PolarBear_P4.png",
+              "icon": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinIcon_Danza_PolarBear_P4.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "godName": "Izanami",
+      "internalName": "Izanami_Item",
+      "skins": [
+        {
+          "skinKey": "Izanami",
+          "skinName": "Base Izanami",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Izanami/Default/t_GodCard_Izanami.png",
+            "cardArt": "app/data/NewGodSkins/Izanami/Default/t_GodCard_Izanami.png",
+            "icon": "app/data/NewGodSkins/Izanami/Default/t_GodPortrait_Izanami.png",
+            "inGame": "app/data/NewGodSkins/Izanami/Default/T_GodFull_Izanami.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Izanami/Skins/Mastery/t_SkinPortrait_Izanami_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Izanami/Skins/Mastery/T_Izanami_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Izanami/Skins/Mastery/T_Izanami_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Izanami/Skins/Mastery/t_SkinPortrait_Izanami_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Izanami/Skins/Mastery/T_Izanami_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Izanami/Skins/Mastery/T_Izanami_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Izanami/Skins/Mastery/t_SkinPortrait_Izanami_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Izanami/Skins/Mastery/T_Izanami_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Izanami/Skins/Mastery/T_Izanami_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Izanami/Skins/Mastery/t_SkinPortrait_Izanami_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Izanami/Skins/Mastery/T_Izanami_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Izanami/Skins/Mastery/T_Izanami_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "01a",
+          "skinName": "01a",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Izanami/Skins/01a/t_GodCard_Izanami_01A.png",
+            "cardArt": "app/data/NewGodSkins/Izanami/Skins/01a/t_GodCard_Izanami_01A.png",
+            "icon": "app/data/NewGodSkins/Izanami/Skins/01a/t_GodPortrait_Izanami_01A.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "CreepynurseSplash",
+          "skinName": "Creepynurse Splash",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Izanami/Skins/CreepyNurse/t_SkinCard_Izanami_CreepyNurse.png",
+            "cardArt": "app/data/NewGodSkins/Izanami/Skins/CreepyNurse/t_SkinCard_Izanami_CreepyNurse.png",
+            "icon": "app/data/NewGodSkins/Izanami/Skins/CreepyNurse/t_SkinPortrait_Izanami_CreepyNurse.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "MaidToKill",
+          "skinName": "Maid To Kill",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Izanami/Skins/MaidtoKill/t_SkinCard_Izanami_MaidtoKill.png",
+            "cardArt": "app/data/NewGodSkins/Izanami/Skins/MaidtoKill/t_SkinCard_Izanami_MaidtoKill.png",
+            "icon": "app/data/NewGodSkins/Izanami/Skins/MaidtoKill/t_SkinPortrait_Izanami_MaidtoKill.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    },
+    {
+      "godName": "Susano",
+      "internalName": "Susano_Item",
+      "skins": [
+        {
+          "skinKey": "Susano",
+          "skinName": "Base Susano",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Susano/Default/t_GodCard_Susano.png",
+            "cardArt": "app/data/NewGodSkins/Susano/Default/t_GodCard_Susano.png",
+            "icon": "app/data/NewGodSkins/Susano/Default/t_GodPortrait_Susano.png",
+            "inGame": "app/data/NewGodSkins/Susano/Default/T_GodFull_Susano.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "CursedSwordsman",
+          "skinName": "Cursed Swordsman",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Susano/Skins/CursedSwordsman/t_SkinCard_Susano_CursedSwordsman.png",
+            "cardArt": "app/data/NewGodSkins/Susano/Skins/CursedSwordsman/t_SkinCard_Susano_CursedSwordsman.png",
+            "icon": "app/data/NewGodSkins/Susano/Skins/CursedSwordsman/t_SkinPortrait_Susano_CursedSwordsman.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "SteelSamurai",
+          "skinName": "Steel Samurai",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Susano/Skins/SteelSamurai/t_SkinCard_Susano_SteelSamurai.png",
+            "cardArt": "app/data/NewGodSkins/Susano/Skins/SteelSamurai/t_SkinCard_Susano_SteelSamurai.png",
+            "icon": "app/data/NewGodSkins/Susano/Skins/SteelSamurai/t_SkinPortrait_Susano_SteelSamurai.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "StumbleBlade",
+          "skinName": "Stumble Blade",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "1000"
+          },
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Epic",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Susano/Skins/StumbleBlade/t_SkinCard_Susano_StumbleBlade.png",
+            "cardArt": "app/data/NewGodSkins/Susano/Skins/StumbleBlade/t_SkinCard_Susano_StumbleBlade.png",
+            "icon": "app/data/NewGodSkins/Susano/Skins/StumbleBlade/t_SkinPortrait_Susano_StumbleBlade.png"
+          },
+          "price": {
+            "diamonds": "1000"
+          }
+        }
+      ]
+    },
+    {
+      "godName": "Tsukuyomi",
+      "internalName": "Tsukuyomi_Item",
+      "skins": [
+        {
+          "skinKey": "Tsukuyomi",
+          "skinName": "Base Tsukuyomi",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Tsukuyomi/Default/t_GodCard_Tsukuyomi.png",
+            "cardArt": "app/data/NewGodSkins/Tsukuyomi/Default/t_GodCard_Tsukuyomi.png",
+            "icon": "app/data/NewGodSkins/Tsukuyomi/Default/t_GodPortrait_Tsukuyomi.png",
+            "inGame": "app/data/NewGodSkins/Tsukuyomi/Default/t_GodFull_Tsukuyomi.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/T_Tsukuyomi_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/t_GodCard_Tsukuyomi_Mastery.png",
+              "skin": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/t_GodCard_Tsukuyomi_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/T_Tsukuyomi_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/t_GodCard_Tsukuyomi_Mastery.png",
+              "skin": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/t_GodCard_Tsukuyomi_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/T_Tsukuyomi_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/t_GodCard_Tsukuyomi_Mastery.png",
+              "skin": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/t_GodCard_Tsukuyomi_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/T_Tsukuyomi_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/t_GodCard_Tsukuyomi_Mastery.png",
+              "skin": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/t_GodCard_Tsukuyomi_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "SilverBullet",
+          "skinName": "Silver Bullet",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinCard_Tsukuyomi_SilverBullet_Base.png",
+            "cardArt": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinCard_Tsukuyomi_SilverBullet_Base.png",
+            "icon": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinPortrait_Tsukuyomi_SilverBullet_Base.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism 1",
+              "cardArt": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinCard_Tsukuyomi_SilverBullet_Prism01.png",
+              "skin": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinCard_Tsukuyomi_SilverBullet_Prism01.png",
+              "icon": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinPortrait_Tsukuyomi_SilverBullet_Prism01.png"
+            },
+            {
+              "name": "Prism 2",
+              "cardArt": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinCard_Tsukuyomi_SilverBullet_Prism02.png",
+              "skin": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinCard_Tsukuyomi_SilverBullet_Prism02.png",
+              "icon": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinPortrait_Tsukuyomi_SilverBullet_Prism02.png"
+            },
+            {
+              "name": "Prism 3",
+              "cardArt": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinCard_Tsukuyomi_SilverBullet_Prism03.png",
+              "skin": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinCard_Tsukuyomi_SilverBullet_Prism03.png",
+              "icon": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinPortrait_Tsukuyomi_SilverBullet_Prism03.png"
+            },
+            {
+              "name": "Prism 4",
+              "cardArt": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinCard_Tsukuyomi_SilverBullet_Prism04.png",
+              "skin": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinCard_Tsukuyomi_SilverBullet_Prism04.png",
+              "icon": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinPortrait_Tsukuyomi_SilverBullet_Prism04.png"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

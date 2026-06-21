@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Image } from 'expo-image';
 import CustomBuildPage from '../custombuild';
-import buildsData from '../data/builds.json';
+import buildsData from '../../lib/buildsData';
 import { listDiscordBotSharedBuilds } from '../../lib/discordBotSharedBuildSupabase';
 import {
   getGodAbilityIcon,

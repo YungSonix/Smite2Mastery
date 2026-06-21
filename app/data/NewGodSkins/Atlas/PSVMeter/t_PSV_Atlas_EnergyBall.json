@@ -1,0 +1,38 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Atlas_EnergyBall",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Atlas/PSVMeter/t_PSV_Atlas_EnergyBall",
+    "Properties": {
+      "ImportedSize": {
+        "X": 100,
+        "Y": 100
+      },
+      "LightingGuid": "1B6D475C-41999D44-1629A89F-D741669A",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "SRGB": false,
+      "NeverStream": true
+    },
+    "SizeX": 100,
+    "SizeY": 100,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 40000,
+          "SizeOnDisk": 40000,
+          "OffsetInFile": "0x7E"
+        },
+        "SizeX": 100,
+        "SizeY": 100,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

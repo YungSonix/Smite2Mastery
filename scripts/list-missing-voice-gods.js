@@ -2,12 +2,13 @@
  * Lists gods that don't have default (Skin00_Base) voice audio so you can add them to GitHub.
  * Run from repo root: node scripts/list-missing-voice-gods.js
  *
- * Uses: Prophecy leaders + units, and optionally all gods from app/data/builds.json.
+ * Uses: Prophecy leaders + units, and optionally all gods from app/data/God Information/Builds/builds.json.
  * Checks: app/data/VoiceAudio/{GodFolder}/Skin00_Base/VOX (or app/data/Voice Audio/).
  */
 
 const fs = require('fs');
 const path = require('path');
+const { BUILDS_JSON } = require('../config/dataPaths');
 
 const root = process.cwd();
 const dataDir = path.join(root, 'app', 'data');
@@ -48,7 +49,7 @@ function getProphecyGodNames() {
 }
 
 function getBuildsJsonGodNames() {
-  const buildsPath = path.join(dataDir, 'builds.json');
+  const buildsPath = BUILDS_JSON;
   if (!fs.existsSync(buildsPath)) return [];
   try {
     const data = JSON.parse(fs.readFileSync(buildsPath, 'utf8'));

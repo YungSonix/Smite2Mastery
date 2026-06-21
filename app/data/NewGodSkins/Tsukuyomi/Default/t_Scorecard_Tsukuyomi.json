@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_Scorecard_Tsukuyomi",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Tsukuyomi/Default/t_Scorecard_Tsukuyomi",
+    "Properties": {
+      "ImportedSize": {
+        "X": 180,
+        "Y": 52
+      },
+      "LightingGuid": "5BB06580-4AE3A228-EBA2E3A7-08FD3802",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 180,
+    "SizeY": 52,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT1",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 4680,
+          "SizeOnDisk": 4680,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 180,
+        "SizeY": 52,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

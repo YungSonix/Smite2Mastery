@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Scylla_Base_Active",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Scylla/PSVMeter/t_PSV_Scylla_Base_Active",
+    "Properties": {
+      "ImportedSize": {
+        "X": 180,
+        "Y": 180
+      },
+      "LightingGuid": "0686D080-46741344-602ABE8A-077A49F0",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 180,
+    "SizeY": 180,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 129600,
+          "SizeOnDisk": 129600,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 180,
+        "SizeY": 180,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

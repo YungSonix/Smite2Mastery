@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSVMeter_Ganesha_Frame",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Ganesha/PSV_Meter/t_PSVMeter_Ganesha_Frame",
+    "Properties": {
+      "ImportedSize": {
+        "X": 184,
+        "Y": 140
+      },
+      "LightingGuid": "174E0CFC-4698F484-27147BBD-78A8123E",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 184,
+    "SizeY": 140,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 103040,
+          "SizeOnDisk": 103040,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 184,
+        "SizeY": 140,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

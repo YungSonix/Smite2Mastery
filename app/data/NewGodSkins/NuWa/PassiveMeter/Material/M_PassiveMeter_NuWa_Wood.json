@@ -1,0 +1,216 @@
+[
+  {
+    "Type": "Material",
+    "Name": "M_PassiveMeter_NuWa_Wood",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Material'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/NuWa/PassiveMeter/Material/M_PassiveMeter_NuWa_Wood",
+    "Properties": {
+      "MaterialDomain": "EMaterialDomain::MD_UI",
+      "BlendMode": "EBlendMode::BLEND_Translucent",
+      "bCanMaskedBeAssumedOpaque": true,
+      "PixelDepthOffsetMode": "EPixelDepthOffsetMode::PDOM_Legacy",
+      "StateId": "96A46CEF-43508094-77EC00BD-D414BBF6",
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedExpressionData": {
+      "RuntimeEntries": {
+        "ParameterInfoSet": [
+          {
+            "Name": "StartAngle",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "Charge",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "OuterRadius",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "InnerRadius",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "Duration",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          },
+          {
+            "Name": "StartTime",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          }
+        ]
+      },
+      "RuntimeEntries[1]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[2]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[3]": {
+        "ParameterInfoSet": [
+          {
+            "Name": "Image",
+            "Association": "EMaterialParameterAssociation::GlobalParameter",
+            "Index": -1
+          }
+        ]
+      },
+      "RuntimeEntries[4]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[5]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[6]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[7]": {
+        "ParameterInfoSet": []
+      },
+      "RuntimeEntries[8]": {
+        "ParameterInfoSet": []
+      },
+      "ScalarPrimitiveDataIndexValues": [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      "VectorPrimitiveDataIndexValues": [],
+      "ScalarValues": [
+        90.0,
+        180.0,
+        0.5,
+        0.3,
+        15.0,
+        0.0
+      ],
+      "StaticSwitchValues": [],
+      "DynamicSwitchValues": [],
+      "VectorValues": [],
+      "DoubleVectorValues": [],
+      "TextureValues": [
+        {
+          "AssetPathName": "/Game/UI/Textures/ArtAssets/Gods/NuWa/PassiveMeter/T_PassiveMeter_NuWaEnergy_Filler.T_PassiveMeter_NuWaEnergy_Filler",
+          "SubPathString": ""
+        }
+      ],
+      "TextureCollectionValues": [],
+      "FontValues": [],
+      "FontPageValues": [],
+      "RuntimeVirtualTextureValues": [],
+      "SparseVolumeTextureValues": [],
+      "ReferencedTextures": [
+        {
+          "ObjectName": "Texture2D'T_PassiveMeter_NuWaEnergy_Filler'",
+          "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/NuWa/PassiveMeter/T_PassiveMeter_NuWaEnergy_Filler.0"
+        }
+      ],
+      "ReferencedTextureCollections": [],
+      "FunctionInfos": [
+        {
+          "StateId": "E572D701-496E6D38-CC53A5BD-C450B0ED",
+          "Function": {
+            "ObjectName": "MaterialFunction'CustomRotator'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions02/Texturing/CustomRotator.0"
+          }
+        },
+        {
+          "StateId": "5E28F255-4817E6E7-2D027C9A-2F7126C6",
+          "Function": {
+            "ObjectName": "MaterialFunction'VectorToRadialValue'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions02/Utility/VectorToRadialValue.0"
+          }
+        },
+        {
+          "StateId": "42FB52C9-4B6E464D-2D6CB2B5-E6A65899",
+          "Function": {
+            "ObjectName": "MaterialFunction'ExponentialDensity'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions01/Density/ExponentialDensity.0"
+          }
+        },
+        {
+          "StateId": "42FB52C9-4B6E464D-2D6CB2B5-E6A65899",
+          "Function": {
+            "ObjectName": "MaterialFunction'ExponentialDensity'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions01/Density/ExponentialDensity.0"
+          }
+        },
+        {
+          "StateId": "235C8133-44D704CA-0297108A-59B9F710",
+          "Function": {
+            "ObjectName": "MaterialFunction'RadialGradientExponential'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions01/Gradient/RadialGradientExponential.0"
+          }
+        },
+        {
+          "StateId": "42FB52C9-4B6E464D-2D6CB2B5-E6A65899",
+          "Function": {
+            "ObjectName": "MaterialFunction'ExponentialDensity'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions01/Density/ExponentialDensity.0"
+          }
+        },
+        {
+          "StateId": "42FB52C9-4B6E464D-2D6CB2B5-E6A65899",
+          "Function": {
+            "ObjectName": "MaterialFunction'ExponentialDensity'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions01/Density/ExponentialDensity.0"
+          }
+        },
+        {
+          "StateId": "235C8133-44D704CA-0297108A-59B9F710",
+          "Function": {
+            "ObjectName": "MaterialFunction'RadialGradientExponential'",
+            "ObjectPath": "/Engine/Functions/Engine_MaterialFunctions01/Gradient/RadialGradientExponential.0"
+          }
+        }
+      ],
+      "FunctionInfosStateCRC": 3349290326,
+      "ParameterCollectionInfos": [],
+      "GrassTypes": [],
+      "MaterialLayers": {
+        "Layers": [],
+        "Blends": [],
+        "Tree": {
+          "Nodes": [],
+          "Payloads": [],
+          "Root": -1
+        }
+      },
+      "DynamicParameterNames": [],
+      "QualityLevelsUsed": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "bHasMaterialLayers": false,
+      "bHasRuntimeVirtualTextureOutput": false,
+      "bHasFirstPersonOutput": false,
+      "bHasSceneColor": false,
+      "bHasPerInstanceCustomData": false,
+      "bHasPerInstanceRandom": false,
+      "bHasVertexInterpolator": false,
+      "bHasCustomizedUVs": false,
+      "bHasMeshPaintTexture": false,
+      "PropertyConnectedMask": 3
+    },
+    "ReferencedTextures": [
+      {
+        "ObjectName": "Texture2D'T_PassiveMeter_NuWaEnergy_Filler'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/NuWa/PassiveMeter/T_PassiveMeter_NuWaEnergy_Filler.0"
+      }
+    ]
+  }
+]

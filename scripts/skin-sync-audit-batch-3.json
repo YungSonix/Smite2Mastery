@@ -1,0 +1,1262 @@
+{
+  "batch": "D-G",
+  "auditedAt": "2026-06-16",
+  "gods": [
+    {
+      "godFolder": "DaJi",
+      "buildsGodName": "Da Ji",
+      "buildsInternalName": "DaJi_Item",
+      "issueCount": 10,
+      "issues": [
+        {
+          "type": "key_folder_mismatch",
+          "skinKey": "Devil_Punk",
+          "diskFolder": "DevilPunk",
+          "name": "Devil Punk"
+        },
+        {
+          "type": "key_folder_mismatch",
+          "skinKey": "Devil_Punk_Prism01",
+          "diskFolder": "DevilPunk",
+          "name": "Devil Punk Prism 01"
+        },
+        {
+          "type": "prism_as_separate_skin_key",
+          "skinKey": "Devil_Punk_Prism01",
+          "name": "Devil Punk Prism 01"
+        },
+        {
+          "type": "key_folder_mismatch",
+          "skinKey": "Devil_Punk_Prism02",
+          "diskFolder": "DevilPunk",
+          "name": "Devil Punk Prism 02"
+        },
+        {
+          "type": "prism_as_separate_skin_key",
+          "skinKey": "Devil_Punk_Prism02",
+          "name": "Devil Punk Prism 02"
+        },
+        {
+          "type": "key_folder_mismatch",
+          "skinKey": "Devil_Punk_Prism03",
+          "diskFolder": "DevilPunk",
+          "name": "Devil Punk Prism 03"
+        },
+        {
+          "type": "prism_as_separate_skin_key",
+          "skinKey": "Devil_Punk_Prism03",
+          "name": "Devil Punk Prism 03"
+        },
+        {
+          "type": "key_folder_mismatch",
+          "skinKey": "Devil_Punk_Prism04",
+          "diskFolder": "DevilPunk",
+          "name": "Devil Punk Prism 04"
+        },
+        {
+          "type": "prism_as_separate_skin_key",
+          "skinKey": "Devil_Punk_Prism04",
+          "name": "Devil Punk Prism 04"
+        },
+        {
+          "type": "prisms_on_disk",
+          "folder": "DevilPunk",
+          "prismIds": [
+            "01",
+            "02",
+            "03"
+          ],
+          "count": 6
+        }
+      ],
+      "suggestedRemaps": {
+        "Devil_Punk": "DevilPunk",
+        "Devil_Punk_Prism01": "DevilPunk",
+        "Devil_Punk_Prism02": "DevilPunk",
+        "Devil_Punk_Prism03": "DevilPunk",
+        "Devil_Punk_Prism04": "DevilPunk"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "path": "app/data/NewGodSkins/DaJi/Default",
+          "fileCount": 6,
+          "cards": [
+            "t_GodCard_Daji.png"
+          ],
+          "icons": [
+            "t_GodPortrait_Daji.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "DevilPunk",
+          "path": "app/data/NewGodSkins/DaJi/Skins/DevilPunk",
+          "fileCount": 8,
+          "cards": [
+            "t_SkinCard_Daji_DevilPunk_Base.png",
+            "t_SkinCard_Daji_DevilPunk_Prism01.png",
+            "t_SkinCard_Daji_DevilPunk_Prism02.png",
+            "t_SkinCard_Daji_DevilPunk_Prism03.png"
+          ],
+          "icons": [
+            "t_SkinPortrait_Daji_DevilPunk_Base.png",
+            "t_SkinPortrait_Daji_DevilPunk_Prism01.png",
+            "t_SkinPortrait_Daji_DevilPunk_Prism02.png",
+            "t_SkinPortrait_Daji_DevilPunk_Prism03.png"
+          ],
+          "prismFiles": [
+            "t_SkinCard_Daji_DevilPunk_Prism01.png",
+            "t_SkinCard_Daji_DevilPunk_Prism02.png",
+            "t_SkinCard_Daji_DevilPunk_Prism03.png",
+            "t_SkinPortrait_Daji_DevilPunk_Prism01.png",
+            "t_SkinPortrait_Daji_DevilPunk_Prism02.png",
+            "t_SkinPortrait_Daji_DevilPunk_Prism03.png"
+          ],
+          "paletteFiles": []
+        },
+        {
+          "folder": "Mastery",
+          "path": "app/data/NewGodSkins/DaJi/Skins/Mastery",
+          "fileCount": 5,
+          "cards": [
+            "t_SkinCard_Mastery.png"
+          ],
+          "icons": [],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "Vixen",
+          "path": "app/data/NewGodSkins/DaJi/Skins/Vixen",
+          "fileCount": 2,
+          "cards": [
+            "t_SkinCard_Daji_Vixen.png"
+          ],
+          "icons": [
+            "t_SkinPortrait_Daji_Vixen.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "skinKey": "Da_Ji",
+          "name": "Base Da Ji",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "Devil_Punk",
+          "name": "Devil Punk",
+          "type": "Classic (Traveler)",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 3,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "Devil_Punk_Prism01",
+          "name": "Devil Punk Prism 01",
+          "type": "Prism",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": true
+        },
+        {
+          "skinKey": "Devil_Punk_Prism02",
+          "name": "Devil Punk Prism 02",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": true
+        },
+        {
+          "skinKey": "Devil_Punk_Prism03",
+          "name": "Devil Punk Prism 03",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": true
+        },
+        {
+          "skinKey": "Devil_Punk_Prism04",
+          "name": "Devil Punk Prism 04",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": true
+        },
+        {
+          "skinKey": "Vixen",
+          "name": "Vixen",
+          "type": "Twitch Drop",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Danzaburou",
+      "buildsGodName": "Danzaburou",
+      "buildsInternalName": "Danzaburou_Item",
+      "issueCount": 3,
+      "issues": [
+        {
+          "type": "key_folder_mismatch",
+          "skinKey": "BossmanSplash1920x1080",
+          "diskFolder": "BossMan",
+          "name": "Bossman Splash 1920 X 1080"
+        },
+        {
+          "type": "no_disk_folder_match",
+          "skinKey": "ButlerOfTheBins",
+          "name": "Butler Of The Bins"
+        },
+        {
+          "type": "palette_variants_on_disk",
+          "folder": "PolarBear",
+          "paletteIds": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "suggestedRemaps": {
+        "BossmanSplash1920x1080": "BossMan"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "path": "app/data/NewGodSkins/Danzaburou/Default",
+          "fileCount": 6,
+          "cards": [
+            "t_GodCard_Danzaburou.png"
+          ],
+          "icons": [
+            "t_GodPortrait_Danzaburou.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "BossMan",
+          "path": "app/data/NewGodSkins/Danzaburou/Skins/BossMan",
+          "fileCount": 2,
+          "cards": [
+            "t_SkinCard_Danzaburou_Bossman.png"
+          ],
+          "icons": [],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "ButlerofBins",
+          "path": "app/data/NewGodSkins/Danzaburou/Skins/ButlerofBins",
+          "fileCount": 2,
+          "cards": [
+            "t_SkinCard_Danzaburou_Butler.png"
+          ],
+          "icons": [
+            "t_SkinPortrait_Danzaburou_Butler.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "Mastery",
+          "path": "app/data/NewGodSkins/Danzaburou/Skins/Mastery",
+          "fileCount": 5,
+          "cards": [],
+          "icons": [
+            "t_SkinPortrait_Danzaburou_Light.png",
+            "t_SkinPortrait_Danzaburou_Onyx.png",
+            "t_SkinPortrait_Danzaburou_Opal.png",
+            "t_SkinPortrait_Danzaburou_Shadow.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "Party_Animal",
+          "path": "app/data/NewGodSkins/Danzaburou/Skins/Party_Animal",
+          "fileCount": 2,
+          "cards": [
+            "t_SkinCard_Danzaburou_PartyAnimal.png"
+          ],
+          "icons": [],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "PolarBear",
+          "path": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear",
+          "fileCount": 10,
+          "cards": [
+            "t_SkinCard_Danza_PolarBear.png",
+            "t_SkinCard_Danza_PolarBear_P1.png",
+            "t_SkinCard_Danza_PolarBear_P2.png",
+            "t_SkinCard_Danza_PolarBear_P3.png",
+            "t_SkinCard_Danza_PolarBear_P4.png"
+          ],
+          "icons": [
+            "t_SkinIcon_Danza_PolarBear.png",
+            "t_SkinIcon_Danza_PolarBear_P1.png",
+            "t_SkinIcon_Danza_PolarBear_P2.png",
+            "t_SkinIcon_Danza_PolarBear_P3.png",
+            "t_SkinIcon_Danza_PolarBear_P4.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [
+            "t_SkinCard_Danza_PolarBear_P1.png",
+            "t_SkinCard_Danza_PolarBear_P2.png",
+            "t_SkinCard_Danza_PolarBear_P3.png",
+            "t_SkinCard_Danza_PolarBear_P4.png",
+            "t_SkinIcon_Danza_PolarBear_P1.png",
+            "t_SkinIcon_Danza_PolarBear_P2.png",
+            "t_SkinIcon_Danza_PolarBear_P3.png",
+            "t_SkinIcon_Danza_PolarBear_P4.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "skinKey": "Danzaburou",
+          "name": "Base Danzaburou",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 4,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "BossmanSplash1920x1080",
+          "name": "Bossman Splash 1920 X 1080",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "ButlerOfTheBins",
+          "name": "Butler Of The Bins",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "ButlerofBins",
+          "name": "Butlerof Bins",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "Party_Animal",
+          "name": "Party Animal",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "PolarBear",
+          "name": "Polar Bear",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 4,
+          "hideFromSkinList": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Discordia",
+      "buildsGodName": "Discordia",
+      "buildsInternalName": "Discordia_Item",
+      "issueCount": 1,
+      "issues": [
+        {
+          "type": "prisms_on_disk",
+          "folder": "LunarMoth",
+          "prismIds": [
+            "01",
+            "02",
+            "04"
+          ],
+          "count": 6
+        }
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "path": "app/data/NewGodSkins/Discordia/Default",
+          "fileCount": 6,
+          "cards": [
+            "t_GodCard_Discordia.png"
+          ],
+          "icons": [
+            "t_GodPortrait_Discordia.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "LunarMoth",
+          "path": "app/data/NewGodSkins/Discordia/Skins/LunarMoth",
+          "fileCount": 8,
+          "cards": [
+            "t_SkinCard_Discordia_LunarMoth_Base.png",
+            "t_SkinCard_Discordia_LunarMoth_Prism01.png",
+            "t_SkinCard_Discordia_LunarMoth_Prism02.png",
+            "t_SkinCard_Discordia_LunarMoth_Prism04.png"
+          ],
+          "icons": [
+            "t_SkinPortrait_Discordia_LunarMoth_Base.png",
+            "t_SkinPortrait_Discordia_LunarMoth_Prism01.png",
+            "t_SkinPortrait_Discordia_LunarMoth_Prism02.png",
+            "t_SkinPortrait_Discordia_LunarMoth_Prism04.png"
+          ],
+          "prismFiles": [
+            "t_SkinCard_Discordia_LunarMoth_Prism01.png",
+            "t_SkinCard_Discordia_LunarMoth_Prism02.png",
+            "t_SkinCard_Discordia_LunarMoth_Prism04.png",
+            "t_SkinPortrait_Discordia_LunarMoth_Prism01.png",
+            "t_SkinPortrait_Discordia_LunarMoth_Prism02.png",
+            "t_SkinPortrait_Discordia_LunarMoth_Prism04.png"
+          ],
+          "paletteFiles": []
+        },
+        {
+          "folder": "Mastery",
+          "path": "app/data/NewGodSkins/Discordia/Skins/Mastery",
+          "fileCount": 5,
+          "cards": [
+            "t_GodCard_Discrodia_Mastery.png"
+          ],
+          "icons": [],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "Rebellious",
+          "path": "app/data/NewGodSkins/Discordia/Skins/Rebellious",
+          "fileCount": 2,
+          "cards": [
+            "t_SkinCard_Discordia_Rebellious.png"
+          ],
+          "icons": [],
+          "prismFiles": [],
+          "paletteFiles": []
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "skinKey": "Discordia",
+          "name": "Base Discordia",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "LunarMoth",
+          "name": "Lunar Moth",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 3,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "Rebellious",
+          "name": "Rebellious",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Eset",
+      "buildsGodName": "Eset",
+      "buildsInternalName": "Eset",
+      "issueCount": 0,
+      "issues": [],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "path": "app/data/NewGodSkins/Eset/Default",
+          "fileCount": 6,
+          "cards": [
+            "t_GodCard_Eset.png"
+          ],
+          "icons": [
+            "t_GodPortrait_Eset.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "CrimsonMist",
+          "path": "app/data/NewGodSkins/Eset/Skins/CrimsonMist",
+          "fileCount": 2,
+          "cards": [
+            "t_SkinCard_Eset_CrimsonMist.png"
+          ],
+          "icons": [
+            "t_GodPortrait_Eset_CrimsonMist.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "Mastery",
+          "path": "app/data/NewGodSkins/Eset/Skins/Mastery",
+          "fileCount": 5,
+          "cards": [
+            "T_SkinCard_Eset_Mastery.png"
+          ],
+          "icons": [],
+          "prismFiles": [],
+          "paletteFiles": []
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "skinKey": "Eset",
+          "name": "Base Eset",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "CrimsonMist",
+          "name": "Crimson Mist",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Fenrir",
+      "buildsGodName": "Fenrir",
+      "buildsInternalName": "Fenrir_Item",
+      "issueCount": 3,
+      "issues": [
+        {
+          "type": "key_folder_mismatch",
+          "skinKey": "LordslashingtonCard",
+          "diskFolder": "Slashington",
+          "name": "Lordslashington Card"
+        },
+        {
+          "type": "misplaced_asset_file",
+          "folder": "UndeadHorror",
+          "file": "t_SkinCard_Odin_DarkCyborg.png"
+        },
+        {
+          "type": "palette_variants_on_disk",
+          "folder": "WrecktheHalls",
+          "paletteIds": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      ],
+      "suggestedRemaps": {
+        "LordslashingtonCard": "Slashington"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "path": "app/data/NewGodSkins/Fenrir/Default",
+          "fileCount": 6,
+          "cards": [
+            "t_GodCard_Fenrir.png"
+          ],
+          "icons": [
+            "t_GodPortrait_Fenrir.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "Mastery",
+          "path": "app/data/NewGodSkins/Fenrir/Skins/Mastery",
+          "fileCount": 5,
+          "cards": [],
+          "icons": [],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "PugOfDestruction",
+          "path": "app/data/NewGodSkins/Fenrir/Skins/PugOfDestruction",
+          "fileCount": 2,
+          "cards": [
+            "t_SkinCard_Fenrir_PugofDestruction.png"
+          ],
+          "icons": [
+            "t_SkinPortrait_Fenrir_PugofDestruction.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "Slashington",
+          "path": "app/data/NewGodSkins/Fenrir/Skins/Slashington",
+          "fileCount": 2,
+          "cards": [
+            "t_SkinCard_Fenrir_Slashington.png"
+          ],
+          "icons": [
+            "t_SkinPortrait_Fenrir_Slashington.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "UndeadHorror",
+          "path": "app/data/NewGodSkins/Fenrir/Skins/UndeadHorror",
+          "fileCount": 2,
+          "cards": [
+            "t_SkinCard_Odin_DarkCyborg.png"
+          ],
+          "icons": [
+            "t_SkinPortrait_Fenrir_UndeadHoror.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "WrecktheHalls",
+          "path": "app/data/NewGodSkins/Fenrir/Skins/WrecktheHalls",
+          "fileCount": 10,
+          "cards": [
+            "t_SkinCard_Fenrir_WrecktheHalls.png",
+            "t_SkinCard_Fenrir_WrecktheHalls_P1.png",
+            "t_SkinCard_Fenrir_WrecktheHalls_P2.png",
+            "t_SkinCard_Fenrir_WrecktheHalls_P3.png",
+            "t_SkinCard_Fenrir_WrecktheHalls_P4.png"
+          ],
+          "icons": [
+            "t_SkinIcon_Fenrir_WrecktheHalls.png",
+            "t_SkinIcon_Fenrir_WrecktheHalls_P1.png",
+            "t_SkinIcon_Fenrir_WrecktheHalls_P2.png",
+            "t_SkinIcon_Fenrir_WrecktheHalls_P3.png",
+            "t_SkinIcon_Fenrir_WrecktheHalls_P4.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": [
+            "t_SkinCard_Fenrir_WrecktheHalls_P1.png",
+            "t_SkinCard_Fenrir_WrecktheHalls_P2.png",
+            "t_SkinCard_Fenrir_WrecktheHalls_P3.png",
+            "t_SkinCard_Fenrir_WrecktheHalls_P4.png",
+            "t_SkinIcon_Fenrir_WrecktheHalls_P1.png",
+            "t_SkinIcon_Fenrir_WrecktheHalls_P2.png",
+            "t_SkinIcon_Fenrir_WrecktheHalls_P3.png",
+            "t_SkinIcon_Fenrir_WrecktheHalls_P4.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "skinKey": "Fenrir",
+          "name": "Base Fenrir",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "LordslashingtonCard",
+          "name": "Lordslashington Card",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "PugOfDestruction",
+          "name": "Pug Of Destruction",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "UndeadHorror",
+          "name": "Undead Horror",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "WrecktheHalls",
+          "name": "Wreckthe Halls",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 4,
+          "hideFromSkinList": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Ganesha",
+      "buildsGodName": "Ganesha",
+      "buildsInternalName": "God.Ganesha",
+      "issueCount": 7,
+      "issues": [
+        {
+          "type": "key_folder_mismatch",
+          "skinKey": "Plushie012",
+          "diskFolder": "Plushie",
+          "name": "Plushie 012"
+        },
+        {
+          "type": "key_folder_mismatch",
+          "skinKey": "PlushieGreen",
+          "diskFolder": "Plushie",
+          "name": "Plushie Green"
+        },
+        {
+          "type": "key_folder_mismatch",
+          "skinKey": "PlushieIndigo",
+          "diskFolder": "Plushie",
+          "name": "Plushie Indigo"
+        },
+        {
+          "type": "key_folder_mismatch",
+          "skinKey": "PlushieOrange",
+          "diskFolder": "Plushie",
+          "name": "Plushie Orange"
+        },
+        {
+          "type": "key_folder_mismatch",
+          "skinKey": "PlushieRed009",
+          "diskFolder": "Plushie",
+          "name": "Plushie Red 009"
+        },
+        {
+          "type": "key_folder_mismatch",
+          "skinKey": "PlushieViolet010",
+          "diskFolder": "Plushie",
+          "name": "Plushie Violet 010"
+        },
+        {
+          "type": "key_folder_mismatch",
+          "skinKey": "PlushieYellow011",
+          "diskFolder": "Plushie",
+          "name": "Plushie Yellow 011"
+        }
+      ],
+      "suggestedRemaps": {
+        "Plushie012": "Plushie",
+        "PlushieGreen": "Plushie",
+        "PlushieIndigo": "Plushie",
+        "PlushieOrange": "Plushie",
+        "PlushieRed009": "Plushie",
+        "PlushieViolet010": "Plushie",
+        "PlushieYellow011": "Plushie"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "path": "app/data/NewGodSkins/Ganesha/Default",
+          "fileCount": 6,
+          "cards": [
+            "t_GodCard_Ganesha.png"
+          ],
+          "icons": [
+            "t_GodPortrait_Ganesha.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "Light",
+          "path": "app/data/NewGodSkins/Ganesha/Skins/Light",
+          "fileCount": 2,
+          "cards": [
+            "t_SkinCard_Ganesha_Light.png"
+          ],
+          "icons": [
+            "t_SkinIcon_Ganesha_Light.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "Mastery",
+          "path": "app/data/NewGodSkins/Ganesha/Skins/Mastery",
+          "fileCount": 5,
+          "cards": [],
+          "icons": [],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "Plushie",
+          "path": "app/data/NewGodSkins/Ganesha/Skins/Plushie",
+          "fileCount": 2,
+          "cards": [
+            "t_SkinCard_Ganesha_Plushie.png"
+          ],
+          "icons": [
+            "t_SkinPortrait_Ganesha_Plushie.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "skinKey": "Ganesha",
+          "name": "Base Ganesha",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "Plushie012",
+          "name": "Plushie 012",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "PlushieGreen",
+          "name": "Plushie Green",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": true
+        },
+        {
+          "skinKey": "PlushieIndigo",
+          "name": "Plushie Indigo",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": true
+        },
+        {
+          "skinKey": "PlushieOrange",
+          "name": "Plushie Orange",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": true
+        },
+        {
+          "skinKey": "PlushieRed009",
+          "name": "Plushie Red 009",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": true
+        },
+        {
+          "skinKey": "PlushieViolet010",
+          "name": "Plushie Violet 010",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": true
+        },
+        {
+          "skinKey": "PlushieYellow011",
+          "name": "Plushie Yellow 011",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": true
+        },
+        {
+          "skinKey": "Light",
+          "name": "Light",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Geb",
+      "buildsGodName": "Geb",
+      "buildsInternalName": "Geb_Item",
+      "issueCount": 4,
+      "issues": [
+        {
+          "type": "key_folder_mismatch",
+          "skinKey": "GEB1CombatCamo",
+          "diskFolder": "GEB1",
+          "name": "Geb 1 Combat Camo"
+        },
+        {
+          "type": "key_folder_mismatch",
+          "skinKey": "GEB1StealthStrike",
+          "diskFolder": "GEB1",
+          "name": "Geb 1 Stealth Strike"
+        },
+        {
+          "type": "key_folder_mismatch",
+          "skinKey": "GEB1UltraCore",
+          "diskFolder": "GEB1",
+          "name": "Geb 1 Ultra Core"
+        },
+        {
+          "type": "key_folder_mismatch",
+          "skinKey": "SpiritStone011",
+          "diskFolder": "SpiritStone",
+          "name": "Spirit Stone 011"
+        }
+      ],
+      "suggestedRemaps": {
+        "GEB1CombatCamo": "GEB1",
+        "GEB1StealthStrike": "GEB1",
+        "GEB1UltraCore": "GEB1",
+        "SpiritStone011": "SpiritStone"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "path": "app/data/NewGodSkins/Geb/Default",
+          "fileCount": 6,
+          "cards": [
+            "t_GodCard_Geb.png"
+          ],
+          "icons": [
+            "t_GodPortrait_Geb.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "GEB1",
+          "path": "app/data/NewGodSkins/Geb/Skins/GEB1",
+          "fileCount": 2,
+          "cards": [
+            "t_SkinCard_Geb_GEB1.png"
+          ],
+          "icons": [
+            "t_SkinPortrait_Geb_GEB1.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "Mastery",
+          "path": "app/data/NewGodSkins/Geb/Skins/Mastery",
+          "fileCount": 5,
+          "cards": [],
+          "icons": [],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "SpiritStone",
+          "path": "app/data/NewGodSkins/Geb/Skins/SpiritStone",
+          "fileCount": 2,
+          "cards": [
+            "t_SkinCard_Geb_SpiritStone.png"
+          ],
+          "icons": [
+            "t_SkinPortrait_Geb_SpiritStone.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "skinKey": "Geb",
+          "name": "Base Geb",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "GEB1",
+          "name": "Geb 1",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 3,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "GEB1CombatCamo",
+          "name": "Geb 1 Combat Camo",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": true
+        },
+        {
+          "skinKey": "GEB1StealthStrike",
+          "name": "Geb 1 Stealth Strike",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": true
+        },
+        {
+          "skinKey": "GEB1UltraCore",
+          "name": "Geb 1 Ultra Core",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": true
+        },
+        {
+          "skinKey": "SpiritStone011",
+          "name": "Spirit Stone 011",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Gilgamesh",
+      "buildsGodName": "Gilgamesh",
+      "buildsInternalName": "Gilgamesh_Item",
+      "issueCount": 0,
+      "issues": [],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "path": "app/data/NewGodSkins/Gilgamesh/Default",
+          "fileCount": 6,
+          "cards": [
+            "t_GodCard_Gilgamesh.png"
+          ],
+          "icons": [
+            "t_GodPortrait_Gilgamesh.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "Mastery",
+          "path": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery",
+          "fileCount": 5,
+          "cards": [
+            "t_GodCard_Gilgamesh_Mastery.png"
+          ],
+          "icons": [],
+          "prismFiles": [],
+          "paletteFiles": []
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "skinKey": "Gilgamesh",
+          "name": "Base Gilgamesh",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": true,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        }
+      ]
+    },
+    {
+      "godFolder": "GuanYu",
+      "buildsGodName": "Guan Yu",
+      "buildsInternalName": "Guan_Item",
+      "issueCount": 2,
+      "issues": [
+        {
+          "type": "no_disk_folder_match",
+          "skinKey": "WraithRiderGuanYu",
+          "name": "Wraith Rider Guan Yu"
+        },
+        {
+          "type": "empty_god_folder",
+          "message": "GuanYu folder exists but has no Skins/Default — assets live under Guan_Yu"
+        }
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "path": "app/data/NewGodSkins/GuanYu/Default",
+          "fileCount": 0,
+          "cards": [],
+          "icons": [],
+          "prismFiles": [],
+          "paletteFiles": []
+        }
+      ],
+      "skinsInBuilds": [
+        {
+          "skinKey": "Guan_Yu",
+          "name": "Base Guan Yu",
+          "type": "Base Skin",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        },
+        {
+          "skinKey": "WraithRiderGuanYu",
+          "name": "Wraith Rider Guan Yu",
+          "type": "",
+          "hasSkin": true,
+          "hasIcon": false,
+          "variantCount": 0,
+          "hideFromSkinList": false
+        }
+      ]
+    },
+    {
+      "godFolder": "Guan_Yu",
+      "buildsGodName": null,
+      "buildsInternalName": null,
+      "issueCount": 3,
+      "issues": [
+        {
+          "type": "no_builds_god",
+          "message": "No matching god in builds.json for folder Guan_Yu"
+        },
+        {
+          "type": "missing_builds_row",
+          "diskFolder": "01a"
+        },
+        {
+          "type": "missing_builds_row",
+          "diskFolder": "Unicorn"
+        }
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "path": "app/data/NewGodSkins/Guan_Yu/Default",
+          "fileCount": 6,
+          "cards": [
+            "t_GodCard_Guan_Yu.png"
+          ],
+          "icons": [
+            "t_GodPortrait_Guan_Yu.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "01a",
+          "path": "app/data/NewGodSkins/Guan_Yu/Skins/01a",
+          "fileCount": 2,
+          "cards": [
+            "T_GodCard_GuanYu_WraithRider.png"
+          ],
+          "icons": [
+            "t_Portrait_GuanYu_WraithRider.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "Mastery",
+          "path": "app/data/NewGodSkins/Guan_Yu/Skins/Mastery",
+          "fileCount": 5,
+          "cards": [],
+          "icons": [],
+          "prismFiles": [],
+          "paletteFiles": []
+        },
+        {
+          "folder": "Unicorn",
+          "path": "app/data/NewGodSkins/Guan_Yu/Skins/Unicorn",
+          "fileCount": 10,
+          "cards": [
+            "T_GodCard_GuanYu_Unicorn.png",
+            "T_GodCard_GuanYu_Unicorn_Blue.png",
+            "T_GodCard_GuanYu_Unicorn_Purple.png",
+            "T_GodCard_GuanYu_Unicorn_Red.png",
+            "T_GodCard_GuanYu_Unicorn_White.png"
+          ],
+          "icons": [
+            "t_Portrait_GuanYu_Unicorn.png",
+            "t_Portrait_GuanYu_Unicorn_Blue.png",
+            "t_Portrait_GuanYu_Unicorn_Purple.png",
+            "t_Portrait_GuanYu_Unicorn_Red.png",
+            "t_Portrait_GuanYu_Unicorn_White.png"
+          ],
+          "prismFiles": [],
+          "paletteFiles": []
+        }
+      ],
+      "skinsInBuilds": []
+    }
+  ],
+  "summary": {
+    "godsAudited": 10,
+    "totalIssues": 33,
+    "godsWithIssues": 8,
+    "cleanGods": [
+      "Eset",
+      "Gilgamesh"
+    ]
+  }
+}

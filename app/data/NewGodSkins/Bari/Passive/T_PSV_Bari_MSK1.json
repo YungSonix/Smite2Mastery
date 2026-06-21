@@ -1,0 +1,39 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_PSV_Bari_MSK1",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Bari/Passive/T_PSV_Bari_MSK1",
+    "Properties": {
+      "AddressX": "TextureAddress::TA_Clamp",
+      "AddressY": "TextureAddress::TA_Clamp",
+      "ImportedSize": {
+        "X": 244,
+        "Y": 160
+      },
+      "LightingGuid": "2C34F2FC-4E08A7F8-3716749E-19C27E34",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 244,
+    "SizeY": 160,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 156160,
+          "SizeOnDisk": 156160,
+          "OffsetInFile": "0x7D"
+        },
+        "SizeX": 244,
+        "SizeY": 160,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

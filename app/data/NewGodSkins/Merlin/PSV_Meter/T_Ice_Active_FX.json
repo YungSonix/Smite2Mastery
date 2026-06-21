@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_Ice_Active_FX",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Merlin/PSV_Meter/T_Ice_Active_FX",
+    "Properties": {
+      "ImportedSize": {
+        "X": 100,
+        "Y": 92
+      },
+      "LightingGuid": "4546A367-4BF52C38-BF8C1799-2F4F88AA",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 100,
+    "SizeY": 92,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 9200,
+          "SizeOnDisk": 9200,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 100,
+        "SizeY": 92,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

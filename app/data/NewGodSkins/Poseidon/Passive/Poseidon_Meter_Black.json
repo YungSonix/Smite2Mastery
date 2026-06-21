@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "Poseidon_Meter_Black",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Poseidon/Passive/Poseidon_Meter_Black",
+    "Properties": {
+      "ImportedSize": {
+        "X": 178,
+        "Y": 95
+      },
+      "LightingGuid": "588D3759-4BDF02A4-A178FE88-379561F9",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 178,
+    "SizeY": 95,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 67640,
+          "SizeOnDisk": 67640,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 178,
+        "SizeY": 95,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

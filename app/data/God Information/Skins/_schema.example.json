@@ -1,0 +1,52 @@
+{
+  "pantheon": "Greek",
+  "gods": [
+    {
+      "godName": "Achilles",
+      "internalName": "Achilles_Item",
+      "skins": [
+        {
+          "skinKey": "Achilles",
+          "skinName": "Base Achilles",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Achilles/Default/t_GodCard_Achilles.png",
+            "cardArt": "app/data/NewGodSkins/Achilles/Default/t_GodCard_Achilles.png",
+            "icon": "app/data/NewGodSkins/Achilles/Default/t_GodPortrait_Achilles.png",
+            "inGame": "app/data/NewGodSkins/Achilles/Default/t_GodFull_Achilles.png"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Achilles/Skins/Mastery/t_SkinPortrait_Achilles_Light.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "SoulPiercer",
+          "skinName": "Soul Piercer",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Achilles/Skins/SoulPiercer/t_SkinCard_Achilles_SoulPiercer.png",
+            "cardArt": "app/data/NewGodSkins/Achilles/Skins/SoulPiercer/t_SkinCard_Achilles_SoulPiercer.png",
+            "icon": "app/data/NewGodSkins/Achilles/Skins/SoulPiercer/t_GodPortrait_Achilles_SoulPiercer.png"
+          },
+          "variants": []
+        }
+      ]
+    }
+  ]
+}

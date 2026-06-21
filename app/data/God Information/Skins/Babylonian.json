@@ -1,0 +1,160 @@
+{
+  "pantheon": "Babylonian",
+  "gods": [
+    {
+      "godName": "Gilgamesh",
+      "internalName": "Gilgamesh_Item",
+      "skins": [
+        {
+          "skinKey": "Gilgamesh",
+          "skinName": "Base Gilgamesh",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Gilgamesh/Default/t_GodCard_Gilgamesh.png",
+            "cardArt": "app/data/NewGodSkins/Gilgamesh/Default/t_GodCard_Gilgamesh.png",
+            "icon": "app/data/NewGodSkins/Gilgamesh/Default/t_GodPortrait_Gilgamesh.png",
+            "inGame": "app/data/NewGodSkins/Gilgamesh/Default/t_GodFull_Gilgamesh.png"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/T_Gilgamesh_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png",
+              "skin": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/T_Gilgamesh_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png",
+              "skin": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/T_Gilgamesh_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png",
+              "skin": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/T_Gilgamesh_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png",
+              "skin": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "godName": "Ishtar",
+      "internalName": "Ishtar_Item",
+      "skins": [
+        {
+          "skinKey": "Ishtar",
+          "skinName": "Base Ishtar",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Ishtar/Default/t_GodCard_Ishtar.png",
+            "cardArt": "app/data/NewGodSkins/Ishtar/Default/t_GodCard_Ishtar.png",
+            "icon": "app/data/NewGodSkins/Ishtar/Default/t_GodPortrait_Ishtar.png",
+            "inGame": "app/data/NewGodSkins/Ishtar/Default/t_GodFull_Ishtar.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Ishtar/Skins/Mastery/T_Ishtar_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png",
+              "skin": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Ishtar/Skins/Mastery/T_Ishtar_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png",
+              "skin": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Ishtar/Skins/Mastery/T_Ishtar_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png",
+              "skin": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Ishtar/Skins/Mastery/T_Ishtar_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png",
+              "skin": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "StrikingArchon",
+          "skinName": "Striking Archon",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinCard_Ishtar_StrikingArchon_Base.png",
+            "cardArt": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinCard_Ishtar_StrikingArchon_Base.png",
+            "icon": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinPortrait_Ishtar_StrikingArchon_Base.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism 2",
+              "cardArt": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinCard_Ishtar_StrikingArchon_Prism02.png",
+              "skin": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinCard_Ishtar_StrikingArchon_Prism02.png",
+              "icon": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinPortrait_Ishtar_StrikingArchon_Prism02.png"
+            },
+            {
+              "name": "Prism 3",
+              "cardArt": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinCard_Ishtar_StrikingArchon_Prism03.png",
+              "skin": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinCard_Ishtar_StrikingArchon_Prism03.png",
+              "icon": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinPortrait_Ishtar_StrikingArchon_Prism03.png"
+            },
+            {
+              "name": "Prism 4",
+              "cardArt": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinCard_Ishtar_StrikingArchon_Prism04.png",
+              "skin": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinCard_Ishtar_StrikingArchon_Prism04.png",
+              "icon": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinPortrait_Ishtar_StrikingArchon_Prism04.png"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

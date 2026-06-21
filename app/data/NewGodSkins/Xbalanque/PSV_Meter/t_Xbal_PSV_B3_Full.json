@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_Xbal_PSV_B3_Full",
+    "Flags": "RF_Public | RF_Standalone | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Xbalanque/PSV_Meter/t_Xbal_PSV_B3_Full",
+    "Properties": {
+      "ImportedSize": {
+        "X": 32,
+        "Y": 36
+      },
+      "LightingGuid": "28064113-45BB3D9E-1D8367BE-E166D413",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 32,
+    "SizeY": 36,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 1152,
+          "SizeOnDisk": 1152,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 32,
+        "SizeY": 36,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Nut_PotGem_Full",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Nut/PSV_Meter/S1/t_PSV_Nut_PotGem_Full",
+    "Properties": {
+      "ImportedSize": {
+        "X": 40,
+        "Y": 68
+      },
+      "LightingGuid": "75792CA5-4C9600E0-30F0E080-C197F03F",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 40,
+    "SizeY": 68,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 10880,
+          "SizeOnDisk": 10880,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 40,
+        "SizeY": 68,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

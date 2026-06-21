@@ -619,7 +619,7 @@ export default function PatchHubPage({ subTab = DEFAULT_TAB_STATE.patchHub }) {
       setTimeout(() => {
         try {
           const patchNotes = require('../Patch Notes/patchnotesob27.json');
-          const builds = require('./data/builds.json');
+          const builds = require('../lib/buildsData');
           
           if (isMounted) {
             const transformedData = transformPatchData(patchNotes);

@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "Poseidon_Meter_Water",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Poseidon/Passive/Poseidon_Meter_Water",
+    "Properties": {
+      "ImportedSize": {
+        "X": 242,
+        "Y": 82
+      },
+      "LightingGuid": "22E2DA69-4FE07C15-46CE94B8-27EB3C42",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 242,
+    "SizeY": 82,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 79376,
+          "SizeOnDisk": 79376,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 242,
+        "SizeY": 82,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

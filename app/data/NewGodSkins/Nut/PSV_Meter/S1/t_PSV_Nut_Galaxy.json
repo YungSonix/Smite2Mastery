@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Nut_Galaxy",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Nut/PSV_Meter/S1/t_PSV_Nut_Galaxy",
+    "Properties": {
+      "ImportedSize": {
+        "X": 192,
+        "Y": 192
+      },
+      "LightingGuid": "168AFD13-4061DA24-6CC779A0-395A9E9D",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 192,
+    "SizeY": 192,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 147456,
+          "SizeOnDisk": 147456,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 192,
+        "SizeY": 192,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

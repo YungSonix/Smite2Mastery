@@ -1,0 +1,332 @@
+{
+  "pantheon": "Arthurian",
+  "gods": [
+    {
+      "godName": "Merlin",
+      "internalName": "Merlin_Item",
+      "skins": [
+        {
+          "skinKey": "Merlin",
+          "skinName": "Base Merlin",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Merlin/Default/t_GodCard_Merlin.png",
+            "cardArt": "app/data/NewGodSkins/Merlin/Default/t_GodCard_Merlin.png",
+            "icon": "app/data/NewGodSkins/Merlin/Default/t_GodPortrait_Merlin.png",
+            "inGame": "app/data/NewGodSkins/Merlin/Default/t_GodFull_Merlin.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Merlin/Skins/Mastery/T_Merlin_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Merlin/Skins/Mastery/T_Merlin_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Merlin/Skins/Mastery/T_Merlin_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Merlin/Skins/Mastery/T_Merlin_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "CosmicConjurer",
+          "skinName": "Cosmic Conjurer",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Merlin/Skins/CosmicConjurer/t_GodCard_CosmicConjurer.png",
+            "cardArt": "app/data/NewGodSkins/Merlin/Skins/CosmicConjurer/t_GodCard_CosmicConjurer.png",
+            "icon": "app/data/NewGodSkins/Merlin/Skins/CosmicConjurer/t_GodPortrait_CosmicConjurer.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "MagicMischief",
+          "skinName": "Magic Mischief",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_GodCard_MysticMischief.png",
+            "cardArt": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_GodCard_MysticMischief.png",
+            "icon": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_GodPortrait_MysticMischief.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism 1",
+              "cardArt": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinCard_Merlin_MysticMischief_Prism1.png",
+              "skin": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinCard_Merlin_MysticMischief_Prism1.png",
+              "icon": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinPortrait_Merlin_MysticMischief__Prism1.png"
+            },
+            {
+              "name": "Prism 2",
+              "cardArt": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinCard_Merlin_MysticMischief_Prism2.png",
+              "skin": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinCard_Merlin_MysticMischief_Prism2.png",
+              "icon": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinPortrait_Merlin_MysticMischief__Prism2.png"
+            },
+            {
+              "name": "Prism 3",
+              "cardArt": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinCard_Merlin_MysticMischief_Prism3.png",
+              "skin": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinCard_Merlin_MysticMischief_Prism3.png",
+              "icon": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinPortrait_Merlin_MysticMischief__Prism3.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "godName": "Mordred",
+      "internalName": "Mordred_Item",
+      "skins": [
+        {
+          "skinKey": "Mordred",
+          "skinName": "Base Mordred",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Mordred/Default/t_GodCard_Mordred.png",
+            "cardArt": "app/data/NewGodSkins/Mordred/Default/t_GodCard_Mordred.png",
+            "icon": "app/data/NewGodSkins/Mordred/Default/t_GodPortrait_Mordred.png",
+            "inGame": "app/data/NewGodSkins/Mordred/Default/T_GodFull_Mordred.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Mordred/Skins/Mastery/T_Mordred_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Mordred/Skins/Mastery/T_Mordred_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Mordred/Skins/Mastery/T_Mordred_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Mordred/Skins/Mastery/T_Mordred_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "Grovebound",
+          "skinName": "Grovebound",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinCard_Mordred_Grovebound_Base.png",
+            "cardArt": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinCard_Mordred_Grovebound_Base.png",
+            "icon": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinPortrait_Mordred_Grovebound_Base.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism 1",
+              "cardArt": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinCard_Mordred_Grovebound_Prism01.png",
+              "skin": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinCard_Mordred_Grovebound_Prism01.png",
+              "icon": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinPortrait_Mordred_Grovebound_Prism01.png"
+            },
+            {
+              "name": "Prism 2",
+              "cardArt": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinCard_Mordred_Grovebound_Prism02.png",
+              "skin": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinCard_Mordred_Grovebound_Prism02.png",
+              "icon": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinPortrait_Mordred_Grovebound_Prism02.png"
+            },
+            {
+              "name": "Prism 3",
+              "cardArt": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinCard_Mordred_Grovebound_Prism03.png",
+              "skin": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinCard_Mordred_Grovebound_Prism03.png",
+              "icon": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinPortrait_Mordred_Grovebound_Prism03.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "LichSplash",
+          "skinName": "Lich Splash",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Mordred/Skins/Litch/t_SkinCard_Litch.png",
+            "cardArt": "app/data/NewGodSkins/Mordred/Skins/Litch/t_SkinCard_Litch.png",
+            "icon": "app/data/NewGodSkins/Mordred/Skins/Litch/t_SkinPortrait_Litch.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    },
+    {
+      "godName": "Morgan Le Fay",
+      "internalName": "MorganLeFay_Item",
+      "skins": [
+        {
+          "skinKey": "MorganLeFay",
+          "skinName": "Base Morgan Le Fay",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/MorganLeFay/Default/t_GodCard_MorganLeFay.png",
+            "cardArt": "app/data/NewGodSkins/MorganLeFay/Default/t_GodCard_MorganLeFay.png",
+            "icon": "app/data/NewGodSkins/MorganLeFay/Default/t_GodPortrait_MorganLeFay.png",
+            "inGame": "app/data/NewGodSkins/MorganLeFay/Default/t_GodFull_MorganLeFay.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "0",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/T_MorganLeFay_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png",
+              "skin": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/T_MorganLeFay_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png",
+              "skin": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/T_MorganLeFay_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png",
+              "skin": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/T_MorganLeFay_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png",
+              "skin": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "DuskGllmmer",
+          "skinName": "Dusk Gllmmer",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/MorganLeFay/Skins/DuskGllmmer/t_SkinCard_MorganLeFay_DarkGlimmer.png",
+            "cardArt": "app/data/NewGodSkins/MorganLeFay/Skins/DuskGllmmer/t_SkinCard_MorganLeFay_DarkGlimmer.png",
+            "icon": "app/data/NewGodSkins/MorganLeFay/Skins/DuskGllmmer/t_SkinIcon_MorganLeFay_DarkGlimmer.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    }
+  ]
+}

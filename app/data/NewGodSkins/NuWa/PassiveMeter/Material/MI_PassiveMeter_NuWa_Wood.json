@@ -1,0 +1,25 @@
+[
+  {
+    "Type": "MaterialInstanceConstant",
+    "Name": "MI_PassiveMeter_NuWa_Wood",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'MaterialInstanceConstant'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/NuWa/PassiveMeter/Material/MI_PassiveMeter_NuWa_Wood",
+    "Properties": {
+      "Parent": {
+        "ObjectName": "Material'M_PassiveMeter_NuWa_Wood'",
+        "ObjectPath": "/Game/UI/Textures/ArtAssets/Gods/NuWa/PassiveMeter/Material/M_PassiveMeter_NuWa_Wood.0"
+      },
+      "BasePropertyOverrides": {
+        "BlendMode": "EBlendMode::BLEND_Translucent",
+        "ShadingModel": "EMaterialShadingModel::MSM_Unlit",
+        "OpacityMaskClipValue": 0.3333
+      },
+      "bIncludedInBaseGame": true
+    },
+    "LoadedMaterialResources": [],
+    "CachedData": {
+      "ParentLayerIndexRemap": []
+    }
+  }
+]

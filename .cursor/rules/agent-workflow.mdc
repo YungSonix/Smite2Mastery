@@ -1,0 +1,122 @@
+---
+description: Agent workflow — task system, feature ideas, proactive improvements, pattern reuse, session memory
+alwaysApply: true
+---
+
+# Agent workflow
+
+## 1. Session startup — check the task files
+
+Read **`Vault/START_HERE.md`** first (if `Vault/` exists locally — it is **gitignored**), then **`Vault/decisions-log.md`**, then **`Vault/Dashboard.md`**.
+
+Then the dev board (repo root):
+1. **`BUGS.md`** — fix open bugs before starting new features
+2. **`TASKS.md`** — pending, in-progress, and completed
+3. **`IMPROVEMENTS.md`** — code quality and UX upgrades
+4. **`GOALS.md`** — product direction and recently aligned work
+
+If any of these files are missing, tell the user before proceeding.
+
+**Before implementing** (code/UI/features): read **`Vault/3-Resources/Cursor agents/skills/00 Read first.md`** (or repo `docs/cursor-agents/skills/00 Read first.md`). Always-on discipline: `.cursor/rules/agent-knowledge.mdc`. Plan mode: `.cursor/rules/plan.mdc`.
+
+| File | Role |
+|------|------|
+| `Vault/START_HERE.md` | Vault guide, glossary, status, conventions |
+| `Vault/decisions-log.md` | ADRs — do not re-litigate |
+| `Vault/Dashboard.md` | Home — links to Code/, Assets/, Scripts/ |
+| `BUGS.md` | Open bugs — priority over features |
+| Bug reports (workflow) | `.cursor/rules/bugs.mdc` | Always update BUGS.md + vault:sync |
+| `TASKS.md` | Feature board + changelog lines |
+| `Vault/Master Task List.md` | Obsidian GTD capture (`#todo`) |
+
+## 1b. Obsidian vault (GTD + PARA) — local only
+
+**`Vault/` is gitignored** — personal Obsidian workspace, not part of the app repo. If the folder is missing (e.g. fresh clone), skip vault reads; dev work uses `BUGS.md` / `TASKS.md` at repo root.
+
+When `Vault/` exists locally, open that folder in Obsidian. Index folders:
+- `Vault/Code/` — source map (features, shared, lib)
+- `Vault/Assets/` — equipment, ranks, exercise JSON
+- `Vault/Scripts/`, `Vault/Docs/`, `Vault/Config/`, `Vault/Server/`, `Vault/Boards/`
+- `1-Projects/`, `2-Areas/`, `3-Resources/`, `4-Archives/`
+- `Vault/3-Resources/Cursor agents/` — agent knowledge (Karpathy, DESIGN.md, token skills)
+
+Task tags: `#todo` (global filter) · `#backburner` · `#waiting` · `#discuss` · `#clarify` · `#later`
+
+When helping with tasks: respect GTD hierarchy; do not schedule more than **5 tasks in a single day**. Dev ships still update `TASKS.md` + changelog.
+
+**Vault sync:** After structural code changes, run `npm run vault:sync` (see `.cursor/rules/vault-sync.mdc`).
+
+## 2. Feature idea generation
+
+After completing any feature, suggest **one concrete next feature idea** related to the area just worked on. Keep it to 1-2 sentences, framed as a question so the user can accept, modify, or skip it. Add the idea to `TASKS.md` Pending if accepted.
+
+## 3. Proactive improvement prompts
+
+When the user asks for a feature, before implementing:
+- Briefly consider a way to **improve or extend** the request (better UX, edge case, related flow).
+- Ask **one** short improvement question alongside acknowledging the task.
+- Don't block on the answer — start working and incorporate the answer if it arrives.
+
+## 4. Pattern reuse — check before building
+
+Before creating any new UI container, dropdown, modal, chip grid, or section layout:
+1. Search `src/shared/components/` and recent feature screens for an **existing pattern**.
+2. If a match exists, **reuse or extend** it rather than building fresh.
+3. Mention what you found: "Reusing the collapsible section from CustomDayGenerator."
+
+Key patterns to check:
+- **Collapsible category sections** (chevron ▼/▲ + chip grid) → `CustomDayGeneratorScreen`
+- **Floating dropdown modal** (overlay + menu) → `WorkoutPlansScreen`
+- **ScanConfirmCard** serving dropdown → `ScanConfirmCard`
+- **PrimaryButton** variants (solid/ghost/compact) → `@shared/components/ui`
+- **Card / TouchRow** → `@shared/components/ui`
+
+## 5. Session memory — track what's done
+
+- After shipping a feature: move it to `TASKS.md` Completed with the date, update `GOALS.md` "Recently aligned", and add any new idea to `TASKS.md` Pending.
+- After fixing a bug: move it to `BUGS.md` Fixed with a short note on what was wrong.
+- After making an improvement: check it off in `IMPROVEMENTS.md`.
+- When the user requests something, **grep the codebase** for related existing work to avoid rebuilding what's already there.
+
+## 6. Scope control
+
+- Unless told otherwise, complete only the requested task. Do not make unrelated changes.
+- If you spot a bug or improvement while working, add it to `BUGS.md` or `IMPROVEMENTS.md` rather than fixing it mid-task (unless it's blocking).
+
+## 7. In-app change log (What's New)
+
+**Full checklist:** `.cursor/rules/changelog-auto.mdc` (always apply). **Agents:** `npm run changelog:add` or edit `changelog.ts`; **users:** never required — commit with `- changelog:` on Completed tasks and the hook syncs.
+
+When you ship **user-visible** work (features, bug fixes users would notice, meaningful QoL):
+
+1. Add **1–3 short bullets** to `CHANGELOG_RELEASES[0].highlights` in `src/shared/changelog/changelog.ts` (or use `changelog:add` above).
+2. Add `- changelog: <title>` on the **Completed** line in `TASKS.md` (hook syncs on commit if bullet missing).
+3. On a **new store version** (user-requested release only — bump `version` in `app.config.js`), add a **new release object at the top** — do not grow one version block forever.
+4. **Popup shows only the first 5** (`WHATS_NEW_PREVIEW_LIMIT`). Most important items first (fixes → features → QoL).
+5. **Do not add**: internal refactors, script-only work, agent doc edits, or dev-only changes.
+
+The app **auto-shows** What's New when `version+build` changes (`appReleaseId.ts`, EAS production `autoIncrement`). Users read the full log at **Profile → Help → Change log**.
+
+## 8. Assumptions
+
+- Never assume — if context is missing, ask before proceeding
+- If the user's intent is unclear, state your interpretation before writing code
+- If a decision isn't covered by conventions or docs, surface it first
+- Do not silently make tradeoffs — make them visible
+
+## 9. What not to do
+
+- Do not skip reading the session startup files
+- Do not refactor, change folder structure, or install packages without approval
+- Do not commit unless the user explicitly asks
+- Do not add changelog bullets for internal refactors or agent-only doc edits (see `changelog-auto.mdc`)
+
+## 10. Project file map
+
+**Vault:** `Vault/START_HERE.md`, `Vault/Dashboard.md`, `Vault/decisions-log.md`, `Vault/Code/`, `Vault/Assets/`, `Vault/Scripts/`
+
+**Repo docs:** `docs/COACH_QUALITY.md`, `docs/EAS_UPDATES.md`, `docs/PUBLISH_CHECKLIST.md`, etc.
+
+**Source:** `src/features/`, `src/shared/`, `src/lib/`
+
+**Obsidian:** open `Vault/` folder · `Vault/.obsidian/`

@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_PassiveMeter_NuWaEnergy_Filler",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/NuWa/PassiveMeter/T_PassiveMeter_NuWaEnergy_Filler",
+    "Properties": {
+      "ImportedSize": {
+        "X": 121,
+        "Y": 120
+      },
+      "LightingGuid": "B838E938-45439939-FEE4408C-74BE5B9B",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 121,
+    "SizeY": 120,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 58080,
+          "SizeOnDisk": 58080,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 121,
+        "SizeY": 120,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

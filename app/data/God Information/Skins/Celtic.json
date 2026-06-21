@@ -1,0 +1,316 @@
+{
+  "pantheon": "Celtic",
+  "gods": [
+    {
+      "godName": "Artio",
+      "internalName": "Artio_Item",
+      "skins": [
+        {
+          "skinKey": "Artio",
+          "skinName": "Base Artio",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Artio/Default/t_GodCard_Artio.png",
+            "cardArt": "app/data/NewGodSkins/Artio/Default/t_GodCard_Artio.png",
+            "icon": "app/data/NewGodSkins/Artio/Default/t_GodPortrait_Artio.png",
+            "inGame": "app/data/NewGodSkins/Artio/Default/t_GodFull_Artio.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Artio/Skins/Mastery/T_Artio_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery.png",
+              "skin": "app/data/NewGodSkins/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Artio/Skins/Mastery/T_Artio_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery.png",
+              "skin": "app/data/NewGodSkins/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Artio/Skins/Mastery/T_Artio_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery.png",
+              "skin": "app/data/NewGodSkins/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Artio/Skins/Mastery/T_Artio_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery.png",
+              "skin": "app/data/NewGodSkins/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "DenMother",
+          "skinName": "Den Mother",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Artio/Skins/DenMother/t_SkinCard_Artio_DenMother.png",
+            "cardArt": "app/data/NewGodSkins/Artio/Skins/DenMother/t_SkinCard_Artio_DenMother.png",
+            "icon": "app/data/NewGodSkins/Artio/Skins/DenMother/t_SkinIcon_Artio_DenMother.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "FiendHunter",
+          "skinName": "Fiend Hunter",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": true,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinCard_Artio_FiendHunter_Base.png",
+            "cardArt": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinCard_Artio_FiendHunter_Base.png",
+            "icon": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinPortrait_Artio_FiendHunter_Base.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          },
+          "variants": [
+            {
+              "name": "Prism 1",
+              "cardArt": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinCard_Artio_FiendHunter_Prism01.png",
+              "skin": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinCard_Artio_FiendHunter_Prism01.png",
+              "icon": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinPortrait_Artio_FiendHunter_Prism01.png"
+            },
+            {
+              "name": "Prism 2",
+              "cardArt": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinCard_Artio_FiendHunter_Prism02.png",
+              "skin": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinCard_Artio_FiendHunter_Prism02.png",
+              "icon": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinPortrait_Artio_FiendHunter_Prism02.png"
+            },
+            {
+              "name": "Prism 3",
+              "cardArt": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinCard_Artio_FiendHunter_Prism03.png",
+              "skin": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinCard_Artio_FiendHunter_Prism03.png",
+              "icon": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinPortrait_Artio_FiendHunter_Prism03.png"
+            },
+            {
+              "name": "Prism 4",
+              "cardArt": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinCard_Artio_FiendHunter_Prism04.png",
+              "skin": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinCard_Artio_FiendHunter_Prism04.png",
+              "icon": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinPortrait_Artio_FiendHunter_Prism04.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "godName": "Cernunnos",
+      "internalName": "Cernunnos_Item",
+      "skins": [
+        {
+          "skinKey": "Cernunnos",
+          "skinName": "Base Cernunnos",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Cernunnos/Default/t_GodCard_Cernunnos.png",
+            "cardArt": "app/data/NewGodSkins/Cernunnos/Default/t_GodCard_Cernunnos.png",
+            "icon": "app/data/NewGodSkins/Cernunnos/Default/t_GodPortrait_Cernunnos.png",
+            "inGame": "app/data/NewGodSkins/Cernunnos/Default/T_GodFull_Cernunnos.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "Netherware",
+          "skinName": "Netherware",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Cernunnos/Skins/Netherware/t_SkinCard_Cernunnos_Netherware.png",
+            "cardArt": "app/data/NewGodSkins/Cernunnos/Skins/Netherware/t_SkinCard_Cernunnos_Netherware.png",
+            "icon": "app/data/NewGodSkins/Cernunnos/Skins/Netherware/t_SkinPortrait_Cernunnos_Netherware.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        },
+        {
+          "skinKey": "Smite2F2pOb1CrimsonstalkerSocial1920x1080Notag",
+          "skinName": "Smite 2 F 2 P Ob 1 Crimsonstalker Social 1920 X 1080 Notag",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/Cernunnos/Skins/CrimsonStalker/t_SkinCard_Cernunnos_CrimsonStalker.png",
+            "cardArt": "app/data/NewGodSkins/Cernunnos/Skins/CrimsonStalker/t_SkinCard_Cernunnos_CrimsonStalker.png",
+            "icon": "app/data/NewGodSkins/Cernunnos/Skins/CrimsonStalker/t_SkinPortrait_Cernunnos_CrimsonStalker.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    },
+    {
+      "godName": "The Morrigan",
+      "internalName": "The_Morrigan_Item",
+      "skins": [
+        {
+          "skinKey": "The Morrigan",
+          "skinName": "Base The Morrigan",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
+          "rarity": null,
+          "isBaseSkin": true,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "type": "Base Skin",
+          "assets": {
+            "skin": "app/data/NewGodSkins/TheMorrigan/Default/t_GodCard_TheMorrigan.png",
+            "cardArt": "app/data/NewGodSkins/TheMorrigan/Default/t_GodCard_TheMorrigan.png",
+            "icon": "app/data/NewGodSkins/TheMorrigan/Default/t_GodPortrait_TheMorrigan.png",
+            "inGame": "app/data/NewGodSkins/TheMorrigan/Default/T_GodFull_TheMorrigan.png"
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "variants": [
+            {
+              "name": "Mastery Light",
+              "icon": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/T_TheMorrigan_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/t_TheMorrigan_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/t_TheMorrigan_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Onyx",
+              "icon": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/T_TheMorrigan_Icon_Onyx.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/t_TheMorrigan_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/t_TheMorrigan_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Opal",
+              "icon": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/T_TheMorrigan_Icon_Opal.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/t_TheMorrigan_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/t_TheMorrigan_Card_Mastery.png"
+            },
+            {
+              "name": "Mastery Shadow",
+              "icon": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/T_TheMorrigan_Icon_Shadow.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/t_TheMorrigan_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/t_TheMorrigan_Card_Mastery.png"
+            }
+          ]
+        },
+        {
+          "skinKey": "GothWaitress",
+          "skinName": "Goth Waitress",
+          "cost": null,
+          "rarity": null,
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": false,
+          "isCrossGen": false,
+          "assets": {
+            "skin": "app/data/NewGodSkins/TheMorrigan/Skins/GothWaitress/t_SkinCard_TheMorrigan_GothWaitress.png",
+            "cardArt": "app/data/NewGodSkins/TheMorrigan/Skins/GothWaitress/t_SkinCard_TheMorrigan_GothWaitress.png",
+            "icon": "app/data/NewGodSkins/TheMorrigan/Skins/GothWaitress/t_SkinPortrait_TheMorrigan_GothWaitress.png"
+          },
+          "price": {
+            "gems": "",
+            "diamonds": "",
+            "gemsdia": ""
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSVMeter_Agni_Ring",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Agni/Passive/t_PSVMeter_Agni_Ring",
+    "Properties": {
+      "ImportedSize": {
+        "X": 160,
+        "Y": 44
+      },
+      "LightingGuid": "BCC8DF97-4A56826F-72417984-8FCF0875",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 160,
+    "SizeY": 44,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 7040,
+          "SizeOnDisk": 7040,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 160,
+        "SizeY": 44,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

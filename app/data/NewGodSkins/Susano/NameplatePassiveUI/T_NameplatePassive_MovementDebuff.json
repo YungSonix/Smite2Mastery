@@ -1,0 +1,35 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_NameplatePassive_MovementDebuff",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Susano/NameplatePassiveUI/T_NameplatePassive_MovementDebuff",
+    "Properties": {
+      "ImportedSize": {
+        "X": 64,
+        "Y": 64
+      },
+      "LightingGuid": "65BB4C30-4C94139E-BDE10DA3-13C97724",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI"
+    },
+    "SizeX": 64,
+    "SizeY": 64,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 4096,
+          "SizeOnDisk": 4096,
+          "OffsetInFile": "0x71"
+        },
+        "SizeX": 64,
+        "SizeY": 64,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

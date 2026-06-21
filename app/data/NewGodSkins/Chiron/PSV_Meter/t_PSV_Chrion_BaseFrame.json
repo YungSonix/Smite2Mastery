@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Chrion_BaseFrame",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Chiron/PSV_Meter/t_PSV_Chrion_BaseFrame",
+    "Properties": {
+      "ImportedSize": {
+        "X": 192,
+        "Y": 192
+      },
+      "LightingGuid": "DF512C0D-48A9164B-84E2A4AB-095DBD94",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 192,
+    "SizeY": 192,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 147456,
+          "SizeOnDisk": 147456,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 192,
+        "SizeY": 192,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

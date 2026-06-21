@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Nut_Ring_Full",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Nut/PSV_Meter/S1/t_PSV_Nut_Ring_Full",
+    "Properties": {
+      "ImportedSize": {
+        "X": 64,
+        "Y": 88
+      },
+      "LightingGuid": "B289C4CE-48542B83-0396B190-CAEB2D1E",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 64,
+    "SizeY": 88,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 22528,
+          "SizeOnDisk": 22528,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 64,
+        "SizeY": 88,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

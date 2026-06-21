@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "PSV_Achilles_Shield",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Achilles/PSVMeter/PSV_Achilles_Shield",
+    "Properties": {
+      "ImportedSize": {
+        "X": 116,
+        "Y": 128
+      },
+      "LightingGuid": "417578B0-467D6998-CB3152B2-A41B6BEE",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 116,
+    "SizeY": 128,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 14848,
+          "SizeOnDisk": 14848,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 116,
+        "SizeY": 128,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

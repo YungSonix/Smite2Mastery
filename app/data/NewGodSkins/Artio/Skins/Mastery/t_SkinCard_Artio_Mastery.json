@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_SkinCard_Artio_Mastery",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery",
+    "Properties": {
+      "ImportedSize": {
+        "X": 680,
+        "Y": 1024
+      },
+      "LightingGuid": "5BF8B505-4A762725-7E058299-D0047BF1",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 680,
+    "SizeY": 1024,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 2785280,
+          "SizeOnDisk": 2785280,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 680,
+        "SizeY": 1024,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

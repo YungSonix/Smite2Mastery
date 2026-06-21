@@ -1,0 +1,1299 @@
+{
+  "batch": "M-P",
+  "auditedAt": "2026-06-16",
+  "gods": [
+    {
+      "godFolder": "Medusa",
+      "godName": "Medusa",
+      "issues": [
+        "VenomStrike: missing portrait/icon PNG",
+        "legacy splash/wallpaper row (should hide or merge): PoolpartySplash1920x1080"
+      ],
+      "suggestedRemaps": {
+        "PoolpartySplash1920x1080": "SummerFun"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "key": "Default",
+          "card": "t_GodCard_Medusa.png",
+          "icon": "t_GodPortrait_Medusa.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_Medusa.png",
+            "t_GodFull_Medusa.png",
+            "t_GodMini_Medusa.png",
+            "t_GodPortrait_Medusa.png",
+            "t_Scorecard_Medusa.png",
+            "t_TeamRoster_Medusa.png"
+          ]
+        },
+        {
+          "folder": "Mastery",
+          "key": "Mastery",
+          "card": null,
+          "icon": null,
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "T_Medusa_Card_Mastery.png",
+            "T_Medusa_Icon_Light.png",
+            "T_Medusa_Icon_Onyx.png",
+            "T_Medusa_Icon_Opal.png",
+            "T_Medusa_Icon_Shadow.png"
+          ]
+        },
+        {
+          "folder": "SummerFun",
+          "key": "SummerFun",
+          "card": "t_SkinCard_Medusa_SummerFun.png",
+          "icon": "t_SkinPortrait_Medusa_SummerFun.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_Medusa_SummerFun.png",
+            "t_SkinPortrait_Medusa_SummerFun.png"
+          ]
+        },
+        {
+          "folder": "VenomStrike",
+          "key": "VenomStrike",
+          "card": "t_GodCard_Medusa_VenomStrike.png",
+          "icon": null,
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_Medusa_VenomStrike.png",
+            "t_SkinCard_Medusa_VenomStrike.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        "Medusa",
+        "VenomStrike",
+        "PoolpartySplash1920x1080",
+        "SummerFun"
+      ]
+    },
+    {
+      "godFolder": "Mercury",
+      "godName": "Mercury",
+      "issues": [
+        "legacy splash/wallpaper row (should hide or merge): 010"
+      ],
+      "suggestedRemaps": {
+        "010": "HellsFury"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "key": "Default",
+          "card": "t_GodCard_Mercury.png",
+          "icon": "t_GodPortrait_Mercury.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_Mercury.png",
+            "t_GodFull_Mercury.png",
+            "t_GodMini_Mercury.png",
+            "t_GodPortrait_Mercury.png",
+            "t_Scorecard_Mercury.png",
+            "t_TeamRoster_Mercury.png"
+          ]
+        },
+        {
+          "folder": "HellsFury",
+          "key": "HellsFury",
+          "card": "t_SkinCard_Mercury_HellsFury.png",
+          "icon": "t_SkinIcon_Mercury_HellsFury.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_Mercury_HellsFury.png",
+            "t_SkinIcon_Mercury_HellsFury.png"
+          ]
+        },
+        {
+          "folder": "Mastery",
+          "key": "Mastery",
+          "card": null,
+          "icon": null,
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "T_Mercury_Card_Mastery.png",
+            "T_Mercury_Icon_Light.png",
+            "T_Mercury_Icon_Onyx.png",
+            "T_Mercury_Icon_Opal.png",
+            "T_Mercury_Icon_Shadow.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        "Mercury",
+        "010",
+        "HellsFury"
+      ]
+    },
+    {
+      "godFolder": "Merlin",
+      "godName": "Merlin",
+      "issues": [
+        "prisms on disk but variants[] empty on: MysticMischief (MysticMischief)",
+        "legacy splash/wallpaper row (should hide or merge): MagicMischief"
+      ],
+      "suggestedRemaps": {
+        "MagicMischief": "MysticMischief"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "key": "Default",
+          "card": "t_GodCard_Merlin.png",
+          "icon": "t_GodPortrait_Merlin.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_Merlin.png",
+            "t_GodFull_Merlin.png",
+            "t_GodMini_Merlin.png",
+            "t_GodPortrait_Merlin.png",
+            "t_Scorecard_Merlin.png",
+            "t_TeamRoster_Merlin.png"
+          ]
+        },
+        {
+          "folder": "CosmicConjurer",
+          "key": "CosmicConjurer",
+          "card": "t_GodCard_CosmicConjurer.png",
+          "icon": "t_GodPortrait_CosmicConjurer.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_CosmicConjurer.png",
+            "t_GodPortrait_CosmicConjurer.png"
+          ]
+        },
+        {
+          "folder": "Mastery",
+          "key": "Mastery",
+          "card": null,
+          "icon": null,
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_Merlin_Card_Mastery.png",
+            "T_Merlin_Icon_Light.png",
+            "T_Merlin_Icon_Onyx.png",
+            "T_Merlin_Icon_Opal.png",
+            "T_Merlin_Icon_Shadow.png"
+          ]
+        },
+        {
+          "folder": "MysticMischief",
+          "key": "MysticMischief",
+          "card": "t_GodCard_MysticMischief.png",
+          "icon": "t_GodPortrait_MysticMischief.png",
+          "prismCount": 6,
+          "prismSample": [
+            "t_SkinCard_Merlin_MysticMischief_Prism1.png",
+            "t_SkinCard_Merlin_MysticMischief_Prism2.png",
+            "t_SkinCard_Merlin_MysticMischief_Prism3.png",
+            "t_SkinPortrait_Merlin_MysticMischief__Prism1.png",
+            "t_SkinPortrait_Merlin_MysticMischief__Prism2.png"
+          ],
+          "keyFiles": [
+            "t_GodCard_MysticMischief.png",
+            "t_GodPortrait_MysticMischief.png",
+            "t_SkinCard_Merlin_MysticMischief_Prism1.png",
+            "t_SkinCard_Merlin_MysticMischief_Prism2.png",
+            "t_SkinCard_Merlin_MysticMischief_Prism3.png",
+            "t_SkinPortrait_Merlin_MysticMischief__Prism1.png",
+            "t_SkinPortrait_Merlin_MysticMischief__Prism2.png",
+            "t_SkinPortrait_Merlin_MysticMischief__Prism3.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        "Merlin",
+        "MagicMischief",
+        "CosmicConjurer",
+        "MysticMischief"
+      ]
+    },
+    {
+      "godFolder": "Mordred",
+      "godName": "Mordred",
+      "issues": [
+        "prisms on disk but variants[] empty on: Grovebound (Grovebound)",
+        "legacy splash/wallpaper row (should hide or merge): LichSplash"
+      ],
+      "suggestedRemaps": {
+        "LichSplash": "Litch"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "key": "Default",
+          "card": "t_GodCard_Mordred.png",
+          "icon": "t_GodPortrait_Mordred.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_Mordred.png",
+            "T_GodFull_Mordred.png",
+            "t_GodMini_Mordred.png",
+            "t_GodPortrait_Mordred.png",
+            "t_Scorecard_Mordred.png",
+            "t_TeamRoster_Mordred.png"
+          ]
+        },
+        {
+          "folder": "Grovebound",
+          "key": "Grovebound",
+          "card": "t_SkinCard_Mordred_Grovebound_Base.png",
+          "icon": "t_SkinPortrait_Mordred_Grovebound_Base.png",
+          "prismCount": 6,
+          "prismSample": [
+            "t_SkinCard_Mordred_Grovebound_Prism01.png",
+            "t_SkinCard_Mordred_Grovebound_Prism02.png",
+            "t_SkinCard_Mordred_Grovebound_Prism03.png",
+            "t_SkinPortrait_Mordred_Grovebound_Prism01.png",
+            "t_SkinPortrait_Mordred_Grovebound_Prism02.png"
+          ],
+          "keyFiles": [
+            "t_SkinCard_Mordred_Grovebound_Base.png",
+            "t_SkinCard_Mordred_Grovebound_Prism01.png",
+            "t_SkinCard_Mordred_Grovebound_Prism02.png",
+            "t_SkinCard_Mordred_Grovebound_Prism03.png",
+            "t_SkinPortrait_Mordred_Grovebound_Base.png",
+            "t_SkinPortrait_Mordred_Grovebound_Prism01.png",
+            "t_SkinPortrait_Mordred_Grovebound_Prism02.png",
+            "t_SkinPortrait_Mordred_Grovebound_Prism03.png"
+          ]
+        },
+        {
+          "folder": "Litch",
+          "key": "Litch",
+          "card": "t_SkinCard_Litch.png",
+          "icon": "t_SkinPortrait_Litch.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_Litch.png",
+            "t_SkinPortrait_Litch.png"
+          ]
+        },
+        {
+          "folder": "Mastery",
+          "key": "Mastery",
+          "card": null,
+          "icon": null,
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_Mordred_Card_Mastery.png",
+            "T_Mordred_Icon_Light.png",
+            "T_Mordred_Icon_Onyx.png",
+            "T_Mordred_Icon_Opal.png",
+            "T_Mordred_Icon_Shadow.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        "Mordred",
+        "LichSplash",
+        "Grovebound",
+        "Litch"
+      ]
+    },
+    {
+      "godFolder": "MorganLeFay",
+      "godName": "Morgan Le Fay",
+      "issues": [],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "key": "Default",
+          "card": "t_GodCard_MorganLeFay.png",
+          "icon": "t_GodPortrait_MorganLeFay.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_MorganLeFay.png",
+            "t_GodFull_MorganLeFay.png",
+            "t_GodMini_MorganLeFay.png",
+            "t_GodPortrait_MorganLeFay.png",
+            "t_Scorecard_MorganLeFay.png",
+            "t_TeamRoster_MorganLeFay.png"
+          ]
+        },
+        {
+          "folder": "Mastery",
+          "key": "Mastery",
+          "card": "t_GodCard_MorganLeFay_Mastery.png",
+          "icon": null,
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_MorganLeFay_Mastery.png",
+            "T_MorganLeFay_Icon_Light.png",
+            "T_MorganLeFay_Icon_Onyx.png",
+            "T_MorganLeFay_Icon_Opal.png",
+            "T_MorganLeFay_Icon_Shadow.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        "MorganLeFay"
+      ]
+    },
+    {
+      "godFolder": "Mulan",
+      "godName": "Hua Mulan",
+      "issues": [],
+      "suggestedRemaps": {
+        "Hua Mulan": "Mulan"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "key": "Default",
+          "card": "t_GodCard_Mulan.png",
+          "icon": "t_GodPortrait_Mulan.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_Mulan.png",
+            "t_GodFull_Mulan.png",
+            "t_GodMini_Mulan.png",
+            "t_GodPortrait_Mulan.png",
+            "t_Scorecard_Mulan.png",
+            "t_TeamRoster_Mulan.png"
+          ]
+        },
+        {
+          "folder": "HighHonor",
+          "key": "HighHonor",
+          "card": "t_SkinCard_Mulan_HighHonor.png",
+          "icon": "t_SkinPortrait_Mulan_HighHonor.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_Mulan_HighHonor.png",
+            "t_SkinPortrait_Mulan_HighHonor.png"
+          ]
+        },
+        {
+          "folder": "Mastery",
+          "key": "Mastery",
+          "card": null,
+          "icon": null,
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_Mulan_Card_Mastery.png",
+            "T_Mulan_Icon_Light.png",
+            "T_Mulan_Icon_Onyx.png",
+            "T_Mulan_Icon_Opal.png",
+            "T_Mulan_Icon_Shadow.png"
+          ]
+        },
+        {
+          "folder": "MysteriousWarrior",
+          "key": "MysteriousWarrior",
+          "card": "t_SkinCard_Mulan_MysteriousWarrior.png",
+          "icon": "t_SkinPortrait_Mulan_MysteriousWarrior.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_Mulan_MysteriousWarrior.png",
+            "t_SkinPortrait_Mulan_MysteriousWarrior.png"
+          ]
+        },
+        {
+          "folder": "Sentai",
+          "key": "Sentai",
+          "card": "t_SkinCard_Mulan_Sentai.png",
+          "icon": "t_SkinPortrait_Mulan_Sentai.png",
+          "prismCount": 8,
+          "prismSample": [
+            "t_SkinCard_Mulan_Sentai_Prism_B.png",
+            "t_SkinCard_Mulan_Sentai_Prism_C.png",
+            "t_SkinCard_Mulan_Sentai_Prism_D.png",
+            "t_SkinCard_Mulan_Sentai_Prism_E.png",
+            "t_SkinIcon_Mulan_Sentai_Prism_B.png"
+          ],
+          "keyFiles": [
+            "t_SkinCard_Mulan_Sentai.png",
+            "t_SkinPortrait_Mulan_Sentai.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        "Hua Mulan",
+        "HighHonor",
+        "MysteriousWarrior",
+        "Sentai"
+      ]
+    },
+    {
+      "godFolder": "NeZha",
+      "godName": "Ne Zha",
+      "issues": [
+        "empty duplicate folder; canonical assets under Ne_Zha"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [],
+      "skinsInBuilds": [
+        "Ne_Zha"
+      ]
+    },
+    {
+      "godFolder": "Ne_Zha",
+      "godName": "Ne Zha",
+      "issues": [],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "key": "Default",
+          "card": "t_GodCard_Ne_Zha.png",
+          "icon": "t_GodPortrait_Ne_Zha.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_Ne_Zha.png",
+            "t_GodFull_Ne_Zha.png",
+            "t_GodMini_Ne_Zha.png",
+            "t_GodPortrait_Ne_Zha.png",
+            "t_Scorecard_Ne_Zha.png",
+            "t_TeamRoster_Ne_Zha.png"
+          ]
+        },
+        {
+          "folder": "Mastery",
+          "key": "Mastery",
+          "card": "t_GodCard_NeZha_Mastery.png",
+          "icon": null,
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_NeZha_Mastery.png",
+            "T_Ne_Zha_Icon_Light.png",
+            "T_Ne_Zha_Icon_Onyx.png",
+            "T_Ne_Zha_Icon_Opal.png",
+            "T_Ne_Zha_Icon_Shadow.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        "Ne_Zha"
+      ]
+    },
+    {
+      "godFolder": "Neith",
+      "godName": "Neith",
+      "issues": [
+        "prisms on disk but variants[] empty on: MidnightGlamour (MidnightGlamour)",
+        "prisms on disk but variants[] empty on: MissdiagnosisSplash1010 (MissDiagnosis)",
+        "legacy splash/wallpaper row (should hide or merge): MissdiagnosisSplash1010",
+        "empty stub skin key: Succubus",
+        "MissDiagnosis split across 4 splash keys (should be one MissDiagnosis row + variants)"
+      ],
+      "suggestedRemaps": {
+        "MissdiagnosisSplash1010": "MissDiagnosis",
+        "MissdiagnosisSplash2011": "MissDiagnosis",
+        "MissdiagnosisSplash3012": "MissDiagnosis",
+        "MissdiagnosisSplash4013": "MissDiagnosis"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "key": "Default",
+          "card": "t_GodCard_Neith.png",
+          "icon": "t_GodPortrait_Neith.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_Neith.png",
+            "T_GodFull_Neith.png",
+            "t_GodMini_Neith.png",
+            "t_GodPortrait_Neith.png",
+            "T_Neith_GodCard_Default.png",
+            "t_Scorecard_Neith.png",
+            "t_TeamRoster_Neith.png"
+          ]
+        },
+        {
+          "folder": "Basscannon",
+          "key": "Basscannon",
+          "card": "t_SkinCard_Neith_Basscannon.png",
+          "icon": "t_SkinPortrait_Neith_Basscannon.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_Neith_Basscannon.png",
+            "t_SkinPortrait_Neith_Basscannon.png"
+          ]
+        },
+        {
+          "folder": "Heavenly",
+          "key": "Heavenly",
+          "card": "t_SkinCard_Neith_Heavenly.png",
+          "icon": "t_SkinPortrait_Neith_Heavenly.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_Neith_Heavenly.png",
+            "t_SkinPortrait_Neith_Heavenly.png"
+          ]
+        },
+        {
+          "folder": "Mastery",
+          "key": "Mastery",
+          "card": null,
+          "icon": null,
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "T_Neith_Card_Mastery.png",
+            "T_Neith_Icon_Angelic.png",
+            "T_Neith_Icon_Onyx.png",
+            "T_Neith_Icon_Opal.png",
+            "T_Neith_Icon_Shadow.png"
+          ]
+        },
+        {
+          "folder": "MidnightGlamour",
+          "key": "MidnightGlamour",
+          "card": "t_SkinCard_Neith_MidnightGlam_Base.png",
+          "icon": "t_SkinPortrait_Neith_MidnightGlam_Base.png",
+          "prismCount": 6,
+          "prismSample": [
+            "t_SkinCard_Neith_MidnightGlam_Prism01.png",
+            "t_SkinCard_Neith_MidnightGlam_Prism02.png",
+            "t_SkinCard_Neith_MidnightGlam_Prism03.png",
+            "t_SkinPortrait_Neith_MidnightGlam_Prism01.png",
+            "t_SkinPortrait_Neith_MidnightGlam_Prism02.png"
+          ],
+          "keyFiles": [
+            "t_SkinCard_Neith_MidnightGlam_Base.png",
+            "t_SkinCard_Neith_MidnightGlam_Prism01.png",
+            "t_SkinCard_Neith_MidnightGlam_Prism02.png",
+            "t_SkinCard_Neith_MidnightGlam_Prism03.png",
+            "t_SkinPortrait_Neith_MidnightGlam_Base.png",
+            "t_SkinPortrait_Neith_MidnightGlam_Prism01.png",
+            "t_SkinPortrait_Neith_MidnightGlam_Prism02.png",
+            "t_SkinPortrait_Neith_MidnightGlam_Prism03.png"
+          ]
+        },
+        {
+          "folder": "MissDiagnosis",
+          "key": "MissDiagnosis",
+          "card": "t_SkinCard_Neith_MissDiagnosis_B.png",
+          "icon": "t_SkinIcon_Neith_MissDiagnosis_B.png",
+          "prismCount": 8,
+          "prismSample": [
+            "t_SkinCard_Neith_MissDiagnosis_B.png",
+            "t_SkinCard_Neith_MissDiagnosis_C.png",
+            "t_SkinCard_Neith_MissDiagnosis_D.png",
+            "t_SkinCard_Neith_MissDiagnosis_E.png",
+            "t_SkinIcon_Neith_MissDiagnosis_B.png"
+          ],
+          "keyFiles": [
+            "t_SkinCard_Neith_MissDiagnosis_B.png",
+            "t_SkinCard_Neith_MissDiagnosis_base.png",
+            "t_SkinCard_Neith_MissDiagnosis_C.png",
+            "t_SkinCard_Neith_MissDiagnosis_D.png",
+            "t_SkinCard_Neith_MissDiagnosis_E.png",
+            "t_SkinIcon_Neith_MissDiagnosis_B.png",
+            "t_SkinIcon_Neith_MissDiagnosis_Base.png",
+            "t_SkinIcon_Neith_MissDiagnosis_C.png"
+          ]
+        },
+        {
+          "folder": "Succubus",
+          "key": "Succubus",
+          "card": "t_Neith_Succubus_SkinCard.png",
+          "icon": "t_Neith_Succubus_SkinPortrait.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_Neith_Succubus_SkinCard.png",
+            "t_Neith_Succubus_SkinPortrait.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        "Neith",
+        "MissdiagnosisSplash1010",
+        "MissdiagnosisSplash2011",
+        "MissdiagnosisSplash3012",
+        "MissdiagnosisSplash4013",
+        "Basscannon",
+        "Heavenly",
+        "MidnightGlamour",
+        "Succubus"
+      ]
+    },
+    {
+      "godFolder": "Nemesis",
+      "godName": "Nemesis",
+      "issues": [
+        "legacy splash/wallpaper row (should hide or merge): DarkjusticeSplash"
+      ],
+      "suggestedRemaps": {
+        "DarkjusticeSplash": "BlindVengeance"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "key": "Default",
+          "card": "t_GodCard_Nemesis.png",
+          "icon": "t_GodPortrait_Nemesis.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_Nemesis.png",
+            "t_GodFull_Nemesis.png",
+            "t_GodMini_Nemesis.png",
+            "t_GodPortrait_Nemesis.png",
+            "t_Scorecard_Nemesis.png",
+            "t_TeamRoster_Nemesis.png"
+          ]
+        },
+        {
+          "folder": "BlindVengeance",
+          "key": "BlindVengeance",
+          "card": "t_SkinCard_Nemisis_BlindVengeance.png",
+          "icon": "t_SkinIcon_Nemisis_BlindVengeance.png",
+          "prismCount": 8,
+          "prismSample": [
+            "t_SkinCard_Nemisis_BlindVengeance_P1.png",
+            "t_SkinCard_Nemisis_BlindVengeance_P2.png",
+            "t_SkinCard_Nemisis_BlindVengeance_P3.png",
+            "t_SkinCard_Nemisis_BlindVengeance_P4.png",
+            "t_SkinIcon_Nemisis_BlindVengeance_P1.png"
+          ],
+          "keyFiles": [
+            "t_SkinCard_Nemisis_BlindVengeance.png",
+            "t_SkinCard_Nemisis_BlindVengeance_P1.png",
+            "t_SkinCard_Nemisis_BlindVengeance_P2.png",
+            "t_SkinCard_Nemisis_BlindVengeance_P3.png",
+            "t_SkinCard_Nemisis_BlindVengeance_P4.png",
+            "t_SkinIcon_Nemisis_BlindVengeance.png",
+            "t_SkinIcon_Nemisis_BlindVengeance_P1.png",
+            "t_SkinIcon_Nemisis_BlindVengeance_P2.png"
+          ]
+        },
+        {
+          "folder": "Fishnets",
+          "key": "Fishnets",
+          "card": "t_SkinCard_Nemesis_Fishnets.png",
+          "icon": "t_SkinPortrait_Nemesis_Fishnets.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_Nemesis_Fishnets.png",
+            "t_SkinPortrait_Nemesis_Fishnets.png"
+          ]
+        },
+        {
+          "folder": "Mastery",
+          "key": "Mastery",
+          "card": null,
+          "icon": null,
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "T_Nemesis_Card_Mastery.png",
+            "T_Nemesis_Icon_Light.png",
+            "T_Nemesis_Icon_Onyx.png",
+            "T_Nemesis_Icon_Opal.png",
+            "T_Nemesis_Icon_Shadow.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        "Nemesis",
+        "DarkjusticeSplash",
+        "BlindVengeance",
+        "Fishnets"
+      ]
+    },
+    {
+      "godFolder": "NuWa",
+      "godName": "Nu Wa",
+      "issues": [
+        "prisms on disk but variants[] empty on: MysticEnchantress (MysticEnchantress)",
+        "Ravenstrike legacy wallpaper prism keys (hidden dupes): NuwaVenstrikeBloodraven, NuwaVenstrikeCyberwhite, NuwaVenstrikeTealtempest"
+      ],
+      "suggestedRemaps": {
+        "NuwaVenstrike": "Ravenstrike",
+        "NuwaVenstrikeBloodraven": "Ravenstrike",
+        "NuwaVenstrikeCyberwhite": "Ravenstrike",
+        "NuwaVenstrikeTealtempest": "Ravenstrike",
+        "Nu Wa": "NuWa"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "key": "Default",
+          "card": "t_GodCard_NuWa.png",
+          "icon": "t_GodPortrait_NuWa.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_NuWa.png",
+            "T_GodFull_NuWa.png",
+            "t_GodMini_NuWa.png",
+            "t_GodPortrait_NuWa.png",
+            "t_Scorecard_NuWa.png",
+            "t_TeamRoster_NuWa.png"
+          ]
+        },
+        {
+          "folder": "BadBunny",
+          "key": "BadBunny",
+          "card": "t_SkinCard_NuWa_BadBunny.png",
+          "icon": "t_SkinPortrait_NuWa_BadBunny.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_NuWa_BadBunny.png",
+            "t_SkinPortrait_NuWa_BadBunny.png"
+          ]
+        },
+        {
+          "folder": "BunnyBliss",
+          "key": "BunnyBliss",
+          "card": "t_SkinCard_NuWa_BunnyBliss.png",
+          "icon": "t_SkinPortrait_NuWa_BunnyBliss.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_NuWa_BunnyBliss.png",
+            "t_SkinPortrait_NuWa_BunnyBliss.png"
+          ]
+        },
+        {
+          "folder": "DarkSupreme",
+          "key": "DarkSupreme",
+          "card": "t_SkinCard_NuWa_DarkSupreme.png",
+          "icon": "t_SkinPortrait_NuWa_DarkSupreme.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_NuWa_DarkSupreme.png",
+            "t_SkinPortrait_NuWa_DarkSupreme.png"
+          ]
+        },
+        {
+          "folder": "Mastery",
+          "key": "Mastery",
+          "card": null,
+          "icon": "t_SkinPortrait_NuWa_Light.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "T_NuWa_Card_Mastery.png",
+            "t_SkinPortrait_NuWa_Light.png",
+            "t_SkinPortrait_NuWa_Onyx.png",
+            "t_SkinPortrait_NuWa_Opal.png",
+            "t_SkinPortrait_NuWa_Shadow.png"
+          ]
+        },
+        {
+          "folder": "MysticEnchantress",
+          "key": "MysticEnchantress",
+          "card": "t_SkinCard_NuWa_MysticEnchantress.png",
+          "icon": "t_SkinPortrait_NuWa_MysticEnchantress.png",
+          "prismCount": 6,
+          "prismSample": [
+            "t_SkinCard_NuWa_MysticEnchantress_Prism01.png",
+            "t_SkinCard_NuWa_MysticEnchantress_Prism02.png",
+            "t_SkinCard_NuWa_MysticEnchantress_Prism03.png",
+            "t_SkinPortrait_NuWa_MysticEnchantress_Prism01.png",
+            "t_SkinPortrait_NuWa_MysticEnchantress_Prism02.png"
+          ],
+          "keyFiles": [
+            "t_SkinCard_NuWa_MysticEnchantress.png",
+            "t_SkinCard_NuWa_MysticEnchantress_Prism01.png",
+            "t_SkinCard_NuWa_MysticEnchantress_Prism02.png",
+            "t_SkinCard_NuWa_MysticEnchantress_Prism03.png",
+            "t_SkinPortrait_NuWa_MysticEnchantress.png",
+            "t_SkinPortrait_NuWa_MysticEnchantress_Prism01.png",
+            "t_SkinPortrait_NuWa_MysticEnchantress_Prism02.png",
+            "t_SkinPortrait_NuWa_MysticEnchantress_Prism03.png"
+          ]
+        },
+        {
+          "folder": "PlayfulBunny",
+          "key": "PlayfulBunny",
+          "card": "t_SkinCard_NuWa_PlayfulBunny.png",
+          "icon": "t_SkinPortrait_NuWa_PlayfulBunny.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_NuWa_PlayfulBunny.png",
+            "t_SkinPortrait_NuWa_PlayfulBunny.png"
+          ]
+        },
+        {
+          "folder": "Ravenstrike",
+          "key": "Ravenstrike",
+          "card": "t_SkinCard_NuWa_Ravenstrike.png",
+          "icon": "t_SkinPortrait_NuWa_Ravenstrike.png",
+          "prismCount": 8,
+          "prismSample": [
+            "t_SkinCard_NuWa_Ravenstrike_Prism_B.png",
+            "t_SkinCard_NuWa_Ravenstrike_Prism_C.png",
+            "t_SkinCard_NuWa_Ravenstrike_Prism_D.png",
+            "t_SkinCard_NuWa_Ravenstrike_Prism_E.png",
+            "t_SkinIcon_NuWa_Ravenstrike_Prism_B.png"
+          ],
+          "keyFiles": [
+            "t_SkinCard_NuWa_Ravenstrike.png",
+            "t_SkinPortrait_NuWa_Ravenstrike.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        "Nu Wa",
+        "NuwaVenstrike",
+        "NuwaVenstrikeBloodraven",
+        "NuwaVenstrikeCyberwhite",
+        "NuwaVenstrikeTealtempest",
+        "BadBunny",
+        "BunnyBliss",
+        "DarkSupreme",
+        "MysticEnchantress",
+        "PlayfulBunny"
+      ]
+    },
+    {
+      "godFolder": "Nut",
+      "godName": "Nut",
+      "issues": [],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "key": "Default",
+          "card": "t_GodCard_Nut.png",
+          "icon": "t_GodPortrait_Nut.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_Nut.png",
+            "t_GodFull_Nut.png",
+            "t_GodMini_Nut.png",
+            "t_GodPortrait_Nut.png",
+            "t_Scorecard_Nut.png",
+            "t_TeamRoster_Nut.png"
+          ]
+        },
+        {
+          "folder": "Ascended",
+          "key": "Ascended",
+          "card": "t_SkinCard_Nut_Ascended.png",
+          "icon": "t_SkinIcon_Nut_Ascended.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_Nut_Ascended.png",
+            "t_SkinIcon_Nut_Ascended.png"
+          ]
+        },
+        {
+          "folder": "Mastery",
+          "key": "Mastery",
+          "card": "t_SkinCard_Nut_Mastery.png",
+          "icon": null,
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "T_Nut_Icon_Light.png",
+            "T_Nut_Icon_Onyx.png",
+            "T_Nut_Icon_Opal.png",
+            "T_Nut_Icon_Shadow.png",
+            "t_SkinCard_Nut_Mastery.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        "Nut",
+        "Ascended"
+      ]
+    },
+    {
+      "godFolder": "Odin",
+      "godName": "Odin",
+      "issues": [],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "key": "Default",
+          "card": "t_GodCard_Odin.png",
+          "icon": "t_GodPortrait_Odin.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_Odin.png",
+            "T_GodFull_Odin.png",
+            "t_GodMini_Odin.png",
+            "t_GodPortrait_Odin.png",
+            "T_Scorecard_Odin.png",
+            "t_TeamRoster_Odin.png"
+          ]
+        },
+        {
+          "folder": "DarkCyborg",
+          "key": "DarkCyborg",
+          "card": "t_SkinCard_Odin_DarkCyborg.png",
+          "icon": "t_SkinPortrait_Odin_DarkCyborg.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_Odin_DarkCyborg.png",
+            "t_SkinPortrait_Odin_DarkCyborg.png"
+          ]
+        },
+        {
+          "folder": "Demon",
+          "key": "Demon",
+          "card": "t_SkinCard_Odin_Demon.png",
+          "icon": "t_SkinPortrait_Odin_Demon.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_Odin_Demon.png",
+            "t_SkinPortrait_Odin_Demon.png"
+          ]
+        },
+        {
+          "folder": "HotDiggity",
+          "key": "HotDiggity",
+          "card": "t_SkinCard_Odin_HotDiggity.png",
+          "icon": "t_SkinPortrait_Odin_HotDiggity.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_Odin_HotDiggity.png",
+            "t_SkinPortrait_Odin_HotDiggity.png"
+          ]
+        },
+        {
+          "folder": "Mastery",
+          "key": "Mastery",
+          "card": null,
+          "icon": null,
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_Ares_Card_Mastery.png",
+            "T_Odin_Icon_Angelic.png",
+            "T_Odin_Icon_Demonic.png",
+            "T_Odin_Icon_Onyx.png",
+            "T_Odin_Icon_Opal.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        "Odin",
+        "DarkCyborg",
+        "Demon",
+        "HotDiggity"
+      ]
+    },
+    {
+      "godFolder": "Osiris",
+      "godName": "Osiris",
+      "issues": [
+        "prisms on disk but variants[] empty on: BlackKnight (BlackKnight)",
+        "prisms on disk but variants[] empty on: NobleKnight (NobleKnight)"
+      ],
+      "suggestedRemaps": {},
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "key": "Default",
+          "card": "t_GodCard_Osiris.png",
+          "icon": "t_GodPortrait_Osiris.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_Osiris.png",
+            "t_GodFull_Osiris.png",
+            "t_GodPortrait_Osiris.png",
+            "t_Scorecard_Osiris.png",
+            "t_TeamRoster_Osiris.png"
+          ]
+        },
+        {
+          "folder": "BlackKnight",
+          "key": "BlackKnight",
+          "card": "t_SkinCard_Osiris_BlackKnight.png",
+          "icon": "t_GodPortrait_Osiris_BlackKnight.png",
+          "prismCount": 8,
+          "prismSample": [
+            "t_GodPortrait_Osiris_BlackKnight_Prism01.png",
+            "t_GodPortrait_Osiris_BlackKnight_Prism02.png",
+            "t_GodPortrait_Osiris_BlackKnight_Prism03.png",
+            "t_GodPortrait_Osiris_BlackKnight_Prism04.png",
+            "t_SkinCard_Osiris_BlackKnight_Prism01.png"
+          ],
+          "keyFiles": [
+            "t_GodPortrait_Osiris_BlackKnight.png",
+            "t_GodPortrait_Osiris_BlackKnight_Prism01.png",
+            "t_GodPortrait_Osiris_BlackKnight_Prism02.png",
+            "t_GodPortrait_Osiris_BlackKnight_Prism03.png",
+            "t_GodPortrait_Osiris_BlackKnight_Prism04.png",
+            "t_SkinCard_Osiris_BlackKnight.png",
+            "t_SkinCard_Osiris_BlackKnight_Prism01.png",
+            "t_SkinCard_Osiris_BlackKnight_Prism02.png"
+          ]
+        },
+        {
+          "folder": "Mastery",
+          "key": "Mastery",
+          "card": "t_GodCard_Osiris_Mastery.png",
+          "icon": null,
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_Osiris_Mastery.png",
+            "T_Osiris_Icon_Light.png",
+            "T_Osiris_Icon_Onyx.png",
+            "T_Osiris_Icon_Opal.png",
+            "T_Osiris_Icon_Shadow.png"
+          ]
+        },
+        {
+          "folder": "NobleKnight",
+          "key": "NobleKnight",
+          "card": "t_SkinCard_Osiris_NobleKnight.png",
+          "icon": "t_GodPortrait_Osiris_NobleKnight.png",
+          "prismCount": 8,
+          "prismSample": [
+            "t_GodPortrait_Osiris_NobleKnight_Prism01.png",
+            "t_GodPortrait_Osiris_NobleKnight_Prism02.png",
+            "t_GodPortrait_Osiris_NobleKnight_Prism03.png",
+            "t_GodPortrait_Osiris_NobleKnight_Prism04.png",
+            "t_SkinCard_Osiris_NobleKnight_Prism01.png"
+          ],
+          "keyFiles": [
+            "t_GodPortrait_Osiris_NobleKnight.png",
+            "t_GodPortrait_Osiris_NobleKnight_Prism01.png",
+            "t_GodPortrait_Osiris_NobleKnight_Prism02.png",
+            "t_GodPortrait_Osiris_NobleKnight_Prism03.png",
+            "t_GodPortrait_Osiris_NobleKnight_Prism04.png",
+            "t_SkinCard_Osiris_NobleKnight.png",
+            "t_SkinCard_Osiris_NobleKnight_Prism01.png",
+            "t_SkinCard_Osiris_NobleKnight_Prism02.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        "Osiris",
+        "BlackKnight",
+        "NobleKnight"
+      ]
+    },
+    {
+      "godFolder": "Pele",
+      "godName": "Pele",
+      "issues": [
+        "legacy splash/wallpaper row (should hide or merge): SupernovaSplash1920x1080",
+        "builds key MoonLIt vs disk folder MoonLIt / files use MoonLit spelling"
+      ],
+      "suggestedRemaps": {
+        "SupernovaSplash1920x1080": "SuperNova"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "key": "Default",
+          "card": "t_GodCard_Pele.png",
+          "icon": "t_GodPortrait_Pele.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_Pele.png",
+            "T_GodFull_Pele.png",
+            "t_GodMini_Pele.png",
+            "t_GodPortrait_Pele.png",
+            "t_Scorecard_Pele.png",
+            "t_TeamRoster_Pele.png"
+          ]
+        },
+        {
+          "folder": "CarnivalKiss",
+          "key": "CarnivalKiss",
+          "card": "t_GodCard_CarnivalKiss.png",
+          "icon": "t_GodPortrait_CarnivalKiss.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_CarnivalKiss.png",
+            "t_GodPortrait_CarnivalKiss.png"
+          ]
+        },
+        {
+          "folder": "Mastery",
+          "key": "Mastery",
+          "card": null,
+          "icon": "t_SkinPortrait_Pele_Light.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "T_Pele_Card_Mastery.png",
+            "t_SkinPortrait_Pele_Light.png",
+            "t_SkinPortrait_Pele_Onyx.png",
+            "t_SkinPortrait_Pele_Opal.png",
+            "t_SkinPortrait_Pele_Shadow.png"
+          ]
+        },
+        {
+          "folder": "MoonLIt",
+          "key": "MoonLIt",
+          "card": "t_SkinCard_Pele_MoonLit.png",
+          "icon": "t_SkinIcon_Pele_MoonLit.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_Pele_MoonLit.png",
+            "t_SkinIcon_Pele_MoonLit.png"
+          ]
+        },
+        {
+          "folder": "SuperNova",
+          "key": "SuperNova",
+          "card": null,
+          "icon": "t_SkinPortrait_Pele_SuperNova.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "SuperNova.png",
+            "t_SkinPortrait_Pele_SuperNova.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        "Pele",
+        "SupernovaSplash1920x1080",
+        "CarnivalKiss",
+        "MoonLIt"
+      ]
+    },
+    {
+      "godFolder": "Poseidon",
+      "godName": "Poseidon",
+      "issues": [
+        "prisms on disk but variants[] empty on: CrimsonKraken (CrimsonKraken)",
+        "legacy splash/wallpaper row (should hide or merge): Smite2F2pOb1PhantomprinceSocial1920x1080",
+        "legacy splash/wallpaper row (should hide or merge): SpicyboySplash010"
+      ],
+      "suggestedRemaps": {
+        "Smite2F2pOb1PhantomprinceSocial1920x1080": "PhantomPrince",
+        "SpicyboySplash010": "SpicyBoy"
+      },
+      "skinsOnDisk": [
+        {
+          "folder": "Default",
+          "key": "Default",
+          "card": "t_GodCard_Poseidon.png",
+          "icon": "t_GodPortrait_Poseidon.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_GodCard_Poseidon.png",
+            "T_GodFull_Poseidon.png",
+            "t_GodMini_Poseidon.png",
+            "t_GodPortrait_Poseidon.png",
+            "t_Scorecard_Poseidon.png",
+            "t_TeamRoster_Poseidon.png"
+          ]
+        },
+        {
+          "folder": "CrimsonKraken",
+          "key": "CrimsonKraken",
+          "card": "t_SkinCard_Poseidon_CrimsonKracken.png",
+          "icon": "t_SkinPortrait_Poseidon_CrimsonKracken.png",
+          "prismCount": 8,
+          "prismSample": [
+            "t_SkinCard_Poseidon_CrimsonKracken_Prism01.png",
+            "t_SkinCard_Poseidon_CrimsonKracken_Prism02.png",
+            "t_SkinCard_Poseidon_CrimsonKracken_Prism03.png",
+            "t_SkinCard_Poseidon_CrimsonKracken_Prism04.png",
+            "t_SkinPortrait_Poseidon_CrimsonKracken_Prism01.png"
+          ],
+          "keyFiles": [
+            "t_SkinCard_Poseidon_CrimsonKracken.png",
+            "t_SkinCard_Poseidon_CrimsonKracken_Prism01.png",
+            "t_SkinCard_Poseidon_CrimsonKracken_Prism02.png",
+            "t_SkinCard_Poseidon_CrimsonKracken_Prism03.png",
+            "t_SkinCard_Poseidon_CrimsonKracken_Prism04.png",
+            "t_SkinPortrait_Poseidon_CrimsonKracken.png",
+            "t_SkinPortrait_Poseidon_CrimsonKracken_Prism01.png",
+            "t_SkinPortrait_Poseidon_CrimsonKracken_Prism02.png"
+          ]
+        },
+        {
+          "folder": "Mastery",
+          "key": "Mastery",
+          "card": null,
+          "icon": null,
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "T_Poseidon_Card_Mastery.png",
+            "T_Poseidon_Icon_Light.png",
+            "T_Poseidon_Icon_Onyx.png",
+            "T_Poseidon_Icon_Opal.png",
+            "T_Poseidon_Icon_Shadow.png"
+          ]
+        },
+        {
+          "folder": "PhantomPrince",
+          "key": "PhantomPrince",
+          "card": "t_SkinCard_Poseidon_PhantomPrince.png",
+          "icon": "t_SkinPortrait_Poseidon_PhantomPrince.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_Poseidon_PhantomPrince.png",
+            "t_SkinPortrait_Poseidon_PhantomPrince.png"
+          ]
+        },
+        {
+          "folder": "SpicyBoy",
+          "key": "SpicyBoy",
+          "card": "t_SkinCard_Poseidon_SpicyBoy.png",
+          "icon": "t_SkinPortrait_Poseidon_SpicyBoy.png",
+          "prismCount": 0,
+          "prismSample": [],
+          "keyFiles": [
+            "t_SkinCard_Poseidon_SpicyBoy.png",
+            "t_SkinPortrait_Poseidon_SpicyBoy.png"
+          ]
+        }
+      ],
+      "skinsInBuilds": [
+        "Poseidon",
+        "Smite2F2pOb1PhantomprinceSocial1920x1080",
+        "SpicyboySplash010",
+        "CrimsonKraken"
+      ]
+    }
+  ],
+  "summary": {
+    "godsAudited": 16,
+    "totalIssues": 23,
+    "godsWithIssues": 11
+  }
+}

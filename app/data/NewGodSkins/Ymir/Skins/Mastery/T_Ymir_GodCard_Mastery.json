@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_Ymir_GodCard_Mastery",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Ymir/Skins/Mastery/T_Ymir_GodCard_Mastery",
+    "Properties": {
+      "ImportedSize": {
+        "X": 681,
+        "Y": 1024
+      },
+      "LightingGuid": "036E6E21-48EE9DC9-5DC470A4-5CC7F4CB",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "NeverStream": true
+    },
+    "SizeX": 681,
+    "SizeY": 1024,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 2789376,
+          "SizeOnDisk": 2789376,
+          "OffsetInFile": "0x78"
+        },
+        "SizeX": 681,
+        "SizeY": 1024,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

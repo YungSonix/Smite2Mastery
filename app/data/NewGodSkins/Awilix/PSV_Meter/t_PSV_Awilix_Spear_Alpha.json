@@ -1,0 +1,38 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Awilix_Spear_Alpha",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Awilix/PSV_Meter/t_PSV_Awilix_Spear_Alpha",
+    "Properties": {
+      "ImportedSize": {
+        "X": 120,
+        "Y": 220
+      },
+      "LightingGuid": "A0EA8C18-44AC9F97-10F00293-7B13988E",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "SRGB": false,
+      "NeverStream": true
+    },
+    "SizeX": 120,
+    "SizeY": 220,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 105600,
+          "SizeOnDisk": 105600,
+          "OffsetInFile": "0x7E"
+        },
+        "SizeX": 120,
+        "SizeY": 220,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

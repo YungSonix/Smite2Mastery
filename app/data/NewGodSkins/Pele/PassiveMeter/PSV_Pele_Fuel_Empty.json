@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "PSV_Pele_Fuel_Empty",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Pele/PassiveMeter/PSV_Pele_Fuel_Empty",
+    "Properties": {
+      "ImportedSize": {
+        "X": 88,
+        "Y": 172
+      },
+      "LightingGuid": "D460BC10-41484F0B-0119E684-C5A8EB61",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 88,
+    "SizeY": 172,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 15136,
+          "SizeOnDisk": 15136,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 88,
+        "SizeY": 172,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

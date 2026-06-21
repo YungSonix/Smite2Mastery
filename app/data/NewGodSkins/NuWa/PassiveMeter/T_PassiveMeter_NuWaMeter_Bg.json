@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "T_PassiveMeter_NuWaMeter_Bg",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/NuWa/PassiveMeter/T_PassiveMeter_NuWaMeter_Bg",
+    "Properties": {
+      "ImportedSize": {
+        "X": 119,
+        "Y": 120
+      },
+      "LightingGuid": "77A4AE68-44EDE45D-362A70A6-482CDAFE",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 119,
+    "SizeY": 120,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 57120,
+          "SizeOnDisk": 57120,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 119,
+        "SizeY": 120,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

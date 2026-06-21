@@ -1,0 +1,37 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSV_Ishtar_Base_Transition",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Ishtar/PSVMeter/t_PSV_Ishtar_Base_Transition",
+    "Properties": {
+      "ImportedSize": {
+        "X": 180,
+        "Y": 140
+      },
+      "LightingGuid": "CDB326A8-460318B9-7E4E0AB4-DB16C233",
+      "CompressionSettings": "TextureCompressionSettings::TC_EditorIcon",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 180,
+    "SizeY": 140,
+    "PackedData": 1,
+    "PixelFormat": "PF_B8G8R8A8",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 100800,
+          "SizeOnDisk": 100800,
+          "OffsetInFile": "0x7B"
+        },
+        "SizeX": 180,
+        "SizeY": 140,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

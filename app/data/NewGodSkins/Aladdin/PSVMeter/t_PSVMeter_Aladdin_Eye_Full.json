@@ -1,0 +1,36 @@
+[
+  {
+    "Type": "Texture2D",
+    "Name": "t_PSVMeter_Aladdin_Eye_Full",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'Texture2D'",
+    "Package": "/Game/UI/Textures/ArtAssets/Gods/Aladdin/PSVMeter/t_PSVMeter_Aladdin_Eye_Full",
+    "Properties": {
+      "ImportedSize": {
+        "X": 44,
+        "Y": 36
+      },
+      "LightingGuid": "FB61D518-44F99A32-2F973CB8-8611A6B1",
+      "LODGroup": "TextureGroup::TEXTUREGROUP_UI",
+      "NeverStream": true
+    },
+    "SizeX": 44,
+    "SizeY": 36,
+    "PackedData": 1,
+    "PixelFormat": "PF_DXT5",
+    "FirstMipToSerialize": 0,
+    "Mips": [
+      {
+        "BulkData": {
+          "BulkDataFlags": "BULKDATA_SingleUse | BULKDATA_ForceInlinePayload",
+          "ElementCount": 1584,
+          "SizeOnDisk": 1584,
+          "OffsetInFile": "0x74"
+        },
+        "SizeX": 44,
+        "SizeY": 36,
+        "SizeZ": 1
+      }
+    ]
+  }
+]

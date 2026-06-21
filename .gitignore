@@ -47,6 +47,8 @@ tsconfig.json
 update-builds.js
 app/data/builds.json.backup
 app/data/builds.json.pre-wallpaper-import-*
+app/data/God Information/Builds/builds.json.backup
+app/data/God Information/Builds/builds.json.pre-wallpaper-import-*
 
 # Build/deployment
 .vercel
@@ -88,3 +90,11 @@ app/data/Icons/Item Icons/
 
 # Voice audio (optional; uncomment to avoid committing 16k+ files)
 # app/data/Voice Audio/
+
+# Obsidian vault (local mirror)
+Vault/
+# Council paths (machine-specific)
+docs/council/council.paths.json
+# Council panel uploads (local screenshots)
+docs/council/ui/attachments/*
+!docs/council/ui/attachments/.gitkeep

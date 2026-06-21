@@ -13,25 +13,29 @@ import {
   Alert,
   Dimensions,
   InteractionManager,
-  ImageBackground,
 } from 'react-native';
 import CryptoJS from 'crypto-js';
 import { Image } from 'expo-image';
 // Lazy load builds.json to prevent startup crash
 let localBuilds = null;
+import { ItemIconImage } from '../lib/ItemIconImage';
 import {
   getLocalItemIcon,
   getLocalGodAsset,
   getSkinImage,
   getRoleIcon,
   PANTHEON_ICONS,
-  getPantheonBackdrop,
+  getGodPageBackdrop,
   getPantheonBorderColor,
 } from './localIcons';
 import { getGodSpecializationEntry } from '../lib/godSpecializations';
 import { AlignedBulletLines, tightenMultilineGameText } from '../lib/alignedBulletText';
 import SkinShowcasePanel from '../lib/SkinShowcasePanel';
-import { getVisibleSkinKeys } from '../lib/skinShowcaseHelpers';
+import {
+  getDefaultSkinKey,
+  getOrderedVisibleSkinKeys,
+  getSkinCardArtPath,
+} from '../lib/skinShowcaseHelpers';
 import { REMOTE_BASE_URLS } from '../config';
 
 // Import supabase lazily to avoid module load errors on mobile
@@ -109,7 +113,7 @@ const IS_WEB = Platform.OS === 'web';
 
 // Import reusable screen dimensions hook
 import { useScreenDimensions } from '../hooks/useScreenDimensions';
-import { flattenBuildsGods } from '../lib/normalizeBuildsGod';
+import { flattenBuildsGods, getGodPantheon } from '../lib/normalizeBuildsGod';
 import { playVOX, resetVoxForNavigation } from '../lib/prophecyAudio';
 import {
   GAME_MODE_ICONS as gameModeIcons,
@@ -595,54 +599,21 @@ function CounterplayContent({ gods, items, getLocalGodAsset, getLocalItemIcon })
     const item = findItemByName(itemName);
     if (!item) return null;
     const itemIcon = item.icon;
-    const localIcon = itemIcon ? getLocalItemIcon(itemIcon) : null;
-    
-    const iconElement = localIcon ? (() => {
-      const imageSource = localIcon.primary || localIcon;
-      const fallbackSource = localIcon.fallback;
-      const iconKey = `counterplay-${item.internalName || item.name || itemName}`;
-      const useFallback = failedItemIcons[iconKey];
-      
-      if (fallbackSource && !useFallback) {
-        // Has fallback - try primary first, then fallback on error
-        return (
-          <Image 
-            source={imageSource} 
-            style={styles.counterplayIcon}
-            contentFit="cover"
-            cachePolicy="memory-disk"
-            transition={0}
-            onError={() => {
-              setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
-            }}
-          />
-        );
-      }
-      
-      if (fallbackSource && useFallback) {
-        // Use fallback (original case)
-        return (
-          <Image 
-            source={fallbackSource} 
-            style={styles.counterplayIcon}
-            contentFit="cover"
-            cachePolicy="memory-disk"
-            transition={0}
-          />
-        );
-      }
-      
-      // No fallback, just use primary
-      return (
-        <Image 
-          source={imageSource} 
-          style={styles.counterplayIcon}
-          contentFit="cover"
-          cachePolicy="memory-disk"
-          transition={0}
-        />
-      );
-    })() : (
+    const iconKey = `counterplay-${item.internalName || item.name || itemName}`;
+
+    const iconElement = itemIcon ? (
+      <ItemIconImage
+        iconPath={itemIcon}
+        internalName={item.internalName}
+        iconKey={iconKey}
+        failedMap={failedItemIcons}
+        setFailedMap={setFailedItemIcons}
+        style={styles.counterplayIcon}
+        contentFit="cover"
+        cachePolicy="memory-disk"
+        transition={0}
+      />
+    ) : (
       <View style={styles.counterplayIconFallback}>
         <Text style={styles.counterplayIconFallbackText}>{itemName.charAt(0)}</Text>
       </View>
@@ -1056,7 +1027,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     let isMounted = true;
     const task = InteractionManager.runAfterInteractions(() => {
       try {
-        const data = require('./data/builds.json');
+        const data = require('../lib/buildsData');
         if (isMounted) {
           setBuilds(data);
           setDataLoading(false);
@@ -1523,7 +1494,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
       const name = (item.name || item.internalName || 'Unknown').toString();
       const itemIcon = item.icon || null;
       const consumableIcon = consumableIcons[name] || null;
-      const localItemIcon = getLocalItemIcon(itemIcon);
+      const localItemIcon = itemIcon || item.internalName;
       const modIcon = vulcanModItemIcons[name] || null;
       const uniqueKey = rowKey;
       const cardWidthStyle = getCardWidthStyle();
@@ -1566,52 +1537,18 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                 accessibilityLabel={`${name} mod icon`}
               />
             ) : localItemIcon ? (
-              (() => {
-                const imageSource = localItemIcon.primary || localItemIcon;
-                const fallbackSource = localItemIcon.fallback;
-                const itemKey = `${uniqueKey}-icon`;
-                const useFallback = failedItemIcons[itemKey];
-
-                if (fallbackSource && !useFallback) {
-                  return (
-                    <Image
-                      source={imageSource}
-                      style={styles.cardIcon}
-                      contentFit="cover"
-                      cachePolicy="memory-disk"
-                      transition={0}
-                      accessibilityLabel={`${name} item icon`}
-                      onError={() => {
-                        setFailedItemIcons((prev) => ({ ...prev, [itemKey]: true }));
-                      }}
-                    />
-                  );
-                }
-
-                if (fallbackSource && useFallback) {
-                  return (
-                    <Image
-                      source={fallbackSource}
-                      style={styles.cardIcon}
-                      contentFit="cover"
-                      cachePolicy="memory-disk"
-                      transition={0}
-                      accessibilityLabel={`${name} item icon`}
-                    />
-                  );
-                }
-
-                return (
-                  <Image
-                    source={imageSource}
-                    style={styles.cardIcon}
-                    contentFit="cover"
-                    cachePolicy="memory-disk"
-                    transition={0}
-                    accessibilityLabel={`${name} item icon`}
-                  />
-                );
-              })()
+              <ItemIconImage
+                iconPath={itemIcon}
+                internalName={item.internalName}
+                iconKey={`${uniqueKey}-icon`}
+                failedMap={failedItemIcons}
+                setFailedMap={setFailedItemIcons}
+                style={styles.cardIcon}
+                contentFit="cover"
+                cachePolicy="memory-disk"
+                transition={0}
+                accessibilityLabel={`${name} item icon`}
+              />
             ) : consumableIcon ? (
               <Image
                 source={consumableIcon}
@@ -2338,7 +2275,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                     {selectedItem.name || selectedItem.internalName || 'Unknown Item'}
                   </Text>
                   {selectedItem.tier && (
-                    <Text style={[styles.itemPageSubtext, { color: '#94a3b8' }]}>
+                    <Text style={[styles.itemPageSubtext, { color: '#f8fafc' }]}>
                       Tier {selectedItem.tier} Item
                     </Text>
                   )}
@@ -2701,7 +2638,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
         );
       })() : selectedGod ? (() => {
         // Get unique styling based on pantheon
-        const pantheon = selectedGod.pantheon || 'Unknown';
+        const pantheon = getGodPantheon(selectedGod) || 'Unknown';
         const godType = selectedGod.Type || '';
         
         // Get builds for this god and extract unique roles
@@ -2835,7 +2772,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
         const pantheonIconSource = pantheonIcons[pantheon] || null;
         const godDisplayName =
           selectedGod.name || selectedGod.GodName || selectedGod.title || 'Unknown God';
-        const pantheonBackdrop = getPantheonBackdrop(pantheon);
+        const godPageBackdrop = getGodPageBackdrop(selectedGod, godDisplayName, pantheon);
         const specializationEntry = getGodSpecializationEntry(selectedGod);
         const godHeaderFallbackStyle = {
           backgroundColor: colors.primary + '12',
@@ -3019,23 +2956,31 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
           </>
         );
 
+        const backdropSource = godPageBackdrop?.primary || godPageBackdrop;
+
         return (
           <View style={[styles.godPageContainer, { backgroundColor: colors.secondary + '15' }]}>
-            {pantheonBackdrop ? (
-              <ImageBackground
-                source={pantheonBackdrop}
-                style={[styles.godPageHeader, styles.godPageHeaderBackdrop]}
-                resizeMode="cover"
-              >
-                <View style={[styles.godPageHeaderContent, styles.godPageHeaderBackdropTint]}>
-                  {godHeaderBody}
-                </View>
-              </ImageBackground>
-            ) : (
-              <View style={[styles.godPageHeader, godHeaderFallbackStyle]}>
-                <View style={styles.godPageHeaderContent}>{godHeaderBody}</View>
-              </View>
-            )}
+            <View
+              style={[
+                styles.godPageHeader,
+                backdropSource ? styles.godPageHeaderWithBackdrop : godHeaderFallbackStyle,
+              ]}
+            >
+              {backdropSource ? (
+                <>
+                  <Image
+                    source={backdropSource}
+                    style={styles.godPageBackdropFill}
+                    contentFit="cover"
+                    contentPosition="center"
+                    cachePolicy="memory-disk"
+                    accessibilityLabel={`${godDisplayName} pantheon backdrop`}
+                  />
+                  <View style={styles.godPageHeaderScrim} pointerEvents="none" />
+                </>
+              ) : null}
+              <View style={styles.godPageHeaderContent}>{godHeaderBody}</View>
+            </View>
           <ScrollView style={styles.godPageBody} scrollEnabled={!isDragging}>
             {selectedGod.loreShort && (
               <View style={styles.modalSection}>
@@ -3672,7 +3617,16 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                 {selectedGod.aspect.icon ? (() => {
                                   const localIcon = getLocalGodAsset(selectedGod.aspect.icon);
                                   if (localIcon) {
-                                    return <Image source={localIcon} style={styles.abilityIconCompact} contentFit="cover" cachePolicy="memory-disk" transition={200} accessibilityLabel="Aspect icon" />;
+                                    return (
+                                      <Image
+                                        source={localIcon}
+                                        style={styles.abilityIconCompact}
+                                        contentFit="contain"
+                                        cachePolicy="memory-disk"
+                                        transition={200}
+                                        accessibilityLabel="Aspect icon"
+                                      />
+                                    );
                                   }
                                   return (
                                     <View style={styles.abilityIconFallbackCompact}>
@@ -3697,34 +3651,46 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
             )}
             {/* Skins Section */}
             {selectedGod.skins && typeof selectedGod.skins === 'object' && Object.keys(selectedGod.skins).length > 0 && (
-              <View style={styles.modalSection}>
-                <TouchableOpacity
-                  style={styles.skinsHeader}
-                  onPress={() => {
-                    if (skinsExpanded) {
-                      setSkinsExpanded(false);
-                      setSelectedSkin(null);
-                    } else {
-                      const keys = getVisibleSkinKeys(selectedGod.skins);
-                      setSkinsExpanded(true);
-                      setSelectedSkin((prev) =>
-                        prev && selectedGod.skins[prev] && !selectedGod.skins[prev].hideFromSkinList
-                          ? prev
-                          : keys[0] || null
-                      );
-                    }
-                  }}
-                >
-                  <Text style={styles.modalSectionTitle}>Skins</Text>
-                  <Text style={styles.skinsToggleText}>
-                    {skinsExpanded ? '▼' : '▶'}
-                  </Text>
-                </TouchableOpacity>
+              <View style={[styles.modalSection, skinsExpanded && styles.skinsSectionExpanded]}>
+                <View style={styles.skinsHeader}>
+                  <TouchableOpacity
+                    style={styles.skinsHeaderMain}
+                    onPress={() => {
+                      if (skinsExpanded) {
+                        setSkinsExpanded(false);
+                        setSelectedSkin(null);
+                      } else {
+                        setSkinsExpanded(true);
+                        setSelectedSkin(getDefaultSkinKey(selectedGod.skins));
+                      }
+                    }}
+                  >
+                    <Text style={[styles.modalSectionTitle, styles.skinsSectionTitle]}>Skins</Text>
+                    <Text style={styles.skinsToggleText}>
+                      {skinsExpanded ? '▼' : '▶'}
+                    </Text>
+                  </TouchableOpacity>
+                  {skinsExpanded ? (
+                    <TouchableOpacity
+                      style={styles.skinsCloseBtn}
+                      onPress={() => {
+                        setSkinsExpanded(false);
+                        setSelectedSkin(null);
+                      }}
+                      hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                      accessibilityRole="button"
+                      accessibilityLabel="Close skins section"
+                    >
+                      <Text style={styles.skinsCloseBtnText}>×</Text>
+                    </TouchableOpacity>
+                  ) : null}
+                </View>
                 {skinsExpanded &&
                   selectedSkin &&
                   selectedGod.skins[selectedSkin] &&
                   !selectedGod.skins[selectedSkin].hideFromSkinList && (
                     <SkinShowcasePanel
+                      flat
                       godIconPath={
                         selectedGod.icon ||
                         selectedGod.GodIcon ||
@@ -3733,14 +3699,16 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                           selectedGod.abilities.A01.icon) ||
                         null
                       }
+                      godDisplayName={
+                        (selectedGod.name || selectedGod.GodName || selectedGod.title || selectedGod.displayName || '')
+                          .toString()
+                          .trim() || undefined
+                      }
+                      godKey={selectedGod.key || selectedGod.internalName || null}
                       skinsRecord={selectedGod.skins}
-                      skinKeysOrdered={getVisibleSkinKeys(selectedGod.skins)}
+                      skinKeysOrdered={getOrderedVisibleSkinKeys(selectedGod.skins)}
                       selectedSkinKey={selectedSkin}
                       onSelectSkinKey={(key) => setSelectedSkin(key)}
-                      onRequestClose={() => {
-                        setSkinsExpanded(false);
-                        setSelectedSkin(null);
-                      }}
                     />
                   )}
               </View>
@@ -3783,11 +3751,12 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                           {tip.icon ? (() => {
                             const localIcon = getLocalGodAsset(tip.icon);
                             if (localIcon) {
+                              const aspectFit = tip.slotId === 'kit-aspect';
                               return (
                                 <Image
                                   source={localIcon}
                                   style={styles.kitAbilityTooltipIcon}
-                                  contentFit="cover"
+                                  contentFit={aspectFit ? 'contain' : 'cover'}
                                   cachePolicy="memory-disk"
                                   transition={100}
                                 />
@@ -5827,8 +5796,9 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         baseSkinKey = firstKey;
                       }
                       
-                      if (baseSkin && baseSkin.skin) {
-                        const skinImage = getSkinImage(baseSkin.skin);
+                      const baseCardPath = getSkinCardArtPath(baseSkin);
+                      if (baseSkin && baseCardPath) {
+                        const skinImage = getSkinImage(baseCardPath);
                         if (skinImage) {
                           // Handle both single URI and primary/fallback object
                           const imageSource = skinImage.primary || skinImage;
@@ -5842,7 +5812,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               <Image 
                                 source={imageSource}
                                 style={[styles.cardIcon, styles.cardIconSkin]}
-                                contentFit="contain"
+                                contentFit="cover"
                                 cachePolicy="memory-disk"
                                 transition={0}
                                 onError={() => {
@@ -5858,7 +5828,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               <Image 
                                 source={fallbackSource}
                                 style={[styles.cardIcon, styles.cardIconSkin]}
-                                contentFit="contain"
+                                contentFit="cover"
                                 cachePolicy="memory-disk"
                                 transition={0}
                               />
@@ -5870,7 +5840,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                             <Image 
                               source={imageSource}
                               style={[styles.cardIcon, styles.cardIconSkin]}
-                              contentFit="contain"
+                              contentFit="cover"
                               cachePolicy="memory-disk"
                               transition={0}
                             />
@@ -6620,7 +6590,7 @@ const styles = StyleSheet.create({
   },
   cardIconSkin: {
     width: '100%',
-    aspectRatio: 16/9, // 1920x1080 default aspect ratio
+    aspectRatio: 3 / 4,
     borderRadius: 12,
     alignSelf: 'center',
     marginBottom: 4,
@@ -6763,6 +6733,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     backgroundColor: 'rgba(8, 12, 22, 0.88)',
     borderWidth: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   abilityIconButtonPressed: {
     opacity: 0.88,
@@ -6814,6 +6786,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#1e3a5f',
     backgroundColor: '#0b1220',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   kitAbilityTooltipIcon: {
     width: '100%',
@@ -7221,6 +7195,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 8,
+    gap: 10,
+  },
+  skinsHeaderMain: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  skinsSectionExpanded: {
+    position: 'relative',
+  },
+  skinsSectionTitle: {
+    marginBottom: 0,
+  },
+  skinsCloseBtn: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: '#1e3a5f',
+    borderWidth: 1,
+    borderColor: 'rgba(125, 211, 252, 0.42)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  skinsCloseBtnText: {
+    color: '#e6eef8',
+    fontSize: 22,
+    fontWeight: '700',
+    lineHeight: 24,
+    marginTop: -2,
   },
   skinsToggleText: {
     color: '#7dd3fc',
@@ -7396,23 +7400,26 @@ const styles = StyleSheet.create({
     width: '100%',
     position: 'relative',
     zIndex: 10,
-    elevation: 4,
     overflow: 'hidden',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: 'rgba(148, 163, 184, 0.32)',
     backgroundColor: '#0a0f1a',
   },
+  godPageHeaderWithBackdrop: {
+    minHeight: 118,
+    backgroundColor: '#030712',
+  },
+  godPageBackdropFill: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  godPageHeaderScrim: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(3, 7, 18, 0.52)',
+  },
   godPageHeaderContent: {
+    position: 'relative',
+    zIndex: 2,
     paddingTop: 2,
     paddingHorizontal: 12,
-    paddingBottom: 6,
-  },
-  godPageHeaderBackdrop: {
-    backgroundColor: '#030712',
-    borderBottomColor: 'rgba(255, 255, 255, 0.12)',
-  },
-  godPageHeaderBackdropTint: {
-    backgroundColor: 'rgba(3, 7, 18, 0.48)',
+    paddingBottom: 8,
   },
   backButton: {
     marginBottom: 0,
@@ -7477,7 +7484,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   godPageEpithet: {
-    color: '#94a3b8',
+    color: '#f8fafc',
     fontSize: 12,
     fontWeight: '500',
     lineHeight: 16,
@@ -7503,7 +7510,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     letterSpacing: 1.2,
     textTransform: 'uppercase',
-    color: '#64748b',
+    color: '#f8fafc',
     marginBottom: 4,
   },
   godPageCombatChip: {
