@@ -1,0 +1,7 @@
+# STOP — do not run bulk / multi-pantheon vision tagging
+# User requested: one pantheon at a time (Greek only). Cancel all other agent work.
+# Created: 2026-06-21
+# Safe to delete when resuming a new pantheon intentionally.
+
+STOP_ALL_OTHER_AGENTS=1
+ALLOWED_SCOPE=greek.json only (Achilles reference + remaining Greek gods)

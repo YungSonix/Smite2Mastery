@@ -1,0 +1,368 @@
+{
+  "gods": [
+    {
+      "folder": "zeus",
+      "godName": "Zeus",
+      "extractions": [
+        {
+          "fileName": "Screenshot (1023).png",
+          "displayName": "Base",
+          "tier": null,
+          "cost": { "currency": "diamonds", "amount": "0", "owned": true },
+          "unlock": { "source": "base", "displayText": "Base god" }
+        },
+        {
+          "fileName": "Screenshot (1024).png",
+          "displayName": "Dark Lord",
+          "matchSkinKey": "DarkLord",
+          "tier": "Classic",
+          "cost": { "currency": "diamonds", "amount": "3200", "owned": false },
+          "unlock": { "source": "traveler", "displayText": "Traveler Collection — Dark Lord" },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the 'Dark Lord' Traveler."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            },
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was inspired by a SMITE 1 Skin."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (1025).png",
+          "displayName": "Dark Lord - Crimson Core",
+          "matchSkinKey": "DarkLord",
+          "matchVariantName": "Prism 1",
+          "tier": "Prisms",
+          "buttonText": "GO TO",
+          "gridBadge": { "type": "prism", "rank": null, "label": "prism" },
+          "unlock": { "source": "prism", "prismNote": true, "displayText": "Prism variant" },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the 'Dark Lord' Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (1026).png",
+          "displayName": "Dark Lord - Ivory Prime",
+          "matchSkinKey": "DarkLord",
+          "matchVariantName": "Prism 2",
+          "tier": "Prisms",
+          "buttonText": "GO TO",
+          "gridBadge": { "type": "prism", "rank": null, "label": "prism" },
+          "unlock": { "source": "prism", "prismNote": true, "displayText": "Prism variant" },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the 'Dark Lord' Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (1027).png",
+          "displayName": "Dark Lord - Phantom Flux",
+          "matchSkinKey": "DarkLord",
+          "matchVariantName": "Prism 3",
+          "tier": "Prisms",
+          "buttonText": "GO TO",
+          "gridBadge": { "type": "prism", "rank": null, "label": "prism" },
+          "unlock": { "source": "prism", "prismNote": true, "displayText": "Prism variant" },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the 'Dark Lord' Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (1028).png",
+          "displayName": "Heaven's Rave",
+          "matchSkinKey": "HeavensRave",
+          "tier": "Classic",
+          "cost": { "currency": "diamonds", "amount": "2400", "owned": false },
+          "unlock": { "source": "standard", "displayText": "Standard — direct purchase or chests" },
+          "information": [
+            {
+              "key": "standard",
+              "label": "Standard",
+              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+            },
+            {
+              "key": "specialEffects",
+              "label": "Special Effects",
+              "text": "This Skin includes a special Emote prompted by using the Special Emote 2 VGS command in match."
+            },
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was inspired by a SMITE 1 Skin."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (1029).png",
+          "displayName": "The Fallen",
+          "matchSkinKey": "T5_Instinct",
+          "tier": "Mythical",
+          "buttonText": "GO TO",
+          "unlock": { "source": "event", "displayText": "Ultimate Founder's Edition" },
+          "information": [
+            {
+              "key": "crossGen",
+              "label": "Cross-Gen",
+              "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
+            },
+            {
+              "key": "foundersEdition",
+              "label": "Founder's Edition",
+              "text": "This Skin is acquired from purchasing the Ultimate Founder's Edition."
+            },
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            },
+            {
+              "key": "specialEffects",
+              "label": "Special Effects",
+              "text": "This Skin includes a special Emote prompted by using the Special Emote 2 VGS command in match."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (1030).png",
+          "displayName": "The Fallen",
+          "matchSkinKey": "T5_Instinct",
+          "tier": "Mythical",
+          "buttonText": "GO TO",
+          "unlock": { "source": "event", "displayText": "Ultimate Founder's Edition" },
+          "information": [
+            {
+              "key": "crossGen",
+              "label": "Cross-Gen",
+              "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
+            },
+            {
+              "key": "foundersEdition",
+              "label": "Founder's Edition",
+              "text": "This Skin is acquired from purchasing the Ultimate Founder's Edition."
+            },
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            },
+            {
+              "key": "specialEffects",
+              "label": "Special Effects",
+              "text": "This Skin includes a special Emote prompted by using the Special Emote 2 VGS command in match."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (1031).png",
+          "displayName": "The Fallen",
+          "matchSkinKey": "T5_Instinct",
+          "tier": "Mythical",
+          "buttonText": "GO TO",
+          "unlock": { "source": "event", "displayText": "Ultimate Founder's Edition" },
+          "information": [
+            {
+              "key": "crossGen",
+              "label": "Cross-Gen",
+              "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
+            },
+            {
+              "key": "foundersEdition",
+              "label": "Founder's Edition",
+              "text": "This Skin is acquired from purchasing the Ultimate Founder's Edition."
+            },
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            },
+            {
+              "key": "specialEffects",
+              "label": "Special Effects",
+              "text": "This Skin includes a special Emote prompted by using the Special Emote 2 VGS command in match."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (1032).png",
+          "displayName": "Darkheart",
+          "matchSkinKey": "TSkincardKingofhearts",
+          "tier": "Legendary",
+          "buttonText": "LOCKED",
+          "unlock": { "source": "event", "displayText": "Special event — may appear for direct purchase or in Chests" },
+          "information": [
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was inspired by a SMITE 1 Skin."
+            },
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (1033).png",
+          "displayName": "Shadow",
+          "matchSkinKey": "Shadow",
+          "tier": "Heroic",
+          "cost": { "currency": "diamonds", "amount": "900", "owned": false },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (1034).png",
+          "displayName": "Onyx",
+          "matchVariantName": "Mastery Onyx",
+          "tier": "Heroic",
+          "cost": { "currency": null, "amount": null, "navigateOnly": true },
+          "buttonText": "GO TO",
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Zeus' Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (1035).png",
+          "displayName": "Opal",
+          "matchVariantName": "Mastery Opal",
+          "tier": "Heroic",
+          "cost": { "currency": null, "amount": null, "navigateOnly": true },
+          "buttonText": "GO TO",
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V",
+            "rarityNote": "Rare"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Zeus' Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (1036).png",
+          "displayName": "Radiant",
+          "matchVariantName": "Mastery Radiant",
+          "tier": "Heroic",
+          "cost": { "currency": null, "amount": null, "navigateOnly": true },
+          "buttonText": "GO TO",
+          "unlock": {
+            "masteryRank": 10,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+            "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 10,
+            "label": "X",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Zeus' Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

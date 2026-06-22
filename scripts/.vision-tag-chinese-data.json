@@ -1,0 +1,3466 @@
+{
+  "generatedAt": "2026-06-22T15:53:47.785Z",
+  "note": "Chinese pantheon (8 gods). Vision-verified panel text; 98 PNGs, 0 duplicate recaptures skipped.",
+  "gods": [
+    {
+      "folder": "da ji",
+      "godName": "Da Ji",
+      "extractions": [
+        {
+          "fileName": "Screenshot (396).png",
+          "displayName": "Base",
+          "tier": null,
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0",
+            "owned": true
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "fileName": "Screenshot (397).png",
+          "displayName": "Devil Punk",
+          "matchSkinKey": "Devil_Punk",
+          "tier": "Classic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "2400",
+            "owned": false
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 1,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Devil Punk\" Traveler."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            },
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was Inspired by a SMITE 1 Skin."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (398).png",
+          "displayName": "Devil Punk - Soulflare",
+          "parentSkinName": "Devil Punk",
+          "variantName": "Prism 1",
+          "matchSkinKey": "Devil_Punk",
+          "matchVariantName": "Prism 1",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 2,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Devil Punk\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (399).png",
+          "displayName": "Devil Punk - Jade Koi",
+          "parentSkinName": "Devil Punk",
+          "variantName": "Prism 2",
+          "matchSkinKey": "Devil_Punk",
+          "matchVariantName": "Prism 2",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 3,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Devil Punk\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (400).png",
+          "displayName": "Devil Punk - Bloodgold Oni",
+          "parentSkinName": "Devil Punk",
+          "variantName": "Prism 3",
+          "matchSkinKey": "Devil_Punk",
+          "matchVariantName": "Prism 3",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 4,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Devil Punk\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (401).png",
+          "displayName": "Devil Punk - Dark Temptation",
+          "parentSkinName": "Devil Punk",
+          "variantName": "Prism 4",
+          "matchSkinKey": "Devil_Punk",
+          "matchVariantName": "Prism 4",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "buttonText": "LOCKED",
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 5,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (402).png",
+          "displayName": "Vixen",
+          "matchSkinKey": "Vixen",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "buttonText": "LOCKED",
+          "unlock": {
+            "source": "twitch",
+            "displayText": "Twitch Drop"
+          },
+          "information": [
+            {
+              "key": "twitchDrop",
+              "label": "Twitch Drop",
+              "text": "This item is acquired from a Twitch Drop."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (403).png",
+          "displayName": "Shadow",
+          "matchSkinKey": "Shadow",
+          "tier": "Heroic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900",
+            "owned": false
+          },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (404).png",
+          "displayName": "Onyx",
+          "matchVariantName": "Mastery Onyx",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Da Ji's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (405).png",
+          "displayName": "Opal",
+          "matchVariantName": "Mastery Opal",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V",
+            "rarityNote": "Rare"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Da Ji's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (406).png",
+          "displayName": "Radiant",
+          "matchVariantName": "Mastery Radiant",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 10,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+            "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 10,
+            "label": "X",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Da Ji's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        }
+      ]
+    },
+    {
+      "folder": "guan yu",
+      "godName": "Guan Yu",
+      "extractions": [
+        {
+          "fileName": "Screenshot (481).png",
+          "displayName": "Base",
+          "tier": null,
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0",
+            "owned": true
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "fileName": "Screenshot (482).png",
+          "displayName": "Guan Unicorn",
+          "matchSkinKey": "Unicorn",
+          "tier": "Classic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "2400",
+            "owned": false
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 1,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Guan Unicorn\" Traveler."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            },
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was Inspired by a SMITE 1 Skin."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (483).png",
+          "displayName": "Guan Unicorn - Scarlet Tempest",
+          "parentSkinName": "Guan Unicorn",
+          "variantName": "Prism 1",
+          "matchSkinKey": "Unicorn",
+          "matchVariantName": "Prism 1",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 2,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Guan Unicorn\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            },
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (484).png",
+          "displayName": "Guan Unicorn - Morning Haze",
+          "parentSkinName": "Guan Unicorn",
+          "variantName": "Prism 2",
+          "matchSkinKey": "Unicorn",
+          "matchVariantName": "Prism 2",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 3,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Guan Unicorn\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            },
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (485).png",
+          "displayName": "Guan Unicorn - Amethyst Shade",
+          "parentSkinName": "Guan Unicorn",
+          "variantName": "Prism 3",
+          "matchSkinKey": "Unicorn",
+          "matchVariantName": "Prism 3",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 4,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Guan Unicorn\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            },
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (486).png",
+          "displayName": "Guan Unicorn - Blacklight",
+          "parentSkinName": "Guan Unicorn",
+          "variantName": "Prism 4",
+          "matchSkinKey": "Unicorn",
+          "matchVariantName": "Prism 4",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 5,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Guan Unicorn\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            },
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (487).png",
+          "displayName": "Wraith Rider",
+          "matchSkinKey": "WraithRider",
+          "tier": "Epic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "1200",
+            "owned": false
+          },
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — may appear in chests or events"
+          },
+          "information": [
+            {
+              "key": "crossGen",
+              "label": "Cross-Gen",
+              "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
+            },
+            {
+              "key": "standard",
+              "label": "Standard",
+              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (488).png",
+          "displayName": "Shadow",
+          "matchSkinKey": "Shadow",
+          "tier": "Heroic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900",
+            "owned": false
+          },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (489).png",
+          "displayName": "Onyx",
+          "matchVariantName": "Mastery Onyx",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Guan Yu's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (490).png",
+          "displayName": "Opal",
+          "matchVariantName": "Mastery Opal",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V",
+            "rarityNote": "Rare"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Guan Yu's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (491).png",
+          "displayName": "Radiant",
+          "matchVariantName": "Mastery Radiant",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 10,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+            "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 10,
+            "label": "X",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Guan Yu's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        }
+      ]
+    },
+    {
+      "folder": "hou yi",
+      "godName": "Hou Yi",
+      "extractions": [
+        {
+          "fileName": "Screenshot (522).png",
+          "displayName": "Base",
+          "tier": null,
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0",
+            "owned": true
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "fileName": "Screenshot (523).png",
+          "displayName": "Gleaming Archer",
+          "matchSkinKey": "GleamingArcher",
+          "tier": "Epic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "1200",
+            "owned": false
+          },
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — may appear in chests or events"
+          },
+          "information": [
+            {
+              "key": "crossGen",
+              "label": "Cross-Gen",
+              "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
+            },
+            {
+              "key": "standard",
+              "label": "Standard",
+              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (524).png",
+          "displayName": "Shadow",
+          "matchSkinKey": "Shadow",
+          "tier": "Heroic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900",
+            "owned": false
+          },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (525).png",
+          "displayName": "Onyx",
+          "matchVariantName": "Mastery Onyx",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Hou Yi's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (526).png",
+          "displayName": "Opal",
+          "matchVariantName": "Mastery Opal",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V",
+            "rarityNote": "Rare"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Hou Yi's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (527).png",
+          "displayName": "Radiant",
+          "matchVariantName": "Mastery Radiant",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 10,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+            "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 10,
+            "label": "X",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Hou Yi's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        }
+      ]
+    },
+    {
+      "folder": "hua mulan",
+      "godName": "Hua Mulan",
+      "extractions": [
+        {
+          "fileName": "Screenshot (528).png",
+          "displayName": "Base",
+          "tier": null,
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0",
+            "owned": true
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "fileName": "Screenshot (529).png",
+          "displayName": "Unmasked Warrior",
+          "matchSkinKey": "MysteriousWarrior",
+          "tier": "Heroic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0",
+            "owned": true
+          },
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — may appear in chests or events"
+          }
+        },
+        {
+          "fileName": "Screenshot (530).png",
+          "displayName": "Sentai",
+          "matchSkinKey": "Sentai",
+          "tier": "Classic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "2400",
+            "owned": false
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 1,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Sentai\" Traveler."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            },
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was Inspired by a SMITE 1 Skin."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (531).png",
+          "displayName": "Sentai - White Blaze",
+          "parentSkinName": "Sentai",
+          "variantName": "Prism B",
+          "matchSkinKey": "Sentai",
+          "matchVariantName": "Prism B",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 2,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Sentai\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            },
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (532).png",
+          "displayName": "Sentai - Cosmic Flair",
+          "parentSkinName": "Sentai",
+          "variantName": "Prism C",
+          "matchSkinKey": "Sentai",
+          "matchVariantName": "Prism C",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 3,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Sentai\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            },
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (533).png",
+          "displayName": "Sentai - RGB.EXE",
+          "parentSkinName": "Sentai",
+          "variantName": "Prism D",
+          "matchSkinKey": "Sentai",
+          "matchVariantName": "Prism D",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 4,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Sentai\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            },
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (534).png",
+          "displayName": "Sentai - Neon Lotus",
+          "parentSkinName": "Sentai",
+          "variantName": "Prism E",
+          "matchSkinKey": "Sentai",
+          "matchVariantName": "Prism E",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 5,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Sentai\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (535).png",
+          "displayName": "High Honor",
+          "matchSkinKey": "HighHonor",
+          "tier": "Epic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "1200",
+            "owned": false
+          },
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — may appear in chests or events"
+          },
+          "information": [
+            {
+              "key": "crossGen",
+              "label": "Cross-Gen",
+              "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
+            },
+            {
+              "key": "standard",
+              "label": "Standard",
+              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (536).png",
+          "displayName": "Moolan",
+          "matchSkinKey": "Moolan",
+          "tier": "Epic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "buttonText": "GO TO",
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 1,
+            "total": 4
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Moolan Mulan\" Traveler."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            },
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (537).png",
+          "displayName": "Moolan - Strawberry",
+          "parentSkinName": "Moolan",
+          "variantName": "Prism 1",
+          "matchSkinKey": "Moolan",
+          "matchVariantName": "Prism 1",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 2,
+            "total": 4
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Moolan Mulan\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (538).png",
+          "displayName": "Moolan - Chocolate",
+          "parentSkinName": "Moolan",
+          "variantName": "Prism 2",
+          "matchSkinKey": "Moolan",
+          "matchVariantName": "Prism 2",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 3,
+            "total": 4
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Moolan Mulan\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (539).png",
+          "displayName": "Moolan - Gold Ribbon",
+          "parentSkinName": "Moolan",
+          "variantName": "Prism 3",
+          "matchSkinKey": "Moolan",
+          "matchVariantName": "Prism 3",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 4,
+            "total": 4
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Moolan Mulan\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (540).png",
+          "displayName": "Shadow",
+          "matchSkinKey": "Shadow",
+          "tier": "Heroic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900",
+            "owned": false
+          },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (541).png",
+          "displayName": "Onyx",
+          "matchVariantName": "Mastery Onyx",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Hua Mulan's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (542).png",
+          "displayName": "Opal",
+          "matchVariantName": "Mastery Opal",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V",
+            "rarityNote": "Rare"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Hua Mulan's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (543).png",
+          "displayName": "Radiant",
+          "matchVariantName": "Mastery Radiant",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 10,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+            "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 10,
+            "label": "X",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Hua Mulan's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        }
+      ]
+    },
+    {
+      "folder": "jing wei",
+      "godName": "Jing Wei",
+      "extractions": [
+        {
+          "fileName": "Screenshot (578).png",
+          "displayName": "Base",
+          "tier": null,
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0",
+            "owned": true
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "fileName": "Screenshot (579).png",
+          "displayName": "Bumble Bee",
+          "matchSkinKey": "BumbleBee",
+          "tier": "Classic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "2400",
+            "owned": false
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "carousel": {
+            "index": 1,
+            "total": 4
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the 'Buzzing Spring Time' Traveler."
+            },
+            {
+              "key": "standard",
+              "label": "Standard",
+              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+            },
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was Inspired by a SMITE 1 Skin."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (580).png",
+          "displayName": "Bumble Bee - Lady Bug",
+          "parentSkinName": "Bumble Bee",
+          "variantName": "Prism 1",
+          "matchSkinKey": "BumbleBee",
+          "matchVariantName": "Prism 1",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 2,
+            "total": 4
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Buzzing Spring Time\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (581).png",
+          "displayName": "Bumble Bee - Beetle",
+          "parentSkinName": "Bumble Bee",
+          "variantName": "Prism 2",
+          "matchSkinKey": "BumbleBee",
+          "matchVariantName": "Prism 2",
+          "tier": "Prisms",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "500",
+            "owned": false
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 3,
+            "total": 4
+          },
+          "information": [
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            },
+            {
+              "key": "supporterPremier",
+              "label": "Supporter Premier",
+              "text": "Select Diamond-only items for those who wish to show their support and help fund the ongoing development of SMITE 2."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (582).png",
+          "displayName": "Bumble Bee - Pink Rose",
+          "parentSkinName": "Bumble Bee",
+          "variantName": "Prism 3",
+          "matchSkinKey": "BumbleBee",
+          "matchVariantName": "Prism 3",
+          "tier": "Prisms",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "500",
+            "owned": false
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 4,
+            "total": 4
+          },
+          "information": [
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (583).png",
+          "displayName": "Pool Party",
+          "matchSkinKey": "PoolParty",
+          "tier": "Classic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "2400",
+            "owned": false
+          },
+          "unlock": {
+            "source": "store",
+            "classicNote": true,
+            "displayText": "Direct purchase — may appear in chests or events"
+          },
+          "information": [
+            {
+              "key": "standard",
+              "label": "Standard",
+              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+            },
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was Inspired by a SMITE 1 Skin."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (584).png",
+          "displayName": "Dragonheart Rebel",
+          "matchSkinKey": "DragonHeart",
+          "tier": "Epic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "buttonText": "GO TO",
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 1,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Dragonheart\" Traveler."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            },
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (585).png",
+          "displayName": "Dragonheart Rebel - Detention",
+          "parentSkinName": "Dragonheart Rebel",
+          "variantName": "Prism 1",
+          "matchSkinKey": "DragonHeart",
+          "matchVariantName": "Prism 1",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 2,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Dragonheart\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (586).png",
+          "displayName": "Dragonheart Rebel - Chilled Out",
+          "parentSkinName": "Dragonheart Rebel",
+          "variantName": "Prism 2",
+          "matchSkinKey": "DragonHeart",
+          "matchVariantName": "Prism 2",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 3,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Dragonheart\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (587).png",
+          "displayName": "Dragonheart Rebel - Ivy League",
+          "parentSkinName": "Dragonheart Rebel",
+          "variantName": "Prism 3",
+          "matchSkinKey": "DragonHeart",
+          "matchVariantName": "Prism 3",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 4,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Dragonheart\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (588).png",
+          "displayName": "Dragonheart Rebel - Valedictorian",
+          "parentSkinName": "Dragonheart Rebel",
+          "variantName": "Prism 4",
+          "matchSkinKey": "DragonHeart",
+          "matchVariantName": "Prism 4",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "buttonText": "LOCKED",
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 5,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (589).png",
+          "displayName": "Baddie Bat",
+          "matchSkinKey": "CuteBat",
+          "tier": "Epic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "buttonText": "LOCKED",
+          "unlock": {
+            "source": "dlc",
+            "displayText": "DLC"
+          },
+          "information": [
+            {
+              "key": "crossGen",
+              "label": "Cross-Gen",
+              "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
+            },
+            {
+              "key": "dlc",
+              "label": "DLC",
+              "text": "This item is acquired from a DLC."
+            },
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (590).png",
+          "displayName": "Shadow",
+          "matchSkinKey": "Shadow",
+          "tier": "Heroic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900",
+            "owned": false
+          },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (591).png",
+          "displayName": "Onyx",
+          "matchVariantName": "Mastery Onyx",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Jing Wei's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (592).png",
+          "displayName": "Opal",
+          "matchVariantName": "Mastery Opal",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V",
+            "rarityNote": "Rare"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Jing Wei's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (593).png",
+          "displayName": "Radiant",
+          "matchVariantName": "Mastery Radiant",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 10,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+            "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 10,
+            "label": "X",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Jing Wei's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        }
+      ]
+    },
+    {
+      "folder": "ne zha",
+      "godName": "Ne Zha",
+      "extractions": [
+        {
+          "fileName": "Screenshot (708).png",
+          "displayName": "Base",
+          "tier": null,
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0",
+            "owned": true
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "fileName": "Screenshot (709).png",
+          "displayName": "Fire Lord",
+          "matchSkinKey": "FireLord",
+          "tier": "Classic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "buttonText": "GO TO",
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 1,
+            "total": 4
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Fire Lord Ne Zha\" Traveler."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            },
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was Inspired by a SMITE 1 Skin."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (710).png",
+          "displayName": "Fire Lord - Emerald Spear",
+          "parentSkinName": "Fire Lord",
+          "variantName": "Prism 1",
+          "matchSkinKey": "FireLord",
+          "matchVariantName": "Prism 1",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 2,
+            "total": 4
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Fire Lord Ne Zha\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (711).png",
+          "displayName": "Fire Lord - Cherry Blossom",
+          "parentSkinName": "Fire Lord",
+          "variantName": "Prism 2",
+          "matchSkinKey": "FireLord",
+          "matchVariantName": "Prism 2",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 3,
+            "total": 4
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Fire Lord Ne Zha\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (712).png",
+          "displayName": "Fire Lord - Cursed Flame",
+          "parentSkinName": "Fire Lord",
+          "variantName": "Prism 3",
+          "matchSkinKey": "FireLord",
+          "matchVariantName": "Prism 3",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 4,
+            "total": 4
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Fire Lord Ne Zha\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (713).png",
+          "displayName": "Shadow",
+          "matchSkinKey": "Shadow",
+          "tier": "Heroic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900",
+            "owned": false
+          },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (714).png",
+          "displayName": "Onyx",
+          "matchVariantName": "Mastery Onyx",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Ne Zha's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (715).png",
+          "displayName": "Opal",
+          "matchVariantName": "Mastery Opal",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V",
+            "rarityNote": "Rare"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Ne Zha's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (716).png",
+          "displayName": "Radiant",
+          "matchVariantName": "Mastery Radiant",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 10,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+            "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 10,
+            "label": "X",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Ne Zha's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        }
+      ]
+    },
+    {
+      "folder": "nu wa",
+      "godName": "Nu Wa",
+      "extractions": [
+        {
+          "fileName": "Screenshot (746).png",
+          "displayName": "Base",
+          "tier": null,
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0",
+            "owned": true
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "fileName": "Screenshot (747).png",
+          "displayName": "Mystic Enchantress",
+          "matchSkinKey": "MysticEnchantress",
+          "tier": "Classic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "2400",
+            "owned": false
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 1,
+            "total": 4
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Mystic Enchantress\" Traveler."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            },
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was Inspired by a SMITE 1 Skin."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (748).png",
+          "displayName": "Mystic Enchantress - Ruby",
+          "parentSkinName": "Mystic Enchantress",
+          "variantName": "Prism 1",
+          "matchSkinKey": "MysticEnchantress",
+          "matchVariantName": "Prism 1",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 2,
+            "total": 4
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Mystic Enchantress\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (749).png",
+          "displayName": "Mystic Enchantress - Pearl",
+          "parentSkinName": "Mystic Enchantress",
+          "variantName": "Prism 2",
+          "matchSkinKey": "MysticEnchantress",
+          "matchVariantName": "Prism 2",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 3,
+            "total": 4
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Mystic Enchantress\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (750).png",
+          "displayName": "Mystic Enchantress - Aquamarine",
+          "parentSkinName": "Mystic Enchantress",
+          "variantName": "Prism 3",
+          "matchSkinKey": "MysticEnchantress",
+          "matchVariantName": "Prism 3",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 4,
+            "total": 4
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Mystic Enchantress\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (751).png",
+          "displayName": "Bad Bunny",
+          "matchSkinKey": "BadBunny",
+          "tier": "Fabled",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "1200",
+            "owned": false
+          },
+          "unlock": {
+            "source": "event",
+            "displayText": "Special event"
+          },
+          "information": [
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (752).png",
+          "displayName": "Dark Supreme",
+          "matchSkinKey": "DarkSupreme",
+          "tier": "Epic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "1200",
+            "owned": false
+          },
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — may appear in chests or events"
+          },
+          "information": [
+            {
+              "key": "crossGen",
+              "label": "Cross-Gen",
+              "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
+            },
+            {
+              "key": "standard",
+              "label": "Standard",
+              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (753).png",
+          "displayName": "Bunny Babe",
+          "matchSkinKey": "PlayfulBunny",
+          "tier": "Legacy",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "500",
+            "owned": false
+          },
+          "unlock": {
+            "source": "legacy",
+            "displayText": "SMITE 1 Divine Legacy"
+          },
+          "information": [
+            {
+              "key": "legacy",
+              "label": "Legacy",
+              "text": "This item is unlocked by progressing your SMITE 1 Divine Legacy."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (754).png",
+          "displayName": "Ravenstrike",
+          "matchSkinKey": "NuwaVenstrike",
+          "tier": "Legendary",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "buttonText": "GO TO",
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 1,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Ravenstrike\" Traveler."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (755).png",
+          "displayName": "Ravenstrike - Blood Raven",
+          "parentSkinName": "Ravenstrike",
+          "variantName": "Prism B",
+          "matchSkinKey": "NuwaVenstrike",
+          "matchVariantName": "Prism B",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 2,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Ravenstrike\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (756).png",
+          "displayName": "Ravenstrike - Cyber White",
+          "parentSkinName": "Ravenstrike",
+          "variantName": "Prism C",
+          "matchSkinKey": "NuwaVenstrike",
+          "matchVariantName": "Prism C",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 3,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Ravenstrike\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (757).png",
+          "displayName": "Ravenstrike - Teal Tempest",
+          "parentSkinName": "Ravenstrike",
+          "variantName": "Prism D",
+          "matchSkinKey": "NuwaVenstrike",
+          "matchVariantName": "Prism D",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 4,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Ravenstrike\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (758).png",
+          "displayName": "Ravenstrike - Bronze Talon",
+          "parentSkinName": "Ravenstrike",
+          "variantName": "Prism E",
+          "matchSkinKey": "NuwaVenstrike",
+          "matchVariantName": "Prism E",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 5,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Ravenstrike\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (759).png",
+          "displayName": "Bunny Bliss",
+          "matchSkinKey": "BunnyBliss",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "buttonText": "GO TO",
+          "unlock": {
+            "source": "event",
+            "displayText": "Special event"
+          },
+          "information": [
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (760).png",
+          "displayName": "Shadow",
+          "matchSkinKey": "Shadow",
+          "tier": "Heroic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900",
+            "owned": false
+          },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (761).png",
+          "displayName": "Onyx",
+          "matchVariantName": "Mastery Onyx",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Nu Wa's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (762).png",
+          "displayName": "Opal",
+          "matchVariantName": "Mastery Opal",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V",
+            "rarityNote": "Rare"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Nu Wa's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (763).png",
+          "displayName": "Radiant",
+          "matchVariantName": "Mastery Radiant",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 10,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+            "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 10,
+            "label": "X",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Nu Wa's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        }
+      ]
+    },
+    {
+      "folder": "sun wokong",
+      "godName": "Sun Wukong",
+      "extractions": [
+        {
+          "fileName": "Screenshot (898).png",
+          "displayName": "Base",
+          "tier": null,
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0",
+            "owned": true
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "fileName": "Screenshot (899).png",
+          "displayName": "Dark Lord",
+          "matchSkinKey": "DarkLord",
+          "tier": "Classic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "1200",
+            "owned": false
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 1,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Dark Lord SWK\" Traveler."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            },
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was Inspired by a SMITE 1 Skin."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (900).png",
+          "displayName": "Dark Lord - Obsidian",
+          "parentSkinName": "Dark Lord",
+          "variantName": "Prism 1",
+          "matchSkinKey": "DarkLord",
+          "matchVariantName": "Prism 1",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 2,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Dark Lord SWK\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (901).png",
+          "displayName": "Dark Lord - Voidspawn",
+          "parentSkinName": "Dark Lord",
+          "variantName": "Prism 2",
+          "matchSkinKey": "DarkLord",
+          "matchVariantName": "Prism 2",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 3,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Dark Lord SWK\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (902).png",
+          "displayName": "Dark Lord - Frostbane",
+          "parentSkinName": "Dark Lord",
+          "variantName": "Prism 3",
+          "matchSkinKey": "DarkLord",
+          "matchVariantName": "Prism 3",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 4,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Dark Lord SWK\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (903).png",
+          "displayName": "Dark Lord - Bloodfire",
+          "parentSkinName": "Dark Lord",
+          "variantName": "Prism 4",
+          "matchSkinKey": "DarkLord",
+          "matchVariantName": "Prism 4",
+          "tier": "Prisms",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "gridBadge": {
+            "type": "prism",
+            "rank": null,
+            "label": "prism"
+          },
+          "carousel": {
+            "index": 5,
+            "total": 5
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the \"Dark Lord SWK\" Traveler."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (904).png",
+          "displayName": "Street King",
+          "matchSkinKey": "StreetKing",
+          "tier": "Epic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "1200",
+            "owned": false
+          },
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — may appear in chests or events"
+          },
+          "information": [
+            {
+              "key": "crossGen",
+              "label": "Cross-Gen",
+              "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
+            },
+            {
+              "key": "standard",
+              "label": "Standard",
+              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (905).png",
+          "displayName": "Shadow",
+          "matchSkinKey": "Shadow",
+          "tier": "Heroic",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900",
+            "owned": false
+          },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (906).png",
+          "displayName": "Onyx",
+          "matchVariantName": "Mastery Onyx",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Sun Wukong's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (907).png",
+          "displayName": "Opal",
+          "matchVariantName": "Mastery Opal",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V",
+            "rarityNote": "Rare"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Sun Wukong's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        },
+        {
+          "fileName": "Screenshot (908).png",
+          "displayName": "Radiant",
+          "matchVariantName": "Mastery Radiant",
+          "tier": "Heroic",
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 10,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+            "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 10,
+            "label": "X",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Sun Wukong's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "buttonText": "GO TO"
+        }
+      ]
+    }
+  ]
+}

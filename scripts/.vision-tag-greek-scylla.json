@@ -1,0 +1,346 @@
+{
+  "gods": [
+    {
+      "folder": "scylla",
+      "godName": "Scylla",
+      "extractions": [
+        {
+          "fileName": "Screenshot (857).png",
+          "displayName": "Base",
+          "tier": null,
+          "cost": { "currency": "diamonds", "amount": "0", "owned": true },
+          "unlock": { "source": "base", "displayText": "Base god" }
+        },
+        {
+          "fileName": "Screenshot (858).png",
+          "displayName": "Snow Day",
+          "matchSkinKey": "SnowGoblin",
+          "tier": "Classic",
+          "cost": { "currency": "gems", "amount": "2400", "owned": false },
+          "unlock": { "source": "event", "displayText": "Yulefest 2025 event skin" },
+          "information": [
+            {
+              "key": "yulefest",
+              "label": "Yulefest",
+              "text": "This item was acquired during The Yulefest 2025 Event."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            },
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was inspired by a SMITE 1 Skin."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (859).png",
+          "displayName": "Snow Day - Black Ice",
+          "matchSkinKey": "SnowGoblin",
+          "matchVariantName": "Prism P1",
+          "tier": "Prisms",
+          "buttonText": "GO TO",
+          "gridBadge": { "type": "prism", "rank": null, "label": "prism" },
+          "unlock": { "source": "prism", "prismNote": true, "displayText": "Prism variant" },
+          "information": [
+            {
+              "key": "yulefest",
+              "label": "Yulefest",
+              "text": "This item was acquired during The Yulefest 2025 Event."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (860).png",
+          "displayName": "Snow Day - Fall Harvest",
+          "matchSkinKey": "SnowGoblin",
+          "matchVariantName": "Prism P2",
+          "tier": "Prisms",
+          "buttonText": "GO TO",
+          "gridBadge": { "type": "prism", "rank": null, "label": "prism" },
+          "unlock": { "source": "prism", "prismNote": true, "displayText": "Prism variant" },
+          "information": [
+            {
+              "key": "yulefest",
+              "label": "Yulefest",
+              "text": "This item was acquired during The Yulefest 2025 Event."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (861).png",
+          "displayName": "Snow Day - Minty Fresh",
+          "matchSkinKey": "SnowGoblin",
+          "matchVariantName": "Prism P3",
+          "tier": "Prisms",
+          "buttonText": "GO TO",
+          "gridBadge": { "type": "prism", "rank": null, "label": "prism" },
+          "unlock": { "source": "prism", "prismNote": true, "displayText": "Prism variant" },
+          "information": [
+            {
+              "key": "yulefest",
+              "label": "Yulefest",
+              "text": "This item was acquired during The Yulefest 2025 Event."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (862).png",
+          "displayName": "Snow Day - Cranberry Queen",
+          "matchSkinKey": "SnowGoblin",
+          "matchVariantName": "Prism P4",
+          "tier": "Prisms",
+          "buttonText": "GO TO",
+          "gridBadge": { "type": "prism", "rank": null, "label": "prism" },
+          "unlock": { "source": "prism", "prismNote": true, "displayText": "Prism variant" },
+          "information": [
+            {
+              "key": "yulefest",
+              "label": "Yulefest",
+              "text": "This item was acquired during The Yulefest 2025 Event."
+            },
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (863).png",
+          "displayName": "Trash Goblin",
+          "matchSkinKey": "ScyllaTrashgoblin",
+          "tier": "Epic",
+          "cost": { "currency": "gems", "amount": "1200", "owned": false },
+          "unlock": { "source": "standard", "displayText": "Standard — direct purchase or chests; on sale -50%" },
+          "information": [
+            {
+              "key": "crossGen",
+              "label": "Cross-Gen",
+              "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            },
+            {
+              "key": "standard",
+              "label": "Standard",
+              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (864).png",
+          "displayName": "Trash Goblin - Possum Punk",
+          "matchSkinKey": "ScyllaTrashgoblin",
+          "matchVariantName": "Prism 1",
+          "tier": "Prisms",
+          "cost": { "currency": "diamonds", "amount": "500", "owned": false },
+          "gridBadge": { "type": "prism", "rank": null, "label": "prism" },
+          "unlock": { "source": "prism", "displayText": "Base Skin not Unlocked." },
+          "information": [
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            },
+            {
+              "key": "supporterPremier",
+              "label": "Supporter Premier",
+              "text": "Select Diamond-only items for those who wish to show their support and help fund the ongoing development of SMITE 2."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (865).png",
+          "displayName": "Trash Goblin - Ruby Rummager",
+          "matchSkinKey": "ScyllaTrashgoblin",
+          "matchVariantName": "Prism 2",
+          "tier": "Prisms",
+          "cost": { "currency": "diamonds", "amount": "500", "owned": false },
+          "gridBadge": { "type": "prism", "rank": null, "label": "prism" },
+          "unlock": { "source": "prism", "displayText": "Base Skin not Unlocked." },
+          "information": [
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            },
+            {
+              "key": "supporterPremier",
+              "label": "Supporter Premier",
+              "text": "Select Diamond-only items for those who wish to show their support and help fund the ongoing development of SMITE 2."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (866).png",
+          "displayName": "Trash Goblin - Pale Pest",
+          "matchSkinKey": "ScyllaTrashgoblin",
+          "matchVariantName": "Prism 3",
+          "tier": "Prisms",
+          "cost": { "currency": "diamonds", "amount": "500", "owned": false },
+          "gridBadge": { "type": "prism", "rank": null, "label": "prism" },
+          "unlock": { "source": "prism", "displayText": "Base Skin not Unlocked." },
+          "information": [
+            {
+              "key": "prism",
+              "label": "Prism",
+              "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+            },
+            {
+              "key": "supporterPremier",
+              "label": "Supporter Premier",
+              "text": "Select Diamond-only items for those who wish to show their support and help fund the ongoing development of SMITE 2."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (867).png",
+          "displayName": "Shadow",
+          "matchSkinKey": "Shadow",
+          "tier": "Heroic",
+          "cost": { "currency": "diamonds", "amount": "900", "owned": false },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (868).png",
+          "displayName": "Onyx",
+          "matchVariantName": "Mastery Onyx",
+          "tier": "Heroic",
+          "cost": { "currency": null, "amount": null, "navigateOnly": true },
+          "buttonText": "GO TO",
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Scylla's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (869).png",
+          "displayName": "Opal",
+          "matchVariantName": "Mastery Opal",
+          "tier": "Heroic",
+          "cost": { "currency": null, "amount": null, "navigateOnly": true },
+          "buttonText": "GO TO",
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V",
+            "rarityNote": "Rare"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Scylla's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (870).png",
+          "displayName": "Radiant",
+          "matchVariantName": "Mastery Radiant",
+          "tier": "Heroic",
+          "cost": { "currency": null, "amount": null, "navigateOnly": true },
+          "buttonText": "GO TO",
+          "unlock": {
+            "masteryRank": 10,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+            "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 10,
+            "label": "X",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Scylla's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

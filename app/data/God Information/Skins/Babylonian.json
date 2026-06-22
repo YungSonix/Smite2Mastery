@@ -8,7 +8,10 @@
         {
           "skinKey": "Gilgamesh",
           "skinName": "Base Gilgamesh",
-          "cost": null,
+          "cost": {
+            "currency": "diamonds",
+            "amount": "0"
+          },
           "rarity": null,
           "isBaseSkin": true,
           "isPrism": false,
@@ -24,32 +27,383 @@
           },
           "variants": [
             {
-              "name": "Mastery Light",
-              "icon": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/T_Gilgamesh_Icon_Light.png",
-              "masteryFromDisk": true,
-              "cardArt": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png",
-              "skin": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png"
-            },
-            {
               "name": "Mastery Onyx",
               "icon": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/T_Gilgamesh_Icon_Onyx.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png",
-              "skin": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png"
+              "skin": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              },
+              "loadout": {
+                "screenshot": "app/data/God Renders/gilgamesh/Screenshot (478).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Gilgamesh",
+                "displayName": "Onyx",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/gilgamesh/Screenshot (478).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/gilgamesh/Screenshot (478).png",
+                  "fileName": "Screenshot (478).png",
+                  "godName": "Gilgamesh",
+                  "displayName": "Onyx",
+                  "target": "variant",
+                  "appliedTo": "Base Gilgamesh → Mastery Onyx",
+                  "skinKey": "Gilgamesh",
+                  "skinName": "Base Gilgamesh",
+                  "variantName": "Mastery Onyx",
+                  "parentSkinKey": "Gilgamesh",
+                  "parentSkinName": "Base Gilgamesh",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up your God's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up your God's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
               "name": "Mastery Opal",
               "icon": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/T_Gilgamesh_Icon_Opal.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png",
-              "skin": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png"
+              "skin": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/gilgamesh/Screenshot (479).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Gilgamesh",
+                "displayName": "Opal",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/gilgamesh/Screenshot (479).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/gilgamesh/Screenshot (479).png",
+                  "fileName": "Screenshot (479).png",
+                  "godName": "Gilgamesh",
+                  "displayName": "Opal",
+                  "target": "variant",
+                  "appliedTo": "Base Gilgamesh → Mastery Opal",
+                  "skinKey": "Gilgamesh",
+                  "skinName": "Base Gilgamesh",
+                  "variantName": "Mastery Opal",
+                  "parentSkinKey": "Gilgamesh",
+                  "parentSkinName": "Base Gilgamesh",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up your God's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V",
+                "rarityNote": "Rare"
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up your God's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
-              "name": "Mastery Shadow",
-              "icon": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/T_Gilgamesh_Icon_Shadow.png",
+              "name": "Mastery Radiant",
+              "icon": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/T_Gilgamesh_Icon_Light.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png",
-              "skin": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png"
+              "skin": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/gilgamesh/Screenshot (480).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Gilgamesh",
+                "displayName": "Radiant",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "screenshot": "app/data/God Renders/gilgamesh/Screenshot (480).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/gilgamesh/Screenshot (480).png",
+                  "fileName": "Screenshot (480).png",
+                  "godName": "Gilgamesh",
+                  "displayName": "Radiant",
+                  "target": "variant",
+                  "appliedTo": "Base Gilgamesh → Mastery Radiant",
+                  "skinKey": "Gilgamesh",
+                  "skinName": "Base Gilgamesh",
+                  "variantName": "Mastery Radiant",
+                  "parentSkinKey": "Gilgamesh",
+                  "parentSkinName": "Base Gilgamesh",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up your God's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)",
+                "rarityNote": "Rare"
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up your God's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/gilgamesh/Screenshot (476).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Gilgamesh",
+            "displayName": "Base",
+            "rarity": null,
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/gilgamesh/Screenshot (476).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/gilgamesh/Screenshot (476).png",
+              "fileName": "Screenshot (476).png",
+              "godName": "Gilgamesh",
+              "displayName": "Base",
+              "target": "skin",
+              "appliedTo": "Base Gilgamesh",
+              "skinKey": "Gilgamesh",
+              "skinName": "Base Gilgamesh",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "0",
+                "owned": true
+              }
+            }
+          },
+          "price": {
+            "diamonds": "0"
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "skinKey": "Shadow",
+          "skinName": "Shadow",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900"
+          },
+          "rarity": "Heroic",
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": true,
+          "isMasteryShadowSkin": true,
+          "isCrossGen": false,
+          "type": "Mastery Shadow",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png",
+            "cardArt": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png",
+            "icon": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/T_Gilgamesh_Icon_Shadow.png"
+          },
+          "cardArt": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png",
+          "skin": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/t_GodCard_Gilgamesh_Mastery.png",
+          "icon": "app/data/NewGodSkins/Gilgamesh/Skins/Mastery/T_Gilgamesh_Icon_Shadow.png",
+          "masteryFromDisk": true,
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+          "price": {
+            "diamonds": "900"
+          },
+          "unlock": {
+            "rarityNote": "Rare",
+            "source": "ascension",
+            "displayText": "Ascension Pass — rare skin (may appear in events)",
+            "requiresAscensionPass": true
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/gilgamesh/Screenshot (477).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Gilgamesh",
+            "displayName": "Shadow",
+            "rarity": "Heroic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/gilgamesh/Screenshot (477).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/gilgamesh/Screenshot (477).png",
+              "fileName": "Screenshot (477).png",
+              "godName": "Gilgamesh",
+              "displayName": "Shadow",
+              "target": "skin",
+              "appliedTo": "Shadow",
+              "skinKey": "Shadow",
+              "skinName": "Shadow",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "900",
+                "owned": false
+              },
+              "tier": "Heroic"
+            },
+            "information": [
+              {
+                "key": "ascensionReward",
+                "label": "Ascension Reward",
+                "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+              },
+              {
+                "key": "rare",
+                "label": "Rare",
+                "text": "This is a rare item and may only appear on special occasions or in specific Events."
+              }
+            ]
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
           ]
         }
@@ -84,32 +438,380 @@
           },
           "variants": [
             {
-              "name": "Mastery Light",
-              "icon": "app/data/NewGodSkins/Ishtar/Skins/Mastery/T_Ishtar_Icon_Light.png",
-              "masteryFromDisk": true,
-              "cardArt": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png",
-              "skin": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png"
-            },
-            {
               "name": "Mastery Onyx",
               "icon": "app/data/NewGodSkins/Ishtar/Skins/Mastery/T_Ishtar_Icon_Onyx.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png",
-              "skin": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png"
+              "skin": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/ishtar/Screenshot (557).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Ishtar",
+                "displayName": "Onyx",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/ishtar/Screenshot (557).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/ishtar/Screenshot (557).png",
+                  "fileName": "Screenshot (557).png",
+                  "godName": "Ishtar",
+                  "displayName": "Onyx",
+                  "target": "variant",
+                  "appliedTo": "Base Ishtar → Mastery Onyx",
+                  "skinKey": "Ishtar",
+                  "skinName": "Base Ishtar",
+                  "variantName": "Mastery Onyx",
+                  "parentSkinKey": "Ishtar",
+                  "parentSkinName": "Base Ishtar",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up your God's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up your God's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
               "name": "Mastery Opal",
               "icon": "app/data/NewGodSkins/Ishtar/Skins/Mastery/T_Ishtar_Icon_Opal.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png",
-              "skin": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png"
+              "skin": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/ishtar/Screenshot (558).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Ishtar",
+                "displayName": "Opal",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/ishtar/Screenshot (558).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/ishtar/Screenshot (558).png",
+                  "fileName": "Screenshot (558).png",
+                  "godName": "Ishtar",
+                  "displayName": "Opal",
+                  "target": "variant",
+                  "appliedTo": "Base Ishtar → Mastery Opal",
+                  "skinKey": "Ishtar",
+                  "skinName": "Base Ishtar",
+                  "variantName": "Mastery Opal",
+                  "parentSkinKey": "Ishtar",
+                  "parentSkinName": "Base Ishtar",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up your God's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V",
+                "rarityNote": "Rare"
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up your God's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
-              "name": "Mastery Shadow",
-              "icon": "app/data/NewGodSkins/Ishtar/Skins/Mastery/T_Ishtar_Icon_Shadow.png",
+              "name": "Mastery Radiant",
+              "icon": "app/data/NewGodSkins/Ishtar/Skins/Mastery/T_Ishtar_Icon_Light.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png",
-              "skin": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png"
+              "skin": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/ishtar/Screenshot (559).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Ishtar",
+                "displayName": "Radiant",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "screenshot": "app/data/God Renders/ishtar/Screenshot (559).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/ishtar/Screenshot (559).png",
+                  "fileName": "Screenshot (559).png",
+                  "godName": "Ishtar",
+                  "displayName": "Radiant",
+                  "target": "variant",
+                  "appliedTo": "Base Ishtar → Mastery Radiant",
+                  "skinKey": "Ishtar",
+                  "skinName": "Base Ishtar",
+                  "variantName": "Mastery Radiant",
+                  "parentSkinKey": "Ishtar",
+                  "parentSkinName": "Base Ishtar",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up your God's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)",
+                "rarityNote": "Rare"
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up your God's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/ishtar/Screenshot (551).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Ishtar",
+            "displayName": "Base",
+            "rarity": null,
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/ishtar/Screenshot (551).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/ishtar/Screenshot (551).png",
+              "fileName": "Screenshot (551).png",
+              "godName": "Ishtar",
+              "displayName": "Base",
+              "target": "skin",
+              "appliedTo": "Base Ishtar",
+              "skinKey": "Ishtar",
+              "skinName": "Base Ishtar",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "0",
+                "owned": true
+              }
+            }
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "skinKey": "Shadow",
+          "skinName": "Shadow",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900"
+          },
+          "rarity": "Heroic",
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": true,
+          "isMasteryShadowSkin": true,
+          "isCrossGen": false,
+          "type": "Mastery Shadow",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png",
+            "cardArt": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png",
+            "icon": "app/data/NewGodSkins/Ishtar/Skins/Mastery/T_Ishtar_Icon_Shadow.png"
+          },
+          "cardArt": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png",
+          "skin": "app/data/NewGodSkins/Ishtar/Skins/Mastery/t_GodCard_Ishtar_Mastery.png",
+          "icon": "app/data/NewGodSkins/Ishtar/Skins/Mastery/T_Ishtar_Icon_Shadow.png",
+          "masteryFromDisk": true,
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+          "price": {
+            "diamonds": "900"
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/ishtar/Screenshot (556).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Ishtar",
+            "displayName": "Shadow",
+            "rarity": "Heroic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/ishtar/Screenshot (556).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/ishtar/Screenshot (556).png",
+              "fileName": "Screenshot (556).png",
+              "godName": "Ishtar",
+              "displayName": "Shadow",
+              "target": "skin",
+              "appliedTo": "Shadow",
+              "skinKey": "Shadow",
+              "skinName": "Shadow",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "900",
+                "owned": false
+              },
+              "tier": "Heroic"
+            },
+            "information": [
+              {
+                "key": "ascensionReward",
+                "label": "Ascension Reward",
+                "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+              },
+              {
+                "key": "rare",
+                "label": "Rare",
+                "text": "This is a rare item and may only appear on special occasions or in specific Events."
+              }
+            ]
+          },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
           ]
         },
@@ -117,7 +819,7 @@
           "skinKey": "StrikingArchon",
           "skinName": "Striking Archon",
           "cost": null,
-          "rarity": null,
+          "rarity": "Classic",
           "isBaseSkin": false,
           "isPrism": true,
           "isRecolor": false,
@@ -135,22 +837,307 @@
           },
           "variants": [
             {
-              "name": "Prism 2",
+              "name": "Aqua",
               "cardArt": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinCard_Ishtar_StrikingArchon_Prism02.png",
               "skin": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinCard_Ishtar_StrikingArchon_Prism02.png",
-              "icon": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinPortrait_Ishtar_StrikingArchon_Prism02.png"
+              "icon": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinPortrait_Ishtar_StrikingArchon_Prism02.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/ishtar/Screenshot (553).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Ishtar",
+                "displayName": "Striking Archon - Aqua",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/ishtar/Screenshot (553).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/ishtar/Screenshot (553).png",
+                  "fileName": "Screenshot (553).png",
+                  "godName": "Ishtar",
+                  "displayName": "Striking Archon - Aqua",
+                  "target": "variant",
+                  "appliedTo": "Striking Archon → Prism 2",
+                  "skinKey": "StrikingArchon",
+                  "skinName": "Striking Archon",
+                  "variantName": "Prism 2",
+                  "parentSkinKey": "StrikingArchon",
+                  "parentSkinName": "Striking Archon",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Striking Archon' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "prismNote": true,
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Striking Archon' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
             },
             {
-              "name": "Prism 3",
+              "name": "Venom",
               "cardArt": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinCard_Ishtar_StrikingArchon_Prism03.png",
               "skin": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinCard_Ishtar_StrikingArchon_Prism03.png",
-              "icon": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinPortrait_Ishtar_StrikingArchon_Prism03.png"
+              "icon": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinPortrait_Ishtar_StrikingArchon_Prism03.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/ishtar/Screenshot (554).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Ishtar",
+                "displayName": "Striking Archon - Venom",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/ishtar/Screenshot (554).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/ishtar/Screenshot (554).png",
+                  "fileName": "Screenshot (554).png",
+                  "godName": "Ishtar",
+                  "displayName": "Striking Archon - Venom",
+                  "target": "variant",
+                  "appliedTo": "Striking Archon → Prism 3",
+                  "skinKey": "StrikingArchon",
+                  "skinName": "Striking Archon",
+                  "variantName": "Prism 3",
+                  "parentSkinKey": "StrikingArchon",
+                  "parentSkinName": "Striking Archon",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Striking Archon' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "prismNote": true,
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Striking Archon' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
             },
             {
-              "name": "Prism 4",
+              "name": "Shimmer",
               "cardArt": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinCard_Ishtar_StrikingArchon_Prism04.png",
               "skin": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinCard_Ishtar_StrikingArchon_Prism04.png",
-              "icon": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinPortrait_Ishtar_StrikingArchon_Prism04.png"
+              "icon": "app/data/NewGodSkins/Ishtar/Skins/StrikingArchon/t_SkinPortrait_Ishtar_StrikingArchon_Prism04.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/ishtar/Screenshot (555).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Ishtar",
+                "displayName": "Striking Archon - Shimmer",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/ishtar/Screenshot (555).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/ishtar/Screenshot (555).png",
+                  "fileName": "Screenshot (555).png",
+                  "godName": "Ishtar",
+                  "displayName": "Striking Archon - Shimmer",
+                  "target": "variant",
+                  "appliedTo": "Striking Archon → Prism 4",
+                  "skinKey": "StrikingArchon",
+                  "skinName": "Striking Archon",
+                  "variantName": "Prism 4",
+                  "parentSkinKey": "StrikingArchon",
+                  "parentSkinName": "Striking Archon",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Striking Archon' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "prismNote": true,
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Striking Archon' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/ishtar/Screenshot (552).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Ishtar",
+            "displayName": "Striking Archon",
+            "rarity": "Classic",
+            "gridBadge": {
+              "type": "prism",
+              "rank": null,
+              "label": "prism"
+            },
+            "screenshot": "app/data/God Renders/ishtar/Screenshot (552).png",
+            "extractedAt": "2026-06-22",
+            "buttonText": "GO TO",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/ishtar/Screenshot (552).png",
+              "fileName": "Screenshot (552).png",
+              "godName": "Ishtar",
+              "displayName": "Striking Archon",
+              "target": "skin",
+              "appliedTo": "Striking Archon",
+              "skinKey": "StrikingArchon",
+              "skinName": "Striking Archon",
+              "tier": "Classic"
+            },
+            "information": [
+              {
+                "key": "travelerCollection",
+                "label": "Traveler Collection",
+                "text": "Acquired in the 'Striking Archon' Traveler."
+              },
+              {
+                "key": "prismsAvailable",
+                "label": "Prisms Available",
+                "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+              },
+              {
+                "key": "classic",
+                "label": "Classic",
+                "text": "This item was inspired by a SMITE 1 Skin."
+              }
+            ]
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_CommonTier.png",
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the 'Striking Archon' Traveler."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            },
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was inspired by a SMITE 1 Skin."
             }
           ]
         }

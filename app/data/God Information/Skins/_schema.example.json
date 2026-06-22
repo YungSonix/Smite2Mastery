@@ -45,6 +45,29 @@
             "icon": "app/data/NewGodSkins/Achilles/Skins/SoulPiercer/t_GodPortrait_Achilles_SoulPiercer.png"
           },
           "variants": []
+        },
+        {
+          "skinKey": "Basscannon",
+          "skinName": "Basscannon",
+          "cost": { "currency": "diamonds", "amount": "400" },
+          "rarity": "Classic",
+          "information": [
+            {
+              "key": "standard",
+              "label": "Standard",
+              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+            },
+            {
+              "key": "specialEffects",
+              "label": "Special Effects",
+              "text": "This Skin includes a special Emote prompted by using the Special Emote 2 VGS command in match."
+            },
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was inspired by a SMITE 1 Skin."
+            }
+          ]
         }
       ]
     }

@@ -1,0 +1,171 @@
+{
+  "gods": [
+    {
+      "folder": "aladdin",
+      "godName": "Aladdin",
+      "extractions": [
+        {
+          "fileName": "Screenshot (132).png",
+          "displayName": "Base",
+          "tier": null,
+          "cost": { "currency": "diamonds", "amount": "0", "owned": true },
+          "unlock": { "source": "base", "displayText": "Base god" }
+        },
+        {
+          "fileName": "Screenshot (133).png",
+          "displayName": "Winter's Wish",
+          "matchSkinKey": "WinterWish",
+          "tier": "Heroic",
+          "cost": { "currency": "diamonds", "amount": "1000", "owned": false },
+          "information": [
+            {
+              "key": "yulefest",
+              "label": "YULEFEST",
+              "text": "This item was acquired during The Yulefest 2025 Event."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (134).png",
+          "displayName": "Silent Wish",
+          "matchSkinKey": "SilentWish",
+          "tier": "Epic",
+          "cost": { "currency": "diamonds", "amount": "1200", "owned": false },
+          "information": [
+            {
+              "key": "special",
+              "label": "SPECIAL",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (135).png",
+          "displayName": "Shadow",
+          "matchSkinKey": "Shadow",
+          "tier": "Heroic",
+          "cost": { "currency": "diamonds", "amount": "900", "owned": false },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascension",
+              "label": "ASCENSION REWARD",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "RARE",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (136).png",
+          "displayName": "Onyx",
+          "matchVariantName": "Mastery Onyx",
+          "tier": "Heroic",
+          "cost": { "currency": null, "amount": null, "navigateOnly": true },
+          "buttonText": "GO TO",
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "masteryReward",
+              "label": "MASTERY REWARD",
+              "text": "This Title is acquired from leveling up Aladdin's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "RARE",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (137).png",
+          "displayName": "Opal",
+          "matchVariantName": "Mastery Opal",
+          "tier": "Heroic",
+          "cost": { "currency": null, "amount": null, "navigateOnly": true },
+          "buttonText": "GO TO",
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V",
+            "rarityNote": "Rare"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascension",
+              "label": "ASCENSION REWARD",
+              "text": "This Title is acquired from leveling up Aladdin's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "RARE",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (138).png",
+          "displayName": "Radiant",
+          "matchVariantName": "Mastery Radiant",
+          "tier": "Heroic",
+          "cost": { "currency": null, "amount": null, "navigateOnly": true },
+          "buttonText": "GO TO",
+          "unlock": {
+            "masteryRank": 10,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+            "displayText": "Ascension reward — requires Mastery rank X (Radiant)",
+            "rarityNote": "Rare"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 10,
+            "label": "X",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+          },
+          "information": [
+            {
+              "key": "ascension",
+              "label": "ASCENSION REWARD",
+              "text": "This Title is acquired from leveling up Aladdin's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "RARE",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

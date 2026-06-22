@@ -31,6 +31,8 @@
     "prune-skins-to-disk": "node scripts/prune-builds-skins-to-disk.js --write",
     "sync-skins:full": "node scripts/sync-newgodskins-to-builds.js --write --prune-duplicates && node scripts/prune-builds-skins-to-disk.js --write && node scripts/export-god-skins.js",
     "skins:viewer": "node scripts/skins-viewer-server.js",
+    "extract-god-renders": "node scripts/extract-god-render-metadata.js",
+    "extract-god-renders:write": "node scripts/extract-god-render-metadata.js --write",
     "web-inspect:on": "node scripts/toggle-web-inspect.js on",
     "web-inspect:off": "node scripts/toggle-web-inspect.js off",
     "vault:sync": "node scripts/sync-vault-index.mjs",
@@ -93,6 +95,7 @@
   "devDependencies": {
     "@types/react": "~19.1.10",
     "sharp": "^0.34.5",
+    "tesseract.js": "^7.0.0",
     "typescript": "~5.9.2"
   }
 }

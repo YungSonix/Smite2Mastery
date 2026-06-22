@@ -30,40 +30,390 @@
           },
           "variants": [
             {
-              "name": "Mastery Light",
-              "icon": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Icon_Light.png",
-              "masteryFromDisk": true,
-              "cardArt": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Card_Mastery.png"
-            },
-            {
               "name": "Mastery Onyx",
               "icon": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Icon_Onyx.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/agni/Screenshot (124).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Agni",
+                "displayName": "Onyx",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/agni/Screenshot (124).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/agni/Screenshot (124).png",
+                  "fileName": "Screenshot (124).png",
+                  "godName": "Agni",
+                  "displayName": "Onyx",
+                  "target": "variant",
+                  "appliedTo": "Base Agni → Mastery Onyx",
+                  "skinKey": "Agni",
+                  "skinName": "Base Agni",
+                  "variantName": "Mastery Onyx",
+                  "parentSkinKey": "Agni",
+                  "parentSkinName": "Base Agni",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up Agni's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up Agni's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
               "name": "Mastery Opal",
               "icon": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Icon_Opal.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/agni/Screenshot (125).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Agni",
+                "displayName": "Opal",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/agni/Screenshot (125).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/agni/Screenshot (125).png",
+                  "fileName": "Screenshot (125).png",
+                  "godName": "Agni",
+                  "displayName": "Opal",
+                  "target": "variant",
+                  "appliedTo": "Base Agni → Mastery Opal",
+                  "skinKey": "Agni",
+                  "skinName": "Base Agni",
+                  "variantName": "Mastery Opal",
+                  "parentSkinKey": "Agni",
+                  "parentSkinName": "Base Agni",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up Agni's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V",
+                "rarityNote": "Rare"
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up Agni's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
-              "name": "Mastery Shadow",
-              "icon": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Icon_Shadow.png",
+              "name": "Mastery Radiant",
+              "icon": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Icon_Light.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/agni/Screenshot (126).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Agni",
+                "displayName": "Radiant",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "screenshot": "app/data/God Renders/agni/Screenshot (126).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/agni/Screenshot (126).png",
+                  "fileName": "Screenshot (126).png",
+                  "godName": "Agni",
+                  "displayName": "Radiant",
+                  "target": "variant",
+                  "appliedTo": "Base Agni → Mastery Radiant",
+                  "skinKey": "Agni",
+                  "skinName": "Base Agni",
+                  "variantName": "Mastery Radiant",
+                  "parentSkinKey": "Agni",
+                  "parentSkinName": "Base Agni",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up Agni's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up Agni's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/agni/Screenshot (117).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Agni",
+            "displayName": "Base",
+            "rarity": null,
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/agni/Screenshot (117).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/agni/Screenshot (117).png",
+              "fileName": "Screenshot (117).png",
+              "godName": "Agni",
+              "displayName": "Base",
+              "target": "skin",
+              "appliedTo": "Base Agni",
+              "skinKey": "Agni",
+              "skinName": "Base Agni",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "0",
+                "owned": true
+              }
+            }
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "skinKey": "Shadow",
+          "skinName": "Shadow",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900"
+          },
+          "rarity": "Heroic",
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": true,
+          "isMasteryShadowSkin": true,
+          "isCrossGen": false,
+          "type": "Mastery Shadow",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Card_Mastery.png",
+            "cardArt": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Card_Mastery.png",
+            "icon": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Icon_Shadow.png"
+          },
+          "cardArt": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Card_Mastery.png",
+          "skin": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Card_Mastery.png",
+          "icon": "app/data/NewGodSkins/Agni/Skins/Mastery/T_Agni_Icon_Shadow.png",
+          "masteryFromDisk": true,
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+          "price": {
+            "diamonds": "900"
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/agni/Screenshot (123).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Agni",
+            "displayName": "Shadow",
+            "rarity": "Heroic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/agni/Screenshot (123).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/agni/Screenshot (123).png",
+              "fileName": "Screenshot (123).png",
+              "godName": "Agni",
+              "displayName": "Shadow",
+              "target": "skin",
+              "appliedTo": "Shadow",
+              "skinKey": "Shadow",
+              "skinName": "Shadow",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "900",
+                "owned": false
+              },
+              "tier": "Heroic"
+            },
+            "information": [
+              {
+                "key": "ascensionReward",
+                "label": "Ascension Reward",
+                "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+              },
+              {
+                "key": "rare",
+                "label": "Rare",
+                "text": "This is a rare item and may only appear on special occasions or in specific Events."
+              }
+            ]
+          },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
           ]
         },
         {
           "skinKey": "InfinitedualityCardPrisms1",
-          "skinName": "Infiniteduality Card Prisms 1",
-          "cost": null,
-          "rarity": null,
+          "skinName": "Infinite Duality",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "2400"
+          },
+          "rarity": "Classic",
           "isBaseSkin": false,
           "isPrism": true,
           "isRecolor": false,
@@ -75,34 +425,397 @@
             "icon": "app/data/NewGodSkins/Agni/Skins/InfiniteDuality/t_SkinPortrait_Agni_InfiniteDuality_Base.png"
           },
           "price": {
-            "gems": "",
-            "diamonds": "",
-            "gemsdia": ""
+            "diamonds": "2400"
           },
           "variants": [
             {
-              "name": "Prism 1",
+              "name": "Dark Matter",
               "cardArt": "app/data/NewGodSkins/Agni/Skins/InfiniteDuality/t_SkinCard_Agni_InfiniteDuality_Prism01.png",
               "skin": "app/data/NewGodSkins/Agni/Skins/InfiniteDuality/t_SkinCard_Agni_InfiniteDuality_Prism01.png",
-              "icon": "app/data/NewGodSkins/Agni/Skins/InfiniteDuality/t_SkinPortrait_Agni_InfiniteDuality_Prism01.png"
+              "icon": "app/data/NewGodSkins/Agni/Skins/InfiniteDuality/t_SkinPortrait_Agni_InfiniteDuality_Prism01.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/agni/Screenshot (119).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Agni",
+                "displayName": "Infinite Duality - Dark Matter",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/agni/Screenshot (119).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/agni/Screenshot (119).png",
+                  "fileName": "Screenshot (119).png",
+                  "godName": "Agni",
+                  "displayName": "Infinite Duality - Dark Matter",
+                  "target": "variant",
+                  "appliedTo": "Infinite Duality → Prism 1",
+                  "skinKey": "InfinitedualityCardPrisms1",
+                  "skinName": "Infinite Duality",
+                  "variantName": "Prism 1",
+                  "parentSkinKey": "InfinitedualityCardPrisms1",
+                  "parentSkinName": "Infinite Duality",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Infinite Duality' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Infinite Duality' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
             },
             {
-              "name": "Prism 2",
+              "name": "Azure Rift",
               "cardArt": "app/data/NewGodSkins/Agni/Skins/InfiniteDuality/t_SkinCard_Agni_InfiniteDuality_Prism02.png",
               "skin": "app/data/NewGodSkins/Agni/Skins/InfiniteDuality/t_SkinCard_Agni_InfiniteDuality_Prism02.png",
-              "icon": "app/data/NewGodSkins/Agni/Skins/InfiniteDuality/t_SkinPortrait_Agni_InfiniteDuality_Prism02.png"
+              "icon": "app/data/NewGodSkins/Agni/Skins/InfiniteDuality/t_SkinPortrait_Agni_InfiniteDuality_Prism02.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/agni/Screenshot (120).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Agni",
+                "displayName": "Infinite Duality - Azure Rift",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/agni/Screenshot (120).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/agni/Screenshot (120).png",
+                  "fileName": "Screenshot (120).png",
+                  "godName": "Agni",
+                  "displayName": "Infinite Duality - Azure Rift",
+                  "target": "variant",
+                  "appliedTo": "Infinite Duality → Prism 2",
+                  "skinKey": "InfinitedualityCardPrisms1",
+                  "skinName": "Infinite Duality",
+                  "variantName": "Prism 2",
+                  "parentSkinKey": "InfinitedualityCardPrisms1",
+                  "parentSkinName": "Infinite Duality",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Infinite Duality' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Infinite Duality' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
             },
             {
-              "name": "Prism 3",
+              "name": "Platinum Pulse",
               "cardArt": "app/data/NewGodSkins/Agni/Skins/InfiniteDuality/t_SkinCard_Agni_InfiniteDuality_Prism03.png",
               "skin": "app/data/NewGodSkins/Agni/Skins/InfiniteDuality/t_SkinCard_Agni_InfiniteDuality_Prism03.png",
-              "icon": "app/data/NewGodSkins/Agni/Skins/InfiniteDuality/t_SkinPortrait_Agni_InfiniteDuality_Prism03.png"
+              "icon": "app/data/NewGodSkins/Agni/Skins/InfiniteDuality/t_SkinPortrait_Agni_InfiniteDuality_Prism03.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/agni/Screenshot (121).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Agni",
+                "displayName": "Infinite Duality - Platinum Pulse",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/agni/Screenshot (121).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/agni/Screenshot (121).png",
+                  "fileName": "Screenshot (121).png",
+                  "godName": "Agni",
+                  "displayName": "Infinite Duality - Platinum Pulse",
+                  "target": "variant",
+                  "appliedTo": "Infinite Duality → Prism 3",
+                  "skinKey": "InfinitedualityCardPrisms1",
+                  "skinName": "Infinite Duality",
+                  "variantName": "Prism 3",
+                  "parentSkinKey": "InfinitedualityCardPrisms1",
+                  "parentSkinName": "Infinite Duality",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Infinite Duality' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Infinite Duality' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
             },
             {
-              "name": "Prism 4",
+              "name": "Solar Nebula",
               "cardArt": "app/data/NewGodSkins/Agni/Skins/InfiniteDuality/t_SkinCard_Agni_InfiniteDuality_Prism04.png",
               "skin": "app/data/NewGodSkins/Agni/Skins/InfiniteDuality/t_SkinCard_Agni_InfiniteDuality_Prism04.png",
-              "icon": "app/data/NewGodSkins/Agni/Skins/InfiniteDuality/t_SkinPortrait_Agni_InfiniteDuality_Prism04.png"
+              "icon": "app/data/NewGodSkins/Agni/Skins/InfiniteDuality/t_SkinPortrait_Agni_InfiniteDuality_Prism04.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/agni/Screenshot (122).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Agni",
+                "displayName": "Infinite Duality - Solar Nebula",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/agni/Screenshot (122).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/agni/Screenshot (122).png",
+                  "fileName": "Screenshot (122).png",
+                  "godName": "Agni",
+                  "displayName": "Infinite Duality - Solar Nebula",
+                  "target": "variant",
+                  "appliedTo": "Infinite Duality → Prism 4",
+                  "skinKey": "InfinitedualityCardPrisms1",
+                  "skinName": "Infinite Duality",
+                  "variantName": "Prism 4",
+                  "parentSkinKey": "InfinitedualityCardPrisms1",
+                  "parentSkinName": "Infinite Duality",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Infinite Duality' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Infinite Duality' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/agni/Screenshot (118).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Agni",
+            "displayName": "Infinite Duality",
+            "rarity": "Classic",
+            "gridBadge": {
+              "type": "prism",
+              "rank": null,
+              "label": "prism"
+            },
+            "screenshot": "app/data/God Renders/agni/Screenshot (118).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/agni/Screenshot (118).png",
+              "fileName": "Screenshot (118).png",
+              "godName": "Agni",
+              "displayName": "Infinite Duality",
+              "target": "skin",
+              "appliedTo": "Infiniteduality Card Prisms 1",
+              "skinKey": "InfinitedualityCardPrisms1",
+              "skinName": "Infiniteduality Card Prisms 1",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "2400",
+                "owned": false
+              },
+              "tier": "Classic"
+            },
+            "information": [
+              {
+                "key": "travelerCollection",
+                "label": "Traveler Collection",
+                "text": "Acquired in the 'Infinite Duality' Traveler."
+              },
+              {
+                "key": "prismsAvailable",
+                "label": "Prisms Available",
+                "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+              },
+              {
+                "key": "classic",
+                "label": "Classic",
+                "text": "This item was inspired by a SMITE 1 Skin."
+              }
+            ]
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_CommonTier.png",
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the 'Infinite Duality' Traveler."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            },
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was inspired by a SMITE 1 Skin."
             }
           ]
         }
@@ -137,63 +850,479 @@
           },
           "variants": [
             {
-              "name": "Mastery Light",
-              "icon": "app/data/NewGodSkins/Ganesha/Skins/Mastery/T_Ganesha_Icon_Light.png",
-              "masteryFromDisk": true,
-              "cardArt": "app/data/NewGodSkins/Ganesha/Skins/Mastery/t_Ganesha_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Ganesha/Skins/Mastery/t_Ganesha_Card_Mastery.png"
-            },
-            {
               "name": "Mastery Onyx",
               "icon": "app/data/NewGodSkins/Ganesha/Skins/Mastery/T_Ganesha_Icon_Onyx.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Ganesha/Skins/Mastery/t_Ganesha_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Ganesha/Skins/Mastery/t_Ganesha_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Ganesha/Skins/Mastery/t_Ganesha_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              },
+              "loadout": {
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (463).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Ganesha",
+                "displayName": "Onyx",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (463).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/ganesha/Screenshot (463).png",
+                  "fileName": "Screenshot (463).png",
+                  "godName": "Ganesha",
+                  "displayName": "Onyx",
+                  "target": "variant",
+                  "appliedTo": "Base Ganesha → Mastery Onyx",
+                  "skinKey": "Ganesha",
+                  "skinName": "Base Ganesha",
+                  "variantName": "Mastery Onyx",
+                  "parentSkinKey": "Ganesha",
+                  "parentSkinName": "Base Ganesha",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up Ganesha's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up Ganesha's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
               "name": "Mastery Opal",
               "icon": "app/data/NewGodSkins/Ganesha/Skins/Mastery/T_Ganesha_Icon_Opal.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Ganesha/Skins/Mastery/t_Ganesha_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Ganesha/Skins/Mastery/t_Ganesha_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Ganesha/Skins/Mastery/t_Ganesha_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (464).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Ganesha",
+                "displayName": "Opal",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (464).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/ganesha/Screenshot (464).png",
+                  "fileName": "Screenshot (464).png",
+                  "godName": "Ganesha",
+                  "displayName": "Opal",
+                  "target": "variant",
+                  "appliedTo": "Base Ganesha → Mastery Opal",
+                  "skinKey": "Ganesha",
+                  "skinName": "Base Ganesha",
+                  "variantName": "Mastery Opal",
+                  "parentSkinKey": "Ganesha",
+                  "parentSkinName": "Base Ganesha",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up Ganesha's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V",
+                "rarityNote": "Rare"
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up Ganesha's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
-              "name": "Mastery Shadow",
-              "icon": "app/data/NewGodSkins/Ganesha/Skins/Mastery/T_Ganesha_Icon_Shadow.png",
+              "name": "Mastery Radiant",
+              "icon": "app/data/NewGodSkins/Ganesha/Skins/Mastery/T_Ganesha_Icon_Light.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Ganesha/Skins/Mastery/t_Ganesha_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Ganesha/Skins/Mastery/t_Ganesha_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Ganesha/Skins/Mastery/t_Ganesha_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (465).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Ganesha",
+                "displayName": "Radiant",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (465).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/ganesha/Screenshot (465).png",
+                  "fileName": "Screenshot (465).png",
+                  "godName": "Ganesha",
+                  "displayName": "Radiant",
+                  "target": "variant",
+                  "appliedTo": "Base Ganesha → Mastery Radiant",
+                  "skinKey": "Ganesha",
+                  "skinName": "Base Ganesha",
+                  "variantName": "Mastery Radiant",
+                  "parentSkinKey": "Ganesha",
+                  "parentSkinName": "Base Ganesha",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up Ganesha's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up Ganesha's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/ganesha/Screenshot (451).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Ganesha",
+            "displayName": "Base",
+            "rarity": null,
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/ganesha/Screenshot (451).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/ganesha/Screenshot (451).png",
+              "fileName": "Screenshot (451).png",
+              "godName": "Ganesha",
+              "displayName": "Base",
+              "target": "skin",
+              "appliedTo": "Base Ganesha",
+              "skinKey": "Ganesha",
+              "skinName": "Base Ganesha",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "0",
+                "owned": true
+              }
+            }
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "skinKey": "Shadow",
+          "skinName": "Shadow",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900"
+          },
+          "rarity": "Heroic",
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": true,
+          "isMasteryShadowSkin": true,
+          "isCrossGen": false,
+          "type": "Mastery Shadow",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Ganesha/Skins/Mastery/t_Ganesha_Card_Mastery.png",
+            "cardArt": "app/data/NewGodSkins/Ganesha/Skins/Mastery/t_Ganesha_Card_Mastery.png",
+            "icon": "app/data/NewGodSkins/Ganesha/Skins/Mastery/T_Ganesha_Icon_Shadow.png"
+          },
+          "cardArt": "app/data/NewGodSkins/Ganesha/Skins/Mastery/t_Ganesha_Card_Mastery.png",
+          "skin": "app/data/NewGodSkins/Ganesha/Skins/Mastery/t_Ganesha_Card_Mastery.png",
+          "icon": "app/data/NewGodSkins/Ganesha/Skins/Mastery/T_Ganesha_Icon_Shadow.png",
+          "masteryFromDisk": true,
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+          "price": {
+            "diamonds": "900"
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/ganesha/Screenshot (462).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Ganesha",
+            "displayName": "Shadow",
+            "rarity": "Heroic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/ganesha/Screenshot (462).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/ganesha/Screenshot (462).png",
+              "fileName": "Screenshot (462).png",
+              "godName": "Ganesha",
+              "displayName": "Shadow",
+              "target": "skin",
+              "appliedTo": "Shadow",
+              "skinKey": "Shadow",
+              "skinName": "Shadow",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "900",
+                "owned": false
+              },
+              "tier": "Heroic"
+            },
+            "information": [
+              {
+                "key": "ascensionReward",
+                "label": "Ascension Reward",
+                "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+              },
+              {
+                "key": "rare",
+                "label": "Rare",
+                "text": "This is a rare item and may only appear on special occasions or in specific Events."
+              }
+            ]
+          },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
           ]
         },
         {
           "skinKey": "Light",
-          "skinName": "Light",
-          "cost": null,
-          "rarity": null,
+          "skinName": "Guiding Light",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "1200"
+          },
+          "rarity": "Epic",
           "isBaseSkin": false,
           "isPrism": false,
           "isRecolor": false,
           "isMastery": false,
-          "isCrossGen": false,
+          "isCrossGen": true,
           "assets": {
             "skin": "app/data/NewGodSkins/Ganesha/Skins/Light/t_SkinCard_Ganesha_Light.png",
             "cardArt": "app/data/NewGodSkins/Ganesha/Skins/Light/t_SkinCard_Ganesha_Light.png",
             "icon": "app/data/NewGodSkins/Ganesha/Skins/Light/t_SkinIcon_Ganesha_Light.png"
           },
           "price": {
-            "gems": "",
-            "diamonds": "",
-            "gemsdia": ""
-          }
+            "diamonds": "1200"
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/ganesha/Screenshot (461).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Ganesha",
+            "displayName": "Guiding Light",
+            "rarity": "Epic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/ganesha/Screenshot (461).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/ganesha/Screenshot (461).png",
+              "fileName": "Screenshot (461).png",
+              "godName": "Ganesha",
+              "displayName": "Guiding Light",
+              "target": "skin",
+              "appliedTo": "Light",
+              "skinKey": "Light",
+              "skinName": "Light",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "1200",
+                "owned": false
+              },
+              "tier": "Epic"
+            },
+            "information": [
+              {
+                "key": "crossGen",
+                "label": "Cross-Gen",
+                "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
+              },
+              {
+                "key": "standard",
+                "label": "Standard",
+                "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+              }
+            ]
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — may appear in chests or events"
+          },
+          "information": [
+            {
+              "key": "crossGen",
+              "label": "Cross-Gen",
+              "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
+            },
+            {
+              "key": "standard",
+              "label": "Standard",
+              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+            }
+          ]
         },
         {
-          "skinKey": "Plushie012",
-          "skinName": "Plushie 012",
-          "cost": null,
-          "rarity": null,
+          "skinKey": "Plushie",
+          "skinName": "Plushie",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "2400"
+          },
+          "rarity": "Classic",
           "isBaseSkin": false,
-          "isPrism": false,
+          "isPrism": true,
           "isRecolor": false,
           "isMastery": false,
           "isCrossGen": false,
@@ -202,11 +1331,686 @@
             "cardArt": "app/data/NewGodSkins/Ganesha/Skins/Plushie/t_SkinCard_Ganesha_Plushie.png",
             "icon": "app/data/NewGodSkins/Ganesha/Skins/Plushie/t_SkinPortrait_Ganesha_Plushie.png"
           },
+          "variants": [
+            {
+              "name": "Cursed Doll",
+              "loadout": {
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (453).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Ganesha",
+                "displayName": "Plushie - Cursed Doll",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (453).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/ganesha/Screenshot (453).png",
+                  "fileName": "Screenshot (453).png",
+                  "godName": "Ganesha",
+                  "displayName": "Plushie - Cursed Doll",
+                  "target": "variant",
+                  "appliedTo": "Plushie → Prism 1",
+                  "skinKey": "Plushie",
+                  "skinName": "Plushie",
+                  "variantName": "Prism 1",
+                  "parentSkinKey": "Plushie",
+                  "parentSkinName": "Plushie",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Plushie' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Plushie' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
+            },
+            {
+              "name": "Yellow",
+              "loadout": {
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (454).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Ganesha",
+                "displayName": "Plushie - Yellow",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (454).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/ganesha/Screenshot (454).png",
+                  "fileName": "Screenshot (454).png",
+                  "godName": "Ganesha",
+                  "displayName": "Plushie - Yellow",
+                  "target": "variant",
+                  "appliedTo": "Plushie → Prism 2",
+                  "skinKey": "Plushie",
+                  "skinName": "Plushie",
+                  "variantName": "Prism 2",
+                  "parentSkinKey": "Plushie",
+                  "parentSkinName": "Plushie",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Plushie' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Plushie' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
+            },
+            {
+              "name": "Red",
+              "loadout": {
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (455).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Ganesha",
+                "displayName": "Plushie - Red",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (455).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/ganesha/Screenshot (455).png",
+                  "fileName": "Screenshot (455).png",
+                  "godName": "Ganesha",
+                  "displayName": "Plushie - Red",
+                  "target": "variant",
+                  "appliedTo": "Plushie → Prism 3",
+                  "skinKey": "Plushie",
+                  "skinName": "Plushie",
+                  "variantName": "Prism 3",
+                  "parentSkinKey": "Plushie",
+                  "parentSkinName": "Plushie",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Plushie' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Plushie' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
+            },
+            {
+              "name": "Green",
+              "loadout": {
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (456).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Ganesha",
+                "displayName": "Plushie - Green",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (456).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/ganesha/Screenshot (456).png",
+                  "fileName": "Screenshot (456).png",
+                  "godName": "Ganesha",
+                  "displayName": "Plushie - Green",
+                  "target": "variant",
+                  "appliedTo": "Plushie → Prism 4",
+                  "skinKey": "Plushie",
+                  "skinName": "Plushie",
+                  "variantName": "Prism 4",
+                  "parentSkinKey": "Plushie",
+                  "parentSkinName": "Plushie",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Plushie' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Plushie' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
+            },
+            {
+              "name": "Orange",
+              "loadout": {
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (457).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Ganesha",
+                "displayName": "Plushie - Orange",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (457).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/ganesha/Screenshot (457).png",
+                  "fileName": "Screenshot (457).png",
+                  "godName": "Ganesha",
+                  "displayName": "Plushie - Orange",
+                  "target": "variant",
+                  "appliedTo": "Plushie → Prism 5",
+                  "skinKey": "Plushie",
+                  "skinName": "Plushie",
+                  "variantName": "Prism 5",
+                  "parentSkinKey": "Plushie",
+                  "parentSkinName": "Plushie",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Plushie' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Plushie' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
+            },
+            {
+              "name": "Violet",
+              "loadout": {
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (458).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Ganesha",
+                "displayName": "Plushie - Violet",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (458).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/ganesha/Screenshot (458).png",
+                  "fileName": "Screenshot (458).png",
+                  "godName": "Ganesha",
+                  "displayName": "Plushie - Violet",
+                  "target": "variant",
+                  "appliedTo": "Plushie → Prism 6",
+                  "skinKey": "Plushie",
+                  "skinName": "Plushie",
+                  "variantName": "Prism 6",
+                  "parentSkinKey": "Plushie",
+                  "parentSkinName": "Plushie",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Plushie' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Plushie' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
+            },
+            {
+              "name": "Indigo",
+              "loadout": {
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (459).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Ganesha",
+                "displayName": "Plushie - Indigo",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (459).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/ganesha/Screenshot (459).png",
+                  "fileName": "Screenshot (459).png",
+                  "godName": "Ganesha",
+                  "displayName": "Plushie - Indigo",
+                  "target": "variant",
+                  "appliedTo": "Plushie → Prism 7",
+                  "skinKey": "Plushie",
+                  "skinName": "Plushie",
+                  "variantName": "Prism 7",
+                  "parentSkinKey": "Plushie",
+                  "parentSkinName": "Plushie",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Plushie' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Plushie' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
+            },
+            {
+              "name": "Monochrome",
+              "loadout": {
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (460).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Ganesha",
+                "displayName": "Plushie - Monochrome",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/ganesha/Screenshot (460).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/ganesha/Screenshot (460).png",
+                  "fileName": "Screenshot (460).png",
+                  "godName": "Ganesha",
+                  "displayName": "Plushie - Monochrome",
+                  "target": "variant",
+                  "appliedTo": "Plushie → Prism 8",
+                  "skinKey": "Plushie",
+                  "skinName": "Plushie",
+                  "variantName": "Prism 8",
+                  "parentSkinKey": "Plushie",
+                  "parentSkinName": "Plushie",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Plushie' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Plushie' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/ganesha/Screenshot (452).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Ganesha",
+            "displayName": "Plushie",
+            "rarity": "Classic",
+            "gridBadge": {
+              "type": "prism",
+              "rank": null,
+              "label": "prism"
+            },
+            "screenshot": "app/data/God Renders/ganesha/Screenshot (452).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/ganesha/Screenshot (452).png",
+              "fileName": "Screenshot (452).png",
+              "godName": "Ganesha",
+              "displayName": "Plushie",
+              "target": "skin",
+              "appliedTo": "Plushie",
+              "skinKey": "Plushie",
+              "skinName": "Plushie",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "2400",
+                "owned": false
+              },
+              "tier": "Classic"
+            },
+            "information": [
+              {
+                "key": "travelerCollection",
+                "label": "Traveler Collection",
+                "text": "Acquired in the 'Plushie' Traveler."
+              },
+              {
+                "key": "prismsAvailable",
+                "label": "Prisms Available",
+                "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+              },
+              {
+                "key": "classic",
+                "label": "Classic",
+                "text": "This item was inspired by a SMITE 1 Skin."
+              }
+            ]
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_CommonTier.png",
           "price": {
-            "gems": "",
-            "diamonds": "",
-            "gemsdia": ""
-          }
+            "diamonds": "2400"
+          },
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the 'Plushie' Traveler."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            },
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was inspired by a SMITE 1 Skin."
+            }
+          ]
         }
       ]
     },
@@ -239,61 +2043,478 @@
           },
           "variants": [
             {
-              "name": "Mastery Light",
-              "icon": "app/data/NewGodSkins/Kali/Skins/Mastery/t_SkinPortrait_Kali_Light.png",
-              "masteryFromDisk": true,
-              "cardArt": "app/data/NewGodSkins/Kali/Skins/Mastery/t_Kali_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Kali/Skins/Mastery/t_Kali_Card_Mastery.png"
-            },
-            {
               "name": "Mastery Onyx",
               "icon": "app/data/NewGodSkins/Kali/Skins/Mastery/t_SkinPortrait_Kali_Onyx.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Kali/Skins/Mastery/t_Kali_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Kali/Skins/Mastery/t_Kali_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Kali/Skins/Mastery/t_Kali_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "unlock": {
+                "rarityNote": "Rare",
+                "source": "ascension",
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              },
+              "loadout": {
+                "screenshot": "app/data/God Renders/kali/Screenshot (611).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Kali",
+                "displayName": "Onyx",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/kali/Screenshot (611).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/kali/Screenshot (611).png",
+                  "fileName": "Screenshot (611).png",
+                  "godName": "Kali",
+                  "displayName": "Onyx",
+                  "target": "variant",
+                  "appliedTo": "Base Kali → Mastery Onyx",
+                  "skinKey": "Kali",
+                  "skinName": "Base Kali",
+                  "variantName": "Mastery Onyx",
+                  "parentSkinKey": "Kali",
+                  "parentSkinName": "Base Kali",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up Kali's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up Kali's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
               "name": "Mastery Opal",
               "icon": "app/data/NewGodSkins/Kali/Skins/Mastery/t_SkinPortrait_Kali_Opal.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Kali/Skins/Mastery/t_Kali_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Kali/Skins/Mastery/t_Kali_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Kali/Skins/Mastery/t_Kali_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/kali/Screenshot (612).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Kali",
+                "displayName": "Opal",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/kali/Screenshot (612).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/kali/Screenshot (612).png",
+                  "fileName": "Screenshot (612).png",
+                  "godName": "Kali",
+                  "displayName": "Opal",
+                  "target": "variant",
+                  "appliedTo": "Base Kali → Mastery Opal",
+                  "skinKey": "Kali",
+                  "skinName": "Base Kali",
+                  "variantName": "Mastery Opal",
+                  "parentSkinKey": "Kali",
+                  "parentSkinName": "Base Kali",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up Kali's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V",
+                "rarityNote": "Rare"
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up Kali's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
-              "name": "Mastery Shadow",
-              "icon": "app/data/NewGodSkins/Kali/Skins/Mastery/t_SkinPortrait_Kali_Shadow.png",
+              "name": "Mastery Radiant",
+              "icon": "app/data/NewGodSkins/Kali/Skins/Mastery/t_SkinPortrait_Kali_Light.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Kali/Skins/Mastery/t_Kali_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Kali/Skins/Mastery/t_Kali_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Kali/Skins/Mastery/t_Kali_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/kali/Screenshot (613).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Kali",
+                "displayName": "Radiant",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "screenshot": "app/data/God Renders/kali/Screenshot (613).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/kali/Screenshot (613).png",
+                  "fileName": "Screenshot (613).png",
+                  "godName": "Kali",
+                  "displayName": "Radiant",
+                  "target": "variant",
+                  "appliedTo": "Base Kali → Mastery Radiant",
+                  "skinKey": "Kali",
+                  "skinName": "Base Kali",
+                  "variantName": "Mastery Radiant",
+                  "parentSkinKey": "Kali",
+                  "parentSkinName": "Base Kali",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up Kali's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up Kali's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/kali/Screenshot (604).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Kali",
+            "displayName": "Base",
+            "rarity": null,
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/kali/Screenshot (604).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/kali/Screenshot (604).png",
+              "fileName": "Screenshot (604).png",
+              "godName": "Kali",
+              "displayName": "Base",
+              "target": "skin",
+              "appliedTo": "Base Kali",
+              "skinKey": "Kali",
+              "skinName": "Base Kali",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "0",
+                "owned": true
+              }
+            }
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "skinKey": "Shadow",
+          "skinName": "Shadow",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900"
+          },
+          "rarity": "Heroic",
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": true,
+          "isMasteryShadowSkin": true,
+          "isCrossGen": false,
+          "type": "Mastery Shadow",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Kali/Skins/Mastery/t_Kali_Card_Mastery.png",
+            "cardArt": "app/data/NewGodSkins/Kali/Skins/Mastery/t_Kali_Card_Mastery.png",
+            "icon": "app/data/NewGodSkins/Kali/Skins/Mastery/t_SkinPortrait_Kali_Shadow.png"
+          },
+          "cardArt": "app/data/NewGodSkins/Kali/Skins/Mastery/t_Kali_Card_Mastery.png",
+          "skin": "app/data/NewGodSkins/Kali/Skins/Mastery/t_Kali_Card_Mastery.png",
+          "icon": "app/data/NewGodSkins/Kali/Skins/Mastery/t_SkinPortrait_Kali_Shadow.png",
+          "masteryFromDisk": true,
+          "unlock": {
+            "rarityNote": "Rare",
+            "source": "ascension",
+            "displayText": "Ascension Pass — rare skin (may appear in events)",
+            "requiresAscensionPass": true
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+          "price": {
+            "diamonds": "900"
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/kali/Screenshot (610).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Kali",
+            "displayName": "Shadow",
+            "rarity": "Heroic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/kali/Screenshot (610).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/kali/Screenshot (610).png",
+              "fileName": "Screenshot (610).png",
+              "godName": "Kali",
+              "displayName": "Shadow",
+              "target": "skin",
+              "appliedTo": "Shadow",
+              "skinKey": "Shadow",
+              "skinName": "Shadow",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "900",
+                "owned": false
+              },
+              "tier": "Heroic"
+            },
+            "information": [
+              {
+                "key": "ascensionReward",
+                "label": "Ascension Reward",
+                "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+              },
+              {
+                "key": "rare",
+                "label": "Rare",
+                "text": "This is a rare item and may only appear on special occasions or in specific Events."
+              }
+            ]
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
           ]
         },
         {
           "skinKey": "CeramicCircuit",
           "skinName": "Ceramic Circuit",
-          "cost": null,
-          "rarity": null,
+          "cost": {
+            "currency": "diamonds",
+            "amount": "1200"
+          },
+          "rarity": "Epic",
           "isBaseSkin": false,
           "isPrism": false,
           "isRecolor": false,
           "isMastery": false,
-          "isCrossGen": false,
+          "isCrossGen": true,
           "assets": {
             "skin": "app/data/NewGodSkins/Kali/Skins/CeramicCircuit/t_GodCard_Kali_CeramicCircuit.png",
             "cardArt": "app/data/NewGodSkins/Kali/Skins/CeramicCircuit/t_GodCard_Kali_CeramicCircuit.png",
             "icon": "app/data/NewGodSkins/Kali/Skins/CeramicCircuit/t_GodPortrait_Kali_CeramicCircuit.png"
           },
           "price": {
-            "gems": "",
-            "diamonds": "",
-            "gemsdia": ""
-          }
+            "diamonds": "1200"
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/kali/Screenshot (609).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Kali",
+            "displayName": "Ceramic Circuit",
+            "rarity": "Epic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/kali/Screenshot (609).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/kali/Screenshot (609).png",
+              "fileName": "Screenshot (609).png",
+              "godName": "Kali",
+              "displayName": "Ceramic Circuit",
+              "target": "skin",
+              "appliedTo": "Ceramic Circuit",
+              "skinKey": "CeramicCircuit",
+              "skinName": "Ceramic Circuit",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "1200",
+                "owned": false
+              },
+              "tier": "Epic"
+            },
+            "information": [
+              {
+                "key": "crossGen",
+                "label": "Cross-Gen",
+                "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
+              },
+              {
+                "key": "standard",
+                "label": "Standard",
+                "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+              }
+            ]
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — may appear in chests or events"
+          },
+          "information": [
+            {
+              "key": "crossGen",
+              "label": "Cross-Gen",
+              "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
+            },
+            {
+              "key": "standard",
+              "label": "Standard",
+              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+            }
+          ]
         },
         {
           "skinKey": "TrophyHunter009",
-          "skinName": "Trophy Hunter 009",
-          "cost": null,
-          "rarity": null,
+          "skinName": "Trophy Hunter",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "2400"
+          },
+          "rarity": "Classic",
           "isBaseSkin": false,
           "isPrism": true,
           "isRecolor": false,
@@ -305,28 +2526,312 @@
             "icon": "app/data/NewGodSkins/Kali/Skins/TrophyHunter/t_SkinPortrait_Kali_TrophyHunter.png"
           },
           "price": {
-            "gems": "",
-            "diamonds": "",
-            "gemsdia": ""
+            "diamonds": "2400"
           },
           "variants": [
             {
-              "name": "Prism B",
+              "name": "Golden Idol",
               "cardArt": "app/data/NewGodSkins/Kali/Skins/TrophyHunter/Prisms/t_SkinCard_Kali_TrophyHunter_Prism_B.png",
               "skin": "app/data/NewGodSkins/Kali/Skins/TrophyHunter/Prisms/t_SkinCard_Kali_TrophyHunter_Prism_B.png",
-              "icon": "app/data/NewGodSkins/Kali/Skins/TrophyHunter/Prisms/t_SkinPortrait_Kali_TrophyHunter_Prism_B.png"
+              "icon": "app/data/NewGodSkins/Kali/Skins/TrophyHunter/Prisms/t_SkinPortrait_Kali_TrophyHunter_Prism_B.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/kali/Screenshot (606).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Kali",
+                "displayName": "Trophy Hunter - Golden Idol",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/kali/Screenshot (606).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/kali/Screenshot (606).png",
+                  "fileName": "Screenshot (606).png",
+                  "godName": "Kali",
+                  "displayName": "Trophy Hunter - Golden Idol",
+                  "target": "variant",
+                  "appliedTo": "Trophy Hunter → Prism B",
+                  "skinKey": "TrophyHunter009",
+                  "skinName": "Trophy Hunter",
+                  "variantName": "Prism B",
+                  "parentSkinKey": "TrophyHunter009",
+                  "parentSkinName": "Trophy Hunter",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Trophy Hunter' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Trophy Hunter' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
             },
             {
-              "name": "Prism C",
+              "name": "Blood Huntress",
               "cardArt": "app/data/NewGodSkins/Kali/Skins/TrophyHunter/Prisms/t_SkinCard_Kali_TrophyHunter_Prism_C.png",
               "skin": "app/data/NewGodSkins/Kali/Skins/TrophyHunter/Prisms/t_SkinCard_Kali_TrophyHunter_Prism_C.png",
-              "icon": "app/data/NewGodSkins/Kali/Skins/TrophyHunter/Prisms/t_SkinPortrait_Kali_TrophyHunter_Prism_C.png"
+              "icon": "app/data/NewGodSkins/Kali/Skins/TrophyHunter/Prisms/t_SkinPortrait_Kali_TrophyHunter_Prism_C.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/kali/Screenshot (607).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Kali",
+                "displayName": "Trophy Hunter - Blood Huntress",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/kali/Screenshot (607).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/kali/Screenshot (607).png",
+                  "fileName": "Screenshot (607).png",
+                  "godName": "Kali",
+                  "displayName": "Trophy Hunter - Blood Huntress",
+                  "target": "variant",
+                  "appliedTo": "Trophy Hunter → Prism C",
+                  "skinKey": "TrophyHunter009",
+                  "skinName": "Trophy Hunter",
+                  "variantName": "Prism C",
+                  "parentSkinKey": "TrophyHunter009",
+                  "parentSkinName": "Trophy Hunter",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Trophy Hunter' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Trophy Hunter' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
             },
             {
-              "name": "Prism D",
+              "name": "Astral Assassin",
               "cardArt": "app/data/NewGodSkins/Kali/Skins/TrophyHunter/Prisms/t_SkinCard_Kali_TrophyHunter_Prism_D.png",
               "skin": "app/data/NewGodSkins/Kali/Skins/TrophyHunter/Prisms/t_SkinCard_Kali_TrophyHunter_Prism_D.png",
-              "icon": "app/data/NewGodSkins/Kali/Skins/TrophyHunter/Prisms/t_SkinPortrait_Kali_TrophyHunter_Prism_D.png"
+              "icon": "app/data/NewGodSkins/Kali/Skins/TrophyHunter/Prisms/t_SkinPortrait_Kali_TrophyHunter_Prism_D.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/kali/Screenshot (608).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Kali",
+                "displayName": "Trophy Hunter - Astral Assassin",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/kali/Screenshot (608).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/kali/Screenshot (608).png",
+                  "fileName": "Screenshot (608).png",
+                  "godName": "Kali",
+                  "displayName": "Trophy Hunter - Astral Assassin",
+                  "target": "variant",
+                  "appliedTo": "Trophy Hunter → Prism D",
+                  "skinKey": "TrophyHunter009",
+                  "skinName": "Trophy Hunter",
+                  "variantName": "Prism D",
+                  "parentSkinKey": "TrophyHunter009",
+                  "parentSkinName": "Trophy Hunter",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Trophy Hunter' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Trophy Hunter' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/kali/Screenshot (605).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Kali",
+            "displayName": "Trophy Hunter",
+            "rarity": "Classic",
+            "gridBadge": {
+              "type": "prism",
+              "rank": null,
+              "label": "prism"
+            },
+            "screenshot": "app/data/God Renders/kali/Screenshot (605).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/kali/Screenshot (605).png",
+              "fileName": "Screenshot (605).png",
+              "godName": "Kali",
+              "displayName": "Trophy Hunter",
+              "target": "skin",
+              "appliedTo": "Trophy Hunter 009",
+              "skinKey": "TrophyHunter009",
+              "skinName": "Trophy Hunter 009",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "2400",
+                "owned": false
+              },
+              "tier": "Classic"
+            },
+            "information": [
+              {
+                "key": "travelerCollection",
+                "label": "Traveler Collection",
+                "text": "Acquired in the 'Trophy Hunter' Traveler."
+              },
+              {
+                "key": "prismsAvailable",
+                "label": "Prisms Available",
+                "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+              },
+              {
+                "key": "classic",
+                "label": "Classic",
+                "text": "This item was inspired by a SMITE 1 Skin."
+              }
+            ]
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_CommonTier.png",
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the 'Trophy Hunter' Traveler."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            },
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was inspired by a SMITE 1 Skin."
             }
           ]
         }
@@ -361,40 +2866,390 @@
           },
           "variants": [
             {
-              "name": "Mastery Light",
-              "icon": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Icon_Light.png",
-              "masteryFromDisk": true,
-              "cardArt": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Card_Mastery.png"
-            },
-            {
               "name": "Mastery Onyx",
               "icon": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Icon_Onyx.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/rama/Screenshot (844).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Rama",
+                "displayName": "Onyx",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/rama/Screenshot (844).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/rama/Screenshot (844).png",
+                  "fileName": "Screenshot (844).png",
+                  "godName": "Rama",
+                  "displayName": "Onyx",
+                  "target": "variant",
+                  "appliedTo": "Base Rama → Mastery Onyx",
+                  "skinKey": "Rama",
+                  "skinName": "Base Rama",
+                  "variantName": "Mastery Onyx",
+                  "parentSkinKey": "Rama",
+                  "parentSkinName": "Base Rama",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up Rama's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up Rama's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
               "name": "Mastery Opal",
               "icon": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Icon_Opal.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/rama/Screenshot (845).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Rama",
+                "displayName": "Opal",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/rama/Screenshot (845).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/rama/Screenshot (845).png",
+                  "fileName": "Screenshot (845).png",
+                  "godName": "Rama",
+                  "displayName": "Opal",
+                  "target": "variant",
+                  "appliedTo": "Base Rama → Mastery Opal",
+                  "skinKey": "Rama",
+                  "skinName": "Base Rama",
+                  "variantName": "Mastery Opal",
+                  "parentSkinKey": "Rama",
+                  "parentSkinName": "Base Rama",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up Rama's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V",
+                "rarityNote": "Rare"
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up Rama's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
-              "name": "Mastery Shadow",
-              "icon": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Icon_Shadow.png",
+              "name": "Mastery Radiant",
+              "icon": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Icon_Light.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/rama/Screenshot (846).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Rama",
+                "displayName": "Radiant",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "screenshot": "app/data/God Renders/rama/Screenshot (846).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/rama/Screenshot (846).png",
+                  "fileName": "Screenshot (846).png",
+                  "godName": "Rama",
+                  "displayName": "Radiant",
+                  "target": "variant",
+                  "appliedTo": "Base Rama → Mastery Radiant",
+                  "skinKey": "Rama",
+                  "skinName": "Base Rama",
+                  "variantName": "Mastery Radiant",
+                  "parentSkinKey": "Rama",
+                  "parentSkinName": "Base Rama",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up Rama's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up Rama's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/rama/Screenshot (837).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Rama",
+            "displayName": "Base",
+            "rarity": null,
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/rama/Screenshot (837).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/rama/Screenshot (837).png",
+              "fileName": "Screenshot (837).png",
+              "godName": "Rama",
+              "displayName": "Base",
+              "target": "skin",
+              "appliedTo": "Base Rama",
+              "skinKey": "Rama",
+              "skinName": "Base Rama",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "0",
+                "owned": true
+              }
+            }
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "skinKey": "Shadow",
+          "skinName": "Shadow",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900"
+          },
+          "rarity": "Heroic",
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": true,
+          "isMasteryShadowSkin": true,
+          "isCrossGen": false,
+          "type": "Mastery Shadow",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Card_Mastery.png",
+            "cardArt": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Card_Mastery.png",
+            "icon": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Icon_Shadow.png"
+          },
+          "cardArt": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Card_Mastery.png",
+          "skin": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Card_Mastery.png",
+          "icon": "app/data/NewGodSkins/Rama/Skins/Mastery/T_Rama_Icon_Shadow.png",
+          "masteryFromDisk": true,
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+          "price": {
+            "diamonds": "900"
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/rama/Screenshot (843).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Rama",
+            "displayName": "Shadow",
+            "rarity": "Heroic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/rama/Screenshot (843).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/rama/Screenshot (843).png",
+              "fileName": "Screenshot (843).png",
+              "godName": "Rama",
+              "displayName": "Shadow",
+              "target": "skin",
+              "appliedTo": "Shadow",
+              "skinKey": "Shadow",
+              "skinName": "Shadow",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "900",
+                "owned": false
+              },
+              "tier": "Heroic"
+            },
+            "information": [
+              {
+                "key": "ascensionReward",
+                "label": "Ascension Reward",
+                "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+              },
+              {
+                "key": "rare",
+                "label": "Rare",
+                "text": "This is a rare item and may only appear on special occasions or in specific Events."
+              }
+            ]
+          },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
           ]
         },
         {
           "skinKey": "SacredArrow",
           "skinName": "Sacred Arrow",
-          "cost": null,
-          "rarity": null,
+          "cost": {
+            "currency": "diamonds",
+            "amount": "2400"
+          },
+          "rarity": "Classic",
           "isBaseSkin": false,
           "isPrism": true,
           "isRecolor": false,
@@ -406,34 +3261,397 @@
             "icon": "app/data/NewGodSkins/Rama/Skins/SacredArrow/t_GodPortrait_Rama_SacredArrow.png"
           },
           "price": {
-            "gems": "",
-            "diamonds": "",
-            "gemsdia": ""
+            "diamonds": "2400"
           },
           "variants": [
             {
-              "name": "Prism 1",
+              "name": "Cursed Wraith",
               "cardArt": "app/data/NewGodSkins/Rama/Skins/SacredArrow/t_SkinCard_Rama_SacredArrow_Prism01.png",
               "skin": "app/data/NewGodSkins/Rama/Skins/SacredArrow/t_SkinCard_Rama_SacredArrow_Prism01.png",
-              "icon": "app/data/NewGodSkins/Rama/Skins/SacredArrow/t_GodPortrait_Rama_SacredArrow_Prism01.png"
+              "icon": "app/data/NewGodSkins/Rama/Skins/SacredArrow/t_GodPortrait_Rama_SacredArrow_Prism01.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/rama/Screenshot (839).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Rama",
+                "displayName": "Sacred Arrow - Cursed Wraith",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/rama/Screenshot (839).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/rama/Screenshot (839).png",
+                  "fileName": "Screenshot (839).png",
+                  "godName": "Rama",
+                  "displayName": "Sacred Arrow - Cursed Wraith",
+                  "target": "variant",
+                  "appliedTo": "Sacred Arrow → Prism 1",
+                  "skinKey": "SacredArrow",
+                  "skinName": "Sacred Arrow",
+                  "variantName": "Prism 1",
+                  "parentSkinKey": "SacredArrow",
+                  "parentSkinName": "Sacred Arrow",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Sacred Arrow' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Sacred Arrow' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
             },
             {
-              "name": "Prism 2",
+              "name": "Starbound Seeker",
               "cardArt": "app/data/NewGodSkins/Rama/Skins/SacredArrow/t_SkinCard_Rama_SacredArrow_Prism02.png",
               "skin": "app/data/NewGodSkins/Rama/Skins/SacredArrow/t_SkinCard_Rama_SacredArrow_Prism02.png",
-              "icon": "app/data/NewGodSkins/Rama/Skins/SacredArrow/t_GodPortrait_Rama_SacredArrow_Prism02.png"
+              "icon": "app/data/NewGodSkins/Rama/Skins/SacredArrow/t_GodPortrait_Rama_SacredArrow_Prism02.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/rama/Screenshot (840).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Rama",
+                "displayName": "Sacred Arrow - Starbound Seeker",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/rama/Screenshot (840).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/rama/Screenshot (840).png",
+                  "fileName": "Screenshot (840).png",
+                  "godName": "Rama",
+                  "displayName": "Sacred Arrow - Starbound Seeker",
+                  "target": "variant",
+                  "appliedTo": "Sacred Arrow → Prism 2",
+                  "skinKey": "SacredArrow",
+                  "skinName": "Sacred Arrow",
+                  "variantName": "Prism 2",
+                  "parentSkinKey": "SacredArrow",
+                  "parentSkinName": "Sacred Arrow",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Sacred Arrow' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Sacred Arrow' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
             },
             {
-              "name": "Prism 3",
+              "name": "Infernal Menace",
               "cardArt": "app/data/NewGodSkins/Rama/Skins/SacredArrow/t_SkinCard_Rama_SacredArrow_Prism03.png",
               "skin": "app/data/NewGodSkins/Rama/Skins/SacredArrow/t_SkinCard_Rama_SacredArrow_Prism03.png",
-              "icon": "app/data/NewGodSkins/Rama/Skins/SacredArrow/t_GodPortrait_Rama_SacredArrow_Prism03.png"
+              "icon": "app/data/NewGodSkins/Rama/Skins/SacredArrow/t_GodPortrait_Rama_SacredArrow_Prism03.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/rama/Screenshot (841).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Rama",
+                "displayName": "Sacred Arrow - Infernal Menace",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/rama/Screenshot (841).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/rama/Screenshot (841).png",
+                  "fileName": "Screenshot (841).png",
+                  "godName": "Rama",
+                  "displayName": "Sacred Arrow - Infernal Menace",
+                  "target": "variant",
+                  "appliedTo": "Sacred Arrow → Prism 3",
+                  "skinKey": "SacredArrow",
+                  "skinName": "Sacred Arrow",
+                  "variantName": "Prism 3",
+                  "parentSkinKey": "SacredArrow",
+                  "parentSkinName": "Sacred Arrow",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Sacred Arrow' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Sacred Arrow' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
             },
             {
-              "name": "Prism 4",
+              "name": "Prismatic Defender",
               "cardArt": "app/data/NewGodSkins/Rama/Skins/SacredArrow/t_SkinCard_Rama_SacredArrow_Prism04.png",
               "skin": "app/data/NewGodSkins/Rama/Skins/SacredArrow/t_SkinCard_Rama_SacredArrow_Prism04.png",
-              "icon": "app/data/NewGodSkins/Rama/Skins/SacredArrow/t_GodPortrait_Rama_SacredArrow_Prism04.png"
+              "icon": "app/data/NewGodSkins/Rama/Skins/SacredArrow/t_GodPortrait_Rama_SacredArrow_Prism04.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/rama/Screenshot (842).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Rama",
+                "displayName": "Sacred Arrow - Prismatic Defender",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/rama/Screenshot (842).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/rama/Screenshot (842).png",
+                  "fileName": "Screenshot (842).png",
+                  "godName": "Rama",
+                  "displayName": "Sacred Arrow - Prismatic Defender",
+                  "target": "variant",
+                  "appliedTo": "Sacred Arrow → Prism 4",
+                  "skinKey": "SacredArrow",
+                  "skinName": "Sacred Arrow",
+                  "variantName": "Prism 4",
+                  "parentSkinKey": "SacredArrow",
+                  "parentSkinName": "Sacred Arrow",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Sacred Arrow' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Sacred Arrow' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/rama/Screenshot (838).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Rama",
+            "displayName": "Sacred Arrow",
+            "rarity": "Classic",
+            "gridBadge": {
+              "type": "prism",
+              "rank": null,
+              "label": "prism"
+            },
+            "screenshot": "app/data/God Renders/rama/Screenshot (838).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/rama/Screenshot (838).png",
+              "fileName": "Screenshot (838).png",
+              "godName": "Rama",
+              "displayName": "Sacred Arrow",
+              "target": "skin",
+              "appliedTo": "Sacred Arrow",
+              "skinKey": "SacredArrow",
+              "skinName": "Sacred Arrow",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "2400",
+                "owned": false
+              },
+              "tier": "Classic"
+            },
+            "information": [
+              {
+                "key": "travelerCollection",
+                "label": "Traveler Collection",
+                "text": "Acquired in the 'Sacred Arrow' Traveler."
+              },
+              {
+                "key": "prismsAvailable",
+                "label": "Prisms Available",
+                "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+              },
+              {
+                "key": "classic",
+                "label": "Classic",
+                "text": "This item was inspired by a SMITE 1 Skin."
+              }
+            ]
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_CommonTier.png",
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the 'Sacred Arrow' Traveler."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            },
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was inspired by a SMITE 1 Skin."
             }
           ]
         }

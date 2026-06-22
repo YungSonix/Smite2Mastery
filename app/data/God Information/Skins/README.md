@@ -48,6 +48,9 @@ Each file contains gods **sorted A–Z**, with that god’s skins nested underne
 | `isMastery` | Standalone mastery skin row |
 | `isCrossGen` | Cross-gen / platform skin |
 | `assets` | `skin`, `cardArt`, `icon`, `inGame` paths |
+| `tierBadge` | Reference PNG under `app/data/Tiers/` (Classic, Prisms, Heroic, …) |
+| `loadout` | `{ screenshot, frame }` — full loadout PNG + CSS crop focal point (2:3, no file crop) |
+| `unlock` | `{ masteryRank, requiresAscensionPass, source, prismNote }` from loadout capture |
 | `variants` | Prism or mastery variant chips |
 
 See `_schema.example.json` for a full example.
@@ -57,6 +60,11 @@ See `_schema.example.json` for a full example.
 ```bash
 # Full pipeline: sync from NewGodSkins → prune wallpaper/orphans → export pantheon JSON
 npm run sync-skins:full
+
+# Extract loadout metadata from God Renders screenshots → pantheon JSON
+npm run extract-god-renders -- --god achilles
+npm run extract-god-renders:write -- --god achilles
+npm run extract-god-renders:write -- --all
 ```
 
 The app loads skins from `Builds/builds.json` at runtime. After editing pantheon JSON here, run `npm run merge-god-skins:write`.

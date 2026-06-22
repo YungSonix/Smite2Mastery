@@ -1,0 +1,1050 @@
+{
+  "generatedAt": "2026-06-21T22:52:05.376Z",
+  "results": [
+    {
+      "godName": "Sobek",
+      "folder": "sobek",
+      "pantheon": "Egyptian.json",
+      "extractions": [
+        {
+          "screenshot": "app/data/God Renders/sobek/Screenshot (871).png",
+          "godName": "Sobek",
+          "displayName": ". SKIN",
+          "parentSkinName": ". SKIN",
+          "variantName": null,
+          "tier": null,
+          "tierLabel": null,
+          "tierBadge": null,
+          "tierMatchScore": null,
+          "cost": null,
+          "unlock": null,
+          "information": [],
+          "grid": {
+            "selectedIndex": 1,
+            "badge": null
+          },
+          "carousel": null,
+          "loadout": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (871).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "ocr": {
+            "godNameRaw": "a COREY",
+            "skinNameRaw": ". SKIN",
+            "tierLineRaw": "EE",
+            "unlockRaw": "3",
+            "costRaw": "EQUIP j",
+            "carouselRaw": "EE"
+          }
+        },
+        {
+          "screenshot": "app/data/God Renders/sobek/Screenshot (872).png",
+          "godName": "Sobek",
+          "displayName": "Soul Piercer",
+          "parentSkinName": "Soul Piercer",
+          "variantName": null,
+          "tier": "Classic",
+          "tierLabel": "Classic",
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_CommonTier.png",
+          "tierMatchScore": null,
+          "cost": {
+            "currency": "diamonds",
+            "amount": "2400",
+            "owned": false
+          },
+          "unlock": null,
+          "information": [],
+          "grid": {
+            "selectedIndex": 1,
+            "badge": null
+          },
+          "carousel": {
+            "index": 1,
+            "total": 4
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (872).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "ocr": {
+            "godNameRaw": "a COREY",
+            "skinNameRaw": "oo",
+            "tierLineRaw": "co",
+            "unlockRaw": "i skin",
+            "costRaw": "P 2400",
+            "carouselRaw": "1/4"
+          }
+        },
+        {
+          "screenshot": "app/data/God Renders/sobek/Screenshot (873).png",
+          "godName": "Sobek",
+          "displayName": "Soul Piercer - Orca Black",
+          "parentSkinName": "Soul Piercer",
+          "variantName": "Orca Black",
+          "tier": "Prisms",
+          "tierLabel": "Prisms",
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+          "tierMatchScore": null,
+          "cost": null,
+          "unlock": null,
+          "information": [],
+          "grid": {
+            "selectedIndex": 1,
+            "badge": {
+              "type": "prism",
+              "rank": null,
+              "label": "prism"
+            }
+          },
+          "carousel": {
+            "index": 2,
+            "total": 4
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (873).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "ocr": {
+            "godNameRaw": "a COREY",
+            "skinNameRaw": "oo - Orca Black",
+            "tierLineRaw": "co",
+            "unlockRaw": "- :",
+            "costRaw": "- rT",
+            "carouselRaw": "2/4"
+          }
+        },
+        {
+          "screenshot": "app/data/God Renders/sobek/Screenshot (874).png",
+          "godName": "Sobek",
+          "displayName": "Radiant",
+          "parentSkinName": "Radiant",
+          "variantName": null,
+          "tier": null,
+          "tierLabel": null,
+          "tierBadge": null,
+          "tierMatchScore": null,
+          "cost": null,
+          "unlock": {
+            "masteryRank": 10,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+            "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+          },
+          "information": [],
+          "grid": {
+            "selectedIndex": 5,
+            "badge": {
+              "type": "masteryRank",
+              "rank": 10,
+              "label": "X",
+              "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+            }
+          },
+          "carousel": {
+            "index": 3,
+            "total": 4
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (874).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "ocr": {
+            "godNameRaw": "a COREY",
+            "skinNameRaw": "oo - Goldfish Orange",
+            "tierLineRaw": "co",
+            "unlockRaw": "",
+            "costRaw": "AT",
+            "carouselRaw": "3/4"
+          }
+        },
+        {
+          "screenshot": "app/data/God Renders/sobek/Screenshot (875).png",
+          "godName": "Sobek",
+          "displayName": "Soul Piercer - Tubular Teal",
+          "parentSkinName": "Soul Piercer",
+          "variantName": "Tubular Teal",
+          "tier": "Prisms",
+          "tierLabel": "Prisms",
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+          "tierMatchScore": null,
+          "cost": null,
+          "unlock": null,
+          "information": [],
+          "grid": {
+            "selectedIndex": 1,
+            "badge": {
+              "type": "prism",
+              "rank": null,
+              "label": "prism"
+            }
+          },
+          "carousel": {
+            "index": 4,
+            "total": 4
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (875).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "ocr": {
+            "godNameRaw": "a COREY",
+            "skinNameRaw": "oo - Tubular Teal",
+            "tierLineRaw": "pnvan couserion.",
+            "unlockRaw": "7 : : —",
+            "costRaw": "- on",
+            "carouselRaw": "4/4"
+          }
+        },
+        {
+          "screenshot": "app/data/God Renders/sobek/Screenshot (876).png",
+          "godName": "Sobek",
+          "displayName": "Shadow",
+          "parentSkinName": "Shadow",
+          "variantName": null,
+          "tier": "Classic",
+          "tierLabel": "Classic",
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_CommonTier.png",
+          "tierMatchScore": null,
+          "cost": {
+            "currency": "diamonds",
+            "amount": "3200",
+            "owned": false
+          },
+          "unlock": null,
+          "information": [],
+          "grid": {
+            "selectedIndex": 1,
+            "badge": null
+          },
+          "carousel": null,
+          "loadout": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (876).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "ocr": {
+            "godNameRaw": "a COREY",
+            "skinNameRaw": "a",
+            "tierLineRaw": "",
+            "unlockRaw": "3 pect Events.",
+            "costRaw": "3,200",
+            "carouselRaw": "EE"
+          }
+        },
+        {
+          "screenshot": "app/data/God Renders/sobek/Screenshot (877).png",
+          "godName": "Sobek",
+          "displayName": "i.",
+          "parentSkinName": "i.",
+          "variantName": null,
+          "tier": null,
+          "tierLabel": null,
+          "tierBadge": null,
+          "tierMatchScore": null,
+          "cost": null,
+          "unlock": null,
+          "information": [],
+          "grid": {
+            "selectedIndex": 2,
+            "badge": null
+          },
+          "carousel": null,
+          "loadout": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (877).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "ocr": {
+            "godNameRaw": "a COREY",
+            "skinNameRaw": "i.",
+            "tierLineRaw": "",
+            "unlockRaw": "y B",
+            "costRaw": "oo",
+            "carouselRaw": "EE"
+          }
+        },
+        {
+          "screenshot": "app/data/God Renders/sobek/Screenshot (878).png",
+          "godName": "Sobek",
+          "displayName": "Shadow",
+          "parentSkinName": "Shadow",
+          "variantName": null,
+          "tier": null,
+          "tierLabel": null,
+          "tierBadge": null,
+          "tierMatchScore": null,
+          "cost": null,
+          "unlock": null,
+          "information": [],
+          "grid": {
+            "selectedIndex": 1,
+            "badge": null
+          },
+          "carousel": null,
+          "loadout": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (878).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "ocr": {
+            "godNameRaw": "a COREY",
+            "skinNameRaw": "o",
+            "tierLineRaw": "",
+            "unlockRaw": "i BN",
+            "costRaw": "- ——— -",
+            "carouselRaw": "EE"
+          }
+        },
+        {
+          "screenshot": "app/data/God Renders/sobek/Screenshot (879).png",
+          "godName": "Sobek",
+          "displayName": "i",
+          "parentSkinName": "i",
+          "variantName": null,
+          "tier": null,
+          "tierLabel": null,
+          "tierBadge": null,
+          "tierMatchScore": null,
+          "cost": null,
+          "unlock": null,
+          "information": [],
+          "grid": {
+            "selectedIndex": 2,
+            "badge": null
+          },
+          "carousel": null,
+          "loadout": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (879).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "ocr": {
+            "godNameRaw": "a COREY",
+            "skinNameRaw": "i",
+            "tierLineRaw": "",
+            "unlockRaw": "B",
+            "costRaw": "me ——",
+            "carouselRaw": "EE"
+          }
+        },
+        {
+          "screenshot": "app/data/God Renders/sobek/Screenshot (880).png",
+          "godName": "Sobek",
+          "displayName": "Onyx",
+          "parentSkinName": "Onyx",
+          "variantName": null,
+          "tier": null,
+          "tierLabel": null,
+          "tierBadge": null,
+          "tierMatchScore": null,
+          "cost": {
+            "currency": null,
+            "amount": null,
+            "navigateOnly": true
+          },
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V"
+          },
+          "information": [],
+          "grid": {
+            "selectedIndex": 3,
+            "badge": {
+              "type": "masteryRank",
+              "rank": 5,
+              "label": "V",
+              "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+            }
+          },
+          "carousel": null,
+          "loadout": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (880).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "ocr": {
+            "godNameRaw": "a COREY",
+            "skinNameRaw": "- IC",
+            "tierLineRaw": "",
+            "unlockRaw": "F .",
+            "costRaw": "a— GOTO",
+            "carouselRaw": "EE"
+          }
+        }
+      ],
+      "report": [
+        {
+          "ok": false,
+          "extracted": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (871).png",
+            "godName": "Sobek",
+            "displayName": ". SKIN",
+            "parentSkinName": ". SKIN",
+            "variantName": null,
+            "tier": null,
+            "tierLabel": null,
+            "tierBadge": null,
+            "tierMatchScore": null,
+            "cost": null,
+            "unlock": null,
+            "information": [],
+            "grid": {
+              "selectedIndex": 1,
+              "badge": null
+            },
+            "carousel": null,
+            "loadout": {
+              "screenshot": "app/data/God Renders/sobek/Screenshot (871).png",
+              "frame": {
+                "focalX": 50,
+                "focalY": 50,
+                "zoom": 1.148936170212766,
+                "aspectWidth": 586,
+                "aspectHeight": 940,
+                "cropWidth": 586,
+                "cropHeight": 940
+              }
+            },
+            "ocr": {
+              "godNameRaw": "a COREY",
+              "skinNameRaw": ". SKIN",
+              "tierLineRaw": "EE",
+              "unlockRaw": "3",
+              "costRaw": "EQUIP j",
+              "carouselRaw": "EE"
+            }
+          },
+          "screenshotTag": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (871).png",
+            "fileName": "Screenshot (871).png",
+            "godName": "Sobek",
+            "displayName": ". SKIN",
+            "target": "unmatched",
+            "appliedTo": null
+          },
+          "reason": "no matching skin row"
+        },
+        {
+          "ok": false,
+          "extracted": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (872).png",
+            "godName": "Sobek",
+            "displayName": "Soul Piercer",
+            "parentSkinName": "Soul Piercer",
+            "variantName": null,
+            "tier": "Classic",
+            "tierLabel": "Classic",
+            "tierBadge": "app/data/Tiers/t_FE_Cosmetics_CommonTier.png",
+            "tierMatchScore": null,
+            "cost": {
+              "currency": "diamonds",
+              "amount": "2400",
+              "owned": false
+            },
+            "unlock": null,
+            "information": [],
+            "grid": {
+              "selectedIndex": 1,
+              "badge": null
+            },
+            "carousel": {
+              "index": 1,
+              "total": 4
+            },
+            "loadout": {
+              "screenshot": "app/data/God Renders/sobek/Screenshot (872).png",
+              "frame": {
+                "focalX": 50,
+                "focalY": 50,
+                "zoom": 1.148936170212766,
+                "aspectWidth": 586,
+                "aspectHeight": 940,
+                "cropWidth": 586,
+                "cropHeight": 940
+              }
+            },
+            "ocr": {
+              "godNameRaw": "a COREY",
+              "skinNameRaw": "oo",
+              "tierLineRaw": "co",
+              "unlockRaw": "i skin",
+              "costRaw": "P 2400",
+              "carouselRaw": "1/4"
+            }
+          },
+          "screenshotTag": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (872).png",
+            "fileName": "Screenshot (872).png",
+            "godName": "Sobek",
+            "displayName": "Soul Piercer",
+            "target": "unmatched",
+            "appliedTo": null,
+            "cost": {
+              "currency": "diamonds",
+              "amount": "2400",
+              "owned": false
+            },
+            "tier": "Classic"
+          },
+          "reason": "no matching skin row"
+        },
+        {
+          "ok": false,
+          "extracted": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (873).png",
+            "godName": "Sobek",
+            "displayName": "Soul Piercer - Orca Black",
+            "parentSkinName": "Soul Piercer",
+            "variantName": "Orca Black",
+            "tier": "Prisms",
+            "tierLabel": "Prisms",
+            "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+            "tierMatchScore": null,
+            "cost": null,
+            "unlock": null,
+            "information": [],
+            "grid": {
+              "selectedIndex": 1,
+              "badge": {
+                "type": "prism",
+                "rank": null,
+                "label": "prism"
+              }
+            },
+            "carousel": {
+              "index": 2,
+              "total": 4
+            },
+            "loadout": {
+              "screenshot": "app/data/God Renders/sobek/Screenshot (873).png",
+              "frame": {
+                "focalX": 50,
+                "focalY": 50,
+                "zoom": 1.148936170212766,
+                "aspectWidth": 586,
+                "aspectHeight": 940,
+                "cropWidth": 586,
+                "cropHeight": 940
+              }
+            },
+            "ocr": {
+              "godNameRaw": "a COREY",
+              "skinNameRaw": "oo - Orca Black",
+              "tierLineRaw": "co",
+              "unlockRaw": "- :",
+              "costRaw": "- rT",
+              "carouselRaw": "2/4"
+            }
+          },
+          "screenshotTag": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (873).png",
+            "fileName": "Screenshot (873).png",
+            "godName": "Sobek",
+            "displayName": "Soul Piercer - Orca Black",
+            "target": "unmatched",
+            "appliedTo": null,
+            "tier": "Prisms"
+          },
+          "reason": "no matching skin row"
+        },
+        {
+          "ok": true,
+          "extracted": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (874).png",
+            "godName": "Sobek",
+            "displayName": "Radiant",
+            "parentSkinName": "Radiant",
+            "variantName": null,
+            "tier": null,
+            "tierLabel": null,
+            "tierBadge": null,
+            "tierMatchScore": null,
+            "cost": null,
+            "unlock": {
+              "masteryRank": 10,
+              "requiresAscensionPass": true,
+              "source": "ascension",
+              "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+              "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+            },
+            "information": [],
+            "grid": {
+              "selectedIndex": 5,
+              "badge": {
+                "type": "masteryRank",
+                "rank": 10,
+                "label": "X",
+                "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+              }
+            },
+            "carousel": {
+              "index": 3,
+              "total": 4
+            },
+            "loadout": {
+              "screenshot": "app/data/God Renders/sobek/Screenshot (874).png",
+              "frame": {
+                "focalX": 50,
+                "focalY": 50,
+                "zoom": 1.148936170212766,
+                "aspectWidth": 586,
+                "aspectHeight": 940,
+                "cropWidth": 586,
+                "cropHeight": 940
+              }
+            },
+            "ocr": {
+              "godNameRaw": "a COREY",
+              "skinNameRaw": "oo - Goldfish Orange",
+              "tierLineRaw": "co",
+              "unlockRaw": "",
+              "costRaw": "AT",
+              "carouselRaw": "3/4"
+            }
+          },
+          "screenshotTag": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (874).png",
+            "fileName": "Screenshot (874).png",
+            "godName": "Sobek",
+            "displayName": "Radiant",
+            "target": "variant",
+            "appliedTo": "Base Sobek → Mastery Radiant",
+            "skinKey": "Sobek",
+            "skinName": "Base Sobek",
+            "variantName": "Mastery Radiant",
+            "parentSkinKey": "Sobek",
+            "parentSkinName": "Base Sobek"
+          },
+          "appliedTo": "Base Sobek → Mastery Radiant"
+        },
+        {
+          "ok": false,
+          "extracted": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (875).png",
+            "godName": "Sobek",
+            "displayName": "Soul Piercer - Tubular Teal",
+            "parentSkinName": "Soul Piercer",
+            "variantName": "Tubular Teal",
+            "tier": "Prisms",
+            "tierLabel": "Prisms",
+            "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+            "tierMatchScore": null,
+            "cost": null,
+            "unlock": null,
+            "information": [],
+            "grid": {
+              "selectedIndex": 1,
+              "badge": {
+                "type": "prism",
+                "rank": null,
+                "label": "prism"
+              }
+            },
+            "carousel": {
+              "index": 4,
+              "total": 4
+            },
+            "loadout": {
+              "screenshot": "app/data/God Renders/sobek/Screenshot (875).png",
+              "frame": {
+                "focalX": 50,
+                "focalY": 50,
+                "zoom": 1.148936170212766,
+                "aspectWidth": 586,
+                "aspectHeight": 940,
+                "cropWidth": 586,
+                "cropHeight": 940
+              }
+            },
+            "ocr": {
+              "godNameRaw": "a COREY",
+              "skinNameRaw": "oo - Tubular Teal",
+              "tierLineRaw": "pnvan couserion.",
+              "unlockRaw": "7 : : —",
+              "costRaw": "- on",
+              "carouselRaw": "4/4"
+            }
+          },
+          "screenshotTag": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (875).png",
+            "fileName": "Screenshot (875).png",
+            "godName": "Sobek",
+            "displayName": "Soul Piercer - Tubular Teal",
+            "target": "unmatched",
+            "appliedTo": null,
+            "tier": "Prisms"
+          },
+          "reason": "no matching skin row"
+        },
+        {
+          "ok": true,
+          "extracted": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (876).png",
+            "godName": "Sobek",
+            "displayName": "Shadow",
+            "parentSkinName": "Shadow",
+            "variantName": null,
+            "tier": "Classic",
+            "tierLabel": "Classic",
+            "tierBadge": "app/data/Tiers/t_FE_Cosmetics_CommonTier.png",
+            "tierMatchScore": null,
+            "cost": {
+              "currency": "diamonds",
+              "amount": "3200",
+              "owned": false
+            },
+            "unlock": null,
+            "information": [],
+            "grid": {
+              "selectedIndex": 1,
+              "badge": null
+            },
+            "carousel": null,
+            "loadout": {
+              "screenshot": "app/data/God Renders/sobek/Screenshot (876).png",
+              "frame": {
+                "focalX": 50,
+                "focalY": 50,
+                "zoom": 1.148936170212766,
+                "aspectWidth": 586,
+                "aspectHeight": 940,
+                "cropWidth": 586,
+                "cropHeight": 940
+              }
+            },
+            "ocr": {
+              "godNameRaw": "a COREY",
+              "skinNameRaw": "a",
+              "tierLineRaw": "",
+              "unlockRaw": "3 pect Events.",
+              "costRaw": "3,200",
+              "carouselRaw": "EE"
+            }
+          },
+          "screenshotTag": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (876).png",
+            "fileName": "Screenshot (876).png",
+            "godName": "Sobek",
+            "displayName": "Shadow",
+            "target": "skin",
+            "appliedTo": "Shadow",
+            "skinKey": "Shadow",
+            "skinName": "Shadow",
+            "cost": {
+              "currency": "diamonds",
+              "amount": "3200",
+              "owned": false
+            },
+            "tier": "Classic"
+          },
+          "appliedTo": "Shadow"
+        },
+        {
+          "ok": false,
+          "extracted": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (877).png",
+            "godName": "Sobek",
+            "displayName": "i.",
+            "parentSkinName": "i.",
+            "variantName": null,
+            "tier": null,
+            "tierLabel": null,
+            "tierBadge": null,
+            "tierMatchScore": null,
+            "cost": null,
+            "unlock": null,
+            "information": [],
+            "grid": {
+              "selectedIndex": 2,
+              "badge": null
+            },
+            "carousel": null,
+            "loadout": {
+              "screenshot": "app/data/God Renders/sobek/Screenshot (877).png",
+              "frame": {
+                "focalX": 50,
+                "focalY": 50,
+                "zoom": 1.148936170212766,
+                "aspectWidth": 586,
+                "aspectHeight": 940,
+                "cropWidth": 586,
+                "cropHeight": 940
+              }
+            },
+            "ocr": {
+              "godNameRaw": "a COREY",
+              "skinNameRaw": "i.",
+              "tierLineRaw": "",
+              "unlockRaw": "y B",
+              "costRaw": "oo",
+              "carouselRaw": "EE"
+            }
+          },
+          "screenshotTag": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (877).png",
+            "fileName": "Screenshot (877).png",
+            "godName": "Sobek",
+            "displayName": "i.",
+            "target": "unmatched",
+            "appliedTo": null
+          },
+          "reason": "no matching skin row"
+        },
+        {
+          "ok": true,
+          "extracted": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (878).png",
+            "godName": "Sobek",
+            "displayName": "Shadow",
+            "parentSkinName": "Shadow",
+            "variantName": null,
+            "tier": null,
+            "tierLabel": null,
+            "tierBadge": null,
+            "tierMatchScore": null,
+            "cost": null,
+            "unlock": null,
+            "information": [],
+            "grid": {
+              "selectedIndex": 1,
+              "badge": null
+            },
+            "carousel": null,
+            "loadout": {
+              "screenshot": "app/data/God Renders/sobek/Screenshot (878).png",
+              "frame": {
+                "focalX": 50,
+                "focalY": 50,
+                "zoom": 1.148936170212766,
+                "aspectWidth": 586,
+                "aspectHeight": 940,
+                "cropWidth": 586,
+                "cropHeight": 940
+              }
+            },
+            "ocr": {
+              "godNameRaw": "a COREY",
+              "skinNameRaw": "o",
+              "tierLineRaw": "",
+              "unlockRaw": "i BN",
+              "costRaw": "- ——— -",
+              "carouselRaw": "EE"
+            }
+          },
+          "screenshotTag": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (878).png",
+            "fileName": "Screenshot (878).png",
+            "godName": "Sobek",
+            "displayName": "Shadow",
+            "target": "skin",
+            "appliedTo": "Shadow",
+            "skinKey": "Shadow",
+            "skinName": "Shadow"
+          },
+          "appliedTo": "Shadow"
+        },
+        {
+          "ok": false,
+          "extracted": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (879).png",
+            "godName": "Sobek",
+            "displayName": "i",
+            "parentSkinName": "i",
+            "variantName": null,
+            "tier": null,
+            "tierLabel": null,
+            "tierBadge": null,
+            "tierMatchScore": null,
+            "cost": null,
+            "unlock": null,
+            "information": [],
+            "grid": {
+              "selectedIndex": 2,
+              "badge": null
+            },
+            "carousel": null,
+            "loadout": {
+              "screenshot": "app/data/God Renders/sobek/Screenshot (879).png",
+              "frame": {
+                "focalX": 50,
+                "focalY": 50,
+                "zoom": 1.148936170212766,
+                "aspectWidth": 586,
+                "aspectHeight": 940,
+                "cropWidth": 586,
+                "cropHeight": 940
+              }
+            },
+            "ocr": {
+              "godNameRaw": "a COREY",
+              "skinNameRaw": "i",
+              "tierLineRaw": "",
+              "unlockRaw": "B",
+              "costRaw": "me ——",
+              "carouselRaw": "EE"
+            }
+          },
+          "screenshotTag": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (879).png",
+            "fileName": "Screenshot (879).png",
+            "godName": "Sobek",
+            "displayName": "i",
+            "target": "unmatched",
+            "appliedTo": null
+          },
+          "reason": "no matching skin row"
+        },
+        {
+          "ok": true,
+          "extracted": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (880).png",
+            "godName": "Sobek",
+            "displayName": "Onyx",
+            "parentSkinName": "Onyx",
+            "variantName": null,
+            "tier": null,
+            "tierLabel": null,
+            "tierBadge": null,
+            "tierMatchScore": null,
+            "cost": {
+              "currency": null,
+              "amount": null,
+              "navigateOnly": true
+            },
+            "unlock": {
+              "masteryRank": 5,
+              "requiresAscensionPass": true,
+              "source": "ascension",
+              "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+              "displayText": "Ascension reward — requires Mastery rank V"
+            },
+            "information": [],
+            "grid": {
+              "selectedIndex": 3,
+              "badge": {
+                "type": "masteryRank",
+                "rank": 5,
+                "label": "V",
+                "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+              }
+            },
+            "carousel": null,
+            "loadout": {
+              "screenshot": "app/data/God Renders/sobek/Screenshot (880).png",
+              "frame": {
+                "focalX": 50,
+                "focalY": 50,
+                "zoom": 1.148936170212766,
+                "aspectWidth": 586,
+                "aspectHeight": 940,
+                "cropWidth": 586,
+                "cropHeight": 940
+              }
+            },
+            "ocr": {
+              "godNameRaw": "a COREY",
+              "skinNameRaw": "- IC",
+              "tierLineRaw": "",
+              "unlockRaw": "F .",
+              "costRaw": "a— GOTO",
+              "carouselRaw": "EE"
+            }
+          },
+          "screenshotTag": {
+            "screenshot": "app/data/God Renders/sobek/Screenshot (880).png",
+            "fileName": "Screenshot (880).png",
+            "godName": "Sobek",
+            "displayName": "Onyx",
+            "target": "variant",
+            "appliedTo": "Base Sobek → Mastery Onyx",
+            "skinKey": "Sobek",
+            "skinName": "Base Sobek",
+            "variantName": "Mastery Onyx",
+            "parentSkinKey": "Sobek",
+            "parentSkinName": "Base Sobek"
+          },
+          "appliedTo": "Base Sobek → Mastery Onyx"
+        }
+      ]
+    }
+  ]
+}

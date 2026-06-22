@@ -30,40 +30,391 @@
           },
           "variants": [
             {
-              "name": "Mastery Light",
-              "icon": "app/data/NewGodSkins/Bari/Skins/Mastery/T_Bari_Icon_Light.png",
-              "masteryFromDisk": true,
-              "cardArt": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png"
-            },
-            {
               "name": "Mastery Onyx",
               "icon": "app/data/NewGodSkins/Bari/Skins/Mastery/T_Bari_Icon_Onyx.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              },
+              "loadout": {
+                "screenshot": "app/data/God Renders/princess bari/Screenshot (821).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Princess Bari",
+                "displayName": "Onyx",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/princess bari/Screenshot (821).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/princess bari/Screenshot (821).png",
+                  "fileName": "Screenshot (821).png",
+                  "godName": "Princess Bari",
+                  "displayName": "Onyx",
+                  "target": "variant",
+                  "appliedTo": "Base Princess Bari → Mastery Onyx",
+                  "skinKey": "Princess Bari",
+                  "skinName": "Base Princess Bari",
+                  "variantName": "Mastery Onyx",
+                  "parentSkinKey": "Princess Bari",
+                  "parentSkinName": "Base Princess Bari",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up your God's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up your God's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
               "name": "Mastery Opal",
               "icon": "app/data/NewGodSkins/Bari/Skins/Mastery/T_Bari_Icon_Opal.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/princess bari/Screenshot (822).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Princess Bari",
+                "displayName": "Opal",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/princess bari/Screenshot (822).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/princess bari/Screenshot (822).png",
+                  "fileName": "Screenshot (822).png",
+                  "godName": "Princess Bari",
+                  "displayName": "Opal",
+                  "target": "variant",
+                  "appliedTo": "Base Princess Bari → Mastery Opal",
+                  "skinKey": "Princess Bari",
+                  "skinName": "Base Princess Bari",
+                  "variantName": "Mastery Opal",
+                  "parentSkinKey": "Princess Bari",
+                  "parentSkinName": "Base Princess Bari",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up your God's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V",
+                "rarityNote": "Rare"
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up your God's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
-              "name": "Mastery Shadow",
-              "icon": "app/data/NewGodSkins/Bari/Skins/Mastery/T_Bari_Icon_Shadow.png",
+              "name": "Mastery Radiant",
+              "icon": "app/data/NewGodSkins/Bari/Skins/Mastery/T_Bari_Icon_Light.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/princess bari/Screenshot (823).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Princess Bari",
+                "displayName": "Radiant",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "screenshot": "app/data/God Renders/princess bari/Screenshot (823).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/princess bari/Screenshot (823).png",
+                  "fileName": "Screenshot (823).png",
+                  "godName": "Princess Bari",
+                  "displayName": "Radiant",
+                  "target": "variant",
+                  "appliedTo": "Base Princess Bari → Mastery Radiant",
+                  "skinKey": "Princess Bari",
+                  "skinName": "Base Princess Bari",
+                  "variantName": "Mastery Radiant",
+                  "parentSkinKey": "Princess Bari",
+                  "parentSkinName": "Base Princess Bari",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up your God's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)",
+                "rarityNote": "Rare"
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up your God's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/princess bari/Screenshot (817).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Princess Bari",
+            "displayName": "Base",
+            "rarity": null,
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/princess bari/Screenshot (817).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/princess bari/Screenshot (817).png",
+              "fileName": "Screenshot (817).png",
+              "godName": "Princess Bari",
+              "displayName": "Base",
+              "target": "skin",
+              "appliedTo": "Base Princess Bari",
+              "skinKey": "Princess Bari",
+              "skinName": "Base Princess Bari",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "0",
+                "owned": true
+              }
+            }
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "skinKey": "Shadow",
+          "skinName": "Shadow",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900"
+          },
+          "rarity": "Heroic",
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": true,
+          "isMasteryShadowSkin": true,
+          "isCrossGen": false,
+          "type": "Mastery Shadow",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png",
+            "cardArt": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png",
+            "icon": "app/data/NewGodSkins/Bari/Skins/Mastery/T_Bari_Icon_Shadow.png"
+          },
+          "cardArt": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png",
+          "skin": "app/data/NewGodSkins/Bari/Skins/Mastery/t_Bari_Card_Mastery.png",
+          "icon": "app/data/NewGodSkins/Bari/Skins/Mastery/T_Bari_Icon_Shadow.png",
+          "masteryFromDisk": true,
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+          "price": {
+            "diamonds": "900"
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/princess bari/Screenshot (820).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Princess Bari",
+            "displayName": "Shadow",
+            "rarity": "Heroic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/princess bari/Screenshot (820).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/princess bari/Screenshot (820).png",
+              "fileName": "Screenshot (820).png",
+              "godName": "Princess Bari",
+              "displayName": "Shadow",
+              "target": "skin",
+              "appliedTo": "Shadow",
+              "skinKey": "Shadow",
+              "skinName": "Shadow",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "900",
+                "owned": false
+              },
+              "tier": "Heroic"
+            },
+            "information": [
+              {
+                "key": "ascensionReward",
+                "label": "Ascension Reward",
+                "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+              },
+              {
+                "key": "rare",
+                "label": "Rare",
+                "text": "This is a rare item and may only appear on special occasions or in specific Events."
+              }
+            ]
+          },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
           ]
         },
         {
           "skinKey": "Reaping",
-          "skinName": "Reaping",
-          "cost": null,
-          "rarity": null,
+          "skinName": "Spooky Oracle",
+          "cost": {
+            "currency": "gems",
+            "amount": "800"
+          },
+          "rarity": "Heroic",
           "isBaseSkin": false,
           "isPrism": false,
           "isRecolor": false,
@@ -75,16 +426,79 @@
             "icon": "app/data/NewGodSkins/Bari/Skins/Reaping/t_SkinPortrait_Bari_Reaping.png"
           },
           "price": {
-            "gems": "",
-            "diamonds": "",
-            "gemsdia": ""
-          }
+            "diamonds": "800"
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/princess bari/Screenshot (818).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Princess Bari",
+            "displayName": "Spooky Oracle",
+            "rarity": "Heroic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/princess bari/Screenshot (818).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/princess bari/Screenshot (818).png",
+              "fileName": "Screenshot (818).png",
+              "godName": "Princess Bari",
+              "displayName": "Spooky Oracle",
+              "target": "skin",
+              "appliedTo": "Spooky Oracle",
+              "skinKey": "Reaping",
+              "skinName": "Spooky Oracle",
+              "cost": {
+                "currency": "gems",
+                "amount": "800",
+                "owned": false
+              },
+              "tier": "Heroic"
+            },
+            "information": [
+              {
+                "key": "theReaping",
+                "label": "The Reaping",
+                "text": "This item was acquired during The Reaping 2025 Event."
+              },
+              {
+                "key": "rare",
+                "label": "Rare",
+                "text": "This is a rare item and may only appear on special occasions or in specific Events."
+              }
+            ]
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+          "unlock": {
+            "source": "event",
+            "displayText": "The Reaping 2025 Event"
+          },
+          "information": [
+            {
+              "key": "theReaping",
+              "label": "The Reaping",
+              "text": "This item was acquired during The Reaping 2025 Event."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
         },
         {
           "skinKey": "ShatteredVisions",
-          "skinName": "Shattered Visions",
+          "skinName": "Shattered Vision",
           "cost": null,
-          "rarity": null,
+          "rarity": "Epic",
           "isBaseSkin": false,
           "isPrism": false,
           "isRecolor": false,
@@ -99,7 +513,68 @@
             "gems": "",
             "diamonds": "",
             "gemsdia": ""
-          }
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/princess bari/Screenshot (819).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Princess Bari",
+            "displayName": "Shattered Vision",
+            "rarity": "Epic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/princess bari/Screenshot (819).png",
+            "extractedAt": "2026-06-22",
+            "buttonText": "GO TO",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/princess bari/Screenshot (819).png",
+              "fileName": "Screenshot (819).png",
+              "godName": "Princess Bari",
+              "displayName": "Shattered Vision",
+              "target": "skin",
+              "appliedTo": "Shattered Vision",
+              "skinKey": "ShatteredVisions",
+              "skinName": "Shattered Vision",
+              "tier": "Epic"
+            },
+            "information": [
+              {
+                "key": "wanderingMarket",
+                "label": "Wandering Market",
+                "text": "Acquired in the 'Spellbound Realms' Collection."
+              },
+              {
+                "key": "special",
+                "label": "Special",
+                "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+              }
+            ]
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
+          "unlock": {
+            "source": "wandering",
+            "displayText": "Wandering Market — Spellbound Realms"
+          },
+          "information": [
+            {
+              "key": "wanderingMarket",
+              "label": "Wandering Market",
+              "text": "Acquired in the 'Spellbound Realms' Collection."
+            },
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            }
+          ]
         }
       ]
     }

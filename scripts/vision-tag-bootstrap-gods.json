@@ -1,0 +1,279 @@
+[
+  {
+    "godName": "Guan Yu",
+    "internalName": "Guan_Item",
+    "pantheonFile": "Chinese.json",
+    "folder": "guan yu",
+    "skins": [
+      {
+        "skinKey": "Guan_Yu",
+        "skinName": "Base Guan Yu",
+        "isBaseSkin": true,
+        "type": "Base Skin",
+        "assets": {
+          "skin": "app/data/NewGodSkins/Guan_Yu/Default/t_GodCard_Guan_Yu.png",
+          "cardArt": "app/data/NewGodSkins/Guan_Yu/Default/t_GodCard_Guan_Yu.png",
+          "icon": "app/data/NewGodSkins/Guan_Yu/Default/t_GodPortrait_Guan_Yu.png",
+          "inGame": "app/data/NewGodSkins/Guan_Yu/Default/t_GodFull_Guan_Yu.png"
+        },
+        "variants": [
+          {
+            "name": "Mastery Onyx",
+            "icon": "app/data/NewGodSkins/Guan_Yu/Skins/Mastery/T_Guan_Yu_Icon_Onyx.png",
+            "masteryFromDisk": true,
+            "cardArt": "app/data/NewGodSkins/Guan_Yu/Skins/Mastery/t_GuanYu_Card_Mastery.png",
+            "skin": "app/data/NewGodSkins/Guan_Yu/Skins/Mastery/t_GuanYu_Card_Mastery.png"
+          },
+          {
+            "name": "Mastery Opal",
+            "icon": "app/data/NewGodSkins/Guan_Yu/Skins/Mastery/T_Guan_Yu_Icon_Opal.png",
+            "masteryFromDisk": true,
+            "cardArt": "app/data/NewGodSkins/Guan_Yu/Skins/Mastery/t_GuanYu_Card_Mastery.png",
+            "skin": "app/data/NewGodSkins/Guan_Yu/Skins/Mastery/t_GuanYu_Card_Mastery.png"
+          },
+          {
+            "name": "Mastery Radiant",
+            "icon": "app/data/NewGodSkins/Guan_Yu/Skins/Mastery/T_Guan_Yu_Icon_Light.png",
+            "masteryFromDisk": true,
+            "cardArt": "app/data/NewGodSkins/Guan_Yu/Skins/Mastery/t_GuanYu_Card_Mastery.png",
+            "skin": "app/data/NewGodSkins/Guan_Yu/Skins/Mastery/t_GuanYu_Card_Mastery.png"
+          }
+        ]
+      },
+      {
+        "skinKey": "Unicorn",
+        "skinName": "Guan Unicorn",
+        "isPrism": true,
+        "type": "Classic (Traveler)",
+        "assets": {
+          "skin": "app/data/NewGodSkins/Guan_Yu/Skins/Unicorn/T_GodCard_GuanYu_Unicorn.png",
+          "cardArt": "app/data/NewGodSkins/Guan_Yu/Skins/Unicorn/T_GodCard_GuanYu_Unicorn.png",
+          "icon": "app/data/NewGodSkins/Guan_Yu/Skins/Unicorn/t_Portrait_GuanYu_Unicorn.png"
+        },
+        "variants": [
+          {
+            "name": "Prism 1",
+            "cardArt": "app/data/NewGodSkins/Guan_Yu/Skins/Unicorn/T_GodCard_GuanYu_Unicorn_Red.png",
+            "skin": "app/data/NewGodSkins/Guan_Yu/Skins/Unicorn/T_GodCard_GuanYu_Unicorn_Red.png",
+            "icon": "app/data/NewGodSkins/Guan_Yu/Skins/Unicorn/t_Portrait_GuanYu_Unicorn_Red.png"
+          },
+          {
+            "name": "Prism 2",
+            "cardArt": "app/data/NewGodSkins/Guan_Yu/Skins/Unicorn/T_GodCard_GuanYu_Unicorn_White.png",
+            "skin": "app/data/NewGodSkins/Guan_Yu/Skins/Unicorn/T_GodCard_GuanYu_Unicorn_White.png",
+            "icon": "app/data/NewGodSkins/Guan_Yu/Skins/Unicorn/t_Portrait_GuanYu_Unicorn_White.png"
+          },
+          {
+            "name": "Prism 3",
+            "cardArt": "app/data/NewGodSkins/Guan_Yu/Skins/Unicorn/T_GodCard_GuanYu_Unicorn_Purple.png",
+            "skin": "app/data/NewGodSkins/Guan_Yu/Skins/Unicorn/T_GodCard_GuanYu_Unicorn_Purple.png",
+            "icon": "app/data/NewGodSkins/Guan_Yu/Skins/Unicorn/t_Portrait_GuanYu_Unicorn_Purple.png"
+          },
+          {
+            "name": "Prism 4",
+            "cardArt": "app/data/NewGodSkins/Guan_Yu/Skins/Unicorn/T_GodCard_GuanYu_Unicorn_Blue.png",
+            "skin": "app/data/NewGodSkins/Guan_Yu/Skins/Unicorn/T_GodCard_GuanYu_Unicorn_Blue.png",
+            "icon": "app/data/NewGodSkins/Guan_Yu/Skins/Unicorn/t_Portrait_GuanYu_Unicorn_Blue.png"
+          }
+        ]
+      },
+      {
+        "skinKey": "WraithRider",
+        "skinName": "Wraith Rider",
+        "type": "Epic",
+        "assets": {
+          "skin": "app/data/NewGodSkins/Guan_Yu/Skins/01A/T_GodCard_GuanYu_WraithRider.png",
+          "cardArt": "app/data/NewGodSkins/Guan_Yu/Skins/01A/T_GodCard_GuanYu_WraithRider.png",
+          "icon": "app/data/NewGodSkins/Guan_Yu/Skins/01A/t_Portrait_GuanYu_WraithRider.png"
+        }
+      },
+      {
+        "skinKey": "Shadow",
+        "skinName": "Shadow",
+        "isMasteryShadowSkin": true,
+        "isMastery": true,
+        "type": "Mastery Shadow",
+        "assets": {
+          "skin": "app/data/NewGodSkins/Guan_Yu/Skins/Mastery/t_GuanYu_Card_Mastery.png",
+          "cardArt": "app/data/NewGodSkins/Guan_Yu/Skins/Mastery/t_GuanYu_Card_Mastery.png",
+          "icon": "app/data/NewGodSkins/Guan_Yu/Skins/Mastery/T_Guan_Yu_Icon_Shadow.png"
+        },
+        "masteryFromDisk": true,
+        "cost": { "currency": "diamonds", "amount": "900" },
+        "rarity": "Classic"
+      }
+    ]
+  },
+  {
+    "godName": "Hou Yi",
+    "internalName": "HouYi_Item",
+    "pantheonFile": "Chinese.json",
+    "folder": "hou yi",
+    "skins": [
+      {
+        "skinKey": "Hou Yi",
+        "skinName": "Base Hou Yi",
+        "isBaseSkin": true,
+        "type": "Base Skin",
+        "assets": {
+          "skin": "app/data/NewGodSkins/Hou_Yi/Default/t_GodCard_Hou_Yi.png",
+          "cardArt": "app/data/NewGodSkins/Hou_Yi/Default/t_GodCard_Hou_Yi.png",
+          "icon": "app/data/NewGodSkins/Hou_Yi/Default/t_GodPortrait_Hou_Yi.png"
+        },
+        "variants": [
+          {
+            "name": "Mastery Onyx",
+            "icon": "app/data/NewGodSkins/Hou_Yi/Skins/Mastery/t_SkinPortrait_HouYi_Onyx.png",
+            "masteryFromDisk": true,
+            "cardArt": "app/data/NewGodSkins/Hou_Yi/Skins/Mastery/t_GodCard_HouYi_Mastery.png",
+            "skin": "app/data/NewGodSkins/Hou_Yi/Skins/Mastery/t_GodCard_HouYi_Mastery.png"
+          },
+          {
+            "name": "Mastery Opal",
+            "icon": "app/data/NewGodSkins/Hou_Yi/Skins/Mastery/t_SkinPortrait_HouYi_Opal.png",
+            "masteryFromDisk": true,
+            "cardArt": "app/data/NewGodSkins/Hou_Yi/Skins/Mastery/t_GodCard_HouYi_Mastery.png",
+            "skin": "app/data/NewGodSkins/Hou_Yi/Skins/Mastery/t_GodCard_HouYi_Mastery.png"
+          },
+          {
+            "name": "Mastery Radiant",
+            "icon": "app/data/NewGodSkins/Hou_Yi/Skins/Mastery/t_SkinPortrait_HouYi_Light.png",
+            "masteryFromDisk": true,
+            "cardArt": "app/data/NewGodSkins/Hou_Yi/Skins/Mastery/t_GodCard_HouYi_Mastery.png",
+            "skin": "app/data/NewGodSkins/Hou_Yi/Skins/Mastery/t_GodCard_HouYi_Mastery.png"
+          }
+        ]
+      },
+      {
+        "skinKey": "GleamingArcher",
+        "skinName": "Gleaming Archer",
+        "type": "Epic",
+        "assets": {
+          "skin": "app/data/NewGodSkins/Hou_Yi/Skins/GleamingArcher/t_SkinCard_HouYi_GleamingArcher.png",
+          "cardArt": "app/data/NewGodSkins/Hou_Yi/Skins/GleamingArcher/t_SkinCard_HouYi_GleamingArcher.png",
+          "icon": "app/data/NewGodSkins/Hou_Yi/Skins/GleamingArcher/t_SkinPortrait_HouYi_GleamingArcher.png"
+        }
+      },
+      {
+        "skinKey": "Shadow",
+        "skinName": "Shadow",
+        "isMasteryShadowSkin": true,
+        "isMastery": true,
+        "type": "Mastery Shadow",
+        "assets": {
+          "skin": "app/data/NewGodSkins/Hou_Yi/Skins/Mastery/t_GodCard_HouYi_Mastery.png",
+          "cardArt": "app/data/NewGodSkins/Hou_Yi/Skins/Mastery/t_GodCard_HouYi_Mastery.png",
+          "icon": "app/data/NewGodSkins/Hou_Yi/Skins/Mastery/t_SkinPortrait_HouYi_Shadow.png"
+        },
+        "masteryFromDisk": true,
+        "cost": { "currency": "diamonds", "amount": "900" },
+        "rarity": "Classic"
+      }
+    ]
+  },
+  {
+    "godName": "Sun Wukong",
+    "internalName": "Sun_Wukong_Item",
+    "pantheonFile": "Chinese.json",
+    "folder": "sun wokong",
+    "skins": [
+      {
+        "skinKey": "Sun_Wukong",
+        "skinName": "Base Sun Wukong",
+        "isBaseSkin": true,
+        "type": "Base Skin",
+        "assets": {
+          "skin": "app/data/NewGodSkins/Sun_Wukong/Default/t_GodCard_Sun_Wukong.png",
+          "cardArt": "app/data/NewGodSkins/Sun_Wukong/Default/t_GodCard_Sun_Wukong.png",
+          "icon": "app/data/NewGodSkins/Sun_Wukong/Default/t_GodPortrait_Sun_Wukong.png",
+          "inGame": "app/data/NewGodSkins/Sun_Wukong/Default/t_GodFull_Sun_Wukong.png"
+        },
+        "variants": [
+          {
+            "name": "Mastery Onyx",
+            "icon": "app/data/NewGodSkins/Sun_Wukong/Skins/Mastery/T_Sun_Wukong_Icon_Onyx.png",
+            "masteryFromDisk": true,
+            "cardArt": "app/data/NewGodSkins/Sun_Wukong/Skins/Mastery/t_SunWukong_Card_Mastery.png",
+            "skin": "app/data/NewGodSkins/Sun_Wukong/Skins/Mastery/t_SunWukong_Card_Mastery.png"
+          },
+          {
+            "name": "Mastery Opal",
+            "icon": "app/data/NewGodSkins/Sun_Wukong/Skins/Mastery/T_Sun_Wukong_Icon_Opal.png",
+            "masteryFromDisk": true,
+            "cardArt": "app/data/NewGodSkins/Sun_Wukong/Skins/Mastery/t_SunWukong_Card_Mastery.png",
+            "skin": "app/data/NewGodSkins/Sun_Wukong/Skins/Mastery/t_SunWukong_Card_Mastery.png"
+          },
+          {
+            "name": "Mastery Radiant",
+            "icon": "app/data/NewGodSkins/Sun_Wukong/Skins/Mastery/T_Sun_Wukong_Icon_Light.png",
+            "masteryFromDisk": true,
+            "cardArt": "app/data/NewGodSkins/Sun_Wukong/Skins/Mastery/t_SunWukong_Card_Mastery.png",
+            "skin": "app/data/NewGodSkins/Sun_Wukong/Skins/Mastery/t_SunWukong_Card_Mastery.png"
+          }
+        ]
+      },
+      {
+        "skinKey": "DarkLord",
+        "skinName": "Dark Lord",
+        "isPrism": true,
+        "type": "Classic (Traveler)",
+        "assets": {
+          "skin": "app/data/NewGodSkins/Sun_Wukong/Skins/DarkLord/t_SkinCard_SWK_DarkLord.png",
+          "cardArt": "app/data/NewGodSkins/Sun_Wukong/Skins/DarkLord/t_SkinCard_SWK_DarkLord.png",
+          "icon": "app/data/NewGodSkins/Sun_Wukong/Skins/DarkLord/t_SkinIcon_SWK_DarkLord.png"
+        },
+        "variants": [
+          {
+            "name": "Prism 1",
+            "cardArt": "app/data/NewGodSkins/Sun_Wukong/Skins/DarkLord/t_SkinCard_SWK_DarkLord_Prism01.png",
+            "skin": "app/data/NewGodSkins/Sun_Wukong/Skins/DarkLord/t_SkinCard_SWK_DarkLord_Prism01.png",
+            "icon": "app/data/NewGodSkins/Sun_Wukong/Skins/DarkLord/t_SkinIcon_SWK_DarkLord_Prism01.png"
+          },
+          {
+            "name": "Prism 2",
+            "cardArt": "app/data/NewGodSkins/Sun_Wukong/Skins/DarkLord/t_SkinCard_SWK_DarkLord_Prism02.png",
+            "skin": "app/data/NewGodSkins/Sun_Wukong/Skins/DarkLord/t_SkinCard_SWK_DarkLord_Prism02.png",
+            "icon": "app/data/NewGodSkins/Sun_Wukong/Skins/DarkLord/t_SkinIcon_SWK_DarkLord_Prism02.png"
+          },
+          {
+            "name": "Prism 3",
+            "cardArt": "app/data/NewGodSkins/Sun_Wukong/Skins/DarkLord/t_SkinCard_SWK_DarkLord_Prism03.png",
+            "skin": "app/data/NewGodSkins/Sun_Wukong/Skins/DarkLord/t_SkinCard_SWK_DarkLord_Prism03.png",
+            "icon": "app/data/NewGodSkins/Sun_Wukong/Skins/DarkLord/t_SkinIcon_SWK_DarkLord_Prism03.png"
+          },
+          {
+            "name": "Prism 4",
+            "cardArt": "app/data/NewGodSkins/Sun_Wukong/Skins/DarkLord/t_SkinCard_SWK_DarkLord_Prism04.png",
+            "skin": "app/data/NewGodSkins/Sun_Wukong/Skins/DarkLord/t_SkinCard_SWK_DarkLord_Prism04.png",
+            "icon": "app/data/NewGodSkins/Sun_Wukong/Skins/DarkLord/t_SkinIcon_SWK_DarkLord_Prism04.png"
+          }
+        ]
+      },
+      {
+        "skinKey": "StreetKing",
+        "skinName": "Street King",
+        "type": "Epic",
+        "assets": {
+          "skin": "app/data/NewGodSkins/Sun_Wukong/Skins/StreetKing/t_SkinCard_SWK_StreetKing.png",
+          "cardArt": "app/data/NewGodSkins/Sun_Wukong/Skins/StreetKing/t_SkinCard_SWK_StreetKing.png",
+          "icon": "app/data/NewGodSkins/Sun_Wukong/Skins/StreetKing/t_SkinIcon_SWK_StreetKing.png"
+        }
+      },
+      {
+        "skinKey": "Shadow",
+        "skinName": "Shadow",
+        "isMasteryShadowSkin": true,
+        "isMastery": true,
+        "type": "Mastery Shadow",
+        "assets": {
+          "skin": "app/data/NewGodSkins/Sun_Wukong/Skins/Mastery/t_SunWukong_Card_Mastery.png",
+          "cardArt": "app/data/NewGodSkins/Sun_Wukong/Skins/Mastery/t_SunWukong_Card_Mastery.png",
+          "icon": "app/data/NewGodSkins/Sun_Wukong/Skins/Mastery/T_Sun_Wukong_Icon_Shadow.png"
+        },
+        "masteryFromDisk": true,
+        "cost": { "currency": "diamonds", "amount": "900" },
+        "rarity": "Classic"
+      }
+    ]
+  }
+]

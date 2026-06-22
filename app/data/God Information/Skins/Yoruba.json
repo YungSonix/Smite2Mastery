@@ -30,61 +30,475 @@
           },
           "variants": [
             {
-              "name": "Mastery Light",
-              "icon": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_SkinPortrait_Yemoja_Light.png",
-              "masteryFromDisk": true,
-              "cardArt": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png"
-            },
-            {
               "name": "Mastery Onyx",
               "icon": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_SkinPortrait_Yemoja_Onyx.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              },
+              "loadout": {
+                "screenshot": "app/data/God Renders/yemoja/Screenshot (1010).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Yemoja",
+                "displayName": "Onyx",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/yemoja/Screenshot (1010).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/yemoja/Screenshot (1010).png",
+                  "fileName": "Screenshot (1010).png",
+                  "godName": "Yemoja",
+                  "displayName": "Onyx",
+                  "target": "variant",
+                  "appliedTo": "Base Yemoja → Mastery Onyx",
+                  "skinKey": "Yemoja",
+                  "skinName": "Base Yemoja",
+                  "variantName": "Mastery Onyx",
+                  "parentSkinKey": "Yemoja",
+                  "parentSkinName": "Base Yemoja",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "masteryReward",
+                    "label": "Mastery Reward",
+                    "text": "This item is acquired from leveling up your God's Mastery."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "information": [
+                {
+                  "key": "masteryReward",
+                  "label": "Mastery Reward",
+                  "text": "This item is acquired from leveling up your God's Mastery."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
               "name": "Mastery Opal",
               "icon": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_SkinPortrait_Yemoja_Opal.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V",
+                "rarityNote": "Rare"
+              },
+              "loadout": {
+                "screenshot": "app/data/God Renders/yemoja/Screenshot (1011).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Yemoja",
+                "displayName": "Opal",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/yemoja/Screenshot (1011).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/yemoja/Screenshot (1011).png",
+                  "fileName": "Screenshot (1011).png",
+                  "godName": "Yemoja",
+                  "displayName": "Opal",
+                  "target": "variant",
+                  "appliedTo": "Base Yemoja → Mastery Opal",
+                  "skinKey": "Yemoja",
+                  "skinName": "Base Yemoja",
+                  "variantName": "Mastery Opal",
+                  "parentSkinKey": "Yemoja",
+                  "parentSkinName": "Base Yemoja",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up your God's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up your God's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
-              "name": "Mastery Shadow",
-              "icon": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_SkinPortrait_Yemoja_Shadow.png",
+              "name": "Mastery Radiant",
+              "icon": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_SkinPortrait_Yemoja_Light.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/yemoja/Screenshot (1012).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Yemoja",
+                "displayName": "Radiant",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "screenshot": "app/data/God Renders/yemoja/Screenshot (1012).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/yemoja/Screenshot (1012).png",
+                  "fileName": "Screenshot (1012).png",
+                  "godName": "Yemoja",
+                  "displayName": "Radiant",
+                  "target": "variant",
+                  "appliedTo": "Base Yemoja → Mastery Radiant",
+                  "skinKey": "Yemoja",
+                  "skinName": "Base Yemoja",
+                  "variantName": "Mastery Radiant",
+                  "parentSkinKey": "Yemoja",
+                  "parentSkinName": "Base Yemoja",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascensionReward",
+                    "label": "Ascension Reward",
+                    "text": "This item is acquired from leveling up your God's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "Rare",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)",
+                "rarityNote": "Rare"
+              },
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up your God's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/yemoja/Screenshot (1002).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Yemoja",
+            "displayName": "Base",
+            "rarity": null,
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/yemoja/Screenshot (1002).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/yemoja/Screenshot (1002).png",
+              "fileName": "Screenshot (1002).png",
+              "godName": "Yemoja",
+              "displayName": "Base",
+              "target": "skin",
+              "appliedTo": "Base Yemoja",
+              "skinKey": "Yemoja",
+              "skinName": "Base Yemoja",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "0",
+                "owned": true
+              }
+            }
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "skinKey": "Shadow",
+          "skinName": "Shadow",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900"
+          },
+          "rarity": "Heroic",
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": true,
+          "isMasteryShadowSkin": true,
+          "isCrossGen": false,
+          "type": "Mastery Shadow",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png",
+            "cardArt": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png",
+            "icon": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_SkinPortrait_Yemoja_Shadow.png"
+          },
+          "cardArt": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png",
+          "skin": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_Yemoja_Card_Mastery.png",
+          "icon": "app/data/NewGodSkins/Yemoja/Skins/Masteries/t_SkinPortrait_Yemoja_Shadow.png",
+          "masteryFromDisk": true,
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+          "price": {
+            "diamonds": "900"
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/yemoja/Screenshot (1009).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Yemoja",
+            "displayName": "Shadow",
+            "rarity": "Heroic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/yemoja/Screenshot (1009).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/yemoja/Screenshot (1009).png",
+              "fileName": "Screenshot (1009).png",
+              "godName": "Yemoja",
+              "displayName": "Shadow",
+              "target": "skin",
+              "appliedTo": "Shadow",
+              "skinKey": "Shadow",
+              "skinName": "Shadow",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "900",
+                "owned": false
+              },
+              "tier": "Heroic"
+            },
+            "information": [
+              {
+                "key": "ascensionReward",
+                "label": "Ascension Reward",
+                "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+              },
+              {
+                "key": "rare",
+                "label": "Rare",
+                "text": "This is a rare item and may only appear on special occasions or in specific Events."
+              }
+            ]
+          },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
           ]
         },
         {
           "skinKey": "DawnSpirits",
-          "skinName": "Dawn Spirits",
-          "cost": null,
-          "rarity": null,
+          "skinName": "Dawn Spirit",
+          "cost": {
+            "currency": "gems",
+            "amount": "1200"
+          },
+          "rarity": "Epic",
           "isBaseSkin": false,
           "isPrism": false,
           "isRecolor": false,
           "isMastery": false,
-          "isCrossGen": false,
+          "isCrossGen": true,
           "assets": {
             "skin": "app/data/NewGodSkins/Yemoja/Skins/DawnSpirits/t_SkinCard_Yemoja_DawnSpirits.png",
             "cardArt": "app/data/NewGodSkins/Yemoja/Skins/DawnSpirits/t_SkinCard_Yemoja_DawnSpirits.png",
             "icon": "app/data/NewGodSkins/Yemoja/Skins/DawnSpirits/t_SkinPortrait_Yemoja_DawnSpirits.png"
           },
           "price": {
-            "gems": "",
-            "diamonds": "",
-            "gemsdia": ""
-          }
+            "diamonds": "1200"
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/yemoja/Screenshot (1007).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Yemoja",
+            "displayName": "Dawn Spirit",
+            "rarity": "Epic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/yemoja/Screenshot (1007).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/yemoja/Screenshot (1007).png",
+              "fileName": "Screenshot (1007).png",
+              "godName": "Yemoja",
+              "displayName": "Dawn Spirit",
+              "target": "skin",
+              "appliedTo": "Dawn Spirit",
+              "skinKey": "DawnSpirits",
+              "skinName": "Dawn Spirit",
+              "cost": {
+                "currency": "gems",
+                "amount": "1200",
+                "owned": false
+              },
+              "tier": "Epic"
+            },
+            "information": [
+              {
+                "key": "crossGen",
+                "label": "Cross-Gen",
+                "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
+              },
+              {
+                "key": "standard",
+                "label": "Standard",
+                "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+              }
+            ]
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — may appear in chests or events"
+          },
+          "information": [
+            {
+              "key": "crossGen",
+              "label": "Cross-Gen",
+              "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
+            },
+            {
+              "key": "standard",
+              "label": "Standard",
+              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+            }
+          ]
         },
         {
           "skinKey": "HiveQueen",
-          "skinName": "Hive Queen",
+          "skinName": "Hive Mother",
           "cost": null,
-          "rarity": null,
+          "rarity": "Epic",
           "isBaseSkin": false,
           "isPrism": false,
           "isRecolor": false,
@@ -99,13 +513,77 @@
             "gems": "",
             "diamonds": "",
             "gemsdia": ""
-          }
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/yemoja/Screenshot (1008).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Yemoja",
+            "displayName": "Hive Mother",
+            "rarity": "Epic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/yemoja/Screenshot (1008).png",
+            "extractedAt": "2026-06-22",
+            "buttonText": "GO TO",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/yemoja/Screenshot (1008).png",
+              "fileName": "Screenshot (1008).png",
+              "godName": "Yemoja",
+              "displayName": "Hive Mother",
+              "target": "skin",
+              "appliedTo": "Hive Mother",
+              "skinKey": "HiveQueen",
+              "skinName": "Hive Mother",
+              "tier": "Epic"
+            },
+            "information": [
+              {
+                "key": "travelerCollection",
+                "label": "Traveler Collection",
+                "text": "Acquired in the 'Buzzing Spring Time' Traveler."
+              },
+              {
+                "key": "special",
+                "label": "Special",
+                "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+              }
+            ]
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
+          "unlock": {
+            "source": "event",
+            "displayText": "Special event — may appear for direct purchase or in chests"
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the 'Buzzing Spring Time' Traveler."
+            },
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            }
+          ]
         },
         {
           "skinKey": "Mastermind",
           "skinName": "Mastermind",
-          "cost": null,
-          "rarity": null,
+          "cost": {
+            "currency": "diamonds",
+            "amount": "2400"
+          },
+          "rarity": "Classic",
           "isBaseSkin": false,
           "isPrism": true,
           "isRecolor": false,
@@ -117,28 +595,315 @@
             "icon": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinPortrait_Yemoja_Mastermind_Base.png"
           },
           "price": {
-            "gems": "",
-            "diamonds": "",
-            "gemsdia": ""
+            "diamonds": "2400"
           },
           "variants": [
             {
-              "name": "Prism 1",
+              "name": "Firewall",
               "cardArt": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinCard_Yemoja_Mastermind_Prism01.png",
               "skin": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinCard_Yemoja_Mastermind_Prism01.png",
-              "icon": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinPortrait_Yemoja_Mastermind_Prism01.png"
+              "icon": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinPortrait_Yemoja_Mastermind_Prism01.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/yemoja/Screenshot (1004).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Yemoja",
+                "displayName": "Mastermind - Firewall",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/yemoja/Screenshot (1004).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/yemoja/Screenshot (1004).png",
+                  "fileName": "Screenshot (1004).png",
+                  "godName": "Yemoja",
+                  "displayName": "Mastermind - Firewall",
+                  "target": "variant",
+                  "appliedTo": "Mastermind → Firewall",
+                  "skinKey": "Mastermind",
+                  "skinName": "Mastermind",
+                  "variantName": "Firewall",
+                  "parentSkinKey": "Mastermind",
+                  "parentSkinName": "Mastermind",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Mastermind' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "prismNote": true,
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Mastermind' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
             },
             {
-              "name": "Prism 2",
+              "name": "Circuit",
               "cardArt": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinCard_Yemoja_Mastermind_Prism02.png",
               "skin": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinCard_Yemoja_Mastermind_Prism02.png",
-              "icon": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinPortrait_Yemoja_Mastermind_Prism02.png"
+              "icon": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinPortrait_Yemoja_Mastermind_Prism02.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/yemoja/Screenshot (1005).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Yemoja",
+                "displayName": "Mastermind - Circuit",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/yemoja/Screenshot (1005).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/yemoja/Screenshot (1005).png",
+                  "fileName": "Screenshot (1005).png",
+                  "godName": "Yemoja",
+                  "displayName": "Mastermind - Circuit",
+                  "target": "variant",
+                  "appliedTo": "Mastermind → Circuit",
+                  "skinKey": "Mastermind",
+                  "skinName": "Mastermind",
+                  "variantName": "Circuit",
+                  "parentSkinKey": "Mastermind",
+                  "parentSkinName": "Mastermind",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Mastermind' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "prismNote": true,
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Mastermind' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
             },
             {
-              "name": "Prism 3",
+              "name": "Matrix",
               "cardArt": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinCard_Yemoja_Mastermind_Prism03.png",
               "skin": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinCard_Yemoja_Mastermind_Prism03.png",
-              "icon": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinPortrait_Yemoja_Mastermind_Prism03.png"
+              "icon": "app/data/NewGodSkins/Yemoja/Skins/Mastermind/t_SkinPortrait_Yemoja_Mastermind_Prism03.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/yemoja/Screenshot (1006).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Yemoja",
+                "displayName": "Mastermind - Matrix",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/yemoja/Screenshot (1006).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/yemoja/Screenshot (1006).png",
+                  "fileName": "Screenshot (1006).png",
+                  "godName": "Yemoja",
+                  "displayName": "Mastermind - Matrix",
+                  "target": "variant",
+                  "appliedTo": "Mastermind → Matrix",
+                  "skinKey": "Mastermind",
+                  "skinName": "Mastermind",
+                  "variantName": "Matrix",
+                  "parentSkinKey": "Mastermind",
+                  "parentSkinName": "Mastermind",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "travelerCollection",
+                    "label": "Traveler Collection",
+                    "text": "Acquired in the 'Mastermind' Traveler."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "Prism",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "traveler",
+                "prismNote": true,
+                "displayText": "Traveler Collection"
+              },
+              "information": [
+                {
+                  "key": "travelerCollection",
+                  "label": "Traveler Collection",
+                  "text": "Acquired in the 'Mastermind' Traveler."
+                },
+                {
+                  "key": "prism",
+                  "label": "Prism",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/yemoja/Screenshot (1003).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Yemoja",
+            "displayName": "Mastermind",
+            "rarity": "Classic",
+            "gridBadge": {
+              "type": "prism",
+              "rank": null,
+              "label": "prism"
+            },
+            "screenshot": "app/data/God Renders/yemoja/Screenshot (1003).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/yemoja/Screenshot (1003).png",
+              "fileName": "Screenshot (1003).png",
+              "godName": "Yemoja",
+              "displayName": "Mastermind",
+              "target": "skin",
+              "appliedTo": "Mastermind",
+              "skinKey": "Mastermind",
+              "skinName": "Mastermind",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "2400",
+                "owned": false
+              },
+              "tier": "Classic"
+            },
+            "information": [
+              {
+                "key": "travelerCollection",
+                "label": "Traveler Collection",
+                "text": "Acquired in the 'Mastermind' Traveler."
+              },
+              {
+                "key": "prismsAvailable",
+                "label": "Prisms Available",
+                "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+              },
+              {
+                "key": "classic",
+                "label": "Classic",
+                "text": "This item was inspired by a SMITE 1 Skin."
+              }
+            ]
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_CommonTier.png",
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "information": [
+            {
+              "key": "travelerCollection",
+              "label": "Traveler Collection",
+              "text": "Acquired in the 'Mastermind' Traveler."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            },
+            {
+              "key": "classic",
+              "label": "Classic",
+              "text": "This item was inspired by a SMITE 1 Skin."
             }
           ]
         }
