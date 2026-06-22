@@ -6,10 +6,20 @@ import { getSkinImage, getLocalGodAsset, getRemoteGodIconByName } from '../app/l
 import {
   getSkinCardArtPath,
   getSkinModelViewPath,
+  getSkinLoadoutContentPosition,
   getSkinThumbPath,
   mergeSkinVariant,
   parseSkinVariants,
 } from './skinShowcaseHelpers';
+import { enrichGodSkinsRecord } from './pantheonSkinsLookup';
+import {
+  formatCostLabel,
+  hasShowcaseMeta,
+  resolveSkinCost,
+  resolveSkinInformation,
+  resolveSkinTier,
+  resolveSkinUnlock,
+} from './skinShowcaseMeta';
 import {
   hasSkinVoxPreview,
   playRandomSkinVox,
@@ -26,7 +36,100 @@ import {
   uiDropdownStyles as dd,
 } from './uiDropdownStyles';
 
-const IS_WEB = Platform.OS === 'web';
+const CURRENCY_ICON_PATHS = {
+  diamonds: 'app/data/Tiers/t_currency_diamond_512 (1).png',
+  gems: 'app/data/Tiers/t_currency_gem_512.png',
+};
+
+function ShowcaseMetaPanel({ entry, portraitFallbacks }) {
+  if (!hasShowcaseMeta(entry)) return null;
+
+  const cost = resolveSkinCost(entry);
+  const costLabel = formatCostLabel(cost);
+  const tier = resolveSkinTier(entry);
+  const unlock = resolveSkinUnlock(entry);
+  const infoRows = resolveSkinInformation(entry);
+  const loadoutPath = getSkinModelViewPath(entry);
+  const loadoutPosition =
+    getSkinLoadoutContentPosition(entry) || {
+      top: `${Math.round(SKIN_LOADOUT_COVER_POSITION.y * 100)}%`,
+      left: `${Math.round(SKIN_LOADOUT_COVER_POSITION.x * 100)}%`,
+    };
+  const currencyIconPath =
+    cost?.kind === 'currency' ? CURRENCY_ICON_PATHS[cost.currency] : null;
+  const tierBadgePath = tier?.tierBadge || null;
+
+  return (
+    <View style={styles.metaPanel}>
+      {loadoutPath ? (
+        <View style={styles.metaLoadoutThumbWrap}>
+          <ShowcaseHeroImage
+            path={loadoutPath}
+            godFallbackUri={portraitFallbacks[0] || null}
+            style={styles.metaLoadoutThumb}
+            accessibilityLabel="Ingame loadout screenshot"
+            contentFit="cover"
+            contentPosition={loadoutPosition}
+          />
+        </View>
+      ) : null}
+      <View style={styles.metaRows}>
+        <View style={styles.metaRow}>
+          <Text style={styles.metaLabel}>Cost</Text>
+          <View style={styles.metaValueRow}>
+            {currencyIconPath ? (
+              <Image
+                source={pickImageSource(getSkinImage(currencyIconPath))}
+                style={styles.metaCurrencyIcon}
+                contentFit="contain"
+                cachePolicy="memory-disk"
+              />
+            ) : null}
+            <Text style={styles.metaValue}>{costLabel}</Text>
+          </View>
+        </View>
+        {tier ? (
+          <View style={styles.metaRow}>
+            <Text style={styles.metaLabel}>Skin tier</Text>
+            <View style={styles.metaValueRow}>
+              {tierBadgePath ? (
+                <Image
+                  source={pickImageSource(getSkinImage(tierBadgePath))}
+                  style={styles.metaTierBadge}
+                  contentFit="contain"
+                  cachePolicy="memory-disk"
+                />
+              ) : null}
+              {tier.rarity ? (
+                <Text style={styles.metaValue}>{tier.rarity}</Text>
+              ) : !tierBadgePath ? (
+                <Text style={styles.metaValueMuted}>—</Text>
+              ) : null}
+            </View>
+          </View>
+        ) : null}
+        {unlock ? (
+          <View style={styles.metaRow}>
+            <Text style={styles.metaLabel}>Unlock</Text>
+            <Text style={[styles.metaValue, styles.metaValueFlex]} numberOfLines={3}>
+              {unlock}
+            </Text>
+          </View>
+        ) : null}
+        {infoRows.map((row, idx) => (
+          <View key={`info-${idx}-${row.label || row.text}`} style={styles.metaInfoBlock}>
+            {row.label ? <Text style={styles.metaInfoLabel}>{row.label}</Text> : null}
+            {row.text ? (
+              <Text style={styles.metaInfoText} numberOfLines={6}>
+                {row.text}
+              </Text>
+            ) : null}
+          </View>
+        ))}
+      </View>
+    </View>
+  );
+}
 
 const PANEL_BORDER = '#1e3a5f';
 const PANEL_BG = '#0b1220';
@@ -144,7 +247,7 @@ export default function SkinShowcasePanel({
   selectedSkinKey,
   onSelectSkinKey,
 }) {
-  const { height: SCREEN_HEIGHT } = useScreenDimensions();
+  const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = useScreenDimensions();
   const [mainView, setMainView] = useState('card');
   const [variantIdx, setVariantIdx] = useState(0);
   const [skinMenuOpen, setSkinMenuOpen] = useState(false);
@@ -193,6 +296,16 @@ export default function SkinShowcasePanel({
   const modelPlaceholder = mainView === 'model' && !modelPath;
 
   const mediaHeight = Math.min(420, Math.round(SCREEN_HEIGHT * 0.52));
+  // Explicit frame size (3:4 card / loadout aspect) — RN Web ignores aspectRatio+maxHeight on large PNGs.
+  const contentApprox = Math.max(260, SCREEN_WIDTH - 72);
+  const cardFrameWidth = Math.min(contentApprox, Math.round(mediaHeight * (3 / 4)));
+  const cardFrameHeight = Math.min(mediaHeight, Math.round(cardFrameWidth * (4 / 3)));
+  const modelFrameWidth = Math.min(
+    contentApprox,
+    SKIN_LOADOUT_FRAME_MAX_WIDTH,
+    Math.round(mediaHeight * SKIN_LOADOUT_FRAME_ASPECT)
+  );
+  const modelFrameHeight = Math.min(mediaHeight, Math.round(modelFrameWidth / SKIN_LOADOUT_FRAME_ASPECT));
   const loadoutContentPosition = {
     top: `${Math.round(SKIN_LOADOUT_COVER_POSITION.y * 100)}%`,
     left: `${Math.round(SKIN_LOADOUT_COVER_POSITION.x * 100)}%`,
@@ -200,12 +313,17 @@ export default function SkinShowcasePanel({
   const mediaStyle =
     mainView === 'model'
       ? {
-          width: '100%',
-          maxWidth: SKIN_LOADOUT_FRAME_MAX_WIDTH,
-          aspectRatio: SKIN_LOADOUT_FRAME_ASPECT,
+          width: modelFrameWidth,
+          height: modelFrameHeight,
+          maxWidth: '100%',
           alignSelf: 'center',
         }
-      : { aspectRatio: 3 / 4, maxHeight: mediaHeight };
+      : {
+          width: cardFrameWidth,
+          height: cardFrameHeight,
+          maxWidth: '100%',
+          alignSelf: 'center',
+        };
 
   const displayName = mergedSkin?.name || selectedSkinKey || 'Skin';
   const typeLine =
@@ -529,7 +647,7 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
   mediaBlock: {
-    width: '100%',
+    position: 'relative',
     backgroundColor: '#030712',
     borderWidth: 1,
     borderColor: PANEL_BORDER,
@@ -538,17 +656,15 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 14,
     borderBottomRightRadius: 14,
     overflow: 'hidden',
+    ...(IS_WEB && { flexShrink: 0 }),
   },
   heroInner: {
-    flex: 1,
+    ...StyleSheet.absoluteFillObject,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 0,
-    paddingVertical: 0,
   },
   heroImage: {
-    width: '100%',
-    height: '100%',
+    ...StyleSheet.absoluteFillObject,
   },
   placeholderBox: {
     alignItems: 'center',

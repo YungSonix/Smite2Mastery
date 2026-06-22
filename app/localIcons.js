@@ -444,6 +444,19 @@ export function getSkinImage(skinPath) {
   if (localBundle) {
     return localBundle;
   }
+  if (normalized.toLowerCase().startsWith('app/data/')) {
+    let rasterPath = normalized;
+    if (/\.json$/i.test(rasterPath)) {
+      rasterPath = rasterPath.replace(/\.json$/i, '.png');
+    }
+    const uri =
+      `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/` +
+      rasterPath
+        .split('/')
+        .map((seg) => encodeURIComponent(seg))
+        .join('/');
+    return createFullUriSource(uri);
+  }
   if (normalized.toLowerCase().startsWith(NEW_GOD_SKINS_PREFIX.toLowerCase())) {
     // Data may still reference UE `.json` exports; prefer raster sibling on GitHub when present.
     let rasterPath = normalized;
