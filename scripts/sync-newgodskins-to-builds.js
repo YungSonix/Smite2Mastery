@@ -30,6 +30,7 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..', 'app', 'data', 'NewGodSkins');
 const { BUILDS_JSON: BUILDS } = require('../config/dataPaths');
+const { promoteMasteryShadowInSkinsRecord, removeMasteryLightInSkinsRecord, normalizeMasteryAngelicDemonicInSkinsRecord } = require('./lib/godSkinsPaths');
 
 /**
  * When the on-disk skin folder name (e.g. internal `02A`) does not match `builds.json` skin key
@@ -1015,6 +1016,7 @@ function buildMasteryFolderVariants(godFolder, projectRoot) {
       if (sharedCardName && f === sharedCardName) continue;
       if (!isMasteryTierPortraitFile(f)) continue;
       const label = extractMasteryTierLabel(f, godFolder);
+      if (/^Demonic$/i.test(label)) continue;
       if (!tierMap.has(label)) tierMap.set(label, { dir: masteryDir, files: [] });
       tierMap.get(label).files.push(f);
     }
@@ -1037,7 +1039,30 @@ function buildMasteryFolderVariants(godFolder, projectRoot) {
     }
     out.push(o);
   }
-  return out;
+
+  const light = out.find((v) => /^Mastery Light$/i.test(v.name));
+  const angelic = out.find((v) => /^Mastery Angelic$/i.test(v.name));
+  const radiant = out.find((v) => /^Mastery Radiant$/i.test(v.name));
+  const radiantIconSource = light?.icon || angelic?.icon;
+  if (radiantIconSource) {
+    if (radiant) radiant.icon = radiantIconSource;
+    else {
+      const src = light || angelic;
+      out.push({
+        name: 'Mastery Radiant',
+        icon: radiantIconSource,
+        masteryFromDisk: true,
+        ...(src.cardArt ? { cardArt: src.cardArt, skin: src.skin || src.cardArt } : {}),
+        ...(sharedCardPath && !src.cardArt
+          ? { cardArt: sharedCardPath, skin: sharedCardPath }
+          : {}),
+      });
+    }
+  }
+
+  return out.filter(
+    (v) => !/^Mastery (Light|Angelic|Demonic)$/i.test(v.name)
+  );
 }
 
 function main() {
@@ -1222,12 +1247,15 @@ function main() {
       const e = skins[baseKey];
       const nonMastery = (e.variants || []).filter((v) => !v.masteryFromDisk);
       const masteryVars = buildMasteryFolderVariants(godFolder, projectRoot);
-      if (nonMastery.length > 0 || masteryVars.length > 0) {
+      if (masteryVars.length > 0 || nonMastery.length > 0) {
         e.variants = [...nonMastery, ...masteryVars];
         if (masteryVars.length > 0) godsWithMasteryVariants += 1;
       } else {
         delete e.variants;
       }
+      promoteMasteryShadowInSkinsRecord(skins, god.name || godFolder);
+      removeMasteryLightInSkinsRecord(skins, god.name || godFolder);
+      normalizeMasteryAngelicDemonicInSkinsRecord(skins, god.name || godFolder);
     }
 
     if (god.skins && god.skins !== skins) {

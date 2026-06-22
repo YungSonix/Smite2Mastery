@@ -16,6 +16,23 @@ const GITHUB_RAW =
   'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/master';
 
 const VIEWER_DIR = path.join(__dirname, 'skins-viewer');
+const VOX_MANIFEST_PATH = path.join(PROJECT_ROOT, 'lib', 'voxSkinManifest.generated.js');
+const VOICE_AUDIO_BASE = `${GITHUB_RAW}/app/data/VoiceAudio`;
+
+let cachedVoxManifest = null;
+
+function loadVoxManifest() {
+  if (cachedVoxManifest) return cachedVoxManifest;
+  if (!fs.existsSync(VOX_MANIFEST_PATH)) {
+    throw new Error('voxSkinManifest.generated.js not found — run npm run vox:manifest');
+  }
+  const raw = fs.readFileSync(VOX_MANIFEST_PATH, 'utf8');
+  const fn = new Function(
+    `${raw.replace(/export const VOX_SKIN_MANIFEST\s*=/, 'return ').replace(/export default VOX_SKIN_MANIFEST;?\s*$/, '')}`
+  );
+  cachedVoxManifest = fn();
+  return cachedVoxManifest;
+}
 const MIME = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -105,8 +122,16 @@ function redirect(res, url) {
   res.end();
 }
 
+function safeDecodeURIComponent(value) {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
 function resolveMedia(reqPath) {
-  const decoded = decodeURIComponent(reqPath.replace(/^\/media\/?/, ''));
+  const decoded = safeDecodeURIComponent(reqPath.replace(/^\/media\/?/, ''));
   const normalized = decoded.replace(/\\/g, '/').replace(/^\/+/, '');
   const local = path.join(PROJECT_ROOT, normalized);
   if (fs.existsSync(local) && fs.statSync(local).isFile() && !/\.json$/i.test(normalized)) {
@@ -145,16 +170,35 @@ const server = http.createServer((req, res) => {
     return sendJson(res, 200, { gods, total: gods.length });
   }
 
+  if (pathname === '/api/vox-manifest') {
+    try {
+      return sendJson(res, 200, {
+        voiceAudioBase: VOICE_AUDIO_BASE,
+        manifest: loadVoxManifest(),
+      });
+    } catch (e) {
+      console.error('Vox manifest error:', e.message);
+      return sendJson(res, 500, { error: e.message });
+    }
+  }
+
   const pantheonMatch = pathname.match(/^\/api\/pantheon\/([^/]+)$/);
   if (pantheonMatch) {
-    const id = decodeURIComponent(pantheonMatch[1]);
+    let id;
+    try {
+      id = decodeURIComponent(pantheonMatch[1]);
+    } catch (e) {
+      return sendJson(res, 400, { error: 'Invalid pantheon id encoding' });
+    }
     const filePath = path.join(SKINS_DIR, `${id}.json`);
     if (!fs.existsSync(filePath)) return sendJson(res, 404, { error: 'Pantheon not found' });
     try {
-      const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+      const raw = fs.readFileSync(filePath, 'utf8');
+      const data = JSON.parse(raw);
       return sendJson(res, 200, data);
     } catch (e) {
-      return sendJson(res, 500, { error: String(e.message) });
+      console.error(`Pantheon JSON error (${id}):`, e.message);
+      return sendJson(res, 500, { error: `Failed to load ${id}.json: ${e.message}` });
     }
   }
 

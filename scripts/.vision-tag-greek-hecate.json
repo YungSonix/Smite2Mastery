@@ -1,0 +1,204 @@
+{
+  "gods": [
+    {
+      "folder": "hecate",
+      "godName": "Hecate",
+      "extractions": [
+        {
+          "fileName": "Screenshot (499).png",
+          "displayName": "Base",
+          "tier": null,
+          "cost": { "currency": "diamonds", "amount": "0", "owned": true },
+          "unlock": { "source": "base", "displayText": "Base god" }
+        },
+        {
+          "fileName": "Screenshot (500).png",
+          "displayName": "Lunar Hex",
+          "matchSkinKey": "CuteWitch",
+          "tier": "Epic",
+          "cost": { "currency": "diamonds", "amount": "1200", "owned": false },
+          "unlock": { "source": "store", "displayText": "Direct purchase — may appear in chests or events" },
+          "information": [
+            {
+              "key": "standard",
+              "label": "Standard",
+              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (501).png",
+          "displayName": "Maid of Midnight",
+          "matchSkinKey": "MaidOfMidnight",
+          "tier": "Legendary",
+          "buttonText": "GO TO",
+          "unlock": {
+            "source": "wanderingMarket",
+            "displayText": "Wandering Market — Tidy Tails Collection"
+          },
+          "information": [
+            {
+              "key": "wanderingMarket",
+              "label": "Wandering Market",
+              "text": "Acquired in the 'Tidy Tails' Collection."
+            },
+            {
+              "key": "special",
+              "label": "Special",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (502).png",
+          "displayName": "High Velocity",
+          "matchSkinKey": "SplashXbox",
+          "tier": "Heroic",
+          "buttonText": "LOCKED",
+          "unlock": {
+            "source": "promotional",
+            "displayText": "Promotional partnership — rare skin (may appear in events)",
+            "rarityNote": "Rare"
+          },
+          "information": [
+            {
+              "key": "promotional",
+              "label": "Promotional",
+              "text": "This item is from a special Promotional Partnership or Event."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (503).png",
+          "displayName": "Shadow",
+          "matchSkinKey": "Shadow",
+          "tier": "Heroic",
+          "cost": { "currency": "diamonds", "amount": "900", "owned": false },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (504).png",
+          "displayName": "Onyx",
+          "matchVariantName": "Mastery Onyx",
+          "tier": "Heroic",
+          "cost": { "currency": null, "amount": null, "navigateOnly": true },
+          "buttonText": "GO TO",
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Hecate's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (507).png",
+          "displayName": "Opal",
+          "matchVariantName": "Mastery Opal",
+          "tier": "Heroic",
+          "cost": { "currency": null, "amount": null, "navigateOnly": true },
+          "buttonText": "GO TO",
+          "unlock": {
+            "masteryRank": 5,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+            "displayText": "Ascension reward — requires Mastery rank V",
+            "rarityNote": "Rare"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 5,
+            "label": "V",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Hecate's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        },
+        {
+          "fileName": "Screenshot (508).png",
+          "displayName": "Radiant",
+          "matchVariantName": "Mastery Radiant",
+          "tier": "Heroic",
+          "cost": { "currency": null, "amount": null, "navigateOnly": true },
+          "buttonText": "GO TO",
+          "unlock": {
+            "masteryRank": 10,
+            "requiresAscensionPass": true,
+            "source": "ascension",
+            "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+            "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+          },
+          "gridBadge": {
+            "type": "masteryRank",
+            "rank": 10,
+            "label": "X",
+            "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+          },
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This item is acquired from leveling up Hecate's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

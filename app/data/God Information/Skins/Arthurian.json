@@ -30,40 +30,391 @@
           },
           "variants": [
             {
-              "name": "Mastery Light",
-              "icon": "app/data/NewGodSkins/Merlin/Skins/Mastery/T_Merlin_Icon_Light.png",
-              "masteryFromDisk": true,
-              "cardArt": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png"
-            },
-            {
               "name": "Mastery Onyx",
               "icon": "app/data/NewGodSkins/Merlin/Skins/Mastery/T_Merlin_Icon_Onyx.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              },
+              "loadout": {
+                "screenshot": "app/data/God Renders/merlin/Screenshot (687).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Merlin",
+                "displayName": "Onyx",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/merlin/Screenshot (687).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/merlin/Screenshot (687).png",
+                  "fileName": "Screenshot (687).png",
+                  "godName": "Merlin",
+                  "displayName": "Onyx",
+                  "target": "variant",
+                  "appliedTo": "Base Merlin → Mastery Onyx",
+                  "skinKey": "Merlin",
+                  "skinName": "Base Merlin",
+                  "variantName": "Mastery Onyx",
+                  "parentSkinKey": "Merlin",
+                  "parentSkinName": "Base Merlin",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascension",
+                    "label": "ASCENSION REWARD",
+                    "text": "This item is acquired from leveling up Merlin's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "RARE",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "information": [
+                {
+                  "key": "ascension",
+                  "label": "ASCENSION REWARD",
+                  "text": "This item is acquired from leveling up Merlin's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "RARE",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
               "name": "Mastery Opal",
               "icon": "app/data/NewGodSkins/Merlin/Skins/Mastery/T_Merlin_Icon_Opal.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/merlin/Screenshot (688).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Merlin",
+                "displayName": "Opal",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/merlin/Screenshot (688).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/merlin/Screenshot (688).png",
+                  "fileName": "Screenshot (688).png",
+                  "godName": "Merlin",
+                  "displayName": "Opal",
+                  "target": "variant",
+                  "appliedTo": "Base Merlin → Mastery Opal",
+                  "skinKey": "Merlin",
+                  "skinName": "Base Merlin",
+                  "variantName": "Mastery Opal",
+                  "parentSkinKey": "Merlin",
+                  "parentSkinName": "Base Merlin",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascension",
+                    "label": "ASCENSION REWARD",
+                    "text": "This item is acquired from leveling up Merlin's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "RARE",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V",
+                "rarityNote": "Rare"
+              },
+              "information": [
+                {
+                  "key": "ascension",
+                  "label": "ASCENSION REWARD",
+                  "text": "This item is acquired from leveling up Merlin's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "RARE",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
-              "name": "Mastery Shadow",
-              "icon": "app/data/NewGodSkins/Merlin/Skins/Mastery/T_Merlin_Icon_Shadow.png",
+              "name": "Mastery Radiant",
+              "icon": "app/data/NewGodSkins/Merlin/Skins/Mastery/T_Merlin_Icon_Light.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/merlin/Screenshot (689).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Merlin",
+                "displayName": "Radiant",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "screenshot": "app/data/God Renders/merlin/Screenshot (689).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/merlin/Screenshot (689).png",
+                  "fileName": "Screenshot (689).png",
+                  "godName": "Merlin",
+                  "displayName": "Radiant",
+                  "target": "variant",
+                  "appliedTo": "Base Merlin → Mastery Radiant",
+                  "skinKey": "Merlin",
+                  "skinName": "Base Merlin",
+                  "variantName": "Mastery Radiant",
+                  "parentSkinKey": "Merlin",
+                  "parentSkinName": "Base Merlin",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascension",
+                    "label": "ASCENSION REWARD",
+                    "text": "This item is acquired from leveling up Merlin's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "RARE",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)",
+                "rarityNote": "Rare"
+              },
+              "information": [
+                {
+                  "key": "ascension",
+                  "label": "ASCENSION REWARD",
+                  "text": "This item is acquired from leveling up Merlin's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "RARE",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/merlin/Screenshot (680).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Merlin",
+            "displayName": "Base",
+            "rarity": null,
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/merlin/Screenshot (680).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/merlin/Screenshot (680).png",
+              "fileName": "Screenshot (680).png",
+              "godName": "Merlin",
+              "displayName": "Base",
+              "target": "skin",
+              "appliedTo": "Base Merlin",
+              "skinKey": "Merlin",
+              "skinName": "Base Merlin",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "0",
+                "owned": true
+              }
+            }
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "skinKey": "Shadow",
+          "skinName": "Shadow",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900"
+          },
+          "rarity": "Heroic",
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": true,
+          "isMasteryShadowSkin": true,
+          "isCrossGen": false,
+          "type": "Mastery Shadow",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png",
+            "cardArt": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png",
+            "icon": "app/data/NewGodSkins/Merlin/Skins/Mastery/T_Merlin_Icon_Shadow.png"
+          },
+          "cardArt": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png",
+          "skin": "app/data/NewGodSkins/Merlin/Skins/Mastery/t_Merlin_Card_Mastery.png",
+          "icon": "app/data/NewGodSkins/Merlin/Skins/Mastery/T_Merlin_Icon_Shadow.png",
+          "masteryFromDisk": true,
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+          "price": {
+            "diamonds": "900"
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/merlin/Screenshot (686).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Merlin",
+            "displayName": "Shadow",
+            "rarity": "Heroic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/merlin/Screenshot (686).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/merlin/Screenshot (686).png",
+              "fileName": "Screenshot (686).png",
+              "godName": "Merlin",
+              "displayName": "Shadow",
+              "target": "skin",
+              "appliedTo": "Shadow",
+              "skinKey": "Shadow",
+              "skinName": "Shadow",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "900",
+                "owned": false
+              },
+              "tier": "Heroic"
+            },
+            "information": [
+              {
+                "key": "ascension",
+                "label": "ASCENSION REWARD",
+                "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+              },
+              {
+                "key": "rare",
+                "label": "RARE",
+                "text": "This is a rare item and may only appear on special occasions or in specific Events."
+              }
+            ]
+          },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascension",
+              "label": "ASCENSION REWARD",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "RARE",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
           ]
         },
         {
           "skinKey": "CosmicConjurer",
           "skinName": "Cosmic Conjurer",
-          "cost": null,
-          "rarity": null,
+          "cost": {
+            "currency": "diamonds",
+            "amount": "1200"
+          },
+          "rarity": "Epic",
           "isBaseSkin": false,
           "isPrism": false,
           "isRecolor": false,
@@ -75,16 +426,79 @@
             "icon": "app/data/NewGodSkins/Merlin/Skins/CosmicConjurer/t_GodPortrait_CosmicConjurer.png"
           },
           "price": {
-            "gems": "",
-            "diamonds": "",
-            "gemsdia": ""
+            "diamonds": "1200"
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/merlin/Screenshot (681).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Merlin",
+            "displayName": "Cosmic Conjurer",
+            "rarity": "Epic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/merlin/Screenshot (681).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/merlin/Screenshot (681).png",
+              "fileName": "Screenshot (681).png",
+              "godName": "Merlin",
+              "displayName": "Cosmic Conjurer",
+              "target": "skin",
+              "appliedTo": "Cosmic Conjurer",
+              "skinKey": "CosmicConjurer",
+              "skinName": "Cosmic Conjurer",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "1200",
+                "owned": false
+              },
+              "tier": "Epic"
+            },
+            "information": [
+              {
+                "key": "crossgen",
+                "label": "CROSS-GEN",
+                "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
+              },
+              {
+                "key": "standard",
+                "label": "STANDARD",
+                "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+              }
+            ]
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
+          "information": [
+            {
+              "key": "crossgen",
+              "label": "CROSS-GEN",
+              "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
+            },
+            {
+              "key": "standard",
+              "label": "STANDARD",
+              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+            }
+          ],
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — may appear in chests or events"
           }
         },
         {
           "skinKey": "MagicMischief",
           "skinName": "Magic Mischief",
           "cost": null,
-          "rarity": null,
+          "rarity": "Epic",
           "isBaseSkin": false,
           "isPrism": true,
           "isRecolor": false,
@@ -102,22 +516,307 @@
           },
           "variants": [
             {
-              "name": "Prism 1",
+              "name": "Flamekeeper",
               "cardArt": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinCard_Merlin_MysticMischief_Prism1.png",
               "skin": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinCard_Merlin_MysticMischief_Prism1.png",
-              "icon": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinPortrait_Merlin_MysticMischief__Prism1.png"
+              "icon": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinPortrait_Merlin_MysticMischief__Prism1.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/merlin/Screenshot (683).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Merlin",
+                "displayName": "Magic Mischief - Flamekeeper",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/merlin/Screenshot (683).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/merlin/Screenshot (683).png",
+                  "fileName": "Screenshot (683).png",
+                  "godName": "Merlin",
+                  "displayName": "Magic Mischief - Flamekeeper",
+                  "target": "variant",
+                  "appliedTo": "Magic Mischief → Prism 1",
+                  "skinKey": "MagicMischief",
+                  "skinName": "Magic Mischief",
+                  "variantName": "Prism 1",
+                  "parentSkinKey": "MagicMischief",
+                  "parentSkinName": "Magic Mischief",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "prism",
+                    "label": "PRISM",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  },
+                  {
+                    "key": "supporter",
+                    "label": "SUPPORTER PREMIER",
+                    "text": "Select Diamond-only items for those who wish to show their support and help fund the ongoing development of SMITE 2."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "prismNote": true,
+                "source": "prism",
+                "displayText": "Prism variant"
+              },
+              "information": [
+                {
+                  "key": "prism",
+                  "label": "PRISM",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                },
+                {
+                  "key": "supporter",
+                  "label": "SUPPORTER PREMIER",
+                  "text": "Select Diamond-only items for those who wish to show their support and help fund the ongoing development of SMITE 2."
+                }
+              ]
             },
             {
-              "name": "Prism 2",
+              "name": "Emerald Sage",
               "cardArt": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinCard_Merlin_MysticMischief_Prism2.png",
               "skin": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinCard_Merlin_MysticMischief_Prism2.png",
-              "icon": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinPortrait_Merlin_MysticMischief__Prism2.png"
+              "icon": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinPortrait_Merlin_MysticMischief__Prism2.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/merlin/Screenshot (684).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Merlin",
+                "displayName": "Magic Mischief - Emerald Sage",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/merlin/Screenshot (684).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/merlin/Screenshot (684).png",
+                  "fileName": "Screenshot (684).png",
+                  "godName": "Merlin",
+                  "displayName": "Magic Mischief - Emerald Sage",
+                  "target": "variant",
+                  "appliedTo": "Magic Mischief → Prism 2",
+                  "skinKey": "MagicMischief",
+                  "skinName": "Magic Mischief",
+                  "variantName": "Prism 2",
+                  "parentSkinKey": "MagicMischief",
+                  "parentSkinName": "Magic Mischief",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "prism",
+                    "label": "PRISM",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  },
+                  {
+                    "key": "supporter",
+                    "label": "SUPPORTER PREMIER",
+                    "text": "Select Diamond-only items for those who wish to show their support and help fund the ongoing development of SMITE 2."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "prismNote": true,
+                "source": "prism",
+                "displayText": "Prism variant"
+              },
+              "information": [
+                {
+                  "key": "prism",
+                  "label": "PRISM",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                },
+                {
+                  "key": "supporter",
+                  "label": "SUPPORTER PREMIER",
+                  "text": "Select Diamond-only items for those who wish to show their support and help fund the ongoing development of SMITE 2."
+                }
+              ]
             },
             {
-              "name": "Prism 3",
+              "name": "Glimmermancer",
               "cardArt": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinCard_Merlin_MysticMischief_Prism3.png",
               "skin": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinCard_Merlin_MysticMischief_Prism3.png",
-              "icon": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinPortrait_Merlin_MysticMischief__Prism3.png"
+              "icon": "app/data/NewGodSkins/Merlin/Skins/MysticMischief/t_SkinPortrait_Merlin_MysticMischief__Prism3.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/merlin/Screenshot (685).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Merlin",
+                "displayName": "Magic Mischief - Glimmermancer",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/merlin/Screenshot (685).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/merlin/Screenshot (685).png",
+                  "fileName": "Screenshot (685).png",
+                  "godName": "Merlin",
+                  "displayName": "Magic Mischief - Glimmermancer",
+                  "target": "variant",
+                  "appliedTo": "Magic Mischief → Prism 3",
+                  "skinKey": "MagicMischief",
+                  "skinName": "Magic Mischief",
+                  "variantName": "Prism 3",
+                  "parentSkinKey": "MagicMischief",
+                  "parentSkinName": "Magic Mischief",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "prism",
+                    "label": "PRISM",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  },
+                  {
+                    "key": "supporter",
+                    "label": "SUPPORTER PREMIER",
+                    "text": "Select Diamond-only items for those who wish to show their support and help fund the ongoing development of SMITE 2."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "prismNote": true,
+                "source": "prism",
+                "displayText": "Prism variant"
+              },
+              "information": [
+                {
+                  "key": "prism",
+                  "label": "PRISM",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                },
+                {
+                  "key": "supporter",
+                  "label": "SUPPORTER PREMIER",
+                  "text": "Select Diamond-only items for those who wish to show their support and help fund the ongoing development of SMITE 2."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/merlin/Screenshot (682).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Merlin",
+            "displayName": "Magic Mischief",
+            "rarity": "Epic",
+            "gridBadge": {
+              "type": "prism",
+              "rank": null,
+              "label": "prism"
+            },
+            "screenshot": "app/data/God Renders/merlin/Screenshot (682).png",
+            "extractedAt": "2026-06-22",
+            "buttonText": "GO TO",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/merlin/Screenshot (682).png",
+              "fileName": "Screenshot (682).png",
+              "godName": "Merlin",
+              "displayName": "Magic Mischief",
+              "target": "skin",
+              "appliedTo": "Magic Mischief",
+              "skinKey": "MagicMischief",
+              "skinName": "Magic Mischief",
+              "tier": "Epic"
+            },
+            "information": [
+              {
+                "key": "wandering",
+                "label": "WANDERING MARKET",
+                "text": "Acquired in the 'Spellbound Realms' Collection."
+              },
+              {
+                "key": "prismsAvailable",
+                "label": "Prisms Available",
+                "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+              },
+              {
+                "key": "special",
+                "label": "SPECIAL",
+                "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+              }
+            ]
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
+          "unlock": {
+            "source": "event",
+            "displayText": "Wandering Market — Spellbound Realms"
+          },
+          "information": [
+            {
+              "key": "wandering",
+              "label": "WANDERING MARKET",
+              "text": "Acquired in the 'Spellbound Realms' Collection."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+            },
+            {
+              "key": "special",
+              "label": "SPECIAL",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
             }
           ]
         }
@@ -152,32 +851,380 @@
           },
           "variants": [
             {
-              "name": "Mastery Light",
-              "icon": "app/data/NewGodSkins/Mordred/Skins/Mastery/T_Mordred_Icon_Light.png",
-              "masteryFromDisk": true,
-              "cardArt": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png"
-            },
-            {
               "name": "Mastery Onyx",
               "icon": "app/data/NewGodSkins/Mordred/Skins/Mastery/T_Mordred_Icon_Onyx.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              },
+              "loadout": {
+                "screenshot": "app/data/God Renders/mordred/Screenshot (699).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Mordred",
+                "displayName": "Onyx",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/mordred/Screenshot (699).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/mordred/Screenshot (699).png",
+                  "fileName": "Screenshot (699).png",
+                  "godName": "Mordred",
+                  "displayName": "Onyx",
+                  "target": "variant",
+                  "appliedTo": "Base Mordred → Mastery Onyx",
+                  "skinKey": "Mordred",
+                  "skinName": "Base Mordred",
+                  "variantName": "Mastery Onyx",
+                  "parentSkinKey": "Mordred",
+                  "parentSkinName": "Base Mordred",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascension",
+                    "label": "ASCENSION REWARD",
+                    "text": "This item is acquired from leveling up Mordred's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "RARE",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "information": [
+                {
+                  "key": "ascension",
+                  "label": "ASCENSION REWARD",
+                  "text": "This item is acquired from leveling up Mordred's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "RARE",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
               "name": "Mastery Opal",
               "icon": "app/data/NewGodSkins/Mordred/Skins/Mastery/T_Mordred_Icon_Opal.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/mordred/Screenshot (700).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Mordred",
+                "displayName": "Opal",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/mordred/Screenshot (700).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/mordred/Screenshot (700).png",
+                  "fileName": "Screenshot (700).png",
+                  "godName": "Mordred",
+                  "displayName": "Opal",
+                  "target": "variant",
+                  "appliedTo": "Base Mordred → Mastery Opal",
+                  "skinKey": "Mordred",
+                  "skinName": "Base Mordred",
+                  "variantName": "Mastery Opal",
+                  "parentSkinKey": "Mordred",
+                  "parentSkinName": "Base Mordred",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascension",
+                    "label": "ASCENSION REWARD",
+                    "text": "This item is acquired from leveling up Mordred's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "RARE",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V",
+                "rarityNote": "Rare"
+              },
+              "information": [
+                {
+                  "key": "ascension",
+                  "label": "ASCENSION REWARD",
+                  "text": "This item is acquired from leveling up Mordred's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "RARE",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
-              "name": "Mastery Shadow",
-              "icon": "app/data/NewGodSkins/Mordred/Skins/Mastery/T_Mordred_Icon_Shadow.png",
+              "name": "Mastery Radiant",
+              "icon": "app/data/NewGodSkins/Mordred/Skins/Mastery/T_Mordred_Icon_Light.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png"
+              "skin": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/mordred/Screenshot (701).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Mordred",
+                "displayName": "Radiant",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "screenshot": "app/data/God Renders/mordred/Screenshot (701).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/mordred/Screenshot (701).png",
+                  "fileName": "Screenshot (701).png",
+                  "godName": "Mordred",
+                  "displayName": "Radiant",
+                  "target": "variant",
+                  "appliedTo": "Base Mordred → Mastery Radiant",
+                  "skinKey": "Mordred",
+                  "skinName": "Base Mordred",
+                  "variantName": "Mastery Radiant",
+                  "parentSkinKey": "Mordred",
+                  "parentSkinName": "Base Mordred",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascension",
+                    "label": "ASCENSION REWARD",
+                    "text": "This item is acquired from leveling up Mordred's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "RARE",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)",
+                "rarityNote": "Rare"
+              },
+              "information": [
+                {
+                  "key": "ascension",
+                  "label": "ASCENSION REWARD",
+                  "text": "This item is acquired from leveling up Mordred's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "RARE",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/mordred/Screenshot (690).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Mordred",
+            "displayName": "Base",
+            "rarity": null,
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/mordred/Screenshot (690).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/mordred/Screenshot (690).png",
+              "fileName": "Screenshot (690).png",
+              "godName": "Mordred",
+              "displayName": "Base",
+              "target": "skin",
+              "appliedTo": "Base Mordred",
+              "skinKey": "Mordred",
+              "skinName": "Base Mordred",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "0",
+                "owned": true
+              }
+            }
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "skinKey": "Shadow",
+          "skinName": "Shadow",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900"
+          },
+          "rarity": "Heroic",
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": true,
+          "isMasteryShadowSkin": true,
+          "isCrossGen": false,
+          "type": "Mastery Shadow",
+          "assets": {
+            "skin": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png",
+            "cardArt": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png",
+            "icon": "app/data/NewGodSkins/Mordred/Skins/Mastery/T_Mordred_Icon_Shadow.png"
+          },
+          "cardArt": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png",
+          "skin": "app/data/NewGodSkins/Mordred/Skins/Mastery/t_Mordred_Card_Mastery.png",
+          "icon": "app/data/NewGodSkins/Mordred/Skins/Mastery/T_Mordred_Icon_Shadow.png",
+          "masteryFromDisk": true,
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+          "price": {
+            "diamonds": "900"
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/mordred/Screenshot (698).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Mordred",
+            "displayName": "Shadow",
+            "rarity": "Heroic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/mordred/Screenshot (698).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/mordred/Screenshot (698).png",
+              "fileName": "Screenshot (698).png",
+              "godName": "Mordred",
+              "displayName": "Shadow",
+              "target": "skin",
+              "appliedTo": "Shadow",
+              "skinKey": "Shadow",
+              "skinName": "Shadow",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "900",
+                "owned": false
+              },
+              "tier": "Heroic"
+            },
+            "information": [
+              {
+                "key": "ascension",
+                "label": "ASCENSION REWARD",
+                "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+              },
+              {
+                "key": "rare",
+                "label": "RARE",
+                "text": "This is a rare item and may only appear on special occasions or in specific Events."
+              }
+            ]
+          },
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          },
+          "information": [
+            {
+              "key": "ascension",
+              "label": "ASCENSION REWARD",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "RARE",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
           ]
         },
@@ -185,7 +1232,7 @@
           "skinKey": "Grovebound",
           "skinName": "Grovebound",
           "cost": null,
-          "rarity": null,
+          "rarity": "Epic",
           "isBaseSkin": false,
           "isPrism": true,
           "isRecolor": false,
@@ -203,30 +1250,305 @@
           },
           "variants": [
             {
-              "name": "Prism 1",
+              "name": "Lantana",
               "cardArt": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinCard_Mordred_Grovebound_Prism01.png",
               "skin": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinCard_Mordred_Grovebound_Prism01.png",
-              "icon": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinPortrait_Mordred_Grovebound_Prism01.png"
+              "icon": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinPortrait_Mordred_Grovebound_Prism01.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/mordred/Screenshot (692).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Mordred",
+                "displayName": "Grovebound - Lantana",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/mordred/Screenshot (692).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/mordred/Screenshot (692).png",
+                  "fileName": "Screenshot (692).png",
+                  "godName": "Mordred",
+                  "displayName": "Grovebound - Lantana",
+                  "target": "variant",
+                  "appliedTo": "Grovebound → Prism 1",
+                  "skinKey": "Grovebound",
+                  "skinName": "Grovebound",
+                  "variantName": "Prism 1",
+                  "parentSkinKey": "Grovebound",
+                  "parentSkinName": "Grovebound",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "archfiend",
+                    "label": "REIGN OF THE ARCHFIEND EVENT",
+                    "text": "This item is acquired from the Reign of the Archfiend Event."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "PRISM",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "event",
+                "prismNote": true,
+                "displayText": "Prism variant"
+              },
+              "information": [
+                {
+                  "key": "archfiend",
+                  "label": "REIGN OF THE ARCHFIEND EVENT",
+                  "text": "This item is acquired from the Reign of the Archfiend Event."
+                },
+                {
+                  "key": "prism",
+                  "label": "PRISM",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
             },
             {
-              "name": "Prism 2",
+              "name": "Nightshade",
               "cardArt": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinCard_Mordred_Grovebound_Prism02.png",
               "skin": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinCard_Mordred_Grovebound_Prism02.png",
-              "icon": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinPortrait_Mordred_Grovebound_Prism02.png"
+              "icon": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinPortrait_Mordred_Grovebound_Prism02.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/mordred/Screenshot (695).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Mordred",
+                "displayName": "Grovebound - Nightshade",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/mordred/Screenshot (695).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/mordred/Screenshot (695).png",
+                  "fileName": "Screenshot (695).png",
+                  "godName": "Mordred",
+                  "displayName": "Grovebound - Nightshade",
+                  "target": "variant",
+                  "appliedTo": "Grovebound → Prism 2",
+                  "skinKey": "Grovebound",
+                  "skinName": "Grovebound",
+                  "variantName": "Prism 2",
+                  "parentSkinKey": "Grovebound",
+                  "parentSkinName": "Grovebound",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "archfiend",
+                    "label": "REIGN OF THE ARCHFIEND EVENT",
+                    "text": "This item is acquired from the Reign of the Archfiend Event."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "PRISM",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "event",
+                "prismNote": true,
+                "displayText": "Prism variant"
+              },
+              "information": [
+                {
+                  "key": "archfiend",
+                  "label": "REIGN OF THE ARCHFIEND EVENT",
+                  "text": "This item is acquired from the Reign of the Archfiend Event."
+                },
+                {
+                  "key": "prism",
+                  "label": "PRISM",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
             },
             {
-              "name": "Prism 3",
+              "name": "Oleander",
               "cardArt": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinCard_Mordred_Grovebound_Prism03.png",
               "skin": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinCard_Mordred_Grovebound_Prism03.png",
-              "icon": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinPortrait_Mordred_Grovebound_Prism03.png"
+              "icon": "app/data/NewGodSkins/Mordred/Skins/Grovebound/t_SkinPortrait_Mordred_Grovebound_Prism03.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/mordred/Screenshot (696).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Mordred",
+                "displayName": "Grovebound - Oleander",
+                "rarity": "Prisms",
+                "gridBadge": {
+                  "type": "prism",
+                  "rank": null,
+                  "label": "prism"
+                },
+                "screenshot": "app/data/God Renders/mordred/Screenshot (696).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/mordred/Screenshot (696).png",
+                  "fileName": "Screenshot (696).png",
+                  "godName": "Mordred",
+                  "displayName": "Grovebound - Oleander",
+                  "target": "variant",
+                  "appliedTo": "Grovebound → Prism 3",
+                  "skinKey": "Grovebound",
+                  "skinName": "Grovebound",
+                  "variantName": "Prism 3",
+                  "parentSkinKey": "Grovebound",
+                  "parentSkinName": "Grovebound",
+                  "tier": "Prisms"
+                },
+                "information": [
+                  {
+                    "key": "archfiend",
+                    "label": "REIGN OF THE ARCHFIEND EVENT",
+                    "text": "This item is acquired from the Reign of the Archfiend Event."
+                  },
+                  {
+                    "key": "prism",
+                    "label": "PRISM",
+                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                  }
+                ]
+              },
+              "rarity": "Prisms",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
+              "unlock": {
+                "source": "event",
+                "prismNote": true,
+                "displayText": "Prism variant"
+              },
+              "information": [
+                {
+                  "key": "archfiend",
+                  "label": "REIGN OF THE ARCHFIEND EVENT",
+                  "text": "This item is acquired from the Reign of the Archfiend Event."
+                },
+                {
+                  "key": "prism",
+                  "label": "PRISM",
+                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/mordred/Screenshot (691).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Mordred",
+            "displayName": "Grovebound",
+            "rarity": "Epic",
+            "gridBadge": {
+              "type": "prism",
+              "rank": null,
+              "label": "prism"
+            },
+            "screenshot": "app/data/God Renders/mordred/Screenshot (691).png",
+            "extractedAt": "2026-06-22",
+            "buttonText": "GO TO",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/mordred/Screenshot (691).png",
+              "fileName": "Screenshot (691).png",
+              "godName": "Mordred",
+              "displayName": "Grovebound",
+              "target": "skin",
+              "appliedTo": "Grovebound",
+              "skinKey": "Grovebound",
+              "skinName": "Grovebound",
+              "tier": "Epic"
+            },
+            "information": [
+              {
+                "key": "archfiend",
+                "label": "REIGN OF THE ARCHFIEND EVENT",
+                "text": "This item is acquired from the Reign of the Archfiend Event."
+              },
+              {
+                "key": "prismsAvailable",
+                "label": "Prisms Available",
+                "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
+              }
+            ]
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
+          "unlock": {
+            "source": "event",
+            "displayText": "Reign of the Archfiend Event"
+          },
+          "information": [
+            {
+              "key": "archfiend",
+              "label": "REIGN OF THE ARCHFIEND EVENT",
+              "text": "This item is acquired from the Reign of the Archfiend Event."
+            },
+            {
+              "key": "prismsAvailable",
+              "label": "Prisms Available",
+              "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
             }
           ]
         },
         {
           "skinKey": "LichSplash",
-          "skinName": "Lich Splash",
+          "skinName": "Lichborne",
           "cost": null,
-          "rarity": null,
+          "rarity": "Epic",
           "isBaseSkin": false,
           "isPrism": false,
           "isRecolor": false,
@@ -241,7 +1563,68 @@
             "gems": "",
             "diamonds": "",
             "gemsdia": ""
-          }
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/mordred/Screenshot (697).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Mordred",
+            "displayName": "Lichborne",
+            "rarity": "Epic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/mordred/Screenshot (697).png",
+            "extractedAt": "2026-06-22",
+            "buttonText": "GO TO",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/mordred/Screenshot (697).png",
+              "fileName": "Screenshot (697).png",
+              "godName": "Mordred",
+              "displayName": "Lichborne",
+              "target": "skin",
+              "appliedTo": "Lichborne",
+              "skinKey": "LichSplash",
+              "skinName": "Lichborne",
+              "tier": "Epic"
+            },
+            "information": [
+              {
+                "key": "wandering",
+                "label": "WANDERING MARKET",
+                "text": "Acquired in the \"Rise of the Gods\" Collection."
+              },
+              {
+                "key": "special",
+                "label": "SPECIAL",
+                "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+              }
+            ]
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
+          "unlock": {
+            "source": "event",
+            "displayText": "Special event"
+          },
+          "information": [
+            {
+              "key": "wandering",
+              "label": "WANDERING MARKET",
+              "text": "Acquired in the \"Rise of the Gods\" Collection."
+            },
+            {
+              "key": "special",
+              "label": "SPECIAL",
+              "text": "This item is from a special Event and may appear for direct purchase or in Chests."
+            }
+          ]
         }
       ]
     },
@@ -270,46 +1653,392 @@
             "inGame": "app/data/NewGodSkins/MorganLeFay/Default/t_GodFull_MorganLeFay.png"
           },
           "price": {
-            "gems": "",
-            "diamonds": "0",
-            "gemsdia": ""
+            "diamonds": "0"
           },
           "variants": [
-            {
-              "name": "Mastery Light",
-              "icon": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/T_MorganLeFay_Icon_Light.png",
-              "masteryFromDisk": true,
-              "cardArt": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png",
-              "skin": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png"
-            },
             {
               "name": "Mastery Onyx",
               "icon": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/T_MorganLeFay_Icon_Onyx.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png",
-              "skin": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png"
+              "skin": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/morgan le fay/Screenshot (705).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Morgan Le Fay",
+                "displayName": "Onyx",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/morgan le fay/Screenshot (705).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/morgan le fay/Screenshot (705).png",
+                  "fileName": "Screenshot (705).png",
+                  "godName": "Morgan Le Fay",
+                  "displayName": "Onyx",
+                  "target": "variant",
+                  "appliedTo": "Base Morgan Le Fay → Mastery Onyx",
+                  "skinKey": "MorganLeFay",
+                  "skinName": "Base Morgan Le Fay",
+                  "variantName": "Mastery Onyx",
+                  "parentSkinKey": "MorganLeFay",
+                  "parentSkinName": "Base Morgan Le Fay",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascension",
+                    "label": "ASCENSION REWARD",
+                    "text": "This item is acquired from leveling up Morgan Le Fay's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "RARE",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              },
+              "information": [
+                {
+                  "key": "ascension",
+                  "label": "ASCENSION REWARD",
+                  "text": "This item is acquired from leveling up Morgan Le Fay's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "RARE",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
               "name": "Mastery Opal",
               "icon": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/T_MorganLeFay_Icon_Opal.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png",
-              "skin": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png"
+              "skin": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/morgan le fay/Screenshot (706).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Morgan Le Fay",
+                "displayName": "Opal",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "screenshot": "app/data/God Renders/morgan le fay/Screenshot (706).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/morgan le fay/Screenshot (706).png",
+                  "fileName": "Screenshot (706).png",
+                  "godName": "Morgan Le Fay",
+                  "displayName": "Opal",
+                  "target": "variant",
+                  "appliedTo": "Base Morgan Le Fay → Mastery Opal",
+                  "skinKey": "MorganLeFay",
+                  "skinName": "Base Morgan Le Fay",
+                  "variantName": "Mastery Opal",
+                  "parentSkinKey": "MorganLeFay",
+                  "parentSkinName": "Base Morgan Le Fay",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascension",
+                    "label": "ASCENSION REWARD",
+                    "text": "This item is acquired from leveling up Morgan Le Fay's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "RARE",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V",
+                "rarityNote": "Rare"
+              },
+              "information": [
+                {
+                  "key": "ascension",
+                  "label": "ASCENSION REWARD",
+                  "text": "This item is acquired from leveling up Morgan Le Fay's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "RARE",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
             },
             {
-              "name": "Mastery Shadow",
-              "icon": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/T_MorganLeFay_Icon_Shadow.png",
+              "name": "Mastery Radiant",
+              "icon": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/T_MorganLeFay_Icon_Light.png",
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png",
-              "skin": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png"
+              "skin": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png",
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "loadout": {
+                "screenshot": "app/data/God Renders/morgan le fay/Screenshot (707).png",
+                "frame": {
+                  "focalX": 50,
+                  "focalY": 50,
+                  "zoom": 1.148936170212766,
+                  "aspectWidth": 586,
+                  "aspectHeight": 940,
+                  "cropWidth": 586,
+                  "cropHeight": 940
+                }
+              },
+              "loadoutMeta": {
+                "godName": "Morgan Le Fay",
+                "displayName": "Radiant",
+                "rarity": "Heroic",
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "screenshot": "app/data/God Renders/morgan le fay/Screenshot (707).png",
+                "extractedAt": "2026-06-22",
+                "buttonText": "GO TO",
+                "screenshotTag": {
+                  "screenshot": "app/data/God Renders/morgan le fay/Screenshot (707).png",
+                  "fileName": "Screenshot (707).png",
+                  "godName": "Morgan Le Fay",
+                  "displayName": "Radiant",
+                  "target": "variant",
+                  "appliedTo": "Base Morgan Le Fay → Mastery Radiant",
+                  "skinKey": "MorganLeFay",
+                  "skinName": "Base Morgan Le Fay",
+                  "variantName": "Mastery Radiant",
+                  "parentSkinKey": "MorganLeFay",
+                  "parentSkinName": "Base Morgan Le Fay",
+                  "tier": "Heroic"
+                },
+                "information": [
+                  {
+                    "key": "ascension",
+                    "label": "ASCENSION REWARD",
+                    "text": "This item is acquired from leveling up Morgan Le Fay's Ascension Pass."
+                  },
+                  {
+                    "key": "rare",
+                    "label": "RARE",
+                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                  }
+                ]
+              },
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)",
+                "rarityNote": "Rare"
+              },
+              "information": [
+                {
+                  "key": "ascension",
+                  "label": "ASCENSION REWARD",
+                  "text": "This item is acquired from leveling up Morgan Le Fay's Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "RARE",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ]
+            }
+          ],
+          "loadout": {
+            "screenshot": "app/data/God Renders/morgan le fay/Screenshot (702).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Morgan Le Fay",
+            "displayName": "Base",
+            "rarity": null,
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/morgan le fay/Screenshot (702).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/morgan le fay/Screenshot (702).png",
+              "fileName": "Screenshot (702).png",
+              "godName": "Morgan Le Fay",
+              "displayName": "Base",
+              "target": "skin",
+              "appliedTo": "Base Morgan Le Fay",
+              "skinKey": "MorganLeFay",
+              "skinName": "Base Morgan Le Fay",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "0",
+                "owned": true
+              }
+            }
+          },
+          "unlock": {
+            "source": "base",
+            "displayText": "Base god"
+          }
+        },
+        {
+          "skinKey": "Shadow",
+          "skinName": "Shadow",
+          "cost": {
+            "currency": "diamonds",
+            "amount": "900"
+          },
+          "rarity": "Heroic",
+          "isBaseSkin": false,
+          "isPrism": false,
+          "isRecolor": false,
+          "isMastery": true,
+          "isMasteryShadowSkin": true,
+          "isCrossGen": false,
+          "type": "Mastery Shadow",
+          "assets": {
+            "skin": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png",
+            "cardArt": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png",
+            "icon": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/T_MorganLeFay_Icon_Shadow.png"
+          },
+          "cardArt": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png",
+          "skin": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/t_GodCard_MorganLeFay_Mastery.png",
+          "icon": "app/data/NewGodSkins/MorganLeFay/Skins/Mastery/T_MorganLeFay_Icon_Shadow.png",
+          "masteryFromDisk": true,
+          "unlock": {
+            "source": "ascension",
+            "displayText": "Ascension Pass — rare skin (may appear in events)",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare"
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+          "price": {
+            "diamonds": "900"
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/morgan le fay/Screenshot (704).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Morgan Le Fay",
+            "displayName": "Shadow",
+            "rarity": "Heroic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/morgan le fay/Screenshot (704).png",
+            "extractedAt": "2026-06-22",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/morgan le fay/Screenshot (704).png",
+              "fileName": "Screenshot (704).png",
+              "godName": "Morgan Le Fay",
+              "displayName": "Shadow",
+              "target": "skin",
+              "appliedTo": "Shadow",
+              "skinKey": "Shadow",
+              "skinName": "Shadow",
+              "cost": {
+                "currency": "diamonds",
+                "amount": "900",
+                "owned": false
+              },
+              "tier": "Heroic"
+            },
+            "information": [
+              {
+                "key": "ascension",
+                "label": "ASCENSION REWARD",
+                "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+              },
+              {
+                "key": "rare",
+                "label": "RARE",
+                "text": "This is a rare item and may only appear on special occasions or in specific Events."
+              }
+            ]
+          },
+          "information": [
+            {
+              "key": "ascension",
+              "label": "ASCENSION REWARD",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "RARE",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
           ]
         },
         {
           "skinKey": "DuskGllmmer",
-          "skinName": "Dusk Gllmmer",
+          "skinName": "Dusk Glimmer",
           "cost": null,
-          "rarity": null,
+          "rarity": "Classic",
           "isBaseSkin": false,
           "isPrism": false,
           "isRecolor": false,
@@ -324,7 +2053,68 @@
             "gems": "",
             "diamonds": "",
             "gemsdia": ""
-          }
+          },
+          "loadout": {
+            "screenshot": "app/data/God Renders/morgan le fay/Screenshot (703).png",
+            "frame": {
+              "focalX": 50,
+              "focalY": 50,
+              "zoom": 1.148936170212766,
+              "aspectWidth": 586,
+              "aspectHeight": 940,
+              "cropWidth": 586,
+              "cropHeight": 940
+            }
+          },
+          "loadoutMeta": {
+            "godName": "Morgan Le Fay",
+            "displayName": "Dusk Glimmer",
+            "rarity": "Classic",
+            "gridBadge": null,
+            "screenshot": "app/data/God Renders/morgan le fay/Screenshot (703).png",
+            "extractedAt": "2026-06-22",
+            "buttonText": "GO TO",
+            "screenshotTag": {
+              "screenshot": "app/data/God Renders/morgan le fay/Screenshot (703).png",
+              "fileName": "Screenshot (703).png",
+              "godName": "Morgan Le Fay",
+              "displayName": "Dusk Glimmer",
+              "target": "skin",
+              "appliedTo": "Dusk Glimmer",
+              "skinKey": "DuskGllmmer",
+              "skinName": "Dusk Glimmer",
+              "tier": "Classic"
+            },
+            "information": [
+              {
+                "key": "darkstar",
+                "label": "DAWN OF THE DARKSTAR EMPIRE",
+                "text": "This item was acquired in the \"Dawn of the Darkstar Empire\" Event."
+              },
+              {
+                "key": "traveler",
+                "label": "TRAVELER COLLECTION",
+                "text": "Acquired in the \"Dusk Glimmer\" Traveler."
+              }
+            ]
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_CommonTier.png",
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          },
+          "information": [
+            {
+              "key": "darkstar",
+              "label": "DAWN OF THE DARKSTAR EMPIRE",
+              "text": "This item was acquired in the \"Dawn of the Darkstar Empire\" Event."
+            },
+            {
+              "key": "traveler",
+              "label": "TRAVELER COLLECTION",
+              "text": "Acquired in the \"Dusk Glimmer\" Traveler."
+            }
+          ]
         }
       ]
     }

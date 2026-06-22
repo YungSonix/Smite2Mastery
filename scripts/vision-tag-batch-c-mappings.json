@@ -1,0 +1,3352 @@
+[
+  {
+    "godName": "Da Ji",
+    "folder": "da ji",
+    "fileName": "Screenshot (396).png",
+    "skinKey": "DaJi",
+    "skinName": "Base Da Ji",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Da Ji",
+    "folder": "da ji",
+    "fileName": "Screenshot (397).png",
+    "skinKey": "Devil_Punk",
+    "skinName": "Devil Punk",
+    "displayName": "Devil Punk"
+  },
+  {
+    "godName": "Da Ji",
+    "folder": "da ji",
+    "fileName": "Screenshot (398).png",
+    "skinKey": "Devil_Punk",
+    "skinName": "Devil Punk",
+    "variantName": "Prism 1",
+    "displayName": "Devil Punk - 1"
+  },
+  {
+    "godName": "Da Ji",
+    "folder": "da ji",
+    "fileName": "Screenshot (399).png",
+    "skinKey": "Devil_Punk",
+    "skinName": "Devil Punk",
+    "variantName": "Prism 2",
+    "displayName": "Devil Punk - 2"
+  },
+  {
+    "godName": "Da Ji",
+    "folder": "da ji",
+    "fileName": "Screenshot (400).png",
+    "skinKey": "Devil_Punk",
+    "skinName": "Devil Punk",
+    "variantName": "Prism 3",
+    "displayName": "Devil Punk - 3"
+  },
+  {
+    "godName": "Da Ji",
+    "folder": "da ji",
+    "fileName": "Screenshot (401).png",
+    "skinKey": "Devil_Punk",
+    "skinName": "Devil Punk",
+    "variantName": "Prism 4",
+    "displayName": "Devil Punk - 4"
+  },
+  {
+    "godName": "Da Ji",
+    "folder": "da ji",
+    "fileName": "Screenshot (402).png",
+    "skinKey": "Vixen",
+    "skinName": "Vixen",
+    "displayName": "Vixen"
+  },
+  {
+    "godName": "Da Ji",
+    "folder": "da ji",
+    "fileName": "Screenshot (403).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Heroic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Da Ji",
+    "folder": "da ji",
+    "fileName": "Screenshot (404).png",
+    "skinKey": "DaJi",
+    "skinName": "Base Da Ji",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Da Ji",
+    "folder": "da ji",
+    "fileName": "Screenshot (405).png",
+    "skinKey": "DaJi",
+    "skinName": "Base Da Ji",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Da Ji",
+    "folder": "da ji",
+    "fileName": "Screenshot (406).png",
+    "skinKey": "DaJi",
+    "skinName": "Base Da Ji",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Guan Yu",
+    "folder": "guan yu",
+    "fileName": "Screenshot (481).png",
+    "skinKey": "Guan_Yu",
+    "skinName": "Base Guan Yu",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Guan Yu",
+    "folder": "guan yu",
+    "fileName": "Screenshot (482).png",
+    "skinKey": "Unicorn",
+    "skinName": "Guan Unicorn",
+    "displayName": "Guan Unicorn"
+  },
+  {
+    "godName": "Guan Yu",
+    "folder": "guan yu",
+    "fileName": "Screenshot (483).png",
+    "skinKey": "Unicorn",
+    "skinName": "Guan Unicorn",
+    "variantName": "Prism 1",
+    "displayName": "Guan Unicorn - 1"
+  },
+  {
+    "godName": "Guan Yu",
+    "folder": "guan yu",
+    "fileName": "Screenshot (484).png",
+    "skinKey": "Unicorn",
+    "skinName": "Guan Unicorn",
+    "variantName": "Prism 2",
+    "displayName": "Guan Unicorn - 2"
+  },
+  {
+    "godName": "Guan Yu",
+    "folder": "guan yu",
+    "fileName": "Screenshot (485).png",
+    "skinKey": "Unicorn",
+    "skinName": "Guan Unicorn",
+    "variantName": "Prism 3",
+    "displayName": "Guan Unicorn - 3"
+  },
+  {
+    "godName": "Guan Yu",
+    "folder": "guan yu",
+    "fileName": "Screenshot (486).png",
+    "skinKey": "Unicorn",
+    "skinName": "Guan Unicorn",
+    "variantName": "Prism 4",
+    "displayName": "Guan Unicorn - 4"
+  },
+  {
+    "godName": "Guan Yu",
+    "folder": "guan yu",
+    "fileName": "Screenshot (487).png",
+    "skinKey": "WraithRider",
+    "skinName": "Wraith Rider",
+    "displayName": "Wraith Rider"
+  },
+  {
+    "godName": "Guan Yu",
+    "folder": "guan yu",
+    "fileName": "Screenshot (488).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Classic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Classic"
+  },
+  {
+    "godName": "Guan Yu",
+    "folder": "guan yu",
+    "fileName": "Screenshot (489).png",
+    "skinKey": "Guan_Yu",
+    "skinName": "Base Guan Yu",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Guan Yu",
+    "folder": "guan yu",
+    "fileName": "Screenshot (490).png",
+    "skinKey": "Guan_Yu",
+    "skinName": "Base Guan Yu",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Guan Yu",
+    "folder": "guan yu",
+    "fileName": "Screenshot (491).png",
+    "skinKey": "Guan_Yu",
+    "skinName": "Base Guan Yu",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Hou Yi",
+    "folder": "hou yi",
+    "fileName": "Screenshot (522).png",
+    "skinKey": "Hou Yi",
+    "skinName": "Base Hou Yi",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Hou Yi",
+    "folder": "hou yi",
+    "fileName": "Screenshot (523).png",
+    "skinKey": "GleamingArcher",
+    "skinName": "Gleaming Archer",
+    "displayName": "Gleaming Archer"
+  },
+  {
+    "godName": "Hou Yi",
+    "folder": "hou yi",
+    "fileName": "Screenshot (524).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Classic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Classic"
+  },
+  {
+    "godName": "Hou Yi",
+    "folder": "hou yi",
+    "fileName": "Screenshot (525).png",
+    "skinKey": "Hou Yi",
+    "skinName": "Base Hou Yi",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Hou Yi",
+    "folder": "hou yi",
+    "fileName": "Screenshot (526).png",
+    "skinKey": "Hou Yi",
+    "skinName": "Base Hou Yi",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Hou Yi",
+    "folder": "hou yi",
+    "fileName": "Screenshot (527).png",
+    "skinKey": "Hou Yi",
+    "skinName": "Base Hou Yi",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Hua Mulan",
+    "folder": "hua mulan",
+    "fileName": "Screenshot (528).png",
+    "skinKey": "Hua Mulan",
+    "skinName": "Base Hua Mulan",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Hua Mulan",
+    "folder": "hua mulan",
+    "fileName": "Screenshot (529).png",
+    "skinKey": "HighHonor",
+    "skinName": "High Honor",
+    "displayName": "High Honor"
+  },
+  {
+    "godName": "Hua Mulan",
+    "folder": "hua mulan",
+    "fileName": "Screenshot (530).png",
+    "skinKey": "Moolan",
+    "skinName": "Moolan",
+    "displayName": "Moolan"
+  },
+  {
+    "godName": "Hua Mulan",
+    "folder": "hua mulan",
+    "fileName": "Screenshot (531).png",
+    "skinKey": "Moolan",
+    "skinName": "Moolan",
+    "variantName": "Prism 1",
+    "displayName": "Moolan - 1"
+  },
+  {
+    "godName": "Hua Mulan",
+    "folder": "hua mulan",
+    "fileName": "Screenshot (532).png",
+    "skinKey": "Moolan",
+    "skinName": "Moolan",
+    "variantName": "Prism 2",
+    "displayName": "Moolan - 2"
+  },
+  {
+    "godName": "Hua Mulan",
+    "folder": "hua mulan",
+    "fileName": "Screenshot (533).png",
+    "skinKey": "Moolan",
+    "skinName": "Moolan",
+    "variantName": "Prism 3",
+    "displayName": "Moolan - 3"
+  },
+  {
+    "godName": "Hua Mulan",
+    "folder": "hua mulan",
+    "fileName": "Screenshot (534).png",
+    "skinKey": "MysteriousWarrior",
+    "skinName": "Mysterious Warrior",
+    "displayName": "Mysterious Warrior"
+  },
+  {
+    "godName": "Hua Mulan",
+    "folder": "hua mulan",
+    "fileName": "Screenshot (535).png",
+    "skinKey": "Sentai",
+    "skinName": "Sentai",
+    "displayName": "Sentai"
+  },
+  {
+    "godName": "Hua Mulan",
+    "folder": "hua mulan",
+    "fileName": "Screenshot (536).png",
+    "skinKey": "Sentai",
+    "skinName": "Sentai",
+    "variantName": "Prism B",
+    "displayName": "Sentai - B"
+  },
+  {
+    "godName": "Hua Mulan",
+    "folder": "hua mulan",
+    "fileName": "Screenshot (537).png",
+    "skinKey": "Sentai",
+    "skinName": "Sentai",
+    "variantName": "Prism C",
+    "displayName": "Sentai - C"
+  },
+  {
+    "godName": "Hua Mulan",
+    "folder": "hua mulan",
+    "fileName": "Screenshot (538).png",
+    "skinKey": "Sentai",
+    "skinName": "Sentai",
+    "variantName": "Prism D",
+    "displayName": "Sentai - D"
+  },
+  {
+    "godName": "Hua Mulan",
+    "folder": "hua mulan",
+    "fileName": "Screenshot (539).png",
+    "skinKey": "Sentai",
+    "skinName": "Sentai",
+    "variantName": "Prism E",
+    "displayName": "Sentai - E"
+  },
+  {
+    "godName": "Hua Mulan",
+    "folder": "hua mulan",
+    "fileName": "Screenshot (540).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Heroic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Hua Mulan",
+    "folder": "hua mulan",
+    "fileName": "Screenshot (541).png",
+    "skinKey": "Hua Mulan",
+    "skinName": "Base Hua Mulan",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Hua Mulan",
+    "folder": "hua mulan",
+    "fileName": "Screenshot (542).png",
+    "skinKey": "Hua Mulan",
+    "skinName": "Base Hua Mulan",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Hua Mulan",
+    "folder": "hua mulan",
+    "fileName": "Screenshot (543).png",
+    "skinKey": "Hua Mulan",
+    "skinName": "Base Hua Mulan",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Jing Wei",
+    "folder": "jing wei",
+    "fileName": "Screenshot (578).png",
+    "skinKey": "Jing Wei",
+    "skinName": "Base Jing Wei",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Jing Wei",
+    "folder": "jing wei",
+    "fileName": "Screenshot (579).png",
+    "skinKey": "BumbleBee",
+    "skinName": "Bumble Bee",
+    "displayName": "Bumble Bee"
+  },
+  {
+    "godName": "Jing Wei",
+    "folder": "jing wei",
+    "fileName": "Screenshot (580).png",
+    "skinKey": "CuteBat",
+    "skinName": "Cute Bat",
+    "displayName": "Cute Bat"
+  },
+  {
+    "godName": "Jing Wei",
+    "folder": "jing wei",
+    "fileName": "Screenshot (581).png",
+    "skinKey": "DragonHeart",
+    "skinName": "Dragon Heart",
+    "displayName": "Dragon Heart"
+  },
+  {
+    "godName": "Jing Wei",
+    "folder": "jing wei",
+    "fileName": "Screenshot (582).png",
+    "skinKey": "DragonHeart",
+    "skinName": "Dragon Heart",
+    "variantName": "Prism 1",
+    "displayName": "Dragon Heart - 1"
+  },
+  {
+    "godName": "Jing Wei",
+    "folder": "jing wei",
+    "fileName": "Screenshot (583).png",
+    "skinKey": "DragonHeart",
+    "skinName": "Dragon Heart",
+    "variantName": "Prism 2",
+    "displayName": "Dragon Heart - 2"
+  },
+  {
+    "godName": "Jing Wei",
+    "folder": "jing wei",
+    "fileName": "Screenshot (584).png",
+    "skinKey": "DragonHeart",
+    "skinName": "Dragon Heart",
+    "variantName": "Prism 3",
+    "displayName": "Dragon Heart - 3"
+  },
+  {
+    "godName": "Jing Wei",
+    "folder": "jing wei",
+    "fileName": "Screenshot (585).png",
+    "skinKey": "DragonHeart",
+    "skinName": "Dragon Heart",
+    "variantName": "Prism 4",
+    "displayName": "Dragon Heart - 4"
+  },
+  {
+    "godName": "Jing Wei",
+    "folder": "jing wei",
+    "fileName": "Screenshot (586).png",
+    "skinKey": "PoolParty",
+    "skinName": "Pool Party",
+    "displayName": "Pool Party"
+  },
+  {
+    "godName": "Jing Wei",
+    "folder": "jing wei",
+    "fileName": "Screenshot (587).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Heroic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Jing Wei",
+    "folder": "jing wei",
+    "fileName": "Screenshot (588).png",
+    "skinKey": "Jing Wei",
+    "skinName": "Base Jing Wei",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Jing Wei",
+    "folder": "jing wei",
+    "fileName": "Screenshot (589).png",
+    "skinKey": "Jing Wei",
+    "skinName": "Base Jing Wei",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Jing Wei",
+    "folder": "jing wei",
+    "fileName": "Screenshot (590).png",
+    "skinKey": "Jing Wei",
+    "skinName": "Base Jing Wei",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Ne Zha",
+    "folder": "ne zha",
+    "fileName": "Screenshot (708).png",
+    "skinKey": "Ne_Zha",
+    "skinName": "Base Ne Zha",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Ne Zha",
+    "folder": "ne zha",
+    "fileName": "Screenshot (709).png",
+    "skinKey": "FireLord",
+    "skinName": "Fire Lord",
+    "displayName": "Fire Lord"
+  },
+  {
+    "godName": "Ne Zha",
+    "folder": "ne zha",
+    "fileName": "Screenshot (710).png",
+    "skinKey": "FireLord",
+    "skinName": "Fire Lord",
+    "variantName": "Prism 1",
+    "displayName": "Fire Lord - 1"
+  },
+  {
+    "godName": "Ne Zha",
+    "folder": "ne zha",
+    "fileName": "Screenshot (711).png",
+    "skinKey": "FireLord",
+    "skinName": "Fire Lord",
+    "variantName": "Prism 2",
+    "displayName": "Fire Lord - 2"
+  },
+  {
+    "godName": "Ne Zha",
+    "folder": "ne zha",
+    "fileName": "Screenshot (712).png",
+    "skinKey": "FireLord",
+    "skinName": "Fire Lord",
+    "variantName": "Prism 3",
+    "displayName": "Fire Lord - 3"
+  },
+  {
+    "godName": "Ne Zha",
+    "folder": "ne zha",
+    "fileName": "Screenshot (713).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Classic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Classic"
+  },
+  {
+    "godName": "Ne Zha",
+    "folder": "ne zha",
+    "fileName": "Screenshot (714).png",
+    "skinKey": "Ne_Zha",
+    "skinName": "Base Ne Zha",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Ne Zha",
+    "folder": "ne zha",
+    "fileName": "Screenshot (715).png",
+    "skinKey": "Ne_Zha",
+    "skinName": "Base Ne Zha",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Ne Zha",
+    "folder": "ne zha",
+    "fileName": "Screenshot (716).png",
+    "skinKey": "Ne_Zha",
+    "skinName": "Base Ne Zha",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Nu Wa",
+    "folder": "nu wa",
+    "fileName": "Screenshot (746).png",
+    "skinKey": "Nu Wa",
+    "skinName": "Base Nu Wa",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Nu Wa",
+    "folder": "nu wa",
+    "fileName": "Screenshot (747).png",
+    "skinKey": "BadBunny",
+    "skinName": "Bad Bunny",
+    "displayName": "Bad Bunny"
+  },
+  {
+    "godName": "Nu Wa",
+    "folder": "nu wa",
+    "fileName": "Screenshot (748).png",
+    "skinKey": "BunnyBliss",
+    "skinName": "Bunny Bliss",
+    "displayName": "Bunny Bliss"
+  },
+  {
+    "godName": "Nu Wa",
+    "folder": "nu wa",
+    "fileName": "Screenshot (749).png",
+    "skinKey": "DarkSupreme",
+    "skinName": "Dark Supreme",
+    "displayName": "Dark Supreme"
+  },
+  {
+    "godName": "Nu Wa",
+    "folder": "nu wa",
+    "fileName": "Screenshot (750).png",
+    "skinKey": "MysticEnchantress",
+    "skinName": "Mystic Enchantress",
+    "displayName": "Mystic Enchantress"
+  },
+  {
+    "godName": "Nu Wa",
+    "folder": "nu wa",
+    "fileName": "Screenshot (751).png",
+    "skinKey": "MysticEnchantress",
+    "skinName": "Mystic Enchantress",
+    "variantName": "Prism 1",
+    "displayName": "Mystic Enchantress - 1"
+  },
+  {
+    "godName": "Nu Wa",
+    "folder": "nu wa",
+    "fileName": "Screenshot (752).png",
+    "skinKey": "MysticEnchantress",
+    "skinName": "Mystic Enchantress",
+    "variantName": "Prism 2",
+    "displayName": "Mystic Enchantress - 2"
+  },
+  {
+    "godName": "Nu Wa",
+    "folder": "nu wa",
+    "fileName": "Screenshot (753).png",
+    "skinKey": "MysticEnchantress",
+    "skinName": "Mystic Enchantress",
+    "variantName": "Prism 3",
+    "displayName": "Mystic Enchantress - 3"
+  },
+  {
+    "godName": "Nu Wa",
+    "folder": "nu wa",
+    "fileName": "Screenshot (754).png",
+    "skinKey": "NuwaVenstrike",
+    "skinName": "Nu Wa Ravenstrike)",
+    "displayName": "Nu Wa Ravenstrike)"
+  },
+  {
+    "godName": "Nu Wa",
+    "folder": "nu wa",
+    "fileName": "Screenshot (755).png",
+    "skinKey": "NuwaVenstrike",
+    "skinName": "Nu Wa Ravenstrike)",
+    "variantName": "Prism B",
+    "displayName": "Nu Wa Ravenstrike) - B"
+  },
+  {
+    "godName": "Nu Wa",
+    "folder": "nu wa",
+    "fileName": "Screenshot (756).png",
+    "skinKey": "NuwaVenstrike",
+    "skinName": "Nu Wa Ravenstrike)",
+    "variantName": "Prism C",
+    "displayName": "Nu Wa Ravenstrike) - C"
+  },
+  {
+    "godName": "Nu Wa",
+    "folder": "nu wa",
+    "fileName": "Screenshot (757).png",
+    "skinKey": "NuwaVenstrike",
+    "skinName": "Nu Wa Ravenstrike)",
+    "variantName": "Prism D",
+    "displayName": "Nu Wa Ravenstrike) - D"
+  },
+  {
+    "godName": "Nu Wa",
+    "folder": "nu wa",
+    "fileName": "Screenshot (758).png",
+    "skinKey": "NuwaVenstrike",
+    "skinName": "Nu Wa Ravenstrike)",
+    "variantName": "Prism E",
+    "displayName": "Nu Wa Ravenstrike) - E"
+  },
+  {
+    "godName": "Nu Wa",
+    "folder": "nu wa",
+    "fileName": "Screenshot (759).png",
+    "skinKey": "PlayfulBunny",
+    "skinName": "Playful Bunny",
+    "displayName": "Playful Bunny"
+  },
+  {
+    "godName": "Nu Wa",
+    "folder": "nu wa",
+    "fileName": "Screenshot (760).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Classic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Classic"
+  },
+  {
+    "godName": "Nu Wa",
+    "folder": "nu wa",
+    "fileName": "Screenshot (761).png",
+    "skinKey": "Nu Wa",
+    "skinName": "Base Nu Wa",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Nu Wa",
+    "folder": "nu wa",
+    "fileName": "Screenshot (762).png",
+    "skinKey": "Nu Wa",
+    "skinName": "Base Nu Wa",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Nu Wa",
+    "folder": "nu wa",
+    "fileName": "Screenshot (763).png",
+    "skinKey": "Nu Wa",
+    "skinName": "Base Nu Wa",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Sun Wukong",
+    "folder": "sun wokong",
+    "fileName": "Screenshot (898).png",
+    "skinKey": "Sun_Wukong",
+    "skinName": "Base Sun Wukong",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Sun Wukong",
+    "folder": "sun wokong",
+    "fileName": "Screenshot (899).png",
+    "skinKey": "DarkLord",
+    "skinName": "Dark Lord",
+    "displayName": "Dark Lord"
+  },
+  {
+    "godName": "Sun Wukong",
+    "folder": "sun wokong",
+    "fileName": "Screenshot (900).png",
+    "skinKey": "DarkLord",
+    "skinName": "Dark Lord",
+    "variantName": "Prism 1",
+    "displayName": "Dark Lord - 1"
+  },
+  {
+    "godName": "Sun Wukong",
+    "folder": "sun wokong",
+    "fileName": "Screenshot (901).png",
+    "skinKey": "DarkLord",
+    "skinName": "Dark Lord",
+    "variantName": "Prism 2",
+    "displayName": "Dark Lord - 2"
+  },
+  {
+    "godName": "Sun Wukong",
+    "folder": "sun wokong",
+    "fileName": "Screenshot (902).png",
+    "skinKey": "DarkLord",
+    "skinName": "Dark Lord",
+    "variantName": "Prism 3",
+    "displayName": "Dark Lord - 3"
+  },
+  {
+    "godName": "Sun Wukong",
+    "folder": "sun wokong",
+    "fileName": "Screenshot (903).png",
+    "skinKey": "DarkLord",
+    "skinName": "Dark Lord",
+    "variantName": "Prism 4",
+    "displayName": "Dark Lord - 4"
+  },
+  {
+    "godName": "Sun Wukong",
+    "folder": "sun wokong",
+    "fileName": "Screenshot (904).png",
+    "skinKey": "StreetKing",
+    "skinName": "Street King",
+    "displayName": "Street King"
+  },
+  {
+    "godName": "Sun Wukong",
+    "folder": "sun wokong",
+    "fileName": "Screenshot (905).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Classic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Classic"
+  },
+  {
+    "godName": "Sun Wukong",
+    "folder": "sun wokong",
+    "fileName": "Screenshot (906).png",
+    "skinKey": "Sun_Wukong",
+    "skinName": "Base Sun Wukong",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Sun Wukong",
+    "folder": "sun wokong",
+    "fileName": "Screenshot (907).png",
+    "skinKey": "Sun_Wukong",
+    "skinName": "Base Sun Wukong",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Sun Wukong",
+    "folder": "sun wokong",
+    "fileName": "Screenshot (908).png",
+    "skinKey": "Sun_Wukong",
+    "skinName": "Base Sun Wukong",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Amaterasu",
+    "folder": "amaterasu",
+    "fileName": "Screenshot (139).png",
+    "skinKey": "Amaterasu",
+    "skinName": "Base Amaterasu",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Amaterasu",
+    "folder": "amaterasu",
+    "fileName": "Screenshot (140).png",
+    "skinKey": "CosmicwitchSplash",
+    "skinName": "Cosmicwitch Splash",
+    "displayName": "Cosmicwitch Splash"
+  },
+  {
+    "godName": "Amaterasu",
+    "folder": "amaterasu",
+    "fileName": "Screenshot (141).png",
+    "skinKey": "DemonHunter",
+    "skinName": "Demon Hunter",
+    "displayName": "Demon Hunter"
+  },
+  {
+    "godName": "Amaterasu",
+    "folder": "amaterasu",
+    "fileName": "Screenshot (142).png",
+    "skinKey": "FoxyCard",
+    "skinName": "Foxy Card",
+    "displayName": "Foxy Card"
+  },
+  {
+    "godName": "Amaterasu",
+    "folder": "amaterasu",
+    "fileName": "Screenshot (143).png",
+    "skinKey": "MaidOfMischief",
+    "skinName": "Maid Of Mischief",
+    "displayName": "Maid Of Mischief"
+  },
+  {
+    "godName": "Amaterasu",
+    "folder": "amaterasu",
+    "fileName": "Screenshot (144).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Classic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "42400",
+      "owned": false
+    },
+    "rarity": "Classic"
+  },
+  {
+    "godName": "Amaterasu",
+    "folder": "amaterasu",
+    "fileName": "Screenshot (145).png",
+    "skinKey": "Amaterasu",
+    "skinName": "Base Amaterasu",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Amaterasu",
+    "folder": "amaterasu",
+    "fileName": "Screenshot (146).png",
+    "skinKey": "Amaterasu",
+    "skinName": "Base Amaterasu",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Amaterasu",
+    "folder": "amaterasu",
+    "fileName": "Screenshot (147).png",
+    "skinKey": "Amaterasu",
+    "skinName": "Base Amaterasu",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Danzaburou",
+    "folder": "danzaburou",
+    "fileName": "Screenshot (407).png",
+    "skinKey": "Danzaburou",
+    "skinName": "Base Danzaburou",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Danzaburou",
+    "folder": "danzaburou",
+    "fileName": "Screenshot (408).png",
+    "skinKey": "BossmanSplash1920x1080",
+    "skinName": "Bossman Splash 1920 X 1080",
+    "displayName": "Bossman Splash 1920 X 1080"
+  },
+  {
+    "godName": "Danzaburou",
+    "folder": "danzaburou",
+    "fileName": "Screenshot (409).png",
+    "skinKey": "ButlerofBins",
+    "skinName": "Butlerof Bins",
+    "displayName": "Butlerof Bins"
+  },
+  {
+    "godName": "Danzaburou",
+    "folder": "danzaburou",
+    "fileName": "Screenshot (410).png",
+    "skinKey": "Party_Animal",
+    "skinName": "Party Animal",
+    "displayName": "Party Animal"
+  },
+  {
+    "godName": "Danzaburou",
+    "folder": "danzaburou",
+    "fileName": "Screenshot (411).png",
+    "skinKey": "PolarBear",
+    "skinName": "Polar Bear",
+    "displayName": "Polar Bear"
+  },
+  {
+    "godName": "Danzaburou",
+    "folder": "danzaburou",
+    "fileName": "Screenshot (412).png",
+    "skinKey": "PolarBear",
+    "skinName": "Polar Bear",
+    "variantName": "Prism P1",
+    "displayName": "Polar Bear - P1"
+  },
+  {
+    "godName": "Danzaburou",
+    "folder": "danzaburou",
+    "fileName": "Screenshot (413).png",
+    "skinKey": "PolarBear",
+    "skinName": "Polar Bear",
+    "variantName": "Prism P2",
+    "displayName": "Polar Bear - P2"
+  },
+  {
+    "godName": "Danzaburou",
+    "folder": "danzaburou",
+    "fileName": "Screenshot (414).png",
+    "skinKey": "PolarBear",
+    "skinName": "Polar Bear",
+    "variantName": "Prism P3",
+    "displayName": "Polar Bear - P3"
+  },
+  {
+    "godName": "Danzaburou",
+    "folder": "danzaburou",
+    "fileName": "Screenshot (415).png",
+    "skinKey": "PolarBear",
+    "skinName": "Polar Bear",
+    "variantName": "Prism P4",
+    "displayName": "Polar Bear - P4"
+  },
+  {
+    "godName": "Danzaburou",
+    "folder": "danzaburou",
+    "fileName": "Screenshot (416).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Heroic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Danzaburou",
+    "folder": "danzaburou",
+    "fileName": "Screenshot (417).png",
+    "skinKey": "Danzaburou",
+    "skinName": "Base Danzaburou",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Danzaburou",
+    "folder": "danzaburou",
+    "fileName": "Screenshot (418).png",
+    "skinKey": "Danzaburou",
+    "skinName": "Base Danzaburou",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Danzaburou",
+    "folder": "danzaburou",
+    "fileName": "Screenshot (419).png",
+    "skinKey": "Danzaburou",
+    "skinName": "Base Danzaburou",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Izanami",
+    "folder": "izanami",
+    "fileName": "Screenshot (560).png",
+    "skinKey": "Izanami",
+    "skinName": "Base Izanami",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Izanami",
+    "folder": "izanami",
+    "fileName": "Screenshot (561).png",
+    "skinKey": "01a",
+    "skinName": "01a",
+    "displayName": "01a"
+  },
+  {
+    "godName": "Izanami",
+    "folder": "izanami",
+    "fileName": "Screenshot (562).png",
+    "skinKey": "CreepynurseSplash",
+    "skinName": "Creepynurse Splash",
+    "displayName": "Creepynurse Splash"
+  },
+  {
+    "godName": "Izanami",
+    "folder": "izanami",
+    "fileName": "Screenshot (563).png",
+    "skinKey": "MaidToKill",
+    "skinName": "Maid To Kill",
+    "displayName": "Maid To Kill"
+  },
+  {
+    "godName": "Izanami",
+    "folder": "izanami",
+    "fileName": "Screenshot (564).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Classic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "90",
+      "owned": false
+    },
+    "rarity": "Classic"
+  },
+  {
+    "godName": "Izanami",
+    "folder": "izanami",
+    "fileName": "Screenshot (565).png",
+    "skinKey": "Izanami",
+    "skinName": "Base Izanami",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Izanami",
+    "folder": "izanami",
+    "fileName": "Screenshot (566).png",
+    "skinKey": "Izanami",
+    "skinName": "Base Izanami",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Izanami",
+    "folder": "izanami",
+    "fileName": "Screenshot (567).png",
+    "skinKey": "Izanami",
+    "skinName": "Base Izanami",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Susano",
+    "folder": "susano",
+    "fileName": "Screenshot (909).png",
+    "skinKey": "Susano",
+    "skinName": "Base Susano",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Susano",
+    "folder": "susano",
+    "fileName": "Screenshot (910).png",
+    "skinKey": "CursedSwordsman",
+    "skinName": "Cursed Swordsman",
+    "displayName": "Cursed Swordsman"
+  },
+  {
+    "godName": "Susano",
+    "folder": "susano",
+    "fileName": "Screenshot (911).png",
+    "skinKey": "SteelSamurai",
+    "skinName": "Steel Samurai",
+    "displayName": "Steel Samurai"
+  },
+  {
+    "godName": "Susano",
+    "folder": "susano",
+    "fileName": "Screenshot (912).png",
+    "skinKey": "StumbleBlade",
+    "skinName": "Stumble Blade",
+    "displayName": "Stumble Blade"
+  },
+  {
+    "godName": "Susano",
+    "folder": "susano",
+    "fileName": "Screenshot (913).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Heroic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Susano",
+    "folder": "susano",
+    "fileName": "Screenshot (914).png",
+    "skinKey": "Susano",
+    "skinName": "Base Susano",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Susano",
+    "folder": "susano",
+    "fileName": "Screenshot (915).png",
+    "skinKey": "Susano",
+    "skinName": "Base Susano",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Susano",
+    "folder": "susano",
+    "fileName": "Screenshot (916).png",
+    "skinKey": "Susano",
+    "skinName": "Base Susano",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Tsukuyomi",
+    "folder": "tsukuyomi",
+    "fileName": "Screenshot (955).png",
+    "skinKey": "Tsukuyomi",
+    "skinName": "Base Tsukuyomi",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Tsukuyomi",
+    "folder": "tsukuyomi",
+    "fileName": "Screenshot (956).png",
+    "skinKey": "SilverBullet",
+    "skinName": "Silver Bullet",
+    "displayName": "Silver Bullet"
+  },
+  {
+    "godName": "Tsukuyomi",
+    "folder": "tsukuyomi",
+    "fileName": "Screenshot (957).png",
+    "skinKey": "SilverBullet",
+    "skinName": "Silver Bullet",
+    "variantName": "Prism 1",
+    "displayName": "Silver Bullet - 1"
+  },
+  {
+    "godName": "Tsukuyomi",
+    "folder": "tsukuyomi",
+    "fileName": "Screenshot (958).png",
+    "skinKey": "SilverBullet",
+    "skinName": "Silver Bullet",
+    "variantName": "Prism 2",
+    "displayName": "Silver Bullet - 2"
+  },
+  {
+    "godName": "Tsukuyomi",
+    "folder": "tsukuyomi",
+    "fileName": "Screenshot (959).png",
+    "skinKey": "SilverBullet",
+    "skinName": "Silver Bullet",
+    "variantName": "Prism 3",
+    "displayName": "Silver Bullet - 3"
+  },
+  {
+    "godName": "Tsukuyomi",
+    "folder": "tsukuyomi",
+    "fileName": "Screenshot (960).png",
+    "skinKey": "SilverBullet",
+    "skinName": "Silver Bullet",
+    "variantName": "Prism 4",
+    "displayName": "Silver Bullet - 4"
+  },
+  {
+    "godName": "Tsukuyomi",
+    "folder": "tsukuyomi",
+    "fileName": "Screenshot (961).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Classic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Classic"
+  },
+  {
+    "godName": "Tsukuyomi",
+    "folder": "tsukuyomi",
+    "fileName": "Screenshot (962).png",
+    "skinKey": "Tsukuyomi",
+    "skinName": "Base Tsukuyomi",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Tsukuyomi",
+    "folder": "tsukuyomi",
+    "fileName": "Screenshot (963).png",
+    "skinKey": "Tsukuyomi",
+    "skinName": "Base Tsukuyomi",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Tsukuyomi",
+    "folder": "tsukuyomi",
+    "fileName": "Screenshot (964).png",
+    "skinKey": "Tsukuyomi",
+    "skinName": "Base Tsukuyomi",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Agni",
+    "folder": "agni",
+    "fileName": "Screenshot (117).png",
+    "skinKey": "Agni",
+    "skinName": "Base Agni",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Agni",
+    "folder": "agni",
+    "fileName": "Screenshot (118).png",
+    "skinKey": "InfinitedualityCardPrisms1",
+    "skinName": "Infiniteduality Card Prisms 1",
+    "displayName": "Infiniteduality Card Prisms 1"
+  },
+  {
+    "godName": "Agni",
+    "folder": "agni",
+    "fileName": "Screenshot (119).png",
+    "skinKey": "InfinitedualityCardPrisms1",
+    "skinName": "Infiniteduality Card Prisms 1",
+    "variantName": "Prism 1",
+    "displayName": "Infiniteduality Card Prisms 1 - 1"
+  },
+  {
+    "godName": "Agni",
+    "folder": "agni",
+    "fileName": "Screenshot (120).png",
+    "skinKey": "InfinitedualityCardPrisms1",
+    "skinName": "Infiniteduality Card Prisms 1",
+    "variantName": "Prism 2",
+    "displayName": "Infiniteduality Card Prisms 1 - 2"
+  },
+  {
+    "godName": "Agni",
+    "folder": "agni",
+    "fileName": "Screenshot (121).png",
+    "skinKey": "InfinitedualityCardPrisms1",
+    "skinName": "Infiniteduality Card Prisms 1",
+    "variantName": "Prism 3",
+    "displayName": "Infiniteduality Card Prisms 1 - 3"
+  },
+  {
+    "godName": "Agni",
+    "folder": "agni",
+    "fileName": "Screenshot (122).png",
+    "skinKey": "InfinitedualityCardPrisms1",
+    "skinName": "Infiniteduality Card Prisms 1",
+    "variantName": "Prism 4",
+    "displayName": "Infiniteduality Card Prisms 1 - 4"
+  },
+  {
+    "godName": "Agni",
+    "folder": "agni",
+    "fileName": "Screenshot (123).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Heroic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Agni",
+    "folder": "agni",
+    "fileName": "Screenshot (124).png",
+    "skinKey": "Agni",
+    "skinName": "Base Agni",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Agni",
+    "folder": "agni",
+    "fileName": "Screenshot (125).png",
+    "skinKey": "Agni",
+    "skinName": "Base Agni",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Agni",
+    "folder": "agni",
+    "fileName": "Screenshot (126).png",
+    "skinKey": "Agni",
+    "skinName": "Base Agni",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Ganesha",
+    "folder": "ganesha",
+    "fileName": "Screenshot (451).png",
+    "skinKey": "Ganesha",
+    "skinName": "Base Ganesha",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Ganesha",
+    "folder": "ganesha",
+    "fileName": "Screenshot (452).png",
+    "skinKey": "Light",
+    "skinName": "Light",
+    "displayName": "Light"
+  },
+  {
+    "godName": "Ganesha",
+    "folder": "ganesha",
+    "fileName": "Screenshot (453).png",
+    "skinKey": "Plushie",
+    "skinName": "Plushie",
+    "displayName": "Plushie"
+  },
+  {
+    "godName": "Ganesha",
+    "folder": "ganesha",
+    "fileName": "Screenshot (454).png",
+    "skinKey": "Plushie",
+    "skinName": "Plushie",
+    "variantName": "Prism 1",
+    "displayName": "Plushie - 1"
+  },
+  {
+    "godName": "Ganesha",
+    "folder": "ganesha",
+    "fileName": "Screenshot (455).png",
+    "skinKey": "Plushie",
+    "skinName": "Plushie",
+    "variantName": "Prism 2",
+    "displayName": "Plushie - 2"
+  },
+  {
+    "godName": "Ganesha",
+    "folder": "ganesha",
+    "fileName": "Screenshot (456).png",
+    "skinKey": "Plushie",
+    "skinName": "Plushie",
+    "variantName": "Prism 3",
+    "displayName": "Plushie - 3"
+  },
+  {
+    "godName": "Ganesha",
+    "folder": "ganesha",
+    "fileName": "Screenshot (457).png",
+    "skinKey": "Plushie",
+    "skinName": "Plushie",
+    "variantName": "Prism 4",
+    "displayName": "Plushie - 4"
+  },
+  {
+    "godName": "Ganesha",
+    "folder": "ganesha",
+    "fileName": "Screenshot (458).png",
+    "skinKey": "Plushie",
+    "skinName": "Plushie",
+    "variantName": "Prism 5",
+    "displayName": "Plushie - 5"
+  },
+  {
+    "godName": "Ganesha",
+    "folder": "ganesha",
+    "fileName": "Screenshot (459).png",
+    "skinKey": "Plushie",
+    "skinName": "Plushie",
+    "variantName": "Prism 6",
+    "displayName": "Plushie - 6"
+  },
+  {
+    "godName": "Ganesha",
+    "folder": "ganesha",
+    "fileName": "Screenshot (460).png",
+    "skinKey": "Plushie",
+    "skinName": "Plushie",
+    "variantName": "Prism 7",
+    "displayName": "Plushie - 7"
+  },
+  {
+    "godName": "Ganesha",
+    "folder": "ganesha",
+    "fileName": "Screenshot (461).png",
+    "skinKey": "Plushie",
+    "skinName": "Plushie",
+    "variantName": "Prism 8",
+    "displayName": "Plushie - 8"
+  },
+  {
+    "godName": "Ganesha",
+    "folder": "ganesha",
+    "fileName": "Screenshot (462).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Heroic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Ganesha",
+    "folder": "ganesha",
+    "fileName": "Screenshot (463).png",
+    "skinKey": "Ganesha",
+    "skinName": "Base Ganesha",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Ganesha",
+    "folder": "ganesha",
+    "fileName": "Screenshot (464).png",
+    "skinKey": "Ganesha",
+    "skinName": "Base Ganesha",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Ganesha",
+    "folder": "ganesha",
+    "fileName": "Screenshot (465).png",
+    "skinKey": "Ganesha",
+    "skinName": "Base Ganesha",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Kali",
+    "folder": "kali",
+    "fileName": "Screenshot (604).png",
+    "skinKey": "Kali",
+    "skinName": "Base Kali",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Kali",
+    "folder": "kali",
+    "fileName": "Screenshot (605).png",
+    "skinKey": "CeramicCircuit",
+    "skinName": "Ceramic Circuit",
+    "displayName": "Ceramic Circuit"
+  },
+  {
+    "godName": "Kali",
+    "folder": "kali",
+    "fileName": "Screenshot (606).png",
+    "skinKey": "TrophyHunter009",
+    "skinName": "Trophy Hunter 009",
+    "displayName": "Trophy Hunter 009"
+  },
+  {
+    "godName": "Kali",
+    "folder": "kali",
+    "fileName": "Screenshot (607).png",
+    "skinKey": "TrophyHunter009",
+    "skinName": "Trophy Hunter 009",
+    "variantName": "Prism B",
+    "displayName": "Trophy Hunter 009 - B"
+  },
+  {
+    "godName": "Kali",
+    "folder": "kali",
+    "fileName": "Screenshot (608).png",
+    "skinKey": "TrophyHunter009",
+    "skinName": "Trophy Hunter 009",
+    "variantName": "Prism C",
+    "displayName": "Trophy Hunter 009 - C"
+  },
+  {
+    "godName": "Kali",
+    "folder": "kali",
+    "fileName": "Screenshot (609).png",
+    "skinKey": "TrophyHunter009",
+    "skinName": "Trophy Hunter 009",
+    "variantName": "Prism D",
+    "displayName": "Trophy Hunter 009 - D"
+  },
+  {
+    "godName": "Kali",
+    "folder": "kali",
+    "fileName": "Screenshot (610).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Heroic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Kali",
+    "folder": "kali",
+    "fileName": "Screenshot (611).png",
+    "skinKey": "Kali",
+    "skinName": "Base Kali",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Kali",
+    "folder": "kali",
+    "fileName": "Screenshot (612).png",
+    "skinKey": "Kali",
+    "skinName": "Base Kali",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Kali",
+    "folder": "kali",
+    "fileName": "Screenshot (613).png",
+    "skinKey": "Kali",
+    "skinName": "Base Kali",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Rama",
+    "folder": "rama",
+    "fileName": "Screenshot (837).png",
+    "skinKey": "Rama",
+    "skinName": "Base Rama",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Rama",
+    "folder": "rama",
+    "fileName": "Screenshot (838).png",
+    "skinKey": "SacredArrow",
+    "skinName": "Sacred Arrow",
+    "displayName": "Sacred Arrow"
+  },
+  {
+    "godName": "Rama",
+    "folder": "rama",
+    "fileName": "Screenshot (839).png",
+    "skinKey": "SacredArrow",
+    "skinName": "Sacred Arrow",
+    "variantName": "Prism 1",
+    "displayName": "Sacred Arrow - 1"
+  },
+  {
+    "godName": "Rama",
+    "folder": "rama",
+    "fileName": "Screenshot (840).png",
+    "skinKey": "SacredArrow",
+    "skinName": "Sacred Arrow",
+    "variantName": "Prism 2",
+    "displayName": "Sacred Arrow - 2"
+  },
+  {
+    "godName": "Rama",
+    "folder": "rama",
+    "fileName": "Screenshot (841).png",
+    "skinKey": "SacredArrow",
+    "skinName": "Sacred Arrow",
+    "variantName": "Prism 3",
+    "displayName": "Sacred Arrow - 3"
+  },
+  {
+    "godName": "Rama",
+    "folder": "rama",
+    "fileName": "Screenshot (842).png",
+    "skinKey": "SacredArrow",
+    "skinName": "Sacred Arrow",
+    "variantName": "Prism 4",
+    "displayName": "Sacred Arrow - 4"
+  },
+  {
+    "godName": "Rama",
+    "folder": "rama",
+    "fileName": "Screenshot (843).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Heroic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Rama",
+    "folder": "rama",
+    "fileName": "Screenshot (844).png",
+    "skinKey": "Rama",
+    "skinName": "Base Rama",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Rama",
+    "folder": "rama",
+    "fileName": "Screenshot (845).png",
+    "skinKey": "Rama",
+    "skinName": "Base Rama",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Rama",
+    "folder": "rama",
+    "fileName": "Screenshot (846).png",
+    "skinKey": "Rama",
+    "skinName": "Base Rama",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Artio",
+    "folder": "artio",
+    "fileName": "Screenshot (235).png",
+    "skinKey": "Artio",
+    "skinName": "Base Artio",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Artio",
+    "folder": "artio",
+    "fileName": "Screenshot (236).png",
+    "skinKey": "DenMother",
+    "skinName": "Den Mother",
+    "displayName": "Den Mother"
+  },
+  {
+    "godName": "Artio",
+    "folder": "artio",
+    "fileName": "Screenshot (237).png",
+    "skinKey": "FiendHunter",
+    "skinName": "Fiend Hunter",
+    "displayName": "Fiend Hunter"
+  },
+  {
+    "godName": "Artio",
+    "folder": "artio",
+    "fileName": "Screenshot (238).png",
+    "skinKey": "FiendHunter",
+    "skinName": "Fiend Hunter",
+    "variantName": "Prism 1",
+    "displayName": "Fiend Hunter - 1"
+  },
+  {
+    "godName": "Artio",
+    "folder": "artio",
+    "fileName": "Screenshot (240).png",
+    "skinKey": "FiendHunter",
+    "skinName": "Fiend Hunter",
+    "variantName": "Prism 2",
+    "displayName": "Fiend Hunter - 2"
+  },
+  {
+    "godName": "Artio",
+    "folder": "artio",
+    "fileName": "Screenshot (241).png",
+    "skinKey": "FiendHunter",
+    "skinName": "Fiend Hunter",
+    "variantName": "Prism 3",
+    "displayName": "Fiend Hunter - 3"
+  },
+  {
+    "godName": "Artio",
+    "folder": "artio",
+    "fileName": "Screenshot (242).png",
+    "skinKey": "FiendHunter",
+    "skinName": "Fiend Hunter",
+    "variantName": "Prism 4",
+    "displayName": "Fiend Hunter - 4"
+  },
+  {
+    "godName": "Artio",
+    "folder": "artio",
+    "fileName": "Screenshot (243).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Heroic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Artio",
+    "folder": "artio",
+    "fileName": "Screenshot (244).png",
+    "skinKey": "Artio",
+    "skinName": "Base Artio",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Artio",
+    "folder": "artio",
+    "fileName": "Screenshot (245).png",
+    "skinKey": "Artio",
+    "skinName": "Base Artio",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Artio",
+    "folder": "artio",
+    "fileName": "Screenshot (246).png",
+    "skinKey": "Artio",
+    "skinName": "Base Artio",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Cernunnos",
+    "folder": "cernennos",
+    "fileName": "Screenshot (347).png",
+    "skinKey": "Cernunnos",
+    "skinName": "Base Cernunnos",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Cernunnos",
+    "folder": "cernennos",
+    "fileName": "Screenshot (348).png",
+    "skinKey": "Netherware",
+    "skinName": "Netherware",
+    "displayName": "Netherware"
+  },
+  {
+    "godName": "Cernunnos",
+    "folder": "cernennos",
+    "fileName": "Screenshot (349).png",
+    "skinKey": "Smite2F2pOb1CrimsonstalkerSocial1920x1080Notag",
+    "skinName": "Smite 2 F 2 P Ob 1 Crimsonstalker Social 1920 X 1080 Notag",
+    "displayName": "Smite 2 F 2 P Ob 1 Crimsonstalker Social 1920 X 1080 Notag"
+  },
+  {
+    "godName": "Cernunnos",
+    "folder": "cernennos",
+    "fileName": "Screenshot (350).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Heroic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "91200",
+      "owned": false
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Cernunnos",
+    "folder": "cernennos",
+    "fileName": "Screenshot (352).png",
+    "skinKey": "Cernunnos",
+    "skinName": "Base Cernunnos",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Cernunnos",
+    "folder": "cernennos",
+    "fileName": "Screenshot (353).png",
+    "skinKey": "Cernunnos",
+    "skinName": "Base Cernunnos",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Cernunnos",
+    "folder": "cernennos",
+    "fileName": "Screenshot (354).png",
+    "skinKey": "Cernunnos",
+    "skinName": "Base Cernunnos",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Gilgamesh",
+    "folder": "gilgamesh",
+    "fileName": "Screenshot (476).png",
+    "skinKey": "Gilgamesh",
+    "skinName": "Base Gilgamesh",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Gilgamesh",
+    "folder": "gilgamesh",
+    "fileName": "Screenshot (477).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Classic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Classic"
+  },
+  {
+    "godName": "Gilgamesh",
+    "folder": "gilgamesh",
+    "fileName": "Screenshot (478).png",
+    "skinKey": "Gilgamesh",
+    "skinName": "Base Gilgamesh",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Gilgamesh",
+    "folder": "gilgamesh",
+    "fileName": "Screenshot (479).png",
+    "skinKey": "Gilgamesh",
+    "skinName": "Base Gilgamesh",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Gilgamesh",
+    "folder": "gilgamesh",
+    "fileName": "Screenshot (480).png",
+    "skinKey": "Gilgamesh",
+    "skinName": "Base Gilgamesh",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Ishtar",
+    "folder": "ishtar",
+    "fileName": "Screenshot (551).png",
+    "skinKey": "Ishtar",
+    "skinName": "Base Ishtar",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Ishtar",
+    "folder": "ishtar",
+    "fileName": "Screenshot (552).png",
+    "skinKey": "StrikingArchon",
+    "skinName": "Striking Archon",
+    "displayName": "Striking Archon"
+  },
+  {
+    "godName": "Ishtar",
+    "folder": "ishtar",
+    "fileName": "Screenshot (553).png",
+    "skinKey": "StrikingArchon",
+    "skinName": "Striking Archon",
+    "variantName": "Prism 2",
+    "displayName": "Striking Archon - 2"
+  },
+  {
+    "godName": "Ishtar",
+    "folder": "ishtar",
+    "fileName": "Screenshot (554).png",
+    "skinKey": "StrikingArchon",
+    "skinName": "Striking Archon",
+    "variantName": "Prism 3",
+    "displayName": "Striking Archon - 3"
+  },
+  {
+    "godName": "Ishtar",
+    "folder": "ishtar",
+    "fileName": "Screenshot (555).png",
+    "skinKey": "StrikingArchon",
+    "skinName": "Striking Archon",
+    "variantName": "Prism 4",
+    "displayName": "Striking Archon - 4"
+  },
+  {
+    "godName": "Ishtar",
+    "folder": "ishtar",
+    "fileName": "Screenshot (556).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Heroic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Ishtar",
+    "folder": "ishtar",
+    "fileName": "Screenshot (557).png",
+    "skinKey": "Ishtar",
+    "skinName": "Base Ishtar",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Ishtar",
+    "folder": "ishtar",
+    "fileName": "Screenshot (558).png",
+    "skinKey": "Ishtar",
+    "skinName": "Base Ishtar",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Ishtar",
+    "folder": "ishtar",
+    "fileName": "Screenshot (559).png",
+    "skinKey": "Ishtar",
+    "skinName": "Base Ishtar",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Merlin",
+    "folder": "merlin",
+    "fileName": "Screenshot (680).png",
+    "skinKey": "Merlin",
+    "skinName": "Base Merlin",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Merlin",
+    "folder": "merlin",
+    "fileName": "Screenshot (681).png",
+    "skinKey": "CosmicConjurer",
+    "skinName": "Cosmic Conjurer",
+    "displayName": "Cosmic Conjurer"
+  },
+  {
+    "godName": "Merlin",
+    "folder": "merlin",
+    "fileName": "Screenshot (682).png",
+    "skinKey": "MagicMischief",
+    "skinName": "Magic Mischief",
+    "displayName": "Magic Mischief"
+  },
+  {
+    "godName": "Merlin",
+    "folder": "merlin",
+    "fileName": "Screenshot (683).png",
+    "skinKey": "MagicMischief",
+    "skinName": "Magic Mischief",
+    "variantName": "Prism 1",
+    "displayName": "Magic Mischief - 1"
+  },
+  {
+    "godName": "Merlin",
+    "folder": "merlin",
+    "fileName": "Screenshot (684).png",
+    "skinKey": "MagicMischief",
+    "skinName": "Magic Mischief",
+    "variantName": "Prism 2",
+    "displayName": "Magic Mischief - 2"
+  },
+  {
+    "godName": "Merlin",
+    "folder": "merlin",
+    "fileName": "Screenshot (685).png",
+    "skinKey": "MagicMischief",
+    "skinName": "Magic Mischief",
+    "variantName": "Prism 3",
+    "displayName": "Magic Mischief - 3"
+  },
+  {
+    "godName": "Merlin",
+    "folder": "merlin",
+    "fileName": "Screenshot (686).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Heroic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Merlin",
+    "folder": "merlin",
+    "fileName": "Screenshot (687).png",
+    "skinKey": "Merlin",
+    "skinName": "Base Merlin",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Merlin",
+    "folder": "merlin",
+    "fileName": "Screenshot (688).png",
+    "skinKey": "Merlin",
+    "skinName": "Base Merlin",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Merlin",
+    "folder": "merlin",
+    "fileName": "Screenshot (689).png",
+    "skinKey": "Merlin",
+    "skinName": "Base Merlin",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Mordred",
+    "folder": "mordred",
+    "fileName": "Screenshot (690).png",
+    "skinKey": "Mordred",
+    "skinName": "Base Mordred",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Mordred",
+    "folder": "mordred",
+    "fileName": "Screenshot (691).png",
+    "skinKey": "Grovebound",
+    "skinName": "Grovebound",
+    "displayName": "Grovebound"
+  },
+  {
+    "godName": "Mordred",
+    "folder": "mordred",
+    "fileName": "Screenshot (692).png",
+    "skinKey": "Grovebound",
+    "skinName": "Grovebound",
+    "variantName": "Prism 1",
+    "displayName": "Grovebound - 1"
+  },
+  {
+    "godName": "Mordred",
+    "folder": "mordred",
+    "fileName": "Screenshot (695).png",
+    "skinKey": "Grovebound",
+    "skinName": "Grovebound",
+    "variantName": "Prism 2",
+    "displayName": "Grovebound - 2"
+  },
+  {
+    "godName": "Mordred",
+    "folder": "mordred",
+    "fileName": "Screenshot (696).png",
+    "skinKey": "Grovebound",
+    "skinName": "Grovebound",
+    "variantName": "Prism 3",
+    "displayName": "Grovebound - 3"
+  },
+  {
+    "godName": "Mordred",
+    "folder": "mordred",
+    "fileName": "Screenshot (697).png",
+    "skinKey": "LichSplash",
+    "skinName": "Lich Splash",
+    "displayName": "Lich Splash"
+  },
+  {
+    "godName": "Mordred",
+    "folder": "mordred",
+    "fileName": "Screenshot (698).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Heroic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Mordred",
+    "folder": "mordred",
+    "fileName": "Screenshot (699).png",
+    "skinKey": "Mordred",
+    "skinName": "Base Mordred",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Mordred",
+    "folder": "mordred",
+    "fileName": "Screenshot (700).png",
+    "skinKey": "Mordred",
+    "skinName": "Base Mordred",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Mordred",
+    "folder": "mordred",
+    "fileName": "Screenshot (701).png",
+    "skinKey": "Mordred",
+    "skinName": "Base Mordred",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Morgan Le Fay",
+    "folder": "morgan le fay",
+    "fileName": "Screenshot (702).png",
+    "skinKey": "MorganLeFay",
+    "skinName": "Base Morgan Le Fay",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Morgan Le Fay",
+    "folder": "morgan le fay",
+    "fileName": "Screenshot (703).png",
+    "skinKey": "DuskGllmmer",
+    "skinName": "Dusk Gllmmer",
+    "displayName": "Dusk Gllmmer"
+  },
+  {
+    "godName": "Morgan Le Fay",
+    "folder": "morgan le fay",
+    "fileName": "Screenshot (704).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Classic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Classic"
+  },
+  {
+    "godName": "Morgan Le Fay",
+    "folder": "morgan le fay",
+    "fileName": "Screenshot (705).png",
+    "skinKey": "MorganLeFay",
+    "skinName": "Base Morgan Le Fay",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Morgan Le Fay",
+    "folder": "morgan le fay",
+    "fileName": "Screenshot (706).png",
+    "skinKey": "MorganLeFay",
+    "skinName": "Base Morgan Le Fay",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Morgan Le Fay",
+    "folder": "morgan le fay",
+    "fileName": "Screenshot (707).png",
+    "skinKey": "MorganLeFay",
+    "skinName": "Base Morgan Le Fay",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Aladdin",
+    "folder": "aladdin",
+    "fileName": "Screenshot (132).png",
+    "skinKey": "Aladdin",
+    "skinName": "Base Aladdin",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Aladdin",
+    "folder": "aladdin",
+    "fileName": "Screenshot (133).png",
+    "skinKey": "SilentWish",
+    "skinName": "Silent Wish",
+    "displayName": "Silent Wish"
+  },
+  {
+    "godName": "Aladdin",
+    "folder": "aladdin",
+    "fileName": "Screenshot (134).png",
+    "skinKey": "WinterWish",
+    "skinName": "Winter Wish",
+    "displayName": "Winter Wish"
+  },
+  {
+    "godName": "Aladdin",
+    "folder": "aladdin",
+    "fileName": "Screenshot (135).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Heroic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Aladdin",
+    "folder": "aladdin",
+    "fileName": "Screenshot (136).png",
+    "skinKey": "Aladdin",
+    "skinName": "Base Aladdin",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Aladdin",
+    "folder": "aladdin",
+    "fileName": "Screenshot (137).png",
+    "skinKey": "Aladdin",
+    "skinName": "Base Aladdin",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Aladdin",
+    "folder": "aladdin",
+    "fileName": "Screenshot (138).png",
+    "skinKey": "Aladdin",
+    "skinName": "Base Aladdin",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Baron Samedi",
+    "folder": "baron samedi",
+    "fileName": "Screenshot (283).png",
+    "skinKey": "Baron Samedi",
+    "skinName": "Base Baron Samedi",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Baron Samedi",
+    "folder": "baron samedi",
+    "fileName": "Screenshot (284).png",
+    "skinKey": "Gingersnap",
+    "skinName": "Gingersnap",
+    "displayName": "Gingersnap"
+  },
+  {
+    "godName": "Baron Samedi",
+    "folder": "baron samedi",
+    "fileName": "Screenshot (285).png",
+    "skinKey": "NanoMancer",
+    "skinName": "Nano Mancer",
+    "displayName": "Nano Mancer"
+  },
+  {
+    "godName": "Baron Samedi",
+    "folder": "baron samedi",
+    "fileName": "Screenshot (286).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Classic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "91200",
+      "owned": false
+    },
+    "rarity": "Classic"
+  },
+  {
+    "godName": "Baron Samedi",
+    "folder": "baron samedi",
+    "fileName": "Screenshot (287).png",
+    "skinKey": "Baron Samedi",
+    "skinName": "Base Baron Samedi",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Baron Samedi",
+    "folder": "baron samedi",
+    "fileName": "Screenshot (288).png",
+    "skinKey": "Baron Samedi",
+    "skinName": "Base Baron Samedi",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Baron Samedi",
+    "folder": "baron samedi",
+    "fileName": "Screenshot (289).png",
+    "skinKey": "Baron Samedi",
+    "skinName": "Base Baron Samedi",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Pele",
+    "folder": "pele",
+    "fileName": "Screenshot (794).png",
+    "skinKey": "Pele",
+    "skinName": "Base Pele",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Pele",
+    "folder": "pele",
+    "fileName": "Screenshot (795).png",
+    "skinKey": "CarnivalKiss",
+    "skinName": "Carnival Kiss",
+    "displayName": "Carnival Kiss"
+  },
+  {
+    "godName": "Pele",
+    "folder": "pele",
+    "fileName": "Screenshot (796).png",
+    "skinKey": "MoonLIt",
+    "skinName": "Moon LIt",
+    "displayName": "Moon LIt"
+  },
+  {
+    "godName": "Pele",
+    "folder": "pele",
+    "fileName": "Screenshot (797).png",
+    "skinKey": "SupernovaSplash1920x1080",
+    "skinName": "Supernova Splash 1920 X 1080",
+    "displayName": "Supernova Splash 1920 X 1080"
+  },
+  {
+    "godName": "Pele",
+    "folder": "pele",
+    "fileName": "Screenshot (798).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Classic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "2500",
+      "owned": false
+    },
+    "rarity": "Classic"
+  },
+  {
+    "godName": "Pele",
+    "folder": "pele",
+    "fileName": "Screenshot (799).png",
+    "skinKey": "Pele",
+    "skinName": "Base Pele",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Pele",
+    "folder": "pele",
+    "fileName": "Screenshot (800).png",
+    "skinKey": "Pele",
+    "skinName": "Base Pele",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Pele",
+    "folder": "pele",
+    "fileName": "Screenshot (801).png",
+    "skinKey": "Pele",
+    "skinName": "Base Pele",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Princess Bari",
+    "folder": "princess bari",
+    "fileName": "Screenshot (817).png",
+    "skinKey": "Princess Bari",
+    "skinName": "Base Princess Bari",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Princess Bari",
+    "folder": "princess bari",
+    "fileName": "Screenshot (818).png",
+    "skinKey": "Reaping",
+    "skinName": "Reaping",
+    "displayName": "Reaping"
+  },
+  {
+    "godName": "Princess Bari",
+    "folder": "princess bari",
+    "fileName": "Screenshot (819).png",
+    "skinKey": "ShatteredVisions",
+    "skinName": "Shattered Visions",
+    "displayName": "Shattered Visions"
+  },
+  {
+    "godName": "Princess Bari",
+    "folder": "princess bari",
+    "fileName": "Screenshot (820).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Heroic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Princess Bari",
+    "folder": "princess bari",
+    "fileName": "Screenshot (821).png",
+    "skinKey": "Princess Bari",
+    "skinName": "Base Princess Bari",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Princess Bari",
+    "folder": "princess bari",
+    "fileName": "Screenshot (822).png",
+    "skinKey": "Princess Bari",
+    "skinName": "Base Princess Bari",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Princess Bari",
+    "folder": "princess bari",
+    "fileName": "Screenshot (823).png",
+    "skinKey": "Princess Bari",
+    "skinName": "Base Princess Bari",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Yemoja",
+    "folder": "yemoja",
+    "fileName": "Screenshot (1002).png",
+    "skinKey": "Yemoja",
+    "skinName": "Base Yemoja",
+    "displayName": "Base"
+  },
+  {
+    "godName": "Yemoja",
+    "folder": "yemoja",
+    "fileName": "Screenshot (1003).png",
+    "skinKey": "DawnSpirits",
+    "skinName": "Dawn Spirits",
+    "displayName": "Dawn Spirits"
+  },
+  {
+    "godName": "Yemoja",
+    "folder": "yemoja",
+    "fileName": "Screenshot (1004).png",
+    "skinKey": "HiveQueen",
+    "skinName": "Hive Queen",
+    "displayName": "Hive Queen"
+  },
+  {
+    "godName": "Yemoja",
+    "folder": "yemoja",
+    "fileName": "Screenshot (1005).png",
+    "skinKey": "Mastermind",
+    "skinName": "Mastermind",
+    "displayName": "Mastermind"
+  },
+  {
+    "godName": "Yemoja",
+    "folder": "yemoja",
+    "fileName": "Screenshot (1006).png",
+    "skinKey": "Mastermind",
+    "skinName": "Mastermind",
+    "variantName": "Prism 1",
+    "displayName": "Mastermind - 1"
+  },
+  {
+    "godName": "Yemoja",
+    "folder": "yemoja",
+    "fileName": "Screenshot (1007).png",
+    "skinKey": "Mastermind",
+    "skinName": "Mastermind",
+    "variantName": "Prism 2",
+    "displayName": "Mastermind - 2"
+  },
+  {
+    "godName": "Yemoja",
+    "folder": "yemoja",
+    "fileName": "Screenshot (1008).png",
+    "skinKey": "Mastermind",
+    "skinName": "Mastermind",
+    "variantName": "Prism 3",
+    "displayName": "Mastermind - 3"
+  },
+  {
+    "godName": "Yemoja",
+    "folder": "yemoja",
+    "fileName": "Screenshot (1009).png",
+    "skinKey": "Shadow",
+    "skinName": "Shadow",
+    "displayName": "Shadow",
+    "tier": "Heroic",
+    "cost": {
+      "currency": "diamonds",
+      "amount": "900",
+      "owned": false
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Yemoja",
+    "folder": "yemoja",
+    "fileName": "Screenshot (1010).png",
+    "skinKey": "Yemoja",
+    "skinName": "Base Yemoja",
+    "variantName": "Mastery Onyx",
+    "displayName": "Onyx",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Yemoja",
+    "folder": "yemoja",
+    "fileName": "Screenshot (1011).png",
+    "skinKey": "Yemoja",
+    "skinName": "Base Yemoja",
+    "variantName": "Mastery Opal",
+    "displayName": "Opal",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 5,
+      "label": "V",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+    },
+    "rarity": "Heroic"
+  },
+  {
+    "godName": "Yemoja",
+    "folder": "yemoja",
+    "fileName": "Screenshot (1012).png",
+    "skinKey": "Yemoja",
+    "skinName": "Base Yemoja",
+    "variantName": "Mastery Radiant",
+    "displayName": "Radiant",
+    "tier": "Heroic",
+    "gridBadge": {
+      "type": "masteryRank",
+      "rank": 10,
+      "label": "X",
+      "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+    },
+    "rarity": "Heroic"
+  }
+]

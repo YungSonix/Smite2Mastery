@@ -82,18 +82,77 @@
     );
   }
 
-  function formatCost(cost) {
+  const CURRENCY_ICONS = {
+    diamonds: 'app/data/Tiers/t_currency_diamond_512 (1).png',
+    gems: 'app/data/Tiers/t_currency_gem_512.png',
+  };
+
+  function normalizeCurrency(currency) {
+    const key = String(currency || '').toLowerCase();
+    if (key === 'gem' || key === 'gems') return 'gems';
+    if (key === 'diamond' || key === 'diamonds') return 'diamonds';
+    return key;
+  }
+
+  function resolveSkinCost(skin) {
+    if (skin?.isBaseSkin) {
+      return { currency: 'diamonds', amount: '0' };
+    }
+    if (skin?.cost != null) {
+      if (typeof skin.cost === 'object' && (skin.cost.currency || skin.cost.amount != null)) {
+        return skin.cost;
+      }
+      if (typeof skin.cost === 'string' || typeof skin.cost === 'number') {
+        return { currency: 'diamonds', amount: String(skin.cost) };
+      }
+    }
+    const price = skin?.price;
+    if (price && typeof price === 'object') {
+      const gems = String(price.gems || '').trim();
+      const diamonds = String(price.diamonds || '').trim();
+      const gemsdia = String(price.gemsdia || '').trim();
+      if (gems) return { currency: 'gems', amount: gems };
+      if (diamonds) return { currency: 'diamonds', amount: diamonds };
+      if (gemsdia) return { currency: 'gems', amount: gemsdia };
+    }
+    return null;
+  }
+
+  function formatCostHtml(skinOrCost) {
+    const entry =
+      skinOrCost && (skinOrCost.loadoutMeta || skinOrCost.cost !== undefined || skinOrCost.price !== undefined)
+        ? skinOrCost
+        : null;
+    const buttonText = entry?.loadoutMeta?.buttonText;
+    if (buttonText && String(buttonText).trim()) {
+      const label = String(buttonText).trim().toUpperCase();
+      const cls = label === 'LOCKED' ? 'cost-action-label locked' : 'cost-action-label go-to';
+      return `<span class="${cls}">${esc(label)}</span>`;
+    }
+    const cost =
+      entry && (entry.cost !== undefined || entry.price !== undefined)
+        ? resolveSkinCost(entry)
+        : skinOrCost;
     if (cost == null) return '—';
     if (typeof cost === 'object' && cost.currency) {
-      return `${cost.amount} ${cost.currency}`;
+      const currency = normalizeCurrency(cost.currency);
+      const iconPath = CURRENCY_ICONS[currency];
+      const amount = cost.amount != null && String(cost.amount).trim() !== '' ? String(cost.amount) : '—';
+      if (iconPath) {
+        const label = currency === 'gems' ? 'Gems' : 'Diamonds';
+        return `<span class="currency-cost"><img class="currency-icon" src="${esc(mediaUrl(iconPath))}" alt="${esc(label)}" loading="lazy" /><span class="currency-amount">${esc(amount)}</span></span>`;
+      }
+      return `${esc(amount)} ${esc(cost.currency)}`;
     }
-    return String(cost);
+    return esc(String(cost));
   }
 
   function skinBadges(skin) {
     const tags = [];
     if (skin.isBaseSkin) tags.push('<span class="badge base">Base</span>');
-    if (skin.isPrism) tags.push('<span class="badge prism">Prism</span>');
+    if (skin.isPrism || skin.loadoutMeta?.gridBadge?.type === 'prism') {
+      tags.push('<span class="badge prism">Prism</span>');
+    }
     if (skin.isMastery) tags.push('<span class="badge mastery">Mastery</span>');
     if (skin.isCrossGen) tags.push('<span class="badge cross">Cross-gen</span>');
     if (skin.isRecolor) tags.push('<span class="badge recolor">Recolor</span>');
@@ -181,6 +240,56 @@
     const res = await fetch(url);
     if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
     return res.json();
+  }
+
+  let skinVoxReady = null;
+
+  function ensureSkinVox() {
+    if (!skinVoxReady) {
+      skinVoxReady = fetchJson('/api/vox-manifest')
+        .then((data) => {
+          if (!window.SkinVox) throw new Error('skinVox.js not loaded');
+          window.SkinVox.init(data.manifest, data.voiceAudioBase);
+          return window.SkinVox;
+        })
+        .catch((err) => {
+          console.warn('Skin VOX manifest unavailable:', err.message);
+          return null;
+        });
+    }
+    return skinVoxReady;
+  }
+
+  let currentGodVoxCtx = null;
+  let currentGodSkinsByKey = null;
+
+  function renderSkinVoxButton(skin, godCtx) {
+    if (!window.SkinVox || !godCtx || !skin?.skinKey) return '';
+    if (!window.SkinVox.hasSkinVoxPreview(godCtx.godName, godCtx.godKey, skin.skinKey, skin)) {
+      return '';
+    }
+    return `<button type="button" class="skin-vox-random-btn" data-skin-key="${esc(skin.skinKey)}">Play a voiceline from this skin</button>`;
+  }
+
+  function bindSkinVoxClicks(root) {
+    if (!root || !window.SkinVox || !currentGodVoxCtx || !currentGodSkinsByKey) return;
+    root.querySelectorAll('.skin-vox-random-btn').forEach((btn) => {
+      if (btn.dataset.voxBound) return;
+      btn.dataset.voxBound = '1';
+      btn.addEventListener('click', () => {
+        const skinKey = btn.getAttribute('data-skin-key');
+        const skin = currentGodSkinsByKey[skinKey];
+        if (!skin || btn.classList.contains('playing')) return;
+        btn.textContent = 'Playing voiceline…';
+        window.SkinVox.playRandomSkinVox(
+          currentGodVoxCtx.godName,
+          currentGodVoxCtx.godKey,
+          skinKey,
+          skin,
+          btn
+        );
+      });
+    });
   }
 
   /** `/api/gods` needs a restarted viewer; fall back to pantheon fetches if server is stale. */
@@ -334,51 +443,264 @@
     }
   }
 
-  function renderSkinCard(skin) {
-    const cardArt = pickCardArt(skin);
-    const icon = pickThumb(skin);
-    const cardPath = (skin.assets && (skin.assets.cardArt || skin.assets.skin)) || skin.cardArt || skin.skin;
-    const iconPath = (skin.assets && (skin.assets.icon || skin.assets.cardArt)) || skin.icon;
-    const variants = skin.variants || [];
+  const LOADOUT_ZOOM = 1080 / 940;
+
+  function shouldShowUnlock(entry) {
+    const u = entry && entry.unlock;
+    if (!u || u.source === 'base' || u.source === 'prism') return false;
+    if (u.masteryRank || u.requiresAscensionPass || u.masteryEmblem) return true;
+    if (u.source === 'ascension' || u.source === 'event' || u.source === 'traveler') return true;
+    const text = formatUnlock(u);
+    return Boolean(text && text !== '—');
+  }
+
+  function shouldShowGridBadge(entry) {
+    return Boolean(gridBadgeTag(entry?.loadoutMeta?.gridBadge));
+  }
+
+  function shouldShowType(skin) {
+    const t = skin && skin.type;
+    return Boolean(t && String(t).trim() && t !== '—');
+  }
+
+  function dlRow(label, valueHtml, show) {
+    if (!show) return '';
+    return `<dt>${label}</dt><dd>${valueHtml}</dd>`;
+  }
+
+  function collectFolderPaths(entry) {
+    const rows = [];
+    const cardArt =
+      (entry.assets && (entry.assets.cardArt || entry.assets.skin)) || entry.cardArt || entry.skin;
+    const icon = (entry.assets && entry.assets.icon) || entry.icon;
+    const inGame = entry.assets && entry.assets.inGame;
+    const loadout = entry.loadout && entry.loadout.screenshot;
+    if (cardArt) rows.push(['Card art', cardArt]);
+    if (loadout) rows.push(['Loadout shot', loadout]);
+    if (icon) rows.push(['Icon', icon]);
+    if (inGame) rows.push(['In-game', inGame]);
+    return rows;
+  }
+
+  function folderLocationsBlock(entry) {
+    const rows = collectFolderPaths(entry);
+    if (!rows.length) return '';
+    return `<details class="folder-locations">
+      <summary>Show Folder Location</summary>
+      <dl>${rows.map(([label, path]) => dlRow(label, esc(path), true)).join('')}</dl>
+    </details>`;
+  }
+
+  function skinInformationRows(entry) {
+    return entry?.information || entry?.loadoutMeta?.information || [];
+  }
+
+  function skinInformationBlock(entry) {
+    const rows = skinInformationRows(entry);
+    if (!rows.length) return '';
+    return `<div class="skin-information">
+      ${rows
+        .map(
+          (row) => `
+        <div class="info-section">
+          <div class="info-label">${esc(row.label || row.key || 'Info')}</div>
+          <div class="info-text">${esc(row.text || '')}</div>
+        </div>`
+        )
+        .join('')}
+    </div>`;
+  }
+
+  function visibleVariants(skin) {
+    return (skin.variants || []).filter((v) => !/^Mastery Light$/i.test(String(v.name || '')));
+  }
+
+  function formatUnlock(unlock) {
+    if (!unlock || typeof unlock !== 'object') return '—';
+    if (unlock.displayText) return unlock.displayText;
+    const parts = [];
+    if (unlock.masteryRank) parts.push(`Mastery rank ${unlock.masteryRank === 10 ? 'X' : unlock.masteryRank}`);
+    if (unlock.requiresAscensionPass) parts.push('Ascension Pass');
+    if (unlock.source) parts.push(unlock.source);
+    return parts.length ? parts.join(' · ') : '—';
+  }
+
+  function masteryEmblemTag(unlock, gridBadge) {
+    const path =
+      (unlock && unlock.masteryEmblem) ||
+      (gridBadge && gridBadge.type === 'masteryRank' && gridBadge.emblemPath) ||
+      null;
+    if (!path) return '';
+    return `<img class="mastery-emblem" src="${esc(mediaUrl(path))}" alt="Mastery ${unlock?.masteryRank || gridBadge?.rank || ''}" loading="lazy" />`;
+  }
+
+  function gridBadgeTag(gridBadge) {
+    if (!gridBadge) return '';
+    if (gridBadge.type === 'prism') {
+      return '<span class="badge prism">Prism</span>';
+    }
+    if (gridBadge.type === 'masteryRank') {
+      const emblem = gridBadge.emblemPath
+        ? `<img class="mastery-emblem small" src="${esc(mediaUrl(gridBadge.emblemPath))}" alt="" />`
+        : '';
+      return `<span class="grid-badge mastery">${emblem}<span>Rank ${gridBadge.rank === 10 ? 'X' : 'V'}</span></span>`;
+    }
+    return '';
+  }
+
+  function formatRarity(skin) {
+    if (skin.isBaseSkin || (!skin.rarity && !skin.tierBadge)) return '—';
+    const badge = skin.tierBadge
+      ? `<img class="tier-badge" src="${esc(mediaUrl(skin.tierBadge))}" alt="" loading="lazy" />`
+      : '';
+    const label = skin.rarity || skin.loadoutMeta?.rarity || '';
+    return `<span class="tier-line">${badge}<span class="tier-label">${esc(label)}</span></span>`;
+  }
+
+  function loadoutFrameTag(entry, label) {
+    const lo = entry && entry.loadout;
+    if (!lo || !lo.screenshot) return '';
+    const src = mediaUrl(lo.screenshot);
+    const frame = lo.frame || {};
+    const fx = frame.focalX ?? 50;
+    const fy = frame.focalY ?? 50;
+    const zoom = frame.zoom ?? frame.zoomY ?? LOADOUT_ZOOM;
     return `
-      <article class="skin-card${skin.isBaseSkin ? ' base' : ''}">
+      <div class="loadout-frame-wrap">
+        <span class="loadout-frame-label">${esc(label || 'In-game loadout')}</span>
+        <div class="loadout-frame" style="--pos-x:${fx}%;--pos-y:${fy}%;--loadout-zoom:${zoom};">
+          ${imgTag(src, '', (entry.skinName || entry.name || 'loadout') + ' render', lo.screenshot)}
+        </div>
+      </div>`;
+  }
+
+  function skinHasVisibleVariants(skin) {
+    return visibleVariants(skin).length > 0;
+  }
+
+  function compareSkinsForDisplay(a, b) {
+    const aHas = skinHasVisibleVariants(a);
+    const bHas = skinHasVisibleVariants(b);
+    if (aHas && !bHas) return -1;
+    if (!aHas && bHas) return 1;
+    if (a.isBaseSkin && !b.isBaseSkin) return -1;
+    if (!a.isBaseSkin && b.isBaseSkin) return 1;
+    return String(a.skinName || a.skinKey || '').localeCompare(
+      String(b.skinName || b.skinKey || ''),
+      undefined,
+      { sensitivity: 'base' }
+    );
+  }
+
+  function renderSkinSections(skins, godCtx) {
+    if (!skins.length) return '<p class="page-sub">No skins listed.</p>';
+
+    const ordered = [...skins].sort(compareSkinsForDisplay);
+    const withVariants = ordered.filter(skinHasVisibleVariants);
+    const withoutVariants = ordered.filter((s) => !skinHasVisibleVariants(s));
+
+    const section = (title, list, extraClass) => {
+      if (!list.length) return '';
+      return `<section class="skin-section ${extraClass || ''}">
+        <h2 class="skin-section-title">${esc(title)} <span class="skin-section-count">${list.length}</span></h2>
+        <div class="skin-cards">${list.map((s) => renderSkinCard(s, godCtx)).join('')}</div>
+      </section>`;
+    };
+
+    return [
+      section('Skins with variants', withVariants, 'skin-section-has-variants'),
+      section('Other skins', withoutVariants, 'skin-section-simple'),
+    ]
+      .filter(Boolean)
+      .join('');
+  }
+
+  function variantFrameLabel(v) {
+    const name = v.loadoutMeta?.displayName || v.name || 'Variant';
+    const tail = String(name).includes('-') ? String(name).split('-').pop().trim() : name;
+    const cleaned = tail.replace(/^Mastery\s+/i, '');
+    if (/^light$/i.test(cleaned)) return 'RADIANT';
+    return cleaned.toUpperCase();
+  }
+
+  function renderVariantChip(v) {
+    return `
+      <div class="variant-chip">
+        ${imgTag(mediaUrl(v.icon || v.cardArt || v.skin), 'variant-icon', v.name)}
+        ${loadoutFrameTag(v, variantFrameLabel(v))}
+        <div class="variant-meta">
+          <strong>${esc(v.loadoutMeta?.displayName || v.name || 'Variant')}</strong>
+          ${v.masteryFromDisk ? '<span class="badge mastery">Mastery</span>' : ''}
+          ${shouldShowGridBadge(v) ? gridBadgeTag(v.loadoutMeta?.gridBadge) : ''}
+          ${v.rarity ? `<div class="tier-line">${v.tierBadge ? `<img class="tier-badge" src="${esc(mediaUrl(v.tierBadge))}" alt="" />` : ''}<span class="tier-label">${esc(v.rarity)}</span></div>` : ''}
+          ${
+            shouldShowUnlock(v)
+              ? `<div class="unlock-cell variant-unlock">${masteryEmblemTag(v.unlock, v.loadoutMeta?.gridBadge)}${esc(formatUnlock(v.unlock))}</div>`
+              : ''
+          }
+          ${skinInformationBlock(v)}
+          ${folderLocationsBlock(v)}
+        </div>
+      </div>`;
+  }
+
+  function renderSkinCardBody(skin, godCtx) {
+    return `
         <div class="skin-card-head">
           <h3>${esc(skin.skinName)}</h3>
           <div class="skin-key">${esc(skin.skinKey)}</div>
           <div class="god-badges" style="margin-top:8px;">${skinBadges(skin)}</div>
         </div>
         <div class="skin-art-row">
-          ${imgTag(cardArt, '', skin.skinName + ' card', cardPath)}
-          ${imgTag(icon, 'icon', skin.skinName + ' icon', iconPath)}
+          ${imgTag(pickCardArt(skin), '', skin.skinName + ' card', (skin.assets && (skin.assets.cardArt || skin.assets.skin)) || skin.cardArt || skin.skin)}
+          ${loadoutFrameTag(skin, 'In-game loadout')}
+          ${imgTag(pickThumb(skin), 'icon', skin.skinName + ' icon', (skin.assets && (skin.assets.icon || skin.assets.cardArt)) || skin.icon)}
         </div>
         <div class="skin-fields">
-          <dl>
-            <dt>Cost</dt><dd>${esc(formatCost(skin.cost))}</dd>
-            <dt>Rarity</dt><dd>${esc(skin.rarity ?? '—')}</dd>
-            <dt>Type</dt><dd>${esc(skin.type || '—')}</dd>
-            <dt>Card art</dt><dd>${esc((skin.assets && skin.assets.cardArt) || '—')}</dd>
-            <dt>Icon</dt><dd>${esc((skin.assets && skin.assets.icon) || '—')}</dd>
-            <dt>In-game</dt><dd>${esc((skin.assets && skin.assets.inGame) || '—')}</dd>
-          </dl>
           ${
-            variants.length
-              ? `<div class="variants-block">
-              <h4>Variants (${variants.length})</h4>
-              ${variants
-                .map(
-                  (v) => `
-                <div class="variant-row">
-                  ${imgTag(mediaUrl(v.icon || v.cardArt || v.skin), '', v.name)}
-                  <div>
-                    <strong>${esc(v.name || 'Variant')}</strong>
-                    ${v.masteryFromDisk ? '<span class="badge mastery">Mastery</span>' : ''}
-                  </div>
-                </div>`
-                )
-                .join('')}
-            </div>`
+            skin.loadoutMeta?.godName
+              ? `<div class="loadout-god-name">${esc(skin.loadoutMeta.godName)}</div>`
               : ''
           }
+          <dl>
+            ${dlRow('Cost', formatCostHtml(skin), true)}
+            ${dlRow('Tier', formatRarity(skin), !skin.isBaseSkin && Boolean(skin.rarity || skin.tierBadge))}
+            ${dlRow(
+              'Unlock',
+              `${masteryEmblemTag(skin.unlock, skin.loadoutMeta?.gridBadge)}${esc(formatUnlock(skin.unlock))}`,
+              shouldShowUnlock(skin)
+            )}
+            ${dlRow('Grid badge', gridBadgeTag(skin.loadoutMeta?.gridBadge), shouldShowGridBadge(skin))}
+            ${dlRow('Type', esc(skin.type), shouldShowType(skin))}
+          </dl>
+          ${skinInformationBlock(skin)}
+          ${folderLocationsBlock(skin)}
+          ${godCtx ? renderSkinVoxButton(skin, godCtx) : ''}
+        </div>`;
+  }
+
+  function renderSkinCard(skin, godCtx) {
+    const variants = visibleVariants(skin);
+    const hasVariants = variants.length > 0;
+    if (!hasVariants) {
+      return `
+      <article class="skin-card${skin.isBaseSkin ? ' base' : ''}">
+        ${renderSkinCardBody(skin, godCtx)}
+      </article>`;
+    }
+
+    return `
+      <article class="skin-card has-variants${skin.isBaseSkin ? ' base' : ''}">
+        <div class="skin-card-split">
+          <div class="skin-card-main">
+            ${renderSkinCardBody(skin, godCtx)}
+          </div>
+          <div class="skin-card-variants">
+            <h4>Variants (${variants.length})</h4>
+            <div class="variants-grid" style="--variant-cols: ${variants.length}">
+              ${variants.map((v) => renderVariantChip(v)).join('')}
+            </div>
+          </div>
         </div>
       </article>
     `;
@@ -393,37 +715,26 @@
     app.innerHTML = '<div class="loading">Loading…</div>';
     hideHover();
     try {
+      await ensureSkinVox();
       const data = await fetchJson(`/api/pantheon/${encodeURIComponent(pantheonId)}`);
       const god = (data.gods || []).find(
         (g) => g.godName.toLowerCase() === godName.toLowerCase()
       );
       if (!god) throw new Error(`God "${godName}" not found in ${pantheonId}`);
 
+      const godCtx = { godName: god.godName, godKey: god.internalName || '' };
       const skins = god.skins || [];
-      const base = skins.filter((s) => s.isBaseSkin);
-      const mastery = skins.filter((s) => s.isMastery && !s.isBaseSkin);
-      const rest = skins.filter((s) => !s.isBaseSkin && !s.isMastery);
+      const orderedSkins = [...skins].sort(compareSkinsForDisplay);
+      currentGodVoxCtx = godCtx;
+      currentGodSkinsByKey = Object.fromEntries(orderedSkins.map((s) => [s.skinKey, s]));
 
       app.innerHTML = `
         <a class="back-link" href="#/pantheon/${encodeURIComponent(pantheonId)}">← ${esc(pantheonId)} pantheon</a>
         <h1 class="page-title">${esc(god.godName)}</h1>
         <p class="page-sub">${esc(data.pantheon)} · ${skins.length} skins · ${esc(god.internalName || '')}</p>
-        ${
-          base.length
-            ? `<section class="skin-section"><h2>Base</h2><div class="skin-cards">${base.map(renderSkinCard).join('')}</div></section>`
-            : ''
-        }
-        ${
-          mastery.length
-            ? `<section class="skin-section"><h2>Mastery</h2><div class="skin-cards">${mastery.map(renderSkinCard).join('')}</div></section>`
-            : ''
-        }
-        ${
-          rest.length
-            ? `<section class="skin-section"><h2>Skins</h2><div class="skin-cards">${rest.map(renderSkinCard).join('')}</div></section>`
-            : ''
-        }
+        ${renderSkinSections(skins, godCtx)}
       `;
+      bindSkinVoxClicks(app);
     } catch (err) {
       app.innerHTML = `<div class="error-box">${esc(err.message)}</div>`;
     }

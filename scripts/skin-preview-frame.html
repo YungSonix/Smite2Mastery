@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Skin loadout frame preview (563×840)</title>
+  <title>Skin loadout frame preview (586×940)</title>
   <style>
     :root {
-      --frame-w: 563px;
-      --frame-h: 840px;
+      --frame-w: 586px;
+      --frame-h: 940px;
       --bg: #030712;
       --border: rgba(125, 211, 252, 0.42);
       --text: #f1f5f9;
@@ -25,15 +25,8 @@
     }
     h1 { font-size: 1.1rem; margin: 0 0 4px; color: var(--accent); }
     p { margin: 0 0 16px; color: var(--muted); font-size: 0.9rem; line-height: 1.45; }
-    .layout {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 28px;
-      align-items: flex-start;
-    }
-    .frame-wrap {
-      flex-shrink: 0;
-    }
+    .layout { display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start; }
+    .frame-wrap { flex-shrink: 0; }
     .frame-label {
       font-size: 0.75rem;
       font-weight: 700;
@@ -42,7 +35,6 @@
       color: var(--muted);
       margin-bottom: 8px;
     }
-    /* Fixed 563×840 — object-fit cover (no file crop) */
     .skin-frame {
       width: var(--frame-w);
       height: var(--frame-h);
@@ -56,7 +48,9 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: var(--pos-x, 50%) var(--pos-y, 42%);
+      object-position: var(--pos-x, 50%) var(--pos-y, 50%);
+      transform: scale(var(--loadout-zoom, 1.149));
+      transform-origin: var(--pos-x, 50%) var(--pos-y, 50%);
       display: block;
     }
     .controls {
@@ -97,80 +91,65 @@
       cursor: pointer;
     }
     button:hover { filter: brightness(1.1); }
-    .compare {
-      margin-top: 20px;
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .compare .skin-frame { transform: scale(0.45); transform-origin: top left; margin-bottom: -460px; margin-right: -310px; }
-    .compare .frame-label { margin-top: 0; }
     code { font-size: 0.78rem; color: #93c5fd; word-break: break-all; }
   </style>
 </head>
 <body>
-  <h1>Skin loadout frame — 563×840 (2:3)</h1>
+  <h1>Skin loadout frame — 586×940</h1>
   <p>
-    Same framing as the app <strong>Loadout</strong> tab: fixed portrait box, <code>object-fit: cover</code>.
-    The source file is never modified — only the viewport crops what you see.
+    Centered crop from a <strong>1920×1080</strong> loadout shot. Ratio <strong>586:940</strong> (~5:8).
+    Default zoom <strong>1080÷940 ≈ 1.149</strong> — uniform scale, no horizontal squash.
   </p>
 
   <div class="layout">
     <div class="frame-wrap">
-      <div class="frame-label">Preview · 563 × 840</div>
+      <div class="frame-label">Preview · 586 × 940</div>
       <div class="skin-frame" id="frame">
         <img id="preview" alt="Skin preview" />
       </div>
     </div>
 
     <div class="controls">
-      <label for="imagePath">Image path (repo-relative)</label>
-      <input type="text" id="imagePath" value="app/data/NewGodSkins/Achilles/Skins/SoulPiercer/Screenshot 2026-06-16 101639.png" />
+      <label for="imagePath">Image path (1920×1080 loadout PNG)</label>
+      <input type="text" id="imagePath" value="app/data/God Renders/achilles/Screenshot (108).png" />
 
-      <label for="filePick">Or pick a local file (e.g. loadout screenshot)</label>
+      <label for="filePick">Or pick a local file</label>
       <input type="file" id="filePick" accept="image/*" />
 
       <label>Focal X <span id="posXVal">50</span>%</label>
       <input type="range" id="posX" min="0" max="100" value="50" />
 
-      <label>Focal Y <span id="posYVal">42</span>%</label>
-      <input type="range" id="posY" min="0" max="100" value="42" />
+      <label>Focal Y <span id="posYVal">50</span>%</label>
+      <input type="range" id="posY" min="0" max="100" value="50" />
+
+      <label>Zoom <span id="zoomVal">1.149</span>× <span style="font-weight:400;color:var(--muted)">(1080÷940)</span></label>
+      <input type="range" id="zoom" min="1" max="3" step="0.001" value="1.148936" />
 
       <div class="row">
         <button type="button" id="reload">Reload path</button>
-        <button type="button" id="presetAchilles">Achilles · Soul Piercer (card)</button>
-        <button type="button" id="presetSoulPiercerLoadout">Achilles · Soul Piercer (loadout)</button>
-        <button type="button" id="presetAchillesBase">Achilles · base loadout</button>
+        <button type="button" id="presetDefault">Reset default crop</button>
       </div>
 
-      <p style="margin-top:16px;font-size:0.8rem;">
-        In app: <strong>Database → Achilles → Skins → Soul Piercer → Loadout</strong>.
-        Until <code>inGame</code> is set on the skin, Loadout shows a placeholder. Soul Piercer now uses
-        <code>T_GodFull_Achilles_SoulPiercer.png</code> (in-game loadout capture).
-      </p>
-      <p style="font-size:0.78rem;"><code id="resolvedUrl"></code></p>
+      <p style="font-size:0.78rem;margin-top:16px;"><code id="resolvedUrl"></code></p>
     </div>
   </div>
 
   <script>
-    const PRESETS = {
-      soulPiercer: 'app/data/NewGodSkins/Achilles/Skins/SoulPiercer/t_SkinCard_Achilles_SoulPiercer.png',
-      soulPiercerLoadout: 'app/data/NewGodSkins/Achilles/Skins/SoulPiercer/Screenshot 2026-06-16 101639.png',
-      achillesBaseLoadout: 'app/data/NewGodSkins/Achilles/Default/T_GodFull_Achilles.png',
-    };
+    const DEFAULT_ZOOM = 1080 / 940;
 
     const img = document.getElementById('preview');
     const pathInput = document.getElementById('imagePath');
     const filePick = document.getElementById('filePick');
     const posX = document.getElementById('posX');
     const posY = document.getElementById('posY');
+    const zoom = document.getElementById('zoom');
     const posXVal = document.getElementById('posXVal');
     const posYVal = document.getElementById('posYVal');
+    const zoomVal = document.getElementById('zoomVal');
     const resolvedUrl = document.getElementById('resolvedUrl');
     const frame = document.getElementById('frame');
 
     function repoRootFromScript() {
-      // scripts/skin-preview-frame.html → repo root is ..
       return new URL('../', window.location.href);
     }
 
@@ -182,28 +161,24 @@
     }
 
     function updateFocal() {
-      const x = posX.value;
-      const y = posY.value;
-      posXVal.textContent = x;
-      posYVal.textContent = y;
-      frame.style.setProperty('--pos-x', x + '%');
-      frame.style.setProperty('--pos-y', y + '%');
+      posXVal.textContent = posX.value;
+      posYVal.textContent = posY.value;
+      zoomVal.textContent = Number(zoom.value).toFixed(3);
+      frame.style.setProperty('--pos-x', posX.value + '%');
+      frame.style.setProperty('--pos-y', posY.value + '%');
+      frame.style.setProperty('--loadout-zoom', zoom.value);
+    }
+
+    function resetDefault() {
+      posX.value = '50';
+      posY.value = '50';
+      zoom.value = String(DEFAULT_ZOOM);
+      updateFocal();
     }
 
     pathInput.addEventListener('change', () => loadFromPath(pathInput.value));
     document.getElementById('reload').addEventListener('click', () => loadFromPath(pathInput.value));
-    document.getElementById('presetAchilles').addEventListener('click', () => {
-      pathInput.value = PRESETS.soulPiercer;
-      loadFromPath(PRESETS.soulPiercer);
-    });
-    document.getElementById('presetSoulPiercerLoadout').addEventListener('click', () => {
-      pathInput.value = PRESETS.soulPiercerLoadout;
-      loadFromPath(PRESETS.soulPiercerLoadout);
-    });
-    document.getElementById('presetAchillesBase').addEventListener('click', () => {
-      pathInput.value = PRESETS.achillesBaseLoadout;
-      loadFromPath(PRESETS.achillesBaseLoadout);
-    });
+    document.getElementById('presetDefault').addEventListener('click', resetDefault);
     filePick.addEventListener('change', (e) => {
       const f = e.target.files && e.target.files[0];
       if (!f) return;
@@ -212,8 +187,9 @@
     });
     posX.addEventListener('input', updateFocal);
     posY.addEventListener('input', updateFocal);
+    zoom.addEventListener('input', updateFocal);
 
-    updateFocal();
+    resetDefault();
     loadFromPath(pathInput.value);
   </script>
 </body>
