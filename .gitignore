@@ -87,6 +87,9 @@ IMPROVEMENTS.md
 ENV_SETUP.md
 SECURITY.md
 vault.config.json
+.cursor/
+docs/council/
+docs/cursor-agents/
 
 # Backup and temporary files
 *.backup
@@ -108,8 +111,3 @@ app/data/Icons/Item Icons/
 
 # Obsidian vault (local mirror)
 Vault/
-# Council paths (machine-specific)
-docs/council/council.paths.json
-# Council panel uploads (local screenshots)
-docs/council/ui/attachments/*
-!docs/council/ui/attachments/.gitkeep
