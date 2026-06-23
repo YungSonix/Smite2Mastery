@@ -7785,9 +7785,9 @@
             },
             {
               "name": "Chromafear",
-              "cardArt": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinCard_Vulcan_Emberlord_T4_Prisim_D.png",
-              "skin": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinCard_Vulcan_Emberlord_T4_Prisim_D.png",
-              "icon": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinPortrait_Vulcan_Emberlord_T4_Prisim_D.png",
+              "cardArt": "app/data/NewGodSkins/Vulcan/Skins/Prisims/t_SkinCard_Vulcan_Emberlord_T4_Prisim_D.png",
+              "skin": "app/data/NewGodSkins/Vulcan/Skins/Prisims/t_SkinCard_Vulcan_Emberlord_T4_Prisim_D.png",
+              "icon": "app/data/NewGodSkins/Vulcan/Skins/Prisims/t_SkinPortrait_Vulcan_Emberlord_T4_Prisim_D.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/vulcan/Screenshot (984).png",
                 "frame": {
@@ -7866,9 +7866,9 @@
             },
             {
               "name": "Sanguine",
-              "cardArt": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinCard_Vulcan_Emberlord_T4_Prisim_A.png",
-              "skin": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinCard_Vulcan_Emberlord_T4_Prisim_A.png",
-              "icon": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinPortrait_Vulcan_Emberlord_T4_Prisim_A.png",
+              "cardArt": "app/data/NewGodSkins/Vulcan/Skins/Prisims/t_SkinCard_Vulcan_Emberlord_T4_Prisim_A.png",
+              "skin": "app/data/NewGodSkins/Vulcan/Skins/Prisims/t_SkinCard_Vulcan_Emberlord_T4_Prisim_A.png",
+              "icon": "app/data/NewGodSkins/Vulcan/Skins/Prisims/t_SkinPortrait_Vulcan_Emberlord_T4_Prisim_A.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/vulcan/Screenshot (985).png",
                 "frame": {
@@ -7947,9 +7947,9 @@
             },
             {
               "name": "Viridread",
-              "cardArt": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinCard_Vulcan_Emberlord_T4_Prisim_B.png",
-              "skin": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinCard_Vulcan_Emberlord_T4_Prisim_B.png",
-              "icon": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinPortrait_Vulcan_Emberlord_T4_Prisim_B.png",
+              "cardArt": "app/data/NewGodSkins/Vulcan/Skins/Prisims/t_SkinCard_Vulcan_Emberlord_T4_Prisim_B.png",
+              "skin": "app/data/NewGodSkins/Vulcan/Skins/Prisims/t_SkinCard_Vulcan_Emberlord_T4_Prisim_B.png",
+              "icon": "app/data/NewGodSkins/Vulcan/Skins/Prisims/t_SkinPortrait_Vulcan_Emberlord_T4_Prisim_B.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/vulcan/Screenshot (986).png",
                 "frame": {
@@ -8028,9 +8028,9 @@
             },
             {
               "name": "Gladiator",
-              "cardArt": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinCard_Vulcan_Emberlord_T4_Prisim_C.png",
-              "skin": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinCard_Vulcan_Emberlord_T4_Prisim_C.png",
-              "icon": "app/data/NewGodSkins/Vulcan/Skins/Emberlord/Prisms/t_SkinPortrait_Vulcan_Emberlord_T4_Prisim_C.png",
+              "cardArt": "app/data/NewGodSkins/Vulcan/Skins/Prisims/t_SkinCard_Vulcan_Emberlord_T4_Prisim_C.png",
+              "skin": "app/data/NewGodSkins/Vulcan/Skins/Prisims/t_SkinCard_Vulcan_Emberlord_T4_Prisim_C.png",
+              "icon": "app/data/NewGodSkins/Vulcan/Skins/Prisims/t_SkinPortrait_Vulcan_Emberlord_T4_Prisim_C.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/vulcan/Screenshot (987).png",
                 "frame": {

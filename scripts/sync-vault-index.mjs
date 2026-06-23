@@ -510,9 +510,9 @@ Browse live: \`_repo/config/\``,
 | Asset | Path |
 |-------|------|
 | Gods, items, builds | \`app/data/God Information/Builds/builds.json\` |
-| Wordle god list | \`Smite2Gods.json\` (repo root) |
+| Wordle god list | \`app/data/Smite2Gods.json\` |
 | Icons / wallpapers | \`app/data/Icons/\` |
-| Patch notes | \`Patch Notes/\` |
+| Patch notes | \`app/data/Patch Notes/\` (JSON + source \`.txt\`) |
 
 Browse live: \`_repo/app/data/\``,
   },

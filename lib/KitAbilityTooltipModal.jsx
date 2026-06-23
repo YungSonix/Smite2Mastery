@@ -20,6 +20,7 @@ import {
   formatIncreaseFromBase,
   formatAbilityStatKey,
 } from './kitAbilityTooltip';
+import { kitAbilityTooltipModalStyles as styles, UI_TOOLTIP_BORDER_DEFAULT } from './uiTheme';
 
 export default function KitAbilityTooltipModal({
   visible,
@@ -28,10 +29,12 @@ export default function KitAbilityTooltipModal({
   icon,
   body,
   valueKeys,
-  borderColor = 'rgba(125, 211, 252, 0.42)',
+  borderColor = UI_TOOLTIP_BORDER_DEFAULT,
   levelIndex = 0,
   onLevelIndexChange,
   iconContentFit = 'cover',
+  onCardHoverIn,
+  onCardHoverOut,
 }) {
   const { width: screenWidth, height: screenHeight } = useScreenDimensions();
 
@@ -54,7 +57,11 @@ export default function KitAbilityTooltipModal({
           accessibilityLabel="Dismiss ability preview"
         />
         <View style={[styles.cardWrap, { top, left, width: cardW, height: cardH }]}>
-          <View style={[styles.card, { borderColor }]}>
+          <View
+            style={[styles.card, { borderColor }]}
+            onHoverIn={onCardHoverIn}
+            onHoverOut={onCardHoverOut}
+          >
             <View style={styles.header}>
               <View style={styles.headerLeft}>
                 <View style={styles.iconWrap}>
@@ -212,249 +219,3 @@ export default function KitAbilityTooltipModal({
     </Modal>
   );
 }
-
-const styles = StyleSheet.create({
-  overlayRoot: {
-    flex: 1,
-    backgroundColor: 'rgba(3, 7, 18, 0.42)',
-  },
-  cardWrap: {
-    position: 'absolute',
-    zIndex: 4,
-    elevation: 10,
-    overflow: 'visible',
-  },
-  card: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(8, 12, 22, 0.98)',
-    borderWidth: 1,
-    borderColor: 'rgba(125, 211, 252, 0.42)',
-    borderRadius: 10,
-    padding: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.35,
-    shadowRadius: 8,
-    overflow: 'hidden',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    gap: 8,
-    marginBottom: 8,
-  },
-  headerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-    minWidth: 0,
-    gap: 8,
-  },
-  iconWrap: {
-    width: 36,
-    height: 36,
-    borderRadius: 8,
-    overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: '#1e3a5f',
-    backgroundColor: '#0b1220',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  icon: {
-    width: '100%',
-    height: '100%',
-  },
-  iconFallback: {
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  iconFallbackText: {
-    color: '#e2e8f0',
-    fontSize: 14,
-    fontWeight: '800',
-  },
-  titleWrap: {
-    flex: 1,
-    minWidth: 0,
-  },
-  title: {
-    color: '#f1f5f9',
-    fontWeight: '800',
-    fontSize: 15,
-  },
-  subTitle: {
-    marginTop: 2,
-    color: '#7dd3fc',
-    fontSize: 9,
-    fontWeight: '700',
-    letterSpacing: 0.2,
-  },
-  headerRight: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 6,
-    flexShrink: 0,
-  },
-  closeCornerBtn: {
-    position: 'absolute',
-    top: -14,
-    right: -14,
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: '#1e3a5f',
-    borderWidth: 1,
-    borderColor: 'rgba(125, 211, 252, 0.42)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 20,
-    elevation: 14,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.4,
-    shadowRadius: 4,
-  },
-  closeCornerText: {
-    color: '#e6eef8',
-    fontSize: 22,
-    fontWeight: '700',
-    lineHeight: 24,
-    marginTop: -2,
-  },
-  sectionLabel: {
-    color: '#93c5fd',
-    fontSize: 9,
-    fontWeight: '800',
-    letterSpacing: 0.2,
-    marginBottom: 2,
-  },
-  levelStepperTopRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    borderWidth: 1,
-    borderColor: '#1e3a5f',
-    borderRadius: 8,
-    paddingVertical: 2,
-    paddingHorizontal: 6,
-    backgroundColor: '#0b1220',
-  },
-  levelStepperBtn: {
-    width: 18,
-    height: 18,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#1e3a5f',
-    backgroundColor: '#0f1724',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  levelStepperText: {
-    color: '#cbd5e1',
-    fontSize: 11,
-    fontWeight: '800',
-    lineHeight: 12,
-  },
-  levelStepperTextDisabled: {
-    color: '#64748b',
-  },
-  levelCurrentText: {
-    color: '#7dd3fc',
-    fontSize: 11,
-    fontWeight: '800',
-    lineHeight: 12,
-    minWidth: 14,
-    textAlign: 'center',
-  },
-  descSection: {
-    marginBottom: 6,
-  },
-  descScroll: {
-    height: 118,
-    marginHorizontal: -2,
-  },
-  descScrollContent: {
-    paddingHorizontal: 2,
-    paddingVertical: 2,
-  },
-  statsSection: {
-    marginBottom: 4,
-    height: 148,
-    minHeight: 148,
-  },
-  statsScroll: {
-    flex: 1,
-    minHeight: 0,
-    borderWidth: 1,
-    borderColor: '#1e3a5f',
-    borderRadius: 8,
-    backgroundColor: '#0b1220',
-  },
-  statsScrollContent: {
-    paddingBottom: 8,
-  },
-  statsBlock: {
-    paddingHorizontal: 6,
-    paddingVertical: 4,
-  },
-  statRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    gap: 6,
-    paddingVertical: 2,
-    borderBottomWidth: 1,
-    borderBottomColor: '#1e293b',
-  },
-  statLabel: {
-    color: '#cbd5e1',
-    fontSize: 9,
-    fontWeight: '600',
-    flex: 1,
-    minWidth: 0,
-    paddingRight: 4,
-    flexWrap: 'wrap',
-  },
-  statValueWrap: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    gap: 4,
-    maxWidth: '46%',
-    flexShrink: 1,
-    minWidth: 0,
-  },
-  statValue: {
-    color: '#f8fafc',
-    fontSize: 9,
-    fontWeight: '800',
-    textAlign: 'right',
-    flexShrink: 1,
-    minWidth: 0,
-    flexWrap: 'wrap',
-  },
-  statDelta: {
-    color: '#67e8f9',
-    fontSize: 8,
-    fontWeight: '700',
-    flexShrink: 0,
-  },
-  body: {
-    color: '#cbd5e1',
-    fontSize: 11,
-    lineHeight: 14,
-  },
-  hint: {
-    color: '#64748b',
-    fontSize: 10,
-    marginTop: 8,
-    fontWeight: '600',
-    letterSpacing: 0.2,
-  },
-});

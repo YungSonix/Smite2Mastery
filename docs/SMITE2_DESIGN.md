@@ -49,7 +49,7 @@ Cross-platform Smite 2 companion: builds, database, Patch Hub, shop, Prophecy mi
 | Muted | `#94a3b8` | Hints, meta |
 | Scrim | `rgba(3, 7, 18, 0.72)` | Full-screen overlays |
 
-Reference: **`kitAbilityTooltipCard`** in `app/data.jsx`.
+Reference: **`lib/uiTheme.js`** (canonical) · **`lib/KitAbilityTooltipModal.jsx`** (Builds).
 
 ---
 
@@ -64,8 +64,8 @@ System / platform fonts. Web: stack in `app/index.jsx` when `IS_WEB`. Match exis
 | Pattern | Location |
 |---------|----------|
 | Main nav + sub-nav | `app/index.jsx` |
-| Tooltips / modals | `kitAbilityTooltipCard`, `kitAbilityTooltipCloseBtn` in `app/data.jsx`; shared **`lib/KitAbilityTooltipModal.jsx`** (Builds + anywhere else) |
-| Dropdown / inline select | **`lib/uiDropdownStyles.js`** — filter menus `app/data.jsx` (`pantheonDropdown`), skin picker `lib/SkinShowcasePanel.jsx` |
+| Tooltips / modals | **`lib/uiTheme.js`** (`kitAbilityTooltipModalStyles`) · **`lib/KitAbilityTooltipModal.jsx`** (Builds + Database god kit) |
+| Dropdown / inline select | **`lib/uiDropdownStyles.js`** (tokens from `uiTheme`) — filter menus `app/data.jsx`, skin picker `lib/SkinShowcasePanel.jsx` |
 | Builds cards | `BuildsPage` in `app/index.jsx` |
 | Shop / profile chrome | `app/shop.jsx`, `app/profile.jsx` |
 | God pantheon (border/color) | `getGodPantheon` (`lib/normalizeBuildsGod.js`), `getPantheonBorderColor` (`app/localIcons.js`) |

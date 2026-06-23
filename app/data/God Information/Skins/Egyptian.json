@@ -4304,9 +4304,9 @@
           "variants": [
             {
               "name": "Beach Blue",
-              "cardArt": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_01.png",
-              "skin": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_01.png",
-              "icon": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinPortrait_Khepri_Chef_Prisim_01.png",
+              "cardArt": "app/data/NewGodSkins/Khepri/Skins/Prisims/t_SkinCard_Khepri_Chef_Prisim_01.png",
+              "skin": "app/data/NewGodSkins/Khepri/Skins/Prisims/t_SkinCard_Khepri_Chef_Prisim_01.png",
+              "icon": "app/data/NewGodSkins/Khepri/Skins/Prisims/t_SkinPortrait_Khepri_Chef_Prisim_01.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/khepri/Screenshot (616).png",
                 "frame": {
@@ -4385,9 +4385,9 @@
             },
             {
               "name": "Bumblesea",
-              "cardArt": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_02.png",
-              "skin": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_02.png",
-              "icon": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinPortrait_Khepri_Chef_Prisim_02.png",
+              "cardArt": "app/data/NewGodSkins/Khepri/Skins/Prisims/t_SkinCard_Khepri_Chef_Prisim_02.png",
+              "skin": "app/data/NewGodSkins/Khepri/Skins/Prisims/t_SkinCard_Khepri_Chef_Prisim_02.png",
+              "icon": "app/data/NewGodSkins/Khepri/Skins/Prisims/t_SkinPortrait_Khepri_Chef_Prisim_02.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/khepri/Screenshot (617).png",
                 "frame": {
@@ -4466,9 +4466,9 @@
             },
             {
               "name": "Stormtide",
-              "cardArt": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_03.png",
-              "skin": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_03.png",
-              "icon": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinPortrait_Khepri_Chef_Prisim_03.png",
+              "cardArt": "app/data/NewGodSkins/Khepri/Skins/Prisims/t_SkinCard_Khepri_Chef_Prisim_03.png",
+              "skin": "app/data/NewGodSkins/Khepri/Skins/Prisims/t_SkinCard_Khepri_Chef_Prisim_03.png",
+              "icon": "app/data/NewGodSkins/Khepri/Skins/Prisims/t_SkinPortrait_Khepri_Chef_Prisim_03.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/khepri/Screenshot (618).png",
                 "frame": {
@@ -4547,9 +4547,9 @@
             },
             {
               "name": "Razzleshade",
-              "cardArt": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_04.png",
-              "skin": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinCard_Khepri_Chef_Prisim_04.png",
-              "icon": "app/data/NewGodSkins/Khepri/Skins/02/Prisms/t_SkinPortrait_Khepri_Chef_Prisim_04.png",
+              "cardArt": "app/data/NewGodSkins/Khepri/Skins/Prisims/t_SkinCard_Khepri_Chef_Prisim_04.png",
+              "skin": "app/data/NewGodSkins/Khepri/Skins/Prisims/t_SkinCard_Khepri_Chef_Prisim_04.png",
+              "icon": "app/data/NewGodSkins/Khepri/Skins/Prisims/t_SkinPortrait_Khepri_Chef_Prisim_04.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/khepri/Screenshot (619).png",
                 "frame": {

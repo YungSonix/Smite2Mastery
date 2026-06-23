@@ -10,14 +10,14 @@ export const SMITE2_FEATURES = [
     id: 'Home',
     tags: ['code', 'home'],
     kanban: '#builds',
-    files: ['app/home.jsx'],
+    files: ['app/_screens/home.jsx'],
     paths: ['News, version, guides entry'],
   },
   {
     id: 'Database',
     tags: ['code', 'builds', 'data'],
     kanban: '#builds',
-    files: ['app/data.jsx'],
+    files: ['app/_screens/data.jsx'],
     paths: ['Gods, items, mechanics, skins, kit tooltips'],
   },
   {
@@ -31,14 +31,14 @@ export const SMITE2_FEATURES = [
     id: 'Patch Hub',
     tags: ['code', 'patch', 'data'],
     kanban: '#patch',
-    files: ['app/patchhub.jsx'],
+    files: ['app/_screens/patchhub.jsx'],
     paths: ['Simple summary, catch-up, archive'],
   },
   {
     id: 'More',
     tags: ['code', 'shop'],
     kanban: '#shop',
-    files: ['app/more.jsx'],
+    files: ['app/_screens/more.jsx'],
     paths: ['Minigames, profile, shop, tools hub'],
   },
   {
@@ -80,7 +80,7 @@ export const SMITE2_FEATURES = [
     id: 'Conquest Map',
     tags: ['code', 'builds'],
     kanban: '#builds',
-    files: ['app/ConquestMap.jsx', 'lib/conquestMapHtml.js'],
+    files: ['app/_screens/ConquestMap.jsx', 'lib/conquestMapHtml.js'],
     paths: ['Conquest map from Data → Game Modes'],
   },
   {
@@ -163,7 +163,7 @@ export const SMITE2_ASSETS = [
   {
     id: 'Game data',
     tags: ['assets', 'data'],
-    paths: ['app/data/God Information/Builds/builds.json', 'Smite2Gods.json', 'Patch Notes/'],
+    paths: ['app/data/God Information/Builds/builds.json', 'app/data/Smite2Gods.json', 'app/data/Patch Notes/'],
   },
   {
     id: 'Prophecy card art',
