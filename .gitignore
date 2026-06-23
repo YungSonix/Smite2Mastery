@@ -78,8 +78,14 @@ Git/
 *.txt
 !public/**/*.txt
 
-# Local planning/progress notes
+# Local planning/progress notes (keep on disk; not for GitHub)
 GOALS.md
+BUGS.md
+TASKS.md
+IMPROVEMENTS.md
+ENV_SETUP.md
+SECURITY.md
+vault.config.json
 
 # Backup and temporary files
 *.backup
