@@ -26,6 +26,13 @@ npm-debug.*
 yarn-debug.*
 yarn-error.*
 
+# Local / tooling artifacts (do not commit)
+eng.traineddata
+*.bak
+env.download
+scripts/god-renders/.vision-tag-*
+scripts/god-renders/.vision-tag-STOP
+
 # macOS
 .DS_Store
 *.pem
@@ -45,6 +52,7 @@ tsconfig.json
 # Update scripts (old location)
 .scripts/
 update-builds.js
+app/data/Backups/
 app/data/builds.json.backup
 app/data/builds.json.pre-wallpaper-import-*
 app/data/God Information/Builds/builds.json.backup

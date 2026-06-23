@@ -29,6 +29,7 @@ import { normalizeBuildsGod, flattenBuildsGods, getGodPantheon } from '../lib/no
 import { AlignedBulletLines } from '../lib/alignedBulletText';
 import KitAbilityTooltipModal from '../lib/KitAbilityTooltipModal';
 import { buildKitAbilityTooltipBody, buildKitAspectTooltipBody } from '../lib/kitAbilityTooltip';
+import { genericTooltipStylesForApp } from '../lib/uiTheme';
 import { getLocalGodAsset, getLocalItemIcon, getPantheonBorderColor, getPantheonIcon, getRoleIcon } from './localIcons';
 import { ItemIconImage } from '../lib/ItemIconImage';
 import { GOLD_ICON } from '../lib/imageGrabber';
@@ -39,16 +40,16 @@ import {
 } from '../lib/buildStats';
 import { resolveRandomizerDevPreload } from '../lib/randomizerDevPreload';
 // Lazy load page components to reduce initial bundle size
-const HomePage = lazy(() => import('./home'));
-const DataPage = lazy(() => import('./data'));
-const CustomBuildPage = lazy(() => import('./custombuild'));
-const PlayerProfilesPage = lazy(() => import('./playerprofiles'));
-const PatchHubPage = lazy(() => import('./patchhub'));
-const MorePage = lazy(() => import('./more'));
-const SmiteWarsPage = lazy(() => import('./prophecy'));
-const WordlePage = lazy(() => import('./wordle'));
-const MyBuildsPage = lazy(() => import('./mybuilds'));
-const TierlistPage = lazy(() => import('./tierlist'));
+const HomePage = lazy(() => import('./_screens/home'));
+const DataPage = lazy(() => import('./_screens/data'));
+const CustomBuildPage = lazy(() => import('./_screens/custombuild'));
+const PlayerProfilesPage = lazy(() => import('./_screens/playerprofiles'));
+const PatchHubPage = lazy(() => import('./_screens/patchhub'));
+const MorePage = lazy(() => import('./_screens/more'));
+const SmiteWarsPage = lazy(() => import('./_screens/prophecy'));
+const WordlePage = lazy(() => import('./_screens/wordle'));
+const MyBuildsPage = lazy(() => import('./_screens/mybuilds'));
+const TierlistPage = lazy(() => import('./_screens/tierlist'));
 const GuidesPage = lazy(() => import('../lib/guidesPage'));
 // Lazy load the large JSON to prevent startup crash
 let localBuilds = null;
@@ -5246,6 +5247,7 @@ function BuildsPage({
 }
 
 const styles = StyleSheet.create({
+  ...genericTooltipStylesForApp,
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -5971,49 +5973,6 @@ const styles = StyleSheet.create({
     borderRadius: 9,
     borderWidth: 1.5,
     paddingHorizontal: 3,
-  },
-  tooltipOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  tooltipContent: {
-    backgroundColor: '#0b1226',
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    paddingRight: 40,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#1e3a5f',
-    maxWidth: 300,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
-    position: 'relative',
-  },
-  tooltipText: {
-    color: '#e6eef8',
-    fontSize: 14,
-    lineHeight: 20,
-  },
-  tooltipCloseButton: {
-    position: 'absolute',
-    top: 8,
-    right: 8,
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: '#1e3a5f',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  tooltipCloseText: {
-    color: '#e6eef8',
-    fontSize: 16,
-    fontWeight: '700',
   },
   expand: { marginTop: 10, backgroundColor: '#061028', padding: 12, borderRadius: 8 },
   expandTitle: { color: '#e6eef8', fontWeight: '800', marginBottom: 12, fontSize: 16 },

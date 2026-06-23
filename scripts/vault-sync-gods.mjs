@@ -16,7 +16,7 @@ function slugify(name) {
 }
 
 function loadSmite2GodsMap(root) {
-  const p = path.join(root, 'Smite2Gods.json');
+  const p = path.join(root, 'app', 'data', 'Smite2Gods.json');
   if (!fs.existsSync(p)) return new Map();
   const rows = JSON.parse(fs.readFileSync(p, 'utf8'));
   const map = new Map();

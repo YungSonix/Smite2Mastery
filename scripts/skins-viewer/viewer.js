@@ -495,8 +495,68 @@
     return entry?.information || entry?.loadoutMeta?.information || [];
   }
 
-  function skinInformationBlock(entry) {
-    const rows = skinInformationRows(entry);
+  /** Parent skin card — merge unique information from skin + variants (variants omit their own copy). */
+  function skinInformationForCard(skin) {
+    const seen = new Set();
+    const out = [];
+    const appendUnique = (rows) => {
+      for (const row of rows || []) {
+        const id = String(row.key || row.label || '')
+          .toLowerCase()
+          .trim();
+        const dedupeKey = id || String(row.text || '').slice(0, 48);
+        if (seen.has(dedupeKey)) continue;
+        seen.add(dedupeKey);
+        out.push(row);
+      }
+    };
+    appendUnique(skinInformationRows(skin));
+    for (const v of skin.variants || []) appendUnique(skinInformationRows(v));
+    for (const v of skin._progressionForms || []) appendUnique(skinInformationRows(v));
+    return out;
+  }
+
+  function renderSkinMetaCombined(skin, splitLayout) {
+    const infoRows = skinInformationForCard(skin);
+    const statsHtml = `
+            ${dlRow('Cost', formatCostHtml(skin), true)}
+            ${dlRow('Tier', formatRarity(skin), !skin.isBaseSkin && Boolean(skin.rarity || skin.tierBadge))}
+            ${dlRow('Unlock', unlockValueHtml(skin), shouldShowUnlock(skin))}
+            ${dlRow('Grid badge', gridBadgeTag(skin.loadoutMeta?.gridBadge), shouldShowGridBadge(skin))}
+            ${dlRow('Type', esc(skin.type), shouldShowType(skin))}
+          `;
+    if (!infoRows.length) {
+      return `<dl class="skin-meta-stats-only">${statsHtml}</dl>`;
+    }
+    const detailsHtml = infoRows
+      .map(
+        (row) => `
+        <div class="meta-info-row">
+          <div class="meta-info-label">${esc(row.label || row.key || 'Info')}</div>
+          <div class="meta-info-text">${esc(row.text || '')}</div>
+        </div>`
+      )
+      .join('');
+    if (!splitLayout) {
+      return `
+          <div class="skin-meta-stacked">
+            <dl class="skin-meta-stats-block">${statsHtml}</dl>
+            <div class="skin-meta-info-list">${detailsHtml}</div>
+          </div>`;
+    }
+    return `
+          <div class="skin-meta-combined">
+            <div class="skin-meta-section skin-meta-stats">
+              <dl>${statsHtml}</dl>
+            </div>
+            <div class="skin-meta-section skin-meta-details">
+              ${detailsHtml}
+            </div>
+          </div>`;
+  }
+
+  function skinInformationBlock(entry, rowsOverride) {
+    const rows = rowsOverride ?? skinInformationRows(entry);
     if (!rows.length) return '';
     return `<div class="skin-information">
       ${rows
@@ -512,7 +572,7 @@
   }
 
   function visibleVariants(skin) {
-    return (skin.variants || []).filter((v) => !/^Mastery Light$/i.test(String(v.name || '')));
+    return SkinVariantGroups.visibleVariants(skin);
   }
 
   function formatUnlock(unlock) {
@@ -575,10 +635,16 @@
   }
 
   function skinHasVisibleVariants(skin) {
+    const grouped = SkinVariantGroups.groupSkinVariants(skin);
+    if (grouped.hasProgressionForms) return true;
+    if (grouped.hasSagaForms) return true;
     return visibleVariants(skin).length > 0;
   }
 
   function compareSkinsForDisplay(a, b) {
+    const sagaCmp = SkinVariantGroups.compareSagaSkinsForDisplay(a, b);
+    if (sagaCmp !== 0) return sagaCmp;
+
     const aHas = skinHasVisibleVariants(a);
     const bHas = skinHasVisibleVariants(b);
     if (aHas && !bHas) return -1;
@@ -623,31 +689,126 @@
     return cleaned.toUpperCase();
   }
 
-  function renderVariantChip(v) {
+  function variantThumbHtml(v) {
+    const path = v.icon || v.cardArt || v.skin;
+    if (!path) return '';
+    const src = mediaUrl(path);
+    if (!src) return '';
+    return imgTag(src, 'variant-icon', v.loadoutMeta?.displayName || v.name, path);
+  }
+
+  function unlockValueHtml(entry) {
+    return `<span class="unlock-cell">${masteryEmblemTag(entry.unlock, entry.loadoutMeta?.gridBadge)}<span class="unlock-text">${esc(formatUnlock(entry.unlock))}</span></span>`;
+  }
+
+  function renderVariantChip(v, layout) {
+    const scroll = layout === 'scroll';
+    const stripFooter = layout === 'even';
+    const labels = SkinVariantGroups.prismDisplayLabel(v);
+    const title = labels.title;
+    const costHtml = formatCostHtml(v);
+    const showCost = costHtml && costHtml !== '—';
+
     return `
-      <div class="variant-chip">
-        ${imgTag(mediaUrl(v.icon || v.cardArt || v.skin), 'variant-icon', v.name)}
+      <div class="variant-chip${scroll ? ' variant-chip-compact' : ''}${stripFooter ? ' variant-chip-split' : ''}">
+        ${variantThumbHtml(v)}
         ${loadoutFrameTag(v, variantFrameLabel(v))}
         <div class="variant-meta">
-          <strong>${esc(v.loadoutMeta?.displayName || v.name || 'Variant')}</strong>
+          <strong title="${esc(title)}">${esc(title)}</strong>
+          ${labels.alias ? `<span class="prism-alias" title="File / tag id">${esc(labels.alias)}</span>` : ''}
           ${v.masteryFromDisk ? '<span class="badge mastery">Mastery</span>' : ''}
           ${shouldShowGridBadge(v) ? gridBadgeTag(v.loadoutMeta?.gridBadge) : ''}
-          ${v.rarity ? `<div class="tier-line">${v.tierBadge ? `<img class="tier-badge" src="${esc(mediaUrl(v.tierBadge))}" alt="" />` : ''}<span class="tier-label">${esc(v.rarity)}</span></div>` : ''}
           ${
-            shouldShowUnlock(v)
-              ? `<div class="unlock-cell variant-unlock">${masteryEmblemTag(v.unlock, v.loadoutMeta?.gridBadge)}${esc(formatUnlock(v.unlock))}</div>`
+            v.rarity
+              ? `<div class="tier-line">${v.tierBadge ? `<img class="tier-badge" src="${esc(mediaUrl(v.tierBadge))}" alt="" loading="lazy" />` : ''}<span class="tier-label">${esc(v.rarity)}</span></div>`
               : ''
           }
-          ${skinInformationBlock(v)}
-          ${folderLocationsBlock(v)}
+          ${showCost ? `<div class="variant-cost-line">${costHtml}</div>` : ''}
+          ${
+            !stripFooter && shouldShowUnlock(v)
+              ? `<div class="unlock-cell variant-unlock">${unlockValueHtml(v)}</div>`
+              : ''
+          }
+          ${scroll || stripFooter ? '' : skinInformationBlock(v)}
+          ${scroll || stripFooter ? '' : folderLocationsBlock(v)}
         </div>
       </div>`;
   }
 
-  function renderSkinCardBody(skin, godCtx) {
+  function renderVariantsGrid(variants, layout) {
+    if (!variants?.length) return '';
+    const scroll = layout === 'scroll';
+    const cls = scroll ? 'variants-grid variants-grid-scroll' : 'variants-grid';
+    const style = scroll ? '' : ` style="--variant-cols: ${variants.length}"`;
+    return `<div class="${cls}"${style}>${variants.map((v) => renderVariantChip(v, layout)).join('')}</div>`;
+  }
+
+  function renderSagaFormBlock(form) {
+    const entry = form.formEntry;
+    return `
+      <div class="saga-form-block">
+        <div class="saga-form-head">
+          <h5 class="saga-form-title">${esc(form.formName)}</h5>
+          ${
+            entry
+              ? `<div class="saga-form-preview">${loadoutFrameTag(entry, form.formName)}</div>`
+              : ''
+          }
+        </div>
+        ${renderVariantsGrid(form.prisms, 'even')}
+      </div>`;
+  }
+
+  function renderVariantSections(skin) {
+    const grouped = SkinVariantGroups.groupSkinVariants(skin);
+    if (grouped.hasProgressionForms) {
+      const prisms = grouped.defaultPrisms;
+      return `
+        <div class="skin-card-variants skin-card-progression">
+          <h4>Forms (${grouped.progressionForms.length})</h4>
+          <p class="saga-forms-hint">Saga progression — unlock each form in order through the Wandering Market.</p>
+          ${renderVariantsGrid(grouped.progressionForms, 'even')}
+          ${
+            prisms.length
+              ? `<h4 class="variants-subhead">Prisms (${prisms.length})</h4>${renderVariantsGrid(prisms, 'even')}`
+              : ''
+          }
+        </div>`;
+    }
+    if (grouped.hasSagaForms) {
+      const defaultBlock =
+        grouped.defaultPrisms.length > 0
+          ? `<div class="saga-form-block saga-form-default">
+              <div class="saga-form-head"><h5 class="saga-form-title">Prisms</h5></div>
+              ${renderVariantsGrid(grouped.defaultPrisms, 'even')}
+            </div>`
+          : '';
+      return `
+        <div class="saga-forms-panel">
+          <h4>Saga forms (${grouped.forms.length})</h4>
+          <p class="saga-forms-hint">Each form is its own unlock with a separate prism set. Prism tags (A–D) match on-disk asset names.</p>
+          ${grouped.forms.map((form) => renderSagaFormBlock(form)).join('')}
+          ${defaultBlock}
+        </div>`;
+    }
+    const variants = grouped.defaultPrisms.length ? grouped.defaultPrisms : visibleVariants(skin);
+    if (!variants.length) return '';
+    return `
+      <div class="skin-card-variants">
+        <h4>Variants (${variants.length})</h4>
+        ${renderVariantsGrid(variants, 'even')}
+      </div>`;
+  }
+
+  function renderSkinCardBody(skin, godCtx, splitLayout) {
     return `
         <div class="skin-card-head">
           <h3>${esc(skin.skinName)}</h3>
+          ${
+            skin._sagaParentSkinName
+              ? `<div class="skin-saga-parent">Saga form · ${esc(skin._sagaParentSkinName)}</div>`
+              : ''
+          }
           <div class="skin-key">${esc(skin.skinKey)}</div>
           <div class="god-badges" style="margin-top:8px;">${skinBadges(skin)}</div>
         </div>
@@ -662,45 +823,33 @@
               ? `<div class="loadout-god-name">${esc(skin.loadoutMeta.godName)}</div>`
               : ''
           }
-          <dl>
-            ${dlRow('Cost', formatCostHtml(skin), true)}
-            ${dlRow('Tier', formatRarity(skin), !skin.isBaseSkin && Boolean(skin.rarity || skin.tierBadge))}
-            ${dlRow(
-              'Unlock',
-              `${masteryEmblemTag(skin.unlock, skin.loadoutMeta?.gridBadge)}${esc(formatUnlock(skin.unlock))}`,
-              shouldShowUnlock(skin)
-            )}
-            ${dlRow('Grid badge', gridBadgeTag(skin.loadoutMeta?.gridBadge), shouldShowGridBadge(skin))}
-            ${dlRow('Type', esc(skin.type), shouldShowType(skin))}
-          </dl>
-          ${skinInformationBlock(skin)}
+          ${renderSkinMetaCombined(skin, splitLayout)}
           ${folderLocationsBlock(skin)}
           ${godCtx ? renderSkinVoxButton(skin, godCtx) : ''}
         </div>`;
   }
 
   function renderSkinCard(skin, godCtx) {
-    const variants = visibleVariants(skin);
-    const hasVariants = variants.length > 0;
+    const grouped = SkinVariantGroups.groupSkinVariants(skin);
+    const hasVariants =
+      grouped.hasProgressionForms ||
+      grouped.hasSagaForms ||
+      grouped.defaultPrisms.length > 0 ||
+      visibleVariants(skin).length > 0;
     if (!hasVariants) {
       return `
       <article class="skin-card${skin.isBaseSkin ? ' base' : ''}">
-        ${renderSkinCardBody(skin, godCtx)}
+        ${renderSkinCardBody(skin, godCtx, false)}
       </article>`;
     }
 
     return `
-      <article class="skin-card has-variants${skin.isBaseSkin ? ' base' : ''}">
+      <article class="skin-card has-variants${skin.isBaseSkin ? ' base' : ''}${grouped.hasSagaForms ? ' has-saga-forms' : ''}">
         <div class="skin-card-split">
           <div class="skin-card-main">
-            ${renderSkinCardBody(skin, godCtx)}
+            ${renderSkinCardBody(skin, godCtx, true)}
           </div>
-          <div class="skin-card-variants">
-            <h4>Variants (${variants.length})</h4>
-            <div class="variants-grid" style="--variant-cols: ${variants.length}">
-              ${variants.map((v) => renderVariantChip(v)).join('')}
-            </div>
-          </div>
+          ${renderVariantSections(skin)}
         </div>
       </article>
     `;
@@ -723,7 +872,7 @@
       if (!god) throw new Error(`God "${godName}" not found in ${pantheonId}`);
 
       const godCtx = { godName: god.godName, godKey: god.internalName || '' };
-      const skins = god.skins || [];
+      const skins = SkinVariantGroups.expandGodSkinsList(god.skins || []);
       const orderedSkins = [...skins].sort(compareSkinsForDisplay);
       currentGodVoxCtx = godCtx;
       currentGodSkinsByKey = Object.fromEntries(orderedSkins.map((s) => [s.skinKey, s]));

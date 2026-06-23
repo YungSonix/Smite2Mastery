@@ -2041,9 +2041,9 @@
           "variants": [
             {
               "name": "Assistant",
-              "cardArt": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinCard_Cabrakan_Prisim_A.png",
-              "skin": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinCard_Cabrakan_Prisim_A.png",
-              "icon": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinPortrait_Cabrakan_Prisim_A.png",
+              "cardArt": "app/data/NewGodSkins/Cabrakan/Skins/Prisms/t_SkinCard_Cabrakan_Prisim_A.png",
+              "skin": "app/data/NewGodSkins/Cabrakan/Skins/Prisms/t_SkinCard_Cabrakan_Prisim_A.png",
+              "icon": "app/data/NewGodSkins/Cabrakan/Skins/Prisms/t_SkinPortrait_Cabrakan_Prisim_A.png",
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
               "unlock": {
@@ -2115,9 +2115,9 @@
             },
             {
               "name": "Neowave",
-              "cardArt": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinCard_Cabrakan_Prisim_B.png",
-              "skin": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinCard_Cabrakan_Prisim_B.png",
-              "icon": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinPortrait_Cabrakan_Prisim_B.png",
+              "cardArt": "app/data/NewGodSkins/Cabrakan/Skins/Prisms/t_SkinCard_Cabrakan_Prisim_B.png",
+              "skin": "app/data/NewGodSkins/Cabrakan/Skins/Prisms/t_SkinCard_Cabrakan_Prisim_B.png",
+              "icon": "app/data/NewGodSkins/Cabrakan/Skins/Prisms/t_SkinPortrait_Cabrakan_Prisim_B.png",
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
               "unlock": {
@@ -2189,9 +2189,9 @@
             },
             {
               "name": "Lo-Rez",
-              "cardArt": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinCard_Cabrakan_Prisim_C.png",
-              "skin": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinCard_Cabrakan_Prisim_C.png",
-              "icon": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinPortrait_Cabrakan_Prisim_C.png",
+              "cardArt": "app/data/NewGodSkins/Cabrakan/Skins/Prisms/t_SkinCard_Cabrakan_Prisim_C.png",
+              "skin": "app/data/NewGodSkins/Cabrakan/Skins/Prisms/t_SkinCard_Cabrakan_Prisim_C.png",
+              "icon": "app/data/NewGodSkins/Cabrakan/Skins/Prisms/t_SkinPortrait_Cabrakan_Prisim_C.png",
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
               "unlock": {
@@ -2263,9 +2263,9 @@
             },
             {
               "name": "Data Logger",
-              "cardArt": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinCard_Cabrakan_Prisim_D.png",
-              "skin": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinCard_Cabrakan_Prisim_D.png",
-              "icon": "app/data/NewGodSkins/Cabrakan/Skins/NerdRage/Prisms/t_SkinPortrait_Cabrakan_Prisim_D.png",
+              "cardArt": "app/data/NewGodSkins/Cabrakan/Skins/Prisms/t_SkinCard_Cabrakan_Prisim_D.png",
+              "skin": "app/data/NewGodSkins/Cabrakan/Skins/Prisms/t_SkinCard_Cabrakan_Prisim_D.png",
+              "icon": "app/data/NewGodSkins/Cabrakan/Skins/Prisms/t_SkinPortrait_Cabrakan_Prisim_D.png",
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
               "information": [

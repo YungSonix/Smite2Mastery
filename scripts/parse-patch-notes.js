@@ -10,7 +10,7 @@
  * suitable for the "Catch Me Up" feature.
  * 
  * Example:
- *   node scripts/parse-patch-notes.js patch-notes.txt
+ *   node scripts/parse-patch-notes.js "app/data/Patch Notes/patchnotesob24.txt"
  *   node scripts/parse-patch-notes.js patch-notes.html --text
  */
 

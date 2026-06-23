@@ -1029,9 +1029,9 @@
           "variants": [
             {
               "name": "Aqua Splash",
-              "cardArt": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/Prisms/t_SkinCard_Aphrodite_Prisim_B.png",
-              "skin": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/Prisms/t_SkinCard_Aphrodite_Prisim_B.png",
-              "icon": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/Prisms/t_SkinPortrait_Aphrodite_Beach_Prisim_B.png",
+              "cardArt": "app/data/NewGodSkins/Aphrodite/Skins/Prisims/t_SkinCard_Aphrodite_Prisim_B.png",
+              "skin": "app/data/NewGodSkins/Aphrodite/Skins/Prisims/t_SkinCard_Aphrodite_Prisim_B.png",
+              "icon": "app/data/NewGodSkins/Aphrodite/Skins/Prisims/t_SkinPortrait_Aphrodite_Beach_Prisim_B.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/aphrodite/Screenshot (178).png",
                 "frame": {
@@ -1115,9 +1115,9 @@
             },
             {
               "name": "White Sands",
-              "cardArt": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/Prisms/t_SkinCard_Aphrodite_Prisim_C.png",
-              "skin": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/Prisms/t_SkinCard_Aphrodite_Prisim_C.png",
-              "icon": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/Prisms/t_SkinPortrait_Aphrodite_Beach_Prisim_C.png",
+              "cardArt": "app/data/NewGodSkins/Aphrodite/Skins/Prisims/t_SkinCard_Aphrodite_Prisim_C.png",
+              "skin": "app/data/NewGodSkins/Aphrodite/Skins/Prisims/t_SkinCard_Aphrodite_Prisim_C.png",
+              "icon": "app/data/NewGodSkins/Aphrodite/Skins/Prisims/t_SkinPortrait_Aphrodite_Beach_Prisim_C.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/aphrodite/Screenshot (179).png",
                 "frame": {
@@ -1201,9 +1201,9 @@
             },
             {
               "name": "Midnight Cove",
-              "cardArt": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/Prisms/t_SkinCard_Aphrodite_Prisim_D.png",
-              "skin": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/Prisms/t_SkinCard_Aphrodite_Prisim_D.png",
-              "icon": "app/data/NewGodSkins/Aphrodite/Skins/BeachBabe/Prisms/t_SkinPortrait_Aphrodite_Beach_Prisim_D.png",
+              "cardArt": "app/data/NewGodSkins/Aphrodite/Skins/Prisims/t_SkinCard_Aphrodite_Prisim_D.png",
+              "skin": "app/data/NewGodSkins/Aphrodite/Skins/Prisims/t_SkinCard_Aphrodite_Prisim_D.png",
+              "icon": "app/data/NewGodSkins/Aphrodite/Skins/Prisims/t_SkinPortrait_Aphrodite_Beach_Prisim_D.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/aphrodite/Screenshot (180).png",
                 "frame": {
@@ -2360,9 +2360,9 @@
           "variants": [
             {
               "name": "Overcharged",
-              "cardArt": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_A.png",
-              "skin": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_A.png",
-              "icon": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinPortrait_Apollo_BitBlaster_Prisim_A.png",
+              "cardArt": "app/data/NewGodSkins/Apollo/Skins/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_A.png",
+              "skin": "app/data/NewGodSkins/Apollo/Skins/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_A.png",
+              "icon": "app/data/NewGodSkins/Apollo/Skins/Prisms/t_SkinPortrait_Apollo_BitBlaster_Prisim_A.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/apollo/Screenshot (189).png",
                 "frame": {
@@ -2436,9 +2436,9 @@
             },
             {
               "name": "RGB Surge",
-              "cardArt": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_B.png",
-              "skin": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_B.png",
-              "icon": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinPortrait_Apollo_BitBlaster_Prisim_B.png",
+              "cardArt": "app/data/NewGodSkins/Apollo/Skins/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_B.png",
+              "skin": "app/data/NewGodSkins/Apollo/Skins/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_B.png",
+              "icon": "app/data/NewGodSkins/Apollo/Skins/Prisms/t_SkinPortrait_Apollo_BitBlaster_Prisim_B.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/apollo/Screenshot (190).png",
                 "frame": {
@@ -2512,9 +2512,9 @@
             },
             {
               "name": "MechaCore",
-              "cardArt": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_C.png",
-              "skin": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_C.png",
-              "icon": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinPortrait_Apollo_BitBlaster_Prisim_C.png",
+              "cardArt": "app/data/NewGodSkins/Apollo/Skins/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_C.png",
+              "skin": "app/data/NewGodSkins/Apollo/Skins/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_C.png",
+              "icon": "app/data/NewGodSkins/Apollo/Skins/Prisms/t_SkinPortrait_Apollo_BitBlaster_Prisim_C.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/apollo/Screenshot (191).png",
                 "frame": {
@@ -2588,9 +2588,9 @@
             },
             {
               "name": "Null.exe",
-              "cardArt": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_D.png",
-              "skin": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_D.png",
-              "icon": "app/data/NewGodSkins/Apollo/Skins/BitBlaster/Prisms/t_SkinPortrait_Apollo_BitBlaster_Prisim_D.png",
+              "cardArt": "app/data/NewGodSkins/Apollo/Skins/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_D.png",
+              "skin": "app/data/NewGodSkins/Apollo/Skins/Prisms/t_SkinCard_Apollo_BitBlaster_Prisim_D.png",
+              "icon": "app/data/NewGodSkins/Apollo/Skins/Prisms/t_SkinPortrait_Apollo_BitBlaster_Prisim_D.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/apollo/Screenshot (192).png",
                 "frame": {

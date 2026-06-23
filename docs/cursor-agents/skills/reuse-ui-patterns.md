@@ -21,8 +21,8 @@ When the user asks for a **dropdown, modal, tooltip, sheet, chip grid, collapsib
 | Pattern | Shared module | Reference screen |
 |---------|---------------|------------------|
 | Dropdown / inline select | `lib/uiDropdownStyles.js` | `app/data.jsx` filter menus, `lib/SkinShowcasePanel.jsx` |
-| Ability tooltip | `lib/KitAbilityTooltipModal.jsx` + `lib/kitAbilityTooltip.js` | Database kit (`app/data.jsx`), Builds (`app/index.jsx`) |
-| Tooltip / modal tokens | `kitAbilityTooltipCard` styles in `app/data.jsx` | All floating chrome |
+| Ability tooltip | `lib/KitAbilityTooltipModal.jsx` + `lib/kitAbilityTooltip.js` | Builds (`app/index.jsx`) and Database god kit (`app/_screens/data.jsx`) |
+| Tooltip / modal tokens | **`lib/uiTheme.js`** (`UI_THEME`, `kitAbilityTooltipModalStyles`) | All floating chrome |
 | God pantheon (border/color) | `getGodPantheon` in `lib/normalizeBuildsGod.js`, `getPantheonBorderColor` in `app/localIcons.js` | Database god header, Builds cards + tooltips |
 | Collapsible section | `modalSection` + `skinsHeader` in `app/data.jsx` | Database god detail sections |
 

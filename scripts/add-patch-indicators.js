@@ -8,7 +8,7 @@
  * 
  * Example:
  * node scripts/add-patch-indicators.js "2.1.0" "./app/data/God Information/Builds/builds.json"
- * node scripts/add-patch-indicators.js "2.1.0" "./app/data/God Information/Builds/builds.json" "./patchnotesob24.json"
+ * node scripts/add-patch-indicators.js "2.1.0" "./app/data/God Information/Builds/builds.json" "./app/data/Patch Notes/patchnotesob24.json"
  */
 
 const fs = require('fs');
@@ -144,7 +144,7 @@ async function main() {
     console.error('  2. Or create a changes.json file in the same directory as builds.json');
     console.error('');
     console.error('Example with parsed patch notes:');
-    console.error('  node scripts/add-patch-indicators.js "2.1.0" "./app/data/God Information/Builds/builds.json" "./patchnotesob24.json"');
+    console.error('  node scripts/add-patch-indicators.js "2.1.0" "./app/data/God Information/Builds/builds.json" "./app/data/Patch Notes/patchnotesob24.json"');
     process.exit(1);
   }
   
@@ -300,7 +300,7 @@ async function main() {
       console.log('📝 No changes.json or patch notes file found. Creating template...');
       console.log('Please create a changes.json file with your patch changes, or');
       console.log('run parse-patch-notes.js first and provide the output JSON file.');
-      console.log('Template saved to:', path.resolve(path.dirname(buildsPath), 'changes-template.json'));
+      console.log('Template saved to:', path.resolve(path.dirname(buildsPath), '../../Templates/changes-template.json'));
       
       const template = {
         gods: {
@@ -318,7 +318,7 @@ async function main() {
       };
       
       fs.writeFileSync(
-        path.resolve(path.dirname(buildsPath), 'changes-template.json'),
+        path.resolve(path.dirname(buildsPath), '../../Templates/changes-template.json'),
         JSON.stringify(template, null, 2),
         'utf8'
       );

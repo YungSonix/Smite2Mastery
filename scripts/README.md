@@ -11,7 +11,7 @@ node scripts/parse-patch-notes.js <file-path>
 
 **Example**:
 ```bash
-node scripts/parse-patch-notes.js patch-notes.txt
+node scripts/parse-patch-notes.js "app/data/Patch Notes/patchnotesob24.txt"
 node scripts/parse-patch-notes.js patch-notes.html
 node scripts/parse-patch-notes.js patch-notes.md
 ```

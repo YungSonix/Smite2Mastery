@@ -8,16 +8,19 @@ import {
   getSkinModelViewPath,
   getSkinLoadoutContentPosition,
   getSkinThumbPath,
+  getOrderedVisibleSkinKeys,
   mergeSkinVariant,
   parseSkinVariants,
 } from './skinShowcaseHelpers';
-import { enrichGodSkinsRecord } from './pantheonSkinsLookup';
+import { enrichGodSkinsRecord, refreshPantheonSkinsFromGitHub } from './pantheonSkinsLookup';
+import { expandGodSkinsRecord } from './skinVariantGroups';
 import {
   formatCostLabel,
   hasShowcaseMeta,
   resolveSkinCost,
   resolveSkinInformation,
   resolveSkinTier,
+  resolveSkinType,
   resolveSkinUnlock,
 } from './skinShowcaseMeta';
 import {
@@ -35,43 +38,37 @@ import {
   dropdownListMaxHeight,
   uiDropdownStyles as dd,
 } from './uiDropdownStyles';
+import { UI_THEME } from './uiTheme';
 
 const CURRENCY_ICON_PATHS = {
   diamonds: 'app/data/Tiers/t_currency_diamond_512 (1).png',
   gems: 'app/data/Tiers/t_currency_gem_512.png',
 };
 
-function ShowcaseMetaPanel({ entry, portraitFallbacks }) {
+const IS_WEB = Platform.OS === 'web';
+
+function ShowcaseMetaPanel({ entry, godDisplayName }) {
   if (!hasShowcaseMeta(entry)) return null;
 
   const cost = resolveSkinCost(entry);
   const costLabel = formatCostLabel(cost);
   const tier = resolveSkinTier(entry);
   const unlock = resolveSkinUnlock(entry);
+  const typeLine = resolveSkinType(entry);
   const infoRows = resolveSkinInformation(entry);
-  const loadoutPath = getSkinModelViewPath(entry);
-  const loadoutPosition =
-    getSkinLoadoutContentPosition(entry) || {
-      top: `${Math.round(SKIN_LOADOUT_COVER_POSITION.y * 100)}%`,
-      left: `${Math.round(SKIN_LOADOUT_COVER_POSITION.x * 100)}%`,
-    };
+  const godName =
+    entry?.loadoutMeta?.godName ||
+    (godDisplayName && String(godDisplayName).trim()) ||
+    null;
   const currencyIconPath =
     cost?.kind === 'currency' ? CURRENCY_ICON_PATHS[cost.currency] : null;
   const tierBadgePath = tier?.tierBadge || null;
+  const costIsAction = cost?.kind === 'action';
 
   return (
     <View style={styles.metaPanel}>
-      {loadoutPath ? (
-        <View style={styles.metaLoadoutThumbWrap}>
-          <ShowcaseHeroImage
-            path={loadoutPath}
-            godFallbackUri={portraitFallbacks[0] || null}
-            style={styles.metaLoadoutThumb}
-            accessibilityLabel="Ingame loadout screenshot"
-            contentFit="cover"
-            contentPosition={loadoutPosition}
-          />
-        </View>
+      {godName ? (
+        <Text style={styles.metaGodName}>{String(godName).toUpperCase()}</Text>
       ) : null}
       <View style={styles.metaRows}>
         <View style={styles.metaRow}>
@@ -85,12 +82,18 @@ function ShowcaseMetaPanel({ entry, portraitFallbacks }) {
                 cachePolicy="memory-disk"
               />
             ) : null}
-            <Text style={styles.metaValue}>{costLabel}</Text>
+            {costIsAction ? (
+              <View style={styles.metaCostAction}>
+                <Text style={styles.metaCostActionText}>{costLabel}</Text>
+              </View>
+            ) : (
+              <Text style={styles.metaValue}>{costLabel}</Text>
+            )}
           </View>
         </View>
         {tier ? (
           <View style={styles.metaRow}>
-            <Text style={styles.metaLabel}>Skin tier</Text>
+            <Text style={styles.metaLabel}>Tier</Text>
             <View style={styles.metaValueRow}>
               {tierBadgePath ? (
                 <Image
@@ -111,34 +114,48 @@ function ShowcaseMetaPanel({ entry, portraitFallbacks }) {
         {unlock ? (
           <View style={styles.metaRow}>
             <Text style={styles.metaLabel}>Unlock</Text>
-            <Text style={[styles.metaValue, styles.metaValueFlex]} numberOfLines={3}>
+            <Text style={[styles.metaValue, styles.metaValueFlex]} numberOfLines={4}>
               {unlock}
             </Text>
           </View>
         ) : null}
-        {infoRows.map((row, idx) => (
-          <View key={`info-${idx}-${row.label || row.text}`} style={styles.metaInfoBlock}>
-            {row.label ? <Text style={styles.metaInfoLabel}>{row.label}</Text> : null}
-            {row.text ? (
-              <Text style={styles.metaInfoText} numberOfLines={6}>
-                {row.text}
-              </Text>
-            ) : null}
+        {typeLine ? (
+          <View style={styles.metaRow}>
+            <Text style={styles.metaLabel}>Type</Text>
+            <Text style={[styles.metaValue, styles.metaValueFlex]} numberOfLines={2}>
+              {typeLine}
+            </Text>
           </View>
-        ))}
+        ) : null}
       </View>
+      {infoRows.length > 0 ? (
+        <View style={styles.metaInfoList}>
+          {infoRows.map((row, idx) => (
+            <View key={`info-${idx}-${row.label || row.text}`} style={styles.metaInfoBlock}>
+              {row.label ? (
+                <Text style={styles.metaInfoLabel}>{String(row.label).toUpperCase()}</Text>
+              ) : null}
+              {row.text ? (
+                <Text style={styles.metaInfoText}>{row.text}</Text>
+              ) : null}
+            </View>
+          ))}
+        </View>
+      ) : null}
     </View>
   );
 }
 
-const PANEL_BORDER = '#1e3a5f';
-const PANEL_BG = '#0b1220';
-const ACCENT_SKY = '#7dd3fc';
-const LABEL_SOFT = '#93c5fd';
-const TEXT_PRIMARY = '#f1f5f9';
-const TEXT_MUTED = '#94a3b8';
-const CARD_BG = 'rgba(8, 12, 22, 0.98)';
-const BORDER_CYAN = 'rgba(125, 211, 252, 0.42)';
+const {
+  panelBorder: PANEL_BORDER,
+  panelBg: PANEL_BG,
+  accentSky: ACCENT_SKY,
+  labelSoft: LABEL_SOFT,
+  textPrimary: TEXT_PRIMARY,
+  textMuted: TEXT_MUTED,
+  cardBg: CARD_BG,
+  borderCyan: BORDER_CYAN,
+} = UI_THEME;
 
 function pickImageSource(resolved) {
   if (!resolved) return null;
@@ -242,6 +259,7 @@ export default function SkinShowcasePanel({
   godIconPath,
   godDisplayName,
   godKey = null,
+  pantheon = null,
   skinsRecord,
   skinKeysOrdered,
   selectedSkinKey,
@@ -252,6 +270,35 @@ export default function SkinShowcasePanel({
   const [variantIdx, setVariantIdx] = useState(0);
   const [skinMenuOpen, setSkinMenuOpen] = useState(false);
   const [skinVoxPlaying, setSkinVoxPlaying] = useState(false);
+  const [enrichedSkins, setEnrichedSkins] = useState(skinsRecord);
+
+  useEffect(() => {
+    if (!skinsRecord) {
+      setEnrichedSkins(null);
+      return;
+    }
+    let cancelled = false;
+    const applyEnrichment = () => {
+      if (!cancelled) {
+        const merged = enrichGodSkinsRecord(godDisplayName, godKey, skinsRecord, pantheon);
+        setEnrichedSkins(expandGodSkinsRecord(merged));
+      }
+    };
+    applyEnrichment();
+    if (pantheon) {
+      refreshPantheonSkinsFromGitHub(pantheon).then(applyEnrichment);
+    }
+    return () => {
+      cancelled = true;
+    };
+  }, [godDisplayName, godKey, pantheon, skinsRecord]);
+
+  const activeSkinsRecord = enrichedSkins || skinsRecord;
+
+  const visibleSkinKeys = useMemo(
+    () => getOrderedVisibleSkinKeys(activeSkinsRecord || {}),
+    [activeSkinsRecord]
+  );
 
   const portraitFallbacks = useMemo(() => {
     const list = [];
@@ -267,7 +314,7 @@ export default function SkinShowcasePanel({
     return list;
   }, [godIconPath, godDisplayName]);
 
-  const baseSkin = skinsRecord && selectedSkinKey ? skinsRecord[selectedSkinKey] : null;
+  const baseSkin = activeSkinsRecord && selectedSkinKey ? activeSkinsRecord[selectedSkinKey] : null;
   /** Prism / style overlays: index 0 in the bar is always `baseSkin`; index 1+ merges `variantOverlays[idx - 1]`. */
   const variantOverlays = useMemo(() => parseSkinVariants(baseSkin), [baseSkin]);
   const prismSlotCount = 1 + variantOverlays.length;
@@ -330,15 +377,20 @@ export default function SkinShowcasePanel({
     mergedSkin && mergedSkin.type && String(mergedSkin.type).trim()
       ? String(mergedSkin.type).trim()
       : null;
-  const canPickSkin = skinKeysOrdered?.length > 1;
-  const skinMenuListHeight = dropdownListMaxHeight(skinKeysOrdered?.length);
+  const canPickSkin = visibleSkinKeys.length > 1;
+  const skinMenuListHeight = dropdownListMaxHeight(visibleSkinKeys.length);
   const skinVoxAvailable = useMemo(
     () =>
       Boolean(
         godDisplayName &&
           selectedSkinKey &&
           baseSkin &&
-          hasSkinVoxPreview(godDisplayName, godKey, selectedSkinKey, baseSkin)
+          hasSkinVoxPreview(
+            godDisplayName,
+            godKey,
+            baseSkin._sagaParentSkinKey || selectedSkinKey,
+            baseSkin
+          )
       ),
     [godDisplayName, godKey, selectedSkinKey, baseSkin]
   );
@@ -347,7 +399,12 @@ export default function SkinShowcasePanel({
     if (!godDisplayName || !selectedSkinKey || !baseSkin || skinVoxPlaying) return;
     setSkinVoxPlaying(true);
     try {
-      await playRandomSkinVox(godDisplayName, godKey, selectedSkinKey, baseSkin);
+      await playRandomSkinVox(
+        godDisplayName,
+        godKey,
+        baseSkin._sagaParentSkinKey || selectedSkinKey,
+        baseSkin
+      );
     } finally {
       setSkinVoxPlaying(false);
     }
@@ -357,7 +414,7 @@ export default function SkinShowcasePanel({
     setSkinVoxPlaying(false);
   }, [selectedSkinKey, godDisplayName]);
 
-  if (!skinsRecord || !skinKeysOrdered?.length || !selectedSkinKey || !baseSkin) return null;
+  if (!activeSkinsRecord || !visibleSkinKeys.length || !selectedSkinKey || !baseSkin) return null;
 
   return (
     <View style={[styles.embedWrap, flat && styles.embedWrapFlat]}>
@@ -392,17 +449,17 @@ export default function SkinShowcasePanel({
                   <ScrollView
                     style={[dd.menuList, { maxHeight: skinMenuListHeight }]}
                     nestedScrollEnabled
-                    showsVerticalScrollIndicator={skinKeysOrdered.length > DROPDOWN_VISIBLE_ROWS}
+                    showsVerticalScrollIndicator={visibleSkinKeys.length > DROPDOWN_VISIBLE_ROWS}
                     keyboardShouldPersistTaps="handled"
                   >
-                    {skinKeysOrdered.map((key, index) => {
-                      const s = skinsRecord[key];
+                    {visibleSkinKeys.map((key, index) => {
+                      const s = activeSkinsRecord[key];
                       const label = s?.name || key;
                       const thumbPath = getSkinThumbPath(s);
                       const selected = key === selectedSkinKey;
                       const resolvedThumb = thumbPath ? getSkinImage(thumbPath) : null;
                       const menuCandidates = [...skinResolvedToCandidates(resolvedThumb), ...portraitFallbacks];
-                      const isLast = index === skinKeysOrdered.length - 1;
+                      const isLast = index === visibleSkinKeys.length - 1;
 
                       return (
                         <TouchableOpacity
@@ -439,9 +496,9 @@ export default function SkinShowcasePanel({
                       );
                     })}
                   </ScrollView>
-                  {skinKeysOrdered.length > DROPDOWN_VISIBLE_ROWS ? (
+                  {visibleSkinKeys.length > DROPDOWN_VISIBLE_ROWS ? (
                     <Text style={dd.menuScrollHint}>
-                      {skinKeysOrdered.length} skins — scroll for more
+                      {visibleSkinKeys.length} skins — scroll for more
                     </Text>
                   ) : null}
                 </>
@@ -454,7 +511,9 @@ export default function SkinShowcasePanel({
               </Text>
               {typeLine ? (
                 <Text style={styles.skinTypeLine} numberOfLines={1}>
-                  {typeLine}
+                  {baseSkin._sagaParentSkinName
+                    ? `Saga form · ${baseSkin._sagaParentSkinName}`
+                    : typeLine}
                 </Text>
               ) : null}
             </View>
@@ -524,6 +583,8 @@ export default function SkinShowcasePanel({
             </Text>
           </TouchableOpacity>
         ) : null}
+
+        <ShowcaseMetaPanel entry={mergedSkin} godDisplayName={godDisplayName} />
 
         {variantOverlays.length > 0 ? (
           <View style={styles.variantBar}>
@@ -648,7 +709,7 @@ const styles = StyleSheet.create({
   },
   mediaBlock: {
     position: 'relative',
-    backgroundColor: '#030712',
+    backgroundColor: UI_THEME.mediaBg,
     borderWidth: 1,
     borderColor: PANEL_BORDER,
     borderTopLeftRadius: 4,
@@ -703,7 +764,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   segmentBtnActive: {
-    backgroundColor: 'rgba(125, 211, 252, 0.12)',
+    backgroundColor: UI_THEME.borderCyanFill12,
   },
   segmentDivider: {
     width: 1,
@@ -761,7 +822,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: PANEL_BORDER,
     padding: 2,
-    backgroundColor: '#0f1724',
+    backgroundColor: UI_THEME.panelBgAlt,
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
@@ -781,7 +842,7 @@ const styles = StyleSheet.create({
     height: 36,
     borderRadius: 18,
     overflow: 'hidden',
-    backgroundColor: '#030712',
+    backgroundColor: UI_THEME.mediaBg,
   },
   variantPrismFallback: {
     alignItems: 'center',
@@ -791,5 +852,103 @@ const styles = StyleSheet.create({
     color: ACCENT_SKY,
     fontSize: 14,
     fontWeight: '800',
+  },
+  metaPanel: {
+    marginTop: 12,
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: PANEL_BORDER,
+  },
+  metaGodName: {
+    color: ACCENT_SKY,
+    fontSize: 13,
+    fontWeight: '800',
+    letterSpacing: 0.08,
+    marginBottom: 10,
+  },
+  metaRows: {
+    gap: 8,
+  },
+  metaRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+  },
+  metaLabel: {
+    width: 72,
+    color: TEXT_MUTED,
+    fontSize: 12,
+    fontWeight: '600',
+    paddingTop: 1,
+  },
+  metaValueRow: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 6,
+  },
+  metaValue: {
+    flex: 1,
+    color: TEXT_PRIMARY,
+    fontSize: 12,
+    fontWeight: '600',
+    lineHeight: 17,
+  },
+  metaValueFlex: {
+    flex: 1,
+  },
+  metaValueMuted: {
+    color: TEXT_MUTED,
+    fontSize: 12,
+  },
+  metaCurrencyIcon: {
+    width: 20,
+    height: 20,
+  },
+  metaTierBadge: {
+    width: 22,
+    height: 22,
+  },
+  metaCostAction: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 6,
+    backgroundColor: 'rgba(34, 197, 94, 0.2)',
+    borderWidth: 1,
+    borderColor: 'rgba(34, 197, 94, 0.55)',
+  },
+  metaCostActionText: {
+    color: '#86efac',
+    fontSize: 11,
+    fontWeight: '800',
+    letterSpacing: 0.04,
+  },
+  metaInfoList: {
+    marginTop: 10,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: PANEL_BORDER,
+    gap: 8,
+  },
+  metaInfoBlock: {
+    backgroundColor: 'rgba(11, 18, 32, 0.55)',
+    borderWidth: 1,
+    borderColor: 'rgba(125, 211, 252, 0.14)',
+    borderRadius: 6,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+  },
+  metaInfoLabel: {
+    color: ACCENT_SKY,
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 0.08,
+    marginBottom: 4,
+  },
+  metaInfoText: {
+    color: '#cbd5e1',
+    fontSize: 11,
+    lineHeight: 16,
   },
 });

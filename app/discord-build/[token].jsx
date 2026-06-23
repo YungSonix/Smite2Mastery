@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, Platform, Pressable, Dimensions } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Image } from 'expo-image';
-import CustomBuildPage from '../custombuild';
+import CustomBuildPage from '../_screens/custombuild';
 import buildsData from '../../lib/buildsData';
 import { listDiscordBotSharedBuilds } from '../../lib/discordBotSharedBuildSupabase';
 import {
