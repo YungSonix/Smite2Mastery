@@ -78,7 +78,8 @@ Git/
 *.txt
 !public/**/*.txt
 
-# Local planning/progress notes (keep on disk; not for GitHub)
+# Local docs / agent notes (keep on disk; not for GitHub)
+*.md
 GOALS.md
 BUGS.md
 TASKS.md
