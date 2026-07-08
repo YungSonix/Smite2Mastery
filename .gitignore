@@ -139,9 +139,19 @@ app/data/Icons/Item Icons/
 # Keep essential icons that are required by the code
 # (Role Icons, Pantheon Icons, Stat Icons, Consumables, Vulcan Mods, Game Modes, Conquest Images are tracked)
 
-# Voice audio — served from `assets` branch CDN (not on slim `master`)
+# Voice audio + skin art + legacy icon dumps — on `assets` branch (not slim `master`)
 app/data/VoiceAudio/
 app/data/Voice Audio/
+app/data/NewGodSkins/
+app/data/Icons/Wallpapers/
+app/data/AspectIcons/
+app/data/Icons/Item Icons/
+app/data/Icons/God Info/
+app/data/Icons/Item Icons Filled/
+app/data/Icons/Role Icons/
+app/data/Icons/Rarity Icons/
+app/data/Icons/Stat Icons/
+app/data/Audio Files/
 
 # God render OCR scratch screenshots (local tooling only)
 app/data/God Renders/

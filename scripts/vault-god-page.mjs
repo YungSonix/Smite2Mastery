@@ -15,7 +15,7 @@ import {
 } from './vault-god-colors.mjs';
 
 const IMAGE_EXT = /\.(webp|png|jpe?g|gif)$/i;
-const CDN_MASTER = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/master';
+const CDN_ASSETS = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets';
 const CDN_MAIN_IMG = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info';
 
 export function buildIconIndex(root) {
@@ -109,7 +109,7 @@ function cdnFallbackUrl(iconPath) {
   if (!iconPath) return null;
   const raw = String(iconPath).trim().replace(/\\/g, '/');
   if (raw.toLowerCase().includes('wallpapers')) {
-    return `${CDN_MASTER}/app/data/Icons/Wallpapers/${path.basename(raw)}`;
+    return `${CDN_ASSETS}/app/data/Icons/Wallpapers/${path.basename(raw)}`;
   }
   return `${CDN_MAIN_IMG}/${encodeURIComponent(path.basename(raw.replace(/^\/+/, '')))}`;
 }

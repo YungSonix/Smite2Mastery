@@ -1,4 +1,4 @@
-import { ICON_PATHS, REMOTE_BASE_URLS } from '../config';
+import { ICON_PATHS, githubRawAssets } from '../config';
 import { ROLE_ICONS, PANTHEON_ICON_FILES, PANTHEON_BACKDROP_FILES } from '../lib/imageGrabber';
 import { SKIN_LOADOUT_LOCAL_BUNDLES } from '../lib/skinLoadoutLocalBundles';
 import {
@@ -22,9 +22,8 @@ const NEW_GOD_SKINS_PREFIX = 'app/data/NewGodSkins/';
 const ASPECT_ICONS_PREFIX = 'app/data/AspectIcons/';
 
 /**
- * Shared aspect slot art on `master` under `app/data/AspectIcons/`
- * ([repo tree](https://github.com/YungSonix/Smite2Mastery/tree/master/app/data/AspectIcons)).
- * Only these basenames are loaded from that folder; per-god `apolloAspect.webp`-style files stay on `GOD_ICONS`.
+ * Shared aspect slot art on `assets` under `app/data/AspectIcons/`.
+ * Per-god `apolloAspect.webp`-style files stay on `GOD_ICONS` (`main/img`).
  */
 const ASPECT_POOL_FILENAMES = new Set(
   [
@@ -337,13 +336,7 @@ export function getLocalGodAsset(iconPath) {
 
   const normalized = raw.replace(/^\/+/, '');
   if (normalized.toLowerCase().startsWith(ASPECT_ICONS_PREFIX.toLowerCase())) {
-    const uri =
-      `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/` +
-      normalized
-        .split('/')
-        .map((seg) => encodeURIComponent(seg))
-        .join('/');
-    return createFullUriSource(uri);
+    return createFullUriSource(githubRawAssets(normalized));
   }
 
   const base = raw.split('/').pop() || '';
@@ -416,7 +409,7 @@ export function getGodAbilityIcon(godName, abilityKey, variant) {
 }
 
 // Card art / wallpaper by god name - for Prophecy TCG etc.
-// Wallpapers: https://github.com/YungSonix/Smite2Mastery/tree/master/app/data/Icons/Wallpapers
+// Wallpapers: `assets` branch — app/data/Icons/Wallpapers
 // Filenames are Title_Case.webp (e.g. Athena.webp, Baron_Samedi.webp)
 const WALLPAPER_NAME_OVERRIDES = {
   baronsamedi: 'Baron_Samedi',
@@ -460,13 +453,7 @@ export function getSkinImage(skinPath) {
     if (/\.json$/i.test(rasterPath)) {
       rasterPath = rasterPath.replace(/\.json$/i, '.png');
     }
-    const uri =
-      `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/` +
-      rasterPath
-        .split('/')
-        .map((seg) => encodeURIComponent(seg))
-        .join('/');
-    return createFullUriSource(uri);
+    return createFullUriSource(githubRawAssets(rasterPath));
   }
   if (normalized.toLowerCase().startsWith(NEW_GOD_SKINS_PREFIX.toLowerCase())) {
     // Data may still reference UE `.json` exports; prefer raster sibling on GitHub when present.
@@ -474,13 +461,7 @@ export function getSkinImage(skinPath) {
     if (/\.json$/i.test(rasterPath)) {
       rasterPath = rasterPath.replace(/\.json$/i, '.png');
     }
-    const uri =
-      `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/` +
-      rasterPath
-        .split('/')
-        .map((seg) => encodeURIComponent(seg))
-        .join('/');
-    return createFullUriSource(uri);
+    return createFullUriSource(githubRawAssets(rasterPath));
   }
 
   // Skin paths are like: /icons/Wallpapers/Achilles.webp

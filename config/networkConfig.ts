@@ -11,10 +11,15 @@ export const SUPABASE_CONFIG = {
   MIN_KEY_LENGTH: 10,
 } as const;
 
+/**
+ * GitHub raw bases:
+ * - `master` — slim app + JSON data (Vercel deploy branch)
+ * - `assets` — large runtime blobs (voice, skins art, legacy icon dumps)
+ * - `main/img` — current god/item icon uploads
+ */
 export const REMOTE_BASE_URLS = {
   GITHUB_RAW_MAIN_IMG: 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img',
   GITHUB_RAW_MASTER: 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/master',
-  /** Large runtime assets (voice, etc.) on `assets` branch — keeps `master` small for Vercel. */
   GITHUB_RAW_ASSETS: 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets',
   SMITE_CALCULATOR: 'https://www.smitecalculator.pro',
   SMITE2_NEWS: 'https://www.smite2.com/news',
@@ -27,24 +32,39 @@ export const REMOTE_BASE_URLS = {
   TWITCH_PLAYER: 'https://player.twitch.tv',
 } as const;
 
+/** Build a raw URL on the `assets` branch (repo-relative path, e.g. `app/data/VoiceAudio/...`). */
+export function githubRawAssets(repoRelativePath: string): string {
+  const normalized = String(repoRelativePath || '').replace(/^\/+/, '');
+  return `${REMOTE_BASE_URLS.GITHUB_RAW_ASSETS}/${normalized
+    .split('/')
+    .map((seg) => encodeURIComponent(seg))
+    .join('/')}`;
+}
+
 export const FORM_ENDPOINTS = {
   BUG_REPORT: `${REMOTE_BASE_URLS.FORMSPREE}/xqarlgol`,
   APP_REVIEW: `${REMOTE_BASE_URLS.FORMSPREE}/meoyzvyg`,
   MISSING_OR_OUTDATED: `${REMOTE_BASE_URLS.FORMSPREE}/xdkqlezy`,
 } as const;
 
+const ASSETS_DATA = `${REMOTE_BASE_URLS.GITHUB_RAW_ASSETS}/app/data`;
+
 export const ICON_PATHS = {
-  /** Current item art — [Smite2Mastery `main/img/Item Icons`](https://github.com/YungSonix/Smite2Mastery/tree/main/img/Item%20Icons) */
+  /** Current item art — `main/img/Item Icons` */
   ITEM_ICONS: `${REMOTE_BASE_URLS.GITHUB_RAW_MAIN_IMG}/Item%20Icons`,
-  /** Legacy uploads before `main/img` migration */
-  ITEM_ICONS_LEGACY: `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/app/data/Icons/Item%20Icons`,
-  ITEM_ICONS_FILLED: `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/app/data/Icons/Item%20Icons%20Filled`,
+  /** Legacy item art — `assets` branch */
+  ITEM_ICONS_LEGACY: `${ASSETS_DATA}/Icons/Item%20Icons`,
+  ITEM_ICONS_FILLED: `${ASSETS_DATA}/Icons/Item%20Icons%20Filled`,
+  /** Current god portraits — `main/img/God Info` */
   GOD_ICONS: `${REMOTE_BASE_URLS.GITHUB_RAW_MAIN_IMG}/God%20Info`,
-  /** God aspect slot art — [Smite2Mastery `app/data/AspectIcons`](https://github.com/YungSonix/Smite2Mastery/tree/master/app/data/AspectIcons) */
-  ASPECT_ICONS: `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/app/data/AspectIcons`,
-  SKINS: `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/app/data/Icons/Wallpapers`,
-  VOICE_AUDIO: `${REMOTE_BASE_URLS.GITHUB_RAW_ASSETS}/app/data/VoiceAudio`,
-  ROLE_ICONS: `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/app/data/Icons/Role%20Icons`,
+  ASPECT_ICONS: `${ASSETS_DATA}/AspectIcons`,
+  SKINS: `${ASSETS_DATA}/Icons/Wallpapers`,
+  NEW_GOD_SKINS: `${ASSETS_DATA}/NewGodSkins`,
+  VOICE_AUDIO: `${ASSETS_DATA}/VoiceAudio`,
+  ROLE_ICONS: `${ASSETS_DATA}/Icons/Role%20Icons`,
+  RARITY_ICONS: `${ASSETS_DATA}/Icons/Rarity%20Icons`,
+  STAT_ICONS: `${ASSETS_DATA}/Icons/Stat%20Icons`,
+  AUDIO_FILES: `${ASSETS_DATA}/Audio%20Files`,
   PROFILE_BANNERS: `${REMOTE_BASE_URLS.GITHUB_RAW_MAIN_IMG}/Profile%20Banner`,
   BADGES: `${REMOTE_BASE_URLS.GITHUB_RAW_MAIN_IMG}/Badges`,
 } as const;

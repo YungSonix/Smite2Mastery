@@ -24,6 +24,8 @@ import { getWallpaperByGodName, getRemoteGodIconByName, getLocalGodAsset, getLoc
 import buildsData from '../../lib/buildsData';
 import { flattenBuildsGods } from '../../lib/normalizeBuildsGod';
 import { playVOX } from '../../lib/prophecyAudio';
+import { buildAlternativeGodCards, buildSkinPoolByGod } from '../../lib/prophecySkinPool';
+import FoilHoloShine from '../../lib/FoilHoloShine';
 import { UI_THEME } from '../../lib/uiTheme';
 import { finalizeAppLogin, ensureAppWriteSession } from '../../lib/appAuth';
 import { applyProphecyGoldDelta } from '../../lib/shopSupabase';
@@ -54,6 +56,7 @@ import {
 } from '../../lib/prophecyDeck';
 import { GOLD_ICON, STAT_ICONS as BUNDLED_STAT_ICONS, PROPHECY_PACK_MYSTERY } from '../../lib/imageGrabber';
 import { GOD_ABILITY_REFERENCE } from '../../lib/godAbilities';
+import { ICON_PATHS, REMOTE_BASE_URLS, githubRawAssets } from '../../config';
 let supabase;
 try {
   supabase = require('../../config/supabase').supabase;
@@ -165,7 +168,7 @@ function getGuaranteeTone(bucket) {
     text: hexToRgba(color, 0.96),
   };
 }
-const RARITY_ICONS_BASE = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/master/app/data/Icons/Rarity%20Icons';
+const RARITY_ICONS_BASE = ICON_PATHS.RARITY_ICONS;
 const RARITY_ICON_FILES = { common: 'Common.png', uncommon: 'Uncommon.png', rare: 'Rare.png', epic: 'Epic.png', legendary: 'Legendary.png', free: 'Free.png' };
 function getRarityIconUri(rarity) {
   const file = RARITY_ICON_FILES[String(rarity || 'common').toLowerCase()] || RARITY_ICON_FILES.common;
@@ -305,9 +308,10 @@ function getGuaranteedFoilByRarity(rarity) {
   if (r === 'rare') return CARD_FOIL_TIER.PANTHEON_HOLO;
   return CARD_FOIL_TIER.DIVINE_FOIL;
 }
-const SMITE_WARS_MUSIC_URL =
-  "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/master/app/data/Audio%20Files/SMITE's%20Top%205%20Plays%20Theme%20Music_%20Choirs%20of%20War%20(Part%202).mp3";
-const STAT_ICONS_BASE = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/master/app/data/Icons/Stat%20Icons';
+const SMITE_WARS_MUSIC_URL = githubRawAssets(
+  "app/data/Audio Files/SMITE's Top 5 Plays Theme Music_ Choirs of War (Part 2).mp3"
+);
+const STAT_ICONS_BASE = ICON_PATHS.STAT_ICONS;
 const STAT_ICONS = {
   strength: `${STAT_ICONS_BASE}/T_StatIcon_Strength.png`,
   health: `${STAT_ICONS_BASE}/T_StatIcon_Health.png`,
@@ -317,8 +321,8 @@ const STAT_ATK_TINT = '#e06060';
 const STAT_HP_TINT = '#22c055';
 const STAT_MANA_TINT = '#5eb3ff';
 const STAT_DEF_TINT = '#3498db';
-const PROFILE_BANNER_BASE_URL = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Profile%20Banner';
-const PROFILE_GOD_ICON_BASE_URL = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Icons';
+const PROFILE_BANNER_BASE_URL = ICON_PATHS.PROFILE_BANNERS;
+const PROFILE_GOD_ICON_BASE_URL = `${REMOTE_BASE_URLS.GITHUB_RAW_MAIN_IMG}/God%20Icons`;
 const SMITE_SCROLL_LOGO = require('../../assets/icon.png');
 const PROPHECY_MANA_ICON = BUNDLED_STAT_ICONS.Mana;
 const PROPHECY_PACK_ICON = PROPHECY_PACK_MYSTERY;
@@ -1162,57 +1166,10 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   const deckCurve = useMemo(() => getDeckCostCurve(customDeck), [customDeck]);
   const starterPool = useMemo(() => {
     const basePool = [...PROPHECY_UNITS, ...ITEM_CARDS, ...TRAP_CARDS, ...SPELL_CARDS];
-    const gods = flattenBuildsGods(buildsData?.gods);
-    const godCardByName = {};
-    PROPHECY_UNITS.forEach((card) => {
-      if ((card?.cardType || CARD_TYPE.GOD) !== CARD_TYPE.GOD) return;
-      const key = String(card?.name || '').trim().toLowerCase();
-      if (!key || godCardByName[key]) return;
-      godCardByName[key] = card;
-    });
-    const godDataByName = {};
-    gods.forEach((god) => {
-      const name = String(god?.name || '').trim().toLowerCase();
-      if (name) godDataByName[name] = god;
-    });
-
-    const altCards = [];
-    PROPHECY_UNITS.forEach((baseCard) => {
-      if ((baseCard?.cardType || CARD_TYPE.GOD) !== CARD_TYPE.GOD) return;
-      const godName = String(baseCard?.name || '').trim();
-      if (!godName) return;
-      const godData = godDataByName[godName.toLowerCase()] || null;
-      const skinsObj = godData?.skins && typeof godData.skins === 'object' ? godData.skins : null;
-      let pickedSkin = null;
-      if (skinsObj) {
-        const skinEntries = Object.entries(skinsObj)
-          .map(([key, value]) => ({ key, value }))
-          .filter((entry) => {
-            const skinName = String(entry?.value?.name || entry?.key || '').toLowerCase();
-            const skinPath = entry?.value?.skin;
-            return !!skinPath && !skinName.includes('base') && !isBlockedSkinPath(skinPath);
-          });
-        if (skinEntries.length) pickedSkin = skinEntries[0];
-      }
-      if (!pickedSkin) return;
-      const variantName = buildVariantName(
-        godName,
-        pickedSkin?.value?.name || '',
-        pickedSkin?.value?.skin || '',
-        pickedSkin?.key || ''
-      );
-      const altId = `alt_${baseCard.id}_variant`;
-      altCards.push({
-        ...baseCard,
-        id: altId,
-        name: variantName,
-        baseGodId: baseCard.id,
-        baseGodName: baseCard.name,
-        isAlternativeCard: true,
-        altSkinPath: pickedSkin?.value?.skin ? String(pickedSkin.value.skin) : null,
-        altVariantName: variantName,
-      });
-    });
+    const godBaseCards = PROPHECY_UNITS.filter(
+      (card) => (card?.cardType || CARD_TYPE.GOD) === CARD_TYPE.GOD
+    ).map((card) => ({ ...card, baseGodName: card.name }));
+    const altCards = buildAlternativeGodCards(godBaseCards, buildsData?.gods);
 
     const allCards = [...basePool, ...altCards];
     const foilCards = allCards.map((card) => ({
@@ -1399,33 +1356,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     const ext = profileBannerUseJpg ? 'jpg' : 'webp';
     return `${PROFILE_BANNER_BASE_URL}/${safeKey}.${ext}`;
   }, [profileData?.profile_banner, profileBannerUseJpg]);
-  const skinPoolByGod = useMemo(() => {
-    const out = {};
-    const gods = flattenBuildsGods(buildsData?.gods);
-    gods.forEach((god) => {
-      const godName = String(god?.name || '').trim();
-      if (!godName) return;
-      const skinsObj = god?.skins;
-      if (!skinsObj || typeof skinsObj !== 'object') return;
-      const list = Object.entries(skinsObj)
-        .map(([k, v]) => {
-          const skinPath = v?.skin;
-          const skinName = v?.name || k;
-          if (!skinPath) return null;
-          if (isBlockedSkinPath(skinPath)) return null;
-          const normalized = String(skinName || '').toLowerCase();
-          if (normalized.includes('base')) return null;
-          return {
-            key: String(k),
-            name: buildVariantName(godName, skinName, skinPath, k),
-            path: String(skinPath),
-          };
-        })
-        .filter(Boolean);
-      if (list.length) out[godName] = list;
-    });
-    return out;
-  }, []);
+  const skinPoolByGod = useMemo(() => buildSkinPoolByGod(buildsData?.gods), []);
   const buildsGodByName = useMemo(() => {
     const out = {};
     const gods = flattenBuildsGods(buildsData?.gods);
@@ -1830,7 +1761,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
           };
         });
         deployedCardPreview = cloneObj(c);
-        purchaseVoiceName = target?.name || null;
+        purchaseVoiceName = target || null;
         return {
           ...prev,
           hand,
@@ -1873,7 +1804,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
               gold += GOLD_PER_RARITY[target.rarity] ?? 1;
               spellDeathTargetKey = `enemy_${target.iid}`;
               spellDeathLabel = target.name;
-              spellTargetDeathName = target.name;
+              spellTargetDeathName = target;
             }
           } else {
             eHp = Math.max(0, eHp - spellDamage);
@@ -1923,7 +1854,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
       u.item_slots = [];
       u.status_effects = [];
       u.row = ROW_FRONT;
-      introVoiceName = u.name || c.baseGodName || null;
+      introVoiceName = c.baseGodName || c.name || null;
       deployedIid = u.iid;
       deployedCardPreview = cloneObj(u);
       return {
@@ -1983,7 +1914,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
         return { ...prev, log: [...prev.log, `Choose a target for ${abilityName}.`] };
       }
 
-      casterName = caster.name;
+      casterName = caster;
       let pField = [...prev.pField];
       let eField = [...prev.eField];
       let eHp = prev.eHp;
@@ -2023,7 +1954,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
           if (nextHp <= 0) {
             abilityDeathTargetKey = `enemy_${target.iid}`;
             abilityDeathLabel = target.name;
-            abilityDeathName = target.name;
+            abilityDeathName = target;
             killEnemy(target, nextHp);
           }
         } else {
@@ -2034,7 +1965,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
           if (eHp <= 0) {
             abilityDeathTargetKey = 'enemy_leader';
             abilityDeathLabel = prev.el.name;
-            abilityDeathName = prev.el.name;
+            abilityDeathName = prev.el;
           }
           log.push(`${prev.el.name} takes ${damage} from ${abilityName}.`);
         }
@@ -2050,7 +1981,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
           if (nextHp <= 0) {
             abilityDeathTargetKey = `enemy_${target.iid}`;
             abilityDeathLabel = target.name;
-            abilityDeathName = target.name;
+            abilityDeathName = target;
             killEnemy(target, nextHp);
           }
         } else {
@@ -2061,7 +1992,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
           if (eHp <= 0) {
             abilityDeathTargetKey = 'enemy_leader';
             abilityDeathLabel = prev.el.name;
-            abilityDeathName = prev.el.name;
+            abilityDeathName = prev.el;
           }
           log.push(`${prev.el.name} takes ${damage} from ${abilityName}.`);
         }
@@ -2077,7 +2008,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
           if (nextHp <= 0) {
             abilityDeathTargetKey = `enemy_${target.iid}`;
             abilityDeathLabel = target.name;
-            abilityDeathName = target.name;
+            abilityDeathName = target;
             killEnemy(target, nextHp);
           }
         } else {
@@ -2088,7 +2019,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
           if (eHp <= 0) {
             abilityDeathTargetKey = 'enemy_leader';
             abilityDeathLabel = prev.el.name;
-            abilityDeathName = prev.el.name;
+            abilityDeathName = prev.el;
           }
           log.push(`${prev.el.name} takes ${damage} from ${abilityName}.`);
         }
@@ -2149,7 +2080,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
         return { ...prev, atker: null, log: [...prev.log, `${att.name} is stunned and cannot attack.`] };
       }
       attackerIid = prev.atker;
-      attackerName = att.name;
+      attackerName = att;
       enemyLeaderName = prev.el?.name;
       const firstAttackThisTurn = !prev.attackedIds?.[att.iid];
       const backstabActive = hasKeyword(att, 'BACKSTAB') && firstAttackThisTurn;
@@ -2212,7 +2143,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
         if (targetDied) {
           eField = eField.filter((u) => u.iid !== tgt.iid);
           eGrave.push({ ...tgt, diedTurn: prev.turn, hp: 0 });
-          enemyUnitKilled = tgt.name;
+          enemyUnitKilled = tgt;
           deathTargetKey = `enemy_${targetIid}`;
           deathLabel = tgt.name;
           gold += GOLD_PER_RARITY[tgt.rarity] ?? 1;
@@ -2234,7 +2165,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
         const attNew = pField.find((u) => u.iid === prev.atker);
         if (attNew && attNew.hp <= 0) {
           pField = pField.filter((u) => u.iid !== prev.atker);
-          attackerDied = attNew.name;
+          attackerDied = attNew;
           counterDeathTargetKey = `player_${prev.atker}`;
           counterDeathLabel = attNew.name;
           pGrave.push({ ...attNew, diedTurn: prev.turn, hp: 0 });
@@ -2324,7 +2255,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
         actingEnemies.forEach((enemyBase) => {
           const eu = eField.find((x) => x.iid === enemyBase.iid);
           if (!eu || hasStatus(eu, 'STUNNED')) return;
-          playVOX(eu.name, 'gruntAttack');
+          playVOX(eu, 'gruntAttack');
           if (pField.length) {
             const tauntTargets = findTauntUnits(pField);
             const backstabActive = hasKeyword(eu, 'BACKSTAB');
@@ -2348,14 +2279,14 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
             const targetNextHp = target.hp - damage;
             pField = pField.map((u) => (u.iid === target.iid ? { ...u, hp: targetNextHp } : u));
             log.push(`${eu.name} hits ${target.name} for ${damage}.`);
-            playVOX(target.name, 'grunthit');
+            playVOX(target, 'grunthit');
 
             let targetDied = false;
             if (targetNextHp <= 0) {
               targetDied = true;
               pField = pField.filter((u) => u.iid !== target.iid);
               pGrave.push({ ...target, hp: 0, diedTurn: prev.turn });
-              playVOX(target.name, 'death');
+              playVOX(target, 'death');
             }
 
             // Player unit counters unless enemy unit has RANGED.
@@ -2370,7 +2301,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                   eField = eField.filter((u) => u.iid !== eu.iid);
                   eGrave.push({ ...eu, hp: 0, diedTurn: prev.turn });
                   gold += GOLD_PER_RARITY[eu.rarity] ?? 1;
-                  playVOX(eu.name, 'death');
+                  playVOX(eu, 'death');
                 }
               }
             }
@@ -2385,12 +2316,12 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                 const nextHp = target.hp - reflected;
                 eField = eField.map((u) => (u.iid === eu.iid ? { ...u, hp: nextHp } : u));
                 log.push(`${trap.name} triggers! ${eu.name} takes ${reflected}.`);
-                playVOX(eu.name, 'grunthit');
+                playVOX(eu, 'grunthit');
                 if (nextHp <= 0) {
                   eField = eField.filter((u) => u.iid !== eu.iid);
                   eGrave.push({ ...target, hp: 0, diedTurn: prev.turn });
                   gold += GOLD_PER_RARITY[target.rarity] ?? 1;
-                  playVOX(eu.name, 'death');
+                  playVOX(eu, 'death');
                 }
               }
               return;
@@ -2896,6 +2827,38 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     return <Image source={src} style={{ width, height, borderRadius: rounded }} contentFit="contain" onError={() => markSkinArtFailed(artKey)} />;
   };
 
+  const renderCardArtWithFoil = (card, width, height, rounded = 4, fillContainer = false, artKey = null) => {
+    const art = renderCardArt(card, width, height, rounded, fillContainer, artKey);
+    const visuals = getCardVisuals(card);
+    const foilTheme = getFoilVisualTheme(visuals, getPantheonVisualProfile(card?.pantheon));
+    const hasFoil = !!(visuals?.foil && visuals.foil !== CARD_FOIL_TIER.NONE);
+    if (!hasFoil || !foilTheme) return art;
+    const wrapStyle = fillContainer
+      ? { width: '100%', height: '100%', overflow: 'hidden', borderRadius: rounded, position: 'relative' }
+      : { width, height, overflow: 'hidden', borderRadius: rounded, position: 'relative' };
+    return (
+      <View style={wrapStyle}>
+        {art}
+        <View
+          pointerEvents="none"
+          style={[StyleSheet.absoluteFillObject, { backgroundColor: foilTheme.artTint, opacity: 0.22, borderRadius: rounded }]}
+        />
+        <FoilHoloShine
+          active
+          shineColor={foilTheme.shinePrimary || 'rgba(255,255,255,0.38)'}
+          durationMs={visuals.foil === CARD_FOIL_TIER.MYTHIC ? 2400 : 3000}
+        />
+        {visuals.foil_accent === CARD_FOIL_TIER.PRISMATIC ? (
+          <FoilHoloShine
+            active
+            shineColor={foilTheme.shineSecondary || 'rgba(113,164,255,0.35)'}
+            durationMs={3800}
+          />
+        ) : null}
+      </View>
+    );
+  };
+
   // Leaders use god icons (circular), not card art
   const renderLeaderIcon = (godName, size = 44) => {
     const src = getRemoteGodIconByName(godName);
@@ -3042,7 +3005,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
 
   const renderHandCardFace = (card) => {
     const t = card?.cardType || CARD_TYPE.GOD;
-    if (t === CARD_TYPE.GOD) return <View style={styles.handCardArt}>{renderCardArt(card, handArtW, handArtH, 4, false, `hand_${card?.iid || card?.id || card?.name}`)}</View>;
+    if (t === CARD_TYPE.GOD) return <View style={styles.handCardArt}>{renderCardArtWithFoil(card, handArtW, handArtH, 4, false, `hand_${card?.iid || card?.id || card?.name}`)}</View>;
     const iconKey = `hand_${card?.iid || card?.id || 'unknown'}`;
     const icon = getSpecialCardIconForKey(card, iconKey);
     return (
@@ -3093,7 +3056,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
         key={key}
         style={[styles.showcaseCardWrap, cardWidth != null && { width: cardWidth }]}
         onPress={() => {
-          if (isGod && card?.name) playVOX(card.name, 'intro');
+          if (isGod && card) playVOX(card, 'intro');
           inspectSpinBaseRef.current = 0;
           inspectSpinRef.current = 0;
           inspectFaceBackRef.current = false;
@@ -3149,7 +3112,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
             <View style={[styles.showcasePantheonAura, { backgroundColor: pantheonVisual.auraColor }]} />
             {isGod ? (
               <View style={styles.showcaseArtInner}>
-                {renderCardArt(card, 0, 0, 0, true, `showcase_${card.id}_${key}`)}
+                {renderCardArtWithFoil(card, 0, 0, 0, true, `showcase_${card.id}_${key}`)}
               </View>
             ) : (
               <View style={styles.showcaseSpecialArt}>
@@ -3442,7 +3405,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
       return { ...card, visuals: nextVisuals };
     }
     if ((card?.cardType || CARD_TYPE.GOD) === CARD_TYPE.GOD) {
-      const skinPool = skinPoolByGod[card.name] || [];
+      const skinPool = skinPoolByGod[card.baseGodName || card.name] || [];
       if (skinPool.length && Math.random() < getSkinVariantChance(card?.rarity)) {
         const pick = skinPool[Math.floor(Math.random() * skinPool.length)];
         nextVisuals.variant_type = 'alternative_card';
@@ -4917,7 +4880,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                       doAttack(u.iid, false);
                       return;
                     }
-                    playVOX(u.name, 'intro');
+                    playVOX(u, 'intro');
                   }}
                   onLongPress={() => openCardInspect(u, `Enemy Front Slot ${idx + 1}`)}
                   delayLongPress={180}
@@ -4929,7 +4892,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                   <View style={styles.rarityIconWrap}>
                     <Image source={{ uri: getRarityIconUri(u.rarity || 'common') }} style={styles.rarityIconImg} contentFit="contain" />
                   </View>
-                  <View style={styles.fieldUnitCardArt}>{renderCardArt(u, boardCardW, boardCardH, 4, false, `field_enemy_front_${u.iid || u.id}`)}</View>
+                  <View style={styles.fieldUnitCardArt}>{renderCardArtWithFoil(u, boardCardW, boardCardH, 4, false, `field_enemy_front_${u.iid || u.id}`)}</View>
                   <Text style={[styles.fieldUnitName, isTinyPhone && { fontSize: 7 }, { color: getPantheonColor(u.pantheon) }]} numberOfLines={1}>{u.name}</Text>
                   <View style={styles.fieldUnitStats}>
                     <View style={styles.fieldUnitHpCluster}>
@@ -5034,7 +4997,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                     } else if (!G.attackedIds[u.iid]) {
                       openTargetPickerForAttack(u.iid);
                     } else {
-                      playVOX(u.name, 'intro');
+                      playVOX(u, 'intro');
                     }
                   }}
                   onLongPress={() => openCardInspect(u, `Allied Front Slot ${idx + 1}`)}
@@ -5047,7 +5010,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
                   <View style={styles.rarityIconWrap}>
                     <Image source={{ uri: getRarityIconUri(u.rarity) }} style={styles.rarityIconImg} contentFit="contain" />
                   </View>
-                  <View style={styles.fieldUnitCardArt}>{renderCardArt(u, boardCardW, boardCardH, 4, false, `field_player_front_${u.iid || u.id}`)}</View>
+                  <View style={styles.fieldUnitCardArt}>{renderCardArtWithFoil(u, boardCardW, boardCardH, 4, false, `field_player_front_${u.iid || u.id}`)}</View>
                   <Text style={[styles.fieldUnitName, isTinyPhone && { fontSize: 7 }, { color: getPantheonColor(u.pantheon) }]} numberOfLines={1}>{u.name}</Text>
                   <View style={styles.fieldUnitStats}>
                     <View style={styles.fieldUnitHpCluster}>
