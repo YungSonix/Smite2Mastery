@@ -18,6 +18,9 @@ import {
 import CryptoJS from 'crypto-js';
 import { Image } from 'expo-image';
 import { useScreenDimensions } from '../hooks/useScreenDimensions';
+import { useWebLayout, WEB_CONTENT_MAX_WIDTH } from '../lib/webLayout';
+import { AppMainNav } from '../lib/appWebChrome';
+import { BeginnerHintBar } from '../lib/BeginnerHintBar';
 import {
   BUILD_AUTHORS,
   DEFAULT_TAB_STATE,
@@ -28,17 +31,31 @@ import {
 import { normalizeBuildsGod, flattenBuildsGods, getGodPantheon } from '../lib/normalizeBuildsGod';
 import { AlignedBulletLines } from '../lib/alignedBulletText';
 import KitAbilityTooltipModal from '../lib/KitAbilityTooltipModal';
-import { buildKitAbilityTooltipBody, buildKitAspectTooltipBody } from '../lib/kitAbilityTooltip';
+import { getAbilityCompactSubtitle, getGodTalentInfo, extractAbilitySlot } from '../lib/stringTableLookup';
+import { shouldUseTalentAbilityCopy } from '../lib/godTalentLineups';
 import { genericTooltipStylesForApp } from '../lib/uiTheme';
 import { getLocalGodAsset, getLocalItemIcon, getPantheonBorderColor, getPantheonIcon, getRoleIcon } from './localIcons';
 import { ItemIconImage } from '../lib/ItemIconImage';
 import { GOLD_ICON } from '../lib/imageGrabber';
+import ItemTooltipModal from '../lib/ItemTooltipModal';
+import ItemTooltipTrigger from '../lib/ItemTooltipTrigger';
+import AbilityTooltipTrigger from '../lib/AbilityTooltipTrigger';
+import { useWebItemTooltip } from '../lib/useWebItemTooltip';
+import { useWebAbilityTooltip } from '../lib/useWebAbilityTooltip';
 import {
   computeBuildGoldCost,
   computeTotalBuildStats,
   getBuildStatDisplayRows,
 } from '../lib/buildStats';
 import { resolveRandomizerDevPreload } from '../lib/randomizerDevPreload';
+import {
+  rollRandomizerFullBuild,
+  rollRandomizerSlotItem,
+  sanitizeRandomizerItems,
+  randomizerSlotsEqual,
+} from '../lib/randomizerBuild';
+import { loadBuildsData, loadBuildsGodsData, loadBuildsItemsData, preloadBuildsGodsData, preloadBuildsItemsData, getBuildsDataSync } from '../lib/loadBuildsData';
+import { finalizeAppLogin, ensureAppWriteSession } from '../lib/appAuth';
 // Lazy load page components to reduce initial bundle size
 const HomePage = lazy(() => import('./_screens/home'));
 const DataPage = lazy(() => import('./_screens/data'));
@@ -275,8 +292,9 @@ function BuildsPage({
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [initialDisplayLimit] = useState(80); // Only show first 80 gods initially
   const [selectedBuildIndex, setSelectedBuildIndex] = useState({}); // { godIndex: buildIndex }
-  const [selectedAbility, setSelectedAbility] = useState(null); // { godIndex, abilityKey, ability }
-  const [selectedItem, setSelectedItem] = useState(null); // { item, itemName }
+  const buildItemTooltip = useWebItemTooltip();
+  const randomItemTooltip = useWebItemTooltip();
+  const buildAbilityTooltip = useWebAbilityTooltip();
   const [selectedTip, setSelectedTip] = useState(null); // { tip, tipIndex, godIndex }
   const [failedItemIcons, setFailedItemIcons] = useState({}); // Track which item icons failed to load
   const [activeTab, setActiveTab] = useState(initialTab === 'randomizer' ? 'randomizer' : 'builds'); // 'builds' or 'randomizer'
@@ -292,12 +310,17 @@ function BuildsPage({
   const [contributorsUserData, setContributorsUserData] = useState({}); // username -> { display_name, profile_god_icon }
   // Filter dropdown states
   const [roleDropdownVisible, setRoleDropdownVisible] = useState(false);
-  const [authorDropdownVisible, setAuthorDropdownVisible] = useState(false);
   const [godDropdownVisible, setGodDropdownVisible] = useState(false);
   const [gamemodeDropdownVisible, setGamemodeDropdownVisible] = useState(false);
-  const [selectedAuthor, setSelectedAuthor] = useState(null);
   const [selectedGod, setSelectedGod] = useState(null);
   const [selectedGamemodes, setSelectedGamemodes] = useState([]); // Array for multiple game mode selection
+  // Tierlist browse filters (Builds hub → Browse tierlists)
+  const [tierCategory, setTierCategory] = useState('meta'); // 'meta' | 'newPlayer'
+  const [tierEntityType, setTierEntityType] = useState('god'); // god | item | aspect | ability
+  const [tierSelectedRole, setTierSelectedRole] = useState(null);
+  const [tierQuery, setTierQuery] = useState('');
+  const [tierEntityDropdownVisible, setTierEntityDropdownVisible] = useState(false);
+  const [tierRoleDropdownVisible, setTierRoleDropdownVisible] = useState(false);
   // Login and certification states
   const [currentUser, setCurrentUser] = useState(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -312,11 +335,42 @@ function BuildsPage({
   const [randomRelic, setRandomRelic] = useState(null);
   const [godRerolls, setGodRerolls] = useState(3);
   const [itemRerolls, setItemRerolls] = useState(3);
-  const [selectedRandomItem, setSelectedRandomItem] = useState(null); // { item, itemName } for tooltip
   const [aspectActive, setAspectActive] = useState(false); // Track if aspect is active
   const [randomizerStatsExpanded, setRandomizerStatsExpanded] = useState(true);
   const { width: buildsScreenWidth } = useScreenDimensions();
-  const randomizerBoardRow = buildsScreenWidth >= 640;
+  const { isWebDesktop } = useWebLayout();
+  const compactBuildsFilters = buildsScreenWidth < 560;
+  const [buildsHintDismissed, setBuildsHintDismissed] = useState(false);
+  const [tierHintDismissed, setTierHintDismissed] = useState(false);
+
+  useEffect(() => {
+    if (!IS_WEB || typeof window === 'undefined') return;
+    setBuildsHintDismissed(window.localStorage.getItem('hint_builds_browse') === '1');
+    setTierHintDismissed(window.localStorage.getItem('hint_tierlists') === '1');
+  }, []);
+
+  const dismissBuildsHint = useCallback(() => {
+    setBuildsHintDismissed(true);
+    if (IS_WEB && typeof window !== 'undefined') window.localStorage.setItem('hint_builds_browse', '1');
+  }, []);
+
+  const dismissTierHint = useCallback(() => {
+    setTierHintDismissed(true);
+    if (IS_WEB && typeof window !== 'undefined') window.localStorage.setItem('hint_tierlists', '1');
+  }, []);
+  const randomizerDesktop = isWebDesktop;
+  const randomizerBoardRow = randomizerDesktop;
+  const randomizerWebCompact = IS_WEB && !randomizerDesktop && buildsScreenWidth >= 480;
+  const randomizerRrButtonStyle = [
+    randomizerStyles.randomizerItemRandomizeButton,
+    IS_WEB && randomizerStyles.randomizerItemRandomizeButtonWeb,
+    randomizerDesktop && randomizerStyles.randomizerItemRandomizeButtonDesktop,
+  ];
+  const randomizerRrButtonTextStyle = [
+    randomizerStyles.randomizerItemRandomizeButtonText,
+    IS_WEB && randomizerStyles.randomizerItemRandomizeButtonTextWeb,
+    randomizerDesktop && randomizerStyles.randomizerItemRandomizeButtonTextDesktop,
+  ];
   const RANDOMIZER_GOD_LEVEL = 20;
 
   const randomizerEquippedItems = useMemo(
@@ -449,22 +503,33 @@ function BuildsPage({
     ((hideInternalTabs && hubMode === 'tierlists' && activeTab === 'builds') ||
       (!hideInternalTabs && activeTab === 'tierlists'));
 
-  // Defer parsing large builds.json until after navigation/animations finish (smoother tab open).
+  // Load gods first (Builds browse), then items in background (icons / randomizer).
   useEffect(() => {
     let isMounted = true;
+    const sync = getBuildsDataSync();
+    if (sync?.gods) {
+      setBuilds(sync);
+      setLoading(!sync.items);
+      if (sync.items) return undefined;
+    }
     const task = InteractionManager.runAfterInteractions(() => {
-      try {
-        const data = require('../lib/buildsData');
-        if (isMounted) {
-          setBuilds(data);
+      loadBuildsGodsData()
+        .then((godsPart) => {
+          if (!isMounted) return null;
+          setBuilds((prev) => ({ ...(prev || {}), ...godsPart }));
           setLoading(false);
-        }
-      } catch (err) {
-        if (isMounted) {
-          setError('Failed to load builds data');
-          setLoading(false);
-        }
-      }
+          return loadBuildsItemsData();
+        })
+        .then((itemsPart) => {
+          if (!isMounted || !itemsPart?.items) return;
+          setBuilds((prev) => ({ ...(prev || {}), items: itemsPart.items }));
+        })
+        .catch(() => {
+          if (isMounted) {
+            setError('Failed to load builds data');
+            setLoading(false);
+          }
+        });
     });
     return () => {
       isMounted = false;
@@ -608,16 +673,14 @@ function BuildsPage({
   // Reset build indices when filters change
   useEffect(() => {
     setSelectedBuildIndex({});
-  }, [selectedRole, selectedAuthor, selectedGod, selectedGamemodes]);
+  }, [selectedRole, selectedGod, selectedGamemodes]);
 
   // Clear filters when build category changes
   useEffect(() => {
     setSelectedRole(null);
-    setSelectedAuthor(null);
     setSelectedGod(null);
     setSelectedGamemodes([]);
     setRoleDropdownVisible(false);
-    setAuthorDropdownVisible(false);
     setGodDropdownVisible(false);
     setGamemodeDropdownVisible(false);
   }, [buildCategory]);
@@ -693,11 +756,19 @@ function BuildsPage({
     const preload = resolveRandomizerDevPreload(gods, itemLookupMap);
     if (!preload) return;
     setRandomGod(preload.god);
-    setRandomItems(preload.itemSlots);
+    setRandomItems(sanitizeRandomizerItems(preload.itemSlots, items, preload.god));
     setRandomRelic(preload.relic);
     setAspectActive(false);
     randomizerDevPreloadDone.current = true;
-  }, [builds, loading, gods, itemLookupMap]);
+  }, [builds, loading, gods, itemLookupMap, items]);
+
+  useEffect(() => {
+    if (!items.length) return;
+    setRandomItems((prev) => {
+      const next = sanitizeRandomizerItems(prev, items, randomGod);
+      return randomizerSlotsEqual(prev, next) ? prev : next;
+    });
+  }, [randomGod, items.length]);
 
   // pair gods with builds. The JSON structure has gods with a builds array property.
   // Each god object contains its own builds array.
@@ -967,44 +1038,6 @@ function BuildsPage({
     return mergedPairs;
   }, [builds, buildCategory, transformedCommunityBuilds, transformedContributorsBuilds]);
 
-  // Extract unique authors from builds in current category (display names where available)
-  const availableAuthors = useMemo(() => {
-    if (!pairs || pairs.length === 0) return [];
-    const authorsSet = new Set();
-    pairs.forEach(({ builds: godBuilds }) => {
-      if (Array.isArray(godBuilds)) {
-        godBuilds.forEach(build => {
-          if (build && build.author) {
-            const displayAuthor = (build.authorDisplayName || build.author || '').toString().trim();
-            if (!displayAuthor) return;
-            // For DB builds, check their category
-            if (build.fromDatabase) {
-              if (build.databaseCategory === 'community' && buildCategory === 'community') {
-                authorsSet.add(displayAuthor);
-              } else if (build.databaseCategory === 'contributors' && buildCategory === 'contributors') {
-                authorsSet.add(displayAuthor);
-              }
-            } else {
-              // JSON builds - use category check
-              const category = getBuildCategory(build);
-              // Only include authors that have builds in the current category
-              if (buildCategory === 'featured' && category === 'featured') {
-                authorsSet.add(displayAuthor);
-              } else if (buildCategory === 'contributors' && category === 'contributors') {
-                authorsSet.add(displayAuthor);
-              } else if (buildCategory === 'community' && category === 'community') {
-                authorsSet.add(displayAuthor);
-              }
-            }
-          }
-        });
-      }
-    });
-    return Array.from(authorsSet).sort((a, b) => {
-      return a.toLowerCase().localeCompare(b.toLowerCase());
-    });
-  }, [pairs, buildCategory]);
-
   // Extract unique god names for filtering (only gods with builds in current category)
   const availableGods = useMemo(() => {
     if (!pairs || pairs.length === 0) return [];
@@ -1228,18 +1261,6 @@ function BuildsPage({
       });
     }
     
-    // Filter by selected author
-    if (selectedAuthor) {
-      result = result.filter(({ pair }) => {
-        const godBuilds = pair.builds;
-        if (!Array.isArray(godBuilds) || godBuilds.length === 0) return false;
-        return godBuilds.some(build => {
-          if (!build || !build.author) return false;
-          return build.author.toString().trim() === selectedAuthor;
-        });
-      });
-    }
-    
     // Filter by selected god
     if (selectedGod) {
       result = result.filter(({ pair }) => {
@@ -1301,13 +1322,13 @@ function BuildsPage({
       return aTitle.localeCompare(bTitle);
     });
 
-    if (!lowerQuery && !selectedRole && !selectedAuthor && !selectedGod && (!selectedGamemodes || selectedGamemodes.length === 0)) {
+    if (!lowerQuery && !selectedRole && !selectedGod && (!selectedGamemodes || selectedGamemodes.length === 0)) {
       result = result.slice(0, initialDisplayLimit);
     }
     
     // Extract just the pairs after filtering/sorting
     return result.map(({ pair }) => pair);
-  }, [pairs, buildCategory, debouncedQuery, selectedRole, selectedAuthor, selectedGod, selectedGamemodes, initialDisplayLimit]);
+  }, [pairs, buildCategory, debouncedQuery, selectedRole, selectedGod, selectedGamemodes, initialDisplayLimit]);
 
   // Fast item lookup function using the pre-built map
   const findItem = useCallback((metaName) => {
@@ -1380,30 +1401,63 @@ function BuildsPage({
   }, [itemLookupMap, items]);
 
   const buildsAbilityTooltip = useMemo(() => {
+    const selectedAbility = buildAbilityTooltip.payload;
     if (!selectedAbility?.ability) return null;
     const isAspect = selectedAbility.abilityKey === 'aspect';
     const god = selectedAbility.god || pairs[selectedAbility.godIndex]?.god;
+    const buildUsesTalent = isAspect || selectedAbility.buildUsesTalent === true;
     const pantheon = getGodPantheon(god);
     const borderColor = pantheon ? getPantheonBorderColor(pantheon) : 'rgba(125, 211, 252, 0.42)';
+    const abilitySlot =
+      !isAspect && /^A0[1-4]$/i.test(String(selectedAbility.abilityKey || ''))
+        ? String(selectedAbility.abilityKey).toUpperCase()
+        : null;
+    const ability =
+      selectedAbility.ability && abilitySlot
+        ? { ...selectedAbility.ability, abilitySlot }
+        : selectedAbility.ability;
+    const talentInfo = isAspect && god ? getGodTalentInfo(god) : null;
+    const abilitySlotForTalent =
+      abilitySlot || (ability ? extractAbilitySlot(ability) : null);
+    const showTalentVariantTag =
+      !isAspect &&
+      buildUsesTalent &&
+      abilitySlotForTalent &&
+      shouldUseTalentAbilityCopy(god, abilitySlotForTalent, true);
     return {
-      title: selectedAbility.abilityName || 'Ability',
+      title: isAspect
+        ? talentInfo?.name || selectedAbility.abilityName || 'Talent'
+        : selectedAbility.abilityName || 'Ability',
       icon: selectedAbility.ability.icon,
-      body: isAspect
-        ? buildKitAspectTooltipBody(selectedAbility.ability)
-        : buildKitAbilityTooltipBody(selectedAbility.ability),
+      ability,
+      god,
+      isAspect,
+      subtitle: isAspect ? null : getAbilityCompactSubtitle(god, selectedAbility.ability),
       valueKeys: isAspect ? null : selectedAbility.ability.valueKeys,
       iconContentFit: isAspect ? 'contain' : 'cover',
       borderColor,
       levelIndex: selectedAbility.levelIndex ?? 0,
+      buildUsesTalent,
+      showTalentVariantTag,
     };
-  }, [selectedAbility, pairs]);
+  }, [buildAbilityTooltip.payload, pairs]);
 
   // Data is loaded from the bundled `localBuilds` by default.
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.logo}>SMITE 2</Text>
+      <View style={[styles.header, hideInternalTabs && isWebDesktop && styles.headerDesktopCompact]}>
+        {hideInternalTabs && isWebDesktop ? (
+          <Text style={styles.headerContextTitle}>
+            {activeTab === 'randomizer'
+              ? 'Build Randomizer'
+              : hubMode === 'tierlists'
+                ? 'God tierlists'
+                : 'Browse builds'}
+          </Text>
+        ) : (
+          <Text style={styles.logo}>SMITE 2</Text>
+        )}
         
         {/* Tab Toggle Buttons - Hide when using sub-nav */}
         {!hideInternalTabs && (
@@ -1423,7 +1477,7 @@ function BuildsPage({
               activeOpacity={0.7}
             >
               <Text style={[styles.tabButtonText, activeTab === 'tierlists' && styles.tabButtonTextActive]}>
-                Tierlists
+                Browse tierlists
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -1438,21 +1492,42 @@ function BuildsPage({
           </View>
         )}
         
-        {activeTab === 'builds' && (
+        {activeTab === 'builds' && (!hideInternalTabs || hubMode === 'browse') && !(hideInternalTabs && isWebDesktop) && (
           <Text style={styles.headerSub}>
-            {buildCategory === 'featured' ? 'Curated builds from the mentor team' : 
-             buildCategory === 'contributors' ? 'Made from Smite 2 Creators' : 
-             buildCategory === 'community' ? 'Made by Community members' : 
-             ''}
+            {buildCategory === 'featured'
+              ? 'Curated builds from the mentor team'
+              : buildCategory === 'contributors'
+                ? 'Builds from Smite 2 partners'
+                : buildCategory === 'community'
+                  ? 'Made by Community members'
+                  : ''}
+          </Text>
+        )}
+        {hideInternalTabs && isWebDesktop && hubMode === 'browse' && activeTab === 'builds' && (
+          <Text style={styles.headerSubCompact}>
+            {buildCategory === 'featured'
+              ? 'Mentor picks — great starting point for new players'
+              : buildCategory === 'contributors'
+                ? 'Partner builds'
+                : buildCategory === 'community'
+                  ? 'Community submissions'
+                  : ''}
+          </Text>
+        )}
+        {hideInternalTabs && isWebDesktop && hubMode === 'tierlists' && activeTab !== 'randomizer' && (
+          <Text style={styles.headerSubCompact}>
+            See which gods are strong per role — start with New Player if you are learning
           </Text>
         )}
         {activeTab === 'randomizer' && (
-          <Text style={styles.headerSub}>Random God & Build Generator</Text>
+          <Text style={[styles.headerSub, hideInternalTabs && isWebDesktop && styles.headerSubCompact]}>
+            Roll a random god, full item build, and relic — reroll anything you do not like
+          </Text>
         )}
       </View>
 
       {hideInternalTabs && activeTab === 'builds' && (
-        <View style={styles.buildsHubRow}>
+        <View style={[styles.buildsHubRow, isWebDesktop && styles.buildsHubRowDesktop]}>
           <TouchableOpacity
             style={[styles.tabButton, hubMode === 'browse' && styles.tabButtonActive]}
             onPress={() => onHubModeChange('browse')}
@@ -1468,7 +1543,7 @@ function BuildsPage({
             activeOpacity={0.7}
           >
             <Text style={[styles.tabButtonText, hubMode === 'tierlists' && styles.tabButtonTextActive]}>
-              Tierlists
+              Browse tierlists
             </Text>
           </TouchableOpacity>
         </View>
@@ -1477,21 +1552,27 @@ function BuildsPage({
       {activeTab === 'randomizer' ? (
         <ScrollView 
           style={styles.guidesContainer} 
-          contentContainerStyle={[styles.guidesContentContainer, randomizerStyles.randomizerContentContainer]}
+          contentContainerStyle={[
+            styles.guidesContentContainer,
+            randomizerStyles.randomizerContentContainer,
+            randomizerDesktop && randomizerStyles.randomizerContentContainerDesktop,
+          ]}
           showsVerticalScrollIndicator={false}
         >
           {/* Randomizer Section */}
-          <View style={randomizerStyles.randomizerContainer}>
-            <View style={randomizerStyles.randomizerSection}>
-              <View style={randomizerStyles.randomizerHeaderRow}>
+          <View style={[randomizerStyles.randomizerContainer, randomizerDesktop && randomizerStyles.randomizerContainerDesktop]}>
+            <View style={[randomizerStyles.randomizerSection, randomizerDesktop && randomizerStyles.randomizerSectionDesktop]}>
+              <View style={[randomizerStyles.randomizerHeaderRow, randomizerDesktop && randomizerStyles.randomizerHeaderRowDesktop]}>
                 <Text style={randomizerStyles.randomizerTitle}>Randomizer</Text>
                 <TouchableOpacity
                   style={randomizerStyles.randomizeAllButtonCompact}
                   onPress={() => {
+                  let nextGod = randomGod;
                   // Randomize God (always randomize, but only decrement rerolls if available)
                   if (gods.length > 0) {
                     const randomGodIndex = Math.floor(Math.random() * gods.length);
                     const newGod = gods[randomGodIndex];
+                    nextGod = newGod;
                     setRandomGod(newGod);
                     // Randomly activate aspect if god has one
                     if (newGod && newGod.aspect) {
@@ -1504,67 +1585,11 @@ function BuildsPage({
                     }
                   }
                   
-                  // Randomize Items (always randomize, but only decrement rerolls if available)
-                  // 1 starter (mandatory) + up to 3 active items + remaining tier 3 items = 7 total
+                  // Randomize Items (starter + max 3 actives + tier-3 passives)
                   if (items.length > 0) {
-                    // Filter starter items
-                    const starterItems = items.filter(item => {
-                      if (!item || typeof item !== 'object') return false;
-                      return item.starter === true && (item.name || item.internalName);
-                    });
-                    
-                    // Filter active items (not consumables, have active: true)
-                    const activeItems = items.filter(item => {
-                      if (!item || typeof item !== 'object') return false;
-                      return item.active === true && 
-                             !item.relic && 
-                             !item.consumable && 
-                             !item.starter &&
-                             (item.tier || item.totalCost || (item.stats && Object.keys(item.stats).length > 0)) &&
-                             (!item.stepCost || item.tier) &&
-                             (item.name || item.internalName);
-                    });
-                    
-                    // Filter tier 3 items (not active, not starter, not consumable)
-                    const tier3Items = items.filter(item => {
-                      if (!item || typeof item !== 'object') return false;
-                      return item.tier === 3 && 
-                             !item.relic && 
-                             !item.consumable && 
-                             !item.starter &&
-                             item.active !== true &&
-                             (item.name || item.internalName);
-                    });
-                    
-                    if (starterItems.length > 0) {
-                      const newItems = [];
-                      
-                      // 1. Add 1 starter item (mandatory)
-                      const randomStarterIndex = Math.floor(Math.random() * starterItems.length);
-                      newItems.push(starterItems[randomStarterIndex]);
-                      
-                      // 2. Add up to 3 active items
-                      const numActiveItems = Math.min(3, activeItems.length);
-                      const selectedActiveItems = [];
-                      for (let i = 0; i < numActiveItems; i++) {
-                        const randomActiveIndex = Math.floor(Math.random() * activeItems.length);
-                        selectedActiveItems.push(activeItems[randomActiveIndex]);
-                      }
-                      newItems.push(...selectedActiveItems);
-                      
-                      // 3. Fill remaining slots with tier 3 items (up to 7 total)
-                      const remainingSlots = 7 - newItems.length;
-                      for (let i = 0; i < remainingSlots && tier3Items.length > 0; i++) {
-                        const randomTier3Index = Math.floor(Math.random() * tier3Items.length);
-                        newItems.push(tier3Items[randomTier3Index]);
-                      }
-                      
-                      // Ensure we have exactly 7 items (pad with null if needed)
-                      while (newItems.length < 7) {
-                        newItems.push(null);
-                      }
-                      
-                      setRandomItems(newItems.slice(0, 7));
+                    const rolled = rollRandomizerFullBuild(items, nextGod);
+                    if (rolled) {
+                      setRandomItems(rolled);
                       if (itemRerolls > 0) {
                         setItemRerolls(itemRerolls - 1);
                       }
@@ -1587,29 +1612,44 @@ function BuildsPage({
                 <Text style={randomizerStyles.randomizeAllButtonCompactText}>Randomize All</Text>
               </TouchableOpacity>
               </View>
-              <View style={randomizerStyles.randomizerBoardFrame}>
+              <View
+                style={[
+                  randomizerStyles.randomizerBoardFrame,
+                  randomizerWebCompact && randomizerStyles.randomizerBoardFrameWebCompact,
+                  randomizerDesktop && randomizerStyles.randomizerBoardFrameDesktop,
+                ]}
+              >
               <View
                 style={[
                   randomizerStyles.randomizerBoard,
                   randomizerBoardRow ? randomizerStyles.randomizerBoardRow : randomizerStyles.randomizerBoardColumn,
+                  randomizerDesktop && randomizerStyles.randomizerBoardDesktop,
                 ]}
               >
                 <View
                   style={[
                     randomizerStyles.randomizerLeftPanel,
-                    randomizerBoardRow
-                      ? randomizerStyles.randomizerLeftPanelRow
-                      : randomizerStyles.randomizerLeftPanelFull,
+                    randomizerDesktop
+                      ? randomizerStyles.randomizerLeftPanelDesktop
+                      : randomizerWebCompact
+                        ? randomizerStyles.randomizerLeftPanelWebCompact
+                        : randomizerStyles.randomizerLeftPanelFull,
                   ]}
                 >
-                  <View style={randomizerStyles.randomizerGodAspectRow}>
-                    <View style={randomizerStyles.randomizerGodSlot}>
-                      <Text style={randomizerStyles.randomizerSlotLabel}>God</Text>
+                  <View
+                    style={[
+                      randomizerStyles.randomizerGodAspectRow,
+                      randomizerWebCompact && randomizerStyles.randomizerGodAspectRowWebCompact,
+                      randomizerDesktop && randomizerStyles.randomizerGodAspectRowDesktop,
+                    ]}
+                  >
+                    <View style={[randomizerStyles.randomizerGodSlot, randomizerDesktop && randomizerStyles.randomizerGodSlotDesktop]}>
+                      <Text style={[randomizerStyles.randomizerSlotLabel, randomizerDesktop && randomizerStyles.randomizerSlotLabelDesktop]}>God</Text>
                       <View style={randomizerStyles.randomizerGodSlotInner}>
                   {randomGod ? (
                     <>
                       <TouchableOpacity
-                        style={randomizerStyles.randomizerGodCardFilled}
+                        style={[randomizerStyles.randomizerGodCardFilled, randomizerDesktop && randomizerStyles.randomizerGodCardFilledDesktop]}
                         onPress={() => {
                           if (randomGod) {
                             if (onNavigateToGod) {
@@ -1623,11 +1663,11 @@ function BuildsPage({
                       >
                         <Image
                           source={getLocalGodAsset(randomGod.icon || randomGod.GodIcon || (randomGod.abilities && randomGod.abilities.A01 && randomGod.abilities.A01.icon))}
-                          style={randomizerStyles.randomizerGodIconLarge}
+                          style={[randomizerStyles.randomizerGodIconLarge, randomizerDesktop && randomizerStyles.randomizerGodIconLargeDesktop]}
                           contentFit="cover"
                         />
                       </TouchableOpacity>
-                      <Text style={randomizerStyles.randomizerGodName} numberOfLines={2}>
+                      <Text style={[randomizerStyles.randomizerGodName, randomizerDesktop && randomizerStyles.randomizerGodNameDesktop]} numberOfLines={2}>
                         {randomGod.name || randomGod.GodName || randomGod.title || randomGod.displayName || 'Unknown'}
                       </Text>
                     </>
@@ -1638,8 +1678,8 @@ function BuildsPage({
                   )}
                       </View>
                     </View>
-                    <View style={randomizerStyles.randomizerAspectCell}>
-                      <Text style={randomizerStyles.randomizerSlotLabel}>Aspect</Text>
+                    <View style={[randomizerStyles.randomizerAspectCell, randomizerDesktop && randomizerStyles.randomizerAspectCellDesktop]}>
+                      <Text style={[randomizerStyles.randomizerSlotLabel, randomizerDesktop && randomizerStyles.randomizerSlotLabelDesktop]}>Aspect</Text>
                       {randomGod?.aspect ? (
                         <>
                           <View
@@ -1696,19 +1736,22 @@ function BuildsPage({
                     </View>
                   </View>
 
-                  <View style={randomizerStyles.randomizerStarterRelicRow}>
-                    <View style={randomizerStyles.randomizerWideSlot}>
-                      <Text style={randomizerStyles.randomizerSlotLabel}>Starter</Text>
+                  <View
+                    style={[
+                      randomizerStyles.randomizerStarterRelicRow,
+                      randomizerWebCompact && randomizerStyles.randomizerStarterRelicRowWebCompact,
+                      randomizerDesktop && randomizerStyles.randomizerStarterRelicRowDesktop,
+                    ]}
+                  >
+                    <View style={[randomizerStyles.randomizerWideSlot, randomizerDesktop && randomizerStyles.randomizerWideSlotDesktop]}>
+                      <Text style={[randomizerStyles.randomizerSlotLabel, randomizerDesktop && randomizerStyles.randomizerSlotLabelDesktop]}>Starter</Text>
                     {randomItems[0] ? (
                     <View style={randomizerStyles.randomizerWideSlotWrapper}>
-                      <TouchableOpacity
-                        style={randomizerStyles.randomizerWideItemSlot}
-                        onPress={() => {
-                          if (randomItems[0]) {
-                            setSelectedRandomItem({ item: randomItems[0], itemName: randomItems[0].name || randomItems[0].internalName || 'Unknown' });
-                          }
-                        }}
-                        activeOpacity={0.7}
+                      <ItemTooltipTrigger
+                        tooltip={randomItemTooltip}
+                        item={randomItems[0]}
+                        itemName={randomItems[0].name || randomItems[0].internalName || 'Unknown'}
+                        style={[randomizerStyles.randomizerWideItemSlot, randomizerDesktop && randomizerStyles.randomizerWideItemSlotDesktop]}
                       >
                         <View style={randomizerStyles.randomizerSlotIconWrap} pointerEvents="none">
                       <ItemIconImage
@@ -1725,28 +1768,24 @@ function BuildsPage({
                         )}
                       />
                         </View>
-                      </TouchableOpacity>
-                      <Text style={randomizerStyles.randomizerWideItemName} numberOfLines={1}>
+                      </ItemTooltipTrigger>
+                      <Text style={[randomizerStyles.randomizerWideItemName, randomizerDesktop && randomizerStyles.randomizerWideItemNameDesktop]} numberOfLines={2}>
                         {randomItems[0].name || randomItems[0].internalName}
                       </Text>
                       <TouchableOpacity
-                        style={randomizerStyles.randomizerItemRandomizeButton}
+                        style={randomizerRrButtonStyle}
+                        accessibilityLabel="Reroll starter"
                         onPress={() => {
-                          const starterItems = items.filter(item => {
-                            if (!item || typeof item !== 'object') return false;
-                            return item.starter === true && (item.name || item.internalName);
-                          });
-                          
-                          if (starterItems.length > 0) {
-                            const randomIndex = Math.floor(Math.random() * starterItems.length);
+                          const picked = rollRandomizerSlotItem(items, randomItems, 0, randomGod);
+                          if (picked) {
                             const newItems = [...randomItems];
-                            newItems[0] = starterItems[randomIndex];
-                            setRandomItems(newItems);
+                            newItems[0] = picked;
+                            setRandomItems(sanitizeRandomizerItems(newItems, items, randomGod));
                           }
                         }}
                         activeOpacity={0.7}
                       >
-                        <Text style={randomizerStyles.randomizerItemRandomizeButtonText}>RR</Text>
+                        <Text style={randomizerRrButtonTextStyle}>RR</Text>
                       </TouchableOpacity>
                     </View>
                   ) : (
@@ -1759,38 +1798,32 @@ function BuildsPage({
                         </View>
                       </View>
                       <TouchableOpacity
-                        style={randomizerStyles.randomizerItemRandomizeButton}
+                        style={randomizerRrButtonStyle}
+                        accessibilityLabel="Reroll starter"
                         onPress={() => {
-                          const starterItems = items.filter(item => {
-                            if (!item || typeof item !== 'object') return false;
-                            return item.starter === true && (item.name || item.internalName);
-                          });
-                          if (starterItems.length > 0) {
-                            const randomIndex = Math.floor(Math.random() * starterItems.length);
+                          const picked = rollRandomizerSlotItem(items, randomItems, 0, randomGod);
+                          if (picked) {
                             const newItems = [...randomItems];
-                            newItems[0] = starterItems[randomIndex];
-                            setRandomItems(newItems);
+                            newItems[0] = picked;
+                            setRandomItems(sanitizeRandomizerItems(newItems, items, randomGod));
                           }
                         }}
                         activeOpacity={0.7}
                       >
-                        <Text style={randomizerStyles.randomizerItemRandomizeButtonText}>RR</Text>
+                        <Text style={randomizerRrButtonTextStyle}>RR</Text>
                       </TouchableOpacity>
                     </View>
                   )}
                     </View>
-                    <View style={randomizerStyles.randomizerWideSlot}>
-                      <Text style={randomizerStyles.randomizerSlotLabel}>Relic</Text>
+                    <View style={[randomizerStyles.randomizerWideSlot, randomizerDesktop && randomizerStyles.randomizerWideSlotDesktop]}>
+                      <Text style={[randomizerStyles.randomizerSlotLabel, randomizerDesktop && randomizerStyles.randomizerSlotLabelDesktop]}>Relic</Text>
                     {randomRelic ? (
                     <View style={randomizerStyles.randomizerWideSlotWrapper}>
-                      <TouchableOpacity
-                        style={randomizerStyles.randomizerWideItemSlot}
-                        onPress={() => {
-                          if (randomRelic) {
-                            setSelectedRandomItem({ item: randomRelic, itemName: randomRelic.name || randomRelic.internalName || 'Unknown' });
-                          }
-                        }}
-                        activeOpacity={0.7}
+                      <ItemTooltipTrigger
+                        tooltip={randomItemTooltip}
+                        item={randomRelic}
+                        itemName={randomRelic.name || randomRelic.internalName || 'Unknown'}
+                        style={[randomizerStyles.randomizerWideItemSlot, randomizerDesktop && randomizerStyles.randomizerWideItemSlotDesktop]}
                       >
                         <View style={randomizerStyles.randomizerSlotIconWrap} pointerEvents="none">
                         <ItemIconImage
@@ -1807,12 +1840,13 @@ function BuildsPage({
                           )}
                         />
                         </View>
-                      </TouchableOpacity>
-                      <Text style={randomizerStyles.randomizerWideItemName} numberOfLines={1}>
+                      </ItemTooltipTrigger>
+                      <Text style={[randomizerStyles.randomizerWideItemName, randomizerDesktop && randomizerStyles.randomizerWideItemNameDesktop]} numberOfLines={2}>
                         {randomRelic.name || randomRelic.internalName}
                       </Text>
                       <TouchableOpacity
-                        style={randomizerStyles.randomizerItemRandomizeButton}
+                        style={randomizerRrButtonStyle}
+                        accessibilityLabel="Reroll relic"
                         onPress={() => {
                           const relics = items.filter(item => {
                             if (!item || typeof item !== 'object') return false;
@@ -1825,7 +1859,7 @@ function BuildsPage({
                         }}
                         activeOpacity={0.7}
                       >
-                        <Text style={randomizerStyles.randomizerItemRandomizeButtonText}>RR</Text>
+                        <Text style={randomizerRrButtonTextStyle}>RR</Text>
                       </TouchableOpacity>
                     </View>
                   ) : (
@@ -1838,7 +1872,8 @@ function BuildsPage({
                         </View>
                       </View>
                       <TouchableOpacity
-                        style={randomizerStyles.randomizerItemRandomizeButton}
+                        style={randomizerRrButtonStyle}
+                        accessibilityLabel="Reroll relic"
                         onPress={() => {
                           const relics = items.filter(item => {
                             if (!item || typeof item !== 'object') return false;
@@ -1851,27 +1886,37 @@ function BuildsPage({
                         }}
                         activeOpacity={0.7}
                       >
-                        <Text style={randomizerStyles.randomizerItemRandomizeButtonText}>RR</Text>
+                        <Text style={randomizerRrButtonTextStyle}>RR</Text>
                       </TouchableOpacity>
                     </View>
                   )}
                     </View>
-                  </View>
+                </View>
                 </View>
 
-                <View style={randomizerStyles.randomizerRightPanel}>
-                  <Text style={randomizerStyles.randomizerSlotLabel}>Items</Text>
-                <View style={randomizerStyles.randomizerItemsGrid}>
+                <View
+                  style={[
+                    randomizerStyles.randomizerRightPanel,
+                    randomizerWebCompact && randomizerStyles.randomizerRightPanelWebCompact,
+                    randomizerDesktop && randomizerStyles.randomizerRightPanelDesktop,
+                  ]}
+                >
+                  <Text style={[randomizerStyles.randomizerSlotLabel, randomizerDesktop && randomizerStyles.randomizerSlotLabelDesktop]}>Items</Text>
+                <View
+                  style={[
+                    randomizerStyles.randomizerItemsGrid,
+                    randomizerWebCompact && randomizerStyles.randomizerItemsGridWebCompact,
+                    randomizerDesktop && randomizerStyles.randomizerItemsGridDesktop,
+                  ]}
+                >
                   {randomItems.slice(1, 7).map((item, index) => (
-                    <View key={index + 1} style={randomizerStyles.randomizerGridItemWrapper}>
-                      <TouchableOpacity
-                        style={randomizerStyles.randomizerGridItemSlot}
-                        onPress={() => {
-                          if (item) {
-                            setSelectedRandomItem({ item, itemName: item.name || item.internalName || 'Unknown' });
-                          }
-                        }}
-                        activeOpacity={0.7}
+                    <View key={index + 1} style={[randomizerStyles.randomizerGridItemWrapper, randomizerDesktop && randomizerStyles.randomizerGridItemWrapperDesktop]}>
+                      <ItemTooltipTrigger
+                        tooltip={randomItemTooltip}
+                        item={item}
+                        itemName={item ? item.name || item.internalName || 'Unknown' : null}
+                        style={[randomizerStyles.randomizerGridItemSlot, randomizerDesktop && randomizerStyles.randomizerGridItemSlotDesktop]}
+                        disabled={!item}
                       >
                         <View style={randomizerStyles.randomizerSlotIconWrap} pointerEvents="none">
                       {item ? (
@@ -1881,7 +1926,7 @@ function BuildsPage({
                           iconKey={`random-item-${item.internalName || item.name}-${index + 1}`}
                           failedMap={failedItemIcons}
                           setFailedMap={setFailedItemIcons}
-                          style={randomizerStyles.randomizerGridItemIcon}
+                          style={[randomizerStyles.randomizerGridItemIcon, randomizerDesktop && randomizerStyles.randomizerGridItemIconDesktop]}
                           placeholder={(
                             <View style={randomizerStyles.randomizerGridItemIconPlaceholder}>
                               <Text style={randomizerStyles.randomizerItemIconPlaceholderText}>?</Text>
@@ -1894,77 +1939,82 @@ function BuildsPage({
                         </View>
                       )}
                         </View>
-                      </TouchableOpacity>
+                      </ItemTooltipTrigger>
                       {item ? (
-                        <Text style={randomizerStyles.randomizerGridItemName} numberOfLines={1}>
+                        <Text style={[randomizerStyles.randomizerGridItemName, randomizerDesktop && randomizerStyles.randomizerGridItemNameDesktop]} numberOfLines={2}>
                           {item.name || item.internalName}
                         </Text>
                       ) : null}
                       <TouchableOpacity
-                        style={randomizerStyles.randomizerItemRandomizeButton}
+                        style={randomizerRrButtonStyle}
+                        accessibilityLabel="Reroll item"
                         onPress={() => {
-                          // Randomize just this single item
-                          // Determine which pool to use based on slot position
-                          // Slots 1-3 (index 0-2) can be active items, slots 4-6 (index 3-5) are tier 3
-                          const slotPosition = index + 1;
-                          let itemPool = [];
-                          
-                          if (slotPosition <= 3) {
-                            // First 3 slots can be active items
-                            const activeItems = items.filter(item => {
-                              if (!item || typeof item !== 'object') return false;
-                              return item.active === true && 
-                                     !item.relic && 
-                                     !item.consumable && 
-                                     !item.starter &&
-                                     (item.tier || item.totalCost || (item.stats && Object.keys(item.stats).length > 0)) &&
-                                     (!item.stepCost || item.tier) &&
-                                     (item.name || item.internalName);
-                            });
-                            
-                            // Also include tier 3 items as fallback
-                            const tier3Items = items.filter(item => {
-                              if (!item || typeof item !== 'object') return false;
-                              return item.tier === 3 && 
-                                     !item.relic && 
-                                     !item.consumable && 
-                                     !item.starter &&
-                                     item.active !== true &&
-                                     (item.name || item.internalName);
-                            });
-                            
-                            itemPool = [...activeItems, ...tier3Items];
-                          } else {
-                            // Slots 4-6 are tier 3 items only
-                            itemPool = items.filter(item => {
-                              if (!item || typeof item !== 'object') return false;
-                              return item.tier === 3 && 
-                                     !item.relic && 
-                                     !item.consumable && 
-                                     !item.starter &&
-                                     item.active !== true &&
-                                     (item.name || item.internalName);
-                            });
-                          }
-                          
-                          if (itemPool.length > 0) {
-                            const randomIndex = Math.floor(Math.random() * itemPool.length);
-                            const newItems = [...randomItems];
-                            newItems[index + 1] = itemPool[randomIndex];
-                            setRandomItems(newItems);
-                          }
+                          const slotIndex = index + 1;
+                          const picked = rollRandomizerSlotItem(items, randomItems, slotIndex, randomGod);
+                          if (!picked) return;
+                          const newItems = [...randomItems];
+                          newItems[slotIndex] = picked;
+                          setRandomItems(sanitizeRandomizerItems(newItems, items, randomGod));
                         }}
                         activeOpacity={0.7}
                       >
-                        <Text style={randomizerStyles.randomizerItemRandomizeButtonText}>RR</Text>
+                        <Text style={randomizerRrButtonTextStyle}>RR</Text>
                       </TouchableOpacity>
                     </View>
                   ))}
                 </View>
                 </View>
+
+              {randomGod && randomizerDesktop ? (
+                <View style={[randomizerStyles.randomizerStatsPanel, randomizerStyles.randomizerStatsPanelDesktop]}>
+                  <TouchableOpacity
+                    style={randomizerStyles.randomizerStatsHeader}
+                    onPress={() => setRandomizerStatsExpanded((v) => !v)}
+                    activeOpacity={0.7}
+                    accessibilityRole="button"
+                    accessibilityState={{ expanded: randomizerStatsExpanded }}
+                  >
+                    <View style={randomizerStyles.randomizerStatsHeaderLeft}>
+                      <Text style={randomizerStyles.randomizerStatsTitle}>Build summary</Text>
+                      <Text style={randomizerStyles.randomizerStatsSubtitle}>
+                        Lv {RANDOMIZER_GOD_LEVEL} · items included
+                      </Text>
+                    </View>
+                    <View style={randomizerStyles.randomizerStatsGoldRow}>
+                      <Image source={GOLD_ICON} style={randomizerStyles.randomizerStatsGoldIcon} contentFit="contain" />
+                      <Text style={randomizerStyles.randomizerStatsGoldText}>
+                        {randomizerBuildGold.toLocaleString()}
+                      </Text>
+                    </View>
+                    <Text style={randomizerStyles.randomizerStatsChevron}>
+                      {randomizerStatsExpanded ? '▲' : '▼'}
+                    </Text>
+                  </TouchableOpacity>
+                  {randomizerStatsExpanded ? (
+                    <View style={[randomizerStyles.randomizerStatsGrid, randomizerStyles.randomizerStatsGridDesktop]}>
+                      {randomizerStatRows.length > 0 ? (
+                        randomizerStatRows.map((row) => (
+                          <View key={row.key} style={[randomizerStyles.randomizerStatCell, randomizerStyles.randomizerStatCellDesktop]}>
+                            <Text style={[randomizerStyles.randomizerStatLabel, { color: row.color }]} numberOfLines={1}>
+                              {row.label}
+                            </Text>
+                            <Text style={[randomizerStyles.randomizerStatValue, { color: row.color }]}>
+                              {row.value}
+                            </Text>
+                          </View>
+                        ))
+                      ) : (
+                        <Text style={randomizerStyles.randomizerStatsEmpty}>
+                          Roll items to see total stats at level {RANDOMIZER_GOD_LEVEL}.
+                        </Text>
+                      )}
+                    </View>
+                  ) : null}
+                </View>
+              ) : null}
               </View>
 
-              {randomGod ? (
+              {randomGod && !randomizerDesktop ? (
                 <View style={randomizerStyles.randomizerStatsPanel}>
                   <TouchableOpacity
                     style={randomizerStyles.randomizerStatsHeader}
@@ -2012,9 +2062,9 @@ function BuildsPage({
                 </View>
               ) : null}
 
-              <View style={randomizerStyles.randomizerFooterActions}>
+              <View style={[randomizerStyles.randomizerFooterActions, randomizerDesktop && randomizerStyles.randomizerFooterActionsDesktop]}>
                 <TouchableOpacity
-                  style={[randomizerStyles.randomizerFooterBtn, godRerolls === 0 && randomizerStyles.randomizerButtonDisabled]}
+                  style={[randomizerStyles.randomizerFooterBtn, randomizerDesktop && randomizerStyles.randomizerFooterBtnDesktop, godRerolls === 0 && randomizerStyles.randomizerButtonDisabled]}
                   onPress={() => {
                     if (godRerolls > 0 && gods.length > 0) {
                       const randomIndex = Math.floor(Math.random() * gods.length);
@@ -2035,7 +2085,7 @@ function BuildsPage({
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={randomizerStyles.randomizerFooterResetBtn}
+                  style={[randomizerStyles.randomizerFooterResetBtn, randomizerDesktop && randomizerStyles.randomizerFooterResetBtnDesktop]}
                   onPress={() => {
                     setGodRerolls(3);
                     setRandomGod(null);
@@ -2045,67 +2095,12 @@ function BuildsPage({
                   <Text style={randomizerStyles.randomizerResetButtonText}>↺</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={[randomizerStyles.randomizerFooterBtn, itemRerolls === 0 && randomizerStyles.randomizerButtonDisabled]}
+                  style={[randomizerStyles.randomizerFooterBtn, randomizerDesktop && randomizerStyles.randomizerFooterBtnDesktop, itemRerolls === 0 && randomizerStyles.randomizerButtonDisabled]}
                   onPress={() => {
                     if (itemRerolls > 0 && items.length > 0) {
-                      // Filter starter items
-                      const starterItems = items.filter(item => {
-                        if (!item || typeof item !== 'object') return false;
-                        return item.starter === true && (item.name || item.internalName);
-                      });
-                      
-                      // Filter active items (not consumables, have active: true)
-                      const activeItems = items.filter(item => {
-                        if (!item || typeof item !== 'object') return false;
-                        return item.active === true && 
-                               !item.relic && 
-                               !item.consumable && 
-                               !item.starter &&
-                               (item.tier || item.totalCost || (item.stats && Object.keys(item.stats).length > 0)) &&
-                               (!item.stepCost || item.tier) &&
-                               (item.name || item.internalName);
-                      });
-                      
-                      // Filter tier 3 items (not active, not starter, not consumable)
-                      const tier3Items = items.filter(item => {
-                        if (!item || typeof item !== 'object') return false;
-                        return item.tier === 3 && 
-                               !item.relic && 
-                               !item.consumable && 
-                               !item.starter &&
-                               item.active !== true &&
-                               (item.name || item.internalName);
-                      });
-                      
-                      if (starterItems.length > 0) {
-                        const newItems = [];
-                        
-                        // 1. Add 1 starter item (mandatory)
-                        const randomStarterIndex = Math.floor(Math.random() * starterItems.length);
-                        newItems.push(starterItems[randomStarterIndex]);
-                        
-                        // 2. Add up to 3 active items
-                        const numActiveItems = Math.min(3, activeItems.length);
-                        const selectedActiveItems = [];
-                        for (let i = 0; i < numActiveItems; i++) {
-                          const randomActiveIndex = Math.floor(Math.random() * activeItems.length);
-                          selectedActiveItems.push(activeItems[randomActiveIndex]);
-                        }
-                        newItems.push(...selectedActiveItems);
-                        
-                        // 3. Fill remaining slots with tier 3 items (up to 7 total)
-                        const remainingSlots = 7 - newItems.length;
-                        for (let i = 0; i < remainingSlots && tier3Items.length > 0; i++) {
-                          const randomTier3Index = Math.floor(Math.random() * tier3Items.length);
-                          newItems.push(tier3Items[randomTier3Index]);
-                        }
-                        
-                        // Ensure we have exactly 7 items (pad with null if needed)
-                        while (newItems.length < 7) {
-                          newItems.push(null);
-                        }
-                        
-                        setRandomItems(newItems.slice(0, 7));
+                      const rolled = rollRandomizerFullBuild(items, randomGod);
+                      if (rolled) {
+                        setRandomItems(rolled);
                         setItemRerolls(itemRerolls - 1);
                       }
                     }
@@ -2117,7 +2112,7 @@ function BuildsPage({
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={randomizerStyles.randomizerFooterResetBtn}
+                  style={[randomizerStyles.randomizerFooterResetBtn, randomizerDesktop && randomizerStyles.randomizerFooterResetBtnDesktop]}
                   onPress={() => {
                     setItemRerolls(3);
                     setRandomItems(Array(7).fill(null));
@@ -2132,29 +2127,249 @@ function BuildsPage({
           </View>
         </ScrollView>
       ) : showTierlists ? (
-        <Suspense
-          fallback={
-            <ActivityIndicator size="large" color="#1e90ff" style={{ padding: 24, alignSelf: 'center' }} />
-          }
-        >
-          <TierlistPage />
-        </Suspense>
+        <>
+          {!tierHintDismissed ? (
+            <BeginnerHintBar
+              compact={compactBuildsFilters}
+              text="S-tier = strongest this patch. Try New Player for easier picks. Tap a role card to open the full list."
+              onDismiss={dismissTierHint}
+            />
+          ) : null}
+          <View style={styles.controls}>
+            <TextInput
+              style={[styles.search, compactBuildsFilters && styles.searchCompact]}
+              placeholder="Search gods (Zeus...)"
+              placeholderTextColor="#cbd5e1"
+              value={tierQuery}
+              onChangeText={setTierQuery}
+            />
+
+            <View
+              style={[
+                styles.buildsFilterToolbar,
+                compactBuildsFilters && styles.buildsFilterToolbarCompact,
+              ]}
+            >
+              <View style={[styles.buildCategorySegment, compactBuildsFilters && styles.buildCategorySegmentCompact]}>
+                <TouchableOpacity
+                  style={[
+                    styles.buildCategoryButton,
+                    compactBuildsFilters && styles.buildCategoryButtonCompact,
+                    tierCategory === 'meta' && styles.buildCategoryButtonActive,
+                  ]}
+                  onPress={() => setTierCategory('meta')}
+                  activeOpacity={0.7}
+                >
+                  <Text
+                    style={[
+                      styles.buildCategoryText,
+                      compactBuildsFilters && styles.buildCategoryTextCompact,
+                      tierCategory === 'meta' && styles.buildCategoryTextActive,
+                      compactBuildsFilters && tierCategory === 'meta' && styles.buildCategoryTextActiveCompact,
+                    ]}
+                    numberOfLines={1}
+                  >
+                    Meta
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles.buildCategoryButton,
+                    compactBuildsFilters && styles.buildCategoryButtonCompact,
+                    tierCategory === 'newPlayer' && styles.buildCategoryButtonActive,
+                  ]}
+                  onPress={() => setTierCategory('newPlayer')}
+                  activeOpacity={0.7}
+                >
+                  <Text
+                    style={[
+                      styles.buildCategoryText,
+                      compactBuildsFilters && styles.buildCategoryTextCompact,
+                      tierCategory === 'newPlayer' && styles.buildCategoryTextActive,
+                      compactBuildsFilters && tierCategory === 'newPlayer' && styles.buildCategoryTextActiveCompact,
+                    ]}
+                    numberOfLines={1}
+                  >
+                    New Player
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={[styles.buildsFilterDropdowns, compactBuildsFilters && styles.buildsFilterDropdownsCompact]}>
+                <View
+                  style={[
+                    styles.filterButtonContainer,
+                    compactBuildsFilters && styles.filterButtonContainerCompact,
+                    compactBuildsFilters && styles.filterButtonContainerGodCompact,
+                  ]}
+                >
+                  <TouchableOpacity
+                    style={[
+                      styles.filterButton,
+                      compactBuildsFilters && styles.filterButtonCompact,
+                      tierEntityType !== 'god' && styles.filterButtonActive,
+                    ]}
+                    onPress={() => {
+                      setTierEntityDropdownVisible(!tierEntityDropdownVisible);
+                      setTierRoleDropdownVisible(false);
+                    }}
+                    activeOpacity={0.7}
+                  >
+                    <Text
+                      style={[styles.filterButtonText, compactBuildsFilters && styles.filterButtonTextCompact]}
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
+                      adjustsFontSizeToFit={compactBuildsFilters}
+                      minimumFontScale={0.82}
+                    >
+                      {tierEntityType.charAt(0).toUpperCase() + tierEntityType.slice(1)}
+                    </Text>
+                    <Text style={[styles.filterButtonIcon, compactBuildsFilters && styles.filterButtonIconCompact]}>▾</Text>
+                  </TouchableOpacity>
+                  {tierEntityDropdownVisible && (
+                    <View style={[styles.filterDropdown, compactBuildsFilters && styles.filterDropdownCompact]}>
+                      <ScrollView style={styles.filterDropdownScroll} nestedScrollEnabled={true}>
+                        {['God', 'Item', 'Aspect', 'Ability'].map((label) => {
+                          const value = label.toLowerCase();
+                          return (
+                            <TouchableOpacity
+                              key={value}
+                              style={[styles.filterOption, tierEntityType === value && styles.filterOptionActive]}
+                              onPress={() => {
+                                setTierEntityType(value);
+                                setTierEntityDropdownVisible(false);
+                              }}
+                            >
+                              <Text style={styles.filterOptionText}>{label}</Text>
+                            </TouchableOpacity>
+                          );
+                        })}
+                      </ScrollView>
+                    </View>
+                  )}
+                </View>
+
+                <View
+                  style={[
+                    styles.filterButtonContainer,
+                    compactBuildsFilters && styles.filterButtonContainerCompact,
+                    compactBuildsFilters && styles.filterButtonContainerRoleCompact,
+                  ]}
+                >
+                  <TouchableOpacity
+                    style={[
+                      styles.filterButton,
+                      compactBuildsFilters && styles.filterButtonCompact,
+                      tierSelectedRole && styles.filterButtonActive,
+                    ]}
+                    onPress={() => {
+                      setTierRoleDropdownVisible(!tierRoleDropdownVisible);
+                      setTierEntityDropdownVisible(false);
+                    }}
+                    activeOpacity={0.7}
+                  >
+                    <Text
+                      style={[styles.filterButtonText, compactBuildsFilters && styles.filterButtonTextCompact]}
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
+                      adjustsFontSizeToFit={compactBuildsFilters}
+                      minimumFontScale={0.82}
+                    >
+                      {tierSelectedRole || (compactBuildsFilters ? 'Any' : 'Role')}
+                    </Text>
+                    <Text style={[styles.filterButtonIcon, compactBuildsFilters && styles.filterButtonIconCompact]}>▾</Text>
+                  </TouchableOpacity>
+                  {tierRoleDropdownVisible && (
+                    <View style={[styles.filterDropdown, compactBuildsFilters && styles.filterDropdownCompact]}>
+                      <ScrollView style={styles.filterDropdownScroll} nestedScrollEnabled={true}>
+                        <TouchableOpacity
+                          style={[styles.filterOption, !tierSelectedRole && styles.filterOptionActive]}
+                          onPress={() => {
+                            setTierSelectedRole(null);
+                            setTierRoleDropdownVisible(false);
+                          }}
+                        >
+                          <Text style={styles.filterOptionText}>All Roles</Text>
+                        </TouchableOpacity>
+                        {['ADC', 'Solo', 'Support', 'Mid', 'Jungle'].map((role) => {
+                          const roleIcon = getRoleIcon(role);
+                          return (
+                            <TouchableOpacity
+                              key={role}
+                              style={[styles.filterOption, tierSelectedRole === role && styles.filterOptionActive]}
+                              onPress={() => {
+                                setTierSelectedRole(role);
+                                setTierRoleDropdownVisible(false);
+                              }}
+                            >
+                              {roleIcon && (
+                                <Image
+                                  source={roleIcon}
+                                  style={styles.filterOptionIcon}
+                                  contentFit="contain"
+                                  cachePolicy="memory-disk"
+                                  accessibilityLabel={`${role} role icon`}
+                                />
+                              )}
+                              <Text style={[styles.filterOptionText, { marginLeft: roleIcon ? 7 : 0 }]}>
+                                {role}
+                              </Text>
+                            </TouchableOpacity>
+                          );
+                        })}
+                      </ScrollView>
+                    </View>
+                  )}
+                </View>
+              </View>
+            </View>
+          </View>
+
+          <Suspense
+            fallback={
+              <View style={styles.inlineLoadingRow}>
+                <ActivityIndicator size="small" color="#1e90ff" />
+                <Text style={styles.loadingText}>Loading tierlists…</Text>
+              </View>
+            }
+          >
+            <TierlistPage
+              tierCategory={tierCategory}
+              entityType={tierEntityType}
+              selectedRole={tierSelectedRole}
+              query={tierQuery}
+            />
+          </Suspense>
+        </>
       ) : (
         <>
+      {!buildsHintDismissed && activeTab === 'builds' && (!hideInternalTabs || hubMode === 'browse') ? (
+        <BeginnerHintBar
+          compact={compactBuildsFilters}
+          text="Pick Featured, choose your lane role, then tap a god card for items, relic, and ability order."
+          onDismiss={dismissBuildsHint}
+        />
+      ) : null}
       <View style={styles.controls}>
         <TextInput
-          style={styles.search}
+          style={[styles.search, compactBuildsFilters && styles.searchCompact]}
           placeholder="Search gods (Zeus...)"
           placeholderTextColor="#cbd5e1"
           value={query}
           onChangeText={setQuery}
         />
        
-        {/* Build category filter */}
-        <View style={styles.buildCategoryFilters}>
+        <View
+          style={[
+            styles.buildsFilterToolbar,
+            compactBuildsFilters && styles.buildsFilterToolbarCompact,
+          ]}
+        >
+          <View style={[styles.buildCategorySegment, compactBuildsFilters && styles.buildCategorySegmentCompact]}>
             <TouchableOpacity
               style={[
                 styles.buildCategoryButton,
+                compactBuildsFilters && styles.buildCategoryButtonCompact,
                 buildCategory === 'featured' && styles.buildCategoryButtonActive,
               ]}
               onPress={() => setBuildCategory('featured')}
@@ -2163,7 +2378,9 @@ function BuildsPage({
               <Text
                 style={[
                   styles.buildCategoryText,
+                  compactBuildsFilters && styles.buildCategoryTextCompact,
                   buildCategory === 'featured' && styles.buildCategoryTextActive,
+                  compactBuildsFilters && buildCategory === 'featured' && styles.buildCategoryTextActiveCompact,
                 ]}
                 numberOfLines={1}
               >
@@ -2173,6 +2390,7 @@ function BuildsPage({
             <TouchableOpacity
               style={[
                 styles.buildCategoryButton,
+                compactBuildsFilters && styles.buildCategoryButtonCompact,
                 buildCategory === 'contributors' && styles.buildCategoryButtonActive,
               ]}
               onPress={() => setBuildCategory('contributors')}
@@ -2181,16 +2399,19 @@ function BuildsPage({
               <Text
                 style={[
                   styles.buildCategoryText,
+                  compactBuildsFilters && styles.buildCategoryTextCompact,
                   buildCategory === 'contributors' && styles.buildCategoryTextActive,
+                  compactBuildsFilters && buildCategory === 'contributors' && styles.buildCategoryTextActiveCompact,
                 ]}
                 numberOfLines={1}
               >
-                Contributors
+                Partners
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[
                 styles.buildCategoryButton,
+                compactBuildsFilters && styles.buildCategoryButtonCompact,
                 buildCategory === 'community' && styles.buildCategoryButtonActive,
               ]}
               onPress={() => setBuildCategory('community')}
@@ -2199,7 +2420,9 @@ function BuildsPage({
               <Text
                 style={[
                   styles.buildCategoryText,
+                  compactBuildsFilters && styles.buildCategoryTextCompact,
                   buildCategory === 'community' && styles.buildCategoryTextActive,
+                  compactBuildsFilters && buildCategory === 'community' && styles.buildCategoryTextActiveCompact,
                 ]}
                 numberOfLines={1}
               >
@@ -2207,220 +2430,217 @@ function BuildsPage({
               </Text>
             </TouchableOpacity>
           </View>
-        {/* Filter buttons row */}
-        <View style={styles.filterButtonsRow}>
-          {/* Role filter dropdown — wider column so labels like "Support" aren’t clipped */}
-          <View style={[styles.filterButtonContainer, styles.filterButtonContainerRole]}>
-            <TouchableOpacity
-              style={[styles.filterButton, styles.filterButtonRole, selectedRole && styles.filterButtonActive]}
-            onPress={() => {
-                setRoleDropdownVisible(!roleDropdownVisible);
-                setAuthorDropdownVisible(false);
-                setGodDropdownVisible(false);
-            }}
-            activeOpacity={0.7}
-          >
-              <Text style={[styles.filterButtonText, styles.filterButtonTextRole]} numberOfLines={1}>
-                {selectedRole ? selectedRole : 'Role'}
-              </Text>
-              <Text style={styles.filterButtonIcon}>
-                {roleDropdownVisible ? '▼' : '▶'}
-              </Text>
-            </TouchableOpacity>
-            {roleDropdownVisible && (
-              <View style={[styles.filterDropdown, styles.filterDropdownRole]}>
-                <ScrollView style={styles.filterDropdownScroll} nestedScrollEnabled={true}>
-                  <TouchableOpacity
-                    style={[styles.filterOption, !selectedRole && styles.filterOptionActive]}
-                    onPress={() => {
-                      setSelectedRole(null);
-                      setRoleDropdownVisible(false);
-                    }}
-                  >
-                    <Text style={styles.filterOptionText}>All Roles</Text>
-                  </TouchableOpacity>
-                  {['ADC', 'Solo', 'Support', 'Mid', 'Jungle'].map((role) => {
-                    const roleIcon = getRoleIcon(role);
-                    return (
-                      <TouchableOpacity
-                        key={role}
-                        style={[styles.filterOption, selectedRole === role && styles.filterOptionActive]}
-                        onPress={() => {
-                          setSelectedRole(role);
-                          setRoleDropdownVisible(false);
-                        }}
-                      >
-                        {roleIcon && (
-                          <Image 
-                            source={roleIcon} 
-                            style={styles.filterOptionIcon}
-                            contentFit="contain"
-                            cachePolicy="memory-disk"
-                            accessibilityLabel={`${role} role icon`}
-                          />
-                        )}
-                        <Text style={[styles.filterOptionText, styles.filterOptionTextRole, { marginLeft: roleIcon ? 7 : 0 }]}>{role}</Text>
-          </TouchableOpacity>
-                    );
-                  })}
-                </ScrollView>
-              </View>
-            )}
-          </View>
 
-          {/* Author filter dropdown */}
-          <View style={styles.filterButtonContainer}>
-          <TouchableOpacity
-              style={[styles.filterButton, selectedAuthor && styles.filterButtonActive]}
-            onPress={() => {
-                setAuthorDropdownVisible(!authorDropdownVisible);
-                setRoleDropdownVisible(false);
-                setGodDropdownVisible(false);
-            }}
-            activeOpacity={0.7}
-          >
-              <Text style={styles.filterButtonText}>
-                {selectedAuthor ? selectedAuthor : 'Author'}
-              </Text>
-              <Text style={styles.filterButtonIcon}>
-                {authorDropdownVisible ? '▼' : '▶'}
-              </Text>
-            </TouchableOpacity>
-            {authorDropdownVisible && (
-              <View style={styles.filterDropdown}>
-                <ScrollView style={styles.filterDropdownScroll} nestedScrollEnabled={true}>
-                  <TouchableOpacity
-                    style={[styles.filterOption, !selectedAuthor && styles.filterOptionActive]}
-                    onPress={() => {
-                      setSelectedAuthor(null);
-                      setAuthorDropdownVisible(false);
-                    }}
-                  >
-                    <Text style={styles.filterOptionText}>All Authors</Text>
-                  </TouchableOpacity>
-                  {availableAuthors.map((author) => (
+          <View style={[styles.buildsFilterDropdowns, compactBuildsFilters && styles.buildsFilterDropdownsCompact]}>
+            <View
+              style={[
+                styles.filterButtonContainer,
+                compactBuildsFilters && styles.filterButtonContainerCompact,
+                compactBuildsFilters && styles.filterButtonContainerRoleCompact,
+              ]}
+            >
+              <TouchableOpacity
+                style={[
+                  styles.filterButton,
+                  compactBuildsFilters && styles.filterButtonCompact,
+                  selectedRole && styles.filterButtonActive,
+                ]}
+                onPress={() => {
+                  setRoleDropdownVisible(!roleDropdownVisible);
+                  setGodDropdownVisible(false);
+                  setGamemodeDropdownVisible(false);
+                }}
+                activeOpacity={0.7}
+              >
+                <Text
+                  style={[styles.filterButtonText, compactBuildsFilters && styles.filterButtonTextCompact]}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                  adjustsFontSizeToFit={compactBuildsFilters}
+                  minimumFontScale={0.82}
+                >
+                  {selectedRole || (compactBuildsFilters ? 'Any' : 'Role')}
+                </Text>
+                <Text style={[styles.filterButtonIcon, compactBuildsFilters && styles.filterButtonIconCompact]}>▾</Text>
+              </TouchableOpacity>
+              {roleDropdownVisible && (
+                <View style={[styles.filterDropdown, compactBuildsFilters && styles.filterDropdownCompact]}>
+                  <ScrollView style={styles.filterDropdownScroll} nestedScrollEnabled={true}>
                     <TouchableOpacity
-                      key={author}
-                      style={[styles.filterOption, selectedAuthor === author && styles.filterOptionActive]}
+                      style={[styles.filterOption, !selectedRole && styles.filterOptionActive]}
                       onPress={() => {
-                        setSelectedAuthor(author);
-                        setAuthorDropdownVisible(false);
+                        setSelectedRole(null);
+                        setRoleDropdownVisible(false);
                       }}
                     >
-                      <Text style={styles.filterOptionText}>{author}</Text>
+                      <Text style={styles.filterOptionText}>All Roles</Text>
                     </TouchableOpacity>
-                  ))}
-                </ScrollView>
-              </View>
-            )}
+                    {['ADC', 'Solo', 'Support', 'Mid', 'Jungle'].map((role) => {
+                      const roleIcon = getRoleIcon(role);
+                      return (
+                        <TouchableOpacity
+                          key={role}
+                          style={[styles.filterOption, selectedRole === role && styles.filterOptionActive]}
+                          onPress={() => {
+                            setSelectedRole(role);
+                            setRoleDropdownVisible(false);
+                          }}
+                        >
+                          {roleIcon && (
+                            <Image
+                              source={roleIcon}
+                              style={styles.filterOptionIcon}
+                              contentFit="contain"
+                              cachePolicy="memory-disk"
+                              accessibilityLabel={`${role} role icon`}
+                            />
+                          )}
+                          <Text style={[styles.filterOptionText, { marginLeft: roleIcon ? 7 : 0 }]}>
+                            {role}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </ScrollView>
+                </View>
+              )}
             </View>
 
-          {/* God filter dropdown */}
-          <View style={styles.filterButtonContainer}>
-          <TouchableOpacity
-              style={[styles.filterButton, selectedGod && styles.filterButtonActive]}
-            onPress={() => {
-                setGodDropdownVisible(!godDropdownVisible);
-                setRoleDropdownVisible(false);
-                setAuthorDropdownVisible(false);
-            }}
-            activeOpacity={0.7}
-          >
-              <Text style={styles.filterButtonText}>
-                {selectedGod ? selectedGod : 'God'}
-              </Text>
-              <Text style={styles.filterButtonIcon}>
-                {godDropdownVisible ? '▼' : '▶'}
-              </Text>
-            </TouchableOpacity>
-            {godDropdownVisible && (
-              <View style={styles.filterDropdown}>
-                <ScrollView style={styles.filterDropdownScroll} nestedScrollEnabled={true}>
-                  <TouchableOpacity
-                    style={[styles.filterOption, !selectedGod && styles.filterOptionActive]}
-                    onPress={() => {
-                      setSelectedGod(null);
-                      setGodDropdownVisible(false);
-                    }}
-                  >
-                    <Text style={styles.filterOptionText}>All Gods</Text>
-                  </TouchableOpacity>
-                  {availableGods.map((godName) => (
+            <View
+              style={[
+                styles.filterButtonContainer,
+                compactBuildsFilters && styles.filterButtonContainerCompact,
+                compactBuildsFilters && styles.filterButtonContainerGodCompact,
+              ]}
+            >
+              <TouchableOpacity
+                style={[
+                  styles.filterButton,
+                  compactBuildsFilters && styles.filterButtonCompact,
+                  selectedGod && styles.filterButtonActive,
+                ]}
+                onPress={() => {
+                  setGodDropdownVisible(!godDropdownVisible);
+                  setRoleDropdownVisible(false);
+                  setGamemodeDropdownVisible(false);
+                }}
+                activeOpacity={0.7}
+              >
+                <Text
+                  style={[styles.filterButtonText, compactBuildsFilters && styles.filterButtonTextCompact]}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                  adjustsFontSizeToFit={compactBuildsFilters}
+                  minimumFontScale={0.82}
+                >
+                  {selectedGod || (compactBuildsFilters ? 'Gods' : 'All Gods')}
+                </Text>
+                <Text style={[styles.filterButtonIcon, compactBuildsFilters && styles.filterButtonIconCompact]}>▾</Text>
+              </TouchableOpacity>
+              {godDropdownVisible && (
+                <View style={[styles.filterDropdown, compactBuildsFilters && styles.filterDropdownCompact]}>
+                  <ScrollView style={styles.filterDropdownScroll} nestedScrollEnabled={true}>
                     <TouchableOpacity
-                      key={godName}
-                      style={[styles.filterOption, selectedGod === godName && styles.filterOptionActive]}
+                      style={[styles.filterOption, !selectedGod && styles.filterOptionActive]}
                       onPress={() => {
-                        setSelectedGod(godName);
+                        setSelectedGod(null);
                         setGodDropdownVisible(false);
                       }}
                     >
-                      <Text style={styles.filterOptionText}>{godName}</Text>
+                      <Text style={styles.filterOptionText}>All Gods</Text>
                     </TouchableOpacity>
-                  ))}
-                </ScrollView>
-              </View>
-            )}
-            </View>
-
-          {/* Gamemode filter dropdown */}
-          <View style={styles.filterButtonContainer}>
-          <TouchableOpacity
-              style={[styles.filterButton, selectedGamemodes && selectedGamemodes.length > 0 && styles.filterButtonActive]}
-            onPress={() => {
-                setGamemodeDropdownVisible(!gamemodeDropdownVisible);
-                setRoleDropdownVisible(false);
-                setAuthorDropdownVisible(false);
-                setGodDropdownVisible(false);
-            }}
-            activeOpacity={0.7}
-          >
-              <Text style={styles.filterButtonText}>
-                {selectedGamemodes && selectedGamemodes.length > 0 
-                  ? selectedGamemodes.length === 1 
-                    ? selectedGamemodes[0] 
-                    : `${selectedGamemodes.length} Modes`
-                  : 'Modes'}
-              </Text>
-              <Text style={styles.filterButtonIcon}>
-                {gamemodeDropdownVisible ? '▼' : '▶'}
-              </Text>
-          </TouchableOpacity>
-            {gamemodeDropdownVisible && (
-              <View style={styles.filterDropdown}>
-                <ScrollView style={styles.filterDropdownScroll} nestedScrollEnabled={true}>
-          <TouchableOpacity
-                    style={[styles.filterOption, (!selectedGamemodes || selectedGamemodes.length === 0) && styles.filterOptionActive]}
-            onPress={() => {
-                      setSelectedGamemodes([]);
-                      setGamemodeDropdownVisible(false);
-                    }}
-                  >
-                    <Text style={styles.filterOptionText}>All Modes</Text>
-                  </TouchableOpacity>
-                  {['Joust', 'Duel', 'Arena', 'Conquest', 'Assault'].map((mode) => {
-                    const isSelected = selectedGamemodes && selectedGamemodes.includes(mode);
-                    return (
+                    {availableGods.map((godName) => (
                       <TouchableOpacity
-                        key={mode}
-                        style={[styles.filterOption, isSelected && styles.filterOptionActive]}
+                        key={godName}
+                        style={[styles.filterOption, selectedGod === godName && styles.filterOptionActive]}
                         onPress={() => {
-                          if (isSelected) {
-                            setSelectedGamemodes(selectedGamemodes.filter(m => m !== mode));
-                          } else {
-                            setSelectedGamemodes([...selectedGamemodes, mode]);
-                          }
+                          setSelectedGod(godName);
+                          setGodDropdownVisible(false);
                         }}
                       >
-                        <Text style={styles.filterOptionText}>
-                          {isSelected ? '✓ ' : ''}{mode}
-                        </Text>
+                        <Text style={styles.filterOptionText}>{godName}</Text>
                       </TouchableOpacity>
-                    );
-                  })}
-                </ScrollView>
-              </View>
-            )}
+                    ))}
+                  </ScrollView>
+                </View>
+              )}
             </View>
+
+            <View
+              style={[
+                styles.filterButtonContainer,
+                compactBuildsFilters && styles.filterButtonContainerCompact,
+                compactBuildsFilters && styles.filterButtonContainerModesCompact,
+              ]}
+            >
+              <TouchableOpacity
+                style={[
+                  styles.filterButton,
+                  compactBuildsFilters && styles.filterButtonCompact,
+                  selectedGamemodes && selectedGamemodes.length > 0 && styles.filterButtonActive,
+                ]}
+                onPress={() => {
+                  setGamemodeDropdownVisible(!gamemodeDropdownVisible);
+                  setRoleDropdownVisible(false);
+                  setGodDropdownVisible(false);
+                }}
+                activeOpacity={0.7}
+              >
+                <Text
+                  style={[styles.filterButtonText, compactBuildsFilters && styles.filterButtonTextCompact]}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                  adjustsFontSizeToFit={compactBuildsFilters}
+                  minimumFontScale={0.82}
+                >
+                  {selectedGamemodes && selectedGamemodes.length > 0
+                    ? selectedGamemodes.length === 1
+                      ? selectedGamemodes[0]
+                      : compactBuildsFilters
+                        ? `${selectedGamemodes.length}`
+                        : `${selectedGamemodes.length} Modes`
+                    : 'Modes'}
+                </Text>
+                <Text style={[styles.filterButtonIcon, compactBuildsFilters && styles.filterButtonIconCompact]}>▾</Text>
+              </TouchableOpacity>
+              {gamemodeDropdownVisible && (
+                <View style={[styles.filterDropdown, compactBuildsFilters && styles.filterDropdownCompact]}>
+                  <ScrollView style={styles.filterDropdownScroll} nestedScrollEnabled={true}>
+                    <TouchableOpacity
+                      style={[styles.filterOption, (!selectedGamemodes || selectedGamemodes.length === 0) && styles.filterOptionActive]}
+                      onPress={() => {
+                        setSelectedGamemodes([]);
+                        setGamemodeDropdownVisible(false);
+                      }}
+                    >
+                      <Text style={styles.filterOptionText}>All Modes</Text>
+                    </TouchableOpacity>
+                    {['Joust', 'Duel', 'Arena', 'Conquest', 'Assault'].map((mode) => {
+                      const isSelected = selectedGamemodes && selectedGamemodes.includes(mode);
+                      return (
+                        <TouchableOpacity
+                          key={mode}
+                          style={[styles.filterOption, isSelected && styles.filterOptionActive]}
+                          onPress={() => {
+                            if (isSelected) {
+                              setSelectedGamemodes(selectedGamemodes.filter((m) => m !== mode));
+                            } else {
+                              setSelectedGamemodes([...selectedGamemodes, mode]);
+                            }
+                          }}
+                        >
+                          <Text style={styles.filterOptionText}>
+                            {isSelected ? '✓ ' : ''}
+                            {mode}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </ScrollView>
+                </View>
+              )}
+            </View>
+          </View>
         </View>
         
         {/* Post Your Build Button and Refresh - Only show on Certified tab */}
@@ -2590,23 +2810,30 @@ function BuildsPage({
                   
                   if (isRequestingCertification) return;
                   
-                  setIsRequestingCertification(true);
-                  try {
-                    const supabaseClient = getSupabase();
-                    if (!supabaseClient || !supabaseClient.from) {
-                      Alert.alert('Error', 'Unable to send certification request. Please try again later.');
-                      setIsRequestingCertification(false);
-                      return;
-                    }
-                    
-                    // Send notification to admin (you)
-                    const { error } = await supabaseClient
-                      .from('certification_requests')
-                      .insert({
-                        username: currentUser,
-                        requested_at: new Date().toISOString(),
-                        status: 'pending'
-                      });
+                    setIsRequestingCertification(true);
+                    try {
+                      const supabaseClient = getSupabase();
+                      if (!supabaseClient || !supabaseClient.from) {
+                        Alert.alert('Error', 'Unable to send certification request. Please try again later.');
+                        setIsRequestingCertification(false);
+                        return;
+                      }
+
+                      const authSession = await ensureAppWriteSession(currentUser);
+                      if (!authSession.ready) {
+                        Alert.alert('Sign in required', 'Sign out and sign in again to request certification.');
+                        setIsRequestingCertification(false);
+                        return;
+                      }
+                      
+                      // Send notification to admin (you)
+                      const { error } = await supabaseClient
+                        .from('certification_requests')
+                        .insert({
+                          username: currentUser,
+                          requested_at: new Date().toISOString(),
+                          status: 'pending'
+                        });
                     
                     if (error) {
                       console.error('Error requesting certification:', error);
@@ -2688,6 +2915,13 @@ function BuildsPage({
                     
                     setIsRequestingCertification(true);
                     
+                    const authSession = await ensureAppWriteSession(currentUser);
+                    if (!authSession.ready) {
+                      Alert.alert('Sign in required', 'Sign out and sign in again to request certification.');
+                      setIsRequestingCertification(false);
+                      return;
+                    }
+
                     // Send notification to admin (you)
                     const { error } = await supabaseClient
                       .from('certification_requests')
@@ -2787,7 +3021,7 @@ function BuildsPage({
           {/* Meet my Contributors Section - Only show on Contributors tab */}
           {buildCategory === 'contributors' && contributorsUsers.size > 0 && (
             <View style={styles.meetContributorsSection}>
-              <Text style={styles.meetContributorsTitle}>Meet my Contributors</Text>
+              <Text style={styles.meetContributorsTitle}>Meet our Partners</Text>
               <View style={styles.contributorsGrid}>
                 {Array.from(contributorsUsers).map((username, index) => {
                   const userData = contributorsUserData[username];
@@ -2822,7 +3056,12 @@ function BuildsPage({
             </View>
           )}
 
-          {loading && <ActivityIndicator size="large" color="#60a5fa" />}
+          {loading && (
+            <View style={styles.inlineLoadingRow}>
+              <ActivityIndicator size="small" color="#60a5fa" />
+              <Text style={styles.loadingText}>Loading builds…</Text>
+            </View>
+          )}
           {error && <Text style={styles.error}>Error: {error}</Text>}
 
           {!loading && debouncedQuery && filtered.length === 0 && <Text style={styles.muted}>No gods found.</Text>}
@@ -3440,6 +3679,21 @@ function BuildsPage({
                 }
               }
 
+              const talentAspectPayload =
+                showAspect && aspect
+                  ? {
+                      god,
+                      godIndex: idx,
+                      abilityKey: 'aspect',
+                      ability: aspect,
+                      abilityName: aspect.name
+                        ? aspect.name.replace(/\*\*__|__\*\*/g, '')
+                        : 'Talent',
+                      levelIndex: 0,
+                      buildUsesTalent: true,
+                    }
+                  : null;
+
               // show exactly 7 final slots
               const finalSlots = Array.from({ length: 7 }, (_, i) => (finalItems && finalItems[i] ? finalItems[i] : null));
 
@@ -3588,7 +3842,16 @@ function BuildsPage({
                               const aspectBadgeIcon = getLocalGodAsset(aspect.icon);
                               if (!aspectBadgeIcon) return null;
                               return (
-                                <View style={styles.buildCardAspectBadge} pointerEvents="none">
+                                <AbilityTooltipTrigger
+                                  tooltip={buildAbilityTooltip}
+                                  payload={talentAspectPayload}
+                                  style={styles.buildCardAspectBadge}
+                                  accessibilityLabel={
+                                    aspect.name
+                                      ? `${aspect.name.replace(/\*\*__|__\*\*/g, '')} talent`
+                                      : 'Talent'
+                                  }
+                                >
                                   <Image
                                     source={aspectBadgeIcon}
                                     style={styles.buildCardAspectOverlay}
@@ -3596,11 +3859,11 @@ function BuildsPage({
                                     cachePolicy="memory-disk"
                                     accessibilityLabel={
                                       aspect.name
-                                        ? `${aspect.name.replace(/\*\*__|__\*\*/g, '')} aspect`
-                                        : 'Aspect'
+                                        ? `${aspect.name.replace(/\*\*__|__\*\*/g, '')} talent`
+                                        : 'Talent'
                                     }
                                   />
-                                </View>
+                                </AbilityTooltipTrigger>
                               );
                             })() : null}
                             {god && god.latestPatchChange && (
@@ -3835,7 +4098,15 @@ function BuildsPage({
                                 const isFirst = ai === 0;
                                 return (
                                   <React.Fragment key={`${idx}-start-${ai}-${key}`}>
-                                    <TouchableOpacity style={styles.levelingOrderIconWrapper} onPress={(e) => { e.stopPropagation(); if (ability && typeof ability === 'object') startTransition(() => setSelectedAbility({ god, godIndex: idx, abilityKey: key, ability, abilityName })); }} activeOpacity={0.7}>
+                                    <AbilityTooltipTrigger
+                                      tooltip={buildAbilityTooltip}
+                                      payload={
+                                        ability && typeof ability === 'object'
+                                          ? { god, godIndex: idx, abilityKey: key, ability, abilityName, levelIndex: 0, buildUsesTalent: showAspect }
+                                          : null
+                                      }
+                                      style={styles.levelingOrderIconWrapper}
+                                    >
                                       <View style={styles.levelingOrderIconOuter}>
                                         <View style={styles.levelingOrderIconInner}>
                                           {aIconPath ? (() => {
@@ -3867,7 +4138,7 @@ function BuildsPage({
                                       </View>
                                       {isFirst && <View style={styles.levelingOrderFirstBadge}><Text style={styles.levelingOrderFirstBadgeText}>1st</Text></View>}
                                       {!isFirst && <Text style={styles.levelingOrderNumber}>{ai + 1}</Text>}
-                                    </TouchableOpacity>
+                                    </AbilityTooltipTrigger>
                                     {!isLast && <Text style={styles.levelingOrderArrow}>→</Text>}
                                   </React.Fragment>
                                 );
@@ -3884,7 +4155,15 @@ function BuildsPage({
                                 const isFirst = ai === 0;
                                 return (
                                   <React.Fragment key={`${idx}-max-${ai}-${key}`}>
-                                    <TouchableOpacity style={styles.levelingOrderIconWrapper} onPress={(e) => { e.stopPropagation(); if (ability && typeof ability === 'object') startTransition(() => setSelectedAbility({ god, godIndex: idx, abilityKey: key, ability, abilityName })); }} activeOpacity={0.7}>
+                                    <AbilityTooltipTrigger
+                                      tooltip={buildAbilityTooltip}
+                                      payload={
+                                        ability && typeof ability === 'object'
+                                          ? { god, godIndex: idx, abilityKey: key, ability, abilityName, levelIndex: 0, buildUsesTalent: showAspect }
+                                          : null
+                                      }
+                                      style={styles.levelingOrderIconWrapper}
+                                    >
                                       <View style={styles.levelingOrderIconOuter}>
                                         <View style={styles.levelingOrderIconInner}>
                                           {aIconPath ? (() => {
@@ -3916,7 +4195,7 @@ function BuildsPage({
                                       </View>
                                       {isFirst && <View style={styles.levelingOrderFirstBadge}><Text style={styles.levelingOrderFirstBadgeText}>1st</Text></View>}
                                       {!isFirst && <Text style={styles.levelingOrderNumber}>{ai + 1}</Text>}
-                                    </TouchableOpacity>
+                                    </AbilityTooltipTrigger>
                                     {!isLast && <Text style={styles.levelingOrderArrow}>→</Text>}
                                   </React.Fragment>
                                 );
@@ -4003,15 +4282,10 @@ function BuildsPage({
 
                         {showAspect && aspect && (
                           <View style={styles.aspectContainer}>
-                            <TouchableOpacity
+                            <AbilityTooltipTrigger
                               style={styles.aspectRow}
-                              onPress={(e) => {
-                                e.stopPropagation();
-                                const aspectName = aspect.name ? aspect.name.replace(/\*\*__|__\*\*/g, '') : 'Aspect';
-                                startTransition(() => {
-                                  setSelectedAbility({ god, godIndex: idx, abilityKey: 'aspect', ability: aspect, abilityName: aspectName });
-                                });
-                              }}
+                              tooltip={buildAbilityTooltip}
+                              payload={talentAspectPayload}
                             >
                               {aspect.icon ? (() => {
                                 const localIcon = getLocalGodAsset(aspect.icon);
@@ -4050,7 +4324,7 @@ function BuildsPage({
                                   </View>
                                 )}
                               </View>
-                            </TouchableOpacity>
+                            </AbilityTooltipTrigger>
                           </View>
                         )}
 
@@ -4065,15 +4339,12 @@ function BuildsPage({
                               } catch (_) {}
                               const localIcon = meta && meta.icon ? getLocalItemIcon(meta.icon) : null;
                               return (
-                                  <TouchableOpacity
+                                  <ItemTooltipTrigger
                                     key={si}
+                                    tooltip={buildItemTooltip}
+                                    item={meta}
+                                    itemName={s}
                                     style={styles.smallIconSlot}
-                                    onPress={(e) => {
-                                      e.stopPropagation();
-                                      startTransition(() => {
-                                        setSelectedItem({ item: meta, itemName: s });
-                                      });
-                                    }}
                                   >
                                       <View style={styles.iconWithBadgeWrapper}>
                                         {localIcon ? (() => {
@@ -4166,7 +4437,7 @@ function BuildsPage({
                                       />
                                     )}
                                   </View>
-                                  </TouchableOpacity>
+                                  </ItemTooltipTrigger>
                               );
                             })}
                           </View>
@@ -4186,15 +4457,12 @@ function BuildsPage({
                             } catch (_) {}
                             const localIcon = meta && meta.icon ? getLocalItemIcon(meta.icon) : null;
                             return (
-                                <TouchableOpacity
+                                <ItemTooltipTrigger
                                   key={fi}
+                                  tooltip={buildItemTooltip}
+                                  item={meta}
+                                  itemName={f}
                                   style={styles.iconWrap}
-                                  onPress={(e) => {
-                                    e.stopPropagation();
-                                    startTransition(() => {
-                                      setSelectedItem({ item: meta, itemName: f });
-                                    });
-                                  }}
                                 >
                                   <View style={styles.iconWithBadgeWrapper}>
                                     {localIcon ? (() => {
@@ -4288,7 +4556,7 @@ function BuildsPage({
                                   />
                                 )}
                                   </View>
-                                </TouchableOpacity>
+                                </ItemTooltipTrigger>
                             );
                           })}
                         </View>
@@ -4324,14 +4592,12 @@ function BuildsPage({
                             const localIcon = meta && meta.icon ? getLocalItemIcon(meta.icon) : null;
                             const itemKey = `relic-${idx}-${slotId}-${lookupName}`;
                             return (
-                              <TouchableOpacity
+                              <ItemTooltipTrigger
+                                key={itemKey}
+                                tooltip={buildItemTooltip}
+                                item={meta}
+                                itemName={lookupName}
                                 style={styles.iconWrap}
-                                onPress={(e) => {
-                                  e.stopPropagation();
-                                  startTransition(() => {
-                                    setSelectedItem({ item: meta, itemName: lookupName });
-                                  });
-                                }}
                               >
                                 <View style={{ position: 'relative' }}>
                                   {localIcon ? (() => {
@@ -4412,7 +4678,7 @@ function BuildsPage({
                                     />
                                   )}
                                 </View>
-                              </TouchableOpacity>
+                              </ItemTooltipTrigger>
                             );
                           };
 
@@ -4698,319 +4964,54 @@ function BuildsPage({
         </>
       )}
 
-      {/* Random Item Tooltip Modal */}
-      <Modal
-        visible={selectedRandomItem !== null}
-        transparent={true}
-        animationType="fade"
-        onRequestClose={() => setSelectedRandomItem(null)}
-      >
-        <Pressable 
-          style={styles.modalOverlay}
-          onPress={() => setSelectedRandomItem(null)}
-        >
-          <Pressable 
-            style={styles.modalContent}
-            onPress={(e) => e.stopPropagation()}
-          >
-            {selectedRandomItem && (
-              <>
-                <View style={styles.modalHeader}>
-                  <View style={styles.modalIconContainer}>
-                    {selectedRandomItem.item && selectedRandomItem.item.icon ? (() => {
-                      const localIcon = getLocalItemIcon(selectedRandomItem.item.icon);
-                      if (localIcon) {
-                        const imageSource = localIcon.primary || localIcon;
-                        const fallbackSource = localIcon.fallback;
-                        const itemKey = `modal-${selectedRandomItem.itemName}`;
-                        const useFallback = failedItemIcons[itemKey];
-                        
-                        if (fallbackSource && !useFallback) {
-                          return (
-                            <Image 
-                              source={imageSource}
-                              style={styles.modalAbilityIcon}
-                              contentFit="cover"
-                              cachePolicy="memory-disk"
-                              transition={200}
-                              onError={() => {
-                                setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
-                              }}
-                            />
-                          );
-                        }
-                        if (fallbackSource && useFallback) {
-                          return (
-                            <Image 
-                              source={fallbackSource}
-                              style={styles.modalAbilityIcon}
-                              contentFit="cover"
-                              cachePolicy="memory-disk"
-                              transition={200}
-                              accessibilityLabel={`${selectedRandomItem.itemName} item icon`}
-                            />
-                          );
-                        }
-                        return (
-                          <Image 
-                            source={imageSource}
-                            style={styles.modalAbilityIcon}
-                            contentFit="cover"
-                            cachePolicy="memory-disk"
-                            transition={200}
-                            accessibilityLabel={`${selectedRandomItem.itemName} item icon`}
-                          />
-                        );
-                      }
-                      return (
-                        <View style={styles.modalAbilityIconFallback}>
-                          <Text style={styles.modalAbilityIconFallbackText}>
-                            {selectedRandomItem.itemName.charAt(0)}
-                          </Text>
-                        </View>
-                      );
-                    })() : (
-                      <View style={styles.modalAbilityIconFallback}>
-                        <Text style={styles.modalAbilityIconFallbackText}>
-                          {selectedRandomItem.itemName.charAt(0)}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                  <Text style={styles.modalTitle}>
-                    {selectedRandomItem.item ? (selectedRandomItem.item.name || selectedRandomItem.itemName) : selectedRandomItem.itemName}
-                  </Text>
-                  <TouchableOpacity 
-                    style={styles.modalCloseButton}
-                    onPress={() => setSelectedRandomItem(null)}
-                  >
-                    <Text style={styles.modalCloseButtonText}>×</Text>
-                  </TouchableOpacity>
-                </View>
+      <ItemTooltipModal
+        visible={randomItemTooltip.isVisible}
+        onClose={randomItemTooltip.close}
+        item={randomItemTooltip.item}
+        itemName={randomItemTooltip.itemName}
+        presentation={randomItemTooltip.presentation}
+        anchor={randomItemTooltip.anchor}
+        onCardHoverIn={randomItemTooltip.cancelHide}
+        onCardHoverOut={randomItemTooltip.scheduleHide}
+        maxHeightRatio={0.65}
+      />
 
-                <View style={styles.modalBody}>
-                  {selectedRandomItem.item && selectedRandomItem.item.tier && (
-                    <Text style={styles.modalTier}>Tier {selectedRandomItem.item.tier} Item</Text>
-                  )}
-
-                  {selectedRandomItem.item && selectedRandomItem.item.totalCost && (
-                    <Text style={[styles.modalCost, { color: '#fbbf24', fontWeight: '700' }]}>
-                      Cost: {selectedRandomItem.item.totalCost} Gold
-                    </Text>
-                  )}
-
-                  {selectedRandomItem.item && selectedRandomItem.item.stats && (
-                    <View style={styles.modalStats}>
-                      <Text style={styles.modalStatsTitle}>Stats:</Text>
-                      {Object.keys(selectedRandomItem.item.stats).map((statKey) => {
-                        const statValue = selectedRandomItem.item.stats[statKey];
-                        let statColor = '#94a3b8';
-                        if (["MaxHealth", "Health", "HP5", "Health Regen"].includes(statKey)) statColor = "#22c55e";
-                        else if (["AttackSpeed", "Critical Chance", "CriticalChance", "Critical Damage", "Attack Speed","Basic Attack Damage", "Criticial Chance", "Critical Damage", "Basic Damage"].includes(statKey)) statColor = "#f97316";
-                        else if (["PhysicalProtection", "Penetration", "Physical Protection"].includes(statKey)) statColor = "#ef4444";
-                        else if (statKey === "Intelligence") statColor = "#a855f7";
-                        else if (statKey === "Strength") statColor = "#facc15";
-                        else if (statKey === "Cooldown Rate") statColor = "#0ea5e9";
-                        else if (statKey === "MagicalProtection") statColor = "#a855f7";
-                        else if (statKey === "Lifesteal") statColor = "#84cc16";
-                        else if (["MaxMana", "MP5", "Mana Regen", "Mana", "Mana Regeneration", "Magical Protection"].includes(statKey)) statColor = "#3b82f6";
-                        
-                        return (
-                          <View key={statKey} style={styles.modalStatRow}>
-                            <Text style={[styles.modalStatLabel, { color: statColor }]}>{statKey}:</Text>
-                            <Text style={styles.modalStatValue}>
-                              {typeof statValue === 'object' ? JSON.stringify(statValue) : statValue}
-                            </Text>
-                          </View>
-                        );
-                      })}
-                    </View>
-                  )}
-
-                  {selectedRandomItem.item && selectedRandomItem.item.passive && (
-                    <View style={styles.modalPassiveContainer}>
-                      <Text style={styles.modalPassiveTitle}>Passive:</Text>
-                      <Text style={styles.modalDescription}>
-                        {selectedRandomItem.item.passive}
-                      </Text>
-                    </View>
-                  )}
-                </View>
-              </>
-            )}
-          </Pressable>
-        </Pressable>
-      </Modal>
-
-      {/* Item Tooltip Modal */}
-      <Modal
-        visible={selectedItem !== null}
-        transparent={true}
-        animationType="fade"
-        onRequestClose={() => setSelectedItem(null)}
-      >
-        <Pressable 
-          style={styles.modalOverlay}
-          onPress={() => setSelectedItem(null)}
-        >
-          <Pressable 
-            style={styles.modalContent}
-            onPress={(e) => e.stopPropagation()}
-          >
-            {selectedItem && (
-              <>
-                <View style={styles.modalHeader}>
-                  <View style={styles.modalIconContainer}>
-                    {selectedItem.item && selectedItem.item.icon ? (() => {
-                      const localIcon = getLocalItemIcon(selectedItem.item.icon);
-                      if (localIcon) {
-                        // Handle both single URI and primary/fallback object
-                        const imageSource = localIcon.primary || localIcon;
-                        const fallbackSource = localIcon.fallback;
-                        const itemKey = `modal-${selectedItem.itemName}`;
-                        const useFallback = failedItemIcons[itemKey];
-                        
-                        if (fallbackSource && !useFallback) {
-                          // Has fallback - try primary first, then fallback on error
-                          return (
-                            <Image 
-                              source={imageSource}
-                              style={styles.modalAbilityIcon}
-                              contentFit="cover"
-                              cachePolicy="memory-disk"
-                              transition={200}
-                              onError={() => {
-                                setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
-                              }}
-                            />
-                          );
-                        }
-                        
-                        if (fallbackSource && useFallback) {
-                          // Use fallback after primary failed
-                          return (
-                            <Image 
-                              source={fallbackSource}
-                              style={styles.modalAbilityIcon}
-                              contentFit="cover"
-                              cachePolicy="memory-disk"
-                              transition={200}
-                              accessibilityLabel={`${selectedItem.itemName} item icon`}
-                            />
-                          );
-                        }
-                        
-                        // Single URI - use directly
-                        return (
-                          <Image 
-                            source={imageSource}
-                            style={styles.modalAbilityIcon}
-                            contentFit="cover"
-                            cachePolicy="memory-disk"
-                            transition={200}
-                            accessibilityLabel={`${selectedItem.itemName} item icon`}
-                          />
-                        );
-                      }
-                      return (
-                        <View style={styles.modalAbilityIconFallback}>
-                          <Text style={styles.modalAbilityIconFallbackText}>
-                            {selectedItem.itemName.charAt(0)}
-                          </Text>
-                        </View>
-                      );
-                    })() : (
-                      <View style={styles.modalAbilityIconFallback}>
-                        <Text style={styles.modalAbilityIconFallbackText}>
-                          {selectedItem.itemName.charAt(0)}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                  <Text style={styles.modalTitle}>
-                    {selectedItem.item ? (selectedItem.item.name || selectedItem.itemName) : selectedItem.itemName}
-                  </Text>
-                  <TouchableOpacity 
-                    style={styles.modalCloseButton}
-                    onPress={() => setSelectedItem(null)}
-                  >
-                    <Text style={styles.modalCloseButtonText}>×</Text>
-                  </TouchableOpacity>
-                </View>
-
-                <View style={styles.modalBody}>
-                  {selectedItem.item && selectedItem.item.tier && (
-                    <Text style={styles.modalTier}>Tier {selectedItem.item.tier} Item</Text>
-                  )}
-
-                  {selectedItem.item && selectedItem.item.totalCost && (
-                    <Text style={[styles.modalCost, { color: '#fbbf24', fontWeight: '700' }]}>
-                      Cost: {selectedItem.item.totalCost} Gold
-                    </Text>
-                  )}
-
-                  {selectedItem.item && selectedItem.item.stats && (
-                    <View style={styles.modalStats}>
-                      <Text style={styles.modalStatsTitle}>Stats:</Text>
-                      {Object.keys(selectedItem.item.stats).map((statKey) => {
-                        const statValue = selectedItem.item.stats[statKey];
-                        // Color code stat labels based on stat type
-                        let statColor = '#94a3b8'; // default
-                        if (["MaxHealth", "Health", "HP5", "Health Regen"].includes(statKey)) statColor = "#22c55e"; // green
-                        else if (["AttackSpeed", "Critical Chance", "CriticalChance", "Critical Damage", "Attack Speed","Basic Attack Damage", "Criticial Chance", "Critical Damage", "Basic Damage"].includes(statKey)) statColor = "#f97316"; // orange
-                        else if (["PhysicalProtection", "Penetration", "Physical Protection"].includes(statKey)) statColor = "#ef4444"; // red
-                        else if (statKey === "Intelligence") statColor = "#a855f7"; // purple
-                        else if (statKey === "Strength") statColor = "#facc15"; // yellow
-                        else if (statKey === "Cooldown Rate") statColor = "#0ea5e9"; // blue
-                        else if (statKey === "MagicalProtection") statColor = "#a855f7"; // purple
-                        else if (statKey === "Lifesteal") statColor = "#84cc16"; // light yellow green
-                        else if (["MaxMana", "MP5", "Mana Regen", "Mana", "Mana Regeneration", "Magical Protection"].includes(statKey)) statColor = "#3b82f6"; // blue
-                        
-                        return (
-                          <View key={statKey} style={styles.modalStatRow}>
-                            <Text style={[styles.modalStatLabel, { color: statColor }]}>{statKey}:</Text>
-                            <Text style={styles.modalStatValue}>
-                              {typeof statValue === 'object' ? JSON.stringify(statValue) : statValue}
-                            </Text>
-                          </View>
-                        );
-                      })}
-                    </View>
-                  )}
-
-                  {selectedItem.item && selectedItem.item.passive && (
-                    <View style={styles.modalPassiveContainer}>
-                      <Text style={styles.modalPassiveTitle}>Passive:</Text>
-                      <Text style={styles.modalDescription}>
-                        {selectedItem.item.passive}
-                      </Text>
-                    </View>
-                  )}
-
-                
-
-  
-                </View>
-              </>
-            )}
-          </Pressable>
-        </Pressable>
-      </Modal>
+      <ItemTooltipModal
+        visible={buildItemTooltip.isVisible}
+        onClose={buildItemTooltip.close}
+        item={buildItemTooltip.item}
+        itemName={buildItemTooltip.itemName}
+        presentation={buildItemTooltip.presentation}
+        anchor={buildItemTooltip.anchor}
+        onCardHoverIn={buildItemTooltip.cancelHide}
+        onCardHoverOut={buildItemTooltip.scheduleHide}
+        maxHeightRatio={0.65}
+      />
 
       {/* Ability Tooltip Modal */}
       <KitAbilityTooltipModal
-        visible={buildsAbilityTooltip !== null}
-        onClose={() => setSelectedAbility(null)}
+        visible={buildAbilityTooltip.isVisible}
+        onClose={buildAbilityTooltip.close}
         title={buildsAbilityTooltip?.title ?? ''}
         icon={buildsAbilityTooltip?.icon}
         body={buildsAbilityTooltip?.body ?? ''}
+        ability={buildsAbilityTooltip?.ability}
+        god={buildsAbilityTooltip?.god}
+        isAspect={buildsAbilityTooltip?.isAspect}
+        subtitle={buildsAbilityTooltip?.subtitle ?? ''}
         valueKeys={buildsAbilityTooltip?.valueKeys}
         borderColor={buildsAbilityTooltip?.borderColor}
         levelIndex={buildsAbilityTooltip?.levelIndex ?? 0}
         iconContentFit={buildsAbilityTooltip?.iconContentFit ?? 'cover'}
-        onLevelIndexChange={(levelIndex) =>
-          setSelectedAbility((prev) => (prev ? { ...prev, levelIndex } : null))
-        }
+        presentation={buildAbilityTooltip.presentation}
+        anchor={buildAbilityTooltip.anchor}
+        isPinned={buildAbilityTooltip.isPinned}
+        onPin={buildAbilityTooltip.pin}
+        onCardHoverIn={buildAbilityTooltip.cancelHide}
+        onCardHoverOut={buildAbilityTooltip.scheduleHide}
+        buildUsesTalent={buildsAbilityTooltip?.buildUsesTalent}
+        showTalentVariantTag={buildsAbilityTooltip?.showTalentVariantTag}
+        onLevelIndexChange={(levelIndex) => buildAbilityTooltip.setPayloadPatch({ levelIndex })}
       />
 
       {/* Tip Tooltip Modal */}
@@ -5186,7 +5187,7 @@ function BuildsPage({
                         }
                         Alert.alert('Error', 'Invalid username or password');
                       } else if (data && data.password_hash === passwordHash) {
-                        await storage.setItem('currentUser', loginUsername.trim());
+                        await finalizeAppLogin(loginUsername.trim(), loginPassword, storage);
                         setCurrentUser(loginUsername.trim());
                         setShowLoginModal(false);
                         setLoginUsername('');
@@ -5254,6 +5255,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 40,
   },
+  inlineLoadingRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+    paddingVertical: 16,
+  },
   loadingText: {
     color: '#94a3b8',
     marginTop: 12,
@@ -5265,7 +5273,7 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 36,
     ...(IS_WEB && {
-      maxWidth: 1200,
+      maxWidth: WEB_CONTENT_MAX_WIDTH,
       alignSelf: 'center',
       width: '100%',
       paddingHorizontal: 20,
@@ -5274,6 +5282,24 @@ const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
     marginBottom: 12,
+  },
+  headerDesktopCompact: {
+    marginBottom: 6,
+    paddingTop: 4,
+  },
+  headerContextTitle: {
+    color: '#f8fafc',
+    fontSize: 20,
+    fontWeight: '800',
+    letterSpacing: 0.5,
+  },
+  headerSubCompact: {
+    color: '#94a3b8',
+    marginTop: 4,
+    fontSize: 13,
+    textAlign: 'center',
+    paddingHorizontal: 16,
+    lineHeight: 18,
   },
   logo: {
     color: '#f8fafc',
@@ -5294,13 +5320,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   tabButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 20,
+    paddingVertical: 6,
+    paddingHorizontal: 14,
     borderRadius: 6,
     backgroundColor: '#0b1226',
     borderWidth: 1,
     borderColor: '#1e3a5f',
-    minWidth: 80,
+    minWidth: 72,
   },
   tabButtonActive: {
     backgroundColor: '#1e90ff',
@@ -5308,7 +5334,7 @@ const styles = StyleSheet.create({
   },
   tabButtonText: {
     color: '#94a3b8',
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '600',
     textAlign: 'center',
   },
@@ -5324,6 +5350,11 @@ const styles = StyleSheet.create({
     gap: 8,
     justifyContent: 'center',
     flexWrap: 'wrap',
+  },
+  buildsHubRowDesktop: {
+    marginTop: 0,
+    marginBottom: 8,
+    paddingHorizontal: 16,
   },
   guidesContainer: {
     flex: 1,
@@ -5488,57 +5519,112 @@ const styles = StyleSheet.create({
   search: {
     backgroundColor: '#06202f',
     color: '#e6eef8',
-    padding: 10,
+    padding: 8,
     borderRadius: 8,
-    marginBottom: 8,
+    marginBottom: 6,
+    fontSize: 13,
+  },
+  searchCompact: {
+    padding: 6,
+    marginBottom: 4,
+    fontSize: 12,
+  },
+  buildsFilterScroll: {
+    marginBottom: 6,
+    flexGrow: 0,
+  },
+  buildsFilterScrollContent: {
+    alignItems: 'stretch',
+  },
+  buildsFilterToolbar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    width: '100%',
+    paddingRight: 4,
+  },
+  buildsFilterToolbarCompact: {
+    gap: 4,
+  },
+  buildCategorySegment: {
+    flexDirection: 'row',
+    flexShrink: 1,
+    backgroundColor: '#06202f',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    padding: 2,
+    gap: 2,
+    minWidth: 0,
+  },
+  buildCategorySegmentCompact: {
+    borderRadius: 6,
+    padding: 1,
+    gap: 1,
+    flexShrink: 1,
+    maxWidth: '40%',
+  },
+  buildsFilterDropdowns: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    minWidth: 0,
+    flexShrink: 0,
+  },
+  buildsFilterDropdownsCompact: {
+    gap: 3,
+    flex: 1.55,
+    minWidth: 0,
   },
   filterButtonsRow: {
     flexDirection: 'row',
     gap: 4,
     marginBottom: 6,
-    flexWrap: 'wrap',
+    flexWrap: 'nowrap',
   },
   filterButtonContainer: {
     position: 'relative',
     zIndex: 10,
     flex: 1,
-    minWidth: 68,
-    maxWidth: '48%',
+    minWidth: 0,
   },
-  filterButtonContainerRole: {
-    minWidth: 128,
-    flexGrow: 1.15,
-    maxWidth: 178,
-    zIndex: 11,
+  filterButtonContainerCompact: {
+    flex: 1,
+    minWidth: 56,
   },
-  filterButtonRole: {
-    minWidth: 118,
-    paddingHorizontal: 6,
+  filterButtonContainerRoleCompact: {
+    flex: 0.95,
+    minWidth: 52,
   },
-  filterButtonTextRole: {
-    flex: 0,
-    flexGrow: 0,
-    flexShrink: 0,
+  filterButtonContainerGodCompact: {
+    flex: 1.15,
+    minWidth: 64,
   },
-  filterDropdownRole: {
-    minWidth: 148,
-    alignSelf: 'stretch',
-  },
-  filterOptionTextRole: {
-    flexShrink: 0,
+  filterButtonContainerModesCompact: {
+    flex: 0.9,
+    minWidth: 50,
   },
   filterButton: {
     backgroundColor: '#06202f',
-    paddingHorizontal: 6,
-    paddingVertical: 6,
+    paddingHorizontal: 5,
+    paddingVertical: 4,
     borderRadius: 6,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     borderWidth: 1,
     borderColor: '#1e3a5f',
-    minWidth: 68,
+    minWidth: 0,
     position: 'relative',
+    gap: 2,
+  },
+  filterButtonCompact: {
+    paddingHorizontal: 4,
+    paddingVertical: 2,
+    borderRadius: 4,
+    gap: 1,
+    minHeight: 24,
   },
   filterButtonActive: {
     backgroundColor: '#1e90ff',
@@ -5546,19 +5632,25 @@ const styles = StyleSheet.create({
   },
   filterButtonText: {
     color: '#e6eef8',
-    fontSize: 10,
+    fontSize: 9,
     fontWeight: '600',
-    textAlign: 'center',
+    textAlign: 'left',
     flex: 1,
     flexShrink: 1,
   },
-  filterButtonIcon: {
-    color: '#e6eef8',
+  filterButtonTextCompact: {
     fontSize: 8,
-    width: 9,
-    textAlign: 'right',
-    marginLeft: 3,
+    letterSpacing: 0,
+  },
+  filterButtonIcon: {
+    color: '#94a3b8',
+    fontSize: 7,
     flexShrink: 0,
+    marginLeft: 1,
+  },
+  filterButtonIconCompact: {
+    fontSize: 6,
+    marginLeft: 0,
   },
   filterDropdown: {
     position: 'absolute',
@@ -5571,12 +5663,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#1e3a5f',
     maxHeight: 176,
+    minWidth: 108,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8,
     zIndex: 1000,
+  },
+  filterDropdownCompact: {
+    minWidth: 118,
   },
   filterDropdownScroll: {
     maxHeight: 176,
@@ -5608,37 +5704,50 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   buildCategoryButton: {
-    flex: 1,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 10,
-    backgroundColor: '#06202f',
-    borderWidth: 2,
-    borderColor: '#1e3a5f',
+    paddingVertical: 5,
+    paddingHorizontal: 8,
+    borderRadius: 6,
+    backgroundColor: 'transparent',
+    borderWidth: 0,
     alignItems: 'center',
     justifyContent: 'center',
     minWidth: 0,
   },
+  buildCategoryButtonCompact: {
+    paddingVertical: 2,
+    paddingHorizontal: 3,
+    borderRadius: 4,
+  },
   buildCategoryButtonActive: {
     backgroundColor: '#1e90ff',
     borderColor: '#1e90ff',
-    shadowColor: '#1e90ff',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 5,
+    shadowColor: 'transparent',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0,
+    shadowRadius: 0,
+    elevation: 0,
   },
   buildCategoryText: {
     color: '#94a3b8',
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 10,
+    fontWeight: '700',
     textAlign: 'center',
-    letterSpacing: 0.5,
+    letterSpacing: 0.3,
+    textTransform: 'uppercase',
+  },
+  buildCategoryTextCompact: {
+    fontSize: 6,
+    letterSpacing: 0,
+    fontWeight: '600',
   },
   buildCategoryTextActive: {
     color: '#ffffff',
     fontWeight: '700',
-    fontSize: 15,
+    fontSize: 10,
+  },
+  buildCategoryTextActiveCompact: {
+    fontSize: 6,
+    fontWeight: '700',
   },
   categorySubtitle: {
     color: '#94a3b8',
@@ -6331,34 +6440,42 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: '#0b1226',
-    borderRadius: 12,
-    padding: 20,
+    borderRadius: 10,
+    padding: 14,
     width: '100%',
-    maxWidth: 400,
-    maxHeight: '80%',
+    maxWidth: 320,
+    maxHeight: '65%',
+    flexDirection: 'column',
+    overflow: 'hidden',
     borderWidth: 1,
     borderColor: '#1e3a5f',
   },
   modalHeader: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
-    paddingBottom: 12,
+    alignItems: 'flex-start',
+    marginBottom: 10,
+    paddingBottom: 8,
     borderBottomWidth: 1,
     borderBottomColor: '#1e3a5f',
   },
+  modalTitleWrap: {
+    flex: 1,
+    minWidth: 0,
+    marginRight: 8,
+  },
   modalIconContainer: {
     marginRight: 12,
+    marginTop: 2,
   },
   modalAbilityIcon: {
-    width: 56,
-    height: 56,
-    borderRadius: 8,
+    width: 44,
+    height: 44,
+    borderRadius: 6,
   },
   modalAbilityIconFallback: {
-    width: 56,
-    height: 56,
-    borderRadius: 8,
+    width: 44,
+    height: 44,
+    borderRadius: 6,
     backgroundColor: '#0f1724',
     alignItems: 'center',
     justifyContent: 'center',
@@ -6366,13 +6483,13 @@ const styles = StyleSheet.create({
   modalAbilityIconFallbackText: {
     color: '#e6eef8',
     fontWeight: '700',
-    fontSize: 24,
+    fontSize: 18,
   },
   modalTitle: {
-    flex: 1,
     color: '#e6eef8',
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: '700',
+    marginBottom: 0,
   },
   // Login Modal Title (matching profile.jsx)
   loginModalTitle: {
@@ -6397,10 +6514,15 @@ const styles = StyleSheet.create({
     lineHeight: 28,
   },
   modalBody: {
-    maxHeight: 500,
+    flexGrow: 1,
+    flexShrink: 1,
+    minHeight: 0,
   },
   modalBodyContent: {
-    paddingBottom: 20,
+    paddingBottom: 8,
+  },
+  modalCostFooter: {
+    flexShrink: 0,
   },
   modalSection: {
     marginBottom: 16,
@@ -7028,10 +7150,11 @@ const styles = StyleSheet.create({
 export default function App() {
   // Use responsive screen dimensions
   const screenDimensions = useScreenDimensions();
+  const { isWebDesktop } = useWebLayout();
   
-  // Web-only effects - hide scrollbars and disable dev tools
+  // Web-only: hide scrollbars on mobile-width web; desktop uses injectWebGlobalStyles thin scrollbars
   useEffect(() => {
-    if (IS_WEB && typeof document !== 'undefined') {
+    if (IS_WEB && typeof document !== 'undefined' && !isWebDesktop) {
       const style = document.createElement('style');
       style.textContent = `
         * {
@@ -7049,7 +7172,7 @@ export default function App() {
         }
       };
     }
-  }, []);
+  }, [isWebDesktop]);
 
   // Optionally disable browser inspection on web (toggled via EXPO_PUBLIC_WEB_INSPECT_LOCK)
   useEffect(() => {
@@ -7219,6 +7342,33 @@ export default function App() {
     storage.getItem(STORAGE_KEYS.CURRENT_USER).then((u) => setCurrentUser(u || null));
   }, []);
 
+  // Warm builds chunks when user leaves Home — not on cold start.
+  useEffect(() => {
+    if (currentPage === 'homepage') return;
+    if (currentPage === 'builds' || currentPage === 'custombuild') {
+      preloadBuildsGodsData();
+    }
+    if (currentPage === 'custombuild') {
+      preloadBuildsItemsData();
+    }
+    if (currentPage === 'data') {
+      preloadBuildsGodsData();
+      preloadBuildsItemsData();
+    }
+  }, [currentPage]);
+
+  // Preload heavy lazy chunks while user is on Builds (dev: avoids 400ms+ wait on first open).
+  useEffect(() => {
+    if (currentPage !== 'builds' && currentPage !== 'custombuild') return;
+    import('./_screens/custombuild').catch(() => {});
+    if (buildsSubTab === 'mybuilds') {
+      import('./_screens/mybuilds').catch(() => {});
+    }
+    if (buildsSubTab === 'guides') {
+      import('../lib/guidesPage').catch(() => {});
+    }
+  }, [currentPage, buildsSubTab]);
+
   if (currentPage === 'smitewars') {
     return (
       <View style={navStyles.outerContainer}>
@@ -7235,361 +7385,60 @@ export default function App() {
     );
   }
 
- 
+  const pageSuspenseFallback = (
+    <View style={navStyles.pageLoading}>
+      <ActivityIndicator size="large" color="#1e90ff" />
+    </View>
+  );
 
-  return (
-    <View style={navStyles.outerContainer}>
-      <ScrollView 
-        style={navStyles.outerScrollView}
-        contentContainerStyle={navStyles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={navStyles.container}>
-          <View style={navStyles.navBar}>
-        <TouchableOpacity
-          style={[navStyles.navButton, currentPage === 'data' && navStyles.navButtonActive]}
-          onPress={() => {
-            setCurrentPage('data');
-            // Force remount of DataPage by changing key
-            if (currentPage !== 'data') {
-              setDataPageKey(prev => prev + 1);
-            }
-          }}
-        >
-          <Text style={[navStyles.navButtonText, currentPage === 'data' && navStyles.navButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit>
-            📚 Database
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[navStyles.navButton, currentPage === 'builds' && navStyles.navButtonActive]}
-          onPress={() => {
-            startTransition(() => {
-              setCurrentPage('builds');
-            });
-          }}
-        >
-          <Text style={[navStyles.navButtonText, currentPage === 'builds' && navStyles.navButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit>
-            🛠️ Builds
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[navStyles.navButton, currentPage === 'homepage' && navStyles.navButtonActive]}
-          onPress={() => {
-            startTransition(() => {
-              setCurrentPage('homepage');
-            });
-          }}
-        >
-          <Text style={[navStyles.navButtonText, currentPage === 'homepage' && navStyles.navButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit>
-            🏠 Home
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[navStyles.navButton, currentPage === 'patchhub' && navStyles.navButtonActive]}
-          onPress={() => {
-            startTransition(() => {
-              setCurrentPage('patchhub');
-            });
-          }}
-        >
-          <Text style={[navStyles.navButtonText, currentPage === 'patchhub' && navStyles.navButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit>
-            📰 Patch Hub
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[navStyles.navButton, currentPage === 'more' && navStyles.navButtonActive]}
-          onPress={() => {
-            startTransition(() => {
-              setCurrentPage('more');
-            });
-          }}
-        >
-          <Text style={[navStyles.navButtonText, currentPage === 'more' && navStyles.navButtonTextActive]} numberOfLines={1} adjustsFontSizeToFit>
-            🎮 More
-          </Text>
-        </TouchableOpacity>
-      </View>
-      
-      {/* Sub-navigation bars */}
-      {currentPage === 'data' && (
-        <View style={navStyles.subNavBar}>
-          <TouchableOpacity
-            style={[navStyles.subNavButton, databaseSubTab === 'gods' && navStyles.subNavButtonActive]}
-            onPress={() => {
-              setCurrentPage('data');
-              setDatabaseSubTab('gods');
-            }}
-          >
-            <Text style={[navStyles.subNavButtonText, databaseSubTab === 'gods' && navStyles.subNavButtonTextActive]}>
-              Gods
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[navStyles.subNavButton, databaseSubTab === 'items' && navStyles.subNavButtonActive]}
-            onPress={() => {
-              startTransition(() => {
-                setCurrentPage('data');
-                setDatabaseSubTab('items');
-              });
-            }}
-          >
-            <Text style={[navStyles.subNavButtonText, databaseSubTab === 'items' && navStyles.subNavButtonTextActive]}>
-              Items
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[navStyles.subNavButton, databaseSubTab === 'gamemodes' && navStyles.subNavButtonActive]}
-            onPress={() => {
-              startTransition(() => {
-                setCurrentPage('data');
-                setDatabaseSubTab('gamemodes');
-              });
-            }}
-          >
-            <Text style={[navStyles.subNavButtonText, databaseSubTab === 'gamemodes' && navStyles.subNavButtonTextActive]}>
-              Game Modes
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[navStyles.subNavButton, databaseSubTab === 'mechanics' && navStyles.subNavButtonActive]}
-            onPress={() => {
-              startTransition(() => {
-                setCurrentPage('data');
-                setDatabaseSubTab('mechanics');
-              });
-            }}
-          >
-            <Text style={[navStyles.subNavButtonText, databaseSubTab === 'mechanics' && navStyles.subNavButtonTextActive]}>
-              Mechanics
-            </Text>
-          </TouchableOpacity>
-        </View>
-      )}
-      
-      {(currentPage === 'builds' || currentPage === 'custombuild') && (
-        <View style={navStyles.subNavBar}>
-          <TouchableOpacity
-            style={[
-              navStyles.subNavButton, 
-              (buildsSubTab === 'featured' || buildsSubTab === 'contributors' || buildsSubTab === 'community') && navStyles.subNavButtonActive
-            ]}
-            onPress={() => {
-              startTransition(() => {
-                setBuildsHubMode('browse');
-                setBuildsSubTab('featured');
-                setCurrentPage('builds');
-              });
-            }}
-          >
-            <Text style={[
-              navStyles.subNavButtonText, 
-              (buildsSubTab === 'featured' || buildsSubTab === 'contributors' || buildsSubTab === 'community') && navStyles.subNavButtonTextActive
-            ]}>
-              Builds
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[navStyles.subNavButton, (buildsSubTab === 'custom' || currentPage === 'custombuild') && navStyles.subNavButtonActive]}
-            onPress={() => {
-              startTransition(() => {
-                setBuildsHubMode('browse');
-                setBuildsSubTab('custom');
-                setCurrentPage('custombuild');
-              });
-            }}
-          >
-            <Text style={[navStyles.subNavButtonText, (buildsSubTab === 'custom' || currentPage === 'custombuild') && navStyles.subNavButtonTextActive]}>
-              Custom Builder
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[navStyles.subNavButton, buildsSubTab === 'randomizer' && navStyles.subNavButtonActive]}
-            onPress={() => {
-              startTransition(() => {
-                setBuildsHubMode('browse');
-                setBuildsSubTab('randomizer');
-                setCurrentPage('builds');
-              });
-            }}
-          >
-            <Text style={[navStyles.subNavButtonText, buildsSubTab === 'randomizer' && navStyles.subNavButtonTextActive]}>
-              Randomizer
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[navStyles.subNavButton, buildsSubTab === 'mybuilds' && navStyles.subNavButtonActive]}
-            onPress={() => {
-              startTransition(() => {
-                setBuildsHubMode('browse');
-                setBuildsSubTab('mybuilds');
-                setCurrentPage('builds');
-              });
-            }}
-          >
-            <Text style={[navStyles.subNavButtonText, buildsSubTab === 'mybuilds' && navStyles.subNavButtonTextActive]}>
-              My Builds
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[navStyles.subNavButton, buildsSubTab === 'guides' && navStyles.subNavButtonActive]}
-            onPress={() => {
-              startTransition(() => {
-                setBuildsHubMode('browse');
-                setBuildsSubTab('guides');
-                setCurrentPage('builds');
-              });
-            }}
-          >
-            <Text style={[navStyles.subNavButtonText, buildsSubTab === 'guides' && navStyles.subNavButtonTextActive]}>
-              Guides
-            </Text>
-          </TouchableOpacity>
-        </View>
-      )}
-      
-      {currentPage === 'patchhub' && (
-        <View style={navStyles.subNavBar}>
-          <TouchableOpacity
-            style={[navStyles.subNavButton, patchHubSubTab === 'simple' && navStyles.subNavButtonActive]}
-            onPress={() => {
-              startTransition(() => {
-                setPatchHubSubTab('simple');
-              });
-            }}
-          >
-            <Text style={[navStyles.subNavButtonText, patchHubSubTab === 'simple' && navStyles.subNavButtonTextActive]}>
-              Simple Summary
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[navStyles.subNavButton, patchHubSubTab === 'catchup' && navStyles.subNavButtonActive]}
-            onPress={() => {
-              startTransition(() => {
-                setPatchHubSubTab('catchup');
-              });
-            }}
-          >
-            <Text style={[navStyles.subNavButtonText, patchHubSubTab === 'catchup' && navStyles.subNavButtonTextActive]}>
-              Catch Me Up
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[navStyles.subNavButton, patchHubSubTab === 'archive' && navStyles.subNavButtonActive]}
-            onPress={() => {
-              startTransition(() => {
-                setPatchHubSubTab('archive');
-              });
-            }}
-          >
-            <Text style={[navStyles.subNavButtonText, patchHubSubTab === 'archive' && navStyles.subNavButtonTextActive]}>
-              Archive
-            </Text>
-          </TouchableOpacity>
-        </View>
-      )}
-
-      {currentPage === 'more' && (
-        <View style={navStyles.subNavBar}>
-          <TouchableOpacity
-            style={[navStyles.subNavButton, moreSubTab === 'minigames' && navStyles.subNavButtonActive]}
-            onPress={() => {
-              startTransition(() => {
-                setMoreSubTab('minigames');
-              });
-            }}
-          >
-            <Text style={[navStyles.subNavButtonText, moreSubTab === 'minigames' && navStyles.subNavButtonTextActive]}>
-              Mini Games
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[navStyles.subNavButton, moreSubTab === 'profile' && navStyles.subNavButtonActive]}
-            onPress={() => {
-              startTransition(() => {
-                setMoreSubTab('profile');
-              });
-            }}
-          >
-            <Text style={[navStyles.subNavButtonText, moreSubTab === 'profile' && navStyles.subNavButtonTextActive]}>
-              Profile
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[navStyles.subNavButton, moreSubTab === 'shop' && navStyles.subNavButtonActive]}
-            onPress={() => {
-              startTransition(() => {
-                setMoreSubTab('shop');
-              });
-            }}
-          >
-            <Text style={[navStyles.subNavButtonText, moreSubTab === 'shop' && navStyles.subNavButtonTextActive]}>
-              Shop
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[navStyles.subNavButton, moreSubTab === 'tools' && navStyles.subNavButtonActive]}
-            onPress={() => {
-              startTransition(() => {
-                setMoreSubTab('tools');
-              });
-            }}
-          >
-            <Text style={[navStyles.subNavButtonText, moreSubTab === 'tools' && navStyles.subNavButtonTextActive]}>
-              Tools
-            </Text>
-          </TouchableOpacity>
-        </View>
-      )}
-
-      {/* Home page */}
+  const appPages = (
+    <>
       {currentPage === 'homepage' && (
-        <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
-          <HomePage 
+        <Suspense fallback={pageSuspenseFallback}>
+          <HomePage
             setCurrentPage={setCurrentPage}
             setPatchHubSubTab={setPatchHubSubTab}
           />
         </Suspense>
       )}
-      
-      {/* Database page - show based on sub-tab */}
+
       {currentPage === 'data' && (
-        <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
-          <DataPage 
+        <Suspense fallback={pageSuspenseFallback}>
+          <DataPage
             key="data-page"
-            initialSelectedGod={godFromBuilds} 
+            initialSelectedGod={godFromBuilds}
             initialExpandAbilities={expandAbilities}
             initialTab={databaseSubTab}
-            onBackToBuilds={() => { 
-              setGodFromBuilds(null); 
+            onBackToBuilds={() => {
+              setGodFromBuilds(null);
               setExpandAbilities(false);
               setCurrentPage('builds');
-            }} 
+            }}
           />
         </Suspense>
       )}
-      
-      {/* Builds pages - handle different sub-tabs */}
+
       {currentPage === 'builds' && (buildsSubTab === 'featured' || buildsSubTab === 'contributors' || buildsSubTab === 'community' || buildsSubTab === 'randomizer') && (
         <View style={navStyles.pageVisible} pointerEvents={currentPage === 'builds' ? 'auto' : 'none'}>
-          <BuildsPage 
+          <BuildsPage
             key={`builds-page-${buildsSubTab}`}
             initialTab={buildsSubTab === 'randomizer' ? 'randomizer' : 'builds'}
             hideInternalTabs={true}
             hubMode={buildsHubMode}
             onHubModeChange={setBuildsHubMode}
             initialBuildCategory={buildsSubTab === 'featured' ? 'featured' : buildsSubTab === 'contributors' ? 'contributors' : buildsSubTab === 'community' ? 'community' : 'featured'}
-            onGodIconPress={(god, shouldExpandAbilities = false) => { 
-              setGodFromBuilds(god); 
+            onGodIconPress={(god, shouldExpandAbilities = false) => {
+              setGodFromBuilds(god);
               setExpandAbilities(shouldExpandAbilities);
               setCurrentPage('data');
               setDatabaseSubTab('gods');
-              setDataPageKey(prev => prev + 1);
+              setDataPageKey((prev) => prev + 1);
             }}
             onNavigateToGod={(god) => {
               setGodFromBuilds(god);
               setCurrentPage('data');
               setDatabaseSubTab('gods');
-              setDataPageKey(prev => prev + 1);
+              setDataPageKey((prev) => prev + 1);
             }}
             onNavigateToCustomBuild={() => {
               setCurrentPage('custombuild');
@@ -7603,10 +7452,10 @@ export default function App() {
           />
         </View>
       )}
-      
+
       {currentPage === 'builds' && buildsSubTab === 'mybuilds' && (
-        <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
-          <MyBuildsPage 
+        <Suspense fallback={pageSuspenseFallback}>
+          <MyBuildsPage
             key={`mybuilds-${mybuildsRefreshKey}`}
             onEditBuild={(build) => {
               setCurrentPage('custombuild');
@@ -7616,13 +7465,11 @@ export default function App() {
           />
         </Suspense>
       )}
-      
+
       {currentPage === 'builds' && buildsSubTab === 'guides' && (
         <View style={navStyles.pageVisible} pointerEvents="auto">
           <Suspense
-            fallback={
-              <ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />
-            }
+            fallback={pageSuspenseFallback}
           >
             <GuidesPage
               currentUsername={currentUser || ''}
@@ -7635,22 +7482,21 @@ export default function App() {
           </Suspense>
         </View>
       )}
-      
-      {/* Custom Build page */}
+
       {(currentPage === 'custombuild' || (currentPage === 'builds' && buildsSubTab === 'custom')) && (
         <View style={navStyles.pageVisible} pointerEvents={(currentPage === 'custombuild' || (currentPage === 'builds' && buildsSubTab === 'custom')) ? 'auto' : 'none'}>
-          <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
-            <CustomBuildPage 
+          <Suspense fallback={pageSuspenseFallback}>
+            <CustomBuildPage
               onNavigateToGod={(god) => {
                 setGodFromBuilds(god);
                 setCurrentPage('data');
                 setDatabaseSubTab('gods');
-                setDataPageKey(prev => prev + 1);
+                setDataPageKey((prev) => prev + 1);
               }}
               buildToEdit={buildToEdit}
               onEditComplete={() => {
                 setBuildToEdit(null);
-                setMybuildsRefreshKey(k => k + 1);
+                setMybuildsRefreshKey((k) => k + 1);
                 setBuildsSubTab('mybuilds');
                 setCurrentPage('builds');
               }}
@@ -7658,18 +7504,16 @@ export default function App() {
           </Suspense>
         </View>
       )}
-      
-      {/* Patch Hub page */}
+
       {currentPage === 'patchhub' && (
-        <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
+        <Suspense fallback={pageSuspenseFallback}>
           <PatchHubPage subTab={patchHubSubTab} />
         </Suspense>
       )}
-      
-      {/* More page */}
+
       {currentPage === 'more' && (
-        <Suspense fallback={<ActivityIndicator size="large" color="#1e90ff" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} />}>
-          <MorePage 
+        <Suspense fallback={pageSuspenseFallback}>
+          <MorePage
             activeTab={moreSubTab}
             currentUsername={currentUser}
             viewUsername={viewingUserProfile}
@@ -7680,63 +7524,93 @@ export default function App() {
               setViewingUserProfile(null);
             }}
             onNavigateToBuilds={(godInternalName) => {
-              // Navigate to builds page
               setCurrentPage('builds');
               setBuildsSubTab('community');
-              
-              // If a god is specified, try to find and set it
+
               if (godInternalName) {
-                try {
-                  const buildsData = require('../lib/buildsData');
-                  if (buildsData && buildsData.gods) {
-                    const allGods = flattenBuildsGods(buildsData.gods);
-                    const god = allGods.find(g => (g.internalName || '').toLowerCase() === (godInternalName || '').toLowerCase());
-                    if (god) {
-                      setGodFromBuilds(god);
+                loadBuildsGodsData()
+                  .then((buildsData) => {
+                    if (buildsData?.gods) {
+                      const allGods = flattenBuildsGods(buildsData.gods);
+                      const god = allGods.find(
+                        (g) => (g.internalName || '').toLowerCase() === (godInternalName || '').toLowerCase()
+                      );
+                      if (god) setGodFromBuilds(god);
                     }
-                  }
-                } catch (err) {
-                  // If require fails, just navigate without setting god
-                }
+                  })
+                  .catch(() => {});
               }
             }}
             onNavigateToGod={(godInternalName) => {
-              // Find the god and navigate to database gods page
               if (godInternalName) {
-                try {
-                  const buildsData = require('../lib/buildsData');
-                  if (buildsData && buildsData.gods) {
-                    const allGods = flattenBuildsGods(buildsData.gods);
-                    const god = allGods.find(g => (g.internalName || '').toLowerCase() === (godInternalName || '').toLowerCase());
-                    if (god) {
-                      setGodFromBuilds(god);
-                      setCurrentPage('data');
-                      setDatabaseSubTab('gods');
+                loadBuildsGodsData()
+                  .then((buildsData) => {
+                    if (buildsData?.gods) {
+                      const allGods = flattenBuildsGods(buildsData.gods);
+                      const god = allGods.find(
+                        (g) => (g.internalName || '').toLowerCase() === (godInternalName || '').toLowerCase()
+                      );
+                      if (god) {
+                        setGodFromBuilds(god);
+                        setCurrentPage('data');
+                        setDatabaseSubTab('gods');
+                        return;
+                      }
                     }
-                  }
-                } catch (err) {
-                  // If require fails, just navigate without setting god
-                  setCurrentPage('data');
-                  setDatabaseSubTab('gods');
-                }
+                    setCurrentPage('data');
+                    setDatabaseSubTab('gods');
+                  })
+                  .catch(() => {
+                    setCurrentPage('data');
+                    setDatabaseSubTab('gods');
+                  });
               } else {
                 setCurrentPage('data');
                 setDatabaseSubTab('gods');
               }
             }}
-            onNavigateToCustomBuild={(build) => {
-              // Navigate to custom build page with the build data
+            onNavigateToCustomBuild={() => {
               setCurrentPage('custombuild');
               setBuildsSubTab('custom');
             }}
             onNavigateToMyBuilds={() => {
-              // Navigate to My Builds tab
               setCurrentPage('builds');
               setBuildsSubTab('mybuilds');
             }}
           />
         </Suspense>
       )}
+    </>
+  );
+
+  const mainNavProps = {
+    currentPage,
+    setCurrentPage,
+    databaseSubTab,
+    setDatabaseSubTab,
+    setDataPageKey,
+    buildsSubTab,
+    setBuildsSubTab,
+    buildsHubMode,
+    setBuildsHubMode,
+    patchHubSubTab,
+    setPatchHubSubTab,
+    moreSubTab,
+    setMoreSubTab,
+    startTransition,
+  };
+
+  return (
+    <View style={navStyles.outerContainer}>
+      {isWebDesktop && <AppMainNav isWebDesktop {...mainNavProps} />}
+      <ScrollView
+        style={navStyles.outerScrollView}
+        contentContainerStyle={navStyles.scrollContent}
+        showsVerticalScrollIndicator={isWebDesktop}
+      >
+        <View style={[navStyles.container, isWebDesktop && navStyles.containerDesktop]}>
+          {!isWebDesktop && <AppMainNav {...mainNavProps} />}
+          {appPages}
         </View>
       </ScrollView>
     </View>
@@ -7767,6 +7641,11 @@ const randomizerStyles = StyleSheet.create({
     alignSelf: 'center',
     width: '100%',
   },
+  randomizerBoardFrameWebCompact: {
+    maxWidth: 400,
+    width: '100%',
+    alignSelf: 'center',
+  },
   randomizerBoard: {
     gap: 10,
     alignItems: 'center',
@@ -7793,11 +7672,19 @@ const randomizerStyles = StyleSheet.create({
     width: 134,
     alignSelf: 'center',
   },
+  randomizerLeftPanelWebCompact: {
+    width: 280,
+    alignSelf: 'center',
+  },
   randomizerRightPanel: {
     width: 134,
     flexGrow: 0,
     flexShrink: 0,
     alignSelf: 'center',
+    alignItems: 'center',
+  },
+  randomizerRightPanelWebCompact: {
+    width: 280,
     alignItems: 'center',
   },
   randomizerGodAspectRow: {
@@ -7807,6 +7694,10 @@ const randomizerStyles = StyleSheet.create({
     gap: 6,
     marginBottom: 6,
     width: 134,
+  },
+  randomizerGodAspectRowWebCompact: {
+    width: 280,
+    gap: 12,
   },
   randomizerGodSlot: {
     width: 64,
@@ -7878,6 +7769,10 @@ const randomizerStyles = StyleSheet.create({
     gap: 6,
     marginBottom: 6,
   },
+  randomizerStarterRelicRowWebCompact: {
+    width: 280,
+    gap: 12,
+  },
   randomizerWideSlot: {
     width: 64,
     flexShrink: 0,
@@ -7938,6 +7833,11 @@ const randomizerStyles = StyleSheet.create({
     marginBottom: 6,
     alignContent: 'flex-start',
     justifyContent: 'space-between',
+  },
+  randomizerItemsGridWebCompact: {
+    width: 280,
+    gap: 12,
+    justifyContent: 'flex-start',
   },
   randomizerGridItemWrapper: {
     position: 'relative',
@@ -8133,7 +8033,7 @@ const randomizerStyles = StyleSheet.create({
     width: 18,
     height: 18,
     borderRadius: 9,
-    backgroundColor: '#1e90ff',
+    backgroundColor: '#0066cc',
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
@@ -8148,10 +8048,41 @@ const randomizerStyles = StyleSheet.create({
       },
     }),
   },
+  randomizerItemRandomizeButtonWeb: {
+    top: -7,
+    right: -7,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#7dd3fc',
+    backgroundColor: '#0066cc',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.35,
+    shadowRadius: 2,
+    elevation: 3,
+  },
+  randomizerItemRandomizeButtonDesktop: {
+    top: -8,
+    right: -8,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+  },
   randomizerItemRandomizeButtonText: {
     color: '#ffffff',
     fontSize: 8,
-    fontWeight: '700',
+    fontWeight: '800',
+    letterSpacing: 0.2,
+  },
+  randomizerItemRandomizeButtonTextWeb: {
+    fontSize: 10,
+    letterSpacing: 0.4,
+  },
+  randomizerItemRandomizeButtonTextDesktop: {
+    fontSize: 11,
+    letterSpacing: 0.5,
   },
   randomizerItemIcon: {
     width: '100%',
@@ -8519,6 +8450,183 @@ const randomizerStyles = StyleSheet.create({
     textAlign: 'center',
     letterSpacing: 1,
   },
+  // —— Web desktop (≥1024px): full-width board, readable labels ——
+  randomizerContentContainerDesktop: {
+    paddingHorizontal: 8,
+    paddingTop: 8,
+    paddingBottom: 16,
+    width: '100%',
+    maxWidth: '100%',
+  },
+  randomizerContainerDesktop: {
+    paddingVertical: 8,
+  },
+  randomizerSectionDesktop: {
+    alignItems: 'center',
+    padding: 16,
+    borderRadius: 12,
+  },
+  randomizerHeaderRowDesktop: {
+    width: '100%',
+    maxWidth: 1040,
+    alignSelf: 'center',
+    marginBottom: 12,
+  },
+  randomizerBoardFrameDesktop: {
+    width: '100%',
+    maxWidth: 1040,
+    alignSelf: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 12,
+  },
+  randomizerBoardDesktop: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    gap: 16,
+    flexWrap: 'nowrap',
+  },
+  randomizerLeftPanelDesktop: {
+    width: 216,
+    minWidth: 216,
+    maxWidth: 216,
+    flexShrink: 0,
+    flexGrow: 0,
+    alignSelf: 'flex-start',
+  },
+  randomizerGodAspectRowDesktop: {
+    width: 216,
+    maxWidth: 216,
+    gap: 10,
+    marginBottom: 10,
+  },
+  randomizerAspectCellDesktop: {
+    width: 96,
+    flexShrink: 0,
+  },
+  randomizerGodSlotDesktop: {
+    width: 96,
+  },
+  randomizerGodCardFilledDesktop: {
+    width: 96,
+    height: 96,
+    padding: 6,
+    borderRadius: 10,
+  },
+  randomizerGodIconLargeDesktop: {
+    width: 80,
+    height: 80,
+    borderRadius: 8,
+  },
+  randomizerGodNameDesktop: {
+    fontSize: 12,
+    lineHeight: 14,
+    width: 96,
+    marginTop: 4,
+  },
+  randomizerRightPanelDesktop: {
+    width: 360,
+    minWidth: 360,
+    maxWidth: 360,
+    flexShrink: 0,
+    flexGrow: 0,
+    alignSelf: 'flex-start',
+    alignItems: 'flex-start',
+  },
+  randomizerItemsGridDesktop: {
+    width: 360,
+    maxWidth: 360,
+    gap: 12,
+    rowGap: 12,
+    justifyContent: 'flex-start',
+    marginBottom: 0,
+  },
+  randomizerGridItemWrapperDesktop: {
+    width: 112,
+  },
+  randomizerGridItemSlotDesktop: {
+    width: 112,
+    height: 112,
+    borderRadius: 8,
+  },
+  randomizerGridItemIconDesktop: {
+    width: 88,
+    height: 88,
+    borderRadius: 6,
+  },
+  randomizerGridItemNameDesktop: {
+    fontSize: 11,
+    lineHeight: 13,
+    width: 112,
+    marginTop: 4,
+  },
+  randomizerSlotLabelDesktop: {
+    fontSize: 11,
+    marginBottom: 4,
+  },
+  randomizerStatsPanelDesktop: {
+    width: 400,
+    minWidth: 280,
+    maxWidth: 400,
+    marginTop: 0,
+    alignSelf: 'flex-start',
+    flexShrink: 0,
+    flexGrow: 0,
+  },
+  randomizerStatsGridDesktop: {
+    gap: 8,
+    paddingHorizontal: 10,
+  },
+  randomizerStatCellDesktop: {
+    width: '31%',
+  },
+  randomizerFooterActionsDesktop: {
+    width: '100%',
+    maxWidth: 1040,
+    alignSelf: 'center',
+    flexBasis: '100%',
+    marginTop: 8,
+    gap: 8,
+    justifyContent: 'center',
+  },
+  randomizerFooterBtnDesktop: {
+    flex: 0,
+    flexGrow: 0,
+    minWidth: 120,
+    maxWidth: 180,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+  },
+  randomizerFooterResetBtnDesktop: {
+    width: 30,
+    paddingVertical: 6,
+  },
+  randomizerStarterRelicRowDesktop: {
+    width: 216,
+    maxWidth: 216,
+    gap: 12,
+    marginBottom: 0,
+  },
+  randomizerWideSlotDesktop: {
+    width: 96,
+  },
+  randomizerWideItemSlotDesktop: {
+    width: 96,
+    height: 96,
+    borderRadius: 8,
+  },
+  randomizerWideItemIconDesktop: {
+    width: 80,
+    height: 80,
+  },
+  randomizerWideItemNameDesktop: {
+    fontSize: 11,
+    lineHeight: 13,
+    width: 96,
+    marginTop: 4,
+  },
 });
 
 const navStyles = StyleSheet.create({
@@ -8536,94 +8644,20 @@ const navStyles = StyleSheet.create({
     minHeight: '100%',
     backgroundColor: '#071024',
     ...(IS_WEB && {
-      maxWidth: 1200,
+      maxWidth: WEB_CONTENT_MAX_WIDTH,
       alignSelf: 'center',
       width: '100%',
     }),
   },
-  navBar: {
-    flexDirection: 'row',
-    backgroundColor: '#0b1226',
-    paddingTop: 40,
-    paddingBottom: 12,
-    paddingHorizontal: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: '#1e3a5f',
-    gap: 6,
+  containerDesktop: {
+    width: '100%',
   },
-  navButton: {
-    flex: 1,
-    paddingVertical: 8,
-    paddingHorizontal: 4,
-    borderRadius: 8,
-    backgroundColor: '#031320',
+  pageLoading: {
+    minHeight: 360,
+    paddingVertical: 80,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#06202f',
-    minWidth: 0,
-    ...(IS_WEB && {
-      cursor: 'pointer',
-      minHeight: 44,
-      transition: 'background-color 0.2s, border-color 0.2s',
-      userSelect: 'none',
-    }),
-  },
-  navButtonActive: {
-    backgroundColor: '#0066cc',
-    borderColor: '#0066cc',
-  },
-  navButtonText: {
-    color: '#cbd5e1',
-    fontSize: Platform.OS === 'web' ? 11 : 9,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  navButtonTextActive: {
-    color: '#ffffff',
-    fontWeight: '700',
-  },
-  subNavBar: {
-    flexDirection: 'row',
-    backgroundColor: '#0b1226',
-    paddingVertical: 8,
-    paddingHorizontal: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: '#1e3a5f',
-    gap: 4,
-  },
-  subNavButton: {
-    flex: 1,
-    paddingVertical: 6,
-    paddingHorizontal: 4,
-    borderRadius: 6,
-    backgroundColor: '#031320',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#06202f',
-    minWidth: 0,
-    flexBasis: 0,
-    ...(IS_WEB && {
-      cursor: 'pointer',
-      minHeight: 40,
-      transition: 'background-color 0.2s, border-color 0.2s',
-      userSelect: 'none',
-    }),
-  },
-  subNavButtonActive: {
-    backgroundColor: '#1e90ff',
-    borderColor: '#1e90ff',
-  },
-  subNavButtonText: {
-    color: '#94a3b8',
-    fontSize: Platform.OS === 'web' ? 10 : 8,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  subNavButtonTextActive: {
-    color: '#ffffff',
-    fontWeight: '700',
+    pointerEvents: 'none',
   },
   placeholderContainer: {
     flex: 1,

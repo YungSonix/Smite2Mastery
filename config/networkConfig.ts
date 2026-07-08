@@ -4,9 +4,9 @@ export const ENV_KEYS = {
 } as const;
 
 export const SUPABASE_CONFIG = {
-  FALLBACK_URL: 'https://ofewccajgulkurtpdyoj.supabase.co',
-  FALLBACK_ANON_KEY:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9mZXdjY2FqZ3Vsa3VydHBkeW9qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU0ODA0MzYsImV4cCI6MjA4MTA1NjQzNn0.iKxzUpSsvGhEwrFMBkhjcawZvKuAm-OJpdnKLZpL3a0',
+  /** Set via EXPO_PUBLIC_SUPABASE_URL at build time — never commit real URLs/keys here. */
+  FALLBACK_URL: '',
+  FALLBACK_ANON_KEY: '',
   MIN_URL_LENGTH: 10,
   MIN_KEY_LENGTH: 10,
 } as const;
@@ -32,7 +32,10 @@ export const FORM_ENDPOINTS = {
 } as const;
 
 export const ICON_PATHS = {
-  ITEM_ICONS: `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/app/data/Icons/Item%20Icons`,
+  /** Current item art — [Smite2Mastery `main/img/Item Icons`](https://github.com/YungSonix/Smite2Mastery/tree/main/img/Item%20Icons) */
+  ITEM_ICONS: `${REMOTE_BASE_URLS.GITHUB_RAW_MAIN_IMG}/Item%20Icons`,
+  /** Legacy uploads before `main/img` migration */
+  ITEM_ICONS_LEGACY: `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/app/data/Icons/Item%20Icons`,
   ITEM_ICONS_FILLED: `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/app/data/Icons/Item%20Icons%20Filled`,
   GOD_ICONS: `${REMOTE_BASE_URLS.GITHUB_RAW_MAIN_IMG}/God%20Info`,
   /** God aspect slot art — [Smite2Mastery `app/data/AspectIcons`](https://github.com/YungSonix/Smite2Mastery/tree/master/app/data/AspectIcons) */

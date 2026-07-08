@@ -14,6 +14,8 @@ import { COLORS } from '../../lib/themeColors';
 import { Image } from 'expo-image';
 import { getLocalGodAsset, getRemoteGodIconByName } from '../localIcons';
 
+import { WEB_CONTENT_MAX_WIDTH } from '../../lib/webLayout';
+
 const IS_WEB = Platform.OS === 'web';
 
 // Import Supabase with a safe fallback (same pattern as profile page)
@@ -57,6 +59,8 @@ try {
     }),
   };
 }
+
+const { ensureAppWriteSession } = require('../../lib/appAuth');
 
 // Try to import profile helpers so we can read the current username
 let profileHelpers = null;
@@ -231,6 +235,9 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
 
   const submitScore = async (guessesCount) => {
     if (!supabase || !currentUser) return;
+
+    const authSession = await ensureAppWriteSession(currentUser);
+    if (!authSession.ready) return;
 
     const slot = getDailySlot();
 
@@ -759,7 +766,7 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 40,
     ...(IS_WEB && {
-      maxWidth: 1200,
+      maxWidth: WEB_CONTENT_MAX_WIDTH,
       alignSelf: 'center',
       width: '100%',
     }),

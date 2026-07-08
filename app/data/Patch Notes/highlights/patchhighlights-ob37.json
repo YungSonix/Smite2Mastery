@@ -1,0 +1,100 @@
+{
+  "patchNumber": 37,
+  "patchLabel": "OB37",
+  "summaryLine": "Bastet joins the roster. Fire Lord Ne Zha and Moolan Mulan Wandering Market travelers. Strength components tuned; Plating and Dampening items reworked.",
+  "new": {
+    "gods": [
+      {
+        "name": "Bastet",
+        "note": "New Classic God",
+        "featuredImage": "ob37-bastet",
+        "title": "Bastet"
+      }
+    ],
+    "aspects": [
+      {
+        "god": "Bastet",
+        "name": "Aspect of the Watchful Pride",
+        "releaseDate": "June 19"
+      }
+    ],
+    "skins": [],
+    "wanderingMarket": [
+      {
+        "title": "Classic Traveler: Fire Lord Ne Zha",
+        "god": "Ne Zha",
+        "featuredImage": "ob37-nezha",
+        "premiumUnlocks": [
+          "Emerald Spear Prism",
+          "Cherry Blossom Prism",
+          "Cursed Flame Prism",
+          "Fire Lord Title",
+          "Battle Banners (Dawn of the Darkstar Empire Event)"
+        ]
+      },
+      {
+        "title": "Traveler: Moolan Hua Mulan",
+        "god": "Mulan",
+        "featuredImage": "ob37-mulan",
+        "premiumUnlocks": [
+          "Strawberry Prism",
+          "Chocolate Prism",
+          "Gold Ribbon Prism",
+          "Spilled Milk Jump Stamp",
+          "Battle Banners (Dawn of the Darkstar Empire Event)"
+        ]
+      }
+    ],
+    "events": [],
+    "items": []
+  },
+  "gods": {
+    "buffed": [
+      { "name": "Fenrir" },
+      { "name": "Horus", "note": "Aspect of the Falcon buffs" },
+      { "name": "Ratatoskr", "note": "Aspect of the Thickbark" }
+    ],
+    "nerfed": [
+      { "name": "Agni" },
+      { "name": "Anubis" },
+      { "name": "Horus", "note": "Base kit — Protector's Surge & To The Skies!" },
+      { "name": "Ishtar", "note": "Aspect of the Passionate Storm" },
+      { "name": "Morgan Le Fay", "note": "Aspect of the Cursed Crown" },
+      { "name": "Pele", "note": "Aspect of Obsidian" },
+      { "name": "Thor", "note": "Aspect of Thunderstruck" }
+    ],
+    "adjusted": [{ "name": "Atlas", "note": "Aspect of the Unburdened reenabled" }]
+  },
+  "items": {
+    "buffed": [],
+    "nerfed": [
+      { "name": "Axe" },
+      { "name": "Skeggox" },
+      { "name": "Lucerne Hammer" },
+      { "name": "Transcendence" },
+      { "name": "Book of Thoth" },
+      { "name": "Blinking Abyss" }
+    ],
+    "new": [],
+    "adjusted": [
+      { "name": "Breastplate of Valor" },
+      { "name": "Heartwood Charm" },
+      { "name": "Chandra's Grace" },
+      { "name": "Doublet Of Binding" },
+      { "name": "Kinetic Cuirass" },
+      { "name": "Leviathan's Hide" },
+      { "name": "Mantle Of Discord" },
+      { "name": "Pharaoh's Curse" },
+      { "name": "Phoenix Feather" },
+      { "name": "Shield of the Phoenix" },
+      { "name": "Shogun's Ofuda" },
+      { "name": "Spectral Armor" },
+      { "name": "Stone Of Binding" },
+      { "name": "Wyrmskin Hide" }
+    ]
+  },
+  "systems": [
+    { "title": "Conquest", "note": "Lane minion tower scaling after 25 min; Moonlight & Ancient Fury updates" },
+    { "title": "Assault", "note": "Lane minion tower scaling after 10 min; respawn timer starts at 12 min" }
+  ]
+}

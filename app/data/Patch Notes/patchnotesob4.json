@@ -1,0 +1,1613 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_4",
+    "title": "SMITE 2 Open Beta 4",
+    "infoboxTitle": "OB4 - SMITE 2 Open Beta 4",
+    "releaseDate": "February 24, 2025",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_3",
+      "next": "SMITE_2_Open_Beta_5"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 4,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Gods",
+      "anchor": "New_Gods",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Artemis (Live with the Update!)",
+          "anchor": "Artemis_(Live_with_the_Update!)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Deals Physical Damage"
+                    },
+                    {
+                      "text": "Strength Scaling"
+                    },
+                    {
+                      "text": "Ranged Basic Attacks"
+                    }
+                  ]
+                },
+                {
+                  "text": "Passive: Still Target",
+                  "bold": true,
+                  "lead": "- Artemis deals 15% increased Basic Attack Damage to gods and 30% to minions that are affected by Crowd Control",
+                  "items": [
+                    {
+                      "text": "New: Artemis is able to detect nearby enemy gods in stealth grass."
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability: Transgressor's Fate",
+                  "bold": true,
+                  "lead": "- Place a trap on the ground. Enemy gods that come in contact with it activate it, Rooting, Crippling, and repeatedly dealing Physical Damage over 3 seconds.",
+                  "items": [
+                    {
+                      "text": "New: Added motion to the enemy version of the trap to make them easier to see"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability: Vengeful Assault",
+                  "bold": true,
+                  "lead": "- Greatly increase your Movement Speed and Attack Speed.",
+                  "items": [
+                    {
+                      "text": "New: While the buff is active, gain a charge each time you hit an enemy god with a basic attack. After reaching 4 charges they are consumed, extending the duration of the buff by 3s."
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability: Suppress the Insolent",
+                  "bold": true,
+                  "detail": "- Fire a volley at the target area dealing Physical Damage and Slowing enemies."
+                },
+                {
+                  "text": "Ability: Calydonian Boar",
+                  "bold": true,
+                  "detail": "- Summon the great Calydonian Boar that charges the nearest enemy god."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Aspect: Aspect of the Wild"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "A01 (Transgressor’s Fate)",
+                  "items": [
+                    {
+                      "text": "Transgressor's Fate no longer roots or cripples gods but can now target minions. Triggered traps now also heal Artemis and deal damage to enemies in a larger area."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Awilix (Planned for Release March 3, 2025)",
+          "anchor": "Awilix_(Planned_for_Release_March_3,_2025)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Deals Physical Damage"
+                    },
+                    {
+                      "text": "Strength Scaling"
+                    },
+                    {
+                      "text": "Melee Basic Attacks"
+                    }
+                  ]
+                },
+                {
+                  "text": "Passive: Initiative",
+                  "bold": true,
+                  "lead": "- If you have not taken or dealt damage in the last 5 seconds, gain 30% increased Basic Attack Power and Strength for 4 seconds if you strike an enemy first.",
+                  "items": [
+                    {
+                      "text": "New: The duration of the buff is increased by 2s if triggered by Summon Suku leap."
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability: Summon Suku",
+                  "bold": true,
+                  "detail": "- Mount your Panther Suku, gaining movement speed by decreased strafe speed. You may Leap off of Suku to deal Physical damage in the target area."
+                },
+                {
+                  "text": "Ability: Feather Step",
+                  "bold": true,
+                  "detail": "- Flip over the last enemy you hit within 1.5 seconds, Rooting, Crippling, and dealing Physical Damage to them. The damage dealt is increased by 50% based on the next attack in your Basic Attack progression."
+                },
+                {
+                  "text": "Ability: Moonlight Charge",
+                  "bold": true,
+                  "lead": "- Suku comes to Awilix’s aid, rushing forward dealing Physical Damage to all enemies. If hit from the side or behind, enemies are also Knocked Up.",
+                  "items": [
+                    {
+                      "text": "New: Can now be fired while riding Suku."
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability: Gravity Surge",
+                  "bold": true,
+                  "lead": "- Pull the closest enemy god to you that is either Knocked Up or Leaping. The target god takes Physical Damage and is Stunned when they land.",
+                  "items": [
+                    {
+                      "text": "New: While the Gravity Surge buff is active, you now always gain the maximum benefit of Feather Step regardless of the next attack in your progression."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Cross-Gen and Classic Skins",
+      "anchor": "New_Cross-Gen_and_Classic_Skins",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Classic (purchasable for 100% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Foxy Amaterasu"
+                },
+                {
+                  "text": "Baron Frostchild Ymir"
+                },
+                {
+                  "text": "La Roca Hercules"
+                }
+              ]
+            },
+            {
+              "text": "Cross-Gen (purchasable for 50% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Summer Fun Medusa"
+                },
+                {
+                  "text": "Hellforged Thor"
+                },
+                {
+                  "text": "Lil Bites Sobek"
+                },
+                {
+                  "text": "Nano-Mancer Baron Samedi"
+                }
+              ]
+            },
+            {
+              "text": "Divine Legacy",
+              "items": [
+                {
+                  "text": "Boss Man Danzaburou"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "General",
+      "anchor": "General",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Updated various face models including Aphrodite, Achilles, and Phantom Seas Poseidon"
+            },
+            {
+              "text": "The Assault mode has been changed! Check out the details in the Gameplay section"
+            },
+            {
+              "text": "Thor has a new aspect! Aspect of Thunderstruck",
+              "items": [
+                {
+                  "text": "Thunderstruck is always active; triggering it 3 times on a god heals Thor, slowing and trembling them. Warrior’s Madness grants Protections instead of Strength. Mjolnir’s Attunement no longer deals bonus return damage, and Tectonic Rift has no damage scaling."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Two new chests are now available for Classic and Cross-Gen skins:",
+              "items": [
+                {
+                  "text": "Classic Skin Chest - Contains 8 Classic Skins"
+                },
+                {
+                  "text": "Chaos Chest - 15 dark, fiery, and supernatural skins!"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "UI",
+      "anchor": "UI",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "New Featured Store to showcase new skins released with each patch in one convenient location!"
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Scoreboard QOL that allows players to read each god’s abilities by selecting their portrait."
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "God Page multi ability display toggling has been added."
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Jump Stamps can now be seen on raised pedestals on the God Page"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Gameplay",
+      "anchor": "Gameplay",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Titan",
+              "items": [
+                {
+                  "text": "The Titan's Basic Attack cleave no longer hits Minotaurs"
+                },
+                {
+                  "text": "Reduced Damage Vs Minotaurs coefficient by 30%"
+                }
+              ]
+            },
+            {
+              "text": "Minotaurs",
+              "items": [
+                {
+                  "text": "Will now try to get close and use melee attacks against enemy Titans"
+                }
+              ]
+            },
+            {
+              "text": "Arena",
+              "items": [
+                {
+                  "text": "Primal (Blue) Buff now grants +5 MPS and +20 CDR in this mode"
+                }
+              ]
+            },
+            {
+              "text": "Assault",
+              "items": [
+                {
+                  "text": "NEW FEATURE - Team bench",
+                  "items": [
+                    {
+                      "text": "Whenever a player re-rolls, their previously owned god is placed onto a team bench"
+                    },
+                    {
+                      "text": "Teammates can freely swap their current god with a god on the bench",
+                      "items": [
+                        {
+                          "text": "You will not be able to swap to gods you do not own"
+                        },
+                        {
+                          "text": "You can, however, swap back to any gods you’ve rolled"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Reduced respawn timer multiplier from 3.0x to 2.5x XP Level"
+                },
+                {
+                  "text": "Pushed up the overtime penalty start time from 30min to 10min (adds +1sec to respawn timer per minute)"
+                }
+              ]
+            },
+            {
+              "text": "Jump Stamps no longer visible through fog of war"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Conquest",
+      "anchor": "Conquest",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Player Kill XP Rewards",
+              "items": [
+                {
+                  "text": "The base reward for a player kill has been increased from 50 to 130"
+                },
+                {
+                  "text": "The inferior multiplier has been increased from 0.1 to 0.2"
+                },
+                {
+                  "text": "The superior multiplier has been decreased from 0.25 to 0.2"
+                }
+              ]
+            },
+            {
+              "text": "Runic Bomb",
+              "items": [
+                {
+                  "text": "Players can now use the Runic Bomb to destroy the enemy’s base doors"
+                }
+              ]
+            },
+            {
+              "text": "Obsidian Dagger",
+              "items": [
+                {
+                  "text": "Increased the duration of the Damage buff from 6 to 9 seconds when used without reviving"
+                }
+              ]
+            },
+            {
+              "text": "Tower Bounties",
+              "items": [
+                {
+                  "text": "Removed from T2 Towers"
+                },
+                {
+                  "text": "Increased Gold Reward of the regular bounty from 15g to 30g"
+                },
+                {
+                  "text": "Increased Gold Reward of the final bounty from 30g to 60g"
+                }
+              ]
+            },
+            {
+              "text": "NEW - Minion Spawn Protection",
+              "items": [
+                {
+                  "text": "On spawn, minions have two stacks of Spawn Protection",
+                  "items": [
+                    {
+                      "text": "Each stack provides +25% damage reduction and +100% physical power"
+                    },
+                    {
+                      "text": "These stacks are represented as shield icons under their health bar"
+                    }
+                  ]
+                },
+                {
+                  "text": "When a minion passes through a friendly tower, one stack of Spawn Protection is removed"
+                },
+                {
+                  "text": "If a friendly tower in their lane is destroyed, they will spawn with one less stack of Spawn Protection",
+                  "items": [
+                    {
+                      "text": "Minions already spawned will also lose one stack"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Lane Minions",
+              "items": [
+                {
+                  "text": "Increased Damage Vs Towers",
+                  "items": [
+                    {
+                      "text": "Melee attack scaling coefficient Vs Towers from 0.4 to 0.8"
+                    },
+                    {
+                      "text": "Ranged attack scaling coefficient Vs Towers from 0.4 to 0.6"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Fire Minions",
+              "items": [
+                {
+                  "text": "Increased Damage Vs Minions",
+                  "items": [
+                    {
+                      "text": "Fire Melee attack scaling coefficient Vs Minions from 1.25 to 1.5"
+                    },
+                    {
+                      "text": "Fire Ranged attack scaling coefficient Vs Minions from 1.25 to 1.5"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "All Structures",
+              "items": [
+                {
+                  "text": "Reduced attack scaling coefficient Vs Minions from 1.0 to 0.6",
+                  "items": [
+                    {
+                      "text": "(This effectively makes regular minions able to tank 1 extra Tower shot on average)"
+                    }
+                  ]
+                },
+                {
+                  "text": "Reduced attack scaling coefficient Vs Siege Minotaurs from 1.0 to 0.7"
+                }
+              ]
+            },
+            {
+              "text": "T1 Tower",
+              "items": [
+                {
+                  "text": "Decreased Max Health from 2700 to 2500"
+                },
+                {
+                  "text": "Decreased Magical Protection from 125 to 100"
+                },
+                {
+                  "text": "Decreased Physical Power from 250 to 225"
+                },
+                {
+                  "text": "Decreased Penetration from 30% to 10%"
+                }
+              ]
+            },
+            {
+              "text": "T2 Tower",
+              "items": [
+                {
+                  "text": "Decreased Max Health from 3200 to 3000"
+                },
+                {
+                  "text": "Decreased Magical Protection from 135 to 120"
+                },
+                {
+                  "text": "Decreased Physical Power from 300 to 275"
+                },
+                {
+                  "text": "Decreased Penetration from 40% to 20%"
+                }
+              ]
+            },
+            {
+              "text": "Phoenix",
+              "items": [
+                {
+                  "text": "Increased Max Health from 3600 to 4000"
+                },
+                {
+                  "text": "Decreased Physical Protection from 150 to 50"
+                },
+                {
+                  "text": "Decreased Magical Protection from 150 to 30"
+                },
+                {
+                  "text": "Decreased Physical Power from 350 to 325"
+                },
+                {
+                  "text": "Decreased Penetration from 50% to 30%"
+                },
+                {
+                  "text": "Added a damage reduction effect when the Phoenix takes Basic Attack damage",
+                  "items": [
+                    {
+                      "text": "A single hit of damage from a Basic Attack (after mitigations) is reduced if the damage is greater than 2.5% of the Phoenix's Max Health"
+                    },
+                    {
+                      "text": "The reduction starts at 0% when the incoming damage is equal to 2.5%, and increases as incoming damage rises"
+                    }
+                  ]
+                },
+                {
+                  "text": "Decreased HPS from 8 to 4"
+                },
+                {
+                  "text": "On Respawn",
+                  "items": [
+                    {
+                      "text": "Increased initial Health on respawn from 20% to 50%"
+                    },
+                    {
+                      "text": "Removed the -50% Max Health penalty on respawn"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Gods",
+      "anchor": "Gods",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Sol Nerf",
+              "items": [
+                {
+                  "text": "Aspect of Conflagration",
+                  "items": [
+                    {
+                      "text": "Unstable Manifestation",
+                      "items": [
+                        {
+                          "text": "Decreased Ability Damage Increase from 7.5% to 6%"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Izanami Nerf",
+              "items": [
+                {
+                  "text": "Death Draws Nigh",
+                  "items": [
+                    {
+                      "text": "Decreased Physical Penetration per stack from 0.4 to 0.3 (decreased from 20% to 15% at max stacks)"
+                    }
+                  ]
+                },
+                {
+                  "text": "Fade Away",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown from 15s to 17/16.5/16/15.5/15s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Cupid Nerf",
+              "items": [
+                {
+                  "text": "Aspect of Love",
+                  "items": [
+                    {
+                      "text": "Heart Bomb",
+                      "items": [
+                        {
+                          "text": "Decreased STR Scaling on initial hit from 40% to 30%"
+                        },
+                        {
+                          "text": "Decreased STR Scaling on Explosion from 40% to 30%"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Ullr Nerf",
+              "items": [
+                {
+                  "text": "Expose Weakness (Invigorate)",
+                  "items": [
+                    {
+                      "text": "Decreased Buff Duration from 5s to 4s on both stances"
+                    },
+                    {
+                      "text": "Decreased Axe Stance Movement Speed buff from 10/12.5/15/17.5/20% to 8/10/12/14/16%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Aladdin Nerf",
+              "items": [
+                {
+                  "text": "Genie’s Lamp",
+                  "items": [
+                    {
+                      "text": "Decreased Base %Stats from other items from 2% to 1%"
+                    },
+                    {
+                      "text": "Decreased %Stats from other items per level from 0.5% to 0.4%",
+                      "items": [
+                        {
+                          "text": "Decreases total stats from other items on the lamp from 12% to 9% at lvl 20"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Hercules Nerf",
+              "items": [
+                {
+                  "text": "Driving Strike",
+                  "items": [
+                    {
+                      "text": "Decreased Base Damage from 90/160/230/300/370 to 80/150/220/290/360"
+                    }
+                  ]
+                },
+                {
+                  "text": "Earthbreaker",
+                  "items": [
+                    {
+                      "text": "Decreased Base Damage from 85/140/195/250/305 to 75/130/185/240/295"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Aphrodite Shift",
+              "items": [
+                {
+                  "text": "Kiss",
+                  "items": [
+                    {
+                      "text": "Decreased Jealousy Damage INcrease from 5/7.5/10/12.5/15% to 6/7/8/9/10%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Back Off",
+                  "items": [
+                    {
+                      "text": "Decreased Slow from 25% to 20%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Love Birds",
+                  "items": [
+                    {
+                      "text": "Increased INT Scaling per tick on the Damage over Time from 15% to 17.5%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Odin Buff",
+              "items": [
+                {
+                  "text": "Lunge",
+                  "items": [
+                    {
+                      "text": "Increased Base Damage from 120/165/210/255/300 to 120/170/220/270/320"
+                    }
+                  ]
+                },
+                {
+                  "text": "Gungnir’s Might",
+                  "items": [
+                    {
+                      "text": "Increased Pulse Damage from 45/70/95/120/145 to 50/80/110/140/170"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ring of Spears",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 110/105/100/95/90s to 100/95/90/85/80s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Bacchus Buff",
+              "items": [
+                {
+                  "text": "Chug",
+                  "items": [
+                    {
+                      "text": "Increased Heal from 0/20/35/50/65/80 to 0/40/60/80/100/120"
+                    }
+                  ]
+                },
+                {
+                  "text": "Belch of the Gods",
+                  "items": [
+                    {
+                      "text": "Increased Damage per tick from 20/35/50/65/80 to 25/40/55/70/85"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Susano Buff",
+              "items": [
+                {
+                  "text": "Wind Siphon",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 16s to 15s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Jet Stream",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 16s to 15s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Typhoon",
+                  "items": [
+                    {
+                      "text": "Increased Max Damage of the travelling Typhoon from 210/270/330/390/450 to 220/285/350/415/480"
+                    },
+                    {
+                      "text": "Increased STR Scaling from 110% to 115%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Cernunnos Buff",
+              "items": [
+                {
+                  "text": "The Wild Hunt",
+                  "items": [
+                    {
+                      "text": "Increased STR Scaling from 65% to 80%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Pele Buff",
+              "items": [
+                {
+                  "text": "Eruption",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 15s to 14s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Volcanic Lightning",
+                  "items": [
+                    {
+                      "text": "Increased Slow from 20/25/30/35/40% to 30/32.5/35/37.5/40%"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Items",
+      "anchor": "Items",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "NEW - Magi’s Cloak",
+              "items": [
+                {
+                  "text": "2450g"
+                },
+                {
+                  "text": "30 Physical Protection"
+                },
+                {
+                  "text": "40 Magical Protection"
+                },
+                {
+                  "text": "10 Cooldown Rate"
+                },
+                {
+                  "text": "Passive: Protects you from a single hard Crowd Control once every 60s. When this triggers, gain 1.5s of Crowd Control Immunity"
+                }
+              ]
+            },
+            {
+              "text": "NEW - Nimble Ring",
+              "items": [
+                {
+                  "text": "2750g"
+                },
+                {
+                  "text": "45 Intelligence"
+                },
+                {
+                  "text": "20% Attack Speed"
+                },
+                {
+                  "text": "15% Lifesteal"
+                },
+                {
+                  "text": "Passive: For every 30 Intelligence, you gain 2 Basic Attack Damage and 2% Attack Speed"
+                }
+              ]
+            },
+            {
+              "text": "NEW - Bancroft’s Talon",
+              "items": [
+                {
+                  "text": "2550g"
+                },
+                {
+                  "text": "40 Intelligence"
+                },
+                {
+                  "text": "150 Max Mana"
+                },
+                {
+                  "text": "2 Mana Regen"
+                },
+                {
+                  "text": "15% Lifesteal"
+                },
+                {
+                  "text": "Passive: You gain additional Intelligence and Lifesteal scaled from missing Health. This caps at 60 Intelligence and 10% Lifesteal at 40% Health"
+                }
+              ]
+            },
+            {
+              "text": "REWORKED - Typhon’s Fang",
+              "items": [
+                {
+                  "text": "2700g"
+                },
+                {
+                  "text": "50 Intelligence"
+                },
+                {
+                  "text": "20% Lifesteal"
+                },
+                {
+                  "text": "Passive: Healing obtained from Lifesteal is increased by 10%. Your Intelligence is increased by 1.75x the amount of Lifesteal you have."
+                }
+              ]
+            },
+            {
+              "text": "Soul Reaver Nerf",
+              "items": [
+                {
+                  "text": "Decreased base % Health damage per tick from 1% to 0.5%"
+                }
+              ]
+            },
+            {
+              "text": "Lifebinder Nerf",
+              "items": [
+                {
+                  "text": "Increased Cooldown 15s to 20s"
+                },
+                {
+                  "text": "Remove the Kill/Assist Clause"
+                }
+              ]
+            },
+            {
+              "text": "Olmec Blue Nerf",
+              "items": [
+                {
+                  "text": "Decreased Health Regen from 3 to 2"
+                }
+              ]
+            },
+            {
+              "text": "Totem of Death Nerf",
+              "items": [
+                {
+                  "text": "Decreased Penetration per Stack 7.5% to 6% (30% to 24% at max stacks)"
+                }
+              ]
+            },
+            {
+              "text": "The Executioner Nerf",
+              "items": [
+                {
+                  "text": "Decreased Penetration per Stack 7.5% to 6% (30% to 24% at max stacks)"
+                }
+              ]
+            },
+            {
+              "text": "Obsidian Shard Nerf",
+              "items": [
+                {
+                  "text": "Decreased Penetration from 20% to 15%"
+                }
+              ]
+            },
+            {
+              "text": "Titan’s Bane Nerf",
+              "items": [
+                {
+                  "text": "Decreased Penetration from 20% to 15%"
+                }
+              ]
+            },
+            {
+              "text": "Heartseeker Nerf",
+              "items": [
+                {
+                  "text": "Increased Cost from 2850 to 3000"
+                }
+              ]
+            },
+            {
+              "text": "Rod of Tahuti Nerf",
+              "items": [
+                {
+                  "text": "Decreased Penetration from 10% to 5%"
+                }
+              ]
+            },
+            {
+              "text": "Genji’s Guard Buff",
+              "items": [
+                {
+                  "text": "Decreased Cooldown of the passive trigger from 45s to 30s"
+                }
+              ]
+            },
+            {
+              "text": "Warrior’s Axe Buff",
+              "items": [
+                {
+                  "text": "Increased Strength from 10 to 15"
+                }
+              ]
+            },
+            {
+              "text": "Sundering Axe Buff",
+              "items": [
+                {
+                  "text": "Increased the Heal from 100 to 125"
+                }
+              ]
+            },
+            {
+              "text": "Bumba’s Cudgel Nerf",
+              "items": [
+                {
+                  "text": "Decreased True Damage on “After casting ability” trigger from 20 to 10"
+                }
+              ]
+            },
+            {
+              "text": "Leather Cowl Buff",
+              "items": [
+                {
+                  "text": "Increased Strength from 10 to 15"
+                }
+              ]
+            },
+            {
+              "text": "The Reaper Buff",
+              "items": [
+                {
+                  "text": "Increased Strength from 30 to 35"
+                }
+              ]
+            },
+            {
+              "text": "Divine Ruin Buff",
+              "items": [
+                {
+                  "text": "Increased Duration of the Healing Reduction debuff from 4s to 6s"
+                }
+              ]
+            },
+            {
+              "text": "Brawler’s Ruin Buff",
+              "items": [
+                {
+                  "text": "Increased Duration of the Healing Reduction debuff from 4s to 6s"
+                }
+              ]
+            },
+            {
+              "text": "Learnean Bow Buff",
+              "items": [
+                {
+                  "text": "Increased Duration of the Healing Reduction debuff from 4s to 6s"
+                },
+                {
+                  "text": "Enemies hit by this have their HP shields reduced by 50%"
+                },
+                {
+                  "text": "Increased the projectile range from 8.8m to 10.5m so it matches the currently used targeter"
+                }
+              ]
+            },
+            {
+              "text": "Pharaoh’s Curse Buff",
+              "items": [
+                {
+                  "text": "Enemies hit by this have their HP shields reduced by 50%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Quality of Life",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Updated console cursor pings speed to be faster, similar to SMITE 1"
+                },
+                {
+                  "text": "Vulcan Lobby VFX now plays on backpack instead of ground"
+                },
+                {
+                  "text": "Global Emotes should no longer show up pixelated"
+                },
+                {
+                  "text": "Zeus ultimate VFX updated to have better visibility for airborne players, such as when Rama is aiming in his ultimate. Base Zeus and skins affected."
+                },
+                {
+                  "text": "Fixed Ra Ascension Pass Skins having distracting bright VFX on each basic attack"
+                },
+                {
+                  "text": "Bumped up opacity on Amaterasu’s skins for her passive glow aura VFX"
+                }
+              ]
+            },
+            {
+              "text": "Conquest",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Improved Naga soldiers ability to target Jungle Bosses"
+                },
+                {
+                  "text": "Fixed the Fire Giant ember’s respawn timer getting cancelled if a player stood in the same location as its new spawn location"
+                },
+                {
+                  "text": "Fixed jungle waypoint assistant pointing to the wrong location on the minimap"
+                }
+              ]
+            },
+            {
+              "text": "Assault",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Fixed Meditation healing other players based on the caster’s missing health and mana"
+                }
+              ]
+            },
+            {
+              "text": "Gods",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Aladdin",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where he could wall run outside of his lamp bounds and become stuck"
+                    }
+                  ]
+                },
+                {
+                  "text": "Nu Wa",
+                  "items": [
+                    {
+                      "text": "Fixed Clay Soldiers targeting Jungle Wisps"
+                    },
+                    {
+                      "text": "Fixed minion stealth aggro when fighting the Pyromancer"
+                    }
+                  ]
+                },
+                {
+                  "text": "Danzaburou",
+                  "items": [
+                    {
+                      "text": "Fixed the VO ability lines on his Party Animal skin using his default voice"
+                    }
+                  ]
+                },
+                {
+                  "text": "Rama",
+                  "items": [
+                    {
+                      "text": "Fixed his weapon glow being seen from out of relevancy"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ra",
+                  "items": [
+                    {
+                      "text": "Fixed Polynomicon not always proccing on his first ability"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ullr",
+                  "items": [
+                    {
+                      "text": "Fixed an issue with Bladed Arrow not passing through player-made walls or geometry"
+                    }
+                  ]
+                },
+                {
+                  "text": "Hecate",
+                  "items": [
+                    {
+                      "text": "Fixed an issue with her Lunar Hex skin where her cape would go crazy"
+                    }
+                  ]
+                },
+                {
+                  "text": "Mordred",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where if two Mordred’s ulted each other near a wall, one would become stuck"
+                    }
+                  ]
+                },
+                {
+                  "text": "The Morrigan",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where she could use Vulcan’s Duel Mod in the Item store after she transformed into him"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "UI",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Fixed an issue on the EOML screen for Joust and Duel always showing a 5v5 layout, instead of a 1v1 or 3v3 format"
+                },
+                {
+                  "text": "Fixed an issue where the Pause UI would become hidden behind the store during pauses"
+                },
+                {
+                  "text": "Fixed an issue where the in-game Settings menu would block player movement when it was opened. This should now match SMITE 1 parity."
+                },
+                {
+                  "text": "Fixed issues where Item Store prices were resetting in the All Items view from toggling filters"
+                }
+              ]
+            },
+            {
+              "text": "ART",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Added Tower Area Radius Structures to Conquest and Assault"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 2/24/25",
+      "anchor": "Hotfix_2/24/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed an issue where Aladdin A02 was difficult and inconsistent to cancel"
+            },
+            {
+              "text": "Readded Bloodforge to the item shop"
+            },
+            {
+              "text": "The Purchase button will no longer disappear from the Store/Featured page if you select a skin you own."
+            },
+            {
+              "text": "Pinging the map while moving will no longer cause the player to stop moving"
+            },
+            {
+              "text": "Gods on rotation should now sort to the top at the Gods page"
+            },
+            {
+              "text": "[Draft Lobby] Other players will no longer persistently show as trade blocked on a trade popup after youI decline their trade request"
+            },
+            {
+              "text": "Removed a ghost red dot on the Player Profile."
+            },
+            {
+              "text": "Added missing descriptions for recently balance changes"
+            },
+            {
+              "text": "Fixed and issue where Meditation Relic did not work in Assault"
+            },
+            {
+              "text": "Artemis Non-Aspect traps should now stack correctly"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 2/26/25",
+      "anchor": "Hotfix_2/26/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Put in a potential fix to address an outstanding Xbox crash"
+            },
+            {
+              "text": "Fixed an issue where the Purchase Diamonds button wasn’t working on the Chests screen."
+            },
+            {
+              "text": "Put in potential fix for issue where Draft Lobby team widgets are not showing up"
+            },
+            {
+              "text": "Fixed an issue where in certain situations Artemis Vengeful Assault was not applying correct attack speed level"
+            },
+            {
+              "text": "Fixed an issue where rebinds of 2 individual inputs would reset when logging back in"
+            },
+            {
+              "text": "Added missing Localization"
+            },
+            {
+              "text": "Added a filter for 'On Rotation' to the God page"
+            },
+            {
+              "text": "Fixed an issue where Magi's Cloak was activating from self (example: Ymir Wall rocket jump)"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 2/27/25",
+      "anchor": "Hotfix_2/27/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed an issue in Assault Bench where players' initial assault choices are sometimes being added to the bench"
+            },
+            {
+              "text": "Fixed an issue with Auto Build where starter item upgrades aren't upgrading when reaching the level requirements"
+            },
+            {
+              "text": "Spear of Desolation and Jotunns Revenge will no longer proc on clones"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 3/1/25",
+      "anchor": "Hotfix_3/1/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed a specific type of crash involving game modes"
+            },
+            {
+              "text": "Potential fix to an issue in the draft lobby where the UI would not show teams"
+            },
+            {
+              "text": "Fixed an issue where the HUD would not operate as expected during announcements like \"Player X got a double kill\""
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Prophetic Cloak Reactivation: Prophetic Cloak was turned back on after the devs ironed out some unexpected behaviors."
+            },
+            {
+              "text": "Typhon’s Fang Disabled: Temporarily removed because buying and selling it retained its passive permanently. A fix is on the way."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Awilix Added 3/3/25",
+      "anchor": "Awilix_Added_3/3/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "With enhanced agility, refined precision, and the triumphant return of her signature lunar strikes, Awilix in SMITE 2 emerges as a swift and deadly huntress, ruling the night with unmatched prowess!"
+        },
+        {
+          "type": "paragraph",
+          "text": "Mount Suku. Command the moonlight. And let your enemies fall beneath the silent fury of Awilix."
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 3/4/25",
+      "anchor": "Hotfix_3/4/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Frame Rate Options",
+              "items": [
+                {
+                  "text": "PC players can now cap framerate at 90 or 144 FPS. More options could be added if there’s demand—give your feedback!"
+                }
+              ]
+            },
+            {
+              "text": "Double Worshiper Event",
+              "items": [
+                {
+                  "text": "A minor technical delay meant the Double Worshiper Weekend started late. To compensate, the event is extended for an extra day so everyone can level up their new gods."
+                }
+              ]
+            },
+            {
+              "text": "Minor Fixes & Hotfixes",
+              "items": [
+                {
+                  "text": "Draft Lobby Display",
+                  "bold": true,
+                  "detail": ": An issue causing hidden team names in draft lobbies was fixed."
+                }
+              ]
+            },
+            {
+              "text": "New Item: Arondight",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Returning as an active item featuring a stealth-reveal ability (think a “sonar ping” effect)."
+                },
+                {
+                  "text": "Successful reveals grant bonus damage and movement speed for a chase."
+                },
+                {
+                  "text": "Perfect for countering invisible gods like Loki or Izanami."
+                }
+              ]
+            },
+            {
+              "text": "HUD Editor (PC Beta)",
+              "items": [
+                {
+                  "text": "A long-awaited feature is here: you can now move and resize HUD elements freely on PC."
+                },
+                {
+                  "text": "Console support planned for a future update once the PC version is polished."
+                }
+              ]
+            },
+            {
+              "text": "Music Packs",
+              "items": [
+                {
+                  "text": "60+ classic music themes from past events, passes, and more are returning in a Music Chest."
+                },
+                {
+                  "text": "Use your Legacy Gems to roll for these nostalgic themes (excluding licensed tracks)."
+                }
+              ]
+            },
+            {
+              "text": "Conquest & Other Balance Tweaks",
+              "items": [
+                {
+                  "text": "Refinements to Conquest map visuals near towers."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed a VFX skin issue with Nu Wa"
+            },
+            {
+              "text": "Fixed a fairly common PS5 crash"
+            },
+            {
+              "text": "Fixed some elements invalidating the HUD which we believe may solve another part of Store Overlay issues."
+            },
+            {
+              "text": "Thor Aspect Now Reflects the Following - Heal 5% +0.1% per level to 4% + 0.075% per level and slow 40% to 30%."
+            },
+            {
+              "text": "Fixed an issue where Thor Aspect was not cleansable as designed"
+            },
+            {
+              "text": "Fixed an issue where cancelling Anubis Ability 1 would still proc poly/hydras"
+            },
+            {
+              "text": "Fixed an issue with Typhon's Fang Passive. It will now be re-enabled."
+            },
+            {
+              "text": "Fixed an issue where Beads weren't preventing getting pulled from Awilix's Ultimate"
+            },
+            {
+              "text": "Fixed an issue with Magi's Cloak where Bellona and Zeus would proc unintentionally"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 3/5/24",
+      "anchor": "Hotfix_3/5/24",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Poseidon’s Passive",
+              "bold": true,
+              "detail": ": Fixed a bug where Poseidon’s Changing Tides movement speed wasn’t applying."
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Awilix Fixes",
+              "bold": true,
+              "lead": ":",
+              "items": [
+                {
+                  "text": "Flip-over mechanic no longer causes you to get stuck."
+                },
+                {
+                  "text": "Gravity Surge no longer drops targets into walls."
+                },
+                {
+                  "text": "Adjusted certain hit/attack timings to make her feel smoother to play."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Xbox Rollback",
+              "bold": true,
+              "detail": ": A build rollback occurred to fix an Xbox update download issue. While this means redownloading for some players, the team felt it was the quickest way to restore stable play for everyone."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

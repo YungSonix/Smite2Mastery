@@ -35,16 +35,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_BaronSamedi_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_BaronSamedi_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
-              "unlock": {
-                "rarityNote": "Rare",
-                "source": "ascension",
-                "masteryRank": 5,
-                "requiresAscensionPass": true,
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
-                "displayText": "Ascension reward — requires Mastery rank V"
-              },
               "loadout": {
                 "screenshot": "app/data/God Renders/baron samedi/Screenshot (287).png",
                 "frame": {
@@ -61,15 +51,8 @@
                 "godName": "Baron Samedi",
                 "displayName": "Onyx",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 5,
-                  "label": "V",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
-                },
                 "screenshot": "app/data/God Renders/baron samedi/Screenshot (287).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/baron samedi/Screenshot (287).png",
                   "fileName": "Screenshot (287).png",
@@ -84,6 +67,13 @@
                   "parentSkinName": "Base Baron Samedi",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "masteryReward",
@@ -97,6 +87,8 @@
                   }
                 ]
               },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "masteryReward",
@@ -108,7 +100,15 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "rarityNote": "Rare",
+                "source": "ascension",
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              }
             },
             {
               "name": "Mastery Opal",
@@ -116,8 +116,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_BaronSamedi_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_BaronSamedi_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/baron samedi/Screenshot (288).png",
                 "frame": {
@@ -134,15 +132,8 @@
                 "godName": "Baron Samedi",
                 "displayName": "Opal",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 5,
-                  "label": "V",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
-                },
                 "screenshot": "app/data/God Renders/baron samedi/Screenshot (288).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/baron samedi/Screenshot (288).png",
                   "fileName": "Screenshot (288).png",
@@ -157,6 +148,13 @@
                   "parentSkinName": "Base Baron Samedi",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -170,14 +168,8 @@
                   }
                 ]
               },
-              "unlock": {
-                "masteryRank": 5,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
-                "displayText": "Ascension reward — requires Mastery rank V",
-                "rarityNote": "Rare"
-              },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "ascensionReward",
@@ -189,7 +181,15 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V",
+                "rarityNote": "Rare"
+              }
             },
             {
               "name": "Mastery Radiant",
@@ -197,8 +197,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_BaronSamedi_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_BaronSamedi_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/baron samedi/Screenshot (289).png",
                 "frame": {
@@ -215,15 +213,8 @@
                 "godName": "Baron Samedi",
                 "displayName": "Radiant",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 10,
-                  "label": "X",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
-                },
                 "screenshot": "app/data/God Renders/baron samedi/Screenshot (289).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/baron samedi/Screenshot (289).png",
                   "fileName": "Screenshot (289).png",
@@ -238,6 +229,13 @@
                   "parentSkinName": "Base Baron Samedi",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -251,14 +249,8 @@
                   }
                 ]
               },
-              "unlock": {
-                "masteryRank": 10,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
-                "displayText": "Ascension reward — requires Mastery rank X (Radiant)",
-                "rarityNote": "Rare"
-              },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "ascensionReward",
@@ -270,7 +262,15 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)",
+                "rarityNote": "Rare"
+              }
             }
           ],
           "loadout": {
@@ -289,7 +289,6 @@
             "godName": "Baron Samedi",
             "displayName": "Base",
             "rarity": null,
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/baron samedi/Screenshot (283).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -306,7 +305,8 @@
                 "amount": "0",
                 "owned": true
               }
-            }
+            },
+            "gridBadge": null
           },
           "unlock": {
             "source": "base",
@@ -324,29 +324,21 @@
           "isBaseSkin": false,
           "isPrism": false,
           "isRecolor": false,
-          "isMastery": true,
-          "isMasteryShadowSkin": true,
+          "isMastery": false,
           "isCrossGen": false,
+          "isMasteryShadowSkin": true,
           "type": "Mastery Shadow",
           "assets": {
             "skin": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_BaronSamedi_Card_Mastery.png",
             "cardArt": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_BaronSamedi_Card_Mastery.png",
             "icon": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_SkinPortrait_BaronSamedi_Shadow.png"
           },
-          "cardArt": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_BaronSamedi_Card_Mastery.png",
-          "skin": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_BaronSamedi_Card_Mastery.png",
-          "icon": "app/data/NewGodSkins/BaronSamedi/Skins/Masteries/t_SkinPortrait_BaronSamedi_Shadow.png",
-          "masteryFromDisk": true,
-          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
           "price": {
-            "diamonds": "900"
+            "gems": "",
+            "diamonds": "900",
+            "gemsdia": ""
           },
-          "unlock": {
-            "rarityNote": "Rare",
-            "source": "ascension",
-            "displayText": "Ascension Pass — rare skin (may appear in events)",
-            "requiresAscensionPass": true
-          },
+          "masteryFromDisk": true,
           "loadout": {
             "screenshot": "app/data/God Renders/baron samedi/Screenshot (286).png",
             "frame": {
@@ -363,7 +355,6 @@
             "godName": "Baron Samedi",
             "displayName": "Shadow",
             "rarity": "Heroic",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/baron samedi/Screenshot (286).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -382,6 +373,7 @@
               },
               "tier": "Heroic"
             },
+            "gridBadge": null,
             "information": [
               {
                 "key": "ascensionReward",
@@ -395,6 +387,7 @@
               }
             ]
           },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
           "information": [
             {
               "key": "ascensionReward",
@@ -406,7 +399,13 @@
               "label": "Rare",
               "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
-          ]
+          ],
+          "unlock": {
+            "rarityNote": "Rare",
+            "source": "ascension",
+            "displayText": "Ascension Pass — rare skin (may appear in events)",
+            "requiresAscensionPass": true
+          }
         },
         {
           "skinKey": "Gingersnap",
@@ -427,7 +426,9 @@
             "icon": "app/data/NewGodSkins/BaronSamedi/Skins/Gingersnap/t_SkinPortrait_BaronSamedi_Gingersnap.png"
           },
           "price": {
-            "diamonds": "1200"
+            "gems": "",
+            "diamonds": "1200",
+            "gemsdia": ""
           },
           "loadout": {
             "screenshot": "app/data/God Renders/baron samedi/Screenshot (285).png",
@@ -445,7 +446,6 @@
             "godName": "Baron Samedi",
             "displayName": "Gingersnap",
             "rarity": "Epic",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/baron samedi/Screenshot (285).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -464,6 +464,7 @@
               },
               "tier": "Epic"
             },
+            "gridBadge": null,
             "information": [
               {
                 "key": "crossGen",
@@ -478,10 +479,6 @@
             ]
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
-          "unlock": {
-            "source": "store",
-            "displayText": "Direct purchase — may appear in chests or events"
-          },
           "information": [
             {
               "key": "crossGen",
@@ -493,11 +490,15 @@
               "label": "Standard",
               "text": "This item is available for direct purchase and may appear in Chests or other special Events."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — may appear in chests or events"
+          }
         },
         {
           "skinKey": "NanoMancer",
-          "skinName": "Nano-Mancer",
+          "skinName": "Nano Mancer",
           "cost": {
             "currency": "gems",
             "amount": "1200"
@@ -514,7 +515,9 @@
             "icon": "app/data/NewGodSkins/BaronSamedi/Skins/NanoMancer/t_SkinPortrait_BaronSamedi_NanoMancer.png"
           },
           "price": {
-            "diamonds": "1200"
+            "gems": "",
+            "diamonds": "1200",
+            "gemsdia": ""
           },
           "loadout": {
             "screenshot": "app/data/God Renders/baron samedi/Screenshot (284).png",
@@ -532,7 +535,6 @@
             "godName": "Baron Samedi",
             "displayName": "Nano-Mancer",
             "rarity": "Epic",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/baron samedi/Screenshot (284).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -551,6 +553,7 @@
               },
               "tier": "Epic"
             },
+            "gridBadge": null,
             "information": [
               {
                 "key": "crossGen",
@@ -565,10 +568,6 @@
             ]
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
-          "unlock": {
-            "source": "store",
-            "displayText": "Direct purchase — may appear in chests or events"
-          },
           "information": [
             {
               "key": "crossGen",
@@ -580,7 +579,11 @@
               "label": "Standard",
               "text": "This item is available for direct purchase and may appear in Chests or other special Events."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — may appear in chests or events"
+          }
         }
       ]
     }

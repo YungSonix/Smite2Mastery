@@ -1,0 +1,1409 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_16",
+    "title": "SMITE 2 Open Beta 16",
+    "infoboxTitle": "OB16 - SMITE 2 Open Beta 16",
+    "releaseDate": "Aug 12th, 2025",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_15",
+      "next": "SMITE_2_Open_Beta_17"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 16,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Ported God",
+      "anchor": "New_Ported_God",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Janus",
+          "anchor": "Janus",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "General"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ranged Basic Attacks",
+                  "items": [
+                    {
+                      "text": "Damage Type: Magical"
+                    },
+                    {
+                      "text": "Scaling Type: Intelligence Scaling"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Passive: Passages"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "When you pass through a Portal or Threshold, your next ability deals bonus Magical Damage."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Smite 2 +1’s"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Now stacks up to 2 times."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 1: Portal"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Open a portal on a surface."
+                },
+                {
+                  "text": "Wall portals create a passage to the other side for yourself."
+                },
+                {
+                  "text": "Ground portals Banishes you and enemies upwards, dealing Magical Damage to enemies on landing."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 2: Unstable Vortex"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Launch two linked portals, dealing Magical Damage to enemies in their path."
+                },
+                {
+                  "text": "Hitting an enemy with both portals deals bonus Magical Damage."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 3: Threshold"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Unleash a rift that Slows enemies and grants Movement Speed to allies who cross it."
+                },
+                {
+                  "text": "Slowed enemies are Phased, causing your abilities to deal bonus Magical Damage."
+                },
+                {
+                  "text": "Passive: You and allies also gain stacking Movement Speed when crossing the rift or passing through a portal."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Smite 2 +1’s"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Magical Damage Janus deals to Phased enemies ignore 25% of their Magical Protection."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ultimate Ability: Through Space and Time"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fire a global projectile that deals Magical Damage and opens portals for allies on any surface it passes."
+                },
+                {
+                  "text": "You are CC Immune while firing."
+                },
+                {
+                  "text": "Damage increases with distance traveled."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Smite 2 +1’s"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Can now be used while falling from Portal, allowing you to exit the self banish early."
+                },
+                {
+                  "text": "No longer has a maximum range at which it stops making new Portals."
+                },
+                {
+                  "text": "No longer has a Maximum Health Damage Cap."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Wandering Market Travelers",
+      "anchor": "New_Wandering_Market_Travelers",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "G.E.B. 1 Traveler",
+          "anchor": "G.E.B._1_Traveler",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "System: online. Directive: downloaded. Target: acquired! Go into hyperdrive with the G.E.B. 1 Traveler in SMITE 2!"
+                },
+                {
+                  "text": "Contents",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Classic G.E.B. 1 Geb Skin - Instantly unlocked after purchasing the Premium Traveler Page."
+                    },
+                    {
+                      "text": "Premium Page Contents",
+                      "bold": true,
+                      "lead": "- Unlock the following items with Wandering Market Coins:",
+                      "items": [
+                        {
+                          "text": "G.E.B. 1 - Stealth Strike Prism"
+                        },
+                        {
+                          "text": "G.E.B. 1 - Combat Camo Prism"
+                        },
+                        {
+                          "text": "G.E.B. 1 - Ultra Core Prism"
+                        },
+                        {
+                          "text": "Mech Step Jump Stamp"
+                        },
+                        {
+                          "text": "G.E.B. Squadron 1 Ward Skin"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Plushie Traveler",
+          "anchor": "Plushie_Traveler",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ganesha is here to spread the love! Dish out some cute and cuddly crowd control with the Plushie Traveler and build out your toy collection with every color of the Rainbow!"
+                },
+                {
+                  "text": "Contents",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Classic Plushie Ganesha Skin - Instantly unlocked after purchasing the Premium Traveler Page."
+                    },
+                    {
+                      "text": "Premium Page Contents",
+                      "bold": true,
+                      "lead": "- Unlock the following items with Wandering Market Coins:",
+                      "items": [
+                        {
+                          "text": "Plushie - Red Prism"
+                        },
+                        {
+                          "text": "Plushie - Orange Prism"
+                        },
+                        {
+                          "text": "Plushie - Yellow Prism"
+                        },
+                        {
+                          "text": "Plushie - Green Prism"
+                        },
+                        {
+                          "text": "Plushie - Indigo Prism"
+                        },
+                        {
+                          "text": "Plushie - Violet Prism"
+                        },
+                        {
+                          "text": "The More You Know! Global Emote"
+                        },
+                        {
+                          "text": "Rainbow Warrior Title"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Quality of Life and New Player Improvements",
+      "anchor": "Quality_of_Life_and_New_Player_Improvements",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Starting in Open Beta 16, Ultimate Founder’s Edition owners will unlock all current and future Ascension Passes forever!",
+              "items": [
+                {
+                  "text": "If you already own the Ultimate Founder’s Edition you’ll receive this new benefit immediately when you log in after the Update."
+                }
+              ]
+            },
+            {
+              "text": "Ultimate Founder’s Edition owners will be refunded 900 Legacy Gems for each Ascension Pass they purchased before the Update."
+            },
+            {
+              "text": "Purchasing Wandering Market Travelers, Collections, and Sagas now also grants bonus levels that reward double Wandering Market coins!",
+              "items": [
+                {
+                  "text": "Bonus Coins will be granted retroactively to existing owners!"
+                },
+                {
+                  "text": "Classic Travelers grant 5 levels of Double Coins."
+                },
+                {
+                  "text": "Premium Travelers grant 10 levels of Double Coins."
+                },
+                {
+                  "text": "Sagas grant 20 levels of Double Coins."
+                }
+              ]
+            },
+            {
+              "text": "A new animation has been added to nameplates/health bars when an enemy God is slain to give better feedback and clarity on when an enemy has died."
+            },
+            {
+              "text": "New Short ability descriptions have been added to both the Ability Icons on the HUD as well as the Control Screen.",
+              "items": [
+                {
+                  "text": "Ability Icon descriptions are one word that quickly communicate what the Ability does. This text will update for Aspects and multi-stage abilities. These are on by default and can be turned off by going to Settings > UI > and toggling the “Show Short Ability Descriptor” option."
+                },
+                {
+                  "text": "Descriptions on the Control screen are three to four words that give a little extra detail on what each Ability does after the Ability name."
+                }
+              ]
+            },
+            {
+              "text": "Item Pips have been added to both the Item shop and your Item loadout on the HUD to better indicate if an item is a Tier 1, 2, or 3."
+            },
+            {
+              "text": "The Quickplay item buying flow has received a visual update!",
+              "items": [
+                {
+                  "text": "It is now centered on your screen."
+                },
+                {
+                  "text": "New UI art has been added."
+                },
+                {
+                  "text": "Item options now have an outer glow that indicates what type of Item it is."
+                }
+              ]
+            },
+            {
+              "text": "Basic Attack Sound Effects have been revised for Agni, Anhur, and Aphrodite.",
+              "items": [
+                {
+                  "text": "Agni’s Basic Attacks now have a projectile sound."
+                }
+              ]
+            },
+            {
+              "text": "Conquest has received a first pass on updated lighting. This is an ongoing project, and the team will continue to make changes in future updates."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Game Modes",
+      "anchor": "Game_Modes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "NEW - Quickplay Joust",
+          "anchor": "NEW_-_Quickplay_Joust",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Joust has been added as a Quickplay mode complete with all the features in Quickplay Arena:",
+                  "items": [
+                    {
+                      "text": "Faster Gold and XP Spooling."
+                    },
+                    {
+                      "text": "Agility Relic selected by default."
+                    },
+                    {
+                      "text": "Draft Buy Item Building."
+                    }
+                  ]
+                },
+                {
+                  "text": "We’ll be testing Quickplay Joust as the default mode for new players in this Update."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Conquest",
+          "anchor": "Conquest",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Totem of Ku",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "NEW: Now takes 50% less damage from Gods outside of its radius."
+                    },
+                    {
+                      "text": "REMOVED: Reward no longer grants +1 Cooldown Rate per kill."
+                    },
+                    {
+                      "text": "NEW: Reward is now a +10 Cooldown Rate and +2 Mana Regen buff for 60 seconds, plus immediately refunds 15% Cooldown on all abilities."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Fire Imps"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "REMOVED: The loose Nuggets in Fire Giant Pit have been removed."
+                },
+                {
+                  "text": "NEW: An additional Fire Imp now spawns that also drops 2 Nuggets."
+                },
+                {
+                  "text": "Decreased base Max Health: 1800 -> 1200."
+                },
+                {
+                  "text": "Decreased base Strength: 32 -> 24."
+                },
+                {
+                  "text": "Decreased base Protections: 32.5 -> 26."
+                },
+                {
+                  "text": "Decreased XP Reward: 125 -> 80."
+                },
+                {
+                  "text": "Decreased Gold Reward: 80 -> 50."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Fire Giant Door"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "NEW: The door will now remain open until the Fire Giant spawns at 15 minutes."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Pyromancer"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Now has an Objective Health Bar."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Amaterasu (Aspect of Valor - Buff)",
+          "anchor": "Amaterasu_(Aspect_of_Valor_-_Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Divine Presence (1)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased Basic Attack Damage: 6/12/18/24/30 -> 7/14/21/28/35."
+                },
+                {
+                  "text": "New: When activated gain 3/3.5/4/4.5/5% Lifesteal."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Ares (Nerf)",
+          "anchor": "Ares_(Nerf)",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Call to Arms (2)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Decreased Health Regen: 10/15/20/25/30 -> 8/11/14/17/20."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Bellona (Shift)",
+          "anchor": "Bellona_(Shift)",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Shield Bash (1)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "No longer gains block stacks from Basic Attacking Non-god targets."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Bludgeon (2)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased Spin Damage: 35/65/95/125/155 -> 45/80/115/155/190."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Cerberus (Fix Buff)",
+          "anchor": "Cerberus_(Fix_Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Paralyzing Spit (1)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Cerberus heads can now be alerted before this ability is ranked."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Hades (Fix Buff)",
+          "anchor": "Hades_(Fix_Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Death from Below (1)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased Intelligence Scaling: 60% -> 75%."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Devour Souls (3)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where the Ally Heal was only considering item Protections."
+                },
+                {
+                  "text": "Fixed an issue where Hades’ self heal was not considering Protection scaling at all."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Hecate (Aspect of Ruin - Non-Conquest Nerf)",
+          "anchor": "Hecate_(Aspect_of_Ruin_-_Non-Conquest_Nerf)",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Spell Eater (2)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "NEW: This ability does 50% reduced damage in all Non-Conquest game modes."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Hou Yi (Aspect of the Mark - Nerf)",
+          "anchor": "Hou_Yi_(Aspect_of_the_Mark_-_Nerf)",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Basic Attacks"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Decreased Unmarked Basic Bounce: 50% -> 33% damage."
+                },
+                {
+                  "text": "Decreased Basic Bounce Range: 4.4m -> 3.2m."
+                },
+                {
+                  "text": "Decreased Basic Ricochet Damage Bonus: 40% -> 30% Per Bounce."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Hun Batz (Nerf)",
+          "anchor": "Hun_Batz_(Nerf)",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Infused Strikes (P)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Decreased Strength Per Stack: 5 -> 3."
+                },
+                {
+                  "text": "Hun Batz at Level 20 with 4 Stacks : 40 -> 32."
+                },
+                {
+                  "text": "Hun Batz at Level 1 with 4 Stacks: 20 -> 12."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Sacred Monkey (3)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Decreased Strength Scaling: 60% -> 55%."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Jing Wei (Buff)",
+          "anchor": "Jing_Wei_(Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Explosive Bolts (2)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Decreased Cooldown: 16s -> 14s."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Agility (3)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Decreased Cooldown: 18s -> 16/16/15/15/14s."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Air Strike (4)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased Strength Scaling: 100% -> 115%."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Medusa (Buff)",
+          "anchor": "Medusa_(Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Viper Shot (1)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased Strength Scaling: 6% -> 8%."
+                },
+                {
+                  "text": "Increased Attack Speed Scaling: 10% -> 15% Strength."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Acid Spray (2)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased Intelligence Scaling: 70% -> 80%."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Petrify (4)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased Intelligence Scaling: 85% -> 95%."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Rama (Buff)",
+          "anchor": "Rama_(Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Astral Quiver (P)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Astral Arrow Cooldown from Successful Basic Attack: 2s -> 3s."
+                },
+                {
+                  "text": "NEW: The first hit of Astral Strike will also trigger this Cooldown effect."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Astral Strike (1)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased Bonus Damage Scaling: 15% -> 20%."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Rolling Assault (3)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased Bonus Damage Scaling: 40% -> 55%."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Zeus (Shift)",
+          "anchor": "Zeus_(Shift)",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Thunderclap (2)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Now provides 10/11.25/12.5/13.75/15% Haste."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Lightning Storm (4)"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Decreased Base Damage: 100/140/180/220/260 -> 100/130/160/190/220."
+                },
+                {
+                  "text": "Increased Intelligence Scaling: 65% -> 75%."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Vampiric Shroud (Starter)"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Increased Health: 75 -> 100."
+            },
+            {
+              "text": "Increased God Health Restore: 3 -> 6."
+            },
+            {
+              "text": "Increased God Mana Restore: 4 -> 8."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Gilded Arrow (Starter)"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Increased Basic Attack Power: 15 -> 20."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Bumba’s Spear (Starter Upgrade)"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Increased Attack Speed: 20% -> 25%."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Ancient Signet (Buff)"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Increased Damage Per Level: 10 -> 12."
+            },
+            {
+              "text": "Decreased Cooldown: 20s -> 15s."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Bancroft’s Talon (Buff)"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Increased Intelligence: 40 -> 55."
+            },
+            {
+              "text": "Decreased bonus Intelligence Maximum: 70 -> 60."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Bragi’s Harp (Nerf)"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Now properly considers Titans as Bosses for the reduced damage."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Contagion (Nerf)"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Decreased Max Health : 500 -> 425."
+            },
+            {
+              "text": "Increased Cost: 2250 -> 2400."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Devourer’s Gauntlets (Nerf)"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Increased Ravenous Minion Kills needed for a Stack: 8 -> 10."
+            },
+            {
+              "text": "Increased Cost: 2400 -> 2500."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Leviathan’s Hide (Buff)"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Increased Health per Stack: 6 -> 8."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Lifebinder (Buff)"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Increased Intelligence: 35 -> 50."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Regrowth Striders (Nerf)"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Decreased Physical Protection: 40 -> 35."
+            },
+            {
+              "text": "Decreased Movement Speed Burst: 35% -> 30%."
+            },
+            {
+              "text": "Decreased Movement Speed Duration: 5s -> 4s."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Sanguine Lash (Nerf)"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Decreased Lifesteal: 10% -> 7.5%."
+            },
+            {
+              "text": "Decreased Base Health % Damage: 1% -> 0.75%."
+            },
+            {
+              "text": "Can now only damage Humanoids. (Won’t damage the Totem of Ku)."
+            },
+            {
+              "text": "Now properly considers Titans as Bosses for the reduced damage."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Sun Beam Bow (Nerf)"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Now properly considers Titans as Bosses for the reduced damage."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Transcendence (Buff)"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Increased Strength : 30 -> 35."
+            },
+            {
+              "text": "Fixed a tooltip issue and a bug."
+            },
+            {
+              "text": "Transcendence has only required 700 damage to be done for a stack, rather than the listed 800. However, minions/jungle monsters were contributing 12.5% less to that amount than they should have."
+            },
+            {
+              "text": "Fixed Tooltip Damage: 800 -> 700."
+            },
+            {
+              "text": "Fixed Minion Contribution to be the expected value."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Quality of Life",
+          "anchor": "Quality_of_Life",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where Gods could be healed and damaged by fountains while flying over them."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Items",
+          "anchor": "Items",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Heartwood Charm has been updated to now properly work when using an Aspect that changes a God’s healing abilities."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 8/12/25",
+      "anchor": "Hotfix_8/12/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Janus portals appearing on enemy minimaps"
+                },
+                {
+                  "text": "Frowny Face Aspects"
+                },
+                {
+                  "text": "Pesky lingering SWK clone healthbars"
+                },
+                {
+                  "text": "Weird timer bars on Travelers"
+                },
+                {
+                  "text": "Assault will return tonight"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Balance",
+          "anchor": "Balance",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Janus Shift",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Portal",
+                      "items": [
+                        {
+                          "text": "Increased Int Scaling: 60% -> 70%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Unstable Vortex",
+                      "items": [
+                        {
+                          "text": "Increased Int Scaling: 85% -> 95%"
+                        },
+                        {
+                          "text": "Increased 2nd hit Int scaling: 17 -> 20%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Threshold",
+                      "items": [
+                        {
+                          "text": "Shifted Int Scaling: 15/25/35/45/55 -> 25/30/35/40/45%"
+                        },
+                        {
+                          "text": "Decreased Mag Prot Ignore: 25% -> 15%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Through Space and Time",
+                      "items": [
+                        {
+                          "text": "Now applies \"Phased\" on hit."
+                        },
+                        {
+                          "text": "Mag Prot ignore applies to damage dealt."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 8/12/25 #2",
+      "anchor": "Hotfix_8/12/25_#2",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_3",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Hou Yi",
+                  "items": [
+                    {
+                      "text": "Fixed Aspect basic attacks not hit some deployables (Wards, GF pots, Odin Wall, etc"
+                    },
+                    {
+                      "text": "Fixed and issue with auto skill not working correctly"
+                    }
+                  ]
+                },
+                {
+                  "text": "Janus",
+                  "items": [
+                    {
+                      "text": "Portal (1): Fixed an issue where portals could appear at origin"
+                    },
+                    {
+                      "text": "Unstable Vortex (2): Fixed an issue where it can be 'aimed' while tweening in a portal"
+                    },
+                    {
+                      "text": "Through Space and Time (4):Fixed an issue where it can be 'aimed' while tweening in a portal"
+                    },
+                    {
+                      "text": "Fixed an issue where the “Attack the Minions” VGS line was not playing"
+                    }
+                  ]
+                },
+                {
+                  "text": "Jing Wei",
+                  "items": [
+                    {
+                      "text": "Agility (3) Can no longer be used while banished (Janus Portal)"
+                    }
+                  ]
+                },
+                {
+                  "text": "Kali",
+                  "items": [
+                    {
+                      "text": "Passive / Talent Proc should now be considered healing for effects like Vital Amplifier"
+                    }
+                  ]
+                },
+                {
+                  "text": "Mercury",
+                  "items": [
+                    {
+                      "text": "Fixed an issue with auto skill not working correctly."
+                    }
+                  ]
+                },
+                {
+                  "text": "Neith",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where even though Neith's A02 was tagged as a healing ability, it would not trigger effects like Vital Amplifier"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ymir",
+                  "items": [
+                    {
+                      "text": "Shards of Ice (4) Finally fixed a bug where spamming to cancel Ymir's Ultimate would sometimes fail to cancel the ability early!"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 8/14/25",
+      "anchor": "Hotfix_8/14/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "General",
+          "anchor": "General",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Agility Relic should now respect things that block Relics. (This notably fixes being able to dash out of Hecate's A04 tween)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Gods",
+          "anchor": "Gods",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Achilles",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Fixed his short ability descriptions for his 1 and Ult"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Janus",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "General",
+                      "items": [
+                        {
+                          "text": "Thinking With Portals description updated with distance tracker"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Portal",
+                      "items": [
+                        {
+                          "text": "Fixed an issue where wall portals would appear at origin when creating ground portals"
+                        },
+                        {
+                          "text": "Now respects cripple"
+                        },
+                        {
+                          "text": "Should not let stacked allies through all at once/staggered"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Unstable Vortex",
+                      "items": [
+                        {
+                          "text": "Made it more difficult for Janus to double hit targets (Investigating a more long term answer)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Danzaborou",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Dishonest Duplication",
+                      "items": [
+                        {
+                          "text": "Clones should stop and attack when in range"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

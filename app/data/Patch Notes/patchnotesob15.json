@@ -1,0 +1,2983 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_15",
+    "title": "SMITE 2 Open Beta 15",
+    "infoboxTitle": "OB15 - SMITE 2 Open Beta 15",
+    "releaseDate": "July 29, 2025",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_14",
+      "next": "SMITE_2_Open_Beta_16"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 15,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Ported God",
+      "anchor": "New_Ported_God",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Hou Yi",
+              "bold": true,
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Ranged Basic Attacks"
+                    },
+                    {
+                      "text": "Damage Type: Physical"
+                    },
+                    {
+                      "text": "Scaling Type: Hybrid Scaling"
+                    }
+                  ]
+                },
+                {
+                  "text": "Passive: Suntouched",
+                  "items": [
+                    {
+                      "text": "After being Critically Hit or taking more than 20% of your Health in a single blow, become Suntouched. When you become Suntouched your active cooldowns are reduced and Mark the enemy who triggered this"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 1: Ricochet",
+                  "items": [
+                    {
+                      "text": "Fire an arrow that ricochets off walls, dealing Physical Damage to enemies it passes through. Deals increasing Damage with each ricochet.",
+                      "items": [
+                        {
+                          "text": "Marked enemies who are hit are Stunned"
+                        },
+                        {
+                          "text": "Ricochet bounces an additional time if you have 400 or more Intelligence"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 2: Mark of the Golden Crow",
+                  "items": [
+                    {
+                      "text": "Mark an enemy causing your other abilities to apply additional effects.",
+                      "items": [
+                        {
+                          "text": "While your Strength is higher than your Intelligence, Marked enemies take bonus Physical Damage based on their missing Health. While your Intelligence is higher than your Strength, Marked additional effects are amplified",
+                          "items": [
+                            {
+                              "text": "Ricochet Stuns Marked enemies"
+                            },
+                            {
+                              "text": "Divebomb Knocks Away Marked enemies"
+                            },
+                            {
+                              "text": "Sunbreaker Slows Marked enemies more"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 3: Divebomb",
+                  "items": [
+                    {
+                      "text": "Leap into the air before selecting a location to dive onto, dealing Physical Damage to enemies where you land",
+                      "items": [
+                        {
+                          "text": "Marked enemies who are hit are Knocked Away"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ultimate Ability: Sunbreaker",
+                  "items": [
+                    {
+                      "text": "Shoot down 9 suns onto target area, dealing Physical Damage and Slowing enemies hit. The first sun stays, acting as a wall that Ricochet can bounce off of.",
+                      "items": [
+                        {
+                          "text": "Marked enemies are more heavily Slowed"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect releasing August 1",
+                  "items": [
+                    {
+                      "text": "Aspect of the Mark",
+                      "items": [
+                        {
+                          "text": "Basic Attacks now ricochet, dealing bonus damage to gods per bounce. Bounced Basic Attacks cannot damage structures. Ricochet no longer bounces or stuns; it applies Mark of the Golden Crow on its first hit. If already marked, the mark spreads. Basic Attacks hitting marked targets bounce to a nearby enemy."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Wandering Market Travelers",
+      "anchor": "New_Wandering_Market_Travelers",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Ravenstrike Traveler - Prepare for orbit. Drip status: Intergalactic! Shine like the stars with the all new Ravenstrike Traveler!"
+        },
+        {
+          "type": "paragraph",
+          "text": "Contents"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Ravenstrike Nu Wa Skin - Instantly unlocked after purchasing the Premium Traveler Page"
+            },
+            {
+              "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+              "items": [
+                {
+                  "text": "Ravenstrike - Blood Raven Prism"
+                },
+                {
+                  "text": "Ravenstrike - Cyber White Prism"
+                },
+                {
+                  "text": "Ravenstrike - Teal Tempest Prism"
+                },
+                {
+                  "text": "Nu Wa Ravenstriker Announcer Pack"
+                },
+                {
+                  "text": "Gravbot Ward Skin"
+                },
+                {
+                  "text": "Intergalactic Drip Card Effect"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Trophy Hunter Traveler - There’s no target in the galaxy that Kali can’t take down. Prepare a hunt that’s out of this world with the Trophy Hunter Traveler"
+        },
+        {
+          "type": "paragraph",
+          "text": "Contents"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Classic Trophy Hunter Kali Skin - Instantly unlocked after purchasing the Premium Traveler Page"
+            },
+            {
+              "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+              "items": [
+                {
+                  "text": "Trophy Hunter- Golden Idol Prism"
+                },
+                {
+                  "text": "Trophy Hunter - Blood Huntress Prism"
+                },
+                {
+                  "text": "Trophy Hunter - Astral Assassin Prism"
+                },
+                {
+                  "text": "UFO Jump Stamp"
+                },
+                {
+                  "text": "Trophy Hunter Title"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Quality of Life and New Player Improvements",
+      "anchor": "Quality_of_Life_and_New_Player_Improvements",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Action Camera has been split into two options that offer different Basic Attack behavior",
+              "items": [
+                {
+                  "text": "Action Camera 1: An action oriented camera with Basic Attacks being fired toward a center reticle"
+                },
+                {
+                  "text": "Action Camera 2: An action oriented camera with Basic Attacks being fired forward from your god"
+                }
+              ]
+            },
+            {
+              "text": "The End of Match Lobby screen has been updated with a new layout"
+            },
+            {
+              "text": "The Wandering Market screen screen has been updated with a new layout"
+            },
+            {
+              "text": "God skins on display can now be rotated on the home screen"
+            },
+            {
+              "text": "The Settings screen has been overhauled for easier navigation between settings"
+            },
+            {
+              "text": "Players can now change individual god ability cast modes via the settings menu under Gameplay without having to take that god into practice or a game"
+            },
+            {
+              "text": "Button callout graphics have been updated for better visibility and clarity"
+            },
+            {
+              "text": "Teammate Aspect selections are now shown in the God Select Lobby"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Game Modes",
+      "anchor": "Game_Modes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Joust & Duel",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Titan regen while Phoenix is alive from +0.8% to +0.2% of Max Health per second"
+                }
+              ]
+            },
+            {
+              "text": "Conquest",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Conquest balance this patch is targeting some specific map issues. these are smaller changes as we're taking incremental steps to address feedback to get changes out sooner rather than later:",
+                  "items": [
+                    {
+                      "text": "Too much safe farm",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "We want safe farm to exist in some form as a way to crawl back from a deficit, but we've seen the side camps turn into part of the regular farm rotation for sidelaners, which has encouraged passive playstyles, especially in Solo.",
+                          "items": [
+                            {
+                              "text": "The contestable Cyclops camps now grant XP (in addition to Gold)"
+                            },
+                            {
+                              "text": "Side camps now spawn later, and less often"
+                            },
+                            {
+                              "text": "The side teleporters unlock slightly earlier, but one of the side camps has changed to Oracles which grant vision on the teleporter for some time"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Objectives are too lethal",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "We want to encourage more play around objectives, but currently they are too punishing and which makes them less approachable",
+                          "items": [
+                            {
+                              "text": "Gold Fury and Fire giant deal less damage overall"
+                            },
+                            {
+                              "text": "To compensate for this, we've added some things to make them not as quick to take down solo:",
+                              "items": [
+                                {
+                                  "text": "Bosses now inherently take reduced damage from Crit"
+                                },
+                                {
+                                  "text": "Taking hits from boss attacks applies a debuff that makes you deal less damage to them"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Conquest Change List",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Oracles",
+                      "items": [
+                        {
+                          "text": "Vision granted from this camp now reveals enemy wards inside the Gold Fury Pit"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Fire Giant",
+                      "items": [
+                        {
+                          "text": "Now takes 30% less damage from Critical Strikes"
+                        },
+                        {
+                          "text": "Basic Attacks now deal 2.5% of Max Health as Physical damage"
+                        },
+                        {
+                          "text": "Stats",
+                          "items": [
+                            {
+                              "text": "Decreased base Strength from 188 to 120"
+                            },
+                            {
+                              "text": "Decreased base Intelligence from 188 to 60"
+                            },
+                            {
+                              "text": "Decreased Strength scaling from +8 to +3 every minute"
+                            },
+                            {
+                              "text": "Decreased Intelligence scaling from +8 to +3 every minute"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Changes to Scorched (debuff applied to targets hit by Fire Giant’s attacks)",
+                          "items": [
+                            {
+                              "text": "Reduces healing by -3.75% per victim Level"
+                            },
+                            {
+                              "text": "Reduces damage dealt to the Fire Giant by -1.25% per victim Level"
+                            },
+                            {
+                              "text": "Lasts 5 seconds"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Abilities",
+                          "items": [
+                            {
+                              "text": "Stygian Impact (AoE smash)",
+                              "items": [
+                                {
+                                  "text": "Applies Scorched"
+                                },
+                                {
+                                  "text": "Now deals Magical Damage"
+                                },
+                                {
+                                  "text": "Deals 100% of Fire Giant’s Intelligence as Magical Damage"
+                                },
+                                {
+                                  "text": "Deals an additional 8% of Max Health as Magical Damage"
+                                }
+                              ]
+                            },
+                            {
+                              "text": "Inescapable Crag (five homing rock projectiles)",
+                              "items": [
+                                {
+                                  "text": "Deals 100% of Fire Giant’s Intelligence as Magical Damage"
+                                },
+                                {
+                                  "text": "Each Projectile deals an additional 4% of Max Health as Magical Damage"
+                                }
+                              ]
+                            },
+                            {
+                              "text": "Conflagration (fire field)",
+                              "items": [
+                                {
+                                  "text": "Applies Scorched"
+                                },
+                                {
+                                  "text": "Deals 80 + 25% of Intelligence as Magical Damage (up from 10%)"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Gold Fury",
+                      "items": [
+                        {
+                          "text": "Now takes 30% less damage from Critical Strikes"
+                        },
+                        {
+                          "text": "Increased Lifesteal effectiveness from 50% to 66%"
+                        },
+                        {
+                          "text": "Basic Attacks now deal 1.5% of Max Health as Physical damage"
+                        },
+                        {
+                          "text": "Stats",
+                          "items": [
+                            {
+                              "text": "Decreased base Strength from 64 to 30"
+                            },
+                            {
+                              "text": "Decreased Strength scaling from +8 to +2 every minute"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Changes to Rended (debuff applied to targets hit by Gold Fury’s Basic Attack)",
+                          "items": [
+                            {
+                              "text": "Reduces healing by -2.5% per victim Level"
+                            },
+                            {
+                              "text": "Reduces damage dealt to the Gold Fury by -1.25% per victim Level"
+                            },
+                            {
+                              "text": "Lasts 5 seconds"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Ancient Gold Fury",
+                      "items": [
+                        {
+                          "text": "LifeSteal effectiveness remains at 50%"
+                        },
+                        {
+                          "text": "Decreased Strength scaling from +8 to +3 every minute"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Pyromancer",
+                      "items": [
+                        {
+                          "text": "Basic Attacks now deal 2% of Max Health as Physical damage"
+                        },
+                        {
+                          "text": "Pyromancer’s Burn",
+                          "items": [
+                            {
+                              "text": "Now deals 1.5% of Max Health as Magical damage every second"
+                            },
+                            {
+                              "text": "Lasts 3 seconds"
+                            },
+                            {
+                              "text": "Decreased base Strength from 50 to 30"
+                            },
+                            {
+                              "text": "Decreased Strength scaling from +18 to +9 every 3 minutes"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Duo Lane Buff Camp",
+                      "items": [
+                        {
+                          "text": "Initial spawn time pushed back from 1 minute to 1:30"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Totem",
+                      "items": [
+                        {
+                          "text": "Initial spawn time pushed up from 2 minutes to 1:30"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Side Teleporters",
+                      "items": [
+                        {
+                          "text": "Unlock time pushed up from 10 minutes to 6 minutes"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Cyclops Gold Camp",
+                      "items": [
+                        {
+                          "text": "Cyclops Rogue",
+                          "items": [
+                            {
+                              "text": "Now awards 30 XP (+6.5 every minute)"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Small Cyclops Rogue",
+                          "items": [
+                            {
+                              "text": "Now awards 10 XP (+6.5 every minute)"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Side Camp A (the one closer to lane)",
+                      "items": [
+                        {
+                          "text": "Now spawn one Elder and two Small Harpies"
+                        },
+                        {
+                          "text": "Initial spawn time pushed back to 2 minutes"
+                        },
+                        {
+                          "text": "Increased respawn delay from 2 minutes to 3 minutes"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Side Camp B (the one nearest to the teleporter)",
+                      "items": [
+                        {
+                          "text": "The Harpies here have been replaced with 2 Oracles"
+                        },
+                        {
+                          "text": "Slaying the Oracles provides vision around their nearby teleporter for 3 minutes"
+                        },
+                        {
+                          "text": "Initial spawn time pushed back to 6 minutes when side teleporters unlock"
+                        },
+                        {
+                          "text": "Increased respawn delay from 2 minutes to 4 minutes"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Healing Balance Update",
+              "bold": true,
+              "items": [
+                {
+                  "text": "High-Level Goals",
+                  "items": [
+                    {
+                      "text": "Address Mandatory Anti-Heal:",
+                      "items": [
+                        {
+                          "text": "New Player Trap: The current necessity of anti-heal is a common pitfall for new players who may not understand its importance. Heals sometimes being completely fight swinging or largely ineffectual also makes it difficult to identify the strengths specific gods bring to Smite."
+                        },
+                        {
+                          "text": "Limited Build Variety at Higher Levels: Anti-heal items are often mandatory pickups for multiple gods in a match, taking up a slot that could be used for more interesting build opportunities."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Give “Healer” roles a more consistent presence",
+                      "items": [
+                        {
+                          "text": "Healers will bring a more known quantity to team fights, which is useful for the healer, the person they are healing, and the enemy figuring out how to approach a fight. Jumping from 100% to 25% effectiveness based on being clipped by potentially any effect, can be difficult to track."
+                        },
+                        {
+                          "text": "To help augment this, healing specific itemization should bring even further utility that healers exclusively will bring to team fights."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Give “Lifesteal” roles a more consistent presence",
+                      "items": [
+                        {
+                          "text": "Similar to above, Anubis can sometimes swing to full health or feel like his gameplay doesn’t exist pretty quickly. We want gods that play with their health pool to be able to more reliably control the risks they want to take without making them unapproachable by enemies."
+                        },
+                        {
+                          "text": "To help augment this, lifesteal specific itemization should bring even further utility that lifesteal exclusively will bring to team fights."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "What We Are Removing",
+                  "items": [
+                    {
+                      "text": "Anti-Heal from Items: We are eliminating anti-heal from items. This ensures it is not a required build component."
+                    },
+                    {
+                      "text": "Reduced Lifesteal on Items: Lifesteal on all items will be reduced by approximately 25-50%, depending on the item."
+                    },
+                    {
+                      "text": "All Healing Increases on Items: Items will no longer provide direct increases to healing output."
+                    },
+                    {
+                      "text": "Reduced Item Healing: Healing derived from items will be reduced by approximately 30-60%, depending on the item's specific impact."
+                    },
+                    {
+                      "text": "Reduced God Healing: God-specific healing will be reduced by approximately 30-60%, with the reduction amount dependent on the context of the god's heal:",
+                      "items": [
+                        {
+                          "text": "Larger reductions apply to heals that are easy to trigger and are more defining for the god in question.",
+                          "items": [
+                            {
+                              "text": "Ex. Aphrodite heal has no restriction on using it, is accessible due to its low cooldown, and is a major component of what she brings."
+                            },
+                            {
+                              "text": "Ex. Baron Samedi’s Consign Spirits does require hitting an enemy god, but can apply to a full team. Its ‘base’ amount of healing was more reduced, while its conditional component of healing hurt targets was hit a bit less."
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Lesser reductions apply to heals that are conditional and are more minor for the god in question.",
+                          "items": [
+                            {
+                              "text": "Ex. Aspect Ra Ultimate is on a significant cooldown, so it didn’t receive as large of a reduction."
+                            },
+                            {
+                              "text": "Ex. Most “Solo” Lane gods combat oriented sustain. Achilles’ Radiant Glory or Hua Mulan's Spear Thrust. These require more effort to trigger and put them more at risk, and tend not to have the same top end potential as true healers."
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Most healing is more heavily reduced towards higher levels and scaling. We don’t want to interfere too heavily with the laning phase which largely feels like it is in a good spot."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Reduced God Anti-Healing:",
+                      "items": [
+                        {
+                          "text": "All gods who apply Anti-heal will now apply it at 25% instead of 40%, and they will not stack."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "What We Are Adding",
+                  "items": [
+                    {
+                      "text": "New Lifesteal Items: Introducing new lifesteal items that offer beneficial effects for building lifesteal, without directly increasing healing output."
+                    },
+                    {
+                      "text": "New Healing-Focused Items: Introducing new items that provide benefits for healing or healing abilities, without directly increasing healing output."
+                    },
+                    {
+                      "text": "Adjusted Existing Items:",
+                      "items": [
+                        {
+                          "text": "Brawler's and Contagion: These items have been adjusted to serve as \"soft\" counters to healing and lifesteal, respectively. We may increase the intensity of the soft counter and introduce a few more in the future."
+                        },
+                        {
+                          "text": "Lernaean Bow and Divine Ruin: The stats for these items have been adjusted to be stronger, compensating for the removal of anti-heal."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Item Compensation for Nerfs: For items that experienced closer to a 50% nerf, we will endeavor to add an interesting new component rather than simply leaving them at half strength."
+                    },
+                    {
+                      "text": "God Compensation for Nerfs: For gods that experienced closer to a 50% nerf to their healing, we will provide different utility in their kits to help compensate."
+                    },
+                    {
+                      "text": "Gods Gaining Anti-Heal: Five gods will have anti-heal integrated as a core part of their kits to expand options when drafting against healer heavy compositions:",
+                      "items": [
+                        {
+                          "text": "Agni (Noxious Fumes (1))"
+                        },
+                        {
+                          "text": "Ares (Searing Flesh (3))"
+                        },
+                        {
+                          "text": "Fenrir (Brutalize (3))"
+                        },
+                        {
+                          "text": "Izanami (Spectral Projection (2))"
+                        },
+                        {
+                          "text": "Aspect Chaac (Rain Dance (3))"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Gods",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Gods gaining Anti Heal",
+                  "items": [
+                    {
+                      "text": "Agni",
+                      "items": [
+                        {
+                          "text": "Noxious Fumes",
+                          "items": [
+                            {
+                              "text": "NEW: Now applies 25% Healing Reduction for 5s"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Ares",
+                      "items": [
+                        {
+                          "text": "Searing Flesh",
+                          "items": [
+                            {
+                              "text": "NEW: Now applies 25% Healing Reduction for 5s"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Fenrir",
+                      "items": [
+                        {
+                          "text": "Brutalize",
+                          "items": [
+                            {
+                              "text": "NEW: Now applies 25% Healing Reduction for 5s"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Izanami",
+                      "items": [
+                        {
+                          "text": "Spectral Projection",
+                          "items": [
+                            {
+                              "text": "NEW: Now applies 25% Healing Reduction for 5s"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Chaac",
+                      "items": [
+                        {
+                          "text": "Aspect of Fulmination",
+                          "items": [
+                            {
+                              "text": "Rain Dance",
+                              "items": [
+                                {
+                                  "text": "NEW: Now applies 25% Healing Reduction for 5s"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Achilles",
+                  "items": [
+                    {
+                      "text": "Radiant Glory (2)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal: 18/21/24/27/30 to 16/18/20/22/24"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Amaterasu",
+                  "items": [
+                    {
+                      "text": "Divine Presence (1)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal: 15/25/35/45/55 to 15/21/27/33/39"
+                        },
+                        {
+                          "text": "Decreased Heal Int Scaling: 6.5% to 3.5%"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Anubis",
+                  "items": [
+                    {
+                      "text": "The Scales (P)",
+                      "items": [
+                        {
+                          "text": "Decreased Base Lifesteal: 4% -> 2%"
+                        },
+                        {
+                          "text": "Decreased Lifesteal Per Stack: 1.5% -> 0.75%"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Aphrodite",
+                  "items": [
+                    {
+                      "text": "Kiss (1)",
+                      "items": [
+                        {
+                          "text": "Increased Protection Share: 8% -> 11%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Love Birds (3)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal: 10/15/20/25/30 to 8/10/12/14/16"
+                        },
+                        {
+                          "text": "Decreased Self Heal Scaling: 7.5% to 3.5% Intelligence"
+                        },
+                        {
+                          "text": "Decreased Ally Heal Scaling: 5% to 2.0% Intelligence"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Undying Love (4)",
+                      "items": [
+                        {
+                          "text": "Decreased Cooldown: 100s -> 100/97.5/95/92.5/90s"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Artemis",
+                  "items": [
+                    {
+                      "text": "Aspect of the Wild",
+                      "items": [
+                        {
+                          "text": "Transgressor’s Fate (1)",
+                          "items": [
+                            {
+                              "text": "Decreased Heal: 15/23/30/37/45 -> 12/17/22/27/32"
+                            },
+                            {
+                              "text": "Decreased Heal Scaling: 5% -> 3% Strength"
+                            },
+                            {
+                              "text": "Is now marked as a Healing Ability"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Bacchus",
+                  "items": [
+                    {
+                      "text": "Chug (1)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal: 0/40/60/80/100/120 to 0/30/45/60/75/80"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Belch of the Gods (3)",
+                      "items": [
+                        {
+                          "text": "Decreased Anti-Heal: 40% -> 25%"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Baron Samedi",
+                  "items": [
+                    {
+                      "text": "Consign Spirits (2)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal: 30/55/80/105/130 to 25/35/45/55/65"
+                        },
+                        {
+                          "text": "Decreased Missing Health Heal: 5% -> 3.0%"
+                        },
+                        {
+                          "text": "Decreased Missing Health Scaling: 10% -> 5% Cooldown Rate"
+                        },
+                        {
+                          "text": "Increased Movement Speed Buff: 25% -> 25/27.5/30/32.5/35%"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Bellona",
+                  "items": [
+                    {
+                      "text": "Scourge (3)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal Scaling: 10% -> 6% Physical Protection"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Cabrakan",
+                  "items": [
+                    {
+                      "text": "Enhanced Refraction Shield (2)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal Per Target: 10/14/18/22/26 -> 8/11/14/17/20"
+                        },
+                        {
+                          "text": "Decreased Heal Scaling: 1% -> 0.75% Max Health"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Cerberus",
+                  "items": [
+                    {
+                      "text": "Spirit Of Death (P)",
+                      "items": [
+                        {
+                          "text": "Decreased Healing Reduction: 40% -> 25%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Soul Expulsion (3)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal from Gods: 20/40/60/80/100 to 15/30/45/60/75"
+                        },
+                        {
+                          "text": "Decreased Heal from Minions: 12/19/26/33/40 to 10/15/20/25/30"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Cernunnos",
+                  "items": [
+                    {
+                      "text": "Shifter of Seasons (1)",
+                      "items": [
+                        {
+                          "text": "Decreased Spring Lifesteal: 4/5/6/7/8% to 3/3.5/4/4.5/5%"
+                        },
+                        {
+                          "text": "Decreased Spring Heal Scaling: 15% -> 8% Intelligence"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Chaac",
+                  "items": [
+                    {
+                      "text": "Overflow (P)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal Scaling: 20% to 12.5% Intelligence"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Rain Dance (3)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal: 10/15/20/25/30 to 8/11/14/17/20"
+                        },
+                        {
+                          "text": "Decreased Heal Scaling: 5% -> 2.5% Intelligence"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Cupid",
+                  "items": [
+                    {
+                      "text": "Share the Love (2)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal: 20/35/50/65/80 to 15/25/35/45/55"
+                        },
+                        {
+                          "text": "Decreased Heal Scaling: 7.5% -> 3.5% Intelligence"
+                        },
+                        {
+                          "text": "NEW: Now provides 10% Attack Speed when picked up. If an Ally picks up the Heart, Cupid also receives the Attack Speed buff."
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Fields of Love (4)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal: 60/95/130/165/200 -> 60/75/90/105/120"
+                        },
+                        {
+                          "text": "Decreased Heal Scaling: 20% -> 12.5% Intelligence"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Aspect of Love",
+                      "items": [
+                        {
+                          "text": "Heart Bomb (1)",
+                          "items": [
+                            {
+                              "text": "Decreased Heal: 40/60/80/100/120 -> 25/40/55/70/85"
+                            },
+                            {
+                              "text": "Decreased Heal Scaling: 15% -> 8% Strength & Intelligence"
+                            },
+                            {
+                              "text": "Is now marked as a Healing Ability"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Danzaburou",
+                  "items": [
+                    {
+                      "text": "Alluring Spirits (2)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal Scaling: 5% -> 3.0% Intelligence"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Fenrir",
+                  "items": [
+                    {
+                      "text": "Seething Howl (2)",
+                      "items": [
+                        {
+                          "text": "Decreased Lifesteal: 20% to 12%"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Guan Yu",
+                  "items": [
+                    {
+                      "text": "Conviction (1)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal: 55/95/135/175/215 -> 45/65/85/105/125"
+                        },
+                        {
+                          "text": "Decreased Heal Scaling: 12.5% to 6% Intelligence"
+                        },
+                        {
+                          "text": "Increased Ally Cooldown Reduction: 1s -> 1.5s"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Aspect of the General",
+                      "items": [
+                        {
+                          "text": "Decreased Heal over Time: 8/16/24/32/40 6/11/16/21/26"
+                        },
+                        {
+                          "text": "Decreased Heal over Time Scaling: 3% -> 1.5% Intelligence"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Hades",
+                  "items": [
+                    {
+                      "text": "Devour Souls (3)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal: 10/25/40/55/70 to 10/19/28/37/46"
+                        },
+                        {
+                          "text": "Decreased Heal Scaling: 7.5% -> 3.5% Protections and Intelligence"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Hercules",
+                  "items": [
+                    {
+                      "text": "Mitigate Wounds",
+                      "items": [
+                        {
+                          "text": "Decreased Heal: 45/75/105/135/165 -> 40/60/80/100/120"
+                        },
+                        {
+                          "text": "Decreased Heal from Recent Damage Taken: 30/35/40/45/50% to 25/27.5/30/32.5/35%"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Hua Mulan",
+                  "items": [
+                    {
+                      "text": "Spear Thrust (2)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal: 20/30/40/50/60 -> 17/24/31/38/45"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Kali",
+                  "items": [
+                    {
+                      "text": "Marked for Death (P)",
+                      "items": [
+                        {
+                          "text": "Decreased Mark Kill Health Heal: 30% -> 20%"
+                        },
+                        {
+                          "text": "Decreased Mark Assist Health Heal: 15% -> 7.5%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Nimble Strike (1)",
+                      "items": [
+                        {
+                          "text": "Decreased Missing Health Heal: 10% to 6%."
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Rupture (3)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal: 20/35/50/65/80 -> 18/26/34/42/50"
+                        },
+                        {
+                          "text": "Decreased Heal per Stack: 10/13/16/19/22 -> 8/10/12/14/16"
+                        },
+                        {
+                          "text": "Decreased Heal per Stack Scaling: 7% -> 4% Intelligence"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Aspect of Unbound Destruction",
+                      "items": [
+                        {
+                          "text": "Rupture (3)",
+                          "items": [
+                            {
+                              "text": "Decreased Heal: 10 -> 7"
+                            },
+                            {
+                              "text": "Decreased Heal Bonus per Level: 4 - 3"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Destruction (4)",
+                          "items": [
+                            {
+                              "text": "Decreased Lifesteal: 15/17.5/20/22.5/25% -> 10% at all ranks"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Mordred",
+                  "items": [
+                    {
+                      "text": "Cruel Strike (1)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal Scaling: 45% Protections -> 25% Protections"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Heart Slash (4)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal Scaling: 20% -> 12.5% Intelligence"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Neith",
+                  "items": [
+                    {
+                      "text": "Unravel (2)",
+                      "items": [
+                        {
+                          "text": "Decreased God Heal: 30/40/50/60/70 -> 25/32/39/46/54"
+                        },
+                        {
+                          "text": "Decreased Minion Heal: 15/20/25/30/35 -> 11/15/19/23/27"
+                        },
+                        {
+                          "text": "Decreased Heal Scaling: 10% -> 5% Intelligence"
+                        },
+                        {
+                          "text": "Decreased Increased Heal Scaling: 10% -> 5% Intelligence"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Nemesis",
+                  "items": [
+                    {
+                      "text": "Retribution (3)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal of % Damage Blocked: 50% -> 40%"
+                        },
+                        {
+                          "text": "Decreased Heal Scaling: 10% -> 5% Intelligence"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Odin",
+                  "items": [
+                    {
+                      "text": "Ring of Spears (4)",
+                      "items": [
+                        {
+                          "text": "Odin’s Ring of Spears will still fully block all healing."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Pele",
+                  "items": [
+                    {
+                      "text": "Everlasting Flame (P)",
+                      "items": [
+                        {
+                          "text": "Decreased Lifesteal: 25% -> 15%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Aspect of Obsidian (3)",
+                      "items": [
+                        {
+                          "text": "Decreased Fuel Heal Per Tick: 5/10/15/20/25 -> 4/7/10/13/16"
+                        },
+                        {
+                          "text": "Decreased Fuel Heal Scaling: 2.5% -> 1.25% Health from Items"
+                        },
+                        {
+                          "text": "Decreased Amped Fuel Heal Per Tick: 10/20/30/40/50 -> 8/14/20/26/32"
+                        },
+                        {
+                          "text": "Decreased Amped Fuel Heal Per Tick: 5% -> 2.5% Health from Items"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Non-Healing Pass Adjustments",
+                      "items": [
+                        {
+                          "text": "“Pele has continued to perform very well, both in her Aspect and Non-Aspect versions. While we know a lot will change with this healing pass, we felt she needed additional adjustments still.”"
+                        },
+                        {
+                          "text": "General",
+                          "items": [
+                            {
+                              "text": "Decreased Per Level Health: 97.5 -> 92.6"
+                            },
+                            {
+                              "text": "Pele will have 98 less Max Health at level 20."
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Pyroclast",
+                          "items": [
+                            {
+                              "text": "Decreased Initial Damage Scaling: 60% -> 55%"
+                            },
+                            {
+                              "text": "Decreased Return Damage: 30 -> 25"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Eruption",
+                          "items": [
+                            {
+                              "text": "Decreased Bonus Movement Speed Peak: 350% -> 275%"
+                            },
+                            {
+                              "text": "Essentially this means Pele won’t cover as much ground upon activating her Eruption."
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ra",
+                  "items": [
+                    {
+                      "text": "Solar Blessing (3)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal: 12/24/36/48/60 -> 10/17/24/31/38"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Aspect of Thermotherapy (4)",
+                      "items": [
+                        {
+                          "text": "Searing Pain (4)",
+                          "items": [
+                            {
+                              "text": "Decreased Heal: 200/350/500/650/800 -> 150/250/350/450/550"
+                            },
+                            {
+                              "text": "Is now marked as a Healing Ability"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Rama - Not Healing Related",
+                  "items": [
+                    {
+                      "text": "General",
+                      "items": [
+                        {
+                          "text": "Increased Base Attack Speed: 0.953 -> 1"
+                        },
+                        {
+                          "text": "Increased Attack Speed Per Level: 1.51% -> 1.7%"
+                        },
+                        {
+                          "text": "These were his intended numbers, but due to an issue he was not getting them. This is more a fix that will also help how his Attack Speed interacts with Attack Speed stims."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Sobek",
+                  "items": [
+                    {
+                      "text": "Sickening Strike (3)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal: 22/29/36/43/50 -> 18/23/28/33/38"
+                        },
+                        {
+                          "text": "Decreased Healing Reduction: 40% -> 25%"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Sol",
+                  "items": [
+                    {
+                      "text": "Radiance (1)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal Scaling: 2% -> 1.25% Intelligence"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Thanatos",
+                  "items": [
+                    {
+                      "text": "Harvester of Souls (P)",
+                      "items": [
+                        {
+                          "text": "Decreased God Kill Heal: 25% -> 15% of their Max Health"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Death Scythe (1)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal: 50% -> 35% of total damage done"
+                        },
+                        {
+                          "text": "Decreased Health Cost: 6% -> 4% Health"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Aspect of Reaping",
+                      "items": [
+                        {
+                          "text": "Soul Reap (3)",
+                          "items": [
+                            {
+                              "text": "Decreased Heal Scaling: 0.5% -> 0.3% Max Health"
+                            },
+                            {
+                              "text": "Is now marked as a Healing Ability"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Thor",
+                  "items": [
+                    {
+                      "text": "Aspect of Thunderstruck",
+                      "items": [
+                        {
+                          "text": "Warrior’s Madness (P)",
+                          "items": [
+                            {
+                              "text": "Decreased Heal Scaling: 3% -> 2% Max Health"
+                            },
+                            {
+                              "text": "Decreased Per Level Heal Scaling: 0.075% -> 0.04% Max Health"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ullr",
+                  "items": [
+                    {
+                      "text": "Wield Axes/Wield Bow (4)",
+                      "items": [
+                        {
+                          "text": "Decreased Lifesteal: 8/13/18/23/28% -> 5/8/11/14/17%"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Yemoja",
+                  "items": [
+                    {
+                      "text": "Omi (P)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal Duration: 6s -> 4s"
+                        },
+                        {
+                          "text": "Decreased Heal Per Level: 0.2 -> 0.1"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Mending Waters (2)",
+                      "items": [
+                        {
+                          "text": "Decreased Heal: 20/40/60/80/100 -> 15/25/35/45/55"
+                        },
+                        {
+                          "text": "Is now marked as a Healing Ability"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Healing Item Balance",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Divine Ruin",
+                  "items": [
+                    {
+                      "text": "Now builds from Evil Eye and Killing Stone."
+                    },
+                    {
+                      "text": "Increased Cost: 2300g -> 2500g"
+                    },
+                    {
+                      "text": "Increased Intelligence: 85 -> 95"
+                    },
+                    {
+                      "text": "Increased Intelligence Scaling: 7.5% -> 10%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Lernaean Bow",
+                  "items": [
+                    {
+                      "text": "Now builds from Hunter’s Bow and Skeggox"
+                    },
+                    {
+                      "text": "Increased Cost: 2400 -> 2500"
+                    },
+                    {
+                      "text": "Increased Strength: 30 -> 40"
+                    }
+                  ]
+                },
+                {
+                  "text": "Brawler’s Ruin -> Renamed to Brawler’s Beat Stick",
+                  "items": [
+                    {
+                      "text": "REMOVED: Healing Reduction Passive"
+                    },
+                    {
+                      "text": "Now builds from Survivor’s Sash and Legionnaires Armor"
+                    },
+                    {
+                      "text": "Increased Cost: 2450 -> 2550"
+                    },
+                    {
+                      "text": "+20 Physical Protection"
+                    },
+                    {
+                      "text": "NEW Passive: You gain 45 Strength or 60 Intelligence, whichever you have more of from items."
+                    },
+                    {
+                      "text": "NEW Passive: If you have not taken or dealt god damage in the last 5s, gain a bonus 75% of the above passive when dealing damage for 4s. If you took damage, instead gain 30 Physical Protection. If an enemy within 11.2m uses a healing Ability, immediately gain both effects."
+                    }
+                  ]
+                },
+                {
+                  "text": "Contagion",
+                  "items": [
+                    {
+                      "text": "REMOVED: Healing Reduction Passive"
+                    },
+                    {
+                      "text": "Now builds from Olmec Blue and Veve Charm"
+                    },
+                    {
+                      "text": "Increased Cost: 2150 -> 2250"
+                    },
+                    {
+                      "text": "NEW Passive: When you are damaged by an enemy Basic Attack or Ability, apply 1 stack of Contagion to them for 20s (once per attack). If you Basic Attack or apply Hard Crowd Control to an enemy with Contagion, consume them to deal 1% of your Max Health as Magical Damage per stack, in a 4m area. If someone lifesteals 100 Health from you, immediately apply 5 stacks to them."
+                    }
+                  ]
+                },
+                {
+                  "text": "REMOVED: Ruinous Ankh, Ruinous Poison, and Ruinous Venom(anti heal section in store needs to go)",
+                  "items": [
+                    {
+                      "text": "Healing Reduction items are largely being moved towards being items not defined by anti heal or being softer counters. We may utilize Ruinous Ankh in the future but it would receive a new passive or be largely reworked. Ruinous Poison and Ruinous Venom are no longer needed for these recipes."
+                    }
+                  ]
+                },
+                {
+                  "text": "Scythe (T1)",
+                  "items": [
+                    {
+                      "text": "Decreased Lifesteal: 5% -> 4%"
+                    },
+                    {
+                      "text": "Increased Cost: 450 -> 550g"
+                    }
+                  ]
+                },
+                {
+                  "text": "Adamantite Sickle (T2)",
+                  "items": [
+                    {
+                      "text": "Decreased Lifesteal: 7% -> 5%"
+                    },
+                    {
+                      "text": "Increased Cost: 1100 -> 1200g"
+                    }
+                  ]
+                },
+                {
+                  "text": "Cursed Sickle (T2)",
+                  "items": [
+                    {
+                      "text": "Decreased Lifesteal: 15% -> 7.5%"
+                    },
+                    {
+                      "text": "Decreased Cost: 1100 -> 850g"
+                    }
+                  ]
+                },
+                {
+                  "text": "Bancroft’s Talon",
+                  "items": [
+                    {
+                      "text": "Decreased Lifesteal: 15% -> 7.5%"
+                    },
+                    {
+                      "text": "Decreased Lifesteal Bonus from Passive: 20% -> 10%"
+                    },
+                    {
+                      "text": "Increased Intelligence: 30 -> 40"
+                    },
+                    {
+                      "text": "Increased intelligence Bonus from Passive: 60 -> 70"
+                    }
+                  ]
+                },
+                {
+                  "text": "Blood-Bound Book",
+                  "items": [
+                    {
+                      "text": "Decreased Lifesteal: 15% -> 7.5%"
+                    },
+                    {
+                      "text": "Increased Intelligence: 55 -> 60"
+                    },
+                    {
+                      "text": "Decreased Lifesteal while Shield is active: 20% -> 10%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Bloodforge",
+                  "items": [
+                    {
+                      "text": "Decreased Lifesteal: 15% -> 7.5%"
+                    },
+                    {
+                      "text": "Increased Strength: 40-> 45"
+                    },
+                    {
+                      "text": "Decreased Lifesteal while Shield is active: 20% -> 10%"
+                    },
+                    {
+                      "text": "Increased Cost: 2450 -> 2550"
+                    }
+                  ]
+                },
+                {
+                  "text": "“While working on this healing pass, it came up that The Reaper, Serrated Edge, and Devourer’s Gauntlets largely filled a very similar role, being largely mathematically similar and with similar ease to gain their effects. We are reworking all three to be more unique in their identities.",
+                  "items": [
+                    {
+                      "text": "The Reaper is now a high risk item, with the potential to actually get weaker if you die too frequently."
+                    },
+                    {
+                      "text": "Serrated Edge has been renamed to Barbed Carver to highlight its different function. It now focuses on apply wounds to the enemy, which grant follow up attacks against them bonus scaling."
+                    },
+                    {
+                      "text": "Devourer’s Gauntlet is returning to its last hit stacking origins, giving it a more clear role for farm heavy gods. Its evolution allows these stacks to continue, especially if you control objectives on the map. We do know that this previously moved away from this stacking method since stacking was difficult in other modes. We may investigate a specific version of this item for those modes in the future, but felt this gave it a very clear identity within the trio.”"
+                    }
+                  ]
+                },
+                {
+                  "text": "The Reaper",
+                  "items": [
+                    {
+                      "text": "REMOVED: Current Passive"
+                    },
+                    {
+                      "text": "NEW: Passive: When you kill anything, gain a stack that provides 6 Strength for 5s, stacking up to 3 times. Stacks are removed 1 at a time. Killing a god increases the max stack by 1 and restores you for 15% of the slain gods max health. Assists restore 7.5% Health but does not grant a stack. When you die, lose a max stack (Minimum 1)."
+                    },
+                    {
+                      "text": "Decreased Lifesteal: 20% -> 10%"
+                    },
+                    {
+                      "text": "Decreased Cost: 2650g -> 2600g"
+                    }
+                  ]
+                },
+                {
+                  "text": "REMOVED: Serrated Edge",
+                  "items": [
+                    {
+                      "text": "Barbed Carver is taking its place with a more applicable effect to a variety of gods."
+                    }
+                  ]
+                },
+                {
+                  "text": "NEW: Barbed Carver",
+                  "items": [
+                    {
+                      "text": "Cost: 2500g"
+                    },
+                    {
+                      "text": "+40 Strength"
+                    },
+                    {
+                      "text": "+7.5% Lifesteal"
+                    },
+                    {
+                      "text": "Passive: Enemies damaged by your Abilities gain a stack of jagged wounds for 5s, up to 3 stacks (once per ability per target). Your Basic Attacks and Abilities deal a bonus 8% (+1% per 10% Lifesteal) Physical Damage for each stack of jagged wounds."
+                    }
+                  ]
+                },
+                {
+                  "text": "Devourer’s Gauntlet",
+                  "items": [
+                    {
+                      "text": "REMOVED: No longer gain stacks by dealing damage"
+                    },
+                    {
+                      "text": "NEW: Gain 1 stack when killing a minion or Jungle Monster."
+                    },
+                    {
+                      "text": "NEW: Evolved Passive: Ravenous - This item continues to stack, but requires 8 minion kills for an additional stack. Jungle bosses kills or assists count as 40 minions."
+                    },
+                    {
+                      "text": "Increased Stack Count: 50 to 75."
+                    },
+                    {
+                      "text": "Increased Strength: 30 -> 35"
+                    },
+                    {
+                      "text": "Increased Cost: 2350 -> 2400"
+                    },
+                    {
+                      "text": "Decreased Lifesteal: 10% -> 5%"
+                    },
+                    {
+                      "text": "Decreased Lifesteal Per Stack: 0.1% -> 0.075%"
+                    },
+                    {
+                      "text": "Decreased Lifesteal Bonus on Full Stacks: 7% -> 5%"
+                    },
+                    {
+                      "text": "Fully Evolved Comparison",
+                      "items": [
+                        {
+                          "text": "Increased Strength: 60 -> 72.5"
+                        },
+                        {
+                          "text": "Decreased Lifesteal: 22% -> 15%"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Nimble Ring",
+                  "items": [
+                    {
+                      "text": "Decreased Lifesteal: 10% -> 7.5%"
+                    },
+                    {
+                      "text": "Decreased Intelligence: 45 -> 35"
+                    }
+                  ]
+                },
+                {
+                  "text": "Soul Gem",
+                  "items": [
+                    {
+                      "text": "Decreased Lifesteal: 10% -> 7.5%"
+                    },
+                    {
+                      "text": "Increased Cost: 2400 -> 2500g"
+                    }
+                  ]
+                },
+                {
+                  "text": "REMOVED: Typhon’s Fang",
+                  "items": [
+                    {
+                      "text": "It has been reworked into Typhon’s Heart with a new effect."
+                    }
+                  ]
+                },
+                {
+                  "text": "NEW: Typhon’s Heart",
+                  "items": [
+                    {
+                      "text": "Cost: 2600g"
+                    },
+                    {
+                      "text": "Builds from Cursed Sickle + Killing Stone + 850g"
+                    },
+                    {
+                      "text": "+40 Intelligence"
+                    },
+                    {
+                      "text": "+12.5% Lifesteal"
+                    },
+                    {
+                      "text": "NEW: Passive: Every minion or jungle monster Kill provides 1 stack. God Kills provide 30 and Assists, 15. At 30 stacks, summon a monster of Typhon. It has 200 + 50 per level Health and deals damage equal to 300% of your Lifesteal and 20% of your Intelligence. Your lifesteal Heals it. If you would summon another, instead fully Heal your current one and grant it 25% Health, Attack Speed, and Movement Speed, stacking up to 5 times."
+                    }
+                  ]
+                },
+                {
+                  "text": "NEW: Gluttonous Grimoire",
+                  "items": [
+                    {
+                      "text": "Cost: 2600g"
+                    },
+                    {
+                      "text": "Builds from Flaming Pearl + Cursed Sickle + 800g"
+                    },
+                    {
+                      "text": "+40 Intelligence"
+                    },
+                    {
+                      "text": "+150 Health"
+                    },
+                    {
+                      "text": "+10% Lifesteal"
+                    },
+                    {
+                      "text": "Passive: 25% of Lifesteal healing is stored into your next Basic Attack that successfully damages an enemy god as Bonus Magical Damage. If you are at maximum health, store 40% of the healing. The stored amount is capped to 33% of your Maximum Health."
+                    }
+                  ]
+                },
+                {
+                  "text": "NEW: Sanguine Lash",
+                  "items": [
+                    {
+                      "text": "Cost: 2800g"
+                    },
+                    {
+                      "text": "Builds from Reinforced Axe + Adamantine Sickle + 650g"
+                    },
+                    {
+                      "text": "+25 Strength"
+                    },
+                    {
+                      "text": "+25 Physical Protection"
+                    },
+                    {
+                      "text": "+10% Lifesteal"
+                    },
+                    {
+                      "text": "Passive: Enemies within 4m take 2% (+1% for every 10% Lifesteal) of their health as physical damage every second (up to 200). When this damages a god, reduce the Active cooldown by 5s (+1s for every 10% Lifesteal). Minions reduce it by 0.5s. This item's damage can trigger lifesteal."
+                    },
+                    {
+                      "text": "Active: Lash out at enemies within 4m for 10% of their maximum health as Physical damage (max 500). Can store up to 3 charges. Cooldown: 90s"
+                    }
+                  ]
+                },
+                {
+                  "text": "NEW: Umbral Link",
+                  "items": [
+                    {
+                      "text": "Cost: 2700g"
+                    },
+                    {
+                      "text": "Builds from Legionnaire Armor + Cursed Sickle + 1100g"
+                    },
+                    {
+                      "text": "+40 Physical Protection"
+                    },
+                    {
+                      "text": "+10% Lifesteal"
+                    },
+                    {
+                      "text": "Passive: Split your lifesteal healing with allied gods within 11.2m evenly. Each unique ally healed like this grants you 10 Protections for 8s. This link only works while you are above 50% Health."
+                    }
+                  ]
+                },
+                {
+                  "text": "NEW: Daybreak Gavel",
+                  "items": [
+                    {
+                      "text": "Cost: 2750g"
+                    },
+                    {
+                      "text": "Builds from Survivor’s Sash + Veve Charm + 950g"
+                    },
+                    {
+                      "text": "+275 Health"
+                    },
+                    {
+                      "text": "Passive: You gain 55 Strength or 75 Intelligence depending on which stat from items is higher."
+                    },
+                    {
+                      "text": "Passive: For each unique god healed by a healing ability, gain a stack, up to 4. Your next ability consumes all the stacks to contribute 10% additional Strength and Intelligence scaling per stack consumed (up to 40%)."
+                    }
+                  ]
+                },
+                {
+                  "text": "NEW: Heartwood Charm",
+                  "items": [
+                    {
+                      "text": "Cost: 2650g"
+                    },
+                    {
+                      "text": "Builds from Adroit Ring + Odigba + 1200g"
+                    },
+                    {
+                      "text": "+400 Health"
+                    },
+                    {
+                      "text": "+250 Mana"
+                    },
+                    {
+                      "text": "+10 Cooldown Rate"
+                    },
+                    {
+                      "text": "Passive: Your healing abilities have 20% reduced Cooldowns and each cast reduces this items active cooldown by 10s."
+                    },
+                    {
+                      "text": "Active : Your next non-ultimate healing ability will have no cooldown but deals 50% reduced damage."
+                    }
+                  ]
+                },
+                {
+                  "text": "REWORKED: Rod of Asclepius",
+                  "items": [
+                    {
+                      "text": "REMOVED: Increased Healing."
+                    },
+                    {
+                      "text": "REMOVED: Active removing all anti-heal."
+                    },
+                    {
+                      "text": "NEW: Active: Send out healing snakes to allied gods within 8.8m restoring 10% of their health over 10s. This healing counts as healing from an Ability. The snake is sacrificed if the target has 6 debuffs active, immediately healing for 10% health and applying all non-damage immunities for 1s. Costs: 35% Mana. CD: 90s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Breastplate of Valor",
+                  "items": [
+                    {
+                      "text": "NEW: Health restored due to your own healing (abilities only) now also contributes to reducing your cooldowns."
+                    }
+                  ]
+                },
+                {
+                  "text": "NEW: Regrowth Striders",
+                  "items": [
+                    {
+                      "text": "Cost: 2550g"
+                    },
+                    {
+                      "text": "Builds from Captain’s Ring + Legionnaire Armor + 1000g"
+                    },
+                    {
+                      "text": "+40 Physical Protection"
+                    },
+                    {
+                      "text": "+3 Mana Regen"
+                    },
+                    {
+                      "text": "+15% Cooldown Rate"
+                    },
+                    {
+                      "text": "Passive: When you heal yourself from an ability, gain a burst of 35% Movement Speed that decays to 10% over 5s for 5s. Cooldown: 10s"
+                    },
+                    {
+                      "text": "Passive: When you gain a Movement Speed buff restore 5% of your health over 5s."
+                    }
+                  ]
+                },
+                {
+                  "text": "NEW: Vital Amplifier",
+                  "items": [
+                    {
+                      "text": "Cost: 2500g"
+                    },
+                    {
+                      "text": "Builds from Survivor’s Sash + Olmec Blue + 800g"
+                    },
+                    {
+                      "text": "+20% Attack Speed"
+                    },
+                    {
+                      "text": "+200 Health"
+                    },
+                    {
+                      "text": "+3 Health Regen"
+                    },
+                    {
+                      "text": "Passive: Passive: Gain 30 Strength or 45 Intelligence, whichever you have more of from Items."
+                    },
+                    {
+                      "text": "Passive: After healing yourself or an allied god with an ability you gain 10% Attack Speed and 5% Basic Attack Damage for 6s, stacking 3 times."
+                    }
+                  ]
+                },
+                {
+                  "text": "REWORKED: Amanita Charm",
+                  "items": [
+                    {
+                      "text": "Increased Heal: 2% HP -> 3% HP"
+                    },
+                    {
+                      "text": "Decreased Tick Rate: 0.5s -> 1.5s"
+                    },
+                    {
+                      "text": "Decreased Lifetime: 5s -> 4.5s"
+                    },
+                    {
+                      "text": "NEW: Now ticks once immediately upon deploy"
+                    },
+                    {
+                      "text": "Overall this decreases the healing from 20% over 5s -> 12% over 4.5s."
+                    },
+                    {
+                      "text": "NEW: Gain a stack of Sporeguard. Each buff stack reduces enemy Basic Attack and Ability damage by 10% before being removed. Ultimate Ability damage is reduced by 5% and all stacks are removed."
+                    }
+                  ]
+                },
+                {
+                  "text": "Eros’ Bow",
+                  "items": [
+                    {
+                      "text": "Decreased Heal: 3% -> 1.5% of your Maximum Health"
+                    },
+                    {
+                      "text": "Increased Max Health: 250 -> 300"
+                    }
+                  ]
+                },
+                {
+                  "text": "Shield of the Phoenix",
+                  "items": [
+                    {
+                      "text": "Decreased Heal: 3% -> 1.5% Max Health"
+                    },
+                    {
+                      "text": "Decreased Mana Heal: 3% ->2% Max Mana"
+                    }
+                  ]
+                },
+                {
+                  "text": "Phoenix Feather",
+                  "items": [
+                    {
+                      "text": "Decreased Base Heal: 100 -> 75"
+                    },
+                    {
+                      "text": "Decreased Missing Health Heal: 10% -> 7.5% of your Missing Health"
+                    }
+                  ]
+                },
+                {
+                  "text": "Leather Cowl",
+                  "items": [
+                    {
+                      "text": "Decreased Lifesteal: 5% -> 4%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Hunter’s Cowl",
+                  "items": [
+                    {
+                      "text": "Decreased Lifesteal Aura: 10% -> 5%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Other Item Balance",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Agility Relic (New Relic)",
+                  "items": [
+                    {
+                      "text": "“Quickplay has been a fun testing ground for different ideas, and one idea that players coming to the game seem to be enjoying is the ability to frequently dash in and out of combat along with higher projectile speeds for ranged gods. As we continue to work on the new player experience, we also have work to do on helping them transition out of the quickplay to see the full breadth of Smite. A part of this is ensuring tools they have come to enjoy exist in some way outside of their introduction."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Agility Relic will now be a choice for all players that will compete with other relics, allowing it to exist but be a distinct tradeoff as it leaves quickplay. It also has a longer cooldown than it did and a unique melee god only benefit to contrast the ranged bonus it granted in quickplay. We do know this is a pretty large potential meta shakeup, so we are currently disabling this relic for Ranked Conquest. We will keep a close eye on how this performs, as well as how the bonus passive effects affect the overall game before we commit to enabling this in Ranked Conquest.\nIt is also unique in being triggered by Shift, which was the default bind for quickplay for it. It will also utilize this bind which is modifiable.”"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "items": [
+                {
+                  "items": [
+                    {
+                      "text": "Active: Dash in the direction you are currently moving. Cooldown: 10s."
+                    },
+                    {
+                      "text": "Passive (Ranged Only) : Your projectiles travel 40% faster."
+                    },
+                    {
+                      "text": "Passive (Melee gods only): Your Basic Attacks will lunge forward if an enemy is slightly outside of your Basic Attack range. This does not trigger if you are strafing or backpedaling. (There is cooldown logic to prevent chain dashing to targets trying to flee)"
+                    }
+                  ]
+                },
+                {
+                  "text": "“Aside from the Healing adjustments we wanted to look at underperforming Tank and Bruiser itemization now that our previous balance pass has had a lot more time to settle. All items on this list were underperforming, especially to other items similar to them seeing success.”"
+                },
+                {
+                  "text": "Golden Blade",
+                  "items": [
+                    {
+                      "text": "Now builds from Battle Axe and Manchu’s Bow. Cost remains the same."
+                    },
+                    {
+                      "text": "Increased Strength: 20 -> 30"
+                    }
+                  ]
+                },
+                {
+                  "text": "Shield Splitter",
+                  "items": [
+                    {
+                      "text": "Decreased Cost: 2450 -> 2400"
+                    },
+                    {
+                      "text": "Increased Strength: 35 -> 40"
+                    }
+                  ]
+                },
+                {
+                  "text": "Erosion",
+                  "items": [
+                    {
+                      "text": "Increased Physical Protection: 25 -> 30"
+                    },
+                    {
+                      "text": "Increased Magical Protection: 15 -> 20"
+                    }
+                  ]
+                },
+                {
+                  "text": "Leviathan’s Hide",
+                  "items": [
+                    {
+                      "text": "“Leviathan’s permanent health stacking is interesting, but we wanted to put more of the onus on the person holding the item to better optimize gaining stacks.”"
+                    },
+                    {
+                      "text": "Removed: Gain 1 Max Health with enemy gods who hit you with Basic Attacks."
+                    },
+                    {
+                      "text": "New Passive: Gain 6 Max Health permanently when you damage an enemy god with a Basic Attack. Cooldown: 10s. Cooldown reduced by 0.5s when taking damage from an enemy god, once per ability or Basic Attack."
+                    }
+                  ]
+                },
+                {
+                  "text": "Berserker’s Shield",
+                  "items": [
+                    {
+                      "text": "Increased Cost: 2300 -> 2400"
+                    },
+                    {
+                      "text": "Increased Physical Protection: 20 -> 30"
+                    },
+                    {
+                      "text": "Increased Magical Protection: 10 -> 15"
+                    }
+                  ]
+                },
+                {
+                  "text": "Musashi’s Dual Swords",
+                  "items": [
+                    {
+                      "text": "“Musashi’s was a good way behind the rest of the Critical Strike items and should be a compelling option for our more Melee focused Critical Strike users. This should move it in the right direction.”"
+                    },
+                    {
+                      "text": "Decreased Cost: 2750 -> 2700"
+                    },
+                    {
+                      "text": "Increased Strength: 30 -> 35"
+                    },
+                    {
+                      "text": "Increased Bonus Movement Speed: 10% -> 15%"
+                    },
+                    {
+                      "text": "Increased Bonus Speed Buff Duration: 4s -> 5s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Magi’s Cloak",
+                  "items": [
+                    {
+                      "text": "Decreased Cost: 2500 -> 2400"
+                    },
+                    {
+                      "text": "Increased Physical Protection: 30 -> 35"
+                    },
+                    {
+                      "text": "Increased Magical Protection: 30 -> 35"
+                    }
+                  ]
+                },
+                {
+                  "text": "Genji’s Guard",
+                  "items": [
+                    {
+                      "text": "Increased Magical protection: 45 -> 50"
+                    },
+                    {
+                      "text": "Increased Cooldown Rate: 10 -> 15"
+                    }
+                  ]
+                },
+                {
+                  "text": "Dwarven Plate",
+                  "items": [
+                    {
+                      "text": "“Of the trio of Late Game protection items, this was performing significantly behind the other two. We found an issue that could be a cause of this, as well as felt the item itself needed more bulk on its own.”"
+                    },
+                    {
+                      "text": "Increased Physical Protection: 30 -> 35"
+                    },
+                    {
+                      "text": "Increased Magical Protection: 30 -> 35"
+                    },
+                    {
+                      "text": "Fixed an issue where this was only providing 10% and 20% of your Protections, rather than the intended 12.5% and 25%."
+                    }
+                  ]
+                },
+                {
+                  "text": "Draconic Scales",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where the flat bonus protections from this item were not considered Item Protections for other items scaling."
+                    },
+                    {
+                      "text": "NOTE: Flat increases from items like this should contribute to Item Protections. Percentile increases like Dwarven Plate or the % portion of the stack of Draconic Scale do not."
+                    },
+                    {
+                      "text": "NOTE: We had reports of Spirit Robe also having this problem, but upon investigating concluded it is working correctly (As seen with Gladiator’s Shield). If you had reported this issue more details would be appreciated on the specific combination of effects you were trying to utilize."
+                    }
+                  ]
+                },
+                {
+                  "text": "Jade Scepter",
+                  "items": [
+                    {
+                      "text": "Decreased Intelligence: 105 -> 90"
+                    },
+                    {
+                      "text": "Increased Cooldown: 40s -> 60s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "PTS Balance and Fixes",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Heartwood Charm",
+                  "items": [
+                    {
+                      "text": "Fixed an issue on PTS where it was providing 20 Cooldown Rate instead of 10 as intended. (noting this since it was strong on PTS)"
+                    }
+                  ]
+                },
+                {
+                  "text": "Breastplate Of Valor",
+                  "items": [
+                    {
+                      "text": "Reduced Healing Converted: 100% -> 25%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Regrowth Striders",
+                  "items": [
+                    {
+                      "text": "Increased Heal Duration: 5s -> 10s"
+                    },
+                    {
+                      "text": "Decreased Heal Per Tick: 1% -> 0.5% Max Health"
+                    }
+                  ]
+                },
+                {
+                  "text": "Blood-Soaked Shroud",
+                  "items": [
+                    {
+                      "text": "Decreased Enemy Heal: 1% -> 0.5% Max Health"
+                    },
+                    {
+                      "text": "Decreased God Heal Bonus: 2% -> 1% Max Health"
+                    }
+                  ]
+                },
+                {
+                  "text": "Spirit Robe",
+                  "items": [
+                    {
+                      "text": "Decreased Heal Per Tick: 1% -> 0.667% (6% Total down to 4% total)."
+                    }
+                  ]
+                },
+                {
+                  "text": "Daybreak Gavel",
+                  "items": [
+                    {
+                      "text": "Decreased Cost: 2750 -> 2650"
+                    },
+                    {
+                      "text": "Increased Health: 275 -> 300"
+                    },
+                    {
+                      "text": "Decreased Max Stack Count: 4 -> 3"
+                    },
+                    {
+                      "text": "Increased Scaling Bonus Per Stack: 10% -> 15%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Baron Samedi",
+                  "items": [
+                    {
+                      "text": "Consign Spirits (2)",
+                      "items": [
+                        {
+                          "text": "Fixed an issue where the Speed Buff could stack on itself."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Princess Bari",
+                  "items": [
+                    {
+                      "text": "Spirit's Cadence (4)",
+                      "items": [
+                        {
+                          "text": "Fixed an issue where you could be healed while immune."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Sol",
+                  "items": [
+                    {
+                      "text": "Disapparate (3)",
+                      "items": [
+                        {
+                          "text": "Fixed an issue where you could be healed while immune."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Fixed quite a few issues with specific types of heals working or not working with specific items."
+                    },
+                    {
+                      "text": "Fixed quite a few issues with item interactions, including selling Sanguine Lash for positive gold and Gluttonous Grimoire lacking its max damage cap."
+                    },
+                    {
+                      "text": "Special thanks to those who took time to play PTS this cycle. We found a lot and it is greatly appreciated."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Quality of Life",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Fixed an issue where jumping immediately after using an ability would remove the Fountain speed buff"
+                },
+                {
+                  "text": "Nu Wa's base and skin targeters upgraded"
+                }
+              ]
+            },
+            {
+              "text": "Gods",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Bellona",
+                  "items": [
+                    {
+                      "text": "Aspect of Vindication",
+                      "items": [
+                        {
+                          "text": "Shield Bash",
+                          "items": [
+                            {
+                              "text": "Fixed an issue where block stacks could be provided to nearby allied minions"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Medusa",
+                  "items": [
+                    {
+                      "text": "Viper Shot",
+                      "items": [
+                        {
+                          "text": "Fixed an issue where this would not hit damageable deployables."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Mercury",
+                  "items": [
+                    {
+                      "text": "Sonic Boom",
+                      "items": [
+                        {
+                          "text": "Fixed an issue where this ability would sometimes cause gods to infinitely spin"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Items",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Scepter of Dominion",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where being CC Immune while within the Stasis field maintained the Damage Immunity"
+                    }
+                  ]
+                },
+                {
+                  "text": "Stalwart Sigil",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where this item could not be searched for in the Item Store"
+                    }
+                  ]
+                },
+                {
+                  "text": "Bluestone Pendant",
+                  "items": [
+                    {
+                      "text": "Added a potential fix for this Item failing to work until a player leaves, re-enters, and leaves the fountain again."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 7/29/25",
+      "anchor": "Hotfix_7/29/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue with some Camera/Targeting and Reticle settings resetting to default after every game"
+                },
+                {
+                  "text": "Fixed an issue where Hou Yi's Mark of the Golden Crow (2) wasn't revealing gods in stealth"
+                },
+                {
+                  "text": "Fixed an issue where Hua Mulan's Spear Thrust (2) did not trigger healing Items"
+                },
+                {
+                  "text": "Fixed an issue where Thanatos' Harvester of Souls (P) and Death Scythe (1) were not proccing healing Items"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 7/29/25 #2",
+      "anchor": "Hotfix_7/29/25_#2",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_3",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Hou Yi's Mark of the Golden Crow (2) when Intelligence is higher than Strength should no longer deal bonus damage, but should properly apply its longer stun and stronger slow"
+                },
+                {
+                  "text": "Fixed an issue where the Item Store would not focus to inventory when using a controller"
+                },
+                {
+                  "text": "Fixed an issue where Cupid's Share the Love (2) Mana heal wasn't working"
+                },
+                {
+                  "text": "Fixed an issue where Aspects would not update in the God Select Lobby upon rerolling in Assault"
+                },
+                {
+                  "text": "Fixed and issues where damage from Sanguine Lash was not displaying correctly in the damage recap screen"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Balance",
+          "anchor": "Balance",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Sanguine Lash"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Decreased Health Damage: 2% -> 1%"
+                },
+                {
+                  "text": "Now deals 50% damage to Jungle Bosses"
+                },
+                {
+                  "text": "Decreased Cooldown Reduction: 5s -> 3s"
+                },
+                {
+                  "text": "Increased Cooldown: 90s -> 100s"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Chaac"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Aspect of Fulmination",
+                  "items": [
+                    {
+                      "text": "Torrent (2)",
+                      "items": [
+                        {
+                          "text": "Can now only gain 2 stacks of Torrent's Protections, down from 4."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Hercules"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Mitigate Wounds (3)",
+                  "items": [
+                    {
+                      "text": "Decreased Damage Taken Heal: 25/27.5/30/32.5/35 -> 25/26.25/27.5/28.75/30%"
+                    },
+                    {
+                      "text": "Decreased Protections from Items : 30% -> 25%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Guan Yu"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Conviction (1)",
+                  "items": [
+                    {
+                      "text": "Now only heals allies for 75% of the healing amount."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 7/31/25",
+      "anchor": "Hotfix_7/31/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_4",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where the HUD was disappearing if changes were made via the HUD editor in Practice"
+                },
+                {
+                  "text": "Fixed an issue where the quickplay pick 3 Item buying pop up would appear for The Morrigan players whenever she transformed/detransformed"
+                },
+                {
+                  "text": "Fixed an issue with Prophetic Cloak's cooldown"
+                },
+                {
+                  "text": "Tagged all Items as \"New\" so they should now appear in the New Items section of the shop"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Balance",
+          "anchor": "Balance_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "War Banner",
+                  "items": [
+                    {
+                      "text": "FIX: Fixed an issue where War Banner was using the holder's Health and Mana to calculate the heal, rather than the targets."
+                    }
+                  ]
+                },
+                {
+                  "text": "Death’s Embrace",
+                  "items": [
+                    {
+                      "text": "Decreased Health Heal: 1.4% -> 1% Maximum Health"
+                    },
+                    {
+                      "text": "Decreased Lifesteal: 10% -> 7.5%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Vital Amplifier",
+                  "items": [
+                    {
+                      "text": "Decreased Attack Speed: 20% -> 10%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Brawler’s Beat Stick",
+                  "items": [
+                    {
+                      "text": "Decreased Strength: 45 -> 40",
+                      "items": [
+                        {
+                          "text": "Decreased total Strength while passive is triggered: 79 -> 70"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Decreased intelligence: 60 -> 55",
+                      "items": [
+                        {
+                          "text": "Decreased total Intelligence while passive is triggered: 105 -> 96"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Decreased Passive Bonus Physical Protection: 30 -> 25"
+                    },
+                    {
+                      "text": "Decreased Heal Detection Range: 11.2m -> 7.2m"
+                    }
+                  ]
+                },
+                {
+                  "text": "Gluttonous Grimoire",
+                  "items": [
+                    {
+                      "text": "Decreased Lifesteal: 10% -> 7.5%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Devourer’s Gauntlets",
+                  "items": [
+                    {
+                      "text": "Decreased Strength Per Stack: 0.5 -> 0.4",
+                      "items": [
+                        {
+                          "text": "Decreased Strength from 75 Stacks: 37.5 -> 30"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Decreased Evolve Lifesteal: 5% -> 3%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Contagion",
+                  "items": [
+                    {
+                      "text": "Decreased Health Regen: 8 -> 6"
+                    },
+                    {
+                      "text": "Decreased Contagion duration: 20s -> 8s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Heartwood Charm",
+                  "items": [
+                    {
+                      "text": "Decreased Active Cooldown Reduction from Casting Heals: 10s -> 6s"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

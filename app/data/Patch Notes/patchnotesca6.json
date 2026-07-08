@@ -1,0 +1,1751 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Closed_Alpha_6",
+    "title": "SMITE 2 Closed Alpha 6",
+    "infoboxTitle": "CA6 - SMITE 2 Closed Alpha 6",
+    "releaseDate": "November 12, 2024",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Closed_Alpha_5",
+      "next": "SMITE_2_Closed_Alpha_7"
+    },
+    "category": "closed_alpha",
+    "categoryLabel": "Closed Alpha patch notes",
+    "number": 6,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "General Changes",
+      "anchor": "General_Changes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "UI",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Auto Build",
+                  "items": [
+                    {
+                      "text": "New setting in Usability to toggle between Auto Build On (popup with auto build suggestions and relics), Off which gives Manual build (no popups), and Auto Open Shop Manual build which opens the store automatically when entering matches."
+                    }
+                  ]
+                },
+                {
+                  "text": "Console Item Store - Added a New Active Items tab"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Item Store - A Bolt Icon is now on all active item icons to make them easier to find."
+            },
+            {
+              "text": "Gods Grid - Coming soon dates have been added to announce the next patch gods."
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "New Overview tab in the gods page to display more god specific info and some lore."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Ranked",
+      "anchor": "Ranked",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Trio Queue",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Parties up to size 3 are now permitted in Ranked Conquest"
+                }
+              ]
+            },
+            {
+              "text": "Party Matchup Protections",
+              "items": [
+                {
+                  "text": "The addition of Trio’s back into Ranked necessitates match protections to ensure only statistically fair matchups of parties on teams are possible to be made"
+                },
+                {
+                  "text": "The matchups were chosen by observation of matches that were biased by less than +/- 1% win rate in either team's direction in Casual Conquest, however the chosen matchups are subject to change if Ranked produces different results"
+                },
+                {
+                  "text": "The valid matchups are:",
+                  "items": [
+                    {
+                      "text": "11111v11111"
+                    },
+                    {
+                      "text": "2111v11111"
+                    },
+                    {
+                      "text": "2111v2111"
+                    },
+                    {
+                      "text": "221v221"
+                    },
+                    {
+                      "text": "311v221"
+                    },
+                    {
+                      "text": "311v311"
+                    },
+                    {
+                      "text": "32v311"
+                    },
+                    {
+                      "text": "32v32"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Solo Queue SR Protections",
+              "items": [
+                {
+                  "text": "Solo players who lose a match after being placed in a match where the enemy team has a party will experience a slight reduction in SR losses"
+                },
+                {
+                  "text": "SR protection will scale depending on how much of the enemy team is composed of parties, with the greatest SR protection occurring during the 32v311 matchup"
+                }
+              ]
+            },
+            {
+              "text": "SR Soft Reset",
+              "items": [
+                {
+                  "text": "To facilitate the introduction of Trio queues and observe their effect we are applying a soft reset to our highest rated players"
+                },
+                {
+                  "text": "The reset will apply to players such that:",
+                  "items": [
+                    {
+                      "text": "Master 3+",
+                      "items": [
+                        {
+                          "text": "Reset back to Obsidian 2"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Diamond 2 to Obsidian 1",
+                      "items": [
+                        {
+                          "text": "Reset to Diamond 2"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Clay to Diamond 3",
+                      "items": [
+                        {
+                          "text": "No Reset"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "This is the final Soft Reset of the Ranked Test Season"
+                },
+                {
+                  "text": "The next season, in January, will bring the first “Hard Reset”"
+                }
+              ]
+            },
+            {
+              "text": "5-Stack Ranked Queue",
+              "items": [
+                {
+                  "text": "5-Stacks have been disabled in Ranked Conquest",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Reexamining how to best implement competitive play for 5-stacks",
+                      "bold": true
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Ranked Draft Lobby",
+              "items": [
+                {
+                  "text": "Added which team and player is Banning and picking in the upper left corner of the God Select lobby for better clarity"
+                },
+                {
+                  "text": "Fixed some text overlap issues during the pick and ban phases"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Conquest",
+      "anchor": "Conquest",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Gold Fury",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Increased base Movement Speed from 400 to 450"
+                },
+                {
+                  "text": "Anti-bodyblock",
+                  "items": [
+                    {
+                      "text": "If Gold Fury is in range of her target, she will use her normal attack"
+                    },
+                    {
+                      "text": "If Gold Fury is out of range of her target, but there are enemies in the way, she will attack all of them with a cleave"
+                    },
+                    {
+                      "text": "Her movement speed must be slightly lower than base for this to trigger"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Warhorn",
+              "items": [
+                {
+                  "text": "Fixed “in the pit” effect not removing properly from players"
+                },
+                {
+                  "text": "Fixed “in the pit” effect granting the wrong amount of damage reduction"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Gods",
+      "anchor": "Gods",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Izanami",
+          "anchor": "Izanami",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Deals Physical Damage"
+                    },
+                    {
+                      "text": "New Feature:",
+                      "bold": true,
+                      "detail": "Thanks to a heavy focus on Hybrid Scaling, players can now choose their build path to determine whether they want hard hitting Basic Attacks and Abilities via Strength Scaling, or very strong Bleed effects from Intelligence Scaling – or a combination of both."
+                    }
+                  ]
+                },
+                {
+                  "text": "Basic Attack",
+                  "items": [
+                    {
+                      "text": "Throw a piercing projectile that deals Physical Damage to all enemies hit."
+                    },
+                    {
+                      "text": "The projectile returns to you after reaching its max range or hitting a wall, dealing Physical Damage to any enemies hit on its way back."
+                    }
+                  ]
+                },
+                {
+                  "text": "Death Draws Nigh",
+                  "items": [
+                    {
+                      "text": "Gain Physical Penetration and Intelligence for each 1% of your Max Health taken as damage."
+                    },
+                    {
+                      "text": "New Feature:",
+                      "bold": true,
+                      "detail": "Each stack fades 10 seconds after the damage was taken."
+                    },
+                    {
+                      "text": "Stack count cannot drop below the percentage of your current missing health."
+                    }
+                  ]
+                },
+                {
+                  "text": "Sickle Storm",
+                  "items": [
+                    {
+                      "text": "Significantly increases your Attack Speed for 6 seconds, but your Basic Attacks no longer pierce enemies or return to you."
+                    },
+                    {
+                      "text": "Basic Attacks deal Bonus Damage to Structures."
+                    },
+                    {
+                      "text": "New Feature:",
+                      "bold": true,
+                      "detail": "Applies a stacking Bleed effect to enemies hit, scaling primarily off of Intelligence and the number of active stacks on the target."
+                    }
+                  ]
+                },
+                {
+                  "text": "Spectral Projection",
+                  "items": [
+                    {
+                      "text": "Send forth a spectral projection of yourself, dealing Physical Damage and Slowing all Enemies in a line."
+                    }
+                  ]
+                },
+                {
+                  "text": "Fade Away",
+                  "items": [
+                    {
+                      "text": "Descend into the underworld, becoming Stealthed, and leap away from your current position."
+                    },
+                    {
+                      "text": "New Feature: Gain Movement Speed while in Stealth.",
+                      "bold": true
+                    }
+                  ]
+                },
+                {
+                  "text": "Dark Portal",
+                  "items": [
+                    {
+                      "text": "Summon a dark portal which deals instant Physical Damage and Silences enemies."
+                    },
+                    {
+                      "text": "New Feature:",
+                      "bold": true,
+                      "detail": "Damaged enemies are also dealt Physical Damage over time, and are hit with a strong Slow which fades over time."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Khepri",
+          "anchor": "Khepri",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Deals Magical Damage"
+                    },
+                    {
+                      "text": "Intelligence Scaling"
+                    },
+                    {
+                      "text": "Melee Basic Attacks"
+                    }
+                  ]
+                },
+                {
+                  "text": "Fortitude",
+                  "items": [
+                    {
+                      "text": "Every few seconds Khepri applies a shield to himself and nearby allied gods."
+                    }
+                  ]
+                },
+                {
+                  "text": "Abduct",
+                  "items": [
+                    {
+                      "text": "Dash forward then grab a god and pull them back"
+                    },
+                    {
+                      "text": "New Feature:",
+                      "bold": true,
+                      "detail": "Khepri can now aim his ultimate while grabbing a god in the A01, it will auto cancel his grab if fired"
+                    },
+                    {
+                      "text": "New Feature:",
+                      "bold": true,
+                      "detail": "the turn radius is higher, so you can position your enemy more carefully or move them around corners"
+                    }
+                  ]
+                },
+                {
+                  "text": "Rising Dawn",
+                  "items": [
+                    {
+                      "text": "Fire a projectile that applies a damage over time, debuffs enemy Physical Protections, and reduces damage allies take."
+                    },
+                    {
+                      "text": "New Feature:",
+                      "bold": true,
+                      "detail": "This ability now has a large delayed detonate area at max range that applies the same effects (to allies and enemies) as the projectile"
+                    },
+                    {
+                      "text": "New Feature:",
+                      "bold": true,
+                      "detail": "This can now buff Khepri himself with the mitigation - but only if you run into the delayed explosion area. S1 it was not possible to buff yourself"
+                    }
+                  ]
+                },
+                {
+                  "text": "Solar Flare",
+                  "items": [
+                    {
+                      "text": "After a short delay, damage and root enemies at the target area."
+                    }
+                  ]
+                },
+                {
+                  "text": "Scarab’s Blessing",
+                  "items": [
+                    {
+                      "text": "Buff an allied god with an instant cleanse, movement speed, slow immunity, STR, and INT. If they die while buffed, they are instead revived at Khepri’s location."
+                    },
+                    {
+                      "text": "New Feature:",
+                      "bold": true,
+                      "detail": "The buff effect now applies STR and INT to the target"
+                    },
+                    {
+                      "text": "New Feature:",
+                      "bold": true,
+                      "detail": "Khepri now gains a small (2 of each prot) buff each time he successfully revives an ally. This has no duration or stack cap"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Nemesis",
+          "anchor": "Nemesis",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Deals Physical damage"
+                    },
+                    {
+                      "text": "Hybrid Scaling"
+                    },
+                    {
+                      "text": "Melee Basic Attacks"
+                    }
+                  ]
+                },
+                {
+                  "text": "Scales of Fate",
+                  "items": [
+                    {
+                      "text": "Hitting enemies with Basic Attacks reduces the target’s Inhand Power, Strength, and Intelligence while increasing yours."
+                    }
+                  ]
+                },
+                {
+                  "text": "Swift Vengeance",
+                  "items": [
+                    {
+                      "text": "Dash in a line up to two times, passing through all enemies and damaging them."
+                    }
+                  ]
+                },
+                {
+                  "text": "Slice and Dice",
+                  "items": [
+                    {
+                      "text": "Slash in a cone, dealing damage to all enemies hit."
+                    },
+                    {
+                      "text": "Enemies hit in the center of the cone take increased damage and are Slowed"
+                    },
+                    {
+                      "text": "New Feature:",
+                      "bold": true,
+                      "detail": "The center cone now has increased width near melee range to help improve melee hit feels."
+                    }
+                  ]
+                },
+                {
+                  "text": "Retribution",
+                  "items": [
+                    {
+                      "text": "Gain a Health Shield for a duration."
+                    },
+                    {
+                      "text": "Heal and Reflect for a percentage of the damage taken."
+                    },
+                    {
+                      "text": "New Feature:",
+                      "bold": true,
+                      "detail": "The Shield scales with Max Health, the Heal scales with Intelligence, and the Reflect scales with Strength."
+                    },
+                    {
+                      "text": "New Feature:",
+                      "bold": true,
+                      "detail": "The Heal and Reflect are calculated using pre-mitigation damage."
+                    },
+                    {
+                      "text": "New Feature:",
+                      "bold": true,
+                      "detail": "Heal from all targets that damage you, not just gods."
+                    }
+                  ]
+                },
+                {
+                  "text": "Divine Retribution",
+                  "items": [
+                    {
+                      "text": "Choose a single enemy god, dealing damage to them and all enemies in an area around them."
+                    },
+                    {
+                      "text": "Gain Movement Speed and a percentage of the enemy’s Protections."
+                    },
+                    {
+                      "text": "Reduce enemy’s Movement Speed and Protections by the same amount."
+                    },
+                    {
+                      "text": "New Feature:",
+                      "bold": true,
+                      "detail": "This ability hits in an area around the original target, but you only steal from the enemy who has the highest Protections. All enemies are still debuffed and Slowed."
+                    },
+                    {
+                      "text": "New Feature:",
+                      "bold": true,
+                      "detail": "This ability now has scaling damage in addition to the Current Health damage, meaning that if you are building Strength or Intelligence, you will be able to kill an enemy with this ability."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Anhur Buff",
+              "items": [
+                {
+                  "text": "Enfeeble",
+                  "items": [
+                    {
+                      "text": "Updated description to show the proper amount of Protection Reduction"
+                    }
+                  ]
+                },
+                {
+                  "text": "Desert Fury",
+                  "items": [
+                    {
+                      "text": "Increased Damage per tick from 60/85/110/135/160 to 65/90/115/140/165"
+                    },
+                    {
+                      "text": "Increased Final Damage from 100/145/190/235/280 + 80% STR to 110/155/200/245/290 + 90% STR"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Baron Samedi Nerf",
+              "items": [
+                {
+                  "text": "Life of the Party",
+                  "items": [
+                    {
+                      "text": "Decreased Vortex Strength by 10%"
+                    },
+                    {
+                      "text": "Decreased Hysteria Vortex Strength by 20%"
+                    },
+                    {
+                      "text": "Decreased % Health Scaling from 5% Protections to 2.5% Protections"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Chaac Buff",
+              "items": [
+                {
+                  "text": "Thunder Strike",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 10s to 10/9.5/9/8.5/8s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Rain Dance",
+                  "items": [
+                    {
+                      "text": "Increased Heal per tick from 6/11/16/21/26 to 10/15/20/25/30"
+                    },
+                    {
+                      "text": "Decreased Cooldown from 14s to 13s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Danzaburou Buff",
+              "items": [
+                {
+                  "text": "Fool’s Gold",
+                  "items": [
+                    {
+                      "text": "Increased Damage Scaling from 85% STR + 50% INT to 90% STR + 65% INT"
+                    }
+                  ]
+                },
+                {
+                  "text": "Tanuki Trickery",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 16s to 16/15.5/15/14.5/14s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Uproarious Rocket",
+                  "items": [
+                    {
+                      "text": "Adjusted Damage Scaling from 85% STR + 85% INT to 100% STR + 70% INT"
+                    },
+                    {
+                      "text": "Adjusted Explosion Damage Scaling from 60% STR + 60% INT to 50% STR + 80% INT"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Hercules Buff",
+              "items": [
+                {
+                  "text": "Driving Strike",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 14s to 13s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Earthbreaker",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 14s to 13s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Nu Wa Buff",
+              "items": [
+                {
+                  "text": "Strength of Wood",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 15s to 12s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Shining Metal",
+                  "items": [
+                    {
+                      "text": "Increased Damage Scaling from 55% INT to 65% INT"
+                    },
+                    {
+                      "text": "Decreased Cooldown from 11s to 10s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Ra Buff",
+              "items": [
+                {
+                  "text": "Celestial Beam",
+                  "items": [
+                    {
+                      "text": "Adjusted this ability’s range to better match the visual"
+                    }
+                  ]
+                },
+                {
+                  "text": "Searing Pain",
+                  "items": [
+                    {
+                      "text": "Increased Damage from 400/475/550/625/700 to 425/500/575/650/725"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Sobek Nerf",
+              "items": [
+                {
+                  "text": "Charge Prey",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown from 12s to 14s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Sol Buff",
+              "items": [
+                {
+                  "text": "Stellar Burst",
+                  "items": [
+                    {
+                      "text": "Increased Slow from 15/20/25/30/35% to 25/27.5/30/32.5/35%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Supernova",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 90s to 90/85/80/75/70s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Thanatos Buff",
+              "items": [
+                {
+                  "text": "Harvester of Souls",
+                  "items": [
+                    {
+                      "text": "Increased God Kill Heal from 15% to 20% of their Max Health"
+                    }
+                  ]
+                },
+                {
+                  "text": "Scent of Death",
+                  "items": [
+                    {
+                      "text": "Increased Flat Penetration from 8/11/14/17/20 to 8/12/16/20/24"
+                    }
+                  ]
+                },
+                {
+                  "text": "Soul Reap",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 14s to 14/13.5/13/12.5/12s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Yemoja Buff",
+              "items": [
+                {
+                  "text": "Moonstrike",
+                  "items": [
+                    {
+                      "text": "Increased Damage from 30/55/80/105/130 + 15% INT to 40/65/90/115/140 + 20% INT"
+                    }
+                  ]
+                },
+                {
+                  "text": "Mending Waters",
+                  "items": [
+                    {
+                      "text": "Adjusted Shield Health Scaling from 15% INT to 5% Max Health"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Zeus Nerf",
+              "items": [
+                {
+                  "text": "Detonate Charge",
+                  "items": [
+                    {
+                      "text": "Decreased Damage from 50/80/110/140/170 + 30% INT to 50/75/100/125/150 + 25% INT"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "NEW - T1 - Reliquary",
+              "items": [
+                {
+                  "text": "300g"
+                },
+                {
+                  "text": "2 Mana Regen"
+                }
+              ]
+            },
+            {
+              "text": "NEW - T2 - Soul Reliquary",
+              "items": [
+                {
+                  "text": "Builds from Reliquary + Gem"
+                },
+                {
+                  "text": "900g"
+                },
+                {
+                  "text": "20 Intelligence"
+                },
+                {
+                  "text": "4 Mana Regen"
+                }
+              ]
+            },
+            {
+              "text": "Soul Reaver Buff",
+              "items": [
+                {
+                  "text": "Adjusted Recipe from Oracle Staff to Oracle Staff + Soul Reliquary"
+                },
+                {
+                  "text": "Increased Mana Regen from 4 to 5"
+                }
+              ]
+            },
+            {
+              "text": "Gem of Focus Buff",
+              "items": [
+                {
+                  "text": "Adjusted Recipe from Ring of Dispel to Adroit Ring + Killing Stone"
+                },
+                {
+                  "text": "Increased Intelligence from 35 to 40"
+                }
+              ]
+            },
+            {
+              "text": "Tekko-Kage Buff",
+              "items": [
+                {
+                  "text": "Adjusted Recipe from Caestus to Adroit Ring + Skeggox"
+                }
+              ]
+            },
+            {
+              "text": "Jotunn’s Revenge Buff",
+              "items": [
+                {
+                  "text": "Adjusted Recipe from Adroit Ring + Skeggox to Caestus + Skeggox"
+                }
+              ]
+            },
+            {
+              "text": "Bloodforge Buff",
+              "items": [
+                {
+                  "text": "Adjusted Recipe from Adamantine Sickle to Adamantine Sickle + Manchu Bow"
+                },
+                {
+                  "text": "Added 15% Attack Speed"
+                }
+              ]
+            },
+            {
+              "text": "Devourer’s Gauntlet Buff",
+              "items": [
+                {
+                  "text": "Decreased Cost from 2500 to 2350"
+                }
+              ]
+            },
+            {
+              "text": "Sun-Beam Bow Buff",
+              "items": [
+                {
+                  "text": "Adjusted Recipe from Manchu Bow + Mana Tome to Manchu Bow + Soul Reliquary"
+                },
+                {
+                  "text": "Removed Mana"
+                },
+                {
+                  "text": "Increased STR from 25 to 30"
+                },
+                {
+                  "text": "Added 25 INT"
+                },
+                {
+                  "text": "Increased Mana Regen from 3 to 5"
+                },
+                {
+                  "text": "Increased Active Damage Scaling from 20% to 25%"
+                }
+              ]
+            },
+            {
+              "text": "Qin’s Blade Buff",
+              "items": [
+                {
+                  "text": "Decreased Cost from 2700 to 2600"
+                }
+              ]
+            },
+            {
+              "text": "Dagger of Frenzy Buff",
+              "items": [
+                {
+                  "text": "Decreased Cost from 2550 to 2500"
+                }
+              ]
+            },
+            {
+              "text": "Demon Blade Buff",
+              "items": [
+                {
+                  "text": "Decreased Cost from 2900 to 2750"
+                }
+              ]
+            },
+            {
+              "text": "Death Metal Buff",
+              "items": [
+                {
+                  "text": "Decreased Cost from 2950 to 2850"
+                }
+              ]
+            },
+            {
+              "text": "Musashi’s Dual Swords Buff",
+              "items": [
+                {
+                  "text": "Increased Strength from 30 to 40"
+                }
+              ]
+            },
+            {
+              "text": "Hydra’s Lament Buff",
+              "items": [
+                {
+                  "text": "Increased Strength from 40 to 45"
+                }
+              ]
+            },
+            {
+              "text": "Transcendence Buff",
+              "items": [
+                {
+                  "text": "Increased Strength from 25 to 35"
+                }
+              ]
+            },
+            {
+              "text": "Heartseeker Buff",
+              "items": [
+                {
+                  "text": "Increased Passive Strength Scaling from 2% to 3%"
+                }
+              ]
+            },
+            {
+              "text": "The Crusher Buff",
+              "items": [
+                {
+                  "text": "Increased Passive Strength Scaling from 30% to 35%"
+                }
+              ]
+            },
+            {
+              "text": "Avatar’s Parashu Buff",
+              "items": [
+                {
+                  "text": "Increased Strength from 60 to 75"
+                }
+              ]
+            },
+            {
+              "text": "Pendulum Blade Buff",
+              "items": [
+                {
+                  "text": "Decreased Cost from 2900 to 2800"
+                }
+              ]
+            },
+            {
+              "text": "Titan’s Bane Buff",
+              "items": [
+                {
+                  "text": "Increased STR from 40 to 45"
+                }
+              ]
+            },
+            {
+              "text": "Prophetic Cloak Buff",
+              "items": [
+                {
+                  "text": "Decreased Stack Cooldown from 8s to 5s"
+                }
+              ]
+            },
+            {
+              "text": "Pharaoh’s Curse Nerf",
+              "items": [
+                {
+                  "text": "Increased Active Cooldown from 40s to 60s"
+                }
+              ]
+            },
+            {
+              "text": "Lifebinder Buff",
+              "items": [
+                {
+                  "text": "Decreased Active Cooldown from 50s to 30s"
+                }
+              ]
+            },
+            {
+              "text": "Bumba’s Cudgel",
+              "items": [
+                {
+                  "text": "Removed Strength"
+                },
+                {
+                  "text": "New effect: Provides 15 Strength or 20 Intelligence depending on which stat is higher."
+                }
+              ]
+            },
+            {
+              "text": "Bumba’s Hammer",
+              "items": [
+                {
+                  "text": "Removed Strength"
+                },
+                {
+                  "text": "New effect: Provides 35 Strength or 60 Intelligence depending on which stat is higher."
+                }
+              ]
+            },
+            {
+              "text": "Bumba’s Golden Dagger",
+              "items": [
+                {
+                  "text": "Removed Strength"
+                },
+                {
+                  "text": "New effect: Provides 15 Strength or 20 Intelligence depending on which stat is higher."
+                }
+              ]
+            },
+            {
+              "text": "Bumba’s Spear",
+              "items": [
+                {
+                  "text": "Removed Strength"
+                },
+                {
+                  "text": "New effect: Provides 35 Strength or 60 Intelligence depending on which stat is higher."
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "General",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Conquest",
+                  "items": [
+                    {
+                      "text": "Fixed issues with the Gold Fury being body blocked by Gods causing it to not do damage to the God who hit it first"
+                    },
+                    {
+                      "text": "Fixed an issue where the Naga NPCs would walk past their initial target before doubling back to attack"
+                    }
+                  ]
+                },
+                {
+                  "text": "Increased brightness and opacity to Enemy and Ally wireframes through walls to be easier to see and match SMITE 1"
+                },
+                {
+                  "text": "Fixed issues with the Gold Fury Kill achievement not being awarded on multiple platforms"
+                },
+                {
+                  "text": "Jungle Practice",
+                  "items": [
+                    {
+                      "text": "Fixed issues with Minion animations being jittery as they path down the lane"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Gods",
+              "bold": true,
+              "items": [
+                {
+                  "text": "The Morrigan",
+                  "items": [
+                    {
+                      "text": "Fixed issues where she could move while transforming during rooted Ultimate abilities (Anubis and Ymir ults)"
+                    },
+                    {
+                      "text": "Fixed issues with her Mastery skin AOE Basic Attack VFX being too bright and distracting"
+                    },
+                    {
+                      "text": "Updated her Ultimate wheel to always be on Normal cast while on controller to match SMITE 1. Players no longer need to hold the button while picking on different cast mode types"
+                    }
+                  ]
+                },
+                {
+                  "text": "Neith",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where the description of Broken Weave was reflecting the incorrect value for the Attack Speed buff"
+                    }
+                  ]
+                },
+                {
+                  "text": "Sol",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where Disapparate wasn’t playing a voiceline 100% of the time when activated like SMITE 1"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ra",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where Solar Blessing wasn’t playing a voiceline 100% of the time when activated like SMITE 1"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ymir",
+                  "items": [
+                    {
+                      "text": "Fixed issues with his Cacodemon skin missing Jokes, Laughs, and Taunts"
+                    }
+                  ]
+                },
+                {
+                  "text": "Odin",
+                  "items": [
+                    {
+                      "text": "Updated the tooltip description of his Passive to mention the permanent Strength gain from getting kills inside his Ultimate"
+                    }
+                  ]
+                },
+                {
+                  "text": "Amaterasu",
+                  "items": [
+                    {
+                      "text": "Fixed an issue with her Heavenly Reflection mirror gaining charge excessively fast on basic attack item proc damage"
+                    }
+                  ]
+                },
+                {
+                  "text": "Fenrir",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where minions were body blocking him in his Ultimate form"
+                    },
+                    {
+                      "text": "Fixed an issue where if he Brutalized while Mordred was using his charged Ultimate ability, he could sometimes get stuck in walls"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "UI",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Player Profile XP progress bar should now update correctly on individual levels"
+                },
+                {
+                  "text": "Fixed an issue with the Playstation Store logo persisting into matches if the users were on the Founder’s Page when a match popped"
+                },
+                {
+                  "text": "Fixed issues when using a PS5 controller on PC would show the incorrect button prompts"
+                },
+                {
+                  "text": "Fixed the Right-Click to Purchase not working on Items in the Builds-Into area of the Item Store"
+                },
+                {
+                  "text": "Fixed issues where the Combat Log wasn’t allowing gamepad player movement when it was tabbed to in-game"
+                },
+                {
+                  "text": "Fixed issues where logging out caused Diamonds and Legacy gems to disappear until a relaunch"
+                },
+                {
+                  "text": "Fixed an issue on the God Select for controllers where the filter button was shown overlapping the icon"
+                },
+                {
+                  "text": "Fixed issues with HUD navigation on gamepad not being able to close the Consumable slots window"
+                }
+              ]
+            },
+            {
+              "text": "Items",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Cosmic Horror and Rod of Tahuti",
+                  "items": [
+                    {
+                      "text": "Fixed issues where these item passives wouldn’t apply correctly if players were stacking Book of Thoth and gained stacks to go over the passive thresholds for Intelligence"
+                    }
+                  ]
+                },
+                {
+                  "text": "Sun-Beam Bow and Eye of the Storm",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where the toggle would deactivate when CC’d"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "God Bots",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Note: God Bots are undergoing constant iteration, both to improve their behavior and address issues in response to changes in Smite 2’s gameplay systems during Alpha. So most of the points listed here are still being fixed and tuned. All of these address Conquest God Bots, but some also apply to Arena bots as well"
+                },
+                {
+                  "text": "Improved end-game AI playcalling. God Bots will more often try to find picks and group up to push into enemy structures when they see an opportunity"
+                },
+                {
+                  "text": "Improved combat behavior defending under Tower - will now more consistently clear minions and fight back"
+                },
+                {
+                  "text": "Improved combat behavior when laning - will now attempt to fall back when lane pressure builds against them, and will fully retreat to their Tower when massively disadvantaged"
+                },
+                {
+                  "text": "God Bots can now purchase and use Relics"
+                },
+                {
+                  "text": "God Bots will now Recall to purchase items when they have enough Gold"
+                },
+                {
+                  "text": "Ranged God Bots will now try to position better while laning, keeping distance between themselves and nearby threats"
+                },
+                {
+                  "text": "Ranged God Bots will now try their best to stand somewhat clear of their own minion wave, to avoid taking incidental damage from enemy lane clear"
+                },
+                {
+                  "text": "God Bots will no longer automatically retaliate when taking damage from another enemy God, but instead have a chance to fight back if the damage is high enough - this is to address situations where a single tick of small damage was triggering a massive response from enemy God bots"
+                },
+                {
+                  "text": "Addressed instances where God Bots could get stuck trying to path around enemy Minions"
+                },
+                {
+                  "text": "Fixed Anhur bot not using his Pillar"
+                },
+                {
+                  "text": "Fixed some instances where God Bots could get stuck on Jungle Camps"
+                },
+                {
+                  "text": "Fixed God Bots not using their consumable potions"
+                },
+                {
+                  "text": "Fixed a case where Jungler bots could get stuck sitting in their Fountain"
+                },
+                {
+                  "text": "Fixed an issue where bots supporting a gank would turn aggressive while the ganker was still far away"
+                },
+                {
+                  "text": "Fixed a case where God Bots would sit in base before preparing to make a push"
+                },
+                {
+                  "text": "Fixed an instance where God Bots would never push past the enemy T2 tower unless with the rest of their team"
+                },
+                {
+                  "text": "Fixed an issue where God Bots in the tutorials would not play strafe or backpedal animations"
+                },
+                {
+                  "text": "Fixed an issue where God Bots would leap into combat when trying to escape"
+                },
+                {
+                  "text": "Fixed God Bots not jumping enough"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Known Issues & Road Map",
+      "anchor": "Known_Issues_&amp;_Road_Map",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "God Bots",
+              "bold": true,
+              "items": [
+                {
+                  "text": "God Bots will sometimes pick and fill duplicate roles"
+                },
+                {
+                  "text": "Still seeing instances where God Bots can get stuck trying to clear Jungle Camps"
+                },
+                {
+                  "text": "God Bots sometimes use Relics at inappropriate times"
+                },
+                {
+                  "text": "God Bots are sometimes too scared to fight the enemy Titan"
+                },
+                {
+                  "text": "Melee bots often get stuck indecisively at the enemy Tower line"
+                },
+                {
+                  "text": "Bots will often purchase the wrong items when forced to flex into a different role"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Patch 11/12/24",
+      "anchor": "Patch_11/12/24",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed Neith Backflip not going on cooldown if used near a wall"
+                },
+                {
+                  "text": "Fixed Khepri Basic Attack dealing Physical Damage"
+                },
+                {
+                  "text": "Fixed Zeus Thunderclap going on cooldown when interrupted in the pre-fire"
+                },
+                {
+                  "text": "Knockups will now properly interrupt dashes that aren't knockup immune"
+                },
+                {
+                  "text": "Combat Blink is now canceled whenever you're Silenced"
+                },
+                {
+                  "text": "Grabs no longer have \"client authoritative\" movement"
+                },
+                {
+                  "text": "Added Stability Improvements"
+                },
+                {
+                  "text": "Added more gods to the god fallback list for when vendors fail to load"
+                },
+                {
+                  "text": "AI matches - Fixed Bots not picking the correct lanes/roles"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 11/13/24",
+      "anchor": "Patch_11/13/24",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_3",
+          "level": 3,
+          "content": []
+        }
+      ]
+    },
+    {
+      "title": "Patch 11/13/24 #2",
+      "anchor": "Patch_11/13/24_#2",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_4",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed Ally bots not respawning in VS AI matches if the same god was on the enemy team"
+                },
+                {
+                  "text": "Fixed an issue where Conduit Gem would stop working under certain conditions"
+                },
+                {
+                  "text": "Added further safe guards to prevent Khepri revive issues"
+                },
+                {
+                  "text": "Fixed Izanami A01 projectile speed scaling"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 11/13/24 #3",
+      "anchor": "Patch_11/13/24_#3",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_5",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed Starter Items not showing the \"Upgrade available\" indicator"
+                },
+                {
+                  "text": "PS5 background home screen music added"
+                },
+                {
+                  "text": "Fixed Izanami Shadow and Radiant stealth materials not showing up properly"
+                },
+                {
+                  "text": "Fixed Khepri Abduct only playing one voice line"
+                },
+                {
+                  "text": "Fixed Gingersnap Baron Samedi Ult outer line FX making it difficult to see allies and enemies"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 11/14/24",
+      "anchor": "Patch_11/14/24",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_6",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Addressing Nemesis Swift Vengeance dash refire issues when using Normal cast at higher frame rates. NOTE: Please report if issues continue"
+                },
+                {
+                  "text": "Addressing an issue with Lifebinder + The Morrigan causing infinite debuff effect. NOTE: Please report if issues continue"
+                },
+                {
+                  "text": "Fixed Prophetic Cloak ICD at 8s when it should have been 5s"
+                },
+                {
+                  "text": "Fixed all tiers of an Achievement unlocking on Steam when you meet the first tier requirements"
+                },
+                {
+                  "text": "Made draft lobby Highlighting for gamepad change role/player actions much clearer with an arrow and gold glow"
+                },
+                {
+                  "text": "Fixed Khepri gameplay UI tags were incorrect/missing, and base stats incorrect (basic attack dmg nerf)"
+                },
+                {
+                  "text": "Fixed spelling issue at End of Match Lobby for \"worshippers\""
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 11/14/24 #2",
+      "anchor": "Patch_11/14/24_#2",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_7",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Addressing issue with Khepri's Ultimate - Scarab's Blessing where Gods are stuck constantly reviving"
+                },
+                {
+                  "text": "Refixed Odin gaining perma STR stacks from killing anything in his ring - should only be gods"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 11/16/24",
+      "anchor": "Patch_11/16/24",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_8",
+          "level": 3,
+          "content": []
+        }
+      ]
+    },
+    {
+      "title": "Patch 11/19/24",
+      "anchor": "Patch_11/19/24",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_9",
+          "level": 3,
+          "content": []
+        }
+      ]
+    },
+    {
+      "title": "Patch 11/19/24 #2",
+      "anchor": "Patch_11/19/24_#2",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_10",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Khepri",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Scarab's Blessing",
+                      "items": [
+                        {
+                          "text": "Readdressing an issue where targets are constantly reviving"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "God Balance",
+          "anchor": "God_Balance_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Jing Wei Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Persistent Gust",
+                      "items": [
+                        {
+                          "text": "Decreased Damage from 90/140/190/240/290 to 80/130/180/230/280"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Sobek Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Charge Prey",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 14s at all ranked to 16/15.5/15/14.5/14s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Zeus Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Chain Lightning",
+                      "items": [
+                        {
+                          "text": "Decreased Damage from 80/125/170/215/260 + 70% INT to 70/115/160/205/250 + 60% INT"
+                        },
+                        {
+                          "text": "Increased Cooldown from 12s to 13s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Item Balance",
+          "anchor": "Item_Balance_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Hastened Fatalis Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased Attack Speed from 30% to 25%"
+                    },
+                    {
+                      "text": "Decreased Movement Penalty Reduction per stack from 50% to 33%"
+                    },
+                    {
+                      "text": "Increased Stack Count from 2 to 3"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+[
+  {
+    "Type": "StringTable",
+    "Name": "ST_HW_RolePreference",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'StringTable'",
+    "Package": "/Game/UI/StringTables/RolePreference/ST_HW_RolePreference",
+    "StringTable": {
+      "TableNamespace": "ST_HW_RankPreference",
+      "KeysToEntries": {
+        "RankPreferenceTitle": "Choose Your Role Preference",
+        "RankPreferenceDesc": "Strongly Preferred roles will be assigned to you when possible. If assigned a less preferred role once, next match you will get Priority. If assigned a less preferred role several times consecutively, next match you will get High Priority. If assigned your Least Preferred role at any point, next match you will get High Priority.",
+        "FillRolePriorityDesc": "Automatically be assigned the Role that is most needed by your team.\r\n\r\nYou will gain a small amount of Role Priority for your next match if you choose to Fill.",
+        "UsePreferredRoles": "USE PREFERRED ROLES",
+        "UseFillRoles": "FILL ROLES",
+        "PriorityStringStrong": "Strongly Preferred",
+        "PriorityStringMedium": "Preferred",
+        "PriorityStringLow": "Not Preferred",
+        "PriorityStringLast": "Least Preferred",
+        "RoleString.Solo.1": "Solo Laners are <highlight>bruisers and off-tanks</>, who focus on winning their lane by destroying the Enemy Tower. Their strength lies in their ability to damage and disrupt weaker enemies.",
+        "RoleString.Solo.2": "Solo Laners typically start the match by themselves in the lane on the Fire Giant side of the map, referred to as the Solo Lane. This lane is positioned next to the Primal Camp (Blue), which they often prioritize defeating as it improves their ability to sustain.",
+        "RoleString.Jungle.1": "Junglers are <highlight>roamers and gankers</>, who focus on gaining gold by slaying Jungle Monsters and Enemy Gods. Their strength lies in their ability to flank and ambush enemies.",
+        "RoleString.Jungle.2": "Junglers typically start the match at a jungle camp, and often prioritize defeating the Pathfinder Camp (Yellow) as it improves their ability to navigate the jungle quickly.",
+        "RoleString.Middle.1": "Mid Laners are <highlight>damage dealers</>, who focus on gaining gold by slaying enemy Minions and Monsters. Their strength lies in their ability to quickly secure objectives or deal large amounts of damage.",
+        "RoleString.Middle.2": "Mid Laners typically start the match in the Middle Lane, and often prioritize defeating objectives near the center of the map.",
+        "RoleString.Support.1": "Supports are <highlight>tanks and utility users</>, who focus on helping their teammates stay alive and complete objectives and gold gain. Their strength lies in their ability to mitigate damage and disrupt enemies.",
+        "RoleString.Support.2": "Supports typically start alongside the Carry in the lane on the Fury side of the map, referred to as the Duo Lane. This lane is positioned next to the Inspiration Camp (Purple), which the Support and Carry often prioritize defeating.",
+        "RoleString.Carry.1": "Carries are <highlight>damage dealers</>, who focus on gaining gold by slaying enemy minions and monsters. Their strength lies in their potential to quickly defeat Bosses and Towers, and deal consistent high damage late in the game.",
+        "RoleString.Carry.2": "Carries typically start alongside the Support in the lane on the Fury side of the map, referred to as the Duo Lane. This lane is positioned next to the Inspiration Camp (Purple), which the Support and Carry often prioritize defeating.",
+        "RoleString.Carry": "Carry",
+        "RoleString.Jungle": "Jungle",
+        "RoleString.Middle": "Middle",
+        "RoleString.Support": "Support",
+        "RoleString.Solo": "Solo",
+        "RoleString.Carry.Buff": "On Minion Last Hit: +2 Gold.",
+        "RoleString.Mid.Buff": "Gain +1.5 Mana Per Second",
+        "RoleString.Jungle.Buff": "+35% Damage to Jungle Monsters. \r\n\r\nOn Jungle Monster Kill: Heal 10 HP + 4% of the monsters health and restore +30 Mana.",
+        "RoleString.Solo.Buff": "Gain +2 Health Per Second.",
+        "RoleString.Support.Buff": "On Minion or Jungle Monster Assist while near an ally god: +7 Gold, +4 Heal, +3 Mana Restore."
+      },
+      "KeysToMetaData": {
+        "RoleString.Carry": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "RoleString.Jungle": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "RoleString.Middle": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "RoleString.Support": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "RoleString.Solo": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "RoleString.Carry.Buff": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "RoleString.Mid.Buff": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "RoleString.Jungle.Buff": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "RoleString.Solo.Buff": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "RoleString.Support.Buff": {
+          "METADATA_ID_COMMENT": ""
+        }
+      }
+    }
+  }
+]

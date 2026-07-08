@@ -1,0 +1,1185 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Closed_Alpha_7",
+    "title": "SMITE 2 Closed Alpha 7",
+    "infoboxTitle": "CA7 - SMITE 2 Closed Alpha 7",
+    "releaseDate": "November 25, 2024",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Closed_Alpha_6",
+      "next": "SMITE_2_Closed_Alpha_8"
+    },
+    "category": "closed_alpha",
+    "categoryLabel": "Closed Alpha patch notes",
+    "number": 7,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "General Changes",
+      "anchor": "General_Changes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Added support for DLSS, FSR, and XeSS upscaling (requires Anti-Aliasing Method set to TAA)."
+            },
+            {
+              "text": "Added the Berserker controller layout in Control Settings."
+            },
+            {
+              "text": "Improvements to the in game Combat Log to display the information more clearly."
+            },
+            {
+              "text": "Improved the off screen damage numbers in-game to function similarly to SMITE 1."
+            },
+            {
+              "text": "Added God names to the exclusive cosmetic item descriptions for their Titles, Card Effects, and Global Emotes to differentiate them better in the Player Loadout."
+            },
+            {
+              "text": "God's screen environment upgrade."
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "New match settings popup to choose manual vs auto build or auto skill while in the draft lobby."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Conquest",
+      "anchor": "Conquest",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Updated the Fire Giant buff material that applies to Gods to be brighter and more intense"
+            },
+            {
+              "text": "Conquest Vs AI",
+              "items": [
+                {
+                  "text": "Adjusted Bot behavior and gamemode balance to help facilitate faster co-op matches",
+                  "items": [
+                    {
+                      "text": "Adjusted balance specifically for Conquest Vs AI:",
+                      "items": [
+                        {
+                          "text": "Increased Gold spooling rate"
+                        },
+                        {
+                          "text": "Increased Gold/XP gain"
+                        },
+                        {
+                          "text": "Decreased Tower/Phoenix Protections"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "God Bots on the human team (Order) will now try to do plays around Gold Fury, Fire Giant, and Tower/Phoenix"
+                    },
+                    {
+                      "text": "Reduced the likelihood for God Bots on the enemy team (Chaos) to defend their late game structures"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Gods",
+      "anchor": "New_Gods",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Thor",
+          "anchor": "Thor",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Deals Physical Damage"
+                    },
+                    {
+                      "text": "Strength Scaling"
+                    },
+                    {
+                      "text": "Melee Basic Attacks"
+                    }
+                  ]
+                },
+                {
+                  "text": "Warrior’s Madness",
+                  "items": [
+                    {
+                      "text": "Thor gains 7 Strength for each enemy near him."
+                    },
+                    {
+                      "text": "New Feature:",
+                      "bold": true,
+                      "detail": "After using Berserker’s Barrage or Anvil of Dawn, Thor is Thunderstruck. While Thunderstruck, Mjolnir deals bonus Physical Damage that can arc to up to 2 nearby enemies."
+                    }
+                  ]
+                },
+                {
+                  "text": "Mjolnir’s Attunement",
+                  "items": [
+                    {
+                      "text": "Thor throws Mjolnir forward, dealing Physical Damage to enemies as it travels. When it reaches max range it flies back towards him. Thor may reactivate this ability while Mjolnir is traveling to teleport to and catch Mjolnir."
+                    }
+                  ]
+                },
+                {
+                  "text": "Tectonic Rift",
+                  "items": [
+                    {
+                      "text": "Thor slams Mjolnir down, creating a fissure, dealing Physical Damage as it erupts. Enemies hit are also Stunned. The fissure blocks movement, but allows projectiles to pass through."
+                    },
+                    {
+                      "text": "New Feature: Thor can reactivate this ability to bring the fissure down early.",
+                      "bold": true
+                    }
+                  ]
+                },
+                {
+                  "text": "Berserker Barrage",
+                  "items": [
+                    {
+                      "text": "Thor spins twice, dealing Physical Damage around him, and unleashes a final cone attack in front of him that deals Physical Damage."
+                    },
+                    {
+                      "text": "New Feature: Thor is Thunderstruck for 3 seconds after casting Berserker Barrage.",
+                      "bold": true
+                    }
+                  ]
+                },
+                {
+                  "text": "Anvil of Dawn",
+                  "items": [
+                    {
+                      "text": "Thor flies into the sky, and is able to choose a location to land, dealing Physical Damage in the area."
+                    },
+                    {
+                      "text": "New Feature: Thor is Thunderstruck for 6 seconds after landing.",
+                      "bold": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Poseidon",
+          "anchor": "Poseidon",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Deals Magical Damage"
+                    },
+                    {
+                      "text": "Intelligence Scaling"
+                    },
+                    {
+                      "text": "Ranged Basic Attacks"
+                    }
+                  ]
+                },
+                {
+                  "text": "Changing Tides",
+                  "items": [
+                    {
+                      "text": "Hitting Basic Attacks increases Poseidon’s Tide, granting him Movement Speed and additional damage to his abilities. Using abilities decreases Tide."
+                    }
+                  ]
+                },
+                {
+                  "text": "Tidal Surge",
+                  "items": [
+                    {
+                      "text": "Summon a wave, dealing damage and Knocking Back enemies."
+                    }
+                  ]
+                },
+                {
+                  "text": "Trident",
+                  "items": [
+                    {
+                      "text": "Gain increased Attack Speed, Movement Speed, and Basic Attack damage."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": While activated, Tidal Surge and Basic Attacks fire two additional shots."
+                    }
+                  ]
+                },
+                {
+                  "text": "Whirlpool",
+                  "items": [
+                    {
+                      "text": "Summon a whirlpool, Crippling, Vortexing, and dealing damage repeatedly to enemies in the area."
+                    }
+                  ]
+                },
+                {
+                  "text": "Release the Kraken!",
+                  "items": [
+                    {
+                      "text": "Summon the Kraken, dealing damage and Slowing enemies in the area. Enemies in the center area when it spawns take increased damage, are Stunned, and Knocked Up."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Cupid",
+          "anchor": "Cupid",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Deals Physical Damage"
+                    },
+                    {
+                      "text": "Hybrid Scaling"
+                    },
+                    {
+                      "text": "Ranged Basic Attacks"
+                    }
+                  ]
+                },
+                {
+                  "text": "Lovestruck",
+                  "items": [
+                    {
+                      "text": "Hitting a Basic Attack grants a stack, or 2 stacks if the target is an enemy god. These stacks are consumed to provide Cupid’s abilities with additional damage, healing or other unique effects."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": Cupid now gains up to a max of 16 stacks."
+                    }
+                  ]
+                },
+                {
+                  "text": "Heart Bomb",
+                  "items": [
+                    {
+                      "text": "Fire an arrow of love, dealing damage and Slowing the first target hit. After 3s, the heart explodes, dealing damage in an area around the target. If Cupid has 8 stacks of Lovestruck, all enemies in the area are also Stunned."
+                    }
+                  ]
+                },
+                {
+                  "text": "Share the Love",
+                  "items": [
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": Cupid lobs an explosive bomb at a location that detonates after 0.75s, dealing damage to all targets in an area."
+                    },
+                    {
+                      "text": "When the bomb explodes, 3 hearts spawn around the detonation location, healing and restoring mana to any ally that picks them up."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": If Cupid has 8 stacks of Lovestruck, the hearts also provide a temporary Strength and Intelligence buff."
+                    }
+                  ]
+                },
+                {
+                  "text": "Flutter",
+                  "items": [
+                    {
+                      "text": "Dash forward quickly, gaining an Attack Speed buff and leaving behind a trail that lasts for 6s."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": The trail provides Movement Speed and Attack Speed to all allies standing on it."
+                    }
+                  ]
+                },
+                {
+                  "text": "Fields of Love",
+                  "items": [
+                    {
+                      "text": "Fire a volley of arrows in an area, Slowing and Crippling all enemies inside. The arrows grow for 2s before exploding, dealing damage and Mesmerizing all enemies hit."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": Allies inside the area during the explosion are healed."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": If Cupid has 8 stacks of Lovestruck, the explosion Stuns instead of Mesmerizes."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "The Morrigan Buff",
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Increased Health from 583 + 97 per level to 595 + 99 per level"
+                    }
+                  ]
+                },
+                {
+                  "text": "Deadly Aspects",
+                  "items": [
+                    {
+                      "text": "Increased Damage from 80/135/190/245/300 + 85% INT to 90/145/200/255/310 + 90% INT"
+                    }
+                  ]
+                },
+                {
+                  "text": "Confusion",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 17/16.5/16/15.5/15s to 15s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Anubis Nerf",
+              "items": [
+                {
+                  "text": "Death Gaze",
+                  "items": [
+                    {
+                      "text": "Decreased Damage Scaling per tick from 22% INT to 20% INT"
+                    },
+                    {
+                      "text": "Increased Cooldown from 90/85/80/75/70s to 90s at all ranks"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Neith Buff",
+              "items": [
+                {
+                  "text": "Spirit Arrow",
+                  "items": [
+                    {
+                      "text": "Increased Damage Scaling from 90% STR + 60% INT to 90% STR + 70% INT"
+                    }
+                  ]
+                },
+                {
+                  "text": "Unravel",
+                  "items": [
+                    {
+                      "text": "Increased Damage Scaling from 75% INT to 50% STR + 80% INT"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Hecate Buff",
+              "items": [
+                {
+                  "text": "Spell Eater",
+                  "items": [
+                    {
+                      "text": "Increased Damage Scaling from 45% INT to 50% INT"
+                    }
+                  ]
+                },
+                {
+                  "text": "Repel Magic",
+                  "items": [
+                    {
+                      "text": "Increased Movement Speed from 5/7.5/10/12.5/15% to 15% at all ranks"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Thanatos Buff",
+              "items": [
+                {
+                  "text": "Death Scythe",
+                  "items": [
+                    {
+                      "text": "Increased Damage Scaling from 60% STR to 70% STR"
+                    }
+                  ]
+                },
+                {
+                  "text": "Soul Reap",
+                  "items": [
+                    {
+                      "text": "Increased Damage Scaling from 70% STR to 80% STR"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Nemesis Buff",
+              "items": [
+                {
+                  "text": "Slice and Dice",
+                  "items": [
+                    {
+                      "text": "Increased Damage from 55/85/115/145/175 to 60/90/120/150/180"
+                    },
+                    {
+                      "text": "Increased Center Damage from 80/140/200/260/320 to 90/150/210/270/330"
+                    }
+                  ]
+                },
+                {
+                  "text": "Retribution",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 14s at all ranks to 14/13.5/13/12.5/12s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Kukulkan Buff",
+              "items": [
+                {
+                  "text": "Slipstream",
+                  "items": [
+                    {
+                      "text": "Increased Dash Damage from 85/135/185/235/285 to 95/145/195/245/295"
+                    },
+                    {
+                      "text": "Decreased Cooldown from 15/14/13/12/11s to 13/12.5/12/11.5/11s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Whirlwind",
+                  "items": [
+                    {
+                      "text": "Increased Damage per tick from 12/18/24/30/36 to 12/19/26/33/40"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Danzaburou Buff",
+              "items": [
+                {
+                  "text": "Fool’s Gold",
+                  "items": [
+                    {
+                      "text": "Increased subsequent hit damage from 15% to 25%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Alluring Spirits",
+                  "items": [
+                    {
+                      "text": "Increased Heal per tick from 10/15/20/25/30 to 15/20/25/30/35"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Baron Samedi Nerf",
+              "items": [
+                {
+                  "text": "Consign Spirits",
+                  "items": [
+                    {
+                      "text": "Decreased Missing Health Heal from 5% to 2.5%"
+                    },
+                    {
+                      "text": "Increased Cooldown from 14/13.5/13/12.5/12s to 14s at all ranks"
+                    }
+                  ]
+                },
+                {
+                  "text": "Life of the Party",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown from 90s to 100s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Ra Nerf",
+              "items": [
+                {
+                  "text": "Divine Light",
+                  "items": [
+                    {
+                      "text": "Shifted Solar Ray Damage from 60/95/125/155/185 + 30% INT to 30/70/100/130/160 + 45% INT"
+                    },
+                    {
+                      "text": "Decreased Duration from 3/3.5/4/4.5/5s to 2/2.5/3/3.5/4s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Ymir Buff",
+              "items": [
+                {
+                  "text": "Frostbite",
+                  "items": [
+                    {
+                      "text": "Increased Damage Dealt Debuff from 10% to 15%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Frost Breath",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 16/15.5/15/14.5/14s to 14s at all ranks"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Deathbringer Buff",
+              "items": [
+                {
+                  "text": "Increased Strength from 40 to 45"
+                },
+                {
+                  "text": "Increased Critical Chance from 20% to 25%"
+                }
+              ]
+            },
+            {
+              "text": "Stampede Buff",
+              "items": [
+                {
+                  "text": "Decreased Cost from 2550 to 2400"
+                }
+              ]
+            },
+            {
+              "text": "NEW - T1 - Sash (Sash icon)",
+              "items": [
+                {
+                  "text": "300g"
+                },
+                {
+                  "text": "2 Health Regen"
+                }
+              ]
+            },
+            {
+              "text": "NEW - T2 - Survivor’s Sash",
+              "items": [
+                {
+                  "text": "Builds from Rune + Sash"
+                },
+                {
+                  "text": "750g"
+                },
+                {
+                  "text": "15 Magical Protection"
+                },
+                {
+                  "text": "4 Health Regen"
+                }
+              ]
+            },
+            {
+              "text": "Olmec Blue Buff",
+              "items": [
+                {
+                  "text": "Adjusted Recipe from Medallion to Medallion + Sash"
+                },
+                {
+                  "text": "Increased Health Regen from 1 to 3"
+                }
+              ]
+            },
+            {
+              "text": "Amanita Charm Buff",
+              "items": [
+                {
+                  "text": "Increased Health Regen from 2 to 4"
+                }
+              ]
+            },
+            {
+              "text": "Hide of the Nemean Lion Buff",
+              "items": [
+                {
+                  "text": "Increased Health Regen from 2 to 4"
+                }
+              ]
+            },
+            {
+              "text": "NEW - T2 - Fencer’s Buckler",
+              "items": [
+                {
+                  "text": "Builds from Bow + Shield"
+                },
+                {
+                  "text": "800g"
+                },
+                {
+                  "text": "10% Attack Speed"
+                },
+                {
+                  "text": "10 Physical Protection"
+                }
+              ]
+            },
+            {
+              "text": "Berserker’s Shield Buff",
+              "items": [
+                {
+                  "text": "Adjusted Recipe from Olmec Blue + Hunter’s Bow to Survivor’s Sash + Fencer’s Buckler"
+                },
+                {
+                  "text": "Removed Health"
+                },
+                {
+                  "text": "Added 20 Physical Protection"
+                },
+                {
+                  "text": "Added 20 Magical Protection"
+                }
+              ]
+            },
+            {
+              "text": "Talisman of Purification Nerf",
+              "items": [
+                {
+                  "text": "Decreased Cooldown Rate from 20 to 15"
+                }
+              ]
+            },
+            {
+              "text": "Eye of Providence Buff",
+              "items": [
+                {
+                  "text": "Decreased Cost from 2400 to 2300"
+                }
+              ]
+            },
+            {
+              "text": "Eye of the Storm Buff",
+              "items": [
+                {
+                  "text": "Adjusted self damage from True Damage to Magical Damage"
+                },
+                {
+                  "text": "Increased self damage per second from 2.5% Max Health to 3% Max Health"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "General",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Conquest",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where the Towers near the Teleporters could be hit from outside their range with longer penetrating basic attacks (Ra’s Divine Light). Now if you hit the Tower from over the wall, you’ll be considered as a valid target for 1 second and get hit unless you leave the radius, so free Tower damage can no longer happen"
+                    },
+                    {
+                      "text": "Fixed an issue with the Fire Giant projectile meteor attacks not dealing any damage when they landed"
+                    },
+                    {
+                      "text": "Fixed visual issues with the buff belts playing FX outside the belt radius"
+                    },
+                    {
+                      "text": "Fixed an issue where minions coming out of relevancy vision range would always play their spawn in VFX"
+                    }
+                  ]
+                },
+                {
+                  "text": "God Bots",
+                  "items": [
+                    {
+                      "text": "Fixed instances where God Bots could get stuck trying to path around enemy minions"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Gods",
+              "bold": true,
+              "items": [
+                {
+                  "text": "The Morrigan",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where she’d turn into Ares and chains would sometimes persist visually for the rest of the match"
+                    }
+                  ]
+                },
+                {
+                  "text": "Athena",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where her Reach passive was not going through walls"
+                    }
+                  ]
+                },
+                {
+                  "text": "Nu Wa",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where her Minion basic attack damage wasn’t scaling with each rank and staying at their rank 1 damage"
+                    }
+                  ]
+                },
+                {
+                  "text": "Danzaburou",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where he couldn’t fire his Ultimate while crippled"
+                    }
+                  ]
+                },
+                {
+                  "text": "Fenrir",
+                  "items": [
+                    {
+                      "text": "Fixed issues where the initial bite from his Ultimate would often dry fire if used quickly"
+                    }
+                  ]
+                },
+                {
+                  "text": "Sol",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where she couldn’t jump while Disapparate was active, or in her immune state"
+                    }
+                  ]
+                },
+                {
+                  "text": "Yemoja",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where her Moonstrike VFX were hard to see for enemies"
+                    }
+                  ]
+                },
+                {
+                  "text": "Zeus",
+                  "items": [
+                    {
+                      "text": "Fixed an issue with his Chain Lightning tooltip on the God Page showing the wrong bounce numbers"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "UI",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Fixed an issue where navigation highlighting wasn’t working past the top two rows of the Enemy team on the Console Scoreboard"
+                },
+                {
+                  "text": "Fixed an issue when selecting a God in God Select and backing out to the expanded list the Lock In button would become overlapped"
+                },
+                {
+                  "text": "Fixed issues with the Nameplate Display of Player Name and Title not showing other player’s equipped Titles properly"
+                },
+                {
+                  "text": "Fixed alignment issues on the God Page on Gods that had longer subtitle descriptions"
+                },
+                {
+                  "text": "Fixed an issue in the Item Store where the Active Item limit count wasn’t dynamically updating properly if Active Items were sold"
+                },
+                {
+                  "text": "Fixed an issue with the Split Item Store where owned green indicators disappeared when swapping to a different tab"
+                }
+              ]
+            },
+            {
+              "text": "Items",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Sun Beam Bow",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where this item could get into a state causing infinite procs with no mana being spent, or double procs when activated again after breaking"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Known Issues & Roadmap",
+      "anchor": "Known_Issues_&amp;_Roadmap",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "God Bots",
+              "items": [
+                {
+                  "text": "Melee God Bots often have trouble attacking Fire Giant"
+                },
+                {
+                  "text": "God Bots can get stuck around the Pyromancer"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Patch 11/27/24",
+      "anchor": "Patch_11/27/24",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Fixed an issue with movement speed effects over time not applying across all movement speed debuff abelites."
+                    },
+                    {
+                      "text": "Fixed chat box for VGS having inconsistent scrolling"
+                    },
+                    {
+                      "text": "Fixed Berserker Setting Vote control binds were incorrect in-game"
+                    },
+                    {
+                      "text": "Fixed Auto Build setting not applying correctly in the select lobby"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Cupid",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Fixed Cupid Basic Attacks being too quiet"
+                    },
+                    {
+                      "text": "Fixed Cupid Hearts sometimes getting stuck in walls"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "God Balance",
+          "anchor": "God_Balance_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Poseidon",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Tidal Surge",
+                      "items": [
+                        {
+                          "text": "Base Damage decreased from 100/140/180/220/260 to 90/130/170/210/250"
+                        },
+                        {
+                          "text": "Damage scaling reduced from 70% to 65%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Whirlpool",
+                      "items": [
+                        {
+                          "text": "Decreased Damage Scaling per tick from 20% to 15%"
+                        },
+                        {
+                          "text": "Fixed Poseidon Whirlpool vortex still effecting CC immune targets"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Release the Kraken!",
+                      "items": [
+                        {
+                          "text": "Outer Ring Scaling reduced from 45% to 40%"
+                        },
+                        {
+                          "text": "Inner Ring Scaling reduced from 100% to 90%"
+                        },
+                        {
+                          "text": "Stun Duration reduced from 1/1.25/1.5/1.75/2.0 to 1/1.2/1.4/1.6/1.8"
+                        },
+                        {
+                          "text": "Fixed typo in Poseidon's VFX Frame name - was \"Krackan\" instead of Kraken"
+                        },
+                        {
+                          "text": "Fixed missing spaces in some of Poseidon's in and out of game ability descriptions for his Ult and scaling"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Thor",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Warrior's Madness",
+                      "items": [
+                        {
+                          "text": "Increased STR per nearby God from 7 to 10"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Mjolnir's Attunement",
+                      "items": [
+                        {
+                          "text": "Reduced CD from 14 to 13"
+                        },
+                        {
+                          "text": "Increased Base Damage from 40/80/120/160/200 to 50/90/130/170/210"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Tectonic Rift",
+                      "items": [
+                        {
+                          "text": "Decreased stun projectile life span from 0.3 to 0.16 (stun travels forward twice as fast)"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Anvil of Dawn",
+                      "items": [
+                        {
+                          "text": "Increased Base Damage from 100/155/210/265/320 to 100/165/230/295/360"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 11/27/24 #2",
+      "anchor": "Patch_11/27/24_#2",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_3",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where Kukulkan's basic attacks were missing audio"
+                },
+                {
+                  "text": "Fixed an issue where Danzaburou's abilities were sometimes going silent"
+                },
+                {
+                  "text": "Fixed an issue where Steam users were having issues when accepting Game Invites"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 12/3/24",
+      "anchor": "Patch_12/3/24",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_4",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where Thor could recall and use his Ult at the same time"
+                },
+                {
+                  "text": "Fixed an issue where The Morrigan would de-transform during Thor Ult"
+                },
+                {
+                  "text": "Fixed an issue where Nu Wa's fog revealed enemy wards"
+                },
+                {
+                  "text": "Added Stability improvements"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 12/4/24",
+      "anchor": "Patch_12/4/24",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_5",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where Thor's Ult would sometimes teleport him to mid lane"
+                },
+                {
+                  "text": "Fixed an issue where Thor's Ult camera would get stuck stuck if channeling near collision"
+                },
+                {
+                  "text": "Fixed an issues where Thor's A01 teleport would sometimes dry fire (fire but not do anything)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

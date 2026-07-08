@@ -1,0 +1,399 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Alpha_Weekend_4",
+    "title": "SMITE 2 Alpha Weekend 4",
+    "infoboxTitle": "AW4 - SMITE 2 Alpha Weekend 4",
+    "releaseDate": "July 18, 2024",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": "1524235",
+    "navigation": {
+      "prev": "SMITE_2_Alpha_Weekend_3",
+      "next": "SMITE_2_Closed_Alpha_1"
+    },
+    "category": "alpha_weekend",
+    "categoryLabel": "Alpha Weekend Test patch notes",
+    "number": 4,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "NEW GODS",
+      "anchor": "NEW_GODS",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Ares\nGod of War\nVoiced By: Jason Douglas"
+            },
+            {
+              "text": "Susano\nGod of the Summer Storm\nVoiced By: Jim Foronda"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "NEW SKINS",
+      "anchor": "NEW_SKINS",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Cosmic Executioner Thanatos\nCross-Gen - SMITE Immortal Honor\nVoiced By: Jonathan Cox"
+            },
+            {
+              "text": "Goth Gourmet The Morrigan\nCross-Gen - SMITE Summer Sizzle Event\nVoiced By: Brett Pels"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "GAMEPLAY",
+      "anchor": "GAMEPLAY",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Relics and Aspects",
+          "anchor": "Relics_and_Aspects",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "At the start of each Conquest match players will get to select an Aspect and a Relic"
+                },
+                {
+                  "text": "The order of the selections are",
+                  "items": [
+                    {
+                      "text": "Auto Build"
+                    },
+                    {
+                      "text": "Relic"
+                    },
+                    {
+                      "text": "Aspect"
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspects and Relics can be changed after selection by using the “undo” button in the item shop and then buying a new one. Aspects and Relics cannot be sold and changed after leaving base with one."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "GENERAL",
+      "anchor": "GENERAL",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Match History tab has been added to the front-end."
+            },
+            {
+              "text": "Code Redemption has been added to the front-end."
+            },
+            {
+              "text": "Item Purchase notifications have been added in-game."
+            },
+            {
+              "text": "VGS keys are now rebindable."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "MODES",
+      "anchor": "MODES",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Arena",
+          "anchor": "Arena",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "New Map Features",
+                  "items": [
+                    {
+                      "text": "Stealth zones added in the center area of Arena"
+                    },
+                    {
+                      "text": "Jungle buffs are updated to match the new buffs dropped in Conquest",
+                      "items": [
+                        {
+                          "text": "Their infamy levels are automatically set to 3 and will not change throughout the match"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "New Relic: Battle Cry",
+                  "items": [
+                    {
+                      "text": "Replaces the Ward utility relic"
+                    },
+                    {
+                      "text": "Gains 1 charge whenever you defeat a player or when you are defeated"
+                    },
+                    {
+                      "text": "Activate the relic to gain +10 Strength, Intelligence, and Health Regen per charge"
+                    },
+                    {
+                      "text": "Max 5 charges"
+                    }
+                  ]
+                },
+                {
+                  "text": "New Killstreak Effect: Hot Streak",
+                  "items": [
+                    {
+                      "text": "Players gain ‘Hot Streak’ if they are on a killstreak",
+                      "items": [
+                        {
+                          "text": "A killstreak is 3 player kills in one life"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "While on a ‘Hot Streak,’ that player will deal, and take, 20% more damage"
+                    },
+                    {
+                      "text": "The player who defeats someone who is on a Hot Streak gains +100 bonus gold per difference in level (on top of the original killstreak ender gold)",
+                      "items": [
+                        {
+                          "text": "For example, if a player A is level 10 and player B is level 8, player B would get +200g on top of the original killstreak ender bonus"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "New Environmental Pickups: Crowd Gifts",
+                  "items": [
+                    {
+                      "text": "Every 90 seconds, the crowd will throw a gift into the middle of Arena"
+                    },
+                    {
+                      "text": "Every time a gift is thrown, the overall spawn timer is reduced by 5 seconds",
+                      "items": [
+                        {
+                          "text": "For example, when the crowd throws its first gift in the match, the next spawn timer is set to 85 seconds"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Every time a player is killed, the current timer is reduced by 10 seconds",
+                      "items": [
+                        {
+                          "text": "For example, if an 85 seconds gift spawn timer was active and 45 seconds of it were left, a player kill would reduce that timer by 10 seconds. The overall timer is unaffected."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Picking up this gift grants +15 Strength, Intelligence, and 1% Max Health Regen",
+                      "items": [
+                        {
+                          "text": "Lasts for 30 seconds"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "The gift increases its reward by +10 for every 3 minutes that have passed in the match"
+                    }
+                  ]
+                },
+                {
+                  "text": "New Phase Effects: Ten Ticket Phase",
+                  "items": [
+                    {
+                      "text": "When a team is 10 tickets away from winning, two things will happen:",
+                      "items": [
+                        {
+                          "text": "The crowd starts cheering for the finale! From this point on, in addition to the gifts being thrown in the center, the crowd will throw gifts at this team!",
+                          "items": [
+                            {
+                              "text": "Happens at a random time every 15-20 seconds"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "The brutes on the opposing team get fired up! They will deal +40% more damage and receive 40% less damage"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Conquest",
+          "anchor": "Conquest",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "All Jungle Buffs",
+                  "items": [
+                    {
+                      "text": "Fixed jungle buff values stacking if you had a higher level buff and picked up a lower level buff"
+                    }
+                  ]
+                },
+                {
+                  "text": "Yellow Buff Nerf",
+                  "items": [
+                    {
+                      "text": "Pathfinder I - Reduced ability protection shred from 10 to 5"
+                    },
+                    {
+                      "text": "Pathfinder III - Reduced ability protection shred from 20 to 10"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Jungle Practice",
+          "anchor": "Jungle_Practice",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Select “Enter Practice” while viewing a god's abilities or from the “Change Game Mode” button on the home screen."
+                },
+                {
+                  "text": "This map now has an entirely new environment"
+                },
+                {
+                  "text": "By default, there is a god bot with a DPS tracker, a Jungle Camp, and Conquest Jungle Buffs to pick up."
+                },
+                {
+                  "text": "The mode now has a UI-based system for accessing a variety of practice tools."
+                },
+                {
+                  "text": "Press TAB (or the corresponding scoreboard button on consoles) to access",
+                  "items": [
+                    {
+                      "text": "Reset Health and Mana"
+                    },
+                    {
+                      "text": "Reset Cooldowns"
+                    },
+                    {
+                      "text": "Toggle Damage Immunity"
+                    },
+                    {
+                      "text": "Toggle Reduced Cooldowns"
+                    },
+                    {
+                      "text": "Toggle Infinite Mana"
+                    },
+                    {
+                      "text": "Add Gold"
+                    },
+                    {
+                      "text": "Add Levels"
+                    },
+                    {
+                      "text": "Set level 20"
+                    },
+                    {
+                      "text": "Set level 1"
+                    }
+                  ]
+                },
+                {
+                  "text": "Spawn God Bots",
+                  "items": [
+                    {
+                      "text": "Spawn a new God Bot - spawns in with a new DPS tracker"
+                    },
+                    {
+                      "text": "Apply Settings to Bot - copies settings from the above section to this initially spawned bot"
+                    },
+                    {
+                      "text": "Toggle Give Inventory - toggle this on to spawn a bot that will equip the same items you currently have equipped"
+                    },
+                    {
+                      "text": "Toggle Team - toggle to spawn allied or enemy bots - applies on next spawn"
+                    },
+                    {
+                      "text": "Add/Subtract Level - adjust the level you want bots to spawn in - applies on next spawn"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "GODS",
+      "anchor": "GODS",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "NEW",
+          "anchor": "NEW",
+          "level": 3,
+          "content": []
+        },
+        {
+          "title": "BALANCE",
+          "anchor": "BALANCE",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "“Both the Gods and Item balance of this update focus on buffing many of the underperforming Tanky gods and items, and nerfing the top performing DPS Gods and Items.”"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "ITEMS",
+      "anchor": "ITEMS",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "BALANCE",
+          "anchor": "BALANCE_2",
+          "level": 3,
+          "content": []
+        }
+      ]
+    }
+  ]
+}

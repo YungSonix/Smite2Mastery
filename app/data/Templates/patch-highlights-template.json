@@ -1,0 +1,78 @@
+{
+  "patchNumber": 0,
+  "patchLabel": "OB0",
+  "summaryLine": "One sentence for the patch header.",
+  "new": {
+    "gods": [
+      {
+        "name": "God Name",
+        "note": "Optional — e.g. Classic god port",
+        "title": "Optional card title (defaults to name)",
+        "featuredImage": "ob37-example",
+        "note_featuredImage": "Key maps in lib/newGodPatchImages.js (Metro require). Splash under app/data/Patch Notes/New God Image/"
+      }
+    ],
+    "aspects": [
+      {
+        "god": "God Name",
+        "name": "Aspect of Example",
+        "releaseDate": "Optional date string"
+      }
+    ],
+    "skins": [
+      {
+        "name": "Skin Name",
+        "god": "God Name",
+        "image": null,
+        "note": "Optional. image: skin path for getSkinImage, e.g. /icons/Wallpapers/Name.webp — or drop file under app/data/Icons/Wallpapers/"
+      }
+    ],
+    "wanderingMarket": [
+      {
+        "title": "Classic Traveler: Example Skin",
+        "god": "God Name",
+        "image": null,
+        "featuredImage": "ob37-example",
+        "note": "featuredImage key maps in lib/wanderingMarketImages.js (Metro require).",
+        "premiumUnlocks": ["Prism Name", "Title Name"]
+      }
+    ],
+    "events": [
+      {
+        "title": "Event Name",
+        "note": "Optional short line"
+      }
+    ],
+    "items": [
+      {
+        "name": "Item Name",
+        "note": "Optional"
+      }
+    ]
+  },
+  "gods": {
+    "buffed": [{ "name": "God Name" }],
+    "nerfed": [{ "name": "God Name" }],
+    "adjusted": [{ "name": "God Name", "note": "Optional — aspect note shows aspect icon on grid" }]
+  },
+  "note_shifted": "Each highlights row is its own entry. Base + aspect split separately. SHIFTED = mixed buff + nerf lines on that same row (inferred from patch text). Separate aspect-buff + base-nerf rows stay in their own buckets. Items use the same rules.",
+  "note_bucket_taxonomy": {
+    "buff": "Stats added or values increased (damage, heal, protections, max mana pool, etc.). Cooldown/ability mana cost/item cost reduced = buff.",
+    "nerf": "Stats removed or values decreased. Cooldown, ability mana cost, and item cost increased = nerf. Max mana pool decreased = nerf.",
+    "shifted": "Mixed buff + nerf on one entry — playstyle or build-path change without a full rework.",
+    "adjusted": "Numeric tweak (common balance change): tuning damage, CD, mana, protections. Reenabled/fixes. Auto-inferred reworks land here until a Rework grid exists.",
+    "rework": "Major overhaul — abilities or systems redesigned. Tag manually in highlights if needed; parser detects rework/overhaul/redesign wording."
+  },
+  "items": {
+    "buffed": [{ "name": "Item Name" }],
+    "nerfed": [{ "name": "Item Name" }],
+    "new": [{ "name": "Item Name" }],
+    "adjusted": [{ "name": "Item Name" }]
+  },
+  "systems": [
+    {
+      "title": "Conquest",
+      "note": "Short chip label for Systems row"
+    }
+  ]
+}

@@ -9,6 +9,7 @@ import {
 } from '../lib/itemIconAliases';
 
 const ITEM_ICONS_PATH = ICON_PATHS.ITEM_ICONS;
+const ITEM_ICONS_PATH_LEGACY = ICON_PATHS.ITEM_ICONS_LEGACY;
 const ITEM_ICONS_FILLED_PATH = ICON_PATHS.ITEM_ICONS_FILLED;
 const GOD_ICONS_PATH = ICON_PATHS.GOD_ICONS;
 const ASPECT_ICONS_PATH = ICON_PATHS.ASPECT_ICONS;
@@ -209,23 +210,33 @@ export function bumpItemIconAttempt(setFailedMap, key, localIcon, currentAttempt
 // Item icon lookup — tries original path, lowerCamelCase, then all-lowercase (GitHub Item Icons naming).
 // options.filled: use Item Icons Filled folder when true
 const itemIconResultCache = new Map();
-const ITEM_ICON_CACHE_VERSION = 'v2';
+const ITEM_ICON_CACHE_VERSION = 'v3';
+
+function getItemIconBasePaths(filled) {
+  if (filled) return [ITEM_ICONS_FILLED_PATH];
+  return [ITEM_ICONS_PATH, ITEM_ICONS_PATH_LEGACY];
+}
 
 export function getLocalItemIcon(iconPath, options = {}) {
   if (!iconPath && !options.internalName) return null;
   const base = (iconPath && iconPath.split('/').pop()) || options.internalName || '';
   if (!base) return null;
 
-  const basePath = options.filled ? ITEM_ICONS_FILLED_PATH : ITEM_ICONS_PATH;
+  const basePaths = getItemIconBasePaths(options.filled);
 
   const candidates = buildItemIconFilenameCandidates(base, options.internalName || '');
-  const resultCacheKey = `${ITEM_ICON_CACHE_VERSION}|${basePath}|${options.internalName || ''}|${candidates.join('|')}`;
+  const resultCacheKey = `${ITEM_ICON_CACHE_VERSION}|${basePaths.join('|')}|${options.internalName || ''}|${candidates.join('|')}`;
   const cachedResult = itemIconResultCache.get(resultCacheKey);
   if (cachedResult) return cachedResult;
 
   if (!candidates.length) return null;
 
-  const chain = candidates.map((f) => createImageUri(basePath, f));
+  const chain = [];
+  for (const filename of candidates) {
+    for (const basePath of basePaths) {
+      chain.push(createImageUri(basePath, filename));
+    }
+  }
   const result = chain.length === 1
     ? chain[0]
     : {

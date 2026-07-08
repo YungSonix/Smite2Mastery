@@ -1,0 +1,1225 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_9",
+    "title": "SMITE 2 Open Beta 9",
+    "infoboxTitle": "OB9 - SMITE 2 Open Beta 9",
+    "releaseDate": "May 5, 2025",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_8",
+      "next": "SMITE_2_Open_Beta_10"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 9,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Ported God",
+      "anchor": "New_Ported_God",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Guan Yu",
+              "bold": true,
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Melee Basic Attacks"
+                    },
+                    {
+                      "text": "Damage Type: Physical"
+                    },
+                    {
+                      "text": "Scaling Type: Hybrid Scaling"
+                    }
+                  ]
+                },
+                {
+                  "text": "Passive: Battle Fervor",
+                  "items": [
+                    {
+                      "text": "Gain Stacks of Fervor when dealing or taking damage",
+                      "items": [
+                        {
+                          "text": "Fervor provides Attack Speed per stack"
+                        },
+                        {
+                          "text": "At Maximum Stacks it provides more Attack Speed"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 1: Conviction",
+                  "items": [
+                    {
+                      "text": "Heals nearby allies for Health",
+                      "items": [
+                        {
+                          "text": "Healing allied gods reduces Guan Yu and his allies cooldowns"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 2: Warrior’s Will",
+                  "items": [
+                    {
+                      "text": "Dash forward, dealing Physical Damage to and Slowing enemies you pass through",
+                      "items": [
+                        {
+                          "text": "Hitting enemy gods reduces your cooldowns"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 3: Taolu Assault",
+                  "items": [
+                    {
+                      "text": "Swing your blade in a flurry, dealing Physical Damage repeatedly and stealing their protections",
+                      "items": [
+                        {
+                          "text": "Damages 10 times in 3s"
+                        },
+                        {
+                          "text": "Every 25% Attack Speed causes it to damage 1 additional time"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ultimate Ability: Cavalry Charge",
+                  "items": [
+                    {
+                      "text": "Mount a warhorse gaining crowd control immunity. Strike enemies while riding dealing Physical Damage. Dismount with a final swing that also Stuns all enemies hit.",
+                      "items": [
+                        {
+                          "text": "Enemies hit by previous strikes take increased damage from the strike. This stacks"
+                        },
+                        {
+                          "text": "Swing faster as you gain Attack Speed"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect releasing May 9: Aspect of the General",
+                  "items": [
+                    {
+                      "text": "Battle Fervor now provides Intelligence instead of Attack Speed. Conviction now applies an additional Heal over Time and will share Protections from Taolu Assault. However, Guan Yu loses all Strength scaling"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Wandering Market Traveler - Buzzing Spring Time",
+      "anchor": "New_Wandering_Market_Traveler_-_Buzzing_Spring_Time",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The Spring Time Traveler has arrived in the Wandering Market! Enjoy some SWEET cosmetics straight from the Beehive!"
+        },
+        {
+          "type": "paragraph",
+          "text": "Contents"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Classic Bumble Bee Jing Wei Skin - Instantly unlocked after purchasing the Premium Traveler Page"
+            },
+            {
+              "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+              "items": [
+                {
+                  "text": "Hive Mother Yemoja Skin"
+                },
+                {
+                  "text": "Bee’s Knees Title"
+                },
+                {
+                  "text": "Buzz Off Ward Skin"
+                },
+                {
+                  "text": "Sweet Honey Badge"
+                },
+                {
+                  "text": "Bumble Bee Lady Bug Jing Wei Prism"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Skins and Cosmetics",
+      "anchor": "New_Skins_and_Cosmetics",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Classic Skins (purchasable for 100% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Miss Senshi Bellona"
+                }
+              ]
+            },
+            {
+              "text": "Prisms (purchasable for 100% Diamonds)",
+              "items": [
+                {
+                  "text": "Miss Senshi - Neowave"
+                },
+                {
+                  "text": "Miss Senshi - Golden Grad"
+                },
+                {
+                  "text": "Miss Senshi - Varsity"
+                }
+              ]
+            },
+            {
+              "text": "Cross-Gen Skins (purchasable for 50% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Shadow Sentry Cerberus"
+                }
+              ]
+            },
+            {
+              "text": "Cosmetics",
+              "items": [
+                {
+                  "text": "Mom Tattoo Jump Stamp, Available in the Mother’s Day Event"
+                },
+                {
+                  "text": "Mother Tiamat Badge, available via a  special First Win of the Day Mother’s Day quest"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Supporter Store Items",
+      "anchor": "New_Supporter_Store_Items",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Esports Quips Pack 1 - This Quips Pack features iconic caster calls from SMITE’s history!",
+              "items": [
+                {
+                  "text": "Bow Down"
+                },
+                {
+                  "text": "Crowd Explodes"
+                },
+                {
+                  "text": "EZ Game"
+                },
+                {
+                  "text": "I Cannot Believe"
+                },
+                {
+                  "text": "I’m A Monster"
+                },
+                {
+                  "text": "Let’s Get Down"
+                },
+                {
+                  "text": "Paul’s Better"
+                },
+                {
+                  "text": "Vamos"
+                },
+                {
+                  "text": "Versus The World"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "General",
+      "anchor": "General",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "NEW FEATURE - Announcer Packs",
+              "items": [
+                {
+                  "text": "Announcer Packs are now in SMITE 2 with a variety of packs from SMITE 1 available in the Classic Announcer Pack Chest. Open Beta 9 features the first wave of Packs being introduced with more coming in future Updates, so be on the lookout!"
+                },
+                {
+                  "text": "Announcer Packs can be equipped on the Account Profile Loadout Screen."
+                }
+              ]
+            },
+            {
+              "text": "Ping System",
+              "items": [
+                {
+                  "text": "Players using Mouse and Keyboard can now press the middle mouse button to fire a general ping on the map wherever their targeter is placed"
+                }
+              ]
+            },
+            {
+              "text": "God Builder",
+              "items": [
+                {
+                  "text": "Search functionality has been added to the God Builder page to allow for easier discoverability for community builds"
+                },
+                {
+                  "text": "Pinned builds are now integrated into the Auto-Buy and Auto-Build systems"
+                }
+              ]
+            },
+            {
+              "text": "God Mastery",
+              "items": [
+                {
+                  "text": "A new icon has been added to God Cards/Portraits on the God Page and God Select screens that shows your current Mastery progress"
+                }
+              ]
+            },
+            {
+              "text": "Chat",
+              "items": [
+                {
+                  "text": "The chat window will now show notifications whenever you or an allied player purchases or picks up a team based item or consumable (Ex: Wards, The Executioner, Talisman of Purification, the Runic Bomb, etc.)"
+                },
+                {
+                  "text": "Chat messages will now display longer in the chat window before fading away."
+                }
+              ]
+            },
+            {
+              "text": "God Pages",
+              "items": [
+                {
+                  "text": "The team has started rolling out new Pantheon specific backgrounds on the God Page starting with the Egyptian Pantheon. Keep an eye out for new backgrounds for other Pantheons in future Updates!"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Ranked",
+      "anchor": "Ranked",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Season 0 Spring Split"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Soft Reset",
+              "items": [
+                {
+                  "text": "There will be a Soft Reset of player Skill Rating in OB9"
+                },
+                {
+                  "text": "This soft reset will be as follows:",
+                  "items": [
+                    {
+                      "text": "> 4,000 SR (Obsidian 2) -> Reset to 4,000 SR (Obsidian 2)"
+                    },
+                    {
+                      "text": "3,400 SR to 4,000 SR -> Reset to 3,400 SR (Diamond 2)"
+                    },
+                    {
+                      "text": "2,800 SR to 3,400 SR -> Reset to 2,800 SR (Platinum 2)"
+                    },
+                    {
+                      "text": "< 2,800 SR -> No Reset"
+                    }
+                  ]
+                },
+                {
+                  "text": "This reset is intended to shake up the top end of the leaderboard, and allow player Skill Rating to more accurately reflect recent matchmaking changes"
+                }
+              ]
+            },
+            {
+              "text": "Skill Rating Update",
+              "items": [
+                {
+                  "text": "In OB9, there have been changes to the manner in which SR is calculated",
+                  "items": [
+                    {
+                      "text": "Less aggressive adjustments at the start of a players Ranked career"
+                    },
+                    {
+                      "text": "Adjustments to limit SR inflation"
+                    },
+                    {
+                      "text": "More consistent adjustments match to match (less variability in +/- SR)"
+                    }
+                  ]
+                },
+                {
+                  "text": "In an upcoming update there will be further changes made to the SR algorithm, mainly to more accurately take into account a players current SR in regards to the average SR of the Lobby when making adjustments"
+                }
+              ]
+            },
+            {
+              "text": "Rewards",
+              "items": [
+                {
+                  "text": "Given limitations in regards to the development of Ranked Rewards, Season 0 Winter Split rewards will be granted in the following patch (OB10)"
+                },
+                {
+                  "text": "There will be two main rewards handed out:",
+                  "items": [
+                    {
+                      "text": "Ranked Border",
+                      "items": [
+                        {
+                          "text": "This reward will be based on a players maximum recorded SR at any point during the Winter Split"
+                        },
+                        {
+                          "text": "All players who achieved at least Silver Rank in the Winter Split will receive this reward in OB10"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Ranked Titles",
+                      "items": [
+                        {
+                          "text": "The “Deity” (Season 0 Winter Split) title will be granted to the Top 100 players when servers go down for maintenance before the release of OB9 (the morning of May 5th)"
+                        },
+                        {
+                          "text": "The “Demigod” Title will be granted to all players who reached 5,000 SR at any point during the Winter Split"
+                        },
+                        {
+                          "text": "The “Speedrunner” Title will be granted to the 10 players who most quickly reached demigod during the Winter Split"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Conquest",
+      "anchor": "Conquest",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The goal of the upcoming XP and Gold changes is to try to realign the pacing of the two systems together while also addressing some of the feedback we received from the community. In summary, players will level slightly slower but gain gold slightly faster. That means reaching level 20 takes a few more minutes, but the time it takes to reach full build has been reduced."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Gold Changes",
+              "items": [
+                {
+                  "text": "Jungle gold scaling increased from 0.5 to 1"
+                },
+                {
+                  "text": "Lane gold scaling increased from 0.25 to 0.375"
+                },
+                {
+                  "text": "Side elder harpy base gold increased from 10 to 15"
+                },
+                {
+                  "text": "Side small harpy base gold increased from 2 to 5"
+                }
+              ]
+            },
+            {
+              "text": "XP Changes",
+              "items": [
+                {
+                  "text": "Jungle XP scaling decreased from 9 to 6.5"
+                },
+                {
+                  "text": "Lane XP scaling decreased from 5 to 3"
+                },
+                {
+                  "text": "Melee minion base XP decreased from 50 to 45"
+                },
+                {
+                  "text": "Ranged minion base XP decreased from 30 to 25"
+                },
+                {
+                  "text": "Big harpy base XP increased from 72 to 80"
+                },
+                {
+                  "text": "Small harpy base XP increased from 12 to 20"
+                },
+                {
+                  "text": "Scorpion base XP increased from 219 to 240"
+                }
+              ]
+            },
+            {
+              "text": "Increased Minion vs Minion damage scaling over time"
+            },
+            {
+              "text": "Decreased Minion vs Phoenix damage"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Athena Buff",
+              "items": [
+                {
+                  "text": "Confound (2)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 18s to 16s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Defender of Olympus (4)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 120s to 120/115/110/105/100s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Bellona Buff",
+              "items": [
+                {
+                  "text": "Scourge (3)",
+                  "items": [
+                    {
+                      "text": "Clarified that the Heal scaling from this ability is only Physical Protections"
+                    },
+                    {
+                      "text": "Increased Heal Scaling from 5% to 10% Physical Protections"
+                    }
+                  ]
+                },
+                {
+                  "text": "Eagle’s Rally (4)",
+                  "items": [
+                    {
+                      "text": "Increased Damage from 150/250/350/450/550 to 220/305/390/475/560"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Nemesis Buff",
+              "items": [
+                {
+                  "text": "Swift Vengeance (1)",
+                  "items": [
+                    {
+                      "text": "Increased Damage of each Dash from 50/80/110/140/170 to 60/90/120/150/180"
+                    }
+                  ]
+                },
+                {
+                  "text": "Slice and Dice (2)",
+                  "items": [
+                    {
+                      "text": "Increased Center Damage Strength Scaling from 80% to 90%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Ra Buff",
+              "items": [
+                {
+                  "text": "Searing Pain (4)",
+                  "items": [
+                    {
+                      "text": "Increased True Damage dealt from 5% to 8% of Target’s Max HP"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Rama Shift",
+              "items": [
+                {
+                  "text": "Aspect of Precision",
+                  "items": [
+                    {
+                      "text": "Astral Strike (1)",
+                      "items": [
+                        {
+                          "text": "Decreased Slow Max Stacks from 3 to 2"
+                        },
+                        {
+                          "text": "Decreased Slow Duration from 1.5s to 1s"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Astral Strike (1)",
+                  "items": [
+                    {
+                      "text": "Increased Bonus Damage Strength scaling from 10% to 15%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Susano Buff",
+              "items": [
+                {
+                  "text": "Wind Siphon (2)",
+                  "items": [
+                    {
+                      "text": "Increased Damage from 90/120/150/180/210 to 90/130/170/210/250"
+                    }
+                  ]
+                },
+                {
+                  "text": "Typhoon (4)",
+                  "items": [
+                    {
+                      "text": "Increased Max Damage from 220/285/350/415/480 to 250/310/370/430/490"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Thanatos Buff",
+              "items": [
+                {
+                  "text": "Harvester of Souls (P)",
+                  "items": [
+                    {
+                      "text": "Increased Minion Kill Heal from 8.5% of their Max Health to 10%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Death Scythe (1)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 12s to 11s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Soul Reap (3)",
+                  "items": [
+                    {
+                      "text": "Increased Silence duration from 0.75s to 1s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Ymir Buff",
+              "items": [
+                {
+                  "text": "Frostbite (P)",
+                  "items": [
+                    {
+                      "text": "Now applies a 10% Attack Speed debuff to enemies affected"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Kali",
+              "items": [
+                {
+                  "text": "New Aspect releasing May 12 - Aspect of Unbound Destruction",
+                  "items": [
+                    {
+                      "text": "Kali’s Basic Attacks are ranged. Rupture consumes at 5 stacks to deal damage and heal Kali. Incense no longer stuns or consumes Rupture. It knocks enemies away and applies Rupture. Destruction no longer damages, prevents death, or gives immunities. It now gives stats, lower cooldown, resets cooldown on Mark kills, and makes Kali’s Basics pierce applying 2 Rupture stacks."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Penetration Item Changes",
+          "anchor": "Penetration_Item_Changes",
+          "level": 3,
+          "content": []
+        },
+        {
+          "title": "General Item Changes",
+          "anchor": "General_Item_Changes",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Gauntlet of Thebes",
+                  "items": [
+                    {
+                      "text": "Passive shift",
+                      "items": [
+                        {
+                          "text": "Assists on a minion give 1 Stack and God kills and assists give 5 Stacks. Stacks provide 15 Max Health. Stacks up to 40 times. At max stacks this item evolves providing you an additional 200 Max Health."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Gem of Focus",
+                  "items": [
+                    {
+                      "text": "Cost reduced from 2500 to 2350"
+                    },
+                    {
+                      "text": "Intelligence increased from 40 to 50"
+                    },
+                    {
+                      "text": "Passive Shift",
+                      "items": [
+                        {
+                          "text": "When you use an ability, gain a stack of Momentum granting 4% Movement Speed for 6s. Stacks up to 3 times."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Passive is now mutually exclusive with Tekko-Kagi"
+                    }
+                  ]
+                },
+                {
+                  "text": "Tekko-Kagi",
+                  "items": [
+                    {
+                      "text": "Passive Shift",
+                      "items": [
+                        {
+                          "text": "When you use an ability, gain a stack of Momentum granting 4% Movement Speed for 6s. Stacks up to 3 times."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Passive is now mutually exclusive with Gem of Focus"
+                    }
+                  ]
+                },
+                {
+                  "text": "Mystical Mail",
+                  "items": [
+                    {
+                      "text": "Damage now scales by distance."
+                    },
+                    {
+                      "text": "Passive: Enemies within 4m are dealt 15 + 1 per level Magical Damage per second. Damage increases by up to +50% at close range and decreases by up to -50% at maximum range."
+                    }
+                  ]
+                },
+                {
+                  "text": "Phoenix Feather",
+                  "items": [
+                    {
+                      "text": "Decreased Health from 325 to 300"
+                    },
+                    {
+                      "text": "Decreased Magical Protection from 40 to 35"
+                    },
+                    {
+                      "text": "Active effect shift:",
+                      "items": [
+                        {
+                          "text": "Active: Fire out 3 pulses, Healing you for 100 HP + 10% of your Missing HP and dealing True Damage equal to Your level + 3% of your Max Health from Items to enemies within 3.2m around you. Cooldown: 120s."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Prophetic Cloak",
+                  "items": [
+                    {
+                      "text": "Protection threshold needed to gain bonus Mitigations decreased from 350 to 300"
+                    }
+                  ]
+                },
+                {
+                  "text": "Rage",
+                  "items": [
+                    {
+                      "text": "Decreased Critical Strike Chance per stack from 5% to 4%"
+                    },
+                    {
+                      "text": "Increased Max Stacks from 4 to 5"
+                    }
+                  ]
+                },
+                {
+                  "text": "Shifter’s Shield",
+                  "items": [
+                    {
+                      "text": "Removed Mana from this item"
+                    },
+                    {
+                      "text": "Increased Health from 200 to 300"
+                    },
+                    {
+                      "text": "Recipe Change",
+                      "items": [
+                        {
+                          "text": "Odigba replaced with Survivor’s Sash"
+                        },
+                        {
+                          "text": "Recipe cost adjusted to maintain same Total cost"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Sun Beam Bow",
+                  "items": [
+                    {
+                      "text": "Removed Strength, Intelligence and  Mana Regen from this item"
+                    },
+                    {
+                      "text": "Decreased Attack Speed from 12% to 10%"
+                    },
+                    {
+                      "text": "Passive damage Scaling increased from 20% of Basic Attack Damage to 30%"
+                    },
+                    {
+                      "text": "Passive now has an additional effect",
+                      "items": [
+                        {
+                          "text": "You gain 40 Strength or 50 Intelligence depending on which stat is higher"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Recipe Change",
+                      "items": [
+                        {
+                          "text": "Soul Reliquary replaced with Survivor’s Sash"
+                        },
+                        {
+                          "text": "Recipe cost adjusted to maintain same Total cost"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Void Shield",
+                  "items": [
+                    {
+                      "text": "Passive effect shift",
+                      "items": [
+                        {
+                          "text": "Passive: Enemies within 8.8m have their Physical Protections reduced by 10%. The Protection debuff increases by up to +50% at close range and decreases by up to -50% at maximum range."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Void Stone",
+                  "items": [
+                    {
+                      "text": "Passive effect shift",
+                      "items": [
+                        {
+                          "text": "Passive: Enemies within 8.8m have their Magical Protections reduced by 10%. The Protection debuff increases by up to +50% at close range and decreases by up to -50% at maximum range."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Bluestone Brooch",
+                  "items": [
+                    {
+                      "text": "Decreased Damage from 120 to 100 over 2s."
+                    },
+                    {
+                      "text": "Fixed an issue where the repeat hit damage from this item was doing 2/3 damage instead of 1/2"
+                    }
+                  ]
+                },
+                {
+                  "text": "Bumba’s Spear",
+                  "items": [
+                    {
+                      "text": "Decreased Attack Speed from 25% to 20%"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "VFX",
+      "anchor": "VFX",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Achilles has received a major Ability VFX rework and his targeters have been visually updated"
+            },
+            {
+              "text": "Bellona’s targeters have been visually updated"
+            },
+            {
+              "text": "Athena’s targeters have been visually updated"
+            },
+            {
+              "text": "Medusa’s targeters have been visually updated"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Quality of Life",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Players cannot use Wind Sprites if they are feared, grabbed, knocked back, levitating, mesmerized, rooted, stunned, taunted, or crippled."
+                }
+              ]
+            },
+            {
+              "text": "Gods",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Jing Wei",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where Persistent Gust (A01) AoE did not show for local-players"
+                    }
+                  ]
+                },
+                {
+                  "text": "Yemoja",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where the Bouncing Bubble (A01) Projectile did not  use the correct Skin color scheme FX on Low settings"
+                    }
+                  ]
+                },
+                {
+                  "text": "Hun Batz",
+                  "items": [
+                    {
+                      "text": "Fixed an issue with his Sacred Monkey (A03) FX material"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Items",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Fixed an issue where several items were benefiting from lifesteal"
+                },
+                {
+                  "text": "Fencer’s Buckler removed as it no longer built into any current T3 items"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 5/6/24",
+      "anchor": "Hotfix_5/6/24",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed an issue where Guan Yu's Ability 2 (Warrior's Will) wasn't having the proper immunity to Cripple/Root/Knockback - Fixed on May 5"
+            },
+            {
+              "text": "Guan Yu cooldown reduction effects no longer affect items. - Fixed on May 5"
+            },
+            {
+              "text": "Fixed an issue where Auto skill sometimes didn't work"
+            },
+            {
+              "text": "Fixed an issue where Nano-mancer was using Might of Neptune VO"
+            },
+            {
+              "text": "Fixed an issue with \"slain enemies\" VO lines being swapped for Khepri"
+            },
+            {
+              "text": "Fixed an issue where Auto buy was not showing items"
+            },
+            {
+              "text": "Fixed an issue where Guan Yu's Passive wasn't working during Charge."
+            },
+            {
+              "text": "Fixed an issue with Guan Yu's Ability 1 (Conviction) where it was healing Titans."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 5/8/24",
+      "anchor": "Hotfix_5/8/24",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed an issue where Guan Yu's abilities could provide double reductions"
+            },
+            {
+              "text": "Fixed an issue with Artemis where her trap couldn't be interrupted by cripple resistance"
+            },
+            {
+              "text": "Fixed an issue where the Report button wouldn't work at the End of Match"
+            },
+            {
+              "text": "Fixed an issue where Merlin did not have a stun animation"
+            },
+            {
+              "text": "Set the Default Announcer Pack to appear if no Announcer Pack has been selected"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 5/9/24",
+      "anchor": "Hotfix_5/9/24",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Items",
+          "anchor": "Items",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The Executioner",
+                  "items": [
+                    {
+                      "text": "Decreased Passive Strength from 40 to 30"
+                    },
+                    {
+                      "text": "Decreased Passive Intelligence from 70 to 55"
+                    }
+                  ]
+                },
+                {
+                  "text": "Totem of death",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown Rate from 20 to 15"
+                    }
+                  ]
+                },
+                {
+                  "text": "Demon Blade",
+                  "items": [
+                    {
+                      "text": "Decreased Attack Speed from 20% to 15%"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Gods",
+          "anchor": "Gods",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Kali",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Incense (3)",
+                      "items": [
+                        {
+                          "text": "Decreased Bonus Intelligence Scaling per Rupture Stack from 22.5% to 17.5%."
+                        },
+                        {
+                          "text": "Decreased Base Damage from 40/65/90/115/140 to 35/55/75/95/115."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Guan Yu",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Taolu Assault (3)",
+                      "items": [
+                        {
+                          "text": "Decreased Protection Steal from 3/6/9/12/15 to 3/5/7/9/11."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Fixes"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where Aphrodite Basic attack was showing the wrong VFX"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 5/14/25",
+      "anchor": "Hotfix_5/14/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed an issue with Neith's World Weaver indicator not always working or updating correctly"
+            },
+            {
+              "text": "Made a fix for gamepad players not being able to move while viewing the combat log"
+            },
+            {
+              "text": "Made fixes to various announcer packs which had swapped and incorrect lines."
+            },
+            {
+              "text": "Fixed an issue where Morrigan clones would not level skills if she transformed into someone lower level"
+            },
+            {
+              "text": "Put in a potential fix to correct situations where a 6 v 5 Lobby would be created"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

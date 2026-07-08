@@ -1,0 +1,1441 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_5",
+    "title": "SMITE 2 Open Beta 5",
+    "infoboxTitle": "OB5 - SMITE 2 Open Beta 5",
+    "releaseDate": "March 10, 2025",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_4",
+      "next": "SMITE_2_Open_Beta_6"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 5,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New God",
+      "anchor": "New_God",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Princess Bari (Live with the Update!)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "General",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Title: The Divine Mudang"
+                    },
+                    {
+                      "text": "New Pantheon: Korean"
+                    },
+                    {
+                      "text": "Ranged Basic Attacks"
+                    },
+                    {
+                      "text": "Damage Type: Magical"
+                    },
+                    {
+                      "text": "Scaling Type: Hybrid Scaling"
+                    }
+                  ]
+                },
+                {
+                  "text": "Passive: Mystic Surge",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Accumulate Spirit by dealing damage to enemies. Upon reaching 100 Spirit you enter Mystic Surge for 5s and can use any of your abilities with no cooldown. Abilities used this way have a bonus effect",
+                      "items": [
+                        {
+                          "text": "Gain bonus Strength, Intelligence, and Attack Speed while in your Mystic Surge based on the rank of Spirit’s Cadence"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 1: Sacred Bell",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Lob a bell, dealing Magical Damage to enemies where it lands. Warding Gusts or Reverent Steps push the Bell, dealing Magical Damage and Slowing enemies",
+                      "items": [
+                        {
+                          "text": "Mystic Surge: +20% Lob Damage and now applies a Slow. +20% Rolling Damage and now applies a Stun. The Bell itself is 1.67x the size."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 2: Warding Gust",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Swipe your fan dealing Magical Damage to enemies and Knockback enemies who are close.",
+                      "items": [
+                        {
+                          "text": "-30% Damage to enemies further away"
+                        },
+                        {
+                          "text": "Mystic Surge: +20% Damage and Knockback. Bells pushed are treated as Mystic Surge Bells."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 3: Reverent Steps",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Dance for a short burst of speed in any direction, then fire a projectile dealing Magical Damage when it ends",
+                      "items": [
+                        {
+                          "text": "Hitting a God grants 50 Spirit and reduces this ability’s cooldown by 25%"
+                        },
+                        {
+                          "text": "Mystic Surge: +20% Damage, dealt instantly in a line. Bells pushed are treated as Mystic Surge Bells."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ultimate Ability: Spirit’s Cadence",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Conjure a spiritual dance that pulses three times. The first two pulses deal Magical Damage. The last pulse deals Magical Damage. Pulses apply a stacking Slow.",
+                      "items": [
+                        {
+                          "text": "You and allies in the area gain Guardian Spirits for 4s. When taking lethal damage become Immune, Silenced, and Disarmed for 1.5s."
+                        },
+                        {
+                          "text": "Casting this ability immediately places you in Mystic Surge for 10s."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Skins and Cosmetics",
+      "anchor": "New_Skins_and_Cosmetics",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "NEW SMITE 2 Skins! (purchasable for 50% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Silent Wish Aladdin, available in the Silent Strike Chest"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Classic Skins (purchasable for 100% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Steel Samurai Susano"
+                },
+                {
+                  "text": "Pool Party Jing Wei"
+                }
+              ]
+            },
+            {
+              "text": "Cross-Gen Skins (purchasable for 50% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Vizier Eggbert Beakington Ra"
+                },
+                {
+                  "text": "Court Archer Cupid"
+                },
+                {
+                  "text": "Court Charmer Aphrodite"
+                }
+              ]
+            },
+            {
+              "text": "Divine Legacy Skins (unlocked in SMITE 1 via Divine Legacy)",
+              "items": [
+                {
+                  "text": "Supernova Pele"
+                }
+              ]
+            },
+            {
+              "text": "New Cosmetics",
+              "items": [
+                {
+                  "text": "Ninja, Vanish! Global Emote + Silent Strike Badge Bundle, available in the Silent Strike Chest"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "General",
+      "anchor": "General",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "NEW FEATURE - HUD Editor",
+              "items": [
+                {
+                  "text": "Players can now access the HUD Editor in game via the Escape Menu to customize the scale, opacity, and position of various HUD Elements! This feature is available to players on all platforms."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "NEW FEATURE - Music Packs",
+              "items": [
+                {
+                  "text": "Music Packs are now in SMITE 2! A variety of god-like soundtracks from SMITE 1 are available for unlock via the Classic Music Chest, purchasable for 100% Legacy Gems! Roll the Chest today and start building out your in game playlist!"
+                },
+                {
+                  "text": "Music Packs can be equipped on the Account Profile Loadout Screen."
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Game Modes",
+      "anchor": "Game_Modes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Conquest",
+          "anchor": "Conquest",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Gold Pacing Changes"
+                },
+                {
+                  "text": "\"Item acquisition throughout the match has been adjusted so that players can build a Tier 3 item every 5 minutes on average. Previously, this timing would get shorter as the match went on due to the higher gold scaling.\"",
+                  "items": [
+                    {
+                      "text": "Melee Minions",
+                      "items": [
+                        {
+                          "text": "Base gold reduced by 2g"
+                        },
+                        {
+                          "text": "Gold scaling reduced from 0.5g to 0.25g"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Ranged Minions",
+                      "items": [
+                        {
+                          "text": "Base gold reduced by 2g"
+                        },
+                        {
+                          "text": "Gold scaling reduced from 0.5g to 0.25g"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Minotaur",
+                      "items": [
+                        {
+                          "text": "Gold scaling reduced from 1.5g to 1g"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Jungle Camps",
+                      "items": [
+                        {
+                          "text": "Alpha creature base gold reduced by 1g"
+                        },
+                        {
+                          "text": "Scorpion base gold reduced by 4g"
+                        },
+                        {
+                          "text": "Gold scaling reduced from 1.5g to 0.5g"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Player Kills",
+                      "items": [
+                        {
+                          "text": "Base gold reward for player kills increased from 150g to 200g"
+                        },
+                        {
+                          "text": "Inferior multiplier increased from 0.1 to 0.25"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Minion Changes",
+                  "items": [
+                    {
+                      "text": "Brutes"
+                    },
+                    {
+                      "text": "\"The goal of the brutes is to assist players with sieging into a structure in the mid and late game. Currently, a mage usually has enough power to clear a wave by themselves at a safe distance. Now, the attacking team will have the opportunity to push minions into a structure and make something happen.\"",
+                      "items": [
+                        {
+                          "text": "A brute will replace a melee minion in the waves at set intervals throughout the match",
+                          "items": [
+                            {
+                              "text": "The first replacement happens at 7 minutes, then at 15 minutes, and finally at 23 minutes"
+                            },
+                            {
+                              "text": "For example, at the 7 minute mark the wave will now be made up of 1 brute, 2 melee minions, and 3 ranged minions"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Brutes spawn with an anti-magic shield, making them more resilient to magical damage",
+                          "items": [
+                            {
+                              "text": "They gain 5% magical damage reduction every 3 minutes, capped at 50%",
+                              "items": [
+                                {
+                                  "text": "Magical in-hands will not be affected by this reduction, and are instead reduced by the normal amount"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Brutes have more health and power than a normal melee minion"
+                        },
+                        {
+                          "text": "Brutes will use the Champion minion model (also known as the Warhorn minion)",
+                          "items": [
+                            {
+                              "text": "Due to this change, minions affected by the Warhorn buff will no longer change character models"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Minion vs. Minion TTK"
+                    },
+                    {
+                      "text": "\"We noticed a problem with minions piling up and snowballing into large waves and taking down structures by themselves without any player being there to help snowball the wave. These changes are an attempt to ensure that waves move up and down lanes at a more predictable pace if left alone.\"",
+                      "items": [
+                        {
+                          "text": "Minions will now do a consistent amount of damage to each other at all points throughout the match",
+                          "items": [
+                            {
+                              "text": "Previously, minions would struggle to clear each other as the match progressed due to their increased protections"
+                            },
+                            {
+                              "text": "This should help reduce the amount of minion waves snowballing without player assistance"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Minion vs. Minion Targeting",
+                      "items": [
+                        {
+                          "text": "Ranged minions will now try to target minotaurs as they move forward passed their normal line formation"
+                        },
+                        {
+                          "text": "Melee and ranged minions will now attempt to prioritize ranged minions who are standing near the melee line formation"
+                        },
+                        {
+                          "text": "This change supports the reduction of minion waves snowballing without player assistance"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Fire Minion Bonus Gold Revert",
+                      "items": [
+                        {
+                          "text": "Fire minions no longer grant bonus gold when slain"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Structure Changes",
+                  "items": [
+                    {
+                      "text": "Penetration Increase",
+                      "items": [
+                        {
+                          "text": "Tier 1 tower penetration increased to 10% to 20%"
+                        },
+                        {
+                          "text": "Tier 2 tower penetration increased to 20% to 30%"
+                        },
+                        {
+                          "text": "Phoenix penetration increased from 30% to 40%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Minion Counter",
+                      "items": [
+                        {
+                          "text": "A small counter under the structure’s objective health bar displays how many friendly minions are near the enemy’s tower"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Obsidian Dagger Nameplate Effect",
+                  "items": [
+                    {
+                      "text": "The owner of the Obsidian Dagger will now have an effect applied to their nameplate"
+                    }
+                  ]
+                },
+                {
+                  "text": "Runic Bomb Changes",
+                  "items": [
+                    {
+                      "text": "Can now destroy the door at the Fire Giant’s pit"
+                    },
+                    {
+                      "text": "Can now be placed further"
+                    },
+                    {
+                      "text": "Now has a throw animation",
+                      "items": [
+                        {
+                          "text": "Has a travel time of 0.5s"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Fountain Changes",
+                  "items": [
+                    {
+                      "text": "Fountain will now recover health and mana every 0.2s instead of every 1s",
+                      "items": [
+                        {
+                          "text": "The amount of recovery per second still remains the same"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Conquest Art Changes",
+                  "items": [
+                    {
+                      "text": "Tower Base Rings have been updated! They give strong and clear ring based definition of where the towers are located and detail their effective range."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Joust",
+          "anchor": "Joust",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Titan",
+                  "items": [
+                    {
+                      "text": "Increased Max Health from 10000 to 12500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Achilles Nerf",
+              "items": [
+                {
+                  "text": "Combat Dodge (Ability 3)",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown from 12/11.5/11/10.5/10s to 14/13.5/13/12.5/12s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Bacchus Buff",
+              "items": [
+                {
+                  "text": "Drunk-o-meter (Passive)",
+                  "items": [
+                    {
+                      "text": "Increased Protections Buffs while Tipsy from 5% increased protections to 6%"
+                    },
+                    {
+                      "text": "Increased Protections Buffs while Smashed from 10% increased protections to 12%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Bellona Nerf",
+              "items": [
+                {
+                  "text": "Bludgeon (Ability 2)",
+                  "items": [
+                    {
+                      "text": "Decreased Slam Damage from 80/145/210/275/340 to 70/130/190/250/310"
+                    }
+                  ]
+                },
+                {
+                  "text": "Scourge Ability (3)",
+                  "items": [
+                    {
+                      "text": "Decreased Heal Scaling from 7% Protections to 5% Protections"
+                    },
+                    {
+                      "text": "Fixed an issue where the heal amount and scaling was missing from the tooltip."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Chaac Buff",
+              "items": [
+                {
+                  "text": "Rain Dance (Ability 3)",
+                  "items": [
+                    {
+                      "text": "Increased Base healing per tick from 8/13/18/23/28 to 10/15/20/25/30"
+                    },
+                    {
+                      "text": "Increased Heal Scaling per tick from 4% INT to 5% INT"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Fenrir Shift",
+              "items": [
+                {
+                  "text": "Brutalize (Ability 3)",
+                  "items": [
+                    {
+                      "text": "Decreased Protections while channeling from 5/10/15/20/25+2 per level to 5/8/11/14/17+2 per level"
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect of Loyalty",
+                  "items": [
+                    {
+                      "text": "Brutalize (Ability 3)",
+                      "items": [
+                        {
+                          "text": "Increased Protections while channeling and for the additional buff duration on the aspect from 5/10/15/20/25+2 per level to 7/14/21/28/35+2.5 per level"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Hecate Nerf",
+              "items": [
+                {
+                  "text": "Aspect of Ruin",
+                  "items": [
+                    {
+                      "text": "Spell Eater (Ability 2)",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 9s to 12s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Hercules Nerf",
+              "items": [
+                {
+                  "text": "Mitigate Wounds (Ability 3)",
+                  "items": [
+                    {
+                      "text": "Decreased Protections from 20/25/30/35/40 to 5/10/15/20/25 + 15% Of your Protections from Items",
+                      "items": [
+                        {
+                          "text": "Note : The 15% is for each stat, meaning if you have 100 Physical Protection and 50 Magical Protection, you would gain 25 + 15 Physical Protection and 25 + 7.5 Magical Protection."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Khepri Shift",
+              "items": [
+                {
+                  "text": "Solar Flare (Ability 3)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 14/13.5/13/12.5/12s to 13/12.5/12/11.5/11s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect of Laceration",
+                  "items": [
+                    {
+                      "text": "Abduct (Ability 1)",
+                      "items": [
+                        {
+                          "text": "Decreased Bonus Damage Scaling per tick from 30% INT to 25% INT"
+                        },
+                        {
+                          "text": "Decreased Bonus Damage Scaling per tick from 5% Max HP to 4% Max HP"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Mordred Shift",
+              "items": [
+                {
+                  "text": "Shoulder Charge Rework (Passive)",
+                  "items": [
+                    {
+                      "text": "Aspect of Rage has been integrated into the base kit",
+                      "items": [
+                        {
+                          "text": "This ability no longer knocks up enemy gods hit but passes through them dealing damage"
+                        },
+                        {
+                          "text": "This ability cooldown is reset on damaging an enemy god with another ability"
+                        },
+                        {
+                          "text": "Damage decreased from 30 + 8 per level to 15 + 4 per level"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Bloodrage (Ability 2)",
+                  "items": [
+                    {
+                      "text": "Buff/Debuff Stack Count is increased from 4 to 5"
+                    },
+                    {
+                      "text": "Base Attack Speed is decreased from 40% to 30%"
+                    },
+                    {
+                      "text": "Gaining Bloodrage stacks now also provides 5% increased Attack speed per stack",
+                      "items": [
+                        {
+                          "text": "The Attack Speed buff always ends when Bloodrage’s Movement Speed buff falls off."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Hitting enemy gods with the initial fire now applies 2 stacks of the Protection debuff to the enemies hit and 2 stacks of the buff to Mordred"
+                    },
+                    {
+                      "text": "Fix : This ability has always been debuffing enemy Magical Protections but was not in the ability description"
+                    },
+                    {
+                      "text": "Fix : Mordred was gaining twice the intended Physical Protection per stack instead of Magical Protection",
+                      "items": [
+                        {
+                          "text": "Mordred now correctly gains magical protections on hitting enemies"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Severing Slice (Ability 3)",
+                  "items": [
+                    {
+                      "text": "Projectile Damage scaling increased from 50% INT to 70% INT"
+                    }
+                  ]
+                },
+                {
+                  "text": "Pursue the Weak (Ability 4B)",
+                  "items": [
+                    {
+                      "text": "Your character rotation is no longer locked while in the Prefire of this ability"
+                    },
+                    {
+                      "text": "This ability now provides a Heal each time an enemy god is hit",
+                      "items": [
+                        {
+                          "text": "Heal per hit: 30/35/40/45/50 + 25% INT"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect of Rage rework",
+                  "items": [
+                    {
+                      "text": "Basic attacks while Bloodrage is active no longer provide bonus Protections or Attack Speed but instead your non-ultimate and non-passive ability cooldowns are lowered by 1s. Additionally Shoulder Charge deals more damage if it has hit an enemy god recently.",
+                      "items": [
+                        {
+                          "text": "10 bonus damage per Stack. Buff stacks up to 5 times and lasts for 6s"
+                        },
+                        {
+                          "text": "Stacks decrease 1 at a time instead of all together on expiration"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Nemesis Buff",
+              "items": [
+                {
+                  "text": "Swift Vengeance (Ability 1)",
+                  "items": [
+                    {
+                      "text": "Increased Damage Scaling from 35% STR to 45% STR"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Rama Shift",
+              "items": [
+                {
+                  "text": "Infinite Arrows (Ability 2)",
+                  "items": [
+                    {
+                      "text": "Increased Buff Duration from 5s to 6s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Astral Barrage (Ability 4)",
+                  "items": [
+                    {
+                      "text": "Increased STR Scaling from 55% to 65%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect of Precision Nerf",
+                  "items": [
+                    {
+                      "text": "Decreased Attack Speed from 0.76 to 0.7"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Sobek Buff",
+              "items": [
+                {
+                  "text": "Aspect of Prey",
+                  "items": [
+                    {
+                      "text": "Charge Prey (Ability 1)",
+                      "items": [
+                        {
+                          "text": "Increased Intelligence scaling from 50% to 75%."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Sickening Strike (Ability 3)",
+                      "items": [
+                        {
+                          "text": "This ability now heals for the full amount when the aspect is enabled, instead of for 50%"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Thanatos Shift",
+              "items": [
+                {
+                  "text": "Harvester of Souls (Passive)",
+                  "items": [
+                    {
+                      "text": "Increased Heal from killing gods from 20% of their max HP to 25%"
+                    },
+                    {
+                      "text": "Increased Heal from killing minions from 7% of their max HP to 8.5%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Death Scythe (Ability 1)",
+                  "items": [
+                    {
+                      "text": "Increased Damage Scaling from 70% STR to 80% STR"
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect of Reaping Nerf",
+                  "items": [
+                    {
+                      "text": "Soul Reap (Ability 3)",
+                      "items": [
+                        {
+                          "text": "Decreased Bonus Damage Scaling from 3.5% of your max HP to 2.5%"
+                        },
+                        {
+                          "text": "Decreased Heal from 0.75% of your max HP to 0.5%"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Thor Buff",
+              "items": [
+                {
+                  "text": "Anvil of Dawn (Ability 4)",
+                  "items": [
+                    {
+                      "text": "Decreased the duration of the warning visuals enemies see from 1.2s to 0.5s. This should now match the duration of the effect in SMITE 1"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Vulcan Buff",
+              "items": [
+                {
+                  "text": "Master Craftsman (P)",
+                  "items": [
+                    {
+                      "text": "Efficiency Mod",
+                      "items": [
+                        {
+                          "text": "Increased CDR from 10 to 20"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Thermal Mod",
+                      "items": [
+                        {
+                          "text": "Increased INT Scaling Bonus from 20% to 30%"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Zeus Buff",
+              "items": [
+                {
+                  "text": "Chain Lightning (1)",
+                  "items": [
+                    {
+                      "text": "Increased Damage Scaling from 50% INT to 60% INT"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "NEW - Arondight",
+              "items": [
+                {
+                  "text": "Cost : 2550"
+                },
+                {
+                  "text": "Strength : 65"
+                },
+                {
+                  "text": "Cooldown Rate : 15"
+                },
+                {
+                  "text": "Active: Enemy Gods within 17.6m become revealed for 10s. Reveal persists through stealth. If any god is revealed, gain 25% Movement Speed for 10s. The first time you damage a revealed god you deal a bonus 30 + 50% STR Physical Damage. Cooldown: 75s."
+                }
+              ]
+            },
+            {
+              "text": "Elixir of Strength Nerf",
+              "items": [
+                {
+                  "text": "Decreased STR from 75 to 50"
+                }
+              ]
+            },
+            {
+              "text": "Elixir of Intelligence Nerf",
+              "items": [
+                {
+                  "text": "Decreased INT from 120 to 80"
+                }
+              ]
+            },
+            {
+              "text": "Spectral Armor Buff",
+              "items": [
+                {
+                  "text": "Increased Attack Speed Debuff Aura from 20% to 25%"
+                },
+                {
+                  "text": "Increased Critical Strike Chance Debuff Aura from 20% to 25%"
+                }
+              ]
+            },
+            {
+              "text": "Void Shield Nerf",
+              "items": [
+                {
+                  "text": "Decreased Physical Protection Debuff Aura from 15% to 10%"
+                },
+                {
+                  "text": "Fixed an issue where this could remove the incorrect amount of protections."
+                }
+              ]
+            },
+            {
+              "text": "Void Stone Nerf",
+              "items": [
+                {
+                  "text": "Decreased Magical Protection Debuff Aura from 15% to 10%"
+                },
+                {
+                  "text": "Fixed an issue where this could remove the incorrect amount of protections."
+                }
+              ]
+            },
+            {
+              "text": "Stone of Binding Shift",
+              "items": [
+                {
+                  "text": "Decreased Physical and Magical Protection Debuff on the Passive trigger from 15 to 10"
+                },
+                {
+                  "text": "Increased Physical Protection from 40 to 45."
+                },
+                {
+                  "text": "Increased Magical Protection from 30 to 35."
+                },
+                {
+                  "text": "Fixed an issue where this could remove the incorrect amount of protections."
+                }
+              ]
+            },
+            {
+              "text": "Devourer’s Gauntlet Buff",
+              "items": [
+                {
+                  "text": "Increased STR per stack from 0.3 to 0.5 (Increases Total STR at max stacks from 45 to 55)"
+                }
+              ]
+            },
+            {
+              "text": "Heartseeker Buff",
+              "items": [
+                {
+                  "text": "fixed an issue where Pen was listed 2x"
+                },
+                {
+                  "text": "Increased STR from 40 to 45"
+                }
+              ]
+            },
+            {
+              "text": "Hydra’s Lament Buff",
+              "items": [
+                {
+                  "text": "Increased STR from 40 to 45"
+                }
+              ]
+            },
+            {
+              "text": "Magi’s Cloak  Nerf",
+              "items": [
+                {
+                  "text": "Increased Cooldown to from 60s to 90s."
+                },
+                {
+                  "text": "Increased cost from 2450 to 2550."
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Quality of Life",
+              "items": [
+                {
+                  "text": "Updated The Fallen Zeus Skin’s Lightning Strikes to better match his color scheme, and fixed an issue where his persistent in-hand FX  weren’t placed correctly."
+                },
+                {
+                  "text": "Decreased the volume when consuming Elixirs"
+                }
+              ]
+            },
+            {
+              "text": "Gods",
+              "items": [
+                {
+                  "text": "Achilles",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where his Ultimate refire would time out while attempting to fire, cancelling the ability."
+                    }
+                  ]
+                },
+                {
+                  "text": "Susano",
+                  "items": [
+                    {
+                      "text": "Susano’s pull should be timed better to the ability cues."
+                    },
+                    {
+                      "text": "Susano’s pull should now better attempt to keep targets in their relative position in the cone when they are pulled to Susano.",
+                      "items": [
+                        {
+                          "text": "IE: When pulling a jungle camp of 3 monsters, the left monster should go to his left, the right monster should go to his right, the center monster should go directly to Susano."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "UI",
+              "items": [
+                {
+                  "text": "Adjusted Gold, XP, Heal, and Mana floating combat text to be closer in style to Damage numbers.",
+                  "items": [
+                    {
+                      "text": "XP and Gold text now fades out more quickly to clear up combat space."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Voice Actors",
+      "anchor": "New_Voice_Actors",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Princess Bari - Judy Alice"
+            },
+            {
+              "text": "Silent Wish Aladdin - Nazeeh Tarsha"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 3/11/25",
+      "anchor": "Hotfix_3/11/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where minions were dealing no damage to familiars."
+                },
+                {
+                  "text": "Made another potential fix to Store Overlay issues reported on console"
+                },
+                {
+                  "text": "Fixed an issue with Health Chalice where if it had 0 charges and a player dies, it won’t refill"
+                },
+                {
+                  "text": "Fixed an audio issue at end of match (“Ally has left the game”)"
+                },
+                {
+                  "text": "Fixed an issue where Music Packs weren’t working Assault"
+                },
+                {
+                  "text": "Aladdin - Moving the Lamp in his inventory no longer despawns other active items"
+                },
+                {
+                  "text": "Fixed a sound effects issue where Zeus was playing the wrong hit sound"
+                },
+                {
+                  "text": "Made an effects change to Bari Sacred Bell projectile and animation of warning circles"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 3/13/25",
+      "anchor": "Hotfix_3/13/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_3",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where Bari could get an extra enhanced ability"
+                },
+                {
+                  "text": "Fixed an issue with Pele’s Pyroclast where return charges were not properly registering"
+                },
+                {
+                  "text": "Fixed an issue with Thanatos Ultimate where he would retain his speed buff after respawn"
+                },
+                {
+                  "text": "Fixed an issue where Bari’s foot was twitching in the lobby"
+                },
+                {
+                  "text": "Made it easier for gamepad players to lock in gods for Assault"
+                },
+                {
+                  "text": "Bari’s audio will no longer loop at start"
+                },
+                {
+                  "text": "Ragnarok Force X now plays the correct music"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 3/14/25",
+      "anchor": "Hotfix_3/14/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_4",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Artemis trap no longer causes attacks to miss targets"
+                },
+                {
+                  "text": "Reduced the volume for the default ambient background music"
+                },
+                {
+                  "text": "Fixed an issue where the Silent Strike chest ownership count was broken"
+                },
+                {
+                  "text": "Fixed a sorting issue with chest bundles"
+                },
+                {
+                  "text": "Fix an issue where chest screen purchase clicks would sometimes fail"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "God Balance",
+          "anchor": "God_Balance_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Awilix Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Summon Suku (1)",
+                      "items": [
+                        {
+                          "text": "Decreased Base Damage from 80/135/190/245/300 to 70/120/170/220/270"
+                        },
+                        {
+                          "text": "Decreased Scaling from 80% Strength to 70% Strength"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Moonlight Charge (3)",
+                      "items": [
+                        {
+                          "text": "Decreased Scaling from 80% Strength to 70% Strength"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Gravity Surge (4)",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 90/85/80/75/70 to 90s at all ranks."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Aphrodite Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Center Of Attention (P)",
+                      "items": [
+                        {
+                          "text": "Decreased Protections from 4 per stack to 3 per stack."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Back Off! (2)",
+                      "items": [
+                        {
+                          "text": "Decreased Ally Damage Scaling from 70% to 50%."
+                        },
+                        {
+                          "text": "Bonus Damage decreased from 21.25% to 15%."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Thor Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Mjolnir’s Attunement (1)",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 13s at all ranks to 14s at all ranks."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Berserker’s Barrage (3)",
+                      "items": [
+                        {
+                          "text": "Decreased Spin Scaling from 40% Strength to 35% Strength"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Mordred Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Shoulder Charge (Passive)",
+                      "items": [
+                        {
+                          "text": "Decreased Base Damage from 15 to 12."
+                        },
+                        {
+                          "text": "Decreased Per Level Damage from 4 to 3."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Aspect Of Rage",
+                      "items": [
+                        {
+                          "text": "Shoulder Charge (Passive)",
+                          "items": [
+                            {
+                              "text": "Decreased Bonus Damage for recent god hits from 10 to 7."
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 3/19/25",
+      "anchor": "Hotfix_3/19/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Blink Test",
+          "anchor": "Blink_Test",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Temporary Disabling of Combat Blink",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Combat Blink is being turned off in live matches for a few days to gather data."
+                    },
+                    {
+                      "text": "The goal is to see how removing this relic affects pacing, engages, and team fights."
+                    }
+                  ]
+                },
+                {
+                  "text": "Community Feedback & Survey",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "A formal survey will be released later this week—after players have time to feel the difference in real matches."
+                    },
+                    {
+                      "text": "Devs are exploring if combat blink should return in its current form, revert to the Smite 1 style, become a hybrid relic, or something entirely new."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

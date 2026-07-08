@@ -1,0 +1,14 @@
+{
+  "SunderingAxe": "AspectBarbarian",
+  "SunderingAxeUpgrade": "AspectBarbarian",
+  "WarFlag": "AspectWarden",
+  "SharpshootersArrow": "Starter.GildedArrowUpgrade",
+  "Heroism": "item.heroism",
+  "WarBanner": "item.warflag",
+  "LeatherCowl": "leathercowl",
+  "SandsOfTime": "sandsoftime",
+  "PendulumOfTheAges": "pendulumoftheages",
+  "FreyasTears": "item.freyastears",
+  "StygianAnchor": "item.StygianAnchor",
+  "MoteOfChaos": "item.MoteOfChaos"
+}

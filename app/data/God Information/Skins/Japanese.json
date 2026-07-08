@@ -35,15 +35,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/T_Amaterasu_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/T_Amaterasu_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
-              "unlock": {
-                "masteryRank": 5,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
-                "displayText": "Ascension reward — requires Mastery rank V"
-              },
               "loadout": {
                 "screenshot": "app/data/God Renders/amaterasu/Screenshot (145).png",
                 "frame": {
@@ -60,15 +51,8 @@
                 "godName": "Amaterasu",
                 "displayName": "Onyx",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 5,
-                  "label": "V",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
-                },
                 "screenshot": "app/data/God Renders/amaterasu/Screenshot (145).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/amaterasu/Screenshot (145).png",
                   "fileName": "Screenshot (145).png",
@@ -83,6 +67,13 @@
                   "parentSkinName": "Base Amaterasu",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "masteryReward",
@@ -96,6 +87,8 @@
                   }
                 ]
               },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "masteryReward",
@@ -107,7 +100,14 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              }
             },
             {
               "name": "Mastery Opal",
@@ -115,8 +115,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/T_Amaterasu_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/T_Amaterasu_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/amaterasu/Screenshot (146).png",
                 "frame": {
@@ -133,15 +131,8 @@
                 "godName": "Amaterasu",
                 "displayName": "Opal",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 5,
-                  "label": "V",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
-                },
                 "screenshot": "app/data/God Renders/amaterasu/Screenshot (146).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/amaterasu/Screenshot (146).png",
                   "fileName": "Screenshot (146).png",
@@ -156,6 +147,13 @@
                   "parentSkinName": "Base Amaterasu",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -169,13 +167,8 @@
                   }
                 ]
               },
-              "unlock": {
-                "masteryRank": 5,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
-                "displayText": "Ascension reward — requires Mastery rank V"
-              },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "ascensionReward",
@@ -187,7 +180,14 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              }
             },
             {
               "name": "Mastery Radiant",
@@ -195,15 +195,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/T_Amaterasu_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/T_Amaterasu_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
-              "unlock": {
-                "masteryRank": 10,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
-                "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
-              },
               "loadout": {
                 "screenshot": "app/data/God Renders/amaterasu/Screenshot (147).png",
                 "frame": {
@@ -220,15 +211,8 @@
                 "godName": "Amaterasu",
                 "displayName": "Radiant",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 10,
-                  "label": "X",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
-                },
                 "screenshot": "app/data/God Renders/amaterasu/Screenshot (147).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/amaterasu/Screenshot (147).png",
                   "fileName": "Screenshot (147).png",
@@ -243,6 +227,13 @@
                   "parentSkinName": "Base Amaterasu",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -256,6 +247,8 @@
                   }
                 ]
               },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "ascensionReward",
@@ -267,7 +260,14 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+              }
             }
           ],
           "loadout": {
@@ -286,7 +286,6 @@
             "godName": "Amaterasu",
             "displayName": "Base",
             "rarity": null,
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/amaterasu/Screenshot (139).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -303,7 +302,8 @@
                 "amount": "0",
                 "owned": true
               }
-            }
+            },
+            "gridBadge": null
           },
           "unlock": {
             "source": "base",
@@ -321,29 +321,21 @@
           "isBaseSkin": false,
           "isPrism": false,
           "isRecolor": false,
-          "isMastery": true,
-          "isMasteryShadowSkin": true,
+          "isMastery": false,
           "isCrossGen": false,
+          "isMasteryShadowSkin": true,
           "type": "Mastery Shadow",
           "assets": {
             "skin": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/T_Amaterasu_Card_Mastery.png",
             "cardArt": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/T_Amaterasu_Card_Mastery.png",
             "icon": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/t_SkinPortrait_Amaterasu_Shadow.png"
           },
-          "cardArt": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/T_Amaterasu_Card_Mastery.png",
-          "skin": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/T_Amaterasu_Card_Mastery.png",
-          "icon": "app/data/NewGodSkins/Amaterasu/Skins/Mastery/t_SkinPortrait_Amaterasu_Shadow.png",
-          "masteryFromDisk": true,
-          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
           "price": {
-            "diamonds": "900"
+            "gems": "",
+            "diamonds": "900",
+            "gemsdia": ""
           },
-          "unlock": {
-            "source": "ascension",
-            "displayText": "Ascension Pass — rare skin (may appear in events)",
-            "requiresAscensionPass": true,
-            "rarityNote": "Rare"
-          },
+          "masteryFromDisk": true,
           "loadout": {
             "screenshot": "app/data/God Renders/amaterasu/Screenshot (144).png",
             "frame": {
@@ -360,7 +352,6 @@
             "godName": "Amaterasu",
             "displayName": "Shadow",
             "rarity": "Heroic",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/amaterasu/Screenshot (144).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -379,6 +370,7 @@
               },
               "tier": "Heroic"
             },
+            "gridBadge": null,
             "information": [
               {
                 "key": "ascensionReward",
@@ -392,6 +384,7 @@
               }
             ]
           },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
           "information": [
             {
               "key": "ascensionReward",
@@ -403,11 +396,17 @@
               "label": "Rare",
               "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "ascension",
+            "displayText": "Ascension Pass — rare skin (may appear in events)",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare"
+          }
         },
         {
           "skinKey": "CosmicwitchSplash",
-          "skinName": "Nova Hex",
+          "skinName": "Cosmicwitch Splash",
           "cost": null,
           "rarity": "Legendary",
           "isBaseSkin": false,
@@ -441,10 +440,8 @@
             "godName": "Amaterasu",
             "displayName": "Nova Hex",
             "rarity": "Legendary",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/amaterasu/Screenshot (143).png",
             "extractedAt": "2026-06-22",
-            "buttonText": "GO TO",
             "screenshotTag": {
               "screenshot": "app/data/God Renders/amaterasu/Screenshot (143).png",
               "fileName": "Screenshot (143).png",
@@ -456,6 +453,8 @@
               "skinName": "Cosmicwitch Splash",
               "tier": "Legendary"
             },
+            "gridBadge": null,
+            "buttonText": "GO TO",
             "information": [
               {
                 "key": "wanderingMarket",
@@ -475,10 +474,6 @@
             ]
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_LegendaryTier.png",
-          "unlock": {
-            "source": "wandering",
-            "displayText": "Wandering Market — Rise of the Gods"
-          },
           "information": [
             {
               "key": "wanderingMarket",
@@ -495,11 +490,15 @@
               "label": "Special Effects",
               "text": "This Skin includes a special Emote prompted by using the Special Emote 2 VGS command in match."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "wandering",
+            "displayText": "Wandering Market — Rise of the Gods"
+          }
         },
         {
           "skinKey": "DemonHunter",
-          "skinName": "Honor Roll",
+          "skinName": "Demon Hunter",
           "cost": {
             "currency": "gems",
             "amount": "1200"
@@ -516,7 +515,9 @@
             "icon": "app/data/NewGodSkins/Amaterasu/Skins/DemonHunter/t_SkinPortrait_Amaterasu_DemonHunter.png"
           },
           "price": {
-            "diamonds": "1200"
+            "gems": "",
+            "diamonds": "1200",
+            "gemsdia": ""
           },
           "loadout": {
             "screenshot": "app/data/God Renders/amaterasu/Screenshot (141).png",
@@ -534,7 +535,6 @@
             "godName": "Amaterasu",
             "displayName": "Honor Roll",
             "rarity": "Epic",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/amaterasu/Screenshot (141).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -553,6 +553,7 @@
               },
               "tier": "Epic"
             },
+            "gridBadge": null,
             "information": [
               {
                 "key": "crossGen",
@@ -567,10 +568,6 @@
             ]
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
-          "unlock": {
-            "source": "store",
-            "displayText": "Direct purchase — Cross-Gen Epic (sale price shown)"
-          },
           "information": [
             {
               "key": "crossGen",
@@ -582,11 +579,15 @@
               "label": "Standard",
               "text": "This item is available for direct purchase and may appear in Chests or other special Events."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — Cross-Gen Epic (sale price shown)"
+          }
         },
         {
           "skinKey": "FoxyCard",
-          "skinName": "Foxy",
+          "skinName": "Foxy Card",
           "cost": {
             "currency": "diamonds",
             "amount": "2400"
@@ -603,7 +604,9 @@
             "icon": "app/data/NewGodSkins/Amaterasu/Skins/Foxy/t_SkinPortrait_Amaterasu_Foxy.png"
           },
           "price": {
-            "diamonds": "2400"
+            "gems": "",
+            "diamonds": "2400",
+            "gemsdia": ""
           },
           "loadout": {
             "screenshot": "app/data/God Renders/amaterasu/Screenshot (140).png",
@@ -621,7 +624,6 @@
             "godName": "Amaterasu",
             "displayName": "Foxy",
             "rarity": "Classic",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/amaterasu/Screenshot (140).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -640,6 +642,7 @@
               },
               "tier": "Classic"
             },
+            "gridBadge": null,
             "information": [
               {
                 "key": "standard",
@@ -654,10 +657,6 @@
             ]
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_CommonTier.png",
-          "unlock": {
-            "source": "store",
-            "displayText": "Direct purchase — may appear in chests or events"
-          },
           "information": [
             {
               "key": "standard",
@@ -669,11 +668,15 @@
               "label": "Classic",
               "text": "This item was inspired by a SMITE 1 Skin."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — may appear in chests or events"
+          }
         },
         {
           "skinKey": "MaidOfMischief",
-          "skinName": "Maid of Mischief",
+          "skinName": "Maid Of Mischief",
           "cost": null,
           "rarity": "Fabled",
           "isBaseSkin": false,
@@ -707,10 +710,8 @@
             "godName": "Amaterasu",
             "displayName": "Maid of Mischief",
             "rarity": "Fabled",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/amaterasu/Screenshot (142).png",
             "extractedAt": "2026-06-22",
-            "buttonText": "GO TO",
             "screenshotTag": {
               "screenshot": "app/data/God Renders/amaterasu/Screenshot (142).png",
               "fileName": "Screenshot (142).png",
@@ -722,6 +723,8 @@
               "skinName": "Maid Of Mischief",
               "tier": "Fabled"
             },
+            "gridBadge": null,
+            "buttonText": "GO TO",
             "information": [
               {
                 "key": "wanderingMarket",
@@ -736,10 +739,6 @@
             ]
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_FabledTier.png",
-          "unlock": {
-            "source": "wandering",
-            "displayText": "Wandering Market — Tidy Tails"
-          },
           "information": [
             {
               "key": "wanderingMarket",
@@ -751,7 +750,11 @@
               "label": "Special",
               "text": "This item is from a special Event and may appear for direct purchase or in Chests."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "wandering",
+            "displayText": "Wandering Market — Tidy Tails"
+          }
         }
       ]
     },
@@ -789,15 +792,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_Danzaburou_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_Danzaburou_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
-              "unlock": {
-                "masteryRank": 5,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
-                "displayText": "Ascension reward — requires Mastery rank V"
-              },
               "loadout": {
                 "screenshot": "app/data/God Renders/danzaburou/Screenshot (417).png",
                 "frame": {
@@ -814,15 +808,8 @@
                 "godName": "Danzaburou",
                 "displayName": "Onyx",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 5,
-                  "label": "V",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
-                },
                 "screenshot": "app/data/God Renders/danzaburou/Screenshot (417).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/danzaburou/Screenshot (417).png",
                   "fileName": "Screenshot (417).png",
@@ -837,6 +824,13 @@
                   "parentSkinName": "Base Danzaburou",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "masteryReward",
@@ -850,6 +844,8 @@
                   }
                 ]
               },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "masteryReward",
@@ -861,7 +857,14 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              }
             },
             {
               "name": "Mastery Opal",
@@ -869,8 +872,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_Danzaburou_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_Danzaburou_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/danzaburou/Screenshot (418).png",
                 "frame": {
@@ -887,15 +888,8 @@
                 "godName": "Danzaburou",
                 "displayName": "Opal",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 5,
-                  "label": "V",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
-                },
                 "screenshot": "app/data/God Renders/danzaburou/Screenshot (418).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/danzaburou/Screenshot (418).png",
                   "fileName": "Screenshot (418).png",
@@ -910,6 +904,13 @@
                   "parentSkinName": "Base Danzaburou",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -923,13 +924,8 @@
                   }
                 ]
               },
-              "unlock": {
-                "masteryRank": 5,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
-                "displayText": "Ascension reward — requires Mastery rank V"
-              },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "ascensionReward",
@@ -941,7 +937,14 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              }
             },
             {
               "name": "Mastery Radiant",
@@ -949,15 +952,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_Danzaburou_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_Danzaburou_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
-              "unlock": {
-                "masteryRank": 10,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
-                "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
-              },
               "loadout": {
                 "screenshot": "app/data/God Renders/danzaburou/Screenshot (419).png",
                 "frame": {
@@ -974,15 +968,8 @@
                 "godName": "Danzaburou",
                 "displayName": "Radiant",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 10,
-                  "label": "X",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
-                },
                 "screenshot": "app/data/God Renders/danzaburou/Screenshot (419).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/danzaburou/Screenshot (419).png",
                   "fileName": "Screenshot (419).png",
@@ -997,6 +984,13 @@
                   "parentSkinName": "Base Danzaburou",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -1010,6 +1004,8 @@
                   }
                 ]
               },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "ascensionReward",
@@ -1021,7 +1017,14 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+              }
             }
           ],
           "loadout": {
@@ -1040,7 +1043,6 @@
             "godName": "Danzaburou",
             "displayName": "Base",
             "rarity": null,
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/danzaburou/Screenshot (407).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -1057,7 +1059,8 @@
                 "amount": "0",
                 "owned": true
               }
-            }
+            },
+            "gridBadge": null
           },
           "unlock": {
             "source": "base",
@@ -1075,23 +1078,21 @@
           "isBaseSkin": false,
           "isPrism": false,
           "isRecolor": false,
-          "isMastery": true,
-          "isMasteryShadowSkin": true,
+          "isMastery": false,
           "isCrossGen": false,
+          "isMasteryShadowSkin": true,
           "type": "Mastery Shadow",
           "assets": {
             "skin": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_Danzaburou_Card_Mastery.png",
             "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_Danzaburou_Card_Mastery.png",
             "icon": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_SkinPortrait_Danzaburou_Shadow.png"
           },
-          "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_Danzaburou_Card_Mastery.png",
-          "skin": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_Danzaburou_Card_Mastery.png",
-          "icon": "app/data/NewGodSkins/Danzaburou/Skins/Mastery/t_SkinPortrait_Danzaburou_Shadow.png",
-          "masteryFromDisk": true,
-          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
           "price": {
-            "diamonds": "900"
+            "gems": "",
+            "diamonds": "900",
+            "gemsdia": ""
           },
+          "masteryFromDisk": true,
           "loadout": {
             "screenshot": "app/data/God Renders/danzaburou/Screenshot (416).png",
             "frame": {
@@ -1108,7 +1109,6 @@
             "godName": "Danzaburou",
             "displayName": "Shadow",
             "rarity": "Heroic",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/danzaburou/Screenshot (416).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -1127,6 +1127,7 @@
               },
               "tier": "Heroic"
             },
+            "gridBadge": null,
             "information": [
               {
                 "key": "ascensionReward",
@@ -1140,12 +1141,7 @@
               }
             ]
           },
-          "unlock": {
-            "source": "ascension",
-            "requiresAscensionPass": true,
-            "rarityNote": "Rare",
-            "displayText": "Ascension Pass — rare skin (may appear in events)"
-          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
           "information": [
             {
               "key": "ascensionReward",
@@ -1157,7 +1153,13 @@
               "label": "Rare",
               "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          }
         },
         {
           "skinKey": "BossmanSplash1920x1080",
@@ -1178,7 +1180,9 @@
             "icon": "app/data/NewGodSkins/Danzaburou/Skins/BossMan/t_SkinPortriat_Danzaburou_Bossman.png"
           },
           "price": {
-            "diamonds": "2250"
+            "gems": "",
+            "diamonds": "2250",
+            "gemsdia": ""
           },
           "loadout": {
             "screenshot": "app/data/God Renders/danzaburou/Screenshot (409).png",
@@ -1193,46 +1197,16 @@
             }
           },
           "loadoutMeta": {
+            "screenshotTag": {
+              "appliedTo": "Boss Man",
+              "skinName": "Boss Man"
+            },
+            "screenshot": "app/data/God Renders/danzaburou/Screenshot (409).png",
             "godName": "Danzaburou",
             "displayName": "Boss Man",
-            "rarity": "Legacy",
-            "gridBadge": null,
-            "screenshot": "app/data/God Renders/danzaburou/Screenshot (409).png",
-            "extractedAt": "2026-06-22",
-            "screenshotTag": {
-              "screenshot": "app/data/God Renders/danzaburou/Screenshot (409).png",
-              "fileName": "Screenshot (409).png",
-              "godName": "Danzaburou",
-              "displayName": "Boss Man",
-              "target": "skin",
-              "appliedTo": "Bossman Splash 1920 X 1080",
-              "skinKey": "BossmanSplash1920x1080",
-              "skinName": "Bossman Splash 1920 X 1080",
-              "cost": {
-                "currency": "diamonds",
-                "amount": "2250",
-                "owned": false
-              },
-              "tier": "Legacy"
-            },
-            "information": [
-              {
-                "key": "legacy",
-                "label": "Legacy",
-                "text": "This item is unlocked by progressing your SMITE 1 Divine Legacy."
-              },
-              {
-                "key": "rare",
-                "label": "Rare",
-                "text": "This is a rare item and may only appear on special occasions or in specific Events."
-              }
-            ]
+            "rarity": "Legacy"
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_LegacyTier.png",
-          "unlock": {
-            "source": "legacy",
-            "displayText": "SMITE 1 Divine Legacy"
-          },
           "information": [
             {
               "key": "legacy",
@@ -1244,7 +1218,11 @@
               "label": "Rare",
               "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "legacy",
+            "displayText": "SMITE 1 Divine Legacy"
+          }
         },
         {
           "skinKey": "ButlerofBins",
@@ -1279,42 +1257,17 @@
             }
           },
           "loadoutMeta": {
+            "screenshotTag": {
+              "appliedTo": "Butler of the Bins",
+              "skinName": "Butler of the Bins"
+            },
+            "screenshot": "app/data/God Renders/danzaburou/Screenshot (415).png",
             "godName": "Danzaburou",
             "displayName": "Butler of the Bins",
             "rarity": "Epic",
-            "gridBadge": null,
-            "screenshot": "app/data/God Renders/danzaburou/Screenshot (415).png",
-            "extractedAt": "2026-06-22",
-            "buttonText": "GO TO",
-            "screenshotTag": {
-              "screenshot": "app/data/God Renders/danzaburou/Screenshot (415).png",
-              "fileName": "Screenshot (415).png",
-              "godName": "Danzaburou",
-              "displayName": "Butler of the Bins",
-              "target": "skin",
-              "appliedTo": "Butlerof Bins",
-              "skinKey": "ButlerofBins",
-              "skinName": "Butlerof Bins",
-              "tier": "Epic"
-            },
-            "information": [
-              {
-                "key": "wanderingMarket",
-                "label": "Wandering Market",
-                "text": "Acquired in the 'Tidy Tails' Collection."
-              },
-              {
-                "key": "special",
-                "label": "Special",
-                "text": "This item is from a special Event and may appear for direct purchase or in Chests."
-              }
-            ]
+            "buttonText": "GO TO"
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
-          "unlock": {
-            "source": "wandering",
-            "displayText": "Wandering Market — Tidy Tails"
-          },
           "information": [
             {
               "key": "wanderingMarket",
@@ -1326,7 +1279,11 @@
               "label": "Special",
               "text": "This item is from a special Event and may appear for direct purchase or in Chests."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "wandering",
+            "displayText": "Wandering Market — Tidy Tails"
+          }
         },
         {
           "skinKey": "Party_Animal",
@@ -1347,7 +1304,9 @@
             "icon": "app/data/NewGodSkins/Danzaburou/Skins/Party_Animal/t_SkinPortait_Danzaburou_PartyAnimal.png"
           },
           "price": {
-            "diamonds": "3200"
+            "gems": "",
+            "diamonds": "3200",
+            "gemsdia": ""
           },
           "loadout": {
             "screenshot": "app/data/God Renders/danzaburou/Screenshot (408).png",
@@ -1365,7 +1324,6 @@
             "godName": "Danzaburou",
             "displayName": "Party Animal",
             "rarity": "Legendary",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/danzaburou/Screenshot (408).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -1384,6 +1342,7 @@
               },
               "tier": "Legendary"
             },
+            "gridBadge": null,
             "information": [
               {
                 "key": "crossGen",
@@ -1403,10 +1362,6 @@
             ]
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_LegendaryTier.png",
-          "unlock": {
-            "source": "store",
-            "displayText": "Direct purchase — may appear in chests or events"
-          },
           "information": [
             {
               "key": "crossGen",
@@ -1423,11 +1378,15 @@
               "label": "Special Effects",
               "text": "This Skin includes a special Emote prompted by using the Special Emote 2 VGS command in match."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — may appear in chests or events"
+          }
         },
         {
           "skinKey": "PolarBear",
-          "skinName": "Polar Prankster",
+          "skinName": "Polar Bear",
           "cost": null,
           "rarity": "Epic",
           "isBaseSkin": false,
@@ -1447,7 +1406,7 @@
           },
           "variants": [
             {
-              "name": "Cocoa",
+              "name": "Prism P1",
               "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinCard_Danza_PolarBear_P1.png",
               "skin": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinCard_Danza_PolarBear_P1.png",
               "icon": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinIcon_Danza_PolarBear_P1.png",
@@ -1467,14 +1426,8 @@
                 "godName": "Danzaburou",
                 "displayName": "Polar Prankster - Cocoa",
                 "rarity": "Prisms",
-                "gridBadge": {
-                  "type": "prism",
-                  "rank": null,
-                  "label": "prism"
-                },
                 "screenshot": "app/data/God Renders/danzaburou/Screenshot (411).png",
-                "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
+                "extractedAt": "2026-07-06",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/danzaburou/Screenshot (411).png",
                   "fileName": "Screenshot (411).png",
@@ -1488,41 +1441,14 @@
                   "parentSkinKey": "PolarBear",
                   "parentSkinName": "Polar Prankster",
                   "tier": "Prisms"
-                },
-                "information": [
-                  {
-                    "key": "travelerCollection",
-                    "label": "Traveler Collection",
-                    "text": "Acquired in the 'Polar Prankster' Traveler."
-                  },
-                  {
-                    "key": "prism",
-                    "label": "Prism",
-                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                  }
-                ]
+                }
               },
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
-              "unlock": {
-                "source": "traveler",
-                "displayText": "Traveler Collection"
-              },
-              "information": [
-                {
-                  "key": "travelerCollection",
-                  "label": "Traveler Collection",
-                  "text": "Acquired in the 'Polar Prankster' Traveler."
-                },
-                {
-                  "key": "prism",
-                  "label": "Prism",
-                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                }
-              ]
+              "isPrism": true
             },
             {
-              "name": "Snow Day",
+              "name": "Prism P2",
               "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinCard_Danza_PolarBear_P2.png",
               "skin": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinCard_Danza_PolarBear_P2.png",
               "icon": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinIcon_Danza_PolarBear_P2.png",
@@ -1542,14 +1468,8 @@
                 "godName": "Danzaburou",
                 "displayName": "Polar Prankster - Snow Day",
                 "rarity": "Prisms",
-                "gridBadge": {
-                  "type": "prism",
-                  "rank": null,
-                  "label": "prism"
-                },
                 "screenshot": "app/data/God Renders/danzaburou/Screenshot (412).png",
-                "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
+                "extractedAt": "2026-07-06",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/danzaburou/Screenshot (412).png",
                   "fileName": "Screenshot (412).png",
@@ -1563,41 +1483,14 @@
                   "parentSkinKey": "PolarBear",
                   "parentSkinName": "Polar Prankster",
                   "tier": "Prisms"
-                },
-                "information": [
-                  {
-                    "key": "travelerCollection",
-                    "label": "Traveler Collection",
-                    "text": "Acquired in the 'Polar Prankster' Traveler."
-                  },
-                  {
-                    "key": "prism",
-                    "label": "Prism",
-                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                  }
-                ]
+                }
               },
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
-              "unlock": {
-                "source": "traveler",
-                "displayText": "Traveler Collection"
-              },
-              "information": [
-                {
-                  "key": "travelerCollection",
-                  "label": "Traveler Collection",
-                  "text": "Acquired in the 'Polar Prankster' Traveler."
-                },
-                {
-                  "key": "prism",
-                  "label": "Prism",
-                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                }
-              ]
+              "isPrism": true
             },
             {
-              "name": "Gummy Bash",
+              "name": "Prism P3",
               "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinCard_Danza_PolarBear_P3.png",
               "skin": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinCard_Danza_PolarBear_P3.png",
               "icon": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinIcon_Danza_PolarBear_P3.png",
@@ -1617,14 +1510,8 @@
                 "godName": "Danzaburou",
                 "displayName": "Polar Prankster - Gummy Bash",
                 "rarity": "Prisms",
-                "gridBadge": {
-                  "type": "prism",
-                  "rank": null,
-                  "label": "prism"
-                },
                 "screenshot": "app/data/God Renders/danzaburou/Screenshot (413).png",
-                "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
+                "extractedAt": "2026-07-06",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/danzaburou/Screenshot (413).png",
                   "fileName": "Screenshot (413).png",
@@ -1638,41 +1525,14 @@
                   "parentSkinKey": "PolarBear",
                   "parentSkinName": "Polar Prankster",
                   "tier": "Prisms"
-                },
-                "information": [
-                  {
-                    "key": "travelerCollection",
-                    "label": "Traveler Collection",
-                    "text": "Acquired in the 'Polar Prankster' Traveler."
-                  },
-                  {
-                    "key": "prism",
-                    "label": "Prism",
-                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                  }
-                ]
+                }
               },
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
-              "unlock": {
-                "source": "traveler",
-                "displayText": "Traveler Collection"
-              },
-              "information": [
-                {
-                  "key": "travelerCollection",
-                  "label": "Traveler Collection",
-                  "text": "Acquired in the 'Polar Prankster' Traveler."
-                },
-                {
-                  "key": "prism",
-                  "label": "Prism",
-                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                }
-              ]
+              "isPrism": true
             },
             {
-              "name": "Cyber Sales",
+              "name": "Prism P4",
               "cardArt": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinCard_Danza_PolarBear_P4.png",
               "skin": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinCard_Danza_PolarBear_P4.png",
               "icon": "app/data/NewGodSkins/Danzaburou/Skins/PolarBear/t_SkinIcon_Danza_PolarBear_P4.png",
@@ -1692,14 +1552,8 @@
                 "godName": "Danzaburou",
                 "displayName": "Polar Prankster - Cyber Sales",
                 "rarity": "Prisms",
-                "gridBadge": {
-                  "type": "prism",
-                  "rank": null,
-                  "label": "prism"
-                },
                 "screenshot": "app/data/God Renders/danzaburou/Screenshot (414).png",
-                "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
+                "extractedAt": "2026-07-06",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/danzaburou/Screenshot (414).png",
                   "fileName": "Screenshot (414).png",
@@ -1713,48 +1567,11 @@
                   "parentSkinKey": "PolarBear",
                   "parentSkinName": "Polar Prankster",
                   "tier": "Prisms"
-                },
-                "information": [
-                  {
-                    "key": "travelerCollection",
-                    "label": "Traveler Collection",
-                    "text": "Acquired in the 'Polar Prankster' Traveler."
-                  },
-                  {
-                    "key": "prism",
-                    "label": "Prism",
-                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                  },
-                  {
-                    "key": "rare",
-                    "label": "Rare",
-                    "text": "This is a rare item and may only appear on special occasions or in specific Events."
-                  }
-                ]
+                }
               },
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
-              "unlock": {
-                "source": "traveler",
-                "displayText": "Traveler Collection"
-              },
-              "information": [
-                {
-                  "key": "travelerCollection",
-                  "label": "Traveler Collection",
-                  "text": "Acquired in the 'Polar Prankster' Traveler."
-                },
-                {
-                  "key": "prism",
-                  "label": "Prism",
-                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                },
-                {
-                  "key": "rare",
-                  "label": "Rare",
-                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
-                }
-              ]
+              "isPrism": true
             }
           ],
           "loadout": {
@@ -1773,14 +1590,8 @@
             "godName": "Danzaburou",
             "displayName": "Polar Prankster",
             "rarity": "Epic",
-            "gridBadge": {
-              "type": "prism",
-              "rank": null,
-              "label": "prism"
-            },
             "screenshot": "app/data/God Renders/danzaburou/Screenshot (410).png",
             "extractedAt": "2026-06-22",
-            "buttonText": "GO TO",
             "screenshotTag": {
               "screenshot": "app/data/God Renders/danzaburou/Screenshot (410).png",
               "fileName": "Screenshot (410).png",
@@ -1792,6 +1603,12 @@
               "skinName": "Polar Bear",
               "tier": "Epic"
             },
+            "gridBadge": {
+              "type": "prism",
+              "rank": null,
+              "label": "prism"
+            },
+            "buttonText": "GO TO",
             "information": [
               {
                 "key": "travelerCollection",
@@ -1806,10 +1623,6 @@
             ]
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
-          "unlock": {
-            "source": "traveler",
-            "displayText": "Traveler Collection"
-          },
           "information": [
             {
               "key": "travelerCollection",
@@ -1821,7 +1634,11 @@
               "label": "Prisms Available",
               "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          }
         }
       ]
     },
@@ -1859,8 +1676,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Izanami/Skins/Mastery/T_Izanami_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/Izanami/Skins/Mastery/T_Izanami_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/izanami/Screenshot (565).png",
                 "frame": {
@@ -1877,15 +1692,8 @@
                 "godName": "Izanami",
                 "displayName": "Onyx",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 5,
-                  "label": "V",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
-                },
                 "screenshot": "app/data/God Renders/izanami/Screenshot (565).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/izanami/Screenshot (565).png",
                   "fileName": "Screenshot (565).png",
@@ -1900,6 +1708,13 @@
                   "parentSkinName": "Base Izanami",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "masteryReward",
@@ -1913,13 +1728,8 @@
                   }
                 ]
               },
-              "unlock": {
-                "masteryRank": 5,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
-                "displayText": "Ascension reward — requires Mastery rank V"
-              },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "masteryReward",
@@ -1931,7 +1741,14 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              }
             },
             {
               "name": "Mastery Opal",
@@ -1939,15 +1756,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Izanami/Skins/Mastery/T_Izanami_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/Izanami/Skins/Mastery/T_Izanami_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
-              "unlock": {
-                "masteryRank": 5,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
-                "displayText": "Ascension reward — requires Mastery rank V"
-              },
               "loadout": {
                 "screenshot": "app/data/God Renders/izanami/Screenshot (566).png",
                 "frame": {
@@ -1964,15 +1772,8 @@
                 "godName": "Izanami",
                 "displayName": "Opal",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 5,
-                  "label": "V",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
-                },
                 "screenshot": "app/data/God Renders/izanami/Screenshot (566).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/izanami/Screenshot (566).png",
                   "fileName": "Screenshot (566).png",
@@ -1987,6 +1788,13 @@
                   "parentSkinName": "Base Izanami",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -2000,6 +1808,8 @@
                   }
                 ]
               },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "ascensionReward",
@@ -2011,7 +1821,14 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              }
             },
             {
               "name": "Mastery Radiant",
@@ -2019,8 +1836,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Izanami/Skins/Mastery/T_Izanami_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/Izanami/Skins/Mastery/T_Izanami_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/izanami/Screenshot (567).png",
                 "frame": {
@@ -2037,15 +1852,8 @@
                 "godName": "Izanami",
                 "displayName": "Radiant",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 10,
-                  "label": "X",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
-                },
                 "screenshot": "app/data/God Renders/izanami/Screenshot (567).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/izanami/Screenshot (567).png",
                   "fileName": "Screenshot (567).png",
@@ -2060,6 +1868,13 @@
                   "parentSkinName": "Base Izanami",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -2073,13 +1888,8 @@
                   }
                 ]
               },
-              "unlock": {
-                "masteryRank": 10,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
-                "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
-              },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "ascensionReward",
@@ -2091,7 +1901,14 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+              }
             }
           ],
           "loadout": {
@@ -2110,7 +1927,6 @@
             "godName": "Izanami",
             "displayName": "Base",
             "rarity": null,
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/izanami/Screenshot (560).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -2127,7 +1943,8 @@
                 "amount": "0",
                 "owned": true
               }
-            }
+            },
+            "gridBadge": null
           },
           "unlock": {
             "source": "base",
@@ -2145,23 +1962,21 @@
           "isBaseSkin": false,
           "isPrism": false,
           "isRecolor": false,
-          "isMastery": true,
-          "isMasteryShadowSkin": true,
+          "isMastery": false,
           "isCrossGen": false,
+          "isMasteryShadowSkin": true,
           "type": "Mastery Shadow",
           "assets": {
             "skin": "app/data/NewGodSkins/Izanami/Skins/Mastery/T_Izanami_Card_Mastery.png",
             "cardArt": "app/data/NewGodSkins/Izanami/Skins/Mastery/T_Izanami_Card_Mastery.png",
             "icon": "app/data/NewGodSkins/Izanami/Skins/Mastery/t_SkinPortrait_Izanami_Shadow.png"
           },
-          "cardArt": "app/data/NewGodSkins/Izanami/Skins/Mastery/T_Izanami_Card_Mastery.png",
-          "skin": "app/data/NewGodSkins/Izanami/Skins/Mastery/T_Izanami_Card_Mastery.png",
-          "icon": "app/data/NewGodSkins/Izanami/Skins/Mastery/t_SkinPortrait_Izanami_Shadow.png",
-          "masteryFromDisk": true,
-          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
           "price": {
-            "diamonds": "900"
+            "gems": "",
+            "diamonds": "900",
+            "gemsdia": ""
           },
+          "masteryFromDisk": true,
           "loadout": {
             "screenshot": "app/data/God Renders/izanami/Screenshot (564).png",
             "frame": {
@@ -2178,7 +1993,6 @@
             "godName": "Izanami",
             "displayName": "Shadow",
             "rarity": "Heroic",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/izanami/Screenshot (564).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -2197,6 +2011,7 @@
               },
               "tier": "Heroic"
             },
+            "gridBadge": null,
             "information": [
               {
                 "key": "masteryReward",
@@ -2210,12 +2025,7 @@
               }
             ]
           },
-          "unlock": {
-            "source": "ascension",
-            "requiresAscensionPass": true,
-            "rarityNote": "Rare",
-            "displayText": "Ascension Pass — rare skin (may appear in events)"
-          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
           "information": [
             {
               "key": "masteryReward",
@@ -2227,7 +2037,13 @@
               "label": "Ascension Reward",
               "text": "This item is acquired from leveling up your God's Ascension Pass."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          }
         },
         {
           "skinKey": "01a",
@@ -2243,12 +2059,14 @@
           "isMastery": false,
           "isCrossGen": false,
           "assets": {
-            "skin": "app/data/NewGodSkins/Izanami/Skins/01a/t_GodCard_Izanami_01A.png",
-            "cardArt": "app/data/NewGodSkins/Izanami/Skins/01a/t_GodCard_Izanami_01A.png",
-            "icon": "app/data/NewGodSkins/Izanami/Skins/01a/t_GodPortrait_Izanami_01A.png"
+            "skin": "app/data/NewGodSkins/Izanami/Skins/01A/t_GodCard_Izanami_01A.png",
+            "cardArt": "app/data/NewGodSkins/Izanami/Skins/01A/t_GodCard_Izanami_01A.png",
+            "icon": "app/data/NewGodSkins/Izanami/Skins/01A/t_GodPortrait_Izanami_01A.png"
           },
           "price": {
-            "diamonds": "1000"
+            "gems": "",
+            "diamonds": "1000",
+            "gemsdia": ""
           },
           "loadout": {
             "screenshot": "app/data/God Renders/izanami/Screenshot (561).png",
@@ -2263,46 +2081,16 @@
             }
           },
           "loadoutMeta": {
+            "screenshotTag": {
+              "appliedTo": "Cyber Geisha",
+              "skinName": "Cyber Geisha"
+            },
+            "screenshot": "app/data/God Renders/izanami/Screenshot (561).png",
             "godName": "Izanami",
             "displayName": "Cyber Geisha",
-            "rarity": "Legacy",
-            "gridBadge": null,
-            "screenshot": "app/data/God Renders/izanami/Screenshot (561).png",
-            "extractedAt": "2026-06-22",
-            "screenshotTag": {
-              "screenshot": "app/data/God Renders/izanami/Screenshot (561).png",
-              "fileName": "Screenshot (561).png",
-              "godName": "Izanami",
-              "displayName": "Cyber Geisha",
-              "target": "skin",
-              "appliedTo": "01a",
-              "skinKey": "01a",
-              "skinName": "01a",
-              "cost": {
-                "currency": "gems",
-                "amount": "1000",
-                "owned": false
-              },
-              "tier": "Legacy"
-            },
-            "information": [
-              {
-                "key": "legacy",
-                "label": "Legacy",
-                "text": "This item is unlocked by progressing your SMITE 1 Divine Legacy."
-              },
-              {
-                "key": "rare",
-                "label": "Rare",
-                "text": "This is a rare item and may only appear on special occasions or in specific Events."
-              }
-            ]
+            "rarity": "Legacy"
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_LegacyTier.png",
-          "unlock": {
-            "source": "legacy",
-            "displayText": "SMITE 1 Divine Legacy"
-          },
           "information": [
             {
               "key": "legacy",
@@ -2314,7 +2102,11 @@
               "label": "Rare",
               "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "legacy",
+            "displayText": "SMITE 1 Divine Legacy"
+          }
         },
         {
           "skinKey": "CreepynurseSplash",
@@ -2335,7 +2127,9 @@
             "icon": "app/data/NewGodSkins/Izanami/Skins/CreepyNurse/t_SkinPortrait_Izanami_CreepyNurse.png"
           },
           "price": {
-            "diamonds": "1200"
+            "gems": "",
+            "diamonds": "1200",
+            "gemsdia": ""
           },
           "loadout": {
             "screenshot": "app/data/God Renders/izanami/Screenshot (562).png",
@@ -2350,46 +2144,16 @@
             }
           },
           "loadoutMeta": {
+            "screenshotTag": {
+              "appliedTo": "Nurse Nightmare",
+              "skinName": "Nurse Nightmare"
+            },
+            "screenshot": "app/data/God Renders/izanami/Screenshot (562).png",
             "godName": "Izanami",
             "displayName": "Nurse Nightmare",
-            "rarity": "Epic",
-            "gridBadge": null,
-            "screenshot": "app/data/God Renders/izanami/Screenshot (562).png",
-            "extractedAt": "2026-06-22",
-            "screenshotTag": {
-              "screenshot": "app/data/God Renders/izanami/Screenshot (562).png",
-              "fileName": "Screenshot (562).png",
-              "godName": "Izanami",
-              "displayName": "Nurse Nightmare",
-              "target": "skin",
-              "appliedTo": "Creepynurse Splash",
-              "skinKey": "CreepynurseSplash",
-              "skinName": "Creepynurse Splash",
-              "cost": {
-                "currency": "gems",
-                "amount": "1200",
-                "owned": false
-              },
-              "tier": "Epic"
-            },
-            "information": [
-              {
-                "key": "crossGen",
-                "label": "Cross-Gen",
-                "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
-              },
-              {
-                "key": "standard",
-                "label": "Standard",
-                "text": "This item is available for direct purchase and may appear in Chests or other special Events."
-              }
-            ]
+            "rarity": "Epic"
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
-          "unlock": {
-            "source": "store",
-            "displayText": "Direct purchase — Cross-Gen Epic (sale price shown)"
-          },
           "information": [
             {
               "key": "crossGen",
@@ -2401,11 +2165,15 @@
               "label": "Standard",
               "text": "This item is available for direct purchase and may appear in Chests or other special Events."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — Cross-Gen Epic (sale price shown)"
+          }
         },
         {
           "skinKey": "MaidToKill",
-          "skinName": "Maid to Kill",
+          "skinName": "Maid To Kill",
           "cost": null,
           "rarity": "Epic",
           "isBaseSkin": false,
@@ -2439,10 +2207,8 @@
             "godName": "Izanami",
             "displayName": "Maid to Kill",
             "rarity": "Epic",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/izanami/Screenshot (563).png",
             "extractedAt": "2026-06-22",
-            "buttonText": "GO TO",
             "screenshotTag": {
               "screenshot": "app/data/God Renders/izanami/Screenshot (563).png",
               "fileName": "Screenshot (563).png",
@@ -2454,6 +2220,8 @@
               "skinName": "Maid To Kill",
               "tier": "Epic"
             },
+            "gridBadge": null,
+            "buttonText": "GO TO",
             "information": [
               {
                 "key": "wanderingMarket",
@@ -2468,10 +2236,6 @@
             ]
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
-          "unlock": {
-            "source": "wandering",
-            "displayText": "Wandering Market — Tidy Tails"
-          },
           "information": [
             {
               "key": "wanderingMarket",
@@ -2483,7 +2247,11 @@
               "label": "Special",
               "text": "This item is from a special Event and may appear for direct purchase or in Chests."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "wandering",
+            "displayText": "Wandering Market — Tidy Tails"
+          }
         }
       ]
     },
@@ -2521,8 +2289,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/susano/Screenshot (917).png",
                 "frame": {
@@ -2539,15 +2305,8 @@
                 "godName": "Susano",
                 "displayName": "Onyx",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 5,
-                  "label": "V",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
-                },
                 "screenshot": "app/data/God Renders/susano/Screenshot (917).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/susano/Screenshot (917).png",
                   "fileName": "Screenshot (917).png",
@@ -2562,6 +2321,13 @@
                   "parentSkinName": "Base Susano",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "masteryReward",
@@ -2575,13 +2341,8 @@
                   }
                 ]
               },
-              "unlock": {
-                "masteryRank": 5,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
-                "displayText": "Ascension reward — requires Mastery rank V"
-              },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "masteryReward",
@@ -2593,7 +2354,14 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              }
             },
             {
               "name": "Mastery Opal",
@@ -2601,15 +2369,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
-              "unlock": {
-                "masteryRank": 5,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
-                "displayText": "Ascension reward — requires Mastery rank V"
-              },
               "loadout": {
                 "screenshot": "app/data/God Renders/susano/Screenshot (918).png",
                 "frame": {
@@ -2626,15 +2385,8 @@
                 "godName": "Susano",
                 "displayName": "Opal",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 5,
-                  "label": "V",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
-                },
                 "screenshot": "app/data/God Renders/susano/Screenshot (918).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/susano/Screenshot (918).png",
                   "fileName": "Screenshot (918).png",
@@ -2649,6 +2401,13 @@
                   "parentSkinName": "Base Susano",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -2662,6 +2421,8 @@
                   }
                 ]
               },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "ascensionReward",
@@ -2673,7 +2434,14 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              }
             },
             {
               "name": "Mastery Radiant",
@@ -2681,8 +2449,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/susano/Screenshot (919).png",
                 "frame": {
@@ -2699,15 +2465,8 @@
                 "godName": "Susano",
                 "displayName": "Radiant",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 10,
-                  "label": "X",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
-                },
                 "screenshot": "app/data/God Renders/susano/Screenshot (919).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/susano/Screenshot (919).png",
                   "fileName": "Screenshot (919).png",
@@ -2722,6 +2481,13 @@
                   "parentSkinName": "Base Susano",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -2735,13 +2501,8 @@
                   }
                 ]
               },
-              "unlock": {
-                "masteryRank": 10,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
-                "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
-              },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "ascensionReward",
@@ -2753,7 +2514,14 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+              }
             }
           ],
           "loadout": {
@@ -2772,7 +2540,6 @@
             "godName": "Susano",
             "displayName": "Base",
             "rarity": null,
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/susano/Screenshot (909).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -2789,7 +2556,8 @@
                 "amount": "0",
                 "owned": true
               }
-            }
+            },
+            "gridBadge": null
           },
           "unlock": {
             "source": "base",
@@ -2807,23 +2575,21 @@
           "isBaseSkin": false,
           "isPrism": false,
           "isRecolor": false,
-          "isMastery": true,
-          "isMasteryShadowSkin": true,
+          "isMastery": false,
           "isCrossGen": false,
+          "isMasteryShadowSkin": true,
           "type": "Mastery Shadow",
           "assets": {
             "skin": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Card_Mastery.png",
             "cardArt": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Card_Mastery.png",
             "icon": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Icon_Shadow.png"
           },
-          "cardArt": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Card_Mastery.png",
-          "skin": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Card_Mastery.png",
-          "icon": "app/data/NewGodSkins/Susano/Skins/Mastery/T_Susano_Icon_Shadow.png",
-          "masteryFromDisk": true,
-          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
           "price": {
-            "diamonds": "900"
+            "gems": "",
+            "diamonds": "900",
+            "gemsdia": ""
           },
+          "masteryFromDisk": true,
           "loadout": {
             "screenshot": "app/data/God Renders/susano/Screenshot (916).png",
             "frame": {
@@ -2840,7 +2606,6 @@
             "godName": "Susano",
             "displayName": "Shadow",
             "rarity": "Heroic",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/susano/Screenshot (916).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -2859,6 +2624,7 @@
               },
               "tier": "Heroic"
             },
+            "gridBadge": null,
             "information": [
               {
                 "key": "ascensionReward",
@@ -2872,12 +2638,7 @@
               }
             ]
           },
-          "unlock": {
-            "source": "ascension",
-            "requiresAscensionPass": true,
-            "rarityNote": "Rare",
-            "displayText": "Ascension Pass — rare skin (may appear in events)"
-          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
           "information": [
             {
               "key": "ascensionReward",
@@ -2889,11 +2650,17 @@
               "label": "Rare",
               "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          }
         },
         {
           "skinKey": "CursedSwordsman",
-          "skinName": "Onyx Blade",
+          "skinName": "Cursed Swordsman",
           "cost": {
             "currency": "gems",
             "amount": "1200"
@@ -2910,7 +2677,9 @@
             "icon": "app/data/NewGodSkins/Susano/Skins/CursedSwordsman/t_SkinPortrait_Susano_CursedSwordsman.png"
           },
           "price": {
-            "diamonds": "1200"
+            "gems": "",
+            "diamonds": "1200",
+            "gemsdia": ""
           },
           "loadout": {
             "screenshot": "app/data/God Renders/susano/Screenshot (915).png",
@@ -2928,7 +2697,6 @@
             "godName": "Susano",
             "displayName": "Onyx Blade",
             "rarity": "Epic",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/susano/Screenshot (915).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -2947,6 +2715,7 @@
               },
               "tier": "Epic"
             },
+            "gridBadge": null,
             "information": [
               {
                 "key": "crossGen",
@@ -2961,10 +2730,6 @@
             ]
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
-          "unlock": {
-            "source": "store",
-            "displayText": "Direct purchase — Cross-Gen Epic (sale price shown)"
-          },
           "information": [
             {
               "key": "crossGen",
@@ -2976,7 +2741,11 @@
               "label": "Standard",
               "text": "This item is available for direct purchase and may appear in Chests or other special Events."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — Cross-Gen Epic (sale price shown)"
+          }
         },
         {
           "skinKey": "SteelSamurai",
@@ -2997,7 +2766,9 @@
             "icon": "app/data/NewGodSkins/Susano/Skins/SteelSamurai/t_SkinPortrait_Susano_SteelSamurai.png"
           },
           "price": {
-            "diamonds": "2400"
+            "gems": "",
+            "diamonds": "2400",
+            "gemsdia": ""
           },
           "loadout": {
             "screenshot": "app/data/God Renders/susano/Screenshot (910).png",
@@ -3015,7 +2786,6 @@
             "godName": "Susano",
             "displayName": "Steel Samurai",
             "rarity": "Classic",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/susano/Screenshot (910).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -3034,6 +2804,7 @@
               },
               "tier": "Classic"
             },
+            "gridBadge": null,
             "information": [
               {
                 "key": "standard",
@@ -3048,10 +2819,6 @@
             ]
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_CommonTier.png",
-          "unlock": {
-            "source": "store",
-            "displayText": "Direct purchase — may appear in chests or events"
-          },
           "information": [
             {
               "key": "standard",
@@ -3063,7 +2830,11 @@
               "label": "Classic",
               "text": "This item was inspired by a SMITE 1 Skin."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — may appear in chests or events"
+          }
         },
         {
           "skinKey": "StumbleBlade",
@@ -3072,9 +2843,9 @@
             "currency": "diamonds",
             "amount": "1200"
           },
-          "rarity": "Epic",
+          "rarity": "Prisms",
           "isBaseSkin": false,
-          "isPrism": false,
+          "isPrism": true,
           "isRecolor": false,
           "isMastery": false,
           "isCrossGen": false,
@@ -3100,50 +2871,12 @@
             }
           },
           "loadoutMeta": {
+            "screenshot": "app/data/God Renders/susano/Screenshot (911).png",
             "godName": "Susano",
             "displayName": "Stumble Blade",
-            "rarity": "Epic",
-            "gridBadge": {
-              "type": "prism",
-              "rank": null,
-              "label": "prism"
-            },
-            "screenshot": "app/data/God Renders/susano/Screenshot (911).png",
-            "extractedAt": "2026-06-22",
-            "screenshotTag": {
-              "screenshot": "app/data/God Renders/susano/Screenshot (911).png",
-              "fileName": "Screenshot (911).png",
-              "godName": "Susano",
-              "displayName": "Stumble Blade",
-              "target": "skin",
-              "appliedTo": "Stumble Blade",
-              "skinKey": "StumbleBlade",
-              "skinName": "Stumble Blade",
-              "cost": {
-                "currency": "diamonds",
-                "amount": "1200",
-                "owned": false
-              },
-              "tier": "Epic"
-            },
-            "information": [
-              {
-                "key": "special",
-                "label": "Special",
-                "text": "This item is from a special Event and may appear for direct purchase or in Chests."
-              },
-              {
-                "key": "prismsAvailable",
-                "label": "Prisms Available",
-                "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
-              }
-            ]
+            "rarity": "Epic"
           },
-          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
-          "unlock": {
-            "source": "store",
-            "displayText": "Direct purchase — may appear in chests or events"
-          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
           "information": [
             {
               "key": "special",
@@ -3156,6 +2889,14 @@
               "text": "This skin supports Prisms, which allow you to customize its appearance. You must own this skin before you can purchase its Prisms."
             }
           ],
+          "unlock": {
+            "source": "store",
+            "displayText": "Direct purchase — may appear in chests or events"
+          },
+          "name": "Crimson",
+          "gridBadge": {
+            "type": "prism"
+          },
           "variants": [
             {
               "name": "Copper",
@@ -3175,59 +2916,39 @@
                 "godName": "Susano",
                 "displayName": "Stumble Blade - Copper",
                 "rarity": "Prisms",
-                "gridBadge": {
-                  "type": "prism",
-                  "rank": null,
-                  "label": "prism"
-                },
                 "screenshot": "app/data/God Renders/susano/Screenshot (912).png",
-                "extractedAt": "2026-06-22",
-                "screenshotTag": {
-                  "screenshot": "app/data/God Renders/susano/Screenshot (912).png",
-                  "fileName": "Screenshot (912).png",
-                  "godName": "Susano",
-                  "displayName": "Stumble Blade - Copper",
-                  "target": "variant-new",
-                  "appliedTo": "Stumble Blade",
-                  "skinKey": "StumbleBlade",
-                  "skinName": "Stumble Blade",
-                  "variantName": "Prism 1",
-                  "parentSkinKey": "StumbleBlade",
-                  "parentSkinName": "Stumble Blade",
-                  "cost": {
-                    "currency": "diamonds",
-                    "amount": "500",
-                    "owned": false
-                  },
-                  "tier": "Prisms"
+                "extractedAt": "2026-07-06",
+                "buttonText": "GO TO",
+                "gridBadge": {
+                  "type": "prism"
                 },
                 "information": [
                   {
                     "key": "prism",
                     "label": "Prism",
                     "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                  },
-                  {
-                    "key": "supporterPremier",
-                    "label": "Supporter Premier",
-                    "text": "Select Diamond-only items for those who wish to show their support and help fund the ongoing development of SMITE 2."
                   }
-                ]
+                ],
+                "screenshotTag": {
+                  "fileName": "Screenshot (912).png",
+                  "godName": "Susano",
+                  "displayName": "Stumble Blade - Copper",
+                  "target": "variant",
+                  "appliedTo": "Stumble Blade → Copper",
+                  "skinKey": "StumbleBlade",
+                  "skinName": "Stumble Blade",
+                  "variantName": "Prism 1",
+                  "parentSkinKey": "StumbleBlade",
+                  "parentSkinName": "Stumble Blade",
+                  "tier": "Prisms"
+                }
               },
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
-              "information": [
-                {
-                  "key": "prism",
-                  "label": "Prism",
-                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                },
-                {
-                  "key": "supporterPremier",
-                  "label": "Supporter Premier",
-                  "text": "Select Diamond-only items for those who wish to show their support and help fund the ongoing development of SMITE 2."
-                }
-              ]
+              "isPrism": true,
+              "gridBadge": {
+                "type": "prism"
+              }
             },
             {
               "name": "Amethyst",
@@ -3247,59 +2968,39 @@
                 "godName": "Susano",
                 "displayName": "Stumble Blade - Amethyst",
                 "rarity": "Prisms",
-                "gridBadge": {
-                  "type": "prism",
-                  "rank": null,
-                  "label": "prism"
-                },
                 "screenshot": "app/data/God Renders/susano/Screenshot (913).png",
-                "extractedAt": "2026-06-22",
-                "screenshotTag": {
-                  "screenshot": "app/data/God Renders/susano/Screenshot (913).png",
-                  "fileName": "Screenshot (913).png",
-                  "godName": "Susano",
-                  "displayName": "Stumble Blade - Amethyst",
-                  "target": "variant-new",
-                  "appliedTo": "Stumble Blade",
-                  "skinKey": "StumbleBlade",
-                  "skinName": "Stumble Blade",
-                  "variantName": "Prism 2",
-                  "parentSkinKey": "StumbleBlade",
-                  "parentSkinName": "Stumble Blade",
-                  "cost": {
-                    "currency": "diamonds",
-                    "amount": "500",
-                    "owned": false
-                  },
-                  "tier": "Prisms"
+                "extractedAt": "2026-07-06",
+                "buttonText": "GO TO",
+                "gridBadge": {
+                  "type": "prism"
                 },
                 "information": [
                   {
                     "key": "prism",
                     "label": "Prism",
                     "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                  },
-                  {
-                    "key": "supporterPremier",
-                    "label": "Supporter Premier",
-                    "text": "Select Diamond-only items for those who wish to show their support and help fund the ongoing development of SMITE 2."
                   }
-                ]
+                ],
+                "screenshotTag": {
+                  "fileName": "Screenshot (913).png",
+                  "godName": "Susano",
+                  "displayName": "Stumble Blade - Amethyst",
+                  "target": "variant",
+                  "appliedTo": "Stumble Blade → Amethyst",
+                  "skinKey": "StumbleBlade",
+                  "skinName": "Stumble Blade",
+                  "variantName": "Prism 2",
+                  "parentSkinKey": "StumbleBlade",
+                  "parentSkinName": "Stumble Blade",
+                  "tier": "Prisms"
+                }
               },
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
-              "information": [
-                {
-                  "key": "prism",
-                  "label": "Prism",
-                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                },
-                {
-                  "key": "supporterPremier",
-                  "label": "Supporter Premier",
-                  "text": "Select Diamond-only items for those who wish to show their support and help fund the ongoing development of SMITE 2."
-                }
-              ]
+              "isPrism": true,
+              "gridBadge": {
+                "type": "prism"
+              }
             },
             {
               "name": "Crimson",
@@ -3319,59 +3020,39 @@
                 "godName": "Susano",
                 "displayName": "Stumble Blade - Crimson",
                 "rarity": "Prisms",
-                "gridBadge": {
-                  "type": "prism",
-                  "rank": null,
-                  "label": "prism"
-                },
                 "screenshot": "app/data/God Renders/susano/Screenshot (914).png",
-                "extractedAt": "2026-06-22",
-                "screenshotTag": {
-                  "screenshot": "app/data/God Renders/susano/Screenshot (914).png",
-                  "fileName": "Screenshot (914).png",
-                  "godName": "Susano",
-                  "displayName": "Stumble Blade - Crimson",
-                  "target": "variant-new",
-                  "appliedTo": "Stumble Blade",
-                  "skinKey": "StumbleBlade",
-                  "skinName": "Stumble Blade",
-                  "variantName": "Prism 3",
-                  "parentSkinKey": "StumbleBlade",
-                  "parentSkinName": "Stumble Blade",
-                  "cost": {
-                    "currency": "diamonds",
-                    "amount": "500",
-                    "owned": false
-                  },
-                  "tier": "Prisms"
+                "extractedAt": "2026-07-06",
+                "buttonText": "GO TO",
+                "gridBadge": {
+                  "type": "prism"
                 },
                 "information": [
                   {
                     "key": "prism",
                     "label": "Prism",
                     "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                  },
-                  {
-                    "key": "supporterPremier",
-                    "label": "Supporter Premier",
-                    "text": "Select Diamond-only items for those who wish to show their support and help fund the ongoing development of SMITE 2."
                   }
-                ]
+                ],
+                "screenshotTag": {
+                  "fileName": "Screenshot (914).png",
+                  "godName": "Susano",
+                  "displayName": "Stumble Blade - Crimson",
+                  "target": "variant",
+                  "appliedTo": "Stumble Blade → Crimson",
+                  "skinKey": "StumbleBlade",
+                  "skinName": "Stumble Blade",
+                  "variantName": "Prism 3",
+                  "parentSkinKey": "StumbleBlade",
+                  "parentSkinName": "Stumble Blade",
+                  "tier": "Prisms"
+                }
               },
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
-              "information": [
-                {
-                  "key": "prism",
-                  "label": "Prism",
-                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                },
-                {
-                  "key": "supporterPremier",
-                  "label": "Supporter Premier",
-                  "text": "Select Diamond-only items for those who wish to show their support and help fund the ongoing development of SMITE 2."
-                }
-              ]
+              "isPrism": true,
+              "gridBadge": {
+                "type": "prism"
+              }
             }
           ]
         }
@@ -3411,15 +3092,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/t_GodCard_Tsukuyomi_Mastery.png",
               "skin": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/t_GodCard_Tsukuyomi_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
-              "unlock": {
-                "masteryRank": 5,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
-                "displayText": "Ascension reward — requires Mastery rank V"
-              },
               "loadout": {
                 "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (962).png",
                 "frame": {
@@ -3436,15 +3108,8 @@
                 "godName": "Tsukuyomi",
                 "displayName": "Onyx",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 5,
-                  "label": "V",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
-                },
                 "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (962).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (962).png",
                   "fileName": "Screenshot (962).png",
@@ -3459,6 +3124,13 @@
                   "parentSkinName": "Base Tsukuyomi",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -3472,6 +3144,8 @@
                   }
                 ]
               },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "ascensionReward",
@@ -3483,7 +3157,14 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              }
             },
             {
               "name": "Mastery Opal",
@@ -3491,8 +3172,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/t_GodCard_Tsukuyomi_Mastery.png",
               "skin": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/t_GodCard_Tsukuyomi_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (963).png",
                 "frame": {
@@ -3509,15 +3188,8 @@
                 "godName": "Tsukuyomi",
                 "displayName": "Opal",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 5,
-                  "label": "V",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
-                },
                 "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (963).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (963).png",
                   "fileName": "Screenshot (963).png",
@@ -3532,6 +3204,13 @@
                   "parentSkinName": "Base Tsukuyomi",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -3545,13 +3224,8 @@
                   }
                 ]
               },
-              "unlock": {
-                "masteryRank": 5,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
-                "displayText": "Ascension reward — requires Mastery rank V"
-              },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "ascensionReward",
@@ -3563,7 +3237,14 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              }
             },
             {
               "name": "Mastery Radiant",
@@ -3571,15 +3252,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/t_GodCard_Tsukuyomi_Mastery.png",
               "skin": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/t_GodCard_Tsukuyomi_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
-              "unlock": {
-                "masteryRank": 10,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
-                "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
-              },
               "loadout": {
                 "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (964).png",
                 "frame": {
@@ -3596,15 +3268,8 @@
                 "godName": "Tsukuyomi",
                 "displayName": "Radiant",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 10,
-                  "label": "X",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
-                },
                 "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (964).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (964).png",
                   "fileName": "Screenshot (964).png",
@@ -3619,6 +3284,13 @@
                   "parentSkinName": "Base Tsukuyomi",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -3632,6 +3304,8 @@
                   }
                 ]
               },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "ascensionReward",
@@ -3643,7 +3317,14 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)"
+              }
             }
           ],
           "loadout": {
@@ -3662,7 +3343,6 @@
             "godName": "Tsukuyomi",
             "displayName": "Base",
             "rarity": null,
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (955).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -3679,7 +3359,8 @@
                 "amount": "0",
                 "owned": true
               }
-            }
+            },
+            "gridBadge": null
           },
           "unlock": {
             "source": "base",
@@ -3697,29 +3378,21 @@
           "isBaseSkin": false,
           "isPrism": false,
           "isRecolor": false,
-          "isMastery": true,
-          "isMasteryShadowSkin": true,
+          "isMastery": false,
           "isCrossGen": false,
+          "isMasteryShadowSkin": true,
           "type": "Mastery Shadow",
           "assets": {
             "skin": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/t_GodCard_Tsukuyomi_Mastery.png",
             "cardArt": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/t_GodCard_Tsukuyomi_Mastery.png",
             "icon": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/T_Tsukuyomi_Icon_Shadow.png"
           },
-          "cardArt": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/t_GodCard_Tsukuyomi_Mastery.png",
-          "skin": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/t_GodCard_Tsukuyomi_Mastery.png",
-          "icon": "app/data/NewGodSkins/Tsukuyomi/Skins/Mastery/T_Tsukuyomi_Icon_Shadow.png",
-          "masteryFromDisk": true,
-          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
           "price": {
-            "diamonds": "900"
+            "gems": "",
+            "diamonds": "900",
+            "gemsdia": ""
           },
-          "unlock": {
-            "rarityNote": "Rare",
-            "source": "ascension",
-            "displayText": "Ascension Pass — rare skin (may appear in events)",
-            "requiresAscensionPass": true
-          },
+          "masteryFromDisk": true,
           "loadout": {
             "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (961).png",
             "frame": {
@@ -3736,7 +3409,6 @@
             "godName": "Tsukuyomi",
             "displayName": "Shadow",
             "rarity": "Heroic",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (961).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -3755,6 +3427,7 @@
               },
               "tier": "Heroic"
             },
+            "gridBadge": null,
             "information": [
               {
                 "key": "ascensionReward",
@@ -3768,6 +3441,7 @@
               }
             ]
           },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
           "information": [
             {
               "key": "ascensionReward",
@@ -3779,7 +3453,13 @@
               "label": "Rare",
               "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
-          ]
+          ],
+          "unlock": {
+            "rarityNote": "Rare",
+            "source": "ascension",
+            "displayText": "Ascension Pass — rare skin (may appear in events)",
+            "requiresAscensionPass": true
+          }
         },
         {
           "skinKey": "SilverBullet",
@@ -3800,11 +3480,13 @@
             "icon": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinPortrait_Tsukuyomi_SilverBullet_Base.png"
           },
           "price": {
-            "diamonds": "2400"
+            "gems": "",
+            "diamonds": "2400",
+            "gemsdia": ""
           },
           "variants": [
             {
-              "name": "Cursed Blood",
+              "name": "Prism 1",
               "cardArt": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinCard_Tsukuyomi_SilverBullet_Prism01.png",
               "skin": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinCard_Tsukuyomi_SilverBullet_Prism01.png",
               "icon": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinPortrait_Tsukuyomi_SilverBullet_Prism01.png",
@@ -3821,65 +3503,24 @@
                 }
               },
               "loadoutMeta": {
+                "gridBadge": {
+                  "type": "prism"
+                },
+                "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (957).png",
                 "godName": "Tsukuyomi",
                 "displayName": "Silver Bullet - Cursed Blood",
                 "rarity": "Prisms",
-                "gridBadge": {
-                  "type": "prism",
-                  "rank": null,
-                  "label": "prism"
-                },
-                "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (957).png",
-                "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
-                "screenshotTag": {
-                  "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (957).png",
-                  "fileName": "Screenshot (957).png",
-                  "godName": "Tsukuyomi",
-                  "displayName": "Silver Bullet - Cursed Blood",
-                  "target": "variant",
-                  "appliedTo": "Silver Bullet → Prism 1",
-                  "skinKey": "SilverBullet",
-                  "skinName": "Silver Bullet",
-                  "variantName": "Prism 1",
-                  "parentSkinKey": "SilverBullet",
-                  "parentSkinName": "Silver Bullet",
-                  "tier": "Prisms"
-                },
-                "information": [
-                  {
-                    "key": "travelerCollection",
-                    "label": "Traveler Collection",
-                    "text": "Acquired in the 'Fiend Hunters' Traveler."
-                  },
-                  {
-                    "key": "prism",
-                    "label": "Prism",
-                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                  }
-                ]
+                "buttonText": "GO TO"
               },
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
-              "unlock": {
-                "source": "traveler",
-                "displayText": "Traveler Collection"
-              },
-              "information": [
-                {
-                  "key": "travelerCollection",
-                  "label": "Traveler Collection",
-                  "text": "Acquired in the 'Fiend Hunters' Traveler."
-                },
-                {
-                  "key": "prism",
-                  "label": "Prism",
-                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                }
-              ]
+              "isPrism": true,
+              "gridBadge": {
+                "type": "prism"
+              }
             },
             {
-              "name": "Paragon",
+              "name": "Prism 2",
               "cardArt": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinCard_Tsukuyomi_SilverBullet_Prism02.png",
               "skin": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinCard_Tsukuyomi_SilverBullet_Prism02.png",
               "icon": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinPortrait_Tsukuyomi_SilverBullet_Prism02.png",
@@ -3896,65 +3537,24 @@
                 }
               },
               "loadoutMeta": {
+                "gridBadge": {
+                  "type": "prism"
+                },
+                "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (958).png",
                 "godName": "Tsukuyomi",
                 "displayName": "Silver Bullet - Paragon",
                 "rarity": "Prisms",
-                "gridBadge": {
-                  "type": "prism",
-                  "rank": null,
-                  "label": "prism"
-                },
-                "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (958).png",
-                "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
-                "screenshotTag": {
-                  "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (958).png",
-                  "fileName": "Screenshot (958).png",
-                  "godName": "Tsukuyomi",
-                  "displayName": "Silver Bullet - Paragon",
-                  "target": "variant",
-                  "appliedTo": "Silver Bullet → Prism 2",
-                  "skinKey": "SilverBullet",
-                  "skinName": "Silver Bullet",
-                  "variantName": "Prism 2",
-                  "parentSkinKey": "SilverBullet",
-                  "parentSkinName": "Silver Bullet",
-                  "tier": "Prisms"
-                },
-                "information": [
-                  {
-                    "key": "travelerCollection",
-                    "label": "Traveler Collection",
-                    "text": "Acquired in the 'Fiend Hunters' Traveler."
-                  },
-                  {
-                    "key": "prism",
-                    "label": "Prism",
-                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                  }
-                ]
+                "buttonText": "GO TO"
               },
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
-              "unlock": {
-                "source": "traveler",
-                "displayText": "Traveler Collection"
-              },
-              "information": [
-                {
-                  "key": "travelerCollection",
-                  "label": "Traveler Collection",
-                  "text": "Acquired in the 'Fiend Hunters' Traveler."
-                },
-                {
-                  "key": "prism",
-                  "label": "Prism",
-                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                }
-              ]
+              "isPrism": true,
+              "gridBadge": {
+                "type": "prism"
+              }
             },
             {
-              "name": "Shadow Stalker",
+              "name": "Prism 3",
               "cardArt": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinCard_Tsukuyomi_SilverBullet_Prism03.png",
               "skin": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinCard_Tsukuyomi_SilverBullet_Prism03.png",
               "icon": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinPortrait_Tsukuyomi_SilverBullet_Prism03.png",
@@ -3971,65 +3571,24 @@
                 }
               },
               "loadoutMeta": {
+                "gridBadge": {
+                  "type": "prism"
+                },
+                "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (959).png",
                 "godName": "Tsukuyomi",
                 "displayName": "Silver Bullet - Shadow Stalker",
                 "rarity": "Prisms",
-                "gridBadge": {
-                  "type": "prism",
-                  "rank": null,
-                  "label": "prism"
-                },
-                "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (959).png",
-                "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
-                "screenshotTag": {
-                  "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (959).png",
-                  "fileName": "Screenshot (959).png",
-                  "godName": "Tsukuyomi",
-                  "displayName": "Silver Bullet - Shadow Stalker",
-                  "target": "variant",
-                  "appliedTo": "Silver Bullet → Prism 3",
-                  "skinKey": "SilverBullet",
-                  "skinName": "Silver Bullet",
-                  "variantName": "Prism 3",
-                  "parentSkinKey": "SilverBullet",
-                  "parentSkinName": "Silver Bullet",
-                  "tier": "Prisms"
-                },
-                "information": [
-                  {
-                    "key": "travelerCollection",
-                    "label": "Traveler Collection",
-                    "text": "Acquired in the 'Fiend Hunters' Traveler."
-                  },
-                  {
-                    "key": "prism",
-                    "label": "Prism",
-                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                  }
-                ]
+                "buttonText": "GO TO"
               },
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
-              "unlock": {
-                "source": "traveler",
-                "displayText": "Traveler Collection"
-              },
-              "information": [
-                {
-                  "key": "travelerCollection",
-                  "label": "Traveler Collection",
-                  "text": "Acquired in the 'Fiend Hunters' Traveler."
-                },
-                {
-                  "key": "prism",
-                  "label": "Prism",
-                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                }
-              ]
+              "isPrism": true,
+              "gridBadge": {
+                "type": "prism"
+              }
             },
             {
-              "name": "Wildwood",
+              "name": "Prism 4",
               "cardArt": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinCard_Tsukuyomi_SilverBullet_Prism04.png",
               "skin": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinCard_Tsukuyomi_SilverBullet_Prism04.png",
               "icon": "app/data/NewGodSkins/Tsukuyomi/Skins/SilverBullet/t_SkinPortrait_Tsukuyomi_SilverBullet_Prism04.png",
@@ -4046,62 +3605,21 @@
                 }
               },
               "loadoutMeta": {
+                "gridBadge": {
+                  "type": "prism"
+                },
+                "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (960).png",
                 "godName": "Tsukuyomi",
                 "displayName": "Silver Bullet - Wildwood",
                 "rarity": "Prisms",
-                "gridBadge": {
-                  "type": "prism",
-                  "rank": null,
-                  "label": "prism"
-                },
-                "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (960).png",
-                "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
-                "screenshotTag": {
-                  "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (960).png",
-                  "fileName": "Screenshot (960).png",
-                  "godName": "Tsukuyomi",
-                  "displayName": "Silver Bullet - Wildwood",
-                  "target": "variant",
-                  "appliedTo": "Silver Bullet → Prism 4",
-                  "skinKey": "SilverBullet",
-                  "skinName": "Silver Bullet",
-                  "variantName": "Prism 4",
-                  "parentSkinKey": "SilverBullet",
-                  "parentSkinName": "Silver Bullet",
-                  "tier": "Prisms"
-                },
-                "information": [
-                  {
-                    "key": "travelerCollection",
-                    "label": "Traveler Collection",
-                    "text": "Acquired in the 'Fiend Hunters' Traveler."
-                  },
-                  {
-                    "key": "prism",
-                    "label": "Prism",
-                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                  }
-                ]
+                "buttonText": "GO TO"
               },
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
-              "unlock": {
-                "source": "traveler",
-                "displayText": "Traveler Collection"
-              },
-              "information": [
-                {
-                  "key": "travelerCollection",
-                  "label": "Traveler Collection",
-                  "text": "Acquired in the 'Fiend Hunters' Traveler."
-                },
-                {
-                  "key": "prism",
-                  "label": "Prism",
-                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                }
-              ]
+              "isPrism": true,
+              "gridBadge": {
+                "type": "prism"
+              }
             }
           ],
           "loadout": {
@@ -4120,11 +3638,6 @@
             "godName": "Tsukuyomi",
             "displayName": "Silver Bullet",
             "rarity": "Classic",
-            "gridBadge": {
-              "type": "prism",
-              "rank": null,
-              "label": "prism"
-            },
             "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (956).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -4142,6 +3655,11 @@
                 "owned": false
               },
               "tier": "Classic"
+            },
+            "gridBadge": {
+              "type": "prism",
+              "rank": null,
+              "label": "prism"
             },
             "information": [
               {
@@ -4162,10 +3680,6 @@
             ]
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_CommonTier.png",
-          "unlock": {
-            "source": "traveler",
-            "displayText": "Traveler Collection"
-          },
           "information": [
             {
               "key": "travelerCollection",
@@ -4182,7 +3696,11 @@
               "label": "Classic",
               "text": "This item was inspired by a SMITE 1 Skin."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          }
         }
       ]
     }

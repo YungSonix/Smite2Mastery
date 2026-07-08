@@ -43,6 +43,7 @@ try {
     rpc: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
     auth: {
       signIn: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
+      signInWithPassword: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
       signUp: async () => ({ data: null, error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
       signOut: async () => ({ error: { code: 'MISSING_CONFIG', message: 'Supabase configuration is missing' } }),
       getSession: async () => ({ data: { session: null }, error: null }),
@@ -52,12 +53,25 @@ try {
 }
 import CryptoJS from 'crypto-js';
 import { useScreenDimensions } from '../../hooks/useScreenDimensions';
+import { WEB_CONTENT_MAX_WIDTH } from '../../lib/webLayout';
 import { flattenBuildsGods } from '../../lib/normalizeBuildsGod';
+import { loadBuildsData, getBuildsDataSync } from '../../lib/loadBuildsData';
 import { getSmite2Gods } from '../../lib/smite2GodsData';
 import { getLocalItemIcon, getLocalGodAsset } from '../localIcons';
 import ColorPicker from 'react-native-wheel-color-picker';
 import { EXTERNAL_LINKS, ICON_PATHS, REMOTE_BASE_URLS } from '../../config';
 import { UI_THEME } from '../../lib/uiTheme';
+import { useAbilityTooltipDetail } from '../../hooks/useAbilityTooltipDetail';
+import { useItemTooltipDetail } from '../../hooks/useItemTooltipDetail';
+import { ABILITY_TOOLTIP_DETAIL } from '../../lib/abilityTooltipDetail';
+import { ITEM_TOOLTIP_DETAIL } from '../../lib/itemTooltipDetail';
+import {
+  finalizeAppLogin,
+  completeAppLogout,
+  establishSupabaseAuthSession,
+  restoreAppAuthSession,
+  ensureAppWriteSession,
+} from '../../lib/appAuth';
 
 // Calculate dynamic font size based on text length and optional screen width (for responsive layout)
 const getProfileNameFontSize = (text, screenWidth) => {
@@ -1249,6 +1263,8 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   // Preferred roles (profile-level, not per-build) - up to 2
   const [preferredRoles, setPreferredRoles] = useState([]);
   const [showPreferredRolesModal, setShowPreferredRolesModal] = useState(false);
+  const [abilityTooltipDetail, setAbilityTooltipDetail] = useAbilityTooltipDetail();
+  const [itemTooltipDetail, setItemTooltipDetail] = useItemTooltipDetail();
   // Profile color and gradient (saved to Supabase; others see when viewing profile)
   const [profileColor, setProfileColor] = useState(null);
   const [profileGradient, setProfileGradient] = useState(null); // [hex, hex] or null
@@ -1384,14 +1400,24 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     });
   }, [allGodsForPicker, godSearchQuery]);
 
-  // Load builds data
+  // Load builds data (shared session cache)
   useEffect(() => {
-    try {
-      const data = require('../../lib/buildsData');
-      setBuildsData(data);
-    } catch (e) {
-      console.error('Failed to load builds.json:', e);
+    const sync = getBuildsDataSync();
+    if (sync) {
+      setBuildsData(sync);
+      return undefined;
     }
+    let cancelled = false;
+    loadBuildsData()
+      .then((data) => {
+        if (!cancelled) setBuildsData(data);
+      })
+      .catch((e) => {
+        console.error('Failed to load builds.json:', e);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // Helper functions for builds (like mybuilds.jsx) - use useMemo to wait for buildsData
@@ -1831,8 +1857,10 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   };
 
   const checkLoginStatus = async () => {
-    const loggedInUser = await storage.getItem('currentUser');
+    const restored = await restoreAppAuthSession();
+    const loggedInUser = restored || (await storage.getItem('currentUser'));
     if (loggedInUser) {
+      if (restored) await storage.setItem('currentUser', restored);
       setCurrentUser(loggedInUser);
       setIsLoggedIn(true);
       await loadUserData();
@@ -1885,15 +1913,9 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     
     // Then try to sync with Supabase in background (merge if Supabase has newer data)
     try {
-      // Try to set user context for RLS (don't fail if this doesn't exist)
-      try {
-        const rpcResult = await supabase.rpc('set_current_user', { username_param: currentUser });
-        if (rpcResult && rpcResult.error && rpcResult.error.code === 'MISSING_CONFIG') {
-          // Supabase not configured, local storage is already loaded
-          return;
-        }
-      } catch (rpcError) {
-        // RPC function might not exist, continue anyway
+      const authSession = await ensureAppWriteSession(currentUser);
+      if (!authSession.ready) {
+        return;
       }
       
       // Try to load from Supabase
@@ -2250,7 +2272,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       
       if (data.password_hash === passwordHash) {
         console.log('Login successful via Supabase');
-        await storage.setItem('currentUser', username.trim());
+        await finalizeAppLogin(username.trim(), password, storage);
         setCurrentUser(username.trim());
         setIsLoggedIn(true);
         setShowLoginModal(false);
@@ -2420,7 +2442,9 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       if (dataError && dataError.code !== '23505') {
         console.error('Error creating user data:', dataError);
       }
-      
+
+      await establishSupabaseAuthSession(usernameTrimmed, registerPassword);
+
       // Store username temporarily so we can log in after they see the code
       await storage.setItem('pendingRegistrationUsername', usernameTrimmed);
       
@@ -2451,7 +2475,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   };
 
   const handleLogout = async () => {
-    await storage.removeItem('currentUser');
+    await completeAppLogout(storage);
     setCurrentUser(null);
     setIsLoggedIn(false);
     setPinnedBuilds([]);
@@ -2941,17 +2965,10 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     
     // Then try to save to Supabase (async, don't block)
     try {
-      // Try to set user context for RLS (might not exist yet)
-      try {
-        const rpcResult = await supabase.rpc('set_current_user', { username_param: currentUser });
-        if (rpcResult && rpcResult.error && rpcResult.error.code === 'MISSING_CONFIG') {
-          // Supabase not configured, local storage already saved above
-          console.log('Supabase not configured, using local storage only');
-          return;
-        }
-      } catch (rpcError) {
-        // Continue without RLS context if function doesn't exist
-        console.log('RPC set_current_user not available, continuing...');
+      const authSession = await ensureAppWriteSession(currentUser);
+      if (!authSession.ready) {
+        console.log('Supabase auth session not ready; local storage saved only');
+        return;
       }
       
       // Ensure we're sending arrays, not null/undefined
@@ -4170,6 +4187,99 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
               </View>
             </TouchableOpacity>
           </View>
+          {currentUser && !viewingUser ? (
+            <View style={styles.appPrefsSection}>
+              <Text style={styles.preferredRolesLabel}>Ability tooltips</Text>
+              <Text style={styles.preferredRolesHint}>
+                Minimal = short summary and quick stats. Descriptive = full per-rank values (0/10/30…).
+              </Text>
+              <View style={styles.abilityDetailToggleRow}>
+                <TouchableOpacity
+                  style={[
+                    styles.abilityDetailChip,
+                    abilityTooltipDetail === ABILITY_TOOLTIP_DETAIL.MINIMAL &&
+                      styles.abilityDetailChipActive,
+                  ]}
+                  onPress={() => setAbilityTooltipDetail(ABILITY_TOOLTIP_DETAIL.MINIMAL)}
+                  activeOpacity={0.8}
+                >
+                  <Text
+                    style={[
+                      styles.abilityDetailChipText,
+                      abilityTooltipDetail === ABILITY_TOOLTIP_DETAIL.MINIMAL &&
+                        styles.abilityDetailChipTextActive,
+                    ]}
+                  >
+                    Minimal
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles.abilityDetailChip,
+                    abilityTooltipDetail === ABILITY_TOOLTIP_DETAIL.DESCRIPTIVE &&
+                      styles.abilityDetailChipActive,
+                  ]}
+                  onPress={() => setAbilityTooltipDetail(ABILITY_TOOLTIP_DETAIL.DESCRIPTIVE)}
+                  activeOpacity={0.8}
+                >
+                  <Text
+                    style={[
+                      styles.abilityDetailChipText,
+                      abilityTooltipDetail === ABILITY_TOOLTIP_DETAIL.DESCRIPTIVE &&
+                        styles.abilityDetailChipTextActive,
+                    ]}
+                  >
+                    Descriptive
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <Text style={[styles.preferredRolesLabel, styles.appPrefsSubLabel]}>Item tooltips</Text>
+              <Text style={styles.preferredRolesHint}>
+                Minimal = tagline and stats. Descriptive = full passive and active text.
+              </Text>
+              <View style={styles.abilityDetailToggleRow}>
+                <TouchableOpacity
+                  style={[
+                    styles.abilityDetailChip,
+                    itemTooltipDetail === ITEM_TOOLTIP_DETAIL.MINIMAL &&
+                      styles.abilityDetailChipActive,
+                  ]}
+                  onPress={() => setItemTooltipDetail(ITEM_TOOLTIP_DETAIL.MINIMAL)}
+                  activeOpacity={0.8}
+                >
+                  <Text
+                    style={[
+                      styles.abilityDetailChipText,
+                      itemTooltipDetail === ITEM_TOOLTIP_DETAIL.MINIMAL &&
+                        styles.abilityDetailChipTextActive,
+                    ]}
+                  >
+                    Minimal
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles.abilityDetailChip,
+                    itemTooltipDetail === ITEM_TOOLTIP_DETAIL.DESCRIPTIVE &&
+                      styles.abilityDetailChipActive,
+                  ]}
+                  onPress={() => setItemTooltipDetail(ITEM_TOOLTIP_DETAIL.DESCRIPTIVE)}
+                  activeOpacity={0.8}
+                >
+                  <Text
+                    style={[
+                      styles.abilityDetailChipText,
+                      itemTooltipDetail === ITEM_TOOLTIP_DETAIL.DESCRIPTIVE &&
+                        styles.abilityDetailChipTextActive,
+                    ]}
+                  >
+                    Descriptive
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          ) : null}
         </View>
           );
         })()}
@@ -5219,7 +5329,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     padding: 20,
     ...(IS_WEB && {
-      maxWidth: 1200,
+      maxWidth: WEB_CONTENT_MAX_WIDTH,
       alignSelf: 'center',
       width: '100%',
     }),
@@ -6182,6 +6292,40 @@ const styles = StyleSheet.create({
     marginTop: 2,
     fontSize: 10,
     color: '#6b7280',
+  },
+  appPrefsSection: {
+    marginTop: 12,
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#1e3a5f',
+  },
+  appPrefsSubLabel: {
+    marginTop: 14,
+  },
+  abilityDetailToggleRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginTop: 8,
+  },
+  abilityDetailChip: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    backgroundColor: '#0b1220',
+  },
+  abilityDetailChipActive: {
+    borderColor: 'rgba(125, 211, 252, 0.55)',
+    backgroundColor: 'rgba(125, 211, 252, 0.12)',
+  },
+  abilityDetailChipText: {
+    color: '#94a3b8',
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  abilityDetailChipTextActive: {
+    color: '#7dd3fc',
   },
   profileActions: {
     flexDirection: 'row',

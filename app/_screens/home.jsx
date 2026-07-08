@@ -17,7 +17,7 @@ import { COLORS } from '../../lib/themeColors';
 import * as Updates from 'expo-updates';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PrivacyPage from './privacy';
-import { useScreenDimensions } from '../../hooks/useScreenDimensions';
+import { WEB_CONTENT_MAX_WIDTH } from '../../lib/webLayout';
 import {
   APP_VERSION_CONFIG,
   EXTERNAL_LINKS,
@@ -30,7 +30,6 @@ import {
 
 export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
   // Use responsive screen dimensions
-  const screenDimensions = useScreenDimensions();
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [articles, setArticles] = useState([]);
   const [imageErrors, setImageErrors] = useState({});
@@ -1059,46 +1058,6 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
           </Text>
         </View>
 
-        {/* Quick links — same look as main app nav destinations */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Jump to</Text>
-          <Text style={[styles.bioText, { marginBottom: 16 }]}>
-            Open a main section of the app in one tap.
-          </Text>
-          <View style={styles.quickLinksContainer}>
-            {[
-              { key: 'data', label: 'Database', icon: '📚', page: 'data' },
-              { key: 'builds', label: 'Builds', icon: '⚔️', page: 'builds' },
-              { key: 'patchhub', label: 'Patch Hub', icon: '📜', page: 'patchhub' },
-              { key: 'custombuild', label: 'Custom Builder', icon: '🛠️', page: 'custombuild' },
-              { key: 'more', label: 'More', icon: '⋯', page: 'more' },
-            ].map((item) => (
-              <TouchableOpacity
-                key={item.key}
-                style={[
-                  styles.quickLinkCard,
-                  {
-                    minWidth: Math.max(100, (screenDimensions.width - 80) / 3),
-                    maxWidth: Platform.OS === 'web' ? 200 : undefined,
-                  },
-                ]}
-                onPress={() => {
-                  if (!setCurrentPage) return;
-                  if (item.page === 'patchhub' && setPatchHubSubTab) {
-                    setPatchHubSubTab('simple');
-                  }
-                  setCurrentPage(item.page);
-                }}
-                activeOpacity={0.85}
-                accessibilityRole="button"
-                accessibilityLabel={`Open ${item.label}`}
-              >
-                <Text style={styles.quickLinkIcon}>{item.icon}</Text>
-                <Text style={styles.quickLinkText}>{item.label}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
 
         {/* Hero Banner with Latest Patch */}
         <View style={styles.heroBanner}>
@@ -1323,7 +1282,7 @@ const styles = StyleSheet.create({
     minHeight: '100%',
     backgroundColor: COLORS.bgVoid,
     ...(Platform.OS === 'web' && {
-      maxWidth: 1200,
+      maxWidth: WEB_CONTENT_MAX_WIDTH,
       alignSelf: 'center',
       width: '100%',
       paddingHorizontal: 20,
@@ -2505,32 +2464,6 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontSize: 16,
     fontWeight: '700',
-  },
-  // Quick Links Styles
-  quickLinksContainer: {
-    flexDirection: 'row',
-    gap: 12,
-    flexWrap: 'wrap',
-  },
-  quickLinkCard: {
-    flex: 1,
-    minWidth: '30%',
-    backgroundColor: COLORS.bgElevated,
-    borderRadius: 8,
-    padding: 16,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: COLORS.surfaceNavy,
-  },
-  quickLinkIcon: {
-    fontSize: 32,
-    marginBottom: 8,
-  },
-  quickLinkText: {
-    color: COLORS.textLight,
-    fontSize: 14,
-    fontWeight: '600',
-    textAlign: 'center',
   },
   // Catch Me Up Button
   catchMeUpButton: {

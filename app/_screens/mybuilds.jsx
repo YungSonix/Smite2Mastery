@@ -13,6 +13,7 @@ import {
   Pressable,
 } from 'react-native';
 import CryptoJS from 'crypto-js';
+import { finalizeAppLogin } from '../../lib/appAuth';
 import { Image } from 'expo-image';
 import { getLocalItemIcon, getLocalGodAsset } from '../localIcons';
 import { useScreenDimensions } from '../../hooks/useScreenDimensions';
@@ -328,7 +329,7 @@ export default function MyBuildsPage({ onEditBuild = null }) {
                           }
                           Alert.alert('Error', 'Invalid username or password');
                         } else if (data && data.password_hash === passwordHash) {
-                          await storage.setItem('currentUser', loginUsername.trim());
+                          await finalizeAppLogin(loginUsername.trim(), loginPassword, storage);
                           setCurrentUser(loginUsername.trim());
                           setShowLoginModal(false);
                           setLoginUsername('');

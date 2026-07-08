@@ -18,7 +18,7 @@ import {
   SHOP_ITEM_POOL,
   DAILY_GOLD_AMOUNT,
 } from '../../lib/shopData';
-import { fetchUserShopData, updateUserShopData, fetchLeaderboard } from '../../lib/shopSupabase';
+import { fetchUserShopData, claimDailyShopGold, purchaseShopItem, fetchLeaderboard } from '../../lib/shopSupabase';
 import { GOLD_ICON } from '../../lib/imageGrabber';
 
 const IS_WEB = Platform.OS === 'web';
@@ -245,12 +245,10 @@ export default function ShopPage({ currentUsername = null, onNavigateToProfile, 
   const persistGold = async (value) => {
     setGold(value);
     await storage.setItem(prefix + 'gold', String(value));
-    if (currentUsername) await updateUserShopData(currentUsername, { newGold: value });
   };
   const persistOwned = async (ids) => {
     setOwnedIds(ids);
     await storage.setItem(prefix + 'owned', JSON.stringify(ids));
-    if (currentUsername) await updateUserShopData(currentUsername, { newOwned: ids });
   };
   const persistChallenges = async (obj) => {
     setChallengeProgress(obj);
@@ -266,15 +264,31 @@ export default function ShopPage({ currentUsername = null, onNavigateToProfile, 
   const handleDailyClaim = async () => {
     if (!canClaimDaily || claimingDaily) return;
     setClaimingDaily(true);
-    const newGold = gold + dailyGoldAmount;
-    setGold(newGold);
-    await storage.setItem(prefix + 'gold', String(newGold));
-    await storage.setItem(prefix + 'last_daily_claim', today);
-    if (currentUsername) await updateUserShopData(currentUsername, { addGold: dailyGoldAmount, addTotalEarned: dailyGoldAmount });
-    setLastDailyClaim(today);
-    const newProgress = { ...challengeProgress, daily_login: today };
-    await persistChallenges(newProgress);
-    setClaimingDaily(false);
+    try {
+      if (currentUsername) {
+        const rpc = await claimDailyShopGold(currentUsername);
+        if (rpc.claimed) {
+          const added = rpc.gold ?? dailyGoldAmount;
+          const balance = rpc.balance ?? gold + added;
+          setGold(balance);
+          await storage.setItem(prefix + 'gold', String(balance));
+          await storage.setItem(prefix + 'last_daily_claim', today);
+          const newProgress = { ...challengeProgress, daily_login: today };
+          await persistChallenges(newProgress);
+          setLastDailyClaim(today);
+          return;
+        }
+      }
+      const newGold = gold + dailyGoldAmount;
+      setGold(newGold);
+      await storage.setItem(prefix + 'gold', String(newGold));
+      await storage.setItem(prefix + 'last_daily_claim', today);
+      const newProgress = { ...challengeProgress, daily_login: today };
+      await persistChallenges(newProgress);
+      setLastDailyClaim(today);
+    } finally {
+      setClaimingDaily(false);
+    }
   };
 
   const handleBuy = async (item) => {
@@ -286,19 +300,34 @@ export default function ShopPage({ currentUsername = null, onNavigateToProfile, 
       Alert.alert('Not enough Gold', `You need ${item.cost} Gold. You have ${gold}.`);
       return;
     }
+    if (currentUsername) {
+      const rpc = await purchaseShopItem(currentUsername, item.id);
+      if (rpc.purchased) {
+        const balance = rpc.balance ?? gold - item.cost;
+        const owned = Array.isArray(rpc.shop_owned)
+          ? rpc.shop_owned
+          : [...ownedIds, item.id];
+        setGold(balance);
+        setOwnedIds(owned);
+        await storage.setItem(prefix + 'gold', String(balance));
+        await storage.setItem(prefix + 'owned', JSON.stringify(owned));
+        return;
+      }
+      if (rpc.reason === 'already_owned') {
+        Alert.alert('Already owned', `You already own ${item.name}.`);
+        return;
+      }
+      if (rpc.reason === 'insufficient_gold') {
+        Alert.alert('Not enough Gold', `You need ${item.cost} Gold.`);
+        return;
+      }
+    }
     const newGold = gold - item.cost;
     const newOwned = [...ownedIds, item.id];
     setGold(newGold);
     setOwnedIds(newOwned);
     await storage.setItem(prefix + 'gold', String(newGold));
     await storage.setItem(prefix + 'owned', JSON.stringify(newOwned));
-    if (currentUsername) {
-      const ok = await updateUserShopData(currentUsername, { newGold, newOwned });
-      if (!ok) {
-        // If Supabase sync fails, keep the purchase locally and log for debugging.
-        console.warn('Shop purchase sync with Supabase failed; kept local state only.');
-      }
-    }
   };
 
   const onRefresh = async () => {
@@ -400,7 +429,7 @@ export default function ShopPage({ currentUsername = null, onNavigateToProfile, 
     >
       {/* Page header */}
       <View style={styles.header}>
-        <Text style={styles.pageTitle}>Temple Bazaar</Text>
+        <Text style={styles.pageTitle}>Player Shop</Text>
         <Text style={styles.pageSubtitle}>
           Trade your hard‑earned favor for divine cosmetics and titles.
         </Text>

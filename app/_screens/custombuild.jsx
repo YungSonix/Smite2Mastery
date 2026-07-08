@@ -8,29 +8,48 @@ import {
   Modal,
   TextInput,
   ActivityIndicator,
-  InteractionManager,
   Platform,
   Pressable,
   Alert,
   PanResponder,
 } from 'react-native';
 import CryptoJS from 'crypto-js';
+import { finalizeAppLogin, ensureAppWriteSession } from '../../lib/appAuth';
 import { Image } from 'expo-image';
 import { getLocalItemIcon, getLocalGodAsset, getRoleIcon } from '../localIcons';
 import { useScreenDimensions } from '../../hooks/useScreenDimensions';
+import { WEB_CONTENT_MAX_WIDTH, useWebLayout } from '../../lib/webLayout';
 import { flattenBuildsGods } from '../../lib/normalizeBuildsGod';
-import { computeItemPassiveBonuses } from '../../lib/customBuildItemPassives';
-import { getBasicAttackPowerCoefficients } from '../../lib/basicAttackScaling';
-import { formatBuildStatValue } from '../../lib/buildStats';
+import { resolveBuildCatalogItem, resolveBuildCatalogRelic } from '../../lib/buildCatalog';
+import { parseItemGoldCost, formatItemGoldCost, getItemGoldCostParts, getBuildStatDisplayRows, getBaseStatsForGodAtLevel, computeTotalBuildStats } from '../../lib/buildStats';
 import {
   getDiscordBotSharedBuildPayload,
   saveDiscordBotSharedBuildPayload,
 } from '../../lib/discordBotSharedBuildSupabase';
-import { GOLD_ICON } from '../../lib/imageGrabber';
+import { GOLD_ICON, getStatIcon, itemHasActiveEffect, STAT_ICONS } from '../../lib/imageGrabber';
+import ItemNameMeta from '../../lib/ItemNameMeta';
+import ItemTooltipBody, { ItemTooltipCost } from '../../lib/ItemTooltipBody';
+import TooltipDetailToggle from '../../lib/TooltipDetailToggle';
+import { useItemTooltipDetail } from '../../hooks/useItemTooltipDetail';
+import { useEphemeralTooltipDetail } from '../../hooks/useEphemeralTooltipDetail';
+import {
+  uiDropdownStyles,
+} from '../../lib/uiDropdownStyles';
+import { BeginnerHintBar } from '../../lib/BeginnerHintBar';
+import { BuildStatChartModal } from '../../lib/BuildStatChart';
+import { resolveChartIconUri } from '../../lib/buildStatChartConfig';
+import { computeBuildProgressionSeries, optimizeItemOrder } from '../../lib/buildStatProgression';
+import { loadBuildsGodsData, loadBuildsItemsData, getBuildsDataSync } from '../../lib/loadBuildsData';
 
 const IS_WEB = Platform.OS === 'web';
 
 const BUILDER_ROLE_OPTIONS = ['Mid', 'Solo', 'ADC', 'Support', 'Jungle'];
+
+function buildDefaultCommunityName(god, roles) {
+  const godName = String(god?.name || god?.GodName || god?.title || 'God').trim();
+  const rolePart = roles?.length > 0 ? ` — ${roles.slice(0, 4).join('/')}` : '';
+  return `${godName}${rolePart} Build`;
+}
 
 /** Avoid repeating certification success logs when `checkCertificationStatus` runs on an interval */
 const certifiedStatusLogOnce = new Set();
@@ -76,47 +95,13 @@ const storage = {
 
 const CUSTOM_BUILDER_PRESET_KEY = 'customBuilderPreset';
 
-function normItemKey(s) {
-  return String(s || '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, '');
-}
-
-/** Merge saved slot refs with full `builds.json` items so stats/passives resolve. */
+/** @deprecated local alias — prefer `resolveBuildCatalogItem` */
 function resolveEquipRef(ref, catalog) {
-  if (!ref || typeof ref !== 'object') return null;
-  if (ref.stats && typeof ref.stats === 'object') return ref;
-  const a = String(ref.internalName || '').toLowerCase().trim();
-  const b = String(ref.name || '').toLowerCase().trim();
-  const an = normItemKey(ref.internalName);
-  const bn = normItemKey(ref.name);
-  for (const it of catalog) {
-    const i = String(it.internalName || '').toLowerCase().trim();
-    const n = String(it.name || '').toLowerCase().trim();
-    if (a && i === a) return it;
-    if (b && n === b) return it;
-    if (an && normItemKey(it.internalName) === an) return it;
-    if (bn && normItemKey(it.name) === bn) return it;
-  }
-  return ref;
+  return resolveBuildCatalogItem(ref, catalog);
 }
 
 function resolveRelicRef(ref, relicCatalog) {
-  if (!ref || typeof ref !== 'object') return null;
-  if (ref.stats && typeof ref.stats === 'object') return ref;
-  const a = String(ref.internalName || '').toLowerCase().trim();
-  const b = String(ref.name || '').toLowerCase().trim();
-  const an = normItemKey(ref.internalName);
-  const bn = normItemKey(ref.name);
-  for (const it of relicCatalog) {
-    const i = String(it.internalName || '').toLowerCase().trim();
-    const n = String(it.name || '').toLowerCase().trim();
-    if (a && i === a) return it;
-    if (b && n === b) return it;
-    if (an && normItemKey(it.internalName) === an) return it;
-    if (bn && normItemKey(it.name) === bn) return it;
-  }
-  return ref;
+  return resolveBuildCatalogRelic(ref, relicCatalog);
 }
 
 async function persistCustomBuilderPresetObject(obj) {
@@ -227,7 +212,62 @@ export default function CustomBuildPage({
 }) {
   // Use responsive screen dimensions
   const screenDimensions = useScreenDimensions();
-  const layoutGodRoleInline = screenDimensions.width >= 640;
+  const { isWebDesktop, isWeb, width } = useWebLayout();
+  /** Tablet + desktop web: multi-column builder (not mobile stack). */
+  const isWebBuilderLayout = isWeb && width >= 768;
+  /** Full desktop: build guide sits beside build panel. */
+  const isWebBuilderSideGuide = isWebDesktop;
+  /** Compact mobile slots — fit 3 per row on narrow screens. */
+  const mobileBuildSlotLayout = useMemo(() => {
+    if (isWebBuilderLayout) return null;
+    const w = screenDimensions.width;
+    const horizontalPad = IS_WEB ? 48 : 24;
+    const gap = IS_WEB ? 14 : 6;
+    const slot = Math.max(52, Math.min(72, Math.floor((w - horizontalPad - gap * 2) / 3)));
+    const icon = Math.max(36, Math.min(44, Math.round(slot * 0.61)));
+    return {
+      slot: { width: slot, minWidth: slot, maxWidth: slot },
+      btn: {
+        aspectRatio: undefined,
+        height: slot,
+        minHeight: slot,
+        maxHeight: slot,
+        paddingTop: 4,
+        paddingBottom: Math.max(12, slot - icon - 8),
+        paddingHorizontal: 3,
+        justifyContent: 'flex-start',
+      },
+      icon: { width: icon, height: icon },
+      row3: { width: slot * 3 + gap * 2, maxWidth: '100%' },
+      row2: { width: slot * 2 + gap, maxWidth: '100%' },
+      gap,
+    };
+  }, [screenDimensions.width, isWebBuilderLayout]);
+  const buildSlotButtonStyle = useMemo(
+    () => [
+      styles.compactSlotButton,
+      IS_WEB ? styles.webBuildSlotButton : styles.nativeBuildSlotButton,
+      mobileBuildSlotLayout?.btn,
+    ],
+    [mobileBuildSlotLayout]
+  );
+  const buildSlotWrapStyle = useMemo(
+    () => [mobileBuildSlotLayout?.slot].filter(Boolean),
+    [mobileBuildSlotLayout]
+  );
+  const itemInfoModalMaxHeight = Math.round(screenDimensions.height * 0.65);
+  const [selectedItemInfo, setSelectedItemInfo] = useState(null); // { item, index } for info modal
+  const [itemTooltipPreference] = useItemTooltipDetail();
+  const itemInfoResetKey =
+    selectedItemInfo?.item?.internalName ||
+    selectedItemInfo?.item?.name ||
+    selectedItemInfo?.index;
+  const [itemTooltipDetail, setItemTooltipDetail] = useEphemeralTooltipDetail(
+    selectedItemInfo !== null,
+    itemTooltipPreference,
+    itemInfoResetKey
+  );
+  const layoutGodRoleInline = isWebBuilderLayout || screenDimensions.width >= 640;
   const [localBuilds, setLocalBuilds] = useState(null);
   const [dataLoading, setDataLoading] = useState(true);
   const [selectedGod, setSelectedGod] = useState(null);
@@ -240,9 +280,14 @@ export default function CustomBuildPage({
   const [relicPickerTarget, setRelicPickerTarget] = useState(null);
   const [aspectActive, setAspectActive] = useState(false);
   const [selectedRoles, setSelectedRoles] = useState([]); // Array of selected roles (max 4)
+  const [roleDropdownVisible, setRoleDropdownVisible] = useState(false);
+  const [postMenuVisible, setPostMenuVisible] = useState(false);
+  /** 'final' (required) | 'starting' (optional) — single build panel at a time */
+  const [buildItemsView, setBuildItemsView] = useState('final');
+  const [buildGuideExpanded, setBuildGuideExpanded] = useState(true);
+  const [builderHintDismissed, setBuilderHintDismissed] = useState(false);
   const [showGodPicker, setShowGodPicker] = useState(false);
   const [showItemPicker, setShowItemPicker] = useState(null); // Index of item slot
-  const [selectedItemInfo, setSelectedItemInfo] = useState(null); // { item, index } for info modal
   const [selectedItemTooltip, setSelectedItemTooltip] = useState(null); // { item, itemName } for tooltip modal
   const [godSearchQuery, setGodSearchQuery] = useState('');
   const [itemSearchQuery, setItemSearchQuery] = useState('');
@@ -280,11 +325,21 @@ export default function CustomBuildPage({
   const [certifiedBuildName, setCertifiedBuildName] = useState('');
   const [isPostingToCertified, setIsPostingToCertified] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showStatChartModal, setShowStatChartModal] = useState(false);
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [botDraftHydrating, setBotDraftHydrating] = useState(() => !!botSharedDraftToken);
   const [botDraftSavePending, setBotDraftSavePending] = useState(false);
+
+  useEffect(() => {
+    if (!IS_WEB || typeof window === 'undefined') return;
+    setBuilderHintDismissed(window.localStorage.getItem('hint_custom_builder') === '1');
+  }, []);
+
+  useEffect(() => {
+    if (isWebBuilderLayout) setGodStatsExpanded(true);
+  }, [isWebBuilderLayout]);
 
   // Check certification status on mount and periodically
   useEffect(() => {
@@ -397,28 +452,47 @@ export default function CustomBuildPage({
   const [isDragging, setIsDragging] = useState(false);
   const sliderTrackRef = useRef(null);
 
-  // Lazy load the builds data
+  const itemsCatalogSyncedRef = useRef(false);
+  const relicsCatalogSyncedRef = useRef(false);
+
+  // Lazy load builds (items chunk first — small — then gods).
   useEffect(() => {
-    let isMounted = true;
-    
-    InteractionManager.runAfterInteractions(() => {
-      setTimeout(async () => {
-        try {
-          const data = require('../../lib/buildsData');
-          if (isMounted) {
-            setLocalBuilds(data);
-            setDataLoading(false);
-          }
-        } catch (err) {
-          if (isMounted) {
-            setDataLoading(false);
-          }
-        }
-      }, 100);
-    });
-    
+    let cancelled = false;
+    const sync = getBuildsDataSync();
+    if (sync?.gods && sync?.items) {
+      setLocalBuilds(sync);
+      setDataLoading(false);
+      return undefined;
+    }
+
+    const mergeLocal = (part) => {
+      setLocalBuilds((prev) => ({
+        gods: part?.gods ?? prev?.gods ?? null,
+        tierlist: part?.tierlist ?? prev?.tierlist ?? [],
+        items: part?.items ?? prev?.items ?? null,
+      }));
+    };
+
+    if (sync) {
+      mergeLocal(sync);
+      if (sync.gods && sync.items) {
+        setDataLoading(false);
+        return undefined;
+      }
+    }
+
+    Promise.all([loadBuildsItemsData(), loadBuildsGodsData()])
+      .then(([itemsPart, godsPart]) => {
+        if (cancelled) return;
+        mergeLocal({ ...godsPart, ...itemsPart });
+        setDataLoading(false);
+      })
+      .catch(() => {
+        if (!cancelled) setDataLoading(false);
+      });
+
     return () => {
-      isMounted = false;
+      cancelled = true;
     };
   }, []);
 
@@ -555,6 +629,21 @@ export default function CustomBuildPage({
       return item.relic === true;
     });
   }, [allItems]);
+
+  // One-time catalog sync when builds.json first becomes available.
+  useEffect(() => {
+    if (!items.length || itemsCatalogSyncedRef.current) return;
+    itemsCatalogSyncedRef.current = true;
+    setSelectedItems((prev) => prev.map((it) => (it ? resolveBuildCatalogItem(it, items) : null)));
+    setStartingItems((prev) => prev.map((it) => (it ? resolveBuildCatalogItem(it, items) : null)));
+  }, [items]);
+
+  useEffect(() => {
+    if (!relics.length || relicsCatalogSyncedRef.current) return;
+    relicsCatalogSyncedRef.current = true;
+    setStartingRelic((prev) => (prev ? resolveBuildCatalogRelic(prev, relics) : null));
+    setFinalRelic((prev) => (prev ? resolveBuildCatalogRelic(prev, relics) : null));
+  }, [relics]);
 
   const applyBuildSnapshot = useCallback(
     (savedBuild) => {
@@ -713,6 +802,7 @@ export default function CustomBuildPage({
     items.forEach((item) => {
       if (item && item.stats && typeof item.stats === 'object') {
         Object.keys(item.stats).forEach((stat) => {
+          if (stat === 'N/A' || stat === 'NA') return;
           statSet.add(stat);
         });
       }
@@ -932,193 +1022,46 @@ export default function CustomBuildPage({
     }
   }, [isDragging, IS_WEB, handleMouseMove, handleMouseUp]);
 
-  // Base god stats scale with godLevel (fractional 1–20 while dragging) using per-stat data
   const baseStats = useMemo(() => {
-    const readNum = (statData, key) => {
-      const v = statData[key];
-      if (v === undefined || v === null || v === '') return NaN;
-      const n = Number(v);
-      return Number.isFinite(n) ? n : NaN;
-    };
-
-    /** Interpolate each stat from its own level keys (1/20 only, or many), else rate+1. */
-    const getBaseStatValueForLevel = (statData, level) => {
-      const lv = Math.max(1, Math.min(20, Number(level) || 20));
-      const levelKeys = Object.keys(statData)
-        .filter((k) => /^\d+$/.test(k))
-        .map((k) => parseInt(k, 10))
-        .filter((n) => n >= 1 && n <= 20)
-        .sort((a, b) => a - b);
-
-      if (levelKeys.length >= 2) {
-        const first = levelKeys[0];
-        const last = levelKeys[levelKeys.length - 1];
-        if (lv <= first) return readNum(statData, String(first));
-        if (lv >= last) return readNum(statData, String(last));
-        let i = 0;
-        while (i < levelKeys.length - 1 && levelKeys[i + 1] < lv) {
-          i += 1;
-        }
-        const lo = levelKeys[i];
-        const hi = levelKeys[i + 1];
-        const vLo = readNum(statData, String(lo));
-        const vHi = readNum(statData, String(hi));
-        if (Number.isFinite(vLo) && Number.isFinite(vHi)) {
-          const t = (lv - lo) / (hi - lo);
-          return vLo + t * (vHi - vLo);
-        }
-      } else if (levelKeys.length === 1) {
-        const v = readNum(statData, String(levelKeys[0]));
-        if (Number.isFinite(v)) return v;
-      }
-
-      const v1 = readNum(statData, '1');
-      const rate = readNum(statData, 'rate');
-      if (Number.isFinite(v1) && Number.isFinite(rate)) {
-        return v1 + (lv - 1) * rate;
-      }
-      const v20 = readNum(statData, '20');
-      if (Number.isFinite(v1) && Number.isFinite(v20)) {
-        const t = (lv - 1) / 19;
-        return v1 + (v20 - v1) * t;
-      }
-      return Number.isFinite(v1) ? v1 : 0;
-    };
-
-    const stats = {};
-
-    if (selectedGod && selectedGod.baseStats) {
-      Object.keys(selectedGod.baseStats).forEach((statKey) => {
-        const statData = selectedGod.baseStats[statKey];
-        if (statData && typeof statData === 'object') {
-          const statValue = getBaseStatValueForLevel(statData, godLevel);
-          const n = Number(statValue);
-          if (statKey === 'BaseAttackSpeed' || statKey === 'AttackSpeedPercent') {
-            stats[statKey] = Number.isFinite(n) ? n : 0;
-          } else {
-            stats[statKey] = Number.isFinite(n) ? n : 0;
-          }
-        } else if (statData !== null && statData !== undefined) {
-          const n = Number(statData);
-          stats[statKey] = Number.isFinite(n) ? n : statData;
-        }
-      });
-    }
-
-    return stats;
+    if (!selectedGod) return {};
+    return getBaseStatsForGodAtLevel(selectedGod, godLevel);
   }, [selectedGod, godLevel]);
 
-  // Stat key normalization - maps item stat keys to base stat keys
-  const normalizeStatKey = (itemKey) => {
-    const mapping = {
-      'Health': 'MaxHealth',
-      'Mana': 'MaxMana',
-      'Health Regen': 'HealthPerSecond',
-      'HP5': 'HealthPerSecond',
-      'Mana Regen': 'ManaPerSecond',
-      'MP5': 'ManaPerSecond',
-      'Physical Protection': 'PhysicalProtection',
-      'Magical Protection': 'MagicalProtection',
-      'Physical Power': 'BasicDamage',
-      'Magical Power': 'BasicDamage',
-      // Rare legacy keys; total Attack Damage still uses STR/INT scaling from god.basic when present
-      // Treat item attack speed as percent bonus that applies on top of base
-      'Attack Speed': 'AttackSpeedPercent',
-      'AttackSpeed': 'AttackSpeedPercent',
-      'Attack Speed %': 'AttackSpeedPercent',
-      'AttackSpeed %': 'AttackSpeedPercent',
-      'Attack Speed Percent': 'AttackSpeedPercent',
-      'AttackSpeed Percent': 'AttackSpeedPercent',
-    };
-    return mapping[itemKey] || itemKey;
-  };
+  /** Final slots resolved against `builds.json` — stats never use stale embedded item copies. */
+  const resolvedFinalItems = useMemo(
+    () => selectedItems.map((it) => (it ? resolveBuildCatalogItem(it, items) : null)),
+    [selectedItems, items]
+  );
 
-  // Calculate total stats
   const totalStats = useMemo(() => {
-    const stats = { ...baseStats };
-    
-    const addItemStats = (item) => {
-      if (item && item.stats) {
-        Object.keys(item.stats).forEach((itemKey) => {
-          const normalizedKey = normalizeStatKey(itemKey);
-          stats[normalizedKey] = (stats[normalizedKey] || 0) + (item.stats[itemKey] || 0);
-        });
-      }
-    };
-    startingItems.forEach(addItemStats);
-    selectedItems.forEach(addItemStats);
+    if (!selectedGod) return {};
+    return computeTotalBuildStats(
+      selectedGod,
+      godLevel,
+      resolvedFinalItems.filter(Boolean)
+    ).totalStats;
+  }, [selectedGod, godLevel, resolvedFinalItems]);
 
-    const equippedForPassives = [...startingItems, ...selectedItems].filter(Boolean);
-    const passiveBonuses = computeItemPassiveBonuses(equippedForPassives);
-    Object.keys(passiveBonuses).forEach((k) => {
-      const add = passiveBonuses[k];
-      if (typeof add === 'number' && Number.isFinite(add) && add !== 0) {
-        stats[k] = (stats[k] || 0) + add;
-      }
-    });
-
-    // Total basic / attack damage: flat (god BasicDamage + item flat bonuses) + STR/INT scaling from god.basic.
-    const flatAttack =
-      (stats.BasicDamage || 0) +
-      (stats['Attack Damage'] || 0) +
-      (stats['Basic Damage'] || 0);
-    const strPow = stats.Strength || 0;
-    const intPow = stats.Intelligence || 0;
-    const { strength: strCoeff, intelligence: intCoeff } = getBasicAttackPowerCoefficients(selectedGod);
-    if (strCoeff !== 0 || intCoeff !== 0) {
-      stats.BasicDamage = Math.round(flatAttack + strPow * strCoeff + intPow * intCoeff);
-    } else {
-      // No scaling data: preserve prior behavior (Strength adds flat to basics).
-      stats.BasicDamage = Math.round(flatAttack + strPow);
-    }
-    delete stats['Attack Damage'];
-    delete stats['Basic Damage'];
-
-    // Combine base attack speed and total attack speed percent into a single effective Attack Speed stat.
-    const baseAS = stats.BaseAttackSpeed || 0;
-    const bonusASPercent = stats.AttackSpeedPercent || 0; // already in % units, e.g. 29.12
-    if (baseAS) {
-      const effectiveAS = baseAS * (1 + bonusASPercent / 100);
-      stats.AttackSpeedEffective = Number(effectiveAS.toFixed(2));
-    }
-
-    // We keep AttackSpeedPercent internally for possible future use, but we don't need to
-    // show it as a separate stat in the UI, so remove it from the stats map.
-    delete stats.AttackSpeedPercent;
-    // Do not show raw BaseAttackSpeed in the UI either; we only surface the combined Attack Speed.
-    delete stats.BaseAttackSpeed;
-    
-    return stats;
-  }, [baseStats, selectedItems, startingItems, selectedGod]);
-
-  // Calculate Effective Health Points
-  // EHP vs one damage type (no pen): Health * (100 + Prot) / 100 — same as Health / (100/(100+Prot))
-  const effectiveHealth = useMemo(() => {
-    const hp = totalStats.MaxHealth || totalStats.Health || 0;
-    const physicalProtection = totalStats.PhysicalProtection || 0;
-    const magicalProtection = totalStats.MagicalProtection || 0;
-
-    const php = Math.round((hp * (physicalProtection + 100)) / 100);
-    const ehp = Math.round((hp * (magicalProtection + 100)) / 100);
-
-    return { PHP: php, EHP: ehp };
-  }, [totalStats]);
+  const statProgression = useMemo(() => {
+    if (!selectedGod) return [];
+    return computeBuildProgressionSeries(selectedGod, godLevel, resolvedFinalItems);
+  }, [selectedGod, godLevel, resolvedFinalItems]);
 
   // Build header gold: final slots + relics only (starting items are free for display)
   const totalGold = useMemo(() => {
     let sum = 0;
     selectedItems.forEach((item) => {
-      if (item && item.totalCost) sum += item.totalCost;
+      sum += parseItemGoldCost(item);
     });
-    if (startingRelic?.totalCost) sum += startingRelic.totalCost;
-    if (finalRelic?.totalCost) sum += finalRelic.totalCost;
+    sum += parseItemGoldCost(startingRelic);
+    sum += parseItemGoldCost(finalRelic);
     return sum;
   }, [selectedItems, startingRelic, finalRelic]);
 
   const selectItem = (item, index) => {
     // Check if this is for a swap (index 999)
     if (index === 999) {
-      setSwapItem(item);
+      setSwapItem(resolveBuildCatalogItem(item, items));
       setShowItemPicker(null);
       setItemSearchQuery('');
       setSelectedStat(null);
@@ -1130,11 +1073,11 @@ export default function CustomBuildPage({
     if (index >= 100) {
       const startingIndex = index - 100;
       const newStartingItems = [...startingItems];
-      newStartingItems[startingIndex] = item;
+      newStartingItems[startingIndex] = resolveBuildCatalogItem(item, items);
       setStartingItems(newStartingItems);
     } else {
       const newItems = [...selectedItems];
-      newItems[index] = item;
+      newItems[index] = resolveBuildCatalogItem(item, items);
       setSelectedItems(newItems);
     }
     setShowItemPicker(null);
@@ -1204,19 +1147,56 @@ export default function CustomBuildPage({
   const godName = selectedGod ? (selectedGod.name || selectedGod.GodName || selectedGod.title || selectedGod.displayName || 'Unknown') : 'Select God';
   const godIcon = selectedGod && (selectedGod.icon || selectedGod.GodIcon || (selectedGod.abilities && selectedGod.abilities.A01 && selectedGod.abilities.A01.icon));
 
+  const godPortraitUri = useMemo(() => {
+    if (!godIcon) return null;
+    return resolveChartIconUri(getLocalGodAsset(godIcon));
+  }, [godIcon]);
+
+  const getStepIconUri = useCallback((step) => {
+    if (!step?.itemIcon && !step?.itemInternalName) return null;
+    return resolveChartIconUri(
+      getLocalItemIcon(step.itemIcon, { internalName: step.itemInternalName })
+    );
+  }, []);
+
+  const applyOptimizedItemOrder = useCallback((orderedEquipped) => {
+    if (!Array.isArray(orderedEquipped)) return;
+    let orderIdx = 0;
+    setSelectedItems((prev) =>
+      prev.map((slot, index) => {
+        // Starter slot (S row) stays fixed — first curve step after Base.
+        if (index === 0) {
+          if (slot) orderIdx = 1;
+          return slot;
+        }
+        if (!slot) return null;
+        const next = orderedEquipped[orderIdx];
+        orderIdx += 1;
+        return next ?? slot;
+      })
+    );
+  }, []);
+
   /** Shared item icon for build slots (full-size or compact side-by-side layout). */
   const renderItemIconOnly = (item, iconKey, compact, relicCompactSlot = false) => {
     if (!item) return null;
     const useRelicMobile = relicCompactSlot && compact && !IS_WEB;
+    const useFixedBuildIcon = compact;
+    const mobileIconOverride =
+      useFixedBuildIcon && mobileBuildSlotLayout?.icon ? mobileBuildSlotLayout.icon : null;
     const iconStyle = compact
       ? useRelicMobile
         ? styles.compactRelicSlotIcon
-        : styles.compactItemIcon
+        : useFixedBuildIcon
+          ? [styles.buildSlotIcon, mobileIconOverride]
+          : styles.compactItemIcon
       : styles.itemIcon;
     const phStyle = compact
       ? useRelicMobile
         ? styles.compactRelicSlotPh
-        : styles.compactItemPh
+        : useFixedBuildIcon
+          ? [styles.buildSlotIconPh, mobileIconOverride]
+          : styles.compactItemPh
       : styles.itemIconPlaceholder;
     const phTextStyle = compact ? styles.compactItemPhText : styles.itemIconPlaceholderText;
     const localIcon = getLocalItemIcon(item.icon || item.internalName);
@@ -1235,7 +1215,7 @@ export default function CustomBuildPage({
         <Image
           source={imageSource}
           style={iconStyle}
-          resizeMode="cover"
+          resizeMode={useFixedBuildIcon ? 'contain' : 'cover'}
           onError={() => {
             setFailedItemIcons((prev) => ({ ...prev, [iconKey]: true }));
           }}
@@ -1243,9 +1223,21 @@ export default function CustomBuildPage({
       );
     }
     if (fallbackSource && useFallback) {
-      return <Image source={fallbackSource} style={iconStyle} resizeMode="cover" />;
+      return (
+        <Image
+          source={fallbackSource}
+          style={iconStyle}
+          resizeMode={useFixedBuildIcon ? 'contain' : 'cover'}
+        />
+      );
     }
-    return <Image source={imageSource} style={iconStyle} resizeMode="cover" />;
+    return (
+      <Image
+        source={imageSource}
+        style={iconStyle}
+        resizeMode={useFixedBuildIcon ? 'contain' : 'cover'}
+      />
+    );
   };
 
   const relicToPayload = (r) =>
@@ -1266,104 +1258,630 @@ export default function CustomBuildPage({
     healthRegen: 'HP5',
     manaRegen: 'MP5',
     penetration: 'Penetration',
+    Penetration: 'Penetration',
+    'Flat Penetration': 'Penetration',
     lifesteal: 'Lifesteal',
     cooldownReduction: 'Cooldown Reduction',
     critChance: 'Critical Strike Chance',
     PercentMagicalPenetration: '% Magical Penetration',
     PercentPhysicalPenetration: '% Physical Penetration',
+    Pathfinding: 'Pathfinding',
+    Plating: 'Plating',
+    Dampening: 'Dampening',
+    Tenacity: 'Tenacity',
+    Echo: 'Echo',
   };
 
-  const renderTotalStatsGrid = () => {
-    const statOrder = [
-      'AttackSpeedEffective',
-      'BasicDamage',
-      'MaxHealth',
-      'HealthPerSecond',
-      'MaxMana',
-      'ManaPerSecond',
-      'PhysicalProtection',
-      'MagicalProtection',
-    ];
-    const allStats = Object.keys(totalStats).filter(
-      (key) => (totalStats[key] !== 0 || baseStats[key]) && key !== 'BaseAttackSpeed'
+  const renderStatIcon = (statKey, displayName, style) => {
+    const src = getStatIcon(statKey, displayName);
+    if (!src) return null;
+    return (
+      <Image
+        source={src}
+        style={style || styles.statRowIcon}
+        contentFit="contain"
+        accessibilityLabel={displayName || statKey}
+      />
     );
-    const orderedStats = statOrder.filter((key) => allStats.includes(key));
-    const remainingStats = allStats.filter((key) => !statOrder.includes(key)).sort();
-    const finalStats = [];
-    orderedStats.forEach((statKey) => {
-      finalStats.push(statKey);
-      if (statKey === 'PhysicalProtection' && (totalStats.MaxHealth || totalStats.Health)) {
-        finalStats.push('__PhysicalEHP__');
-      }
-      if (statKey === 'MagicalProtection' && (totalStats.MaxHealth || totalStats.Health)) {
-        finalStats.push('__MagicalEHP__');
-      }
-    });
-    finalStats.push(...remainingStats);
+  };
 
-    return finalStats.map((statKey) => {
-      if (statKey === '__PhysicalEHP__') {
-        return (
-          <View key="PhysicalEHP" style={styles.statItem}>
-            <Text style={[styles.statLabel, { color: '#ef4444' }]}>Physical EHP</Text>
-            <Text style={[styles.statValue, { color: '#ef4444' }]}>
-              {effectiveHealth.PHP.toLocaleString()}
-            </Text>
-          </View>
-        );
-      }
-      if (statKey === '__MagicalEHP__') {
-        return (
-          <View key="MagicalEHP" style={styles.statItem}>
-            <Text style={[styles.statLabel, { color: '#a855f7' }]}>Magical EHP</Text>
-            <Text style={[styles.statValue, { color: '#a855f7' }]}>
-              {effectiveHealth.EHP.toLocaleString()}
-            </Text>
-          </View>
-        );
-      }
-      let statColor = '#94a3b8';
-      const statName = (statDisplayNames[statKey] || statKey).toLowerCase();
-      const statKeyLower = statKey.toLowerCase();
-      if (statName.includes('health') || statKeyLower.includes('health') || statName.includes('hp5') || statKeyLower.includes('healthper')) {
-        statColor = '#22c55e';
-      } else if (statName.includes('mana') || statKeyLower.includes('mana') || statName.includes('mp5') || statKeyLower.includes('manaper')) {
-        statColor = '#3b82f6';
-      } else if (statName.includes('physical protection') || statKeyLower.includes('physicalprotection')) {
-        statColor = '#ef4444';
-      } else if (statName.includes('magical protection') || statKeyLower.includes('magicalprotection')) {
-        statColor = '#a855f7';
-      } else if (statName.includes('physical power') || statKeyLower.includes('basicdamage')) {
-        statColor = '#f97316';
-      } else if (statName.includes('magical power') || statKeyLower.includes('magicalpower')) {
-        statColor = '#ec4899';
-      } else if (statName.includes('attack speed') || statKeyLower.includes('attackspeed') || statKeyLower.includes('baseattackspeed')) {
-        statColor = '#f97316';
-      } else if (statName.includes('movement speed') || statKeyLower.includes('movementspeed')) {
-        statColor = '#10b981';
-      } else if (statName.includes('penetration') || statKeyLower.includes('penetration')) {
-        statColor = '#ef4444';
-      } else if (statName.includes('lifesteal') || statKeyLower.includes('lifesteal')) {
-        statColor = '#84cc16';
-      } else if (statName.includes('cooldown') || statKeyLower.includes('cooldown')) {
-        statColor = '#0ea5e9';
-      } else if (statName.includes('critical') || statKeyLower.includes('critical') || statName.includes('crit')) {
-        statColor = '#f97316';
-      } else if (statName.includes('strength') || statKeyLower.includes('strength')) {
-        statColor = '#facc15';
-      } else if (statName.includes('intelligence') || statKeyLower.includes('intelligence')) {
-        statColor = '#a855f7';
-      }
-      const raw = totalStats[statKey];
-      const displayValue = formatBuildStatValue(raw, statKey);
+  const renderGoldCostRow = (item, textStyle, iconStyle) => {
+    const goldParts = getItemGoldCostParts(item);
+    return (
+      <View style={styles.itemGoldCostRow}>
+        {!goldParts.isFree ? (
+          <Image
+            source={GOLD_ICON}
+            style={iconStyle || styles.itemGoldCostIcon}
+            contentFit="contain"
+            accessibilityLabel="Gold"
+          />
+        ) : null}
+        <Text style={textStyle}>
+          {goldParts.isFree ? goldParts.label : `${goldParts.label} Gold`}
+        </Text>
+      </View>
+    );
+  };
+
+  const renderItemEffectIcon = (item) => {
+    if (itemHasActiveEffect(item)) {
       return (
-        <View key={statKey} style={styles.statItem}>
-          <Text style={[styles.statLabel, { color: statColor }]}>{statDisplayNames[statKey] || statKey}</Text>
-          <Text style={[styles.statValue, { color: statColor }]}>{displayValue}</Text>
+        <Image
+          source={STAT_ICONS.Active}
+          style={styles.itemPickerActiveIcon}
+          contentFit="contain"
+          accessibilityLabel="Active item"
+        />
+      );
+    }
+    if (item?.passive) {
+      return (
+        <Image
+          source={STAT_ICONS.Passive}
+          style={styles.itemPickerActiveIcon}
+          contentFit="contain"
+          accessibilityLabel="Passive item"
+        />
+      );
+    }
+    return null;
+  };
+
+  const renderTotalStatsGrid = () =>
+    getBuildStatDisplayRows(totalStats, baseStats).map((row) => (
+      <View key={row.key} style={[styles.statItem, isWebBuilderLayout && styles.statItemDesktop]}>
+        <View style={styles.statLabelRow}>
+          {renderStatIcon(row.key.replace(/^__.*__$/, 'Penetration'), row.label)}
+          <Text
+            style={[styles.statLabel, isWebBuilderLayout && styles.statLabelDesktop, { color: row.color }]}
+            numberOfLines={isWebBuilderLayout ? 2 : 1}
+          >
+            {row.label}
+          </Text>
+        </View>
+        <Text style={[styles.statValue, isWebBuilderLayout && styles.statValueDesktop, { color: row.color }]}>
+          {row.value}
+        </Text>
+      </View>
+    ));
+
+  const renderGodRoleSection = () => (
+    <>
+      <View style={styles.godRoleSectionHeader}>
+        <View style={styles.godRoleSectionHeaderText}>
+          <Text style={[styles.sectionTitle, isWebBuilderLayout && styles.sectionTitleCompact, styles.godRoleSectionTitle]}>
+            Select God / Role
+          </Text>
+          {selectedGod ? (
+            <Text style={styles.godRoleSubtitle} numberOfLines={2}>
+              Select up to 4 roles this build can be played in
+            </Text>
+          ) : null}
+        </View>
+        {selectedGod && !botSharedDraftToken ? renderPostActionsMenu() : null}
+      </View>
+      <View style={styles.godRoleBlock}>
+        <View
+          style={[
+            styles.godSelectorContainer,
+            selectedGod && layoutGodRoleInline && styles.godSelectorContainerInline,
+          ]}
+        >
+          <TouchableOpacity
+            style={[
+              styles.godSelector,
+              selectedGod && layoutGodRoleInline && styles.godSelectorWhenInline,
+            ]}
+            onPress={() => setShowGodPicker(true)}
+            activeOpacity={0.7}
+          >
+            {godIcon ? (
+              <Image
+                source={getLocalGodAsset(godIcon)}
+                style={styles.godIcon}
+                resizeMode="cover"
+                accessibilityLabel={selectedGod ? `${selectedGod.name || selectedGod.GodName || 'God'} icon` : 'God icon'}
+              />
+            ) : (
+              <View style={styles.godIconPlaceholder}>
+                <Text style={styles.godIconPlaceholderText}>?</Text>
+              </View>
+            )}
+            <Text style={styles.godNameText}>{godName}</Text>
+          </TouchableOpacity>
+          {selectedGod && selectedGod.aspect && (
+            <TouchableOpacity
+              style={[
+                styles.aspectSlotButton,
+                aspectActive && styles.aspectSlotButtonActive,
+              ]}
+              onPress={() => setAspectActive(!aspectActive)}
+              activeOpacity={0.7}
+            >
+              {(() => {
+                const aspectIcon = selectedGod.aspect.icon;
+                if (aspectIcon) {
+                  const localIcon = getLocalGodAsset(aspectIcon);
+                  if (localIcon) {
+                    return (
+                      <Image
+                        source={localIcon}
+                        style={styles.aspectSlotIcon}
+                        contentFit="contain"
+                        cachePolicy="memory-disk"
+                      />
+                    );
+                  }
+                }
+        return (
+                  <View style={styles.aspectSlotIconPlaceholder}>
+                    <Text style={styles.aspectSlotIconPlaceholderText}>A</Text>
+                  </View>
+                );
+              })()}
+              <Text style={styles.aspectSlotLabel}>Aspect</Text>
+              {aspectActive && (
+                <View style={styles.aspectActiveIndicatorSmall}>
+                  <Text style={styles.aspectActiveTextSmall}>✓</Text>
+                </View>
+              )}
+            </TouchableOpacity>
+          )}
+        </View>
+        {selectedGod ? renderRoleDropdown() : null}
+      </View>
+    </>
+  );
+
+  const renderLevelSlider = () => (
+    <View style={[styles.statsEmbedLevelBlock, isWebBuilderLayout && styles.statsEmbedLevelBlockDesktop]}>
+      <Text style={[styles.statsEmbedLevelHeading, isWebBuilderLayout && styles.statsEmbedLevelHeadingDesktop]}>
+        Base level (1-20) — drag track or use +/−
+            </Text>
+      <View style={styles.statsEmbedLevelRow}>
+        <TouchableOpacity
+          style={[
+            styles.statsEmbedLevelBtn,
+            Math.round(godLevel) <= 1 && styles.statsEmbedLevelBtnDisabled,
+          ]}
+          onPress={() => setGodLevel((g) => Math.max(1, Math.round(g) - 1))}
+          disabled={Math.round(godLevel) <= 1}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.statsEmbedLevelBtnText}>−</Text>
+        </TouchableOpacity>
+        <View
+          ref={sliderTrackRef}
+          style={styles.statsEmbedSliderHit}
+          onLayout={(e) => setSliderTrackWidth(e.nativeEvent.layout.width)}
+          {...(!IS_WEB ? godLevelTrackPan.panHandlers : {})}
+          {...(IS_WEB
+            ? {
+                onMouseDown: (e) => {
+                  e.preventDefault?.();
+                  applyGodLevelFromWebClientX(e.clientX);
+                  setIsDragging(true);
+                },
+              }
+            : {})}
+        >
+          <View style={styles.statsEmbedSliderRail} pointerEvents="none">
+            <View
+              style={[
+                styles.statsEmbedSliderFill,
+                { width: `${((godLevel - 1) / 19) * 100}%` },
+              ]}
+            />
+            <View
+              style={[
+                styles.statsEmbedSliderThumb,
+                { left: `${((godLevel - 1) / 19) * 100}%` },
+              ]}
+            />
+          </View>
+        </View>
+        <TouchableOpacity
+          style={[
+            styles.statsEmbedLevelBtn,
+            Math.round(godLevel) >= 20 && styles.statsEmbedLevelBtnDisabled,
+          ]}
+          onPress={() => setGodLevel((g) => Math.min(20, Math.round(g) + 1))}
+          disabled={Math.round(godLevel) >= 20}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.statsEmbedLevelBtnText}>+</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+
+  const renderStatChartGraphButton = (disabled = false) => {
+    const canOpen = !disabled && statProgression.length >= 2;
+    return (
+      <TouchableOpacity
+        style={[styles.statChartGraphBtn, !canOpen && styles.statChartGraphBtnDisabled]}
+        onPress={() => canOpen && setShowStatChartModal(true)}
+        disabled={!canOpen}
+        activeOpacity={0.85}
+        accessibilityLabel="Open stat chart"
+        accessibilityRole="button"
+      >
+        <View style={styles.statChartGraphIcon} pointerEvents="none">
+          <View style={[styles.statChartGraphBar, { height: 5 }]} />
+          <View style={[styles.statChartGraphBar, { height: 9 }]} />
+          <View style={[styles.statChartGraphBar, { height: 12 }]} />
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderStatsSection = () => {
+    if (!selectedGod) {
+      if (isWebBuilderLayout) {
+        return (
+          <View style={styles.desktopStatsPlaceholder}>
+            <Text style={styles.desktopStatsPlaceholderTitle}>Total stats</Text>
+            <Text style={styles.desktopStatsPlaceholderText}>Pick a god to preview level 20 stats here.</Text>
+          </View>
+        );
+      }
+      return null;
+    }
+
+    if (isWebBuilderLayout) {
+        return (
+        <View style={[styles.godStatsExpandableWrap, styles.desktopStatsPanel]}>
+          <View style={styles.desktopStatsHeaderRow}>
+            <Text style={styles.godStatsExpandHeaderTitle}>Total stats</Text>
+            {renderStatChartGraphButton()}
+            <Text style={styles.godStatsExpandHeaderMeta}>Lv {Math.round(godLevel)}</Text>
+          </View>
+          {renderLevelSlider()}
+          <View style={[styles.statsGrid, styles.statsGridDesktop]}>{renderTotalStatsGrid()}</View>
+          </View>
+        );
+      }
+
+      return (
+      <View style={styles.godStatsExpandableWrap}>
+        <TouchableOpacity
+          style={styles.godStatsExpandHeader}
+          onPress={() => setGodStatsExpanded((v) => !v)}
+          activeOpacity={0.7}
+        >
+          <View style={styles.godStatsExpandHeaderTitleWrap}>
+            <Text style={styles.godStatsExpandHeaderTitle}>Total stats</Text>
+            {renderStatChartGraphButton()}
+            <Text style={styles.godStatsExpandHeaderMeta}> Lv {Math.round(godLevel)}</Text>
+          </View>
+          <Text style={styles.godStatsExpandChevron}>{godStatsExpanded ? '▲' : '▼'}</Text>
+        </TouchableOpacity>
+        {godStatsExpanded ? (
+          <View style={styles.statsExpandedBody}>
+            {renderLevelSlider()}
+            <View style={styles.statsGrid}>{renderTotalStatsGrid()}</View>
+          </View>
+        ) : null}
         </View>
       );
-    });
   };
+
+  const renderBuildGuideSection = () => (
+    <>
+      <TouchableOpacity
+        style={[styles.godStatsExpandHeader, isWebBuilderLayout && styles.buildGuideHeaderCompact]}
+        onPress={() => setBuildGuideExpanded((v) => !v)}
+        activeOpacity={0.7}
+      >
+        <View style={styles.godStatsExpandHeaderTitleWrap}>
+          <Text style={[styles.godStatsExpandHeaderTitle, isWebBuilderLayout && styles.godStatsExpandHeaderTitleCompact]}>
+            Build guide (optional)
+          </Text>
+          {!isWebBuilderLayout ? (
+            <Text style={styles.buildGuideHeaderHint}>
+              Ability order, tips, and item swaps
+            </Text>
+          ) : null}
+        </View>
+        <Text style={styles.godStatsExpandChevron}>{buildGuideExpanded ? '▲' : '▼'}</Text>
+      </TouchableOpacity>
+      {buildGuideExpanded ? (
+        <View style={[styles.buildGuideBody, isWebBuilderLayout && styles.buildGuideBodyDesktop]}>
+      {selectedGod.abilities ? (
+        <>
+            <Text style={[styles.buildGuideSubTitle, isWebBuilderLayout && styles.buildGuideSubTitleDesktop]}>Ability leveling</Text>
+            <View style={[styles.abilityOrderTabRow, isWebBuilderLayout && styles.abilityOrderTabRowDesktop]}>
+        <TouchableOpacity
+                style={[styles.abilityOrderTab, isWebBuilderLayout && styles.abilityOrderTabDesktop, abilityOrderTab === 'starting' && styles.abilityOrderTabActive]}
+          onPress={() => setAbilityOrderTab('starting')}
+          activeOpacity={0.7}
+        >
+          <Text
+            style={[
+              styles.abilityOrderTabText,
+              abilityOrderTab === 'starting' && styles.abilityOrderTabTextActive,
+            ]}
+          >
+            Starting (1-5)
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+                style={[styles.abilityOrderTab, isWebBuilderLayout && styles.abilityOrderTabDesktop, abilityOrderTab === 'max' && styles.abilityOrderTabActive]}
+          onPress={() => setAbilityOrderTab('max')}
+          activeOpacity={0.7}
+        >
+          <Text
+            style={[
+              styles.abilityOrderTabText,
+              abilityOrderTab === 'max' && styles.abilityOrderTabTextActive,
+            ]}
+          >
+            Max order
+          </Text>
+        </TouchableOpacity>
+      </View>
+      {abilityOrderTab === 'starting' ? (
+        <>
+          {!isWebBuilderLayout ? (
+          <Text style={[styles.sectionSubtitle, isWebBuilderLayout && styles.sectionSubtitleDesktop]}>
+            Select which ability to level at each of the first 5 levels
+          </Text>
+          ) : null}
+                <View style={[styles.startingAbilityOrderContainer, isWebBuilderLayout && styles.startingAbilityOrderContainerDesktop]}>
+            {[1, 2, 3, 4, 5].map((level) => {
+              const abilityKey = startingAbilityOrder[level - 1];
+              const ability = abilityKey ? selectedGod.abilities[abilityKey] : null;
+              return (
+                      <View key={level} style={[styles.startingAbilityLevelSlot, isWebBuilderLayout && styles.startingAbilityLevelSlotDesktop]}>
+                  <Text style={[styles.startingAbilityLevelLabel, isWebBuilderLayout && styles.startingAbilityLevelLabelDesktop]}>Level {level}</Text>
+                  <TouchableOpacity
+                    style={[
+                      styles.startingAbilitySlotButton,
+                      isWebBuilderLayout && styles.startingAbilitySlotButtonDesktop,
+                      ability && styles.startingAbilitySlotButtonSelected,
+                    ]}
+                    onPress={() => {
+                      setCurrentStartingAbilityLevel(level - 1);
+                      setShowStartingAbilityPicker(true);
+                    }}
+                    activeOpacity={0.7}
+                  >
+                    {ability ? (
+                      <>
+                        {ability.icon && (
+                          <Image
+                            source={getLocalGodAsset(ability.icon)}
+                            style={[styles.startingAbilityIcon, isWebBuilderLayout && styles.startingAbilityIconDesktop]}
+                            resizeMode="cover"
+                          />
+                        )}
+                        <Text style={styles.startingAbilityName} numberOfLines={1}>
+                          {!isWebBuilderLayout ? (ability.name || abilityKey) : null}
+                        </Text>
+                      </>
+                    ) : (
+                      <>
+                        <View style={[styles.startingAbilityIconPlaceholder, isWebBuilderLayout && styles.startingAbilityIconPlaceholderDesktop]}>
+                          <Text style={styles.startingAbilityIconPlaceholderText}>?</Text>
+                        </View>
+                        <Text style={[styles.startingAbilityPlaceholderText, isWebBuilderLayout && styles.startingAbilityPlaceholderTextDesktop]}>Select</Text>
+                      </>
+                    )}
+                  </TouchableOpacity>
+                </View>
+              );
+            })}
+          </View>
+          {startingAbilityOrder.some((a) => a !== null) && (
+            <TouchableOpacity
+              style={[styles.clearAbilityOrderButton, isWebBuilderLayout && styles.clearAbilityOrderButtonDesktop]}
+              onPress={() => setStartingAbilityOrder(Array(5).fill(null))}
+            >
+              <Text style={[styles.clearAbilityOrderText, isWebBuilderLayout && styles.clearAbilityOrderTextDesktop]}>Clear Order</Text>
+            </TouchableOpacity>
+          )}
+        </>
+      ) : (
+        <>
+          {!isWebBuilderLayout ? (
+          <Text style={[styles.sectionSubtitle, isWebBuilderLayout && styles.sectionSubtitleDesktop]}>
+            Tap abilities in the order you want to level them
+          </Text>
+          ) : null}
+          <View style={[styles.abilityLevelingContainerSingleRow, isWebBuilderLayout && styles.abilityLevelingContainerSingleRowDesktop]}>
+            {Object.keys(selectedGod.abilities).map((abilityKey) => {
+              const ability = selectedGod.abilities[abilityKey];
+              const orderIndex = abilityLevelingOrder.indexOf(abilityKey);
+              const isSelected = orderIndex !== -1;
+              return (
+                <TouchableOpacity
+                  key={abilityKey}
+                  style={[
+                    styles.abilityLevelingButtonSmall,
+                    isWebBuilderLayout && styles.abilityLevelingButtonSmallDesktop,
+                    isSelected && styles.abilityLevelingButtonSelected,
+                  ]}
+                  onPress={() => {
+                    if (isSelected) {
+                      setAbilityLevelingOrder((prev) => prev.filter((k) => k !== abilityKey));
+                    } else {
+                      setAbilityLevelingOrder((prev) => [...prev, abilityKey]);
+                    }
+                  }}
+                  activeOpacity={0.7}
+                >
+                  {ability.icon && (
+                    <Image
+                      source={getLocalGodAsset(ability.icon)}
+                      style={[styles.abilityLevelingIconSmall, isWebBuilderLayout && styles.abilityLevelingIconSmallDesktop]}
+                      resizeMode="cover"
+                    />
+                  )}
+                  {isSelected && (
+                    <View style={styles.abilityLevelingOrderBadgeSmall}>
+                      <Text style={styles.abilityLevelingOrderTextSmall}>{orderIndex + 1}</Text>
+                    </View>
+                  )}
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+          {abilityLevelingOrder.length > 0 && (
+            <TouchableOpacity
+              style={[styles.clearAbilityOrderButton, isWebBuilderLayout && styles.clearAbilityOrderButtonDesktop]}
+              onPress={() => setAbilityLevelingOrder([])}
+            >
+              <Text style={[styles.clearAbilityOrderText, isWebBuilderLayout && styles.clearAbilityOrderTextDesktop]}>Clear Order</Text>
+            </TouchableOpacity>
+          )}
+        </>
+      )}
+        </>
+      ) : null}
+            <Text style={[styles.buildGuideSubTitle, isWebBuilderLayout && styles.buildGuideSubTitleDesktop]}>Tips & notes</Text>
+            <View style={[styles.abilityOrderTabRow, isWebBuilderLayout && styles.abilityOrderTabRowDesktop]}>
+        <TouchableOpacity
+          style={[styles.abilityOrderTab, isWebBuilderLayout && styles.abilityOrderTabDesktop, buildNotesTab === 'tips' && styles.abilityOrderTabActive]}
+          onPress={() => setBuildNotesTab('tips')}
+          activeOpacity={0.7}
+        >
+          <Text
+            style={[
+              styles.abilityOrderTabText,
+              buildNotesTab === 'tips' && styles.abilityOrderTabTextActive,
+            ]}
+          >
+            Tips
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.abilityOrderTab, isWebBuilderLayout && styles.abilityOrderTabDesktop, buildNotesTab === 'swaps' && styles.abilityOrderTabActive]}
+          onPress={() => setBuildNotesTab('swaps')}
+          activeOpacity={0.7}
+        >
+          <Text
+            style={[
+              styles.abilityOrderTabText,
+              buildNotesTab === 'swaps' && styles.abilityOrderTabTextActive,
+            ]}
+          >
+            Item swaps
+          </Text>
+        </TouchableOpacity>
+      </View>
+      {buildNotesTab === 'tips' ? (
+        <>
+          {!isWebBuilderLayout ? (
+          <Text style={styles.sectionSubtitle}>
+            Strategy, lane notes, or general build advice
+          </Text>
+          ) : null}
+          <View style={[styles.tipsHeader, isWebBuilderLayout && styles.tipsHeaderDesktop]}>
+            <TouchableOpacity
+              style={[styles.addTipButton, isWebBuilderLayout && styles.addTipButtonDesktop]}
+              onPress={() => setBuildTips([...buildTips, ''])}
+              activeOpacity={0.7}
+            >
+              <Text style={[styles.addTipButtonText, isWebBuilderLayout && styles.addTipButtonTextDesktop]}>+ Add Tip</Text>
+            </TouchableOpacity>
+          </View>
+          {buildTips.map((tip, tipIndex) => (
+            <View key={tipIndex} style={[styles.tipInputContainer, isWebBuilderLayout && styles.tipInputContainerDesktop]}>
+              <View style={styles.tipInputHeader}>
+                <Text style={styles.tipNumber}>Tip {tipIndex + 1}</Text>
+                {buildTips.length > 1 && (
+                  <TouchableOpacity
+                    style={styles.removeTipButton}
+                    onPress={() => {
+                      const newTips = buildTips.filter((_, i) => i !== tipIndex);
+                      setBuildTips(newTips);
+                    }}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={styles.removeTipButtonText}>✕</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+              <TextInput
+                style={[styles.buildTipsInput, isWebBuilderLayout && styles.buildTipsInputDesktop]}
+                placeholder={`Tip ${tipIndex + 1}: Add tip, strategy, or note...`}
+                placeholderTextColor="#64748b"
+                value={tip}
+                onChangeText={(text) => {
+                  const newTips = [...buildTips];
+                  newTips[tipIndex] = text;
+                  setBuildTips(newTips);
+                }}
+                multiline={true}
+                numberOfLines={3}
+                textAlignVertical="top"
+              />
+            </View>
+          ))}
+        </>
+      ) : (
+        <>
+          <Text style={styles.sectionSubtitle}>
+            Add alternative items and explain when to use them
+          </Text>
+          {itemSwaps.map((swap, index) => (
+            <View key={index} style={styles.swapItem}>
+              {swap.item && (
+                <Image
+                  source={getLocalItemIcon(swap.item.icon || swap.item.internalName)}
+                  style={styles.swapItemIcon}
+                  resizeMode="cover"
+                />
+              )}
+              <View style={styles.swapItemContent}>
+                <Text style={styles.swapItemName}>
+                  {swap.item ? (swap.item.name || swap.item.internalName) : 'No item selected'}
+                </Text>
+                {swap.reasoning && (
+                  <Text style={styles.swapItemReasoning}>{swap.reasoning}</Text>
+                )}
+              </View>
+              <View style={styles.swapItemActions}>
+                <TouchableOpacity
+                  style={styles.editSwapButton}
+                  onPress={() => {
+                    setCurrentSwapIndex(index);
+                    setSwapItem(swap.item);
+                    setSwapReasoning(swap.reasoning || '');
+                    setShowSwapModal(true);
+                  }}
+                >
+                  <Text style={styles.editSwapButtonText}>Edit</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.deleteSwapButton}
+                  onPress={() => {
+                    setItemSwaps((prev) => prev.filter((_, i) => i !== index));
+                  }}
+                >
+                  <Text style={styles.deleteSwapButtonText}>✕</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          ))}
+          <TouchableOpacity
+            style={styles.addSwapButton}
+            onPress={() => {
+              setCurrentSwapIndex(null);
+              setSwapItem(null);
+              setSwapReasoning('');
+              setShowSwapModal(true);
+            }}
+          >
+            <Text style={styles.addSwapButtonText}>+ Add Swap</Text>
+          </TouchableOpacity>
+        </>
+      )}
+        </View>
+      ) : null}
+    </>
+  );
 
   // Load saved builds
   useEffect(() => {
@@ -1384,46 +1902,512 @@ export default function CustomBuildPage({
     loadSavedBuilds();
   }, []);
 
-  const renderBuilderRoleChips = () =>
-    BUILDER_ROLE_OPTIONS.map((role) => {
-      const isSelected = selectedRoles.includes(role);
-      const isDisabled = !isSelected && selectedRoles.length >= 4;
-      const iconSrc = getRoleIcon(role);
-      return (
+  const renderRoleDropdown = () => (
+    <View style={styles.rolePickerWrap}>
+      <View
+        style={[
+          uiDropdownStyles.selectShell,
+          roleDropdownVisible && uiDropdownStyles.selectShellOpen,
+        ]}
+      >
         <TouchableOpacity
-          key={role}
-          style={[
-            styles.inlineRoleChip,
-            isSelected && styles.inlineRoleChipSelected,
-            isDisabled && styles.inlineRoleChipDisabled,
-          ]}
+          style={uiDropdownStyles.selectTrigger}
           onPress={() => {
-            if (isSelected) {
-              setSelectedRoles((prev) => prev.filter((r) => r !== role));
-            } else if (!isDisabled) {
-              setSelectedRoles((prev) => [...prev, role]);
-            }
+            setPostMenuVisible(false);
+            setRoleDropdownVisible((v) => !v);
           }}
-          disabled={isDisabled}
-          activeOpacity={1}
-          accessibilityLabel={`${role} role${isSelected ? ', selected' : ''}`}
+          activeOpacity={0.7}
+          accessibilityLabel="Select roles for this build"
         >
-          {iconSrc ? (
-            <Image source={iconSrc} style={styles.inlineRoleChipIcon} contentFit="contain" />
-          ) : null}
+          <View style={styles.roleDropdownTriggerContent}>
+            {selectedRoles.length === 0 ? (
+              <Text style={styles.roleDropdownPlaceholder}>Select roles (up to 4)</Text>
+            ) : (
+              <ScrollView
+                horizontal
+                nestedScrollEnabled
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.roleDropdownSelectedRow}
+              >
+                {selectedRoles.map((role) => {
+                  const iconSrc = getRoleIcon(role);
+                  return (
+                    <View key={role} style={styles.roleDropdownSelectedChip}>
+                      {iconSrc ? (
+                        <Image source={iconSrc} style={styles.roleDropdownChipIcon} contentFit="contain" />
+                      ) : null}
+                      <Text style={styles.roleDropdownChipText}>{role}</Text>
+                    </View>
+                  );
+                })}
+              </ScrollView>
+            )}
+          </View>
           <Text
             style={[
-              styles.inlineRoleChipText,
-              isSelected && styles.inlineRoleChipTextSelected,
-              isDisabled && styles.inlineRoleChipTextDisabled,
+              uiDropdownStyles.selectCaret,
+              roleDropdownVisible && uiDropdownStyles.selectCaretOpen,
             ]}
-            numberOfLines={1}
           >
-            {role}
+            ▼
           </Text>
         </TouchableOpacity>
+        {roleDropdownVisible ? (
+          <>
+            <View style={uiDropdownStyles.selectDivider} />
+            <View style={styles.rolePickerPanel}>
+              <View style={styles.rolePickerRow}>
+                {BUILDER_ROLE_OPTIONS.map((role) => {
+                  const isSelected = selectedRoles.includes(role);
+                  const isDisabled = !isSelected && selectedRoles.length >= 4;
+                  const iconSrc = getRoleIcon(role);
+                  return (
+                    <TouchableOpacity
+                      key={role}
+                      style={[
+                        styles.rolePickerBox,
+                        isSelected && styles.rolePickerBoxSelected,
+                        isDisabled && styles.rolePickerBoxDisabled,
+                      ]}
+                      onPress={() => {
+                        if (isSelected) {
+                          setSelectedRoles((prev) => prev.filter((r) => r !== role));
+                        } else if (!isDisabled) {
+                          setSelectedRoles((prev) => [...prev, role]);
+                        }
+                      }}
+                      disabled={isDisabled}
+                      activeOpacity={0.7}
+                      accessibilityLabel={`${role} role${isSelected ? ', selected' : ''}`}
+                      accessibilityState={{ selected: isSelected, disabled: isDisabled }}
+                    >
+                      {iconSrc ? (
+                        <Image source={iconSrc} style={styles.rolePickerBoxIcon} contentFit="contain" />
+                      ) : null}
+                      <Text
+                        style={[
+                          styles.rolePickerBoxText,
+                          isSelected && styles.rolePickerBoxTextSelected,
+                          isDisabled && styles.rolePickerBoxTextDisabled,
+                        ]}
+                        numberOfLines={1}
+                      >
+                        {role}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </View>
+          </>
+        ) : null}
+      </View>
+    </View>
+  );
+
+  const submitCommunityBuild = async (nameOverride) => {
+    const resolvedName = (
+      nameOverride ||
+      communityBuildName ||
+      buildDefaultCommunityName(selectedGod, selectedRoles)
+    ).trim();
+    if (!selectedGod || !resolvedName) return false;
+
+    const currentUser = await storage.getItem('currentUser');
+    if (!currentUser) {
+      setShowLoginModal(true);
+      return false;
+    }
+
+    setIsPostingToCommunity(true);
+    try {
+      const { supabase } = require('../../config/supabase');
+      const authSession = await ensureAppWriteSession(currentUser);
+      if (!authSession.ready) {
+        Alert.alert('Sign in required', 'Sign out and sign in again to post community builds.');
+        return false;
+      }
+      const gamemodesToSave = selectedGamemodes.includes('All Modes')
+        ? ['Joust', 'Duel', 'Arena', 'Conquest', 'Assault']
+        : selectedGamemodes;
+
+      const buildData = {
+        name: resolvedName,
+        god: selectedGod.name || selectedGod.GodName || selectedGod.title || selectedGod.displayName,
+        godInternalName: selectedGod.internalName || selectedGod.GodName,
+        godIcon: selectedGod.icon || selectedGod.GodIcon,
+        items: selectedItems.filter(Boolean).map((item) => ({
+          name: item.name || item.internalName,
+          internalName: item.internalName,
+          icon: item.icon,
+        })),
+        relic: relicToPayload(finalRelic),
+        starting_relic: relicToPayload(startingRelic),
+        final_relic: relicToPayload(finalRelic),
+        godLevel: Math.round(godLevel),
+        aspectActive: aspectActive && selectedGod.aspect ? true : false,
+        author: currentUser,
+        notes: buildTips.filter((t) => t && t.trim()).join('\n') || resolvedName,
+        tips: buildTips.filter((t) => t && t.trim()).join('\n') || null,
+        startingItems: startingItems.filter(Boolean).map((item) => ({
+          name: item.name || item.internalName,
+          internalName: item.internalName,
+          icon: item.icon,
+        })),
+        abilityLevelingOrder,
+        startingAbilityOrder,
+        itemSwaps: itemSwaps.map((swap) => ({
+          item: swap.item,
+          reasoning: swap.reasoning,
+        })),
+        roles: selectedRoles,
+        gamemodes: gamemodesToSave,
+        createdAt: new Date().toISOString(),
+      };
+
+      const isEditing =
+        buildToEdit && buildToEdit.databaseId && buildToEdit.databaseTable === 'community_builds';
+      const updateData = {
+        build_name: resolvedName,
+        god_name: buildData.god,
+        god_internal_name: buildData.godInternalName,
+        items: buildData.items,
+        starting_items: buildData.startingItems,
+        relic: buildData.relic,
+        starting_relic: buildData.starting_relic,
+        final_relic: buildData.final_relic,
+        god_level: Math.round(godLevel),
+        aspect_active: buildData.aspectActive,
+        notes: buildData.notes || buildData.tips || resolvedName,
+        tips: (buildData.tips && buildData.tips.trim()) || null,
+        ability_leveling_order: buildData.abilityLevelingOrder,
+        starting_ability_order: buildData.startingAbilityOrder,
+        item_swaps: buildData.itemSwaps,
+        roles: buildData.roles,
+        gamemodes: gamemodesToSave,
+        updated_at: new Date().toISOString(),
+      };
+
+      let error;
+      if (isEditing) {
+        const result = await supabase
+          .from('community_builds')
+          .update(updateData)
+          .eq('id', buildToEdit.databaseId)
+          .eq('username', currentUser);
+        error = result.error;
+      } else {
+        const result = await supabase.from('community_builds').insert({
+          username: currentUser,
+          ...updateData,
+          created_at: new Date().toISOString(),
+        });
+        error = result.error;
+      }
+
+      if (error) {
+        if (error.code === 'MISSING_CONFIG') {
+          Alert.alert(
+            'Development Mode',
+            'Supabase is not configured in development. In production, your builds will be saved properly.'
+          );
+          setShowPostToCommunityModal(false);
+          setCommunityBuildName('');
+          setSelectedGamemodes(['All Modes']);
+          Alert.alert('Success (Dev Mode)', 'Build posted! In production, this will be saved to the database.');
+          return true;
+        }
+        Alert.alert('Error', `Failed to post build: ${error.message || 'Please try again.'}`);
+        return false;
+      }
+
+      setShowPostToCommunityModal(false);
+      setCommunityBuildName('');
+      setSelectedGamemodes(['All Modes']);
+      if (isEditing && onEditComplete) onEditComplete();
+      Alert.alert('Success', `Your community build has been ${isEditing ? 'updated' : 'posted'}!`);
+      return true;
+    } catch (error) {
+      console.error('Exception posting to community:', error);
+      Alert.alert('Error', 'An error occurred while posting. Please try again.');
+      return false;
+    } finally {
+      setIsPostingToCommunity(false);
+    }
+  };
+
+  const promptQuickCommunityPost = () => {
+    const defaultName = buildDefaultCommunityName(selectedGod, selectedRoles);
+    Alert.alert(
+      'Quick post to community?',
+      `Post "${defaultName}" for All Modes. Tap Customize to change the name or modes first.`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Customize',
+          onPress: () => {
+            setCommunityBuildName(defaultName);
+            setSelectedGamemodes(['All Modes']);
+            setShowPostToCommunityModal(true);
+          },
+        },
+        {
+          text: 'Post now',
+          onPress: async () => {
+            setCommunityBuildName(defaultName);
+            setSelectedGamemodes(['All Modes']);
+            await submitCommunityBuild(defaultName);
+          },
+        },
+      ]
+    );
+  };
+
+  const requireLoggedInUser = async () => {
+    const currentUser = await storage.getItem('currentUser');
+    if (!currentUser) {
+      setShowLoginModal(true);
+      return null;
+    }
+    return currentUser;
+  };
+
+  const requireBuildHasItems = () => {
+    const hasItems = selectedItems.filter(Boolean).length > 0;
+    if (!hasItems) {
+      Alert.alert('Incomplete Build', 'Add at least one final build item first.');
+      return false;
+    }
+    return true;
+  };
+
+  const handleSaveBuildToProfile = async () => {
+    setPostMenuVisible(false);
+    const currentUser = await storage.getItem('currentUser');
+    if (!currentUser) {
+      Alert.alert('Not Logged In', 'Please log in to your profile to save builds.');
+      return;
+    }
+    setBuildName(selectedGod.name || selectedGod.GodName || 'My Build');
+    setShowSaveBuildModal(true);
+  };
+
+  const handleQuickPostCommunity = async () => {
+    setPostMenuVisible(false);
+    if (!(await requireLoggedInUser())) return;
+    if (!requireBuildHasItems()) return;
+    promptQuickCommunityPost();
+  };
+
+  const handleCustomizePost = async () => {
+    setPostMenuVisible(false);
+    if (!(await requireLoggedInUser())) return;
+    if (!requireBuildHasItems()) return;
+    setCommunityBuildName(buildDefaultCommunityName(selectedGod, selectedRoles));
+    setSelectedGamemodes(['All Modes']);
+    setShowPostToCommunityModal(true);
+  };
+
+  const handleUpdateContributorBuild = async () => {
+    setPostMenuVisible(false);
+    if (!(await requireLoggedInUser())) return;
+    if (!requireBuildHasItems()) return;
+    try {
+      const currentUser = await storage.getItem('currentUser');
+      const { supabase } = require('../../config/supabase');
+      const authSession = await ensureAppWriteSession(currentUser);
+      if (!authSession.ready) {
+        Alert.alert('Sign in required', 'Sign out and sign in again to update contributor builds.');
+        return;
+      }
+      const gamemodesToSave =
+        buildToEdit.gamemodes && Array.isArray(buildToEdit.gamemodes) && buildToEdit.gamemodes.length > 0
+          ? buildToEdit.gamemodes
+          : ['Joust', 'Duel', 'Arena', 'Conquest', 'Assault'];
+      const nameToSave =
+        (buildToEdit.build_name || buildToEdit.name || certifiedBuildName || buildName || '').trim() ||
+        'My Build';
+      const updatePayload = {
+        build_name: nameToSave,
+        god_name: selectedGod.name || selectedGod.GodName || selectedGod.title || selectedGod.displayName,
+        god_internal_name: selectedGod.internalName || selectedGod.GodName,
+        items: selectedItems
+          .filter(Boolean)
+          .map((item) => ({
+            name: item.name || item.internalName,
+            internalName: item.internalName,
+            icon: item.icon,
+          })),
+        starting_items: startingItems
+          .filter(Boolean)
+          .map((item) => ({
+            name: item.name || item.internalName,
+            internalName: item.internalName,
+            icon: item.icon,
+          })),
+        relic: relicToPayload(finalRelic),
+        starting_relic: relicToPayload(startingRelic),
+        final_relic: relicToPayload(finalRelic),
+        god_level: Math.round(godLevel),
+        aspect_active: aspectActive && selectedGod.aspect ? true : false,
+        notes: (buildTips.filter((t) => t && t.trim()).join('\n') || nameToSave).trim(),
+        tips: (buildTips.filter((t) => t && t.trim()).join('\n') || '').trim() || null,
+        ability_leveling_order: abilityLevelingOrder,
+        starting_ability_order: startingAbilityOrder,
+        item_swaps: itemSwaps.map((swap) => ({ item: swap.item, reasoning: swap.reasoning })),
+        roles: selectedRoles,
+        gamemodes: gamemodesToSave,
+        updated_at: new Date().toISOString(),
+      };
+      const result = await supabase.rpc('update_contributor_build', {
+        build_id: String(buildToEdit.databaseId),
+        request_username: currentUser,
+        payload: updatePayload,
+      });
+      if (result.error) {
+        console.error('Contributor build update error:', result.error.code, result.error.message, result.error.details);
+        Alert.alert(
+          'Update failed',
+          result.error.message || 'Could not save to server. Run supabase_update_contributor_build_rpc.sql in Supabase SQL Editor if you use custom login.'
+        );
+        return;
+      }
+      const updated = Array.isArray(result.data) ? result.data[0] : result.data;
+      if (!updated) {
+        Alert.alert(
+          'Update failed',
+          'No rows were updated. Run the SQL in supabase_update_contributor_build_rpc.sql in your Supabase project.'
+        );
+        return;
+      }
+      if (onEditComplete) onEditComplete();
+      Alert.alert('Success', 'Your contributor build has been updated.');
+    } catch (err) {
+      console.error('Exception updating contributor build:', err);
+      Alert.alert('Error', err?.message || 'An error occurred. Please try again.');
+    }
+  };
+
+  const handleOpenContributorPost = async () => {
+    setPostMenuVisible(false);
+    if (!(await requireLoggedInUser())) return;
+    if (!requireBuildHasItems()) return;
+    if (buildToEdit?.databaseTable === 'contributor_builds') {
+      setCertifiedBuildName(buildToEdit.build_name || buildToEdit.name || '');
+      setSelectedGamemodes(
+        Array.isArray(buildToEdit.gamemodes) && buildToEdit.gamemodes.length > 0
+          ? buildToEdit.gamemodes
+          : ['All Modes']
       );
-    });
+    } else {
+      setCertifiedBuildName(buildDefaultCommunityName(selectedGod, selectedRoles));
+      setSelectedGamemodes(['All Modes']);
+    }
+    setShowPostToCertifiedModal(true);
+  };
+
+  const getPostMenuItems = useCallback(() => {
+    const showContributorUpdate =
+      isUserCertified && buildToEdit?.databaseTable === 'contributor_builds' && buildToEdit?.databaseId;
+    const showContributorPost =
+      isUserCertified && !(buildToEdit?.databaseTable === 'contributor_builds' && buildToEdit?.databaseId);
+
+    const menuItems = [
+      {
+        key: 'save',
+        title: 'Save to profile',
+        hint: 'My Builds on your account',
+        onPress: handleSaveBuildToProfile,
+      },
+      {
+        key: 'quick',
+        title: 'Quick post to community',
+        hint: 'Default name · all modes',
+        onPress: handleQuickPostCommunity,
+      },
+      {
+        key: 'custom',
+        title: 'Customize & post',
+        hint: 'Name, modes, and notes',
+        onPress: handleCustomizePost,
+      },
+    ];
+    if (showContributorUpdate) {
+      menuItems.push({
+        key: 'contrib-update',
+        title: 'Update contributor build',
+        hint: 'Save edits to certified listing',
+        onPress: handleUpdateContributorBuild,
+      });
+    }
+    if (showContributorPost) {
+      menuItems.push({
+        key: 'contrib-post',
+        title: 'Post to contributor builds',
+        hint: 'Certified author listing',
+        onPress: handleOpenContributorPost,
+      });
+    }
+    return menuItems;
+  }, [isUserCertified, buildToEdit]);
+
+  const renderPostMenuItemRows = (menuItems) =>
+    menuItems.map((item, idx) => (
+      <TouchableOpacity
+        key={item.key}
+        style={[
+          styles.postMenuItem,
+          idx === menuItems.length - 1 && uiDropdownStyles.menuItemLast,
+        ]}
+        onPress={item.onPress}
+        activeOpacity={0.85}
+      >
+        <View style={styles.postMenuItemTextCol}>
+          <Text style={styles.postMenuItemTitle}>{item.title}</Text>
+          <Text style={styles.postMenuItemHint}>{item.hint}</Text>
+        </View>
+      </TouchableOpacity>
+    ));
+
+  const renderPostActionsMenu = () => {
+    const menuItems = getPostMenuItems();
+
+    return (
+      <View style={styles.postMenuWrap}>
+        <TouchableOpacity
+          style={[styles.postMenuBtn, postMenuVisible && styles.postMenuBtnOpen]}
+          onPress={() => {
+            setRoleDropdownVisible(false);
+            setPostMenuVisible((v) => !v);
+          }}
+          activeOpacity={0.85}
+          accessibilityLabel="Post build menu"
+        >
+          <Text style={styles.postMenuBtnText}>Post</Text>
+          <Text style={styles.postMenuCaret}>{postMenuVisible ? '▴' : '▾'}</Text>
+        </TouchableOpacity>
+        {IS_WEB && postMenuVisible ? (
+          <View style={styles.postMenuDropdown}>{renderPostMenuItemRows(menuItems)}</View>
+        ) : null}
+      </View>
+    );
+  };
+
+  const renderPostMenuModal = () => (
+    <Modal
+      visible={postMenuVisible && !IS_WEB}
+      transparent
+      animationType="fade"
+      onRequestClose={() => setPostMenuVisible(false)}
+    >
+      <Pressable style={styles.postMenuOverlay} onPress={() => setPostMenuVisible(false)}>
+        <Pressable style={styles.postMenuSheet} onPress={(e) => e?.stopPropagation?.()}>
+          <Text style={styles.postMenuSheetTitle}>Post build</Text>
+          {renderPostMenuItemRows(getPostMenuItems())}
+        </Pressable>
+      </Pressable>
+    </Modal>
+  );
 
   if (dataLoading || (botSharedDraftToken && botDraftHydrating)) {
     return (
@@ -1436,7 +2420,26 @@ export default function CustomBuildPage({
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        onScrollBeginDrag={() => {
+          setPostMenuVisible(false);
+          setRoleDropdownVisible(false);
+        }}
+      >
+        {!builderHintDismissed && !botSharedDraftToken ? (
+          <BeginnerHintBar
+            compact={screenDimensions.width < 560}
+            text="1) Pick a god and lane role. 2) Fill seven item slots + relic. 3) Expand Total stats to preview damage and survivability at level 20."
+            onDismiss={() => {
+              setBuilderHintDismissed(true);
+              if (IS_WEB && typeof window !== 'undefined') {
+                window.localStorage.setItem('hint_custom_builder', '1');
+              }
+            }}
+          />
+        ) : null}
         {botSharedDraftToken ? (
           <View style={styles.section}>
             <View style={styles.botDraftBanner}>
@@ -1451,6 +2454,7 @@ export default function CustomBuildPage({
 
         {/* Load Saved Build Button */}
         {!botSharedDraftToken ? (
+          !isWebBuilderLayout ? (
           <View style={styles.section}>
             <TouchableOpacity
               style={styles.loadBuildButton}
@@ -1459,181 +2463,33 @@ export default function CustomBuildPage({
               <Text style={styles.loadBuildButtonText}>Load Saved Build</Text>
             </TouchableOpacity>
           </View>
+          ) : null
         ) : null}
 
-        {/* God Selection + roles (roles when a god is selected) */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Select God / Role</Text>
-          {selectedGod ? (
-            <Text style={styles.godRoleSubtitle} numberOfLines={2}>
-              Select up to 4 roles this build can be played in
-            </Text>
-          ) : null}
-          <View style={styles.godRoleBlock}>
-            <View
-              style={[
-                styles.godSelectorContainer,
-                selectedGod && layoutGodRoleInline && styles.godSelectorContainerInline,
-              ]}
-            >
-              <TouchableOpacity
-                style={[
-                  styles.godSelector,
-                  selectedGod && layoutGodRoleInline && styles.godSelectorWhenInline,
-                ]}
-                onPress={() => setShowGodPicker(true)}
-                activeOpacity={0.7}
-              >
-                {godIcon ? (
-                  <Image
-                    source={getLocalGodAsset(godIcon)}
-                    style={styles.godIcon}
-                    resizeMode="cover"
-                    accessibilityLabel={selectedGod ? `${selectedGod.name || selectedGod.GodName || 'God'} icon` : 'God icon'}
-                  />
-                ) : (
-                  <View style={styles.godIconPlaceholder}>
-                    <Text style={styles.godIconPlaceholderText}>?</Text>
-                  </View>
-                )}
-                <Text style={styles.godNameText}>{godName}</Text>
-              </TouchableOpacity>
-              {selectedGod && layoutGodRoleInline ? (
-                <View style={styles.inlineRoleCluster}>{renderBuilderRoleChips()}</View>
-              ) : null}
-              {/* Aspect Slot */}
-              {selectedGod && selectedGod.aspect && (
-                <TouchableOpacity
-                  style={[
-                    styles.aspectSlotButton,
-                    aspectActive && styles.aspectSlotButtonActive,
-                  ]}
-                  onPress={() => setAspectActive(!aspectActive)}
-                  activeOpacity={0.7}
-                >
-                  {(() => {
-                    const aspectIcon = selectedGod.aspect.icon;
-                    if (aspectIcon) {
-                      const localIcon = getLocalGodAsset(aspectIcon);
-                      if (localIcon) {
-                        return (
-                          <Image
-                            source={localIcon}
-                            style={styles.aspectSlotIcon}
-                            contentFit="contain"
-                            cachePolicy="memory-disk"
-                          />
-                        );
-                      }
-                    }
-                    return (
-                      <View style={styles.aspectSlotIconPlaceholder}>
-                        <Text style={styles.aspectSlotIconPlaceholderText}>A</Text>
-                      </View>
-                    );
-                  })()}
-                  <Text style={styles.aspectSlotLabel}>Aspect</Text>
-                  {aspectActive && (
-                    <View style={styles.aspectActiveIndicatorSmall}>
-                      <Text style={styles.aspectActiveTextSmall}>✓</Text>
-                    </View>
-                  )}
-                </TouchableOpacity>
-              )}
-            </View>
-            {selectedGod && !layoutGodRoleInline ? (
-              <ScrollView
-                horizontal
-                nestedScrollEnabled
-                showsHorizontalScrollIndicator={false}
-                style={styles.inlineRoleScroll}
-                contentContainerStyle={styles.inlineRoleScrollContent}
-              >
-                {renderBuilderRoleChips()}
-              </ScrollView>
-            ) : null}
-          </View>
-          {selectedGod && (
-            <View style={styles.godStatsExpandableWrap}>
-              <TouchableOpacity
-                style={styles.godStatsExpandHeader}
-                onPress={() => setGodStatsExpanded((v) => !v)}
-                activeOpacity={0.7}
-              >
-                <View style={styles.godStatsExpandHeaderTitleWrap}>
-                  <Text style={styles.godStatsExpandHeaderTitle}>Total stats</Text>
-                  <Text style={styles.godStatsExpandHeaderMeta}> Lv {Math.round(godLevel)}</Text>
-                </View>
-                <Text style={styles.godStatsExpandChevron}>{godStatsExpanded ? '▲' : '▼'}</Text>
-              </TouchableOpacity>
-              {godStatsExpanded ? (
-                <View style={styles.statsExpandedBody}>
-                  <View style={styles.statsEmbedLevelBlock}>
-                    <Text style={styles.statsEmbedLevelHeading}>Base level (1-20) — drag track or use +/-</Text>
-                    <View style={styles.statsEmbedLevelRow}>
-                      <TouchableOpacity
-                        style={[
-                          styles.statsEmbedLevelBtn,
-                          Math.round(godLevel) <= 1 && styles.statsEmbedLevelBtnDisabled,
-                        ]}
-                        onPress={() => setGodLevel((g) => Math.max(1, Math.round(g) - 1))}
-                        disabled={Math.round(godLevel) <= 1}
-                        activeOpacity={0.7}
-                      >
-                        <Text style={styles.statsEmbedLevelBtnText}>−</Text>
-                      </TouchableOpacity>
-                      <View
-                        ref={sliderTrackRef}
-                        style={styles.statsEmbedSliderHit}
-                        onLayout={(e) => setSliderTrackWidth(e.nativeEvent.layout.width)}
-                        {...(!IS_WEB ? godLevelTrackPan.panHandlers : {})}
-                        {...(IS_WEB
-                          ? {
-                              onMouseDown: (e) => {
-                                e.preventDefault?.();
-                                applyGodLevelFromWebClientX(e.clientX);
-                                setIsDragging(true);
-                              },
-                            }
-                          : {})}
-                      >
-                        <View style={styles.statsEmbedSliderRail} pointerEvents="none">
-                          <View
-                            style={[
-                              styles.statsEmbedSliderFill,
-                              { width: `${((godLevel - 1) / 19) * 100}%` },
-                            ]}
-                          />
-                          <View
-                            style={[
-                              styles.statsEmbedSliderThumb,
-                              { left: `${((godLevel - 1) / 19) * 100}%` },
-                            ]}
-                          />
-                        </View>
-                      </View>
-                      <TouchableOpacity
-                        style={[
-                          styles.statsEmbedLevelBtn,
-                          Math.round(godLevel) >= 20 && styles.statsEmbedLevelBtnDisabled,
-                        ]}
-                        onPress={() => setGodLevel((g) => Math.min(20, Math.round(g) + 1))}
-                        disabled={Math.round(godLevel) >= 20}
-                        activeOpacity={0.7}
-                      >
-                        <Text style={styles.statsEmbedLevelBtnText}>+</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                  <View style={styles.statsGrid}>{renderTotalStatsGrid()}</View>
-                </View>
-              ) : null}
-            </View>
-          )}
+        <View style={isWebBuilderLayout ? styles.desktopBuilderColumns : undefined}>
+        {/* Left: stats on desktop · god + stats stacked on mobile */}
+        <View style={[
+          styles.section,
+          isWebBuilderLayout && styles.desktopBuilderLeft,
+          isWebBuilderLayout && !isWebBuilderSideGuide && styles.tabletBuilderLeft,
+        ]}>
+          {!isWebBuilderLayout ? renderGodRoleSection() : null}
+          {renderStatsSection()}
         </View>
 
-        {/* Starting items + Final build (side by side when a god is selected; compact slots) */}
-        <View style={styles.section}>
+        {/* Right: god + build (+ guide column on desktop) */}
+        <View style={[
+          isWebBuilderLayout ? styles.desktopBuilderRightWrap : styles.mobileBuilderRightWrap,
+          isWebBuilderLayout && !isWebBuilderSideGuide && styles.tabletBuilderRightWrap,
+        ]}>
+        <View style={[
+          styles.section,
+          isWebBuilderLayout && styles.desktopBuilderBuildPanel,
+          isWebBuilderLayout && !isWebBuilderSideGuide && styles.tabletBuilderBuildPanel,
+        ]}>
+          {isWebBuilderLayout ? (
+            <View style={styles.desktopGodRoleInBuild}>{renderGodRoleSection()}</View>
+          ) : null}
           <View style={styles.buildSectionToolbar}>
             <TouchableOpacity
               style={styles.buildClearAllBtnInline}
@@ -1647,14 +2503,40 @@ export default function CustomBuildPage({
                 <Text style={styles.buildClearAllBtnEmoji}>🗑</Text>
               )}
             </TouchableOpacity>
+            {isWebBuilderLayout && !botSharedDraftToken ? (
+              <TouchableOpacity
+                style={styles.desktopToolbarLoadBtn}
+                onPress={() => setShowLoadBuildModal(true)}
+                activeOpacity={0.85}
+              >
+                <Text style={styles.desktopToolbarLoadBtnText}>Load build</Text>
+              </TouchableOpacity>
+            ) : null}
           </View>
           <View style={styles.buildItemsHeaderRow}>
             <Text style={styles.buildItemsHeaderTitle}>Build</Text>
-            <View style={styles.buildItemsHeaderGold}>
-              <Image source={GOLD_ICON} style={styles.buildItemsHeaderGoldIcon} contentFit="contain" />
-              <Text style={styles.buildItemsHeaderGoldText}>
-                {totalGold.toLocaleString()} gold
-              </Text>
+            <View style={styles.buildItemsHeaderActions}>
+              {selectedGod && !isWebBuilderLayout ? (
+                <TouchableOpacity
+                  style={styles.buildViewSwapBtn}
+                  onPress={() =>
+                    setBuildItemsView((v) => (v === 'final' ? 'starting' : 'final'))
+                  }
+                  activeOpacity={0.7}
+                >
+                  <Text style={styles.buildViewSwapBtnText}>
+                    {buildItemsView === 'final'
+                      ? 'Swap to Starting Items'
+                      : 'Swap to Final Build'}
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
+              <View style={styles.buildItemsHeaderGold}>
+                <Image source={GOLD_ICON} style={styles.buildItemsHeaderGoldIcon} contentFit="contain" />
+                <Text style={styles.buildItemsHeaderGoldText}>
+                  {totalGold.toLocaleString()} gold
+                </Text>
+              </View>
             </View>
           </View>
           {!selectedGod ? (
@@ -1722,130 +2604,19 @@ export default function CustomBuildPage({
             </>
           ) : (
             <>
-            <View style={styles.itemsBuildTwoColumn}>
-              <View style={styles.itemsBuildColumnStart}>
-                <Text style={[styles.sectionTitleInline, IS_WEB && styles.sectionTitleInlineCenterWeb]}>
-                  Starting items
+            {isWebBuilderLayout ? (
+            <View style={[styles.itemsBuildTwoColumn, styles.desktopItemsBuildTwoColumn]}>
+              <View style={[styles.itemsBuildColumnFinal, styles.desktopBuildColumn]}>
+                <Text style={styles.sectionTitleInline}>
+                  Final build <Text style={styles.buildRequiredMark}>*</Text>
                 </Text>
-                <View style={styles.compactStarterRow}>
-                  <View style={styles.compactStarterSlotWrap}>
-                    <TouchableOpacity
-                      style={styles.compactSlotButton}
-                      onPress={() => {
-                        const item = startingItems[0];
-                        if (item) showItemInfo(item, 100);
-                        else setShowItemPicker(100);
-                      }}
-                      activeOpacity={0.7}
-                    >
-                      {startingItems[0] ? (
-                        <>
-                          {renderItemIconOnly(
-                            startingItems[0],
-                            `starting-item-${startingItems[0].internalName || startingItems[0].name}-0`,
-                            true
-                          )}
-                          <Text style={styles.compactItemName} numberOfLines={1}>
-                            {startingItems[0].name || startingItems[0].internalName}
-                          </Text>
-                        </>
-                      ) : (
-                        <View style={styles.compactSlotPlaceholder}>
-                          <Text style={styles.compactSlotPlus}>+</Text>
-                          <Text style={styles.compactSlotHint}>S</Text>
-                        </View>
-                      )}
-                    </TouchableOpacity>
-                  </View>
-                </View>
-                <View style={styles.compactStartingGrid}>
-                  {startingItems.slice(1).map((item, i) => {
-                    const index = i + 1;
-                    return (
-                      <View key={`st-${index}`} style={styles.compactStartingSlot}>
+                <View style={styles.desktopFinalBuildStack}>
+                  <View style={styles.starterRelicRow}>
+                    <View style={styles.buildSlotColumn}>
+                      <View style={styles.buildSlotLabelSpacer} />
+                      <View style={styles.desktopFinalSlot}>
                         <TouchableOpacity
-                          style={styles.compactSlotButton}
-                          onPress={() => {
-                            if (item) showItemInfo(item, 100 + index);
-                            else setShowItemPicker(100 + index);
-                          }}
-                          activeOpacity={0.7}
-                        >
-                          {item ? (
-                            <>
-                              {renderItemIconOnly(
-                                item,
-                                `starting-item-${item.internalName || item.name}-${index}`,
-                                true
-                              )}
-                              <Text style={styles.compactItemName} numberOfLines={1}>
-                                {item.name || item.internalName}
-                              </Text>
-                            </>
-                          ) : (
-                            <View style={styles.compactSlotPlaceholder}>
-                              <Text style={styles.compactSlotPlus}>+</Text>
-                              <Text style={styles.compactSlotHint}>{i + 1}</Text>
-                            </View>
-                          )}
-                        </TouchableOpacity>
-                      </View>
-                    );
-                  })}
-                </View>
-                <View style={styles.relicBlockInColumn}>
-                  <Text style={[styles.sectionTitleInline, styles.relicSectionLabel]} numberOfLines={1}>
-                    Starting relic
-                  </Text>
-                  <View style={styles.compactStarterRow}>
-                    <View style={styles.compactStarterSlotWrap}>
-                      <TouchableOpacity
-                        style={styles.compactSlotButton}
-                        onPress={() => setRelicPickerTarget('starting')}
-                        activeOpacity={0.7}
-                      >
-                        {startingRelic ? (
-                          <>
-                            {renderItemIconOnly(
-                              startingRelic,
-                              `starting-relic-${startingRelic.internalName || startingRelic.name}`,
-                              true,
-                              true
-                            )}
-                            <Text style={styles.compactItemName} numberOfLines={1}>
-                              {startingRelic.name || startingRelic.internalName}
-                            </Text>
-                            <TouchableOpacity
-                              style={styles.compactRelicRemoveOverlay}
-                              onPress={(e) => {
-                                e.stopPropagation?.();
-                                setStartingRelic(null);
-                              }}
-                            >
-                              <Text style={styles.removeRelicButtonText}>✕</Text>
-                            </TouchableOpacity>
-                          </>
-                        ) : (
-                          <View style={styles.compactSlotPlaceholder}>
-                            <Text style={styles.compactSlotPlus}>+</Text>
-                          </View>
-                        )}
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View style={styles.itemsBuildDivider} />
-              <View style={styles.itemsBuildColumnFinal}>
-                <Text style={[styles.sectionTitleInline, IS_WEB && styles.sectionTitleInlineCenterWeb]}>
-                  Final build
-                </Text>
-                {IS_WEB ? (
-                  <View style={styles.compactFinalBuildWeb}>
-                    <View style={styles.compactFinalGridWebRowSingle}>
-                      <View style={styles.compactFinalSlotWeb}>
-                        <TouchableOpacity
-                          style={styles.compactSlotButton}
+                          style={[styles.compactSlotButton, styles.desktopBuildSlotButton]}
                           onPress={() => {
                             const item0 = selectedItems[0];
                             if (item0) showItemInfo(item0, 0);
@@ -1860,7 +2631,7 @@ export default function CustomBuildPage({
                                 `item-${selectedItems[0].internalName || selectedItems[0].name}-0`,
                                 true
                               )}
-                              <Text style={styles.compactItemName} numberOfLines={1}>
+                              <Text style={styles.desktopBuildItemName} numberOfLines={2}>
                                 {selectedItems[0].name || selectedItems[0].internalName}
                               </Text>
                             </>
@@ -1873,13 +2644,351 @@ export default function CustomBuildPage({
                         </TouchableOpacity>
                       </View>
                     </View>
-                    <View style={styles.compactFinalGridWeb}>
+                    <View style={styles.starterRelicDivider} />
+                    <View style={styles.buildSlotColumn}>
+                      <Text style={styles.relicInlineLabel}>Relic</Text>
+                      <View style={styles.desktopFinalSlot}>
+                        <TouchableOpacity
+                          style={[styles.compactSlotButton, styles.desktopBuildSlotButton]}
+                          onPress={() => setRelicPickerTarget('final')}
+                          activeOpacity={0.7}
+                        >
+                          {finalRelic ? (
+                            <>
+                              {renderItemIconOnly(
+                                finalRelic,
+                                `final-relic-${finalRelic.internalName || finalRelic.name}`,
+                                true
+                              )}
+                              <Text style={styles.desktopBuildItemName} numberOfLines={2}>
+                                {finalRelic.name || finalRelic.internalName}
+                              </Text>
+                              <TouchableOpacity
+                                style={styles.compactRelicRemoveOverlay}
+                                onPress={(e) => {
+                                  e.stopPropagation?.();
+                                  setFinalRelic(null);
+                                }}
+                              >
+                                <Text style={styles.removeRelicButtonText}>✕</Text>
+                              </TouchableOpacity>
+                            </>
+                          ) : (
+                            <View style={styles.compactSlotPlaceholder}>
+                              <Text style={styles.compactSlotPlus}>+</Text>
+                            </View>
+                          )}
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.desktopFinalItemRow}>
+                    {selectedItems.slice(1, 4).map((item, i) => {
+                      const index = i + 1;
+                      return (
+                        <View key={`df-r2-${index}`} style={styles.desktopFinalSlot}>
+                          <TouchableOpacity
+                            style={[styles.compactSlotButton, styles.desktopBuildSlotButton]}
+                            onPress={() => {
+                              if (item) showItemInfo(item, index);
+                              else setShowItemPicker(index);
+                            }}
+                            activeOpacity={0.7}
+                          >
+                            {item ? (
+                              <>
+                                {renderItemIconOnly(
+                                  item,
+                                  `item-${item.internalName || item.name}-${index}`,
+                                  true
+                                )}
+                                <Text style={styles.desktopBuildItemName} numberOfLines={2}>
+                                  {item.name || item.internalName}
+                                </Text>
+                              </>
+                            ) : (
+                              <View style={styles.compactSlotPlaceholder}>
+                                <Text style={styles.compactSlotPlus}>+</Text>
+                                <Text style={styles.compactSlotHint}>{index}</Text>
+                              </View>
+                            )}
+                          </TouchableOpacity>
+                        </View>
+                      );
+                    })}
+                  </View>
+                  <View style={styles.desktopFinalItemRow}>
+                    {selectedItems.slice(4, 7).map((item, i) => {
+                      const index = i + 4;
+                      return (
+                        <View key={`df-r3-${index}`} style={styles.desktopFinalSlot}>
+                          <TouchableOpacity
+                            style={[styles.compactSlotButton, styles.desktopBuildSlotButton]}
+                            onPress={() => {
+                              if (item) showItemInfo(item, index);
+                              else setShowItemPicker(index);
+                            }}
+                            activeOpacity={0.7}
+                          >
+                            {item ? (
+                              <>
+                                {renderItemIconOnly(
+                                  item,
+                                  `item-${item.internalName || item.name}-${index}`,
+                                  true
+                                )}
+                                <Text style={styles.desktopBuildItemName} numberOfLines={2}>
+                                  {item.name || item.internalName}
+                                </Text>
+                              </>
+                            ) : (
+                              <View style={styles.compactSlotPlaceholder}>
+                                <Text style={styles.compactSlotPlus}>+</Text>
+                                <Text style={styles.compactSlotHint}>{index}</Text>
+                              </View>
+                            )}
+                          </TouchableOpacity>
+                        </View>
+                      );
+                    })}
+                  </View>
+                </View>
+              </View>
+              <View style={styles.itemsBuildDivider} />
+              <View style={[styles.itemsBuildColumnStart, styles.desktopBuildColumn]}>
+                <Text style={styles.sectionTitleInline}>Starting items (optional)</Text>
+                <View style={styles.desktopFinalBuildStack}>
+                  <View style={styles.starterRelicRow}>
+                    <View style={styles.buildSlotColumn}>
+                      <View style={styles.buildSlotLabelSpacer} />
+                      <View style={styles.desktopFinalSlot}>
+                        <TouchableOpacity
+                          style={[styles.compactSlotButton, styles.desktopBuildSlotButton]}
+                          onPress={() => {
+                            const item0 = startingItems[0];
+                            if (item0) showItemInfo(item0, 100);
+                            else setShowItemPicker(100);
+                          }}
+                          activeOpacity={0.7}
+                        >
+                          {startingItems[0] ? (
+                            <>
+                              {renderItemIconOnly(
+                                startingItems[0],
+                                `starting-item-${startingItems[0].internalName || startingItems[0].name}-0`,
+                                true
+                              )}
+                              <Text style={styles.desktopBuildItemName} numberOfLines={2}>
+                                {startingItems[0].name || startingItems[0].internalName}
+                              </Text>
+                            </>
+                          ) : (
+                            <View style={styles.compactSlotPlaceholder}>
+                              <Text style={styles.compactSlotPlus}>+</Text>
+                              <Text style={styles.compactSlotHint}>S</Text>
+                            </View>
+                          )}
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                    <View style={styles.starterRelicDivider} />
+                    <View style={styles.buildSlotColumn}>
+                      <Text style={styles.relicInlineLabel}>Relic</Text>
+                      <View style={styles.desktopFinalSlot}>
+                        <TouchableOpacity
+                          style={[styles.compactSlotButton, styles.desktopBuildSlotButton]}
+                          onPress={() => setRelicPickerTarget('starting')}
+                          activeOpacity={0.7}
+                        >
+                          {startingRelic ? (
+                            <>
+                              {renderItemIconOnly(
+                                startingRelic,
+                                `starting-relic-${startingRelic.internalName || startingRelic.name}`,
+                                true
+                              )}
+                              <Text style={styles.desktopBuildItemName} numberOfLines={2}>
+                                {startingRelic.name || startingRelic.internalName}
+                              </Text>
+                              <TouchableOpacity
+                                style={styles.compactRelicRemoveOverlay}
+                                onPress={(e) => {
+                                  e.stopPropagation?.();
+                                  setStartingRelic(null);
+                                }}
+                              >
+                                <Text style={styles.removeRelicButtonText}>✕</Text>
+                              </TouchableOpacity>
+                            </>
+                          ) : (
+                            <View style={styles.compactSlotPlaceholder}>
+                              <Text style={styles.compactSlotPlus}>+</Text>
+                            </View>
+                          )}
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.desktopFinalItemRow}>
+                    {startingItems.slice(1, 3).map((item, i) => {
+                      const index = i + 1;
+                      return (
+                        <View key={`ds-${index}`} style={styles.desktopFinalSlot}>
+                          <TouchableOpacity
+                            style={[styles.compactSlotButton, styles.desktopBuildSlotButton]}
+                            onPress={() => {
+                              if (item) showItemInfo(item, 100 + index);
+                              else setShowItemPicker(100 + index);
+                            }}
+                            activeOpacity={0.7}
+                          >
+                            {item ? (
+                              <>
+                                {renderItemIconOnly(
+                                  item,
+                                  `starting-item-${item.internalName || item.name}-${index}`,
+                                  true
+                                )}
+                                <Text style={styles.desktopBuildItemName} numberOfLines={2}>
+                                  {item.name || item.internalName}
+                                </Text>
+                              </>
+                            ) : (
+                              <View style={styles.compactSlotPlaceholder}>
+                                <Text style={styles.compactSlotPlus}>+</Text>
+                                <Text style={styles.compactSlotHint}>{index}</Text>
+                              </View>
+                            )}
+                          </TouchableOpacity>
+                        </View>
+                      );
+                    })}
+                  </View>
+                  <View style={styles.desktopFinalItemRow}>
+                    {startingItems.slice(3, 5).map((item, i) => {
+                      const index = i + 3;
+                      return (
+                        <View key={`ds-${index}`} style={styles.desktopFinalSlot}>
+                          <TouchableOpacity
+                            style={[styles.compactSlotButton, styles.desktopBuildSlotButton]}
+                            onPress={() => {
+                              if (item) showItemInfo(item, 100 + index);
+                              else setShowItemPicker(100 + index);
+                            }}
+                            activeOpacity={0.7}
+                          >
+                            {item ? (
+                              <>
+                                {renderItemIconOnly(
+                                  item,
+                                  `starting-item-${item.internalName || item.name}-${index}`,
+                                  true
+                                )}
+                                <Text style={styles.desktopBuildItemName} numberOfLines={2}>
+                                  {item.name || item.internalName}
+                                </Text>
+                              </>
+                            ) : (
+                              <View style={styles.compactSlotPlaceholder}>
+                                <Text style={styles.compactSlotPlus}>+</Text>
+                                <Text style={styles.compactSlotHint}>{index}</Text>
+                              </View>
+                            )}
+                          </TouchableOpacity>
+                        </View>
+                      );
+                    })}
+                  </View>
+                </View>
+              </View>
+            </View>
+            ) : (
+            <View style={styles.buildItemsSingleColumn}>
+              {buildItemsView === 'final' ? (
+              <View style={styles.itemsBuildColumnFinal}>
+                <Text style={[styles.sectionTitleInline, IS_WEB && styles.sectionTitleInlineCenterWeb]}>
+                  Final build <Text style={styles.buildRequiredMark}>*</Text>
+                </Text>
+                {IS_WEB ? (
+                  <View style={styles.compactFinalBuildWeb}>
+                    <View style={styles.starterRelicRow}>
+                      <View style={styles.buildSlotColumn}>
+                        <View style={styles.buildSlotLabelSpacer} />
+                        <View style={[styles.compactFinalSlotWeb, ...buildSlotWrapStyle]}>
+                          <TouchableOpacity
+                            style={buildSlotButtonStyle}
+                            onPress={() => {
+                              const item0 = selectedItems[0];
+                              if (item0) showItemInfo(item0, 0);
+                              else setShowItemPicker(0);
+                            }}
+                            activeOpacity={0.7}
+                          >
+                            {selectedItems[0] ? (
+                              <>
+                                {renderItemIconOnly(
+                                  selectedItems[0],
+                                  `item-${selectedItems[0].internalName || selectedItems[0].name}-0`,
+                                  true
+                                )}
+                                <Text style={styles.compactItemName} numberOfLines={1}>
+                                  {selectedItems[0].name || selectedItems[0].internalName}
+                                </Text>
+                              </>
+                            ) : (
+                              <View style={styles.compactSlotPlaceholder}>
+                                <Text style={styles.compactSlotPlus}>+</Text>
+                                <Text style={styles.compactSlotHint}>S</Text>
+                              </View>
+                            )}
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                      <View style={styles.starterRelicDivider} />
+                      <View style={styles.buildSlotColumn}>
+                        <Text style={styles.relicInlineLabel}>Relic</Text>
+                        <View style={[styles.compactFinalSlotWeb, ...buildSlotWrapStyle]}>
+                          <TouchableOpacity
+                            style={buildSlotButtonStyle}
+                            onPress={() => setRelicPickerTarget('final')}
+                            activeOpacity={0.7}
+                          >
+                            {finalRelic ? (
+                              <>
+                                {renderItemIconOnly(
+                                  finalRelic,
+                                  `final-relic-${finalRelic.internalName || finalRelic.name}`,
+                                  true
+                                )}
+                                <Text style={styles.compactItemName} numberOfLines={1}>
+                                  {finalRelic.name || finalRelic.internalName}
+                                </Text>
+                                <TouchableOpacity
+                                  style={styles.compactRelicRemoveOverlay}
+                                  onPress={(e) => {
+                                    e.stopPropagation?.();
+                                    setFinalRelic(null);
+                                  }}
+                                >
+                                  <Text style={styles.removeRelicButtonText}>✕</Text>
+                                </TouchableOpacity>
+                              </>
+                            ) : (
+                              <View style={styles.compactSlotPlaceholder}>
+                                <Text style={styles.compactSlotPlus}>+</Text>
+                              </View>
+                            )}
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    </View>
+                    <View style={[styles.compactFinalGridWeb, mobileBuildSlotLayout?.row3]}>
                       {selectedItems.slice(1, 4).map((item, i) => {
                         const index = i + 1;
                         return (
-                          <View key={`fiw-r2-${index}`} style={styles.compactFinalSlotWeb}>
+                          <View key={`fiw-r2-${index}`} style={[styles.compactFinalSlotWeb, ...buildSlotWrapStyle]}>
                             <TouchableOpacity
-                              style={styles.compactSlotButton}
+                              style={buildSlotButtonStyle}
                               onPress={() => {
                                 if (item) showItemInfo(item, index);
                                 else setShowItemPicker(index);
@@ -1908,13 +3017,13 @@ export default function CustomBuildPage({
                         );
                       })}
                     </View>
-                    <View style={styles.compactFinalGridWeb}>
+                    <View style={[styles.compactFinalGridWeb, mobileBuildSlotLayout?.row3]}>
                       {selectedItems.slice(4, 7).map((item, i) => {
                         const index = i + 4;
                         return (
-                          <View key={`fiw-r3-${index}`} style={styles.compactFinalSlotWeb}>
+                          <View key={`fiw-r3-${index}`} style={[styles.compactFinalSlotWeb, ...buildSlotWrapStyle]}>
                             <TouchableOpacity
-                              style={styles.compactSlotButton}
+                              style={buildSlotButtonStyle}
                               onPress={() => {
                                 if (item) showItemInfo(item, index);
                                 else setShowItemPicker(index);
@@ -1946,44 +3055,84 @@ export default function CustomBuildPage({
                   </View>
                 ) : (
                   <>
-                    <View style={styles.compactStarterRow}>
-                      <View style={styles.compactStarterSlotWrap}>
-                        <TouchableOpacity
-                          style={styles.compactSlotButton}
-                          onPress={() => {
-                            const item = selectedItems[0];
-                            if (item) showItemInfo(item, 0);
-                            else setShowItemPicker(0);
-                          }}
-                          activeOpacity={0.7}
-                        >
-                          {selectedItems[0] ? (
-                            <>
-                              {renderItemIconOnly(
-                                selectedItems[0],
-                                `item-${selectedItems[0].internalName || selectedItems[0].name}-0`,
-                                true
-                              )}
-                              <Text style={styles.compactItemName} numberOfLines={1}>
-                                {selectedItems[0].name || selectedItems[0].internalName}
-                              </Text>
-                            </>
-                          ) : (
-                            <View style={styles.compactSlotPlaceholder}>
-                              <Text style={styles.compactSlotPlus}>+</Text>
-                              <Text style={styles.compactSlotHint}>S</Text>
-                            </View>
-                          )}
-                        </TouchableOpacity>
+                    <View style={styles.starterRelicRow}>
+                      <View style={styles.buildSlotColumn}>
+                        <View style={styles.buildSlotLabelSpacer} />
+                        <View style={[styles.compactStarterSlotWrap, ...buildSlotWrapStyle]}>
+                          <TouchableOpacity
+                            style={buildSlotButtonStyle}
+                            onPress={() => {
+                              const item = selectedItems[0];
+                              if (item) showItemInfo(item, 0);
+                              else setShowItemPicker(0);
+                            }}
+                            activeOpacity={0.7}
+                          >
+                            {selectedItems[0] ? (
+                              <>
+                                {renderItemIconOnly(
+                                  selectedItems[0],
+                                  `item-${selectedItems[0].internalName || selectedItems[0].name}-0`,
+                                  true
+                                )}
+                                <Text style={styles.compactItemName} numberOfLines={1}>
+                                  {selectedItems[0].name || selectedItems[0].internalName}
+                                </Text>
+                              </>
+                            ) : (
+                              <View style={styles.compactSlotPlaceholder}>
+                                <Text style={styles.compactSlotPlus}>+</Text>
+                                <Text style={styles.compactSlotHint}>S</Text>
+                              </View>
+                            )}
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                      <View style={styles.starterRelicDivider} />
+                      <View style={styles.buildSlotColumn}>
+                        <Text style={styles.relicInlineLabel}>Relic</Text>
+                        <View style={[styles.compactStarterSlotWrap, ...buildSlotWrapStyle]}>
+                          <TouchableOpacity
+                            style={buildSlotButtonStyle}
+                            onPress={() => setRelicPickerTarget('final')}
+                            activeOpacity={0.7}
+                          >
+                            {finalRelic ? (
+                              <>
+                                {renderItemIconOnly(
+                                  finalRelic,
+                                  `final-relic-${finalRelic.internalName || finalRelic.name}`,
+                                  true
+                                )}
+                                <Text style={styles.compactItemName} numberOfLines={1}>
+                                  {finalRelic.name || finalRelic.internalName}
+                                </Text>
+                                <TouchableOpacity
+                                  style={styles.compactRelicRemoveOverlay}
+                                  onPress={(e) => {
+                                    e.stopPropagation?.();
+                                    setFinalRelic(null);
+                                  }}
+                                >
+                                  <Text style={styles.removeRelicButtonText}>✕</Text>
+                                </TouchableOpacity>
+                              </>
+                            ) : (
+                              <View style={styles.compactSlotPlaceholder}>
+                                <Text style={styles.compactSlotPlus}>+</Text>
+                              </View>
+                            )}
+                          </TouchableOpacity>
+                        </View>
                       </View>
                     </View>
-                    <View style={styles.compactFinalGrid}>
-                      {selectedItems.slice(1).map((item, i) => {
+                    <View style={styles.compactFinalGridMobileRow}>
+                      {selectedItems.slice(1, 4).map((item, i) => {
                         const index = i + 1;
                         return (
-                          <View key={`fi-${index}`} style={styles.compactFinalSlot}>
+                          <View key={`fi-r2-${index}`} style={styles.compactFinalSlot}>
                             <TouchableOpacity
-                              style={styles.compactSlotButton}
+                              style={buildSlotButtonStyle}
                               onPress={() => {
                                 if (item) showItemInfo(item, index);
                                 else setShowItemPicker(index);
@@ -2000,7 +3149,38 @@ export default function CustomBuildPage({
                               ) : (
                                 <View style={styles.compactSlotPlaceholder}>
                                   <Text style={styles.compactSlotPlus}>+</Text>
-                                  <Text style={styles.compactSlotHint}>{i + 1}</Text>
+                                  <Text style={styles.compactSlotHint}>{index}</Text>
+                                </View>
+                              )}
+                            </TouchableOpacity>
+                          </View>
+                        );
+                      })}
+                    </View>
+                    <View style={styles.compactFinalGridMobileRow}>
+                      {selectedItems.slice(4, 7).map((item, i) => {
+                        const index = i + 4;
+                        return (
+                          <View key={`fi-r3-${index}`} style={styles.compactFinalSlot}>
+                            <TouchableOpacity
+                              style={buildSlotButtonStyle}
+                              onPress={() => {
+                                if (item) showItemInfo(item, index);
+                                else setShowItemPicker(index);
+                              }}
+                              activeOpacity={0.7}
+                            >
+                              {item ? (
+                                <>
+                                  {renderItemIconOnly(item, `item-${item.internalName || item.name}-${index}`, true)}
+                                  <Text style={styles.compactItemName} numberOfLines={1}>
+                                    {item.name || item.internalName}
+                                  </Text>
+                                </>
+                              ) : (
+                                <View style={styles.compactSlotPlaceholder}>
+                                  <Text style={styles.compactSlotPlus}>+</Text>
+                                  <Text style={styles.compactSlotHint}>{index}</Text>
                                 </View>
                               )}
                             </TouchableOpacity>
@@ -2010,33 +3190,69 @@ export default function CustomBuildPage({
                     </View>
                   </>
                 )}
-                <View style={styles.relicBlockInColumn}>
-                  <Text style={[styles.sectionTitleInline, styles.relicSectionLabel]} numberOfLines={1}>
-                    Final relic
-                  </Text>
-                  <View style={styles.compactStarterRow}>
-                    <View style={styles.compactStarterSlotWrap}>
+              </View>
+              ) : (
+              <View style={styles.itemsBuildColumnStart}>
+                <Text style={[styles.sectionTitleInline, IS_WEB && styles.sectionTitleInlineCenterWeb]}>
+                  Starting items (optional)
+                </Text>
+                <View style={styles.starterRelicRow}>
+                  <View style={styles.buildSlotColumn}>
+                    <View style={styles.buildSlotLabelSpacer} />
+                    <View style={[styles.compactStarterSlotWrap, ...buildSlotWrapStyle]}>
                       <TouchableOpacity
-                        style={styles.compactSlotButton}
-                        onPress={() => setRelicPickerTarget('final')}
+                        style={buildSlotButtonStyle}
+                        onPress={() => {
+                          const item = startingItems[0];
+                          if (item) showItemInfo(item, 100);
+                          else setShowItemPicker(100);
+                        }}
                         activeOpacity={0.7}
                       >
-                        {finalRelic ? (
+                        {startingItems[0] ? (
                           <>
                             {renderItemIconOnly(
-                              finalRelic,
-                              `final-relic-${finalRelic.internalName || finalRelic.name}`,
-                              true,
+                              startingItems[0],
+                              `starting-item-${startingItems[0].internalName || startingItems[0].name}-0`,
                               true
                             )}
                             <Text style={styles.compactItemName} numberOfLines={1}>
-                              {finalRelic.name || finalRelic.internalName}
+                              {startingItems[0].name || startingItems[0].internalName}
+                            </Text>
+                          </>
+                        ) : (
+                          <View style={styles.compactSlotPlaceholder}>
+                            <Text style={styles.compactSlotPlus}>+</Text>
+                            <Text style={styles.compactSlotHint}>S</Text>
+                          </View>
+                        )}
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                  <View style={styles.starterRelicDivider} />
+                  <View style={styles.buildSlotColumn}>
+                    <Text style={styles.relicInlineLabel}>Relic</Text>
+                    <View style={[styles.compactStarterSlotWrap, ...buildSlotWrapStyle]}>
+                      <TouchableOpacity
+                        style={buildSlotButtonStyle}
+                        onPress={() => setRelicPickerTarget('starting')}
+                        activeOpacity={0.7}
+                      >
+                        {startingRelic ? (
+                          <>
+                            {renderItemIconOnly(
+                              startingRelic,
+                              `starting-relic-${startingRelic.internalName || startingRelic.name}`,
+                              true
+                            )}
+                            <Text style={styles.compactItemName} numberOfLines={1}>
+                              {startingRelic.name || startingRelic.internalName}
                             </Text>
                             <TouchableOpacity
                               style={styles.compactRelicRemoveOverlay}
                               onPress={(e) => {
                                 e.stopPropagation?.();
-                                setFinalRelic(null);
+                                setStartingRelic(null);
                               }}
                             >
                               <Text style={styles.removeRelicButtonText}>✕</Text>
@@ -2051,300 +3267,104 @@ export default function CustomBuildPage({
                     </View>
                   </View>
                 </View>
-              </View>
-            </View>
-            </>
-          )}
-        </View>
-
-        {selectedGod && selectedGod.abilities && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Ability leveling</Text>
-            <View style={styles.abilityOrderTabRow}>
-              <TouchableOpacity
-                style={[styles.abilityOrderTab, abilityOrderTab === 'starting' && styles.abilityOrderTabActive]}
-                onPress={() => setAbilityOrderTab('starting')}
-                activeOpacity={0.7}
-              >
-                <Text
-                  style={[
-                    styles.abilityOrderTabText,
-                    abilityOrderTab === 'starting' && styles.abilityOrderTabTextActive,
-                  ]}
-                >
-                  Starting (1-5)
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.abilityOrderTab, abilityOrderTab === 'max' && styles.abilityOrderTabActive]}
-                onPress={() => setAbilityOrderTab('max')}
-                activeOpacity={0.7}
-              >
-                <Text
-                  style={[
-                    styles.abilityOrderTabText,
-                    abilityOrderTab === 'max' && styles.abilityOrderTabTextActive,
-                  ]}
-                >
-                  Max order
-                </Text>
-              </TouchableOpacity>
-            </View>
-            {abilityOrderTab === 'starting' ? (
-              <>
-                <Text style={styles.sectionSubtitle}>
-                  Select which ability to level at each of the first 5 levels
-                </Text>
-                <View style={styles.startingAbilityOrderContainer}>
-                  {[1, 2, 3, 4, 5].map((level) => {
-                    const abilityKey = startingAbilityOrder[level - 1];
-                    const ability = abilityKey ? selectedGod.abilities[abilityKey] : null;
-                    return (
-                      <View key={level} style={styles.startingAbilityLevelSlot}>
-                        <Text style={styles.startingAbilityLevelLabel}>Level {level}</Text>
-                        <TouchableOpacity
-                          style={[
-                            styles.startingAbilitySlotButton,
-                            ability && styles.startingAbilitySlotButtonSelected,
-                          ]}
-                          onPress={() => {
-                            setCurrentStartingAbilityLevel(level - 1);
-                            setShowStartingAbilityPicker(true);
-                          }}
-                          activeOpacity={0.7}
-                        >
-                          {ability ? (
-                            <>
-                              {ability.icon && (
-                                <Image
-                                  source={getLocalGodAsset(ability.icon)}
-                                  style={styles.startingAbilityIcon}
-                                  resizeMode="cover"
-                                />
-                              )}
-                              <Text style={styles.startingAbilityName} numberOfLines={1}>
-                                {ability.name || abilityKey}
-                              </Text>
-                            </>
-                          ) : (
-                            <>
-                              <View style={styles.startingAbilityIconPlaceholder}>
-                                <Text style={styles.startingAbilityIconPlaceholderText}>?</Text>
+                <View style={styles.compactStartingRows}>
+                  <View style={[styles.compactStartingRow, mobileBuildSlotLayout?.row2]}>
+                    {startingItems.slice(1, 3).map((item, i) => {
+                      const index = i + 1;
+                      return (
+                        <View key={`st-${index}`} style={styles.compactStartingSlot}>
+                          <TouchableOpacity
+                            style={buildSlotButtonStyle}
+                            onPress={() => {
+                              if (item) showItemInfo(item, 100 + index);
+                              else setShowItemPicker(100 + index);
+                            }}
+                            activeOpacity={0.7}
+                          >
+                            {item ? (
+                              <>
+                                {renderItemIconOnly(
+                                  item,
+                                  `starting-item-${item.internalName || item.name}-${index}`,
+                                  true
+                                )}
+                                <Text style={styles.compactItemName} numberOfLines={1}>
+                                  {item.name || item.internalName}
+                                </Text>
+                              </>
+                            ) : (
+                              <View style={styles.compactSlotPlaceholder}>
+                                <Text style={styles.compactSlotPlus}>+</Text>
+                                <Text style={styles.compactSlotHint}>{index}</Text>
                               </View>
-                              <Text style={styles.startingAbilityPlaceholderText}>Select</Text>
+                            )}
+                          </TouchableOpacity>
+                        </View>
+                      );
+                    })}
+                  </View>
+                  <View style={[styles.compactStartingRow, mobileBuildSlotLayout?.row2]}>
+                    {startingItems.slice(3, 5).map((item, i) => {
+                      const index = i + 3;
+                      return (
+                        <View key={`st-${index}`} style={styles.compactStartingSlot}>
+                          <TouchableOpacity
+                            style={buildSlotButtonStyle}
+                            onPress={() => {
+                              if (item) showItemInfo(item, 100 + index);
+                              else setShowItemPicker(100 + index);
+                            }}
+                            activeOpacity={0.7}
+                          >
+                            {item ? (
+                              <>
+                                {renderItemIconOnly(
+                                  item,
+                                  `starting-item-${item.internalName || item.name}-${index}`,
+                                  true
+                                )}
+                                <Text style={styles.compactItemName} numberOfLines={1}>
+                                  {item.name || item.internalName}
+                                </Text>
+                              </>
+                            ) : (
+                              <View style={styles.compactSlotPlaceholder}>
+                                <Text style={styles.compactSlotPlus}>+</Text>
+                                <Text style={styles.compactSlotHint}>{index}</Text>
+                              </View>
+                            )}
+                          </TouchableOpacity>
+                        </View>
+                      );
+                    })}
+                  </View>
+                </View>
+              </View>
+              )}
+            </View>
+            )}
                             </>
                           )}
-                        </TouchableOpacity>
                       </View>
-                    );
-                  })}
+        {isWebBuilderSideGuide && selectedGod ? (
+          <View style={[styles.section, styles.desktopBuilderGuidePanel]}>
+            {renderBuildGuideSection()}
                 </View>
-                {startingAbilityOrder.some((a) => a !== null) && (
-                  <TouchableOpacity
-                    style={styles.clearAbilityOrderButton}
-                    onPress={() => setStartingAbilityOrder(Array(5).fill(null))}
-                  >
-                    <Text style={styles.clearAbilityOrderText}>Clear Order</Text>
-                  </TouchableOpacity>
-                )}
-              </>
-            ) : (
-              <>
-                <Text style={styles.sectionSubtitle}>
-                  Tap abilities in the order you want to level them
-                </Text>
-                <View style={styles.abilityLevelingContainerSingleRow}>
-                  {Object.keys(selectedGod.abilities).map((abilityKey) => {
-                    const ability = selectedGod.abilities[abilityKey];
-                    const orderIndex = abilityLevelingOrder.indexOf(abilityKey);
-                    const isSelected = orderIndex !== -1;
-                    return (
-                      <TouchableOpacity
-                        key={abilityKey}
-                        style={[
-                          styles.abilityLevelingButtonSmall,
-                          isSelected && styles.abilityLevelingButtonSelected,
-                        ]}
-                        onPress={() => {
-                          if (isSelected) {
-                            setAbilityLevelingOrder((prev) => prev.filter((k) => k !== abilityKey));
-                          } else {
-                            setAbilityLevelingOrder((prev) => [...prev, abilityKey]);
-                          }
-                        }}
-                        activeOpacity={0.7}
-                      >
-                        {ability.icon && (
-                          <Image
-                            source={getLocalGodAsset(ability.icon)}
-                            style={styles.abilityLevelingIconSmall}
-                            resizeMode="cover"
-                          />
-                        )}
-                        {isSelected && (
-                          <View style={styles.abilityLevelingOrderBadgeSmall}>
-                            <Text style={styles.abilityLevelingOrderTextSmall}>{orderIndex + 1}</Text>
+        ) : null}
+        {isWebBuilderLayout && !isWebBuilderSideGuide && selectedGod ? (
+          <View style={[styles.section, styles.tabletBuilderGuidePanel]}>
+            {renderBuildGuideSection()}
                           </View>
-                        )}
-                      </TouchableOpacity>
-                    );
-                  })}
-                </View>
-                {abilityLevelingOrder.length > 0 && (
-                  <TouchableOpacity
-                    style={styles.clearAbilityOrderButton}
-                    onPress={() => setAbilityLevelingOrder([])}
-                  >
-                    <Text style={styles.clearAbilityOrderText}>Clear Order</Text>
-                  </TouchableOpacity>
-                )}
-              </>
-            )}
-          </View>
-        )}
-
-        {/* Build Tips & Notes + Item Swaps (tabbed, same pattern as Ability leveling) */}
-        {selectedGod && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Build Tips & Notes</Text>
-            <View style={styles.abilityOrderTabRow}>
-              <TouchableOpacity
-                style={[styles.abilityOrderTab, buildNotesTab === 'tips' && styles.abilityOrderTabActive]}
-                onPress={() => setBuildNotesTab('tips')}
-                activeOpacity={0.7}
-              >
-                <Text
-                  style={[
-                    styles.abilityOrderTabText,
-                    buildNotesTab === 'tips' && styles.abilityOrderTabTextActive,
-                  ]}
-                >
-                  Tips
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.abilityOrderTab, buildNotesTab === 'swaps' && styles.abilityOrderTabActive]}
-                onPress={() => setBuildNotesTab('swaps')}
-                activeOpacity={0.7}
-              >
-                <Text
-                  style={[
-                    styles.abilityOrderTabText,
-                    buildNotesTab === 'swaps' && styles.abilityOrderTabTextActive,
-                  ]}
-                >
-                  Item swaps
-                </Text>
-              </TouchableOpacity>
+            ) : null}
             </View>
-            {buildNotesTab === 'tips' ? (
-              <>
-                <Text style={styles.sectionSubtitle}>
-                  Strategy, lane notes, or general build advice
-                </Text>
-                <View style={styles.tipsHeader}>
-                  <TouchableOpacity
-                    style={styles.addTipButton}
-                    onPress={() => setBuildTips([...buildTips, ''])}
-                    activeOpacity={0.7}
-                  >
-                    <Text style={styles.addTipButtonText}>+ Add Tip</Text>
-                  </TouchableOpacity>
                 </View>
-                {buildTips.map((tip, tipIndex) => (
-                  <View key={tipIndex} style={styles.tipInputContainer}>
-                    <View style={styles.tipInputHeader}>
-                      <Text style={styles.tipNumber}>Tip {tipIndex + 1}</Text>
-                      {buildTips.length > 1 && (
-                        <TouchableOpacity
-                          style={styles.removeTipButton}
-                          onPress={() => {
-                            const newTips = buildTips.filter((_, i) => i !== tipIndex);
-                            setBuildTips(newTips);
-                          }}
-                          activeOpacity={0.7}
-                        >
-                          <Text style={styles.removeTipButtonText}>✕</Text>
-                        </TouchableOpacity>
-                      )}
-                    </View>
-                    <TextInput
-                      style={styles.buildTipsInput}
-                      placeholder={`Tip ${tipIndex + 1}: Add tip, strategy, or note...`}
-                      placeholderTextColor="#64748b"
-                      value={tip}
-                      onChangeText={(text) => {
-                        const newTips = [...buildTips];
-                        newTips[tipIndex] = text;
-                        setBuildTips(newTips);
-                      }}
-                      multiline={true}
-                      numberOfLines={3}
-                      textAlignVertical="top"
-                    />
-                  </View>
-                ))}
-              </>
-            ) : (
-              <>
-                <Text style={styles.sectionSubtitle}>
-                  Add alternative items and explain when to use them
-                </Text>
-                {itemSwaps.map((swap, index) => (
-                  <View key={index} style={styles.swapItem}>
-                    {swap.item && (
-                      <Image
-                        source={getLocalItemIcon(swap.item.icon || swap.item.internalName)}
-                        style={styles.swapItemIcon}
-                        resizeMode="cover"
-                      />
-                    )}
-                    <View style={styles.swapItemContent}>
-                      <Text style={styles.swapItemName}>
-                        {swap.item ? (swap.item.name || swap.item.internalName) : 'No item selected'}
-                      </Text>
-                      {swap.reasoning && (
-                        <Text style={styles.swapItemReasoning}>{swap.reasoning}</Text>
-                      )}
-                    </View>
-                    <View style={styles.swapItemActions}>
-                      <TouchableOpacity
-                        style={styles.editSwapButton}
-                        onPress={() => {
-                          setCurrentSwapIndex(index);
-                          setSwapItem(swap.item);
-                          setSwapReasoning(swap.reasoning || '');
-                          setShowSwapModal(true);
-                        }}
-                      >
-                        <Text style={styles.editSwapButtonText}>Edit</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={styles.deleteSwapButton}
-                        onPress={() => {
-                          setItemSwaps((prev) => prev.filter((_, i) => i !== index));
-                        }}
-                      >
-                        <Text style={styles.deleteSwapButtonText}>✕</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                ))}
-                <TouchableOpacity
-                  style={styles.addSwapButton}
-                  onPress={() => {
-                    setCurrentSwapIndex(null);
-                    setSwapItem(null);
-                    setSwapReasoning('');
-                    setShowSwapModal(true);
-                  }}
-                >
-                  <Text style={styles.addSwapButtonText}>+ Add Swap</Text>
-                </TouchableOpacity>
-              </>
-            )}
-          </View>
-        )}
+
+        {selectedGod && !isWebBuilderLayout ? (
+          <View style={styles.section}>
+            {renderBuildGuideSection()}
+              </View>
+            ) : null}
+
 
         {/* Save Build Button — profile / community (hidden on bot draft link page) */}
         {selectedGod && botSharedDraftToken ? (
@@ -2427,161 +3447,6 @@ export default function CustomBuildPage({
             </TouchableOpacity>
           </View>
         ) : null}
-
-        {selectedGod && !botSharedDraftToken ? (
-          <View style={styles.section}>
-            <TouchableOpacity
-              style={styles.saveBuildButton}
-              onPress={async () => {
-                const currentUser = await storage.getItem('currentUser');
-                if (!currentUser) {
-                  Alert.alert('Not Logged In', 'Please log in to your profile to save builds.');
-                  return;
-                }
-                setBuildName(selectedGod.name || selectedGod.GodName || 'My Build');
-                setShowSaveBuildModal(true);
-              }}
-            >
-              <Text style={styles.saveBuildButtonText}>Save Build to Profile</Text>
-            </TouchableOpacity>
-            
-            {/* Update Build (direct) - when editing a contributor build, one tap saves to Supabase */}
-            {isUserCertified && buildToEdit?.databaseTable === 'contributor_builds' && buildToEdit?.databaseId && (
-              <TouchableOpacity
-                style={[styles.postToCommunityButton, styles.postToCertifiedButton]}
-                onPress={async () => {
-                  const currentUser = await storage.getItem('currentUser');
-                  if (!currentUser) {
-                    setShowLoginModal(true);
-                    return;
-                  }
-                  const hasItems = selectedItems.filter(Boolean).length > 0;
-                  if (!hasItems) {
-                    Alert.alert('Incomplete Build', 'Please add items to your build before updating.');
-                    return;
-                  }
-                  try {
-                    const { supabase } = require('../../config/supabase');
-                    const gamemodesToSave = (buildToEdit.gamemodes && Array.isArray(buildToEdit.gamemodes) && buildToEdit.gamemodes.length > 0)
-                      ? buildToEdit.gamemodes
-                      : ['Joust', 'Duel', 'Arena', 'Conquest', 'Assault'];
-                    const nameToSave = (buildToEdit.build_name || buildToEdit.name || certifiedBuildName || buildName || '').trim() || 'My Build';
-                    const updatePayload = {
-                      build_name: nameToSave,
-                      god_name: selectedGod.name || selectedGod.GodName || selectedGod.title || selectedGod.displayName,
-                      god_internal_name: selectedGod.internalName || selectedGod.GodName,
-                      items: selectedItems.filter(Boolean).map(item => ({ name: item.name || item.internalName, internalName: item.internalName, icon: item.icon })),
-                      starting_items: startingItems.filter(Boolean).map(item => ({ name: item.name || item.internalName, internalName: item.internalName, icon: item.icon })),
-                      relic: relicToPayload(finalRelic),
-                      starting_relic: relicToPayload(startingRelic),
-                      final_relic: relicToPayload(finalRelic),
-                      god_level: Math.round(godLevel),
-                      aspect_active: aspectActive && selectedGod.aspect ? true : false,
-                      notes: (buildTips.filter(t => t && t.trim()).join('\n') || nameToSave).trim(),
-                      tips: (buildTips.filter(t => t && t.trim()).join('\n') || '').trim() || null,
-                      ability_leveling_order: abilityLevelingOrder,
-                      starting_ability_order: startingAbilityOrder,
-                      item_swaps: itemSwaps.map(swap => ({ item: swap.item, reasoning: swap.reasoning })),
-                      roles: selectedRoles,
-                      gamemodes: gamemodesToSave,
-                      updated_at: new Date().toISOString(),
-                    };
-                    // Use RPC so update works when RLS blocks direct UPDATE (e.g. custom login without Supabase Auth)
-                    const result = await supabase.rpc('update_contributor_build', {
-                      build_id: String(buildToEdit.databaseId),
-                      request_username: currentUser,
-                      payload: updatePayload,
-                    });
-                    if (result.error) {
-                      console.error('Contributor build update error:', result.error.code, result.error.message, result.error.details);
-                      Alert.alert('Update failed', result.error.message || 'Could not save to server. Run supabase_update_contributor_build_rpc.sql in Supabase SQL Editor if you use custom login.');
-                      return;
-                    }
-                    const updated = Array.isArray(result.data) ? result.data[0] : result.data;
-                    if (!updated) {
-                      console.error('Contributor build update: no row returned. Run supabase_update_contributor_build_rpc.sql in Supabase SQL Editor.');
-                      Alert.alert('Update failed', 'No rows were updated. Run the SQL in supabase_update_contributor_build_rpc.sql in your Supabase project.');
-                      return;
-                    }
-                    if (onEditComplete) onEditComplete();
-                    Alert.alert('Success', 'Your contributor build has been updated.');
-                  } catch (err) {
-                    console.error('Exception updating contributor build:', err);
-                    Alert.alert('Error', err?.message || 'An error occurred. Please try again.');
-                  }
-                }}
-              >
-                <Text style={styles.postToCommunityButtonText}>Update Build</Text>
-              </TouchableOpacity>
-            )}
-            {/* Post to Contributor Builds Button - Only show if user is certified (or when not editing contributor) */}
-            {isUserCertified && !(buildToEdit?.databaseTable === 'contributor_builds' && buildToEdit?.databaseId) && (
-              <TouchableOpacity
-                style={[styles.postToCommunityButton, styles.postToCertifiedButton]}
-                onPress={async () => {
-                  const currentUser = await storage.getItem('currentUser');
-                  if (!currentUser) {
-                    setShowLoginModal(true);
-                    return;
-                  }
-                  
-                  // Check if build is complete
-                  const hasItems = selectedItems.filter(Boolean).length > 0;
-                  if (!hasItems) {
-                    Alert.alert('Incomplete Build', 'Please add items to your build before posting.');
-                    return;
-                  }
-                  
-                  // Pre-fill when editing existing contributor build
-                  if (buildToEdit?.databaseTable === 'contributor_builds') {
-                    setCertifiedBuildName(buildToEdit.build_name || buildToEdit.name || '');
-                    setSelectedGamemodes(Array.isArray(buildToEdit.gamemodes) && buildToEdit.gamemodes.length > 0 ? buildToEdit.gamemodes : ['All Modes']);
-                  } else {
-                    setCertifiedBuildName('');
-                    setSelectedGamemodes(['All Modes']);
-                  }
-                  setShowPostToCertifiedModal(true);
-                }}
-              >
-                <Text style={styles.postToCommunityButtonText}>Post to Contributor Builds</Text>
-              </TouchableOpacity>
-            )}
-            
-            {/* Post to Community Builds Button */}
-            <TouchableOpacity
-              style={styles.postToCommunityButton}
-              onPress={async () => {
-                const currentUser = await storage.getItem('currentUser');
-                if (!currentUser) {
-                  Alert.alert(
-                    'Not Logged In',
-                    'Please log in to post builds to the community. You can create an account or sign in from the Profile page.',
-                    [
-                      { text: 'Cancel', style: 'cancel' },
-                      { text: 'Go to Profile', onPress: () => {
-                        // Navigate to profile - this will be handled by the parent
-                        Alert.alert('Info', 'Please go to the Profile tab to sign in or create an account.');
-                      }}
-                    ]
-                  );
-                  return;
-                }
-                
-                // Check if build is complete
-                const hasItems = selectedItems.filter(Boolean).length > 0;
-                if (!hasItems) {
-                  Alert.alert('Incomplete Build', 'Please add items to your build before posting to the community.');
-                  return;
-                }
-                
-                setBuildName('');
-                setShowPostToCommunityModal(true);
-              }}
-            >
-              <Text style={styles.postToCommunityButtonText}>Post to Community Builds</Text>
-            </TouchableOpacity>
-          </View>
-        ) : null}
       </ScrollView>
 
       {/* Item Info Modal */}
@@ -2596,15 +3461,24 @@ export default function CustomBuildPage({
           onPress={() => setSelectedItemInfo(null)}
         >
           <Pressable 
-            style={styles.itemInfoModal}
+            style={[styles.itemInfoModal, { maxHeight: itemInfoModalMaxHeight }]}
             onPress={(e) => e.stopPropagation()}
           >
             {selectedItemInfo && selectedItemInfo.item && (
               <>
                 <View style={styles.itemInfoHeader}>
-                  <Text style={styles.itemInfoTitle}>
-                    {selectedItemInfo.item.name || selectedItemInfo.item.internalName}
-                  </Text>
+                  <View style={styles.itemInfoHeaderText}>
+                    <ItemNameMeta
+                      item={selectedItemInfo.item}
+                      titleStyle={styles.itemInfoTitle}
+                      wrapStyle={styles.itemInfoNameWrap}
+                      hideSubtitle
+                    />
+                    <TooltipDetailToggle
+                      detailLevel={itemTooltipDetail}
+                      onChange={setItemTooltipDetail}
+                    />
+                  </View>
                   <TouchableOpacity
                     style={styles.modalCloseButton}
                     onPress={() => setSelectedItemInfo(null)}
@@ -2612,7 +3486,14 @@ export default function CustomBuildPage({
                     <Text style={styles.modalCloseText}>✕</Text>
                   </TouchableOpacity>
                 </View>
-                
+
+                <ScrollView
+                  style={styles.itemInfoScroll}
+                  contentContainerStyle={styles.itemInfoScrollContent}
+                  nestedScrollEnabled
+                  keyboardShouldPersistTaps="handled"
+                  showsVerticalScrollIndicator
+                >
                 {(() => {
                   const localIcon = getLocalItemIcon(selectedItemInfo.item.icon || selectedItemInfo.item.internalName);
                   if (localIcon) {
@@ -2650,53 +3531,16 @@ export default function CustomBuildPage({
                   }
                   return null;
                 })()}
-                
-                {selectedItemInfo.item.stats && Object.keys(selectedItemInfo.item.stats).length > 0 && (
-                  <View style={styles.itemInfoStats}>
-                    <Text style={styles.itemInfoStatsTitle}>Stats:</Text>
-                    {Object.keys(selectedItemInfo.item.stats).map((statKey) => {
-                      const statValue = selectedItemInfo.item.stats[statKey];
-                      // Color code stat labels based on stat type (same as builds section)
-                      let statColor = '#94a3b8'; // default
-                      if (["MaxHealth", "Health", "HP5", "Health Regen"].includes(statKey)) statColor = "#22c55e"; // green
-                      else if (["AttackSpeed", "Critical Chance", "CriticalChance", "Critical Damage", "Attack Speed","Basic Attack Damage", "Criticial Chance", "Critical Damage", "Basic Damage"].includes(statKey)) statColor = "#f97316"; // orange
-                      else if (["PhysicalProtection", "Penetration", "Physical Protection"].includes(statKey)) statColor = "#ef4444"; // red
-                      else if (statKey === "Intelligence") statColor = "#a855f7"; // purple
-                      else if (statKey === "Strength") statColor = "#facc15"; // yellow
-                      else if (statKey === "Cooldown Rate") statColor = "#0ea5e9"; // blue
-                      else if (statKey === "MagicalProtection") statColor = "#a855f7"; // purple
-                      else if (statKey === "Lifesteal") statColor = "#84cc16"; // light yellow green
-                      else if (["MaxMana", "MP5", "Mana Regen", "Mana", "Mana Regeneration", "Magical Protection"].includes(statKey)) statColor = "#3b82f6"; // blue
-                      
-                      return (
-                        <View key={statKey} style={styles.itemInfoStatRow}>
-                          <Text style={[styles.itemInfoStatLabel, { color: statColor }]}>
-                            {statDisplayNames[statKey] || statKey}:
-                          </Text>
-                          <Text style={styles.itemInfoStatValue}>
-                            {statValue}
-                          </Text>
-                        </View>
-                      );
-                    })}
-                  </View>
-                )}
 
-                {selectedItemInfo.item.passive ? (
-                  <View style={styles.itemInfoPassive}>
-                    <Text style={styles.itemInfoStatsTitle}>Passive</Text>
-                    <Text style={styles.itemInfoPassiveText}>{String(selectedItemInfo.item.passive).trim()}</Text>
-                  </View>
-                ) : null}
-                
-                {selectedItemInfo.item.totalCost && (
-                  <View style={styles.itemInfoCost}>
-                    <Text style={styles.itemInfoCostText}>
-                      Cost: {selectedItemInfo.item.totalCost.toLocaleString()} Gold
-                    </Text>
-                  </View>
-                )}
-                
+                <ItemTooltipBody
+                  item={selectedItemInfo.item}
+                  detailLevel={itemTooltipDetail}
+                  hideCost
+                />
+                </ScrollView>
+
+                <ItemTooltipCost item={selectedItemInfo.item} style={styles.itemInfoCostPinned} />
+
                 <View style={styles.itemInfoButtons}>
                   <TouchableOpacity
                     style={styles.changeItemButton}
@@ -2877,7 +3721,12 @@ export default function CustomBuildPage({
                           setStatDropdownVisible(false);
                         }}
                       >
-                        <Text style={[styles.dropdownItemText, selectedStat === stat && styles.dropdownItemTextActive]}>{stat}</Text>
+                        <View style={styles.dropdownItemLabelRow}>
+                          {renderStatIcon(stat, statDisplayNames[stat] || stat, styles.dropdownTierIcon)}
+                          <Text style={[styles.dropdownItemText, selectedStat === stat && styles.dropdownItemTextActive]}>
+                            {statDisplayNames[stat] || stat}
+                          </Text>
+                        </View>
                       </TouchableOpacity>
                     ))}
                   </ScrollView>
@@ -2895,7 +3744,16 @@ export default function CustomBuildPage({
                           setTierDropdownVisible(false);
                         }}
                       >
-                        <Text style={[styles.dropdownItemText, selectedTier === tier && styles.dropdownItemTextActive]}>{tier}</Text>
+                        <View style={styles.dropdownItemLabelRow}>
+                          {tier === 'Active' ? (
+                            <Image
+                              source={STAT_ICONS.Active}
+                              style={styles.dropdownTierIcon}
+                              contentFit="contain"
+                            />
+                          ) : null}
+                          <Text style={[styles.dropdownItemText, selectedTier === tier && styles.dropdownItemTextActive]}>{tier}</Text>
+                        </View>
                       </TouchableOpacity>
                     ))}
                   </ScrollView>
@@ -2914,7 +3772,6 @@ export default function CustomBuildPage({
               {filteredItems.map((item, index) => {
                 const name = item.name || item.internalName || 'Unknown';
                 const icon = item.icon || item.internalName;
-                const cost = item.totalCost || 0;
                 const localIcon = getLocalItemIcon(icon);
                 const iconKey = `picker-${item.internalName || item.name}-${index}`;
                 const useFallback = failedItemIcons[iconKey];
@@ -2927,7 +3784,7 @@ export default function CustomBuildPage({
                       // Check if we're selecting for a swap (index 999)
                       if (showItemPicker === 999) {
                         // This is for a swap - set the item and reopen swap modal
-                        setSwapItem(item);
+                        setSwapItem(resolveBuildCatalogItem(item, items));
                         setShowItemPicker(null);
                         setItemSearchQuery('');
                         setSelectedStat(null);
@@ -2968,10 +3825,11 @@ export default function CustomBuildPage({
                       </>
                     )}
                     <View style={styles.itemPickerInfo}>
-                      <Text style={styles.itemPickerName}>{name}</Text>
-                      {cost > 0 && (
-                        <Text style={styles.itemPickerCost}>{cost.toLocaleString()} Gold</Text>
-                      )}
+                      <View style={styles.itemPickerNameRow}>
+                        {renderItemEffectIcon(item)}
+                        <Text style={styles.itemPickerName}>{name}</Text>
+                      </View>
+                      {renderGoldCostRow(item, styles.itemPickerCost, styles.itemPickerGoldIcon)}
                     </View>
                   </TouchableOpacity>
                 );
@@ -3267,7 +4125,13 @@ export default function CustomBuildPage({
                           />
                         );
                       })() : null}
-                      <Text style={styles.itemPickerName}>{name}</Text>
+                      <View style={styles.itemPickerInfo}>
+                        <View style={styles.itemPickerNameRow}>
+                          {renderItemEffectIcon(relic)}
+                          <Text style={styles.itemPickerName}>{name}</Text>
+                        </View>
+                        {renderGoldCostRow(relic, styles.itemPickerCost, styles.itemPickerGoldIcon)}
+                      </View>
                     </TouchableOpacity>
                   );
                 })}
@@ -3625,6 +4489,12 @@ export default function CustomBuildPage({
                   
                   try {
                     const { supabase } = require('../../config/supabase');
+                    const authSession = await ensureAppWriteSession(currentUser);
+                    if (!authSession.ready) {
+                      Alert.alert('Sign in required', 'Sign out and sign in again to post contributor builds.');
+                      setIsPostingToCertified(false);
+                      return;
+                    }
                     
                     const gamemodesToSave = selectedGamemodes.includes('All Modes')
                       ? ['Joust', 'Duel', 'Arena', 'Conquest', 'Assault']
@@ -3793,7 +4663,10 @@ export default function CustomBuildPage({
                 <Text style={styles.modalCloseText}>✕</Text>
               </TouchableOpacity>
             </View>
-            
+
+            <Text style={styles.saveBuildModalHint}>
+              Name defaults to your god and roles. Gamemodes default to All Modes.
+            </Text>
             <Text style={styles.saveBuildModalLabel}>Build Name:</Text>
             <TextInput
               style={styles.saveBuildModalInput}
@@ -3862,166 +4735,7 @@ export default function CustomBuildPage({
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.saveBuildModalButton, styles.saveBuildModalButtonSave, isPostingToCommunity && styles.saveBuildModalButtonDisabled]}
-                onPress={async () => {
-                  if (!communityBuildName.trim()) {
-                    Alert.alert('Error', 'Please enter a build name.');
-                    return;
-                  }
-
-                  const currentUser = await storage.getItem('currentUser');
-                  if (!currentUser) {
-                    setShowPostToCommunityModal(false);
-                    setShowLoginModal(true);
-                    return;
-                  }
-
-                  setIsPostingToCommunity(true);
-                  
-                  try {
-                    // Import supabase
-                    const { supabase } = require('../../config/supabase');
-                    
-                    // Prepare gamemodes - if "All Modes" is selected, store all modes, otherwise store selected modes
-                    const gamemodesToSave = selectedGamemodes.includes('All Modes')
-                      ? ['Joust', 'Duel', 'Arena', 'Conquest', 'Assault']
-                      : selectedGamemodes;
-                    
-                    // Check if user is certified (for posting to certified builds)
-                    let isCertified = false;
-                    try {
-                      const { data: certData } = await supabase
-                        .from('certification_requests')
-                        .select('status')
-                        .eq('username', currentUser)
-                        .eq('status', 'approved')
-                        .limit(1)
-                        .single();
-                      isCertified = !!(certData && certData.status === 'approved');
-                    } catch (certErr) {
-                      // Not certified, continue as community build
-                    }
-                    
-                    // Prepare build data for community/certified
-                    const buildData = {
-                      name: communityBuildName.trim(),
-                      god: selectedGod.name || selectedGod.GodName || selectedGod.title || selectedGod.displayName,
-                      godInternalName: selectedGod.internalName || selectedGod.GodName,
-                      godIcon: selectedGod.icon || selectedGod.GodIcon,
-                      items: selectedItems.filter(Boolean).map(item => ({
-                        name: item.name || item.internalName,
-                        internalName: item.internalName,
-                        icon: item.icon,
-                      })),
-                      relic: relicToPayload(finalRelic),
-                      starting_relic: relicToPayload(startingRelic),
-                      final_relic: relicToPayload(finalRelic),
-                      godLevel: Math.round(godLevel),
-                      aspectActive: aspectActive && selectedGod.aspect ? true : false,
-                      author: currentUser,
-                      notes: buildTips.filter(t => t && t.trim()).join('\n') || communityBuildName.trim(),
-                      tips: buildTips.filter(t => t && t.trim()).join('\n') || null,
-                      startingItems: startingItems.filter(Boolean).map(item => ({
-                        name: item.name || item.internalName,
-                        internalName: item.internalName,
-                        icon: item.icon,
-                      })),
-                      abilityLevelingOrder: abilityLevelingOrder,
-                      startingAbilityOrder: startingAbilityOrder,
-                      itemSwaps: itemSwaps.map(swap => ({
-                        item: swap.item,
-                        reasoning: swap.reasoning,
-                      })),
-                      roles: selectedRoles,
-                      gamemodes: gamemodesToSave,
-                      createdAt: new Date().toISOString(),
-                      isCertified: isCertified,
-                    };
-
-                    // Check if we're editing an existing build
-                    const isEditing = buildToEdit && buildToEdit.databaseId && buildToEdit.databaseTable === 'community_builds';
-                    
-                    const updateData = {
-                      build_name: communityBuildName.trim(),
-                      god_name: buildData.god,
-                      god_internal_name: buildData.godInternalName,
-                      items: buildData.items,
-                      starting_items: buildData.startingItems,
-                      relic: buildData.relic,
-                      starting_relic: buildData.starting_relic,
-                      final_relic: buildData.final_relic,
-                      god_level: Math.round(godLevel),
-                      aspect_active: buildData.aspectActive,
-                      notes: buildData.notes || buildData.tips || communityBuildName.trim(),
-                      tips: (buildData.tips && buildData.tips.trim()) || null,
-                      ability_leveling_order: buildData.abilityLevelingOrder,
-                      starting_ability_order: buildData.startingAbilityOrder,
-                      item_swaps: buildData.itemSwaps,
-                      roles: buildData.roles,
-                      gamemodes: gamemodesToSave,
-                      updated_at: new Date().toISOString(),
-                    };
-
-                    let data, error;
-                    if (isEditing) {
-                      // Update existing build
-                      const result = await supabase
-                        .from('community_builds')
-                        .update(updateData)
-                        .eq('id', buildToEdit.databaseId)
-                        .eq('username', currentUser); // Ensure user owns the build
-                      data = result.data;
-                      error = result.error;
-                    } else {
-                      // Insert new build
-                      const result = await supabase
-                        .from('community_builds')
-                        .insert({
-                          username: currentUser,
-                          ...updateData,
-                          created_at: new Date().toISOString(),
-                        });
-                      data = result.data;
-                      error = result.error;
-                    }
-
-                    if (error) {
-                      console.error('Error posting to community:', error);
-                      if (error.code === 'MISSING_CONFIG') {
-                        Alert.alert(
-                          'Development Mode', 
-                          'Supabase is not configured in development. In proaction, your builds will be saved properly. This is normal for Expo development.'
-                        );
-                        // Still show success in dev mode so user knows the flow works
-                        setShowPostToCommunityModal(false);
-                        setCommunityBuildName('');
-                        setSelectedGamemodes(['All Modes']);
-                        setIsPostingToCommunity(false);
-                        Alert.alert('Success (Dev Mode)', 'Build posted! In production, this will be saved to the database.');
-                      } else {
-                        Alert.alert('Error', `Failed to post build: ${error.message || 'Please try again.'}`);
-                      }
-                      setIsPostingToCommunity(false);
-                      return;
-                    }
-
-                    setShowPostToCommunityModal(false);
-                    setCommunityBuildName('');
-                    setSelectedGamemodes(['All Modes']);
-                    setIsPostingToCommunity(false);
-                    
-                    // Clear buildToEdit if we were editing
-                    const isEditingCommunity = buildToEdit && buildToEdit.databaseId && buildToEdit.databaseTable === 'community_builds';
-                    if (isEditingCommunity && onEditComplete) {
-                      onEditComplete();
-                    }
-                    
-                    Alert.alert('Success', `Your community build has been ${isEditingCommunity ? 'updated' : 'posted'}!`);
-                  } catch (error) {
-                    console.error('Exception posting to community:', error);
-                    Alert.alert('Error', 'An error occurred while posting. Please try again.');
-                    setIsPostingToCommunity(false);
-                  }
-                }}
+                onPress={() => submitCommunityBuild()}
                 disabled={isPostingToCommunity}
               >
                 {isPostingToCommunity ? (
@@ -4133,7 +4847,7 @@ export default function CustomBuildPage({
                         }
                         Alert.alert('Error', 'Invalid username or password');
                       } else if (data && data.password_hash === passwordHash) {
-                        await storage.setItem('currentUser', loginUsername.trim());
+                        await finalizeAppLogin(loginUsername.trim(), loginPassword, storage);
                         setShowLoginModal(false);
                         setLoginUsername('');
                         setLoginPassword('');
@@ -4197,6 +4911,20 @@ export default function CustomBuildPage({
           </Pressable>
         </Pressable>
       </Modal>
+
+      {renderPostMenuModal()}
+
+      <BuildStatChartModal
+        visible={showStatChartModal}
+        onClose={() => setShowStatChartModal(false)}
+        data={statProgression}
+        godPortraitUri={godPortraitUri}
+        getStepIconUri={getStepIconUri}
+        god={selectedGod}
+        godLevel={godLevel}
+        finalItems={resolvedFinalItems}
+        onApplyOptimizedOrder={applyOptimizedItemOrder}
+      />
     </View>
   );
 }
@@ -4212,10 +4940,378 @@ const styles = StyleSheet.create({
   scrollContent: {
     padding: IS_WEB ? 16 : 12,
     ...(IS_WEB && {
-      maxWidth: 1200,
+      maxWidth: WEB_CONTENT_MAX_WIDTH,
       alignSelf: 'center',
       width: '100%',
+      paddingHorizontal: 24,
     }),
+  },
+  desktopBuilderColumns: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 16,
+    width: '100%',
+    marginBottom: 20,
+  },
+  desktopBuilderLeft: {
+    flex: 0.38,
+    minWidth: 280,
+    maxWidth: 400,
+    marginBottom: 0,
+    alignSelf: 'flex-start',
+  },
+  tabletBuilderLeft: {
+    flex: 0.42,
+    minWidth: 240,
+    maxWidth: 420,
+  },
+  mobileBuilderRightWrap: {
+    width: '100%',
+  },
+  desktopBuilderRightWrap: {
+    flex: 1,
+    minWidth: 0,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 12,
+  },
+  tabletBuilderRightWrap: {
+    flexDirection: 'column',
+    gap: 10,
+  },
+  desktopBuilderBuildPanel: {
+    flex: 1,
+    minWidth: 420,
+    marginBottom: 0,
+    padding: 12,
+  },
+  tabletBuilderBuildPanel: {
+    minWidth: 0,
+    width: '100%',
+    padding: 10,
+  },
+  desktopBuilderGuidePanel: {
+    width: 280,
+    minWidth: 260,
+    maxWidth: 300,
+    flexShrink: 0,
+    flexGrow: 0,
+    marginBottom: 0,
+    padding: 10,
+    alignSelf: 'flex-start',
+  },
+  tabletBuilderGuidePanel: {
+    width: '100%',
+    maxWidth: '100%',
+    marginBottom: 0,
+    padding: 10,
+  },
+  desktopGodRoleInBuild: {
+    marginBottom: 10,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1e3a5f',
+    overflow: 'visible',
+    zIndex: 50,
+  },
+  sectionTitleCompact: {
+    fontSize: 15,
+    marginBottom: 6,
+  },
+  desktopStatsPanel: {
+    marginTop: 0,
+    paddingTop: 0,
+    borderTopWidth: 0,
+  },
+  desktopStatsSplit: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+    width: '100%',
+  },
+  desktopStatsSplitStacked: {
+    flexDirection: 'column',
+  },
+  desktopStatsGridCol: {
+    flex: 1,
+    minWidth: 0,
+  },
+  desktopStatsChartCol: {
+    flex: 1.1,
+    minWidth: 240,
+  },
+  desktopStatsHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 6,
+  },
+  statChartGraphBtn: {
+    width: 28,
+    height: 28,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: 'rgba(201, 162, 39, 0.45)',
+    backgroundColor: 'rgba(201, 162, 39, 0.1)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  statChartGraphBtnDisabled: {
+    opacity: 0.35,
+    borderColor: '#1e3a5f',
+    backgroundColor: '#0b1220',
+  },
+  statChartGraphIcon: {
+    width: 16,
+    height: 12,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    gap: 2,
+  },
+  statChartGraphBar: {
+    width: 3,
+    borderRadius: 1,
+    backgroundColor: '#c9a227',
+  },
+  desktopStatsPlaceholder: {
+    paddingVertical: 20,
+    paddingHorizontal: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 120,
+  },
+  desktopStatsPlaceholderTitle: {
+    color: '#7dd3fc',
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 6,
+  },
+  desktopStatsPlaceholderText: {
+    color: '#64748b',
+    fontSize: 13,
+    textAlign: 'center',
+    lineHeight: 18,
+  },
+  desktopItemsBuildTwoColumn: {
+    gap: 10,
+    alignItems: 'stretch',
+  },
+  desktopBuildColumn: {
+    alignItems: 'flex-start',
+    flex: 1,
+    minWidth: 0,
+  },
+  desktopFinalBuildStack: {
+    width: '100%',
+    flexDirection: 'column',
+    gap: 8,
+  },
+  starterRelicRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    width: '100%',
+    gap: 10,
+    marginBottom: IS_WEB ? 6 : 4,
+  },
+  buildSlotColumn: {
+    alignItems: 'center',
+    flexShrink: 0,
+  },
+  buildSlotLabelSpacer: {
+    height: 14,
+    marginBottom: 4,
+  },
+  starterRelicDivider: {
+    width: 1,
+    alignSelf: 'stretch',
+    minHeight: 72,
+    backgroundColor: 'rgba(125, 211, 252, 0.28)',
+    marginHorizontal: 2,
+    marginBottom: 0,
+  },
+  relicInlineLabel: {
+    color: '#64748b',
+    fontSize: 10,
+    fontWeight: '600',
+    letterSpacing: 0.6,
+    textTransform: 'uppercase',
+    marginBottom: 4,
+    textAlign: 'center',
+  },
+  desktopFinalItemRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 8,
+    width: '100%',
+  },
+  desktopFinalRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    rowGap: 8,
+    width: '100%',
+  },
+  desktopFinalSlot: {
+    width: 72,
+    minWidth: 72,
+    maxWidth: 72,
+    flexGrow: 0,
+    flexShrink: 0,
+  },
+  desktopBuildSlotButton: {
+    aspectRatio: undefined,
+    width: '100%',
+    height: 72,
+    minHeight: 72,
+    maxHeight: 72,
+    paddingTop: 4,
+    paddingBottom: 16,
+    paddingHorizontal: 3,
+    borderRadius: 8,
+    justifyContent: 'flex-start',
+  },
+  desktopBuildItemName: {
+    color: '#94a3b8',
+    fontSize: 9,
+    textAlign: 'center',
+    lineHeight: 11,
+    width: '100%',
+    position: 'absolute',
+    bottom: 3,
+    left: 2,
+    right: 2,
+  },
+  desktopRelicRow: {
+    flexDirection: 'row',
+    width: '100%',
+  },
+  desktopRelicSlotWrap: {
+    width: 72,
+  },
+  desktopRelicSlotButton: {},
+  buildGuideBodyDesktop: {
+    marginTop: 6,
+    gap: 8,
+  },
+  buildGuideSubTitleDesktop: {
+    fontSize: 12,
+    marginBottom: 4,
+  },
+  abilityOrderTabRowDesktop: {
+    gap: 4,
+    marginBottom: 4,
+  },
+  abilityOrderTabDesktop: {
+    paddingVertical: 5,
+    paddingHorizontal: 6,
+    borderRadius: 5,
+  },
+  sectionSubtitleDesktop: {
+    fontSize: 10,
+    marginBottom: 4,
+    lineHeight: 13,
+  },
+  startingAbilityOrderContainerDesktop: {
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    gap: 4,
+    marginBottom: 4,
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  startingAbilityLevelSlotDesktop: {
+    flex: 1,
+    minWidth: 0,
+    maxWidth: 52,
+    width: '18%',
+  },
+  startingAbilityLevelLabelDesktop: {
+    fontSize: 8,
+    marginBottom: 2,
+  },
+  startingAbilitySlotButtonDesktop: {
+    aspectRatio: undefined,
+    height: 48,
+    minHeight: 48,
+    maxHeight: 48,
+    padding: 2,
+    borderRadius: 6,
+  },
+  startingAbilityIconDesktop: {
+    width: 26,
+    height: 26,
+    marginBottom: 1,
+  },
+  startingAbilityIconPlaceholderDesktop: {
+    width: 26,
+    height: 26,
+    marginBottom: 1,
+  },
+  startingAbilityPlaceholderTextDesktop: {
+    fontSize: 7,
+    marginTop: 0,
+  },
+  buildGuideHeaderCompact: {
+    paddingVertical: 8,
+    marginBottom: 0,
+  },
+  abilityLevelingContainerSingleRowDesktop: {
+    gap: 6,
+    marginBottom: 4,
+    justifyContent: 'flex-start',
+  },
+  abilityLevelingButtonSmallDesktop: {
+    width: 44,
+    height: 44,
+    padding: 2,
+  },
+  abilityLevelingIconSmallDesktop: {
+    width: 36,
+    height: 36,
+  },
+  clearAbilityOrderButtonDesktop: {
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    marginTop: 2,
+  },
+  clearAbilityOrderTextDesktop: {
+    fontSize: 11,
+  },
+  tipsHeaderDesktop: {
+    marginBottom: 4,
+  },
+  addTipButtonDesktop: {
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+  },
+  addTipButtonTextDesktop: {
+    fontSize: 11,
+  },
+  tipInputContainerDesktop: {
+    marginBottom: 6,
+  },
+  buildTipsInputDesktop: {
+    padding: 8,
+    fontSize: 12,
+    minHeight: 56,
+    maxHeight: 100,
+  },
+  desktopToolbarLoadBtn: {
+    marginLeft: 'auto',
+    backgroundColor: '#10b981',
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#059669',
+    ...(IS_WEB && { cursor: 'pointer' }),
+  },
+  desktopToolbarLoadBtnText: {
+    color: '#ffffff',
+    fontSize: 13,
+    fontWeight: '700',
   },
   loadingContainer: {
     flex: 1,
@@ -4293,35 +5389,36 @@ const styles = StyleSheet.create({
     marginBottom: IS_WEB ? 6 : 4,
   },
   compactStarterSlotWrap: {
-    width: '40%',
-    minWidth: 56,
-    maxWidth: 96,
-    ...(IS_WEB && {
-      width: 92,
-      minWidth: 92,
-      maxWidth: 92,
-    }),
-  },
-  compactStartingGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: IS_WEB ? 'center' : 'flex-start',
     ...(IS_WEB
-      ? {
-          alignSelf: 'center',
-          justifyContent: 'center',
-          width: 92 * 4 + 10 * 3,
-          maxWidth: '100%',
-          columnGap: 10,
-          rowGap: 10,
-        }
-      : { gap: 4 }),
+      ? { width: 72, minWidth: 72, maxWidth: 72, flexShrink: 0 }
+      : { flex: 1, minWidth: 0, maxWidth: '42%', flexShrink: 1 }),
+  },
+  compactStartingRows: {
+    width: '100%',
+    alignItems: 'center',
+    gap: IS_WEB ? 8 : 6,
+  },
+  compactStartingRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    gap: IS_WEB ? 8 : 6,
+    width: IS_WEB ? 72 * 2 + 8 : '100%',
+    maxWidth: '100%',
   },
   compactFinalGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: IS_WEB ? 6 : 4,
     justifyContent: IS_WEB ? 'center' : 'flex-start',
+  },
+  compactFinalGridMobileRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    width: '100%',
+    gap: 6,
+    marginBottom: 6,
   },
   /** Web: Final build stack — row of 1 (starter S) + row of 3 + row of 3. */
   compactFinalBuildWeb: {
@@ -4344,36 +5441,73 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     alignSelf: 'center',
-    width: IS_WEB ? 112 * 3 + 14 * 2 : '100%',
+    width: IS_WEB ? 72 * 3 + 14 * 2 : '100%',
     maxWidth: '100%',
     columnGap: 14,
     rowGap: 14,
   },
   compactFinalSlotWeb: {
     ...(IS_WEB && {
-      width: 112,
-      minWidth: 112,
-      maxWidth: 112,
+      width: 72,
+      minWidth: 72,
+      maxWidth: 72,
       flexGrow: 0,
       flexShrink: 0,
     }),
   },
   compactStartingSlot: {
-    width: '23%',
-    minWidth: 48,
-    maxWidth: 76,
+    width: '48%',
+    minWidth: 56,
+    maxWidth: 72,
     ...(IS_WEB && {
-      width: 92,
-      minWidth: 92,
-      maxWidth: 92,
+      width: 72,
+      minWidth: 72,
+      maxWidth: 72,
       flexGrow: 0,
       flexShrink: 0,
     }),
   },
   compactFinalSlot: {
-    width: '30%',
-    minWidth: 48,
-    maxWidth: 78,
+    flex: 1,
+    minWidth: 0,
+    maxWidth: '33.333%',
+  },
+  webBuildSlotButton: IS_WEB
+    ? {
+        aspectRatio: undefined,
+        width: '100%',
+        height: 72,
+        minHeight: 72,
+        maxHeight: 72,
+        paddingTop: 4,
+        paddingBottom: 16,
+        paddingHorizontal: 3,
+        justifyContent: 'flex-start',
+      }
+    : {},
+  nativeBuildSlotButton: {
+    aspectRatio: undefined,
+    width: '100%',
+    minHeight: 68,
+    maxHeight: 80,
+    paddingTop: 4,
+    paddingBottom: 14,
+    paddingHorizontal: 3,
+    justifyContent: 'flex-start',
+  },
+  buildSlotIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 3,
+    alignSelf: 'center',
+  },
+  buildSlotIconPh: {
+    width: 44,
+    height: 44,
+    backgroundColor: '#1e3a5f',
+    borderRadius: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   compactSlotButton: {
     position: 'relative',
@@ -4425,19 +5559,23 @@ const styles = StyleSheet.create({
   },
   compactItemName: {
     color: '#94a3b8',
-    fontSize: IS_WEB ? 7 : 6,
+    fontSize: IS_WEB ? 8 : 7,
     textAlign: 'center',
-    marginTop: 1,
-    lineHeight: IS_WEB ? 9 : 8,
+    lineHeight: IS_WEB ? 10 : 9,
     width: '100%',
     paddingHorizontal: 1,
+    position: 'absolute',
+    bottom: 3,
+    left: 2,
+    right: 2,
+    marginTop: 0,
   },
   compactSlotPlaceholder: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
     minHeight: 28,
+    ...(IS_WEB ? { height: 44 } : { height: 40 }),
   },
   compactSlotPlus: {
     color: '#475569',
@@ -4475,6 +5613,9 @@ const styles = StyleSheet.create({
     fontSize: IS_WEB ? 16 : 14,
     fontWeight: '700',
   },
+  godStatsExpandHeaderTitleCompact: {
+    fontSize: 14,
+  },
   godStatsExpandHeaderMeta: {
     color: '#94a3b8',
     fontSize: IS_WEB ? 13 : 12,
@@ -4494,11 +5635,19 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#1e3a5f',
   },
+  statsEmbedLevelBlockDesktop: {
+    marginBottom: 6,
+    paddingBottom: 6,
+  },
   statsEmbedLevelHeading: {
     color: '#64748b',
     fontSize: IS_WEB ? 11 : 10,
     fontWeight: '600',
     marginBottom: IS_WEB ? 6 : 5,
+  },
+  statsEmbedLevelHeadingDesktop: {
+    fontSize: 9,
+    marginBottom: 4,
   },
   statsEmbedLevelRow: {
     flexDirection: 'row',
@@ -4606,9 +5755,119 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   // God Selection + compact role chips
+  godRoleSectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    gap: 12,
+    width: '100%',
+    marginBottom: IS_WEB ? 4 : 2,
+    position: 'relative',
+    zIndex: 50,
+  },
+  godRoleSectionHeaderText: {
+    flex: 1,
+    minWidth: 0,
+  },
+  godRoleSectionTitle: {
+    marginBottom: IS_WEB ? 4 : 2,
+  },
+  postMenuWrap: {
+    position: 'relative',
+    flexShrink: 0,
+    zIndex: 100,
+  },
+  postMenuBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingVertical: 7,
+    paddingHorizontal: 12,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: 'rgba(125, 211, 252, 0.42)',
+    backgroundColor: 'rgba(8, 12, 22, 0.98)',
+  },
+  postMenuBtnOpen: {
+    borderColor: '#7dd3fc',
+    backgroundColor: 'rgba(30, 58, 95, 0.55)',
+  },
+  postMenuBtnText: {
+    color: '#7dd3fc',
+    fontSize: 13,
+    fontWeight: '700',
+    letterSpacing: 0.3,
+  },
+  postMenuCaret: {
+    color: '#7dd3fc',
+    fontSize: 10,
+    fontWeight: '800',
+    marginTop: 1,
+  },
+  postMenuDropdown: {
+    position: 'absolute',
+    minWidth: 240,
+    right: 0,
+    top: '100%',
+    marginTop: 6,
+    backgroundColor: '#0b1220',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    zIndex: 10000,
+    elevation: 100,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.35,
+    shadowRadius: 8,
+  },
+  postMenuItem: {
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1e3a5f',
+  },
+  postMenuItemTextCol: {
+    gap: 2,
+  },
+  postMenuItemTitle: {
+    color: '#e2e8f0',
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  postMenuItemHint: {
+    color: '#64748b',
+    fontSize: 11,
+    fontWeight: '500',
+  },
+  postMenuOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.55)',
+    justifyContent: 'flex-end',
+  },
+  postMenuSheet: {
+    backgroundColor: '#0b1220',
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    borderBottomWidth: 0,
+    paddingTop: 14,
+    paddingBottom: 24,
+    paddingHorizontal: 12,
+    maxHeight: '70%',
+  },
+  postMenuSheetTitle: {
+    color: '#7dd3fc',
+    fontSize: 15,
+    fontWeight: '800',
+    marginBottom: 10,
+    paddingHorizontal: 4,
+  },
   godRoleBlock: {
     width: '100%',
     gap: IS_WEB ? 8 : 6,
+    overflow: 'visible',
   },
   godRoleSubtitle: {
     color: '#94a3b8',
@@ -4617,6 +5876,108 @@ const styles = StyleSheet.create({
     marginTop: -2,
     marginBottom: IS_WEB ? 8 : 6,
     lineHeight: IS_WEB ? 16 : 15,
+  },
+  rolePickerWrap: {
+    width: '100%',
+    marginTop: IS_WEB ? 4 : 2,
+  },
+  roleDropdownTriggerContent: {
+    flex: 1,
+    minWidth: 0,
+  },
+  roleDropdownPlaceholder: {
+    color: '#64748b',
+    fontSize: IS_WEB ? 14 : 13,
+    fontWeight: '600',
+  },
+  roleDropdownSelectedRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingRight: 4,
+  },
+  roleDropdownSelectedChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingVertical: 3,
+    paddingHorizontal: 8,
+    borderRadius: 999,
+    backgroundColor: '#0c2d4a',
+    borderWidth: 1,
+    borderColor: '#38bdf8',
+  },
+  roleDropdownChipIcon: {
+    width: 16,
+    height: 16,
+  },
+  roleDropdownChipText: {
+    color: '#7dd3fc',
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  rolePickerPanel: {
+    paddingHorizontal: 8,
+    paddingVertical: 8,
+  },
+  rolePickerRow: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    gap: IS_WEB ? 6 : 4,
+    width: '100%',
+  },
+  rolePickerBox: {
+    flex: 1,
+    minWidth: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: IS_WEB ? 7 : 6,
+    paddingHorizontal: 2,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#1e3a5f',
+    backgroundColor: '#0f1724',
+    gap: 3,
+    ...(IS_WEB && { cursor: 'pointer' }),
+  },
+  rolePickerBoxSelected: {
+    borderColor: '#38bdf8',
+    backgroundColor: '#0c2d4a',
+  },
+  rolePickerBoxDisabled: {
+    opacity: 0.4,
+  },
+  rolePickerBoxIcon: {
+    width: IS_WEB ? 18 : 16,
+    height: IS_WEB ? 18 : 16,
+  },
+  rolePickerBoxText: {
+    color: '#94a3b8',
+    fontSize: IS_WEB ? 10 : 9,
+    fontWeight: '700',
+    textAlign: 'center',
+    width: '100%',
+  },
+  rolePickerBoxTextSelected: {
+    color: '#7dd3fc',
+  },
+  rolePickerBoxTextDisabled: {
+    color: '#64748b',
+  },
+  buildGuideBody: {
+    marginTop: 12,
+    gap: 16,
+  },
+  buildGuideSubTitle: {
+    color: '#7dd3fc',
+    fontSize: IS_WEB ? 16 : 15,
+    fontWeight: '700',
+    marginBottom: 8,
+  },
+  buildGuideHeaderHint: {
+    color: '#64748b',
+    fontSize: IS_WEB ? 12 : 11,
+    marginTop: 2,
   },
   godSelectorContainer: {
     flexDirection: 'row',
@@ -4738,9 +6099,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: IS_WEB ? 8 : 6,
+    width: '100%',
     ...(IS_WEB && {
       alignSelf: 'stretch',
-      width: '100%',
       justifyContent: 'flex-start',
     }),
   },
@@ -4764,6 +6125,35 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: IS_WEB ? 8 : 6,
     flexShrink: 0,
+  },
+  buildItemsHeaderActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: IS_WEB ? 10 : 8,
+    flexShrink: 1,
+    justifyContent: 'flex-end',
+    flexWrap: 'wrap',
+  },
+  buildViewSwapBtn: {
+    paddingVertical: IS_WEB ? 8 : 6,
+    paddingHorizontal: IS_WEB ? 12 : 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#38bdf8',
+    backgroundColor: '#0c2d4a',
+    ...(IS_WEB && { cursor: 'pointer' }),
+  },
+  buildViewSwapBtnText: {
+    color: '#7dd3fc',
+    fontSize: IS_WEB ? 12 : 11,
+    fontWeight: '700',
+  },
+  buildItemsSingleColumn: {
+    width: '100%',
+  },
+  buildRequiredMark: {
+    color: '#f87171',
+    fontWeight: '800',
   },
   buildItemsHeaderGoldIcon: {
     width: IS_WEB ? 22 : 20,
@@ -4989,6 +6379,9 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: 12,
   },
+  statsGridDesktop: {
+    gap: 6,
+  },
   statItem: {
     flex: 1,
     minWidth: '45%',
@@ -4998,13 +6391,42 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#1e3a5f',
   },
+  statItemDesktop: {
+    minWidth: '47%',
+    flexBasis: '47%',
+    flexGrow: 0,
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+    borderRadius: 6,
+  },
   statLabel: {
     fontSize: 12,
     marginBottom: 4,
     fontWeight: '600',
+    flex: 1,
+    minWidth: 0,
+  },
+  statLabelDesktop: {
+    fontSize: 10,
+    marginBottom: 2,
+  },
+  statLabelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 4,
+  },
+  statRowIcon: {
+    width: 18,
+    height: 18,
+    flexShrink: 0,
   },
   statValue: {
     fontSize: 20,
+    fontWeight: '700',
+  },
+  statValueDesktop: {
+    fontSize: 15,
     fontWeight: '700',
   },
   // Gold
@@ -5042,19 +6464,19 @@ const styles = StyleSheet.create({
   },
   postToCommunityButton: {
     backgroundColor: '#10b981',
-    paddingVertical: 14,
-    paddingHorizontal: 20,
-    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 6,
     marginTop: 12,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: '#059669',
-    shadowColor: '#10b981',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 5,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  postToCommunityQuickButton: {
+    backgroundColor: '#059669',
+    borderColor: '#34d399',
+    marginTop: 16,
   },
   postToCommunityButtonText: {
     color: '#ffffff',
@@ -5134,36 +6556,57 @@ const styles = StyleSheet.create({
   // Item Info Modal
   itemInfoModal: {
     backgroundColor: '#0b1226',
-    borderRadius: 16,
-    padding: 20,
-    maxWidth: 400,
+    borderRadius: 12,
+    padding: 14,
+    maxWidth: 320,
     width: '90%',
+    maxHeight: '65%',
+    flexDirection: 'column',
+    overflow: 'hidden',
     borderWidth: 2,
     borderColor: '#1e90ff',
     alignSelf: 'center',
     marginTop: 'auto',
     marginBottom: 'auto',
   },
+  itemInfoScroll: {
+    flexGrow: 1,
+    flexShrink: 1,
+    minHeight: 0,
+  },
+  itemInfoScrollContent: {
+    paddingBottom: 8,
+  },
   itemInfoHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
+    alignItems: 'flex-start',
+    marginBottom: 12,
+    gap: 8,
+  },
+  itemInfoHeaderText: {
+    flex: 1,
+    minWidth: 0,
+  },
+  itemInfoNameWrap: {
+    flex: 1,
+    minWidth: 0,
+    paddingRight: 4,
   },
   itemInfoTitle: {
     color: '#7dd3fc',
-    fontSize: 22,
+    fontSize: 16,
     fontWeight: '700',
-    flex: 1,
+    marginBottom: 0,
   },
   itemInfoIconContainer: {
     alignItems: 'center',
     marginBottom: 16,
   },
   itemInfoIcon: {
-    width: 80,
-    height: 80,
-    borderRadius: 8,
+    width: 56,
+    height: 56,
+    borderRadius: 6,
   },
   itemInfoStats: {
     marginBottom: 16,
@@ -5177,9 +6620,36 @@ const styles = StyleSheet.create({
   itemInfoStatRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     paddingVertical: 4,
     borderBottomWidth: 1,
     borderBottomColor: '#1e3a5f',
+  },
+  itemInfoStatRowLast: {
+    borderBottomWidth: 0,
+    paddingBottom: 0,
+  },
+  itemInfoStatLabelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    flex: 1,
+    minWidth: 0,
+  },
+  itemInfoStatIcon: {
+    width: 16,
+    height: 16,
+    flexShrink: 0,
+  },
+  itemInfoPassiveHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 8,
+  },
+  itemInfoActiveIcon: {
+    width: 20,
+    height: 20,
   },
   itemInfoStatLabel: {
     color: '#cbd5e1',
@@ -5202,16 +6672,45 @@ const styles = StyleSheet.create({
     lineHeight: 19,
   },
   itemInfoCost: {
-    marginBottom: 16,
-    paddingTop: 12,
+    flexShrink: 0,
+    marginBottom: 12,
+    paddingTop: 10,
     borderTopWidth: 1,
     borderTopColor: '#1e3a5f',
+    alignItems: 'center',
+    gap: 6,
+  },
+  itemInfoCostPinned: {
+    flexShrink: 0,
+    marginBottom: 12,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#1e3a5f',
+    alignItems: 'flex-start',
+  },
+  itemInfoCostLabel: {
+    color: '#7dd3fc',
+    fontSize: 14,
+    fontWeight: '700',
   },
   itemInfoCostText: {
     color: '#fbbf24',
     fontSize: 16,
     fontWeight: '700',
-    textAlign: 'center',
+  },
+  itemInfoCostGoldIcon: {
+    width: 20,
+    height: 20,
+  },
+  itemGoldCostRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  itemGoldCostIcon: {
+    width: 16,
+    height: 16,
+    flexShrink: 0,
   },
   itemInfoButtons: {
     flexDirection: 'row',
@@ -5356,15 +6855,41 @@ const styles = StyleSheet.create({
   itemPickerInfo: {
     flex: 1,
   },
+  itemPickerNameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 4,
+  },
+  itemPickerActiveIcon: {
+    width: 16,
+    height: 16,
+    flexShrink: 0,
+  },
+  dropdownItemLabelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  dropdownTierIcon: {
+    width: 16,
+    height: 16,
+  },
   itemPickerName: {
     color: '#e6eef8',
     fontSize: 16,
     fontWeight: '600',
-    marginBottom: 4,
+    flex: 1,
+    minWidth: 0,
   },
   itemPickerCost: {
     color: '#fbbf24',
     fontSize: 14,
+  },
+  itemPickerGoldIcon: {
+    width: 14,
+    height: 14,
+    flexShrink: 0,
   },
   saveBuildModal: {
     backgroundColor: '#0b1226',
@@ -5390,6 +6915,12 @@ const styles = StyleSheet.create({
     color: '#cbd5e1',
     fontSize: 14,
     marginBottom: 8,
+  },
+  saveBuildModalHint: {
+    color: '#94a3b8',
+    fontSize: 13,
+    lineHeight: 18,
+    marginBottom: 14,
   },
   saveBuildModalInput: {
     backgroundColor: '#0f1724',

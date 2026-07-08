@@ -46,5 +46,5 @@ export const DEFAULT_TAB_STATE = {
   builds: BUILDS_SUBTABS.FEATURED,
   patchHub: PATCH_HUB_SUBTABS.SIMPLE,
   more: MORE_SUBTABS.MINIGAMES,
-  patchHubLastPatch: 25,
+  patchHubLastPatch: 36,
 } as const;

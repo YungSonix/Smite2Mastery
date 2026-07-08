@@ -25,6 +25,8 @@ import buildsData from '../../lib/buildsData';
 import { flattenBuildsGods } from '../../lib/normalizeBuildsGod';
 import { playVOX } from '../../lib/prophecyAudio';
 import { UI_THEME } from '../../lib/uiTheme';
+import { finalizeAppLogin, ensureAppWriteSession } from '../../lib/appAuth';
+import { applyProphecyGoldDelta } from '../../lib/shopSupabase';
 import { getClassPoolKey, getPooledAbility, getPooledUltimate } from '../../src/data/abilityPools';
 import {
   CARD_TYPE,
@@ -1486,9 +1488,8 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   }, [currentUser, getTutorialStatusKey]);
   const loadProfileAndCollection = useCallback(async (username) => {
     if (!username) return;
-    try {
-      await supabase.rpc('set_current_user', { username_param: username });
-    } catch (_) {}
+    const authSession = await ensureAppWriteSession(username);
+    if (!authSession.ready) return;
     let { data: profileRow } = await supabase.from('user_data').select('*').eq('username', username).maybeSingle();
     if (!profileRow) {
       const { data: inserted } = await supabase
@@ -1594,7 +1595,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
         setAuthError('Invalid username or password.');
         return;
       }
-      await storageSetItem('currentUser', username);
+      await finalizeAppLogin(username, password, { setItem: storageSetItem });
       setCurrentUser(username);
       await loadProfileAndCollection(username);
       const status = await loadTutorialStatus(username);
@@ -2786,11 +2787,8 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     if (currentUser) {
       (async () => {
         try {
-          await supabase.rpc('set_current_user', { username_param: currentUser });
+          await applyProphecyGoldDelta(currentUser, TUTORIAL_REWARD_GOLD);
         } catch (_) {}
-        if (nextGold != null) {
-          await supabase.from('user_data').update({ gold: nextGold }).eq('username', currentUser);
-        }
       })();
     }
   }, [G, screen, tutorialStatus.rewarded, openPack, saveTutorialStatus, currentUser]);
@@ -3532,9 +3530,9 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
       setProfileData((prev) => (prev ? { ...prev, gold: nextGold } : prev));
       (async () => {
         try {
-          await supabase.rpc('set_current_user', { username_param: currentUser });
-        } catch (_) {}
-        const nowIso = new Date().toISOString();
+          const authSession = await ensureAppWriteSession(currentUser);
+          if (!authSession.ready) return;
+          const nowIso = new Date().toISOString();
         const userCardRows = visualCards.map((card) => ({
           user_id: currentUser,
           card_id: card.id,
@@ -3546,7 +3544,9 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
           acquired_at: nowIso,
         }));
         await supabase.from('user_cards').insert(userCardRows);
-        await supabase.from('user_data').update({ gold: nextGold }).eq('username', currentUser);
+        if (spent > 0) {
+          await applyProphecyGoldDelta(currentUser, -spent);
+        }
         await supabase.from('pack_purchases').insert([{
           user_id: currentUser,
           pack_type: pack.id,
@@ -3555,6 +3555,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
           cards_received: visualCards.map((c) => c.id),
           purchased_at: nowIso,
         }]);
+        } catch (_) {}
       })();
     }
   }, [dailyClaimed, metaGold, pullRandomFrom, currentUser, rarityIndex, applyPulledCosmetics]);
@@ -3667,9 +3668,8 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
     if (currentUser) {
       const currentSlotId = deckSlots[idx]?.id || null;
       (async () => {
-        try {
-          await supabase.rpc('set_current_user', { username_param: currentUser });
-        } catch (_) {}
+        const authSession = await ensureAppWriteSession(currentUser);
+        if (!authSession.ready) return;
         const payload = {
           id: currentSlotId || undefined,
           user_id: currentUser,

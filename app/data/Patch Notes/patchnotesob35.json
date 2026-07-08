@@ -1,0 +1,1254 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_35",
+    "title": "SMITE 2 Open Beta 35",
+    "infoboxTitle": "OB35 - SMITE 2 Open Beta 35",
+    "releaseDate": "May 19th, 2026",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_34",
+      "next": "SMITE_2_Open_Beta_36"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 35,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Classic God",
+      "anchor": "New_Classic_God",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Ah Puch",
+          "anchor": "Ah_Puch",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Passive Hollow Ground",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Exhume decaying corpses at will. When you walk over a decaying corpse, reduce the Cooldown of Undead Surge and Corpse Explosion by  1s, restore a portion of your max Health and Mana."
+                    },
+                    {
+                      "text": "Enemy gods and the Fire Giant can destroy corpses with 2 Attacks"
+                    },
+                    {
+                      "text": "You can have up to 6 corpses (max duration); placing more removes the oldest"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 1: Undead Surge",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Raise up to two decaying corpses from the underworld that surge forward, exploding on contact, at max range, or when you reactivate Undead Surge, dealing Magical Damage. Enemies hit are Slowed and have their Healing reduced for a duration. Corpses collapse after exploding and remain behind as decaying corpses."
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 2: Corpse Explosion",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Throw a charm from the underworld that awakens a decaying corpse, applying miasma to enemies in an area. The corpse falls to the ground and remains behind. Enemies take Magical Damage over time. After the duration, enemies take additional Magical Damage and are Stunned if they were healed by an ability during the initial duration."
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 3: Fleeting Breath",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Throw a charm from the underworld that awakens a decaying corpse, applying miasma to enemies in an area. The corpse falls to the ground and remains behind. Enemies take Magical Damage over time. After the duration, enemies that healed while they had this effect take Magical Damage and are Stunned."
+                    }
+                  ]
+                },
+                {
+                  "text": "Ultimate Ability: Empty The Crypts",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Unleash a field of spirits at a target location for 6s. Enemies inside the field take Magical Damage every 0.5s."
+                    },
+                    {
+                      "text": "Each tick applies stacking Healing Reduction and Damage Dealt reduction (stacks refresh)"
+                    },
+                    {
+                      "text": "After casting this ability, your next 3 Attacks also launch zombies that leave decaying corpses behind"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Aspect of the Death March releasing 22nd May",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Each decaying corpse you walk over reduces the Cooldown of Fleeting Breath instead of the Cooldown of Corpse Explosion."
+                    },
+                    {
+                      "text": "Corpse Explosion becomes Wraith Call, which haunts enemy gods dealing bonus damage and significantly debuffing targets on ability hits."
+                    },
+                    {
+                      "text": "Empty The Crypts deals less damage per tick but Slows haunted enemy gods inside the field."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Saga & Event: Dawn of the Darkstar Empire",
+      "anchor": "New_Saga_&amp;_Event:_Dawn_of_the_Darkstar_Empire",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "The Dawn of the Darkstar Empire Event:",
+          "anchor": "The_Dawn_of_the_Darkstar_Empire_Event:",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Purchase to unlock all Dawn of the Darkstar Empire content, including:"
+            },
+            {
+              "type": "paragraph",
+              "text": "• Event Rewards:  One Legendary Saga, Two Premium Travelers, and Four Event Cosmetics"
+            },
+            {
+              "type": "paragraph",
+              "text": "• Classic Travelers for Six Gods"
+            },
+            {
+              "type": "paragraph",
+              "text": "• Four Premium Travelers"
+            },
+            {
+              "type": "paragraph",
+              "text": "Instant Unlock:"
+            },
+            {
+              "type": "paragraph",
+              "text": "• Legendary Reward: The Darkstar Saga for Bellona"
+            },
+            {
+              "type": "paragraph",
+              "text": "• Reward Traveler for Morgan Le Fay"
+            },
+            {
+              "type": "paragraph",
+              "text": "• Reward Cosmetics"
+            },
+            {
+              "type": "paragraph",
+              "text": "• Classic Traveler for Ishtar"
+            },
+            {
+              "type": "paragraph",
+              "text": "Delayed Unlock:"
+            },
+            {
+              "type": "paragraph",
+              "text": "• Premium Reward traveler for Khepri"
+            },
+            {
+              "type": "paragraph",
+              "text": "• Classic travelers for Chiron, Geb, Ne Zha, The Morrigan, Vulcan"
+            },
+            {
+              "type": "paragraph",
+              "text": "• Premium travelers for Bastet, Discordia, Mulan, Nut"
+            }
+          ]
+        },
+        {
+          "title": "The Darkstar Saga",
+          "anchor": "The_Darkstar_Saga",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Bellona is born anew as the Sovereign of the Darkstar Empire, a stunning new Saga skin with three forms."
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Interstella Empyrean Bellona & Darkstar Saga special effect VGS"
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing the premium page"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Outerworld Invader - Bellona Skin"
+                },
+                {
+                  "text": "Galactic Commander - Bellona Skin"
+                },
+                {
+                  "text": "Interstella Empyrean - Burning Conquest Prism"
+                },
+                {
+                  "text": "Interstella Empyrean - Bloody Wrath Prism"
+                },
+                {
+                  "text": "Interstella Empyrean - Phantom Blade Prism"
+                },
+                {
+                  "text": "Interstella Empyrean - Emerald Reaver Prism"
+                },
+                {
+                  "text": "Interstellar Dimension - Recall Skin"
+                },
+                {
+                  "text": "Interstellar Rift - Kill Effect"
+                },
+                {
+                  "text": "Empyrean - Title"
+                },
+                {
+                  "text": "Darkstar’s Banner - Badge"
+                },
+                {
+                  "text": "Outerworld Invader - Burning Conquest Prism"
+                },
+                {
+                  "text": "Outerworld Invader - Bloody Wrath Prism"
+                },
+                {
+                  "text": "Outerworld Invader - Phantom Blade Prism"
+                },
+                {
+                  "text": "Outerworld Invader - Emerald Reaver Prism"
+                },
+                {
+                  "text": "Burning Empyrean - Recall Skin"
+                },
+                {
+                  "text": "Bloody Invade - Recall Skin"
+                },
+                {
+                  "text": "Outerworld Phantom - Recall Skin"
+                },
+                {
+                  "text": "Galactic Reaver - Recall Skin"
+                },
+                {
+                  "text": "Galactic Commander - Burning Conquest Prism"
+                },
+                {
+                  "text": "Galactic Commander - Bloody Wrath Prism"
+                },
+                {
+                  "text": "Galactic Commander - Phantom Blade Prism"
+                },
+                {
+                  "text": "Galactic Commander - Emerald Reaver Prism"
+                },
+                {
+                  "text": "Burning Rift - Kill Effect"
+                },
+                {
+                  "text": "Bloody Rift - Kill Effect"
+                },
+                {
+                  "text": "Outerworld Rift - Kill Effect"
+                },
+                {
+                  "text": "Galactic Rift - Kill Effect"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Wandering Market Travelers",
+      "anchor": "New_Wandering_Market_Travelers",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Traveler: Ishtar Striking Archon",
+          "anchor": "Traveler:_Ishtar_Striking_Archon",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing the Premium Traveler Page, or included in the Dawn of the Darkstar Empire Event Buy All"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Shimmer Prism"
+                    },
+                    {
+                      "text": "Aqua Prism"
+                    },
+                    {
+                      "text": "Venom Prism"
+                    },
+                    {
+                      "text": "Angelic Archon Badge"
+                    },
+                    {
+                      "text": "Battle Banners (part of the Dawn of the Darkstar Empire Event)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Traveler: Dusk Glimmer Morgan Le Fay",
+          "anchor": "Traveler:_Dusk_Glimmer_Morgan_Le_Fay",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after unlocking the Premium Traveler Page by collecting Battle Banners or included in the Dawn of the Darkstar Empire Event Buy All"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Dusk Glimmer Title"
+                    },
+                    {
+                      "text": "Classic Cutesy Chest"
+                    },
+                    {
+                      "text": "Arcane Mark Badge"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Gameplay",
+      "anchor": "Gameplay",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Conquest",
+          "anchor": "Conquest",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Lane Minions",
+                  "items": [
+                    {
+                      "text": "Increased XP Reward while behind the median enemy God level +6% -> +9%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Titans",
+                  "items": [
+                    {
+                      "text": "Now gain +4% Damage Mitigation per alive friendly Structure"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Jungle Monsters",
+                  "items": [
+                    {
+                      "text": "Pushed back initial spawn time of Oracles 1:30 -> 1:35"
+                    },
+                    {
+                      "text": "Pushed back initial spawn of the Random Mid Buff Camp 1:30 -> 1:35"
+                    },
+                    {
+                      "text": "Alpha Centaur (Yellow Buff), Alpha Chimera (Purple Buff), Big Cyclops Warrior",
+                      "items": [
+                        {
+                          "text": "Decreased base Protections from 30 to 25"
+                        },
+                        {
+                          "text": "Decreased max Protections from 68 to 54"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Increased Vortex CC strength against Jungle Monsters"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Runic Bomb",
+                  "items": [
+                    {
+                      "text": "Runic Bomb was dealing extra physical damage to bosses, on top of the 1000 damage already being dealt. The extra phys damage has been removed as a nerf, but now the damage dealt to bosses cannot be mitigated."
+                    },
+                    {
+                      "text": "The physical damage portion of the explosion now only applies to Gods"
+                    },
+                    {
+                      "text": "Increased physical damage vs Gods 300 -> 500"
+                    },
+                    {
+                      "text": "The 1000 damage dealt to Towers, Bosses, and Minions is now pure damage that bypasses all types of mitigation"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fire Giant and Gold Fury",
+                  "items": [
+                    {
+                      "text": "Minions and Pets tanking these objectives now have -75% reduced healing"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fire Giant Buff",
+                  "items": [
+                    {
+                      "text": "Healing from the buff is now reduced by anti-heal and healing immunity effects (e.g. Aegis)"
+                    },
+                    {
+                      "text": "Base",
+                      "items": [
+                        {
+                          "text": "Decreased healing from 1% -> 0.8% of Max Health per second"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Enhanced",
+                      "items": [
+                        {
+                          "text": "Decreased healing from 2% -> 1.6% of Max Health per second"
+                        },
+                        {
+                          "text": "Decreased mana regen from 2% -> 1% of Max Mana per second"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Enhanced Fire Giant",
+                  "items": [
+                    {
+                      "text": "Enhanced Fire Giant being too difficult to kill went against its design goal of being the powerplay option to end games decisively (or at least get very close to ending). EFG’s stats are now more in line with normal Fire Giant."
+                    },
+                    {
+                      "text": "Removed Fire Giant’s additional Max Health while Enhanced (was +4000)"
+                    },
+                    {
+                      "text": "Decreased Fire Giant’s additional Strength while Enhanced +85 -> +40"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Moonlight",
+                  "items": [
+                    {
+                      "text": "A few changes to make both the middle objective and the race to collect shards more competitive…",
+                      "items": [
+                        {
+                          "text": "Lowered the cap on the number of Shards collected, and made it possible for teams to tie and both get Lane Pushers"
+                        },
+                        {
+                          "text": "The Ritual Site at the center of the map now functions similar to how Beacon did in Smite 1, with a couple tweaks. Capturing it is now what awards your team with the Ritual consumable (it’s still also a source of Shards, but less than before)"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "… and re-align the goals and structure of the Moonlight Phase:",
+                      "items": [
+                        {
+                          "text": "Moonlight Objectives",
+                          "items": [
+                            {
+                              "text": "These offer opportunities for PvP, and grant unique rewards for winning these individual objectives"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Moonlight Shards",
+                          "items": [
+                            {
+                              "text": "The number collected represents how well your team as a whole controlled the entire map during the Moonlight Phase, and grant the Lane Pushers as a reward for playing better overall"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Reduced maximum number of Shards teams can collect 100 -> 75"
+                    },
+                    {
+                      "text": "Lane Pushers",
+                      "items": [
+                        {
+                          "text": "Now always spawn at the end of the Moonlight Phase for the team with the highest number of Shards collected",
+                          "items": [
+                            {
+                              "text": "If scores are tied, Lane Pushers will spawn for both teams"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Ritual Site",
+                      "items": [
+                        {
+                          "text": "This point at the center of the map is now capturable by standing in it for approx. 25s"
+                        },
+                        {
+                          "text": "Capturing the Ritual Site awards your team the Ritual consumable and +50 Team Gold",
+                          "items": [
+                            {
+                              "text": "Shards still rain from the sky while capturing, but they are no longer tied to winning the consumable"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Capture Rules:",
+                          "items": [
+                            {
+                              "text": "Capturing speeds up slightly with more teammates on the point"
+                            },
+                            {
+                              "text": "Tug-Of-War: Capture progress is retained if control of the point is lost. However, if the capture progress of both teams exceeds the total progress needed to win the capture point, the team in control will begin reducing the progress of the enemy team."
+                            },
+                            {
+                              "text": "Teams will automatically win the Capture Point if they’re in control of it when the Moonlight Phase ends"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Moonlight Queen Naga",
+                      "items": [
+                        {
+                          "text": "Now drops a Shard once for every 5% of Health lost"
+                        },
+                        {
+                          "text": "Now regenerates a small burst of HP on leash"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Amaterasu"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Heavenly Reflection",
+              "items": [
+                {
+                  "text": "Now deals 15 increased base damage to minions at all ranks"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Anubis"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "The Scales",
+              "items": [
+                {
+                  "text": "Base Protections reduced from 10 to 5"
+                },
+                {
+                  "text": "Max bonus Lifesteal reduced from 6% to 4%"
+                },
+                {
+                  "text": "Max bonus Protections reduced from 20 to 16"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Aphrodite"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Love Birds",
+              "items": [
+                {
+                  "text": "Heal now ticks 1 additional time on application (was 6 ticks  now 7 ticks total)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Bellona"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Bludgeon",
+              "items": [
+                {
+                  "text": "Spin damage increased from 45/80/115/155/190 to 55/90/125/165/200"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Cerberus"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Stygian Torment",
+              "items": [
+                {
+                  "text": "This ability will no longer Crowd Controls displacement immune gods."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Da Ji"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "General",
+              "items": [
+                {
+                  "text": "Base Health reduced from 525 to 483"
+                },
+                {
+                  "text": "Health Per Level reduced from 101.5 to 86.5"
+                },
+                {
+                  "text": "Base Physical Protections reduced from 16 to 14.7"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Discordia"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Erratic Behavior",
+              "items": [
+                {
+                  "text": "Reduced cooldown reduction from 0.4/0.6/0.8/1.0/1.2 to 0.2/0.4/0.6/0.8/1.0"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Eset"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Spirit Ball",
+              "items": [
+                {
+                  "text": "Intelligence scaling increased from 70% to 80%"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Izanami"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Spectral Projection",
+              "items": [
+                {
+                  "text": "Projectile speed slightly increased"
+                }
+              ]
+            },
+            {
+              "text": "Dark Portal",
+              "items": [
+                {
+                  "text": "Post fire time reduced from .6s to .3s"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Morgan Le Fay"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Shroud of Wild Fire",
+              "items": [
+                {
+                  "text": "Aspect of the Cursed Crown",
+                  "items": [
+                    {
+                      "text": "Percent Max Health Scaling reduced from 5% to 3%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Consuming Power",
+              "items": [
+                {
+                  "text": "Aspect of the Cursed Crown",
+                  "items": [
+                    {
+                      "text": "Slow decreased from 20% to 15%"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Jing Wei"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Agility",
+              "items": [
+                {
+                  "text": "No longer grants a charge of Explosive Bolts"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Scylla"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Crush",
+              "items": [
+                {
+                  "text": "Intelligence scaling increased from 80% to 90%"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Xbalanque"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Branching Bolas",
+              "items": [
+                {
+                  "text": "Increased Damage increased from 10/15/20/25/30 to 10/20/30/40/50"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Alchemist Cloak"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Removed: 400 Max Mana"
+            },
+            {
+              "text": "Added: 250 Max Health"
+            },
+            {
+              "text": "Added: 30 Intelligence"
+            },
+            {
+              "text": "Recipe changed to Soul Reliquary + Runic Hide"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Blink Rune"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Cooldown increased from 140s to 170s"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Blinking Abyss"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Cooldown increased from 140s to 170s"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Bracer of the Abyss"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Power per stack reduced from 10 to 8"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Eros’ Bow"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "No longer provides healing when hitting towers or phoenixes"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Eye of Providence"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Magical Protection increased from 25 to 30"
+            },
+            {
+              "text": "Physical Protection increased from 25 to 30"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Gauntlet of Thebes"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Added: +10 Physical Protections at max stacks"
+            },
+            {
+              "text": "Added: +10 Magical Protections at max stacks"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Kinetic Cuirass"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Attacks required for buff decreased from 4 to 3"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Oath-Sworn Spear"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Strength reduced from 60 to 50"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Prophetic Cloak"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "max stacks reduced from 20 to 15."
+            },
+            {
+              "text": "Protections at max stacks increased from 5 to 10"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Selflessness"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Cooldown reduced from 30s to 20s"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The World Stone"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Intelligence increased from 70 to 80"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "War Flag"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Now when assisting on minions or Jungle monsters, War Flag will additionally heal self and allies within 8.8m for 7 health."
+            }
+          ]
+        }
+      ],
+      "subsections": [
+        {
+          "title": "New item",
+          "anchor": "New_item",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Midgardian Mail"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "50 Physical Protection"
+                },
+                {
+                  "text": "250 Max Health"
+                },
+                {
+                  "text": "Damaged by Attack: That enemy has their Attack Speed reduced by 8% for 3s. Stacks up to 4 times."
+                },
+                {
+                  "text": "Recipe: Veve Charm + Legionnaire Armor"
+                },
+                {
+                  "text": "Total Cost 2400"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Audio - Fixed announcer line not triggering when minions spawn in Assault"
+            },
+            {
+              "text": "Audio - Rebalanced Bellona’s Sfx volume"
+            },
+            {
+              "text": "Fixed additional cases that could result in a “stuck falling” situation"
+            },
+            {
+              "text": "Fixed Morgan Le Fay 1-1 casting for Normal Cast users"
+            },
+            {
+              "text": "[Ishtar] Fixed issue with Morrigan being unable to detransform and ishtar being revealed"
+            },
+            {
+              "text": "Fix for Ishtar A01 Getting Stuck"
+            },
+            {
+              "text": "fixed issue with inhand abilities not consuming costs in certain cases"
+            },
+            {
+              "text": "Fixed objective healthbars not displaying for Towers"
+            },
+            {
+              "text": "Fixed Towers marking an enemy God as the priority target if that enemy God damaged a friendly God standing outside of the Tower’s radius"
+            },
+            {
+              "text": "Fixed Jungle Monsters getting stuck after being Banished"
+            },
+            {
+              "text": "Fixed Jungle Camp rewards scaling beyond 30min"
+            },
+            {
+              "text": "Fixed being able to damage the Moonlight Queen while outside of her leash range"
+            },
+            {
+              "text": "Fixed “Minions have spawned!” announcement not playing in Assault"
+            },
+            {
+              "text": "Fixed Mike Typhon not targeting Phoenixes"
+            },
+            {
+              "text": "Fixed issue that could cause adaptive stats to not function correctly"
+            },
+            {
+              "text": "Void Shield removed from item store Strength filter"
+            },
+            {
+              "text": "Void Stone removed from item store Intelligence filter"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 5/21/26",
+      "anchor": "Hotfix_5/21/26",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed an Issue with Agni ultimate. Agni is now available for play."
+            },
+            {
+              "text": "Amaterasu - Fixed an issue where Heavenly reflection was not dealing damage to Jungle camps and bosses"
+            },
+            {
+              "text": "Fixed some issues with low priority queue."
+            },
+            {
+              "text": "AhPuch - Fixed an issue where autoskill was not working correctly"
+            },
+            {
+              "text": "Fixed Runic Bomb dealing reduced damage to Phoenixes"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 5/22/26",
+      "anchor": "Hotfix_5/22/26",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Ah Puch being able to hit enemy Ah Puch corpses with Corpse Explosion"
+            },
+            {
+              "text": "Fixed an issue with Atlas Kinetic Charge giving unintended movement speed to himself"
+            },
+            {
+              "text": "Buff icon added to Atlas Kinetic Charge"
+            },
+            {
+              "text": "Midgardian Mail Item should now be available for purchase (We’re aware the item image is not displaying correctly)"
+            },
+            {
+              "text": "Fixed an issue with Atlas aspect proccing item effects on basic attack"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 5/26/26",
+      "anchor": "Hotfix_5/26/26",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed a case where a duplicate Ritual could spawn that neither team could pick up"
+            },
+            {
+              "text": "Fixed Ah Puch aspect autolevel"
+            },
+            {
+              "text": "Mulan double proccing items on evolved spear strike sometimes is fixed."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

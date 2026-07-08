@@ -1,0 +1,192 @@
+[
+  {
+    "Type": "StringTable",
+    "Name": "ST_HW_HelpTip_Descriptions",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'StringTable'",
+    "Package": "/Game/UI/StringTables/HelpTips/ST_HW_HelpTip_Descriptions",
+    "StringTable": {
+      "TableNamespace": "HW.HelpTip.Descriptions",
+      "KeysToEntries": {
+        "Blight.1.Description": "Attacks and abilities apply poison that deals <Highlight>5%</> of Max Health over 3 seconds.",
+        "Blight.2.Description": "Attacks and abilities apply poison that deals 5% of Max Health over 3 seconds.\r\n\r\n<Highlight>You gain +10 HP for each tick of damage.</>",
+        "Blight.3.Description": "Attacks and abilities apply poison that deals <Highlight>10%</> of Max Health over 3 seconds.\r\n\r\nYou gain +10 HP for each tick of damage.",
+        "Inspiration.1.Description": "Gain +4 Strength and Intelligence, once per ability hit or basic attack hit. Max 5 stacks.\r\n\r\n<Highlight>Nearby minion deaths stores a soul. Hitting an objective or jungle boss fires all of the souls towards the target, dealing 15 damage per soul. Max 30 souls.</>",
+        "Inspiration.2.Description": "Gain <Highlight>+8</> Strength and Intelligence, once per ability hit or basic attack hit. Max 5 stacks.\r\n\r\nNearby minion deaths stores a soul. Hitting an objective or jungle boss fires all of the souls towards the target, dealing 15 damage per soul. Max 30 souls.",
+        "Inspiration.3.Description": "Gain +8 Strength and Intelligence, once per ability hit or basic attack hit. Max 5 stacks.\r\n\r\nNearby minion deaths stores a soul. Hitting an objective or jungle boss fires all of the souls towards the target, dealing 15 damage per soul. Max 30 souls.\r\n\r\n<Highlight>Gain +1 soul every second.</>",
+        "Pathfinder.1.Description": "Gain +10% Movement Speed while out of combat.\r\n\r\n<Highlight>+5 Tenacity</>",
+        "Pathfinder.2.Description": "Gain <Highlight>+15%</> Movement Speed while out of combat.\r\n\r\n+5 Tenacity",
+        "Pathfinder.3.Description": "Gain +15% Movement Speed while out of combat.\r\n\r\n<Highlight>+10</> Tenacity",
+        "Primal.1.Description": "Gain +5 Mana Regeneration.\r\n\r\n<Highlight>When you take damage from an enemy god, reduce your non-ultimate cooldowns by 1s. Can only occur every 6s.</>",
+        "Primal.2.Description": "Gain <Highlight>+10</> Mana Regeneration.\r\n\r\nWhen you take damage from an enemy god, reduce your non-ultimate cooldowns by 1s. Can only occur every 6s.",
+        "Primal.3.Description": "Gain +10 Mana Regeneration.\r\n\r\nWhen you take damage from an enemy god, reduce your non-ultimate cooldowns by 1s. Can only occur every <Highlight>3s</>.",
+        "Trinkets.1.Description": "Gain a <Highlight>+100</> HP Shield. Stacks with other Trinkets.\r\n\r\nMax 900 Shield HP.",
+        "Trinkets.2.Description": "Gain a <Highlight>+200</> HP Shield. Stacks with other Trinkets. \r\n\r\nMax 900 Shield HP. ",
+        "GoldFury.1.Description": "Your speed boost out of fountain is now permanently doubled.",
+        "GoldFury.2.Description": "Nearby friendly minions take reduced damage and deal more damage.",
+        "GoldFury.3.Description": "Deal +25% bonus true damage to Structures.\r\nGain +50 Protections when near an enemy Structure.",
+        "FireGiant.1.Description": "Grants +50 STR or +75 INT.\r\nRegenerates 1% of Health and 0.5% of Mana every second.",
+        "Essence.1.Description": "Grants +15 STR/INT. Max 4 stacks.",
+        "Warhorn.Friendly.Description": "Your team captured the Warhorn.\r\n\r\nYour towers now grant increased movement speed and mana regeneration when standing near them.",
+        "TowerBounty.Reward.Description": "Enemy Towers drop Bounty rewards when you destroy a segment of their health bar.\r\n\r\nThe final Bounty grants a lot of Gold, but only one team can get it! Claim the final Bounty first to deny the enemy from getting yours!",
+        "GoldFury.Reward.Description": "1st Kill: Double Fountain Speed\r\n2nd Kill: Ward Upgrade (Reduced Cooldown, Grants +1 Gold per Reveal)\r\n3rd Kill: Leadership Aura (Buffs nearby Minions)",
+        "Phoenix.Description": "Phoenixes regain health after taking damage, but they cannot regenerate past 50% of their maximum HP.",
+        "StealthZone.Description": "You remain hidden inside patches of foliage until you attack.",
+        "GoldFury.4.Description": "The enemy’s frontmost structures are weakened. Their damage is reduced by 25% and their attack speed is reduced by 50%.",
+        "Infamy.1.Description": "Defeat Jungle Monsters to gain Infamy with their camp.\r\n\r\nCamps with higher levels of Infamy drop more powerful Jungle Buffs.",
+        "Conquest.Role.Generic.Description": "<Highlight>Slay enemy Gods, minions, and monsters to gain Gold.</> Gold is used to purchase powerful items.\r\n\r\nClear a path into the enemy base by destroying Towers, then <Highlight>slay their Titan to win!</> ",
+        "Conquest.Role.Carry.Description": "You are a <Highlight>damage dealer</>.\r\n\r\nCarries typically <Highlight>lane with a Support</>.\r\n\r\n<Highlight>Focus on gaining Gold</> by slaying enemy minions and monsters.\r\n\r\nYour strength lies in your potential to quickly <Highlight>defeat Bosses and Towers</>.",
+        "Conquest.Role.Mid.Description": "You are a <Highlight>damage dealer</>.\r\n\r\nMid typically starts in the <Highlight>Middle Lane</>.\r\n\r\n<Highlight>Focus on gaining Gold</> by slaying enemy minions and monsters.\r\n\r\nYour strength lies in your ability to <Highlight>secure objectives near the center of the map</>.",
+        "Conquest.Role.Solo.Description": "You are a <Highlight>bruiser and off-tank</>.\r\n\r\nSolo typically starts in the <Highlight>Solo Lane</>\r\n\r\n<Highlight>Focus on winning your Lane</> by destroying the enemy Tower.\r\n\r\nYour strength lies in your ability to <Highlight>damage and disrupt weaker enemies</>.",
+        "Conquest.Role.Jungle.Description": "You are a <Highlight>roamer and ganker</>.\r\n\r\nJungle typically starts at a <Highlight>Jungle Camp</>.\r\n\r\n<Highlight>Focus on gaining Gold</> by slaying Jungle Monsters and enemy Gods.\r\n\r\nYour strength lies in your ability to <Highlight>flank and ambush enemies</>.",
+        "Conquest.Role.Support.Description": "You are a <Highlight>tank and utility support</>.\r\n\r\nSupport typically starts in <Highlight>lane with a Carry</>.\r\n\r\n<Highlight>Focus on helping your teammates</> with their objectives and Gold gain.\r\n\r\nYour strength lies in your ability to <Highlight>mitigate damage and disrupt enemies</>.",
+        "Conquest.Role.Fill.Desciption": "You are a <Highlight>team player</>.\r\n\r\n<Highlight>Focus on filling</> into a role your team is missing.",
+        "Conquest.Role.Generic.ChooseALane.Description": "Pick a lane to start in.",
+        "Conquest.Lane.Middle.Description": "<Highlight>Destroy the enemy Minions</> when they arrive.\r\n\r\nBetween Minion waves, you can hunt <Highlight>nearby Monsters in the Jungle</> for extra Gold.",
+        "Conquest.Lane.Duo.Description": "<Highlight>Destroy the enemy Minions</> when they arrive.\r\n\r\nBetween Minion waves, you can hunt <Highlight>nearby Monsters in the Jungle</> for extra Gold.",
+        "Conquest.Lane.Solo.Description": "<Highlight>Destroy the enemy Minions</> when they arrive.\r\n\r\nBetween Minion waves, you can <Highlight>capture the Warhorn</> to spawn Champion minions for your team.",
+        "Warhorn.Description": "Capture the Warhorn to spawn Champion minions in all 3 lanes.",
+        "Trinkets.3.Description": "Gain a <Highlight>+300</> HP Shield. Stacks with other Trinkets. \r\n\r\nMax 900 Shield HP. ",
+        "Blight.0.Description": "Attacks and abilities apply poison that deals 2.5% of Max Health over 3 seconds.",
+        "Inspiration.0.Description": "Gain +3 Strength and Intelligence, once per ability hit or basic attack hit. Max 5 stacks.",
+        "Pathfinder.0.Description": "Gain +10% Movement Speed while out of combat.",
+        "Primal.0.Description": "Gain +5 Mana Regeneration.",
+        "Trinkets.0.Description": "Gain a +50HP Shield. Stacks with other Trinkets.\r\n\r\nMax 900 Shield HP.",
+        "Naga.0.Description": "Hitting an objective or jungle boss spawns <Highlight>two naga soldiers</> that only attack that target.\r\n\r\nOnce summoned, they cannot be resummoned again for <Highlight>15s</>.\r\n\r\nThe Naga soldiers will be unsummoned upon victory or defeat.",
+        "Practice.PracticeMenu.Description": "Open the scoreboard to access the Practice Menu.",
+        "Gift.0.Description": "Grants +5% Strength, Intelligence, and Protections; +1% Max Health Regen for 60s.",
+        "BattleCry.NoFire": "You don't have any charges for Battle Cry!\r\n\r\nYou gain charges whenever you defeat a player or when you are defeated.",
+        "BattleCry.Fire": "You've activated Battle Cry!\r\n\r\nGrants +3% Item Stats and 3% Movement Speed per stack consumed.",
+        "Totem.Description": "The Totem grants Cooldown Reduction to the winner who dealt the most damage to the Totem.\r\n\r\nNearby friendly structures also grant +4 Mana Regeneration.",
+        "InspirationV2.1.Description": "Gain +3 Strength and Intelligence, once per ability hit or basic attack hit. Max 5 stacks.\r\n\r\n<Highlight>Upon reaching max stacks, gain +5% lifesteal.</>",
+        "InspirationV2.2.Description": "Gain <Highlight>+8</> Strength and Intelligence, once per ability hit or basic attack hit. Max 5 stacks.\r\n\r\nUpon reaching max stacks, gain +5% lifesteal.",
+        "InspirationV2.3.Description": "Gain +8 Strength and Intelligence, once per ability hit or basic attack hit. Max 5 stacks.\r\n\r\n<Highlight>Upon reaching max stacks, gain +10% lifesteal.</>",
+        "Conquest.Teleporter.Description": "Use the Lane Teleporter to quickly return to your furthest Tower.\r\n\r\nLane Teleporters can only be used once every 3 minutes.",
+        "Conquest.Tower.TargetedByEnemyTower.Description": "Enemy Towers will attack you if you step into their radius alone.\r\n\r\nThey will also target you if you hit an enemy God nearby, so watch your aim!",
+        "Recall.Description": "Receiving damage or taking any action will cancel your Recall.\r\n\r\nLook for a safe place to hide before channeling your Recall!",
+        "Conquest.Hint.Recall.Description": "Receiving damage or taking any action will cancel your Recall.\r\n\r\nLook for a safe place to hide before channeling your Recall!",
+        "Conquest.Hint.ClearingMinionsQuickly": "Focus on slaying the enemy Minions to put pressure on your lane opponent. \r\n\r\nUse abilities to clear Minion waves quickly!",
+        "Conquest.Hint.AutoBuilder.Description": "Auto Builder will automatically purchase Items for you while in the Fountain.\r\n\r\nYou can select an Auto Build at the start of a match. In this Tutorial, we've selected one for you.",
+        "Conquest.ObsidianDagger.SlotsFull": "Your consumable slots are full!",
+        "Conquest.ObsidianDagger.AlreadyOwned": "You can only hold one Obsidian Dagger in your inventory at a time.",
+        "CyclopsWard.Description": "A placeable vision ward. Lasts for 120s or until killed. Can carry up to 2 of this item.  \r\n\r\nYou can have up to two total wards placed in the map.",
+        "CyclopsWard.AlreadyOwned": "You can only hold up to two Cyclops Wards.",
+        "EyesOfTheJungle.Description": "Activate to ping all enemy locations on the minimap once.",
+        "EyesOfTheJungle.AlreadyOwned": "You can only hold up to one of the Eyes of the Jungle.",
+        "EyesOfTheJungle.SlotsFull": "You need at least one empty slot in order to pickup the Eyes of the Jungle.",
+        "CyclopsWard.SlotsFull": "You need at least one empty slot in order to pickup the Cyclops Ward.",
+        "Primal.Arena.Description": "Gain +5 Mana Regeneration and +20 Cooldown Rate",
+        "CyclopsEye.Description": "Instantly reduces the active cooldown of your Curio by <Highlight>50%</>.\r\n\r\nAlso heals <Highlight>10%</> of your Health and Mana.",
+        "Moonlight.Ritual.AlreadyOwned": "You can only hold one of each Ritual at a time.",
+        "FireGiant.2.Description": "Grants +80 STR or +120 INT.\r\nRegenerates 2% of Health and 2% of Mana every second.",
+        "Conquest.EverlastingFlame.SlotsFull": "Your item slots are full!",
+        "GoldFury.Reward.StatBuff": "Grants all teammates a permanent Fury Buff:\r\n<highlight>+3% Max Health</>\r\n<highlight>+2% Attack Speed</>\r\n<highlight>+3% Stats From Items</>",
+        "GoldFury.Reward.StatBuff.NoFormatting": "Each Gold Fury Kill grants all teammates a permanent buff stack:\r\n+3% Max Health\r\n+2% Attack Speed\r\n+3% all other Stats From Items"
+      },
+      "KeysToMetaData": {
+        "Conquest.Hint.Recall.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Recall.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "FireGiant.1.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Inspiration.1.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Inspiration.2.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Inspiration.3.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Inspiration.0.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "InspirationV2.1.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "InspirationV2.2.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "InspirationV2.3.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Conquest.ObsidianDagger.SlotsFull": {
+          "METADATA_ID_COMMENT": "Obsidian Dagger is a reward players can pick up, but only if they have an open consumable inventory slot."
+        },
+        "Conquest.ObsidianDagger.AlreadyOwned": {
+          "METADATA_ID_COMMENT": "Obsidian Dagger is a reward players can pick up, but they can only hold one at a time."
+        },
+        "CyclopsWard.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "CyclopsWard.AlreadyOwned": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "EyesOfTheJungle.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "EyesOfTheJungle.AlreadyOwned": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "EyesOfTheJungle.SlotsFull": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "CyclopsWard.SlotsFull": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "GoldFury.3.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Primal.Arena.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Warhorn.Friendly.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Totem.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "BattleCry.Fire": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "CyclopsEye.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Moonlight.Ritual.AlreadyOwned": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Gift.0.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "FireGiant.2.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Pathfinder.0.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Pathfinder.1.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Pathfinder.2.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Pathfinder.3.Description": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Conquest.EverlastingFlame.SlotsFull": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "GoldFury.Reward.StatBuff": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "GoldFury.Reward.StatBuff.NoFormatting": {
+          "METADATA_ID_COMMENT": ""
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,2802 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_7",
+    "title": "SMITE 2 Open Beta 7",
+    "infoboxTitle": "OB7 - SMITE 2 Open Beta 7",
+    "releaseDate": "April 7, 2025",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_6",
+      "next": "SMITE_2_Open_Beta_8"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 7,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Ported God",
+      "anchor": "New_Ported_God",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Cerberus (Live with the Update!)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Melee Basic Attacks"
+                    },
+                    {
+                      "text": "Damage Type: Magical"
+                    },
+                    {
+                      "text": "Scaling Type: Intelligence Scaling"
+                    }
+                  ]
+                },
+                {
+                  "text": "Passive: Spirit of Death",
+                  "items": [
+                    {
+                      "text": "Any time a nearby enemy god is Healed, that Heal is reduced by 40% and you receive 60% + 1% per level of the Heal",
+                      "items": [
+                        {
+                          "text": "The amount stolen is based off of the base heal effect and does not include any increase or reduction applied"
+                        },
+                        {
+                          "text": "Severing an enemy soul increases Healing stolen from them by 20% for 5s"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 1: Paralyzing Spit",
+                  "items": [
+                    {
+                      "text": "Spit venom with your snake tail that passes through enemies dealing Magical Damage",
+                      "items": [
+                        {
+                          "text": "If your dog heads are alert, they also spit venom"
+                        },
+                        {
+                          "text": "Each head is alerted by landing a basic attack and all are alerted after Ghastly Breath is used"
+                        },
+                        {
+                          "text": "When all heads are alert the snake tail projectile Stuns targets. The stun is 75% less effective within 2.5 meters."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 2: Ghastly Breath",
+                  "items": [
+                    {
+                      "text": "Your heads release a cone of noxious breath dealing Magical Damage repeatedly to enemies in front of you.",
+                      "items": [
+                        {
+                          "text": "Enemies hit have their Magical Protection reduced up to 3 times"
+                        },
+                        {
+                          "text": "Enemies in the center of the breath are Slowed up to 3 times"
+                        },
+                        {
+                          "text": "Firing this ability immediately alerts all your heads"
+                        },
+                        {
+                          "text": "Killing Souls with this ability enhances its damage by 15% for the remaining duration up to 3 times. At 3 stacks the entire area immediately applies 3 stacks of the Slow"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 3: Soul Expulsion",
+                  "items": [
+                    {
+                      "text": "Leap forward dealing Magical Damage to enemies and severing their souls when you land",
+                      "items": [
+                        {
+                          "text": "Killing a soul Heals you and reduces Soul Expulsion’s cooldown by 2s"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ultimate Ability: Stygian Torment",
+                  "items": [
+                    {
+                      "text": "Raise all enemy Gods into the air, severing their souls and dealing Magical Damage to them before pulling them in front of you.",
+                      "items": [
+                        {
+                          "text": "Using this ability alerts all of your heads"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect releasing April 11: Aspect of Souls",
+                  "items": [
+                    {
+                      "text": "Ghastly Breath ticks an additional time for every 3 god souls you have killed but souls no longer heal. Stygian Torment now only knocks up targets."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Supporter Store",
+      "anchor": "New_Supporter_Store",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "NEW Cosmetic Type: Name Flairs!",
+              "items": [
+                {
+                  "text": "Name Flairs change the user’s name display everywhere in-game except above the user’s chosen god in match."
+                }
+              ]
+            },
+            {
+              "text": "NEW SMITE 2 Supporter Store",
+              "items": [
+                {
+                  "text": "Base Colors - Set of 8 Name Flairs",
+                  "items": [
+                    {
+                      "text": "Burnstream"
+                    },
+                    {
+                      "text": "Infernal Tide"
+                    },
+                    {
+                      "text": "Spring Bloom"
+                    },
+                    {
+                      "text": "Glacial Tide"
+                    },
+                    {
+                      "text": "Emerald Veil"
+                    },
+                    {
+                      "text": "Solar Flare"
+                    },
+                    {
+                      "text": "Royal Amethyst"
+                    },
+                    {
+                      "text": "Crimson Twilight"
+                    }
+                  ]
+                },
+                {
+                  "text": "Sine Wave - Set of 8 Name Flairs",
+                  "items": [
+                    {
+                      "text": "Burnstream - Sine Wave"
+                    },
+                    {
+                      "text": "Infernal Tide - Sine Wave"
+                    },
+                    {
+                      "text": "Spring Bloom - Sine Wave"
+                    },
+                    {
+                      "text": "Glacial Tide - Sine Wave"
+                    },
+                    {
+                      "text": "Emerald Veil - Sine Wave"
+                    },
+                    {
+                      "text": "Solar Flare - Sine Wave"
+                    },
+                    {
+                      "text": "Royal Amethyst - Sine Wave"
+                    },
+                    {
+                      "text": "Crimson Twilight - Sine Wave"
+                    }
+                  ]
+                },
+                {
+                  "text": "Global Emote Slot Bundle - Increases the available number of Global Emote equip slots for use in match from 1 to 4."
+                },
+                {
+                  "text": "The following VGS commands can be used to fire Global Emotes in game",
+                  "items": [
+                    {
+                      "text": "Slot 1 - VXE1"
+                    },
+                    {
+                      "text": "Slot 2 - VXE2"
+                    },
+                    {
+                      "text": "Slot 3 - VXE3"
+                    },
+                    {
+                      "text": "Slot 4 - VXE4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Wandering Market Collection - Tidy Tails",
+      "anchor": "New_Wandering_Market_Collection_-_Tidy_Tails",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Page 1 - Free for all players!",
+              "items": [
+                {
+                  "text": "Maid of Mischief Amaterasu Skin"
+                },
+                {
+                  "text": "In Glorious Silence Amaterasu Tracker"
+                },
+                {
+                  "text": "Kitty Backpack Badge"
+                },
+                {
+                  "text": "Keeping it Clean Global Emote"
+                },
+                {
+                  "text": "I’m Batty Jump Stamp"
+                },
+                {
+                  "text": "Dusty Title"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Page 2",
+              "items": [
+                {
+                  "text": "Maid to Kill Izanami Skin"
+                },
+                {
+                  "text": "Cat Butler Ward Skin"
+                },
+                {
+                  "text": "Feather Ruffler Badge"
+                },
+                {
+                  "text": "Blessed Heals Ra Tracker"
+                },
+                {
+                  "text": "100 Diamonds"
+                },
+                {
+                  "text": "Ascension Pass Token"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Page 3",
+              "items": [
+                {
+                  "text": "Butler of the Bins Danzaburou Skin"
+                },
+                {
+                  "text": "Blood Stepper Jump Stamp"
+                },
+                {
+                  "text": "Beast at Midnight Badge"
+                },
+                {
+                  "text": "Rocketeer Racoon Danzaburou Tracker"
+                },
+                {
+                  "text": "100 Diamonds"
+                },
+                {
+                  "text": "Haunter Mansion Card Effect"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Page 4",
+              "items": [
+                {
+                  "text": "Maid of Midnight Hecate Skin"
+                },
+                {
+                  "text": "Certified Clean Title"
+                },
+                {
+                  "text": "Sweeping the Floor Jump Stamp"
+                },
+                {
+                  "text": "100 Diamonds"
+                },
+                {
+                  "text": "Classic Skin Chest"
+                },
+                {
+                  "text": "Exsanguinating Kills Izanami Tracker"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Skins and Cosmetics",
+      "anchor": "New_Skins_and_Cosmetics",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "NEW SMITE 2 Skins! (purchasable for 50% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Oblivion Seer Ra, available in the Oblivion Chest or Direct Purchase"
+                },
+                {
+                  "text": "Bad Bunny Nu Wa, available in the Easter Chest or Direct Purchase - Releasing April 14"
+                }
+              ]
+            },
+            {
+              "text": "NEW SMITE 2 Event Skins (available FREE via the Easter Event)",
+              "items": [
+                {
+                  "text": "Bunny Bliss Nu Wa - Releasing April 14"
+                }
+              ]
+            },
+            {
+              "text": "Classic Skins (purchasable for 100% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Shadow Howler Hun Batz"
+                },
+                {
+                  "text": "Thanatoast Thanatos - Releasing April 14"
+                }
+              ]
+            },
+            {
+              "text": "Prisms (purchasable for 100% Diamonds)",
+              "items": [
+                {
+                  "text": "Oblivion Seer - Wraithborn Green"
+                },
+                {
+                  "text": "Oblivion Seer - Sunflare Yellow"
+                },
+                {
+                  "text": "Oblivion Seer - Bloodshade Red"
+                },
+                {
+                  "text": "Thanatoast - Shadowberry"
+                },
+                {
+                  "text": "Thanatoast - French Toast"
+                },
+                {
+                  "text": "Thanatoast - Burnt Black"
+                }
+              ]
+            },
+            {
+              "text": "Cross-Gen Skins (purchasable for 50% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Fletched Faun Artemis"
+                },
+                {
+                  "text": "Spirit Stone Geb"
+                }
+              ]
+            },
+            {
+              "text": "Cosmetics",
+              "items": [
+                {
+                  "text": "Grave Rabbit Badge + Cottontail Title Bundle, available in the Easter Chest"
+                },
+                {
+                  "text": "Oblivion Sigil Jump Stamp + Phantom Crown Badge Bundle, available in the Oblivion Chest"
+                },
+                {
+                  "text": "Sobek Bunny Badge, available in the Bunny Bliss Egg Festival Event - Releasing April 14"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "OB7 Full Size Skin Splash art can be found in the Community Resource Bank."
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Support Notifications",
+      "anchor": "Support_Notifications",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "In our continued efforts to mitigate disruptive behavior in SMITE 2, we're introducing a new notification feature to enhance player transparency. Players will now receive a pop-up notification upon login if action has been taken against someone they reported for disruptive behavior. Additionally, players who receive multiple reports for disruptive actions will also be notified, providing a clear signal that negative behavior is being monitored and addressed. This improvement reinforces our commitment to maintaining a fair, enjoyable, and respectful gaming community."
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Gameplay",
+      "anchor": "Gameplay",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "NEW Feature - Consumable Dropping",
+              "items": [
+                {
+                  "text": "Players can now drop a Consumable Item in their inventory if they pick up a new Item while both consumable slots are full."
+                },
+                {
+                  "text": "Dropped consumables will stay on the ground for 120s and can be picked up by anyone on your allied team by pressing the Interact key."
+                },
+                {
+                  "text": "This system will attempt to drop items in Consumable Slot 2 first. If there is an item in Consumable slot 2 that is not droppable then the system will drop the Item in Consumable slot 1.",
+                  "items": [
+                    {
+                      "text": "Droppable Items",
+                      "items": [
+                        {
+                          "text": "Health Potion"
+                        },
+                        {
+                          "text": "Mana Potion"
+                        },
+                        {
+                          "text": "Multi Potion"
+                        },
+                        {
+                          "text": "Vision Ward"
+                        },
+                        {
+                          "text": "Sentry Ward"
+                        },
+                        {
+                          "text": "Baron’s Brew"
+                        },
+                        {
+                          "text": "Cyclops Ward"
+                        },
+                        {
+                          "text": "Eyes of the Jungle"
+                        },
+                        {
+                          "text": "Runic Bomb"
+                        },
+                        {
+                          "text": "Crystalline Egg"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Non-Droppable Items",
+                      "items": [
+                        {
+                          "text": "Health Chalice"
+                        },
+                        {
+                          "text": "Elixir of Strength"
+                        },
+                        {
+                          "text": "Elixir of Intelligence"
+                        },
+                        {
+                          "text": "Obsidian Dagger"
+                        },
+                        {
+                          "text": "Vulcan Mods"
+                        },
+                        {
+                          "text": "Hua Mulan Banner"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "General",
+      "anchor": "General",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Wandering Market Update",
+              "items": [
+                {
+                  "text": "The ability to purchase Wandering Market coins has been added to the Wandering Market Hub screen."
+                },
+                {
+                  "text": "Players can purchase packs of 500 coins, and can purchase multiple packs of 500 at once from the purchase confirmation screen."
+                },
+                {
+                  "text": "Purchased coins do not count toward the 20,000 Coin cap.  If players have both purchased and earned coins, earned coins are spent first to keep players below the cap and earning coins."
+                }
+              ]
+            },
+            {
+              "text": "Targeter Updates",
+              "items": [
+                {
+                  "text": "Izanami - all targeters updated with new versions for base and skins"
+                },
+                {
+                  "text": "Susano - all targeters updated with new versions for base and skins"
+                },
+                {
+                  "text": "Thanatos - all targeters updated with new versions for base and skins"
+                },
+                {
+                  "text": "Ra’s Solar Blessing (Ability 3) Aspect Unit Targeter has been updated to replace Geb Rocks"
+                }
+              ]
+            },
+            {
+              "text": "HUD Editor",
+              "items": [
+                {
+                  "text": "A new slider has been added for minimap “Background Opacity.” This will now allow players to change the opacity of the minimap and the minimap icons independently."
+                },
+                {
+                  "text": "More widgets have been added to the HUD editor"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Game Modes",
+      "anchor": "Game_Modes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Conquest",
+          "anchor": "Conquest",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "New Map Feature - Wind Sprites",
+                  "items": [
+                    {
+                      "text": "When the first Gold Fury is slain, small wind elementals appear around the map"
+                    },
+                    {
+                      "text": "Players can interact with these wind elementals to be propelled forward in the direction they are facing",
+                      "items": [
+                        {
+                          "text": "The distance traveled is 10m (for reference An-hur’s leap is 8.8m)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Assault",
+          "anchor": "Assault",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "We've reviewed everyone's feedback from our last test and have made some further iterations and we can't wait to hear everyone's thoughts."
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Removed the side paths behind the Towers"
+                },
+                {
+                  "text": "Removed the base doors and paths around the Phoenixes"
+                },
+                {
+                  "text": "Made some of the stealth grass patches smaller"
+                },
+                {
+                  "text": "(Experimental) Added some Wind Sprites",
+                  "items": [
+                    {
+                      "text": "These are in front of the T2 towers, and near the middle of the map"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Duel",
+          "anchor": "Duel",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Sunder has been removed from this mode"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Achilles Nerf",
+              "items": [
+                {
+                  "text": "Gift of the Gods (P)",
+                  "items": [
+                    {
+                      "text": "Decreased Armored Per Level Health from 15 to 10."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Amaterasu Nerf",
+              "items": [
+                {
+                  "text": "Aspect Of Valor",
+                  "items": [
+                    {
+                      "text": "Divine Presence (1)",
+                      "items": [
+                        {
+                          "text": "Decreased Strength Aura from 14/18/22/26/30 to 7/9/11/13/15."
+                        },
+                        {
+                          "text": "Decreased Intelligence Aura from 18/22/26/30/34 to 9/11/13/15/17."
+                        },
+                        {
+                          "text": "Decreased Basic Attack Damage Bonus from 15/27.5/40/52.5/65 to 10/20/30/40/50."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Merlin Buff",
+              "items": [
+                {
+                  "text": "Eclipse (Arcane 1)",
+                  "items": [
+                    {
+                      "text": "Increased Damage from 40/60/80/100/120 to 50/75/100/125/150"
+                    },
+                    {
+                      "text": "Increased Tick Damage INT Scaling from 8% to 10%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Vortex (Arcane 2)",
+                  "items": [
+                    {
+                      "text": "Increased Damage from 50/80/110/140/170 + 60% INT Scaling to 65/95/125/155/185 + 70% INT Scaling",
+                      "bold": true
+                    }
+                  ]
+                },
+                {
+                  "text": "Radiate (Fire 1)",
+                  "items": [
+                    {
+                      "text": "Increased Damage from 8/14/20/26/32 + 18% INT Scaling per tick to 10/17/24/31/38 + 20% INT Scaling per tick"
+                    }
+                  ]
+                },
+                {
+                  "text": "Blizzard (Ice 2)",
+                  "items": [
+                    {
+                      "text": "Increased the deployment range of this ability as it was shorter than intended"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Aladdin Large Shift",
+              "items": [
+                {
+                  "text": "Kufic Invocation (1)",
+                  "items": [
+                    {
+                      "text": "Increased Large Damage from 72/108/144/180/216 to 70/120/170/220/270"
+                    },
+                    {
+                      "text": "Increased Charge Rate from 0.66s to 0.5s."
+                    },
+                    {
+                      "text": "Decreased Large Return Intelligence Scaling from 72% to 60%."
+                    },
+                    {
+                      "text": "Decreased Large Return Strength Scaling from 81% to 65%."
+                    }
+                  ]
+                },
+                {
+                  "text": "Sultan’s Grace (2)",
+                  "items": [
+                    {
+                      "text": "Increased Strength Scaling from 55% to 65%."
+                    },
+                    {
+                      "text": "Increased Dash Damage from 70/115/160/205/250 to 70/120/170/220/270"
+                    },
+                    {
+                      "text": "Decreased Punch Damage from 20/32/44/56/68 to 20/30/40/50/60"
+                    }
+                  ]
+                },
+                {
+                  "text": "Agile Run (3)",
+                  "items": [
+                    {
+                      "text": "Increased Strength Scaling from 40% to 50%."
+                    },
+                    {
+                      "text": "Increased Base Damage from 60/95/130/165/200 to 60/105/150/195/240."
+                    },
+                    {
+                      "text": "Decreased Genie Bonus Damage from 20/35/50/65/80 to 20/30/40/50/60."
+                    },
+                    {
+                      "text": "Decreased Genie Bonus Strength Scaling from 30% to 25%."
+                    }
+                  ]
+                },
+                {
+                  "text": "Into The Lamp (4)",
+                  "items": [
+                    {
+                      "text": "Now deals 80/140/200/260/320 + 65% Intelligence + 50% Strength to the target hit. This damage cannot bring them below the health they would be restored to and does not trigger item effects."
+                    },
+                    {
+                      "text": "Decreased Aladdin Health Restore from 60% of his Health to 50% of his health."
+                    },
+                    {
+                      "text": "Increased Enemy Health Restore from 60/55/50/45/40% of their Health to 50% of their Health at all ranks."
+                    },
+                    {
+                      "text": "Increased Enemy Cooldown Reduction from 50/45/40/45/40% Cooldown Reduction to 50% at all ranks."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Hecate Buff",
+              "items": [
+                {
+                  "text": "Triplicate Form (1)",
+                  "items": [
+                    {
+                      "text": "Increased Damage from 60/110/150/190/230 + 70% INT Scaling to 70/115/160/205/250 + 75% INT Scaling"
+                    }
+                  ]
+                },
+                {
+                  "text": "Repel Magic (3)",
+                  "items": [
+                    {
+                      "text": "Increased Magical Shield Health from 60/120/180/240/300 to 70/140/210/280/350"
+                    }
+                  ]
+                },
+                {
+                  "text": "Open the Gates (4)",
+                  "items": [
+                    {
+                      "text": "Increased Damage from 220/290/350/410/470 + 80% INT Scaling to 280/335/390/445/500 + 85% INT Scaling"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Bacchus Buff",
+              "items": [
+                {
+                  "text": "Chug (1)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 12s to 10s."
+                    },
+                    {
+                      "text": "Increased Protection Scaling from 0/30/30/30/30/30% to 0/35/35/35/35/35%."
+                    }
+                  ]
+                },
+                {
+                  "text": "Belly Flop (2)",
+                  "items": [
+                    {
+                      "text": "Increased Base Damage from 80/125/170/215/260 to 80/135/190/245/300."
+                    },
+                    {
+                      "text": "Bacchus now applies a longer duration slow if targets were successfully knocked up. This means Bacchus should be slowing people for 2s after they land.",
+                      "items": [
+                        {
+                          "text": "This means this slow is ~1s longer when hitting a target that was successfully knocked up."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Vulcan Buff",
+              "items": [
+                {
+                  "text": "Master Craftsman (P)",
+                  "items": [
+                    {
+                      "text": "Efficiency Mod (Set 1)",
+                      "items": [
+                        {
+                          "text": "This Mod now also provides 5 Intelligence + 1 Per Level in addition to the CDR bonus"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Seismic Mod (Set 3)",
+                      "items": [
+                        {
+                          "text": "This Mod now causes Earthshaker to Knock Up enemies in addition to the Tremble effect"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Backfire (1)",
+                  "items": [
+                    {
+                      "text": "Increased Damage from 90/130/170/210/250 to 90/135/180/225/270"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Cabrakan Shift",
+              "items": [
+                {
+                  "text": "Shadow Zone (P)",
+                  "items": [
+                    {
+                      "text": "Now provides Cabrakan an additional 1% Damage Mitigation for every 100 Protections from Items.",
+                      "items": [
+                        {
+                          "text": "This is not shared with his Allies."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Refraction Shield (2)",
+                  "items": [
+                    {
+                      "text": "Enhanced Refraction Shield now also restores 1% Maximum Health in addition to the Base Amount."
+                    },
+                    {
+                      "text": "Decreased Base & Enhanced Base Damage from 80/135/190/245/300 to 70/120/170/220/270."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Rama Buff",
+              "items": [
+                {
+                  "text": "Rolling Assault (3)",
+                  "items": [
+                    {
+                      "text": "Increased Bonus Damage from 20/40/60/80/100 to 35/55/75/95/115"
+                    }
+                  ]
+                },
+                {
+                  "text": "Astral Barrage (4)",
+                  "items": [
+                    {
+                      "text": "Increased Damage from 190/280/370/460/550 to 235/315/395/475/555"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Pele Shift",
+              "items": [
+                {
+                  "text": "Eruption (2)",
+                  "items": [
+                    {
+                      "text": "Removed the dash when used while Enhanced Magma Rush was active."
+                    },
+                    {
+                      "text": "Pele’s Eruption now ALWAYS gains a burst of Movement Speed during the prefire of Eruption.",
+                      "items": [
+                        {
+                          "text": "This uses the same speed burst that Princess Bari’s Reverent Steps (3) uses."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Adjusted the pacing of the animation so the Eruption damage area appears as she lands. The timing of the ability is unchanged."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "The Morrigan Shift",
+              "items": [
+                {
+                  "text": "Doomsayer (P)",
+                  "items": [
+                    {
+                      "text": "The DoT damage from this ability has changed from Basic attack damage to ability damage"
+                    }
+                  ]
+                },
+                {
+                  "text": "Deadly Aspects (1)",
+                  "items": [
+                    {
+                      "text": "Increased damage from 90/145/200/255/310 to 105/160/215/270/325"
+                    }
+                  ]
+                },
+                {
+                  "text": "Dark Omen (2)",
+                  "items": [
+                    {
+                      "text": "Decreased Minion Damage from 80/140/200/260/320 to 65/125/185/245/305"
+                    },
+                    {
+                      "text": "Increased Initial Damage Scaling 45% INT to 55% INT"
+                    },
+                    {
+                      "text": "Increased Mark Scaling from 45% INT to 55% INT"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Princess Bari Nerf",
+              "items": [
+                {
+                  "text": "Mystic Surge (P)",
+                  "items": [
+                    {
+                      "text": "Decreased Attack Speed Bonus from 15/20/25/30/35/45 to 10/14/18/22/26/40%."
+                    }
+                  ]
+                },
+                {
+                  "text": "Sacred Bell (1)",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where this was benefitting too much from Intelligence when enhanced.",
+                      "items": [
+                        {
+                          "text": "Enhanced Intelligence Scaling was providing 96% Intelligence Scaling when it should have been 78%."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Reverent Steps (3)",
+                  "items": [
+                    {
+                      "text": "Decreased Base Damage from 30/60/90/120/150 to 10/45/80/115/150."
+                    },
+                    {
+                      "text": "Decreased Intelligence Scaling from 45% to 40%."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Awilix Nerf",
+              "items": [
+                {
+                  "text": "Summon Suku (1)",
+                  "items": [
+                    {
+                      "text": "Decreased Strength Scaling from 80% to 70%."
+                    }
+                  ]
+                },
+                {
+                  "text": "Moonlight Charge (3)",
+                  "items": [
+                    {
+                      "text": "Decreased Strength Scaling from 80% to 70%."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Mordred Nerf",
+              "items": [
+                {
+                  "text": "Aspect of Rage",
+                  "items": [
+                    {
+                      "text": "Decreased ability cooldown reduction while Bloodrage is active from 1s to 0.5s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Cruel Strikes (1)",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown from 12/11.5/11/10.5/10s to 14/13/12/11/10s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Odin",
+              "items": [
+                {
+                  "text": "Gungnir’s Might (3)",
+                  "items": [
+                    {
+                      "text": "Now pierces gods, but will only stun the first god hit."
+                    }
+                  ]
+                },
+                {
+                  "text": "Ring of Spears (4)",
+                  "items": [
+                    {
+                      "text": "Odin gains a stack of his Passive upon casting his Ultimate."
+                    },
+                    {
+                      "text": "Now also provides 8 Intelligence in addition to 5 Strength per stack when killing an enemy god inside the Ring."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Poseidon",
+              "items": [
+                {
+                  "text": "New Aspect releasing April 14 - Aspect of the Trident",
+                  "items": [
+                    {
+                      "text": "Poseidon’s basic attacks always fire side waves. Trident no longer affects Tidal Surge but can be activated to focus the side waves, causing them to pierce enemies, and both abilities deal extra basic attack damage."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Hey everyone!"
+        },
+        {
+          "type": "paragraph",
+          "text": "We're kicking off a significant series of adjustments to items in Smite 2. This is a major undertaking, so we'll be rolling out these changes across the next three patches (OB7, OB8, and OB9)."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "OB7 (This Patch): Focuses on resetting the baseline power level of items."
+            },
+            {
+              "text": "OB8: Will concentrate on enhancing item specialization, making their unique effects more impactful."
+            },
+            {
+              "text": "OB9 & Hotfixes: Will be dedicated to tying up loose ends and addressing any issues that arise from these broad changes."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Smite 2 initially launched with items being less impactful than they are now. Since then, several factors have increased their overall power: we moved Starter items to a dedicated 7th slot (effectively adding another item's worth of stats/effects), and we've had rapid balance passes that incrementally increased item strength, especially as we figured out the power budget for things like active effects."
+        },
+        {
+          "type": "paragraph",
+          "text": "While our starting point for item power in Smite 2 was likely too low, we feel the pendulum has swung too far, and items are currently too strong."
+        },
+        {
+          "type": "paragraph",
+          "text": "Let's dive into what we're doing in OB7. Maintaining a specific balance between the inherent power of gods and the power contributed by items is crucial."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "If gods are too strong relative to items, the strategic flexibility and counter-play potential that items offer gets diminished."
+            },
+            {
+              "text": "Conversely, if items become too powerful, balancing specific gods or strategies becomes incredibly difficult. For instance, imagine tanks becoming immensely durable due to items. Damage dealers (and even Bruisers) would need proportionally huge damage increases to compensate, leading to scenarios where fragile gods instantly obliterate each other with a single ability."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Finding the right balance here is key. Therefore, in OB7, we're aiming for a broad reduction in overall item power by approximately 10−12%. This adjustment will bring item power down from its current peak but still leave items generally stronger than they were at Smite 2's launch."
+        },
+        {
+          "type": "paragraph",
+          "text": "We expect this change to have several positive effects:"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Alleviate Balance Concerns: It should help address some underlying balance issues stemming from excessive item power."
+            },
+            {
+              "text": "Breathing Room for Damage Dealers: Pure damage characters should have slightly more survivability in fights against each other without significantly altering the time it takes to defeat tanks."
+            },
+            {
+              "text": "Objective & Structure Importance: Gods will need to exert more effort and respect the danger when taking objectives or tanking structures, which had become a bit too easy previously."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "This baseline reset in OB7 is also essential groundwork for our next phase in OB8: item specialization. By establishing this new power foundation, we can better tune the unique passive and active effects of items, pushing them to be more defining and strategically interesting where appropriate."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Blink Rune",
+              "items": [
+                {
+                  "text": "Decreased Cooldown from 210s to 180s."
+                },
+                {
+                  "text": "NEW - If you successfully Basic Attack or Kill an Enemy God within 4s of using Blink, its Cooldown is reduced by 30 seconds."
+                },
+                {
+                  "text": "This where we plan to keep Blink for some time (Non-Combat Blink with offensive use bonus)."
+                }
+              ]
+            },
+            {
+              "text": "Amanita Charm",
+              "items": [
+                {
+                  "text": "Decreased recipe cost from 950 to 850"
+                },
+                {
+                  "text": "Decreased Physical Protection from 25 to 15."
+                }
+              ]
+            },
+            {
+              "text": "Ancile",
+              "items": [
+                {
+                  "text": "Increased recipe cost from 850 to 900"
+                },
+                {
+                  "text": "Decreased Magical Protection from 60 to 55."
+                },
+                {
+                  "text": "Decreased Health from 250 to 200."
+                }
+              ]
+            },
+            {
+              "text": "Arondight",
+              "items": [
+                {
+                  "text": "Increased recipe cost from 900 to 1000."
+                },
+                {
+                  "text": "Decreased Strength from 50 to 45."
+                }
+              ]
+            },
+            {
+              "text": "Avatar’s Parashu",
+              "items": [
+                {
+                  "text": "Decreased Strength from 100 to 90."
+                }
+              ]
+            },
+            {
+              "text": "Avenging Blade",
+              "items": [
+                {
+                  "text": "Increased recipe cost from 700 to 750."
+                },
+                {
+                  "text": "Decreased Health from 200 to 150."
+                }
+              ]
+            },
+            {
+              "text": "Bancroft’s Talon",
+              "items": [
+                {
+                  "text": "Decreased Intelligence from 40 to 30."
+                }
+              ]
+            },
+            {
+              "text": "Berserker’s Shield",
+              "items": [
+                {
+                  "text": "Decreased Physical Protection from 20 to 15."
+                },
+                {
+                  "text": "Decreased Magical Protection from 20 to 15."
+                }
+              ]
+            },
+            {
+              "text": "Blood-bound Book",
+              "items": [
+                {
+                  "text": "Increased recipe cost from 400 to 450."
+                },
+                {
+                  "text": "Decreased Intelligence from 60 to 55."
+                },
+                {
+                  "text": "Decreased Lifesteal from 15% to 12%."
+                }
+              ]
+            },
+            {
+              "text": "Bloodforge",
+              "items": [
+                {
+                  "text": "Increased recipe cost from 400 to 450."
+                },
+                {
+                  "text": "Decreased Strength from 45 to 40."
+                },
+                {
+                  "text": "Decreased Lifesteal from 15% to 12%."
+                }
+              ]
+            },
+            {
+              "text": "Book of Thoth",
+              "items": [
+                {
+                  "text": "Decreased Intelligence from 35 to 30."
+                },
+                {
+                  "text": "Decreased Mana from 400 to 350."
+                }
+              ]
+            },
+            {
+              "text": "Bracer of the Abyss",
+              "items": [
+                {
+                  "text": "Decreased Intelligence from 60 to 45."
+                }
+              ]
+            },
+            {
+              "text": "Bragi’s Harp",
+              "items": [
+                {
+                  "text": "Decreased Attack Speed from 15% to 10%."
+                }
+              ]
+            },
+            {
+              "text": "Brawler’s Ruin",
+              "items": [
+                {
+                  "text": "Decreased Strength from 60 to 50."
+                }
+              ]
+            },
+            {
+              "text": "Breastplate of Valor",
+              "items": [
+                {
+                  "text": "Decreased Cooldown Rate from 25 to 20."
+                },
+                {
+                  "text": "Decreased Mana from 250 to 200."
+                }
+              ]
+            },
+            {
+              "text": "Chronos’ Pendant",
+              "items": [
+                {
+                  "text": "Decreased Intelligence from 65 to 55."
+                }
+              ]
+            },
+            {
+              "text": "Circe’s Hexstone",
+              "items": [
+                {
+                  "text": "Decreased Health from 400 to 350."
+                }
+              ]
+            },
+            {
+              "text": "Dagger of Frenzy",
+              "items": [
+                {
+                  "text": "Decreased Attack Speed from 15% to 10%."
+                }
+              ]
+            },
+            {
+              "text": "Death Metal",
+              "items": [
+                {
+                  "text": "Decreased Strength from 40 to 35."
+                },
+                {
+                  "text": "Decreased Intelligence from 45 to 40."
+                }
+              ]
+            },
+            {
+              "text": "Deathbringer",
+              "items": [
+                {
+                  "text": "Decreased Critical Strike Chance from 30% to 25%."
+                }
+              ]
+            },
+            {
+              "text": "Demon Blade",
+              "items": [
+                {
+                  "text": "Decreased Strength from 30 to 25."
+                },
+                {
+                  "text": "Decreased Attack Speed from 20% to 15%."
+                }
+              ]
+            },
+            {
+              "text": "Demonic Grip",
+              "items": [
+                {
+                  "text": "Decreased Intelligence from 65 to 55."
+                }
+              ]
+            },
+            {
+              "text": "Devourer’s Gauntlet",
+              "items": [
+                {
+                  "text": "Decreased Strength from 30 to 25."
+                }
+              ]
+            },
+            {
+              "text": "Divine Ruin",
+              "items": [
+                {
+                  "text": "Decreased Intelligence from 100 to 85."
+                }
+              ]
+            },
+            {
+              "text": "Dominance",
+              "items": [
+                {
+                  "text": "Decreased Strength from 50 to 45."
+                },
+                {
+                  "text": "Decreased Mana from 200 to 150."
+                }
+              ]
+            },
+            {
+              "text": "Doom Orb",
+              "items": [
+                {
+                  "text": "Decreased Intelligence from 75 to 65."
+                }
+              ]
+            },
+            {
+              "text": "Dreamer’s Idol",
+              "items": [
+                {
+                  "text": "Decreased Intelligence from 140 to 125."
+                }
+              ]
+            },
+            {
+              "text": "Eros’ Bow",
+              "items": [
+                {
+                  "text": "Decreased Health from 300 to 250."
+                }
+              ]
+            },
+            {
+              "text": "Eye of Providence",
+              "items": [
+                {
+                  "text": "Decreased Health from 300 to 200."
+                }
+              ]
+            },
+            {
+              "text": "Eye of the Storm",
+              "items": [
+                {
+                  "text": "Decreased Recipe Cost from 850 to 800."
+                },
+                {
+                  "text": "Decreased Strength from 30 to 25."
+                },
+                {
+                  "text": "Increased Max Health Damage from 3% to 4%."
+                },
+                {
+                  "text": "Increased Vortex Strength by 50%."
+                }
+              ]
+            },
+            {
+              "text": "Gauntlet of Thebes",
+              "items": [
+                {
+                  "text": "No change."
+                }
+              ]
+            },
+            {
+              "text": "Gem of Focus",
+              "items": [
+                {
+                  "text": "Decreased Cooldown Rate from 15 to 10."
+                }
+              ]
+            },
+            {
+              "text": "Gem of Isolation",
+              "items": [
+                {
+                  "text": "Decreased Health from 350 to 250."
+                }
+              ]
+            },
+            {
+              "text": "Genji’s Guard",
+              "items": [
+                {
+                  "text": "Increased Recipe cost from 1000 to 1050."
+                },
+                {
+                  "text": "Decreased Mana from 300 to 200."
+                }
+              ]
+            },
+            {
+              "text": "Gladiator’s Shield",
+              "items": [
+                {
+                  "text": "Increased build cost from 700 to 800. (2350 to 2450 total)"
+                },
+                {
+                  "text": "Decreased Physical Protection from 40 to 25."
+                },
+                {
+                  "text": "Decreased Base Damage from 15 to 0."
+                },
+                {
+                  "text": "Increased Item Protection scaling from 25% to 40%.",
+                  "items": [
+                    {
+                      "text": "“This item received additional adjustments with other Bruiser based items. We want this item's passive to be that major component of its power with reasons to focus on optimising its effect rather than providing as much upfront tankiness.”"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Glorious Pridwen",
+              "items": [
+                {
+                  "text": "Decreased Physical Protection from 35 to 25."
+                },
+                {
+                  "text": "Decreased Magical Protection from 35 to 25."
+                },
+                {
+                  "text": "Decreased Cooldown Rate from 20 to 12."
+                },
+                {
+                  "text": "Increased Explosion Damage Scaling from 55% to 65% of your Protections."
+                },
+                {
+                  "text": "Increased Shield from 100% of your Protections to 125% of your Protections.",
+                  "items": [
+                    {
+                      "text": "“This item received additional adjustments with other Bruiser based items. We want this item's passive to be that major component of its power with reasons to focus on optimizing its effect rather than providing as much upfront tankiness.”"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Golden Blade",
+              "items": [
+                {
+                  "text": "Increased Recipe cost from 650 to 800."
+                },
+                {
+                  "text": "Decreased Strength from 25 to 20."
+                }
+              ]
+            },
+            {
+              "text": "Hastened Fatalis",
+              "items": [
+                {
+                  "text": "Decreased Recipe cost from 1700 to 1600."
+                },
+                {
+                  "text": "Decreased Attack Speed from 25% to 20%."
+                }
+              ]
+            },
+            {
+              "text": "Heartseeker",
+              "items": [
+                {
+                  "text": "Decreased Recipe cost from 1200 to 1050."
+                },
+                {
+                  "text": "Decreased Strength from 40 to 30."
+                }
+              ]
+            },
+            {
+              "text": "Helm of Darkness",
+              "items": [
+                {
+                  "text": "Decreased Intelligence from 50 to 35."
+                }
+              ]
+            },
+            {
+              "text": "Helm of Radiance",
+              "items": [
+                {
+                  "text": "Decreased Recipe cost from 700 to 650."
+                },
+                {
+                  "text": "Decreased Intelligence from 60 to 55."
+                },
+                {
+                  "text": "Decreased Physical Protection from 35 to 30."
+                }
+              ]
+            },
+            {
+              "text": "Hide of the Nemean Lion",
+              "items": [
+                {
+                  "text": "Decreased Physical Protection from 50 to 40."
+                }
+              ]
+            },
+            {
+              "text": "Hussar’s Wing",
+              "items": [
+                {
+                  "text": "Decreased Physical Protection from 40 to 35."
+                },
+                {
+                  "text": "Decreased Magical Protection from 30 to 25."
+                },
+                {
+                  "text": "Decreased Health from 400 to 375."
+                }
+              ]
+            },
+            {
+              "text": "Hydra’s Lament",
+              "items": [
+                {
+                  "text": "Increased Recipe cost from 500 to 550."
+                },
+                {
+                  "text": "Decreased Strength from 45 to 40."
+                },
+                {
+                  "text": "Decreased Mana from 250 to 200."
+                }
+              ]
+            },
+            {
+              "text": "Jade Scepter",
+              "items": [
+                {
+                  "text": "Decreased Intelligence from 120 to 105."
+                }
+              ]
+            },
+            {
+              "text": "Jotunn’s Revenge",
+              "items": [
+                {
+                  "text": "Decreased Recipe cost from 450 to 400."
+                },
+                {
+                  "text": "Decreased Strength from 45 to 35."
+                }
+              ]
+            },
+            {
+              "text": "Lernaean Bow",
+              "items": [
+                {
+                  "text": "Decreased Recipe cost from 900 to 850."
+                },
+                {
+                  "text": "Decreased Strength from 40 to 30."
+                }
+              ]
+            },
+            {
+              "text": "Leviathan’s Hide",
+              "items": [
+                {
+                  "text": "Decreased Health from 300 to 225."
+                }
+              ]
+            },
+            {
+              "text": "Lifebinder",
+              "items": [
+                {
+                  "text": "Increased Recipe cost from 750 to 850."
+                },
+                {
+                  "text": "Decreased Health from 350 to 300."
+                }
+              ]
+            },
+            {
+              "text": "Magi’s Cloak",
+              "items": [
+                {
+                  "text": "Decreased Recipe cost from 1000 to 950."
+                },
+                {
+                  "text": "Increased Physical Protection from 30 to 35."
+                },
+                {
+                  "text": "Decreased Magical Protection from 40 to 35."
+                },
+                {
+                  "text": "Removed Cooldown Rate. (10 to 0)"
+                }
+              ]
+            },
+            {
+              "text": "Mantle of Discord",
+              "items": [
+                {
+                  "text": "Decreased Physical Protection from 35 to 30."
+                },
+                {
+                  "text": "Decreased Magical Protection from 35 to 30."
+                }
+              ]
+            },
+            {
+              "text": "Musashi’s Dual Swords",
+              "items": [
+                {
+                  "text": "Decreased Recipe cost from 600 to 500."
+                },
+                {
+                  "text": "Decreased Strength from 35 to 30."
+                }
+              ]
+            },
+            {
+              "text": "Mystical Mail",
+              "items": [
+                {
+                  "text": "Decreased Recipe cost from 1000 to 900."
+                },
+                {
+                  "text": "Decreased Health from 400 to 300."
+                },
+                {
+                  "text": "Decreased Physical Protection from 40 to 30.",
+                  "items": [
+                    {
+                      "text": "“This item received additional adjustments with other Bruiser based items. We want this item's passive to be that major component of its power with reasons to focus on optimising its effect rather than providing as much upfront tankiness.”"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Necronomicon",
+              "items": [
+                {
+                  "text": "Recipe cost decreased from 950 to 750"
+                },
+                {
+                  "text": "Decreased Intelligence from 50 to 45."
+                },
+                {
+                  "text": "Decreased Penetration from 10% to 8%."
+                }
+              ]
+            },
+            {
+              "text": "Nimble Ring",
+              "items": [
+                {
+                  "text": "Decreased Lifesteal from 15% to 10%."
+                }
+              ]
+            },
+            {
+              "text": "Oath-sword Spear",
+              "items": [
+                {
+                  "text": "Increased Recipe cost from 450 to 550."
+                },
+                {
+                  "text": "Decreased Strength from 45 to 40."
+                }
+              ]
+            },
+            {
+              "text": "Obsidian Shard",
+              "items": [
+                {
+                  "text": "No change.",
+                  "items": [
+                    {
+                      "text": "“In regards to this pass, an item not receiving changes is functional to it being buffed.”"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Odysseus’ Bow",
+              "items": [
+                {
+                  "text": "Increased Recipe cost from 700 to 950."
+                }
+              ]
+            },
+            {
+              "text": "Oni Hunter’s Garb",
+              "items": [
+                {
+                  "text": "Decreased Recipe cost from 1200 to 1150."
+                },
+                {
+                  "text": "Decreased Magical Protection from 55 to 45."
+                },
+                {
+                  "text": "Decreased Mana from 250 to 200."
+                },
+                {
+                  "text": "Decreased Mana Regen from 10 to 8."
+                }
+              ]
+            },
+            {
+              "text": "Pendulum Blade",
+              "items": [
+                {
+                  "text": "Decreased Recipe cost from 800 to 700."
+                },
+                {
+                  "text": "Decreased Strength from 60 to 55."
+                },
+                {
+                  "text": "Decreased Cooldown Rate from 15 to 10."
+                }
+              ]
+            },
+            {
+              "text": "Pharaoh’s Curse",
+              "items": [
+                {
+                  "text": "Increased Recipe cost from 850 to 900."
+                },
+                {
+                  "text": "Decreased Magical Protection from 40 to 30."
+                }
+              ]
+            },
+            {
+              "text": "Phoenix Feather",
+              "items": [
+                {
+                  "text": "Decreased Magical Protection from 65 to 55."
+                }
+              ]
+            },
+            {
+              "text": "Polynomicon",
+              "items": [
+                {
+                  "text": "Increased Recipe cost from 500 to 550."
+                },
+                {
+                  "text": "Decreased Intelligence from 80 to 75."
+                }
+              ]
+            },
+            {
+              "text": "Prophetic Cloak",
+              "items": [
+                {
+                  "text": "Decreased Protections gained at full stacks from 15 to 5."
+                }
+              ]
+            },
+            {
+              "text": "Qin’s Blade",
+              "items": [
+                {
+                  "text": "Decreased Strength from 30 to 20.",
+                  "items": [
+                    {
+                      "text": "“This is a slightly heavier nerf than the rest of the items are receiving when it comes to their stat efficiency. Qin’s Blade heavily defines builds and is overperforming in that role. Rushing this will now be more heavily felt, but it should still be quite strong when paired with supporting items.”"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Rod Of Asclepius",
+              "items": [
+                {
+                  "text": "Decreased Health from 300 to 225."
+                }
+              ]
+            },
+            {
+              "text": "Rod of Tahuti",
+              "items": [
+                {
+                  "text": "Decreased Intelligence from 70 to 65"
+                },
+                {
+                  "text": "Increased Penetration from 5% to 8%"
+                },
+                {
+                  "text": "Decreased Mana from 250 to 200"
+                }
+              ]
+            },
+            {
+              "text": "Ruinous Ankh",
+              "items": [
+                {
+                  "text": "Decreased Physical Protection from 40 to 35."
+                },
+                {
+                  "text": "Decreased Magical Protection from 40 to 35."
+                }
+              ]
+            },
+            {
+              "text": "Runeforged Hammer",
+              "items": [
+                {
+                  "text": "Increased Recipe cost from 1000 to 1100."
+                },
+                {
+                  "text": "Decreased Strength from 40 to 35."
+                },
+                {
+                  "text": "Decreased Health from 400 to 350."
+                },
+                {
+                  "text": "Decreased Health Regen from 5 to 3.",
+                  "items": [
+                    {
+                      "text": "“This item received additional adjustments with other Bruiser based items. We want this item's passive to be that major component of its power with reasons to focus on optimising its effect rather than providing as much upfront tankiness.”"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Scepter of Dominion",
+              "items": [
+                {
+                  "text": "Decreased Recipe cost from 1150 to 950."
+                },
+                {
+                  "text": "Decreased Health from 200 to 150"
+                },
+                {
+                  "text": "Decreased Mana from 300 to 200."
+                },
+                {
+                  "text": "Decreased Buildup from 2s to 1.5s."
+                }
+              ]
+            },
+            {
+              "text": "Screeching Gargoyle",
+              "items": [
+                {
+                  "text": "Decreased Cooldown Rate from 15 to 10."
+                }
+              ]
+            },
+            {
+              "text": "Serrated Edge",
+              "items": [
+                {
+                  "text": "Decreased Strength from 40 to 30."
+                }
+              ]
+            },
+            {
+              "text": "Shield of the Phoenix",
+              "items": [
+                {
+                  "text": "Decreased Physical Protection from 30 to 20."
+                },
+                {
+                  "text": "Decreased Health from 250 to 200."
+                },
+                {
+                  "text": "Increased Maximum Health and Mana heal from 2% to 3%.",
+                  "items": [
+                    {
+                      "text": "“This item received additional adjustments with other Bruiser based items. We want this item's passive to be that major component of its power with reasons to focus on optimising its effect rather than providing as much upfront tankiness.”"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Shield Splitter",
+              "items": [
+                {
+                  "text": "Decreased Strength from 40 to 30."
+                },
+                {
+                  "text": "Increased Damage Per Level from 5 to 10."
+                },
+                {
+                  "text": "Increased Shield Reduction from 50% to 65%."
+                },
+                {
+                  "text": "Increased Shield Gain from 50 to 65%."
+                }
+              ]
+            },
+            {
+              "text": "Shifter’s Shield",
+              "items": [
+                {
+                  "text": "No Change",
+                  "items": [
+                    {
+                      "text": "“In regards to this pass, an item not receiving changes is functional to it being buffed. While a bruiser item, this was underperforming in that capacity.”"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Shogun’s Kusari",
+              "items": [
+                {
+                  "text": "Decreased Recipe cost from 950 to 900."
+                },
+                {
+                  "text": "Decreased Magical Protection from 40 to 30."
+                }
+              ]
+            },
+            {
+              "text": "Soul Gem",
+              "items": [
+                {
+                  "text": "Decreased Lifesteal from 15 to 10%."
+                }
+              ]
+            },
+            {
+              "text": "Soul Reaver",
+              "items": [
+                {
+                  "text": "Decreased Recipe cost from 1150 to 1100."
+                },
+                {
+                  "text": "Decreased Intelligence from 70 to 60."
+                },
+                {
+                  "text": "Decreased Mana from 300 to 250."
+                }
+              ]
+            },
+            {
+              "text": "Spear of Desolation",
+              "items": [
+                {
+                  "text": "Increased Recipe cost from 450 to 600."
+                },
+                {
+                  "text": "Decreased Intelligence from 90 to 85."
+                }
+              ]
+            },
+            {
+              "text": "Spectral Armor",
+              "items": [
+                {
+                  "text": "Decreased Health from 200 to 150."
+                }
+              ]
+            },
+            {
+              "text": "Sphere of Negation",
+              "items": [
+                {
+                  "text": "Decreased Intelligence from 70 to 60."
+                }
+              ]
+            },
+            {
+              "text": "Spirit Robe",
+              "items": [
+                {
+                  "text": "Decreased Recipe cost from 1150 to 1000."
+                },
+                {
+                  "text": "Decreased Physical Protection from 30 to 25."
+                },
+                {
+                  "text": "Decreased Magical Protection from 30 to 25."
+                }
+              ]
+            },
+            {
+              "text": "Staff of Myrddin",
+              "items": [
+                {
+                  "text": "Decreased Recipe cost from 1000 to 900."
+                },
+                {
+                  "text": "Decreased Intelligence from 80 to 70."
+                },
+                {
+                  "text": "Decreased Cooldown Rate from 15 to 10."
+                }
+              ]
+            },
+            {
+              "text": "Stampede",
+              "items": [
+                {
+                  "text": "Decreased Physical Protection from 45 to 40."
+                }
+              ]
+            },
+            {
+              "text": "Stone of Binding",
+              "items": [
+                {
+                  "text": "Decreased Physical Protection from 45 to 40."
+                },
+                {
+                  "text": "Decreased Magical Protection from 35 to 30."
+                }
+              ]
+            },
+            {
+              "text": "Sun Beam Bow",
+              "items": [
+                {
+                  "text": "Decreased Attack Speed from 20% to 12%.",
+                  "items": [
+                    {
+                      "text": "“This is a slightly heavier nerf than the rest of the items are receiving when it comes to their stat efficiency.”"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Talisman of Purification",
+              "items": [
+                {
+                  "text": "Decreased Magical Protection from 45 to 35."
+                }
+              ]
+            },
+            {
+              "text": "Tekko-Kagi",
+              "items": [
+                {
+                  "text": "Decreased Cooldown Rate from 15 to 10."
+                }
+              ]
+            },
+            {
+              "text": "The Cosmic Horror",
+              "items": [
+                {
+                  "text": "Decreased Intelligence from 90 to 85.",
+                  "items": [
+                    {
+                      "text": "“This item is receiving a slightly less heavy adjustment. It had some room to come up in efficiency slightly.”"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "The Crusher",
+              "items": [
+                {
+                  "text": "Recipe cost decreased from 1050 to 900"
+                },
+                {
+                  "text": "Decreased Strength from 45 to 40."
+                },
+                {
+                  "text": "Decreased Penetration from 10% to 8%."
+                }
+              ]
+            },
+            {
+              "text": "The Executioner",
+              "items": [
+                {
+                  "text": "Decreased Attack Speed from 20% to 15%."
+                }
+              ]
+            },
+            {
+              "text": "The Reaper",
+              "items": [
+                {
+                  "text": "Decreased Strength from 30 to 25."
+                }
+              ]
+            },
+            {
+              "text": "The World Stone",
+              "items": [
+                {
+                  "text": "Decreased Intelligence from 75 to 70."
+                },
+                {
+                  "text": "Decreased Mana from 350 to 250."
+                }
+              ]
+            },
+            {
+              "text": "Titan’s Bane",
+              "items": [
+                {
+                  "text": "No change.",
+                  "items": [
+                    {
+                      "text": "“In regards to this pass, an item not receiving changes is functional to it being buffed.”"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Totem of Death",
+              "items": [
+                {
+                  "text": "No change.",
+                  "items": [
+                    {
+                      "text": "“In regards to this pass, an item not receiving changes is functional to it being buffed.”"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Transcendence",
+              "items": [
+                {
+                  "text": "Decreased Strength from 35 to 30."
+                }
+              ]
+            },
+            {
+              "text": "Triton’s conch",
+              "items": [
+                {
+                  "text": "Decreased Intelligence from 45 to 40."
+                }
+              ]
+            },
+            {
+              "text": "Typhon’s Fang",
+              "items": [
+                {
+                  "text": "Decreased Intelligence from 50 to 40."
+                }
+              ]
+            },
+            {
+              "text": "Void Shield",
+              "items": [
+                {
+                  "text": "Decreased Physical Protection from 45 to 40."
+                }
+              ]
+            },
+            {
+              "text": "Void Stone",
+              "items": [
+                {
+                  "text": "Decreased Health from 250 to 100.",
+                  "items": [
+                    {
+                      "text": "“This is a slightly heavier nerf than the rest of the items are receiving when it comes to their stat efficiency. This was also overperforming compared to its analogue in Void Shield. After this both items may have some room to come up, but we wanted to make them more comparable first.”"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Wish-Granting Pearl",
+              "items": [
+                {
+                  "text": "Decreased Health from 500 to 425"
+                },
+                {
+                  "text": "Decreased Mana from 250 to 200"
+                }
+              ]
+            },
+            {
+              "text": "Yogi’s Necklace",
+              "items": [
+                {
+                  "text": "Increased Recipe cost from 950 to 1050."
+                },
+                {
+                  "text": "Decreased mana from 300 to 250."
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Quality of Life",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Fixed an issue where Buff Belts would show incorrect iconography on Medium/Low settings"
+                }
+              ]
+            },
+            {
+              "text": "Gods",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Yemoja’s Ability 2 targeter sizing has been adjusted to match gameplay"
+                },
+                {
+                  "text": "The Seraph’s Bow Neith Skin has been updated with improved enemy coloration on abilities"
+                },
+                {
+                  "text": "Added Grass Culling to Merlin’s ability  targeters"
+                },
+                {
+                  "text": "Fixed an issue where Loki would get in a state where he would move very slowly"
+                }
+              ]
+            },
+            {
+              "text": "Conquest",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Fixed an issue where the Pathfinder (Yellow) Buff was not healing the owner for the right amount when defeating a jungle camp"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Voice Actors",
+      "anchor": "New_Voice_Actors",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Maid of Mischief Amaterasu - Salli Saffinoti"
+            },
+            {
+              "text": "Maid to Kill Izanami - D Casellian"
+            },
+            {
+              "text": "Butler of the Bins Danzaburou - Richard Reed"
+            },
+            {
+              "text": "Maid of Midnight Hecate - Elsie Lovelock"
+            },
+            {
+              "text": "Bad Bunny Nu Wa - Sara Secora"
+            },
+            {
+              "text": "Oblivion Seer Ra - Blythe Melin"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 4/7/25",
+      "anchor": "Hotfix_4/7/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed shader precaching issue causing load-in freezes."
+            },
+            {
+              "text": "Fixed Merlin's ability not hitting the totem."
+            },
+            {
+              "text": "Fixed acquisition screen not closing."
+            },
+            {
+              "text": "Fixed God stats in the HU Editor."
+            },
+            {
+              "text": "Resolved the persistent ghost red dot in player profiles."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 4/8/25",
+      "anchor": "Hotfix_4/8/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed gamepad issue preventing God lock-in on Xbox."
+            },
+            {
+              "text": "Addressed cursor loss in draft lobbies."
+            },
+            {
+              "text": "Resolved focus loss and coin purchase bug in Wandering Market."
+            },
+            {
+              "text": "Adjusted VGS for global emotes."
+            },
+            {
+              "text": "Fixed acquisition notifications in Wandering Market."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 4/9/25",
+      "anchor": "Hotfix_4/9/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed Chaac’s ability not hitting stealth targets."
+            },
+            {
+              "text": "Corrected VO issues with Ra’s Oblivion Tier skin."
+            },
+            {
+              "text": "Resolved mastery progress showing as incorrect God."
+            },
+            {
+              "text": "Fixed pricing error for Hydra's Lament."
+            },
+            {
+              "text": "Fixed Wandering Market coin progress resetting on login."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 4/11/25",
+      "anchor": "Hotfix_4/11/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where Nu Wa was inadvertently damaging enemy gods when they respawn"
+                },
+                {
+                  "text": "Fixed an issue with Hecate sound effects not playing"
+                },
+                {
+                  "text": "Fixes were made around the Draft Lobby god grid which should improve navigation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Assault",
+          "anchor": "Assault_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "T1 Towers have been buffed"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Deserter Penalties",
+          "anchor": "Deserter_Penalties",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Deserter Penalties have been adjusted.",
+                  "items": [
+                    {
+                      "text": "Tier 1 - 5 Minutes"
+                    },
+                    {
+                      "text": "Tier 2 - 20 Minutes"
+                    },
+                    {
+                      "text": "Tier 3 - 1 Hour"
+                    },
+                    {
+                      "text": "Tier 4 - 12 Hours"
+                    },
+                    {
+                      "text": "Tier 5 - 24 hours"
+                    },
+                    {
+                      "text": "Deserter Cool Down has increased from 24 hours to 72."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Items",
+          "anchor": "Items",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Glorious Pridwen",
+                  "items": [
+                    {
+                      "text": "Decreased initial Explosion Damage Scaling from 65% to 40% of your Protections."
+                    },
+                    {
+                      "text": "Increased second Explosion Damage Scaling from 65% to 70% of your Protections."
+                    }
+                  ]
+                },
+                {
+                  "text": "Mystical Mail",
+                  "items": [
+                    {
+                      "text": "Decreased Passive damage from 20 + 1.5 Per Level to 15 + 1 Per Level"
+                    }
+                  ]
+                },
+                {
+                  "text": "Shoguns Ofuda",
+                  "items": [
+                    {
+                      "text": "Decreased Passive Attack Speed from 20% to 15%"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Gods",
+          "anchor": "Gods",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Thor",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Aspect of Thunderstruck",
+                      "items": [
+                        {
+                          "text": "Decreased Slow duration from 2s to 1.5s"
+                        },
+                        {
+                          "text": "Decreased Base Heal from 4% to 3%"
+                        },
+                        {
+                          "text": "Decreased Protections per stack from 10 to 8"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Amaterasu",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Aspect of Valor",
+                      "items": [
+                        {
+                          "text": "Decreased Basic Attack Power from 10/20/30/40/50 to 6/12/18/24/30"
+                        },
+                        {
+                          "text": "Decreased Haste effect from 12.5% to 10%"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ares",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Blessed Armaments (P)",
+                      "items": [
+                        {
+                          "text": "Decreased Strength gained from Protections from Items from 12.5% to 8%"
+                        },
+                        {
+                          "text": "Decreased Intelligence gained from Cooldown Rate from 100% to 80%"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 4/15/25",
+      "anchor": "Hotfix_4/15/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "New Movement System",
+          "anchor": "New_Movement_System",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "We’re excited to introduce an experimental movement system in today’s hotfix, which we believe will greatly enhance the overall feel of gameplay in SMITE 2. Normally, we work hard to keep your client and the server perfectly in sync with your position on the map. However, occasional mismatches can occur, resulting in sudden snaps or hitching."
+            },
+            {
+              "type": "paragraph",
+              "text": "Our new system helps minimize these issues by having your client “replay” your movements so you stay closer to where you expect to be. While this won’t fully eliminate sudden snaps or hitching, it should significantly reduce them and provide a smoother experience overall."
+            },
+            {
+              "type": "paragraph",
+              "text": "Because this is a major feature, there may be scenarios we haven’t fully accounted for yet. We’re closely monitoring your feedback during this first iteration, and we’ll make rapid, meaningful improvements based on what we learn. Thank you for testing this new system and helping us continue to refine SMITE 2!"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 4/16/25",
+      "anchor": "Hotfix_4/16/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Geb Rollout Ability (1)",
+              "items": [
+                {
+                  "text": "Fixed an issue with knockback and broken rocks animation"
+                },
+                {
+                  "text": "Fixed an issue where players could get stuck in pebbles/rocks animation on close range hits"
+                }
+              ]
+            },
+            {
+              "text": "Fixed an issue where Thanatoast would become a big piece of toast after his Ult."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

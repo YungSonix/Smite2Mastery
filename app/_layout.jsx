@@ -5,6 +5,8 @@ import { useEffect, useMemo } from 'react';
 import * as Updates from 'expo-updates';
 import { Platform } from 'react-native';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
+import { injectWebGlobalStyles } from '../lib/injectWebGlobalStyles';
 import { RESOURCE_HINT_DOMAINS } from '../config';
 
 // Global error handler for unhandled promise rejections and errors
@@ -62,6 +64,10 @@ const setupGlobalErrorHandlers = () => {
 };
 
 export default function RootLayout() {
+  useEffect(() => {
+    return injectWebGlobalStyles();
+  }, []);
+
   useEffect(() => {
     setupGlobalErrorHandlers();
     
@@ -182,6 +188,7 @@ export default function RootLayout() {
       <SafeAreaProvider>
         <Stack screenOptions={screenOptions} />
         {Platform.OS === 'web' && <Analytics />}
+        {Platform.OS === 'web' && <SpeedInsights />}
       </SafeAreaProvider>
     </ErrorBoundary>
   );

@@ -1,0 +1,107 @@
+{
+  "patchNumber": 38,
+  "patchLabel": "OB38",
+  "summaryLine": "Chronos joins the roster. Beach Day Discordia and Cat's Eye Bastet Wandering Market travelers. Global base stat pass; penetration shifts on many power items; Spear of the Magus added.",
+  "new": {
+    "gods": [
+      {
+        "name": "Chronos",
+        "note": "New Classic God — Keeper Of Time",
+        "featuredImage": "ob38-chronos",
+        "title": "Chronos"
+      }
+    ],
+    "aspects": [
+      {
+        "god": "Chronos",
+        "name": "Aspect of Relativity",
+        "releaseDate": "July 2"
+      }
+    ],
+    "skins": [],
+    "wanderingMarket": [
+      {
+        "title": "Traveler: Beach Day Discordia",
+        "god": "Discordia",
+        "featuredImage": "ob38-discordia",
+        "premiumUnlocks": [
+          "Midnight Plunge Prism",
+          "Seabreeze Prism",
+          "Pool Party Prism",
+          "Lil Puffer Ward Skin",
+          "Beach Day Announcer Pack",
+          "Battle Banners (Dawn of the Darkstar Empire Event)"
+        ]
+      },
+      {
+        "title": "Traveler: Cat's Eye Bastet",
+        "god": "Bastet",
+        "featuredImage": "ob38-bastet",
+        "premiumUnlocks": [
+          "Cat's Eye Announcer Pack",
+          "Empire's Hoard Chest",
+          "Spotted Title",
+          "Battle Banners (Dawn of the Darkstar Empire Event)"
+        ]
+      }
+    ],
+    "events": [
+      {
+        "title": "Race to Radiant — Chronos",
+        "note": "June 30 – July 7; top 500 earn tracker rewards"
+      },
+      {
+        "title": "Race to Exalted — Scylla",
+        "note": "July 7 – July 14; first Exalted race for a prior god"
+      }
+    ],
+    "items": [
+      {
+        "name": "Spear of the Magus",
+        "note": "New tier-3 Intelligence item (Evil Eye + Void Shard)"
+      }
+    ]
+  },
+  "gods": {
+    "buffed": [],
+    "nerfed": [
+      { "name": "Bastet", "note": "Cat Call dash damage and slow reduced" }
+    ],
+    "adjusted": []
+  },
+  "items": {
+    "buffed": [],
+    "nerfed": [
+      { "name": "Gilded Arrow", "note": "Attack Damage reduced" }
+    ],
+    "new": [{ "name": "Spear of the Magus" }],
+    "adjusted": [
+      { "name": "Avatar's Parashu" },
+      { "name": "Book of Thoth" },
+      { "name": "Cosmic Horror" },
+      { "name": "Doom Orb" },
+      { "name": "Dreamer's Idol" },
+      { "name": "Gluttonous Grimoire" },
+      { "name": "Heartseeker" },
+      { "name": "Jotunns Revenge" },
+      { "name": "Obsidian Shard" },
+      { "name": "Oath-Sworn Spear" },
+      { "name": "Pendulum Blade" },
+      { "name": "Riptalon" },
+      { "name": "Rod of Tahuti" },
+      { "name": "Soul Gem" },
+      { "name": "Spear of Desolation" },
+      { "name": "Tekko-Kagi" },
+      { "name": "The Crusher" },
+      { "name": "The Reaper" },
+      { "name": "Titan's Bane" },
+      { "name": "Totem of Death", "note": "Removed from the game" },
+      { "name": "Transcendence" },
+      { "name": "World Stone" }
+    ]
+  },
+  "systems": [
+    { "title": "Conquest", "note": "Jungle/minion HP tuning; Totem XP split; Phoenix regen; minion mitigation split by damage type" },
+    { "title": "Assault", "note": "Lane widened 2m in front of Tier 1 towers" }
+  ]
+}

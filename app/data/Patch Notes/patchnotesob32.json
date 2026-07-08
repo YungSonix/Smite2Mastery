@@ -1,0 +1,1505 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_32",
+    "title": "SMITE 2 Open Beta 32",
+    "infoboxTitle": "OB32 - SMITE 2 Open Beta 32",
+    "releaseDate": "April 7th, 2026",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_31",
+      "next": "SMITE_2_Open_Beta_33"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 32,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Classic God",
+      "anchor": "New_Classic_God",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Ratatoskr",
+          "anchor": "Ratatoskr",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "-Passive: Acorn of Yggdrasil",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "You spawn with a Magic Acorn in your inventory. This can be upgraded anywhere on the map to provide different bonuses."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 1: Dart",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Dash forward, dealing physical damage and slowing enemies hit, stopping on enemy gods."
+                    },
+                    {
+                      "text": "Cooldown is reduced when dealing damage to enemy gods with other abilities, Once per ability, per God"
+                    },
+                    {
+                      "text": "This ability can now critical strike",
+                      "items": [
+                        {
+                          "text": "Briskberry Acorn",
+                          "items": [
+                            {
+                              "text": "Dart is shorter, wider and now passes through enemy gods. It’s cooldown is reset on enemy god hit. It cannot be reset more than twice"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 2: Flurry",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Spin 4 times and deal physical damage to enemies around you, reducing their physical protections.",
+                      "items": [
+                        {
+                          "text": "Ashwhorl Acorn",
+                          "items": [
+                            {
+                              "text": "Flurry sends out 8 acorns in a circle that freeze in the air before returning back to you, dealing physical damage and providing attack speed per enemy god hit."
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 3: Acorn Blast",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Fire a blast of 3 acorns that deal physical damage, enemies hit by 3 acorns are stunned.",
+                      "items": [
+                        {
+                          "text": "Thistlethorn Acorn",
+                          "items": [
+                            {
+                              "text": "Acorn Blast fires 3 acorns that deal physical damage and stick to enemy gods or freeze at max range. After a short delay they explode dealing physical damage.",
+                              "items": [
+                                {
+                                  "text": "Damage is no longer reduced by subsequent hits"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ultimate Ability: Through the Cosmos",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Fly into the sky, choose and leap to a location up to two times before landing at a final location dealing physical damage and knocking up enemies."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Aspect releasing April 10th",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Aspect of the Thickbark",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Your tier 3 acorn effects change.",
+                          "items": [
+                            {
+                              "text": "Briskberry causes Dart to knockback enemy gods, marking them to explode."
+                            },
+                            {
+                              "text": "Ashworl provides Flurry 2 charges, protections and healing."
+                            },
+                            {
+                              "text": "Thistlethorn causes Acorn Blast to fire 5 projectiles and debuffs enemies."
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Event: Tracker Syndicate",
+      "anchor": "New_Event:_Tracker_Syndicate",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "All new Wandering Market content released in the Ratatoskr, Atlas, and Ishtar updates"
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "6 Travelers (1 Reward, 1 Premium, 4 Classic)"
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "3 NEW Tracker Collections (1 Reward, 2 Standard)",
+              "items": [
+                {
+                  "text": "This all-new type of Collection gives players a ton of Trackers (20!) for their favorite gods, plus Diamonds, Chest Rolls, and bonus Cosmetics."
+                },
+                {
+                  "text": "These new Collections work like our classic Collections – The first page is available to all players, while pages 2-4 are unlocked by purchasing the Collection."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "New Tracker Type: Account Trackers",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Equippable on any God"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "New Tracker Type: Aspect Trackers",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Tracking gameplay aspects unique to a God’s Aspect"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": [
+        {
+          "title": "Reward Tracker: Crimson Kraken Poseidon",
+          "anchor": "Reward_Tracker:_Crimson_Kraken_Poseidon",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Venom Cartel Prism"
+                },
+                {
+                  "text": "Hyper Vice Prism"
+                },
+                {
+                  "text": "Grand Syndicate Prism"
+                },
+                {
+                  "text": "Black Spectre Prism"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Classic Traveler: Yemoja Mastermind",
+          "anchor": "Classic_Traveler:_Yemoja_Mastermind",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Firewall Prism"
+                },
+                {
+                  "text": "Circuit Prism"
+                },
+                {
+                  "text": "Matrix Prism"
+                },
+                {
+                  "text": "Mastermind Title"
+                },
+                {
+                  "text": "Tracker Pact Token (part of the Tracker Syndicate Event)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Reward Tracker Collection: In-Demand Deities",
+          "anchor": "Reward_Tracker_Collection:_In-Demand_Deities",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Trackers for:",
+                  "items": [
+                    {
+                      "text": "The Afterlife Awaits You – Osiris Tracker"
+                    },
+                    {
+                      "text": "Fiery Deaths – Agni Tracker"
+                    },
+                    {
+                      "text": "Crippling Love – Cupid Tracker"
+                    },
+                    {
+                      "text": "Multi-Assassinations – Loki Tracker"
+                    },
+                    {
+                      "text": "Mauled to Death – Artio Tracker"
+                    },
+                    {
+                      "text": "Eye of the Tiger – Sun Wukong Tracker"
+                    },
+                    {
+                      "text": "Disappointing Revives – Khepri Tracker"
+                    },
+                    {
+                      "text": "Time Stealthed – Cabrakan Aspect Tracker"
+                    },
+                    {
+                      "text": "Healing Howl – Fenrir Aspect Tracker"
+                    },
+                    {
+                      "text": "Elephant Stampedes – Ganesha Tracker"
+                    },
+                    {
+                      "text": "Cheated Death – Kali Tracker"
+                    },
+                    {
+                      "text": "Shielded Allies or Self – Bellona Tracker"
+                    },
+                    {
+                      "text": "Meltmaster – Ares Tracker"
+                    },
+                    {
+                      "text": "Two for One – Mulan Tracker"
+                    },
+                    {
+                      "text": "Horrible Heals – Da Ji Tracker"
+                    },
+                    {
+                      "text": "Oops All Cooldowns! – Ullr Tracker"
+                    },
+                    {
+                      "text": "Mounted Fervor – Guan Yu Tracker"
+                    },
+                    {
+                      "text": "Jungle Prey Strikes – Sobek Tracker"
+                    },
+                    {
+                      "text": "Healing Magma – Pele Aspect Tracker"
+                    },
+                    {
+                      "text": "% of Markets Completed – Account Tracker"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Tracker Collection: Purple Haze",
+          "anchor": "Tracker_Collection:_Purple_Haze",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Trackers for:",
+                  "items": [
+                    {
+                      "text": "Deaths from Below – Hades Tracker"
+                    },
+                    {
+                      "text": "Highest Lifesteal – Anubis Tracker"
+                    },
+                    {
+                      "text": "Acid Rain Deaths – Chaac Aspect Tracker"
+                    },
+                    {
+                      "text": "Shards of Ice – Ymir Tracker"
+                    },
+                    {
+                      "text": "Calm Before the Storm – Susano Tracker"
+                    },
+                    {
+                      "text": "Stayed Quiet – Thanatos Tracker"
+                    },
+                    {
+                      "text": "Mass Hysteria – Baron Samedi Tracker"
+                    },
+                    {
+                      "text": "Horn Charged Cooldowns – Cernunnos Aspect Tracker"
+                    },
+                    {
+                      "text": "Mangetsu Kills – Tsukuyomi Tracker"
+                    },
+                    {
+                      "text": "Singularity Kills – Nut Tracker"
+                    },
+                    {
+                      "text": "All-Consuming Bellows – Jormungandr Tracker"
+                    },
+                    {
+                      "text": "Consumed Wrath – Morgan Le Fay Tracker"
+                    },
+                    {
+                      "text": "Multi-Slices, Mostly Dices – Nemesis Tracker"
+                    },
+                    {
+                      "text": "Serenade – Apollo Tracker"
+                    },
+                    {
+                      "text": "Feather Stepped On – Awilix Tracker"
+                    },
+                    {
+                      "text": "Reigning All-Father – Odin Tracker"
+                    },
+                    {
+                      "text": "Mirror Match – The Morrigan Tracker"
+                    },
+                    {
+                      "text": "Launched Allies – Gilgamesh Aspect Tracker"
+                    },
+                    {
+                      "text": "Riptide Movements – Yemoja Tracker"
+                    },
+                    {
+                      "text": "Fully-Mastered Gods – Account Tracker"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Tracker Collection: Long Shot",
+          "anchor": "Tracker_Collection:_Long_Shot",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Trackers for:",
+                  "items": [
+                    {
+                      "text": "So Slippery – Medusa Tracker"
+                    },
+                    {
+                      "text": "Gods Dispersed – Anhur Tracker"
+                    },
+                    {
+                      "text": "Cataclysmic Knockups – Geb Aspect Tracker"
+                    },
+                    {
+                      "text": "Hitting Max Speed – Mercury Tracker"
+                    },
+                    {
+                      "text": "Ouch! – Rama Tracker"
+                    },
+                    {
+                      "text": "Dragon’s Wrath – Kukulkan Tracker"
+                    },
+                    {
+                      "text": "Not so Skilled Shot – Nu Wa Tracker"
+                    },
+                    {
+                      "text": "Crushed Jungles – Scylla Tracker"
+                    },
+                    {
+                      "text": "Tree’s Wrath – Sylvanus Aspect Tracker"
+                    },
+                    {
+                      "text": "Multi-Supressing – Artemis Tracker"
+                    },
+                    {
+                      "text": "Watch Your Step – Janus Tracker"
+                    },
+                    {
+                      "text": "Teleport Bonk – Hun Batz Tracker"
+                    },
+                    {
+                      "text": "Returning Unruly Magic Damage – Discordia Aspect Tracker"
+                    },
+                    {
+                      "text": "Pushed Oer Gods – Hercules Tracker"
+                    },
+                    {
+                      "text": "Cheated Death – Chiron Tracker"
+                    },
+                    {
+                      "text": "King of Gods – Zeus Tracker"
+                    },
+                    {
+                      "text": "8-hit Supernovas – Sol Tracker"
+                    },
+                    {
+                      "text": "Ricochet Marks – Hou Yi Aspect Tracker"
+                    },
+                    {
+                      "text": "Exploded Gods – Jing Wei Tracker"
+                    },
+                    {
+                      "text": "Skins for God Owned – Account Tracker"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Coming in the Atlas Update: Premium Traveler for Ratatoskr, Classic Traveler for Nu"
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Coming in the Ishtar Update: Classic Travelers for Zeus and Sylvanus"
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The Wandering Path has been reset to Level 1 with new rewards as part of this Event."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Wandering Market Coin level improvements",
+      "anchor": "Wandering_Market_Coin_level_improvements",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Players who purchased Travelers or an Event after completing the Wandering Path could get into a situation where they were not earning Coins quickly enough to progress through their Travelers."
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Now, if you have Boosted Coin Levels, any Wandering Path Level will progress at the accelerated rate, even if you previously completed the Wandering Path."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Supporter Store",
+      "anchor": "Supporter_Store",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Spring Supporter Store Bundle"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Eggstatic - Sine – Animated Name Flare"
+            },
+            {
+              "text": "Spring Swirl – Animated Name Flare"
+            },
+            {
+              "text": "Springy Egg – Teleporter Effect"
+            },
+            {
+              "text": "Bouncy Bunny – Teleporter Effect"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Reign of the Archfiend Event Ends",
+      "anchor": "Reign_of_the_Archfiend_Event_Ends",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "The Ratatoskr update is your last chance to buy all of the Reign of the Archfiend event at a discount.",
+              "items": [
+                {
+                  "text": "This can be found in the Store > Special tab for this update"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "It is also the final update where Wyrm Seals can be collected to unlock rewards, such as Grovebound Mordred or The Archfiend Saga"
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "The Travelers and Saga in Reign of the Archfiend will be available for individual purchase after the event concludes, but this is your final chance to get bonus rewards and the buy-all discount."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Gameplay",
+      "anchor": "Gameplay",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Leaving and Returning Penalty Update"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "The first draft of the system was too sensitive to players leaving games, and then later returning. If you return, you likely left due to something out of your control and should not be punished as harshly."
+            },
+            {
+              "text": "This has been adjusted so players will not earn Leaver Points if they return to the match within a longer, more reasonable amount of time that should allow for restarts."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Dodged Lobby High Priority Queue"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "If a lobby fails due to a player dodging the Lobby, all other players can requeue with high priority matchmaking",
+              "items": [
+                {
+                  "text": "This will remember your priority in the queue prior to the failed lobby, and will re-enter you to the matchmaking pool with the same priority."
+                },
+                {
+                  "text": "This should result in a quick new lobby, with roughly the same matchmaking quality as the lobby which failed"
+                }
+              ]
+            },
+            {
+              "text": "For those working through Low Priority Queues, this will also allow you to remain in queue after a failed lobby without needing to wait through the Low Priority Queue again. Waiting for 5 games is appropriate, waiting for a lot more due to failed lobbies is too much."
+            },
+            {
+              "text": "The intent is for this system to auto-requeue you after a failed lobby, but this is not fully implemented for this update"
+            },
+            {
+              "text": "This only works for the queue you were in. (You can't skip the line for a different queue.)"
+            },
+            {
+              "text": "If there are any party member changes, you lose High Priority. This is to prevent people bypassing a queue."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Geb (Nerf Aspect only)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Aspect of Calamity",
+                  "items": [
+                    {
+                      "text": "Attack Scaling: 100% Strength + 20% Intelligence +100% Attack Damage -> 75% Strength + 20% Intelligence + 75% Attack Damage"
+                    }
+                  ]
+                },
+                {
+                  "text": "Shockwave",
+                  "items": [
+                    {
+                      "text": "100/165/230/295/360-> 80/145/210/275/340"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Gilgamesh (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Sun-forged Scimitar",
+                  "items": [
+                    {
+                      "text": "Increased Ignition Damage: 65/95/125/155/185 -> 70/105/140/175/210"
+                    },
+                    {
+                      "text": "Increased Attack Bonus Scaling: 3% -> 4% Max Health"
+                    },
+                    {
+                      "text": "Updated Quest Progress to be “Hit 5 Attacks on enemy gods while Sun-forged Scimitar is ignited.”"
+                    }
+                  ]
+                },
+                {
+                  "text": "Drop Kick",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where this was not properly getting Displacement Immunity during the channel."
+                    }
+                  ]
+                },
+                {
+                  "text": "Hero’s Advance",
+                  "items": [
+                    {
+                      "text": "Increased Damage Taken Debuff: 10 -> 12.5%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Winds of Shamash",
+                  "items": [
+                    {
+                      "text": "Updated Quest Progress to count knockbacks that occur when damaging someone touching the wall."
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect of Shamash",
+                  "items": [
+                    {
+                      "text": "Decreased Wall Burn Damage Scaling: 160% -> 140%"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Hecate (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Triplicate Form (1)",
+                  "items": [
+                    {
+                      "text": "Decreased Bonus Damage Scaling: 3.5% -> 2%"
+                    },
+                    {
+                      "text": "Decreased Mark Duration: 6s -> 5s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Repel Magic (3)",
+                  "items": [
+                    {
+                      "text": "Decreased Base Damage: 85/130/175/220/265 -> 75/120/165/210/255"
+                    },
+                    {
+                      "text": "Decreased Intelligence Scaling: 85% -> 70%"
+                    },
+                    {
+                      "text": "Decreased Shield Duration: 6s -> 5s"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Hercules (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Decreased Base Physical Protections: 16.3 -> 15"
+                    },
+                    {
+                      "text": "Decreased Base Magical Protections: 28.1 -> 25"
+                    }
+                  ]
+                },
+                {
+                  "text": "Apotheosis",
+                  "items": [
+                    {
+                      "text": "Decreased Protections Per Level: 4 -> 2"
+                    }
+                  ]
+                },
+                {
+                  "text": "Mitigate Wounds",
+                  "items": [
+                    {
+                      "text": "Decreased Protections: 15/20/25/30/35 -> 10/15/20/25/30"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Nu Wa",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Aspect of Shining Mist",
+                  "items": [
+                    {
+                      "text": "Strength of Wood (P)",
+                      "items": [
+                        {
+                          "text": "New: Every Attack reduces the Cooldown of Shining Metal by 0.5s if hitting an enemy god or 0.2s otherwise."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Shining Metal (3)",
+                      "items": [
+                        {
+                          "text": "Increased Projectile Damage Scaling: 40% Intelligence -> 80% Strength + 40% Intelligence + 80% Attack Damage"
+                        },
+                        {
+                          "text": "This ability can proc Attack item effects (in addition to Ability item effects)."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Fire Shards (4)",
+                      "items": [
+                        {
+                          "text": "This ability can no longer Critically Strike."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Mysterious Fog travels slightly before stopping, allowing you to fire Attacks within it and remain Stealthed. Shining Metal and Fire Shards scale with Attack Power, and procs Attack Item Effects. Attacks reduce the Cooldown of Shining Metal. Additionally Strength of Fire also provides Attack Speed."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Radiant Bulwark",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Removed the self slow"
+                },
+                {
+                  "text": "While channeling you gain 20% Damage Mitigation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Damaru",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Strength: 40 -> 35"
+                },
+                {
+                  "text": "Decreased Bonus Ability Damage Per Stack: 10% -> 8%"
+                },
+                {
+                  "text": "Decreased Bonus Attack Damage Per Stack: 10% -> 8%"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Spectral Armor",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Increased Max Health: 400 -> 450"
+                },
+                {
+                  "text": "Increased Critical Strike Reduction: -25% -> -30%"
+                },
+                {
+                  "text": "You share -15% Critical Strike Reduction to allies within 8.8m."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Pharaoh’s Curse",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Added Health: 0 -> 250"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Kinetic Cuirass",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Attacks needed to trigger: 5 -> 4"
+                },
+                {
+                  "text": "Can now store up to two charges of Kinetic"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Tekko-Kagi",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Pathfinding Duration: 10s -> 8s"
+                },
+                {
+                  "text": "Decreased Strength: 50 -> 45"
+                },
+                {
+                  "text": "Decreased Attack Speed: 25% -> 20%"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Gem of Focus",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Intelligence: 75 -> 65"
+                },
+                {
+                  "text": "Decreased Pathfinding Duration: 10s -> 8s"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "The Cosmic Horror",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Intelligence: 85 -> 75"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed Curios and Role Passives being removed in Conquest Vs AI"
+            },
+            {
+              "text": "Fixed Artemis traps showing enemy coloration on the minimap for friendlies"
+            },
+            {
+              "text": "Morgan Le Fay’s Sigil Mastery (A01) has been completely rewritten technically. Cast mode issues and “clunkiness” for players with bad connections should be resolved."
+            },
+            {
+              "text": "Degree of Misconduct notifications have been updated with new icons."
+            },
+            {
+              "text": "Friendly Artemis traps will no longer show as red dots on the minimap"
+            },
+            {
+              "text": "Conquest vs. AI will no longer remove Role Buffs or Curios"
+            },
+            {
+              "text": "Filters/Respawning will no longer refocus the Item Store cursor to the top of the store"
+            },
+            {
+              "text": "Fixed an issue that could lead to Hyper Speed/Stuck Movements."
+            },
+            {
+              "text": "Fixed an issue where Ne Zha’s slow would bypass slow immunities."
+            },
+            {
+              "text": "Fixed an issue where old items that received new stats were not showing up on the Split store (Console store) under the Special tab."
+            },
+            {
+              "text": "Fixed an issue where Console could not scroll God Abilities on the Gods tab."
+            },
+            {
+              "text": "Fixed a player-reported Chiron A01 size issue (it was too small by .3m)"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 4/8/26",
+      "anchor": "Hotfix_4/8/26",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Gameplay",
+          "anchor": "Gameplay_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Abilities that can critical strike now only do 50% item proc damage."
+            }
+          ]
+        },
+        {
+          "title": "Item Adjustments",
+          "anchor": "Item_Adjustments",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Bumba's Golden Dagger",
+                  "items": [
+                    {
+                      "text": "On attack hit: 15% bonus Physical Damage ->10% bonus physical damage"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Mercury's Talaria",
+                  "items": [
+                    {
+                      "text": "Passive: your next non-Ultimate ability deals up to 20% more damage -> 8% more damage. If this was a movement ability deals 10% more damage instead."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 4/11/26",
+      "anchor": "Hotfix_4/11/26",
+      "level": 2,
+      "subsections": []
+    },
+    {
+      "title": "Item Balance Updates",
+      "anchor": "Item_Balance_Updates",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Bumba’s Golden Dagger, Bumba’s Spear, and Golden Blade"
+        },
+        {
+          "type": "paragraph",
+          "text": "We are addressing unintended interactions where area-of-effect abilities and attacks could trigger multiple item procs. These items will now only proc once on each target per activation. This will lead to a drastic reduction in unintended bonus burst damage."
+        },
+        {
+          "type": "paragraph",
+          "text": "Bumba’s Cudgelntly too plentiful and can be abused by certain Gods, leading to unhealthy play patterns."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Hit this Attack:",
+              "bold": true,
+              "detail": "Cooldown reduction decreased from 0.75s to 0.33s."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Bumba’s Hammer"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Hit this Attack:",
+              "bold": true,
+              "detail": "Cooldown reduction decreased from 1.0s to 0.66s."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Developer Note on Cooldown Items: You may notice Pendulum Blade and Staff of Myrddin are missing from this list. The specific adjustments we want to make to these items cannot be done via a server-side hotfix. However, we are taking a hard look at all sources of free flat Cooldown Reduction for future updates."
+        },
+        {
+          "type": "paragraph",
+          "text": "Wyrmskin Hide"
+        },
+        {
+          "type": "paragraph",
+          "text": "We are pivoting this item's identity to focus more on Max Health and Dampening, removing its overly strong early-game spikes."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Strength:",
+              "bold": true,
+              "detail": "Decreased from 40 to 20."
+            },
+            {
+              "text": "Max Health:",
+              "bold": true,
+              "detail": "Increased from 250 to 300."
+            },
+            {
+              "text": "Dampening:",
+              "bold": true,
+              "detail": "Decreased from 15 to 10."
+            },
+            {
+              "text": "Passive Dampening:",
+              "bold": true,
+              "detail": "Changed from 20 flat to 1 Dampening per Level."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Shield Splitter"
+        },
+        {
+          "type": "paragraph",
+          "text": "We are shifting this item to function more as a damage-heavy, anti-shield hybrid tool."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Physical Protections:",
+              "bold": true,
+              "detail": "Decreased from 30 to 15."
+            },
+            {
+              "text": "Magical Protections:",
+              "bold": true,
+              "detail": "Decreased from 30 to 15."
+            },
+            {
+              "text": "Shield Removed:",
+              "bold": true,
+              "detail": "Increased from 65% to 70%."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "God & Aspect Balance Updates",
+      "anchor": "God_&amp;_Aspect_Balance_Updates",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Apollo Aspect"
+        },
+        {
+          "type": "paragraph",
+          "text": "Triple \"So Beautiful\" provides an extremely strong source of poke. We are reducing its damage for now and will likely revisit this in a future update."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "So Beautiful (Ability 1):",
+              "bold": true,
+              "detail": "Damage reduced from 60/100/140/180/220 to 40/80/120/160/200."
+            },
+            {
+              "text": "So Beautiful (Ability 1):",
+              "bold": true,
+              "detail": "no longer applies the Attack Speed Buff to Apollo"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Da Ji (Base and Aspect)"
+        },
+        {
+          "type": "paragraph",
+          "text": "Da Ji has remained a top pick in both forms, largely due to the sheer power concentrated in her second ability. We are reducing this damage and are keeping a close eye on her Paolao immunity time for a future patch."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "One-Thousand Cuts (Ability 2) Aspect:",
+              "bold": true,
+              "detail": "Damage scaling reduced from 75% Strength + 15% Intelligence + 75% Attack Damage to 60% Strength + 12% Intelligence + 60% Attack Damage."
+            },
+            {
+              "text": "One-Thousand Cuts (Ability 2) Non-Aspect:",
+              "bold": true,
+              "detail": "Base Damage reduced from 35/50/65/80/95 to 30/42/54/66/78."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Fenrir"
+        },
+        {
+          "type": "paragraph",
+          "text": "The release of Echo highlighted the extreme strength of Brutalize. While the bug fixes to the Bumba’s tree and Golden Blade will naturally address his worst-case scenarios, we are giving him a light adjustment here as well."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Brutalize (Ability 3)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Strength Scaling reduced from 45% to 40%."
+                },
+                {
+                  "text": "Empowered Strength Scaling reduced from 60% to 55%."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Hercules"
+        },
+        {
+          "type": "paragraph",
+          "text": "Hercules has been frustrating at higher ranks. This change is intended to slightly check his early game while we monitor how the broader item adjustments impact his win rate."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Driving Strike (Ability 1):",
+              "bold": true,
+              "detail": "Cooldown increased from 13s flat to 15/14.5/14/13.5/13s."
+            },
+            {
+              "text": "Earthbreaker (Ability 2):",
+              "bold": true,
+              "detail": "Cooldown increased from 13s flat to 15/14.5/14/13.5/13s."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Kali Aspect"
+        },
+        {
+          "type": "paragraph",
+          "text": "Kali Aspect has been overperforming by abusing on-hit procs with her 1/0.5/0.5 attack chain. This is overly potent for a ranged Carry who also gains piercing attacks during her ultimate."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Basic Attacks:",
+              "bold": true,
+              "detail": "Attacks now process items at 66% Efficiency."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Ne Zha Aspect"
+        },
+        {
+          "type": "paragraph",
+          "text": "This Aspect currently provides too much tankiness without sacrificing damage. We are refocusing its identity heavily onto sustain and reducing its lethal output accordingly."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Flaming Spear (Ability 2):",
+              "bold": true,
+              "detail": "Enflamed Max Health Damage reduced from [6% of Base Health + 3-5% Item Health] to [4% of Base Health + 1.5-3.5% Item Health]."
+            },
+            {
+              "text": "Wind Fire Wheels (Ultimate):",
+              "bold": true,
+              "detail": "No longer deals % Health Damage."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Nu Wa Aspect"
+        },
+        {
+          "type": "paragraph",
+          "text": "This Aspect was simply functioning as a strictly better version of Nu Wa. We are shifting its focus to Attacking and may revisit her identity further in a future patch."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Shining Metal (Ability 3):",
+              "bold": true,
+              "detail": "Base Damage, Strength, and Intelligence Scalings have been removed. This ability now deals 200% of Basic Attack Damage (cannot Crit)."
+            },
+            {
+              "text": "Fire Shards (Ultimate):",
+              "bold": true,
+              "detail": "Attack Damage Scaling reduced from 70% to 60%."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Odin"
+        },
+        {
+          "type": "paragraph",
+          "text": "Canceling Gungnir’s Might early was allowing players to deal more burst damage than intended due to the massive cooldown refund."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Gungnir’s Might (Ability 3):",
+              "bold": true,
+              "detail": "Early refire cooldown reduction decreased from 40% to 20%."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Merlin"
+        },
+        {
+          "type": "paragraph",
+          "text": "Merlin is too safe and effective in the early game considering his massive late-game prowess. He is also spamming abilities too quickly by abusing the Cooldown Reduction on his Flicker."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Flicker | Ice (Ability 3):",
+              "bold": true,
+              "detail": "Ability Cooldown Reduction decreased from 5s to 2s."
+            },
+            {
+              "text": "Elemental Mastery (Ultimate):",
+              "bold": true,
+              "detail": "Cooldown increased from 30/27.5/25/22.5/20s to 40/35/30/25/20s."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Pele Aspect"
+        },
+        {
+          "type": "paragraph",
+          "text": "Pele Aspect gained incredible survivability but didn't give up enough burst damage to justify it."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Pyroclast (Ability 1):",
+              "bold": true,
+              "detail": "Initial Damage Scaling reduced from 60% Strength to 50% Strength."
+            },
+            {
+              "text": "Volcanic Lightning (Ultimate):",
+              "bold": true,
+              "detail": "Initial Dash Hit Damage reduced from 180/255/330/405/480 to 160/235/310/385/460."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Developer Note on Ratatoskr: We hear your feedback that Ratatoskr's base kit feels underpowered and underwhelming. We could have shipped a quick numbers buff in this hotfix, but we want to do it right. We are actively working on exactly how to address his core issues for a future update."
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

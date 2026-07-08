@@ -35,8 +35,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery.png",
               "skin": "app/data/NewGodSkins/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/artio/Screenshot (244).png",
                 "frame": {
@@ -53,15 +51,8 @@
                 "godName": "Artio",
                 "displayName": "Onyx",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 5,
-                  "label": "V",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
-                },
                 "screenshot": "app/data/God Renders/artio/Screenshot (244).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/artio/Screenshot (244).png",
                   "fileName": "Screenshot (244).png",
@@ -76,6 +67,13 @@
                   "parentSkinName": "Base Artio",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -89,13 +87,8 @@
                   }
                 ]
               },
-              "unlock": {
-                "masteryRank": 5,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
-                "displayText": "Ascension reward — requires Mastery rank V"
-              },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "ascensionReward",
@@ -107,7 +100,14 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              }
             },
             {
               "name": "Mastery Opal",
@@ -115,8 +115,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery.png",
               "skin": "app/data/NewGodSkins/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/artio/Screenshot (245).png",
                 "frame": {
@@ -133,15 +131,8 @@
                 "godName": "Artio",
                 "displayName": "Opal",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 5,
-                  "label": "V",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
-                },
                 "screenshot": "app/data/God Renders/artio/Screenshot (245).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/artio/Screenshot (245).png",
                   "fileName": "Screenshot (245).png",
@@ -156,6 +147,13 @@
                   "parentSkinName": "Base Artio",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -169,14 +167,8 @@
                   }
                 ]
               },
-              "unlock": {
-                "masteryRank": 5,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
-                "displayText": "Ascension reward — requires Mastery rank V",
-                "rarityNote": "Rare"
-              },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "ascensionReward",
@@ -188,7 +180,15 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V",
+                "rarityNote": "Rare"
+              }
             },
             {
               "name": "Mastery Radiant",
@@ -196,8 +196,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery.png",
               "skin": "app/data/NewGodSkins/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/artio/Screenshot (246).png",
                 "frame": {
@@ -214,15 +212,8 @@
                 "godName": "Artio",
                 "displayName": "Radiant",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 10,
-                  "label": "X",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
-                },
                 "screenshot": "app/data/God Renders/artio/Screenshot (246).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/artio/Screenshot (246).png",
                   "fileName": "Screenshot (246).png",
@@ -237,6 +228,13 @@
                   "parentSkinName": "Base Artio",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -250,14 +248,8 @@
                   }
                 ]
               },
-              "unlock": {
-                "masteryRank": 10,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
-                "displayText": "Ascension reward — requires Mastery rank X (Radiant)",
-                "rarityNote": "Rare"
-              },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "ascensionReward",
@@ -269,7 +261,15 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)",
+                "rarityNote": "Rare"
+              }
             }
           ],
           "loadout": {
@@ -288,7 +288,6 @@
             "godName": "Artio",
             "displayName": "Base",
             "rarity": null,
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/artio/Screenshot (235).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -305,7 +304,8 @@
                 "amount": "0",
                 "owned": true
               }
-            }
+            },
+            "gridBadge": null
           },
           "unlock": {
             "source": "base",
@@ -323,23 +323,21 @@
           "isBaseSkin": false,
           "isPrism": false,
           "isRecolor": false,
-          "isMastery": true,
-          "isMasteryShadowSkin": true,
+          "isMastery": false,
           "isCrossGen": false,
+          "isMasteryShadowSkin": true,
           "type": "Mastery Shadow",
           "assets": {
             "skin": "app/data/NewGodSkins/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery.png",
             "cardArt": "app/data/NewGodSkins/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery.png",
             "icon": "app/data/NewGodSkins/Artio/Skins/Mastery/T_Artio_Icon_Shadow.png"
           },
-          "cardArt": "app/data/NewGodSkins/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery.png",
-          "skin": "app/data/NewGodSkins/Artio/Skins/Mastery/t_SkinCard_Artio_Mastery.png",
-          "icon": "app/data/NewGodSkins/Artio/Skins/Mastery/T_Artio_Icon_Shadow.png",
-          "masteryFromDisk": true,
-          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
           "price": {
-            "diamonds": "900"
+            "gems": "",
+            "diamonds": "900",
+            "gemsdia": ""
           },
+          "masteryFromDisk": true,
           "loadout": {
             "screenshot": "app/data/God Renders/artio/Screenshot (243).png",
             "frame": {
@@ -356,7 +354,6 @@
             "godName": "Artio",
             "displayName": "Shadow",
             "rarity": "Heroic",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/artio/Screenshot (243).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -375,6 +372,7 @@
               },
               "tier": "Heroic"
             },
+            "gridBadge": null,
             "information": [
               {
                 "key": "ascensionReward",
@@ -388,12 +386,7 @@
               }
             ]
           },
-          "unlock": {
-            "source": "ascension",
-            "requiresAscensionPass": true,
-            "rarityNote": "Rare",
-            "displayText": "Ascension Pass — rare skin (may appear in events)"
-          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
           "information": [
             {
               "key": "ascensionReward",
@@ -405,7 +398,13 @@
               "label": "Rare",
               "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          }
         },
         {
           "skinKey": "DenMother",
@@ -443,10 +442,8 @@
             "godName": "Artio",
             "displayName": "Den Mother",
             "rarity": "Heroic",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/artio/Screenshot (242).png",
             "extractedAt": "2026-06-22",
-            "buttonText": "LOCKED",
             "screenshotTag": {
               "screenshot": "app/data/God Renders/artio/Screenshot (242).png",
               "fileName": "Screenshot (242).png",
@@ -458,6 +455,8 @@
               "skinName": "Den Mother",
               "tier": "Heroic"
             },
+            "gridBadge": null,
+            "buttonText": "LOCKED",
             "information": [
               {
                 "key": "twitchDrop",
@@ -472,11 +471,6 @@
             ]
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
-          "unlock": {
-            "source": "twitch",
-            "rarityNote": "Rare",
-            "displayText": "Twitch Drop — rare skin (may appear in events)"
-          },
           "information": [
             {
               "key": "twitchDrop",
@@ -488,7 +482,12 @@
               "label": "Rare",
               "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "twitch",
+            "rarityNote": "Rare",
+            "displayText": "Twitch Drop — rare skin (may appear in events)"
+          }
         },
         {
           "skinKey": "FiendHunter",
@@ -509,11 +508,13 @@
             "icon": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinPortrait_Artio_FiendHunter_Base.png"
           },
           "price": {
-            "diamonds": "2400"
+            "gems": "",
+            "diamonds": "2400",
+            "gemsdia": ""
           },
           "variants": [
             {
-              "name": "Cursed Blood",
+              "name": "Prism 1",
               "cardArt": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinCard_Artio_FiendHunter_Prism01.png",
               "skin": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinCard_Artio_FiendHunter_Prism01.png",
               "icon": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinPortrait_Artio_FiendHunter_Prism01.png",
@@ -533,14 +534,8 @@
                 "godName": "Artio",
                 "displayName": "Fiend Hunter - Cursed Blood",
                 "rarity": "Prisms",
-                "gridBadge": {
-                  "type": "prism",
-                  "rank": null,
-                  "label": "prism"
-                },
                 "screenshot": "app/data/God Renders/artio/Screenshot (237).png",
-                "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
+                "extractedAt": "2026-07-06",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/artio/Screenshot (237).png",
                   "fileName": "Screenshot (237).png",
@@ -554,42 +549,14 @@
                   "parentSkinKey": "FiendHunter",
                   "parentSkinName": "Fiend Hunter",
                   "tier": "Prisms"
-                },
-                "information": [
-                  {
-                    "key": "travelerCollection",
-                    "label": "Traveler Collection",
-                    "text": "Acquired in the 'Fiend Hunters' Traveler."
-                  },
-                  {
-                    "key": "prism",
-                    "label": "Prism",
-                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                  }
-                ]
+                }
               },
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
-              "unlock": {
-                "source": "traveler",
-                "prismNote": true,
-                "displayText": "Traveler Collection"
-              },
-              "information": [
-                {
-                  "key": "travelerCollection",
-                  "label": "Traveler Collection",
-                  "text": "Acquired in the 'Fiend Hunters' Traveler."
-                },
-                {
-                  "key": "prism",
-                  "label": "Prism",
-                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                }
-              ]
+              "isPrism": true
             },
             {
-              "name": "Paragon",
+              "name": "Prism 2",
               "cardArt": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinCard_Artio_FiendHunter_Prism02.png",
               "skin": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinCard_Artio_FiendHunter_Prism02.png",
               "icon": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinPortrait_Artio_FiendHunter_Prism02.png",
@@ -609,14 +576,8 @@
                 "godName": "Artio",
                 "displayName": "Fiend Hunter - Paragon",
                 "rarity": "Prisms",
-                "gridBadge": {
-                  "type": "prism",
-                  "rank": null,
-                  "label": "prism"
-                },
                 "screenshot": "app/data/God Renders/artio/Screenshot (238).png",
-                "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
+                "extractedAt": "2026-07-06",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/artio/Screenshot (238).png",
                   "fileName": "Screenshot (238).png",
@@ -630,42 +591,14 @@
                   "parentSkinKey": "FiendHunter",
                   "parentSkinName": "Fiend Hunter",
                   "tier": "Prisms"
-                },
-                "information": [
-                  {
-                    "key": "travelerCollection",
-                    "label": "Traveler Collection",
-                    "text": "Acquired in the 'Fiend Hunters' Traveler."
-                  },
-                  {
-                    "key": "prism",
-                    "label": "Prism",
-                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                  }
-                ]
+                }
               },
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
-              "unlock": {
-                "source": "traveler",
-                "prismNote": true,
-                "displayText": "Traveler Collection"
-              },
-              "information": [
-                {
-                  "key": "travelerCollection",
-                  "label": "Traveler Collection",
-                  "text": "Acquired in the 'Fiend Hunters' Traveler."
-                },
-                {
-                  "key": "prism",
-                  "label": "Prism",
-                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                }
-              ]
+              "isPrism": true
             },
             {
-              "name": "Violet Stalker",
+              "name": "Prism 3",
               "cardArt": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinCard_Artio_FiendHunter_Prism03.png",
               "skin": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinCard_Artio_FiendHunter_Prism03.png",
               "icon": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinPortrait_Artio_FiendHunter_Prism03.png",
@@ -685,14 +618,8 @@
                 "godName": "Artio",
                 "displayName": "Fiend Hunter - Violet Stalker",
                 "rarity": "Prisms",
-                "gridBadge": {
-                  "type": "prism",
-                  "rank": null,
-                  "label": "prism"
-                },
                 "screenshot": "app/data/God Renders/artio/Screenshot (240).png",
-                "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
+                "extractedAt": "2026-07-06",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/artio/Screenshot (240).png",
                   "fileName": "Screenshot (240).png",
@@ -706,42 +633,14 @@
                   "parentSkinKey": "FiendHunter",
                   "parentSkinName": "Fiend Hunter",
                   "tier": "Prisms"
-                },
-                "information": [
-                  {
-                    "key": "travelerCollection",
-                    "label": "Traveler Collection",
-                    "text": "Acquired in the 'Fiend Hunters' Traveler."
-                  },
-                  {
-                    "key": "prism",
-                    "label": "Prism",
-                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                  }
-                ]
+                }
               },
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
-              "unlock": {
-                "source": "traveler",
-                "prismNote": true,
-                "displayText": "Traveler Collection"
-              },
-              "information": [
-                {
-                  "key": "travelerCollection",
-                  "label": "Traveler Collection",
-                  "text": "Acquired in the 'Fiend Hunters' Traveler."
-                },
-                {
-                  "key": "prism",
-                  "label": "Prism",
-                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                }
-              ]
+              "isPrism": true
             },
             {
-              "name": "Myrmidon",
+              "name": "Prism 4",
               "cardArt": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinCard_Artio_FiendHunter_Prism04.png",
               "skin": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinCard_Artio_FiendHunter_Prism04.png",
               "icon": "app/data/NewGodSkins/Artio/Skins/FiendHunter/t_SkinPortrait_Artio_FiendHunter_Prism04.png",
@@ -761,14 +660,8 @@
                 "godName": "Artio",
                 "displayName": "Fiend Hunter - Myrmidon",
                 "rarity": "Prisms",
-                "gridBadge": {
-                  "type": "prism",
-                  "rank": null,
-                  "label": "prism"
-                },
                 "screenshot": "app/data/God Renders/artio/Screenshot (241).png",
-                "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
+                "extractedAt": "2026-07-06",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/artio/Screenshot (241).png",
                   "fileName": "Screenshot (241).png",
@@ -782,39 +675,11 @@
                   "parentSkinKey": "FiendHunter",
                   "parentSkinName": "Fiend Hunter",
                   "tier": "Prisms"
-                },
-                "information": [
-                  {
-                    "key": "travelerCollection",
-                    "label": "Traveler Collection",
-                    "text": "Acquired in the 'Fiend Hunters' Traveler."
-                  },
-                  {
-                    "key": "prism",
-                    "label": "Prism",
-                    "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                  }
-                ]
+                }
               },
               "rarity": "Prisms",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_RecolorsTier.png",
-              "unlock": {
-                "source": "traveler",
-                "prismNote": true,
-                "displayText": "Traveler Collection"
-              },
-              "information": [
-                {
-                  "key": "travelerCollection",
-                  "label": "Traveler Collection",
-                  "text": "Acquired in the 'Fiend Hunters' Traveler."
-                },
-                {
-                  "key": "prism",
-                  "label": "Prism",
-                  "text": "Prisms are unique color variations of existing skins, letting you further customize your god's appearance. You must own the base skin to unlock its Prisms."
-                }
-              ]
+              "isPrism": true
             }
           ],
           "loadout": {
@@ -833,11 +698,6 @@
             "godName": "Artio",
             "displayName": "Fiend Hunter",
             "rarity": "Classic",
-            "gridBadge": {
-              "type": "prism",
-              "rank": null,
-              "label": "prism"
-            },
             "screenshot": "app/data/God Renders/artio/Screenshot (236).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -855,6 +715,11 @@
                 "owned": false
               },
               "tier": "Classic"
+            },
+            "gridBadge": {
+              "type": "prism",
+              "rank": null,
+              "label": "prism"
             },
             "information": [
               {
@@ -875,10 +740,6 @@
             ]
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_CommonTier.png",
-          "unlock": {
-            "source": "traveler",
-            "displayText": "Traveler Collection"
-          },
           "information": [
             {
               "key": "travelerCollection",
@@ -895,7 +756,11 @@
               "label": "Classic",
               "text": "This item was inspired by a SMITE 1 Skin."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "traveler",
+            "displayText": "Traveler Collection"
+          }
         }
       ]
     },
@@ -933,28 +798,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
-              "unlock": {
-                "rarityNote": "Rare",
-                "source": "ascension",
-                "masteryRank": 5,
-                "requiresAscensionPass": true,
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
-                "displayText": "Ascension reward — requires Mastery rank V"
-              },
-              "information": [
-                {
-                  "key": "masteryReward",
-                  "label": "Mastery Reward",
-                  "text": "This item is acquired from leveling up Cernunnos' Ascension Pass."
-                },
-                {
-                  "key": "ascensionReward",
-                  "label": "Ascension Reward",
-                  "text": "This item is acquired from leveling up your God's Ascension Pass."
-                }
-              ],
               "loadout": {
                 "screenshot": "app/data/God Renders/cernennos/Screenshot (352).png",
                 "frame": {
@@ -971,15 +814,8 @@
                 "godName": "Cernunnos",
                 "displayName": "Onyx",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 5,
-                  "label": "V",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
-                },
                 "screenshot": "app/data/God Renders/cernennos/Screenshot (352).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/cernennos/Screenshot (352).png",
                   "fileName": "Screenshot (352).png",
@@ -994,6 +830,13 @@
                   "parentSkinName": "Base Cernunnos",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "masteryReward",
@@ -1006,6 +849,28 @@
                     "text": "This item is acquired from leveling up your God's Ascension Pass."
                   }
                 ]
+              },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "information": [
+                {
+                  "key": "masteryReward",
+                  "label": "Mastery Reward",
+                  "text": "This item is acquired from leveling up Cernunnos' Ascension Pass."
+                },
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up your God's Ascension Pass."
+                }
+              ],
+              "unlock": {
+                "rarityNote": "Rare",
+                "source": "ascension",
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
               }
             },
             {
@@ -1014,28 +879,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
-              "unlock": {
-                "masteryRank": 5,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
-                "displayText": "Ascension reward — requires Mastery rank V",
-                "rarityNote": "Rare"
-              },
-              "information": [
-                {
-                  "key": "ascensionReward",
-                  "label": "Ascension Reward",
-                  "text": "This item is acquired from leveling up Cernunnos' Ascension Pass."
-                },
-                {
-                  "key": "rare",
-                  "label": "Rare",
-                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
-                }
-              ],
               "loadout": {
                 "screenshot": "app/data/God Renders/cernennos/Screenshot (353).png",
                 "frame": {
@@ -1052,15 +895,8 @@
                 "godName": "Cernunnos",
                 "displayName": "Opal",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 5,
-                  "label": "V",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
-                },
                 "screenshot": "app/data/God Renders/cernennos/Screenshot (353).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/cernennos/Screenshot (353).png",
                   "fileName": "Screenshot (353).png",
@@ -1075,6 +911,13 @@
                   "parentSkinName": "Base Cernunnos",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -1087,24 +930,9 @@
                     "text": "This is a rare item and may only appear on special occasions or in specific Events."
                   }
                 ]
-              }
-            },
-            {
-              "name": "Mastery Radiant",
-              "icon": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Icon_Light.png",
-              "masteryFromDisk": true,
-              "cardArt": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png",
-              "skin": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png",
+              },
               "rarity": "Heroic",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
-              "unlock": {
-                "masteryRank": 10,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
-                "displayText": "Ascension reward — requires Mastery rank X (Radiant)",
-                "rarityNote": "Rare"
-              },
               "information": [
                 {
                   "key": "ascensionReward",
@@ -1117,6 +945,21 @@
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
               ],
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V",
+                "rarityNote": "Rare"
+              }
+            },
+            {
+              "name": "Mastery Radiant",
+              "icon": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Icon_Light.png",
+              "masteryFromDisk": true,
+              "cardArt": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png",
+              "skin": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png",
               "loadout": {
                 "screenshot": "app/data/God Renders/cernennos/Screenshot (354).png",
                 "frame": {
@@ -1133,15 +976,8 @@
                 "godName": "Cernunnos",
                 "displayName": "Radiant",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 10,
-                  "label": "X",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
-                },
                 "screenshot": "app/data/God Renders/cernennos/Screenshot (354).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/cernennos/Screenshot (354).png",
                   "fileName": "Screenshot (354).png",
@@ -1156,6 +992,13 @@
                   "parentSkinName": "Base Cernunnos",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -1168,6 +1011,28 @@
                     "text": "This is a rare item and may only appear on special occasions or in specific Events."
                   }
                 ]
+              },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+              "information": [
+                {
+                  "key": "ascensionReward",
+                  "label": "Ascension Reward",
+                  "text": "This item is acquired from leveling up Cernunnos' Ascension Pass."
+                },
+                {
+                  "key": "rare",
+                  "label": "Rare",
+                  "text": "This is a rare item and may only appear on special occasions or in specific Events."
+                }
+              ],
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)",
+                "rarityNote": "Rare"
               }
             }
           ],
@@ -1187,7 +1052,6 @@
             "godName": "Cernunnos",
             "displayName": "Base",
             "rarity": null,
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/cernennos/Screenshot (347).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -1204,7 +1068,8 @@
                 "amount": "0",
                 "owned": true
               }
-            }
+            },
+            "gridBadge": null
           },
           "unlock": {
             "source": "base",
@@ -1222,41 +1087,21 @@
           "isBaseSkin": false,
           "isPrism": false,
           "isRecolor": false,
-          "isMastery": true,
-          "isMasteryShadowSkin": true,
+          "isMastery": false,
           "isCrossGen": false,
+          "isMasteryShadowSkin": true,
           "type": "Mastery Shadow",
           "assets": {
             "skin": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png",
             "cardArt": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png",
             "icon": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Icon_Shadow.png"
           },
-          "cardArt": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png",
-          "skin": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Card_Mastery.png",
-          "icon": "app/data/NewGodSkins/Cernunnos/Skins/Mastery/T_Cernunnos_Icon_Shadow.png",
-          "masteryFromDisk": true,
-          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
           "price": {
-            "diamonds": "900"
+            "gems": "",
+            "diamonds": "900",
+            "gemsdia": ""
           },
-          "unlock": {
-            "source": "ascension",
-            "requiresAscensionPass": true,
-            "rarityNote": "Rare",
-            "displayText": "Ascension Pass — rare skin (may appear in events)"
-          },
-          "information": [
-            {
-              "key": "ascensionReward",
-              "label": "Ascension Reward",
-              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
-            },
-            {
-              "key": "rare",
-              "label": "Rare",
-              "text": "This is a rare item and may only appear on special occasions or in specific Events."
-            }
-          ],
+          "masteryFromDisk": true,
           "loadout": {
             "screenshot": "app/data/God Renders/cernennos/Screenshot (350).png",
             "frame": {
@@ -1273,7 +1118,6 @@
             "godName": "Cernunnos",
             "displayName": "Shadow",
             "rarity": "Heroic",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/cernennos/Screenshot (350).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -1292,6 +1136,7 @@
               },
               "tier": "Heroic"
             },
+            "gridBadge": null,
             "information": [
               {
                 "key": "ascensionReward",
@@ -1304,6 +1149,25 @@
                 "text": "This is a rare item and may only appear on special occasions or in specific Events."
               }
             ]
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
+          "information": [
+            {
+              "key": "ascensionReward",
+              "label": "Ascension Reward",
+              "text": "This Skin is instantly unlocked when you purchase this God's Ascension Pass."
+            },
+            {
+              "key": "rare",
+              "label": "Rare",
+              "text": "This is a rare item and may only appear on special occasions or in specific Events."
+            }
+          ],
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
           }
         },
         {
@@ -1325,21 +1189,10 @@
             "icon": "app/data/NewGodSkins/Cernunnos/Skins/Netherware/t_SkinPortrait_Cernunnos_Netherware.png"
           },
           "price": {
-            "diamonds": "1200"
+            "gems": "",
+            "diamonds": "1200",
+            "gemsdia": ""
           },
-          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
-          "information": [
-            {
-              "key": "crossGen",
-              "label": "Cross-Gen",
-              "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
-            },
-            {
-              "key": "standard",
-              "label": "Standard",
-              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
-            }
-          ],
           "loadout": {
             "screenshot": "app/data/God Renders/cernennos/Screenshot (349).png",
             "frame": {
@@ -1353,41 +1206,27 @@
             }
           },
           "loadoutMeta": {
+            "screenshotTag": {
+              "skinName": "Headhunter"
+            },
+            "screenshot": "app/data/God Renders/cernennos/Screenshot (349).png",
             "godName": "Cernunnos",
             "displayName": "Headhunter",
-            "rarity": "Epic",
-            "gridBadge": null,
-            "screenshot": "app/data/God Renders/cernennos/Screenshot (349).png",
-            "extractedAt": "2026-06-22",
-            "screenshotTag": {
-              "screenshot": "app/data/God Renders/cernennos/Screenshot (349).png",
-              "fileName": "Screenshot (349).png",
-              "godName": "Cernunnos",
-              "displayName": "Headhunter",
-              "target": "skin",
-              "appliedTo": "Headhunter",
-              "skinKey": "Netherware",
-              "skinName": "Headhunter",
-              "cost": {
-                "currency": "gems",
-                "amount": "1200",
-                "owned": false
-              },
-              "tier": "Epic"
+            "rarity": "Epic"
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
+          "information": [
+            {
+              "key": "crossGen",
+              "label": "Cross-Gen",
+              "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
             },
-            "information": [
-              {
-                "key": "crossGen",
-                "label": "Cross-Gen",
-                "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
-              },
-              {
-                "key": "standard",
-                "label": "Standard",
-                "text": "This item is available for direct purchase and may appear in Chests or other special Events."
-              }
-            ]
-          }
+            {
+              "key": "standard",
+              "label": "Standard",
+              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+            }
+          ]
         },
         {
           "skinKey": "Smite2F2pOb1CrimsonstalkerSocial1920x1080Notag",
@@ -1408,21 +1247,10 @@
             "icon": "app/data/NewGodSkins/Cernunnos/Skins/CrimsonStalker/t_SkinPortrait_Cernunnos_CrimsonStalker.png"
           },
           "price": {
-            "diamonds": "1200"
+            "gems": "",
+            "diamonds": "1200",
+            "gemsdia": ""
           },
-          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
-          "information": [
-            {
-              "key": "crossGen",
-              "label": "Cross-Gen",
-              "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
-            },
-            {
-              "key": "standard",
-              "label": "Standard",
-              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
-            }
-          ],
           "loadout": {
             "screenshot": "app/data/God Renders/cernennos/Screenshot (348).png",
             "frame": {
@@ -1436,41 +1264,28 @@
             }
           },
           "loadoutMeta": {
+            "screenshotTag": {
+              "skinName": "Crimson Striker",
+              "appliedTo": "Crimson Striker"
+            },
+            "screenshot": "app/data/God Renders/cernennos/Screenshot (348).png",
             "godName": "Cernunnos",
             "displayName": "Crimson Striker",
-            "rarity": "Epic",
-            "gridBadge": null,
-            "screenshot": "app/data/God Renders/cernennos/Screenshot (348).png",
-            "extractedAt": "2026-06-22",
-            "screenshotTag": {
-              "screenshot": "app/data/God Renders/cernennos/Screenshot (348).png",
-              "fileName": "Screenshot (348).png",
-              "godName": "Cernunnos",
-              "displayName": "Crimson Striker",
-              "target": "skin",
-              "appliedTo": "Crimson Striker",
-              "skinKey": "Smite2F2pOb1CrimsonstalkerSocial1920x1080Notag",
-              "skinName": "Crimson Striker",
-              "cost": {
-                "currency": "gems",
-                "amount": "1200",
-                "owned": false
-              },
-              "tier": "Epic"
+            "rarity": "Epic"
+          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
+          "information": [
+            {
+              "key": "crossGen",
+              "label": "Cross-Gen",
+              "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
             },
-            "information": [
-              {
-                "key": "crossGen",
-                "label": "Cross-Gen",
-                "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
-              },
-              {
-                "key": "standard",
-                "label": "Standard",
-                "text": "This item is available for direct purchase and may appear in Chests or other special Events."
-              }
-            ]
-          }
+            {
+              "key": "standard",
+              "label": "Standard",
+              "text": "This item is available for direct purchase and may appear in Chests or other special Events."
+            }
+          ]
         }
       ]
     },
@@ -1508,15 +1323,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/t_TheMorrigan_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/t_TheMorrigan_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
-              "unlock": {
-                "masteryRank": 5,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
-                "displayText": "Ascension reward — requires Mastery rank V"
-              },
               "loadout": {
                 "screenshot": "app/data/God Renders/the morrigan/Screenshot (944).png",
                 "frame": {
@@ -1533,15 +1339,8 @@
                 "godName": "The Morrigan",
                 "displayName": "Onyx",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 5,
-                  "label": "V",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
-                },
                 "screenshot": "app/data/God Renders/the morrigan/Screenshot (944).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/the morrigan/Screenshot (944).png",
                   "fileName": "Screenshot (944).png",
@@ -1556,6 +1355,13 @@
                   "parentSkinName": "Base The Morrigan",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "masteryReward",
@@ -1569,6 +1375,8 @@
                   }
                 ]
               },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "masteryReward",
@@ -1580,7 +1388,14 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V"
+              }
             },
             {
               "name": "Mastery Opal",
@@ -1604,15 +1419,8 @@
                 "godName": "The Morrigan",
                 "displayName": "Opal",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 5,
-                  "label": "V",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
-                },
                 "screenshot": "app/data/God Renders/the morrigan/Screenshot (945).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/the morrigan/Screenshot (945).png",
                   "fileName": "Screenshot (945).png",
@@ -1627,6 +1435,13 @@
                   "parentSkinName": "Base The Morrigan",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 5,
+                  "label": "V",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -1642,14 +1457,6 @@
               },
               "rarity": "Heroic",
               "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
-              "unlock": {
-                "masteryRank": 5,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
-                "displayText": "Ascension reward — requires Mastery rank V",
-                "rarityNote": "Rare"
-              },
               "information": [
                 {
                   "key": "ascensionReward",
@@ -1661,7 +1468,15 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 5,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Lvl5_256.png",
+                "displayText": "Ascension reward — requires Mastery rank V",
+                "rarityNote": "Rare"
+              }
             },
             {
               "name": "Mastery Radiant",
@@ -1669,16 +1484,6 @@
               "masteryFromDisk": true,
               "cardArt": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/t_TheMorrigan_Card_Mastery.png",
               "skin": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/t_TheMorrigan_Card_Mastery.png",
-              "rarity": "Heroic",
-              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
-              "unlock": {
-                "masteryRank": 10,
-                "requiresAscensionPass": true,
-                "source": "ascension",
-                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
-                "displayText": "Ascension reward — requires Mastery rank X (Radiant)",
-                "rarityNote": "Rare"
-              },
               "loadout": {
                 "screenshot": "app/data/God Renders/the morrigan/Screenshot (946).png",
                 "frame": {
@@ -1695,15 +1500,8 @@
                 "godName": "The Morrigan",
                 "displayName": "Radiant",
                 "rarity": "Heroic",
-                "gridBadge": {
-                  "type": "masteryRank",
-                  "rank": 10,
-                  "label": "X",
-                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
-                },
                 "screenshot": "app/data/God Renders/the morrigan/Screenshot (946).png",
                 "extractedAt": "2026-06-22",
-                "buttonText": "GO TO",
                 "screenshotTag": {
                   "screenshot": "app/data/God Renders/the morrigan/Screenshot (946).png",
                   "fileName": "Screenshot (946).png",
@@ -1718,6 +1516,13 @@
                   "parentSkinName": "Base The Morrigan",
                   "tier": "Heroic"
                 },
+                "gridBadge": {
+                  "type": "masteryRank",
+                  "rank": 10,
+                  "label": "X",
+                  "emblemPath": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png"
+                },
+                "buttonText": "GO TO",
                 "information": [
                   {
                     "key": "ascensionReward",
@@ -1731,6 +1536,8 @@
                   }
                 ]
               },
+              "rarity": "Heroic",
+              "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
               "information": [
                 {
                   "key": "ascensionReward",
@@ -1742,7 +1549,15 @@
                   "label": "Rare",
                   "text": "This is a rare item and may only appear on special occasions or in specific Events."
                 }
-              ]
+              ],
+              "unlock": {
+                "masteryRank": 10,
+                "requiresAscensionPass": true,
+                "source": "ascension",
+                "masteryEmblem": "app/data/Tiers/T_MasteryEmblem_Perfect_256.png",
+                "displayText": "Ascension reward — requires Mastery rank X (Radiant)",
+                "rarityNote": "Rare"
+              }
             }
           ],
           "loadout": {
@@ -1761,7 +1576,6 @@
             "godName": "The Morrigan",
             "displayName": "Base",
             "rarity": null,
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/the morrigan/Screenshot (941).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -1778,7 +1592,8 @@
                 "amount": "0",
                 "owned": true
               }
-            }
+            },
+            "gridBadge": null
           },
           "unlock": {
             "source": "base",
@@ -1796,23 +1611,21 @@
           "isBaseSkin": false,
           "isPrism": false,
           "isRecolor": false,
-          "isMastery": true,
-          "isMasteryShadowSkin": true,
+          "isMastery": false,
           "isCrossGen": false,
+          "isMasteryShadowSkin": true,
           "type": "Mastery Shadow",
           "assets": {
             "skin": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/t_TheMorrigan_Card_Mastery.png",
             "cardArt": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/t_TheMorrigan_Card_Mastery.png",
             "icon": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/T_TheMorrigan_Icon_Shadow.png"
           },
-          "cardArt": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/t_TheMorrigan_Card_Mastery.png",
-          "skin": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/t_TheMorrigan_Card_Mastery.png",
-          "icon": "app/data/NewGodSkins/TheMorrigan/Skins/Mastery/T_TheMorrigan_Icon_Shadow.png",
-          "masteryFromDisk": true,
-          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
           "price": {
-            "diamonds": "900"
+            "gems": "",
+            "diamonds": "900",
+            "gemsdia": ""
           },
+          "masteryFromDisk": true,
           "loadout": {
             "screenshot": "app/data/God Renders/the morrigan/Screenshot (943).png",
             "frame": {
@@ -1829,7 +1642,6 @@
             "godName": "The Morrigan",
             "displayName": "Shadow",
             "rarity": "Heroic",
-            "gridBadge": null,
             "screenshot": "app/data/God Renders/the morrigan/Screenshot (943).png",
             "extractedAt": "2026-06-22",
             "screenshotTag": {
@@ -1848,6 +1660,7 @@
               },
               "tier": "Heroic"
             },
+            "gridBadge": null,
             "information": [
               {
                 "key": "ascensionReward",
@@ -1861,12 +1674,7 @@
               }
             ]
           },
-          "unlock": {
-            "source": "ascension",
-            "requiresAscensionPass": true,
-            "rarityNote": "Rare",
-            "displayText": "Ascension Pass — rare skin (may appear in events)"
-          },
+          "tierBadge": "app/data/Tiers/t_FE_Cosmetics_HeroicTier.png",
           "information": [
             {
               "key": "ascensionReward",
@@ -1878,7 +1686,13 @@
               "label": "Rare",
               "text": "This is a rare item and may only appear on special occasions or in specific Events."
             }
-          ]
+          ],
+          "unlock": {
+            "source": "ascension",
+            "requiresAscensionPass": true,
+            "rarityNote": "Rare",
+            "displayText": "Ascension Pass — rare skin (may appear in events)"
+          }
         },
         {
           "skinKey": "GothWaitress",
@@ -1899,7 +1713,9 @@
             "icon": "app/data/NewGodSkins/TheMorrigan/Skins/GothWaitress/t_SkinPortrait_TheMorrigan_GothWaitress.png"
           },
           "price": {
-            "diamonds": "1600"
+            "gems": "",
+            "diamonds": "1600",
+            "gemsdia": ""
           },
           "loadout": {
             "screenshot": "app/data/God Renders/the morrigan/Screenshot (942).png",
@@ -1914,40 +1730,14 @@
             }
           },
           "loadoutMeta": {
+            "screenshotTag": {
+              "skinName": "Goth Gourmet",
+              "appliedTo": "Goth Gourmet"
+            },
+            "screenshot": "app/data/God Renders/the morrigan/Screenshot (942).png",
             "godName": "The Morrigan",
             "displayName": "Goth Gourmet",
-            "rarity": "Epic",
-            "gridBadge": null,
-            "screenshot": "app/data/God Renders/the morrigan/Screenshot (942).png",
-            "extractedAt": "2026-06-22",
-            "screenshotTag": {
-              "screenshot": "app/data/God Renders/the morrigan/Screenshot (942).png",
-              "fileName": "Screenshot (942).png",
-              "godName": "The Morrigan",
-              "displayName": "Goth Gourmet",
-              "target": "skin",
-              "appliedTo": "Goth Gourmet",
-              "skinKey": "GothWaitress",
-              "skinName": "Goth Gourmet",
-              "cost": {
-                "currency": "gems",
-                "amount": "1600",
-                "owned": false
-              },
-              "tier": "Epic"
-            },
-            "information": [
-              {
-                "key": "crossGen",
-                "label": "Cross-Gen",
-                "text": "Purchasing this Skin unlocks it in both SMITE 1 and SMITE 2."
-              },
-              {
-                "key": "standard",
-                "label": "Standard",
-                "text": "This item is available for direct purchase and may appear in Chests or other special Events."
-              }
-            ]
+            "rarity": "Epic"
           },
           "tierBadge": "app/data/Tiers/t_FE_Cosmetics_EpicTier.png",
           "information": [

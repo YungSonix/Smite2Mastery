@@ -1,0 +1,2489 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Closed_Alpha_4",
+    "title": "SMITE 2 Closed Alpha 4",
+    "infoboxTitle": "CA4 - SMITE 2 Closed Alpha 4",
+    "releaseDate": "October 17, 2024",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Closed_Alpha_3",
+      "next": "SMITE_2_Closed_Alpha_5"
+    },
+    "category": "closed_alpha",
+    "categoryLabel": "Closed Alpha patch notes",
+    "number": 4,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "Audio Improvements",
+      "anchor": "Audio_Improvements",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Audio latency has been improved in this patch, lowered by approximately 20ms. We encourage the community to report any audio distortion issues, though this should overall be a strict upgrade."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "General Changes",
+      "anchor": "General_Changes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Dashes no longer hit past max range and are more accurate."
+            },
+            {
+              "text": "Fixed a bug where immobilizations (stuns, roots, etc.) allowed a small amount of movement after application."
+            },
+            {
+              "text": "Minions no longer receive hit knockbacks while dead or when killed."
+            },
+            {
+              "text": "Minion spreads are more responsive now, addressing issues where they would walk back to formation after being knocked up."
+            },
+            {
+              "text": "Improved deployable responsiveness; fixed an issue where some deployables were slightly delayed from intended timing."
+            },
+            {
+              "text": "Ymir received a polish pass to improve latency and responsiveness to his personal self-root/control locks."
+            },
+            {
+              "text": "Added a maintenance message at the top of the screen when servers are down."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "UI/UX Improvements",
+      "anchor": "UI/UX_Improvements",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Lines in the item store now connect components, making it easier to understand the flow of item building."
+            },
+            {
+              "text": "Accolades have been greatly improved:",
+              "items": [
+                {
+                  "text": "Players will now see accolades for things they did."
+                },
+                {
+                  "text": "Players will also see text for actions they did not perform."
+                },
+                {
+                  "text": "Note: Some accolades are temporary art."
+                }
+              ]
+            },
+            {
+              "text": "Bots can now be added to custom lobbies."
+            },
+            {
+              "text": "Role filters have been added to the Gods Page and Match Lobby:",
+              "items": [
+                {
+                  "text": "These filters show a subset of gods good in a specific role, making it easier for players to find appropriate gods, especially for newer players."
+                }
+              ]
+            },
+            {
+              "text": "End of Match Lobby Improvements:",
+              "items": [
+                {
+                  "text": "The results screen will now show progress towards Account Level, Ascension Level, and Rank.",
+                  "items": [
+                    {
+                      "text": "Note: This screen is WIP and may show some temp data, incorrect or god data."
+                    }
+                  ]
+                },
+                {
+                  "text": "Players will also see if they have Ascension Rewards to claim."
+                },
+                {
+                  "text": "Scoreboard now highlights stat leaders."
+                }
+              ]
+            },
+            {
+              "text": "Fixed an issue where Titans were regenerating HP faster than intended while all Phoenixes were up."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Arena Changes",
+      "anchor": "Arena_Changes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "A number of changes were made to reduce the \"snowball effect\" that led to more one-sided matches than intended."
+            },
+            {
+              "text": "Added more gift spawns on each team's side of the map and reduced spawns in the center, allowing teams closer to their base to access buffs without falling further behind."
+            },
+            {
+              "text": "Disabled the Killstreak buff (\"On-Fire\" mechanic) to prevent win-more situations. The damage increase was more impactful than the increased damage taken, leading to less balanced matches."
+            },
+            {
+              "text": "Increased XP spooling from 10 to 11 to match Smite 1 pacing."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Balance Changes",
+      "anchor": "Balance_Changes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Gods no longer have base Strength. This stat has been replaced with Basic Attack Power. Functionally, basic attack damage and scaling should feel identical, but gods with Strength scaling are now decoupled from gaining Strength per level."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Visual Improvements",
+      "anchor": "Visual_Improvements",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Visual improvements made to the Gods Screen to enhance the overall user experience"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Gods",
+      "anchor": "New_Gods",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Danzaburou",
+          "anchor": "Danzaburou",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "General"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Deals Physical Damage"
+                },
+                {
+                  "text": "Hybrid Scaling"
+                },
+                {
+                  "text": "Ranged Basic Attacks"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "New Passive: Dishonest Duplication"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "You have a chance of spawning a clone of yourself with each basic attack hitting an enemy",
+                  "items": [
+                    {
+                      "text": "Clones last 3s, deal 30% of your Basic Attack Damage and take 500% Increased Damage"
+                    },
+                    {
+                      "text": "Clones have a 5% + 0.25% Per Level chance of spawning a clone"
+                    },
+                    {
+                      "text": "Clones target the enemy that was hit when they were created"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 1: Fool's Gold"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Roll out 3 money bags that deal Physical Damage to enemies hit and then explode dealing Physical Damage",
+                  "items": [
+                    {
+                      "text": "They stop on enemy gods, Trembling them and dropping a coin"
+                    },
+                    {
+                      "text": "Coins can be picked up by yourself or allied gods to provide you 10 gold"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 2: Alluring Spirits"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Drink some sake, Healing over time before throwing the bottle, dealing Physical Damage to enemies hit.",
+                  "items": [
+                    {
+                      "text": "On landing, the bottle applies a stacking Slow to enemy gods"
+                    },
+                    {
+                      "text": "On reaching 3 stacks, they are Taunted towards the bottle"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 3: Tanuki Trickery"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Create a field where you gain Movement Speed, Slow Immunity, your Basic Attack Movement Penalty is removed, and your Dishonest Duplication chance is doubled. When you leave the area, it disappears and you transform into a leaf while decoys mimic your movement",
+                  "items": [
+                    {
+                      "text": "Enemies in the field are Slowed"
+                    },
+                    {
+                      "text": "As a leaf you gain increased Movement Speed, Slow Immunity, and a buff that causes your next Basic Attack to deal Physical Damage"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ultimate Ability: Uproarious Rocket"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fire a rocket that locks onto enemy gods or reactivate this ability to become the rocket! The rocket deals Physical Damage, Stuns the first enemy god hit and explodes dealing Physical Damage."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Hercules",
+          "anchor": "Hercules",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "General"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Deals Physical Damage"
+                },
+                {
+                  "text": "Strength Scaling"
+                },
+                {
+                  "text": "Melee Basic Attacks"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "New Passive: Apotheosis"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Hercules gains Strength when enemy gods damage him. This stacks up to 3 times and lasts 5s. Additionally, hit a target with an ability to gain a stack toward achieving Apotheosis, or 2 stacks from his Ultimate."
+                },
+                {
+                  "text": "At 4 stacks, enter an empowered state that immediately subtracts 2s from active cooldowns and provides an additional Strength, Protections, and Cleaving basic attacks for the duration."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 1: Driving Strike"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Dash forward, dealing [95% STR] Physical Damage, Stunning and Pushing enemies hit"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 2: Earthbreaker"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Create a rift that deals [75% STR] Physical Damage to enemies in front of you. Enemies hit by the end area are Pulled to you."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 3: Mitigate Wounds"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Immediately Heal yourself, and gain Attack Speed and Protections for 4s. At the end of the duration Heal yourself again for a percentage of damage taken during the effect"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ultimate Ability: Excavate"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Hurl a boulder at a location, Displacing enemies straight up at the landing spot. The boulder then rolls and bounces off walls, dealing [105% STR] Physical Damage to enemies hit."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Gods",
+          "anchor": "Gods",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The Morrigan",
+                  "items": [
+                    {
+                      "text": "Fixed an issue with the Kill Announcements and Accolades showing her transformed target's icon instead of hers if she got a Kill/Assist while transformed"
+                    }
+                  ]
+                },
+                {
+                  "text": "Anhur",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where his pillar could permanently slow targets on occasion near Jungle Objectives"
+                    }
+                  ]
+                },
+                {
+                  "text": "Neith",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where her Ultimate wasn't cancelling her backing animation"
+                    }
+                  ]
+                },
+                {
+                  "text": "Bacchus",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where there was no VFX visible on Lowest settings for his Chug"
+                    }
+                  ]
+                },
+                {
+                  "text": "Baron Samedi",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where his Brew bottle was missing on his belt"
+                    }
+                  ]
+                },
+                {
+                  "text": "Nu Wa",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where her Ultimate ability was missing some SFX on the meteor as it hit enemies at further distances"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ymir",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where he would teleport back to fountain if he placed his Wall against certain environment"
+                    }
+                  ]
+                },
+                {
+                  "text": "Yemoja",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where her Moonstrike wasn't causing stun animations to play on enemies"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "General Gameplay",
+          "anchor": "General_Gameplay",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed issues with multiple god projectiles that go through walls stopping on the edge of map boundaries"
+                },
+                {
+                  "text": "Fixed an issue with Ranked Draft not having the countdown SFX when it was a player's turn to pick for the last 10 seconds"
+                },
+                {
+                  "text": "Fixed an issue where Item Auras weren't applying when Gods were mid leap or in the air"
+                },
+                {
+                  "text": "Fixed an issue where the Minotaur minion could stop moving on occasion"
+                },
+                {
+                  "text": "Fixed an issue with kill-hit knockbacks on minions, they should feel parity to SMITE 1 on death now"
+                },
+                {
+                  "text": "Fixed buff belts showing vertically on the Conquest Teleporter particle while traveling"
+                },
+                {
+                  "text": "Fixed some God weapons and VFX showing when traveling in the Conquest Teleporter"
+                },
+                {
+                  "text": "Fixed an issue where Titans were being body blocked by minions, they now can walk through minions"
+                },
+                {
+                  "text": "Fixed an issue where if a God was polymorphed while they had a buff belt, the belt would go vertical on the pig"
+                },
+                {
+                  "text": "Fixed an issue with God VO being cut off after they died"
+                },
+                {
+                  "text": "Fixed an issue where God clones and pets weren't counting towards damage dealt to Gods, Minions, and Jungle camps for Item stacking"
+                },
+                {
+                  "text": "Fixed an issue with the Ranked Queue not swapping to the Solo/Party queue if the party size updated after selecting the queue"
+                },
+                {
+                  "text": "Fixed an issue in Co-Op where bot HP bars would sometimes appear offset from their models"
+                },
+                {
+                  "text": "Fixed issues where Gods that dashed into the Fire Giant could get pulled back to the point of entry, should get pushed out radially now"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "UI",
+          "anchor": "UI",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where the Player level would display as Level 1 on Login until a match was completed"
+                },
+                {
+                  "text": "Fixed issues with the Ascension Pass Global Emote preview being cut off on the bottom of the art"
+                },
+                {
+                  "text": "Fixed an issue where Voice Chat Push To Talk wasn't working in the God Select Lobby"
+                },
+                {
+                  "text": "Fixed an issue where Starter Items weren't being shown with the \"Upgrade Available\" indicator in the player inventory like other items"
+                },
+                {
+                  "text": "Fixed how HP shields display on nameplates to be more parity with SMITE 1"
+                },
+                {
+                  "text": "Fixed Conquest Roles being visible in Arena's God Select lobby"
+                },
+                {
+                  "text": "Fixed multiple navigation issues on Console in the EOML when navigating over a player, should be more clear now"
+                },
+                {
+                  "text": "Fixed issues in the Match History tab where it showed wildly incorrect KDA numbers sometimes"
+                },
+                {
+                  "text": "Fixed an issue with the Item Store when sorting T1/T3 items, it changed the current position in the store instead of staying at the top"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Items",
+          "anchor": "Items",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue with Phantom Shell, where the targeter was highlighting over models and world geometry and duplicating itself when pre-targeted and canceled"
+                },
+                {
+                  "text": "Fixed an issue with Qin's Blades not proccing when hitting Gods with HP shields"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Known Issues",
+      "anchor": "Known_Issues",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Console Players may get into a state where they can not navigate away from the new Account linking QR Code pop up on launch. You can press the Xbox Options button or PS5 touchpad to skip this screen"
+            },
+            {
+              "text": "Danzaburou's Ultimate is sometimes not dealing damage if you becomes the rocket"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Patch 10/17/24",
+      "anchor": "Patch_10/17/24",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where Hercules' voice not working in match lobby"
+                },
+                {
+                  "text": "Fixed an issue where Neith's Ult would not cancel her backing animation"
+                },
+                {
+                  "text": "Fixed an issue where filters on god roster screen were broken"
+                },
+                {
+                  "text": "Fixed an issue where enemy player entries for players who didn't pick showed a Chaac portrait when the draft lobby ended"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 10/18/24",
+      "anchor": "Patch_10/18/24",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_3",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "[PC] Fixed an issue where Danzaburou's Ultimate did not always explode on contact"
+                },
+                {
+                  "text": "[PC] Fixed an issue where Danzaburou's Ultimate could be fired twice"
+                },
+                {
+                  "text": "[PC] Fixed an issue where voice chat was not working for certain party sizes"
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "[Console] Gamepad is unable to click past the Link Account popup that comes up after 2nd launch"
+                },
+                {
+                  "text": "[Console] Fixed an issue where Danzaburou's Ultimate did not always explode on contact"
+                },
+                {
+                  "text": "[Console] Fixed an issue where Danzaburou's Ultimate could be fired twice"
+                },
+                {
+                  "text": "[Console] Fixed an issue where voice chat was not working for certain party sizes"
+                },
+                {
+                  "text": "[Console] Fixed an issue where Hercules' voice not working in match lobby"
+                },
+                {
+                  "text": "[Console] Fixed an issue where Neith's Ult would not cancel her backing animation"
+                },
+                {
+                  "text": "[Console] Fixed an issue where filters on god roster screen were broken"
+                },
+                {
+                  "text": "[Console] Fixed an issue where enemy player entries for players who didn't pick showed a Chaac portrait when the draft lobby ended"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 10/18/24 #2",
+      "anchor": "Patch_10/18/24_#2",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Server Side Bug fixes",
+          "anchor": "Server_Side_Bug_fixes",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Fixed all knockups from pushing gods through structures"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Danzaburou",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Fool’s Gold",
+                      "items": [
+                        {
+                          "text": "Fixed the money bags from stopping on Neith weaves"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The Morrigan",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Changeling",
+                      "items": [
+                        {
+                          "text": "Fixed not gaining gold when transformed into Danzaburou and picking up money bags"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Zeus",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Chain Lightning",
+                      "items": [
+                        {
+                          "text": "Fixed lightning only arcing up to 5 times at higher ranks. NOTE: This now arcs up to 6 times for each rank (text current says 5/5/5/6/6)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "PC Client Bug Fixes (Consoles will get these fixes at a later date)",
+          "anchor": "PC_Client_Bug_Fixes_(Consoles_will_get_these_fixes_at_a_later_date)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Stability improvements"
+                    },
+                    {
+                      "text": "Translation updates"
+                    },
+                    {
+                      "text": "Fixed Mastery Emotes not working in-match"
+                    },
+                    {
+                      "text": "Fixed \"Alpha\" Title having a ‘call to action’ indicator despite not owning the title"
+                    },
+                    {
+                      "text": "Fixed some call to actions (red dots) stuck on \"Loadout\""
+                    },
+                    {
+                      "text": "Fixed pixelated god icons in Ranked Pick/Ban widget"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Danzaburou",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "General",
+                      "items": [
+                        {
+                          "text": "Fixed all mastery skins playing the wrong voice for some VGS lines in-match"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Fool’s Gold",
+                      "items": [
+                        {
+                          "text": "Fixed coin pickup audio cue playing globally."
+                        },
+                        {
+                          "text": "Added the coin pickup sound from Smite 1"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Alluring Spirits",
+                      "items": [
+                        {
+                          "text": "Fixed pips showing as Grey until they are hit to enemies & allies"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Tanuki Trickery",
+                      "items": [
+                        {
+                          "text": "Fixed issue where enemies could tell which leaf he was in"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Odin",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Ring of Spears",
+                      "items": [
+                        {
+                          "text": "Fixed wireframes displaying around cage"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 10/21/24",
+      "anchor": "Patch_10/21/24",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_4",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Teleporters - Fixed Gods seen walking in place or under the map when they use the teleporter"
+                    },
+                    {
+                      "text": "Fixed HUD navigation not being closeable on gamepad"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Danzaburou",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Alluring Spirits",
+                      "items": [
+                        {
+                          "text": "Fixed taunted enemies not basic attacking his deployable properly"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Tanuki Trickery",
+                      "items": [
+                        {
+                          "text": "Fixed Leaf form not having movement speed increase for a duration or Slow Immunity"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fenrir",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Brutalize",
+                      "items": [
+                        {
+                          "text": "Fixed scaling at full runes where it was only 70% at all ranks"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Hercules",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "General",
+                      "items": [
+                        {
+                          "text": "Lowered nameplate"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Driving Strike",
+                      "items": [
+                        {
+                          "text": "Now has knockback immunity during dash (Smite 1 parity)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Nu Wa",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Clay Soldiers",
+                      "items": [
+                        {
+                          "text": "Fixed an issue where the Clay Soldier Basic Attacks were proccing items"
+                        },
+                        {
+                          "text": "Temporarily decreased the Damage of the Clay Soldier Dash attack while we investigate an issue of it damaging for more than intended."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Zeus",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Chain Lightning",
+                      "items": [
+                        {
+                          "text": "Corrected arc from 6x per rank to 5/5/5/6 per tooltip"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "God Balance",
+          "anchor": "God_Balance",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Hercules Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Apotheosis",
+                      "items": [
+                        {
+                          "text": "Decreased STR per stack from 4 to 3"
+                        },
+                        {
+                          "text": "Decreased STR per level per stack from 1 to 0.5"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Driving Strike",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 12s to 14s"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Earthbreaker",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 12s to 14s"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Excavate",
+                      "items": [
+                        {
+                          "text": "Decreased Damage from 300/425/550/675/800 to 280/400/520/640/760"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Baron Samedi Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Vivid Gaze",
+                      "items": [
+                        {
+                          "text": "Decreased Power Reduction from 30% to 20%"
+                        },
+                        {
+                          "text": "Decreased Attack Speed Reduction from 30% to 20%"
+                        },
+                        {
+                          "text": "Increased Cooldown from 9s to 11s"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Consign Spirits",
+                      "items": [
+                        {
+                          "text": "Decreased % Missing Health Heal Scaling from 20% CDR to 15% CDR"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Wrap It Up",
+                      "items": [
+                        {
+                          "text": "Decreased Mesmerize Duration from 2.25s to 1.5s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Neith Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "World Weaver",
+                      "items": [
+                        {
+                          "text": "Decreased Damage Scaling from 115% STR + 100% INT to 105% STR + 90% INT"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fenrir Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Ragnarok",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 100s to 110s"
+                        },
+                        {
+                          "text": "Increased Mana Cost from 50/55/60/65/70 to 100 at all ranks"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Bacchus Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Belch of the Gods",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 10s at all ranks to 13/12.5/12/11.5/11s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Item Balance",
+          "anchor": "Item_Balance",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ring of Dispel Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased CDR from 15 to 10"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ring Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased CDR from 8 to 5"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Breastplate of Valor Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased Physical Protection from 40 to 35"
+                    },
+                    {
+                      "text": "Increased Passive Threshold from 350 + 20 per level Health to 400 + 20 per level Health"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Genji’s Guard Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased Magical Protection from 55 to 45"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The Cosmic Horror Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased INT from 100 to 85"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Chronos Pendant Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Increased Cost from 2400 to 2500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 10/21/24 #2",
+      "anchor": "Patch_10/21/24_#2",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_5",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Probable fix for ranked draft not properly sorting pick order by highest SR"
+                    },
+                    {
+                      "text": "Fixed teams able to start Pause vote while the other team has already paused"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Athena",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Defender of Olympus [Ult]",
+                      "items": [
+                        {
+                          "text": "Addressed an issue where if affected by Mordred Severing Slice while teleporting to Ally then she would instantly die."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Danzaburou",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Fool’s Gold",
+                      "items": [
+                        {
+                          "text": "Fixed Lifesteal items not working with this ability"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Uproarious Rocket [Ult]",
+                      "items": [
+                        {
+                          "text": "Fixed an issue where if holding W key while riding the rocket then damage would apply twice."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 10/22/24",
+      "anchor": "Patch_10/22/24",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "New Early Surrender Functionality",
+          "anchor": "New_Early_Surrender_Functionality",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Implemented Early Surrender functionality to match SMITE 1 for All Modes",
+                  "items": [
+                    {
+                      "text": "Teams can surrender at 3m into the match if a teammate has DC'd before that time"
+                    }
+                  ]
+                },
+                {
+                  "text": "Implemented Early Surrender Ranked SR functionality to match SMITE 1 for protecting SR",
+                  "items": [
+                    {
+                      "text": "For all Ranked Modes, if an early surrender occurs, the following will happen (this will ONLY occur if a team successfully surrenders before 10m)."
+                    },
+                    {
+                      "text": "Active players on the losing team will lose 0 SR."
+                    },
+                    {
+                      "text": "The disconnected player will lose 2x the full SR amount they would have lost if the match finished normally."
+                    },
+                    {
+                      "text": "The enemy winning team will win 0.5x the full SR amount they would have lost if the match finished normally."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Server Side Bug Fixes",
+          "anchor": "Server_Side_Bug_Fixes_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Live Now",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where a team could double pick the same God"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Client Side Bug Fixes",
+          "anchor": "Client_Side_Bug_Fixes",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Released on PC late 10/22 and on Console early 10/23",
+                  "items": [
+                    {
+                      "text": "Fixed the camera being stuck overhead after using base portal"
+                    },
+                    {
+                      "text": "Fixed Bellona weapons not appearing in her hand after using base portal"
+                    },
+                    {
+                      "text": "Fixed targeters being offset after using base portal"
+                    },
+                    {
+                      "text": "Fixed HUD navigation not being able to close on gamepad (this fix was attempted in an earlier Patch, but was not successful)"
+                    },
+                    {
+                      "text": "Reverted nameplate changes back to CA3 configurations"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 10/23/24",
+      "anchor": "Patch_10/23/24",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_6",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Added Stability Improvements"
+                },
+                {
+                  "text": "Fixed an issue where the Teammate Opacity VFX setting was shown as self"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 10/23/24 #2",
+      "anchor": "Patch_10/23/24_#2",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Gods Balance",
+          "anchor": "Gods_Balance",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Amaterasu Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "General",
+                      "items": [
+                        {
+                          "text": "Increased Base Attack Speed from 0.96 to 1"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Dazzling Offensive",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 90s at all ranks to 110/105/100/95/90s"
+                        },
+                        {
+                          "text": "Decreased Stun Duration from 1.5s to 1.2s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Anhur Buff",
+                  "items": [
+                    {
+                      "text": "General",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Attack Speed from 0.99 + 1.5% per level to 1 + 1.7% per level"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Impale",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Stun Duration from 0.75/0.8/0.85/0.9/0.95s to 0.9/0.95/1/1.05/1.1s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Anubis Nerf",
+                  "items": [
+                    {
+                      "text": "Mummify",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 16/15/14/13/12s to 16/15.5/15/14.5/14s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Bellona Buff",
+                  "items": [
+                    {
+                      "text": "General",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Base Attack Speed from 0.96 to 1"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Bludgeon",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Slam Base Damage from 70/130/190/250/310 to 80/145/210/275/340"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Bacchus Nerf",
+                  "items": [
+                    {
+                      "text": "Belly Flop",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 14s to 15s"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Belch of the Gods",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Shifted Stun Duration from 0.85/0.95/1.05/1.15/1.25s to 0.9/0.95/1/1.05/1.1s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Baron Samedi Nerf",
+                  "items": [
+                    {
+                      "text": "Life of the Party",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Decreased Stun Duration from 1.5s to 1.3s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Cernunnos Buff",
+                  "items": [
+                    {
+                      "text": "General",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Base Attack Speed from 0.99 to 1"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Shifter of Seasons",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Spring",
+                          "items": [
+                            {
+                              "text": "Removed Flat Heal"
+                            },
+                            {
+                              "text": "Added 4/5/6/7/8% Lifesteal"
+                            },
+                            {
+                              "text": "Note: Still gains additional Heal per hit based on a percentage of your INT"
+                            },
+                            {
+                              "text": "Fixed an issue where the Heal was not scaling the proper amount"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Summer",
+                          "items": [
+                            {
+                              "text": "Added 5/10/15/20/25 Damage per hit"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Winter",
+                          "items": [
+                            {
+                              "text": "Increased Slow Duration from 1.4s to 1.5s"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Bramble Blast",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Shifted Damage Scaling per tick from 8/9/10/11/12% INT to 6% STR + 12% INT"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Horn Charge",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Damage Scaling from 80% STR to 85% STR"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "The Wild Hunt",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Added 65% STR Damage Scaling"
+                        },
+                        {
+                          "text": "Fixed an issue where the Polymorph/Slow Duration displayed incorrectly"
+                        },
+                        {
+                          "text": "Increased Slow from 15% to 20%"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Danzaburou Buff",
+                  "items": [
+                    {
+                      "text": "General",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Base Attack Speed from 0.99 to 1"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Dishonest Duplication",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Clone Basic Attack Damage from 30% to 40%"
+                        },
+                        {
+                          "text": "Decreased Clone Damage Taken Debuff from 500% to 400%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Fool’s Gold",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Initial Damage Scaling from 75% STR + 50% INT to 85% STR + 50% INT"
+                        },
+                        {
+                          "text": "Shifted Explosion Damage Scaling from 30% STR + 15% INT to 20% STR + 40% INT"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Alluring Spirits",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Added 40% INT Damage Scaling"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Tanuki Trickery",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Added 15% Damage Reduction while inside of the field"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Uproarious Rocket",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Decreased Cooldown from 100s to 90s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fenrir Shift",
+                  "items": [
+                    {
+                      "text": "General",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Attack Speed from 0.99 + 1.5% per level to 1 + 1.7% per level"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Unchained",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Decreased Damage Scaling from 90% STR + 40% Protections to 85% STR + 30% Protections"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Seething Howl",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 11s to 13s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Hercules Nerf",
+                  "items": [
+                    {
+                      "text": "Driving Strike",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Decreased Damage from 100/170/240/310/380 + 90% STR to 90/160/230/300/370 + 80% STR"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Earthbreaker",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Decreased Damage from 90/145/200/255/310 + 70% STR to 80/135/190/245/300 + 65% STR"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Jing Wei Buff",
+                  "items": [
+                    {
+                      "text": "General",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Attack Speed from 0.99 + 1.5% per level to 1 + 1.6% per level"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Neith Shift",
+                  "items": [
+                    {
+                      "text": "General",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Attack Speed from 0.99 + 1.5% per level to 1 + 1.6% per level"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Spirit Arrow",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Decreased Root Duration from 1/1.1/1.2/1.3/1.4s to 1s at all ranks"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Nu Wa Nerf",
+                  "items": [
+                    {
+                      "text": "Clay Soldiers",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 15s to 16s"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Shining Metal",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Decreased Stun Duration from 1/1.1/1.2/1.3/1.4s to 0.8/0.85/0.9/0.95/1s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Odin Nerf",
+                  "items": [
+                    {
+                      "text": "Gungnir’s Might",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Decreased Stun Duration from 1s to 0.9s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Sol Buff",
+                  "items": [
+                    {
+                      "text": "General",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Attack Speed from 0.99 + 1.5% per level to 1 + 1.8% per level"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Radiance",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Added 15% STR Damage Scaling per tick"
+                        },
+                        {
+                          "text": "Added 5% INT Heal Scaling"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Disapparate",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Damage Scaling per tick from 25% INT to 30% INT"
+                        },
+                        {
+                          "text": "Added 40% STR Explosion Damage Scaling"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Supernova",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Damage from 120/160/200/240/280 to 130/175/220/265/310"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Susano Nerf",
+                  "items": [
+                    {
+                      "text": "Typhoon",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 90s to 100s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The Morrigan Buff",
+                  "items": [
+                    {
+                      "text": "Deadly Aspects",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Stun Duration from 0.75s to 0.8s"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Confusion",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Decreased Cooldown from 19/18/17/16/15s to 17/16.5/16/15.5/15s"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Changeling",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Decreased Cooldown from 140/130/120/110/100s to 120/115/110/105/100s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Yemoja Nerf",
+                  "items": [
+                    {
+                      "text": "Riptide",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Decreased Slow from 15% to 10%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "River’s Rebuke",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Decreased Slow Duration from 3s to 2s"
+                        },
+                        {
+                          "text": "Note: Initial Slow will remain at 60% and decrease by 15% every 0.5s"
+                        },
+                        {
+                          "text": "Fixed an issue where River’s Rebuke was applying the Moonstrike buff to enemies"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ymir Nerf",
+                  "items": [
+                    {
+                      "text": "Ice Wall",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 13s at all ranks to 15/14.5/14/13.5/13s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Zeus Buff",
+                  "items": [
+                    {
+                      "text": "General",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Base Attack Speed from 0.93 to 0.98"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Chain Lightning",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Fixed an issue where this ability was dealing too little damage"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Lightning Storm",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Damage from 100/130/160/190/210 to 100/140/180/220/260"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Items",
+          "anchor": "Items_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Sundering Arc Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased Damage per level from 5 to 4"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Soul Reaver Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Increased Cost from 2900 to 3000"
+                    },
+                    {
+                      "text": "Decreased Current Health Damage from 15% to 10%"
+                    },
+                    {
+                      "text": "Decreased Minimum Damage from 5% Max Health to 2.5% Max Health"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Doom Orb Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased Cost from 2950 to 2850"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Void Shield Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Increased STR from 15 to 20"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Void Stone Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Increased INT from 35 to 40"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Shifter’s Shield Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Added 40 INT while over 75% Health"
+                    },
+                    {
+                      "text": "Increased Mana from 100 to 200 (T2 stat loss on upgrade fix)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Pendulum Blade Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased Cost from 3050 to 2900"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The Crusher Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Increased STR from 30 to 35"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Heartseeker Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Increased STR from 35 to 40"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Serrated Edge Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Increased Passive STR per stack from 7 to 10"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Bloodforge Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Increased STR from 40 to 45"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The Reaper Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Increased STR from 25 to 30"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Demon Blade Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Increased STR from 20 to 25"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Qin’s Blade Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Increased STR from 20 to 30"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Stampede Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased Active Cooldown from 90s to 60s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Circe’s Hexstone Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased Active Cooldown from 120s to 90s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Staff of Myrddin Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased Active Cooldown from 180s to 150s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Scepter of Dominion Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased Active Cooldown from 120s to 90s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Jade Scepter Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased Active Cooldown from 90s to 60s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Helm of Darkness Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased Active Cooldown from 120s to 90s"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 10/24/14",
+      "anchor": "Patch_10/24/14",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_7",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Added Stability Improvements"
+                },
+                {
+                  "text": "Fixed an issue where early surrender rules were not working as intended"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

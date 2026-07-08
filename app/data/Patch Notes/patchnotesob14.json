@@ -1,0 +1,577 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_14",
+    "title": "SMITE 2 Open Beta 14",
+    "infoboxTitle": "OB14 - SMITE 2 Open Beta 14",
+    "releaseDate": "July 15, 2025",
+    "bonusUpdate": null,
+    "hotfixes": "OB14 July 22 Hotfix",
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_13",
+      "next": "SMITE_2_Open_Beta_15"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 14,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "Open Beta 14 - The Monkey King Update",
+      "anchor": "Open_Beta_14_-_The_Monkey_King_Update",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Sun Wukong storms onto the Battleground in SMITE 2’s latest Update, bringing his iconic shapeshifting abilities and flashy combat to the roster! From smashing foes with his Magic Cudgel to pulling stealthy tricks with his Somersault Cloud, Wukong’s hybrid-scaling kit makes him a formidable brawler with a mystical flair. Plus, get ready for his \"Aspect of Transformation\" coming July 18, which amps up his animal forms adding unique effects to his other abilities."
+        },
+        {
+          "type": "paragraph",
+          "text": "The Wandering Market’s got two new spicy additions headed your way. The Emberlord Saga Vault lets you experience Vulcan’s fury filled rebirth across four epic skins (plus Prisms and the first ever SMITE 2 Recall Skins!), while the Nerd Traveler delivers a full-on geek rebellion led by Nerd Rage Cabrakan!"
+        },
+        {
+          "type": "paragraph",
+          "text": "There are also some great Quality of Life Improvements headed to Quickplay, the God Select Lobby, and Match Loading Screen! Whether you’re causing chaos with Sun Wukong’s clones, or following the flame with The Emberlord Saga Vault, Open Beta 14 is sure to be a fiery good time filled with monkey business! See you on the Battleground Deities!"
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Ported God",
+      "anchor": "New_Ported_God",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Sun Wukong",
+          "anchor": "Sun_Wukong",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "General"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Melee Basic Attacks"
+                },
+                {
+                  "text": "Damage Type: Physical"
+                },
+                {
+                  "text": "Scaling Type: Hybrid Scaling"
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Passive: Undefeated Body",
+                  "bold": true,
+                  "detail": "When you drop below 60% health, gain increased Strength, Intelligence, and Protections. If you go above this threshold, the buff persists for a short duration. When you drop below 30% health, you spawn a clone. This effect has a cooldown."
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 1: The Magic Cudgel",
+                  "bold": true,
+                  "detail": "Slam down with your Cudgel, dealing Physical Damage.\nThis ability has reduced Strength Scaling but increased Intelligence Scaling to enemies that are further away.\nIntelligence increases the length of this ability."
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 2: Master’s Will",
+                  "bold": true,
+                  "detail": "Strike around you dealing Physical Damage. Enemies hit are Slowed and have reduced Attack Speed.\nThis ability has reduced Strength Scaling but increased Intelligence Scaling to enemies that are further away.\nIntelligence increases the radius of this ability."
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 3: 72 Transformations",
+                  "bold": true,
+                  "detail": "Transform into an Ox, Tiger, or Eagle, and charge forward.\nOx: Knockback enemies in your path, dealing Physical Damage.\nTiger: Maul the first enemy you hit, dealing Physical Damage and Stunning them.\nEagle: Is the fastest of the three forms."
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ultimate Ability: Somersault Cloud",
+                  "bold": true,
+                  "detail": "Rise into a cloud leaving a clone to fight in your stead. While in the cloud you are Stealthed and Heal every 0.5s.\nRefire to deal Physical Damage.\nYou are CC Immune while using this ability."
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Aspect releasing July 18",
+                  "bold": true
+                },
+                {
+                  "text": "Aspect of Transformation",
+                  "bold": true,
+                  "detail": "72 Transformations has a reduced Cooldown and locks your animal form until Somersault Cloud is used. Locking in Ox form causes Master’s Will to Knockup. Tiger form provides stacking Attack Speed on hits of The Magic Cudgel and Eagle form causes your other two non-ultimate abilities to have a reduced Cooldown."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Wandering Market Additions",
+      "anchor": "New_Wandering_Market_Additions",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "The Emberlord Saga Vault",
+          "anchor": "The_Emberlord_Saga_Vault",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Once a master of steel and strategy, Vulcan fell in battle and was reborn in fire. Now a harbinger of flame and fury, the Emberlord's transformation unfolds across four devastating forms, each more corrupted, powerful, and awe-inspiring than the last."
+            },
+            {
+              "type": "paragraph",
+              "text": "Unlock to instantly claim Emberlord Vulcan's First Flame Skin, then then ascend through the ashes by collecting Wandering Market coins to unlock his full infernal legacy — a total of four separate Skins, four Prisms and additional cosmetics including SMITE 2's first Recall Skins."
+            },
+            {
+              "type": "paragraph",
+              "text": "Emberlord - Vulcan\nVideo courtesy of Elu on Youtube."
+            },
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Emberlord - First Flame Vulcan Saga Skin - Instantly unlocked after purchasing the Premium Saga Vault"
+                },
+                {
+                  "text": "Premium Page Contents",
+                  "bold": true,
+                  "lead": "- Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Page 1",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Meatball Combos Vulcan Tracker"
+                        },
+                        {
+                          "text": "Forged in Fire Title"
+                        },
+                        {
+                          "text": "Emberlord Recall Skin"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Page 2",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Emberlord - Ashen Ascendant Vulcan Skin"
+                        },
+                        {
+                          "text": "Ember Turret Ward Skin"
+                        },
+                        {
+                          "text": "Emberlord Card Effect"
+                        },
+                        {
+                          "text": "Emberlord Announcer Pack"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Page 3",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Emberlord - Pyerforged Tyrant Vulcan Skin"
+                        },
+                        {
+                          "text": "Emberlord Ward Skin"
+                        },
+                        {
+                          "text": "Emberlord Ultimate Recall Skin"
+                        },
+                        {
+                          "text": "Ultimate Lord Title"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Page 4",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Emberlord - Inferno Incarnate Vulcan Skin"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Page 5",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Emberlord - Chromafear Prism"
+                        },
+                        {
+                          "text": "Emberlord - Sanguine Prism"
+                        },
+                        {
+                          "text": "Emberlord - Viridread Prism"
+                        },
+                        {
+                          "text": "Emberlord - Glaciator Prism"
+                        },
+                        {
+                          "text": "Chromafear Recall Skin"
+                        },
+                        {
+                          "text": "Sanguine Recall Skin"
+                        },
+                        {
+                          "text": "Viridread Recall Skin"
+                        },
+                        {
+                          "text": "Glaciator Recall Skin"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Nerd Traveler",
+          "anchor": "Nerd_Traveler",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "The Nerds shall inherit the Battleground! Rise up and fight for your right to CALCULATE!"
+            },
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Classic Nerd Rage Cabrakan Skin - Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents",
+                  "bold": true,
+                  "lead": "- Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Nerd Rage - Assistant Prism"
+                    },
+                    {
+                      "text": "Nerd Rage - Neowave Prism"
+                    },
+                    {
+                      "text": "Nerd Rage - Lo-Rez Prism"
+                    },
+                    {
+                      "text": "Nerd Rage - Data Logger Prism"
+                    },
+                    {
+                      "text": "Nerd Title"
+                    },
+                    {
+                      "text": "Geek Title"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Nerd Rage - Cabrakan\nVideo courtesy of Elu on Youtube."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Skins and Cosmetics",
+      "anchor": "New_Skins_and_Cosmetics",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Cross-Gen Skins",
+              "bold": true,
+              "lead": "(purchasable for 50% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Bit Blaster Apollo"
+                }
+              ]
+            },
+            {
+              "text": "Prisms",
+              "bold": true,
+              "lead": "(purchasable for 100% Diamonds)",
+              "items": [
+                {
+                  "text": "Bit Blaster - Overcharged"
+                },
+                {
+                  "text": "Bit Blaster - RGB Surge"
+                },
+                {
+                  "text": "Bit Blaster - MechaCore"
+                },
+                {
+                  "text": "Bit Blaster - Null.exe"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Bit Blaster - Apollo\nVideo courtesy of Elu on Youtube."
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Quality of Life and New Player Improvements",
+      "anchor": "Quality_of_Life_and_New_Player_Improvements",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Quick Play",
+          "anchor": "Quick_Play",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "A progress bar has been added underneath your Item build on the HUD to better show when you have enough gold for your next Item."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "God Select Lobby Improvements",
+          "anchor": "God_Select_Lobby_Improvements",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The first God in the Lobby Select screen is no longer highlighted for PC players."
+                },
+                {
+                  "text": "The view Abilities keybind in the God Select Lobby has been changed to “Control” to match how you view abilities in game."
+                },
+                {
+                  "text": "A new color gradient has been added to the Match Loading Screen to better display what teams are Order and Chaos."
+                },
+                {
+                  "text": "The Death Recap box has received improvements to show how many hits of each damage source you took, and what damage source dealt the killing blow."
+                },
+                {
+                  "text": "The Hitmarker sound effect has been updated."
+                },
+                {
+                  "text": "A new display treatment has been added to the Loadout screen for skins with Prisms to more easily cycle through options."
+                },
+                {
+                  "text": "Two new Bots have been introduced for co-op and AI modes: Ra & Khepri."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Game Modes",
+      "anchor": "Game_Modes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Assault",
+          "anchor": "Assault",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Starting Gold has been increased from 3000 to 3100."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "subsections": []
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Gods",
+          "anchor": "Gods",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where Sobek’s Charge Prey targeter was not displaying while the Aspect was active."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 7/15/25",
+      "anchor": "Hotfix_7/15/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed an issue where Scylla’s Crush Ability (2) could be cast twice at the same time. She has been reenabled for play"
+            },
+            {
+              "text": "Fixed an issue where Kali’s Mastery skin was set to be associated as a Prism"
+            },
+            {
+              "text": "Fixed issues with navigation and focus for controller players on the Saga Vault screen"
+            },
+            {
+              "text": "Fixed an issue where Mercury’s Max Crit Tracker was not updating"
+            },
+            {
+              "text": "Fixed an issue where UI elements were overlapping on the Wandering Market screen"
+            },
+            {
+              "text": "Fixed an issue where the consumable slot would appear with a Yellow overlay after using the Obsidian Dagger"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 7/16/25",
+      "anchor": "Hotfix_7/16/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed an issue where you could not disable Auto Skill by choosing to manually level an ability"
+            },
+            {
+              "text": "Fixed an issue where Mercury could get stuck spinning if he killed Sun Wukong with his Special Delivery ability (3)"
+            },
+            {
+              "text": "Fixed an issue where Sun Wukong would not drop aggro if he used his ultimate within the tower or phoenix radius"
+            },
+            {
+              "text": "Fixed an issue where Danzaburou could sometimes get stuck in his rocket while riding it in his Ultimate"
+            },
+            {
+              "text": "Fixed an issue where you could get stuck in place after hitting a SUn Wukong Clone with certain CC abilities (EX: Mercury Special Delivery (3), Sobek Charge Prey (1)"
+            },
+            {
+              "text": "Fixed several VFX issues with Vulcan's Emberlord Skin"
+            },
+            {
+              "text": "Fixed an issue where the FOV zoom in on certain Gods in the Select Lobby was too close"
+            },
+            {
+              "text": "Fixed an issue with the Featured page in the store where it was sometimes remaining on the last skin you selected causing accidental purchases"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 7/22/25",
+      "anchor": "Hotfix_7/22/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Server hotfix rolled out for the following."
+            },
+            {
+              "text": "Update Assault random pick checks to not allow randoming a god that's already on the team's bench PC client hotfix deployed to live (consoles later)"
+            },
+            {
+              "text": "Fixed Aspects not saving correctly"
+            },
+            {
+              "text": "Unable to search for Custom lobbies using Gamepad"
+            },
+            {
+              "text": "Fixed not being able to view god list after picking in Ranked"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

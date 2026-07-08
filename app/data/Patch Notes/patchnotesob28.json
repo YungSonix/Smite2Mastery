@@ -1,0 +1,1131 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_28",
+    "title": "SMITE 2 Open Beta 28",
+    "infoboxTitle": "OB28 - SMITE 2 Open Beta 28",
+    "releaseDate": "February 10, 2026",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_27",
+      "next": "SMITE_2_Open_Beta_29"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 28,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Classic God",
+      "anchor": "New_Classic_God",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Ne Zha",
+          "anchor": "Ne_Zha",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Melee Basic Attacks"
+                    },
+                    {
+                      "text": "Damage Type: Physical"
+                    },
+                    {
+                      "text": "Scaling Type: Strength Scaling"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Passive: Righteous Spirit",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Build Righteous Spirit stacks by hitting enemies to gain Movement Speed. Stacks reset if you have not taken or dealt damage recently.",
+                      "items": [
+                        {
+                          "text": "Critical Strikes grant bonus stacks"
+                        },
+                        {
+                          "text": "Stacks grant Movement Speed"
+                        },
+                        {
+                          "text": "Gaining a stack permanently increases Critical Strike Damage."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 1: Universe Ring Toss",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Throw your ring to deal Physical Damage which bounces between enemies, applying Physical Protection Debuff and Slows. Subsequent hits deal 35% damage",
+                      "items": [
+                        {
+                          "text": "Catching the returning ring grants a free single ring that can Critically Strike."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 2: Flaming Spear",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Ignite your spear to gain Attack Speed and Critical Strike chance.",
+                      "items": [
+                        {
+                          "text": "Heal based on your Righteous Spirit Stacks."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 3: Armillary Sash",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Throw your Armillary Sash, Stunning the first enemy god hit and pulling you to them."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ultimate Ability: Wind Fire Wheels",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Dash forward gaining Protections and becoming CC immune. Hitting an enemy god delays Physical Damage and launches them into the air, triggering a 3-hit combo that deals Physical Damage. Successful timing can allow these to Critically Strike."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Aspect releasing February 13th",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Aspect of the Righteous Flame",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Righteous Spirit no longer stacks on hitting enemies. Taking damage charges Righteous Spirit to provide a heal over time. Ring Toss can bounce to allies for a movement and Attack Speed boost. Flaming Spear is now a damaging AoE attack that buffs Ne Zha’s attacks and consumes Righteous Spirit to burst heal."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Wandering Market Travelers",
+      "anchor": "New_Wandering_Market_Travelers",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Oblivion Queen - Discordia",
+          "anchor": "Oblivion_Queen_-_Discordia",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Oblivion Queen - Rising Ember Prism"
+                    },
+                    {
+                      "text": "Oblivion Queen - Glitter Bomb Prism"
+                    },
+                    {
+                      "text": "Oblivion QueenStarry Void Prism"
+                    },
+                    {
+                      "text": "Queen’s Bage"
+                    },
+                    {
+                      "text": "Wyrm Seal - Part of the Reign of the Archfiend Event"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Devil Punk - Daji",
+          "anchor": "Devil_Punk_-_Daji",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Devil Punk - Soulflare Prism"
+                    },
+                    {
+                      "text": "Devil Punk - Jade Koi Prism"
+                    },
+                    {
+                      "text": "Devil Punk - Bloodgold Oni"
+                    },
+                    {
+                      "text": "Portal to Hell Jump Stamp"
+                    },
+                    {
+                      "text": "Wyrm Seal - Part of the Reign of the Archfiend Event"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Game Modes",
+      "anchor": "Game_Modes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Jungle Practice",
+          "anchor": "Jungle_Practice",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Added Practice to the list of Custom Lobby modes, available to launch with other players and bots"
+                },
+                {
+                  "text": "Practice Menu",
+                  "items": [
+                    {
+                      "text": "Added Remove Items option (allows for repurchasing Starter Items, Relics)"
+                    },
+                    {
+                      "text": "Added simple behavior controls for God Bots",
+                      "items": [
+                        {
+                          "text": "Idle"
+                        },
+                        {
+                          "text": "Attack - Fight with basic attacks"
+                        },
+                        {
+                          "text": "Patrol - Path in a 10m line"
+                        },
+                        {
+                          "text": "Orbit - Path in a 10m circle"
+                        },
+                        {
+                          "text": "Ability - Uses the bot's A01"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Items can now be purchased globally from anywhere in the map",
+                  "items": [
+                    {
+                      "text": "There's a small fountain near spawn for healing and testing fountain interactions (e.g. changing Achilles' equipment, Jing Wei leaving base)"
+                    }
+                  ]
+                },
+                {
+                  "text": "Added an interactable to cycle different NPCs at the center of the map",
+                  "items": [
+                    {
+                      "text": "Target Totem"
+                    },
+                    {
+                      "text": "Jungle Camp + Buffs"
+                    },
+                    {
+                      "text": "Gold Fury"
+                    },
+                    {
+                      "text": "Free Practice (no NPC)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Arena",
+          "anchor": "Arena",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "“We previously made adjustments to Arena to speed it up overall, which it definitely did. We saw what generally took 19 minutes went down to ~12.5m. Looking back this change at best didn’t move the needle for the mode, and at worst might have turned people away given the ratio of time in queue to time in match. We like the quicker respawns overall, and believe bringing the ticket count up to 500 will bring this mode closer to 16 minutes which we think will be a nice spot for it.  We are also making some adjustments to the flower Pickup to provide bulk to tanks who pick it up. This lets them better serve as the frontline for their team, while making it easier to understand what you are gaining from picking it up.”"
+                },
+                {
+                  "text": "Increased Domination Respawn Time Bonus: 10 -> 18s"
+                },
+                {
+                  "text": "Increased Ticket Count: 425 -> 500"
+                },
+                {
+                  "text": "Increased Surrender Time: 8m -> 10m"
+                },
+                {
+                  "text": "Decreased XP Bonus: 1.25x -> 1.1"
+                },
+                {
+                  "text": "Decreased Gold Spooling: 21 -> 15"
+                },
+                {
+                  "text": "Decreased XP Spooling: 15 -> 10"
+                },
+                {
+                  "text": "Gift Buff (Flower Pickup)",
+                  "items": [
+                    {
+                      "text": "Now grants 7.5% Strength, 7.5% Intelligence, and 5% Protections."
+                    },
+                    {
+                      "text": "Reduced Strength / Intelligence Base: 15 -> 0"
+                    },
+                    {
+                      "text": "Reduced Strength / Intelligence Bonus Per 3 Minutes: 10 -> 0"
+                    },
+                    {
+                      "text": "Decreased Intensity of the Material Glow."
+                    }
+                  ]
+                },
+                {
+                  "text": "Battle Cry (Arena Curio)",
+                  "items": [
+                    {
+                      "text": "Increased Stack Count: 5 -> 10"
+                    },
+                    {
+                      "text": "Increased Stacks from God Kills: 1 -> 2"
+                    },
+                    {
+                      "text": "Increased Stacks from God Assists: 0 -> 1"
+                    },
+                    {
+                      "text": "Increased Stacks from Dying: 1 -> 2"
+                    },
+                    {
+                      "text": "Decreased Stats from Items from Stacks: 3% -> 1.5%"
+                    },
+                    {
+                      "text": "Decreased Movement Speed from Stacks: 3% -> 1.5%"
+                    },
+                    {
+                      "text": "Decreased Buff Duration from 6s -> 3s"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Joust",
+          "anchor": "Joust",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "“Joust is a relatively small map, and with the addition of the Bifrost Shard it was too easy to cover all the major chokepoints to have constant vision on your enemy. We think the Gjallarflare is going to be better for Joust, giving you targeted vision to see if players are doing a specific camp or boss; but only for a smaller window of time.”"
+                },
+                {
+                  "text": "Replaced the default Curio with Gjallarflare."
+                },
+                {
+                  "text": "Removed Bifrost Shard from Joust. Players can still change Gjallarflare into Heimdallr’s Sight."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Conquest",
+          "anchor": "Conquest",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Oracle Ward no longer gives sentry vision"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Aladdin (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Wall Run",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown: 16s -> 18s"
+                    },
+                    {
+                      "text": "Increased Cooldown Reduction if you damaged a god: 0s -> 2/2.5/3/3.5/4s"
+                    },
+                    {
+                      "text": "Decreased Minimum Leap Range: 4.4m -> 3.2m"
+                    },
+                    {
+                      "text": "Decreased Maximum Leap Range: 8.8m -> 7.2m"
+                    },
+                    {
+                      "text": "Decreased Wall Run Max Distance: 8.8m -> 7.2m"
+                    },
+                    {
+                      "text": "Decreased Wall Run Duration: 1.25s -> 1.05s",
+                      "items": [
+                        {
+                          "text": "This keeps the wall run “speed” approximately the same."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Apollo (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "The Moves (3)",
+                  "items": [
+                    {
+                      "text": "Increased Damage: 70/115/160/205/250 -> 80/125/170/215/260"
+                    },
+                    {
+                      "text": "Increased Damage Scaling: 60% -> 70% Strength"
+                    }
+                  ]
+                },
+                {
+                  "text": "Across the Sky (4)",
+                  "items": [
+                    {
+                      "text": "Removed: Carrying ally bonus mana cost"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Artemis (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Aspect of the Wild",
+                  "items": [
+                    {
+                      "text": "Transgressor’s Fate (1)",
+                      "items": [
+                        {
+                          "text": "Decreased Cooldown: 14/13/12/11/10s -> 10s"
+                        },
+                        {
+                          "text": "Increased Damage per tick: 12/24/36/48/60 -> 15/30/45/60/75"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Cabrakan (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Seismic Crush (1)",
+                  "items": [
+                    {
+                      "text": "Increased Damage: 80/125/170/215/260 -> 90/140/190/240/290"
+                    }
+                  ]
+                },
+                {
+                  "text": "Refraction Shield (2)",
+                  "items": [
+                    {
+                      "text": "Increased Heal per target: 8/11/14/17/20 -> 12/15/18/21/24"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Cernunnos (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Shifter of Seasons (1)",
+                  "items": [
+                    {
+                      "text": "Increased Spring Heal Scaling: 8% -> 10% Intelligence"
+                    },
+                    {
+                      "text": "Increased Summer Damage Scaling: 10/13/16/19/22% -> 12/15/18/21/24% Strength or Intelligence (whichever is higher)"
+                    },
+                    {
+                      "text": "Increased Winter Slow Duration: 1.5s -> 2s"
+                    }
+                  ]
+                },
+                {
+                  "text": "The Wild Hunt (4)",
+                  "items": [
+                    {
+                      "text": "Increased Damage: 200/285/370/455/540 -> 240/320/400/480/540"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Chiron (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Masterful Shot (2)",
+                  "items": [
+                    {
+                      "text": "Decreased Scaling: 80% -> 70%",
+                      "items": [
+                        {
+                          "text": "Note - This also decreases the refire damage scaling"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Fix tooltip"
+                }
+              ]
+            },
+            {
+              "text": "Discordia (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Erratic Behavior (3)",
+                  "items": [
+                    {
+                      "text": "Decreased Range: 6.4m -> 5.3m"
+                    },
+                    {
+                      "text": "Decreased Tween time: 0.6s -> 0.5s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Golden Apple of Discord (4)",
+                  "items": [
+                    {
+                      "text": "Decreased Max Range: 50m -> 35m",
+                      "items": [
+                        {
+                          "text": "Speed decreased slightly"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Guan Yu (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Warrior’s Will (2)",
+                  "items": [
+                    {
+                      "text": "Increased Damage: 80/135/190/245/300 -> 90/145/200/255/310"
+                    }
+                  ]
+                },
+                {
+                  "text": "Taolu Assault (3)",
+                  "items": [
+                    {
+                      "text": "Increased Damage: 14/25/36/47/58 -> 16/27/38/49/60"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Hou Yi (Nerf/Fix)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Dive Bomb (3)",
+                  "items": [
+                    {
+                      "text": "Increased Prefire Time: 0.0667s -> 0.1667s",
+                      "items": [
+                        {
+                          "text": "This should better sync up when he becomes untargetable to when he leaves the ground in the animation."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Jormungandr (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Immovable (P)",
+                  "items": [
+                    {
+                      "text": "Increased Stack count to deal damage: 10 -> 14"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Nu Wa (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Clay Soldiers (2)",
+                  "items": [
+                    {
+                      "text": "Decreased Lifetime: 10s -> 6/7/8/9/10s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Nut (Aspect Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Flux",
+                  "items": [
+                    {
+                      "text": "Removed Damage Mitigation Per Stack on Cosmic Flux: 0.5% -> 0%",
+                      "items": [
+                        {
+                          "text": "10% -> 0% at Maximum Stacks"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Warp",
+                  "items": [
+                    {
+                      "text": "Decreased Crowd Control Immunity Duration: 1.5s -> 0.75s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Osiris (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Judgement Tether (3)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown: 15s -> 15/14.5/14/13.5/13s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Lord of the Afterlife (4)",
+                  "items": [
+                    {
+                      "text": "Increased Damage: 220/320/420/520/620 -> 250/345/440/535/630"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Pele (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Pyroclast (1)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown: 15/14.5/14/13.5/13s -> 13s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Eruption (2)",
+                  "items": [
+                    {
+                      "text": "Increased Inner Ring Damage: 70/115/160/205/250 -> 85/130/175/220/265"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Sun Wukong (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Raised base stats to more closely match those of similar gods"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Thanatos / Thor",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Did a pass to try to ensure their Ultimate landing warning sounds are audible and occur at the right time for enemy reaction time."
+                }
+              ]
+            },
+            {
+              "text": "Vulcan (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Master Craftsman (P)",
+                  "items": [
+                    {
+                      "text": "Alternator/Dual Mod",
+                      "items": [
+                        {
+                          "text": "Decreased Thumper Turret Scaling: 10% -> 8% Intelligence"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Shrapnel Mod",
+                      "items": [
+                        {
+                          "text": "Decreased Damage per tick: 3/6/9/12/15 ->  2/4/6/8/10"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Thermal Mod",
+                      "items": [
+                        {
+                          "text": "Decreased Scaling: 20% -> 15% Intelligence"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Inferno Cannon (2)",
+                  "items": [
+                    {
+                      "text": "Decreased Intelligence Scaling: 40% -> 35%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Xbalanque (Shift)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Darkest of Nights (4)",
+                  "items": [
+                    {
+                      "text": "Increased Attack Speed: 20/25/30/35/40% -> 28/31/34/37/40"
+                    },
+                    {
+                      "text": "Increased Movement Speed: 20/25/30/35/40% -> 28/31/34/37/40"
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect of the Nightstalker",
+                  "items": [
+                    {
+                      "text": "Branching Bola (1)",
+                      "items": [
+                        {
+                          "text": "Increased Damage: 70/90/110/130/150 -> 75/100/125/150/175"
+                        },
+                        {
+                          "text": "Increased Scaling: 45% Strength + 65% Intelligence -> 55% Strength + 75% Intelligence"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Darkest of Nights (4)",
+                      "items": [
+                        {
+                          "text": "This ability no longer resets the cooldown of Poison Darts"
+                        },
+                        {
+                          "text": "Increased Ability damage buff: 10/13/16/19/22% -> 14/18/22/26/30%"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Blinking Abyss",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Fixed: You can no longer use this item while Crippled"
+                }
+              ]
+            },
+            {
+              "text": "Bumba’s Golden Dagger & Bumba’s Cudgel",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Increased Minion Damage Reduction: 25% -> 40% (-1.5% Per Level)",
+                  "items": [
+                    {
+                      "text": "Level 1: 25% -> 38.5%"
+                    },
+                    {
+                      "text": "Level 20: 25% -> 10%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Arondight",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Strength: 65 -> 55"
+                }
+              ]
+            },
+            {
+              "text": "Titan’s Bane",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Strength: 50 -> 40"
+                }
+              ]
+            },
+            {
+              "text": "Qin’s Blade",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Removed the current method for determining damage."
+                },
+                {
+                  "text": "Removed the Anti-Heal Component on this Item."
+                },
+                {
+                  "text": "Now deals damage based on a mixture of the targets Base Health and the targets Item Health.",
+                  "items": [
+                    {
+                      "text": "1.5% of the Targets Base Health"
+                    },
+                    {
+                      "text": "3% of the Targets Item Health"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Soul Reaver",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Removed the current method for determining damage."
+                },
+                {
+                  "text": "Increased Intelligence: 60 -> 75"
+                },
+                {
+                  "text": "Now deals damage based on a mixture of the targets Base Health and the targets Item Health.",
+                  "items": [
+                    {
+                      "text": "1% of the Targets Base Health Per Tick"
+                    },
+                    {
+                      "text": "2% of the Targets Item Health Per Tick"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Divine Ruin",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Removed existing Anti-Heal logic on this Item."
+                },
+                {
+                  "text": "Increased Healing Reduction applied from your Abilities or Attacks: 0% -> 25%. Does not stack with God Anti Heal."
+                },
+                {
+                  "text": "Increased Healing Reduction applied from the Chain Lightning: 0% -> 25%"
+                },
+                {
+                  "text": "Decreased Intelligence: 95 -> 85"
+                }
+              ]
+            },
+            {
+              "text": "Stygian Anchor",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Increased Healing Echoed -> 4% -> 5%"
+                },
+                {
+                  "text": "Removed Movement Speed Slow: 3% -> 0%"
+                },
+                {
+                  "text": "Increased Healing Reduction applies from your Abilities or Attacks: 0% -> 25%"
+                }
+              ]
+            },
+            {
+              "text": "Brawler’s Beat Stick",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Reworked."
+                },
+                {
+                  "text": "Increased Healing Reduction applied from your Abilities: 0% -> 25%. Does not stack with other sources of Anti Heal."
+                },
+                {
+                  "text": "While in Combat: Gain 2% Strength, 2% Intelligence, and 2% Protections every 1.5s, up to 5 stacks. Lose 1 stack every 0.5s out of Combat."
+                }
+              ]
+            },
+            {
+              "text": "Ragnarok’s Wake",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Replaced placeholder sound effects"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Gods",
+          "anchor": "Gods",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Thor’s A04 warning sound now plays at his landing location"
+                },
+                {
+                  "text": "Fixed Chiron’s A03 dash sound only being heard by Chiron"
+                },
+                {
+                  "text": "Chiron A02 fire sound now only plays once regardless of how many enemies are marked"
+                },
+                {
+                  "text": "Fixed an issue with A01 projectiles for Izanami Maid to Kill sounding similar to Jing Wei Dragon Hearted Rebel's A03 dash"
+                },
+                {
+                  "text": "Increased global wish volume for Aladdin Winter's Wish"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 2/11/26",
+      "anchor": "Hotfix_2/11/26",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Oblivion Queen Traveler: All items are now unlockable."
+            },
+            {
+              "text": "PC Item Store: Potential fix for unresponsive clicking."
+            },
+            {
+              "text": "Console UI: Hold-to-confirm icon fixed."
+            },
+            {
+              "text": "Home Rotator: Chest names update correctly."
+            },
+            {
+              "text": "Quickplay: Bots will now buy starter items."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 2/12/26",
+      "anchor": "Hotfix_2/12/26",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Ne Zha: Quickplay builds added; no longer ults Jorm."
+            },
+            {
+              "text": "Visuals: Colorblind health bars & MLF’s Pantheon fix."
+            },
+            {
+              "text": "Nerfs: Yogi’s (Health 400 ➡️ 325) & Thebes (Evolved Bonus 200 ➡️ 100)."
+            },
+            {
+              "text": "Buffs: Qin’s (Base 2%, Item 5%) & Soul Reaver (85 INT, Base 1.2%, Item 3%)."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

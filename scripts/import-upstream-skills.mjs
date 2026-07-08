@@ -164,11 +164,35 @@ async function importUiuxStyleIndex() {
   }
 }
 
+async function importKarpathyUpstream() {
+  const url = 'https://raw.githubusercontent.com/multica-ai/andrej-karpathy-skills/main/CURSOR.md';
+  const raw = await fetchText(url);
+  const header = `---
+tags: [cursor-agent, karpathy, upstream-mirror, smite2app]
+vault-zone: cursor-agent
+upstream: https://github.com/multica-ai/andrej-karpathy-skills/blob/main/CURSOR.md
+imported: ${new Date().toISOString().slice(0, 10)}
+---
+
+# Karpathy — upstream CURSOR.md (mirror)
+
+> Auto-imported. Project-specific rules: [[../karpathy|karpathy.md]]
+
+`;
+  writeFile('_upstream/karpathy-CURSOR.md', header + raw);
+  console.log('karpathy: CURSOR.md mirror');
+}
+
 async function main() {
   console.log(DRY ? 'DRY RUN' : 'Importing upstream skills...');
   await importStopSlop();
   await importMarketingSkills();
   await importUiuxStyleIndex();
+  try {
+    await importKarpathyUpstream();
+  } catch (e) {
+    console.warn(`karpathy upstream: ${e.message}`);
+  }
   console.log('Done.');
 }
 

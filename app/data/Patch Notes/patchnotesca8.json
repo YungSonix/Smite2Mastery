@@ -1,0 +1,1629 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Closed_Alpha_8",
+    "title": "SMITE 2 Closed Alpha 8",
+    "infoboxTitle": "CA8 - SMITE 2 Closed Alpha 8",
+    "releaseDate": "December 10, 2024",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Closed_Alpha_7",
+      "next": "SMITE_2_Open_Beta_1"
+    },
+    "category": "closed_alpha",
+    "categoryLabel": "Closed Alpha patch notes",
+    "number": 8,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "General Changes",
+      "anchor": "General_Changes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Updates to the minion last hit presentation."
+            },
+            {
+              "text": "Item auto upgrade notification in match."
+            },
+            {
+              "text": "New Accolade - Deicide"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Conquest Changes",
+      "anchor": "Conquest_Changes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Warhorn",
+              "items": [
+                {
+                  "text": "No longer buffs minions until 15 minutes into a match"
+                }
+              ]
+            },
+            {
+              "text": "Fixed % HP damage abilities dealing too much damage/gaining too much health from Totem of Ku"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Gods",
+      "anchor": "New_Gods",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Aphrodite",
+          "anchor": "Aphrodite",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Deals Magical Damage"
+                    },
+                    {
+                      "text": "Intelligence Scaling"
+                    },
+                    {
+                      "text": "Ranged Basic Attacks"
+                    }
+                  ]
+                },
+                {
+                  "text": "Center of Attention",
+                  "items": [
+                    {
+                      "text": "Gain Physical Protection and Magical Protection for each friendly or enemy god nearby."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": Passive Meter has been updated with new Art with for better clarity"
+                    }
+                  ]
+                },
+                {
+                  "text": "Kiss",
+                  "items": [
+                    {
+                      "text": "Fire a kiss projectile at an allied god to link a Soul Mate, giving you both increased movement speed, and reduce Kiss's cooldown. If the kiss hits an enemy god, they take Magical Damage, are Stunned, and your Soul Mate becomes Jealous, increasing their damage dealt. The Soul Mate gains 50% of your MP5 and 10% of your protections."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": A locked-on to ally kiss will now hit enemies it hits along the way, if this happens, the full length cooldown will be applied"
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": if you were linked to an ally for 4s or longer when you switch to a new linked target, both allies will become jealous"
+                    }
+                  ]
+                },
+                {
+                  "text": "Back Off!",
+                  "items": [
+                    {
+                      "text": "Deal Magical Damage, Slow, and Push away enemies around you. If you have a Soul Mate, Deal Magical Damage, Slow, and Push away enemies around them as well. If an enemy is hit by both areas, they take reduced damage from the 2nd area."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": Enemies hit by both areas of back off in a single fire will now be hit by 25% bonus damage"
+                    }
+                  ]
+                },
+                {
+                  "text": "Love Birds",
+                  "items": [
+                    {
+                      "text": "Fire a doves projectile that deals Magical Damage repeatedly over time to enemies hit. On fire, Aphrodite and her Soul Mate start healing repeatedly over time and have their active cooldowns decreased per tick."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": INT scaling returns to the healing on Love Birds Scaling is higher scaling for Aphrodite than for her allies being healed by the effect"
+                    }
+                  ]
+                },
+                {
+                  "text": "Undying Love",
+                  "items": [
+                    {
+                      "text": "You and your Soul Mate become Damage Immune, CC Immune, and gain the Jealousy effect for a short duration."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": Aphrodite can now refire this ability while the buff is active to fly to her allies location - she is untargetable while flying"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Medusa",
+          "anchor": "Medusa",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Deals Physical Damage"
+                    },
+                    {
+                      "text": "Hybrid Scaling"
+                    },
+                    {
+                      "text": "Ranged Basic Attacks"
+                    }
+                  ]
+                },
+                {
+                  "text": "Sidewinder",
+                  "items": [
+                    {
+                      "text": "Medusa suffers no movement penalty when strafing and half the movement penalty while backpedaling."
+                    }
+                  ]
+                },
+                {
+                  "text": "Viper Shot",
+                  "items": [
+                    {
+                      "text": "Medusa gains increased Attack Speed and augments her next 4 Basic Attacks, shooting vipers that poison the targets hit, dealing damage every 0.5s for 1.5s."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": Each successful hit on an enemy god reduces the Cooldown of this ability by 0.5s."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": The Attack Speed stim scales with Strength."
+                    }
+                  ]
+                },
+                {
+                  "text": "Acid Spray",
+                  "items": [
+                    {
+                      "text": "Medusa spits acid that deals damage to the first enemy hit, which then sprays out in a cone behind them. Enemies hit have their Healing Taken reduced for 5s. Acid Spray will explode on statues Medusa has created."
+                    }
+                  ]
+                },
+                {
+                  "text": "Lacerate",
+                  "items": [
+                    {
+                      "text": "Medusa slithers forward, dealing damage to all enemies she passes through. Medusa stops on the first enemy god hit, damaging and Rooting them."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": Medusa can instantly destroy statues when colliding with them during this ability."
+                    }
+                  ]
+                },
+                {
+                  "text": "Petrify",
+                  "items": [
+                    {
+                      "text": "Medusa removes her mask, revealing her true face and delivering a powerful blast. Enemies are dealt damage and Stunned if they are looking at her or Slowed if they are not."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": Statues are created when an enemy god is killed during any of the ability’s effects, including the Stun, Slow, or the damage."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": When a statue is destroyed, the Cooldown of Lacerate is reduced by 5s, Medusa gains a 10s Strength and Intelligence buff, and Medusa gains a permanent stack of Strength and Intelligence."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Pele",
+          "anchor": "Pele",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Deals Physical Damage"
+                    },
+                    {
+                      "text": "Strength Scaling"
+                    },
+                    {
+                      "text": "Melee Basic Attacks"
+                    }
+                  ]
+                },
+                {
+                  "text": "Everlasting Flame",
+                  "items": [
+                    {
+                      "text": "When you drop below 50% health, gain increased Strength and Lifesteal. This effect has a cooldown."
+                    }
+                  ]
+                },
+                {
+                  "text": "Pyroclast",
+                  "items": [
+                    {
+                      "text": "Fires a Magma projectile that deals Physical Damage and grants fuel per enemy hit. At max range the Magma persists and fired additional shard projectiles back to you, dealing Physical Damage to enemies. The shared returning is dependent on the rank of the ability."
+                    },
+                    {
+                      "text": "Pele has 2 charges of this ability."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": Spawn location of the return projectiles has been adjusted slightly so that gods hit at max range of the initial projectile will also be hit by the returning ones"
+                    }
+                  ]
+                },
+                {
+                  "text": "Eruption",
+                  "items": [
+                    {
+                      "text": "Deal Physical Damage and Knock Up enemies around you. At rank 3 and 5 this area gains additional explosion areas, which deal Physical Damage and a smaller Knock Up."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": Firing this ability while in the Amplified Stage of Magma Rush will cause Pele to dash a short distance before erupting"
+                    }
+                  ]
+                },
+                {
+                  "text": "Magma Rush",
+                  "items": [
+                    {
+                      "text": "Repeatedly deal Physical Damage to nearby enemies and gain movement speed while this ability is active. Magma Rush uses Fuel for its duration and has no cooldown."
+                    },
+                    {
+                      "text": "Reactivate this ability to amplify the effect, expending more fuel but dealing increased Physical Damage and gaining additional movement speed."
+                    },
+                    {
+                      "text": "New Feature",
+                      "bold": true,
+                      "detail": ": Pele now enters Magma Rush and gains the effects faster than in S1, but is locked out from cancelling the effect for the same duration as in S1"
+                    }
+                  ]
+                },
+                {
+                  "text": "Volcanic Lightning",
+                  "items": [
+                    {
+                      "text": "Become CC Immune then Dash forward dealing Physical Damage and Slowing the first enemy God hit, and firing a cone attack that deals Physical Damage to other enemies."
+                    },
+                    {
+                      "text": "For the next 10 seconds or 4 attacks, every time you basic attack an enemy, you deal reduced damage and also fire a cone attack."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "General",
+              "items": [
+                {
+                  "text": "In CA5, we increased all gods Health per level stat by 15%. We are now reverting a portion of the nerf, which would equate to gods having only 10% greater Health per level than they would from that adjustment."
+                },
+                {
+                  "text": "God Classes are slightly more spread out stat-wise - not nearly to the same extent Smite 1 is, but greater than in previous Smite 2 patches."
+                },
+                {
+                  "text": "This adjustment does not include the Attack Speed stat"
+                }
+              ]
+            },
+            {
+              "text": "Anubis Nerf",
+              "items": [
+                {
+                  "text": "Mummify",
+                  "items": [
+                    {
+                      "text": "Decreased Stun Duration from 0.85/0.95/1.05/1.15/1.25s to 0.85/0.9/0.95/1/1.05s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Death Gaze",
+                  "items": [
+                    {
+                      "text": "Decreased Initial Damage Scaling from 100% INT to 90% INT"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Baron Samedi Nerf",
+              "items": [
+                {
+                  "text": "Consign Spirits",
+                  "items": [
+                    {
+                      "text": "Decreased % Missing Health Heal Scaling from 15% Cooldown Rate to 10% Cooldown Rate"
+                    }
+                  ]
+                },
+                {
+                  "text": "Wrap It Up",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown from 16/15.5/15/14.5/14s to 16s at all ranks"
+                    }
+                  ]
+                },
+                {
+                  "text": "Life of the Party",
+                  "items": [
+                    {
+                      "text": "Decreased Hysteria applied per tick from 5 to 2"
+                    },
+                    {
+                      "text": "Increased Cooldown from 100s to 110s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Danzaburou Buff",
+              "items": [
+                {
+                  "text": "Tanuki Trickery",
+                  "items": [
+                    {
+                      "text": "Added 55% STR Damage Scaling to the buffed Basic Attack after transforming"
+                    },
+                    {
+                      "text": "Decreased Cooldown from 16/15.5/15/14.5/14s to 14s at all ranks"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Hercules Buff",
+              "items": [
+                {
+                  "text": "Driving Strike",
+                  "items": [
+                    {
+                      "text": "Increased Damage Scaling from 80% STR to 85% STR"
+                    }
+                  ]
+                },
+                {
+                  "text": "Earthbreaker",
+                  "items": [
+                    {
+                      "text": "Increased Damage from 80/135/190/245/300 to 85/140/195/250/305"
+                    }
+                  ]
+                },
+                {
+                  "text": "Mitigate Wounds",
+                  "items": [
+                    {
+                      "text": "Increased Attack Speed from 10/12.5/15/17.5/20% to 15/17.5/20/22.5/25%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Loki Nerf",
+              "items": [
+                {
+                  "text": "Vanish",
+                  "items": [
+                    {
+                      "text": "Decreased Damage Scaling from 15% STR to 10% STR"
+                    }
+                  ]
+                },
+                {
+                  "text": "Flurry Strike",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown from 8s to 9s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Mordred Buff",
+              "items": [
+                {
+                  "text": "Bloodrage",
+                  "items": [
+                    {
+                      "text": "Increased Buff/Debuff Duration from 4s to 4/4.5/5/5.5/6s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Heart Slash",
+                  "items": [
+                    {
+                      "text": "Removed Self Slow while channeling"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Nu Wa Shift",
+              "items": [
+                {
+                  "text": "Mysterious Fog",
+                  "items": [
+                    {
+                      "text": "Decreased Buff Duration from 5s to 4s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Clay Soldiers",
+                  "items": [
+                    {
+                      "text": "Decreased Soldier Health Scaling from 25% of Nu Wa’s Maximum Health to 20%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Shining Metal",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 10s to 9s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Poseidon Nerf",
+              "items": [
+                {
+                  "text": "Trident",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown from 10s to 15s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Whirlpool",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown from 10s to 15/14/13/12/11s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Sobek Nerf",
+              "items": [
+                {
+                  "text": "Charge Prey",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown from 16/15.5/15/14.5/14s to 16s at all ranks"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Susano Buff",
+              "items": [
+                {
+                  "text": "Storm’s Edge",
+                  "items": [
+                    {
+                      "text": "Increased Buff/Debuff Duration from 3s to 4s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Typhoon",
+                  "items": [
+                    {
+                      "text": "Increased Knockup Height by 25%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "The Morrigan Nerf",
+              "items": [
+                {
+                  "text": "Dark Omen",
+                  "items": [
+                    {
+                      "text": "Decreased Initial Damage from 45/75/105/135/165 + 50% INT to 40/70/100/130/160 45% INT"
+                    },
+                    {
+                      "text": "Decreased Mark Damage from 45/75/105/135/165 + 50% INT to 40/70/100/130/160 + 45% INT"
+                    },
+                    {
+                      "text": "Decreased Minion Damage from 90/150/210/270/330 to 80/140/200/260/320"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Yemoja Nerf",
+              "items": [
+                {
+                  "text": "Mending Waters",
+                  "items": [
+                    {
+                      "text": "Decreased Shield Health Scaling from 5% Max Health to 3% Max Health"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Zeus Nerf",
+              "items": [
+                {
+                  "text": "Chain Lightning",
+                  "items": [
+                    {
+                      "text": "Decreased Damage Scaling from 60% INT to 50% INT"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Items",
+      "anchor": "New_Items",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "NEW",
+              "bold": true,
+              "lead": "- Eros' Bow",
+              "items": [
+                {
+                  "text": "Builds from Hunter’s Bow + Veve Charm"
+                },
+                {
+                  "text": "2300g"
+                },
+                {
+                  "text": "300 Health"
+                },
+                {
+                  "text": "30% Attack Speed"
+                },
+                {
+                  "text": "Active: Mark an ally god for 10s. Each Basic Attack that hits an enemy heals the marked god for 2% of your Maximum Health, once per Basic Attack. Cooldown: 10s."
+                }
+              ]
+            },
+            {
+              "text": "NEW",
+              "bold": true,
+              "lead": "- Rod of Asclepius",
+              "items": [
+                {
+                  "text": "Builds from Olmec Blue + Killing Stone"
+                },
+                {
+                  "text": "2450g"
+                },
+                {
+                  "text": "55 Intelligence"
+                },
+                {
+                  "text": "300 Health"
+                },
+                {
+                  "text": "3 Health Regen"
+                },
+                {
+                  "text": "Passive: Allies within 8.8m have 15% increased Healing."
+                },
+                {
+                  "text": "Active: Remove and prevent all Anti Heal effects for 3s for all allies within 7m. Cooldown: 90s."
+                }
+              ]
+            },
+            {
+              "text": "NEW",
+              "bold": true,
+              "lead": "- Shield Splitter",
+              "items": [
+                {
+                  "text": "Builds from Skeggox + Engraved Guard"
+                },
+                {
+                  "text": "2600g"
+                },
+                {
+                  "text": "40 Strength"
+                },
+                {
+                  "text": "25 Physical Protection"
+                },
+                {
+                  "text": "25 Magical Protection"
+                },
+                {
+                  "text": "Active: Throw Shield Splitter 8.8m in front of you, dealing 40 + 5 per level True Damage to the first enemy god hit. If they have a Shield, it is reduced by 50% and you gain a Shield equal to the amount reduced. Cooldown: 15s."
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Adroit Ring Nerf",
+              "items": [
+                {
+                  "text": "Decreased Cooldown Rate from 15 to 10"
+                }
+              ]
+            },
+            {
+              "text": "Bracer of the Abyss Shift",
+              "items": [
+                {
+                  "text": "Adjusted Recipe from Ring of Dispel + Hunter’s Bow to Killing Stone + Hunter’s Bow"
+                },
+                {
+                  "text": "Removed Cooldown Rate"
+                },
+                {
+                  "text": "Passive now triggers on Basic Attacks in addition to abilities"
+                },
+                {
+                  "text": "Decreased Basic Attack Damage per stack from 15 to 10"
+                },
+                {
+                  "text": "Increased Stack Count from 4 to 6"
+                }
+              ]
+            },
+            {
+              "text": "Breastplate of Valor Buff",
+              "items": [
+                {
+                  "text": "Decreased Cost from 2600 to 2400"
+                },
+                {
+                  "text": "Increased Physical Protection from 35 to 40"
+                }
+              ]
+            },
+            {
+              "text": "Chronos Pendant Shift",
+              "items": [
+                {
+                  "text": "Decreased Cost from 2500 to 2400"
+                },
+                {
+                  "text": "Decreased Intelligence from 50 to 40"
+                }
+              ]
+            },
+            {
+              "text": "Conduit Gem Nerf",
+              "items": [
+                {
+                  "text": "Now deals half damage to gods on its true damage proc"
+                },
+                {
+                  "text": "Reduced Mana Regen from 2 to 1"
+                }
+              ]
+            },
+            {
+              "text": "Gem of Focus Nerf",
+              "items": [
+                {
+                  "text": "Decreased Cooldown Rate from 20 to 15"
+                }
+              ]
+            },
+            {
+              "text": "Genji’s Guard Shift",
+              "items": [
+                {
+                  "text": "Decreased Cost from 2550 to 2300"
+                },
+                {
+                  "text": "Decreased Cooldown Rate from 20 to 10"
+                }
+              ]
+            },
+            {
+              "text": "Gladiator’s Shield Nerf",
+              "items": [
+                {
+                  "text": "Decreased Cooldown Rate from 20 to 10"
+                },
+                {
+                  "text": "Decreased Passive Damage from 15 + 30% of your Item Protections to 15 + 25% of your Item Protections"
+                }
+              ]
+            },
+            {
+              "text": "Hastened Fatalis Nerf",
+              "items": [
+                {
+                  "text": "Increased Cost from 2500 to 2650"
+                },
+                {
+                  "text": "Decreased Basic Attack Movement Penalty decrease per stack from 33% to 25%"
+                }
+              ]
+            },
+            {
+              "text": "Heartseeker Buff",
+              "items": [
+                {
+                  "text": "Increased Mana from 100 to 150 (T2 upgrade stat loss fix)"
+                }
+              ]
+            },
+            {
+              "text": "Helm of Darkness Buff",
+              "items": [
+                {
+                  "text": "Using the active ability now grants the Phantom effect to the owner for the duration"
+                }
+              ]
+            },
+            {
+              "text": "Jotunn’s Revenge Buff",
+              "items": [
+                {
+                  "text": "Decreased Cost from 2600 to 2400"
+                }
+              ]
+            },
+            {
+              "text": "Phantom Shell Buff",
+              "items": [
+                {
+                  "text": "Decreased Cooldown from 160s to 140s"
+                }
+              ]
+            },
+            {
+              "text": "Pharaoh’s Curse Nerf",
+              "items": [
+                {
+                  "text": "Increased Cost from 2300 to 2400"
+                },
+                {
+                  "text": "Decreased Active Slow from 25% to 20%"
+                },
+                {
+                  "text": "Decreased Active Attack Speed Slow from 25% to 20%"
+                }
+              ]
+            },
+            {
+              "text": "Prophetic Cloak Shift",
+              "items": [
+                {
+                  "text": "Increased Physical Protection from 25 to 30"
+                },
+                {
+                  "text": "Increased Magical Protection from 25 to 30"
+                },
+                {
+                  "text": "Decreased Cooldown Rate from 20 to 15"
+                }
+              ]
+            },
+            {
+              "text": "Sands of Time Shift",
+              "items": [
+                {
+                  "text": "Decreased Cooldown Rate from 15 to 10"
+                },
+                {
+                  "text": "Increased Mana Regen from 1 to 2"
+                },
+                {
+                  "text": "Increased Mana Regen per stack from .5 to .6"
+                },
+                {
+                  "text": "Decreased Minion damage per ability from 15 to 10"
+                }
+              ]
+            },
+            {
+              "text": "Shield of the Phoenix Shift",
+              "items": [
+                {
+                  "text": "Increased Physical Protection from 25 to 30"
+                },
+                {
+                  "text": "Increased Health from 200 to 250"
+                },
+                {
+                  "text": "Decreased Cooldown Rate from 15 to 10"
+                }
+              ]
+            },
+            {
+              "text": "Shogun’s Ofuda Buff",
+              "items": [
+                {
+                  "text": "Decreased Cost from 2700 to 2550"
+                }
+              ]
+            },
+            {
+              "text": "Soul Gem Nerf",
+              "items": [
+                {
+                  "text": "Decreased Cooldown Rate from 15 to 10"
+                }
+              ]
+            },
+            {
+              "text": "Stone of Binding Shift",
+              "items": [
+                {
+                  "text": "Decreased Cost from 2700 to 2450"
+                },
+                {
+                  "text": "Removed Health"
+                }
+              ]
+            },
+            {
+              "text": "Talisman of Purification Nerf",
+              "items": [
+                {
+                  "text": "Decreased Cooldown Rate from 15 to 10"
+                }
+              ]
+            },
+            {
+              "text": "The Cosmic Horror Shift",
+              "items": [
+                {
+                  "text": "Increased Intelligence from 85 to 90"
+                },
+                {
+                  "text": "Increased Mana from 150 to 200"
+                },
+                {
+                  "text": "Increased Mana Regen from 2 to 3"
+                },
+                {
+                  "text": "Decreased Cooldown Rate from 15 to 10"
+                },
+                {
+                  "text": "Decreased Item Intelligence Threshold from 300 to 275"
+                }
+              ]
+            },
+            {
+              "text": "The Crusher Shift",
+              "items": [
+                {
+                  "text": "Decreased Cost from 2900 to 2800"
+                },
+                {
+                  "text": "Increased Strength from 35 to 45"
+                },
+                {
+                  "text": "Decreased Cooldown Rate from 15 to 10"
+                }
+              ]
+            },
+            {
+              "text": "Void Shield Buff",
+              "items": [
+                {
+                  "text": "Increased Passive Physical Protection Reduction from 10% to 15%"
+                }
+              ]
+            },
+            {
+              "text": "Void Stone Buff",
+              "items": [
+                {
+                  "text": "Increased Passive Magical Protection Reduction from 10% to 15%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "General",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Fixed issues with lock on ability targeting for Athena and Neith ultimates where the ability wouldn’t cast correctly, and would be cancelled while moving"
+                },
+                {
+                  "text": "Fixed issues with abilities that applied ramping Slows weren’t working properly"
+                },
+                {
+                  "text": "Fixes issues with Inhand Swaps causing lower than intended Attack Speed after abilities"
+                },
+                {
+                  "text": "Fixed issues with god Bots getting stuck in fountain after they died and respawned"
+                },
+                {
+                  "text": "Fixed an issue where AFK players were not being kicked after idling past the time limit"
+                },
+                {
+                  "text": "Fixed an issue where projectiles weren’t hitting at their max distance"
+                }
+              ]
+            },
+            {
+              "text": "Gods",
+              "bold": true,
+              "items": [
+                {
+                  "text": "The Morrigan",
+                  "items": [
+                    {
+                      "text": "Fixed issues where Changeling could freeze clients for a couple seconds whenever she would transform or detransform"
+                    },
+                    {
+                      "text": "Changeling now copies item stacks when transforming into gods"
+                    }
+                  ]
+                },
+                {
+                  "text": "Nu Wa",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where Mysterious Fog movement speed was stacking with other movement speed buffs"
+                    }
+                  ]
+                },
+                {
+                  "text": "Cernunnos",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where his Horn Charge ability wasn’t respecting Cooldown Reduction"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ares",
+                  "items": [
+                    {
+                      "text": "Fixed an issue with No Escape, where enemy gods could cast abilities during the Knock Up, and leaps could bypass the pull"
+                    }
+                  ]
+                },
+                {
+                  "text": "Cupid",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where his Heart Bomb wouldn’t damage or CC enemies that were mid Leap"
+                    },
+                    {
+                      "text": "Fixed his postfire of Share the Love being too long"
+                    }
+                  ]
+                },
+                {
+                  "text": "Thor",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where Tectonic Rift could leave invisible walls"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "UI",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Fixed issues where other players couldn’t see any equipped card cosmetics on the loading screen"
+                },
+                {
+                  "text": "Fixed the issue where the Chaos team killing the Fire Giant would show the Gold Fury kill message to the Order team"
+                },
+                {
+                  "text": "Fixed an issue where the Match Settings for Autobuild weren’t applying correctly in the god select lobby"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Patch 12/13/24",
+      "anchor": "Patch_12/13/24",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "CC Buffering",
+          "anchor": "CC_Buffering",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Silences now interrupt prefires, meaning you are unable to buffer into a Silence."
+                },
+                {
+                  "text": "Ares No Escape now cripples enemies that he chains, meaning you are now unable to buffer movement abilities into his Ultimate. This ability will still cripple even when our CC Buffering tests are not active."
+                },
+                {
+                  "text": "Hades Shroud of Darkness (Ability 2) will now Silence in addition to Fearing when used on a Blighted target. This will not impact Diminishing Return stacks. This is to make sure that getting the better version of the ability doesn't allow buffering when the base does not."
+                },
+                {
+                  "text": "Be sure to complete our CC Buffering Survey if you've had a chance to play with the new feature!"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_2",
+          "level": 3,
+          "content": []
+        }
+      ]
+    },
+    {
+      "title": "Patch 12/13/24 #2",
+      "anchor": "Patch_12/13/24_#2",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_3",
+          "level": 3,
+          "content": []
+        },
+        {
+          "title": "God Balance",
+          "anchor": "God_Balance_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Aphrodite Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Kiss",
+                      "items": [
+                        {
+                          "text": "Stun Duration decreased from 1s to 0.8s"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Lovebirds",
+                      "items": [
+                        {
+                          "text": "Decreased Heal per tick from 10/17/24/31/38 to 10/15/20/25/30"
+                        },
+                        {
+                          "text": "Decreased Self Heal Scaling from 10% INT to 7.5% INT"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Undying Love",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 90s to 100s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Baron Samedi Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Consign Spirits",
+                      "items": [
+                        {
+                          "text": "Decreased Heal from 30/60/90/120/150 to 30/55/80/105/130"
+                        },
+                        {
+                          "text": "Decreased Missing Health Heal from 2.5% to 2%"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Bellona Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Bludgeon",
+                      "items": [
+                        {
+                          "text": "Increased Slam Damage Scaling from 60/62.5/65/67.5/70% STR to 70% STR"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Scourge",
+                      "items": [
+                        {
+                          "text": "Decreased Cooldown from 17/16/15/14/13s to 14/13.5/13/12.5/12s"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Eagle’s Rally",
+                      "items": [
+                        {
+                          "text": "Increased Damage Scaling from 50% STR to 60% STR"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Chaac Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Torrent",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 10/9/8/7/6s to 10/9.5/9/8.5/8s"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Rain Dance",
+                      "items": [
+                        {
+                          "text": "Decreased Heal per tick from 10/15/20/25/30 + 5% INT to 8/13/18/23/28 + 4% INT"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Cupid Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Share the Love",
+                      "items": [
+                        {
+                          "text": "Decreased Heal from 20/40/60/80/100 + 10% INT to 20/35/50/65/80 + 7.5% INT"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Fields of Love",
+                      "items": [
+                        {
+                          "text": "Decreased Heal from 60/100/140/180/220 + 30% INT to 60/95/130/165/200 + 20% INT"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Medusa Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Viper Shot",
+                      "items": [
+                        {
+                          "text": "Decreased Damage per tick from 20/25/30/35/40 + 8% STR + 10% INT to 15/20/25/30/35 + 6% STR + 8% INT"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Petrify",
+                      "items": [
+                        {
+                          "text": "Decreased Damage Scaling from 80% STR + 90% INT to 65% STR + 85% INT"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Neith Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Broken Weave",
+                      "items": [
+                        {
+                          "text": "Added 2% STR Scaling to the Attack Speed per stack"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Unravel",
+                      "items": [
+                        {
+                          "text": "Increased Damage from 70/110/150/190/230 to 75/120/165/210/255"
+                        },
+                        {
+                          "text": "Decreased Cooldown from 14/13.5/13/12.5/12s to 12s at all ranks"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Nu Wa Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Clay Soldiers",
+                      "items": [
+                        {
+                          "text": "This ability no longer procs item effects"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Pele Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Everlasting Flame",
+                      "items": [
+                        {
+                          "text": "Increased Duration from 4s to 6s"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Pyroclast",
+                      "items": [
+                        {
+                          "text": "Decreased Cooldown from 15s to 15/14.5/14/13.5/13s"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Eruption",
+                      "items": [
+                        {
+                          "text": "Increased Knockup Height by 25%"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ra Shift",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Celestial Beam",
+                      "items": [
+                        {
+                          "text": "Increased Damage Scaling from 100% INT to 105% INT"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Divine Light",
+                      "items": [
+                        {
+                          "text": "Shifted Solar Ray Damage from 30/70/100/130/160 + 45% INT to 25/60/85/110/135 + 55% INT"
+                        },
+                        {
+                          "text": "Increased Cooldown from 12s to 14/13.5/13/12.5/12s"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Solar Blessing",
+                      "items": [
+                        {
+                          "text": "Increased Damage Scaling per tick from 25% INT to 30% INT"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Thor Shift",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Warrior’s Madness",
+                      "items": [
+                        {
+                          "text": "Thunderstruck no longer procs item effects"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Mjolnir’s Attunement",
+                      "items": [
+                        {
+                          "text": "Increased Damage from 50/90/130/170/210 + 30% STR to 50/95/140/185/230 + 35% STR"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Tectonic Rift",
+                      "items": [
+                        {
+                          "text": "Decreased Stun Duration from 1.2/1.3/1.4/1.5/1.6s to 1.2/1.25/1.3/1.35/1.4s"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Berserker Barrage",
+                      "items": [
+                        {
+                          "text": "Increased Cone Damage from 45/65/85/105/125 + 60% STR to 50/70/90/110/130 + 70% STR"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Yemoja Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Mending Waters",
+                      "items": [
+                        {
+                          "text": "Decreased Shield Health from 30/60/90/120/150 + 3% Max Health to 30/55/80/105/130 + 2% Max Health"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Item Balance",
+          "anchor": "Item_Balance_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Hide of the Nemean Lion Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Increased Health from 200 to 350 (T2 upgrade stat loss fix)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Hussar’s Wing Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Increased Health from 200 to 250 (T2 upgrade stat loss fix)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Mystical Mail Buff",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Increased Health from 350 to 400 (T2 upgrade stat loss fix)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Prophetic Cloak Nerf",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased Physical Protection from 30 to 25"
+                    },
+                    {
+                      "text": "Decreased Magical Protection from 30 to 25"
+                    },
+                    {
+                      "text": "Decreased Cooldown Rate from 15 to 10"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ruinous Ankh Shift",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Increased Physical Protection from 30 to 40"
+                    },
+                    {
+                      "text": "Increased Magical Protection from 30 to 40"
+                    },
+                    {
+                      "text": "Removed Health"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

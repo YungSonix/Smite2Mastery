@@ -1,0 +1,817 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_33",
+    "title": "SMITE 2 Open Beta 33",
+    "infoboxTitle": "OB33 - SMITE 2 Open Beta 33",
+    "releaseDate": "April 21st, 2026",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_32",
+      "next": "SMITE_2_Open_Beta_34"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 33,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Classic God",
+      "anchor": "New_Classic_God",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Ishtar",
+          "anchor": "Ishtar",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Passive: Mark of Vengeance",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "When you drop below 75% Health, apply Mark of Vengeance to the enemy god that most recently damaged you for 10 seconds."
+                    },
+                    {
+                      "text": "Each attack against the marked god grants stacking attack speed"
+                    },
+                    {
+                      "text": "Scoring a kill or assist on the marked god grants movement speed and permanent 5 strength, up to 25."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 1:",
+                  "bold": true,
+                  "lead": "Imbue Arrows",
+                  "items": [
+                    {
+                      "text": "Imbue your arrows with heavenly light, empowering your attacks as Strike Shot, Spread Shot or Storm Shot",
+                      "items": [
+                        {
+                          "text": "Strike Shot: Lob explosions that deal bonus area damage in an area; may fire over walls"
+                        },
+                        {
+                          "text": "Spread Shot: Fire 5 arrows in a cone; Center hit applies on hit item effects to the target"
+                        },
+                        {
+                          "text": "Storm SHot: Gain attack speed and fire faster, longer range shots that deal reduced damage."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 2: Rolling Thunder",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Call down four lightning strikes in a line, dealing physical damage per strike to enemies in each area."
+                    },
+                    {
+                      "text": "Enemies hit by more than one strike are Mesmerized"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 3: Jolt",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Dash forward with your blades, dealing physical damage to enemies in your path",
+                      "items": [
+                        {
+                          "text": "Hitting an enemy god roots them as you backflip in an area around them and can Critically strike and trigger on hit item effects."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ultimate Ability: Blades of Retribution",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Become CC immune and summon five swords of light, firing out in a cone. Each sword deals physical damage and cripples enemies.",
+                      "items": [
+                        {
+                          "text": "Refire this ability to recall the swords towards you"
+                        },
+                        {
+                          "text": "Enemies hit by both the outgoing volley and the recall are stunned."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Aspect of the Passionate Storm - Releasing 24/4",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Your Spread Shot cone is always active on your attacks."
+                    },
+                    {
+                      "text": "Imbue Arrows no longer changes stance; it grants Attack Speed and lets you build Storm’s Kiss whenever you hit a target with an attack while imbue is active."
+                    },
+                    {
+                      "text": "Rolling Thunder now grants you a small movement speed bonus per strike."
+                    },
+                    {
+                      "text": "Jolt Consumes Storm’s Kiss stacks on hit; at 8 or more stacks, the arrow you fire after the backflip deals bonus damage."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Wandering Market Travelers",
+      "anchor": "New_Wandering_Market_Travelers",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Classic Traveler: Mystic Enchantress Nu Wa",
+          "anchor": "Classic_Traveler:_Mystic_Enchantress_Nu_Wa",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Mystic Enchantress - Pearl Prism"
+                    },
+                    {
+                      "text": "Mystic Enchantress -Ruby Prism"
+                    },
+                    {
+                      "text": "Mystic Enchantress - Aquamarine Prism"
+                    },
+                    {
+                      "text": "Mystic Cat - Ward Skin"
+                    },
+                    {
+                      "text": "Tracker Pact Token (part of the Tracker Syndicate Event)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Classic Traveler: Shadowrunner Ratatoskr",
+          "anchor": "Classic_Traveler:_Shadowrunner_Ratatoskr",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Shadowrunner - Solar Spirit  Prism"
+                    },
+                    {
+                      "text": "Shadowrunner  - Void Forager Prism"
+                    },
+                    {
+                      "text": "Shadowrunner - Pearl Star Prism"
+                    },
+                    {
+                      "text": "Shadows - Recall Skin"
+                    },
+                    {
+                      "text": "Tracker Pact Token (part of the Tracker Syndicate Event)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Quality of Life",
+      "anchor": "Quality_of_Life",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Improvements for Party Queuing",
+              "items": [
+                {
+                  "text": "If a Party Member is not available when a queue pops (e.g., they are not logged in), your Party will not join a lobby"
+                },
+                {
+                  "text": "If a Party Member opens the Console Guide while in queue, the Party will be removed from the queue",
+                  "items": [
+                    {
+                      "text": "This matches the behavior for a single player. We are unable to determine what a player does after they open the Guide, and if they leave the game it would result in a failed lobby."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Gameplay",
+      "anchor": "Gameplay",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Global Crit Adjustment",
+          "anchor": "Global_Crit_Adjustment",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The bonus damage from a Critical Strike is now 150%. This is reduced from 165%"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Items",
+          "anchor": "Items",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Typhon’s Heart",
+                  "items": [
+                    {
+                      "text": "Typhon Minion will attempt to follow back and to the left of its owner"
+                    },
+                    {
+                      "text": "Typhon Minion will drop target and return to owner if too far away"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Tenacity Improvements",
+          "anchor": "Tenacity_Improvements",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "This stat now also reduces the intensity/strength (but not the duration of):"
+                },
+                {
+                  "text": "Vortices"
+                },
+                {
+                  "text": "Fears/Taunts"
+                },
+                {
+                  "text": "Intoxicates/Trembles"
+                },
+                {
+                  "text": "Slows"
+                },
+                {
+                  "text": "Knockbacks/Knockups"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Conquest Pacing, Economy, and the Jungle",
+          "anchor": "Conquest_Pacing,_Economy,_and_the_Jungle",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "In this update, we are taking a targeted approach to address community feedback surrounding match pacing—specifically, the feeling that matches can snowball out of control too quickly. Our overarching goal for this patch is to ensure that falling behind doesn't feel like an automatic defeat, while still heavily rewarding players who actively execute good plays."
+            },
+            {
+              "type": "paragraph",
+              "text": "Additionally, we are dialing back the overarching power and global influence of the Jungler role, which has been dominating the mid-game economy."
+            },
+            {
+              "type": "paragraph",
+              "text": "Here is a breakdown of how we are addressing these goals:"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "\"With the wide-scale updates to jungle experience and rewards, as well as adjustments to critical strike mechanics, this patch focuses on more targeted individual god and item balance changes. These address follow-up adjustments that could not be included in the previously deployed hotfix.\""
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Apollo",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Audacity",
+                  "items": [
+                    {
+                      "text": "Aspect of Harmony",
+                      "items": [
+                        {
+                          "text": "Can no longer gain stacks of Audacity while an empowered So Beautiful is available."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Anhur",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Enfeeble",
+                  "items": [
+                    {
+                      "text": "Physical Protection Reduction changed from 20 -> 5 + .75 per level"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Da Ji",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Paolao",
+                  "items": [
+                    {
+                      "text": "Duration reduced from 7s -> 5s",
+                      "items": [
+                        {
+                          "text": "(more specifically this was 5s -> 4s for the ability firing window and 2s -> 1s for the landing window)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Gilgamesh",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Winds of Shamash",
+                  "items": [
+                    {
+                      "text": "Aspect of Shamash",
+                      "items": [
+                        {
+                          "text": "Sun-forged Scimitar",
+                          "items": [
+                            {
+                              "text": "Damage per Tick reduced from 15/22.5/30/37.5/45 -> 10/17.5/25/32.5/40"
+                            },
+                            {
+                              "text": "Damage Tick scaling reduced from 17.5% -> 15%"
+                            },
+                            {
+                              "text": "Initial Damage Scaling reduced from 50% -> 40%"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Ne Zha",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Ring Toss",
+                  "items": [
+                    {
+                      "text": "Aspect of the Righteous Flame",
+                      "items": [
+                        {
+                          "text": "Subsequent Ring Bounce Damage reduced from 35% to 20%."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Nu Wa",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Shining Metal",
+                  "items": [
+                    {
+                      "text": "Aspect of Shining Mist",
+                      "items": [
+                        {
+                          "text": "Damage taken from 200% Physical and Attack Power + 40% Intelligence to 140/155/170/185/200% Physical and Attack Power + 28/31/34/37/40% Intelligence"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Nut",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Astral Flux",
+                  "items": [
+                    {
+                      "text": "Bonus Magic Damage per stack reduced from 5% -> 2.5%"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Pele",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Magma Rush",
+                  "items": [
+                    {
+                      "text": "Aspect of Obsidian",
+                      "items": [
+                        {
+                          "text": "Magma Rush Enhanced Base Damage reduced 30/45/60/75/90 -> 20/35/50/65/80"
+                        },
+                        {
+                          "text": "Magma Rush Enhanced Scaling reduced from 15% -> 10%"
+                        },
+                        {
+                          "text": "Heal Scaling reduced from 1.25% of Health from Items -> 1.15% of Health from Items"
+                        },
+                        {
+                          "text": "Enhanced Heal Scaling reduced from 2.5% of Health from Items -> 2.25% of Health from Items"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Pendulum Blade",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Cost increased from 2600 -> 2750"
+                },
+                {
+                  "text": "Strength reduced from 45 -> 35"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Staff of Myrddin",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Cost increased from 2750 -> 2900"
+                },
+                {
+                  "text": "Intelligence reduced from 85 -> 75"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fatalis now properly respects Melee vs. Ranged for Gods that switch Attack type via Aspect (Cernunnos, Morgan Le Fay, Kali, Geb), and Gods that change their Attack type via ability (Athena, Tsukuyomi)."
+            },
+            {
+              "text": "Dagger of Frenzy stacks are now expended by abilities that benefit from the attack speed (Da Ji Aspect 2, Guan Yu 3, etc.)"
+            },
+            {
+              "text": "Ratatoskr Acorn dash will still reset if a dash kills an enemy."
+            },
+            {
+              "text": "Added Charon passive icon to leave boat"
+            },
+            {
+              "text": "Addressed certain prisms appearing untextured in DX11."
+            },
+            {
+              "text": "Sylvanus 3 no longer procs Resolute Mantle and Spirit Robe on Sylvanus"
+            },
+            {
+              "text": "Fixed issue where Charon Aspect was being hit by DoT’s."
+            },
+            {
+              "text": "Fixed Towers sometimes being able to see and target enemy Gods behind walls if they were leaping high enough"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 4/22/26",
+      "anchor": "Hotfix_4/22/26",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ishtar",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Ishtar Imbue Arrows was causing Rolling Thunder or Jolt to fire off when used."
+                    },
+                    {
+                      "text": "Ishtar Imbue Arrows was canceling abilities while active, and was cancelled by CC."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 4/23/26",
+      "anchor": "Hotfix_4/23/26",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_3",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ishtar",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Ishtar Strike Shot wasn't properly getting its full bonus damage."
+                    },
+                    {
+                      "text": "Ishtar Imbue Arrows was not resetting inhand chain when leaving the stance."
+                    },
+                    {
+                      "text": "Ishtar Jolt backfip was targetable"
+                    },
+                    {
+                      "text": "Ishtar Jolt was sometimes going to the center of the map"
+                    },
+                    {
+                      "text": "Ishtar Rolling Thunder deploy speed got sped up"
+                    },
+                    {
+                      "text": "Ishtar Rolling Thunder can now fired in walls properly"
+                    },
+                    {
+                      "text": "Ishtar Blades of Retribution wasn't stunning targets when damage was immuned"
+                    },
+                    {
+                      "text": "Ishtar wasn't showing up in character select under the Carry role."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 4/26/26",
+      "anchor": "Hotfix_4/26/26",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "God Balance",
+          "anchor": "God_Balance_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Nu Wa",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Shining Metal",
+                      "items": [
+                        {
+                          "text": "Aspect of Shining Mist",
+                          "items": [
+                            {
+                              "text": "Shining Metal scaling reduced from 140/155/170/185/200% Strength and Attack Power + 28/31/34/37/40% Intelligence to 40/60/80/100/120% Strength and Attack Power + 8/12/16/20/24% Intelligence"
+                            },
+                            {
+                              "text": "Strength of Metal AoE reduced from 75% of attack damage to 25% in Aspect only"
+                            },
+                            {
+                              "text": "Strength of Metal AoE no longer procs item effects."
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_4",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Pele Aspect",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Fixed an issue with A03 dealing double damage."
+                    }
+                  ]
+                },
+                {
+                  "text": "Ishtar",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Ishtar Blades of Retribution was hitting players in the air."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

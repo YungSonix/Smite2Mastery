@@ -1,0 +1,1363 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_10",
+    "title": "SMITE 2 Open Beta 10",
+    "infoboxTitle": "OB10 - SMITE 2 Open Beta 10",
+    "releaseDate": "May 19, 2025",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_9",
+      "next": "SMITE_2_Open_Beta_11"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 10,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Ported God",
+      "anchor": "New_Ported_God",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Apollo",
+              "bold": true,
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Ranged Basic Attacks"
+                    },
+                    {
+                      "text": "Damage Type: Physical"
+                    },
+                    {
+                      "text": "Scaling Type: Strength Scaling"
+                    }
+                  ]
+                },
+                {
+                  "text": "Passive: Audacity",
+                  "items": [
+                    {
+                      "text": "Gain a stack of Audacity for each successful Basic Attack on an enemy and for each successful damaging ability on Enemy gods. At 10 stacks you gain 100% Attack Speed and Increased Basic Attack Projectile Speed for his next 5 Basic Attacks."
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 1: So Beautiful",
+                  "items": [
+                    {
+                      "text": "Send a projectile forward that deals Physical Damage."
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 2: Serenade",
+                  "items": [
+                    {
+                      "text": "Sing to mesmerize all nearby enemies and gain additional protections.",
+                      "items": [
+                        {
+                          "text": "Any damage done breaks the Mesmerize"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 3: The Moves",
+                  "items": [
+                    {
+                      "text": "Dash forward dealing Physical Damage and Knocking aside all enemies. At the end of the Dash all nearby allies gain a Speed Buff and all nearby enemies are Slowed",
+                      "items": [
+                        {
+                          "text": "Any enemy hit provides 1 stack of Audacity."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ultimate Ability: Across the Sky",
+                  "items": [
+                    {
+                      "text": "Ride your chariot across the sky, choosing when to land. When descending you deal Physical Damage every 0.15s for 0.6s, knocking back enemies on the last tick.",
+                      "items": [
+                        {
+                          "text": "2 Allies can join the Chariot ride by interacting with his takeoff location. Allies have until Apollo reaches max height to join."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect releasing May 23:",
+                  "items": [
+                    {
+                      "text": "Aspect of Harmony",
+                      "items": [
+                        {
+                          "text": "Audacity now grants free So Beautiful casts but no Attack Speed. So Beautiful scales with Item Health, lowers enemy Attack Speed, and grants nearby allies Attack Speed on God or Boss hits, but deals less Base Damage. Serenade now shields nearby allies but applies no Protections. Buffing an ally grants an Audacity stack."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Wandering Market Traveler - Land Shark",
+      "anchor": "New_Wandering_Market_Traveler_-_Land_Shark",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Sobek is here to tell you, “Land or Sea, no one is safe from me!” Unlock JAW-esome cosmetics in this new Premium Traveler Page!"
+        },
+        {
+          "type": "paragraph",
+          "text": "Contents"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Classic Land Shark Sobek Skin - Instantly unlocked after purchasing the Premium Traveler Page"
+            },
+            {
+              "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+              "items": [
+                {
+                  "text": "Land Shark - Orca Black Prism"
+                },
+                {
+                  "text": "Land Shark - Goldfish Orange Prism"
+                },
+                {
+                  "text": "Land Shark - Tubular Teal Prism"
+                },
+                {
+                  "text": "Testing the Waters Jump Stamp"
+                },
+                {
+                  "text": "Deepbite Charm Badge"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Skins and Cosmetics",
+      "anchor": "New_Skins_and_Cosmetics",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Classic Skins (purchasable for 100% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Mystic Guardian Athena"
+                }
+              ]
+            },
+            {
+              "text": "Prisms (purchasable for 100% Diamonds)",
+              "items": [
+                {
+                  "text": "600 Diamonds each or all 4 in a Bundle for 1200 Diamonds",
+                  "items": [
+                    {
+                      "text": "Mystic Guardian - Starflare"
+                    },
+                    {
+                      "text": "Mystic Guardian - Nightshade"
+                    },
+                    {
+                      "text": "Mystic Guardian - Lunarveil"
+                    },
+                    {
+                      "text": "Mystic Guardian - Stardust, only available in the Bundle"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Cross-Gen Skins (purchasable for 50% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Ceramic Circuit Kali"
+                }
+              ]
+            },
+            {
+              "text": "Cosmetics",
+              "items": [
+                {
+                  "text": "Dancing Shark Global Emote, available in the Hot God Summer Event"
+                },
+                {
+                  "text": "A variety of Cutesy Avatars from SMITE 1 have been added to the game as Badges and are now available in the Classic Cutesy Chest, purchaseable for 100% Legacy Gems"
+                }
+              ]
+            },
+            {
+              "text": "Season 0 Winter Split Ranked Rewards",
+              "items": [
+                {
+                  "text": "Ranked Borders",
+                  "items": [
+                    {
+                      "text": "Earned based on peak Rank during the Winter Split"
+                    },
+                    {
+                      "text": "Must have reached Silver+ to earn a Border"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ranked Titles",
+                  "items": [
+                    {
+                      "text": "“Demigod”"
+                    },
+                    {
+                      "text": "“Deity Winter 2025”"
+                    },
+                    {
+                      "text": "“Speedrunner”"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Supporter Store Items",
+      "anchor": "New_Supporter_Store_Items",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "New Cosmetic Type: Teleporter VFX!"
+            },
+            {
+              "text": "Teleporter VFX have been added to SMITE 2! These are new VFX that will change your appearance when using a Base Teleporter back to Lane in Conquest and Assault."
+            },
+            {
+              "text": "Teleporter VFX can be equipped via the Profile Screen.",
+              "items": [
+                {
+                  "text": "Twin Flames Bundle",
+                  "items": [
+                    {
+                      "text": "Red Fireball"
+                    },
+                    {
+                      "text": "Blue Fireball"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "General",
+      "anchor": "General",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Account Boosters",
+              "items": [
+                {
+                  "text": "Account Boosters are now available for purchase in the Store!"
+                },
+                {
+                  "text": "Purchasing an Account Booster grants you the following for 30 days",
+                  "items": [
+                    {
+                      "text": "100% Account XP"
+                    },
+                    {
+                      "text": "25% Worshiper Gain"
+                    },
+                    {
+                      "text": "25% Wandering Market XP Gain"
+                    },
+                    {
+                      "text": "Team Benefits (per teammate)",
+                      "items": [
+                        {
+                          "text": "25% Account XP"
+                        },
+                        {
+                          "text": "5% Worshiper Gain"
+                        },
+                        {
+                          "text": "5% Wandering Market XP Gain"
+                        },
+                        {
+                          "text": "Stackable! If multiple teammates have an active boost, the bonuses add up for everyone!"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "God Builder",
+              "items": [
+                {
+                  "text": "Players can now Copy an existing Build for one God to another God"
+                },
+                {
+                  "text": "Filters have been added to the God Builder page to better sort Items by Stat type"
+                }
+              ]
+            },
+            {
+              "text": "Console Specific HUD",
+              "items": [
+                {
+                  "text": "A new Console specific HUD layout has been added to the options menu. You can select this layout in the Setting menu under the UI tab"
+                }
+              ]
+            },
+            {
+              "text": "Audio",
+              "items": [
+                {
+                  "text": "An option has been added for Quip and Ambient Map sound volume"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Game Modes",
+      "anchor": "Game_Modes",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Arena"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Increased Gold Spooling amount from 12 to 14 per second"
+            },
+            {
+              "text": "Increased XP Spooling amount from 11 to 12 per second"
+            },
+            {
+              "text": "Arena Vs AI (Medium) - Increased ticket limit from 400 to 500"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Baron Samedi Buff",
+              "items": [
+                {
+                  "text": "Wrap It Up (3)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 16s to 16/15.5/15/14.5/14s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Life of the Party (4)",
+                  "items": [
+                    {
+                      "text": "Increased Slam Damage and Intelligence Scaling from 125/210/295/380/475 + 55% to 200/270/340/410/480 + 70%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Cernunnos Buff",
+              "items": [
+                {
+                  "text": "Aspect of Strife",
+                  "items": [
+                    {
+                      "text": "Horn Charge (3)",
+                      "items": [
+                        {
+                          "text": "Bonus Cooldown reduction now applies when hitting Jungle Monsters at a reduced amount",
+                          "items": [
+                            {
+                              "text": "2s instead of 4s per hit"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Horn Charge (3)",
+                  "items": [
+                    {
+                      "text": "Increased Damage from 70/125/180/235/290 to 90/140/190/240/290"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Hun Batz Buff",
+              "items": [
+                {
+                  "text": "Aspect of Disruption",
+                  "items": [
+                    {
+                      "text": "Overhand Smash (2)",
+                      "items": [
+                        {
+                          "text": "Increased Damage from 50/80/110/140/170 to 60/100/140/180/220"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Infused Strikes (P)",
+                  "items": [
+                    {
+                      "text": "Increased Strength per stack from 2 to 5"
+                    }
+                  ]
+                },
+                {
+                  "text": "Somersault (1)",
+                  "items": [
+                    {
+                      "text": "Increased Damage from 65/105/145/185/225 to 75/115/155/195/235",
+                      "items": [
+                        {
+                          "text": "This also affects the second hit from this ability"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Loki Buff",
+              "items": [
+                {
+                  "text": "Vanish (1)",
+                  "items": [
+                    {
+                      "text": "Increased Damage over time Scaling from 10% to 15% per tick"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Nu Wa Buff",
+              "items": [
+                {
+                  "text": "Clay Soldiers (2)",
+                  "items": [
+                    {
+                      "text": "Increased Dash Damage Intelligence Scaling from 2.5% to 5%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Shining Metal (3)",
+                  "items": [
+                    {
+                      "text": "Increased Explosion Damage Intelligence Scaling from 30% to 40%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Yemoja Buff",
+              "items": [
+                {
+                  "text": "Mending Waters (2)",
+                  "items": [
+                    {
+                      "text": "Increased Shield Health and Scaling from 30/55/80/105/130 + 2% Max Health to 40/65/90/115/140 + 4% Max Health"
+                    }
+                  ]
+                },
+                {
+                  "text": "River’s Rebuke (4)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 140/135/130/125/120s to 120s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Merlin Shift",
+              "items": [
+                {
+                  "text": "Aspect of Pandemonium",
+                  "items": [
+                    {
+                      "text": "Elemental Mastery (4)",
+                      "items": [
+                        {
+                          "text": "Decreased Intelligence buff scaling from 1 per level to 0.5 per level"
+                        },
+                        {
+                          "text": "Increased Cooldown from 15s to 20s"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Eclipse (1a)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 14s to 12s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Radiate (2a)",
+                  "items": [
+                    {
+                      "text": "Increased Damage Per Tick and Intelligence Scaling from 4/8/12/16/20 + 4% to 5/10/15/20/25 + 5%",
+                      "items": [
+                        {
+                          "text": "This is the burn DoT damage, not the ticking channel damage"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Dragonfire (2b)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 19/18.5/18/17.5/17 to 16s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Aladdin Nerf",
+              "items": [
+                {
+                  "text": "Kufic Invocation (1)",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown from 11s to 13s."
+                    },
+                    {
+                      "text": "Increased Mana Cost from 65/70/75/80/85 to 85 at all ranks."
+                    },
+                    {
+                      "text": "Decreased Retuning Small damage from 40/60/80/100/120 to 30/50/70/90/110."
+                    },
+                    {
+                      "text": "Decreased Returning Large damage from 70/120/170/220/270 to 50/100/150/200/250."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Awiix Nerf",
+              "items": [
+                {
+                  "text": "Feather Step",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown from 8 to 9s."
+                    }
+                  ]
+                },
+                {
+                  "text": "Moonlight Charge",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown from 12s to 14/13.5/13/12.5/12."
+                    }
+                  ]
+                },
+                {
+                  "text": "Gravity Surge",
+                  "items": [
+                    {
+                      "text": "Decreased Base Damage from 180/230/280/330/380 to 170/215/260/305/350."
+                    }
+                  ]
+                },
+                {
+                  "text": "Decreased Strength Scaling from 75% to 65%."
+                }
+              ]
+            },
+            {
+              "text": "Cabrakan Nerf",
+              "items": [
+                {
+                  "text": "Refraction Shield (2)",
+                  "items": [
+                    {
+                      "text": "Decreased Damage from 70/120/170/220/270 to 50/105/160/215/270",
+                      "items": [
+                        {
+                          "text": "This affects both normal and Enhanced Refraction Shield"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Hades Nerf",
+              "items": [
+                {
+                  "text": "Devour Souls (3)",
+                  "items": [
+                    {
+                      "text": "Decreased Heal from 20/35/50/65/80 to 10/25/40/55/70"
+                    }
+                  ]
+                },
+                {
+                  "text": "Pillar of Agony (4)",
+                  "items": [
+                    {
+                      "text": "Decreased Protections gained while channeling from 50/65/80/95/110 to 30/50/70/90/110"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Sobek Nerf",
+              "items": [
+                {
+                  "text": "Tail Whip (2)",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown from 12s to 13s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Sickening Strike (3)",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown from 12s to 13s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Sol Nerf",
+              "items": [
+                {
+                  "text": "Aspect of Conflagration",
+                  "items": [
+                    {
+                      "text": "Disapparate (3)",
+                      "items": [
+                        {
+                          "text": "Decreased Damage and Intelligence Scaling from 90/130/170/210/250 + 60% to 80/120/160/200/240 + 50%"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Anti-Heal Items",
+              "items": [
+                {
+                  "text": "Ruinous Ankh",
+                  "items": [
+                    {
+                      "text": "Shifted Passive",
+                      "items": [
+                        {
+                          "text": "Passive: Enemies within 4m have 40% reduced Healing. The anti-heal effect is increased by up to +50% at close range and decreases by up to -50% at maximum range. Item Anti-heal effects stack to a cap of 75%."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Divine Ruin",
+                  "items": [
+                    {
+                      "text": "Decreased Intelligence from 105 to 85"
+                    },
+                    {
+                      "text": "Added new passive effect",
+                      "items": [
+                        {
+                          "text": "Passive: Enemy gods hit by your basic attacks or abilities have 50% reduced healing for 6s and trigger a chain lightning, damaging the target and up to 4 nearby enemies for 40 damage + 7.5% of your Intelligence. This can only occur once every 20 seconds. Item Anti-heal effects stack to a cap of 75%."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Brawlers Ruin",
+                  "items": [
+                    {
+                      "text": "Decreased Strength from 65 to 50"
+                    },
+                    {
+                      "text": "Added new passive effect",
+                      "items": [
+                        {
+                          "text": "Passive: Enemy gods hit by your basic attacks or abilities have 50% reduced healing for 6s. Item Anti-heal effects stack to a cap of 75%."
+                        },
+                        {
+                          "text": "Getting a kill or assist on an enemy god creates a field around you that lasts 6s, providing allies within it 5 + 1 Per Level Strength and Intelligence."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "New Item - Contagion - Releasing May 19",
+                  "items": [
+                    {
+                      "text": "2150 gold"
+                    },
+                    {
+                      "text": "+400 Health"
+                    },
+                    {
+                      "text": "+6 Health Regen",
+                      "items": [
+                        {
+                          "text": "Active: Target a location causing any enemy gods within to be debuffed with 75% reduced Healing for 6s. If an enemy uses an ability while afflicted, your cooldowns are reduced by 0.25s. Cooldown: 45s."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Builds from Ruinous Venom + Olmec Blue + Engraved Guard + 850g"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Other New Items",
+              "items": [
+                {
+                  "text": "Dwarven Plate - Releasing May 19",
+                  "items": [
+                    {
+                      "text": "2800g"
+                    },
+                    {
+                      "text": "+30 Physical Protection"
+                    },
+                    {
+                      "text": "+30 Magical Protection",
+                      "items": [
+                        {
+                          "text": "Passive : Gain Additional Physical Protection equal to 12.5% of your Physical Protections from Items. Gain Additional Magical Protection equal to 25% of your Magical Protection from Items."
+                        },
+                        {
+                          "text": "Active : Swap the % Bonuses. 30s cooldown."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Built from Engraved Guard and Stalwart Sigil + 850g"
+                    }
+                  ]
+                },
+                {
+                  "text": "Freya's Tears - Releasing May 19",
+                  "items": [
+                    {
+                      "text": "2600g"
+                    },
+                    {
+                      "text": "+20 Physical Protection"
+                    },
+                    {
+                      "text": "+25 Magical Protections"
+                    },
+                    {
+                      "text": "+20 Cooldown Rate",
+                      "items": [
+                        {
+                          "text": "Passive : Each time you lose 25% Health, you gain a bonus 15% Protections. This lasts for 5s and can stack twice."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Builds from Sage’s Ring and Captain’s Ring +1000g"
+                    }
+                  ]
+                },
+                {
+                  "text": "Erosion - Releasing May 26",
+                  "items": [
+                    {
+                      "text": "2400g"
+                    },
+                    {
+                      "text": "+250 Health"
+                    },
+                    {
+                      "text": "+25 Physical Protection"
+                    },
+                    {
+                      "text": "+15 Magical Protection",
+                      "items": [
+                        {
+                          "text": "Passive: Any Shields applied on enemy gods within 11.2m will be reduced by 30%. Whenever this effect occurs you gain 10% of your Protections for 6s."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Builds from Medal of Defense + Engraved Guard + 750g"
+                    }
+                  ]
+                },
+                {
+                  "text": "Draconic Scale - Releasing May 26",
+                  "items": [
+                    {
+                      "text": "2700g"
+                    },
+                    {
+                      "text": "+300 Health"
+                    },
+                    {
+                      "text": "+20 Physical Protection"
+                    },
+                    {
+                      "text": "+20 Magical Protection",
+                      "items": [
+                        {
+                          "text": "Passive : Each time you take damage, gain 1 + 2% Bonus Protections against that damage type. Stacks last for 1.5s with a maximum of 10 stacks. Stacks decay by 1 rather than being fully removed."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Builds from Veve Charm and Stalwart Sigil + 750g"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "General Item Balance",
+              "items": [
+                {
+                  "text": "Amanita Charm",
+                  "items": [
+                    {
+                      "text": "Increased tick frequency from 1s to 0.5s"
+                    },
+                    {
+                      "text": "Decreased Heal from 3.5% to 2%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Berserkers Shield",
+                  "items": [
+                    {
+                      "text": "Increased passive Protections from items from 50% to 65%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Eye of Providence",
+                  "items": [
+                    {
+                      "text": "Increased Health from 200 to 250"
+                    }
+                  ]
+                },
+                {
+                  "text": "Hastened Fatalis",
+                  "items": [
+                    {
+                      "text": "Increased Cost from 2550 to 2650"
+                    },
+                    {
+                      "text": "Increased Attack Speed from 20% to 25%"
+                    },
+                    {
+                      "text": "Increased Max stacks from 3 to 4",
+                      "items": [
+                        {
+                          "text": "Melee basic attacks provide 2 stacks while Ranged only provide 1 per hit"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Recipe Change",
+                      "items": [
+                        {
+                          "text": "Added Hunter’s Bow as a T2 component"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Hussars Wing",
+                  "items": [
+                    {
+                      "text": "Decreased Cost from 3700 to 3500"
+                    },
+                    {
+                      "text": "Increased Health from 400 to 500"
+                    }
+                  ]
+                },
+                {
+                  "text": "Mystical Mail",
+                  "items": [
+                    {
+                      "text": "Passive effect added",
+                      "items": [
+                        {
+                          "text": "Passive: Enemies within 4m are dealt 15 + 1 per level Magical Damage per second. Damage increases by up to +50% at close range and decreases by up to -50% at maximum range."
+                        },
+                        {
+                          "text": "Enemies take the full amount as bonus damage if they have a Health Shield."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Pharoah’s Curse",
+                  "items": [
+                    {
+                      "text": "Increased Attack Speed Slow from 20% to 40%",
+                      "items": [
+                        {
+                          "text": "Slow debuff remains 20%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Decreased Duration from 6s to 4s"
+                    },
+                    {
+                      "text": "Decreased Cooldown from 60s to 45s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Spirit Robe",
+                  "items": [
+                    {
+                      "text": "Increased Physical Protection from 20 to 25"
+                    },
+                    {
+                      "text": "Increased Physical Protection from 20 to 25"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Quality of Life",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Fixed Joust Vs AI only creating team comps with melee Gods"
+                }
+              ]
+            },
+            {
+              "text": "Items",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Prophetic Cloak",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where the 6% Mitigation for being evolved was not working."
+                    }
+                  ]
+                },
+                {
+                  "text": "Blood-soaked Shroud",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where this was not healing for twice the amount on god hits."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 5/23/25",
+      "anchor": "Hotfix_5/23/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where Bots were not loading into VS AI matches"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Item Balance",
+          "anchor": "Item_Balance_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Soul Reaver",
+                  "items": [
+                    {
+                      "text": "Decreased Scaling from difference in Max HP from 10% to 8%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Sun Beam Bow",
+                  "items": [
+                    {
+                      "text": "Decreased damage dealt to Structures and Bosses from 50% to 25%"
+                    },
+                    {
+                      "text": "This item now deals the reduced damage to the enemy Titan as well"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "God Balance",
+          "anchor": "God_Balance_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Agni (Nerf)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Aspect of Combustion",
+                      "items": [
+                        {
+                          "text": "Rain Fire (4)",
+                          "items": [
+                            {
+                              "text": "Decreased Damage from 135/175/215/255/295 to 120/150/180/210/240"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Rain Fire (4)",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 18s to 20s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Princess Bari (Shift)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Mystic Surge (P)",
+                      "items": [
+                        {
+                          "text": "Increased Intelligence from 10/20/30/40/50/70 to 15/30/45/60/75/90."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Sacred Bell (1)",
+                      "items": [
+                        {
+                          "text": "Decreased Lob Strength Scaling from 65% to 60%."
+                        },
+                        {
+                          "text": "Decreased Roll Strength Scaling from 65% to 60%."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Warding Gust (2)",
+                      "items": [
+                        {
+                          "text": "Decreased Strength Scaling from 55% to 50%."
+                        },
+                        {
+                          "text": "Increased Intelligence Scaling from 45% to 60%."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Spirit’s Cadence (4)",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 100s to 110s."
+                        },
+                        {
+                          "text": "Decreased the slow from 15% per stack to 7.5% per stack."
+                        },
+                        {
+                          "text": "Decreased Mystic Surge Duration from 10s to 7s."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Guan Yu",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Aspect Nerf",
+                      "items": [
+                        {
+                          "text": "Conviction (1)",
+                          "items": [
+                            {
+                              "text": "Decreased Bonus Heal Per Tick Base from 11/22/33/44/55 to 8/16/24/32/40."
+                            },
+                            {
+                              "text": "Decreased Bonus Heal Per Tick Int Scaling from 4% to 3%."
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Taolu Assault (3)",
+                          "items": [
+                            {
+                              "text": "Decreased Intelligence Scaling from 8.75% to 7.5%."
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Non Aspect Shift",
+                      "items": [
+                        {
+                          "text": "Conviction (1)",
+                          "items": [
+                            {
+                              "text": "Decreased Heal Int Scaling from 20% to 12.5%."
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Taolu Assault (3)",
+                          "items": [
+                            {
+                              "text": "Increased Base Damage from 14/23/32/41/50 to 14/25/36/47/58."
+                            },
+                            {
+                              "text": "Increased Strength Scaling from 20% to 22.5%."
+                            },
+                            {
+                              "text": "Decreased Intelligence Scaling from 17.5% to 15%."
+                            },
+                            {
+                              "text": "Decreased Protection Steal Intelligence Scaling from 1.7% to 1.5%."
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Kali (Nerf)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Nimble Strike (1)",
+                      "items": [
+                        {
+                          "text": "Decreased Stacks of Rupture applied from 3 to 2."
+                        },
+                        {
+                          "text": "Increased Cooldown from 12s to 13s."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Incense (3)",
+                      "items": [
+                        {
+                          "text": "Decreased Base Damage Strength Scaling from 20% to 15%."
+                        },
+                        {
+                          "text": "Decreased Base Damage Intelligence Scaling from 40% to 30%."
+                        },
+                        {
+                          "text": "Decreased Bonus Damage Strength Scaling from 12.5% to 10%."
+                        },
+                        {
+                          "text": "Decreased Bonus Damage Intelligence Scaling from 17.5% to 12.5%."
+                        },
+                        {
+                          "text": "Increased Cooldown from 14s to 15s."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Pele (Nerf)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Eruption (2)",
+                      "items": [
+                        {
+                          "text": "Decreased Inner Strength Scaling from 80% to 70% and Outer Strength Scaling from 60% to 50%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Magma Rush (3)",
+                      "items": [
+                        {
+                          "text": "Decreased Amped Damage Scaling from 20% to 15%."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

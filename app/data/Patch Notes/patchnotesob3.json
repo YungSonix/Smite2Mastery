@@ -1,0 +1,1566 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_3",
+    "title": "SMITE 2 Open Beta 3",
+    "infoboxTitle": "OB3 - SMITE 2 Open Beta 3",
+    "releaseDate": "February 10, 2025",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_2",
+      "next": "SMITE_2_Open_Beta_4"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 3,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Cross-Gen and Classic Skins",
+      "anchor": "New_Cross-Gen_and_Classic_Skins",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Lord Slashington Fenrir"
+            },
+            {
+              "text": "Frosted Fury Thor"
+            },
+            {
+              "text": "Dark Supreme Nu Wa"
+            },
+            {
+              "text": "Nurse Nightmare Izanami"
+            },
+            {
+              "text": "Bunny Babe Nu Wa"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Wandering Market",
+      "anchor": "Wandering_Market",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "The Wandering Market has arrived, kicking off the ever-growing Collections of Skins, cosmetics, and rewards."
+            },
+            {
+              "text": "Players earn Wandering Market XP through gameplay to unlock Coins and spend them on rewards throughout rotating Collections. Each Collection features multiple reward pages, each with one free page for all players and more pages with more rewards for Premium players. Coins can be saved and spent across any Collection, with no rush—progress at your own pace! With new Collections arriving over time, there’s always something fresh to discover."
+            },
+            {
+              "text": "Unleash your inner deity with the Rise of the Gods Collection, the first Wandering Market Collection and the ultimate introduction to the boundless realms of SMITE 2!"
+            },
+            {
+              "text": "From the deadly allure of Vixen Nemesis to the bone-chilling might of Lichborne Mordred, the fiery kick of Hot Stuff Poseidon, and the spellbinding charm of Nova Hex Amaterasu, there’s something for everyone."
+            },
+            {
+              "text": "Learn more about the Wandering Market system here."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Gameplay",
+      "anchor": "Gameplay",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Titans",
+              "items": [
+                {
+                  "text": "(SMITE 1 Parity) Titans now have similar targeting rules as Towers & Phoenixes",
+                  "items": [
+                    {
+                      "text": "Prioritize targeting Minions over Gods"
+                    },
+                    {
+                      "text": "Will maintain their target until that target dies, leaves its range, or becomes Untargetable",
+                      "items": [
+                        {
+                          "text": "Exception: If an enemy God within its range damaged a friendly God, and the Titan is not currently targeting a God, it will switch target to the hostile enemy God"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Reduced overall size of their AoE cleave vs Minions"
+                },
+                {
+                  "text": "Will no longer mysteriously gravitate towards playermade walls such as Anhur Pillar"
+                }
+              ]
+            },
+            {
+              "text": "Towers & Phoenixes",
+              "items": [
+                {
+                  "text": "(SMITE 1 Parity) Enemy targets are now considered in targeting range only when the center of the target character has crossed into the Tower's radius.",
+                  "items": [
+                    {
+                      "text": "This behavior now matches SMITE 1 and essentially makes Towers' aggro range the same for all characters, regardless of their size"
+                    },
+                    {
+                      "text": "(Previously, it was checking if the edge of the character had crossed into range, so smaller characters like Cupid could stand closer to Tower without being targeted)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Ranged Minions",
+              "items": [
+                {
+                  "text": "Archers will now attempt to move closer to the enemy Titan when attacking it"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "General",
+      "anchor": "General",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Added an unequip button to God loadout"
+            },
+            {
+              "text": "Added a “Wallet” widget to the profile screen so players can more easily see how much of each in-game currency they own"
+            },
+            {
+              "text": "Can now enter practice with selected skins from the God Collections screen"
+            },
+            {
+              "text": "Added contextual ping through VGS and minimap (hold Alt on KBM, hold VGS button on controller)."
+            },
+            {
+              "text": "Raised Ranked level requirement to 10"
+            },
+            {
+              "text": "Changed Conquest pause duration from 180s -> 60s",
+              "items": [
+                {
+                  "text": "Note: Pause duration is indefinite in Custom Conquest"
+                }
+              ]
+            },
+            {
+              "text": "Added \"Your Turn To Pick\" audio and alt-tabbed popup image in Ranked Conquest draft lobby"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Game Modes",
+      "anchor": "Game_Modes",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Conquest"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Jungle Bosses",
+              "items": [
+                {
+                  "text": "The Fire Giant, Gold Fury, Pyromancer, and Naga have had their max level increased from 30 to 40",
+                  "items": [
+                    {
+                      "text": "This will give them the capability to scale their stats further into the late game and open up opportunities for us to start adjusting their TTK"
+                    }
+                  ]
+                },
+                {
+                  "text": "Increased the visibility range of Gold Fury and Fire Giant"
+                }
+              ]
+            },
+            {
+              "text": "Jungle Camps",
+              "items": [
+                {
+                  "text": "Fixed big harpies staying at one level higher than normal throughout the match",
+                  "items": [
+                    {
+                      "text": "For example, if all jungle camps were meant to be level 2 the big harpies were at level 3"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Joust & Duel"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Lost Knight",
+              "items": [
+                {
+                  "text": "Increased duration of the objective debuff from 90s to 120s"
+                }
+              ]
+            },
+            {
+              "text": "Phoenix",
+              "items": [
+                {
+                  "text": "Decreased Physical Power from 250 to 225"
+                },
+                {
+                  "text": "Decreased Penetration from 40% to 30%"
+                }
+              ]
+            },
+            {
+              "text": "(Duel) Disabled Lifebinder"
+            },
+            {
+              "text": "(Duel) Titan",
+              "items": [
+                {
+                  "text": "Decreased base Physical Power by 15% in this mode"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Arena"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Smoothed out collision around the base walls"
+            },
+            {
+              "text": "Improved camera collision behind the bases",
+              "items": [
+                {
+                  "text": "Previously players would start the match with their cameras pushed up into their characters"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Assault"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Disabled Amanita Charm"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Gods",
+      "anchor": "Gods",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "New:",
+          "anchor": "New:",
+          "level": 3,
+          "content": []
+        },
+        {
+          "title": "Buffs",
+          "anchor": "Buffs",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Amaterasu",
+                  "items": [
+                    {
+                      "text": "General",
+                      "items": [
+                        {
+                          "text": "Increased Base Attack Speed from 0.97 to 1."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Divine Presence",
+                      "items": [
+                        {
+                          "text": "Increased Attack Speed Buff from 10/12/14/16/18% to 10/15/20/25/30%."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Heavenly Reflection",
+                      "items": [
+                        {
+                          "text": "Increased Damage Reduction Scaling from 5% INT to 7% INT."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Anhur",
+                  "items": [
+                    {
+                      "text": "Impale",
+                      "items": [
+                        {
+                          "text": "Increased Damage from 105/170/235/300/365 + 80% STR to 125/185/245/305/365 + 85% STR."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Desert Fury",
+                      "items": [
+                        {
+                          "text": "Increased Final Damage from 110/155/200/245/290 + 100% STR to 125/175/225/275/325 + 115% STR."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Cabrakan",
+                  "items": [
+                    {
+                      "text": "Seismic Crush",
+                      "items": [
+                        {
+                          "text": "Increased Damage Scaling from 60% STR + 40% INT to 75% STR + 45% INT."
+                        },
+                        {
+                          "text": "Decreased Cooldown from 14s at all ranks to 14/13.5/13/12.5/12s."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Refraction Shield",
+                      "items": [
+                        {
+                          "text": "Increased Damage Scaling from 50% INT to 55% INT."
+                        },
+                        {
+                          "text": "Increased Enhanced Damage Scaling from 70% STR to 75% STR."
+                        },
+                        {
+                          "text": "Increased Protections from 3/4/5/6/7 to 5/6/7/8/9."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Tremors",
+                      "items": [
+                        {
+                          "text": "Increased Damage Scaling from 35% INT to 40% INT."
+                        },
+                        {
+                          "text": "Increased Refire Damage Scaling from 50% STR to 55% STR."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Tectonic Shift",
+                      "items": [
+                        {
+                          "text": "Increased Damage Scaling from 80% STR + 60% INT to 95% STR + 65% INT."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Shifts",
+          "anchor": "Shifts",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Zeus",
+                  "items": [
+                    {
+                      "text": "Overcharge",
+                      "items": [
+                        {
+                          "text": "Decreased Damage Increase from 20% per stack to 15% per stack."
+                        },
+                        {
+                          "text": "Chain Lightning"
+                        },
+                        {
+                          "text": "Decreased Cooldown from 13s to 12s."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Thunderclap",
+                      "items": [
+                        {
+                          "text": "Decreased Attack Speed from 25/27.5/30/32.5/35% to 20/22.5/25/27.5/30%."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Detonate Charge",
+                      "items": [
+                        {
+                          "text": "Decreased Damage from 50/75/100/125/150 to 40/65/90/115/140."
+                        },
+                        {
+                          "text": "Increased Damage Scaling from 25% INT to 30% INT."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Lightning Storm",
+                      "items": [
+                        {
+                          "text": "Increased Damage Scaling per tick from 55% INT to 65% INT."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Vulcan",
+                  "items": [
+                    {
+                      "text": "Thermal Mod",
+                      "items": [
+                        {
+                          "text": "Increased Damage from 20 + 10% INT to 30 + 20% INT."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Masterwork Mod",
+                      "items": [
+                        {
+                          "text": "Decreased Protections from 10/20/30/40/50 to 10/15/20/25/30."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Earthshaker",
+                      "items": [
+                        {
+                          "text": "Increased Damage Scaling from 110% INT to 120% INT."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Aspect of Fortification",
+                      "items": [
+                        {
+                          "text": "Decreased Protections per level from 2 to 1.5."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Nerfs",
+          "anchor": "Nerfs",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Medusa",
+                  "items": [
+                    {
+                      "text": "Acid Spray",
+                      "items": [
+                        {
+                          "text": "Decreased Damage from 100/155/210/265/320 + 60% STR + 75% INT to 90/145/200/255/310 + 50% STR + 70% INT."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Petrify",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 100s to 110s."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Aspects",
+      "anchor": "Aspects",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Rama: Aspect of Precision",
+              "items": [
+                {
+                  "text": "Astral Strike is always active, but you no longer regen Astral Arrows. When out of Astral Arrows, reload. While Infinite Arrows is active, Astral Arrows are not consumed."
+                }
+              ]
+            },
+            {
+              "text": "Achilles: Aspect of Prowess",
+              "items": [
+                {
+                  "text": "Combat Dodge can now be recast after striking a Jungle Monster or Boss, with Spear Strike gaining increased Scaling when forgoing your Armor. Radiant Glory no longer grants increased Protections or Crowd Control Reduction."
+                }
+              ]
+            },
+            {
+              "text": "Sol: Aspect of Conflagration",
+              "items": [
+                {
+                  "text": "Sol's Heat provides Intelligence and Ability Damage, but no longer provides Strength, Attack Speed, and Basic Attack Damage. Sol erupts and deals damage around her when becomes immune in Disapparate."
+                }
+              ]
+            },
+            {
+              "text": "Amaterasu: Aspect Of Valor",
+              "items": [
+                {
+                  "text": "Divine Presence now defaults to Red Buff, and when activated you gain Movement Speed, Haste, and Basic Attack Power in addition to the original effects. It no longer alternates to Gold Buff, or Heals you when activated."
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Items",
+      "anchor": "Items",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "NEW",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Mantle of Discord",
+                  "items": [
+                    {
+                      "text": "2600 Gold"
+                    },
+                    {
+                      "text": "+35 Physical Protection"
+                    },
+                    {
+                      "text": "+35 Magical Protection"
+                    },
+                    {
+                      "text": "+10 Cooldown Rate"
+                    },
+                    {
+                      "text": "Passive: If you take damage below 40% health, you unleash a shockwave that Stuns all enemies within a range of 3.2m for 1s and you become CC Immune for 1s. Cooldown 110s."
+                    }
+                  ]
+                },
+                {
+                  "text": "Tekko Kage and Gem of Focus Rework",
+                  "items": [
+                    {
+                      "text": "These items no longer require Mana, allowing Thanatos and Yemoja to use them."
+                    },
+                    {
+                      "text": "Abilities with extremely low cooldowns, such as Pele's 3 and Ullr's 4, will prevent item procs on the ability side."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Buffs",
+              "items": [
+                {
+                  "text": "Divine Ruin",
+                  "items": [
+                    {
+                      "text": "Increased Intelligence from 80 to 100"
+                    }
+                  ]
+                },
+                {
+                  "text": "Chronos Pendant",
+                  "items": [
+                    {
+                      "text": "Increased Intelligence from 50 to 65"
+                    }
+                  ]
+                },
+                {
+                  "text": "Soul Reaver (Buff & Rework)",
+                  "items": [
+                    {
+                      "text": "Increased Intelligence from 50 to 70"
+                    },
+                    {
+                      "text": "Decreased Cost from 3000 Gold to 2800 Gold."
+                    },
+                    {
+                      "text": "Passive now deals % Max HP damage instead of % Current HP"
+                    },
+                    {
+                      "text": "Minimum damage has been removed"
+                    },
+                    {
+                      "text": "Intelligence scaling now applies to the passive effect"
+                    },
+                    {
+                      "text": "Passive: Your abilities deal bonus magical damage over time, equal to 1% + 0.5% of your Intelligence per tick. This effect ticks four times over two seconds. Hitting the same target refreshes the damage over time."
+                    }
+                  ]
+                },
+                {
+                  "text": "Jade Scepter",
+                  "items": [
+                    {
+                      "text": "Increased Cost from 2550 Gold to 2850 Gold"
+                    },
+                    {
+                      "text": "Increased Intelligence from 80 to 120"
+                    },
+                    {
+                      "text": "Decreased Health from 200 to 150"
+                    }
+                  ]
+                },
+                {
+                  "text": "Leather Cowl",
+                  "items": [
+                    {
+                      "text": "Removed Attack Speed"
+                    },
+                    {
+                      "text": "Added 5% Lifesteal"
+                    },
+                    {
+                      "text": "Increased Passive Attack Speed buff from 10% to 15%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Hunter’s Cowl",
+                  "items": [
+                    {
+                      "text": "Increased Strength from 35 to 45"
+                    },
+                    {
+                      "text": "Removed Attack Speed"
+                    },
+                    {
+                      "text": "Added 5% Lifesteal"
+                    },
+                    {
+                      "text": "Increased Attack Speed Aura from 20% to 30%"
+                    },
+                    {
+                      "text": "Added 10% Lifesteal Aura"
+                    }
+                  ]
+                },
+                {
+                  "text": "Conduit Gem",
+                  "items": [
+                    {
+                      "text": "Increased Intelligence from 25 to 30"
+                    }
+                  ]
+                },
+                {
+                  "text": "Sands of Time",
+                  "items": [
+                    {
+                      "text": "Increased Intelligence from 20 to 25"
+                    }
+                  ]
+                },
+                {
+                  "text": "Spear of Desolation",
+                  "items": [
+                    {
+                      "text": "Now builds from Evil Eye + Ring of Dispel instead of Evil Eye + Killing Stone"
+                    },
+                    {
+                      "text": "Added 10 Cooldown Rate"
+                    }
+                  ]
+                },
+                {
+                  "text": "Staff of Myrddin",
+                  "items": [
+                    {
+                      "text": "Decreased Active cooldown from 150 seconds to 120 seconds"
+                    }
+                  ]
+                },
+                {
+                  "text": "Glorious Pridwen",
+                  "items": [
+                    {
+                      "text": "Increased Physical Protection from 25 to 35"
+                    },
+                    {
+                      "text": "Increased Magical Protection from 25 to 35"
+                    },
+                    {
+                      "text": "Increased Shield from 80% to 100% of your Protections"
+                    }
+                  ]
+                },
+                {
+                  "text": "Spirit Robe",
+                  "items": [
+                    {
+                      "text": "Increased Physical Protection from 30 to 40"
+                    },
+                    {
+                      "text": "Increased Magical Protection from 30 to 40"
+                    },
+                    {
+                      "text": "New effect: Passive now also grants 30% Crowd Control Reduction for 6 seconds."
+                    }
+                  ]
+                },
+                {
+                  "text": "Mystical Mail",
+                  "items": [
+                    {
+                      "text": "Decreased Cost from 2650 Gold to 2500 Gold"
+                    }
+                  ]
+                },
+                {
+                  "text": "Shield Splitter",
+                  "items": [
+                    {
+                      "text": "Decreased Cost from 2600 Gold to 2450 Gold"
+                    },
+                    {
+                      "text": "Increased Projectile speed by approximately 50%"
+                    },
+                    {
+                      "text": "Now passes through and damages all targets hit, with shield stacking per enemy shield reduced"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Shifts",
+              "items": [
+                {
+                  "text": "Gilded Arrow",
+                  "items": [
+                    {
+                      "text": "Decreased Basic Attack Power from 20 to 15"
+                    },
+                    {
+                      "text": "Added 10% Attack Speed"
+                    },
+                    {
+                      "text": "Decreased Passive Gold Bonus from 4 to 3"
+                    },
+                    {
+                      "text": "Increased Mark cooldown from 8 seconds to 10 seconds"
+                    },
+                    {
+                      "text": "Decreased Passive Attack Speed from 25% to 15%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Sharpshooter Arrow",
+                  "items": [
+                    {
+                      "text": "Decreased Basic Attack Power from 50 to 40"
+                    },
+                    {
+                      "text": "Increased Attack Speed from 10% to 15%"
+                    },
+                    {
+                      "text": "Gold gains effect now applies only to gold earned from kills and assists"
+                    },
+                    {
+                      "text": "Increased Basic Attack Damage now applies only when hitting enemy gods"
+                    },
+                    {
+                      "text": "Decreased Basic Attack Damage Bonus from 15% to 10%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Nerfs",
+              "items": [
+                {
+                  "text": "Lifebinder",
+                  "items": [
+                    {
+                      "text": "Decreased Damage from the projectile from 125 + 5 per level to 110 + 5 per level"
+                    },
+                    {
+                      "text": "Decreased Heal on consuming the mark from 130 + 5 per level to 110 + 5 per level"
+                    }
+                  ]
+                },
+                {
+                  "text": "Hussar’s Wings",
+                  "items": [
+                    {
+                      "text": "Increased Cost from 3000 Gold to 3700 Gold"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Ward Adjustments",
+              "items": [
+                {
+                  "text": "During testing, Ward, Sentry Ward, Cyclops Ward, and Eye of Providence were found to have inconsistent reveal radii and targeting sizes. To ensure these match the intended design from SMITE, the following adjustments have been made:",
+                  "items": [
+                    {
+                      "text": "Reveal Radius reduced from 10.4m to 7.2m"
+                    },
+                    {
+                      "text": "Increased Targeter Radius from 5.2m to 7.2m"
+                    },
+                    {
+                      "text": "All descriptions have been updated to use \"Radius\" instead of \"Area\" for accuracy"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Gods",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Jing Wei",
+                  "items": [
+                    {
+                      "text": "Fixed Explosive Bolts not being able to hit Deployables (Wards, etc)"
+                    }
+                  ]
+                },
+                {
+                  "text": "Izanami",
+                  "items": [
+                    {
+                      "text": "Fixed Sickle Storm Attacks not being able to hit Deployables (Wards, etc)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "UI",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Fixed an issue where the mouse cursor would always reset back to center when opening and closing in-game menus like the Item Store"
+                }
+              ]
+            },
+            {
+              "text": "Items",
+              "bold": true,
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where passive items that have an Internal Cooldown would go on cooldown upon leaving the fountain for the first time."
+                    },
+                    {
+                      "text": "Added a new icon for Basic Attack Power in Item tooltips, such as Gilded Arrow and Sharpshooter Arrow."
+                    },
+                    {
+                      "text": "Updated icon art for Jade Scepter, Musashi's Dual Swords, and Scepter of Dominion"
+                    }
+                  ]
+                },
+                {
+                  "text": "Aegis of Acceleration",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where this item’s self-silence and disarm duration could be reduced by Diminishing Returns, allowing the player to take actions earlier than intended."
+                    }
+                  ]
+                },
+                {
+                  "text": "Runic Bomb",
+                  "items": [
+                    {
+                      "text": "Fixed an issue that was causing Runic Bomb to not be damageable when it was placed."
+                    }
+                  ]
+                },
+                {
+                  "text": "Helm of Darkness",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where this item could be used during Channeled abilities, such as Geb’s Rollout and Mordred’s Charge Ultimate."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Patch 2/11/25",
+      "anchor": "Patch_2/11/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "General",
+          "anchor": "General_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed gamemode disabled items still appearing in builds into list"
+                },
+                {
+                  "text": "Fixed a gamepad issue in the Item Store where entering the Consumables window can cause a loss of navigation causing the player to be stuck in the Consumables row"
+                },
+                {
+                  "text": "Fixed missing Passive description for Hecate"
+                },
+                {
+                  "text": "Fixed low resolution Wandering Market Coin acquisition texture"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Gods",
+          "anchor": "Gods_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Amaterasu",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Aspect of Valor",
+                      "items": [
+                        {
+                          "text": "Decreased Bonus Movement Speed from 20/22.5/25/27.5/30 to 15/17.5/20/22.5/25%."
+                        },
+                        {
+                          "text": "Decreased Basic Attack Power from 20/35/50/65/80 to 15/27.5/40/52.5/65"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Heavenly Reflection",
+                      "items": [
+                        {
+                          "text": "Reverted the Damage Reduction Scaling. (7% to 5%)"
+                        },
+                        {
+                          "text": "Partially reverted the attack speed buff from 10/15/20/25/30% to 10/14/18/22/26%"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Nu Wa",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Mysterious Fog",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 10s to 12"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Clay Soldiers",
+                      "items": [
+                        {
+                          "text": "Decreased Strength of Earth from 8/11/14/17/20 pen to 4/6/8/10/12"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Shining Metal",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 9s to 10s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Hun Batz",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Aspect of Disruption",
+                      "items": [
+                        {
+                          "text": "Increased Overhand Smash cooldown by 4s when Aspect is selected"
+                        },
+                        {
+                          "text": "Decreased bonus damage from Passive 1.2x to 1.1x."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Rama",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Aspect of Precision",
+                      "items": [
+                        {
+                          "text": "Fixed an issue where using the Aspect wasn't allowing him to use stealth grass in the state"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Rolling Assault",
+                      "items": [
+                        {
+                          "text": "Fixed when dashing backwards while Rooted, he will tween forward"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Sol",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Unstable Manifestation (Passive)",
+                      "items": [
+                        {
+                          "text": "Increased Strength gain from 10% to 15%."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Aspect of Conflagration",
+                      "items": [
+                        {
+                          "text": "Decreased Passive Intelligence gain from 40% to 35%. Also fixed an issue where this multiplied together with Rod Of Tahuti. (IE: With aspect and Rod of Tahuti you gain 1.6x Intelligence. Was previously 1.68x)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The Morrigan",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Fixed an issue with being unable to select gods. She will be turned back on as soon as Consoles receive this patch. ETA around 8pm ET."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 2/12/25",
+      "anchor": "Patch_2/12/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where dying during Rama Ult caused forced restricted camera pitch"
+                },
+                {
+                  "text": "Fixed an issue where Mantle of Discord's internal cooldown was not being properly reset as intended"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 2/13/25",
+      "anchor": "Patch_2/13/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_3",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Introduced a fix that should address VGS and Ability lag or feeling like you're soft locked momentarily while playing"
+                },
+                {
+                  "text": "Fixed an issue where Rama camera would get in a locked state after dying in Ultimate"
+                },
+                {
+                  "text": "Minimap should no longer show on top of the Store"
+                },
+                {
+                  "text": "Fixed an issue with Fenrir Lord Slashington not playing VO"
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Item Store",
+                  "items": [
+                    {
+                      "text": "Price will no longer reset in All items view if you toggle filters on/off while having components in inventory"
+                    },
+                    {
+                      "text": "Fixed and issue where filters sometimes lost items in store"
+                    }
+                  ]
+                },
+                {
+                  "text": "Improved the \"Turn to Pick\" sound to be similar to the \"Joining Match\" sound"
+                },
+                {
+                  "text": "Added additional Localization"
+                },
+                {
+                  "text": "Fixed an issue where a Tower would stop targeting minions"
+                },
+                {
+                  "text": "Fixed an issue where Duel draft rules were not working as intended. This mode is now available."
+                },
+                {
+                  "text": "Fixed an issue where god loadout equips would not cycle to other gods correctly"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Balance",
+          "anchor": "Balance",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Runic Bomb, Crystalline Egg, and Obsidian Dagger will no longer spawn before 10 minutes."
+                },
+                {
+                  "text": "Soul Reaver",
+                  "items": [
+                    {
+                      "text": "Soul Reaver now scales at 0.25% Int from 0.5%"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Patch 2/14/25",
+      "anchor": "Patch_2/14/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed an issue with input lag specifically around normal cast."
+            },
+            {
+              "text": "Fixed an issue where when Rama would die to a knockback his next Ultimate would fall through the floor."
+            },
+            {
+              "text": "Fixed an issue in Role pick where it was showing 'None' or 'Solo'"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Patch 2/15/25",
+      "anchor": "Patch_2/15/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed an issue that where players could get sent to two game match lobbies"
+            },
+            {
+              "text": "Reverted a volume boost on the Your Turn to Pick notification sound to make it quieter"
+            },
+            {
+              "text": "Added a potential fix to Minimap showing on top of the store for console users. Please continue to provide us your feedback on this issue."
+            },
+            {
+              "text": "Fixed an issue where Hun Batz could teleport to incorrect spots in combat"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Patch 2/17/25",
+      "anchor": "Patch_2/17/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Achilles added."
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed Console players getting locked out of abilities when attempting to use text chat"
+            },
+            {
+              "text": "Fixed VGS popping on Release instead of on Trigger for gamepad"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Patch 2/18/25",
+      "anchor": "Patch_2/18/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Players can no longer inadvertently queue for another game when they are in an active one."
+            },
+            {
+              "text": "Added another potential fix for an issue where the item store overlay impacts the mini-map."
+            },
+            {
+              "text": "Added Gladiator Shield and Shifters Shield Into Solo Role Tabs"
+            },
+            {
+              "text": "Fixed an issue where Jump stamps were triggering the UI Red Dot"
+            },
+            {
+              "text": "Fixed an issue where Wandering Market coin balance would not display correctly after a purchase"
+            },
+            {
+              "text": "Fixed an issue where Achilles Combat Dodge/Spear Strike was getting more activations than intended on dashes. This will now reflect the ability similar to how it was in SMITE 1."
+            },
+            {
+              "text": "Lowered the respawn timers in Assault"
+            },
+            {
+              "text": "Fixed an issue where Mulan was applying the wrong type of protection modifier with Grapple"
+            },
+            {
+              "text": "Fixed an issue where Pridwin was ignoring percentage based protection buffs"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Patch 2/19/25",
+      "anchor": "Patch_2/19/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Balance changes",
+          "anchor": "Balance_changes",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Amaterasu Balance",
+                  "items": [
+                    {
+                      "text": "Aspect of Valor",
+                      "items": [
+                        {
+                          "text": "Decreased Haste amount from 25% to 12.5%"
+                        },
+                        {
+                          "text": "Decreased Buff Duration from 4s to 6s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Hun Batz Balance",
+                  "items": [
+                    {
+                      "text": "Aspect of Disruption",
+                      "items": [
+                        {
+                          "text": "Overhand Smash",
+                          "items": [
+                            {
+                              "text": "Decreased Base Damage from 70/120/170/220/270 to 50/80/110/140/170"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Fear No Evil",
+                      "items": [
+                        {
+                          "text": "Decreased Base Damage from 40 per tick to 35 per tick"
+                        },
+                        {
+                          "text": "Decreased STR Scaling from 12.5% per tick to 10% per tick"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Bug fixes",
+          "anchor": "Bug_fixes_4",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed Sol Stellar Burst immune form cancelling VGS"
+                },
+                {
+                  "text": "Fixed Achilles Shield of Achilles feeling way too fast on hit (and a slight tweak to the Combat Dodge hit timing)"
+                },
+                {
+                  "text": "Fixed Towers dropping aggro immediately after switching targets to a God that just damaged a friendly God"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Quality of life",
+          "anchor": "Quality_of_life",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Added haptic/force feedback events at the beginning of the Draft Lobby (aka \"Match Found\") and when it's your turn to pick"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfixes 2/20/25",
+      "anchor": "Hotfixes_2/20/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed an issue where the Lobby Timer in ranked can become out of sync if players minimize the client"
+            },
+            {
+              "text": "Put in a potential fix for Achilles Execute sometimes failing to execute targets"
+            },
+            {
+              "text": "Fixed an issue where God Tokens, Ascension Tokens, and Wandering Market Coins were not displayed"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfixes 2/22/25",
+      "anchor": "Hotfixes_2/22/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed an issue where Aladdin's A02 can be cancelled and trigger more hydras that intended."
+            },
+            {
+              "text": "User API - Fixed an issue where searching for a name just like yours will return yourself"
+            },
+            {
+              "text": "User API - Fixed an issue where searching for a player would cause them to appear multiple times in the results"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

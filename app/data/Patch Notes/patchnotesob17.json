@@ -1,0 +1,832 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_17",
+    "title": "SMITE 2 Open Beta 17",
+    "infoboxTitle": "OB17 - SMITE 2 Open Beta 17",
+    "releaseDate": "Aug 26th, 2025",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_16",
+      "next": "SMITE_2_Open_Beta_18"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 17,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Ported God",
+      "anchor": "New_Ported_God",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Jormungandr",
+          "anchor": "Jormungandr",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "General"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ranged Basic Attacks: Basic Attacks proc item hit effects for 40% damage and 20% healing."
+                },
+                {
+                  "text": "Damage Type: Magical"
+                },
+                {
+                  "text": "Scaling Type: Intelligence & Strength Scaling"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Passive: Immovable"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "You are immune to Hard Displacement, but are instead dazed, a debuff that slows you and increases the damage you take."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 1: Venomous Haze"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fire a noxious spit at an area dealing Magical Damage and creating a toxic cloud that persists."
+                },
+                {
+                  "text": "While within the cloud, you gain extra cooling for your basic attacks"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 2: Consuming Bellow"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Channel briefly, drawing power from nearby toxic clouds, then roar to deal Magical Damage, Slow, and Tremble enemies around you."
+                },
+                {
+                  "text": "Each cloud empowers you and the roar, increasing the size and causing it to deal bonus Magical Damage per cloud."
+                },
+                {
+                  "text": "While Empowered, your Basic Attacks fire at their maximum rate."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 3: Submerge"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Submerge into the ground, becoming Stealthed and gaining Movement Speed. Reactivating to emerge, Knocking Up and dealing Magical Damage to enemies."
+                },
+                {
+                  "text": "While submerged, you pulse out a ring, gaining vision of enemies"
+                },
+                {
+                  "text": "Emerging through a toxic cloud creates two new clouds"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ultimate Ability: The World Serpent"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Enter into the world before diving up to three times across the battlefield. Each time you Submerge you deal Magical Damage to enemies hit."
+                },
+                {
+                  "text": "Emerging out of the ground and your body crashing down, deals Magical Damage to enemies hit."
+                },
+                {
+                  "text": "Each time you emerge and submerge, you Knock Up enemies and leave behind a low duration toxic cloud."
+                },
+                {
+                  "text": "You are CC immune during this ability."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Wandering Market Travelers",
+      "anchor": "New_Wandering_Market_Travelers",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Infinite Duality Agni",
+          "anchor": "Infinite_Duality_Agni",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Infinite Duality Skin - Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Infinite Duality - Dark Matter"
+                    },
+                    {
+                      "text": "Infinite Duality - Azure Rift"
+                    },
+                    {
+                      "text": "Infinite Duality - Platinum Pulse"
+                    },
+                    {
+                      "text": "Two-Heads Title"
+                    },
+                    {
+                      "text": "Galaxy Jump Stamp"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Infinite Overseer Cerberus",
+          "anchor": "Infinite_Overseer_Cerberus",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Infinite Overseer Skin - Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Infinite Overseer - Obsidian Supernova"
+                    },
+                    {
+                      "text": "Infinite Overseer - Forest Guardian"
+                    },
+                    {
+                      "text": "Infinite Overseer - Abyss Walker"
+                    },
+                    {
+                      "text": "Overseer Title"
+                    },
+                    {
+                      "text": "Flying Doggo Tracker"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Quality of Life and New Player Improvements",
+      "anchor": "Quality_of_Life_and_New_Player_Improvements",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "General",
+          "anchor": "General",
+          "level": 3,
+          "content": []
+        }
+      ]
+    },
+    {
+      "title": "Game Modes",
+      "anchor": "Game_Modes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Conquest",
+          "anchor": "Conquest",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The pots near Gold Fury pit can now be broken with Basic Attacks"
+                },
+                {
+                  "text": "Jungle Monsters now use their abilities earlier in their attack chain"
+                },
+                {
+                  "text": "Wind Sprites grant Jormungandr a Movement Speed buff for 2 seconds"
+                },
+                {
+                  "text": "Oracle Camp & Middle Lane Contestable Buff Camp",
+                  "items": [
+                    {
+                      "text": "Initial spawn time pushed back from 1:00 to 1:30"
+                    }
+                  ]
+                },
+                {
+                  "text": "Satyr Camp (Blue Buff) & Chimera Camp (Purple Buff)",
+                  "items": [
+                    {
+                      "text": "Initial spawn time pushed up from 0:25 to 0:20"
+                    }
+                  ]
+                },
+                {
+                  "text": "Satyr Camp (Blue Buff)",
+                  "items": [
+                    {
+                      "text": "Elder Satyr (Buff Holder)",
+                      "items": [
+                        {
+                          "text": "Decreased base Max Health from 975 to 350"
+                        },
+                        {
+                          "text": "Decreased base Protections from 26 to 18"
+                        },
+                        {
+                          "text": "Decreased base XP Reward from 86 to 34"
+                        },
+                        {
+                          "text": "Decreased base Gold reward from 56 to 27"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Satyr (Mini)",
+                      "items": [
+                        {
+                          "text": "Decreased base Max Health from 208 to 160"
+                        },
+                        {
+                          "text": "Decreased base Protections from 14 to 10"
+                        },
+                        {
+                          "text": "Decreased base XP Reward from 29 to 17"
+                        },
+                        {
+                          "text": "Decreased base Gold Reward from 19 to 7"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Vs AI",
+          "anchor": "Vs_AI",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Joust and Arena Vs AI once again use rules and settings equal to their PvP counterparts and use the regular Item Store"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Gods",
+          "anchor": "Gods",
+          "level": 3,
+          "content": []
+        }
+      ]
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Ancient Signet (Buff)",
+          "anchor": "Ancient_Signet_(Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased Intelligence: 75 -> 80"
+                },
+                {
+                  "text": "Increased Mana: 200 -> 250"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Book of Thoth (Buff)",
+          "anchor": "Book_of_Thoth_(Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased Mana Conversion before Evolution: 4% -> 5%"
+                },
+                {
+                  "text": "Increased Mana Conversion after Evolution: 6% -> 7%"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Divine Ruin (Buff)",
+          "anchor": "Divine_Ruin_(Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Now only triggers on God Damage"
+                },
+                {
+                  "text": "Increased Intelligence Scaling: 10% -> 20%"
+                },
+                {
+                  "text": "Decreased Cooldown: 20s -> 15s"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Gem of Focus (Buff)",
+          "anchor": "Gem_of_Focus_(Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased Cooldown Rate: 10 -> 20"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Tekko-Kagi (Buff)",
+          "anchor": "Tekko-Kagi_(Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased Strength: 50 -> 60"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Regrowth Striders (Nerf)",
+          "anchor": "Regrowth_Striders_(Nerf)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Decreased Movement Speed: 30% decaying to 10% -> 25% decaying to 0%."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Runeforged Hammer (Buff)",
+          "anchor": "Runeforged_Hammer_(Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased Strength: 40 -> 45"
+                },
+                {
+                  "text": "Increased Item Protection Scaling: 50 -> 65%"
+                },
+                {
+                  "text": "Decreased Cooldown: 40 -> 30s"
+                },
+                {
+                  "text": "Increased Cooldown Reduction on Applying Hard Crowd Control: 3s -> 6s"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Soul Gem (Shift)",
+          "anchor": "Soul_Gem_(Shift)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "“Soul Gem’s healing was unchanged in the healing pass, as we felt it was underperforming and remaining where it was could bring it into a good spot. However, it still underperforms where it was in Smite 1. One major reason is that it didn’t consider ally god hits. We are fixing that, giving gods who can buff or heal themselves and allies a much easier way to stack, giving them more control over reaching the effect. With this change the healing may now be too easily available, so we are doing a rough approximation of the Healing Pass to its heal, but giving it more raw Intelligence to help it feel like a strong pick and further bolster the passive damage boost it can trigger.”"
+                },
+                {
+                  "text": "Adjusted so that it now considers abilities that hit allies for stacking.",
+                  "items": [
+                    {
+                      "text": "Stack Proc happens once per ability."
+                    },
+                    {
+                      "text": "Damage Proc happens once per target per ability."
+                    }
+                  ]
+                },
+                {
+                  "text": "Increased Intelligence: 40 -> 60"
+                },
+                {
+                  "text": "Increased Base Heal: 5 -> 20"
+                },
+                {
+                  "text": "Decreased Heal Per Level: 10 -> 6",
+                  "items": [
+                    {
+                      "text": "Level 1: 15 -> 26"
+                    },
+                    {
+                      "text": "Level 20: 205 -> 140"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Daybreak Gavel (Shift)",
+          "anchor": "Daybreak_Gavel_(Shift)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "“Daybreak Gavel and Soul Gem were already close in their raw effect, but with the change to Soul Gem they really occupy a very similar space. We are adjusting Daybreak to focus more on gaining raw Strength or Intelligence than bolstering just the next ability, separating it out from Soul Gem.”"
+                },
+                {
+                  "text": "Removed: On Ability Use: Consume all Stacks, this ability is +10% Strength and Intelligence scaling per stack (max 40%)."
+                },
+                {
+                  "text": "NEW: On Non-Healing Ability Use: Consume all Stacks, gaining +13 Strength or +16 Intelligence (based on highest item stat) for 8s per Stack (max 4)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Staff of Myrddin (Buff)",
+          "anchor": "Staff_of_Myrddin_(Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Decreased Cooldown: 120s -> 80s"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Totem of Death (Buff)",
+          "anchor": "Totem_of_Death_(Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased Intelligence: 45 -> 60"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Typhon’s Heart (Buff)",
+          "anchor": "Typhon’s_Heart_(Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Typhon’s Spawn will now only consider targets in combat to attack.",
+                  "items": [
+                    {
+                      "text": "Will prioritize Gods over any other target."
+                    }
+                  ]
+                },
+                {
+                  "text": "Typhon’s Spawn will now retreat to their owner if they are separated by more than 13.2m."
+                },
+                {
+                  "text": "Increased Damage Scaling: 20 -> 30% Intelligence"
+                },
+                {
+                  "text": "Increased Typhon’s Spawn Health: 50 -> 55 Per Level"
+                },
+                {
+                  "text": "Increased Intelligence: 40 -> 50"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Umbral Link (Buff)",
+          "anchor": "Umbral_Link_(Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Decreased Cost: 2700 -> 2500"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Triton’s Conch (Buff)",
+          "anchor": "Triton’s_Conch_(Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased Strength: 20 -> 25"
+                },
+                {
+                  "text": "Decreased Cost: 2800 -> 2700"
+                },
+                {
+                  "text": "Increased Base Strength Aura: 7 -> 10"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Quality of Life",
+          "anchor": "Quality_of_Life",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where Minions would move backwards after getting pulled by an ability"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Gods",
+          "anchor": "Gods_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Janus Recall now has portals."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Audio",
+          "anchor": "Audio",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Decreased A04 hit volume for Aladdin"
+                },
+                {
+                  "text": "Fixed an issue with A04 projectile being too quiet for Vulcan"
+                },
+                {
+                  "text": "Fixed an issue with ability VO not playing for The Morrigan"
+                },
+                {
+                  "text": "Revised Titan death sounds"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 8/26/25 and 8/27/25",
+      "anchor": "Hotfix_8/26/25_and_8/27/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed Neith Ult targeter appearing stuck overhead on targets"
+                },
+                {
+                  "text": "Fixed bots filling casual queues"
+                },
+                {
+                  "text": "Addressed Jing Wei Ult vfx lingering and triggering in Aladdin’s lamp"
+                },
+                {
+                  "text": "Fixed Ancile not going on cooldown if a passive ability triggers the effect (Jorm stacks burst bonus damage"
+                },
+                {
+                  "text": "Fixed Jorm and Izanami short descriptions"
+                },
+                {
+                  "text": "Fixed Jorm minimap icon showing temp angry face"
+                },
+                {
+                  "text": "Fixed Mordred Ult from being able to knockup Jorm"
+                },
+                {
+                  "text": "Fixed Khepri Ult not tweening Jorm since he is hard displacement immune"
+                },
+                {
+                  "text": "Fixed Daybreak Gavel providing a 64s buff instead of 8s"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 8/27/25",
+      "anchor": "Hotfix_8/27/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_3",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Daybreak Gavel fix for giving stacks even if you had no healing stacks."
+                },
+                {
+                  "text": "Soul Gem fix for proccing on unintended things, like Neith charging her ultimate."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 9/2/25",
+      "anchor": "Hotfix_9/2/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_4",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed early surrendering before 10m in Arena"
+                },
+                {
+                  "text": "Fixed Sol 3 not dealing explosion damage"
+                },
+                {
+                  "text": "Fixed Janus 1 ground portals creating useless wall portals while using Action Cam 1"
+                },
+                {
+                  "text": "Fixing an issue with Soul Gem double procing from Janus 2 if both hit unstable portals hit"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 9/4/25",
+      "anchor": "Hotfix_9/4/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_5",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixing issues with Mordred and Danza Ults going through enemy gods."
+                },
+                {
+                  "text": "Fixed Baron Aspect unintentionally giving damage reduction to Baron."
+                },
+                {
+                  "text": "Fixed Ganesha 1 breaking Fire Giant Dagger."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

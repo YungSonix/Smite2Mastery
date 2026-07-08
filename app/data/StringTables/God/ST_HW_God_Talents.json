@@ -1,0 +1,472 @@
+[
+  {
+    "Type": "StringTable",
+    "Name": "ST_HW_God_Talents",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'StringTable'",
+    "Package": "/Game/UI/StringTables/God/ST_HW_God_Talents",
+    "StringTable": {
+      "TableNamespace": "ST_HW_Character_Talents",
+      "KeysToEntries": {
+        "Fenrir01Name": "Aspect of Loyalty",
+        "Fenrir01Desc": "Unchained gains additional Protection Scaling and Stun Duration. Seething Howl applies to all allies in the area around him, and their Lifesteal Heals Fenrir, but the Strength it provides is decreased. Brutalize deals less damage but applies a stacking Slow, provides increased Protections, and the Protections persists afterwards. ",
+        "Athena01Name": "Aspect of War",
+        "Athena01Desc": "Defender of Olympus now targets visible enemy gods instead of allies, dealing no landing damage but causing the enemy to take increased damage while Athena is channeling.",
+        "Cernunnos01Name": "Aspect of Strife",
+        "Cernunnos01Desc": "Your Basic Attacks are now melee and deal increased damage, cleave, and apply stronger Shifter of Seasons effects to all enemies hit. In addition, Horn Charge's cooldown is reduced when hitting a god or Jungle Monster and applies Shifter of Seasons.",
+        "Loki01Name": "Aspect of Agony",
+        "Loki01Desc": "Vanish no longer grants Stealth; its attack now inflicts Blind instead of Bleed. Agonizing Visions can be cast on allies, providing damage mitigation while slowing enemies. Behind You now deals bonus damage scaling with your Health and Protections rather than its percentage increase.",
+        "Hecate01Name": "Aspect of Ruin",
+        "Hecate01Desc": "Spell Eater can no longer be refired but instead reduces enemy ability damage in the area. Additionally, each time an enemy ability is cast a projectile lands and explodes at their location. Its Cooldown is increased.",
+        "Geb01Name": "Aspect of Calamity",
+        "Geb01Desc": "Geb's attacks are ranged, travel slowly, and pierce with damage falloff. Shockwave deals circular damage, Crits, triggers on-hits, and grants Attack Speed on god hit. Stone Shield is self-only and buffs attack damage. Cataclysm causes Knockback rather than a Stun. -7.5% Base Health, -5% Base Protections.",
+        "Ra01Name": "Aspect of Thermotherapy",
+        "Ra01Desc": "Solar Blessing and Searing Pain only deal base damage with no scaling. In return, Solar Blessing can be placed on allied gods, attaching to them and Searing Pain Heals allies hit.",
+        "Danzaburou01Name": "Aspect of Fellowship",
+        "Danzaburou01Desc": "Alluring Spirits no longer throws out a sake bottle but instead spawns 2 Clones. All of your Clones deal more damage and take less damage.",
+        "Hercules01Name": "Aspect of Preservation",
+        "Hercules01Desc": "Mitigate Wounds no longer Heals based on damage taken or provides Attack Speed. Instead you gain a stack when you or nearby allied gods take damage from Basic Attacks and when the ability ends, stacks are expended to Heal nearby allied gods. +7.5% Base Health.",
+        "Chaac01Name": "Aspect of Fulmination",
+        "Chaac01Desc": "Rain Dance no longer heals or grants Overflow stacks but damages enemies in the area instead. Torrent max stacks are decreased.",
+        "Yemoja01Name": "Aspect of Downpour",
+        "Yemoja01Desc": "Yemoja’s abilities have higher Intelligence Scaling. Mending Waters no longer affects allies but stops and bounces on enemy gods, dealing damage, shield damage, and grants Intelligence per hit. Moonstrike no longer stuns.",
+        "Mordred01Name": "Aspect of Rage",
+        "Mordred01Desc": "Basic attacks while Bloodrage is active no longer provide bonus Protections or Attack Speed but instead your non-ultimate and non-passive ability cooldowns are lowered. Additionally Shoulder Charge deals more damage if it has hit an enemy god recently.",
+        "Neith01Name": "Aspect of Wind",
+        "Neith01Desc": "Broken Weave explosions no longer Root enemies and the Buff has a reduced duration however the Attack Speed gained is much higher. Additionally using World Weaver provides stacks of Broken Weave.",
+        "Thanatos01Name": "Aspect of Reaping",
+        "Thanatos01Desc": "Harvester of Souls no longer Heals Thanatos but provides permanent Max Health. Additionally Soul Reap deals bonus damage and Heals Thanatos based on his Max Health.",
+        "Nemesis01Name": "Aspect of Justice",
+        "Nemesis01Desc": "Divine Judgement no longer does damage in an area or steals Protections, but instead moves your and the enemy god’s current Health 75% of the way toward each other, as long as you have less Health than the target.",
+        "The_Morrigan01Name": "Aspect of Mischief",
+        "The_Morrigan01Desc": "Confusion no longer Stealths you but on refire, you swap positions with your clone.",
+        "Cupid01Name": "Aspect of Love",
+        "Cupid01Desc": "Heart Bomb's damage is decreased but the enemy hit has reduced Attack Speed and the explosion area heals allies. At 8 stacks of Lovestruck, allies also gain a Health Shield.",
+        "Khepri01Name": "Aspect of Laceration",
+        "Khepri01Desc": "Abduct no longer Pulls enemy gods but Roots them in place with you, dealing constant Basic Attack Damage for the duration. No longer gain Protections from Abduct.",
+        "Anhur01Name": "Aspect of Pride",
+        "Anhur01Desc": "Enfeeble no longer Debuffs enemies but dealing damage to the same enemy god with Basic Attacks provides you up to 100% bonus Attack Speed.",
+        "Bacchus01Name": "Aspect of Revelry",
+        "Bacchus01Desc": "After using Chug, your inhand attacks cleave and deal bonus damage scaling with Strength instead of Protections, for a short duration.",
+        "Bellona01Desc": "Bludgeon no longer deals bonus Final Slam Damage but whenever you gain Block stacks with Sword and Shield or gain Healing from Scourge, nearby allied gods also gain those benefits.",
+        "Bellona01Name": "Aspect of Vindication",
+        "Odin01Name": "Odin_01",
+        "Odin01Desc": "Placeholder Desc",
+        "Sobek01Desc": "Charge Prey now passes through all targets, knocks them forward, and has bonus scaling. Sickening Strike deals increased damage against Jungle Monsters and the cooldown reduction now triggers off Jungle Monsters. ",
+        "Sobek01Name": "Aspect of Prey",
+        "Ares01Name": "Aspect of Reverberation",
+        "Ares01Desc": "Call to Arms no longer grants Protections, Regen, or affects allies. Instead, Ares empowers his Shield for his next Basic Attack, stunning the target and spreading damage to nearby enemies.",
+        "Vulcan01Name": "Aspect of Fortification",
+        "Vulcan01Desc": "Vulcan's Passive gains: Being near one of your turrets grants you and the turret increased Protections and Health Regeneration. \r\n\r\nBackfire and Magma Bomb have lower Damage Scaling.",
+        "Hunbatz01Name": "Aspect of Disruption",
+        "Hunbatz01Desc": "Infused Strikes Slow gods hit by them, but do not deal bonus damage or provide the stacking Strength buff. Overhand Smash Stuns gods hit by it, but deals reduced damage. Sacred Monkey has reduced Scaling. ",
+        "Achilles01Name": "Aspect of Prowess",
+        "Achilles01Desc": "Combat Dodge can now be recast after striking a Jungle Monster or Boss, with Spear Strike gaining increased Scaling when forgoing your Armor. Radiant Glory no longer grants increased Protections or Crowd Control Reduction.",
+        "Rama01Name": "Aspect of Precision",
+        "Rama01Desc": "Astral Strike is always active, but you have severely decreased Attack Speed and no longer regen Astral Arrows. When out of Astral Arrows, reload. While Infinite Arrows is active, Astral Arrows are not consumed.",
+        "Kali01Name": "Aspect of Unbound Destruction",
+        "Kali01Desc": "Kali's Basics are ranged. Rupture procs at 5 stacks to deal damage & heal her. Incense doesn't stun or proc Rupture but knocks back & applies Rupture. Destruction doesn't damage, prevent death, or give immunities but gives stats, has a lower cooldown, resets cooldown on Mark kills, makes her Basics apply 2 Rupture stacks & pierce.",
+        "Sol01Desc": "Sol's Heat provides Intelligence and Ability Damage, but no longer provides Strength, Attack Speed, and Basic Attack Damage. Sol erupts and deals damage around her when becomes immune in Disapparate.",
+        "Sol01Name": "Aspect of Conflagration",
+        "Amaterasu01Desc": "Divine Presence now defaults to Red Buff, and when activated you gain Movement Speed, Haste, and Basic Attack Power in addition to the original effects. It no longer alternates to Gold Buff, or Heals you when activated.",
+        "Amaterasu01Name": "Aspect Of Valor",
+        "Artemis01Name": "Aspect of the Wild",
+        "Artemis01Desc": "Transgressor's Fate no longer roots or cripples gods but can now target minions. Triggered traps now also heal Artemis and deal damage to enemies in a larger area.",
+        "BaronSamedi01Name": "Aspect of Hysteria",
+        "BaronSamedi01Desc": "Hysteria applied over max deals damage. Max Hysteria no longer reduces damage. Consign Spirits only heals Baron. Vivid Gaze bonus now grants Hysteria over time, but no debuff.  Wrap It Up explosion and DoT apply Bonus Hysteria, but the explosion no longer Mesmerizes. Your personal Brew can be thrown every 20s.",
+        "Thor01Name": "Aspect of Thunderstruck",
+        "Thor01Desc": "Thunderstruck is always active but chains for less damage. Triggering it 3 times on a god heals Thor, slowing and trembling them. Warrior’s Madness grants Protections instead of Strength. Mjolnir’s Attunement no longer deals bonus damage, and his abilities have less scaling.",
+        "Merlin01Name": "Aspect of Pandemonium",
+        "Merlin01Desc": "Elemental Mastery has a reduced cooldown and each time it is used, a random Stance is selected with 2 random primary abilities, Flicker will always persist. Using Elemental Mastery provides an Intelligence buff for a short duration.",
+        "Poseidon01Name": "Aspect of the Trident",
+        "Poseidon01Desc": "Poseidon’s basic attacks always fire side waves. Trident no longer affects Tidal Surge but can be activated to focus the side waves, causing them to pierce enemies, and both abilities deal extra basic attack damage.",
+        "Cerberus01Name": "Aspect of Souls",
+        "Cerberus01Desc": "Ghastly Breath ticks an additional time for every 3 god souls you have killed but souls no longer heal. Stygian Torment now only knocks up targets.",
+        "Agni01Name": "Aspect of Combustion",
+        "Agni01Desc": "Your Basic Attacks now ignite enemies dealing damage over time and stacking 5 times. Flame Wave and Rain of Fire consume ignites dealing a burst of damage. Rain of Fire deals reduced damage.",
+        "Kukulkan01Name": "Aspect of the Squall",
+        "Kukulkan01Desc": "You gain Mana from Jungle monster kills and god kills and assists. Zephyr has a shorter range but fires 3 projectiles. Slipstream is always a dash and steals protections. Whirlwind attaches to you and explodes in a blast that knocks back enemies.",
+        "Pele01Desc": "You only gain Fuel from Pyroclast and when damaged by enemies instead of over time. Magma Rush can no longer be refired but now provides Healing. Additionally Everlasting Flame now provides Protections instead of Strength and Lifesteal, and Volcanic Lightning damage no longer has Strength Scaling.",
+        "Pele01Name": "Aspect of Obsidian",
+        "Scylla01Desc": "Your abilities give Mana on damaging enemies instead of spending. I'm a Monster can be used when at full Mana, using it all. It no longer provides Movement Speed, but can be fired 3 times and damage scales only from Max Mana. Its stacks provide max Mana and at max rank you gain bonus Mana. Sentinel's Empowered attack also scales with Max Mana, but no longer Cooldown Reduces itself.",
+        "Scylla01Name": "Aspect of the Devourer",
+        "Apollo01Name": "Aspect of Harmony",
+        "Apollo01Desc": "Audacity now grants free So Beautiful casts but no Attack Speed. So Beautiful scales with item Health, lowers enemy Attack Speed, and grants nearby allies Attack Speed on God or Boss hits, but deals less Base Damage. Serenade now shields nearby allies and Protections while it holds. Buffing an ally grants an Audacity stack.",
+        "GuanYu01Name": "Aspect of the General",
+        "GuanYu01Desc": "Battle Fervor now provides Intelligence instead of Attack Speed. Conviction now applies an additional Heal over Time and will share Protections from Taolu Assault. However, Guan Yu loses all Strength scaling and reduced Intelligence damage scaling.",
+        "Ganesha01Name": "Aspect of the Triumphant",
+        "Ganesha01Desc": "Ohm no longer silences but damages enemies and provides Movement Speed. Turn of Fate’s mark only procs when you hit the marked enemy with an ability. You no longer bestow kills to allies but each god kill provides permanent Cooldown Rate. Dharmic Pillars no longer slows and has a longer Cooldown.",
+        "Sun_Wukong01Name": "Aspect of Transformation",
+        "Sun_Wukong01Desc": "72 Transformations has a reduced Cooldown and locks your animal form until Somersault Cloud is used. Locking in Ox form causes Master’s Will to Knockup, Tiger form provides stacking Attack Speed on hits of The Magic Cudgel and Eagle form causes your other two non-ultimate abilities to have a reduced Cooldown.",
+        "Nu_Wa01Name": "Aspect of Shining Mist",
+        "Nu_Wa01Desc": "Mysterious Fog travels slightly before stopping, allowing you to fire Attacks within it and remain Stealthed. Shining Metal and Fire Shards scale with Attack Power, and procs Attack Item Effects. Attacks reduce the Cooldown of Shining Metal. Additionally Strength of Fire also provides Attack Speed.",
+        "Jormungandr01Name": "Aspect of the Unyielding",
+        "Jormungandr01Desc": "Toxic clouds do not deal tick damage but allied gods within them gain Damage Reduction. Within them, you do not gain Cooling but lower cooldown for Venomous Haze. Consuming Bellow does not deal bonus damage but allies gain INT and STR. Submerge Knockup height is increased.",
+        "Xbalanque01Name": "Aspect of the Nightstalker",
+        "Xbalanque01Desc": "Branching Bola is no longer a toggle but provides 3 fires of ability based projectiles. Poison Darts requires less hits to deal full damage. Darkest of Nights loses existing buffs but provides increased ability damage.",
+        "Daji01Name": "Aspect of Ferocity",
+        "Daji01Desc": "Horrible Burns no longer burns but provides Lifesteal and lasts for a short duration. One Thousand Cuts fires 2 swings, increasing at Attack Speed thresholds and deals Attack damage. Trickster Spirit does less damage but provides an Attack Speed buff.",
+        "Sylvanus01Name": "Aspect of Grover's Wrath",
+        "Sylvanus01Desc": "Attacks: +15% damage to targets debuffed by Sylvanus. Wisp’s Heal, Protections, and Ultimate Knockup reduced by 40%. Nature’s Grasp tethers, dealing damage, slowing, and granting Sylvanus Haste. Gain Anger (+Attack Speed) when Verdant Growth/Ally dies; +2 on Ultimate cast. At 4 stacks, Enrage: +Attack Speed and a free Wisps or Nature’s Grasp cast.",
+        "Nut01Name": "Aspect of the Cosmos",
+        "Nut01Desc": "Flux becomes Cosmic Flux (Mitigation, decays). Decaying past 10 stacks Heals allies. Base Damage +10%, Scaling -25%. Convergence grants a version of itself to allies on God hit. Crashing Comet Stuns and Slows, but takes longer to land. Warp grants CC Immunity to self and 1 nearby ally. -12.5% Attack Damage.",
+        "Discordia01Name": "Aspect of the Gilded Victor",
+        "Discordia01Desc": "Contest of Gods only provides you extra Attack Damage from Intelligence. Unruly Magic does not explode but returns back, dealing damage and providing a stack causing your next Attacks to explode. Erratic Behavior no longer creates a field or Stealth but Attack Speed and Attack Damage. Golden Apple of Discord is faster and does not spread.",
+        "MorganLeFay01Name": "Aspect of the Cursed Crown",
+        "MorganLeFay01Desc": "Your Basic Attacks are now melee. You gain Wrath over time and when you deal damage. Consuming Power has two levels that can be used at 40 and 80 Wrath. Sigil Mastery fires all 3 Sigils simultaneously. Shroud of Wildfire Attack explosions deal a percentage of your Max Health as damage.",
+        "GilgameshName": "Aspect of Shamash",
+        "GilgameshDesc": "Winds of Shamash is no longer an ultimate. Place a wind wall that transforms once with your next ability: ignites from Sun-forged Scimitar, solidifies from Drop Kick, or launches allies from Hero's Advance. It can only transform once, granting you Attack Speed, Tenacity, or Pathfinding until its next transform.",
+        "ratatoskr01Name": "Aspect of the Thickbark",
+        "ratatoskr01Desc": "Your tier 3 Acorn effects change. Briskberry causes Dart to knockback enemy gods, marking them to explode. Ashwhorl provides Flurry 2 charges, protections and healing. Thistlethorn causes Acorn Blast to fire 5 projectiles and debuffs enemies.",
+        "Atlas01Name": "Aspect of the Unburdened",
+        "Atlas01Desc": "Your basic attack now throws your astrolabe. Unburden is used to reposition the astrolabe. Gravity no longer pulls when the astrolabe is deployed. Kinetic Charge can be used to kick the astrolabe forward. Your passive now reduces the cooldown of Gamma-Ray Burst.",
+        "Horus01Name": "Aspect of the Falcon",
+        "Horus01Desc": "Fracture no longer stuns but deals increased damage on the cleave. Protector's Surge has a reduced range but now can target a location spawning a wind sprite or targeting an enemy dealing damage and granting a gust attack. To The Skies! no longer teleports allies but deals bonus damage in the center."
+      },
+      "KeysToMetaData": {
+        "Anhur01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Anhur01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Athena01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Athena01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Bacchus01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Bacchus01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Bellona01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Bellona01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Cernunnos01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Cernunnos01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Chaac01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Chaac01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Cupid01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Cupid01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Danzaburou01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Danzaburou01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Fenrir01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Fenrir01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Geb01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Geb01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Khepri01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Khepri01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Loki01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Loki01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Mordred01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Mordred01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Neith01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Neith01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Nemesis01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Nemesis01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Ra01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Ra01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Thanatos01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Thanatos01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "The_Morrigan01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "The_Morrigan01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Hecate01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Hecate01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Hercules01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Hercules01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Odin01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Odin01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Sobek01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Sobek01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Ares01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Ares01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Vulcan01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Vulcan01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Hunbatz01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Hunbatz01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Achilles01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Achilles01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Rama01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Rama01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Kali01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Kali01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Sol01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Sol01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Amaterasu01Desc": {
+          "METADATA_ID_COMMENT": "DNT"
+        },
+        "Amaterasu01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Artemis01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Artemis01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "BaronSamedi01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "BaronSamedi01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Thor01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Thor01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Merlin01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Merlin01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Yemoja01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Yemoja01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Cerberus01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Cerberus01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Poseidon01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Poseidon01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Agni01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Agni01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Pele01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Pele01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Scylla01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Scylla01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Apollo01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Apollo01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "GuanYu01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "GuanYu01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Ganesha01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Ganesha01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Nu_Wa01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Nu_Wa01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Sun_Wukong01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Sun_Wukong01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Jormungandr01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Jormungandr01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Xbalanque01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Xbalanque01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Sylvanus01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Sylvanus01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Daji01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Daji01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Nut01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Nut01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Kukulkan01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Kukulkan01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Discordia01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Discordia01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "MorganLeFay01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "MorganLeFay01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "GilgameshName": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "GilgameshDesc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "ratatoskr01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "ratatoskr01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Atlas01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Atlas01Desc": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Horus01Name": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Horus01Desc": {
+          "METADATA_ID_COMMENT": ""
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,1352 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_34",
+    "title": "SMITE 2 Open Beta 34",
+    "infoboxTitle": "OB34 - SMITE 2 Open Beta 34",
+    "releaseDate": "May 6th, 2026",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_33",
+      "next": "SMITE_2_Open_Beta_35"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 34,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Classic God",
+      "anchor": "New_Classic_God",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Atlas",
+          "anchor": "Atlas",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Passive: The Astrolobe",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "You gain Energy in your Astrolabe when you take damage from enemy gods or deal damage with your Basic Attacks or Abilities (minions grant reduced Energy). At enough Energy, you may press your Interact key to unleash an Empowered Astrolabe Strike, consuming Energy. This does not trigger automatically from your next Basic Attack."
+                    },
+                    {
+                      "text": "Empowered Astrolabe Strikes deal Basic Attack Damage + 8 Bonus Damage per Level in an area, with increased swing time; enemy gods are Trembled and minions are Stunned"
+                    },
+                    {
+                      "text": "While your Astrolabe is deployed with Unburden, your Empowered Astrolabe Strike resolves at the Astrolabe's location, dealing 3 times Basic Attack Damage to enemies around it"
+                    },
+                    {
+                      "text": "While you are holding your Astrolabe, Empowered Astrolabe Strikes damage enemies in front of you"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 1: Unburden",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Throw your Astrolabe to a target location, dealing Magical Damage and Slowing enemies for 2s. While deployed, your Basic Attacks cause explosions at the Astrolabe that deal Magical Damage to enemies and cost Mana per explosion. After 5s or when you refire, the Astrolabe returns."
+                    },
+                    {
+                      "text": "While the Astrolabe is deployed, gain Bonus Movement Speed"
+                    },
+                    {
+                      "text": "Gravity Pull changes based on whether your Astrolabe is deployed or held"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 2: Gravity Pull",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Pull enemies toward your Astrolabe. Enemy gods who are too close are pulled into it. If you are holding your Astrolabe, you become Knock Up Immune, and enemies pulled into the Astrolabe are held in front of you before being launched in the direction you are facing. If your Astrolabe is deployed, held enemies are launched toward you from its location."
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 3: Kinetic Charge",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Dash forward, dealing Magical Damage to minions and cleansing yourself of Slows. Each allied god you pass near is cleansed of Slows and gains Movement Speed. While dashing, you are Slow and Knock Up Immune. Hitting an enemy god releases an explosion that Slows; each Slow you cleanse from an ally during the dash strengthens that explosion's Slow, up to a maximum."
+                    }
+                  ]
+                },
+                {
+                  "text": "Ultimate Ability: Gamma Ray Burst",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Tear open the sky and call down a Gamma-Ray Burst. Enemies in the area take Magical Damage over time and gain Radiation stacks that reduce their Protections and Power. After 5s or when you refire, the burst focuses into a traveling beam that deals heavier damage and applies Focused Radiation."
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect of the Unburdened releasing May 8th.",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Your basic attack now throws your astrolabe. Unburden is used to reposition the astrolabe. Gravity no longer pulls when the astrolabe is deployed. Kinetic Charge can be used to kick the astrolabe forward. Your passive now reduces the cooldown of Gamma-Ray Burst."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Cosmetics",
+      "anchor": "New_Cosmetics",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Classic Traveler: High Noon Sylvanus",
+          "anchor": "Classic_Traveler:_High_Noon_Sylvanus",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Part of the Tracker Syndicate event."
+            },
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing the Premium Traveler Page",
+                  "items": [
+                    {
+                      "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins"
+                    },
+                    {
+                      "text": "Alebrije Prism"
+                    },
+                    {
+                      "text": "Tendril Dredge Prism"
+                    },
+                    {
+                      "text": "El Tree-ablo Prism"
+                    },
+                    {
+                      "text": "High Noon Ward Skin"
+                    },
+                    {
+                      "text": "Tracker Pact Token (part of the Tracker Syndicate Event)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Classic Traveler: Dark Lord Zeus",
+          "anchor": "Classic_Traveler:_Dark_Lord_Zeus",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Part of the Tracker Syndicate event."
+            },
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Crimson Core Prism"
+                    },
+                    {
+                      "text": "Ivory Prime Prism"
+                    },
+                    {
+                      "text": "Phantom Flux Prism"
+                    },
+                    {
+                      "text": "White Lightning Jump Stamp"
+                    },
+                    {
+                      "text": "Tracker Pact Token (part of the Tracker Syndicate Event)\nNew Skin: Burning Passion Aphrodite"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Available in the Burning Passion Chest, or via direct purchase."
+            }
+          ]
+        },
+        {
+          "title": "New Twitch Drop Skin: Flurry Ratatoskr",
+          "anchor": "New_Twitch_Drop_Skin:_Flurry_Ratatoskr",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Available free as a Twitch Drop, starting May 9."
+            },
+            {
+              "type": "paragraph",
+              "text": "Note: The Reaping will end when this update goes live. Pumpkins will disappear. Collect any Reaping rewards you desire before this update."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Quality of Life",
+      "anchor": "Quality_of_Life",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Added Audio to teleporters that only enemies and allies can hear when being used."
+            },
+            {
+              "text": "Profile Loadout categories now have dropdown menus for better organization, making it easier to find the Profile items you are looking for."
+            },
+            {
+              "text": "Aspects now show on the team portrait bar in-game."
+            },
+            {
+              "text": "Improvements made to prevent attack animation desynchronizations."
+            },
+            {
+              "text": "Tenacity has been updated to affect both Hard CC and Soft CC."
+            },
+            {
+              "text": "Low Priority Queue Updates",
+              "items": [
+                {
+                  "text": "Your first offense will now be a Deserter penalty, like it used to be. So there is some leniency/grace."
+                },
+                {
+                  "text": "Your second offense will still result in Low Priority Queue"
+                },
+                {
+                  "text": "If you have Low Priority Queue, you cannot queue for Ranked (but can queue for other modes)"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Gameplay",
+      "anchor": "Gameplay",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Conquest",
+          "anchor": "Conquest",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Decreased base Gold Reward for God Kills 200g -> 180g"
+                },
+                {
+                  "text": "Jungle Role Passive",
+                  "items": [
+                    {
+                      "text": "Decreased healing from Jungle Monster kills from +7.5% of the Monster’s Max Health to flat 10 HP + 4% of the Monster’s Max Health"
+                    }
+                  ]
+                },
+                {
+                  "text": "Pathfinder (Yellow) Buff",
+                  "items": [
+                    {
+                      "text": "Infamy IV: Decreased Tenacity 15 -> 10"
+                    }
+                  ]
+                },
+                {
+                  "text": "Jungle Scaling",
+                  "items": [
+                    {
+                      "text": "Increased XP Reward scaling +5% -> +8%"
+                    },
+                    {
+                      "text": "Increased XP Reward for slaying higher level Jungle Monsters +10% -> +12%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Fire Giant",
+                  "items": [
+                    {
+                      "text": "Decreased Crit Damage Reduction -70% -> -20%"
+                    },
+                    {
+                      "text": "Damage Reduction Debuff"
+                    },
+                    {
+                      "text": "Stacks are now gained every 5% of Fire Giant’s missing Health",
+                      "items": [
+                        {
+                          "text": "(previously it stacked to match the player’s level)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Gold Fury",
+                  "items": [
+                    {
+                      "text": "Decreased Crit Damage Reduction -70% -> -20%"
+                    },
+                    {
+                      "text": "Damage Reduction Debuff"
+                    },
+                    {
+                      "text": "Decreased Damage Reduction per stack 1.75% -> 1.25%"
+                    },
+                    {
+                      "text": "Stacks are now gained every 5% of Gold Fury’s missing Health",
+                      "items": [
+                        {
+                          "text": "(previously it stacked to match the player’s level)"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Vengeant Gaze - Gold Fury now gains bonus damage, mitigations, and attack speed when fighting teams that have slain her at least once before during the match. This effect stacks up to 3 times for each Gold Fury kill.",
+                      "items": [
+                        {
+                          "text": "Increases damage dealt to team targets by 20%"
+                        },
+                        {
+                          "text": "Decreases damage taken from team targets by 7.5%"
+                        },
+                        {
+                          "text": "Increases Attack Speed by 15% while fighting a team target"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Lane Minions",
+                  "items": [
+                    {
+                      "text": "Adjusted pathing to reduce instances of minions side-stepping when running towards a target"
+                    },
+                    {
+                      "text": "Wave 1 minions now have slightly different targeting AI to spread out their damage"
+                    },
+                    {
+                      "text": "Lane Minions will now attack enemy minions that are bodyblocking their path towards a Tower"
+                    }
+                  ]
+                },
+                {
+                  "text": "Jungle Monsters",
+                  "items": [
+                    {
+                      "text": "Adjusted pathfinding to reduce instances of monsters side-stepping when running towards a target"
+                    },
+                    {
+                      "text": "Removed the Cyclops Warrior’s offhand ability"
+                    }
+                  ]
+                },
+                {
+                  "text": "Fire Imps Rework",
+                  "items": [
+                    {
+                      "text": "Infernal Power",
+                      "items": [
+                        {
+                          "text": "+1 STR or INT (based on highest item stat on pickup)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Cyclops Rogue Camp (Side Camps)",
+                  "items": [
+                    {
+                      "text": "Big",
+                      "items": [
+                        {
+                          "text": "Increased Gold Reward 26 -> 32"
+                        },
+                        {
+                          "text": "Decreased Max Health 700 -> 600"
+                        },
+                        {
+                          "text": "Decreased Max Health scaling +65 -> +35"
+                        },
+                        {
+                          "text": "Decreased Protections 19 -> 18"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Small",
+                      "items": [
+                        {
+                          "text": "Increased Gold Reward 7 -> 8"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Cyclops Warrior Camp (Mid Camps)",
+                  "items": [
+                    {
+                      "text": "Big",
+                      "items": [
+                        {
+                          "text": "Decreased XP Reward 86 -> 72"
+                        },
+                        {
+                          "text": "Increased Max Health scaling +65 -> +75"
+                        },
+                        {
+                          "text": "Increased Protections 19 -> 30"
+                        },
+                        {
+                          "text": "Increased Max Protections 28 -> 68"
+                        },
+                        {
+                          "text": "Added Damage Reduction scaling  -0.8%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Small",
+                      "items": [
+                        {
+                          "text": "Decreased XP Reward 29 -> 20"
+                        },
+                        {
+                          "text": "Increased Max Health 200 -> 235"
+                        },
+                        {
+                          "text": "Increased Max Health scaling +30 -> +35"
+                        },
+                        {
+                          "text": "Decreased Strength scaling +3 -> +1.5"
+                        },
+                        {
+                          "text": "Increased Protections 12 -> 14"
+                        },
+                        {
+                          "text": "Increased Max Protections 15 -> 42"
+                        },
+                        {
+                          "text": "Added Damage Reduction scaling -0.8%"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Buff Camps (except Blue Buff)",
+                  "items": [
+                    {
+                      "text": "Big",
+                      "items": [
+                        {
+                          "text": "Increased Max Health scaling +65 -> +75"
+                        },
+                        {
+                          "text": "Increased Protections 26 -> 30"
+                        },
+                        {
+                          "text": "Increased Max Protections 33 -> 68"
+                        },
+                        {
+                          "text": "Added Damage Reduction scaling -0.8%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Small",
+                      "items": [
+                        {
+                          "text": "Increased XP Reward 29 -> 32"
+                        },
+                        {
+                          "text": "Increased Max Health 208 -> 235"
+                        },
+                        {
+                          "text": "Increased Max Health scaling +30 -> +35"
+                        },
+                        {
+                          "text": "Increased Max Protections 18 -> 42"
+                        },
+                        {
+                          "text": "Added Damage Reduction scaling -0.8%"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Harpy Camps (Back Harpies)",
+                  "items": [
+                    {
+                      "text": "Big",
+                      "items": [
+                        {
+                          "text": "Decreased XP Reward 74 -> 72"
+                        },
+                        {
+                          "text": "Decreased Gold Reward 33 -> 28.2"
+                        },
+                        {
+                          "text": "Increased Protections 21 -> 22"
+                        },
+                        {
+                          "text": "Increased Max Protections 24 -> 66"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Small",
+                      "items": [
+                        {
+                          "text": "Increased XP Reward 14 -> 20"
+                        },
+                        {
+                          "text": "Increased Gold Reward 5 -> 9.4"
+                        },
+                        {
+                          "text": "Increased Max Protections 12 -> 33"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Scorpion",
+                  "items": [
+                    {
+                      "text": "Increased XP Reward 146 -> 158"
+                    },
+                    {
+                      "text": "Increased Max Health 1150 -> 1200"
+                    },
+                    {
+                      "text": "Increased Max Health scaling +65 -> +75"
+                    },
+                    {
+                      "text": "Increased Protections 26 -> 30"
+                    },
+                    {
+                      "text": "Increased Max Protections 35 -> 68"
+                    },
+                    {
+                      "text": "Added Damage Reduction scaling -0.8%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Solo Lane",
+                  "items": [
+                    {
+                      "text": "Pushed back Cyclops Rogue Camp initial spawn 1:00 -> 1:15"
+                    },
+                    {
+                      "text": "Decreased Cyclops Rogue Camp respawn timer 60s -> 55s"
+                    },
+                    {
+                      "text": "Pushed back Totem initial spawn 1:30 -> 1:45"
+                    }
+                  ]
+                },
+                {
+                  "text": "Duo Lane",
+                  "items": [
+                    {
+                      "text": "Pushed back Cyclops Rogue Camp initial spawn 1:00 -> 1:15"
+                    },
+                    {
+                      "text": "Decreased Cyclops Rogue Camp respawn timer 60s -> 55s"
+                    },
+                    {
+                      "text": "Pushed up Random Buff Camp initial spawn 1:30 -> 1:15"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "The Nu Wa balance is already live."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Nu Wa",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Shining Metal",
+                  "items": [
+                    {
+                      "text": "Aspect of Shining Mist",
+                      "items": [
+                        {
+                          "text": "Damage reduced from 140/155/170/185/200% Strength and Attack Power + 28/31/34/37/40% Intelligence to 40/60/80/100/120% Strength and Attack Power + 8/12/16/20/24% Intelligence"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Strength of Metal",
+                  "items": [
+                    {
+                      "text": "Aspect of Shining Mist",
+                      "items": [
+                        {
+                          "text": "Damage reduced from 75% of attack damage to 25%."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Baron Samedi",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Consign Spirits",
+                  "items": [
+                    {
+                      "text": "Base healing from 25/35/45/55/65 to 40/55/65/75/85"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Chaac",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Torrent",
+                  "items": [
+                    {
+                      "text": "Damage increased from 80/145/210/275/340 to 100/160/220/280/340"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Charon",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Spectral Surge",
+                  "items": [
+                    {
+                      "text": "Increased Base Damage from 80/110/140/170/200 to 90/130/170/210/250"
+                    },
+                    {
+                      "text": "Increased Base Trail Ticking damage from 6/8/10/12/14 to 7/9/11/13/15"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Cupid",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Heart Bomb",
+                  "items": [
+                    {
+                      "text": "Explosion damage increased from 50/80/110/140/170 to 60/90/120/150/180"
+                    },
+                    {
+                      "text": "Minion bonus damage increased from 55% to 60%"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Geb",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Hard As Rock",
+                  "items": [
+                    {
+                      "text": "Critical Strike Damage Reduction reduced from 65% to 50%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Roll Out",
+                  "items": [
+                    {
+                      "text": "Now grants Slow Immunity while rolling"
+                    }
+                  ]
+                },
+                {
+                  "text": "Stone Shield",
+                  "items": [
+                    {
+                      "text": "Shield Health Scaling Per Level reduced from 15 to 10"
+                    },
+                    {
+                      "text": "Shield now scales with 5% of Max Health"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Gilgamesh",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Hero's Advance",
+                  "items": [
+                    {
+                      "text": "Hero’s Advance now correctly consumes the stated mana cost."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Ishtar",
+              "bold": true,
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Aspect of the Passionate Storm",
+                      "items": [
+                        {
+                          "text": "Basic attack length reduced by 25%."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Blades of Retribution",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where blades could miss targets that weren’t intended in the cone."
+                    }
+                  ]
+                },
+                {
+                  "text": "Rolling Thunder",
+                  "items": [
+                    {
+                      "text": "Increased base damage from 60/85/110/135/160 to 75/100/125/150/175"
+                    }
+                  ]
+                },
+                {
+                  "text": "Jolt",
+                  "items": [
+                    {
+                      "text": "Increased the speed of the dash by 33%"
+                    },
+                    {
+                      "text": "Aspect of the Passionate Storm (Only)",
+                      "items": [
+                        {
+                          "text": "Explode Arrow Base Damage reduced from 24/36/48/60/72 to 20/30/40/50/60"
+                        },
+                        {
+                          "text": "Explode Arrow Scaling taken from 144% Strength and Attack Power + 28% Intelligence to 120% Attack Power and Strength and 24% Intelligence."
+                        },
+                        {
+                          "text": "Arrow 8 Stack Bonus Damage reduced from 10/20/30/40/50 to 5/10/15/20/25"
+                        },
+                        {
+                          "text": "Arrow 8 Stack Bonus Scaling reduced from 60% Strength and Attack Power + 12% Intelligence to 30% Strength and Attack Power and 6% Intelligence."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Khepri",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Rising Dawn",
+                  "items": [
+                    {
+                      "text": "Duration increased from 3s to 4s"
+                    },
+                    {
+                      "text": "Damage reduced from 10/14/18/22/26 to 8/12/16/20/24"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Medusa",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Viper Shot",
+                  "items": [
+                    {
+                      "text": "The initial hit of each projectile now also deals 2% of the target’s Max Health as bonus physical damage"
+                    }
+                  ]
+                },
+                {
+                  "text": "Acid Spray",
+                  "items": [
+                    {
+                      "text": "Cooldown reduced from 15/14.5/14/13.5/13 to 14/13.5/13/12.5/12"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Mercury",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Special Delivery",
+                  "items": [
+                    {
+                      "text": "Can no longer be manually cancelled early"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Mordred",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Cruel Strikes",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where the healing from gods was less than the stated description"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Pele",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Magma Rush",
+                  "items": [
+                    {
+                      "text": "Aspect of Obsidian",
+                      "items": [
+                        {
+                          "text": "Magma Rush base healing reduced from 4/7/10/13/16 -> 3/5/7/9/11"
+                        },
+                        {
+                          "text": "Magma Rush base enhanced healing reduced from 8/14/20/26/32 -> 6/10/14/18/22"
+                        },
+                        {
+                          "text": "Magma Rush heal health scaling reduced from 1.15% of Health from Items -> 1%"
+                        },
+                        {
+                          "text": "Magma Rush heal health scaling reduced from 2.25% of Health from Items -> 2%"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Pyroclast",
+                  "items": [
+                    {
+                      "text": "Aspect of Obsidian",
+                      "items": [
+                        {
+                          "text": "Pyroclast Return Base Damage reduced from 25 -> 20"
+                        },
+                        {
+                          "text": "Pyroclast Return Damage Scaling reduced from 15% -> 10%"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Poseidon",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Release The Kraken!",
+                  "items": [
+                    {
+                      "text": "Outer Ring Damage Scaling increased from 40% to 50%"
+                    },
+                    {
+                      "text": "Inner Ring Damage Scaling increased from 100% to 110%"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Ratatoskr",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Acorn of Yggdrasil",
+                  "items": [
+                    {
+                      "text": "Briskberry Acorn",
+                      "items": [
+                        {
+                          "text": "No longer has reduced range"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Ashwhorl Acorn",
+                      "items": [
+                        {
+                          "text": "Now gives a 20% bonus to movement speed when A02 is fired"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Thistlethorn Acorn",
+                      "items": [
+                        {
+                          "text": "Now will stun targets hit by 3 acorns properly."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Dart",
+                  "items": [
+                    {
+                      "text": "Strength Scaling increased from 70% to 80%"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Ymir",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Shards of Ice",
+                  "items": [
+                    {
+                      "text": "Now deals its damage if Ymir dies during the ultimate cast."
+                    }
+                  ]
+                },
+                {
+                  "text": "Frostbite",
+                  "items": [
+                    {
+                      "text": "Damage reduction to Ymir from Frostbitten targets increased from 15% to 20%"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Bumba's Golden Dagger",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Bonus damage no longer affects the primary target"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Bumba’s Spear",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Bonus damage no longer affects the primary target"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Cleric's Cloak",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Tenacity Reduced from 15 to 5"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Golden Blade",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Base damage reduced from 20 to 10"
+                },
+                {
+                  "text": "Protection scaling increased from 15% to 20%"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Mantle of Discord",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Tenacity reduced from 20 to 15"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Resolute Mantle",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Tenacity reduced from 20 to 15"
+                },
+                {
+                  "text": "Buff Tenacity reduced from 10 to 5"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Shroud of Vengeance",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Tenacity reduced from 20 to 15"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Spirit Robe",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Tenacity reduced from 20 to 15"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Spectral Armor",
+              "bold": true,
+              "items": [
+                {
+                  "text": "No longer provides the aura effect to the owner."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Void Shield",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Strength removed"
+                },
+                {
+                  "text": "Physical Protection increased from 30 to 55"
+                },
+                {
+                  "text": "Now builds from Medal of Defense and Legionnaire Armor"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Void Stone",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Intelligence removed"
+                },
+                {
+                  "text": "Magical Protection increased from 35 to 60"
+                },
+                {
+                  "text": "Now builds from Medal of Disruption and Circle of Protection\\"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 5/7/26",
+      "anchor": "Hotfix_5/7/26",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed a Bug that allowed for multiple Typhon's Fang pets"
+            },
+            {
+              "text": "Fixed Doublet of Binding to properly reduce damage taken by allies"
+            },
+            {
+              "text": "Fixed a bug that could cause \"infinite falling\""
+            },
+            {
+              "text": "Fixed Audio for Ishtar's ultimate"
+            },
+            {
+              "text": "Atlas passive attack no longer stuns towers"
+            },
+            {
+              "text": "Atlas now has builds for Quickplay"
+            },
+            {
+              "text": "Atlas' Astrolabe can no longer get stuck in Aladdin's lamp; Aladdin has been reenabled"
+            },
+            {
+              "text": "Atlas Aspect now has reduced health and protections, as intended"
+            },
+            {
+              "text": "Added the name of the new Aphrodite skin (Burning Passion)"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 5/11/26",
+      "anchor": "Hotfix_5/11/26",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Atlas",
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Aspect of the Unburdened",
+                      "items": [
+                        {
+                          "text": "Basic (non-deployed) no longer procs item effects"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

@@ -1,0 +1,643 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_36",
+    "title": "SMITE 2 Open Beta 36",
+    "infoboxTitle": "OB36 - SMITE 2 Open Beta 36",
+    "releaseDate": "June 2nd, 2026",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_35",
+      "next": "SMITE_2_Open_Beta_37"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 36,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Classic God",
+      "anchor": "New_Classic_God",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Horus",
+          "anchor": "Horus",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Passive: Resolute",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Gain Resolute stacks when an enemy god damages you. Each stack grants protections and crowd control reduction for a short duration. When resolute expires, heal based on your stacks."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 1: Updraft",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Create an updraft around you, dealing physical damage and knocking up nearby enemies."
+                    },
+                    {
+                      "text": "Your next attack within a short duration, fires a gust forward, dealing physical damage and slowing enemies. Enemies already knocked up take bonus physical damage."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 2: Fracture",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Dash forward, dealing physical damage, hitting an enemy god stops the dash and stuns them, then you cleave enemies in front of you for physical damage and reduce their protections for a duration."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 3: Protector’s Surge",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Fly to a target ally and descend on their location. When you land, heal the target ally and nearby allies and grant them protections for a duration."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ultimate Ability: To the Skies!",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Send a mirror image into the sky to choose a landing location. After selecting a location, channel briefly, then teleport to that location. On landing, deal physical damage, knock back enemies, and grant yourself a shield for a duration."
+                    },
+                    {
+                      "text": "You  are immobile and CC immune while channeling."
+                    },
+                    {
+                      "text": "After landing all allies near your start location are also teleported and receive a shield."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Aspect of the Falcon releasing June 5th.",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Fracture no longer stuns but deals increased damage on the cleave. Protector’s Suge has reduced range but now can target a location spawning a wind sprite or targeting an enemy dealing damage and granting a gust attack. To the Skies! No longer teleports allies but deals bonus damage in the center."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Wandering Market Travelers",
+      "anchor": "New_Wandering_Market_Travelers",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Classic Traveler: Fabulous Chiron",
+          "anchor": "Classic_Traveler:_Fabulous_Chiron",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Minty Fresh Prism"
+                    },
+                    {
+                      "text": "Sailor Stars Prism"
+                    },
+                    {
+                      "text": "Riot Night Prism"
+                    },
+                    {
+                      "text": "Fabulous Badge"
+                    },
+                    {
+                      "text": "Battle Banner (part of the Darkstar Empire Event)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Classic Traveler: Chef Vulcan",
+          "anchor": "Classic_Traveler:_Chef_Vulcan",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Mare Prism"
+                    },
+                    {
+                      "text": "Primavera Prism"
+                    },
+                    {
+                      "text": "Pesto del Drago Prism"
+                    },
+                    {
+                      "text": "Mama Mia! Badge"
+                    },
+                    {
+                      "text": "Chef Vulcan Special VGS"
+                    },
+                    {
+                      "text": "Battle Banner (part of the Darkstar Empire Event)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Traveler: Skies of Liberty Nut",
+          "anchor": "Traveler:_Skies_of_Liberty_Nut",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Fireworks Show Global Emote"
+                    },
+                    {
+                      "text": "Race Track Jump Stamp"
+                    },
+                    {
+                      "text": "Skies of Liberty Announcer Pack"
+                    },
+                    {
+                      "text": "Battle Banner (part of the Darkstar Empire Event)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Gameplay",
+      "anchor": "Gameplay",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Game Modes",
+          "anchor": "Game_Modes",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Assault",
+                  "items": [
+                    {
+                      "text": "You can now re-enter the fountain to purchase items during the Setup phase before Minions spawn."
+                    }
+                  ]
+                },
+                {
+                  "text": "Duel",
+                  "items": [
+                    {
+                      "text": "Standing in your Fountain for too long after Minions spawn will cause your Tower, Phoenix, and Titan to take continuous damage."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Ah Puch"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Hollow Ground",
+              "items": [
+                {
+                  "text": "Health heal reduced from 4% of max health to 3%."
+                }
+              ]
+            },
+            {
+              "text": "Wraith Call",
+              "items": [
+                {
+                  "text": "Aspect of the Death March",
+                  "items": [
+                    {
+                      "text": "Protection Shred reduced from 1/2.5/4/5.5/7 to 1/2/3/4/5"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Fleeting Breath",
+              "items": [
+                {
+                  "text": "Damage and Scaling reduced from 30/40/50/60/70 + 20% Intelligence per tick to 24/32/40/48/56 + 16% Intelligence per tick"
+                }
+              ]
+            },
+            {
+              "text": "Empty The Crypts",
+              "items": [
+                {
+                  "text": "Damage reduced from 55/65/75/85/95 + 18% scaling to 50/58/66/74/82 + 15% Scaling"
+                },
+                {
+                  "text": "Cooldown increased to 110s"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Cabrakan"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "General",
+              "items": [
+                {
+                  "text": "Aspect of the Rotund Jotunn",
+                  "items": [
+                    {
+                      "text": "Base Health, health per level and Protections reduced by 8%"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Tremors",
+              "items": [
+                {
+                  "text": "Aspect of the Rotund Jotunn",
+                  "items": [
+                    {
+                      "text": "Tick Damage reduced from 9/13/17/21/25 + 15% Strength and 20% Intelligence to 5/9/13/17/21 + 15% Strength and Intelligence"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Cerberus"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Ghastly Breath",
+              "items": [
+                {
+                  "text": "Reduced Protections Debuff from 5/7/9/11/13 to 3/4.5/6/7.5/9"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Chaac"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Rain Dance",
+              "items": [
+                {
+                  "text": "Chaac gains 9/10.5/12/13.5/15 Dampening during Rain Dance.",
+                  "items": [
+                    {
+                      "text": "This only applies to non-aspect"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Kali"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Incense",
+              "items": [
+                {
+                  "text": "Strength Buff reduced from 10/15/20/25/30 to 8/12/16/20/24"
+                },
+                {
+                  "text": "Intelligence Buff reduced from 14/21/28/35/42 to 12/17/22/27/32"
+                },
+                {
+                  "text": "Bonus Scaling per Rupture Stack reduced from 12.5% Intelligence and 10% Strength to 10% Intelligence and 8% Strength."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Kukulkan"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Zephyr",
+              "items": [
+                {
+                  "text": "Scaling increased from 80% to 85%"
+                }
+              ]
+            },
+            {
+              "text": "Slipstream",
+              "items": [
+                {
+                  "text": "Scaling increased from 80% to 90%"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Odin"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Raven Shout",
+              "items": [
+                {
+                  "text": "While the shield has HP, Odin now pulses 10/15.5/21/26.5/32 + 5% Intelligence + 4% Strength Physical damage every second around himself."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Pele"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Everlasting Flame",
+              "items": [
+                {
+                  "text": "Aspect of Obsidian",
+                  "items": [
+                    {
+                      "text": "Pele no longer gains fuel from item procs dealing damage to her."
+                    },
+                    {
+                      "text": "Fuel gained from taking god damage reduced from 10 to 8"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Ratatoskr"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Acorn of Yggdrasil",
+              "items": [
+                {
+                  "text": "Briskberry Acorn no longer will allow a cooldown reset when it hits a marked target."
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Hunter’s Cowl"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Now gives 2.5 Mana Regen"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Leather Cowl"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Now gives 1.5 Mana Regen"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The Cosmic Horror"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed an issue where Staff of Cosmic Horror wasn’t applying its echo bonus damage when at higher echo than intelligence."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed a case where Jungle Monsters could become stuck after being knocked up"
+            },
+            {
+              "text": "Familiars can no longer remove Backdoor Protections"
+            },
+            {
+              "text": "Fixed a case where Mike Typhon would not target Minions if there was a higher priority target (a God) in range, but too far from its owner"
+            },
+            {
+              "text": "Fixed a case where Mike Typhon could target Jungle Monsters through wall"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 6/3/26",
+      "anchor": "Hotfix_6/3/26",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed an issue with Horus gaining more movement speed than intended."
+            },
+            {
+              "text": "Fixed Audio issues with Charon."
+            },
+            {
+              "text": "Fixed Knockup Daily quest tracking"
+            },
+            {
+              "text": "Fixed an issue with Chef Vulcan on low settings"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 6/4/26",
+      "anchor": "Hotfix_6/4/26",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed an issue with auto skill not working correctly in quick play"
+            },
+            {
+              "text": "Fixed an issue with gold and experience floating text not appearing correctly."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

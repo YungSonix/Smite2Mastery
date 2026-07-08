@@ -15,6 +15,8 @@ import { Image } from 'expo-image';
 import { getGodAbilityIcon } from '../localIcons';
 import { getSmite2Gods } from '../../lib/smite2GodsData';
 
+import { WEB_CONTENT_MAX_WIDTH } from '../../lib/webLayout';
+
 const IS_WEB = Platform.OS === 'web';
 
 let GODS = [];
@@ -70,11 +72,13 @@ try {
   };
 }
 
+const { ensureAppWriteSession } = require('../../lib/appAuth');
+
 // Try to import profile helpers so we can read the current username
 let profileHelpers = null;
 try {
   profileHelpers = require('./profile').profileHelpers;
-} catch (e) {
+} catch (_) {
   profileHelpers = {
     async getCurrentUser() {
       return null;
@@ -201,6 +205,9 @@ export default function AbilityGamePage({ onBack = null }) {
 
   const submitBestStreak = async (newBest) => {
     if (!supabase || !currentUser || !newBest || newBest <= 0) return;
+
+    const authSession = await ensureAppWriteSession(currentUser);
+    if (!authSession.ready) return;
 
     try {
       const payload = {
@@ -473,7 +480,7 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 40,
     ...(IS_WEB && {
-      maxWidth: 1200,
+      maxWidth: WEB_CONTENT_MAX_WIDTH,
       alignSelf: 'center',
       width: '100%',
     }),

@@ -1,0 +1,1047 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_13",
+    "title": "SMITE 2 Open Beta 13",
+    "infoboxTitle": "OB13 - SMITE 2 Open Beta 13",
+    "releaseDate": "July 1, 2025",
+    "bonusUpdate": null,
+    "hotfixes": "OB13 July 11 Hotfix",
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_12",
+      "next": "SMITE_2_Open_Beta_14"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 13,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "OB13 Recap",
+      "anchor": "OB13_Recap",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "OB13 Recap"
+            },
+            {
+              "text": ""
+            },
+            {
+              "text": ""
+            },
+            {
+              "text": ""
+            },
+            {
+              "text": ""
+            },
+            {
+              "text": ""
+            },
+            {
+              "text": ""
+            },
+            {
+              "text": ""
+            },
+            {
+              "text": ""
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Thanks to u/BluesUltra on Reddit"
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Ported God",
+      "anchor": "New_Ported_God",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Mercury",
+              "bold": true,
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Melee Basic Attacks"
+                    },
+                    {
+                      "text": "Damage Type: Physical"
+                    },
+                    {
+                      "text": "Scaling Type: Strength Scaling"
+                    }
+                  ]
+                },
+                {
+                  "text": "Passive: Fastest God Alive",
+                  "items": [
+                    {
+                      "text": "For every 1cm traveled, gain 0.04% bonus damage on next Basic Attack (max 20%)"
+                    },
+                    {
+                      "text": "Gain Strength equal to 25% of Movement Speed from items or abilities"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 1: Made You Look",
+                  "items": [
+                    {
+                      "text": "Instantly move and deal Physical Damage in a target area"
+                    },
+                    {
+                      "text": "Can Critically Hit, apply Ability and Basic Attack Item effects"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 2: Maximum Velocity",
+                  "items": [
+                    {
+                      "text": "Passive: Increased Movement Speed"
+                    },
+                    {
+                      "text": "Active: Gain Attack Speed, cleanse Slows, and gain Slow immunity"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 3: Special Delivery",
+                  "items": [
+                    {
+                      "text": "Dash forward, knock minions aside, and grab first enemy god"
+                    },
+                    {
+                      "text": "Deals Physical Damage over time and throws the god at the end"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ultimate Ability: Sonic Boom",
+                  "items": [
+                    {
+                      "text": "Charge a long-range dash, then deal Physical Damage and spin enemies"
+                    },
+                    {
+                      "text": "Gain Movement Speed based on charge time"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Travelers",
+      "anchor": "New_Travelers",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Classic Beach Babe Aphrodite Skin – Instantly unlocked (Premium Page)"
+            },
+            {
+              "text": "Beach Babe Aqua Splash – Prism"
+            },
+            {
+              "text": "Beach Babe White Sands – Prism"
+            },
+            {
+              "text": "Beach Babe Midnight Cove – Prism"
+            },
+            {
+              "text": "Beach Vibes Only – Badge"
+            },
+            {
+              "text": "Inflicted Jealousy – Aphrodite Tracker"
+            },
+            {
+              "text": "Classic Chef’s Special Khepri Skin – Instantly unlocked (Premium Page)"
+            },
+            {
+              "text": "Chef’s Special – Beach Blue Prism"
+            },
+            {
+              "text": "Chef’s Special – Bumblesea Prism"
+            },
+            {
+              "text": "Chef’s Special – Stormtide Prism"
+            },
+            {
+              "text": "Chef’s Special – Razzleshade Prism"
+            },
+            {
+              "text": "Grillmaster – Badge"
+            },
+            {
+              "text": "Chef – Title"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Skins and Cosmetics",
+      "anchor": "New_Skins_and_Cosmetics",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Cross-Gen Skins",
+              "bold": true,
+              "lead": "(50% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Trash Goblin Scylla"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Prisms",
+              "bold": true,
+              "lead": "(100% Diamonds)",
+              "items": [
+                {
+                  "text": "Pale Pest"
+                },
+                {
+                  "text": "Ruby Rummager"
+                },
+                {
+                  "text": "Possum Punk"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Cosmetics",
+              "bold": true,
+              "items": [
+                {
+                  "text": "GG in Freedom Colors – Global Emote (Independence Day Event)"
+                },
+                {
+                  "text": "Announcer Packs: Bart, Celestial Deliverer, Fabulous, Hinduman, Pixel Lancer (Classic Chest)"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Game Modes",
+      "anchor": "Game_Modes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Quick Play Arena",
+          "anchor": "Quick_Play_Arena",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "10-minute matches with roguelike builds"
+                },
+                {
+                  "text": "Choose between 3 playstyles, then select Tier 3 items (no shop access)"
+                },
+                {
+                  "text": "Features Dodge Button, Faster Projectiles, Faster Match Pacing"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Action Cam 2.0",
+          "anchor": "Action_Cam_2.0",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Shooter-style camera available in all modes"
+                },
+                {
+                  "text": "Crosshair locked to screen center"
+                },
+                {
+                  "text": "Vertical aiming enabled for Ranged gods"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Gameplay Changes",
+      "anchor": "Gameplay_Changes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Nu Wa: Aspect of Shining Mist (Releasing July 8)",
+          "anchor": "Nu_Wa:_Aspect_of_Shining_Mist_(Releasing_July_8)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fog travels a short distance and grants Stealth + Basic Attack"
+                },
+                {
+                  "text": "Fire Shards now scale with Basic Attack Power, can Crit, and apply Item Effects"
+                },
+                {
+                  "text": "Strength of Fire grants Attack Speed"
+                },
+                {
+                  "text": "Reduced Shining Metal scaling"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Engine & UI Improvements",
+      "anchor": "Engine_&amp;_UI_Improvements",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Upgraded to Unreal Engine 5.5"
+            },
+            {
+              "text": "Xbox performance improvements"
+            },
+            {
+              "text": "Visual updates to Play Button and Queue Screen"
+            },
+            {
+              "text": "Hit/Kill Markers added"
+            },
+            {
+              "text": "New Reticle options"
+            },
+            {
+              "text": "Lobby position adjustments"
+            },
+            {
+              "text": "Audio rebalance"
+            },
+            {
+              "text": "Red outline replaces red screen overlay"
+            },
+            {
+              "text": "White flash hit reaction (toggleable)"
+            },
+            {
+              "text": "Steam friend messaging + login notifications"
+            },
+            {
+              "text": "Party management from end of match"
+            },
+            {
+              "text": "Improved Damage Numbers"
+            },
+            {
+              "text": "Close buttons added to popups"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Co-Op Bot Additions",
+      "anchor": "Co-Op_Bot_Additions",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Medusa"
+            },
+            {
+              "text": "Ganesha"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Misc. Improvements",
+      "anchor": "Misc._Improvements",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Khepri’s ability targeters updated"
+            },
+            {
+              "text": "Skin purchase UI shows currency + savings"
+            },
+            {
+              "text": "Nu Wa minion dash VFX and footstep sounds fixed"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "God Balance Changes",
+      "anchor": "God_Balance_Changes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Buffs",
+          "anchor": "Buffs",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Agni",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Aspect of Combustion",
+                      "items": [
+                        {
+                          "text": "Combustion damage multiplier per Ignite Stack from 30% to 20%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Rain Fire (4)",
+                      "items": [
+                        {
+                          "text": "Decreased Cooldown from 20s to 18s"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Achilles",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Shield of Achilles (1)",
+                      "items": [
+                        {
+                          "text": "Increased falloff damage from 70% to 80%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Combat Dodge",
+                      "items": [
+                        {
+                          "text": "Increased damage from 65/100/135/170/205 to 65/105/145/185/225"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Bellona",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Scourge (3)",
+                      "items": [
+                        {
+                          "text": "Increased heal from 5/6/7/8/9 to 10 at all ranks"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Eagle’s Rally (4)",
+                      "items": [
+                        {
+                          "text": "Increased damage from 220/305/390/475/560 to 300/370/440/510/580"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Cerberus",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Stygian Torment (4)",
+                      "items": [
+                        {
+                          "text": "Decreased Cooldown from 100s to 90s"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Danzaburou",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Fool's Gold (1)",
+                      "items": [
+                        {
+                          "text": "Decreased Cooldown from 12s to 11s"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Uproarious Rocket (4)",
+                      "items": [
+                        {
+                          "text": "Increased Damage from 300/360/420/480/540 to 400/450/500/550/600"
+                        },
+                        {
+                          "text": "Increased Intelligence Scaling from  70% to 100%"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Geb",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Roll Out (1)",
+                      "items": [
+                        {
+                          "text": "Fixed the Dash Attack having too much damage scaling,"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Aspect of Calamity Roll Out (1)",
+                      "items": [
+                        {
+                          "text": "Increased Leap Damage Scaling from 50% to 75%"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Hercules",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Mitigate Wounds (3)",
+                      "items": [
+                        {
+                          "text": "Increased healing from Recent Damage Taken from 20/26/32/38/44% to 30/35/40/45/50%"
+                        },
+                        {
+                          "text": "Increased Bonus Protections from 20% to 30% of Protection from Items"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Hua Mulan",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Cross Strike (1)",
+                      "items": [
+                        {
+                          "text": "Increased Damage from 75/95/115/135/155 to 85/105/125/145/165, this affects both strikes when Adept"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Spear Thrust (2)",
+                      "items": [
+                        {
+                          "text": "Increased Heal from 12/23/34/45/56 to 20/30/40/50/60"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Kukulkan",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Slipstream (2)",
+                      "items": [
+                        {
+                          "text": "Now grants Movement Speed when using Dash"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Nemesis",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Aspect of Justice Divine Judgement (4)",
+                      "items": [
+                        {
+                          "text": "Healing is now Anti-Heal immune"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Scylla",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Aspect of the Devourer Quick Learner (P)",
+                      "items": [
+                        {
+                          "text": "Grants Base and Item Mana Regen and Mana on level up"
+                        },
+                        {
+                          "text": "Increased Max Mana gain on enemy god hit from 1% to 2%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "I’m a Monster (4)",
+                      "items": [
+                        {
+                          "text": "Cooldown removed from 90s to 0s"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Nerfs (from OB12 Hotfixes)",
+          "anchor": "Nerfs_(from_OB12_Hotfixes)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Princess Bari",
+                  "bold": true,
+                  "lead": "– Spirit’s Cadence (4)",
+                  "items": [
+                    {
+                      "text": "Slow debuff removed"
+                    }
+                  ]
+                },
+                {
+                  "text": "Hun Batz",
+                  "bold": true,
+                  "lead": "– Somersault (1)",
+                  "items": [
+                    {
+                      "text": "Ability always does 25% damage on the start of the leap and the full damage on landing"
+                    }
+                  ]
+                },
+                {
+                  "text": "Kali",
+                  "bold": true,
+                  "lead": "– Incense (3)",
+                  "items": [
+                    {
+                      "text": "Decreased Strength buff from 10/17/24/31/38 to 10/15/20/25/30"
+                    },
+                    {
+                      "text": "Decreased Intelligence buff from 15/25/35/45/55 to 14/21/28/35/42"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ganesha",
+                  "bold": true,
+                  "lead": "– Aspect of the Triumphant – Ohm (2)",
+                  "items": [
+                    {
+                      "text": "Protections buff for Allies and Self removed"
+                    },
+                    {
+                      "text": "Decreased Movement Speed from 25% to 20%"
+                    },
+                    {
+                      "text": "Decreased Damage from 35/45/55/65/75 to 30/40/50/60/70"
+                    },
+                    {
+                      "text": "Decreased Intelligence Scaling per tick from 30% to 25%"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Item Balance Changes",
+      "anchor": "Item_Balance_Changes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Buffs",
+          "anchor": "Buffs_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Berserker’s Shield",
+                  "items": [
+                    {
+                      "text": "Increased Physical Protection from 15 to 20"
+                    }
+                  ]
+                },
+                {
+                  "text": "Contagion",
+                  "items": [
+                    {
+                      "text": "Increased Health Regen from 6 to 8"
+                    },
+                    {
+                      "text": "Increased Cooldown Reduction per enemy ability use from 0.25s to 0.5s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Genji’s Guard",
+                  "items": [
+                    {
+                      "text": "Increased Magical Protection from 40 to 45"
+                    },
+                    {
+                      "text": "Decreased Passive Cooldown from 20s to 15s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Gladiator’s Shield",
+                  "items": [
+                    {
+                      "text": "Increased Bonus Damage from 40% to 10 + 40% of your Item Protections"
+                    }
+                  ]
+                },
+                {
+                  "text": "Lifebinder",
+                  "items": [
+                    {
+                      "text": "Decreased Recipe Cost from 850 to 750"
+                    }
+                  ]
+                },
+                {
+                  "text": "Runeforged",
+                  "items": [
+                    {
+                      "text": "Decreased Recipe Cost from 1100 to 950"
+                    }
+                  ]
+                },
+                {
+                  "text": "Shogun’s Ofuda",
+                  "items": [
+                    {
+                      "text": "Increased Magical Protection from 25 to 30"
+                    },
+                    {
+                      "text": "Increased Passive Attack Speed from 15% to 20%"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Nerfs / Fixes",
+          "anchor": "Nerfs_/_Fixes",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Circe’s Hexstone",
+                  "items": [
+                    {
+                      "text": "Increased Cost from 2600 to 2750"
+                    },
+                    {
+                      "text": "Cooldown is now 120s but if you hit an enemy god it stays at 80s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Heartseeker",
+                  "items": [
+                    {
+                      "text": "Decreased Max%Health Damage Scaling from 3% to 2.5% Strength"
+                    }
+                  ]
+                },
+                {
+                  "text": "Spirit Robe",
+                  "items": [
+                    {
+                      "text": "Fixed a bug where healing from this item was stacking and proccing multiple times"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Conquest Changes",
+      "anchor": "Conquest_Changes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Side Teleporters unlock at 10:00"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Arena Changes",
+      "anchor": "Arena_Changes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Siege Minotaurs now spawn every 3 minutes for both teams"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Other Notes",
+      "anchor": "Other_Notes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "OB13 launches July 1"
+            },
+            {
+              "text": "Aspect of Shining Mist (Nu Wa) releases July 8"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 7/1/25",
+      "anchor": "Hotfix_7/1/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed an issue where Mercury could use Special Delivery (3) while Rooted/Crippled"
+            },
+            {
+              "text": "Fixed an issue where Cripples would stop Mercury's Sonic Boom (4)"
+            },
+            {
+              "text": "Sonic Boom (4) is now less sensitive to colliding with world geometry"
+            },
+            {
+              "text": "Fixed issues with Obsidian Shard, Demon Blade, Stone of Binding, and Hastened Fatalis not applying their stats/effects"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 7/3/25",
+      "anchor": "Hotfix_7/3/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Reduced the level requirement to play Classic Queues from 10 to 5"
+            },
+            {
+              "text": "Reduced the amount of Tickets in Quickplay Arena from 400 to 350"
+            },
+            {
+              "text": "Resolved multiple issues on PC for players using mixed inputs (Controller + Mouse & Keyboard)"
+            },
+            {
+              "text": "Rama Fix/Buff - Rama's Basic Attacks while using Astral Strike (1) should now knockback minions directly backwards, rather than left or right if the projectile hit them off center"
+            },
+            {
+              "text": "Disabled the ability to beads during Aladdin's Ultimate channel/stasis. This fixes an issue where you could use beads and they would not do anything but still go on cooldown"
+            },
+            {
+              "text": "Mercury's Made You Look (1) now scales off 70% Basic Attack Damage rather than 70% Strength (this means the ability will deal more damage always)"
+            },
+            {
+              "text": "Fixed several crash cases"
+            },
+            {
+              "text": "Fixed an issue where the Joust Teleporter was disabled for the first 10 minutes of a match"
+            },
+            {
+              "text": "Fixed an issue on the Assault map where there were large areas with unintentional blue lighting"
+            },
+            {
+              "text": "Added Sound FX to the new Queue Screen"
+            },
+            {
+              "text": "Fixed an issue where Mercury's basic Attacks could get desynced when using Maximum Velocity (2) mid attack chain"
+            },
+            {
+              "text": "Fixed an issue where sometimes minions would \"moonwalk\" and behave in an unintended way"
+            },
+            {
+              "text": "Adjusted Combat Dodge in Quickplay to better match jump animations"
+            },
+            {
+              "text": "Fixed an issue where Mercury's Maximum Velocity (2) was making him root immune"
+            },
+            {
+              "text": "Fixed an issue where Mercury's Special Delivery (3) was not knockup immune"
+            },
+            {
+              "text": "Fixed an issue where Mercury could get stuck in a \"spinning\" animation state after using Special Delivery (3)"
+            },
+            {
+              "text": "Fixed an issue where Mercury's Passive was buffing the Strength contribution to his empowered Basic Attack"
+            },
+            {
+              "text": "Fixed an issue where Global Emotes were appearing too large for players using Action Cam"
+            },
+            {
+              "text": "Fixed an issue where Awilix could no longer summon Suku if she died to Mercury's Special Delivery (3) while on Suku"
+            },
+            {
+              "text": "Fixed an issue where the Mouse cursor was not showing up on Xbox"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 7/11/25",
+      "anchor": "Hotfix_7/11/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Addressed a few crash cases"
+            },
+            {
+              "text": "Fixed an issue where you could lose focus and have your cursor disappear in Quickplay when attempting to use the Draft Item Buy system"
+            },
+            {
+              "text": "Fixed an issue where Vulcan Mods were missing from the Split layout store"
+            },
+            {
+              "text": "Fixed an issue in the End of Match Lobby where the “One More Game” button was overlapping unintended portions of the screen"
+            },
+            {
+              "text": "Fixed an issue where Izanami’s Basic Attacks would persist in the air and deal damage if you were using Action Cam"
+            },
+            {
+              "text": "Fixed an issue where Minotaurs would sometimes be invulnerable in Assault"
+            },
+            {
+              "text": "Fixed an issue where Assault End of Match Lobby chat was ending too soon"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

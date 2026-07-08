@@ -1,0 +1,690 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_18",
+    "title": "SMITE 2 Open Beta 18",
+    "infoboxTitle": "OB18 - SMITE 2 Open Beta 18",
+    "releaseDate": "Sept 9th, 2025",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_17",
+      "next": "SMITE_2_Open_Beta_19"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 18,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Ported God",
+      "anchor": "New_Ported_God",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Tsukuyomi",
+          "anchor": "Tsukuyomi",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "General"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Melee Basic Attacks"
+                },
+                {
+                  "text": "Damage Type: Physical & Magical"
+                },
+                {
+                  "text": "Scaling Type: Strength & Intelligence Scaling"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Passive: Shingetsu & Mangetsu"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Damaging enemies empowers your twin tonfas, Shingetsu and Mangetsu",
+                  "items": [
+                    {
+                      "text": "Empowered Shingetsu cleaves and restores mana"
+                    },
+                    {
+                      "text": "Empowered Mangetsu deals bonus damage and restores health"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 1: Dark Moon Shuriken"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Throw a shuriken that deals physical damage to enemies and sticks into the first god hit",
+                  "items": [
+                    {
+                      "text": "Retrieving the shuriken from a god reduces the abilities cooldown"
+                    },
+                    {
+                      "text": "After casting, your next Shingetsu attack becomes a ranged attack that steals movement speed."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 2: Kusarigama"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Perform a three-swing combo with Kusarigama. The first two swings deal damage and disarm enemies. The final swing deals more damage."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 3: Silver Moon Caltrops"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Scatter Caltrops in an area, dealing damage and slowing enemies"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ultimate Ability: Piercing Moonlight"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fire 4 piercing beams of moonlight, marking and dealing damage to enemy gods.",
+                  "items": [
+                    {
+                      "text": "After firing, dash through all marked gods in order dealing damage with each strike."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Aspect releasing Mangetsu - Released 12th September"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "When gaining Shingetsu ranged attack, they become Magnetsu ranged attacks instead. Dark Moon Shuriken no longer sticks to gods. Piercing Moonlight hits each target only once for major damage in an AOE, before returning to his casting location."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Wandering Market",
+      "anchor": "New_Wandering_Market",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "The Survivor - Ullr",
+          "anchor": "The_Survivor_-_Ullr",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The Survivor Ullr Skin - Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "The Survivor -Fangslayer"
+                    },
+                    {
+                      "text": "The Survivor - Corsecaller"
+                    },
+                    {
+                      "text": "The Survivor - “as Chuck Killigan”"
+                    },
+                    {
+                      "text": "Survivor - Title"
+                    },
+                    {
+                      "text": "Pumpkin - Reaping Event"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Vampiress - Sol",
+          "anchor": "Vampiress_-_Sol",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Vampiress Skin - Instantly unlocked after purchasing the Premium Traveler Page"
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Vampiress - Moonlit Mistress"
+                    },
+                    {
+                      "text": "Vampiress - Blood Rose"
+                    },
+                    {
+                      "text": "Vampiress - Ultraviolet"
+                    },
+                    {
+                      "text": "Chonky Floof Bat - Ward Skin"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Supporter Store",
+      "anchor": "New_Supporter_Store",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Halloween 2025 - 8 Base Color Name Flairs",
+          "anchor": "Halloween_2025_-_8_Base_Color_Name_Flairs",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Plague Bloom"
+                },
+                {
+                  "text": "Autumn Sunset"
+                },
+                {
+                  "text": "Halloween Pumpkins"
+                },
+                {
+                  "text": "Plague Bloom"
+                },
+                {
+                  "text": "Halloween Ghosts"
+                },
+                {
+                  "text": "Pumpkin Veil"
+                },
+                {
+                  "text": "Acid Pulse"
+                },
+                {
+                  "text": "Halloween Candy"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Halloween 2025 - 8 Animated Name Flairs",
+          "anchor": "Halloween_2025_-_8_Animated_Name_Flairs",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Phantom Bloom - Sine Wave"
+                },
+                {
+                  "text": "Hellstream - Sine Wave"
+                },
+                {
+                  "text": "Hauntstream - Sine Wave"
+                },
+                {
+                  "text": "Halloween Candy - Banner"
+                },
+                {
+                  "text": "Halloween Ghosts - Banner"
+                },
+                {
+                  "text": "Acid Pulse - Banner"
+                },
+                {
+                  "text": "Pumpkin Veil - Banner"
+                },
+                {
+                  "text": "Halloween Pumpkins - Banner"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Skins and Cosmetics",
+      "anchor": "New_Skins_and_Cosmetics",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Cross-Gen Skins (purchasable for 50% Legacy Gems)",
+          "anchor": "Cross-Gen_Skins_(purchasable_for_50%_Legacy_Gems)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Guiding Light Ganesha"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Reaping Event",
+      "anchor": "Reaping_Event",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Collect Pumpkins through the Candy Quest and Travelers to unlock rewards",
+              "items": [
+                {
+                  "text": "Rewards include:",
+                  "items": [
+                    {
+                      "text": "Princess Bari - Spooky Oracle"
+                    },
+                    {
+                      "text": "Chaac - Slaughterhouse"
+                    },
+                    {
+                      "text": "Spoopy Jump Stamp"
+                    },
+                    {
+                      "text": "Jack-O-Lantern Badge"
+                    },
+                    {
+                      "text": "Candy Corn Ward Skin"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Gameplay",
+      "anchor": "Gameplay",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Conquest",
+          "anchor": "Conquest",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fire Imps",
+                  "items": [
+                    {
+                      "text": "Are now considered bosses.",
+                      "items": [
+                        {
+                          "text": "Basically make this more approachable for solo laners, less required by the jungler."
+                        },
+                        {
+                          "text": "Decreased base Max Health from 1200 to 700"
+                        },
+                        {
+                          "text": "Decreased base Physical Power from 24 to 18"
+                        },
+                        {
+                          "text": "Decreased base Protections from 26 to 22"
+                        },
+                        {
+                          "text": "Decreased base XP reward from 80 to 70"
+                        },
+                        {
+                          "text": "Decreased base Gold reward from 50 to 40"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Jungle Monsters",
+                  "items": [
+                    {
+                      "text": "Adjusted when they can attack to be after three attacks."
+                    }
+                  ]
+                },
+                {
+                  "text": "Lane Minion Proxy Protection is now disabled after 5 minutes"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Balance",
+      "anchor": "Balance",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Gods",
+          "anchor": "Gods",
+          "level": 3,
+          "content": []
+        },
+        {
+          "title": "Items",
+          "anchor": "Items",
+          "level": 3,
+          "content": []
+        }
+      ]
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Gods",
+          "anchor": "Gods_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where Ganesha Turn of fate could kill you if you used FG Dagger"
+                },
+                {
+                  "text": "Mordred/Danza Dashes going through enemies"
+                },
+                {
+                  "text": "Baron Aspect was unintentionally giving damage reduction."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Audio",
+          "anchor": "Audio",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue with Sol Meltdown forgetting one of her jokes, she now recalls going on an unexpected date with Ymir"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 9/9/25",
+      "anchor": "Hotfix_9/9/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "General",
+          "anchor": "General",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed The Reaping assist quest 3 sometimes not working."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Gods",
+          "anchor": "Gods_3",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Tsukuyomi",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Kusarigama (2)",
+                      "items": [
+                        {
+                          "text": "Fixed ability from being CC buffer able. Hard CCs will now properly stop this ability."
+                        },
+                        {
+                          "text": "Fixed a cancel exploit."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Silver Moon Caltrops",
+                      "items": [
+                        {
+                          "text": "Fixed an issue with slow immunities still effecting god abilities and items."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Piercing Moonlight (Ult)",
+                      "items": [
+                        {
+                          "text": "Removed enhanced projectiles on death."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 9/10/25",
+      "anchor": "Hotfix_9/10/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Gods",
+          "anchor": "Gods_4",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Janus",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Fixed Janus being able to leave the map with ability 1 in the corners of the base in Assault"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Tsukuyomi",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Can no longer cancel ability 2 for free benefit (Poly, Hydra's, etc)"
+                    },
+                    {
+                      "text": "Fixed targeters persisting on respawn"
+                    },
+                    {
+                      "text": "Fixed lobby intro particles lingering if switching between gods"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Misc",
+          "anchor": "Misc",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed Yemoja ability 1 playing on Aladdin lamp exit"
+                },
+                {
+                  "text": "In certain situations, simplified the item store thinking items are not available for purchase"
+                },
+                {
+                  "text": "Wandering market redirect doesn't work sometimes"
+                },
+                {
+                  "text": "Fixed voice volume not being able on client launch"
+                },
+                {
+                  "text": "Help tip popups don't apply keywords properly"
+                },
+                {
+                  "text": "Fixed candy corn fx not showing at low settings"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 9/10/25 #2",
+      "anchor": "Hotfix_9/10/25_#2",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed a crash with Tsukuyomi Ult while targets transitioning to Aladdin's lamp"
+                },
+                {
+                  "text": "Fixed Hecate's ability 2 dealing 0 damage if you have 0 charges"
+                },
+                {
+                  "text": "Fixed Fenir Ult from not being able to grab displacement immune targets"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 9/11/25",
+      "anchor": "Hotfix_9/11/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_3",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixing Mercury Ult sometimes not hitting enemies (we're still investigating issues with his 3)"
+                },
+                {
+                  "text": "Tsukuyomi 1 can now properly be slow cleansed"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,821 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_11",
+    "title": "SMITE 2 Open Beta 11",
+    "infoboxTitle": "OB11 - SMITE 2 Open Beta 11",
+    "releaseDate": "June 2, 2025",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_10",
+      "next": "SMITE_2_Open_Beta_12"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 11,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Ported God",
+      "anchor": "New_Ported_God",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Scylla",
+              "bold": true,
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Ranged Basic Attacks"
+                    },
+                    {
+                      "text": "Damage Type: Magical"
+                    },
+                    {
+                      "text": "Scaling Type: Intelligence Scaling"
+                    }
+                  ]
+                },
+                {
+                  "text": "Passive: Quick Learner",
+                  "items": [
+                    {
+                      "text": "Your abilities gain an additional effect at max rank. In addition, gain Intelligence and Mana Regen for each max rank ability"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 1: Sic ‘Em",
+                  "items": [
+                    {
+                      "text": "Send two hounds forward, Rooting, Crippling, and dealing Magical Damage",
+                      "items": [
+                        {
+                          "text": "At max rank, the two closest enemies to the first target will also be hit"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 2: Crush",
+                  "items": [
+                    {
+                      "text": "Creates a magical field that Slows enemies. After 5s it detonates, dealing Magical Damage",
+                      "items": [
+                        {
+                          "text": "At max rank, enemies in the area also have their Magical Protection reduced and the field persists if detonated early"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 3: Sentinel",
+                  "items": [
+                    {
+                      "text": "Summon a sentinel at the target area, granting vision of enemies for 5s. Reactivate the ability to Leap to the sentinel location and gain a buff that causes your next Basic Attack to deal Magical Damage",
+                      "items": [
+                        {
+                          "text": "At max rank, hitting an enemy god with the empowered Basic Attack reduces your active ability cooldowns"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ultimate Ability: I’m a Monster",
+                  "items": [
+                    {
+                      "text": "Become CC Immune for the next 6s, and gain Movement Speed. Reactivate to deal Magical Damage at the target area",
+                      "items": [
+                        {
+                          "text": "If you kill an enemy god with the attack, the duration resets and you may attack again."
+                        },
+                        {
+                          "text": "Whenever this ability deals damage to enemy gods you gain 1 stack, killing enemy gods provides 3. At max rank, each stack provides bonus damage to this ability."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Wandering Market Collection - Spellbound Realms",
+      "anchor": "New_Wandering_Market_Collection_-_Spellbound_Realms",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Page 1 - Free for all players!",
+              "items": [
+                {
+                  "text": "Arcane Ape Hun Batz Skin"
+                },
+                {
+                  "text": "Classic Announcer Pack Chest"
+                },
+                {
+                  "text": "Sword and the Lilly Stone Badge"
+                },
+                {
+                  "text": "Adventurer Title"
+                },
+                {
+                  "text": "Bells Rung Princess Bari Tracker"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Page 2",
+              "items": [
+                {
+                  "text": "Magic Mischief Merlin Skin"
+                },
+                {
+                  "text": "100 Diamonds"
+                },
+                {
+                  "text": "Crystal Vessel Badge"
+                },
+                {
+                  "text": "Shattered Shot Jump Stamp"
+                },
+                {
+                  "text": "Dragon’s Head Ward Skin"
+                },
+                {
+                  "text": "Ascension Pass Token"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Page 3",
+              "items": [
+                {
+                  "text": "Shattered Vision Princess Bari Skin"
+                },
+                {
+                  "text": "100 Diamonds"
+                },
+                {
+                  "text": "Book of Fantasy Rules Badge"
+                },
+                {
+                  "text": "Belly Flop Launches Bacchus Tracker"
+                },
+                {
+                  "text": "Flight of Fancy Card FX"
+                },
+                {
+                  "text": "Roll the Dice Jump Stamp"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Page 4",
+              "items": [
+                {
+                  "text": "Sir Croakus Bacchus Skin"
+                },
+                {
+                  "text": "100 Diamonds"
+                },
+                {
+                  "text": "Rucksack Duck Ward Skin"
+                },
+                {
+                  "text": "Healing Magic Merlin tracker"
+                },
+                {
+                  "text": "Classic Skin Chest"
+                },
+                {
+                  "text": "Game Master Title"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Skins and Cosmetics",
+      "anchor": "New_Skins_and_Cosmetics",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Classic Skins (purchasable for 100% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Soul Piercer Achilles"
+                }
+              ]
+            },
+            {
+              "text": "Prisms (purchasable for 100% Diamonds)",
+              "items": [
+                {
+                  "text": "Soul Piercer - Veil Striker"
+                },
+                {
+                  "text": "Soul Piercer - Frigid Warden"
+                },
+                {
+                  "text": "Soul Piercer - Golden Wrath"
+                },
+                {
+                  "text": "Magic Mischief - Flamekeeper"
+                },
+                {
+                  "text": "Magic Mischief - Emerald Sage"
+                },
+                {
+                  "text": "Magic Mischief - Glimmermancer"
+                }
+              ]
+            },
+            {
+              "text": "Cross-Gen Skins (purchasable for 50% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Wraith Rider Guan Yu"
+                }
+              ]
+            },
+            {
+              "text": "Cosmetics",
+              "items": [
+                {
+                  "text": "#1 Dad Mug Badge, available in the Father’s Day Event"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Gameplay",
+      "anchor": "Gameplay",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Pele",
+              "items": [
+                {
+                  "text": "Aspect of Obsidian - Releasing June 6",
+                  "items": [
+                    {
+                      "text": "You only gain Fuel from Pyroclast and when damaged by enemies instead of over time. Magma Rush can no longer be refired but now provides Healing. Additionally Everlasting Flame now provides Protections instead of Strength and Lifesteal, and Volcanic Lightning damage no longer has Strength Scaling."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Baron Samedi",
+              "items": [
+                {
+                  "text": "Aspect of Hysteria - Releasing June 9",
+                  "items": [
+                    {
+                      "text": "Hysteria applied over max deals damage. Max Hysteria no longer reduces damage. Consign Spirits only heals Baron. Vivid Gaze bonus now grants Hysteria over time, but no debuff.  Wrap It Up explosion and DoT apply Bonus Hysteria, but the explosion no longer Mesmerizes. Your personal Brew can be thrown every 20s."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Game Modes",
+      "anchor": "Game_Modes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Conquest",
+          "anchor": "Conquest",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The Titan will now cleave familiars (EX: Naga Soldiers) and deal double damage vs. familiars"
+                },
+                {
+                  "text": "Gold Fury Gilded Strength buff (on third Gold Fury Kill) now correctly provides 25% increased bonus structure damage. It was dealing 50%.",
+                  "items": [
+                    {
+                      "text": "This buff no longer affects item procs."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Athena Buff",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Shield Wall (3)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 14s to 14/13.5/13/12.5/12"
+                    }
+                  ]
+                },
+                {
+                  "text": "Defender of Olympus (4)",
+                  "items": [
+                    {
+                      "text": "Increased Shield Max Health Scaling from 12.5% to 15%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Ares Buff",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Searing Flesh (3)",
+                  "items": [
+                    {
+                      "text": "Increased Damage Per Tick from 15/20/25/30/35 to 20/25/30/35/40"
+                    }
+                  ]
+                },
+                {
+                  "text": "No Escape (4)",
+                  "items": [
+                    {
+                      "text": "Increased Initial Damage from 60/80/110/120/140 to 80/110/140/170/200"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Hecate Buff",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Repel Magic (3)",
+                  "items": [
+                    {
+                      "text": "Increased Magical Shield Health from 70/140/210/280/350 to 90/155/220/285/350"
+                    }
+                  ]
+                },
+                {
+                  "text": "Open the Gates (4)",
+                  "items": [
+                    {
+                      "text": "Increased Damage from 280/335/390/445/500 to 320/370/420/470/520"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Nemesis Buff",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Divine Judgement (4)",
+                  "items": [
+                    {
+                      "text": "Increased Damage from 10/12.5/15/17.5/20% to 15/17.5/20/22.5/25% of enemy’s Current Health"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Thanatos Buff",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Death Scythe (1)",
+                  "items": [
+                    {
+                      "text": "Increased Bonus damage dealt to Gods from 10% to 12.5% of their Max Health"
+                    },
+                    {
+                      "text": "Increased Strength Scaling from 80% to 85%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Scent of Death (2)",
+                  "items": [
+                    {
+                      "text": "Increased low health Bonus Damage from 5/7.5/10/12.5/15% to 15%"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Blood-soaked Shroud Buff",
+              "items": [
+                {
+                  "text": "Increased Max Health from 225 to 275"
+                },
+                {
+                  "text": "Increased Healing obtained from hitting enemy gods from 1% to 2%"
+                }
+              ]
+            },
+            {
+              "text": "Contagion Buff",
+              "items": [
+                {
+                  "text": "Note - This item had its Max Health increased from 400 to 500",
+                  "items": [
+                    {
+                      "text": "This buff has already been live"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Doom Orb Buff",
+              "items": [
+                {
+                  "text": "Decreased buff duration from 15s to 10s"
+                },
+                {
+                  "text": "Stacks are now removed one at a time rather than all together"
+                }
+              ]
+            },
+            {
+              "text": "Death Metal Buff",
+              "items": [
+                {
+                  "text": "Decreased Cost from 2850 to 2700"
+                },
+                {
+                  "text": "Decreased Cooldown from 60s to 45s"
+                }
+              ]
+            },
+            {
+              "text": "Hide of the Nemean Lion Nerf",
+              "items": [
+                {
+                  "text": "The Active reflect is now 50% effective against abilities"
+                }
+              ]
+            },
+            {
+              "text": "Serrated Edge Buff",
+              "items": [
+                {
+                  "text": "Increased Strength per stack from 10 to 15"
+                }
+              ]
+            },
+            {
+              "text": "Stone of Binding Buff",
+              "items": [
+                {
+                  "text": "Decreased Threshold to apply a bonus stack from 150 Protections from Items to 120"
+                }
+              ]
+            },
+            {
+              "text": "Tekko-Kagi Buff",
+              "items": [
+                {
+                  "text": "Increased Strength from 40 to 50"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Quality of Life",
+              "items": [
+                {
+                  "text": "Totem Buff VFX now placed on ground around Phoenix instead of hovering above"
+                }
+              ]
+            },
+            {
+              "text": "Gods",
+              "items": [
+                {
+                  "text": "Susano",
+                  "items": [
+                    {
+                      "text": "Made adjustments to his Basic Attack timing and sounds to better line up with his hit."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Items",
+              "items": [
+                {
+                  "text": "Brawlers Ruin now correctly only provides the buff on your god Kills and Assists"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 6/4/25",
+      "anchor": "Hotfix_6/4/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Hotfix recap list with everything that's been fixed in SMITE 2 since the OB11 Update on Monday! These fixes are live on PC and Console."
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed Ranked progress not updating correctly"
+            },
+            {
+              "text": "Fixed Assault Meditation Relic not showing FX"
+            },
+            {
+              "text": "Merlin ability 1: Adjusted Outer Ring FX behavior and visibility when hitting targets to ensure clarity during combat."
+            },
+            {
+              "text": "Scylla ability 1: Resolved an issue where her decal appeared offset to the right in Practice Mode only."
+            },
+            {
+              "text": "Sobek Land Shark: Fixed a bug where the skin appeared blown out on Low settings."
+            },
+            {
+              "text": "Scylla (Shadow and Radiant Skins): Fixed a bug where her dogs were missing from the model."
+            },
+            {
+              "text": "Arcane Ape Hun Batz (Out-of-Game): Adjusted weapon offset to prevent clipping with hat."
+            },
+            {
+              "text": "Roll the Dice Jump Stamp: No longer invisible on Low settings during matches."
+            },
+            {
+              "text": "Shattered Shot Jump Stamp: FX now properly displays on Low settings."
+            },
+            {
+              "text": "Baron Samedi: Fixed an Issue where Baron's Brew cooldown could be reset by switching consumable slots"
+            },
+            {
+              "text": "Fixed an issuer were player names were appearing as \"...\" in several places"
+            },
+            {
+              "text": "Fixed an issue where the Beaky Bot Announcer Pack wasn't playing correctly"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 6/6/25",
+      "anchor": "Hotfix_6/6/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where Thanatos could get stuck in the ground"
+                },
+                {
+                  "text": "Fixed an issue where Bellona could get stuck in Shield stance Run Left and Right"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Item Balance",
+          "anchor": "Item_Balance_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Blood-Bound Book",
+                  "items": [
+                    {
+                      "text": "Increased Cost from 2400 to 2500"
+                    },
+                    {
+                      "text": "Reduced Lifesteal from 17% to 15%"
+                    },
+                    {
+                      "text": "Reduced Shield Health Contribution from 10% to 7.5% Max Health"
+                    },
+                    {
+                      "text": "Reduced Shield Scaling Contribution from 100% to 75% Intelligence"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "God Balance",
+          "anchor": "God_Balance_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Agni",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Aspect of Combustion",
+                      "items": [
+                        {
+                          "text": "Removed:",
+                          "bold": true,
+                          "detail": "Critical strikes no longer provide 2 stacks of Ignite"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Anubis",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "The Scales",
+                      "items": [
+                        {
+                          "text": "Decreased Lifesteal from 6% to 4% per stack"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Apollo Aspect",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "So Beautiful (1)",
+                      "items": [
+                        {
+                          "text": "NEW:",
+                          "bold": true,
+                          "detail": "Increased Enhanced So Beautiful Mana Cost from 0 to 20/25/30/35/40"
+                        },
+                        {
+                          "text": "Decreased Damage Scaling Contribution from 15% to 10% Item Health"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Serenade (2)",
+                      "items": [
+                        {
+                          "text": "Decreased Base Shield from 60/100/140/180/220 to 50/85/120/155/190"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Princess Bari",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Reverent Steps (3)",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 15s to 17/16.5/16/15.5/15s"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Scylla",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Fixed an issue where Crush could explode slightly faster than expected"
+                    },
+                    {
+                      "text": "Quick Learner (P)",
+                      "items": [
+                        {
+                          "text": "Decreased Intelligence from 25 to 20 per stack"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

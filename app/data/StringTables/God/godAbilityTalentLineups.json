@@ -1,0 +1,423 @@
+{
+  "description": "Per-god talent ability lineup. Each slot: \"base\" | \"talent\". Edit manually; run node scripts/generate-god-talent-lineups.js --write to refresh from string tables.",
+  "gods": {
+    "Anhur": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "base",
+        "A03": "base",
+        "A04": "base",
+        "PSV": "talent",
+        "BASIC": "base"
+      }
+    },
+    "Athena": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "base",
+        "A03": "base",
+        "A04": "talent",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Bacchus": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "talent",
+        "A02": "base",
+        "A03": "base",
+        "A04": "base",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Bellona": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "talent",
+        "A02": "base",
+        "A03": "talent",
+        "A04": "base",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Cernunnos": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "base",
+        "A03": "talent",
+        "A04": "base",
+        "PSV": "talent",
+        "BASIC": "talent"
+      }
+    },
+    "Cupid": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "base",
+        "A03": "base",
+        "A04": "base",
+        "PSV": "talent",
+        "BASIC": "base"
+      }
+    },
+    "Danzaburou": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "talent",
+        "A03": "base",
+        "A04": "base",
+        "PSV": "talent",
+        "BASIC": "base"
+      }
+    },
+    "Fenrir": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "talent",
+        "A02": "talent",
+        "A03": "talent",
+        "A04": "base",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Geb": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "talent",
+        "A02": "talent",
+        "A03": "base",
+        "A04": "base",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Khepri": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "talent",
+        "A02": "base",
+        "A03": "base",
+        "A04": "base",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Loki": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "talent",
+        "A02": "talent",
+        "A03": "base",
+        "A04": "base",
+        "PSV": "talent",
+        "BASIC": "base"
+      }
+    },
+    "Mordred": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "talent",
+        "A03": "base",
+        "A04": "base",
+        "PSV": "talent",
+        "BASIC": "base"
+      }
+    },
+    "Nemesis": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "base",
+        "A03": "base",
+        "A04": "talent",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Ra": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "base",
+        "A03": "talent",
+        "A04": "talent",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Thanatos": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "base",
+        "A03": "talent",
+        "A04": "base",
+        "PSV": "talent",
+        "BASIC": "base"
+      }
+    },
+    "TheMorrigan": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "base",
+        "A03": "talent",
+        "A04": "base",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Chaac": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "base",
+        "A03": "talent",
+        "A04": "base",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Neith": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "base",
+        "A03": "base",
+        "A04": "base",
+        "PSV": "talent",
+        "BASIC": "base"
+      }
+    },
+    "Hecate": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "talent",
+        "A03": "base",
+        "A04": "base",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Hercules": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "base",
+        "A03": "talent",
+        "A04": "base",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Ares": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "talent",
+        "A03": "base",
+        "A04": "base",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Rama": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "talent",
+        "A02": "base",
+        "A03": "base",
+        "A04": "base",
+        "PSV": "talent",
+        "BASIC": "base"
+      }
+    },
+    "Achilles": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "talent",
+        "A03": "talent",
+        "A04": "base",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Artemis": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "talent",
+        "A02": "base",
+        "A03": "base",
+        "A04": "base",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Merlin": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "base",
+        "A03": "base",
+        "A04": "talent",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Yemoja": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "talent",
+        "A02": "talent",
+        "A03": "base",
+        "A04": "talent",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Cerberus": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "talent",
+        "A03": "talent",
+        "A04": "talent",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Poseidon": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "talent",
+        "A02": "talent",
+        "A03": "base",
+        "A04": "base",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Agni": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "base",
+        "A03": "base",
+        "A04": "talent",
+        "PSV": "talent",
+        "BASIC": "base"
+      }
+    },
+    "Pele": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "talent",
+        "A02": "base",
+        "A03": "talent",
+        "A04": "talent",
+        "PSV": "talent",
+        "BASIC": "base"
+      }
+    },
+    "Scylla": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "base",
+        "A03": "base",
+        "A04": "talent",
+        "PSV": "talent",
+        "BASIC": "base"
+      }
+    },
+    "Ganesha": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "talent",
+        "A02": "talent",
+        "A03": "base",
+        "A04": "talent",
+        "PSV": "talent",
+        "BASIC": "base"
+      }
+    },
+    "Sobek": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "base",
+        "A03": "talent",
+        "A04": "base",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "NuWa": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "talent",
+        "A02": "base",
+        "A03": "talent",
+        "A04": "talent",
+        "PSV": "talent",
+        "BASIC": "base"
+      }
+    },
+    "SunWukong": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "talent",
+        "A02": "talent",
+        "A03": "talent",
+        "A04": "base",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Cabrakan": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "talent",
+        "A02": "talent",
+        "A03": "talent",
+        "A04": "talent",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    },
+    "Kukulkan": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "talent",
+        "A02": "talent",
+        "A03": "talent",
+        "A04": "base",
+        "PSV": "talent",
+        "BASIC": "base"
+      }
+    },
+    "HunBatz": {
+      "talentIndex": 1,
+      "slots": {
+        "A01": "base",
+        "A02": "base",
+        "A03": "talent",
+        "A04": "base",
+        "PSV": "base",
+        "BASIC": "base"
+      }
+    }
+  }
+}

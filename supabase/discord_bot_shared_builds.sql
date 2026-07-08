@@ -60,6 +60,9 @@ $$;
 GRANT EXECUTE ON FUNCTION public.get_discord_bot_shared_build(uuid) TO anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.save_discord_bot_shared_build(uuid, jsonb) TO anon, authenticated;
 
+-- Listing all bot drafts is revoked in security_hardening_economy.sql (token-only access).
+-- GRANT EXECUTE ON FUNCTION public.list_discord_bot_shared_builds() TO anon, authenticated;
+
 -- List all shared bot drafts for "View Builds" screen.
 CREATE OR REPLACE FUNCTION public.list_discord_bot_shared_builds()
 RETURNS TABLE (
@@ -82,4 +85,5 @@ AS $$
   ORDER BY d.updated_at DESC;
 $$;
 
-GRANT EXECUTE ON FUNCTION public.list_discord_bot_shared_builds() TO anon, authenticated;
+-- Do not grant list to clients — see security_hardening_economy.sql
+-- GRANT EXECUTE ON FUNCTION public.list_discord_bot_shared_builds() TO anon, authenticated;

@@ -1,0 +1,71 @@
+[
+  {
+    "Type": "StringTable",
+    "Name": "ST_HW_God_AbilityShortDescriptions",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'StringTable'",
+    "Package": "/Game/UI/StringTables/God/ST_HW_God_AbilityShortDescriptions",
+    "StringTable": {
+      "TableNamespace": "HW.God.Ability.ShortDescriptions",
+      "KeysToEntries": {
+        "Buff": "Buff",
+        "Stun": "Stun",
+        "Dash": "Dash",
+        "Execute": "Execute",
+        "Damage": "Damage",
+        "Zone": "Zone",
+        "Debuff": "Debuff",
+        "Protect": "Protect",
+        "Push": "Push",
+        "Leap": "Leap",
+        "Utility": "Utility",
+        "Knockback": "Knockback",
+        "Heal": "Heal",
+        "Immune": "Immune",
+        "Mezmerize": "Mezmerize",
+        "Flight": "Flight",
+        "Pull": "Pull",
+        "Root": "Root",
+        "Summon": "Summon",
+        "Taunt": "Taunt",
+        "TeleportTeleport": "Teleport",
+        "Mount": "Mount",
+        "Knockup": "Knockup",
+        "Mobility": "Mobility",
+        "Disarm": "Disarm",
+        "Tremble": "Tremble",
+        "Anti-Heal": "Anti-Heal",
+        "Slow": "Slow",
+        "Throw": "Throw",
+        "Polymorph": "Polymorph",
+        "Grab": "Grab",
+        "Silence": "Silence",
+        "Cooldown": "Cooldown",
+        "Shield": "Shield",
+        "Fear": "Fear",
+        "Stealth": "Stealth",
+        "Resurrect": "Resurrect",
+        "Blind": "Blind",
+        "SpeedUp": "Speed Up",
+        "Stance": "Stance",
+        "Charge": "Charge",
+        "Snipe": "Snipe",
+        "Cripple": "Cripple",
+        "Transform": "Transform",
+        "Tether": "Tether",
+        "Clone": "Clone"
+      },
+      "KeysToMetaData": {
+        "TeleportTeleport": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Tether": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "Clone": {
+          "METADATA_ID_COMMENT": ""
+        }
+      }
+    }
+  }
+]

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-22T17:47:45.463Z",
+  "generatedAt": "2026-07-06T16:56:49.142Z",
   "gods": {
     "merlin": {
       "Screenshot (680).png": {
@@ -271,17 +271,6 @@
         "parentSkinKey": "Grovebound",
         "parentSkinName": "Grovebound",
         "tier": "Prisms"
-      },
-      "Screenshot (697).png": {
-        "screenshot": "app/data/God Renders/mordred/Screenshot (697).png",
-        "fileName": "Screenshot (697).png",
-        "godName": "Mordred",
-        "displayName": "Lichborne",
-        "target": "skin",
-        "appliedTo": "Lichborne",
-        "skinKey": "LichSplash",
-        "skinName": "Lichborne",
-        "tier": "Epic"
       }
     },
     "morgan le fay": {
@@ -357,17 +346,6 @@
           "owned": false
         },
         "tier": "Heroic"
-      },
-      "Screenshot (703).png": {
-        "screenshot": "app/data/God Renders/morgan le fay/Screenshot (703).png",
-        "fileName": "Screenshot (703).png",
-        "godName": "Morgan Le Fay",
-        "displayName": "Dusk Glimmer",
-        "target": "skin",
-        "appliedTo": "Dusk Glimmer",
-        "skinKey": "DuskGllmmer",
-        "skinName": "Dusk Glimmer",
-        "tier": "Classic"
       }
     },
     "gilgamesh": {
@@ -804,38 +782,6 @@
           "owned": false
         },
         "tier": "Heroic"
-      },
-      "Screenshot (349).png": {
-        "screenshot": "app/data/God Renders/cernennos/Screenshot (349).png",
-        "fileName": "Screenshot (349).png",
-        "godName": "Cernunnos",
-        "displayName": "Headhunter",
-        "target": "skin",
-        "appliedTo": "Headhunter",
-        "skinKey": "Netherware",
-        "skinName": "Headhunter",
-        "cost": {
-          "currency": "gems",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
-      "Screenshot (348).png": {
-        "screenshot": "app/data/God Renders/cernennos/Screenshot (348).png",
-        "fileName": "Screenshot (348).png",
-        "godName": "Cernunnos",
-        "displayName": "Crimson Striker",
-        "target": "skin",
-        "appliedTo": "Crimson Striker",
-        "skinKey": "Smite2F2pOb1CrimsonstalkerSocial1920x1080Notag",
-        "skinName": "Crimson Striker",
-        "cost": {
-          "currency": "gems",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
       }
     },
     "the morrigan": {
@@ -911,22 +857,6 @@
           "owned": false
         },
         "tier": "Heroic"
-      },
-      "Screenshot (942).png": {
-        "screenshot": "app/data/God Renders/the morrigan/Screenshot (942).png",
-        "fileName": "Screenshot (942).png",
-        "godName": "The Morrigan",
-        "displayName": "Goth Gourmet",
-        "target": "skin",
-        "appliedTo": "Goth Gourmet",
-        "skinKey": "GothWaitress",
-        "skinName": "Goth Gourmet",
-        "cost": {
-          "currency": "gems",
-          "amount": "1600",
-          "owned": false
-        },
-        "tier": "Epic"
       }
     },
     "da ji": {
@@ -1084,260 +1014,6 @@
         "appliedTo": "Vixen",
         "skinKey": "Vixen",
         "skinName": "Vixen",
-        "tier": "Heroic"
-      }
-    },
-    "guan yu": {
-      "Screenshot (481).png": {
-        "screenshot": "app/data/God Renders/guan yu/Screenshot (481).png",
-        "fileName": "Screenshot (481).png",
-        "godName": "Guan Yu",
-        "displayName": "Base",
-        "target": "skin",
-        "appliedTo": "Base Guan Yu",
-        "skinKey": "Guan_Yu",
-        "skinName": "Base Guan Yu",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "0",
-          "owned": true
-        }
-      },
-      "Screenshot (489).png": {
-        "screenshot": "app/data/God Renders/guan yu/Screenshot (489).png",
-        "fileName": "Screenshot (489).png",
-        "godName": "Guan Yu",
-        "displayName": "Onyx",
-        "target": "variant",
-        "appliedTo": "Base Guan Yu → Mastery Onyx",
-        "skinKey": "Guan_Yu",
-        "skinName": "Base Guan Yu",
-        "variantName": "Mastery Onyx",
-        "parentSkinKey": "Guan_Yu",
-        "parentSkinName": "Base Guan Yu",
-        "tier": "Heroic"
-      },
-      "Screenshot (490).png": {
-        "screenshot": "app/data/God Renders/guan yu/Screenshot (490).png",
-        "fileName": "Screenshot (490).png",
-        "godName": "Guan Yu",
-        "displayName": "Opal",
-        "target": "variant",
-        "appliedTo": "Base Guan Yu → Mastery Opal",
-        "skinKey": "Guan_Yu",
-        "skinName": "Base Guan Yu",
-        "variantName": "Mastery Opal",
-        "parentSkinKey": "Guan_Yu",
-        "parentSkinName": "Base Guan Yu",
-        "tier": "Heroic"
-      },
-      "Screenshot (491).png": {
-        "screenshot": "app/data/God Renders/guan yu/Screenshot (491).png",
-        "fileName": "Screenshot (491).png",
-        "godName": "Guan Yu",
-        "displayName": "Radiant",
-        "target": "variant",
-        "appliedTo": "Base Guan Yu → Mastery Radiant",
-        "skinKey": "Guan_Yu",
-        "skinName": "Base Guan Yu",
-        "variantName": "Mastery Radiant",
-        "parentSkinKey": "Guan_Yu",
-        "parentSkinName": "Base Guan Yu",
-        "tier": "Heroic"
-      },
-      "Screenshot (482).png": {
-        "screenshot": "app/data/God Renders/guan yu/Screenshot (482).png",
-        "fileName": "Screenshot (482).png",
-        "godName": "Guan Yu",
-        "displayName": "Guan Unicorn",
-        "target": "skin",
-        "appliedTo": "Guan Unicorn",
-        "skinKey": "Unicorn",
-        "skinName": "Guan Unicorn",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "2400",
-          "owned": false
-        },
-        "tier": "Classic"
-      },
-      "Screenshot (483).png": {
-        "screenshot": "app/data/God Renders/guan yu/Screenshot (483).png",
-        "fileName": "Screenshot (483).png",
-        "godName": "Guan Yu",
-        "displayName": "Guan Unicorn - Scarlet Tempest",
-        "target": "variant",
-        "appliedTo": "Guan Unicorn → Prism 1",
-        "skinKey": "Unicorn",
-        "skinName": "Guan Unicorn",
-        "variantName": "Prism 1",
-        "parentSkinKey": "Unicorn",
-        "parentSkinName": "Guan Unicorn",
-        "tier": "Prisms"
-      },
-      "Screenshot (484).png": {
-        "screenshot": "app/data/God Renders/guan yu/Screenshot (484).png",
-        "fileName": "Screenshot (484).png",
-        "godName": "Guan Yu",
-        "displayName": "Guan Unicorn - Morning Haze",
-        "target": "variant",
-        "appliedTo": "Guan Unicorn → Prism 2",
-        "skinKey": "Unicorn",
-        "skinName": "Guan Unicorn",
-        "variantName": "Prism 2",
-        "parentSkinKey": "Unicorn",
-        "parentSkinName": "Guan Unicorn",
-        "tier": "Prisms"
-      },
-      "Screenshot (485).png": {
-        "screenshot": "app/data/God Renders/guan yu/Screenshot (485).png",
-        "fileName": "Screenshot (485).png",
-        "godName": "Guan Yu",
-        "displayName": "Guan Unicorn - Amethyst Shade",
-        "target": "variant",
-        "appliedTo": "Guan Unicorn → Prism 3",
-        "skinKey": "Unicorn",
-        "skinName": "Guan Unicorn",
-        "variantName": "Prism 3",
-        "parentSkinKey": "Unicorn",
-        "parentSkinName": "Guan Unicorn",
-        "tier": "Prisms"
-      },
-      "Screenshot (486).png": {
-        "screenshot": "app/data/God Renders/guan yu/Screenshot (486).png",
-        "fileName": "Screenshot (486).png",
-        "godName": "Guan Yu",
-        "displayName": "Guan Unicorn - Blacklight",
-        "target": "variant",
-        "appliedTo": "Guan Unicorn → Prism 4",
-        "skinKey": "Unicorn",
-        "skinName": "Guan Unicorn",
-        "variantName": "Prism 4",
-        "parentSkinKey": "Unicorn",
-        "parentSkinName": "Guan Unicorn",
-        "tier": "Prisms"
-      },
-      "Screenshot (487).png": {
-        "screenshot": "app/data/God Renders/guan yu/Screenshot (487).png",
-        "fileName": "Screenshot (487).png",
-        "godName": "Guan Yu",
-        "displayName": "Wraith Rider",
-        "target": "skin",
-        "appliedTo": "Wraith Rider",
-        "skinKey": "WraithRider",
-        "skinName": "Wraith Rider",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
-      "Screenshot (488).png": {
-        "screenshot": "app/data/God Renders/guan yu/Screenshot (488).png",
-        "fileName": "Screenshot (488).png",
-        "godName": "Guan Yu",
-        "displayName": "Shadow",
-        "target": "skin",
-        "appliedTo": "Shadow",
-        "skinKey": "Shadow",
-        "skinName": "Shadow",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "900",
-          "owned": false
-        },
-        "tier": "Heroic"
-      }
-    },
-    "hou yi": {
-      "Screenshot (522).png": {
-        "screenshot": "app/data/God Renders/hou yi/Screenshot (522).png",
-        "fileName": "Screenshot (522).png",
-        "godName": "Hou Yi",
-        "displayName": "Base",
-        "target": "skin",
-        "appliedTo": "Base Hou Yi",
-        "skinKey": "Hou Yi",
-        "skinName": "Base Hou Yi",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "0",
-          "owned": true
-        }
-      },
-      "Screenshot (525).png": {
-        "screenshot": "app/data/God Renders/hou yi/Screenshot (525).png",
-        "fileName": "Screenshot (525).png",
-        "godName": "Hou Yi",
-        "displayName": "Onyx",
-        "target": "variant",
-        "appliedTo": "Base Hou Yi → Mastery Onyx",
-        "skinKey": "Hou Yi",
-        "skinName": "Base Hou Yi",
-        "variantName": "Mastery Onyx",
-        "parentSkinKey": "Hou Yi",
-        "parentSkinName": "Base Hou Yi",
-        "tier": "Heroic"
-      },
-      "Screenshot (526).png": {
-        "screenshot": "app/data/God Renders/hou yi/Screenshot (526).png",
-        "fileName": "Screenshot (526).png",
-        "godName": "Hou Yi",
-        "displayName": "Opal",
-        "target": "variant",
-        "appliedTo": "Base Hou Yi → Mastery Opal",
-        "skinKey": "Hou Yi",
-        "skinName": "Base Hou Yi",
-        "variantName": "Mastery Opal",
-        "parentSkinKey": "Hou Yi",
-        "parentSkinName": "Base Hou Yi",
-        "tier": "Heroic"
-      },
-      "Screenshot (527).png": {
-        "screenshot": "app/data/God Renders/hou yi/Screenshot (527).png",
-        "fileName": "Screenshot (527).png",
-        "godName": "Hou Yi",
-        "displayName": "Radiant",
-        "target": "variant",
-        "appliedTo": "Base Hou Yi → Mastery Radiant",
-        "skinKey": "Hou Yi",
-        "skinName": "Base Hou Yi",
-        "variantName": "Mastery Radiant",
-        "parentSkinKey": "Hou Yi",
-        "parentSkinName": "Base Hou Yi",
-        "tier": "Heroic"
-      },
-      "Screenshot (523).png": {
-        "screenshot": "app/data/God Renders/hou yi/Screenshot (523).png",
-        "fileName": "Screenshot (523).png",
-        "godName": "Hou Yi",
-        "displayName": "Gleaming Archer",
-        "target": "skin",
-        "appliedTo": "Gleaming Archer",
-        "skinKey": "GleamingArcher",
-        "skinName": "Gleaming Archer",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
-      "Screenshot (524).png": {
-        "screenshot": "app/data/God Renders/hou yi/Screenshot (524).png",
-        "fileName": "Screenshot (524).png",
-        "godName": "Hou Yi",
-        "displayName": "Shadow",
-        "target": "skin",
-        "appliedTo": "Shadow",
-        "skinKey": "Shadow",
-        "skinName": "Shadow",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "900",
-          "owned": false
-        },
         "tier": "Heroic"
       }
     },
@@ -1664,12 +1340,11 @@
         "tier": "Classic"
       },
       "Screenshot (580).png": {
-        "screenshot": "app/data/God Renders/jing wei/Screenshot (580).png",
         "fileName": "Screenshot (580).png",
         "godName": "Jing Wei",
         "displayName": "Bumble Bee - Lady Bug",
-        "target": "variant-new",
-        "appliedTo": "Bumble Bee",
+        "target": "variant",
+        "appliedTo": "Bumble Bee → Lady Bug",
         "skinKey": "BumbleBee",
         "skinName": "Bumble Bee",
         "variantName": "Prism 1",
@@ -1678,53 +1353,30 @@
         "tier": "Prisms"
       },
       "Screenshot (581).png": {
-        "screenshot": "app/data/God Renders/jing wei/Screenshot (581).png",
         "fileName": "Screenshot (581).png",
         "godName": "Jing Wei",
         "displayName": "Bumble Bee - Beetle",
-        "target": "variant-new",
-        "appliedTo": "Bumble Bee",
+        "target": "variant",
+        "appliedTo": "Bumble Bee → Beetle",
         "skinKey": "BumbleBee",
         "skinName": "Bumble Bee",
         "variantName": "Prism 2",
         "parentSkinKey": "BumbleBee",
         "parentSkinName": "Bumble Bee",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
         "tier": "Prisms"
       },
       "Screenshot (582).png": {
-        "screenshot": "app/data/God Renders/jing wei/Screenshot (582).png",
         "fileName": "Screenshot (582).png",
         "godName": "Jing Wei",
         "displayName": "Bumble Bee - Pink Rose",
-        "target": "variant-new",
-        "appliedTo": "Bumble Bee",
+        "target": "variant",
+        "appliedTo": "Bumble Bee → Pink Rose",
         "skinKey": "BumbleBee",
         "skinName": "Bumble Bee",
         "variantName": "Prism 3",
         "parentSkinKey": "BumbleBee",
         "parentSkinName": "Bumble Bee",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
         "tier": "Prisms"
-      },
-      "Screenshot (589).png": {
-        "screenshot": "app/data/God Renders/jing wei/Screenshot (589).png",
-        "fileName": "Screenshot (589).png",
-        "godName": "Jing Wei",
-        "displayName": "Baddie Bat",
-        "target": "skin",
-        "appliedTo": "Cute Bat",
-        "skinKey": "CuteBat",
-        "skinName": "Cute Bat",
-        "tier": "Epic"
       },
       "Screenshot (584).png": {
         "screenshot": "app/data/God Renders/jing wei/Screenshot (584).png",
@@ -2113,17 +1765,6 @@
         "parentSkinName": "Mystic Enchantress",
         "tier": "Prisms"
       },
-      "Screenshot (754).png": {
-        "screenshot": "app/data/God Renders/nu wa/Screenshot (754).png",
-        "fileName": "Screenshot (754).png",
-        "godName": "Nu Wa",
-        "displayName": "Ravenstrike",
-        "target": "skin",
-        "appliedTo": "Nu Wa Ravenstrike)",
-        "skinKey": "NuwaVenstrike",
-        "skinName": "Nu Wa Ravenstrike)",
-        "tier": "Legendary"
-      },
       "Screenshot (755).png": {
         "screenshot": "app/data/God Renders/nu wa/Screenshot (755).png",
         "fileName": "Screenshot (755).png",
@@ -2195,169 +1836,6 @@
           "owned": false
         },
         "tier": "Legacy"
-      }
-    },
-    "sun wokong": {
-      "Screenshot (898).png": {
-        "screenshot": "app/data/God Renders/sun wokong/Screenshot (898).png",
-        "fileName": "Screenshot (898).png",
-        "godName": "Sun Wukong",
-        "displayName": "Base",
-        "target": "skin",
-        "appliedTo": "Base Sun Wukong",
-        "skinKey": "Sun_Wukong",
-        "skinName": "Base Sun Wukong",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "0",
-          "owned": true
-        }
-      },
-      "Screenshot (906).png": {
-        "screenshot": "app/data/God Renders/sun wokong/Screenshot (906).png",
-        "fileName": "Screenshot (906).png",
-        "godName": "Sun Wukong",
-        "displayName": "Onyx",
-        "target": "variant",
-        "appliedTo": "Base Sun Wukong → Mastery Onyx",
-        "skinKey": "Sun_Wukong",
-        "skinName": "Base Sun Wukong",
-        "variantName": "Mastery Onyx",
-        "parentSkinKey": "Sun_Wukong",
-        "parentSkinName": "Base Sun Wukong",
-        "tier": "Heroic"
-      },
-      "Screenshot (907).png": {
-        "screenshot": "app/data/God Renders/sun wokong/Screenshot (907).png",
-        "fileName": "Screenshot (907).png",
-        "godName": "Sun Wukong",
-        "displayName": "Opal",
-        "target": "variant",
-        "appliedTo": "Base Sun Wukong → Mastery Opal",
-        "skinKey": "Sun_Wukong",
-        "skinName": "Base Sun Wukong",
-        "variantName": "Mastery Opal",
-        "parentSkinKey": "Sun_Wukong",
-        "parentSkinName": "Base Sun Wukong",
-        "tier": "Heroic"
-      },
-      "Screenshot (908).png": {
-        "screenshot": "app/data/God Renders/sun wokong/Screenshot (908).png",
-        "fileName": "Screenshot (908).png",
-        "godName": "Sun Wukong",
-        "displayName": "Radiant",
-        "target": "variant",
-        "appliedTo": "Base Sun Wukong → Mastery Radiant",
-        "skinKey": "Sun_Wukong",
-        "skinName": "Base Sun Wukong",
-        "variantName": "Mastery Radiant",
-        "parentSkinKey": "Sun_Wukong",
-        "parentSkinName": "Base Sun Wukong",
-        "tier": "Heroic"
-      },
-      "Screenshot (899).png": {
-        "screenshot": "app/data/God Renders/sun wokong/Screenshot (899).png",
-        "fileName": "Screenshot (899).png",
-        "godName": "Sun Wukong",
-        "displayName": "Dark Lord",
-        "target": "skin",
-        "appliedTo": "Dark Lord",
-        "skinKey": "DarkLord",
-        "skinName": "Dark Lord",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Classic"
-      },
-      "Screenshot (900).png": {
-        "screenshot": "app/data/God Renders/sun wokong/Screenshot (900).png",
-        "fileName": "Screenshot (900).png",
-        "godName": "Sun Wukong",
-        "displayName": "Dark Lord - Obsidian",
-        "target": "variant",
-        "appliedTo": "Dark Lord → Prism 1",
-        "skinKey": "DarkLord",
-        "skinName": "Dark Lord",
-        "variantName": "Prism 1",
-        "parentSkinKey": "DarkLord",
-        "parentSkinName": "Dark Lord",
-        "tier": "Prisms"
-      },
-      "Screenshot (901).png": {
-        "screenshot": "app/data/God Renders/sun wokong/Screenshot (901).png",
-        "fileName": "Screenshot (901).png",
-        "godName": "Sun Wukong",
-        "displayName": "Dark Lord - Voidspawn",
-        "target": "variant",
-        "appliedTo": "Dark Lord → Prism 2",
-        "skinKey": "DarkLord",
-        "skinName": "Dark Lord",
-        "variantName": "Prism 2",
-        "parentSkinKey": "DarkLord",
-        "parentSkinName": "Dark Lord",
-        "tier": "Prisms"
-      },
-      "Screenshot (902).png": {
-        "screenshot": "app/data/God Renders/sun wokong/Screenshot (902).png",
-        "fileName": "Screenshot (902).png",
-        "godName": "Sun Wukong",
-        "displayName": "Dark Lord - Frostbane",
-        "target": "variant",
-        "appliedTo": "Dark Lord → Prism 3",
-        "skinKey": "DarkLord",
-        "skinName": "Dark Lord",
-        "variantName": "Prism 3",
-        "parentSkinKey": "DarkLord",
-        "parentSkinName": "Dark Lord",
-        "tier": "Prisms"
-      },
-      "Screenshot (903).png": {
-        "screenshot": "app/data/God Renders/sun wokong/Screenshot (903).png",
-        "fileName": "Screenshot (903).png",
-        "godName": "Sun Wukong",
-        "displayName": "Dark Lord - Bloodfire",
-        "target": "variant",
-        "appliedTo": "Dark Lord → Prism 4",
-        "skinKey": "DarkLord",
-        "skinName": "Dark Lord",
-        "variantName": "Prism 4",
-        "parentSkinKey": "DarkLord",
-        "parentSkinName": "Dark Lord",
-        "tier": "Prisms"
-      },
-      "Screenshot (904).png": {
-        "screenshot": "app/data/God Renders/sun wokong/Screenshot (904).png",
-        "fileName": "Screenshot (904).png",
-        "godName": "Sun Wukong",
-        "displayName": "Street King",
-        "target": "skin",
-        "appliedTo": "Street King",
-        "skinKey": "StreetKing",
-        "skinName": "Street King",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
-      "Screenshot (905).png": {
-        "screenshot": "app/data/God Renders/sun wokong/Screenshot (905).png",
-        "fileName": "Screenshot (905).png",
-        "godName": "Sun Wukong",
-        "displayName": "Shadow",
-        "target": "skin",
-        "appliedTo": "Shadow",
-        "skinKey": "Shadow",
-        "skinName": "Shadow",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "900",
-          "owned": false
-        },
-        "tier": "Heroic"
       }
     },
     "anhur": {
@@ -2460,22 +1938,6 @@
           "owned": false
         },
         "tier": "Classic"
-      },
-      "Screenshot (152).png": {
-        "screenshot": "app/data/God Renders/anhur/Screenshot (152).png",
-        "fileName": "Screenshot (152).png",
-        "godName": "Anhur",
-        "displayName": "Shadow",
-        "target": "skin",
-        "appliedTo": "Shadow",
-        "skinKey": "Shadow",
-        "skinName": "Shadow",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "900",
-          "owned": false
-        },
-        "tier": "Heroic"
       }
     },
     "anubis": {
@@ -2585,57 +2047,53 @@
         "tier": "Legendary"
       },
       "Screenshot (159).png": {
-        "screenshot": "app/data/God Renders/anubis/Screenshot (159).png",
         "fileName": "Screenshot (159).png",
         "godName": "Anubis",
-        "displayName": "Holly Berry",
+        "displayName": "Festive Knit-Wit - Holly Berry",
         "target": "variant",
-        "appliedTo": "Festive Knit-Wit → Holly Berry",
+        "appliedTo": "Festive Knit-Wit → Prism 2",
         "skinKey": "KnitWit",
         "skinName": "Festive Knit-Wit",
-        "variantName": "Holly Berry",
+        "variantName": "Prism 2",
         "parentSkinKey": "KnitWit",
         "parentSkinName": "Festive Knit-Wit",
         "tier": "Prisms"
       },
       "Screenshot (160).png": {
-        "screenshot": "app/data/God Renders/anubis/Screenshot (160).png",
         "fileName": "Screenshot (160).png",
         "godName": "Anubis",
-        "displayName": "Frosty Woods",
+        "displayName": "Festive Knit-Wit - Frosty Woods",
         "target": "variant",
-        "appliedTo": "Festive Knit-Wit → Frosty Woods",
+        "appliedTo": "Festive Knit-Wit → Prism 3",
         "skinKey": "KnitWit",
         "skinName": "Festive Knit-Wit",
-        "variantName": "Frosty Woods",
+        "variantName": "Prism 3",
         "parentSkinKey": "KnitWit",
         "parentSkinName": "Festive Knit-Wit",
         "tier": "Prisms"
       },
       "Screenshot (161).png": {
-        "screenshot": "app/data/God Renders/anubis/Screenshot (161).png",
         "fileName": "Screenshot (161).png",
         "godName": "Anubis",
-        "displayName": "Krampus",
+        "displayName": "Festive Knit-Wit - Krampus",
         "target": "variant",
-        "appliedTo": "Festive Knit-Wit → Krampus",
+        "appliedTo": "Festive Knit-Wit → Prism 4",
         "skinKey": "KnitWit",
         "skinName": "Festive Knit-Wit",
-        "variantName": "Krampus",
+        "variantName": "Prism 4",
         "parentSkinKey": "KnitWit",
         "parentSkinName": "Festive Knit-Wit",
         "tier": "Prisms"
       },
       "Screenshot (162).png": {
-        "screenshot": "app/data/God Renders/anubis/Screenshot (162).png",
         "fileName": "Screenshot (162).png",
         "godName": "Anubis",
-        "displayName": "Grumbles",
+        "displayName": "Festive Knit-Wit - Grumbles",
         "target": "variant",
-        "appliedTo": "Festive Knit-Wit → Grumbles",
+        "appliedTo": "Festive Knit-Wit → Prism 5",
         "skinKey": "KnitWit",
         "skinName": "Festive Knit-Wit",
-        "variantName": "Grumbles",
+        "variantName": "Prism 5",
         "parentSkinKey": "KnitWit",
         "parentSkinName": "Festive Knit-Wit",
         "tier": "Prisms"
@@ -2655,22 +2113,6 @@
           "owned": false
         },
         "tier": "Legacy"
-      },
-      "Screenshot (166).png": {
-        "screenshot": "app/data/God Renders/anubis/Screenshot (166).png",
-        "fileName": "Screenshot (166).png",
-        "godName": "Anubis",
-        "displayName": "Shadow",
-        "target": "skin",
-        "appliedTo": "Shadow",
-        "skinKey": "Shadow",
-        "skinName": "Shadow",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "900",
-          "owned": false
-        },
-        "tier": "Heroic"
       }
     },
     "bastet": {
@@ -2925,43 +2367,40 @@
         "tier": "Classic"
       },
       "Screenshot (468).png": {
-        "screenshot": "app/data/God Renders/geb/Screenshot (468).png",
         "fileName": "Screenshot (468).png",
         "godName": "Geb",
-        "displayName": "Stealth Strike",
+        "displayName": "G.E.B. 1 - Stealth Strike",
         "target": "variant",
         "appliedTo": "G.E.B. 1 → Stealth Strike",
         "skinKey": "GEB1CombatCamo",
         "skinName": "G.E.B. 1",
-        "variantName": "Stealth Strike",
+        "variantName": "Prism B",
         "parentSkinKey": "GEB1CombatCamo",
         "parentSkinName": "G.E.B. 1",
         "tier": "Prisms"
       },
       "Screenshot (469).png": {
-        "screenshot": "app/data/God Renders/geb/Screenshot (469).png",
         "fileName": "Screenshot (469).png",
         "godName": "Geb",
-        "displayName": "Combat Camo",
+        "displayName": "G.E.B. 1 - Combat Camo",
         "target": "variant",
         "appliedTo": "G.E.B. 1 → Combat Camo",
         "skinKey": "GEB1CombatCamo",
         "skinName": "G.E.B. 1",
-        "variantName": "Combat Camo",
+        "variantName": "Prism C",
         "parentSkinKey": "GEB1CombatCamo",
         "parentSkinName": "G.E.B. 1",
         "tier": "Prisms"
       },
       "Screenshot (470).png": {
-        "screenshot": "app/data/God Renders/geb/Screenshot (470).png",
         "fileName": "Screenshot (470).png",
         "godName": "Geb",
-        "displayName": "Ultra Core",
+        "displayName": "G.E.B. 1 - Ultra Core",
         "target": "variant",
         "appliedTo": "G.E.B. 1 → Ultra Core",
         "skinKey": "GEB1CombatCamo",
         "skinName": "G.E.B. 1",
-        "variantName": "Ultra Core",
+        "variantName": "Prism D",
         "parentSkinKey": "GEB1CombatCamo",
         "parentSkinName": "G.E.B. 1",
         "tier": "Prisms"
@@ -3165,57 +2604,53 @@
         "tier": "Classic"
       },
       "Screenshot (616).png": {
-        "screenshot": "app/data/God Renders/khepri/Screenshot (616).png",
         "fileName": "Screenshot (616).png",
         "godName": "Khepri",
-        "displayName": "Beach Blue",
+        "displayName": "Chef's Special - Beach Blue",
         "target": "variant",
         "appliedTo": "Chef's Special → Beach Blue",
         "skinKey": "ChefSSpecial009",
         "skinName": "Chef's Special",
-        "variantName": "Beach Blue",
+        "variantName": "Prism 1",
         "parentSkinKey": "ChefSSpecial009",
         "parentSkinName": "Chef's Special",
         "tier": "Prisms"
       },
       "Screenshot (617).png": {
-        "screenshot": "app/data/God Renders/khepri/Screenshot (617).png",
         "fileName": "Screenshot (617).png",
         "godName": "Khepri",
-        "displayName": "Bumblesea",
+        "displayName": "Chef's Special - Bumblesea",
         "target": "variant",
         "appliedTo": "Chef's Special → Bumblesea",
         "skinKey": "ChefSSpecial009",
         "skinName": "Chef's Special",
-        "variantName": "Bumblesea",
+        "variantName": "Prism 2",
         "parentSkinKey": "ChefSSpecial009",
         "parentSkinName": "Chef's Special",
         "tier": "Prisms"
       },
       "Screenshot (618).png": {
-        "screenshot": "app/data/God Renders/khepri/Screenshot (618).png",
         "fileName": "Screenshot (618).png",
         "godName": "Khepri",
-        "displayName": "Stormtide",
+        "displayName": "Chef's Special - Stormtide",
         "target": "variant",
         "appliedTo": "Chef's Special → Stormtide",
         "skinKey": "ChefSSpecial009",
         "skinName": "Chef's Special",
-        "variantName": "Stormtide",
+        "variantName": "Prism 3",
         "parentSkinKey": "ChefSSpecial009",
         "parentSkinName": "Chef's Special",
         "tier": "Prisms"
       },
       "Screenshot (619).png": {
-        "screenshot": "app/data/God Renders/khepri/Screenshot (619).png",
         "fileName": "Screenshot (619).png",
         "godName": "Khepri",
-        "displayName": "Razzleshade",
+        "displayName": "Chef's Special - Razzleshade",
         "target": "variant",
         "appliedTo": "Chef's Special → Razzleshade",
         "skinKey": "ChefSSpecial009",
         "skinName": "Chef's Special",
-        "variantName": "Razzleshade",
+        "variantName": "Prism 4",
         "parentSkinKey": "ChefSSpecial009",
         "parentSkinName": "Chef's Special",
         "tier": "Prisms"
@@ -3311,22 +2746,6 @@
         },
         "tier": "Classic"
       },
-      "Screenshot (729).png": {
-        "screenshot": "app/data/God Renders/neith/Screenshot (729).png",
-        "fileName": "Screenshot (729).png",
-        "godName": "Neith",
-        "displayName": "Seraph's Bow",
-        "target": "skin",
-        "appliedTo": "Seraph's Bow",
-        "skinKey": "Heavenly",
-        "skinName": "Seraph's Bow",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1600",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
       "Screenshot (718).png": {
         "screenshot": "app/data/God Renders/neith/Screenshot (718).png",
         "fileName": "Screenshot (718).png",
@@ -3344,143 +2763,108 @@
         "tier": "Classic"
       },
       "Screenshot (719).png": {
-        "screenshot": "app/data/God Renders/neith/Screenshot (719).png",
         "fileName": "Screenshot (719).png",
         "godName": "Neith",
-        "displayName": "Enchanted",
+        "displayName": "Midnight Glamour - Enchanted",
         "target": "variant",
         "appliedTo": "Midnight Glamour → Enchanted",
         "skinKey": "MidnightGlamour",
         "skinName": "Midnight Glamour",
-        "variantName": "Enchanted",
+        "variantName": "Prism 1",
         "parentSkinKey": "MidnightGlamour",
         "parentSkinName": "Midnight Glamour",
         "tier": "Prisms"
       },
       "Screenshot (720).png": {
-        "screenshot": "app/data/God Renders/neith/Screenshot (720).png",
         "fileName": "Screenshot (720).png",
         "godName": "Neith",
-        "displayName": "Poison Petal",
+        "displayName": "Midnight Glamour - Poison Petal",
         "target": "variant",
         "appliedTo": "Midnight Glamour → Poison Petal",
         "skinKey": "MidnightGlamour",
         "skinName": "Midnight Glamour",
-        "variantName": "Poison Petal",
+        "variantName": "Prism 2",
         "parentSkinKey": "MidnightGlamour",
         "parentSkinName": "Midnight Glamour",
         "tier": "Prisms"
       },
       "Screenshot (721).png": {
-        "screenshot": "app/data/God Renders/neith/Screenshot (721).png",
         "fileName": "Screenshot (721).png",
         "godName": "Neith",
-        "displayName": "Widow's Lace",
+        "displayName": "Midnight Glamour - Widow's Lace",
         "target": "variant",
         "appliedTo": "Midnight Glamour → Widow's Lace",
         "skinKey": "MidnightGlamour",
         "skinName": "Midnight Glamour",
-        "variantName": "Widow's Lace",
+        "variantName": "Prism 3",
         "parentSkinKey": "MidnightGlamour",
         "parentSkinName": "Midnight Glamour",
         "tier": "Prisms"
       },
       "Screenshot (722).png": {
-        "screenshot": "app/data/God Renders/neith/Screenshot (722).png",
         "fileName": "Screenshot (722).png",
         "godName": "Neith",
-        "displayName": "Dreamscape",
+        "displayName": "Midnight Glamour - Dreamscape",
         "target": "variant",
         "appliedTo": "Midnight Glamour → Dreamscape",
         "skinKey": "MidnightGlamour",
         "skinName": "Midnight Glamour",
-        "variantName": "Dreamscape",
+        "variantName": "Prism 4",
         "parentSkinKey": "MidnightGlamour",
         "parentSkinName": "Midnight Glamour",
         "tier": "Prisms"
       },
-      "Screenshot (723).png": {
-        "screenshot": "app/data/God Renders/neith/Screenshot (723).png",
-        "fileName": "Screenshot (723).png",
-        "godName": "Neith",
-        "displayName": "Ms. Diagnosis",
-        "target": "skin",
-        "appliedTo": "Ms. Diagnosis",
-        "skinKey": "MissdiagnosisSplash1010",
-        "skinName": "Ms. Diagnosis",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "800",
-          "owned": false
-        },
-        "tier": "Classic"
-      },
       "Screenshot (724).png": {
-        "screenshot": "app/data/God Renders/neith/Screenshot (724).png",
         "fileName": "Screenshot (724).png",
         "godName": "Neith",
-        "displayName": "Graveyard Shift",
+        "displayName": "Ms. Diagnosis - Graveyard Shift",
         "target": "variant",
         "appliedTo": "Ms. Diagnosis → Graveyard Shift",
         "skinKey": "MissdiagnosisSplash1010",
         "skinName": "Ms. Diagnosis",
-        "variantName": "Graveyard Shift",
+        "variantName": "Prism 1",
         "parentSkinKey": "MissdiagnosisSplash1010",
         "parentSkinName": "Ms. Diagnosis",
         "tier": "Prisms"
       },
       "Screenshot (725).png": {
-        "screenshot": "app/data/God Renders/neith/Screenshot (725).png",
         "fileName": "Screenshot (725).png",
         "godName": "Neith",
-        "displayName": "Blood Drive",
+        "displayName": "Ms. Diagnosis - Blood Drive",
         "target": "variant",
         "appliedTo": "Ms. Diagnosis → Blood Drive",
         "skinKey": "MissdiagnosisSplash1010",
         "skinName": "Ms. Diagnosis",
-        "variantName": "Blood Drive",
+        "variantName": "Prism 2",
         "parentSkinKey": "MissdiagnosisSplash1010",
         "parentSkinName": "Ms. Diagnosis",
         "tier": "Prisms"
       },
       "Screenshot (726).png": {
-        "screenshot": "app/data/God Renders/neith/Screenshot (726).png",
         "fileName": "Screenshot (726).png",
         "godName": "Neith",
-        "displayName": "Candy Cure",
+        "displayName": "Ms. Diagnosis - Candy Cure",
         "target": "variant",
         "appliedTo": "Ms. Diagnosis → Candy Cure",
         "skinKey": "MissdiagnosisSplash1010",
         "skinName": "Ms. Diagnosis",
-        "variantName": "Candy Cure",
+        "variantName": "Prism 3",
         "parentSkinKey": "MissdiagnosisSplash1010",
         "parentSkinName": "Ms. Diagnosis",
         "tier": "Prisms"
       },
       "Screenshot (727).png": {
-        "screenshot": "app/data/God Renders/neith/Screenshot (727).png",
         "fileName": "Screenshot (727).png",
         "godName": "Neith",
-        "displayName": "Major Remedy",
+        "displayName": "Ms. Diagnosis - Major Remedy",
         "target": "variant",
         "appliedTo": "Ms. Diagnosis → Major Remedy",
         "skinKey": "MissdiagnosisSplash1010",
         "skinName": "Ms. Diagnosis",
-        "variantName": "Major Remedy",
+        "variantName": "Prism 4",
         "parentSkinKey": "MissdiagnosisSplash1010",
         "parentSkinName": "Ms. Diagnosis",
         "tier": "Prisms"
-      },
-      "Screenshot (730).png": {
-        "screenshot": "app/data/God Renders/neith/Screenshot (730).png",
-        "fileName": "Screenshot (730).png",
-        "godName": "Neith",
-        "displayName": "Nightstalker",
-        "target": "skin",
-        "appliedTo": "Nightstalker",
-        "skinKey": "Succubus",
-        "skinName": "Nightstalker",
-        "tier": "Legendary"
       }
     },
     "nut": {
@@ -3556,28 +2940,6 @@
           "owned": false
         },
         "tier": "Heroic"
-      },
-      "Screenshot (766).png": {
-        "screenshot": "app/data/God Renders/nut/Screenshot (766).png",
-        "fileName": "Screenshot (766).png",
-        "godName": "Nut",
-        "displayName": "Solstice Sky",
-        "target": "skin",
-        "appliedTo": "Solstice Sky",
-        "skinKey": "Ascended",
-        "skinName": "Solstice Sky",
-        "tier": "Heroic"
-      },
-      "Screenshot (765).png": {
-        "screenshot": "app/data/God Renders/nut/Screenshot (765).png",
-        "fileName": "Screenshot (765).png",
-        "godName": "Nut",
-        "displayName": "Skies of Liberty",
-        "target": "skin",
-        "appliedTo": "Skies of Liberty",
-        "skinKey": "FreedomJamberee",
-        "skinName": "Skies of Liberty",
-        "tier": "Fabled"
       }
     },
     "osiris": {
@@ -3670,62 +3032,6 @@
         },
         "tier": "Classic"
       },
-      "Screenshot (781).png": {
-        "screenshot": "app/data/God Renders/osiris/Screenshot (781).png",
-        "fileName": "Screenshot (781).png",
-        "godName": "Osiris",
-        "displayName": "Black Knight - False Word",
-        "target": "variant",
-        "appliedTo": "Black Knight → False Word",
-        "skinKey": "BlackKnight",
-        "skinName": "Black Knight",
-        "variantName": "False Word",
-        "parentSkinKey": "BlackKnight",
-        "parentSkinName": "Black Knight",
-        "tier": "Prisms"
-      },
-      "Screenshot (782).png": {
-        "screenshot": "app/data/God Renders/osiris/Screenshot (782).png",
-        "fileName": "Screenshot (782).png",
-        "godName": "Osiris",
-        "displayName": "Black Knight - Toxic Oath",
-        "target": "variant",
-        "appliedTo": "Black Knight → Toxic Oath",
-        "skinKey": "BlackKnight",
-        "skinName": "Black Knight",
-        "variantName": "Toxic Oath",
-        "parentSkinKey": "BlackKnight",
-        "parentSkinName": "Black Knight",
-        "tier": "Prisms"
-      },
-      "Screenshot (783).png": {
-        "screenshot": "app/data/God Renders/osiris/Screenshot (783).png",
-        "fileName": "Screenshot (783).png",
-        "godName": "Osiris",
-        "displayName": "Black Knight - Bloody Vow",
-        "target": "variant",
-        "appliedTo": "Black Knight → Bloody Vow",
-        "skinKey": "BlackKnight",
-        "skinName": "Black Knight",
-        "variantName": "Bloody Vow",
-        "parentSkinKey": "BlackKnight",
-        "parentSkinName": "Black Knight",
-        "tier": "Prisms"
-      },
-      "Screenshot (784).png": {
-        "screenshot": "app/data/God Renders/osiris/Screenshot (784).png",
-        "fileName": "Screenshot (784).png",
-        "godName": "Osiris",
-        "displayName": "Black Knight - Frigid Promise",
-        "target": "variant",
-        "appliedTo": "Black Knight → Frigid Promise",
-        "skinKey": "BlackKnight",
-        "skinName": "Black Knight",
-        "variantName": "Frigid Promise",
-        "parentSkinKey": "BlackKnight",
-        "parentSkinName": "Black Knight",
-        "tier": "Prisms"
-      },
       "Screenshot (785).png": {
         "screenshot": "app/data/God Renders/osiris/Screenshot (785).png",
         "fileName": "Screenshot (785).png",
@@ -3741,62 +3047,6 @@
           "owned": false
         },
         "tier": "Classic"
-      },
-      "Screenshot (786).png": {
-        "screenshot": "app/data/God Renders/osiris/Screenshot (786).png",
-        "fileName": "Screenshot (786).png",
-        "godName": "Osiris",
-        "displayName": "Noble Knight - Golden Word",
-        "target": "variant",
-        "appliedTo": "Noble Knight → Golden Word",
-        "skinKey": "NobleKnight",
-        "skinName": "Noble Knight",
-        "variantName": "Golden Word",
-        "parentSkinKey": "NobleKnight",
-        "parentSkinName": "Noble Knight",
-        "tier": "Prisms"
-      },
-      "Screenshot (787).png": {
-        "screenshot": "app/data/God Renders/osiris/Screenshot (787).png",
-        "fileName": "Screenshot (787).png",
-        "godName": "Osiris",
-        "displayName": "Noble Knight - Emerald Oath",
-        "target": "variant",
-        "appliedTo": "Noble Knight → Emerald Oath",
-        "skinKey": "NobleKnight",
-        "skinName": "Noble Knight",
-        "variantName": "Emerald Oath",
-        "parentSkinKey": "NobleKnight",
-        "parentSkinName": "Noble Knight",
-        "tier": "Prisms"
-      },
-      "Screenshot (788).png": {
-        "screenshot": "app/data/God Renders/osiris/Screenshot (788).png",
-        "fileName": "Screenshot (788).png",
-        "godName": "Osiris",
-        "displayName": "Noble Knight - Holy Vow",
-        "target": "variant",
-        "appliedTo": "Noble Knight → Holy Vow",
-        "skinKey": "NobleKnight",
-        "skinName": "Noble Knight",
-        "variantName": "Holy Vow",
-        "parentSkinKey": "NobleKnight",
-        "parentSkinName": "Noble Knight",
-        "tier": "Prisms"
-      },
-      "Screenshot (789).png": {
-        "screenshot": "app/data/God Renders/osiris/Screenshot (789).png",
-        "fileName": "Screenshot (789).png",
-        "godName": "Osiris",
-        "displayName": "Noble Knight - Dark Promise",
-        "target": "variant",
-        "appliedTo": "Noble Knight → Dark Promise",
-        "skinKey": "NobleKnight",
-        "skinName": "Noble Knight",
-        "variantName": "Dark Promise",
-        "parentSkinKey": "NobleKnight",
-        "parentSkinName": "Noble Knight",
-        "tier": "Prisms"
       }
     },
     "ra": {
@@ -3889,79 +3139,6 @@
         },
         "tier": "Epic"
       },
-      "Screenshot (827).png": {
-        "screenshot": "app/data/God Renders/ra/Screenshot (827).png",
-        "fileName": "Screenshot (827).png",
-        "godName": "Ra",
-        "displayName": "Oblivion Seer",
-        "target": "skin",
-        "appliedTo": "Oblivion Seer",
-        "skinKey": "OblivionSeer009",
-        "skinName": "Oblivion Seer",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
-      "Screenshot (828).png": {
-        "screenshot": "app/data/God Renders/ra/Screenshot (828).png",
-        "fileName": "Screenshot (828).png",
-        "godName": "Ra",
-        "displayName": "Oblivion Seer - Wraithborn Green",
-        "target": "variant",
-        "appliedTo": "Oblivion Seer → Wraithborn Green",
-        "skinKey": "OblivionSeer009",
-        "skinName": "Oblivion Seer",
-        "variantName": "Wraithborn Green",
-        "parentSkinKey": "OblivionSeer009",
-        "parentSkinName": "Oblivion Seer",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
-        "tier": "Prisms"
-      },
-      "Screenshot (829).png": {
-        "screenshot": "app/data/God Renders/ra/Screenshot (829).png",
-        "fileName": "Screenshot (829).png",
-        "godName": "Ra",
-        "displayName": "Oblivion Seer - Sunflare Yellow",
-        "target": "variant",
-        "appliedTo": "Oblivion Seer → Sunflare Yellow",
-        "skinKey": "OblivionSeer009",
-        "skinName": "Oblivion Seer",
-        "variantName": "Sunflare Yellow",
-        "parentSkinKey": "OblivionSeer009",
-        "parentSkinName": "Oblivion Seer",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
-        "tier": "Prisms"
-      },
-      "Screenshot (830).png": {
-        "screenshot": "app/data/God Renders/ra/Screenshot (830).png",
-        "fileName": "Screenshot (830).png",
-        "godName": "Ra",
-        "displayName": "Oblivion Seer - Bloodshade Red",
-        "target": "variant",
-        "appliedTo": "Oblivion Seer → Bloodshade Red",
-        "skinKey": "OblivionSeer009",
-        "skinName": "Oblivion Seer",
-        "variantName": "Bloodshade Red",
-        "parentSkinKey": "OblivionSeer009",
-        "parentSkinName": "Oblivion Seer",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
-        "tier": "Prisms"
-      },
       "Screenshot (832).png": {
         "screenshot": "app/data/God Renders/ra/Screenshot (832).png",
         "fileName": "Screenshot (832).png",
@@ -3972,36 +3149,6 @@
         "skinKey": "Plucky",
         "skinName": "Plucky",
         "tier": "Heroic"
-      },
-      "Screenshot (825).png": {
-        "screenshot": "app/data/God Renders/ra/Screenshot (825).png",
-        "fileName": "Screenshot (825).png",
-        "godName": "Ra",
-        "displayName": "Ra'Merica",
-        "target": "skin",
-        "appliedTo": "Ra'Merica",
-        "skinKey": "Ra Merica",
-        "skinName": "Ra'Merica",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "2400",
-          "owned": false
-        },
-        "tier": "Classic"
-      },
-      "Screenshot (826).png": {
-        "screenshot": "app/data/God Renders/ra/Screenshot (826).png",
-        "fileName": "Screenshot (826).png",
-        "godName": "Ra",
-        "displayName": "Ra'Merica - Chrome Eagle",
-        "target": "variant",
-        "appliedTo": "Ra'Merica → Chrome Eagle",
-        "skinKey": "Ra Merica",
-        "skinName": "Ra'Merica",
-        "variantName": "Chrome Eagle",
-        "parentSkinKey": "Ra Merica",
-        "parentSkinName": "Ra'Merica",
-        "tier": "Prisms"
       }
     },
     "sobek": {
@@ -4077,64 +3224,6 @@
           "owned": false
         },
         "tier": "Heroic"
-      },
-      "Screenshot (872).png": {
-        "screenshot": "app/data/God Renders/sobek/Screenshot (872).png",
-        "fileName": "Screenshot (872).png",
-        "godName": "Sobek",
-        "displayName": "Land Shark",
-        "target": "skin",
-        "appliedTo": "Land Shark",
-        "skinKey": "LandShark",
-        "skinName": "Land Shark",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "2400",
-          "owned": false
-        },
-        "tier": "Classic"
-      },
-      "Screenshot (873).png": {
-        "screenshot": "app/data/God Renders/sobek/Screenshot (873).png",
-        "fileName": "Screenshot (873).png",
-        "godName": "Sobek",
-        "displayName": "Land Shark - Orca Black",
-        "target": "variant",
-        "appliedTo": "Land Shark → Orca Black",
-        "skinKey": "LandShark",
-        "skinName": "Land Shark",
-        "variantName": "Orca Black",
-        "parentSkinKey": "LandShark",
-        "parentSkinName": "Land Shark",
-        "tier": "Prisms"
-      },
-      "Screenshot (874).png": {
-        "screenshot": "app/data/God Renders/sobek/Screenshot (874).png",
-        "fileName": "Screenshot (874).png",
-        "godName": "Sobek",
-        "displayName": "Land Shark - Goldfish Orange",
-        "target": "variant",
-        "appliedTo": "Land Shark → Goldfish Orange",
-        "skinKey": "LandShark",
-        "skinName": "Land Shark",
-        "variantName": "Goldfish Orange",
-        "parentSkinKey": "LandShark",
-        "parentSkinName": "Land Shark",
-        "tier": "Prisms"
-      },
-      "Screenshot (875).png": {
-        "screenshot": "app/data/God Renders/sobek/Screenshot (875).png",
-        "fileName": "Screenshot (875).png",
-        "godName": "Sobek",
-        "displayName": "Land Shark - Tubular Teal",
-        "target": "variant",
-        "appliedTo": "Land Shark → Tubular Teal",
-        "skinKey": "LandShark",
-        "skinName": "Land Shark",
-        "variantName": "Tubular Teal",
-        "parentSkinKey": "LandShark",
-        "parentSkinName": "Land Shark",
-        "tier": "Prisms"
       },
       "Screenshot (876).png": {
         "screenshot": "app/data/God Renders/sobek/Screenshot (876).png",
@@ -4241,43 +3330,40 @@
         "tier": "Classic"
       },
       "Screenshot (110).png": {
-        "screenshot": "app/data/God Renders/achilles/Screenshot (110).png",
         "fileName": "Screenshot (110).png",
         "godName": "Achilles",
         "displayName": "Soul Piercer - Veil Strider",
         "target": "variant",
-        "appliedTo": "Soul Piercer → Veil Strider",
+        "appliedTo": "Soul Piercer → Prism 2",
         "skinKey": "SoulPiercer",
         "skinName": "Soul Piercer",
-        "variantName": "Veil Strider",
+        "variantName": "Prism 2",
         "parentSkinKey": "SoulPiercer",
         "parentSkinName": "Soul Piercer",
         "tier": "Prisms"
       },
       "Screenshot (111).png": {
-        "screenshot": "app/data/God Renders/achilles/Screenshot (111).png",
         "fileName": "Screenshot (111).png",
         "godName": "Achilles",
         "displayName": "Soul Piercer - Frigid Warden",
         "target": "variant",
-        "appliedTo": "Soul Piercer → Frigid Warden",
+        "appliedTo": "Soul Piercer → Prism 3",
         "skinKey": "SoulPiercer",
         "skinName": "Soul Piercer",
-        "variantName": "Frigid Warden",
+        "variantName": "Prism 3",
         "parentSkinKey": "SoulPiercer",
         "parentSkinName": "Soul Piercer",
         "tier": "Prisms"
       },
       "Screenshot (112).png": {
-        "screenshot": "app/data/God Renders/achilles/Screenshot (112).png",
         "fileName": "Screenshot (112).png",
         "godName": "Achilles",
         "displayName": "Soul Piercer - Golden Wrath",
         "target": "variant",
-        "appliedTo": "Soul Piercer → Golden Wrath",
+        "appliedTo": "Soul Piercer → Prism 4",
         "skinKey": "SoulPiercer",
         "skinName": "Soul Piercer",
-        "variantName": "Golden Wrath",
+        "variantName": "Prism 4",
         "parentSkinKey": "SoulPiercer",
         "parentSkinName": "Soul Piercer",
         "tier": "Prisms"
@@ -5535,94 +4621,6 @@
           "owned": false
         },
         "tier": "Heroic"
-      },
-      "Screenshot (337).png": {
-        "screenshot": "app/data/God Renders/cerberus/Screenshot (337).png",
-        "fileName": "Screenshot (337).png",
-        "godName": "Cerberus",
-        "displayName": "Infinite Overseer",
-        "target": "skin",
-        "appliedTo": "Infinite Overseer",
-        "skinKey": "InfiniteoverseerCardPrisms1010",
-        "skinName": "Infinite Overseer",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "2400",
-          "owned": false
-        },
-        "tier": "Classic"
-      },
-      "Screenshot (338).png": {
-        "screenshot": "app/data/God Renders/cerberus/Screenshot (338).png",
-        "fileName": "Screenshot (338).png",
-        "godName": "Cerberus",
-        "displayName": "Infinite Overseer - Obsidian Supernova",
-        "target": "variant",
-        "appliedTo": "Infinite Overseer → Prism B",
-        "skinKey": "InfiniteoverseerCardPrisms1010",
-        "skinName": "Infinite Overseer",
-        "variantName": "Prism B",
-        "parentSkinKey": "InfiniteoverseerCardPrisms1010",
-        "parentSkinName": "Infinite Overseer",
-        "tier": "Prisms"
-      },
-      "Screenshot (339).png": {
-        "screenshot": "app/data/God Renders/cerberus/Screenshot (339).png",
-        "fileName": "Screenshot (339).png",
-        "godName": "Cerberus",
-        "displayName": "Infinite Overseer - Forest Guardian",
-        "target": "variant",
-        "appliedTo": "Infinite Overseer → Prism C",
-        "skinKey": "InfiniteoverseerCardPrisms1010",
-        "skinName": "Infinite Overseer",
-        "variantName": "Prism C",
-        "parentSkinKey": "InfiniteoverseerCardPrisms1010",
-        "parentSkinName": "Infinite Overseer",
-        "tier": "Prisms"
-      },
-      "Screenshot (340).png": {
-        "screenshot": "app/data/God Renders/cerberus/Screenshot (340).png",
-        "fileName": "Screenshot (340).png",
-        "godName": "Cerberus",
-        "displayName": "Infinite Overseer - Abyss Walker",
-        "target": "variant",
-        "appliedTo": "Infinite Overseer → Prism D",
-        "skinKey": "InfiniteoverseerCardPrisms1010",
-        "skinName": "Infinite Overseer",
-        "variantName": "Prism D",
-        "parentSkinKey": "InfiniteoverseerCardPrisms1010",
-        "parentSkinName": "Infinite Overseer",
-        "tier": "Prisms"
-      },
-      "Screenshot (341).png": {
-        "screenshot": "app/data/God Renders/cerberus/Screenshot (341).png",
-        "fileName": "Screenshot (341).png",
-        "godName": "Cerberus",
-        "displayName": "Infinite Overseer - Dark Void",
-        "target": "variant",
-        "appliedTo": "Infinite Overseer → Prism E",
-        "skinKey": "InfiniteoverseerCardPrisms1010",
-        "skinName": "Infinite Overseer",
-        "variantName": "Prism E",
-        "parentSkinKey": "InfiniteoverseerCardPrisms1010",
-        "parentSkinName": "Infinite Overseer",
-        "tier": "Prisms"
-      },
-      "Screenshot (342).png": {
-        "screenshot": "app/data/God Renders/cerberus/Screenshot (342).png",
-        "fileName": "Screenshot (342).png",
-        "godName": "Cerberus",
-        "displayName": "Shadow Sentry",
-        "target": "skin",
-        "appliedTo": "Shadow Sentry",
-        "skinKey": "ShadowSpirit",
-        "skinName": "Shadow Sentry",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
       }
     },
     "charon": {
@@ -5795,48 +4793,6 @@
         "skinKey": "Fabulous",
         "skinName": "Fabulous",
         "tier": "Classic"
-      },
-      "Screenshot (376).png": {
-        "screenshot": "app/data/God Renders/chiron/Screenshot (376).png",
-        "fileName": "Screenshot (376).png",
-        "godName": "Chiron",
-        "displayName": "Fabulous - Minty Fresh",
-        "target": "variant",
-        "appliedTo": "Fabulous → Prism 1",
-        "skinKey": "Fabulous",
-        "skinName": "Fabulous",
-        "variantName": "Prism 1",
-        "parentSkinKey": "Fabulous",
-        "parentSkinName": "Fabulous",
-        "tier": "Prisms"
-      },
-      "Screenshot (377).png": {
-        "screenshot": "app/data/God Renders/chiron/Screenshot (377).png",
-        "fileName": "Screenshot (377).png",
-        "godName": "Chiron",
-        "displayName": "Fabulous - Sailor Stars",
-        "target": "variant",
-        "appliedTo": "Fabulous → Prism 2",
-        "skinKey": "Fabulous",
-        "skinName": "Fabulous",
-        "variantName": "Prism 2",
-        "parentSkinKey": "Fabulous",
-        "parentSkinName": "Fabulous",
-        "tier": "Prisms"
-      },
-      "Screenshot (378).png": {
-        "screenshot": "app/data/God Renders/chiron/Screenshot (378).png",
-        "fileName": "Screenshot (378).png",
-        "godName": "Chiron",
-        "displayName": "Fabulous - Riot Night",
-        "target": "variant",
-        "appliedTo": "Fabulous → Prism 3",
-        "skinKey": "Fabulous",
-        "skinName": "Fabulous",
-        "variantName": "Prism 3",
-        "parentSkinKey": "Fabulous",
-        "parentSkinName": "Fabulous",
-        "tier": "Prisms"
       },
       "Screenshot (379).png": {
         "screenshot": "app/data/God Renders/chiron/Screenshot (379).png",
@@ -6215,17 +5171,6 @@
         "skinKey": "MaidOfMidnight",
         "skinName": "Maid of Midnight",
         "tier": "Legendary"
-      },
-      "Screenshot (502).png": {
-        "screenshot": "app/data/God Renders/hecate/Screenshot (502).png",
-        "fileName": "Screenshot (502).png",
-        "godName": "Hecate",
-        "displayName": "High Velocity",
-        "target": "skin",
-        "appliedTo": "High Velocity",
-        "skinKey": "SplashXbox",
-        "skinName": "High Velocity",
-        "tier": "Heroic"
       }
     },
     "medusa": {
@@ -6335,60 +5280,42 @@
         "tier": "Epic"
       },
       "Screenshot (666).png": {
-        "screenshot": "app/data/God Renders/Medusa/Screenshot (666).png",
         "fileName": "Screenshot (666).png",
         "godName": "Medusa",
         "displayName": "Venom Strike - Blue Coral",
-        "target": "variant-new",
-        "appliedTo": "Venom Strike",
+        "target": "variant",
+        "appliedTo": "Venom Strike → Blue Coral",
         "skinKey": "VenomStrike",
         "skinName": "Venom Strike",
         "variantName": "Prism 1",
         "parentSkinKey": "VenomStrike",
         "parentSkinName": "Venom Strike",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
         "tier": "Prisms"
       },
       "Screenshot (667).png": {
-        "screenshot": "app/data/God Renders/Medusa/Screenshot (667).png",
         "fileName": "Screenshot (667).png",
         "godName": "Medusa",
         "displayName": "Venom Strike - White Cobra",
-        "target": "variant-new",
-        "appliedTo": "Venom Strike",
+        "target": "variant",
+        "appliedTo": "Venom Strike → White Cobra",
         "skinKey": "VenomStrike",
         "skinName": "Venom Strike",
         "variantName": "Prism 2",
         "parentSkinKey": "VenomStrike",
         "parentSkinName": "Venom Strike",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
         "tier": "Prisms"
       },
       "Screenshot (668).png": {
-        "screenshot": "app/data/God Renders/Medusa/Screenshot (668).png",
         "fileName": "Screenshot (668).png",
         "godName": "Medusa",
         "displayName": "Venom Strike - Black Mamba",
-        "target": "variant-new",
-        "appliedTo": "Venom Strike",
+        "target": "variant",
+        "appliedTo": "Venom Strike → Black Mamba",
         "skinKey": "VenomStrike",
         "skinName": "Venom Strike",
         "variantName": "Prism 3",
         "parentSkinKey": "VenomStrike",
         "parentSkinName": "Venom Strike",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
         "tier": "Prisms"
       }
     },
@@ -6466,22 +5393,6 @@
         },
         "tier": "Heroic"
       },
-      "Screenshot (736).png": {
-        "screenshot": "app/data/God Renders/nemesis/Screenshot (736).png",
-        "fileName": "Screenshot (736).png",
-        "godName": "Nemesis",
-        "displayName": "Blind Vengeance",
-        "target": "skin",
-        "appliedTo": "Blind Vengeance",
-        "skinKey": "DarkjusticeSplash",
-        "skinName": "Blind Vengeance",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "800",
-          "owned": false
-        },
-        "tier": "Classic"
-      },
       "Screenshot (737).png": {
         "screenshot": "app/data/God Renders/nemesis/Screenshot (737).png",
         "fileName": "Screenshot (737).png",
@@ -6537,17 +5448,6 @@
         "parentSkinKey": "DarkjusticeSplash",
         "parentSkinName": "Blind Vengeance",
         "tier": "Prisms"
-      },
-      "Screenshot (741).png": {
-        "screenshot": "app/data/God Renders/nemesis/Screenshot (741).png",
-        "fileName": "Screenshot (741).png",
-        "godName": "Nemesis",
-        "displayName": "Vixen",
-        "target": "skin",
-        "appliedTo": "Vixen",
-        "skinKey": "Fishnets",
-        "skinName": "Vixen",
-        "tier": "Fabled"
       }
     },
     "poseidon": {
@@ -6798,77 +5698,43 @@
         },
         "tier": "Heroic"
       },
-      "Screenshot (863).png": {
-        "screenshot": "app/data/God Renders/scylla/Screenshot (863).png",
-        "fileName": "Screenshot (863).png",
-        "godName": "Scylla",
-        "displayName": "Trash Goblin",
-        "target": "skin",
-        "appliedTo": "Trash Goblin",
-        "skinKey": "ScyllaTrashgoblin",
-        "skinName": "Trash Goblin",
-        "cost": {
-          "currency": "gems",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
       "Screenshot (864).png": {
-        "screenshot": "app/data/God Renders/scylla/Screenshot (864).png",
         "fileName": "Screenshot (864).png",
         "godName": "Scylla",
         "displayName": "Trash Goblin - Possum Punk",
-        "target": "variant-new",
-        "appliedTo": "Trash Goblin",
+        "target": "variant",
+        "appliedTo": "Trash Goblin → Possum Punk",
         "skinKey": "ScyllaTrashgoblin",
         "skinName": "Trash Goblin",
-        "variantName": "Prism 1",
+        "variantName": "Possum Punk",
         "parentSkinKey": "ScyllaTrashgoblin",
         "parentSkinName": "Trash Goblin",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
         "tier": "Prisms"
       },
       "Screenshot (865).png": {
-        "screenshot": "app/data/God Renders/scylla/Screenshot (865).png",
         "fileName": "Screenshot (865).png",
         "godName": "Scylla",
         "displayName": "Trash Goblin - Ruby Rummager",
-        "target": "variant-new",
-        "appliedTo": "Trash Goblin",
+        "target": "variant",
+        "appliedTo": "Trash Goblin → Ruby Rummager",
         "skinKey": "ScyllaTrashgoblin",
         "skinName": "Trash Goblin",
-        "variantName": "Prism 2",
+        "variantName": "Ruby Rummager",
         "parentSkinKey": "ScyllaTrashgoblin",
         "parentSkinName": "Trash Goblin",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
         "tier": "Prisms"
       },
       "Screenshot (866).png": {
-        "screenshot": "app/data/God Renders/scylla/Screenshot (866).png",
         "fileName": "Screenshot (866).png",
         "godName": "Scylla",
         "displayName": "Trash Goblin - Pale Pest",
-        "target": "variant-new",
-        "appliedTo": "Trash Goblin",
+        "target": "variant",
+        "appliedTo": "Trash Goblin → Pale Pest",
         "skinKey": "ScyllaTrashgoblin",
         "skinName": "Trash Goblin",
-        "variantName": "Prism 3",
+        "variantName": "Pale Pest",
         "parentSkinKey": "ScyllaTrashgoblin",
         "parentSkinName": "Trash Goblin",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
         "tier": "Prisms"
       },
       "Screenshot (858).png": {
@@ -7017,111 +5883,6 @@
           "owned": false
         },
         "tier": "Heroic"
-      },
-      "Screenshot (935).png": {
-        "screenshot": "app/data/God Renders/thanatos/Screenshot (935).png",
-        "fileName": "Screenshot (935).png",
-        "godName": "Thanatos",
-        "displayName": "Divine Retribution",
-        "target": "skin",
-        "appliedTo": "Divine Retribution",
-        "skinKey": "BiblicalHorror",
-        "skinName": "Divine Retribution",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "2100",
-          "owned": false
-        },
-        "tier": "Legendary"
-      },
-      "Screenshot (936).png": {
-        "screenshot": "app/data/God Renders/thanatos/Screenshot (936).png",
-        "fileName": "Screenshot (936).png",
-        "godName": "Thanatos",
-        "displayName": "Cosmic Executioner",
-        "target": "skin",
-        "appliedTo": "Cosmic Executioner",
-        "skinKey": "Intersteller",
-        "skinName": "Cosmic Executioner",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1600",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
-      "Screenshot (931).png": {
-        "screenshot": "app/data/God Renders/thanatos/Screenshot (931).png",
-        "fileName": "Screenshot (931).png",
-        "godName": "Thanatos",
-        "displayName": "Thanatoast",
-        "target": "skin",
-        "appliedTo": "Thanatoast",
-        "skinKey": "Thanatoast012",
-        "skinName": "Thanatoast",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "2400",
-          "owned": false
-        },
-        "tier": "Classic"
-      },
-      "Screenshot (932).png": {
-        "screenshot": "app/data/God Renders/thanatos/Screenshot (932).png",
-        "fileName": "Screenshot (932).png",
-        "godName": "Thanatos",
-        "displayName": "Thanatoast - Shadowberry",
-        "target": "variant",
-        "appliedTo": "Thanatoast → Prism 1",
-        "skinKey": "Thanatoast012",
-        "skinName": "Thanatoast",
-        "variantName": "Prism 1",
-        "parentSkinKey": "Thanatoast012",
-        "parentSkinName": "Thanatoast",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
-        "tier": "Prisms"
-      },
-      "Screenshot (933).png": {
-        "screenshot": "app/data/God Renders/thanatos/Screenshot (933).png",
-        "fileName": "Screenshot (933).png",
-        "godName": "Thanatos",
-        "displayName": "Thanatoast - French Toast",
-        "target": "variant",
-        "appliedTo": "Thanatoast → Prism 2",
-        "skinKey": "Thanatoast012",
-        "skinName": "Thanatoast",
-        "variantName": "Prism 2",
-        "parentSkinKey": "Thanatoast012",
-        "parentSkinName": "Thanatoast",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
-        "tier": "Prisms"
-      },
-      "Screenshot (934).png": {
-        "screenshot": "app/data/God Renders/thanatos/Screenshot (934).png",
-        "fileName": "Screenshot (934).png",
-        "godName": "Thanatos",
-        "displayName": "Thanatoast - Burnt Black",
-        "target": "variant",
-        "appliedTo": "Thanatoast → Prism 3",
-        "skinKey": "Thanatoast012",
-        "skinName": "Thanatoast",
-        "variantName": "Prism 3",
-        "parentSkinKey": "Thanatoast012",
-        "parentSkinName": "Thanatoast",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
-        "tier": "Prisms"
       }
     },
     "zeus": {
@@ -7271,28 +6032,6 @@
           "owned": false
         },
         "tier": "Classic"
-      },
-      "Screenshot (1032).png": {
-        "screenshot": "app/data/God Renders/zeus/Screenshot (1032).png",
-        "fileName": "Screenshot (1032).png",
-        "godName": "Zeus",
-        "displayName": "Darkheart",
-        "target": "skin",
-        "appliedTo": "Darkheart",
-        "skinKey": "TSkincardKingofhearts",
-        "skinName": "Darkheart",
-        "tier": "Legendary"
-      },
-      "Screenshot (1031).png": {
-        "screenshot": "app/data/God Renders/zeus/Screenshot (1031).png",
-        "fileName": "Screenshot (1031).png",
-        "godName": "Zeus",
-        "displayName": "The Fallen",
-        "target": "skin",
-        "appliedTo": "The Fallen",
-        "skinKey": "T5_Instinct",
-        "skinName": "The Fallen",
-        "tier": "Mythical"
       }
     },
     "agni": {
@@ -7398,48 +6137,6 @@
         "parentSkinKey": "InfinitedualityCardPrisms1",
         "parentSkinName": "Infinite Duality",
         "tier": "Prisms"
-      },
-      "Screenshot (120).png": {
-        "screenshot": "app/data/God Renders/agni/Screenshot (120).png",
-        "fileName": "Screenshot (120).png",
-        "godName": "Agni",
-        "displayName": "Infinite Duality - Azure Rift",
-        "target": "variant",
-        "appliedTo": "Infinite Duality → Prism 2",
-        "skinKey": "InfinitedualityCardPrisms1",
-        "skinName": "Infinite Duality",
-        "variantName": "Prism 2",
-        "parentSkinKey": "InfinitedualityCardPrisms1",
-        "parentSkinName": "Infinite Duality",
-        "tier": "Prisms"
-      },
-      "Screenshot (121).png": {
-        "screenshot": "app/data/God Renders/agni/Screenshot (121).png",
-        "fileName": "Screenshot (121).png",
-        "godName": "Agni",
-        "displayName": "Infinite Duality - Platinum Pulse",
-        "target": "variant",
-        "appliedTo": "Infinite Duality → Prism 3",
-        "skinKey": "InfinitedualityCardPrisms1",
-        "skinName": "Infinite Duality",
-        "variantName": "Prism 3",
-        "parentSkinKey": "InfinitedualityCardPrisms1",
-        "parentSkinName": "Infinite Duality",
-        "tier": "Prisms"
-      },
-      "Screenshot (122).png": {
-        "screenshot": "app/data/God Renders/agni/Screenshot (122).png",
-        "fileName": "Screenshot (122).png",
-        "godName": "Agni",
-        "displayName": "Infinite Duality - Solar Nebula",
-        "target": "variant",
-        "appliedTo": "Infinite Duality → Prism 4",
-        "skinKey": "InfinitedualityCardPrisms1",
-        "skinName": "Infinite Duality",
-        "variantName": "Prism 4",
-        "parentSkinKey": "InfinitedualityCardPrisms1",
-        "parentSkinName": "Infinite Duality",
-        "tier": "Prisms"
       }
     },
     "ganesha": {
@@ -7516,59 +6213,25 @@
         },
         "tier": "Heroic"
       },
-      "Screenshot (461).png": {
-        "screenshot": "app/data/God Renders/ganesha/Screenshot (461).png",
-        "fileName": "Screenshot (461).png",
+      "Screenshot (460).png": {
+        "fileName": "Screenshot (460).png",
         "godName": "Ganesha",
-        "displayName": "Guiding Light",
-        "target": "skin",
-        "appliedTo": "Light",
-        "skinKey": "Light",
-        "skinName": "Light",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
-      "Screenshot (452).png": {
-        "screenshot": "app/data/God Renders/ganesha/Screenshot (452).png",
-        "fileName": "Screenshot (452).png",
-        "godName": "Ganesha",
-        "displayName": "Plushie",
-        "target": "skin",
-        "appliedTo": "Plushie",
-        "skinKey": "Plushie",
-        "skinName": "Plushie",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "2400",
-          "owned": false
-        },
-        "tier": "Classic"
-      },
-      "Screenshot (453).png": {
-        "screenshot": "app/data/God Renders/ganesha/Screenshot (453).png",
-        "fileName": "Screenshot (453).png",
-        "godName": "Ganesha",
-        "displayName": "Plushie - Cursed Doll",
+        "displayName": "Plushie - Monochrome",
         "target": "variant",
-        "appliedTo": "Plushie → Prism 1",
+        "appliedTo": "Plushie → Monochrome",
         "skinKey": "Plushie",
         "skinName": "Plushie",
-        "variantName": "Prism 1",
+        "variantName": "Prism 9",
         "parentSkinKey": "Plushie",
         "parentSkinName": "Plushie",
         "tier": "Prisms"
       },
-      "Screenshot (454).png": {
-        "screenshot": "app/data/God Renders/ganesha/Screenshot (454).png",
-        "fileName": "Screenshot (454).png",
+      "Screenshot (453).png": {
+        "fileName": "Screenshot (453).png",
         "godName": "Ganesha",
-        "displayName": "Plushie - Yellow",
+        "displayName": "Plushie - Cursed Doll",
         "target": "variant",
-        "appliedTo": "Plushie → Prism 2",
+        "appliedTo": "Plushie → Cursed Doll",
         "skinKey": "Plushie",
         "skinName": "Plushie",
         "variantName": "Prism 2",
@@ -7576,13 +6239,12 @@
         "parentSkinName": "Plushie",
         "tier": "Prisms"
       },
-      "Screenshot (455).png": {
-        "screenshot": "app/data/God Renders/ganesha/Screenshot (455).png",
-        "fileName": "Screenshot (455).png",
+      "Screenshot (454).png": {
+        "fileName": "Screenshot (454).png",
         "godName": "Ganesha",
-        "displayName": "Plushie - Red",
+        "displayName": "Plushie - Yellow",
         "target": "variant",
-        "appliedTo": "Plushie → Prism 3",
+        "appliedTo": "Plushie → Yellow",
         "skinKey": "Plushie",
         "skinName": "Plushie",
         "variantName": "Prism 3",
@@ -7590,13 +6252,12 @@
         "parentSkinName": "Plushie",
         "tier": "Prisms"
       },
-      "Screenshot (456).png": {
-        "screenshot": "app/data/God Renders/ganesha/Screenshot (456).png",
-        "fileName": "Screenshot (456).png",
+      "Screenshot (455).png": {
+        "fileName": "Screenshot (455).png",
         "godName": "Ganesha",
-        "displayName": "Plushie - Green",
+        "displayName": "Plushie - Red",
         "target": "variant",
-        "appliedTo": "Plushie → Prism 4",
+        "appliedTo": "Plushie → Red",
         "skinKey": "Plushie",
         "skinName": "Plushie",
         "variantName": "Prism 4",
@@ -7604,13 +6265,12 @@
         "parentSkinName": "Plushie",
         "tier": "Prisms"
       },
-      "Screenshot (457).png": {
-        "screenshot": "app/data/God Renders/ganesha/Screenshot (457).png",
-        "fileName": "Screenshot (457).png",
+      "Screenshot (456).png": {
+        "fileName": "Screenshot (456).png",
         "godName": "Ganesha",
-        "displayName": "Plushie - Orange",
+        "displayName": "Plushie - Green",
         "target": "variant",
-        "appliedTo": "Plushie → Prism 5",
+        "appliedTo": "Plushie → Green",
         "skinKey": "Plushie",
         "skinName": "Plushie",
         "variantName": "Prism 5",
@@ -7618,13 +6278,12 @@
         "parentSkinName": "Plushie",
         "tier": "Prisms"
       },
-      "Screenshot (458).png": {
-        "screenshot": "app/data/God Renders/ganesha/Screenshot (458).png",
-        "fileName": "Screenshot (458).png",
+      "Screenshot (457).png": {
+        "fileName": "Screenshot (457).png",
         "godName": "Ganesha",
-        "displayName": "Plushie - Violet",
+        "displayName": "Plushie - Orange",
         "target": "variant",
-        "appliedTo": "Plushie → Prism 6",
+        "appliedTo": "Plushie → Orange",
         "skinKey": "Plushie",
         "skinName": "Plushie",
         "variantName": "Prism 6",
@@ -7632,13 +6291,12 @@
         "parentSkinName": "Plushie",
         "tier": "Prisms"
       },
-      "Screenshot (459).png": {
-        "screenshot": "app/data/God Renders/ganesha/Screenshot (459).png",
-        "fileName": "Screenshot (459).png",
+      "Screenshot (458).png": {
+        "fileName": "Screenshot (458).png",
         "godName": "Ganesha",
-        "displayName": "Plushie - Indigo",
+        "displayName": "Plushie - Violet",
         "target": "variant",
-        "appliedTo": "Plushie → Prism 7",
+        "appliedTo": "Plushie → Violet",
         "skinKey": "Plushie",
         "skinName": "Plushie",
         "variantName": "Prism 7",
@@ -7646,13 +6304,12 @@
         "parentSkinName": "Plushie",
         "tier": "Prisms"
       },
-      "Screenshot (460).png": {
-        "screenshot": "app/data/God Renders/ganesha/Screenshot (460).png",
-        "fileName": "Screenshot (460).png",
+      "Screenshot (459).png": {
+        "fileName": "Screenshot (459).png",
         "godName": "Ganesha",
-        "displayName": "Plushie - Monochrome",
+        "displayName": "Plushie - Indigo",
         "target": "variant",
-        "appliedTo": "Plushie → Prism 8",
+        "appliedTo": "Plushie → Indigo",
         "skinKey": "Plushie",
         "skinName": "Plushie",
         "variantName": "Prism 8",
@@ -8160,33 +6817,6 @@
         },
         "tier": "Heroic"
       },
-      "Screenshot (409).png": {
-        "screenshot": "app/data/God Renders/danzaburou/Screenshot (409).png",
-        "fileName": "Screenshot (409).png",
-        "godName": "Danzaburou",
-        "displayName": "Boss Man",
-        "target": "skin",
-        "appliedTo": "Bossman Splash 1920 X 1080",
-        "skinKey": "BossmanSplash1920x1080",
-        "skinName": "Bossman Splash 1920 X 1080",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "2250",
-          "owned": false
-        },
-        "tier": "Legacy"
-      },
-      "Screenshot (415).png": {
-        "screenshot": "app/data/God Renders/danzaburou/Screenshot (415).png",
-        "fileName": "Screenshot (415).png",
-        "godName": "Danzaburou",
-        "displayName": "Butler of the Bins",
-        "target": "skin",
-        "appliedTo": "Butlerof Bins",
-        "skinKey": "ButlerofBins",
-        "skinName": "Butlerof Bins",
-        "tier": "Epic"
-      },
       "Screenshot (408).png": {
         "screenshot": "app/data/God Renders/danzaburou/Screenshot (408).png",
         "fileName": "Screenshot (408).png",
@@ -8345,38 +6975,6 @@
         },
         "tier": "Heroic"
       },
-      "Screenshot (561).png": {
-        "screenshot": "app/data/God Renders/izanami/Screenshot (561).png",
-        "fileName": "Screenshot (561).png",
-        "godName": "Izanami",
-        "displayName": "Cyber Geisha",
-        "target": "skin",
-        "appliedTo": "01a",
-        "skinKey": "01a",
-        "skinName": "01a",
-        "cost": {
-          "currency": "gems",
-          "amount": "1000",
-          "owned": false
-        },
-        "tier": "Legacy"
-      },
-      "Screenshot (562).png": {
-        "screenshot": "app/data/God Renders/izanami/Screenshot (562).png",
-        "fileName": "Screenshot (562).png",
-        "godName": "Izanami",
-        "displayName": "Nurse Nightmare",
-        "target": "skin",
-        "appliedTo": "Creepynurse Splash",
-        "skinKey": "CreepynurseSplash",
-        "skinName": "Creepynurse Splash",
-        "cost": {
-          "currency": "gems",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
       "Screenshot (563).png": {
         "screenshot": "app/data/God Renders/izanami/Screenshot (563).png",
         "fileName": "Screenshot (563).png",
@@ -8495,77 +7093,43 @@
         },
         "tier": "Classic"
       },
-      "Screenshot (911).png": {
-        "screenshot": "app/data/God Renders/susano/Screenshot (911).png",
-        "fileName": "Screenshot (911).png",
-        "godName": "Susano",
-        "displayName": "Stumble Blade",
-        "target": "skin",
-        "appliedTo": "Stumble Blade",
-        "skinKey": "StumbleBlade",
-        "skinName": "Stumble Blade",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
       "Screenshot (912).png": {
-        "screenshot": "app/data/God Renders/susano/Screenshot (912).png",
         "fileName": "Screenshot (912).png",
         "godName": "Susano",
         "displayName": "Stumble Blade - Copper",
-        "target": "variant-new",
-        "appliedTo": "Stumble Blade",
+        "target": "variant",
+        "appliedTo": "Stumble Blade → Copper",
         "skinKey": "StumbleBlade",
         "skinName": "Stumble Blade",
         "variantName": "Prism 1",
         "parentSkinKey": "StumbleBlade",
         "parentSkinName": "Stumble Blade",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
         "tier": "Prisms"
       },
       "Screenshot (913).png": {
-        "screenshot": "app/data/God Renders/susano/Screenshot (913).png",
         "fileName": "Screenshot (913).png",
         "godName": "Susano",
         "displayName": "Stumble Blade - Amethyst",
-        "target": "variant-new",
-        "appliedTo": "Stumble Blade",
+        "target": "variant",
+        "appliedTo": "Stumble Blade → Amethyst",
         "skinKey": "StumbleBlade",
         "skinName": "Stumble Blade",
         "variantName": "Prism 2",
         "parentSkinKey": "StumbleBlade",
         "parentSkinName": "Stumble Blade",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
         "tier": "Prisms"
       },
       "Screenshot (914).png": {
-        "screenshot": "app/data/God Renders/susano/Screenshot (914).png",
         "fileName": "Screenshot (914).png",
         "godName": "Susano",
         "displayName": "Stumble Blade - Crimson",
-        "target": "variant-new",
-        "appliedTo": "Stumble Blade",
+        "target": "variant",
+        "appliedTo": "Stumble Blade → Crimson",
         "skinKey": "StumbleBlade",
         "skinName": "Stumble Blade",
         "variantName": "Prism 3",
         "parentSkinKey": "StumbleBlade",
         "parentSkinName": "Stumble Blade",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
         "tier": "Prisms"
       }
     },
@@ -8658,62 +7222,6 @@
           "owned": false
         },
         "tier": "Classic"
-      },
-      "Screenshot (957).png": {
-        "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (957).png",
-        "fileName": "Screenshot (957).png",
-        "godName": "Tsukuyomi",
-        "displayName": "Silver Bullet - Cursed Blood",
-        "target": "variant",
-        "appliedTo": "Silver Bullet → Prism 1",
-        "skinKey": "SilverBullet",
-        "skinName": "Silver Bullet",
-        "variantName": "Prism 1",
-        "parentSkinKey": "SilverBullet",
-        "parentSkinName": "Silver Bullet",
-        "tier": "Prisms"
-      },
-      "Screenshot (958).png": {
-        "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (958).png",
-        "fileName": "Screenshot (958).png",
-        "godName": "Tsukuyomi",
-        "displayName": "Silver Bullet - Paragon",
-        "target": "variant",
-        "appliedTo": "Silver Bullet → Prism 2",
-        "skinKey": "SilverBullet",
-        "skinName": "Silver Bullet",
-        "variantName": "Prism 2",
-        "parentSkinKey": "SilverBullet",
-        "parentSkinName": "Silver Bullet",
-        "tier": "Prisms"
-      },
-      "Screenshot (959).png": {
-        "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (959).png",
-        "fileName": "Screenshot (959).png",
-        "godName": "Tsukuyomi",
-        "displayName": "Silver Bullet - Shadow Stalker",
-        "target": "variant",
-        "appliedTo": "Silver Bullet → Prism 3",
-        "skinKey": "SilverBullet",
-        "skinName": "Silver Bullet",
-        "variantName": "Prism 3",
-        "parentSkinKey": "SilverBullet",
-        "parentSkinName": "Silver Bullet",
-        "tier": "Prisms"
-      },
-      "Screenshot (960).png": {
-        "screenshot": "app/data/God Renders/tsukuyomi/Screenshot (960).png",
-        "fileName": "Screenshot (960).png",
-        "godName": "Tsukuyomi",
-        "displayName": "Silver Bullet - Wildwood",
-        "target": "variant",
-        "appliedTo": "Silver Bullet → Prism 4",
-        "skinKey": "SilverBullet",
-        "skinName": "Silver Bullet",
-        "variantName": "Prism 4",
-        "parentSkinKey": "SilverBullet",
-        "parentSkinName": "Silver Bullet",
-        "tier": "Prisms"
       }
     },
     "princess bari": {
@@ -9146,48 +7654,6 @@
         },
         "tier": "Classic"
       },
-      "Screenshot (323).png": {
-        "screenshot": "app/data/God Renders/cabrakan/Screenshot (323).png",
-        "fileName": "Screenshot (323).png",
-        "godName": "Cabrakan",
-        "displayName": "Fat Loki - Joki",
-        "target": "variant",
-        "appliedTo": "Fat Loki → Prism 1",
-        "skinKey": "FatLoki",
-        "skinName": "Fat Loki",
-        "variantName": "Prism 1",
-        "parentSkinKey": "FatLoki",
-        "parentSkinName": "Fat Loki",
-        "tier": "Prisms"
-      },
-      "Screenshot (324).png": {
-        "screenshot": "app/data/God Renders/cabrakan/Screenshot (324).png",
-        "fileName": "Screenshot (324).png",
-        "godName": "Cabrakan",
-        "displayName": "Fat Loki - Grim Mariachi",
-        "target": "variant",
-        "appliedTo": "Fat Loki → Prism 2",
-        "skinKey": "FatLoki",
-        "skinName": "Fat Loki",
-        "variantName": "Prism 2",
-        "parentSkinKey": "FatLoki",
-        "parentSkinName": "Fat Loki",
-        "tier": "Prisms"
-      },
-      "Screenshot (325).png": {
-        "screenshot": "app/data/God Renders/cabrakan/Screenshot (325).png",
-        "fileName": "Screenshot (325).png",
-        "godName": "Cabrakan",
-        "displayName": "Fat Loki - Loki Charms",
-        "target": "variant",
-        "appliedTo": "Fat Loki → Prism 3",
-        "skinKey": "FatLoki",
-        "skinName": "Fat Loki",
-        "variantName": "Prism 3",
-        "parentSkinKey": "FatLoki",
-        "parentSkinName": "Fat Loki",
-        "tier": "Prisms"
-      },
       "Screenshot (326).png": {
         "screenshot": "app/data/God Renders/cabrakan/Screenshot (326).png",
         "fileName": "Screenshot (326).png",
@@ -9198,62 +7664,6 @@
         "skinKey": "NerdRage014",
         "skinName": "Nerd Rage 014",
         "tier": "Classic"
-      },
-      "Screenshot (327).png": {
-        "screenshot": "app/data/God Renders/cabrakan/Screenshot (327).png",
-        "fileName": "Screenshot (327).png",
-        "godName": "Cabrakan",
-        "displayName": "Nerd Rage - Assistant",
-        "target": "variant",
-        "appliedTo": "Nerd Rage → Prism A",
-        "skinKey": "NerdRage014",
-        "skinName": "Nerd Rage",
-        "variantName": "Prism A",
-        "parentSkinKey": "NerdRage014",
-        "parentSkinName": "Nerd Rage",
-        "tier": "Prisms"
-      },
-      "Screenshot (328).png": {
-        "screenshot": "app/data/God Renders/cabrakan/Screenshot (328).png",
-        "fileName": "Screenshot (328).png",
-        "godName": "Cabrakan",
-        "displayName": "Nerd Rage - Neowave",
-        "target": "variant",
-        "appliedTo": "Nerd Rage → Prism B",
-        "skinKey": "NerdRage014",
-        "skinName": "Nerd Rage",
-        "variantName": "Prism B",
-        "parentSkinKey": "NerdRage014",
-        "parentSkinName": "Nerd Rage",
-        "tier": "Prisms"
-      },
-      "Screenshot (329).png": {
-        "screenshot": "app/data/God Renders/cabrakan/Screenshot (329).png",
-        "fileName": "Screenshot (329).png",
-        "godName": "Cabrakan",
-        "displayName": "Nerd Rage - Lo-Rez",
-        "target": "variant",
-        "appliedTo": "Nerd Rage → Prism C",
-        "skinKey": "NerdRage014",
-        "skinName": "Nerd Rage",
-        "variantName": "Prism C",
-        "parentSkinKey": "NerdRage014",
-        "parentSkinName": "Nerd Rage",
-        "tier": "Prisms"
-      },
-      "Screenshot (330).png": {
-        "screenshot": "app/data/God Renders/cabrakan/Screenshot (330).png",
-        "fileName": "Screenshot (330).png",
-        "godName": "Cabrakan",
-        "displayName": "Nerd Rage - Data Logger",
-        "target": "variant",
-        "appliedTo": "Nerd Rage → Prism D",
-        "skinKey": "NerdRage014",
-        "skinName": "Nerd Rage",
-        "variantName": "Prism D",
-        "parentSkinKey": "NerdRage014",
-        "parentSkinName": "Nerd Rage",
-        "tier": "Prisms"
       }
     },
     "chaac": {
@@ -9331,74 +7741,20 @@
         "tier": "Heroic"
       },
       "Screenshot (356).png": {
-        "screenshot": "app/data/God Renders/chaac/Screenshot (356).png",
         "fileName": "Screenshot (356).png",
-        "godName": "Chaac",
-        "displayName": "Demon",
-        "target": "skin",
-        "appliedTo": "Demon",
-        "skinKey": "Demon",
-        "skinName": "Demon",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
-      "Screenshot (357).png": {
-        "screenshot": "app/data/God Renders/chaac/Screenshot (357).png",
-        "fileName": "Screenshot (357).png",
-        "godName": "Chaac",
-        "displayName": "Necrotic Divinity",
-        "target": "skin",
-        "appliedTo": "Necrotic Divinity",
-        "skinKey": "NecroticDivinity",
-        "skinName": "Necrotic Divinity",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
-      "Screenshot (358).png": {
-        "screenshot": "app/data/God Renders/chaac/Screenshot (358).png",
-        "fileName": "Screenshot (358).png",
         "godName": "Chaac",
         "displayName": "Slaughterhouse",
         "target": "skin",
-        "appliedTo": "Slaughterhouse Splash 1",
+        "appliedTo": "Slaughterhouse",
         "skinKey": "SlaughterhouseSplash1",
-        "skinName": "Slaughterhouse Splash 1",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "2400",
-          "owned": false
-        },
-        "tier": "Classic"
+        "skinName": "Slaughterhouse"
       },
-      "Screenshot (359).png": {
-        "screenshot": "app/data/God Renders/chaac/Screenshot (359).png",
-        "fileName": "Screenshot (359).png",
+      "Screenshot (357).png": {
+        "fileName": "Screenshot (357).png",
         "godName": "Chaac",
-        "displayName": "Slaughterhouse - 1",
+        "displayName": "Slaughterhouse - Smiley Time",
         "target": "variant",
-        "appliedTo": "Slaughterhouse → Prism 1",
-        "skinKey": "SlaughterhouseSplash1",
-        "skinName": "Slaughterhouse",
-        "variantName": "Prism 1",
-        "parentSkinKey": "SlaughterhouseSplash1",
-        "parentSkinName": "Slaughterhouse",
-        "tier": "Prisms"
-      },
-      "Screenshot (360).png": {
-        "screenshot": "app/data/God Renders/chaac/Screenshot (360).png",
-        "fileName": "Screenshot (360).png",
-        "godName": "Chaac",
-        "displayName": "Slaughterhouse - 2",
-        "target": "variant",
-        "appliedTo": "Slaughterhouse → Prism 2",
+        "appliedTo": "Slaughterhouse → Smiley Time",
         "skinKey": "SlaughterhouseSplash1",
         "skinName": "Slaughterhouse",
         "variantName": "Prism 2",
@@ -9406,13 +7762,25 @@
         "parentSkinName": "Slaughterhouse",
         "tier": "Prisms"
       },
-      "Screenshot (361).png": {
-        "screenshot": "app/data/God Renders/chaac/Screenshot (361).png",
-        "fileName": "Screenshot (361).png",
+      "Screenshot (359).png": {
+        "fileName": "Screenshot (359).png",
         "godName": "Chaac",
-        "displayName": "Slaughterhouse - 3",
+        "displayName": "Slaughterhouse - Carnival Carnage",
         "target": "variant",
-        "appliedTo": "Slaughterhouse → Prism 3",
+        "appliedTo": "Slaughterhouse → Carnival Carnage",
+        "skinKey": "SlaughterhouseSplash1",
+        "skinName": "Slaughterhouse",
+        "variantName": "Prism 4",
+        "parentSkinKey": "SlaughterhouseSplash1",
+        "parentSkinName": "Slaughterhouse",
+        "tier": "Prisms"
+      },
+      "Screenshot (358).png": {
+        "fileName": "Screenshot (358).png",
+        "godName": "Chaac",
+        "displayName": "Slaughterhouse - Infernal Rider",
+        "target": "variant",
+        "appliedTo": "Slaughterhouse → Infernal Rider",
         "skinKey": "SlaughterhouseSplash1",
         "skinName": "Slaughterhouse",
         "variantName": "Prism 3",
@@ -9420,16 +7788,15 @@
         "parentSkinName": "Slaughterhouse",
         "tier": "Prisms"
       },
-      "Screenshot (362).png": {
-        "screenshot": "app/data/God Renders/chaac/Screenshot (362).png",
-        "fileName": "Screenshot (362).png",
+      "Screenshot (360).png": {
+        "fileName": "Screenshot (360).png",
         "godName": "Chaac",
-        "displayName": "Slaughterhouse - 4",
+        "displayName": "Slaughterhouse - Gilded Gore",
         "target": "variant",
-        "appliedTo": "Slaughterhouse → Prism 4",
+        "appliedTo": "Slaughterhouse → Gilded Gore",
         "skinKey": "SlaughterhouseSplash1",
         "skinName": "Slaughterhouse",
-        "variantName": "Prism 4",
+        "variantName": "Prism 5",
         "parentSkinKey": "SlaughterhouseSplash1",
         "parentSkinName": "Slaughterhouse",
         "tier": "Prisms"
@@ -9627,22 +7994,6 @@
         },
         "tier": "Heroic"
       },
-      "Screenshot (630).png": {
-        "screenshot": "app/data/God Renders/kukulkan/Screenshot (630).png",
-        "fileName": "Screenshot (630).png",
-        "godName": "Kukulkan",
-        "displayName": "Cosmic Moth",
-        "target": "skin",
-        "appliedTo": "Cosmicmoth",
-        "skinKey": "Smite2F2pOb1SocialCosmicmoth1920x1080Notag",
-        "skinName": "Cosmicmoth",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1600",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
       "Screenshot (642).png": {
         "screenshot": "app/data/God Renders/kukulkan/Screenshot (642).png",
         "fileName": "Screenshot (642).png",
@@ -9655,73 +8006,55 @@
         "tier": "Epic"
       },
       "Screenshot (643).png": {
-        "screenshot": "app/data/God Renders/kukulkan/Screenshot (643).png",
         "fileName": "Screenshot (643).png",
         "godName": "Kukulkan",
         "displayName": "Necrotic Tyrant - Toxic Wings",
         "target": "variant",
-        "appliedTo": "Dragon Lord Form 1 → Toxic Wings",
+        "appliedTo": "Necrotic Tyrant → Toxic Wings",
         "skinKey": "DragonLordForm01",
-        "skinName": "Dragon Lord Form 1",
-        "variantName": "Toxic Wings",
+        "skinName": "Necrotic Tyrant",
+        "variantName": "Prism P1",
         "parentSkinKey": "DragonLordForm01",
-        "parentSkinName": "Dragon Lord Form 1",
+        "parentSkinName": "Necrotic Tyrant",
         "tier": "Prisms"
       },
       "Screenshot (644).png": {
-        "screenshot": "app/data/God Renders/kukulkan/Screenshot (644).png",
         "fileName": "Screenshot (644).png",
         "godName": "Kukulkan",
-        "displayName": "Form 2 - 2",
+        "displayName": "Necrotic Tyrant - Gilded Fangs",
         "target": "variant",
-        "appliedTo": "Dragon Lord Form 1 → 2",
+        "appliedTo": "Necrotic Tyrant → Gilded Fangs",
         "skinKey": "DragonLordForm01",
-        "skinName": "Dragon Lord Form 1",
-        "variantName": "2",
+        "skinName": "Necrotic Tyrant",
+        "variantName": "Prism P2",
         "parentSkinKey": "DragonLordForm01",
-        "parentSkinName": "Dragon Lord Form 1",
+        "parentSkinName": "Necrotic Tyrant",
         "tier": "Prisms"
       },
       "Screenshot (645).png": {
-        "screenshot": "app/data/God Renders/kukulkan/Screenshot (645).png",
         "fileName": "Screenshot (645).png",
         "godName": "Kukulkan",
-        "displayName": "Form 2 - 3",
+        "displayName": "Necrotic Tyrant - Molten Breath",
         "target": "variant",
-        "appliedTo": "Dragon Lord Form 1 → 3",
+        "appliedTo": "Necrotic Tyrant → Molten Breath",
         "skinKey": "DragonLordForm01",
-        "skinName": "Dragon Lord Form 1",
-        "variantName": "3",
+        "skinName": "Necrotic Tyrant",
+        "variantName": "Prism P3",
         "parentSkinKey": "DragonLordForm01",
-        "parentSkinName": "Dragon Lord Form 1",
+        "parentSkinName": "Necrotic Tyrant",
         "tier": "Prisms"
       },
       "Screenshot (646).png": {
-        "screenshot": "app/data/God Renders/kukulkan/Screenshot (646).png",
         "fileName": "Screenshot (646).png",
         "godName": "Kukulkan",
-        "displayName": "Form 2 - 4",
+        "displayName": "Necrotic Tyrant - Shadow Claws",
         "target": "variant",
-        "appliedTo": "Dragon Lord Form 1 → Molten Breath",
+        "appliedTo": "Necrotic Tyrant → Shadow Claws",
         "skinKey": "DragonLordForm01",
-        "skinName": "Dragon Lord Form 1",
-        "variantName": "Molten Breath",
+        "skinName": "Necrotic Tyrant",
+        "variantName": "Prism P4",
         "parentSkinKey": "DragonLordForm01",
-        "parentSkinName": "Dragon Lord Form 1",
-        "tier": "Prisms"
-      },
-      "Screenshot (641).png": {
-        "screenshot": "app/data/God Renders/kukulkan/Screenshot (641).png",
-        "fileName": "Screenshot (641).png",
-        "godName": "Kukulkan",
-        "displayName": "Crimson Majesty - Shadow Claws",
-        "target": "variant-new",
-        "appliedTo": "Dragon Lord Form 1",
-        "skinKey": "DragonLordForm01",
-        "skinName": "Dragon Lord Form 1",
-        "variantName": "Shadow Claws",
-        "parentSkinKey": "DragonLordForm01",
-        "parentSkinName": "Dragon Lord Form 1",
+        "parentSkinName": "Necrotic Tyrant",
         "tier": "Prisms"
       },
       "Screenshot (631).png": {
@@ -9765,34 +8098,6 @@
         "skinKey": "VoidWyrm",
         "skinName": "Void Wyrm",
         "variantName": "Prism 1",
-        "parentSkinKey": "VoidWyrm",
-        "parentSkinName": "Void Wyrm",
-        "tier": "Prisms"
-      },
-      "Screenshot (628).png": {
-        "screenshot": "app/data/God Renders/kukulkan/Screenshot (628).png",
-        "fileName": "Screenshot (628).png",
-        "godName": "Kukulkan",
-        "displayName": "Void Wyrm - 2",
-        "target": "variant",
-        "appliedTo": "Void Wyrm → Prism 2",
-        "skinKey": "VoidWyrm",
-        "skinName": "Void Wyrm",
-        "variantName": "Prism 2",
-        "parentSkinKey": "VoidWyrm",
-        "parentSkinName": "Void Wyrm",
-        "tier": "Prisms"
-      },
-      "Screenshot (629).png": {
-        "screenshot": "app/data/God Renders/kukulkan/Screenshot (629).png",
-        "fileName": "Screenshot (629).png",
-        "godName": "Kukulkan",
-        "displayName": "Void Wyrm - 3",
-        "target": "variant",
-        "appliedTo": "Void Wyrm → Prism 3",
-        "skinKey": "VoidWyrm",
-        "skinName": "Void Wyrm",
-        "variantName": "Prism 3",
         "parentSkinKey": "VoidWyrm",
         "parentSkinName": "Void Wyrm",
         "tier": "Prisms"
@@ -9887,62 +8192,6 @@
           "owned": false
         },
         "tier": "Classic"
-      },
-      "Screenshot (994).png": {
-        "screenshot": "app/data/God Renders/xbalanque/Screenshot (994).png",
-        "fileName": "Screenshot (994).png",
-        "godName": "Xbalanque",
-        "displayName": "Darkest Knight - 1",
-        "target": "variant",
-        "appliedTo": "Darkest Knight → Prism 1",
-        "skinKey": "DarkestKnight",
-        "skinName": "Darkest Knight",
-        "variantName": "Prism 1",
-        "parentSkinKey": "DarkestKnight",
-        "parentSkinName": "Darkest Knight",
-        "tier": "Prisms"
-      },
-      "Screenshot (995).png": {
-        "screenshot": "app/data/God Renders/xbalanque/Screenshot (995).png",
-        "fileName": "Screenshot (995).png",
-        "godName": "Xbalanque",
-        "displayName": "Darkest Knight - 2",
-        "target": "variant",
-        "appliedTo": "Darkest Knight → Prism 2",
-        "skinKey": "DarkestKnight",
-        "skinName": "Darkest Knight",
-        "variantName": "Prism 2",
-        "parentSkinKey": "DarkestKnight",
-        "parentSkinName": "Darkest Knight",
-        "tier": "Prisms"
-      },
-      "Screenshot (996).png": {
-        "screenshot": "app/data/God Renders/xbalanque/Screenshot (996).png",
-        "fileName": "Screenshot (996).png",
-        "godName": "Xbalanque",
-        "displayName": "Darkest Knight - 3",
-        "target": "variant",
-        "appliedTo": "Darkest Knight → Prism 3",
-        "skinKey": "DarkestKnight",
-        "skinName": "Darkest Knight",
-        "variantName": "Prism 3",
-        "parentSkinKey": "DarkestKnight",
-        "parentSkinName": "Darkest Knight",
-        "tier": "Prisms"
-      },
-      "Screenshot (997).png": {
-        "screenshot": "app/data/God Renders/xbalanque/Screenshot (997).png",
-        "fileName": "Screenshot (997).png",
-        "godName": "Xbalanque",
-        "displayName": "Darkest Knight - 4",
-        "target": "variant",
-        "appliedTo": "Darkest Knight → Prism 4",
-        "skinKey": "DarkestKnight",
-        "skinName": "Darkest Knight",
-        "variantName": "Prism 4",
-        "parentSkinKey": "DarkestKnight",
-        "parentSkinName": "Darkest Knight",
-        "tier": "Prisms"
       }
     },
     "fenrir": {
@@ -10084,7 +8333,6 @@
         "tier": "Classic"
       },
       "Screenshot (439).png": {
-        "screenshot": "app/data/God Renders/fenrir/Screenshot (439).png",
         "fileName": "Screenshot (439).png",
         "godName": "Fenrir",
         "displayName": "Wreck the Halls - Frosty",
@@ -10092,13 +8340,12 @@
         "appliedTo": "Wreck the Halls → Frosty",
         "skinKey": "WrecktheHalls",
         "skinName": "Wreck the Halls",
-        "variantName": "Frosty",
+        "variantName": "Prism P1",
         "parentSkinKey": "WrecktheHalls",
         "parentSkinName": "Wreck the Halls",
         "tier": "Prisms"
       },
       "Screenshot (441).png": {
-        "screenshot": "app/data/God Renders/fenrir/Screenshot (441).png",
         "fileName": "Screenshot (441).png",
         "godName": "Fenrir",
         "displayName": "Wreck the Halls - Yule Napper",
@@ -10106,13 +8353,12 @@
         "appliedTo": "Wreck the Halls → Yule Napper",
         "skinKey": "WrecktheHalls",
         "skinName": "Wreck the Halls",
-        "variantName": "Yule Napper",
+        "variantName": "Prism P2",
         "parentSkinKey": "WrecktheHalls",
         "parentSkinName": "Wreck the Halls",
         "tier": "Prisms"
       },
       "Screenshot (442).png": {
-        "screenshot": "app/data/God Renders/fenrir/Screenshot (442).png",
         "fileName": "Screenshot (442).png",
         "godName": "Fenrir",
         "displayName": "Wreck the Halls - Festive Filcher",
@@ -10120,13 +8366,12 @@
         "appliedTo": "Wreck the Halls → Festive Filcher",
         "skinKey": "WrecktheHalls",
         "skinName": "Wreck the Halls",
-        "variantName": "Festive Filcher",
+        "variantName": "Prism P3",
         "parentSkinKey": "WrecktheHalls",
         "parentSkinName": "Wreck the Halls",
         "tier": "Prisms"
       },
       "Screenshot (443).png": {
-        "screenshot": "app/data/God Renders/fenrir/Screenshot (443).png",
         "fileName": "Screenshot (443).png",
         "godName": "Fenrir",
         "displayName": "Wreck the Halls - Roast Chestnut",
@@ -10134,7 +8379,7 @@
         "appliedTo": "Wreck the Halls → Roast Chestnut",
         "skinKey": "WrecktheHalls",
         "skinName": "Wreck the Halls",
-        "variantName": "Roast Chestnut",
+        "variantName": "Prism P4",
         "parentSkinKey": "WrecktheHalls",
         "parentSkinName": "Wreck the Halls",
         "tier": "Prisms"
@@ -10231,7 +8476,6 @@
         "tier": "Classic"
       },
       "Screenshot (596).png": {
-        "screenshot": "app/data/God Renders/jormungandr/Screenshot (596).png",
         "fileName": "Screenshot (596).png",
         "godName": "Jormungandr",
         "displayName": "World Kitty - Baron",
@@ -10239,13 +8483,12 @@
         "appliedTo": "World Kitty → Baron",
         "skinKey": "WorldKitty",
         "skinName": "World Kitty",
-        "variantName": "Baron",
+        "variantName": "Prism P1",
         "parentSkinKey": "WorldKitty",
         "parentSkinName": "World Kitty",
         "tier": "Prisms"
       },
       "Screenshot (597).png": {
-        "screenshot": "app/data/God Renders/jormungandr/Screenshot (597).png",
         "fileName": "Screenshot (597).png",
         "godName": "Jormungandr",
         "displayName": "World Kitty - Ginger",
@@ -10253,13 +8496,12 @@
         "appliedTo": "World Kitty → Ginger",
         "skinKey": "WorldKitty",
         "skinName": "World Kitty",
-        "variantName": "Ginger",
+        "variantName": "Prism P2",
         "parentSkinKey": "WorldKitty",
         "parentSkinName": "World Kitty",
         "tier": "Prisms"
       },
       "Screenshot (598).png": {
-        "screenshot": "app/data/God Renders/jormungandr/Screenshot (598).png",
         "fileName": "Screenshot (598).png",
         "godName": "Jormungandr",
         "displayName": "World Kitty - Dipper",
@@ -10267,13 +8509,12 @@
         "appliedTo": "World Kitty → Dipper",
         "skinKey": "WorldKitty",
         "skinName": "World Kitty",
-        "variantName": "Dipper",
+        "variantName": "Prism P3",
         "parentSkinKey": "WorldKitty",
         "parentSkinName": "World Kitty",
         "tier": "Prisms"
       },
       "Screenshot (599).png": {
-        "screenshot": "app/data/God Renders/jormungandr/Screenshot (599).png",
         "fileName": "Screenshot (599).png",
         "godName": "Jormungandr",
         "displayName": "World Kitty - Snowball",
@@ -10281,7 +8522,7 @@
         "appliedTo": "World Kitty → Snowball",
         "skinKey": "WorldKitty",
         "skinName": "World Kitty",
-        "variantName": "Snowball",
+        "variantName": "Prism P4",
         "parentSkinKey": "WorldKitty",
         "parentSkinName": "World Kitty",
         "tier": "Prisms"
@@ -10540,37 +8781,20 @@
         "parentSkinName": "Base Odin",
         "tier": "Heroic"
       },
-      "Screenshot (774).png": {
-        "screenshot": "app/data/God Renders/odin/Screenshot (774).png",
-        "fileName": "Screenshot (774).png",
+      "Screenshot (775).png": {
+        "fileName": "Screenshot (775).png",
         "godName": "Odin",
-        "displayName": "Bionic Overlord",
+        "displayName": "Shadow",
         "target": "skin",
-        "appliedTo": "Bionic Overlord",
-        "skinKey": "DarkCyborg",
-        "skinName": "Bionic Overlord",
+        "appliedTo": "Shadow",
+        "skinKey": "Shadow",
+        "skinName": "Shadow",
         "cost": {
           "currency": "diamonds",
-          "amount": "1200",
+          "amount": "900",
           "owned": false
         },
-        "tier": "Epic"
-      },
-      "Screenshot (772).png": {
-        "screenshot": "app/data/God Renders/odin/Screenshot (772).png",
-        "fileName": "Screenshot (772).png",
-        "godName": "Odin",
-        "displayName": "Winged Terror",
-        "target": "skin",
-        "appliedTo": "Winged Terror",
-        "skinKey": "Demon",
-        "skinName": "Winged Terror",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "2100",
-          "owned": false
-        },
-        "tier": "Legendary"
+        "tier": "Heroic"
       },
       "Screenshot (773).png": {
         "screenshot": "app/data/God Renders/odin/Screenshot (773).png",
@@ -10587,22 +8811,6 @@
           "owned": false
         },
         "tier": "Classic"
-      },
-      "Screenshot (775).png": {
-        "screenshot": "app/data/God Renders/odin/Screenshot (775).png",
-        "fileName": "Screenshot (775).png",
-        "godName": "Odin",
-        "displayName": "Shadow",
-        "target": "skin",
-        "appliedTo": "Shadow",
-        "skinKey": "Shadow",
-        "skinName": "Shadow",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "900",
-          "owned": false
-        },
-        "tier": "Heroic"
       }
     },
     "ratatoskr": {
@@ -10833,161 +9041,6 @@
           "owned": false
         },
         "tier": "Epic"
-      },
-      "Screenshot (882).png": {
-        "screenshot": "app/data/God Renders/sol/Screenshot (882).png",
-        "fileName": "Screenshot (882).png",
-        "godName": "Sol",
-        "displayName": "The Magnificent",
-        "target": "skin",
-        "appliedTo": "The Magnificent",
-        "skinKey": "Magnificent",
-        "skinName": "The Magnificent",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "2400",
-          "owned": false
-        },
-        "tier": "Classic"
-      },
-      "Screenshot (883).png": {
-        "screenshot": "app/data/God Renders/sol/Screenshot (883).png",
-        "fileName": "Screenshot (883).png",
-        "godName": "Sol",
-        "displayName": "The Magnificent - Golden Illusion",
-        "target": "variant",
-        "appliedTo": "The Magnificent → Prism 1",
-        "skinKey": "Magnificent",
-        "skinName": "The Magnificent",
-        "variantName": "Prism 1",
-        "parentSkinKey": "Magnificent",
-        "parentSkinName": "The Magnificent",
-        "tier": "Prisms"
-      },
-      "Screenshot (884).png": {
-        "screenshot": "app/data/God Renders/sol/Screenshot (884).png",
-        "fileName": "Screenshot (884).png",
-        "godName": "Sol",
-        "displayName": "The Magnificent - Emerald Trickster",
-        "target": "variant",
-        "appliedTo": "The Magnificent → Prism 2",
-        "skinKey": "Magnificent",
-        "skinName": "The Magnificent",
-        "variantName": "Prism 2",
-        "parentSkinKey": "Magnificent",
-        "parentSkinName": "The Magnificent",
-        "tier": "Prisms"
-      },
-      "Screenshot (885).png": {
-        "screenshot": "app/data/God Renders/sol/Screenshot (885).png",
-        "fileName": "Screenshot (885).png",
-        "godName": "Sol",
-        "displayName": "The Magnificent - Pink Prestige",
-        "target": "variant",
-        "appliedTo": "The Magnificent → Prism 3",
-        "skinKey": "Magnificent",
-        "skinName": "The Magnificent",
-        "variantName": "Prism 3",
-        "parentSkinKey": "Magnificent",
-        "parentSkinName": "The Magnificent",
-        "tier": "Prisms"
-      },
-      "Screenshot (886).png": {
-        "screenshot": "app/data/God Renders/sol/Screenshot (886).png",
-        "fileName": "Screenshot (886).png",
-        "godName": "Sol",
-        "displayName": "The Magnificent - Grand Noir",
-        "target": "variant",
-        "appliedTo": "The Magnificent → Prism 4",
-        "skinKey": "Magnificent",
-        "skinName": "The Magnificent",
-        "variantName": "Prism 4",
-        "parentSkinKey": "Magnificent",
-        "parentSkinName": "The Magnificent",
-        "tier": "Prisms"
-      },
-      "Screenshot (887).png": {
-        "screenshot": "app/data/God Renders/sol/Screenshot (887).png",
-        "fileName": "Screenshot (887).png",
-        "godName": "Sol",
-        "displayName": "Meltdown",
-        "target": "skin",
-        "appliedTo": "Meltdown",
-        "skinKey": "TSkincardMeltdown",
-        "skinName": "Meltdown",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "2400",
-          "owned": false
-        },
-        "tier": "Classic"
-      },
-      "Screenshot (889).png": {
-        "screenshot": "app/data/God Renders/sol/Screenshot (889).png",
-        "fileName": "Screenshot (889).png",
-        "godName": "Sol",
-        "displayName": "Vampiress",
-        "target": "skin",
-        "appliedTo": "Vampiress",
-        "skinKey": "VampiressPrisms",
-        "skinName": "Vampiress",
-        "tier": "Legendary"
-      },
-      "Screenshot (890).png": {
-        "screenshot": "app/data/God Renders/sol/Screenshot (890).png",
-        "fileName": "Screenshot (890).png",
-        "godName": "Sol",
-        "displayName": "Vampiress - Moonlit Mistress",
-        "target": "variant",
-        "appliedTo": "Vampiress → Prism B",
-        "skinKey": "VampiressPrisms",
-        "skinName": "Vampiress",
-        "variantName": "Prism B",
-        "parentSkinKey": "VampiressPrisms",
-        "parentSkinName": "Vampiress",
-        "tier": "Prisms"
-      },
-      "Screenshot (891).png": {
-        "screenshot": "app/data/God Renders/sol/Screenshot (891).png",
-        "fileName": "Screenshot (891).png",
-        "godName": "Sol",
-        "displayName": "Vampiress - Blood Rose",
-        "target": "variant",
-        "appliedTo": "Vampiress → Prism C",
-        "skinKey": "VampiressPrisms",
-        "skinName": "Vampiress",
-        "variantName": "Prism C",
-        "parentSkinKey": "VampiressPrisms",
-        "parentSkinName": "Vampiress",
-        "tier": "Prisms"
-      },
-      "Screenshot (892).png": {
-        "screenshot": "app/data/God Renders/sol/Screenshot (892).png",
-        "fileName": "Screenshot (892).png",
-        "godName": "Sol",
-        "displayName": "Vampiress - Ultraviolent",
-        "target": "variant",
-        "appliedTo": "Vampiress → Prism D",
-        "skinKey": "VampiressPrisms",
-        "skinName": "Vampiress",
-        "variantName": "Prism D",
-        "parentSkinKey": "VampiressPrisms",
-        "parentSkinName": "Vampiress",
-        "tier": "Prisms"
-      },
-      "Screenshot (893).png": {
-        "screenshot": "app/data/God Renders/sol/Screenshot (893).png",
-        "fileName": "Screenshot (893).png",
-        "godName": "Sol",
-        "displayName": "Vampiress - Twilight Glimmer",
-        "target": "variant",
-        "appliedTo": "Vampiress → Prism E",
-        "skinKey": "VampiressPrisms",
-        "skinName": "Vampiress",
-        "variantName": "Prism E",
-        "parentSkinKey": "VampiressPrisms",
-        "parentSkinName": "Vampiress",
-        "tier": "Prisms"
       }
     },
     "thor": {
@@ -11080,22 +9133,6 @@
         },
         "tier": "Epic"
       },
-      "Screenshot (949).png": {
-        "screenshot": "app/data/God Renders/thor/Screenshot (949).png",
-        "fileName": "Screenshot (949).png",
-        "godName": "Thor",
-        "displayName": "Frosted Fury",
-        "target": "skin",
-        "appliedTo": "Frosted Fury",
-        "skinKey": "Snowman",
-        "skinName": "Frosted Fury",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
       "Screenshot (950).png": {
         "screenshot": "app/data/God Renders/thor/Screenshot (950).png",
         "fileName": "Screenshot (950).png",
@@ -11181,78 +9218,6 @@
           "owned": false
         },
         "tier": "Heroic"
-      },
-      "Screenshot (966).png": {
-        "screenshot": "app/data/God Renders/ullr/Screenshot (966).png",
-        "fileName": "Screenshot (966).png",
-        "godName": "Ullr",
-        "displayName": "The Survivor",
-        "target": "skin",
-        "appliedTo": "The Survivor",
-        "skinKey": "SurvivorCardPrisms1",
-        "skinName": "The Survivor",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "800",
-          "owned": false
-        },
-        "tier": "Classic"
-      },
-      "Screenshot (967).png": {
-        "screenshot": "app/data/God Renders/ullr/Screenshot (967).png",
-        "fileName": "Screenshot (967).png",
-        "godName": "Ullr",
-        "displayName": "The Survivor - Fangslayer",
-        "target": "variant",
-        "appliedTo": "The Survivor → Prism B",
-        "skinKey": "SurvivorCardPrisms1",
-        "skinName": "The Survivor",
-        "variantName": "Prism B",
-        "parentSkinKey": "SurvivorCardPrisms1",
-        "parentSkinName": "The Survivor",
-        "tier": "Prisms"
-      },
-      "Screenshot (968).png": {
-        "screenshot": "app/data/God Renders/ullr/Screenshot (968).png",
-        "fileName": "Screenshot (968).png",
-        "godName": "Ullr",
-        "displayName": "The Survivor - Corpsecaller",
-        "target": "variant",
-        "appliedTo": "The Survivor → Prism C",
-        "skinKey": "SurvivorCardPrisms1",
-        "skinName": "The Survivor",
-        "variantName": "Prism C",
-        "parentSkinKey": "SurvivorCardPrisms1",
-        "parentSkinName": "The Survivor",
-        "tier": "Prisms"
-      },
-      "Screenshot (969).png": {
-        "screenshot": "app/data/God Renders/ullr/Screenshot (969).png",
-        "fileName": "Screenshot (969).png",
-        "godName": "Ullr",
-        "displayName": "The Survivor - as Chuck Killigan",
-        "target": "variant",
-        "appliedTo": "The Survivor → Prism D",
-        "skinKey": "SurvivorCardPrisms1",
-        "skinName": "The Survivor",
-        "variantName": "Prism D",
-        "parentSkinKey": "SurvivorCardPrisms1",
-        "parentSkinName": "The Survivor",
-        "tier": "Prisms"
-      },
-      "Screenshot (970).png": {
-        "screenshot": "app/data/God Renders/ullr/Screenshot (970).png",
-        "fileName": "Screenshot (970).png",
-        "godName": "Ullr",
-        "displayName": "The Survivor - Splatterstorm",
-        "target": "variant",
-        "appliedTo": "The Survivor → Prism E",
-        "skinKey": "SurvivorCardPrisms1",
-        "skinName": "The Survivor",
-        "variantName": "Prism E",
-        "parentSkinKey": "SurvivorCardPrisms1",
-        "parentSkinName": "The Survivor",
-        "tier": "Prisms"
       }
     },
     "ymir": {
@@ -11329,22 +9294,6 @@
         },
         "tier": "Heroic"
       },
-      "Screenshot (1014).png": {
-        "screenshot": "app/data/God Renders/ymir/Screenshot (1014).png",
-        "fileName": "Screenshot (1014).png",
-        "godName": "Ymir",
-        "displayName": "Baron Frostchild",
-        "target": "skin",
-        "appliedTo": "Baronfrostchild Card 1440 X 1920",
-        "skinKey": "BaronfrostchildCard1440x1920",
-        "skinName": "Baronfrostchild Card 1440 X 1920",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "2400",
-          "owned": false
-        },
-        "tier": "Classic"
-      },
       "Screenshot (1018).png": {
         "screenshot": "app/data/God Renders/ymir/Screenshot (1018).png",
         "fileName": "Screenshot (1018).png",
@@ -11355,54 +9304,6 @@
         "skinKey": "Cacodemon",
         "skinName": "Cacodemon",
         "tier": "Classic"
-      },
-      "Screenshot (1015).png": {
-        "screenshot": "app/data/God Renders/ymir/Screenshot (1015).png",
-        "fileName": "Screenshot (1015).png",
-        "godName": "Ymir",
-        "displayName": "Mr. Squish",
-        "target": "skin",
-        "appliedTo": "Cute NSquishy",
-        "skinKey": "CuteNSquishy",
-        "skinName": "Cute NSquishy",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1600",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
-      "Screenshot (1017).png": {
-        "screenshot": "app/data/God Renders/ymir/Screenshot (1017).png",
-        "fileName": "Screenshot (1017).png",
-        "godName": "Ymir",
-        "displayName": "Blobmir",
-        "target": "skin",
-        "appliedTo": "Ooze Boi",
-        "skinKey": "OozeBoi",
-        "skinName": "Ooze Boi",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
-      "Screenshot (1016).png": {
-        "screenshot": "app/data/God Renders/ymir/Screenshot (1016).png",
-        "fileName": "Screenshot (1016).png",
-        "godName": "Ymir",
-        "displayName": "Mint Choco",
-        "target": "skin",
-        "appliedTo": "T Skincard Icecream",
-        "skinKey": "TSkincardIcecream",
-        "skinName": "T Skincard Icecream",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "2000",
-          "owned": false
-        },
-        "tier": "Legacy"
       }
     },
     "pele": {
@@ -11479,77 +9380,43 @@
         },
         "tier": "Heroic"
       },
-      "Screenshot (795).png": {
-        "screenshot": "app/data/God Renders/pele/Screenshot (795).png",
-        "fileName": "Screenshot (795).png",
-        "godName": "Pele",
-        "displayName": "Carnival Kiss",
-        "target": "skin",
-        "appliedTo": "Carnival Kiss",
-        "skinKey": "CarnivalKiss",
-        "skinName": "Carnival Kiss",
-        "cost": {
-          "currency": "gems",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
       "Screenshot (796).png": {
-        "screenshot": "app/data/God Renders/pele/Screenshot (796).png",
         "fileName": "Screenshot (796).png",
         "godName": "Pele",
         "displayName": "Carnival Kiss - Ghoul Green",
-        "target": "variant-new",
-        "appliedTo": "Carnival Kiss",
+        "target": "variant",
+        "appliedTo": "Carnival Kiss → Ghoul Green",
         "skinKey": "CarnivalKiss",
         "skinName": "Carnival Kiss",
-        "variantName": "Prism 1",
+        "variantName": "Ghoul Green",
         "parentSkinKey": "CarnivalKiss",
         "parentSkinName": "Carnival Kiss",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
         "tier": "Prisms"
       },
       "Screenshot (797).png": {
-        "screenshot": "app/data/God Renders/pele/Screenshot (797).png",
         "fileName": "Screenshot (797).png",
         "godName": "Pele",
         "displayName": "Carnival Kiss - Pumpkin",
-        "target": "variant-new",
-        "appliedTo": "Carnival Kiss",
+        "target": "variant",
+        "appliedTo": "Carnival Kiss → Pumpkin",
         "skinKey": "CarnivalKiss",
         "skinName": "Carnival Kiss",
-        "variantName": "Prism 2",
+        "variantName": "Pumpkin",
         "parentSkinKey": "CarnivalKiss",
         "parentSkinName": "Carnival Kiss",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
         "tier": "Prisms"
       },
       "Screenshot (798).png": {
-        "screenshot": "app/data/God Renders/pele/Screenshot (798).png",
         "fileName": "Screenshot (798).png",
         "godName": "Pele",
         "displayName": "Carnival Kiss - Cotton Candy",
-        "target": "variant-new",
-        "appliedTo": "Carnival Kiss",
+        "target": "variant",
+        "appliedTo": "Carnival Kiss → Cotton Candy",
         "skinKey": "CarnivalKiss",
         "skinName": "Carnival Kiss",
-        "variantName": "Prism 3",
+        "variantName": "Cotton Candy",
         "parentSkinKey": "CarnivalKiss",
         "parentSkinName": "Carnival Kiss",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "500",
-          "owned": false
-        },
         "tier": "Prisms"
       },
       "Screenshot (800).png": {
@@ -11772,214 +9639,14 @@
         },
         "tier": "Heroic"
       },
-      "Screenshot (301).png": {
-        "screenshot": "app/data/God Renders/bellona/Screenshot (301).png",
-        "fileName": "Screenshot (301).png",
-        "godName": "Bellona",
-        "displayName": "Interstellar Empyrean - Burning Conquest",
-        "target": "variant",
-        "appliedTo": "Dark Tyrant → Prism 1",
-        "skinKey": "DarkTyrant",
-        "skinName": "Dark Tyrant",
-        "variantName": "Prism 1",
-        "parentSkinKey": "DarkTyrant",
-        "parentSkinName": "Dark Tyrant",
-        "tier": "Prisms"
-      },
-      "Screenshot (302).png": {
-        "screenshot": "app/data/God Renders/bellona/Screenshot (302).png",
-        "fileName": "Screenshot (302).png",
-        "godName": "Bellona",
-        "displayName": "Interstellar Empyrean - Bloody Wrath",
-        "target": "variant",
-        "appliedTo": "Dark Tyrant → Prism 2",
-        "skinKey": "DarkTyrant",
-        "skinName": "Dark Tyrant",
-        "variantName": "Prism 2",
-        "parentSkinKey": "DarkTyrant",
-        "parentSkinName": "Dark Tyrant",
-        "tier": "Prisms"
-      },
-      "Screenshot (303).png": {
-        "screenshot": "app/data/God Renders/bellona/Screenshot (303).png",
-        "fileName": "Screenshot (303).png",
-        "godName": "Bellona",
-        "displayName": "Interstellar Empyrean - Phantom Blade",
-        "target": "variant",
-        "appliedTo": "Dark Tyrant → Prism 3",
-        "skinKey": "DarkTyrant",
-        "skinName": "Dark Tyrant",
-        "variantName": "Prism 3",
-        "parentSkinKey": "DarkTyrant",
-        "parentSkinName": "Dark Tyrant",
-        "tier": "Prisms"
-      },
-      "Screenshot (304).png": {
-        "screenshot": "app/data/God Renders/bellona/Screenshot (304).png",
-        "fileName": "Screenshot (304).png",
-        "godName": "Bellona",
-        "displayName": "Interstellar Empyrean - Emerald Reaver",
-        "target": "variant",
-        "appliedTo": "Dark Tyrant → Prism 4",
-        "skinKey": "DarkTyrant",
-        "skinName": "Dark Tyrant",
-        "variantName": "Prism 4",
-        "parentSkinKey": "DarkTyrant",
-        "parentSkinName": "Dark Tyrant",
-        "tier": "Prisms"
-      },
-      "Screenshot (306).png": {
-        "screenshot": "app/data/God Renders/bellona/Screenshot (306).png",
-        "fileName": "Screenshot (306).png",
-        "godName": "Bellona",
-        "displayName": "Galactic Commander - Burning Conquest",
-        "target": "variant",
-        "appliedTo": "Dark Tyrant → Galactic Burning Conquest",
-        "skinKey": "DarkTyrant",
-        "skinName": "Dark Tyrant",
-        "variantName": "Galactic Burning Conquest",
-        "parentSkinKey": "DarkTyrant",
-        "parentSkinName": "Dark Tyrant",
-        "tier": "Prisms"
-      },
-      "Screenshot (307).png": {
-        "screenshot": "app/data/God Renders/bellona/Screenshot (307).png",
-        "fileName": "Screenshot (307).png",
-        "godName": "Bellona",
-        "displayName": "Galactic Commander - Bloody Wrath",
-        "target": "variant",
-        "appliedTo": "Dark Tyrant → Galactic Bloody Wrath",
-        "skinKey": "DarkTyrant",
-        "skinName": "Dark Tyrant",
-        "variantName": "Galactic Bloody Wrath",
-        "parentSkinKey": "DarkTyrant",
-        "parentSkinName": "Dark Tyrant",
-        "tier": "Prisms"
-      },
-      "Screenshot (308).png": {
-        "screenshot": "app/data/God Renders/bellona/Screenshot (308).png",
-        "fileName": "Screenshot (308).png",
-        "godName": "Bellona",
-        "displayName": "Galactic Commander - Phantom Blade",
-        "target": "variant",
-        "appliedTo": "Dark Tyrant → Galactic Phantom Blade",
-        "skinKey": "DarkTyrant",
-        "skinName": "Dark Tyrant",
-        "variantName": "Galactic Phantom Blade",
-        "parentSkinKey": "DarkTyrant",
-        "parentSkinName": "Dark Tyrant",
-        "tier": "Prisms"
-      },
-      "Screenshot (309).png": {
-        "screenshot": "app/data/God Renders/bellona/Screenshot (309).png",
-        "fileName": "Screenshot (309).png",
-        "godName": "Bellona",
-        "displayName": "Galactic Commander - Emerald Reaver",
-        "target": "variant",
-        "appliedTo": "Dark Tyrant → Galactic Emerald Reaver",
-        "skinKey": "DarkTyrant",
-        "skinName": "Dark Tyrant",
-        "variantName": "Galactic Emerald Reaver",
-        "parentSkinKey": "DarkTyrant",
-        "parentSkinName": "Dark Tyrant",
-        "tier": "Prisms"
-      },
-      "Screenshot (311).png": {
-        "screenshot": "app/data/God Renders/bellona/Screenshot (311).png",
-        "fileName": "Screenshot (311).png",
-        "godName": "Bellona",
-        "displayName": "Outerworld Invader - Burning Conquest",
-        "target": "variant",
-        "appliedTo": "Dark Tyrant → Outerworld Burning Conquest",
-        "skinKey": "DarkTyrant",
-        "skinName": "Dark Tyrant",
-        "variantName": "Outerworld Burning Conquest",
-        "parentSkinKey": "DarkTyrant",
-        "parentSkinName": "Dark Tyrant",
-        "tier": "Prisms"
-      },
-      "Screenshot (312).png": {
-        "screenshot": "app/data/God Renders/bellona/Screenshot (312).png",
-        "fileName": "Screenshot (312).png",
-        "godName": "Bellona",
-        "displayName": "Outerworld Invader - Bloody Wrath",
-        "target": "variant",
-        "appliedTo": "Dark Tyrant → Outerworld Bloody Wrath",
-        "skinKey": "DarkTyrant",
-        "skinName": "Dark Tyrant",
-        "variantName": "Outerworld Bloody Wrath",
-        "parentSkinKey": "DarkTyrant",
-        "parentSkinName": "Dark Tyrant",
-        "tier": "Prisms"
-      },
-      "Screenshot (313).png": {
-        "screenshot": "app/data/God Renders/bellona/Screenshot (313).png",
-        "fileName": "Screenshot (313).png",
-        "godName": "Bellona",
-        "displayName": "Outerworld Invader - Phantom Blade",
-        "target": "variant",
-        "appliedTo": "Dark Tyrant → Outerworld Phantom Blade",
-        "skinKey": "DarkTyrant",
-        "skinName": "Dark Tyrant",
-        "variantName": "Outerworld Phantom Blade",
-        "parentSkinKey": "DarkTyrant",
-        "parentSkinName": "Dark Tyrant",
-        "tier": "Prisms"
-      },
-      "Screenshot (314).png": {
-        "screenshot": "app/data/God Renders/bellona/Screenshot (314).png",
-        "fileName": "Screenshot (314).png",
-        "godName": "Bellona",
-        "displayName": "Outerworld Invader - Emerald Reaver",
-        "target": "variant",
-        "appliedTo": "Dark Tyrant → Outerworld Emerald Reaver",
-        "skinKey": "DarkTyrant",
-        "skinName": "Dark Tyrant",
-        "variantName": "Outerworld Emerald Reaver",
-        "parentSkinKey": "DarkTyrant",
-        "parentSkinName": "Dark Tyrant",
-        "tier": "Prisms"
-      },
       "Screenshot (300).png": {
-        "screenshot": "app/data/God Renders/bellona/Screenshot (300).png",
         "fileName": "Screenshot (300).png",
         "godName": "Bellona",
         "displayName": "Interstellar Empyrean",
-        "target": "variant-new",
-        "appliedTo": "Dark Tyrant",
+        "target": "skin",
+        "appliedTo": "Interstellar Empyrean",
         "skinKey": "DarkTyrant",
-        "skinName": "Dark Tyrant",
-        "variantName": "Interstellar Empyrean",
-        "parentSkinKey": "DarkTyrant",
-        "parentSkinName": "Dark Tyrant",
-        "tier": "Epic"
-      },
-      "Screenshot (305).png": {
-        "screenshot": "app/data/God Renders/bellona/Screenshot (305).png",
-        "fileName": "Screenshot (305).png",
-        "godName": "Bellona",
-        "displayName": "Galactic Commander",
-        "target": "variant-new",
-        "appliedTo": "Dark Tyrant",
-        "skinKey": "DarkTyrant",
-        "skinName": "Dark Tyrant",
-        "variantName": "Galactic Commander",
-        "parentSkinKey": "DarkTyrant",
-        "parentSkinName": "Dark Tyrant",
-        "tier": "Epic"
-      },
-      "Screenshot (310).png": {
-        "screenshot": "app/data/God Renders/bellona/Screenshot (310).png",
-        "fileName": "Screenshot (310).png",
-        "godName": "Bellona",
-        "displayName": "Outerworld Invader",
-        "target": "variant-new",
-        "appliedTo": "Dark Tyrant",
-        "skinKey": "DarkTyrant",
-        "skinName": "Dark Tyrant",
-        "variantName": "Outerworld Invader",
-        "parentSkinKey": "DarkTyrant",
-        "parentSkinName": "Dark Tyrant",
+        "skinName": "Interstellar Empyrean",
         "tier": "Epic"
       },
       "Screenshot (316).png": {
@@ -12019,48 +9686,6 @@
           "owned": false
         },
         "tier": "Classic"
-      },
-      "Screenshot (297).png": {
-        "screenshot": "app/data/God Renders/bellona/Screenshot (297).png",
-        "fileName": "Screenshot (297).png",
-        "godName": "Bellona",
-        "displayName": "Miss Senshi - Neowave",
-        "target": "variant",
-        "appliedTo": "Miss Senshi → Prism 1",
-        "skinKey": "MissSenshi",
-        "skinName": "Miss Senshi",
-        "variantName": "Prism 1",
-        "parentSkinKey": "MissSenshi",
-        "parentSkinName": "Miss Senshi",
-        "tier": "Prisms"
-      },
-      "Screenshot (298).png": {
-        "screenshot": "app/data/God Renders/bellona/Screenshot (298).png",
-        "fileName": "Screenshot (298).png",
-        "godName": "Bellona",
-        "displayName": "Miss Senshi - Golden Grad",
-        "target": "variant",
-        "appliedTo": "Miss Senshi → Prism 2",
-        "skinKey": "MissSenshi",
-        "skinName": "Miss Senshi",
-        "variantName": "Prism 2",
-        "parentSkinKey": "MissSenshi",
-        "parentSkinName": "Miss Senshi",
-        "tier": "Prisms"
-      },
-      "Screenshot (299).png": {
-        "screenshot": "app/data/God Renders/bellona/Screenshot (299).png",
-        "fileName": "Screenshot (299).png",
-        "godName": "Bellona",
-        "displayName": "Miss Senshi - Varsity",
-        "target": "variant",
-        "appliedTo": "Miss Senshi → Prism 3",
-        "skinKey": "MissSenshi",
-        "skinName": "Miss Senshi",
-        "variantName": "Prism 3",
-        "parentSkinKey": "MissSenshi",
-        "parentSkinName": "Miss Senshi",
-        "tier": "Prisms"
       }
     },
     "cupid": {
@@ -12137,38 +9762,6 @@
         },
         "tier": "Heroic"
       },
-      "Screenshot (390).png": {
-        "screenshot": "app/data/God Renders/cupid/Screenshot (385).png",
-        "fileName": "Screenshot (390).png",
-        "godName": "Cupid",
-        "displayName": "Big Head",
-        "target": "skin",
-        "appliedTo": "Bighead",
-        "skinKey": "Bighead",
-        "skinName": "Bighead",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Fabled"
-      },
-      "Screenshot (391).png": {
-        "screenshot": "app/data/God Renders/cupid/Screenshot (386).png",
-        "fileName": "Screenshot (391).png",
-        "godName": "Cupid",
-        "displayName": "Court Archer",
-        "target": "skin",
-        "appliedTo": "Court Archer",
-        "skinKey": "CourtArcher",
-        "skinName": "Court Archer",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
       "Screenshot (385).png": {
         "screenshot": "app/data/God Renders/cupid/Screenshot (385).png",
         "fileName": "Screenshot (385).png",
@@ -12184,62 +9777,6 @@
           "owned": false
         },
         "tier": "Fabled"
-      },
-      "Screenshot (386).png": {
-        "screenshot": "app/data/God Renders/cupid/Screenshot (386).png",
-        "fileName": "Screenshot (386).png",
-        "godName": "Cupid",
-        "displayName": "Lil' Thanatos - Onyx",
-        "target": "variant",
-        "appliedTo": "Lil Thanatos → Prism 1",
-        "skinKey": "LilThanatos",
-        "skinName": "Lil Thanatos",
-        "variantName": "Prism 1",
-        "parentSkinKey": "LilThanatos",
-        "parentSkinName": "Lil Thanatos",
-        "tier": "Prisms"
-      },
-      "Screenshot (387).png": {
-        "screenshot": "app/data/God Renders/cupid/Screenshot (387).png",
-        "fileName": "Screenshot (387).png",
-        "godName": "Cupid",
-        "displayName": "Lil' Thanatos - Opal",
-        "target": "variant",
-        "appliedTo": "Lil Thanatos → Prism 2",
-        "skinKey": "LilThanatos",
-        "skinName": "Lil Thanatos",
-        "variantName": "Prism 2",
-        "parentSkinKey": "LilThanatos",
-        "parentSkinName": "Lil Thanatos",
-        "tier": "Prisms"
-      },
-      "Screenshot (388).png": {
-        "screenshot": "app/data/God Renders/cupid/Screenshot (388).png",
-        "fileName": "Screenshot (388).png",
-        "godName": "Cupid",
-        "displayName": "Lil' Thanatos - Shadow",
-        "target": "variant",
-        "appliedTo": "Lil Thanatos → Prism 3",
-        "skinKey": "LilThanatos",
-        "skinName": "Lil Thanatos",
-        "variantName": "Prism 3",
-        "parentSkinKey": "LilThanatos",
-        "parentSkinName": "Lil Thanatos",
-        "tier": "Prisms"
-      },
-      "Screenshot (389).png": {
-        "screenshot": "app/data/God Renders/cupid/Screenshot (389).png",
-        "fileName": "Screenshot (389).png",
-        "godName": "Cupid",
-        "displayName": "Lil' Thanatos - Radiant",
-        "target": "variant",
-        "appliedTo": "Lil Thanatos → Prism 4",
-        "skinKey": "LilThanatos",
-        "skinName": "Lil Thanatos",
-        "variantName": "Prism 4",
-        "parentSkinKey": "LilThanatos",
-        "parentSkinName": "Lil Thanatos",
-        "tier": "Prisms"
       }
     },
     "hercules": {
@@ -12315,54 +9852,6 @@
           "owned": false
         },
         "tier": "Heroic"
-      },
-      "Screenshot (510).png": {
-        "screenshot": "app/data/God Renders/hercules/Screenshot (510).png",
-        "fileName": "Screenshot (510).png",
-        "godName": "Hercules",
-        "displayName": "Batter Up",
-        "target": "skin",
-        "appliedTo": "Batter Up",
-        "skinKey": "BatterUp",
-        "skinName": "Batter Up",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "2400",
-          "owned": false
-        },
-        "tier": "Classic"
-      },
-      "Screenshot (511).png": {
-        "screenshot": "app/data/God Renders/hercules/Screenshot (511).png",
-        "fileName": "Screenshot (511).png",
-        "godName": "Hercules",
-        "displayName": "Crimson Mangus",
-        "target": "skin",
-        "appliedTo": "Crimson Mangus",
-        "skinKey": "CrimsonMangus",
-        "skinName": "Crimson Mangus",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
-      },
-      "Screenshot (512).png": {
-        "screenshot": "app/data/God Renders/hercules/Screenshot (512).png",
-        "fileName": "Screenshot (512).png",
-        "godName": "Hercules",
-        "displayName": "El Macho",
-        "target": "skin",
-        "appliedTo": "TLuchadore Card1440x1920",
-        "skinKey": "TLuchadoreCard1440x1920",
-        "skinName": "TLuchadore Card1440x1920",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "2400",
-          "owned": false
-        },
-        "tier": "Classic"
       }
     },
     "janus": {
@@ -12454,62 +9943,6 @@
           "owned": false
         },
         "tier": "Classic"
-      },
-      "Screenshot (570).png": {
-        "screenshot": "app/data/God Renders/janus/Screenshot (570).png",
-        "fileName": "Screenshot (570).png",
-        "godName": "Janus",
-        "displayName": "Jandroid - Chrome",
-        "target": "variant",
-        "appliedTo": "Jandroid → Prism 1",
-        "skinKey": "Jandroid",
-        "skinName": "Jandroid",
-        "variantName": "Prism 1",
-        "parentSkinKey": "Jandroid",
-        "parentSkinName": "Jandroid",
-        "tier": "Prisms"
-      },
-      "Screenshot (571).png": {
-        "screenshot": "app/data/God Renders/janus/Screenshot (571).png",
-        "fileName": "Screenshot (571).png",
-        "godName": "Janus",
-        "displayName": "Jandroid - Copper",
-        "target": "variant",
-        "appliedTo": "Jandroid → Prism 2",
-        "skinKey": "Jandroid",
-        "skinName": "Jandroid",
-        "variantName": "Prism 2",
-        "parentSkinKey": "Jandroid",
-        "parentSkinName": "Jandroid",
-        "tier": "Prisms"
-      },
-      "Screenshot (572).png": {
-        "screenshot": "app/data/God Renders/janus/Screenshot (572).png",
-        "fileName": "Screenshot (572).png",
-        "godName": "Janus",
-        "displayName": "Jandroid - Gold",
-        "target": "variant",
-        "appliedTo": "Jandroid → Prism 3",
-        "skinKey": "Jandroid",
-        "skinName": "Jandroid",
-        "variantName": "Prism 3",
-        "parentSkinKey": "Jandroid",
-        "parentSkinName": "Jandroid",
-        "tier": "Prisms"
-      },
-      "Screenshot (573).png": {
-        "screenshot": "app/data/God Renders/janus/Screenshot (573).png",
-        "fileName": "Screenshot (573).png",
-        "godName": "Janus",
-        "displayName": "Jandroid - Titanium",
-        "target": "variant",
-        "appliedTo": "Jandroid → Prism 4",
-        "skinKey": "Jandroid",
-        "skinName": "Jandroid",
-        "variantName": "Prism 4",
-        "parentSkinKey": "Jandroid",
-        "parentSkinName": "Jandroid",
-        "tier": "Prisms"
       }
     },
     "mercury": {
@@ -12585,22 +10018,6 @@
           "owned": false
         },
         "tier": "Heroic"
-      },
-      "Screenshot (675).png": {
-        "screenshot": "app/data/God Renders/mercury/Screenshot (675).png",
-        "fileName": "Screenshot (675).png",
-        "godName": "Mercury",
-        "displayName": "Hell's Fury",
-        "target": "skin",
-        "appliedTo": "010",
-        "skinKey": "010",
-        "skinName": "010",
-        "cost": {
-          "currency": "diamonds",
-          "amount": "1200",
-          "owned": false
-        },
-        "tier": "Epic"
       }
     },
     "sylvanus": {
@@ -12708,48 +10125,6 @@
           "owned": false
         },
         "tier": "Classic"
-      },
-      "Screenshot (923).png": {
-        "screenshot": "app/data/God Renders/sylvanus/Screenshot (923).png",
-        "fileName": "Screenshot (923).png",
-        "godName": "Sylvanus",
-        "displayName": "Highnoon - Dust Devil",
-        "target": "variant",
-        "appliedTo": "Highnoon → Prism 1",
-        "skinKey": "Highnoon",
-        "skinName": "Highnoon",
-        "variantName": "Prism 1",
-        "parentSkinKey": "Highnoon",
-        "parentSkinName": "Highnoon",
-        "tier": "Prisms"
-      },
-      "Screenshot (924).png": {
-        "screenshot": "app/data/God Renders/sylvanus/Screenshot (924).png",
-        "fileName": "Screenshot (924).png",
-        "godName": "Sylvanus",
-        "displayName": "Highnoon - Sunset",
-        "target": "variant",
-        "appliedTo": "Highnoon → Prism 2",
-        "skinKey": "Highnoon",
-        "skinName": "Highnoon",
-        "variantName": "Prism 2",
-        "parentSkinKey": "Highnoon",
-        "parentSkinName": "Highnoon",
-        "tier": "Prisms"
-      },
-      "Screenshot (925).png": {
-        "screenshot": "app/data/God Renders/sylvanus/Screenshot (925).png",
-        "fileName": "Screenshot (925).png",
-        "godName": "Sylvanus",
-        "displayName": "Highnoon - Wild West",
-        "target": "variant",
-        "appliedTo": "Highnoon → Prism 4",
-        "skinKey": "Highnoon",
-        "skinName": "Highnoon",
-        "variantName": "Prism 4",
-        "parentSkinKey": "Highnoon",
-        "parentSkinName": "Highnoon",
-        "tier": "Prisms"
       }
     },
     "vulcan": {
@@ -12879,72 +10254,15 @@
         "parentSkinName": "Chef Vulcan",
         "tier": "Prisms"
       },
-      "Screenshot (980).png": {
-        "screenshot": "app/data/God Renders/vulcan/Screenshot (980).png",
-        "fileName": "Screenshot (980).png",
-        "godName": "Vulcan",
-        "displayName": "Emberlord - First Flame",
-        "target": "skin",
-        "appliedTo": "Emberlord Ashen Ascendant",
-        "skinKey": "EmberlordAshenAscendant",
-        "skinName": "Emberlord Ashen Ascendant",
-        "tier": "Epic"
-      },
       "Screenshot (981).png": {
-        "screenshot": "app/data/God Renders/vulcan/Screenshot (981).png",
         "fileName": "Screenshot (981).png",
         "godName": "Vulcan",
         "displayName": "Emberlord - Ashen Ascendant",
-        "target": "variant-new",
-        "appliedTo": "Emberlord Ashen Ascendant",
+        "target": "skin",
+        "appliedTo": "Emberlord - Ashen Ascendant",
         "skinKey": "EmberlordAshenAscendant",
         "skinName": "Emberlord Ashen Ascendant",
-        "variantName": "Ashen Ascendant",
-        "parentSkinKey": "EmberlordAshenAscendant",
-        "parentSkinName": "Emberlord Ashen Ascendant",
         "tier": "Epic"
-      },
-      "Screenshot (982).png": {
-        "screenshot": "app/data/God Renders/vulcan/Screenshot (982).png",
-        "fileName": "Screenshot (982).png",
-        "godName": "Vulcan",
-        "displayName": "Emberlord - Pyreforged Tyrant",
-        "target": "variant-new",
-        "appliedTo": "Emberlord Ashen Ascendant",
-        "skinKey": "EmberlordAshenAscendant",
-        "skinName": "Emberlord Ashen Ascendant",
-        "variantName": "Pyreforged Tyrant",
-        "parentSkinKey": "EmberlordAshenAscendant",
-        "parentSkinName": "Emberlord Ashen Ascendant",
-        "tier": "Legendary"
-      },
-      "Screenshot (983).png": {
-        "screenshot": "app/data/God Renders/vulcan/Screenshot (983).png",
-        "fileName": "Screenshot (983).png",
-        "godName": "Vulcan",
-        "displayName": "Emberlord - Inferno Incarnate",
-        "target": "variant-new",
-        "appliedTo": "Emberlord Ashen Ascendant",
-        "skinKey": "EmberlordAshenAscendant",
-        "skinName": "Emberlord Ashen Ascendant",
-        "variantName": "Inferno Incarnate",
-        "parentSkinKey": "EmberlordAshenAscendant",
-        "parentSkinName": "Emberlord Ashen Ascendant",
-        "tier": "Legendary"
-      },
-      "Screenshot (984).png": {
-        "screenshot": "app/data/God Renders/vulcan/Screenshot (984).png",
-        "fileName": "Screenshot (984).png",
-        "godName": "Vulcan",
-        "displayName": "Emberlord - Chromafear",
-        "target": "variant",
-        "appliedTo": "Emberlord Ashen Ascendant → Prism D",
-        "skinKey": "EmberlordAshenAscendant",
-        "skinName": "Emberlord Ashen Ascendant",
-        "variantName": "Prism D",
-        "parentSkinKey": "EmberlordAshenAscendant",
-        "parentSkinName": "Emberlord Ashen Ascendant",
-        "tier": "Prisms"
       },
       "Screenshot (985).png": {
         "screenshot": "app/data/God Renders/vulcan/Screenshot (985).png",
@@ -12987,6 +10305,40 @@
         "parentSkinKey": "EmberlordAshenAscendant",
         "parentSkinName": "Emberlord Ashen Ascendant",
         "tier": "Prisms"
+      },
+      "Screenshot (984).png": {
+        "screenshot": "app/data/God Renders/vulcan/Screenshot (984).png",
+        "fileName": "Screenshot (984).png",
+        "godName": "Vulcan",
+        "displayName": "Emberlord - Chromafear",
+        "target": "variant",
+        "appliedTo": "Emberlord Ashen Ascendant → Prism D",
+        "skinKey": "EmberlordAshenAscendant",
+        "skinName": "Emberlord Ashen Ascendant",
+        "variantName": "Prism D",
+        "parentSkinKey": "EmberlordAshenAscendant",
+        "parentSkinName": "Emberlord Ashen Ascendant",
+        "tier": "Prisms"
+      },
+      "Screenshot (983).png": {
+        "fileName": "Screenshot (983).png",
+        "godName": "Vulcan",
+        "displayName": "Emberlord - Inferno Incarnate",
+        "target": "skin",
+        "appliedTo": "Emberlord - Inferno Incarnate",
+        "skinKey": "EmberlordInfernoIncarnate",
+        "skinName": "Emberlord - Inferno Incarnate",
+        "tier": "Legendary"
+      },
+      "Screenshot (982).png": {
+        "fileName": "Screenshot (982).png",
+        "godName": "Vulcan",
+        "displayName": "Emberlord - Pyreforged Tyrant",
+        "target": "skin",
+        "appliedTo": "Emberlord - Pyreforged Tyrant",
+        "skinKey": "EmberlordPyreforgedTyntVulcan009",
+        "skinName": "Emberlord - Pyreforged Tyrant",
+        "tier": "Legendary"
       }
     },
     "aladdin": {
@@ -13321,7 +10673,6 @@
         "tier": "Classic"
       },
       "Screenshot (1004).png": {
-        "screenshot": "app/data/God Renders/yemoja/Screenshot (1004).png",
         "fileName": "Screenshot (1004).png",
         "godName": "Yemoja",
         "displayName": "Mastermind - Firewall",
@@ -13335,7 +10686,6 @@
         "tier": "Prisms"
       },
       "Screenshot (1005).png": {
-        "screenshot": "app/data/God Renders/yemoja/Screenshot (1005).png",
         "fileName": "Screenshot (1005).png",
         "godName": "Yemoja",
         "displayName": "Mastermind - Circuit",
@@ -13349,7 +10699,6 @@
         "tier": "Prisms"
       },
       "Screenshot (1006).png": {
-        "screenshot": "app/data/God Renders/yemoja/Screenshot (1006).png",
         "fileName": "Screenshot (1006).png",
         "godName": "Yemoja",
         "displayName": "Mastermind - Matrix",

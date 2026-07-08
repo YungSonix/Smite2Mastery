@@ -1,0 +1,423 @@
+{
+  "fetchedAt": "2026-06-30T16:24:12.509Z",
+  "categories": [
+    {
+      "id": "open_beta",
+      "label": "Open Beta patch notes",
+      "patches": [
+        {
+          "number": 38,
+          "title": "SMITE 2 Open Beta 38",
+          "releaseDate": "June 30th, 2026",
+          "slug": "SMITE_2_Open_Beta_38",
+          "file": "patchnotesob38.json",
+          "sectionCount": 10
+        },
+        {
+          "number": 37,
+          "title": "SMITE 2 Open Beta 37",
+          "releaseDate": "June 16th, 2026",
+          "slug": "SMITE_2_Open_Beta_37",
+          "file": "patchnotesob37.json",
+          "sectionCount": 8
+        },
+        {
+          "number": 36,
+          "title": "SMITE 2 Open Beta 36",
+          "releaseDate": "June 2nd, 2026",
+          "slug": "SMITE_2_Open_Beta_36",
+          "file": "patchnotesob36.json",
+          "sectionCount": 8
+        },
+        {
+          "number": 35,
+          "title": "SMITE 2 Open Beta 35",
+          "releaseDate": "May 19th, 2026",
+          "slug": "SMITE_2_Open_Beta_35",
+          "file": "patchnotesob35.json",
+          "sectionCount": 10
+        },
+        {
+          "number": 34,
+          "title": "SMITE 2 Open Beta 34",
+          "releaseDate": "May 6th, 2026",
+          "slug": "SMITE_2_Open_Beta_34",
+          "file": "patchnotesob34.json",
+          "sectionCount": 8
+        },
+        {
+          "number": 33,
+          "title": "SMITE 2 Open Beta 33",
+          "releaseDate": "April 21st, 2026",
+          "slug": "SMITE_2_Open_Beta_33",
+          "file": "patchnotesob33.json",
+          "sectionCount": 10
+        },
+        {
+          "number": 32,
+          "title": "SMITE 2 Open Beta 32",
+          "releaseDate": "April 7th, 2026",
+          "slug": "SMITE_2_Open_Beta_32",
+          "file": "patchnotesob32.json",
+          "sectionCount": 13
+        },
+        {
+          "number": 31,
+          "title": "SMITE 2 Open Beta 31",
+          "releaseDate": "March 24, 2026",
+          "slug": "SMITE_2_Open_Beta_31",
+          "file": "patchnotesob31.json",
+          "sectionCount": 11
+        },
+        {
+          "number": 30,
+          "title": "SMITE 2 Open Beta 30",
+          "releaseDate": "March 10, 2026",
+          "slug": "SMITE_2_Open_Beta_30",
+          "file": "patchnotesob30.json",
+          "sectionCount": 9
+        },
+        {
+          "number": 29,
+          "title": "SMITE 2 Open Beta 29",
+          "releaseDate": "February 24, 2026",
+          "slug": "SMITE_2_Open_Beta_29",
+          "file": "patchnotesob29.json",
+          "sectionCount": 11
+        },
+        {
+          "number": 28,
+          "title": "SMITE 2 Open Beta 28",
+          "releaseDate": "February 10, 2026",
+          "slug": "SMITE_2_Open_Beta_28",
+          "file": "patchnotesob28.json",
+          "sectionCount": 8
+        },
+        {
+          "number": 27,
+          "title": "SMITE 2 Open Beta 27",
+          "releaseDate": "January 27, 2026",
+          "slug": "SMITE_2_Open_Beta_27",
+          "file": "patchnotesob27.json",
+          "sectionCount": 15
+        },
+        {
+          "number": 26,
+          "title": "SMITE 2 Open Beta 26",
+          "releaseDate": "January 13, 2026",
+          "slug": "SMITE_2_Open_Beta_26",
+          "file": "patchnotesob26.json",
+          "sectionCount": 9
+        },
+        {
+          "number": 25,
+          "title": "SMITE 2 Open Beta 25",
+          "releaseDate": "December 16, 2025",
+          "slug": "SMITE_2_Open_Beta_25",
+          "file": "patchnotesob25.json",
+          "sectionCount": 14
+        },
+        {
+          "number": 24,
+          "title": "SMITE 2 Open Beta 24",
+          "releaseDate": "December 2nd, 2025",
+          "slug": "SMITE_2_Open_Beta_24",
+          "file": "patchnotesob24.json",
+          "sectionCount": 9
+        },
+        {
+          "number": 23,
+          "title": "SMITE 2 Open Beta 23",
+          "releaseDate": "November 18th, 2025",
+          "slug": "SMITE_2_Open_Beta_23",
+          "file": "patchnotesob23.json",
+          "sectionCount": 14
+        },
+        {
+          "number": 22,
+          "title": "SMITE 2 Open Beta 22",
+          "releaseDate": "November 4th, 2025",
+          "slug": "SMITE_2_Open_Beta_22",
+          "file": "patchnotesob22.json",
+          "sectionCount": 12
+        },
+        {
+          "number": 21,
+          "title": "SMITE 2 Open Beta 21",
+          "releaseDate": "Oct 21st, 2025",
+          "slug": "SMITE_2_Open_Beta_21",
+          "file": "patchnotesob21.json",
+          "sectionCount": 13
+        },
+        {
+          "number": 20,
+          "title": "SMITE 2 Open Beta 20",
+          "releaseDate": "Oct 7th, 2025",
+          "slug": "SMITE_2_Open_Beta_20",
+          "file": "patchnotesob20.json",
+          "sectionCount": 14
+        },
+        {
+          "number": 19,
+          "title": "SMITE 2 Open Beta 19",
+          "releaseDate": "Sept 23rd, 2025",
+          "slug": "SMITE_2_Open_Beta_19",
+          "file": "patchnotesob19.json",
+          "sectionCount": 12
+        },
+        {
+          "number": 18,
+          "title": "SMITE 2 Open Beta 18",
+          "releaseDate": "Sept 9th, 2025",
+          "slug": "SMITE_2_Open_Beta_18",
+          "file": "patchnotesob18.json",
+          "sectionCount": 12
+        },
+        {
+          "number": 17,
+          "title": "SMITE 2 Open Beta 17",
+          "releaseDate": "Aug 26th, 2025",
+          "slug": "SMITE_2_Open_Beta_17",
+          "file": "patchnotesob17.json",
+          "sectionCount": 11
+        },
+        {
+          "number": 16,
+          "title": "SMITE 2 Open Beta 16",
+          "releaseDate": "Aug 12th, 2025",
+          "slug": "SMITE_2_Open_Beta_16",
+          "file": "patchnotesob16.json",
+          "sectionCount": 10
+        },
+        {
+          "number": 15,
+          "title": "SMITE 2 Open Beta 15",
+          "releaseDate": "July 29, 2025",
+          "slug": "SMITE_2_Open_Beta_15",
+          "file": "patchnotesob15.json",
+          "sectionCount": 10
+        },
+        {
+          "number": 14,
+          "title": "SMITE 2 Open Beta 14",
+          "releaseDate": "July 15, 2025",
+          "slug": "SMITE_2_Open_Beta_14",
+          "file": "patchnotesob14.json",
+          "sectionCount": 12
+        },
+        {
+          "number": 13,
+          "title": "SMITE 2 Open Beta 13",
+          "releaseDate": "July 1, 2025",
+          "slug": "SMITE_2_Open_Beta_13",
+          "file": "patchnotesob13.json",
+          "sectionCount": 17
+        },
+        {
+          "number": 12,
+          "title": "SMITE 2 Open Beta 12",
+          "releaseDate": "June 16, 2025",
+          "slug": "SMITE_2_Open_Beta_12",
+          "file": "patchnotesob12.json",
+          "sectionCount": 15
+        },
+        {
+          "number": 11,
+          "title": "SMITE 2 Open Beta 11",
+          "releaseDate": "June 2, 2025",
+          "slug": "SMITE_2_Open_Beta_11",
+          "file": "patchnotesob11.json",
+          "sectionCount": 10
+        },
+        {
+          "number": 10,
+          "title": "SMITE 2 Open Beta 10",
+          "releaseDate": "May 19, 2025",
+          "slug": "SMITE_2_Open_Beta_10",
+          "file": "patchnotesob10.json",
+          "sectionCount": 10
+        },
+        {
+          "number": 9,
+          "title": "SMITE 2 Open Beta 9",
+          "releaseDate": "May 5, 2025",
+          "slug": "SMITE_2_Open_Beta_9",
+          "file": "patchnotesob9.json",
+          "sectionCount": 15
+        },
+        {
+          "number": 8,
+          "title": "SMITE 2 Open Beta 8",
+          "releaseDate": "April 21, 2025",
+          "slug": "SMITE_2_Open_Beta_8",
+          "file": "patchnotesob8.json",
+          "sectionCount": 13
+        },
+        {
+          "number": 7,
+          "title": "SMITE 2 Open Beta 7",
+          "releaseDate": "April 7, 2025",
+          "slug": "SMITE_2_Open_Beta_7",
+          "file": "patchnotesob7.json",
+          "sectionCount": 18
+        },
+        {
+          "number": 6,
+          "title": "SMITE 2 Open Beta 6",
+          "releaseDate": "March 24, 2025",
+          "slug": "SMITE_2_Open_Beta_6",
+          "file": "patchnotesob6.json",
+          "sectionCount": 13
+        },
+        {
+          "number": 5,
+          "title": "SMITE 2 Open Beta 5",
+          "releaseDate": "March 10, 2025",
+          "slug": "SMITE_2_Open_Beta_5",
+          "file": "patchnotesob5.json",
+          "sectionCount": 12
+        },
+        {
+          "number": 4,
+          "title": "SMITE 2 Open Beta 4",
+          "releaseDate": "February 24, 2025",
+          "slug": "SMITE_2_Open_Beta_4",
+          "file": "patchnotesob4.json",
+          "sectionCount": 16
+        },
+        {
+          "number": 3,
+          "title": "SMITE 2 Open Beta 3",
+          "releaseDate": "February 10, 2025",
+          "slug": "SMITE_2_Open_Beta_3",
+          "file": "patchnotesob3.json",
+          "sectionCount": 19
+        },
+        {
+          "number": 2,
+          "title": "SMITE 2 Open Beta 2",
+          "releaseDate": "January 24, 2025",
+          "slug": "SMITE_2_Open_Beta_2",
+          "file": "patchnotesob2.json",
+          "sectionCount": 19
+        },
+        {
+          "number": 1,
+          "title": "SMITE 2 Open Beta 1",
+          "releaseDate": "January 7, 2025",
+          "slug": "SMITE_2_Open_Beta_1",
+          "file": "patchnotesob1.json",
+          "sectionCount": 23
+        }
+      ]
+    },
+    {
+      "id": "closed_alpha",
+      "label": "Closed Alpha patch notes",
+      "patches": [
+        {
+          "number": 8,
+          "title": "SMITE 2 Closed Alpha 8",
+          "releaseDate": "December 10, 2024",
+          "slug": "SMITE_2_Closed_Alpha_8",
+          "file": "patchnotesca8.json",
+          "sectionCount": 9
+        },
+        {
+          "number": 7,
+          "title": "SMITE 2 Closed Alpha 7",
+          "releaseDate": "November 25, 2024",
+          "slug": "SMITE_2_Closed_Alpha_7",
+          "file": "patchnotesca7.json",
+          "sectionCount": 11
+        },
+        {
+          "number": 6,
+          "title": "SMITE 2 Closed Alpha 6",
+          "releaseDate": "November 12, 2024",
+          "slug": "SMITE_2_Closed_Alpha_6",
+          "file": "patchnotesca6.json",
+          "sectionCount": 17
+        },
+        {
+          "number": 5,
+          "title": "SMITE 2 Closed Alpha 5",
+          "releaseDate": "October 29, 2024",
+          "slug": "SMITE_2_Closed_Alpha_5",
+          "file": "patchnotesca5.json",
+          "sectionCount": 14
+        },
+        {
+          "number": 4,
+          "title": "SMITE 2 Closed Alpha 4",
+          "releaseDate": "October 17, 2024",
+          "slug": "SMITE_2_Closed_Alpha_4",
+          "file": "patchnotesca4.json",
+          "sectionCount": 18
+        },
+        {
+          "number": 3,
+          "title": "SMITE 2 Closed Alpha 3",
+          "releaseDate": "October 3, 2024",
+          "slug": "SMITE_2_Closed_Alpha_3",
+          "file": "patchnotesca3.json",
+          "sectionCount": 22
+        },
+        {
+          "number": 2,
+          "title": "SMITE 2 Closed Alpha 2",
+          "releaseDate": "September 17, 2024",
+          "slug": "SMITE_2_Closed_Alpha_2",
+          "file": "patchnotesca2.json",
+          "sectionCount": 9
+        },
+        {
+          "number": 1,
+          "title": "SMITE 2 Closed Alpha 1",
+          "releaseDate": "August 27, 2024",
+          "slug": "SMITE_2_Closed_Alpha_1",
+          "file": "patchnotesca1.json",
+          "sectionCount": 16
+        }
+      ]
+    },
+    {
+      "id": "alpha_weekend",
+      "label": "Alpha Weekend Test patch notes",
+      "patches": [
+        {
+          "number": 4,
+          "title": "SMITE 2 Alpha Weekend 4",
+          "releaseDate": "July 18, 2024",
+          "slug": "SMITE_2_Alpha_Weekend_4",
+          "file": "patchnotesaw4.json",
+          "sectionCount": 7
+        },
+        {
+          "number": 3,
+          "title": "SMITE 2 Alpha Weekend 3",
+          "releaseDate": "June 27, 2024",
+          "slug": "SMITE_2_Alpha_Weekend_3",
+          "file": "patchnotesaw3.json",
+          "sectionCount": 10
+        },
+        {
+          "number": 2,
+          "title": "SMITE 2 Alpha Weekend 2",
+          "releaseDate": "May 30, 2024",
+          "slug": "SMITE_2_Alpha_Weekend_2",
+          "file": "patchnotesaw2.json",
+          "sectionCount": 8
+        },
+        {
+          "number": 1,
+          "title": "SMITE 2 Alpha Weekend 1",
+          "releaseDate": "May 2, 2024",
+          "slug": "SMITE_2_Alpha_Weekend_1",
+          "file": "patchnotesaw1.json",
+          "sectionCount": 10
+        }
+      ]
+    }
+  ]
+}

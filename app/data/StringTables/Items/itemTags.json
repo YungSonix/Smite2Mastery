@@ -1,0 +1,2703 @@
+{
+  "description": "Item tags by internalName. Edit tags here — builds.json no longer stores tags. Run apply-loadout-item-tags.js / propagate-item-tags.js against this file.",
+  "items": [
+    {
+      "internalName": "AdamantineSickle",
+      "name": "Adamantine Sickle",
+      "tags": [
+        "LifeSteal",
+        "Tier2",
+        "Strength",
+        "Passive",
+        "ItemTier.Tier2"
+      ]
+    },
+    {
+      "internalName": "AdroitRing",
+      "name": "Adroit Ring",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "AegisOfAcceleration",
+      "name": "Aegis Of Acceleration",
+      "tags": [
+        "Relic",
+        "Immune"
+      ]
+    },
+    {
+      "internalName": "AgilityGreaves",
+      "name": "Agility Greaves",
+      "tags": [
+        "Dash",
+        "Attack",
+        "Active"
+      ]
+    },
+    {
+      "internalName": "AgilityRelic",
+      "name": "Agility Relic",
+      "tags": [
+        "Relic",
+        "Dash",
+        "Attack"
+      ]
+    },
+    {
+      "internalName": "aladdinslamp",
+      "name": "Aladdin's Lamp",
+      "tags": [
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "AlchemistCoat",
+      "name": "Alchemist Coat",
+      "tags": [
+        "Dampening",
+        "Defensive",
+        "Mana",
+        "Passive",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "AncientSignet",
+      "name": "Ancient Signet",
+      "tags": [
+        "Passive",
+        "Mid.INT",
+        "Tier3",
+        "Intelligence",
+        "Offensive"
+      ]
+    },
+    {
+      "internalName": "Ancile",
+      "name": "Ancile",
+      "tags": [
+        "Tier3",
+        "Magical Protection",
+        "Health",
+        "Hybrid",
+        "Active"
+      ]
+    },
+    {
+      "internalName": "ArchmagesGem",
+      "name": "Archmage's Gem",
+      "tags": [
+        "Tier2",
+        "ItemTier.Tier2",
+        "Starter",
+        "Passive",
+        "Adaptive",
+        "Ability"
+      ]
+    },
+    {
+      "internalName": "Arondight",
+      "name": "Arondight",
+      "tags": [
+        "Tier3",
+        "Passive",
+        "Carry.STR",
+        "Strength",
+        "CooldownReduction",
+        "Offensive",
+        "Mid.STR"
+      ]
+    },
+    {
+      "internalName": "AshwhorlAcorn",
+      "name": "Ashwhorl Acorn",
+      "tags": [
+        "Attack Speed",
+        "Health",
+        "Offensive",
+        "Physical",
+        "Physical Power",
+        "Ratatoskr",
+        "STR",
+        "Strength",
+        "Tenacity",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "AtalantasBow",
+      "name": "Hastened Fatalis",
+      "tags": [
+        "Strength",
+        "Attack Speed",
+        "Passive",
+        "Carry.STR",
+        "Carry.Hybrid",
+        "Offensive",
+        "Tier3",
+        "Role"
+      ]
+    },
+    {
+      "internalName": "AvatarsParashu",
+      "name": "Avatar's Parashu",
+      "tags": [
+        "Active",
+        "Strength",
+        "Mid.STR",
+        "Carry.STR",
+        "Offensive",
+        "Tier3",
+        "Role"
+      ]
+    },
+    {
+      "internalName": "Axe",
+      "name": "Axe",
+      "tags": [
+        "Passive",
+        "ItemTier.Tier1",
+        "StartingLoadout",
+        "Tier1",
+        "Strength"
+      ]
+    },
+    {
+      "internalName": "BalorsEye",
+      "name": "Obsidian Shard",
+      "tags": [
+        "Intelligence",
+        "Passive",
+        "Mid.INT",
+        "Penetration",
+        "Offensive",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "BancroftsTalon",
+      "name": "Bancroft's Talon",
+      "tags": [
+        "Tier3",
+        "Passive",
+        "LifeSteal",
+        "Mid.INT",
+        "Offensive",
+        "Carry.Hybrid",
+        "INT"
+      ]
+    },
+    {
+      "internalName": "BanefulRapier",
+      "name": "Demon Blade",
+      "tags": [
+        "Critical Strike Chance",
+        "Strength",
+        "Attack Speed",
+        "Passive",
+        "Carry.STR",
+        "Offensive",
+        "Tier3",
+        "Carry.Hybrid"
+      ]
+    },
+    {
+      "internalName": "BarbedCarver",
+      "name": "Barbed Carver",
+      "tags": [
+        "Healing",
+        "STR",
+        "Health"
+      ]
+    },
+    {
+      "internalName": "BattleAxe",
+      "name": "Battle Axe",
+      "tags": [
+        "Tier2",
+        "Strength"
+      ]
+    },
+    {
+      "internalName": "BerserkersShield",
+      "name": "Berserker's Shield",
+      "tags": [
+        "Passive",
+        "Physical Protection",
+        "Attack Speed",
+        "Defensive",
+        "Tier3",
+        "Magical Protection"
+      ]
+    },
+    {
+      "internalName": "BindingsOfLyngvi",
+      "name": "Stone of Binding",
+      "tags": [
+        "Physical Protection",
+        "Magical Protection",
+        "MagicalPenetration",
+        "PhysicalPenetration",
+        "Passive",
+        "Support",
+        "Defensive",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "BlinkingAbyss",
+      "name": "Blinking Abyss",
+      "tags": [
+        "Teleport",
+        "Active"
+      ]
+    },
+    {
+      "internalName": "BlinkRune",
+      "name": "Blink Rune",
+      "tags": [
+        "Relic",
+        "Teleport"
+      ]
+    },
+    {
+      "internalName": "Blood-BoundBook",
+      "name": "Blood-Bound Book",
+      "tags": [
+        "Intelligence",
+        "LifeSteal",
+        "Mid.INT",
+        "Carry.Hybrid",
+        "Offensive",
+        "Tier3",
+        "Active",
+        "Health"
+      ]
+    },
+    {
+      "internalName": "BloodForge",
+      "name": "Bloodforge",
+      "tags": [
+        "Active",
+        "Strength",
+        "LifeSteal",
+        "Carry.STR",
+        "Mid.STR",
+        "Offensive",
+        "Tier3",
+        "Attack Speed"
+      ]
+    },
+    {
+      "internalName": "BloodSoakedShroud",
+      "name": "Blood-Soaked Shroud",
+      "tags": [
+        "Starter",
+        "Adaptive",
+        "Heal"
+      ]
+    },
+    {
+      "internalName": "BlueStoneBrooch",
+      "name": "Bluestone Brooch",
+      "tags": [
+        "Tier2",
+        "ItemTier.Tier2",
+        "Starter",
+        "Passive",
+        "Adaptive",
+        "Ability"
+      ]
+    },
+    {
+      "internalName": "BlueStonePendant",
+      "name": "Bluestone Pendant",
+      "tags": [
+        "Starter",
+        "Starter",
+        "StartingLoadout",
+        "Adaptive",
+        "Ability"
+      ]
+    },
+    {
+      "internalName": "BookOfThoth",
+      "name": "Book of Thoth",
+      "tags": [
+        "Passive",
+        "Mid.INT",
+        "Mana",
+        "ManaRegen",
+        "Intelligence",
+        "Penetration",
+        "Offensive",
+        "Tier3",
+        "Jungle.INT"
+      ]
+    },
+    {
+      "internalName": "Bow",
+      "name": "Bow",
+      "tags": [
+        "Tier1",
+        "Passive",
+        "ItemTier.Tier1",
+        "Attack Speed"
+      ]
+    },
+    {
+      "internalName": "BowlDrum",
+      "name": "Bowl Drum",
+      "tags": [
+        "Echo",
+        "Offensive",
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "BragisHarp",
+      "name": "Bragi's Harp",
+      "tags": [
+        "Attack Speed",
+        "Strength",
+        "Intelligence",
+        "Passive",
+        "Carry.Hybrid",
+        "Offensive",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "BrawlersBeatstick",
+      "name": "Brawler's Beat Stick",
+      "tags": [
+        "Strength",
+        "Tier3",
+        "INT",
+        "Passive",
+        "Mid.STR",
+        "Carry.STR",
+        "Offensive",
+        "Carry.STR"
+      ]
+    },
+    {
+      "internalName": "BreastplateOfValor",
+      "name": "Breastplate of Valor",
+      "tags": [
+        "Physical Protection",
+        "Passive",
+        "CooldownReduction",
+        "Mana",
+        "Support",
+        "ManaRegen",
+        "Defensive",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "BriskberryAcorn",
+      "name": "Briskberry Acorn",
+      "tags": [
+        "CooldownReduction",
+        "Health",
+        "Offensive",
+        "Pathfinding",
+        "Physical",
+        "Physical Power",
+        "Ratatoskr",
+        "STR",
+        "Strength",
+        "Tier3",
+        "Utility"
+      ]
+    },
+    {
+      "internalName": "BumbasCudgel",
+      "name": "Bumba's Cudgel",
+      "tags": [
+        "Starter",
+        "Starter",
+        "StartingLoadout",
+        "Adaptive",
+        "Jungle"
+      ]
+    },
+    {
+      "internalName": "BumbasGoldenDagger",
+      "name": "Bumba's Golden Dagger",
+      "tags": [
+        "Starter",
+        "Starter",
+        "StartingLoadout",
+        "Adaptive",
+        "Jungle"
+      ]
+    },
+    {
+      "internalName": "BumbasHammer",
+      "name": "Bumba's Hammer",
+      "tags": [
+        "Tier2",
+        "ItemTier.Tier2",
+        "Starter",
+        "Passive",
+        "Adaptive",
+        "Jungle"
+      ]
+    },
+    {
+      "internalName": "BumbasSpear",
+      "name": "Bumba's Spear",
+      "tags": [
+        "Tier2",
+        "ItemTier.Tier2",
+        "Starter",
+        "Passive",
+        "Adaptive",
+        "Jungle"
+      ]
+    },
+    {
+      "internalName": "Caestus",
+      "name": "Caestus",
+      "tags": [
+        "Tier2",
+        "CooldownReduction",
+        "Passive",
+        "Strength",
+        "ItemTier.Tier2"
+      ]
+    },
+    {
+      "internalName": "CaptainsRing",
+      "name": "Captain's Ring",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "ChandrasGrace",
+      "name": "Chandra's Grace",
+      "tags": [
+        "Health",
+        "Tier3",
+        "Active",
+        "Support",
+        "Defensive",
+        "Cooldown Rate"
+      ]
+    },
+    {
+      "internalName": "ChronosPendant",
+      "name": "Chronos' Pendant",
+      "tags": [
+        "Intelligence",
+        "CooldownReduction",
+        "Passive",
+        "Mid.INT",
+        "Offensive",
+        "Tier3",
+        "Carry.Hybrid"
+      ]
+    },
+    {
+      "internalName": "CircesHexstone",
+      "name": "Circe's Hexstone",
+      "tags": [
+        "Tier3",
+        "Active",
+        "Health",
+        "HealthRegen",
+        "Defensive",
+        "CooldownReduction"
+      ]
+    },
+    {
+      "internalName": "Circlet",
+      "name": "Circlet",
+      "tags": [
+        "Tier1",
+        "Passive",
+        "ItemTier.Tier1",
+        "Mana"
+      ]
+    },
+    {
+      "internalName": "ClericsCloak",
+      "name": "Cleric's Cloak",
+      "tags": [
+        "Defensive",
+        "Tenacity",
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "CombatBoots",
+      "name": "Combat Boots",
+      "tags": [
+        "Pathfinding",
+        "Tier2",
+        "Utility"
+      ]
+    },
+    {
+      "internalName": "ConduitGem",
+      "name": "Conduit Gem",
+      "tags": [
+        "Starter",
+        "Starter",
+        "StartingLoadout",
+        "Adaptive",
+        "Ability"
+      ]
+    },
+    {
+      "internalName": "Contagion",
+      "name": "Contagion",
+      "tags": [
+        "Passive",
+        "Tier3",
+        "Support",
+        "Defensive"
+      ]
+    },
+    {
+      "internalName": "CursedSickle",
+      "name": "Cursed Sickle",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "DaggerOfFrenzy",
+      "name": "Dagger of Frenzy",
+      "tags": [
+        "Active",
+        "Attack Speed",
+        "Strength",
+        "Carry.STR",
+        "Offensive",
+        "Tier3",
+        "Jungle.STR"
+      ]
+    },
+    {
+      "internalName": "Damaru",
+      "name": "Damaru",
+      "tags": [
+        "Carry",
+        "Critical Strike",
+        "Echo",
+        "Offensive",
+        "Passive",
+        "Physical",
+        "STR",
+        "Strength",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "DaybreakGavel",
+      "name": "Daybreak Gavel",
+      "tags": [
+        "Healing",
+        "INT",
+        "STR",
+        "Health"
+      ]
+    },
+    {
+      "internalName": "Deathbringer",
+      "name": "Deathbringer",
+      "tags": [
+        "Critical Strike Chance",
+        "Strength",
+        "Passive",
+        "Carry.Hybrid",
+        "Carry.STR",
+        "Offensive",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "DeathMetal",
+      "name": "Death Metal",
+      "tags": [
+        "Active",
+        "Strength",
+        "Intelligence",
+        "Critical Strike Chance",
+        "Attack Speed",
+        "Carry.Hybrid",
+        "Offensive",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "DeathsEmbrace",
+      "name": "Death's Embrace",
+      "tags": [
+        "Tier2",
+        "Passive",
+        "Starter",
+        "ItemTier.Tier2",
+        "Attack",
+        "Heal"
+      ]
+    },
+    {
+      "internalName": "DeathsToll",
+      "name": "Death's Toll",
+      "tags": [
+        "Starter",
+        "Starter",
+        "StartingLoadout",
+        "Attack",
+        "Heal"
+      ]
+    },
+    {
+      "internalName": "DevourersGauntlet",
+      "name": "Devourer's Gauntlet",
+      "tags": [
+        "Tier3",
+        "Strength",
+        "LifeSteal",
+        "Carry.STR",
+        "Mid.STR",
+        "Passive",
+        "Offensive"
+      ]
+    },
+    {
+      "internalName": "DivineRuin",
+      "name": "Divine Ruin",
+      "tags": [
+        "Tier3",
+        "Intelligence",
+        "Passive",
+        "Mid.INT",
+        "Offensive"
+      ]
+    },
+    {
+      "internalName": "DoomOrb",
+      "name": "Doom Orb",
+      "tags": [
+        "Tier3",
+        "Passive",
+        "Intelligence",
+        "Mid.INT",
+        "Mana",
+        "ManaRegen",
+        "Penetration",
+        "Offensive"
+      ]
+    },
+    {
+      "internalName": "DoubletOfBinding",
+      "name": "Doublet of Binding",
+      "tags": [
+        "Active",
+        "Dampening",
+        "Defensive",
+        "Health",
+        "Support",
+        "Tank",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "DraconicScale",
+      "name": "Draconic Scale",
+      "tags": [
+        "Passive",
+        "Tier3",
+        "Support",
+        "Physical Protection",
+        "Magical Protection",
+        "Defensive"
+      ]
+    },
+    {
+      "internalName": "DreamersIdol",
+      "name": "Dreamer's Idol",
+      "tags": [
+        "Tier3",
+        "Active",
+        "Intelligence",
+        "Mid.INT",
+        "Offensive"
+      ]
+    },
+    {
+      "internalName": "DruidClub",
+      "name": "Druid Club",
+      "tags": [
+        "Tier2",
+        "Strength",
+        "ManaRegen",
+        "Passive",
+        "ItemTier.Tier2"
+      ]
+    },
+    {
+      "internalName": "DwarvenPlate",
+      "name": "Dwarven Plate",
+      "tags": [
+        "Passive",
+        "Tier3",
+        "Support",
+        "Physical Protection",
+        "Magical Protection",
+        "Defensive"
+      ]
+    },
+    {
+      "internalName": "EldritchOrb",
+      "name": "Rod of Tahuti",
+      "tags": [
+        "Tier3",
+        "Passive",
+        "Intelligence",
+        "Mid.INT",
+        "Mana",
+        "ManaRegen",
+        "Penetration",
+        "Offensive"
+      ]
+    },
+    {
+      "internalName": "EngravedGuard",
+      "name": "Engraved Guard",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "ErosBow",
+      "name": "Eros' Bow",
+      "tags": [
+        "Tier3",
+        "Active",
+        "Health",
+        "Offensive",
+        "Attack Speed",
+        "Healing"
+      ]
+    },
+    {
+      "internalName": "Erosion",
+      "name": "Erosion",
+      "tags": [
+        "Passive",
+        "Tier3",
+        "Support",
+        "Physical Protection",
+        "Magical Protection",
+        "Defensive"
+      ]
+    },
+    {
+      "internalName": "EvilEye",
+      "name": "Evil Eye",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "EvolvedBookOfThoth",
+      "name": "Evolved Book of Thoth",
+      "tags": [
+        "Passive",
+        "Tier3",
+        "Mid.INT",
+        "Mana",
+        "ManaRegen",
+        "Intelligence",
+        "Penetration",
+        "Offensive",
+        "Jungle.INT"
+      ]
+    },
+    {
+      "internalName": "EvolvedDevourersGauntlet",
+      "name": "Evolved Devourer's Gauntlet",
+      "tags": [
+        "Tier3",
+        "Passive",
+        "Strength",
+        "LifeSteal",
+        "Carry.STR",
+        "Mid.STR",
+        "Offensive"
+      ]
+    },
+    {
+      "internalName": "EvolvedPropheticCloak",
+      "name": "Evolved Prophetic Cloak",
+      "tags": [
+        "Tier3",
+        "Passive",
+        "Support",
+        "Physical Protection",
+        "Magical Protection",
+        "Defensive",
+        "CooldownReduction"
+      ]
+    },
+    {
+      "internalName": "EvolvedRage",
+      "name": "Evolved Rage",
+      "tags": [
+        "Passive",
+        "Tier3",
+        "Critical Strike Chance",
+        "Strength",
+        "Carry.Hybrid",
+        "Carry.STR",
+        "Offensive"
+      ]
+    },
+    {
+      "internalName": "EvolvedTranscendence",
+      "name": "Evolved Transcendence",
+      "tags": [
+        "Tier3",
+        "Passive",
+        "Mana",
+        "ManaRegen",
+        "Strength",
+        "Penetration",
+        "Offensive",
+        "Carry.STR",
+        "Mid.STR"
+      ]
+    },
+    {
+      "internalName": "EyeofErebus",
+      "name": "Eye of Erebus",
+      "tags": [
+        "Health",
+        "Tier3",
+        "Active",
+        "Support",
+        "Defensive",
+        "Cooldown Rate"
+      ]
+    },
+    {
+      "internalName": "EyeOfProvidence",
+      "name": "Eye of Providence",
+      "tags": [
+        "Tier3",
+        "Health",
+        "Magical Protection",
+        "Physical Protection",
+        "Active",
+        "Support",
+        "Defensive"
+      ]
+    },
+    {
+      "internalName": "EyeOfTheStorm",
+      "name": "Eye of the Storm",
+      "tags": [
+        "Tier3",
+        "Strength",
+        "Magical Protection",
+        "Health",
+        "Hybrid",
+        "Active"
+      ]
+    },
+    {
+      "internalName": "FencersBuckler",
+      "name": "Fencer's Buckler",
+      "tags": [
+        "Tier2",
+        "Passive",
+        "Attack Speed",
+        "Physical Protection",
+        "ItemTier.Tier2"
+      ]
+    },
+    {
+      "internalName": "FlamingPearl",
+      "name": "Flaming Pearl",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "FreyasTears",
+      "name": "Freya's Tears",
+      "tags": [
+        "Passive",
+        "Tier3",
+        "Support",
+        "Physical Protection",
+        "Magical Protection",
+        "Defensive",
+        "CooldownReduction"
+      ]
+    },
+    {
+      "internalName": "Gem",
+      "name": "Gem",
+      "tags": [
+        "Tier1",
+        "Passive",
+        "ItemTier.Tier1",
+        "StartingLoadout",
+        "Intelligence"
+      ]
+    },
+    {
+      "internalName": "GemOfFocus",
+      "name": "Gem of Focus",
+      "tags": [
+        "Tier3",
+        "Intelligence",
+        "MovementSpeed",
+        "Passive",
+        "CooldownReduction",
+        "Mid.INT",
+        "Offensive",
+        "Carry.Hybrid"
+      ]
+    },
+    {
+      "internalName": "GemOfIsolation",
+      "name": "Gem of Isolation",
+      "tags": [
+        "Tier3",
+        "Intelligence",
+        "Health",
+        "Passive",
+        "Mid.INT",
+        "Hybrid"
+      ]
+    },
+    {
+      "internalName": "GenjisGuard",
+      "name": "Genji's Guard",
+      "tags": [
+        "Magical Protection",
+        "Tier3",
+        "Passive",
+        "Support",
+        "CooldownReduction",
+        "Defensive",
+        "Mana",
+        "ManaRegen"
+      ]
+    },
+    {
+      "internalName": "GildedArrow",
+      "name": "Gilded Arrow",
+      "tags": [
+        "Starter",
+        "Starter",
+        "StartingLoadout",
+        "Attack",
+        "Farm"
+      ]
+    },
+    {
+      "internalName": "GloriousPridwen",
+      "name": "Glorious Pridwen",
+      "tags": [
+        "Tier3",
+        "Physical Protection",
+        "Magical Protection",
+        "CooldownReduction",
+        "Support",
+        "Active",
+        "Defensive"
+      ]
+    },
+    {
+      "internalName": "GluttonousGrimoire",
+      "name": "Gluttonous Grimoire",
+      "tags": [
+        "Healing",
+        "INT",
+        "Health"
+      ]
+    },
+    {
+      "internalName": "HandOfTheAbyss",
+      "name": "Bracer of The Abyss",
+      "tags": [
+        "Tier3",
+        "Intelligence",
+        "Passive",
+        "Attack Speed",
+        "Carry.Hybrid",
+        "Offensive"
+      ]
+    },
+    {
+      "internalName": "HealthChalice",
+      "name": "Health Chalice",
+      "tags": [
+        "Consumable",
+        "Tier1",
+        "Consumable",
+        "NoResaleValue",
+        "Heal"
+      ]
+    },
+    {
+      "internalName": "HealthPotion",
+      "name": "Health Potion",
+      "tags": [
+        "Consumable",
+        "Consumable",
+        "StartingLoadout",
+        "Heal"
+      ]
+    },
+    {
+      "internalName": "Heartseeker",
+      "name": "Heartseeker",
+      "tags": [
+        "Tier3",
+        "Passive",
+        "Strength",
+        "Penetration",
+        "Mana",
+        "ManaRegen",
+        "Offensive",
+        "Mid.STR",
+        "Carry.STR"
+      ]
+    },
+    {
+      "internalName": "HeartwoodCharm",
+      "name": "Heartwood Charm",
+      "tags": [
+        "Healing",
+        "Health",
+        "Cooldown",
+        "Mana Regen",
+        "Mana",
+        "Health"
+      ]
+    },
+    {
+      "internalName": "HelmOfDarkness",
+      "name": "Helm of Darkness",
+      "tags": [
+        "Tier3",
+        "Active",
+        "Physical Protection",
+        "Intelligence",
+        "Magical Protection",
+        "Hybrid"
+      ]
+    },
+    {
+      "internalName": "HelmOfRadiance",
+      "name": "Helm of Radiance",
+      "tags": [
+        "Tier3",
+        "Intelligence",
+        "Physical Protection",
+        "Passive",
+        "Mid.INT",
+        "Hybrid"
+      ]
+    },
+    {
+      "internalName": "Heroism",
+      "name": "Heroism",
+      "tags": [
+        "Tier2",
+        "Passive",
+        "Starter",
+        "ItemTier.Tier2",
+        "Support",
+        "Anti-CC"
+      ]
+    },
+    {
+      "internalName": "HideOfNemean",
+      "name": "Hide of the Nemean Lion",
+      "tags": [
+        "Tier3",
+        "Health",
+        "Physical Protection",
+        "Active",
+        "HealthRegen",
+        "Defensive"
+      ]
+    },
+    {
+      "internalName": "HookedSword",
+      "name": "Hooked Sword",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "HuntersBow",
+      "name": "Hunter's Bow",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "HuntersCowl",
+      "name": "Hunter's Cowl",
+      "tags": [
+        "Tier2",
+        "ItemTier.Tier2",
+        "Starter",
+        "Passive",
+        "Adaptive",
+        "Aura"
+      ]
+    },
+    {
+      "internalName": "HussarsWings",
+      "name": "Hussar's Wings",
+      "tags": [
+        "Tier3",
+        "Magical Protection",
+        "Physical Protection",
+        "Support",
+        "Health",
+        "Defensive",
+        "Passive"
+      ]
+    },
+    {
+      "internalName": "HydrasLament",
+      "name": "Hydra's Lament",
+      "tags": [
+        "Tier3",
+        "Strength",
+        "Mana",
+        "ManaRegen",
+        "Passive",
+        "Mid.STR",
+        "Carry.STR",
+        "Offensive",
+        "CooldownReduction"
+      ]
+    },
+    {
+      "internalName": "InfusedAxe",
+      "name": "Infused Axe",
+      "tags": [
+        "Tier2",
+        "ManaRegen",
+        "Passive",
+        "Mana",
+        "ItemTier.Tier2",
+        "Strength"
+      ]
+    },
+    {
+      "internalName": "JadeScepter",
+      "name": "Jade Scepter",
+      "tags": [
+        "Intelligence",
+        "Tier3",
+        "Active",
+        "Mid.INT",
+        "Health",
+        "Hybrid"
+      ]
+    },
+    {
+      "internalName": "JotunnsRevenge",
+      "name": "Jotunn's Revenge",
+      "tags": [
+        "Tier3",
+        "Strength",
+        "CooldownReduction",
+        "Passive",
+        "Mid.STR",
+        "Offensive",
+        "Solo.STR"
+      ]
+    },
+    {
+      "internalName": "KillingStone",
+      "name": "Killing Stone",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "KineticCuirass",
+      "name": "Kinetic Cuirass",
+      "tags": [
+        "Defensive",
+        "Health",
+        "Passive",
+        "Plating",
+        "Support",
+        "Tank",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "Kopesh",
+      "name": "Kopesh",
+      "tags": [
+        "Critical Strike Chance",
+        "Tier2",
+        "Strength",
+        "Passive",
+        "ItemTier.Tier2"
+      ]
+    },
+    {
+      "internalName": "LeatherCowl",
+      "name": "Leather Cowl",
+      "tags": [
+        "Starter",
+        "Starter",
+        "StartingLoadout",
+        "Adaptive",
+        "Attack Speed"
+      ]
+    },
+    {
+      "internalName": "LegionnaireArmor",
+      "name": "Legionnaire Armor",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "LernaeanBow",
+      "name": "Lernaean Bow",
+      "tags": [
+        "Offensive",
+        "Tier3",
+        "Active",
+        "Carry",
+        "Strength",
+        "Attack Speed"
+      ]
+    },
+    {
+      "internalName": "LevianthansHide",
+      "name": "Leviathan's Hide",
+      "tags": [
+        "Physical Protection",
+        "Tier3",
+        "Passive",
+        "Support",
+        "Defensive",
+        "Health"
+      ]
+    },
+    {
+      "internalName": "LifeBinder",
+      "name": "Lifebinder",
+      "tags": [
+        "Tier3",
+        "Active",
+        "Health",
+        "Intelligence",
+        "HealthRegen",
+        "Hybrid",
+        "Support",
+        "Healing",
+        "Shielding"
+      ]
+    },
+    {
+      "internalName": "LivelyAcorn",
+      "name": "Lively Acorn",
+      "tags": [
+        "Health",
+        "Offensive",
+        "Physical",
+        "Physical Power",
+        "Ratatoskr",
+        "STR",
+        "Strength",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "LorgMor",
+      "name": "Gladiator's Shield",
+      "tags": [
+        "Tier3",
+        "Passive",
+        "CooldownReduction",
+        "Physical Protection",
+        "Defensive",
+        "Health"
+      ]
+    },
+    {
+      "internalName": "LucerneHammer",
+      "name": "Lucerne Hammer",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "MagicAcorn",
+      "name": "Magic Acorn",
+      "tags": [
+        "Offensive",
+        "Physical",
+        "Physical Power",
+        "Ratatoskr",
+        "Starter",
+        "STR",
+        "Strength",
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "MagisCloak",
+      "name": "Magi's Cloak",
+      "tags": [
+        "Passive",
+        "Tier3",
+        "Support",
+        "Physical Protection",
+        "Magical Protection",
+        "Defensive"
+      ]
+    },
+    {
+      "internalName": "ManaPotion",
+      "name": "Mana Potion",
+      "tags": [
+        "Consumable",
+        "Consumable",
+        "StartingLoadout",
+        "Recovery"
+      ]
+    },
+    {
+      "internalName": "ManaTome",
+      "name": "Mana Tome",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "ManchuBow",
+      "name": "Manchu Bow",
+      "tags": [
+        "Attack Speed",
+        "Strength",
+        "Tier2",
+        "Passive",
+        "ItemTier.Tier2"
+      ]
+    },
+    {
+      "internalName": "MantleOfDiscord",
+      "name": "Mantle Of Discord",
+      "tags": [
+        "Passive",
+        "Tier3",
+        "Support",
+        "Physical Protection",
+        "Magical Protection",
+        "Defensive",
+        "CooldownReduction"
+      ]
+    },
+    {
+      "internalName": "Medallion",
+      "name": "Medallion",
+      "tags": [
+        "Tier1",
+        "Passive",
+        "ItemTier.Tier1",
+        "StartingLoadout",
+        "Health"
+      ]
+    },
+    {
+      "internalName": "MedalOfDefense",
+      "name": "Medal of Defense",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "MedalOfDisruption",
+      "name": "Medal of Disruption",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "MercurysTalaria",
+      "name": "Mercury's Talaria",
+      "tags": [
+        "Adaptive",
+        "Offensive",
+        "Pathfinding",
+        "Physical",
+        "Magical",
+        "STR",
+        "INT",
+        "Strength",
+        "Intelligence",
+        "Tier3",
+        "Passive"
+      ]
+    },
+    {
+      "internalName": "MeteorHammer",
+      "name": "Golden Blade",
+      "tags": [
+        "Strength",
+        "Tier3",
+        "Passive",
+        "Attack Speed",
+        "Health",
+        "Hybrid"
+      ]
+    },
+    {
+      "internalName": "MidgardianMail",
+      "name": "Midgardian Mail",
+      "tags": [
+        "Defensive",
+        "Passive",
+        "Physical Protection",
+        "Tier3",
+        "Utility"
+      ]
+    },
+    {
+      "internalName": "MoteOfChaos",
+      "name": "Mote of Chaos",
+      "tags": [
+        "Component"
+      ]
+    },
+    {
+      "internalName": "MultiPotion",
+      "name": "Multi Potion",
+      "tags": [
+        "Consumable",
+        "Consumable",
+        "StartingLoadout",
+        "Heal",
+        "Recovery"
+      ]
+    },
+    {
+      "internalName": "MusashisDualSwords",
+      "name": "Musashi's Dual Swords",
+      "tags": [
+        "Critical Strike Chance",
+        "Strength",
+        "Tier3",
+        "Passive",
+        "Carry.STR",
+        "Offensive",
+        "Carry.Hybrid"
+      ]
+    },
+    {
+      "internalName": "MysticalMail",
+      "name": "Mystical Mail",
+      "tags": [
+        "Health",
+        "Tier3",
+        "Physical Protection",
+        "Passive",
+        "Support",
+        "Defensive"
+      ]
+    },
+    {
+      "internalName": "Necronomicon",
+      "name": "Necronomicon",
+      "tags": [
+        "Tier3",
+        "Passive",
+        "Intelligence",
+        "Mid.INT",
+        "Penetration",
+        "Offensive"
+      ]
+    },
+    {
+      "internalName": "NimbleRing",
+      "name": "Nimble Ring",
+      "tags": [
+        "Tier3",
+        "Attack Speed",
+        "Passive",
+        "Carry.Hybrid",
+        "Intelligence",
+        "Penetration",
+        "Offensive"
+      ]
+    },
+    {
+      "internalName": "ObsidianMacuahuitl",
+      "name": "Oath-Sworn Spear",
+      "tags": [
+        "Tier3",
+        "Passive",
+        "Strength",
+        "Mid.STR",
+        "Penetration",
+        "Offensive",
+        "Carry.STR"
+      ]
+    },
+    {
+      "internalName": "Odigba",
+      "name": "Odigba",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "OdysseusBow",
+      "name": "Odysseus' Bow",
+      "tags": [
+        "Tier3",
+        "Passive",
+        "Offensive",
+        "Carry.Hybrid",
+        "Carry.STR",
+        "Attack Speed"
+      ]
+    },
+    {
+      "internalName": "OlmecBlue",
+      "name": "Olmec Blue",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "OmenDrum",
+      "name": "Omen Drum",
+      "tags": [
+        "Active",
+        "Adaptive",
+        "Echo",
+        "INT",
+        "Intelligence",
+        "Offensive",
+        "Physical",
+        "Magical",
+        "STR",
+        "Strength",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "OniHuntersGarb",
+      "name": "Oni Hunter's Garb",
+      "tags": [
+        "Tier3",
+        "Magical Protection",
+        "Health",
+        "Passive",
+        "Support",
+        "ManaRegen",
+        "Mana",
+        "Defensive"
+      ]
+    },
+    {
+      "internalName": "OracleStaff",
+      "name": "Oracle Staff",
+      "tags": [
+        "Intelligence",
+        "Tier2",
+        "ManaRegen",
+        "Passive",
+        "Mana",
+        "ItemTier.Tier2"
+      ]
+    },
+    {
+      "internalName": "PendulumBlade",
+      "name": "Pendulum Blade",
+      "tags": [
+        "Tier3",
+        "Strength",
+        "CooldownReduction",
+        "Mid.STR",
+        "Carry.STR",
+        "Active",
+        "Offensive",
+        "Role"
+      ]
+    },
+    {
+      "internalName": "PendulumOfTheAges",
+      "name": "Pendulum Of The Ages",
+      "tags": [
+        "Tier2",
+        "Passive",
+        "Starter",
+        "ItemTier.Tier2",
+        "Adaptive",
+        "Cooldown Rate"
+      ]
+    },
+    {
+      "internalName": "PhantomShell",
+      "name": "Phantom Shell",
+      "tags": [
+        "Relic",
+        "Shield"
+      ]
+    },
+    {
+      "internalName": "PharaohsCurse",
+      "name": "Pharaoh's Curse",
+      "tags": [
+        "Tier3",
+        "Physical Protection",
+        "Active",
+        "Support",
+        "Attack Speed",
+        "Defensive",
+        "Magical Protection"
+      ]
+    },
+    {
+      "internalName": "PhoenixAmulet",
+      "name": "Phoenix Feather",
+      "tags": [
+        "Health",
+        "Tier3",
+        "Active",
+        "Magical Protection",
+        "Support",
+        "Defensive"
+      ]
+    },
+    {
+      "internalName": "PlatedMetal",
+      "name": "Plated Metal",
+      "tags": [
+        "Defensive",
+        "Plating",
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "Polynomicon",
+      "name": "Polynomicon",
+      "tags": [
+        "Tier3",
+        "Intelligence",
+        "ManaRegen",
+        "Passive",
+        "Mana",
+        "Mid.INT",
+        "Offensive",
+        "Carry.Hybrid"
+      ]
+    },
+    {
+      "internalName": "PropheticCloak",
+      "name": "Prophetic Cloak",
+      "tags": [
+        "Tier3",
+        "Passive",
+        "Support",
+        "Physical Protection",
+        "Magical Protection",
+        "Defensive",
+        "CooldownReduction"
+      ]
+    },
+    {
+      "internalName": "ProtectionOfItus",
+      "name": "Avenging Blade",
+      "tags": [
+        "Tier3",
+        "Strength",
+        "Health",
+        "Offensive",
+        "Passive"
+      ]
+    },
+    {
+      "internalName": "PurificationBeads",
+      "name": "Purification Beads",
+      "tags": [
+        "Relic",
+        "CC Immunity"
+      ]
+    },
+    {
+      "internalName": "QinsBlade",
+      "name": "Qin's Blade",
+      "tags": [
+        "Tier3",
+        "Attack Speed",
+        "Strength",
+        "Passive",
+        "Carry.Hybrid",
+        "Carry.STR",
+        "Offensive",
+        "Jungle.STR"
+      ]
+    },
+    {
+      "internalName": "RadiantBulwark",
+      "name": "Radiant Bulwark",
+      "tags": [
+        "Active",
+        "Defensive",
+        "Magical Protection",
+        "Physical Protection",
+        "Plating",
+        "Support",
+        "Tank",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "Rage",
+      "name": "Rage",
+      "tags": [
+        "Critical Strike Chance",
+        "Strength",
+        "Passive",
+        "Carry.Hybrid",
+        "Carry.STR",
+        "Offensive",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "RagnaroksWake",
+      "name": "Ragnarok's Wake",
+      "tags": [
+        "Active",
+        "Defense",
+        "Defensive",
+        "Physical Protection",
+        "Health",
+        "Solo.STR",
+        "Solo.INT",
+        "Support.STR",
+        "Support.INT",
+        "Tier3",
+        "Mobility",
+        "Damage"
+      ]
+    },
+    {
+      "internalName": "RegrowthStriders",
+      "name": "Regrowth Striders",
+      "tags": [
+        "Healing",
+        "Mana Regen",
+        "Physical Protection",
+        "Cooldown"
+      ]
+    },
+    {
+      "internalName": "Reliquary",
+      "name": "Reliquary",
+      "tags": [
+        "Tier1",
+        "Passive",
+        "ItemTier.Tier1",
+        "Mana Regen"
+      ]
+    },
+    {
+      "internalName": "ResoluteMantle",
+      "name": "Resolute Mantle",
+      "tags": [
+        "Defensive",
+        "Health",
+        "Passive",
+        "Support",
+        "Tank",
+        "Tenacity",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "RestorativeAmanita",
+      "name": "Amanita Charm",
+      "tags": [
+        "Tier3",
+        "Health",
+        "Physical Protection",
+        "Active",
+        "Support",
+        "Magical Protection",
+        "HealthRegen",
+        "Defensive",
+        "Healing"
+      ]
+    },
+    {
+      "internalName": "Ring",
+      "name": "Ring",
+      "tags": [
+        "Tier1",
+        "Passive",
+        "ItemTier.Tier1",
+        "StartingLoadout",
+        "Cooldown"
+      ]
+    },
+    {
+      "internalName": "RingOfDispel",
+      "name": "Ring of Dispel",
+      "tags": [
+        "Intelligence",
+        "Tier2",
+        "CooldownReduction",
+        "Passive",
+        "ItemTier.Tier2"
+      ]
+    },
+    {
+      "internalName": "Riptalon",
+      "name": "Riptalon",
+      "tags": [
+        "LifeSteal",
+        "Carry.STR",
+        "Mid.STR",
+        "Offensive",
+        "Tier3",
+        "Attack Speed"
+      ]
+    },
+    {
+      "internalName": "RodOfAsclepius",
+      "name": "Rod Of Asclepius",
+      "tags": [
+        "Tier3",
+        "Active",
+        "Health",
+        "Intelligence",
+        "HealthRegen",
+        "Hybrid",
+        "Healing"
+      ]
+    },
+    {
+      "internalName": "Rune",
+      "name": "Rune",
+      "tags": [
+        "Tier1",
+        "Passive",
+        "ItemTier.Tier1",
+        "Descriptor_MagProtection"
+      ]
+    },
+    {
+      "internalName": "RuneForgedHammer",
+      "name": "Runeforged Hammer",
+      "tags": [
+        "Tier3",
+        "Strength",
+        "Physical Protection",
+        "Magical Protection",
+        "Health",
+        "Hybrid",
+        "Active"
+      ]
+    },
+    {
+      "internalName": "runicBomb",
+      "name": "Runic Bomb",
+      "tags": [
+        "Active",
+        "Consumable"
+      ]
+    },
+    {
+      "internalName": "RunicHide",
+      "name": "Runic Hide",
+      "tags": [
+        "Dampening",
+        "Defensive",
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "Sabre",
+      "name": "Sabre",
+      "tags": [
+        "Tier1",
+        "Passive",
+        "ItemTier.Tier1",
+        "Critical"
+      ]
+    },
+    {
+      "internalName": "SagesRing",
+      "name": "Sage's Ring",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "SandsOfTime",
+      "name": "Sands Of Time",
+      "tags": [
+        "Starter",
+        "Starter",
+        "StartingLoadout",
+        "Adaptive",
+        "Cooldown Rate"
+      ]
+    },
+    {
+      "internalName": "SanguineLash",
+      "name": "Sanguine Lash",
+      "tags": [
+        "Healing",
+        "STR",
+        "Health",
+        "Lifesteal",
+        "Magical Protection"
+      ]
+    },
+    {
+      "internalName": "Sash",
+      "name": "Sash",
+      "tags": [
+        "Tier1",
+        "Passive",
+        "ItemTier.Tier1",
+        "Heal"
+      ]
+    },
+    {
+      "internalName": "ScepterOfDominion",
+      "name": "Scepter of Dominion",
+      "tags": [
+        "Tier3",
+        "Intelligence",
+        "Active",
+        "Mana",
+        "Mid.INT",
+        "ManaRegen",
+        "Health",
+        "Hybrid",
+        "Support"
+      ]
+    },
+    {
+      "internalName": "ScreechingGargoyle",
+      "name": "Screeching Gargoyle",
+      "tags": [
+        "Active",
+        "Tier3",
+        "Magical Protection",
+        "CooldownReduction",
+        "Support",
+        "Defensive"
+      ]
+    },
+    {
+      "internalName": "Scythe",
+      "name": "Scythe",
+      "tags": [
+        "Tier1",
+        "Passive",
+        "ItemTier.Tier1",
+        "Lifesteal"
+      ]
+    },
+    {
+      "internalName": "Selflessness",
+      "name": "Selflessness",
+      "tags": [
+        "Starter",
+        "Starter",
+        "StartingLoadout",
+        "Support",
+        "Anti-CC"
+      ]
+    },
+    {
+      "internalName": "SerpentSpear",
+      "name": "Titan's Bane",
+      "tags": [
+        "Tier3",
+        "Strength",
+        "Passive",
+        "Carry.STR",
+        "Mid.STR",
+        "Penetration",
+        "Offensive"
+      ]
+    },
+    {
+      "internalName": "SharpshootersArrow",
+      "name": "Sharpshooter's Arrow",
+      "tags": [
+        "Starter",
+        "Starter",
+        "StartingLoadout",
+        "Attack",
+        "Farm"
+      ]
+    },
+    {
+      "internalName": "ShellOfRebuke",
+      "name": "Shell of Rebuke",
+      "tags": [
+        "Shield",
+        "Active"
+      ]
+    },
+    {
+      "internalName": "Shield",
+      "name": "Shield",
+      "tags": [
+        "Tier1",
+        "Passive",
+        "ItemTier.Tier1",
+        "Descriptor_PhysicalProtect"
+      ]
+    },
+    {
+      "internalName": "ShieldOfThePhoenix",
+      "name": "Shield of the Phoenix",
+      "tags": [
+        "Tier3",
+        "Passive",
+        "Health",
+        "CooldownReduction",
+        "Physical Protection",
+        "Defensive"
+      ]
+    },
+    {
+      "internalName": "ShieldSplitter",
+      "name": "Shield Splitter",
+      "tags": [
+        "Tier3",
+        "Active",
+        "Strength",
+        "Magical Protection",
+        "Physical Protection",
+        "Solo",
+        "Hybrid"
+      ]
+    },
+    {
+      "internalName": "ShiftersShieldV2",
+      "name": "Shifter's Shield",
+      "tags": [
+        "Passive",
+        "Tier3",
+        "Health",
+        "Magical Protection",
+        "Physical Protection",
+        "Mana",
+        "Strength",
+        "Hybrid",
+        "Solo.STR"
+      ]
+    },
+    {
+      "internalName": "ShogunsOfuda",
+      "name": "Shogun's Ofuda",
+      "tags": [
+        "Tier3",
+        "Magical Protection",
+        "Attack Speed",
+        "Passive",
+        "Support",
+        "Defensive",
+        "Health"
+      ]
+    },
+    {
+      "internalName": "ShroudOfVengeance",
+      "name": "Shroud of Vengeance",
+      "tags": [
+        "Defensive",
+        "Magical Protection",
+        "Passive",
+        "Physical Protection",
+        "Support",
+        "Tank",
+        "Tenacity",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "SilkenMailcoat",
+      "name": "Spectral Armor",
+      "tags": [
+        "Physical Protection",
+        "Tier3",
+        "Passive",
+        "Support",
+        "Defensive",
+        "Health"
+      ]
+    },
+    {
+      "internalName": "Skeggox",
+      "name": "Skeggox",
+      "tags": [
+        "Tier2",
+        "Strength"
+      ]
+    },
+    {
+      "internalName": "SoulDevourer",
+      "name": "Soul Reaver",
+      "tags": [
+        "Tier3",
+        "Intelligence",
+        "Mana",
+        "Passive",
+        "ManaRegen",
+        "Mid.INT",
+        "Offensive"
+      ]
+    },
+    {
+      "internalName": "SoulGem",
+      "name": "Soul Gem",
+      "tags": [
+        "Passive",
+        "Mid.INT",
+        "Tier3",
+        "Intelligence",
+        "LifeSteal",
+        "Offensive",
+        "CooldownReduction",
+        "Healing"
+      ]
+    },
+    {
+      "internalName": "SoulReliquary",
+      "name": "Soul Reliquary",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "SpearOfDesolation",
+      "name": "Spear of Desolation",
+      "tags": [
+        "Tier3",
+        "CooldownReduction",
+        "Passive",
+        "Mid.INT",
+        "Penetration",
+        "Offensive",
+        "Intelligence",
+        "Carry.Hybrid"
+      ]
+    },
+    {
+      "internalName": "SphereOfNegation",
+      "name": "Sphere of Negation",
+      "tags": [
+        "Tier3",
+        "Passive",
+        "Intelligence",
+        "Magical Protection",
+        "Hybrid",
+        "Role"
+      ]
+    },
+    {
+      "internalName": "SpiritRobe",
+      "name": "Spirit Robe",
+      "tags": [
+        "Passive",
+        "Tier3",
+        "Support",
+        "Physical Protection",
+        "Magical Protection",
+        "Defensive",
+        "Solo.STR"
+      ]
+    },
+    {
+      "internalName": "StaffOfCosmicHorror",
+      "name": "The Cosmic Horror",
+      "tags": [
+        "Intelligence",
+        "Tier3",
+        "ManaRegen",
+        "Passive",
+        "Mana",
+        "CooldownReduction",
+        "Mid.INT",
+        "Offensive"
+      ]
+    },
+    {
+      "internalName": "StaffOfMyrddin",
+      "name": "Staff of Myrddin",
+      "tags": [
+        "Tier3",
+        "Intelligence",
+        "CooldownReduction",
+        "Mid.INT",
+        "Active",
+        "Offensive"
+      ]
+    },
+    {
+      "internalName": "Stampede",
+      "name": "Stampede",
+      "tags": [
+        "Health",
+        "Tier3",
+        "Physical Protection",
+        "Active",
+        "Support",
+        "HealthRegen",
+        "Defensive"
+      ]
+    },
+    {
+      "internalName": "StygianAnchor",
+      "name": "Stygian Anchor",
+      "tags": [
+        "Physical Protection",
+        "Magical Protection",
+        "Basic Attack Damage",
+        "Passive",
+        "Support",
+        "Defensive",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "SunBeamBow",
+      "name": "Sun Beam Bow",
+      "tags": [
+        "Attack Speed",
+        "Tier3",
+        "Strength",
+        "Carry.Hybrid",
+        "Carry.STR",
+        "Mid.STR",
+        "ManaRegen",
+        "Offensive",
+        "Role",
+        "Active",
+        "INT"
+      ]
+    },
+    {
+      "internalName": "sunderingArc",
+      "name": "Sundering Arc",
+      "tags": [
+        "Damage",
+        "Jungle"
+      ]
+    },
+    {
+      "internalName": "SunderingAxe",
+      "name": "Warrior's Axe",
+      "tags": [
+        "Starter",
+        "Starter",
+        "Adaptive",
+        "Damage"
+      ]
+    },
+    {
+      "internalName": "SunderingAxeUpgrade",
+      "name": "Sundering Axe",
+      "tags": [
+        "Tier2",
+        "Passive",
+        "Starter",
+        "ItemTier.Tier2",
+        "Adaptive",
+        "Damage"
+      ]
+    },
+    {
+      "internalName": "SunderingEcho",
+      "name": "Sundering Echo",
+      "tags": [
+        "Damage",
+        "Jungle",
+        "Active"
+      ]
+    },
+    {
+      "internalName": "SurvivorsSash",
+      "name": "Survivor's Sash",
+      "tags": [
+        "Tier2",
+        "Passive",
+        "HealthRegen",
+        "Magical Protection",
+        "ItemTier.Tier2"
+      ]
+    },
+    {
+      "internalName": "TalismanOfPurification",
+      "name": "Talisman of Purification",
+      "tags": [
+        "CC Immunity",
+        "Active"
+      ]
+    },
+    {
+      "internalName": "TekkoKagi",
+      "name": "Tekko-Kagi",
+      "tags": [
+        "Tier3",
+        "MovementSpeed",
+        "Passive",
+        "CooldownReduction",
+        "Strength",
+        "Mid.STR",
+        "Offensive"
+      ]
+    },
+    {
+      "internalName": "TheCrusher",
+      "name": "The Crusher",
+      "tags": [
+        "Tier3",
+        "Passive",
+        "Carry.STR",
+        "Strength",
+        "Penetration",
+        "CooldownReduction",
+        "Offensive",
+        "Mid.STR"
+      ]
+    },
+    {
+      "internalName": "TheExecutioner",
+      "name": "The Executioner",
+      "tags": [
+        "Tier3",
+        "Strength",
+        "Intelligence",
+        "Attack Speed",
+        "Passive",
+        "Carry.Hybrid",
+        "Carry.STR",
+        "Penetration",
+        "Offensive",
+        "Jungle.STR"
+      ]
+    },
+    {
+      "internalName": "TheNemes",
+      "name": "Gauntlet of Thebes",
+      "tags": [
+        "Health",
+        "Tier3",
+        "Passive",
+        "Mana",
+        "Support",
+        "Defensive"
+      ]
+    },
+    {
+      "internalName": "TheReaper",
+      "name": "The Reaper",
+      "tags": [
+        "LifeSteal",
+        "Strength",
+        "Tier3",
+        "Passive",
+        "Carry.STR",
+        "Mid.STR",
+        "Carry.Hybrid",
+        "Offensive"
+      ]
+    },
+    {
+      "internalName": "TheWorldStone",
+      "name": "The World Stone",
+      "tags": [
+        "Tier3",
+        "Intelligence",
+        "Passive",
+        "CooldownReduction",
+        "Mid.INT",
+        "Offensive",
+        "Role"
+      ]
+    },
+    {
+      "internalName": "ThistlethornAcorn",
+      "name": "Thistlethorn Acorn",
+      "tags": [
+        "CooldownReduction",
+        "Health",
+        "LifeSteal",
+        "Offensive",
+        "Physical",
+        "Physical Power",
+        "Ratatoskr",
+        "STR",
+        "Strength",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "TimeLockAegis",
+      "name": "Time-Lock Aegis",
+      "tags": [
+        "Immune",
+        "Active"
+      ]
+    },
+    {
+      "internalName": "TotemOfDeath",
+      "name": "Totem of Death",
+      "tags": [
+        "Tier3",
+        "Intelligence",
+        "Passive",
+        "CooldownReduction",
+        "Mid.INT",
+        "Penetration",
+        "Offensive",
+        "Carry.Hybrid"
+      ]
+    },
+    {
+      "internalName": "Transcendence",
+      "name": "Transcendence",
+      "tags": [
+        "Tier3",
+        "Passive",
+        "Mana",
+        "ManaRegen",
+        "Strength",
+        "Penetration",
+        "Offensive",
+        "Carry.STR",
+        "Mid.STR"
+      ]
+    },
+    {
+      "internalName": "TritonsConch",
+      "name": "Triton's Conch",
+      "tags": [
+        "Tier3",
+        "Intelligence",
+        "Strength",
+        "Passive",
+        "Hybrid",
+        "Health"
+      ]
+    },
+    {
+      "internalName": "TyphonsHeart",
+      "name": "Typhon's Heart",
+      "tags": [
+        "Healing",
+        "INT",
+        "Health"
+      ]
+    },
+    {
+      "internalName": "Tyrfing",
+      "name": "Tyrfing",
+      "tags": [
+        "Tier3",
+        "Attack Speed",
+        "Strength",
+        "Passive",
+        "Carry.Hybrid",
+        "Carry.STR",
+        "Offensive",
+        "Jungle.STR"
+      ]
+    },
+    {
+      "internalName": "UmbralLink",
+      "name": "Umbral Link",
+      "tags": [
+        "Healing",
+        "Health",
+        "Lifesteal",
+        "Physical Protection"
+      ]
+    },
+    {
+      "internalName": "VampiricShroud",
+      "name": "Vampiric Shroud",
+      "tags": [
+        "Starter",
+        "Adaptive",
+        "Heal"
+      ]
+    },
+    {
+      "internalName": "VeveCharm",
+      "name": "Veve Charm",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "VitalAmplifier",
+      "name": "Vital Amplifier",
+      "tags": [
+        "Healing",
+        "INT",
+        "STR",
+        "Health"
+      ]
+    },
+    {
+      "internalName": "VoidShard",
+      "name": "Void Shard",
+      "tags": [
+        "Tier2"
+      ]
+    },
+    {
+      "internalName": "VoidShield",
+      "name": "Void Shield",
+      "tags": [
+        "Health",
+        "Tier3",
+        "Passive",
+        "Support",
+        "Physical Protection",
+        "Strength",
+        "Hybrid"
+      ]
+    },
+    {
+      "internalName": "VoidStone",
+      "name": "Void Stone",
+      "tags": [
+        "Health",
+        "Tier3",
+        "Magical Protection",
+        "Passive",
+        "Support",
+        "Intelligence",
+        "Hybrid"
+      ]
+    },
+    {
+      "internalName": "WarBanner",
+      "name": "War Banner",
+      "tags": [
+        "Tier2",
+        "Passive",
+        "Starter",
+        "ItemTier.Tier2",
+        "Support",
+        "Speed Up"
+      ]
+    },
+    {
+      "internalName": "WarFlag",
+      "name": "War Flag",
+      "tags": [
+        "Starter",
+        "Starter",
+        "StartingLoadout",
+        "Support",
+        "Speed Up"
+      ]
+    },
+    {
+      "internalName": "Wish-GrantingPearl",
+      "name": "Wish-Granting Pearl",
+      "tags": [
+        "Health",
+        "Intelligence",
+        "Tier3",
+        "Mana",
+        "Passive",
+        "Mid.INT",
+        "Hybrid"
+      ]
+    },
+    {
+      "internalName": "WyrmskinHide",
+      "name": "Wyrmskin Hide",
+      "tags": [
+        "Dampening",
+        "Defensive",
+        "Health",
+        "Passive",
+        "Physical",
+        "STR",
+        "Strength",
+        "Tier3"
+      ]
+    },
+    {
+      "internalName": "XibalbanEffigy",
+      "name": "Xibalban Effigy",
+      "tags": [
+        "Passive",
+        "Tier3",
+        "Support",
+        "Physical Protection",
+        "Magical Protection",
+        "Defensive",
+        "Mana",
+        "Mana Regen",
+        "Active"
+      ]
+    },
+    {
+      "internalName": "YogisNecklace",
+      "name": "Yogi's Necklace",
+      "tags": [
+        "Health",
+        "Tier3",
+        "Mana",
+        "HealthRegen",
+        "ManaRegen",
+        "Passive",
+        "Defensive"
+      ]
+    },
+    {
+      "internalName": "Zisurru",
+      "name": "Circle of Protection",
+      "tags": [
+        "Tier2",
+        "Magical Protection",
+        "Passive",
+        "ItemTier.Tier2"
+      ]
+    },
+    {
+      "internalName": "Zither",
+      "name": "Zither",
+      "tags": [
+        "Tier2"
+      ]
+    }
+  ]
+}

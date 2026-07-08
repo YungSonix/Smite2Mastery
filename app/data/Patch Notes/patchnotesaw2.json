@@ -1,0 +1,1018 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Alpha_Weekend_2",
+    "title": "SMITE 2 Alpha Weekend 2",
+    "infoboxTitle": "AW2 - SMITE 2 Alpha Weekend 2",
+    "releaseDate": "May 30, 2024",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": "1512147",
+    "navigation": {
+      "prev": "SMITE_2_Alpha_Weekend_1",
+      "next": "SMITE_2_Alpha_Weekend_3"
+    },
+    "category": "alpha_weekend",
+    "categoryLabel": "Alpha Weekend Test patch notes",
+    "number": 2,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "NEW GODS",
+      "anchor": "NEW_GODS",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Hades\nKing of the Underworld\nVoiced by: Patrick Seitz"
+            },
+            {
+              "text": "Sol\nGoddess of the Sun\nVoiced by: Jeannie Tirado"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "NEW SKINS",
+      "anchor": "NEW_SKINS",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Iron Fang Anhur\nCross-Gen - SMITE Cross-Gen Pass\nVoiced by: Mike Bodie"
+            },
+            {
+              "text": "Steel Sentry Athena\nCross-Gen - SMITE Cross-Gen Pass\nVoiced by: Sarah Ruth Thomas"
+            },
+            {
+              "text": "Prismatic Gust Kukulkan\nCross-Gen - SMITE Prismatic Chest\nVoiced by: Laila Berzins"
+            },
+            {
+              "text": "Bionic Overlord\nCross-Gen - SMITE Immortal Honor\nVoiced by: Oliver Smith"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "GENERAL",
+      "anchor": "GENERAL",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Item Store",
+          "anchor": "Item_Store",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Improved general console navigation"
+                },
+                {
+                  "text": "Artistically reworked",
+                  "items": [
+                    {
+                      "text": "More of the HUD will be updated to match this style in the future"
+                    }
+                  ]
+                },
+                {
+                  "text": "Added options for 3 different versions of the store UI",
+                  "items": [
+                    {
+                      "text": "Left aligned"
+                    },
+                    {
+                      "text": "Centered"
+                    },
+                    {
+                      "text": "Split"
+                    }
+                  ]
+                },
+                {
+                  "text": "Added Role Filters and Popular Tab per god"
+                },
+                {
+                  "text": "Fixed an issue where console hovering items in builds-into section didn't show those items names/stats"
+                },
+                {
+                  "text": "Fixed an issue where multiple items could be selected at once"
+                },
+                {
+                  "text": "Can now also type stats to search them",
+                  "items": [
+                    {
+                      "text": "Ex: crit, int, intelligence, etc"
+                    }
+                  ]
+                },
+                {
+                  "text": "Auto Buy will no longer be canceled by buying or selling potions. It will still be canceled by buying or selling any other item."
+                },
+                {
+                  "text": "Auto Buy will now display a message in the shop to confirm it is active and help prevent players from deactivating it accidentally."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Visual Settings",
+          "anchor": "Visual_Settings",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Default ruler targeter setting has been added"
+                },
+                {
+                  "text": "Reticle setting can now be set to “none”"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Control Settings",
+          "anchor": "Control_Settings",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Adjusted default sensitivity and sensitivity scale for both PC and Consoles"
+                },
+                {
+                  "text": "Adjust Controller Savage layout to be more like SMITE 1 (reminder: controller players can now fully rebind all buttons as well)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Damage Numbers",
+          "anchor": "Damage_Numbers",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Damage dealt will no longer display magical or physical icons next to the number"
+                },
+                {
+                  "text": "Damage taken will still show damage type icons, with some extra recoloring to helm them read more clearly"
+                },
+                {
+                  "text": "Default size and font size scaling rules based on amount of damage dealt have been adjusted"
+                },
+                {
+                  "text": "Adjusted position of damage numbers relative to the gods"
+                },
+                {
+                  "text": "Damage numbers of different types will now have different directional animation, or randomized directional animations"
+                },
+                {
+                  "text": "Added randomized direction animations"
+                },
+                {
+                  "text": "Fixed an issue where damage numbers position would move unintentionally when moving closer/further away from a target, or when rotating your camera while hitting a target"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Accolades",
+          "anchor": "Accolades",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Accolade popups on screen will now be more responsive, and display on screen for shorter durations."
+                },
+                {
+                  "text": "Accolade popups can now display kill information, and accolade information simultaneously"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "God Description Text",
+          "anchor": "God_Description_Text",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Added Basic Attack descriptions to all gods"
+                },
+                {
+                  "text": "Fixed a variety of typos"
+                },
+                {
+                  "text": "Future updates to organization and color coding of these are still in progress"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "CONQUEST",
+      "anchor": "CONQUEST",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "“Our primary goal for change on the Conquest map is to address the pacing. Alpha 1 felt like matches ran too long, objectives were too hard to secure, and gold leads were less common or impactful in the early to mid-game. For the next Alpha objectives are going to become easier to kill. That will move games toward the end more quickly as teams can take them more often and gain bigger advantages over their enemies. Gold sources in the lane and jungle will be increasing to make map control even more valuable. There are also some important fixes and changes to the amount of XP earned from kills. These economic factors are likely to have an impact on the mode in a variety of ways.”"
+        }
+      ],
+      "subsections": [
+        {
+          "title": "Map",
+          "anchor": "Map",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Improved camera collision on the outside bounds of the map",
+                  "items": [
+                    {
+                      "text": "Previously, camera was blocked by the invisible wall but now should only be blocked by environment assets"
+                    }
+                  ]
+                },
+                {
+                  "text": "Fixed fountain deaths granting xp/gold to the player who died to the fountain"
+                },
+                {
+                  "text": "Changed name of the Blight buff to Caustic"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Fire Giant",
+          "anchor": "Fire_Giant",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Reduced base health from 5625 to 4500"
+                },
+                {
+                  "text": "Slightly reduced pre-fire on Fire Giant’s magma slam"
+                },
+                {
+                  "text": "Fixed damage scaling on Fire Giant’s other two abilities (Ragnarok’s Fury and Fire Blast)",
+                  "items": [
+                    {
+                      "text": "Was previously doing low damage without factoring its base power into the equation"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Fire Giant Door",
+          "anchor": "Fire_Giant_Door",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed door giving gold/xp to players who died to the door"
+                },
+                {
+                  "text": "Fixed Fenrir dying when he brutalizes through the door while it’s closed"
+                },
+                {
+                  "text": "Fixed Fenrir killing players by picking them up with his ultimate and placing them within the door while it’s closed"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Gold Fury",
+          "anchor": "Gold_Fury",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Reduced base health from 2700 to 2250"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Ancient Fury",
+          "anchor": "Ancient_Fury",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Reduced base health from 3150 to 2700"
+                },
+                {
+                  "text": "Fixed ancient fury tooltip (showed 180 seconds, but in reality its 120 seconds)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Minions",
+          "anchor": "Minions",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Melee minion base gold increased from 21 to 23"
+                },
+                {
+                  "text": "Ranged minion base gold increased from 15 to 16"
+                },
+                {
+                  "text": "Minotaur minion base gold increased from 60 to 66"
+                },
+                {
+                  "text": "Fixed last hit indicator sometimes showing up on allied minions"
+                },
+                {
+                  "text": "Fixed minions not pathing properly through the jungle and back to lane"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Jungle Camps",
+          "anchor": "Jungle_Camps",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Alpha buff camp creature base gold increased from 38 to 57"
+                },
+                {
+                  "text": "Small buff camp creature base gold increased from 13 to 19.5"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Towers",
+          "anchor": "Towers",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Tier 1",
+                  "items": [
+                    {
+                      "text": "Decreased Team Gold Reward from 125 to 100"
+                    }
+                  ]
+                },
+                {
+                  "text": "Tier 2",
+                  "items": [
+                    {
+                      "text": "Decreased Team Gold Reward from 150 to 125"
+                    }
+                  ]
+                },
+                {
+                  "text": "Tower Bounties",
+                  "items": [
+                    {
+                      "text": "Decreased base Gold Reward from 75 to 50"
+                    },
+                    {
+                      "text": "Decreased final bounty Gold Reward from 125 to 100"
+                    }
+                  ]
+                },
+                {
+                  "text": "Fixed backdoor protection VFX not showing on towers"
+                },
+                {
+                  "text": "New temporary tower dissolve VFX will play when towers are destroyed"
+                },
+                {
+                  "text": "Fixed tower bounties sometimes flying into the walls"
+                },
+                {
+                  "text": "Fixed blue bounty not properly being removed from the tower health bar when the opposing team has claimed theirs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kill Rewards",
+          "anchor": "Kill_Rewards",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Reduced the penalty applied to the XP reward for killing a lower level God from 20% to 10%"
+                },
+                {
+                  "text": "Reduced the bonus applied to the XP reward for killing higher level God from 40% to 25%"
+                },
+                {
+                  "text": "Reduced the duration of eligibility for NPC kill assists from 10 seconds to 5 seconds"
+                },
+                {
+                  "text": "Bug Fixes",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where assists for God kills were awarding much lower XP and Gold than intended"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "JUNGLE PRACTICE",
+      "anchor": "JUNGLE_PRACTICE",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Added level 20 pad"
+            },
+            {
+              "text": "Fixed “ignore cooldowns” pad not applying ignore cooldown effect"
+            },
+            {
+              "text": "Added a Enter Practice queue in the Custom Game Browser"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "GODS",
+      "anchor": "GODS",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "NEW",
+          "anchor": "NEW",
+          "level": 3,
+          "content": []
+        },
+        {
+          "title": "General",
+          "anchor": "General_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "“In the first Alpha we saw a pretty clear trend toward bruiser tank strategies being overpowered. Gods in SMITE 2 get a lot of natural Strength, which tanks can use very effectively by dealing a lot of basic attack damage throughout their longer lifespans. For Alpha 2 we re-adjusted the base Strength of all gods, reducing it game wide. Many gods also received base damage changes to adjust for this, so the most clear effect will be basic attack damage. This should curb the damage output of gods who were foregoing any strength, and put more emphasis on specific build choices.”"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Base STR has been nerfed across all gods, in differing amounts."
+                },
+                {
+                  "text": "Many god abilities with STR scaling have had their base damage adjusted in conjunction with the base STR changes."
+                },
+                {
+                  "text": "The following lists of buffs and nerfs will list the unique buffs or nerfs applied on top of the “base STR changes”"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "NERFS",
+          "anchor": "NERFS",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "“Anhur was one of the absolute top performers of Alpha 1 in both win% and popularity. To adjust him, we are reducing the range of his new ultimate back to something more like it was in SMITE 1. This new Ultimate has felt very strong, and the extra range allowed for kill potential that was unlike anything else. The Protection shred on his passive is another thing we will keep an eye on, but for now it feels like a reasonably strong unique feature for this carry to have."
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Anhur",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Desert Fury",
+                      "items": [
+                        {
+                          "text": "Decreased Projectile Range from 16 meters to 12.8 meters"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "“Bruisers were strong, but Bellona felt a step above the rest even within that category. Her kit is great at shutting down other physical damage gods, but it was doing that too well and too often. Scourge is being nerfed as a way of giving her opponents a better window to take her down.”"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Bellona",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Scourge",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 18/17/16/15/14 seconds to 19/18/17/16/15 seconds"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "BUFFS",
+          "anchor": "BUFFS",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "“This god is dealing with a lot of external factors in the new game. Lifesteal was overhauled, and some new philosophies toward free stats required his passive to be adjusted. This god performed pretty well even with the odds stacked against him, and we think these changes in Alpha 2 can put him back into high priority. He is getting some direct damage and cooldown buffs, as well as another high Lifesteal item option!”"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Anubis",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Plague of Locusts",
+                      "items": [
+                        {
+                          "text": "Decreased Cooldown from 11/10.5/10/9.5/9 seconds to 10/9.5/9/8.5/8 seconds"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Grasping Hands",
+                      "items": [
+                        {
+                          "text": "Increased Damage Per Tick from 22/35/48/61/73 to 20/35/50/65/80"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "“The big boy didn’t quite pack the punch people are used to, especially with the Strength build. For Alpha 2 we want to make sure his opponents feel the flop, and this could extend Bacchus’ viability into more roles.”"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Bacchus",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Belly Flop",
+                      "items": [
+                        {
+                          "text": "Increased Damage Scaling from 65% Strength to 85% Strength"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "“Cernunnos has the potential to take over a match, so we were very measured in what he could excel at for this first test. It looks like he was a bit too restricted, so we are bringing back elements of power to his kit in small steps. Some higher damage scaling and a better slow during his Ultimate are where we wanted to start, and we will continue to adjust from there.”"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Cernunnos",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Bramble Blast",
+                      "items": [
+                        {
+                          "text": "Increased Initial Damage Scaling from 50% Strength + 80% Intelligence to 55% Strength + 80% Intelligence"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "The Wild Hunt",
+                      "items": [
+                        {
+                          "text": "Increased Slow on Polymorphed targets from 10% to 15%"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "“This change is a highly requested quality of life fix. As an early tech limitation prevented this design, we have now the updated tool to implement this ability as desired, and it will be a truly free ability. Chaac can keep battling even when hes at 0 mana.”"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Chaac",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Overflow",
+                      "items": [
+                        {
+                          "text": "Abilities fired off the passive now actually cost 0 mana instead of refunding the mana"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "“As one of the premier junglers for the start of SMITE 2, Loki is off to a good start. Stealth and tactics are necessary to playing Loki at the highest level, but we wanted to make sure he could still burst enemies down. Vanish is getting a noticeable increase in STR scaling to achieve this. Also, Cripple CC is now functional in SMITE 2 and returns to Loki’s Ultimate!”"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Loki",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Vanish",
+                      "items": [
+                        {
+                          "text": "Increased Damage Scaling Per Tick from 17.5% Strength to 20% Strength"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Assassinate",
+                      "items": [
+                        {
+                          "text": "The first hit of this ability now now Cripples targets for 0.75 seconds"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "“After we began work on SMITE 2’s, he received a SMITE 1 update to his kit and timings. Much of this was considered in the SMITE 2 version, but players were clear in their testing that the time to charge his stun ability just felt wrong after even a short time playing with the new timings, so we have updated this to match.”"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Odin",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Gungnir’s Might",
+                      "items": [
+                        {
+                          "text": "Decrease charge time per pulse from 0.93 seconds to 0.7 seconds to match SMITE 1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "“This god has had some exciting shifts in transferring over to the sequel, and is now equal amounts carry and mid, often leaning more towards carry. As we aim to keep gods flexible between roles, we wanted to show Zeus a little more love for his INT scaling, and make sure he can get the job done in multiple lanes.”"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Zeus",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Lightning Storm",
+                      "items": [
+                        {
+                          "text": "Increased Damage Scaling Per Tick from 50% Intelligence to 55% Intelligence"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "ITEMS",
+      "anchor": "ITEMS",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Stat Efficiency Buffs",
+          "anchor": "Stat_Efficiency_Buffs",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "“Alpha 2 brings a lot of item changes, first to stats. The new component based shop has this concept of item efficiency that helps keep items from running away with too many stats. With base STR going down for many gods in order to mitigate tank dps, we wanted to counteract that effect for carrys and junglers. To achieve that, you will now get more Attack Speed and Crit Strike per gold spent on items with those stats."
+            },
+            {
+              "type": "paragraph",
+              "text": "There was also some data and feedback about INT builds and gods being a bit underwhelming. To add some power and more build options to these roles, we have adjusted CDR to have better gold efficiency, but only when paired with INT items.”"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "These changes will cause items with the adjusted stat on them to have more stats for the same price, or become lower in price."
+                },
+                {
+                  "text": "Decreased cost per point of Attack Speed from 70 gold to 60 gold."
+                },
+                {
+                  "text": "Decreased cost per point of Critical Strike Chance from 90 gold to 80 gold."
+                },
+                {
+                  "text": "Added a new Stat Efficiency - INT Cooldown",
+                  "items": [
+                    {
+                      "text": "Items with INT and CDR will have decrease cost per point of CDR"
+                    },
+                    {
+                      "text": "Decreased cost per point of CDR from 75 to 55 in these cases"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Cost and Economy Changes",
+          "anchor": "Cost_and_Economy_Changes",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "“We also did some tweaking to gold costs, and thus stats (as they are connected through the efficiency system) to nearly every item in the game. We aren’t going to be listing out the individual changes to every item in these notes, but the high-level summary is in this section, and the items with significant changes or reworks in addition to the economy changes are listed. These changes looked to solve multiple problems and to improve the item shop as a whole. We wanted to smooth out spending your full gold at level 1. We wanted to make T2’s more powerful and cheaper, to make sure they felt meaningful. And we wanted to better separate T3 items into various cost tiers.”"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Decreased Conquest starting gold from 800 to 750"
+                },
+                {
+                  "text": "Decreased all 350g T1 items to 300g"
+                },
+                {
+                  "text": "Increased Stat Efficient of T2 items from 1.1x to 1.2x"
+                },
+                {
+                  "text": "Many T2 items have been made cheaper."
+                },
+                {
+                  "text": "Many T3 items have had their cost adjusted to better separate items into tiers, and to create more intentional luxury items."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "“We are quite excited to bring 5 new items to Alpha 2. While in the alpha stages and using temporary art, we can design and implement items quickly and experiment with them in a live setting, before evaluating if they should be kept long term.”"
+            }
+          ]
+        },
+        {
+          "title": "NEW",
+          "anchor": "NEW_2",
+          "level": 3,
+          "content": []
+        },
+        {
+          "title": "REWORKS",
+          "anchor": "REWORKS",
+          "level": 3,
+          "content": []
+        },
+        {
+          "title": "BUFFS",
+          "anchor": "BUFFS_2",
+          "level": 3,
+          "content": []
+        },
+        {
+          "title": "NERFS",
+          "anchor": "NERFS_2",
+          "level": 3,
+          "content": []
+        },
+        {
+          "title": "GENERAL",
+          "anchor": "GENERAL_3",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Virtually every other item in the game has had some small stat or cost adjustment based on the economy, T1, and T2 changes listed above."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "BUG FIXES",
+      "anchor": "BUG_FIXES",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "General",
+              "items": [
+                {
+                  "text": "Fixed issues with key bindings settings. Controllers should have fully rebindable button options"
+                },
+                {
+                  "text": "Tab and Scroll Wheel can now be re-binded in Settings"
+                },
+                {
+                  "text": "Falling below the conquest map or getting into a place where you are permanently stuck in a wall will now kill the god or send them back to the fountain depending on the state."
+                },
+                {
+                  "text": "Fixed an issue where holding the autorun button was causing the God to walk slowly"
+                },
+                {
+                  "text": "Fixed an issue where upon reconnect Gods would sometimes have reduced movement speed"
+                }
+              ]
+            },
+            {
+              "text": "VGS",
+              "items": [
+                {
+                  "text": "Console players can now ping the map in world targeter"
+                },
+                {
+                  "text": "Fixed issues where using movement keys while in the VGS menu was updating God movement when it shouldn't"
+                },
+                {
+                  "text": "Fixed an issue where using VGS would also trigger keybinds"
+                },
+                {
+                  "text": "Fixed issues with missing lines and mixed up lines"
+                }
+              ]
+            },
+            {
+              "text": "Gods",
+              "items": [
+                {
+                  "text": "Athena",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where Athena’s ult damage area would disappear if her target died."
+                    },
+                    {
+                      "text": "Fixed an issue with her  Preemptive Strike ability not dealing damage sometimes at close range"
+                    }
+                  ]
+                },
+                {
+                  "text": "Fenrir",
+                  "items": [
+                    {
+                      "text": "Fixes issues where his Brutalize would follow targets through teleports and recalls"
+                    },
+                    {
+                      "text": "Fixed issues where his Brutalize would teleport behind Jungle Camps oddly"
+                    }
+                  ]
+                },
+                {
+                  "text": "Kukulkan",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where his Dash form of Slipstream had the incorrect cooldown"
+                    }
+                  ]
+                },
+                {
+                  "text": "Neith",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where her Ultimate projectile would get stuck on map walls"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Items",
+              "items": [
+                {
+                  "text": "Fixed an issue where Divine Ruin, Cosmic Horror, and Ruinous Ankh weren't giving the right type of mana, therefore not working with Kukulkan's passive."
+                },
+                {
+                  "text": "Fixed an issue where Cosmic Horror’s passive CDR could stack infinitely when bought/sold repeatedly."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Source"
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

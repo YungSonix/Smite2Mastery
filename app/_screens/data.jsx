@@ -30,20 +30,29 @@ import {
 } from '../localIcons';
 import { getGodSpecializationEntry } from '../../lib/godSpecializations';
 import { AlignedBulletLines, tightenMultilineGameText } from '../../lib/alignedBulletText';
+import ItemPassiveDescription from '../../lib/ItemPassiveDescription';
 import SkinShowcasePanel from '../../lib/SkinShowcasePanel';
 import { genericTooltipStylesForApp, counterplayTooltipStylesForData } from '../../lib/uiTheme';
 import KitAbilityTooltipModal from '../../lib/KitAbilityTooltipModal';
 import {
   KIT_ABILITY_TOOLTIP_BODY_MAX,
-  buildKitAbilityTooltipBody,
-  buildKitAspectTooltipBody,
 } from '../../lib/kitAbilityTooltip';
+import { getAbilityCompactSubtitle } from '../../lib/stringTableLookup';
 import {
   getDefaultSkinKey,
   getOrderedVisibleSkinKeys,
   getSkinCardArtPath,
 } from '../../lib/skinShowcaseHelpers';
 import { REMOTE_BASE_URLS } from '../../config';
+import {
+  getBaseStatsForGodAtLevel,
+  consolidateRegenInStats,
+  formatBuildStatValue,
+  getItemGoldCostParts,
+  getStepGoldCostParts,
+  getBuildStatColor,
+  BUILD_STAT_DISPLAY_NAMES,
+} from '../../lib/buildStats';
 
 // Import supabase lazily to avoid module load errors on mobile
 let supabase = null;
@@ -120,7 +129,9 @@ const IS_WEB = Platform.OS === 'web';
 
 // Import reusable screen dimensions hook
 import { useScreenDimensions } from '../../hooks/useScreenDimensions';
+import { WEB_CONTENT_MAX_WIDTH } from '../../lib/webLayout';
 import { flattenBuildsGods, getGodPantheon } from '../../lib/normalizeBuildsGod';
+import { loadBuildsData, loadBuildsGodsData, loadBuildsItemsData, getBuildsDataSync } from '../../lib/loadBuildsData';
 import { playVOX, resetVoxForNavigation } from '../../lib/prophecyAudio';
 import {
   GAME_MODE_ICONS as gameModeIcons,
@@ -131,7 +142,11 @@ import {
   CONSUMABLE_ICONS as consumableIcons,
   VULCAN_MOD_ICONS as vulcanModItemIcons,
   STAT_ICONS as statIcons,
+  getStatIcon,
+  itemHasActiveEffect,
+  GOLD_ICON,
 } from '../../lib/imageGrabber';
+import ItemNameMeta from '../../lib/ItemNameMeta';
 
 // Buff colors
 const buffColors = {
@@ -941,32 +956,71 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
     }
   }, []);
 
-  // Lazy load builds.json after transitions settle so Database opens without jank.
+  // Lazy-load builds by Database tab (gods chunk is large; items chunk is small).
   useEffect(() => {
-    if (builds !== null) {
-      return;
+    if (selectedTab === 'gamemodes' || selectedTab === 'mechanics') {
+      setDataLoading(false);
+      return undefined;
     }
 
     let isMounted = true;
-    const task = InteractionManager.runAfterInteractions(() => {
-      try {
-        const data = require('../../lib/buildsData');
-        if (isMounted) {
-          setBuilds(data);
-          setDataLoading(false);
+    const wantGods = selectedTab === 'gods' || !!initialSelectedGod;
+    const wantItems = selectedTab === 'items';
+    const sync = getBuildsDataSync();
+
+    const mergeBuilds = (part) => {
+      setBuilds((prev) => ({
+        gods: part?.gods ?? prev?.gods ?? null,
+        tierlist: part?.tierlist ?? prev?.tierlist ?? [],
+        items: part?.items ?? prev?.items ?? null,
+      }));
+    };
+
+    if (sync) {
+      mergeBuilds(sync);
+      const ready =
+        (!wantGods || sync.gods) &&
+        (!wantItems || sync.items);
+      if (ready) {
+        setDataLoading(false);
+        if (selectedTab === 'gods' && !sync.items) {
+          loadBuildsItemsData().then((part) => {
+            if (isMounted) mergeBuilds(part);
+          }).catch(() => {});
         }
-      } catch (err) {
-        if (isMounted) {
-          setDataLoading(false);
-        }
+        return undefined;
       }
+    }
+
+    const task = InteractionManager.runAfterInteractions(() => {
+      const loaders = [];
+      if (wantGods && !sync?.gods) loaders.push(loadBuildsGodsData());
+      if (wantItems && !sync?.items) loaders.push(loadBuildsItemsData());
+      if (!loaders.length) {
+        if (isMounted) setDataLoading(false);
+        return;
+      }
+      Promise.all(loaders)
+        .then((parts) => {
+          if (!isMounted) return;
+          parts.forEach(mergeBuilds);
+          setDataLoading(false);
+          if (selectedTab === 'gods') {
+            loadBuildsItemsData().then((part) => {
+              if (isMounted) mergeBuilds(part);
+            }).catch(() => {});
+          }
+        })
+        .catch(() => {
+          if (isMounted) setDataLoading(false);
+        });
     });
 
     return () => {
       isMounted = false;
       task?.cancel?.();
     };
-  }, []); // Empty deps - only run once on mount
+  }, [selectedTab, initialSelectedGod]);
   
   // If initialSelectedGod changes, update selectedGod
   useEffect(() => {
@@ -1629,38 +1683,20 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
 
   // Calculate base stats at current level (must be at top level, not conditional)
   const baseStatsAtLevel = useMemo(() => {
-    const stats = {};
-    
-    if (selectedGod && selectedGod.baseStats) {
-      Object.keys(selectedGod.baseStats).forEach((statKey) => {
-        const statData = selectedGod.baseStats[statKey];
-        if (statData && typeof statData === 'object') {
-          const level1 = statData['1'] || 0;
-          const level20 = statData['20'] || 0;
-          // Linear interpolation between level 1 and 20
-          const levelProgress = (godLevel - 1) / 19; // 0 at level 1, 1 at level 20
-          const statValue = level1 + (level20 - level1) * levelProgress;
-          if (statKey === 'BaseAttackSpeed' || statKey === 'AttackSpeedPercent') {
-            stats[statKey] = statValue;
-          } else {
-            stats[statKey] = Math.round(statValue);
-          }
-        }
-      });
+    if (!selectedGod) return {};
 
-      // Combine base attack speed and total attack speed percent into a single effective Attack Speed stat.
-      const baseAS = stats.BaseAttackSpeed || 0;
-      const bonusASPercent = stats.AttackSpeedPercent || 0;
-      if (baseAS) {
-        const effectiveAS = baseAS * (1 + bonusASPercent / 100);
-        stats.AttackSpeedEffective = Number(effectiveAS.toFixed(2));
-      }
+    const stats = { ...getBaseStatsForGodAtLevel(selectedGod, godLevel) };
 
-      // We don't need to show raw BaseAttackSpeed or AttackSpeedPercent in the UI; we only surface effective Attack Speed.
-      delete stats.BaseAttackSpeed;
-      delete stats.AttackSpeedPercent;
+    const baseAS = stats.BaseAttackSpeed || 0;
+    const bonusASPercent = stats.AttackSpeedPercent || 0;
+    if (baseAS) {
+      stats.AttackSpeedEffective = Number((baseAS * (1 + bonusASPercent / 100)).toFixed(2));
     }
-    
+
+    delete stats.BaseAttackSpeed;
+    delete stats.AttackSpeedPercent;
+    consolidateRegenInStats(stats);
+
     return stats;
   }, [selectedGod, godLevel]);
 
@@ -1910,7 +1946,8 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         <Text style={styles.pantheonOptionText}>All Stats</Text>
                       </TouchableOpacity>
                         {availableStats.map((stat) => {
-                          const statIcon = statIcons[stat];
+                          const displayName = BUILD_STAT_DISPLAY_NAMES[stat] || stat;
+                          const statIcon = getStatIcon(stat, displayName);
                           return (
                         <TouchableOpacity
                           key={stat}
@@ -1920,15 +1957,15 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                             setStatDropdownVisible(false);
                           }}
                         >
-                              {statIcon && (
+                              {statIcon ? (
                                 <Image 
                                   source={statIcon} 
                                   style={styles.statOptionIcon}
                                   contentFit="contain"
-                                  accessibilityLabel={`${stat} stat icon`}
+                                  accessibilityLabel={`${displayName} stat icon`}
                                 />
-                              )}
-                              <Text style={[styles.pantheonOptionText, { marginLeft: statIcon ? 10 : 0 }]}>{stat}</Text>
+                              ) : null}
+                              <Text style={[styles.pantheonOptionText, { marginLeft: statIcon ? 10 : 0 }]}>{displayName}</Text>
                             </TouchableOpacity>
                           );
                         })}
@@ -2194,14 +2231,11 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                   )}
                 </View>
                 <View style={styles.itemPageTitleWrapper}>
-                  <Text style={[styles.itemPageTitle, { color: '#1e90ff' }]}>
-                    {selectedItem.name || selectedItem.internalName || 'Unknown Item'}
-                  </Text>
-                  {selectedItem.tier && (
-                    <Text style={[styles.itemPageSubtext, { color: '#f8fafc' }]}>
-                      Tier {selectedItem.tier} Item
-                    </Text>
-                  )}
+                  <ItemNameMeta
+                    item={selectedItem}
+                    titleStyle={styles.itemPageTitle}
+                    accentColor="#1e90ff"
+                  />
                 </View>
               </View>
             </View>
@@ -2501,59 +2535,121 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
               )}
 
               {/* Item Info Sections */}
-              {selectedItem.totalCost && (
+              {selectedItem.totalCost != null && selectedItem.totalCost !== '' && (() => {
+                const goldParts = getItemGoldCostParts(selectedItem);
+                return (
                 <View style={styles.itemInfoSection}>
                   <Text style={styles.itemInfoLabel}>Cost:</Text>
-                  <Text style={[styles.itemInfoValue, { color: '#fbbf24', fontWeight: '700' }]}>
-                    {selectedItem.totalCost} Gold
-                  </Text>
+                  <View style={styles.itemCostRow}>
+                    {!goldParts.isFree ? (
+                      <Image
+                        source={GOLD_ICON}
+                        style={styles.itemCostGoldIcon}
+                        contentFit="contain"
+                        accessibilityLabel="Gold"
+                      />
+                    ) : null}
+                    <Text style={[styles.itemInfoValue, { color: '#fbbf24', fontWeight: '700' }]}>
+                      {goldParts.isFree ? goldParts.label : `${goldParts.label} Gold`}
+                    </Text>
+                  </View>
                 </View>
-              )}
-              {selectedItem.stepCost && !selectedItem.totalCost && (
+                );
+              })()}
+              {selectedItem.stepCost && !selectedItem.totalCost && (() => {
+                const goldParts = getStepGoldCostParts(selectedItem.stepCost);
+                return (
                 <View style={styles.itemInfoSection}>
                   <Text style={styles.itemInfoLabel}>Cost:</Text>
-                  <Text style={[styles.itemInfoValue, { color: '#fbbf24', fontWeight: '700' }]}>
-                    {selectedItem.stepCost} Gold
-                  </Text>
+                  <View style={styles.itemCostRow}>
+                    {!goldParts.isFree ? (
+                      <Image
+                        source={GOLD_ICON}
+                        style={styles.itemCostGoldIcon}
+                        contentFit="contain"
+                        accessibilityLabel="Gold"
+                      />
+                    ) : null}
+                    <Text style={[styles.itemInfoValue, { color: '#fbbf24', fontWeight: '700' }]}>
+                      {goldParts.isFree ? goldParts.label : `${goldParts.label} Gold`}
+                    </Text>
+                  </View>
                 </View>
-              )}
+                );
+              })()}
               {selectedItem.active && (
                 <View style={styles.itemInfoSection}>
-                  <Text style={styles.itemInfoLabel}>Type:</Text>
+                  <View style={styles.itemStatLabelRow}>
+                    <Image
+                      source={statIcons.Active}
+                      style={styles.itemStatIcon}
+                      contentFit="contain"
+                      accessibilityLabel="Active"
+                    />
+                    <Text style={styles.itemInfoLabel}>Type:</Text>
+                  </View>
                   <Text style={styles.itemInfoValue}>Active/Consumable</Text>
                 </View>
               )}
               {selectedItem.stats && (
                 <View style={styles.itemInfoSection}>
                   <Text style={styles.itemInfoSectionTitle}>Stats</Text>
-                  {Object.keys(selectedItem.stats).map((statKey) => {
+                  {(() => {
+                    const statKeys = Object.keys(selectedItem.stats).filter((statKey) => {
+                      if (statKey === 'N/A' || statKey === 'NA') return false;
+                      const v = selectedItem.stats[statKey];
+                      return v !== 0 && v !== '0' && v !== 'N/A';
+                    });
+                    return statKeys.map((statKey, index) => {
                     const statValue = selectedItem.stats[statKey];
-                    let statColor = '#94a3b8';
-                    if (["MaxHealth", "Health", "HP5", "Health Regen", "HealthPerSecond"].includes(statKey)) statColor = "#22c55e";
-                    else if (["AttackSpeed", "Critical Chance", "CriticalChance", "Critical Damage", "Attack Speed","Basic Attack Damage", "Criticial Chance", "Critical Damage", "Basic Damage"].includes(statKey)) statColor = "#f97316";
-                    else if (["PhysicalProtection", "Penetration", "Physical Protection"].includes(statKey)) statColor = "#ef4444";
-                    else if (statKey === "Intelligence") statColor = "#a855f7";
-                    else if (statKey === "MovementSpeed") statColor = "#0ea5e9";
-                    else if (statKey === "%statsFromItems") statColor = "#f97316";
-                    else if (statKey === "Strength") statColor = "#facc15";
-                    else if (statKey === "Cooldown Rate") statColor = "#0ea5e9";
-                    else if (statKey === "MagicalProtection") statColor = "#a855f7";
-                    else if (statKey === "Lifesteal") statColor = "#84cc16";
-                    else if (["MaxMana", "MP5", "Mana Regen", "Mana", "Mana Regeneration", "Magical Protection", "ManaPerSecond"].includes(statKey)) statColor = "#3b82f6";
+                    const displayName = BUILD_STAT_DISPLAY_NAMES[statKey] || statKey;
+                    const statColor = getBuildStatColor(statKey, displayName);
+                    const statIcon = getStatIcon(statKey, displayName);
+                    const isLast = index === statKeys.length - 1;
                     
                     return (
-                      <View key={statKey} style={styles.itemStatRow}>
-                        <Text style={[styles.itemStatLabel, { color: statColor }]}>{statKey}:</Text>
+                      <View key={statKey} style={[styles.itemStatRow, isLast && styles.itemStatRowLast]}>
+                        <View style={styles.itemStatLabelRow}>
+                          {statIcon ? (
+                            <Image
+                              source={statIcon}
+                              style={styles.itemStatIcon}
+                              contentFit="contain"
+                              accessibilityLabel={`${displayName} stat icon`}
+                            />
+                          ) : null}
+                          <Text style={[styles.itemStatLabel, { color: statColor }]}>{displayName}:</Text>
+                        </View>
                         <Text style={styles.itemStatValue}>{statValue}</Text>
                       </View>
                     );
-                  })}
+                  });
+                  })()}
                 </View>
               )}
               {selectedItem.passive && (
                 <View style={styles.itemInfoSection}>
-                  <Text style={styles.itemInfoSectionTitle}>Passive</Text>
-                  <Text style={styles.itemInfoText}>{selectedItem.passive}</Text>
+                  <View style={styles.itemStatLabelRow}>
+                    {itemHasActiveEffect(selectedItem) ? (
+                      <Image
+                        source={statIcons.Active}
+                        style={styles.itemStatIcon}
+                        contentFit="contain"
+                        accessibilityLabel="Active"
+                      />
+                    ) : (
+                      <Image
+                        source={statIcons.Passive}
+                        style={styles.itemStatIcon}
+                        contentFit="contain"
+                        accessibilityLabel="Passive"
+                      />
+                    )}
+                    <Text style={[styles.itemInfoSectionTitle, styles.itemInfoSectionTitleInline]}>
+                      {itemHasActiveEffect(selectedItem) ? 'Active' : 'Passive'}
+                    </Text>
+                  </View>
+                  <ItemPassiveDescription text={selectedItem.passive} textStyle={styles.itemInfoText} />
                 </View>
               )}
             </ScrollView>
@@ -3306,17 +3402,18 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                           }
 
                           const rawValue = baseStatsAtLevel[statKey];
-                          let statValue = rawValue;
+                          let statValue = formatBuildStatValue(rawValue, statKey);
 
-                          // Format stat name for display
-                          let displayName;
-                          if (statKey === 'AttackSpeedEffective') {
-                            displayName = 'Attack Speed';
-                          } else {
-                            displayName = statKey
-                              .replace(/([A-Z])/g, ' $1')
-                              .replace(/^./, (str) => str.toUpperCase())
-                              .trim();
+                          let displayName = BUILD_STAT_DISPLAY_NAMES[statKey];
+                          if (!displayName) {
+                            if (statKey === 'AttackSpeedEffective') {
+                              displayName = 'Attack Speed';
+                            } else {
+                              displayName = statKey
+                                .replace(/([A-Z])/g, ' $1')
+                                .replace(/^./, (str) => str.toUpperCase())
+                                .trim();
+                            }
                           }
 
                           // Get stat color (aligned with custombuild)
@@ -3356,7 +3453,12 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                               typeof statValue === 'number' && Number.isFinite(statValue)
                                 ? statValue.toFixed(2)
                                 : statValue;
-                          } else if (typeof statValue === 'number' && Number.isFinite(statValue)) {
+                          } else if (
+                            typeof statValue === 'number' &&
+                            Number.isFinite(statValue) &&
+                            statKey !== 'ManaPerSecond' &&
+                            statKey !== 'HealthPerSecond'
+                          ) {
                             displayValue = Math.round(statValue);
                           }
 
@@ -3415,12 +3517,16 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                   pressed && styles.abilityIconButtonPressed,
                                 ]}
                                 onPress={() =>
-                                  toggleKitAbilityTooltip(
+                                    toggleKitAbilityTooltip(
                                     'kit-passive',
                                     {
                                       title: 'Passive',
                                       icon: selectedGod.passive?.icon || null,
-                                      body: buildKitPassiveTooltipBody(selectedGod.passive),
+                                      ability: {
+                                        ...selectedGod.passive,
+                                        abilitySlot: 'PSV',
+                                      },
+                                      subtitle: getAbilityCompactSubtitle(selectedGod, selectedGod.passive),
                                     }
                                   )
                                 }
@@ -3476,7 +3582,8 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                       toggleKitAbilityTooltip(kitSlotId, {
                                         title: abilityName,
                                         icon: ability.icon || null,
-                                        body: buildKitAbilityTooltipBody(ability),
+                                        ability: { ...ability, abilitySlot: key },
+                                        subtitle: getAbilityCompactSubtitle(selectedGod, ability),
                                         valueKeys:
                                           ability.valueKeys && typeof ability.valueKeys === 'object'
                                             ? ability.valueKeys
@@ -3529,7 +3636,9 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                                     {
                                       title: 'Aspect',
                                       icon: selectedGod.aspect?.icon || null,
-                                      body: buildKitAspectTooltipBody(selectedGod.aspect),
+                                      ability: selectedGod.aspect,
+                                      isAspect: true,
+                                      subtitle: getAbilityCompactSubtitle(selectedGod, selectedGod.aspect),
                                     }
                                   )
                                 }
@@ -3644,7 +3753,11 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
             onClose={clearKitAbilityTooltip}
             title={kitAbilityTooltip?.title ?? ''}
             icon={kitAbilityTooltip?.icon}
+            ability={kitAbilityTooltip?.ability}
+            god={selectedGod}
+            isAspect={kitAbilityTooltip?.isAspect}
             body={kitAbilityTooltip?.body ?? ''}
+            subtitle={kitAbilityTooltip?.subtitle ?? ''}
             valueKeys={kitAbilityTooltip?.valueKeys}
             borderColor={kitAbilityBorderColor}
             levelIndex={kitAbilityTooltip?.levelIndex ?? 0}
@@ -5831,7 +5944,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#071024',
     paddingTop: 20,
     ...(IS_WEB && {
-      maxWidth: 1200,
+      maxWidth: WEB_CONTENT_MAX_WIDTH,
       alignSelf: 'center',
       width: '100%',
       paddingHorizontal: 20,
@@ -7033,7 +7146,7 @@ const styles = StyleSheet.create({
   },
   itemPageTitleContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     width: '100%',
   },
   itemPageTitleWrapper: {
@@ -7044,7 +7157,7 @@ const styles = StyleSheet.create({
     color: '#e6eef8',
     fontSize: 26,
     fontWeight: '800',
-    marginBottom: 8,
+    marginBottom: 0,
     letterSpacing: 0.5,
   },
   itemPageSubtext: {
@@ -7268,23 +7381,55 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  itemCostRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  itemCostGoldIcon: {
+    width: 20,
+    height: 20,
+    flexShrink: 0,
+  },
   itemInfoSectionTitle: {
     color: '#7dd3fc',
     fontSize: 18,
     fontWeight: '700',
     marginBottom: 12,
   },
+  itemInfoSectionTitleInline: {
+    marginBottom: 0,
+  },
   itemStatRow: {
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: 8,
     paddingBottom: 8,
     borderBottomWidth: 1,
     borderBottomColor: '#1e3a5f',
   },
+  itemStatRowLast: {
+    marginBottom: 0,
+    paddingBottom: 0,
+    borderBottomWidth: 0,
+  },
+  itemStatLabelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    flex: 1,
+    minWidth: 0,
+  },
+  itemStatIcon: {
+    width: 18,
+    height: 18,
+    flexShrink: 0,
+  },
   itemStatLabel: {
     fontSize: 14,
     fontWeight: '600',
-    minWidth: 140,
+    flexShrink: 1,
   },
   itemStatValue: {
     color: '#e6eef8',

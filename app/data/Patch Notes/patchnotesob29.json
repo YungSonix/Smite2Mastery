@@ -1,0 +1,1751 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_29",
+    "title": "SMITE 2 Open Beta 29",
+    "infoboxTitle": "OB29 - SMITE 2 Open Beta 29",
+    "releaseDate": "February 24, 2026",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_28",
+      "next": "SMITE_2_Open_Beta_30"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 29,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Classic God",
+      "anchor": "New_Classic_God",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Morgan Le Fay",
+          "anchor": "Morgan_Le_Fay",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Ranged Basic Attacks"
+                    },
+                    {
+                      "text": "Damage Type: Magical"
+                    },
+                    {
+                      "text": "Scaling Type: Intelligence Scaling"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Passive: Empowered Blade",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Damaging enemy gods with abilities Marks them and activates a shared Symbol on your sword, providing Mana Regen. After gaining all 5 Symbols you become empowered temporarily, causing your Cooldowns to be decreased and providing Intelligence and Mana Regen. Additionally you gain 1 stack of permanent Intelligence and bonus healing towards Consuming Power."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 1: Sigil Mastery",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Summon a crashing sword, imbued by your chosen sigil, dealing Magical Damage before exploding dealing Magical Damage."
+                    },
+                    {
+                      "text": "Mark of Mind, Fear enemy gods away from the center of the sigil"
+                    },
+                    {
+                      "text": "Mark of Body, create a Slowing field"
+                    },
+                    {
+                      "text": "Mark of Soul, spawn a clone at the enemy god location",
+                      "items": [
+                        {
+                          "text": "During the targeting of this ability, you can choose which sigil to imbue."
+                        },
+                        {
+                          "text": "Clones last 4s, inherit 30% of your Health and 75% of your Attack damage."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 2: Dragonflight",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Summon a dragon that deals Magical Damage and Knocks Up enemies. The dragon then flies forward, dealing Magical Damage and Knocking Back enemies hit."
+                    },
+                    {
+                      "text": "Applies Mark of Spirit to enemy gods hit"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 3: Shroud of Wildfire",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Send out Wildfire that explodes at max range or when it hits an enemy god, dealing Magical Damage in a small area and afflicts enemies with a Debuff."
+                    },
+                    {
+                      "text": "Enemies debuffed take Magical Damage."
+                    },
+                    {
+                      "text": "Enemy gods debuffed explode for Magical Damage when hit by your Attacks."
+                    },
+                    {
+                      "text": "If an enemy uses a Movement ability while debuffed, they take Magical Damage and the debuff is removed."
+                    },
+                    {
+                      "text": "Using this ability increases your Movement Speed for a short duration"
+                    },
+                    {
+                      "text": "Your Attacks extend the debuff on enemies"
+                    },
+                    {
+                      "text": "Applies Mark of Matter to enemy gods hit",
+                      "items": [
+                        {
+                          "text": "Burn does damage every 1s for 4s and can be extended 1s per Attack, up to an additional 4s."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ultimate Ability: Consuming Power",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Consume Marks from enemy gods dealing Magical Damage and empowering you. For a short duration, fire out 3 strikes of dark energy dealing Magical Damage and Healing you."
+                    },
+                    {
+                      "text": "The center of the final strike deals bonus damage based on the enemy's Max Health."
+                    },
+                    {
+                      "text": "You are CC Immune during this ability.",
+                      "items": [
+                        {
+                          "text": "Unique Marks consumed increase the width of the energy projectiles."
+                        },
+                        {
+                          "text": "Stacks of Empowered Blade provide bonus Healing."
+                        },
+                        {
+                          "text": "You ignore all movement penalties for the duration."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Aspect releasing: Feb 27",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Aspect of the Cursed Crown",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Your Basic Attacks are now melee. You gain Wrath over time and when you deal damage. Consuming Power has two levels that can be used at 40 and 80 Wrath. Sigil Mastery fires all 3 Sigils simultaneously. Shroud of Wildfire Attack explosions deal a percentage of your Max Health as damage."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Wandering Market Travelers",
+      "anchor": "New_Wandering_Market_Travelers",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Midnight Glamour  - Neith",
+          "anchor": "Midnight_Glamour_-_Neith",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Midnight Glamour - Poison Petal Prism"
+                    },
+                    {
+                      "text": "Midnight Glamour - Enchanted Prism"
+                    },
+                    {
+                      "text": "Midnight Glamour - Widow’s Lace Prism"
+                    },
+                    {
+                      "text": "Wyrm Seal - Part of the Archfiend Event"
+                    },
+                    {
+                      "text": "G-L-A-M-O-R-O-U-S - Badge"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Jandroid - Janus",
+          "anchor": "Jandroid_-_Janus",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Jandroid Punk Bot - Prism"
+                    },
+                    {
+                      "text": "Jandroid Overgrown - Prism"
+                    },
+                    {
+                      "text": "Jandroid P.A.L Prism"
+                    },
+                    {
+                      "text": "Wyrm Seal - Part of the Archfiend Event"
+                    },
+                    {
+                      "text": "Portal Technology - Jump Stamp"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Reward Traveler",
+      "anchor": "New_Reward_Traveler",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "As part of the Archfiend Saga a new Traveler arrives, requires collecting 6 Wyrm Seals to unlock it."
+        }
+      ],
+      "subsections": [
+        {
+          "title": "Grovebound - Mordred",
+          "anchor": "Grovebound_-_Mordred",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing the page for spending 6 Wyrm Seals"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Grovebound - Lantana Prism"
+                    },
+                    {
+                      "text": "Grovebound - Nightshade Prism"
+                    },
+                    {
+                      "text": "Grovebound -  Oleander Prism"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Divine Legacy Skins",
+      "anchor": "Divine_Legacy_Skins",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "We are elevating the Divine Legacy skins out of the 'Classic' category to better reflect their prestige. These skins aren't just direct ports; they are badges of honor for SMITE 1 veterans. By reclassifying them, we ensure that their in-game value and rarity are properly recognized as distinct from standard Classic content."
+            },
+            {
+              "text": "However, we also believe that content shouldn't be permanently locked behind Limited walls. We’ve heard from many new SMITE 2 players who want to share in this legacy. To answer that call, we will be making these skins available for purchase in the coming weeks. They will be offered at a premium price point—one that allows new players to access these skins while respecting the rarity and commitment of the veterans who earned them originally."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Quality of Life",
+      "anchor": "Quality_of_Life",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Multiqueue",
+          "anchor": "Multiqueue",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Multiqueue will now allow players to select which modes they specifically want to queue for. Modes that are allowed for Multiqueue are:",
+                  "items": [
+                    {
+                      "text": "Conquest"
+                    },
+                    {
+                      "text": "Arena"
+                    },
+                    {
+                      "text": "Joust"
+                    },
+                    {
+                      "text": "Assault"
+                    }
+                  ]
+                },
+                {
+                  "text": "To improve matchmaking quality, we are optimizing the queue list for specific regions. This change consolidates the player base into active queues to minimize wait times and ensure matches start reliably.",
+                  "items": [
+                    {
+                      "text": "NA/EU : All queues are visible. No queue is marked as recommended."
+                    },
+                    {
+                      "text": "Latam S: Removed Assault. Multiqueue is marked as recommended."
+                    },
+                    {
+                      "text": "OCE: Removed Assault/Arena. Multiqueue is marked as recommended."
+                    },
+                    {
+                      "text": "Japan/Latam N: Removed all queues except Multiqueue. Multiqueue is marked as recommended."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Updated God Screen",
+          "anchor": "Updated_God_Screen",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Reflects Physical or Magical Damage"
+                },
+                {
+                  "text": "New option to use small icons instead of portraits"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Support & Report a Bug",
+          "anchor": "Support_&amp;_Report_a_Bug",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Added buttons to the out-of-game Escape Menu to link you to Support and to Report a Bug"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "We noticed some players saying they were having problems finding out how to get support and report bugs, so we wanted to make it easier to do so"
+                },
+                {
+                  "text": "Also, we are trying to make our support site easier to use. We’re not all the way there yet, but we wanted to say we are aware and working on it."
+                },
+                {
+                  "text": "You need to click the chat icon in the bottom right of the screen to start a conversation with an agent. We are trying to have that start opened so it’s easier to notice, but in the short term we added the bright yellow notification at the top of the screen."
+                },
+                {
+                  "text": "The agent will try to troubleshoot your problems. Please give it a chance, because it really can help address the vast majority of tickets."
+                },
+                {
+                  "text": "If you reach a deadend, you can open a ticket via the chat."
+                },
+                {
+                  "text": "Keep in mind: We will contact you about your ticket VIA EMAIL, usually within 48 hours. A lot of people are angry that they “never get a reply” but they don’t check their emails."
+                },
+                {
+                  "text": "Our support process isn’t perfect, but hopefully these steps are in the right direction to make the process easier to understand"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Gameplay",
+      "anchor": "Gameplay",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "General",
+          "anchor": "General",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue where being Banished, Feared, Mesmerized, Polymorphed, Displaced, or Taunted wouldn’t cause your ability icons to X out and make the “Can’t Activate” sound."
+                },
+                {
+                  "text": "Fixed an issue that could sometimes cause Crowd Control Immunity glow to stick around."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Role Specific Pass",
+          "anchor": "Role_Specific_Pass",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Role Specific Buffs",
+                  "items": [
+                    {
+                      "text": "Support - On Minion or Jungle Monster Assist while near an ally god, +7 Gold, +4 Heal, +3 Mana Restore."
+                    },
+                    {
+                      "text": "Jungle - +35% Damage to Jungle Monsters. On Jungle Monster Kill: Heal +7.5% of the monsters health and restore +30 Mana."
+                    },
+                    {
+                      "text": "Solo - +2 HPS."
+                    },
+                    {
+                      "text": "Mid - +1.5 MPS."
+                    },
+                    {
+                      "text": "Carry - +2 Gold on Minion Last Hit"
+                    },
+                    {
+                      "text": "These only apply to Conquest."
+                    }
+                  ]
+                },
+                {
+                  "text": "Role Starter Item Updates",
+                  "items": [
+                    {
+                      "text": "Selflessness",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Max Health - 60 -> 100"
+                        },
+                        {
+                          "text": "No longer grants Gold, Health, or Mana on Assist."
+                        },
+                        {
+                          "text": "Now requires level 20 to Upgrade."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Heroism",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Physical Protection: 30 -> 40"
+                        },
+                        {
+                          "text": "Increased Magical Protection: 30 -> 40"
+                        },
+                        {
+                          "text": "Increased Health: 200 -250"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "War Flag",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Decreased Max Health: 60 -> 0"
+                        },
+                        {
+                          "text": "Increased Attack Speed: 0 -> 15%"
+                        },
+                        {
+                          "text": "No longer grants Gold, Health, or Mana on Assist."
+                        },
+                        {
+                          "text": "Now grants Movement Speed and Attack Speed on Kill or Assist."
+                        },
+                        {
+                          "text": "Now requires level 20 to Upgrade."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "War Banner",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Decreased Max Health: 200 -> 0"
+                        },
+                        {
+                          "text": "Increased Attack Speed: 0% -> 30%"
+                        },
+                        {
+                          "text": "Now grants Movement Speed and Attack Speed, Heal, and Mana Restore on Kill or Assist."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Bumba’s Golden Dagger",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "No longer provides increased Damage to Jungle Monsters: 50% -> 0"
+                        },
+                        {
+                          "text": "No longer reduces damage done to Minions: 40% -> 0%"
+                        },
+                        {
+                          "text": "Now triggers the Bonus Damage on enemy hit, rather than just Jungle Monsters."
+                        },
+                        {
+                          "text": "No longer provides a Heal or Mana Restore on Jungle Monster slain."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Bumba’s Spear",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Attack Speed: 25% -> 30%"
+                        },
+                        {
+                          "text": "Increased Bonus Damage Percentage: 20 -> 25%"
+                        },
+                        {
+                          "text": "No longer provides increased Damage to Jungle Monsters: 50% -> 0"
+                        },
+                        {
+                          "text": "No longer reduces damage done to Minions: 40% -> 0%"
+                        },
+                        {
+                          "text": "No longer provides Strength or Intelligence on Jungle Monster slain: 10% -> 0%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Bumba’s Cudgel",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "No longer provides increased Damage to Jungle Monsters: 50% -> 0"
+                        },
+                        {
+                          "text": "No longer reduces damage done to Minions: 40% -> 0%"
+                        },
+                        {
+                          "text": "Now triggers the Bonus Damage on enemy hit, rather than just Jungle Monsters."
+                        },
+                        {
+                          "text": "No longer provides a Heal or Mana Restore on Jungle Monster slain."
+                        },
+                        {
+                          "text": "Increased the Bonus Damage Per Level on Enemies: 0 -> 1"
+                        },
+                        {
+                          "text": "Jungle Monsters now receive the same damage as all other enemies: 70 -> 15"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Bumba’s Hammer",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "No longer provides increased Damage to Jungle Monsters: 50% -> 0"
+                        },
+                        {
+                          "text": "No longer reduces damage done to Minions: 40% -> 0%"
+                        },
+                        {
+                          "text": "Increased the Bonus Damage on Enemies: 40 -> 60 True Damage"
+                        },
+                        {
+                          "text": "Jungle Monsters now receive the same damage as all other enemies: 240 -> 60"
+                        },
+                        {
+                          "text": "No longer provides Cooldown Rate on Jungle Monster slain: 10% -> 0%"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Adaptive Starters",
+                  "items": [
+                    {
+                      "text": "Leather Cowl",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Now provides Adaptive Stats",
+                          "items": [
+                            {
+                              "text": "15 Strength or 25 Intelligence"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Now also considers enemy gods within 8.8m."
+                        },
+                        {
+                          "text": "Now provides 2.5% Movement Speed when near a god in addition to its previous effects."
+                        },
+                        {
+                          "text": "Now provides 7.5% Attack Speed when alone in addition to its previous effects."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Hunter’s Cowl",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Now provides Adaptive Stats",
+                          "items": [
+                            {
+                              "text": "55 Strength or 80 Intelligence"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "No longer a shared aura."
+                        },
+                        {
+                          "text": "Now also considers enemy gods within 8.8m."
+                        },
+                        {
+                          "text": "Now provides 5% Movement Speed when near a god in addition to its previous effects."
+                        },
+                        {
+                          "text": "Now provides 15% Attack Speed and 2.5% Lifesteal when alone in addition to its previous effects."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Conduit Gem",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Now provides Adaptive Stats",
+                          "items": [
+                            {
+                              "text": "15 Strength or 30 Intelligence"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Archmage’s Gem",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Now provides Adaptive Stats",
+                          "items": [
+                            {
+                              "text": "60 Strength or 90 Intelligence"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Now also deals 50% Strength Scaling"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Sands of Time",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Now provides Adaptive Stats",
+                          "items": [
+                            {
+                              "text": "15 Strength or 25 Intelligence"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Pendulum of the Ages",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Now provides Adaptive Stats",
+                          "items": [
+                            {
+                              "text": "45 Strength or 70 Intelligence"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Now provides +5 Strength or +7 Intelligence per 10% of Available Mana."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Death’s Toll",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Now provides Adaptive Stats",
+                          "items": [
+                            {
+                              "text": "+15 Strength or +25 Intelligence"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Death’s Embrace",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Now provides Adaptive Stats",
+                          "items": [
+                            {
+                              "text": "+40 Strength or +70 Intelligence"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Warrior’s Axe",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Now provides Adaptive Stats",
+                          "items": [
+                            {
+                              "text": "+15 Strength or +25 Intelligence"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Increased Strength: 12 -> 15"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Sundering Axe",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Now provides Adaptive Stats",
+                          "items": [
+                            {
+                              "text": "+30 Strength or +50 Intelligence"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Bluestone Pendant",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Now provides Adaptive Stats",
+                          "items": [
+                            {
+                              "text": "+15 Strength or +25 Intelligence"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Decreased Health Regen: 2.5 -> 1"
+                        },
+                        {
+                          "text": "Decreased Mana Regen: 2 -> 1"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Bluestone Brooch",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Now provides Adaptive Stats",
+                          "items": [
+                            {
+                              "text": "+30 Strength or +50 Intelligence"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Decreased Health Regen: 7 -> 4"
+                        },
+                        {
+                          "text": "Decreased Mana Regen: 5 -> 2.5"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Gilded Arrow",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Attack Damage: 20 -> 25"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Sharpshooter’s Arrow",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Increased Attack Damage: 50 -> 60"
+                        },
+                        {
+                          "text": "Increased Attack Speed: 15% -> 25%"
+                        },
+                        {
+                          "text": "+10% Attack Damage now scales based on distance, maxing out at 6m away."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Vampiric Shroud",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Now provides Adaptive Stats",
+                          "items": [
+                            {
+                              "text": "+10 Strength or +20 Intelligence"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Blood Soaked Shroud",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Now provides Adaptive Stats",
+                          "items": [
+                            {
+                              "text": "+35 Strength or +60 Intelligence"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Game Modes",
+      "anchor": "Game_Modes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Arena",
+          "anchor": "Arena",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Arena has been updated with new lighting and materials!"
+                },
+                {
+                  "text": "New Stadium Themed Night Lighting playing up the struggle between Order and Chaos"
+                },
+                {
+                  "text": "Cosmetic fog added to the edges of the map"
+                },
+                {
+                  "text": "Updated ground and sky materials"
+                },
+                {
+                  "text": "A couple of critters here and there. Try and spot them…"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Assault",
+          "anchor": "Assault",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Meditation no longer canceled by hard CC"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed Titan minimap icons not accurately reflecting their health"
+                },
+                {
+                  "text": "Fixed a case where teleporting out of base would instantly transport players to their destination"
+                },
+                {
+                  "text": "Fixed an issue where Titan could leash if its target was sent through a Janus portal"
+                },
+                {
+                  "text": "Fixed several spots on the Conquest map boundary where Mordred could get stuck while in his ultimate"
+                },
+                {
+                  "text": "Jungle Practice",
+                  "items": [
+                    {
+                      "text": "Essential Item store is now disabled in Jungle Practice (was causing issues with abilities)"
+                    },
+                    {
+                      "text": "Fixed Toggle Aspect causing disconnects in customs"
+                    },
+                    {
+                      "text": "Fixed the DPS Totem not spawning on map load"
+                    },
+                    {
+                      "text": "Fixed the NPC cycler prompt showing the next NPC instead of the current"
+                    },
+                    {
+                      "text": "Fixed the nearby Fountain not enabled by default",
+                      "items": [
+                        {
+                          "text": "Removed the Toggle Global Item Shop interactable"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Adjustments",
+      "anchor": "God_Adjustments",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Achilles (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Radiant Glory (2)",
+                  "items": [
+                    {
+                      "text": "Increased Physical Shield Health: 50 + 10 per level -> 75 + 20 per level"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Aphrodite (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Back Off (2)",
+                  "items": [
+                    {
+                      "text": "Increased Slow: 20% -> 30%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Love Birds (3)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown: 16s -> 16/15.5/15/14.5/14s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Awilix (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Feather Step (2)",
+                  "items": [
+                    {
+                      "text": "Increased Damage: 40/75/110/145/180 -> 50/85/120/155/190"
+                    }
+                  ]
+                },
+                {
+                  "text": "Moonlight Charge (3)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown: 14/13.5/13/12.5/12s -> 12s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Gravity Surge (4)",
+                  "items": [
+                    {
+                      "text": "Increased Damage: 160/200/240/280/320 -> 170/215/260/305/350"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Baron Samedi (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Increased Health Per level from 92.6 to 97.5"
+                    }
+                  ]
+                },
+                {
+                  "text": "Wrap It Up (3)",
+                  "items": [
+                    {
+                      "text": "Increased Damage: 70/125/180/235/290 -> 90/140/190/240/290",
+                      "items": [
+                        {
+                          "text": "This is both the total Tick damage as well as the explosion damage that affects nearby enemies"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Life of the Party (4)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown: 110s -> 110/105/100/95/90s",
+                      "items": [
+                        {
+                          "text": "This only affects non-aspect"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Chiron (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Herbal Medicine (P)",
+                  "items": [
+                    {
+                      "text": "Decreased Strength: 10 -> 5"
+                    },
+                    {
+                      "text": "Decreased Intelligence: 15 + 2 per level -> 10 + 1.5 per level"
+                    }
+                  ]
+                },
+                {
+                  "text": "Masterful Shot (2)",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown: 15s -> 17/16.5/16/15.5/15s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Da Ji (Shift)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Horrible Burns (1)",
+                  "items": [
+                    {
+                      "text": "Decreased Damage Per Tick: 20/28/36/42/50 -> 20/25/30/35/40"
+                    }
+                  ]
+                },
+                {
+                  "text": "One Thousand Cuts (2)",
+                  "items": [
+                    {
+                      "text": "Decreased Damage Scaling per tick: 40% -> 35% Strength"
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect of Ferocity",
+                  "items": [
+                    {
+                      "text": "Trickster Spirit (3)",
+                      "items": [
+                        {
+                          "text": "Increased Attack Speed: 20/25/30/35/40% -> 30/35/45/45/50%"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Eset (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Wing Gust (1)",
+                  "items": [
+                    {
+                      "text": "Decreased Damage Scaling: 45% -> 40% Intelligence"
+                    },
+                    {
+                      "text": "Increased Cooldown: 10s -> 12/11.5/11/10.5/10s"
+                    },
+                    {
+                      "text": "Decreased Movement Speed: 25% -> 20%"
+                    },
+                    {
+                      "text": "Note",
+                      "items": [
+                        {
+                          "text": "Cooldown and Movement Speed changes also affect the Aspect"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Hercules (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Apotheosis (P)",
+                  "items": [
+                    {
+                      "text": "Increased Protections Per Level: 2 -> 4"
+                    }
+                  ]
+                },
+                {
+                  "text": "Mitigate Wounds (3)",
+                  "items": [
+                    {
+                      "text": "Increased Protections from Items: 25% -> 35%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Hou Yi (Fixes)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Dive Bomb (3)",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where the previous attempt to make him hittable while still visually on the ground failed. He should now remain hittable for 0.1667s when initially cast."
+                    },
+                    {
+                      "text": "Fixed an issue where this ability would not go on cooldown when Awilix pulled this leap."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Loki (Fixes)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Aspect of Agony",
+                  "items": [
+                    {
+                      "text": "Decoy (2)",
+                      "items": [
+                        {
+                          "text": "Should no longer cause issues with knockups or odd interactions with dashes when attached to an ally."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Ne Zha (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Universe Ring Toss (1)",
+                  "items": [
+                    {
+                      "text": "Increased Subsequent Bounce Damage: 35% -> 50%"
+                    },
+                    {
+                      "text": "You can now see how long you have left to refire the caught ring on the ability icon."
+                    }
+                  ]
+                },
+                {
+                  "text": "Flaming Spear (2)",
+                  "items": [
+                    {
+                      "text": "Increased Attack Speed: 25/32.5/40/47.5/55% -> 35/40/45/50/55%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Armillary Sash (3)",
+                  "items": [
+                    {
+                      "text": "Increased Base Damage: 70/100/130/160/190 -> 90/125/160/195/230"
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect of Righteous Flame",
+                  "items": [
+                    {
+                      "text": "Righteous Spirit (P)",
+                      "items": [
+                        {
+                          "text": "Increased Damage converted to Heal: 10% -> 12.5%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Flaming Spear (2)",
+                      "items": [
+                        {
+                          "text": "No longer consumes Righteous Spirit to heal.",
+                          "items": [
+                            {
+                              "text": "It will still heal for 50% stored, it just will no longer consume it."
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Now has a Baseline Heal: 30/45/60/75/90."
+                        },
+                        {
+                          "text": "Fixed an issue where this would not trigger items like Regrowth Striders."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Scylla (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Sic ‘Em (1)",
+                  "items": [
+                    {
+                      "text": "Increased Damage: 60/110/160/210/260 -> 85/130/175/220/265"
+                    }
+                  ]
+                },
+                {
+                  "text": "Sentinel (3)",
+                  "items": [
+                    {
+                      "text": "Increased Damage: 20/25/30/35/40 -> 40/45/50/55/60"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Sobek (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Blessing of the Nile (P)",
+                  "items": [
+                    {
+                      "text": "Increased Protections: 3 -> 5"
+                    },
+                    {
+                      "text": "New: Each stack now provides Cooldown Rate",
+                      "items": [
+                        {
+                          "text": "2 + 0.2 Cooldown Rate per level"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Lurking in the Waters (4)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown: 100s -> 90s"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Sylvanus (Fix)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Verdant Growth (1)",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where this could be deployed in walls."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Ullr (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Hail of Arrows (3 Bow)",
+                  "items": [
+                    {
+                      "text": "Decreased Damage Scaling: 100% -> 85% Strength"
+                    }
+                  ]
+                },
+                {
+                  "text": "Glory Bound (3 Axe)",
+                  "items": [
+                    {
+                      "text": "Decreased Physical Protection Debuff: 5/10/15/20/25 -> 4/8/12/16/20"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Item Adjustments",
+      "anchor": "Item_Adjustments",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "General",
+              "items": [
+                {
+                  "text": "Adaptive Items will now try to utilize the scaling tag of the god when choosing between Strength or Intelligence if both are perfectly equal.",
+                  "items": [
+                    {
+                      "text": "If a god is tagged as “Hybrid Scaling” it will default to Strength, which is the current behavior."
+                    },
+                    {
+                      "text": "If a god is tagged as “Intelligence Scaling” but has built Strength, it will choose Strength once it is higher than Intelligence."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Death Metal (Rework)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "No longer grants a buff to nearby allies."
+                },
+                {
+                  "text": "No longer grants self Attack Speed."
+                },
+                {
+                  "text": "Now sets Intelligence to 0 and provides 66% of lost Intelligence as Strength for the buff duration."
+                },
+                {
+                  "text": "Increased Critical Strike Chance: 15% -> 20%"
+                }
+              ]
+            },
+            {
+              "text": "Bracer of the Abyss (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Increased Intelligence: 45 -> 60"
+                }
+              ]
+            },
+            {
+              "text": "Brawler’s Beat Stick (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Strength: 40 -> 30"
+                },
+                {
+                  "text": "Decreased Intelligence: 55 -> 45"
+                }
+              ]
+            },
+            {
+              "text": "Rod of Asclepius (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Increased Intelligence: 55 -> 65"
+                },
+                {
+                  "text": "Decreased Mana Cost: 35% -> 15%"
+                }
+              ]
+            },
+            {
+              "text": "Shield Splitter (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Increased Physical Protection: 25 -> 30"
+                },
+                {
+                  "text": "Increased Magical Protection: 20 -> 30"
+                }
+              ]
+            },
+            {
+              "text": "Triton’s Conch (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Aura Base Strength: 10 -> 5"
+                },
+                {
+                  "text": "Decreased Aura Base Intelligence: 10 -> 5"
+                }
+              ]
+            },
+            {
+              "text": "Relic upgrade",
+              "items": [
+                {
+                  "text": "Time Lock Aegis",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased Physical Protection: 20 -> 15"
+                    },
+                    {
+                      "text": "Decreased Magical Protection: 20 -> 15"
+                    },
+                    {
+                      "text": "Decreased Stats from Items: 7.5% -> 6%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Blinking Abyss",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased Strength: 25 -> 20"
+                    },
+                    {
+                      "text": "Decreased intelligence: 45 -> 35"
+                    },
+                    {
+                      "text": "Decreased Stats from Items: 7.5% -> 6%"
+                    },
+                    {
+                      "text": "Decreased Cooldown Reduction from Damaging an Enemy God: 50s -> 35s"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes_2",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Bug Fix: Danza Sake Taunt no longer causes the camera to go crazy"
+            },
+            {
+              "text": "Bug Fix: Aspect Apollo 1 Targeter doesn't show up when he has a free cast stack"
+            },
+            {
+              "text": "Bug Fix: Issue that could cause Crowd Control immunity to stick around"
+            },
+            {
+              "text": "Bug Fix: God Models not loading in Lobby… for real this time (we think)"
+            },
+            {
+              "text": "Bug Fix: Additional cases where you could become unable to click on items in the in-game store"
+            },
+            {
+              "text": "Bug Fix: Controller Players can select Aspect after trading Gods"
+            },
+            {
+              "text": "Bug Fix: Colorblind UI color treatment for Arena Minotaurs now works"
+            },
+            {
+              "text": "Bug Fix: Stars now properly tile on God Mastery (Both SMITE 2 God Mastery and the SMITE 1 Mastery Badge)"
+            },
+            {
+              "text": "Bug Fix: Hou Yi can now actually be interrupted during his jump warmup"
+            },
+            {
+              "text": "Bug Fix: Hou Yi jump will no longer get the cooldown back if interrupted by Awilix pull"
+            },
+            {
+              "text": "Bug Fix: Bots are now knocked up/knocked back properly (Hercules works!)"
+            },
+            {
+              "text": "Bug Fix: Balls now don’t show up around Nut and Artemis when they shouldn’t"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 2/25/25",
+      "anchor": "Hotfix_2/25/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Bumba's Cudgel (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Increased Strength: 10 - 15"
+                },
+                {
+                  "text": "Increased Intelligence: 20 -> 25"
+                }
+              ]
+            },
+            {
+              "text": "Bumba's Golden Dagger (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Increased Strength: 10 - 15"
+                },
+                {
+                  "text": "Increased Intelligence: 20 - 25"
+                }
+              ]
+            },
+            {
+              "text": "Sands of Time (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Mana Regen: 0.6 - 0.4 per second per 10% of Missing Mana"
+                },
+                {
+                  "text": "Pendulum of the Ages (Nerf)"
+                },
+                {
+                  "text": "Decreased Strength: 5 - 3 per 10% of available Mana"
+                }
+              ]
+            },
+            {
+              "text": "War Flag",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Fixed an issue where this item was not providing Attack Speed correctly"
+                }
+              ]
+            },
+            {
+              "text": "War Banner",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Fixed an issue where this item was not providing Attack Speed correctly"
+                }
+              ]
+            },
+            {
+              "text": "Warrior's Axe (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Strength: 15 - 12"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Cerberus",
+              "bold": true,
+              "detail": "disabled due to ult interaction"
+            },
+            {
+              "text": "Typhon's Fang",
+              "bold": true,
+              "detail": "disabled"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

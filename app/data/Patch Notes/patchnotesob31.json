@@ -1,0 +1,1892 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_31",
+    "title": "SMITE 2 Open Beta 31",
+    "infoboxTitle": "OB31 - SMITE 2 Open Beta 31",
+    "releaseDate": "March 24, 2026",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_30",
+      "next": "SMITE_2_Open_Beta_32"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 31,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Classic God",
+      "anchor": "New_Classic_God",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Gilgamesh",
+          "anchor": "Gilgamesh",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "General",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Melee Basic Attacks"
+                    },
+                    {
+                      "text": "Damage Type: Physical"
+                    },
+                    {
+                      "text": "Scaling Type: Strength Scaling"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Passive: Epic of Gilgamesh",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "You wield artifacts that demand quests to unlock their true potential."
+                    },
+                    {
+                      "text": "Sun-Forged Scimitar:",
+                      "bold": true,
+                      "detail": "Extend buff to max by hitting only gods 3 times."
+                    },
+                    {
+                      "text": "Drop Kick",
+                      "bold": true,
+                      "detail": ": Drop Kick a target into a god 3 times."
+                    },
+                    {
+                      "text": "Hero's Advance",
+                      "bold": true,
+                      "detail": ": Kill or assist 3 Gods affected by Hero's advance damage bonus"
+                    },
+                    {
+                      "text": "Winds of Shamash",
+                      "bold": true,
+                      "detail": ": Knockback a target off the wall 5 times"
+                    },
+                    {
+                      "text": "Each quest completed gives 100 gold + the upgrade!"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 1: Sun-Forged Scimitar",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Ignite your sword for 3 seconds. Enemies around the ignition take Physical Damage and are slowed"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 2: Drop Kick",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Drop kick an area in front of you, dealing Physical Damage to enemies. The closest enemy is launched through them, taking bonus physical damage when hitting a minion or burst physical damage and stunned when hitting a God or wall."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ability 3: Hero’s Advance",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Leap to a target location dealing physical damage on impact. Create a beacon for 5 seconds."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ultimate Ability: Winds of Shamash",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Call the winds of Shamash at a target location. Enemies inside at the start take physical damage and are slowed. Enemies in the ring take physical damage. The outer wall heavily slows; your damage pulls them to the center."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Aspect releasing",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Aspect of Shamash",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Winds of Shamash is no longer an ultimate. Place a wind wall that transforms once with your next ability. Ignites from Sun-Forged Scimitar, solidifies from Drop Kick, or launches allies from Hero’s Advance. It can only transform once, granting you attack speed, tenacity, or Pathfinding until its next transformation."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Feature - Anti-Leaver 2.0 - Phase 1",
+      "anchor": "New_Feature_-_Anti-Leaver_2.0_-_Phase_1",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "This does not apply to Training, Jungle Practice, Quickplay, vs. AI, or Custom –  It only applies to Classic and Ranked"
+            },
+            {
+              "text": "Anti-Leaving In-Game Timer",
+              "items": [
+                {
+                  "text": "Increased from 5s to 10s"
+                },
+                {
+                  "text": "Message Changed to make it more clear that players should not leave matches"
+                },
+                {
+                  "text": "Fixed to no longer be active in the End of Match Lobby"
+                }
+              ]
+            },
+            {
+              "text": "Leaver Points",
+              "items": [
+                {
+                  "text": "Players who leave matches or dodge lobbies acquire Leaver Points"
+                },
+                {
+                  "text": "Upon reaching certain thresholds of Leaver Points, two things occur:",
+                  "items": [
+                    {
+                      "text": "Players see a message that explains their account has been penalized for leaving a match, and that leaving matches is bad. They must type \"I Agree\" that they will not abandon future matches to proceed past this screen."
+                    },
+                    {
+                      "text": "Players are sent to a Low Priority Queue before their next X matches. This requires them to wait an additional amount of time before they will find a match. The time required to wait scales up with points acquired. Playing matches without leaving reduces the number of leaver points you have.",
+                      "items": [
+                        {
+                          "text": "If a party is being delayed due to a Low Priority Queue party member, the party is notified."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Players are notified in the End of Match Lobby that a Leaver is being punished and has a penalty"
+                }
+              ]
+            },
+            {
+              "text": "AFK Detection",
+              "items": [
+                {
+                  "text": "This has been improved. Players are warned in-game for being AFK, and kicked at a certain time threshold."
+                },
+                {
+                  "text": "If you are detected as AFK, you are punished as a Leaver with an additional punishment of Deserter so you cannot immediately join back."
+                }
+              ]
+            },
+            {
+              "text": "Dodging Penalties",
+              "items": [
+                {
+                  "text": "Dodging a Ranked Queue results in the loss of 60SR"
+                },
+                {
+                  "text": "Dodging any Lobby grants Leaver Points"
+                }
+              ]
+            },
+            {
+              "text": "Additional updates to this system are planned for future updates"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Wandering Market",
+      "anchor": "New_Wandering_Market",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Fiend Hunters Artio and Tsukuyomi",
+          "anchor": "Fiend_Hunters_Artio_and_Tsukuyomi",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Fiend Hunter Artio  - Cursed Blood Prism"
+                    },
+                    {
+                      "text": "Fiend Hunter Artio - Paragon Prism"
+                    },
+                    {
+                      "text": "Fiend Hunter Artio - Violet Stalker Prism"
+                    },
+                    {
+                      "text": "Fiend Hunter Artio - Violet Stalker Prism"
+                    },
+                    {
+                      "text": "Silver Bullet Tsukuyomi - Cursed Blood Prism"
+                    },
+                    {
+                      "text": "Silver Bullet Tsukuyomi - Paragon Prism"
+                    },
+                    {
+                      "text": "Silver Bullet Tsukuyomi - Shadow Stalker Prism"
+                    },
+                    {
+                      "text": "Fiend Hunter - Badge"
+                    },
+                    {
+                      "text": "Wyrm Seals - Part of the Archfiend Event"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Warrenborn Artemis",
+          "anchor": "Warrenborn_Artemis",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Warrenborn - Bramble Prism"
+                    },
+                    {
+                      "text": "Warrenborn - Lotus Prism"
+                    },
+                    {
+                      "text": "Warrenborn - Starbound Prism"
+                    },
+                    {
+                      "text": "Shadowfluff Ward skin"
+                    },
+                    {
+                      "text": "Warrenborn - Announcer Pack"
+                    },
+                    {
+                      "text": "Wyrm Seal - Part of the Archfiend Event"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Gameplay",
+      "anchor": "Gameplay",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Shifted Tower shot prefire/postfire timing from 0.3s/0.7s -> 0.0s/1.0s",
+              "items": [
+                {
+                  "text": "Previously there was a 0.3s delay before the tower would fire its first shot. This removes that delay to match parity with Smite 1. While it's not a huge buff to towers, it should make them feel more responsive when targeting gods that dive you under tower."
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Game Modes",
+      "anchor": "Game_Modes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Arena",
+          "anchor": "Arena",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Decreased setup time from 60s to 55s"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Assault",
+          "anchor": "Assault",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased setup time from 60s to 75s"
+                },
+                {
+                  "text": "Already Live in OB30 Hotfix:",
+                  "items": [
+                    {
+                      "text": "Melee Minion",
+                      "items": [
+                        {
+                          "text": "Reduced protections scaling from +6 to +2"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Ranged Minion",
+                      "items": [
+                        {
+                          "text": "Reduced protections scaling from +4 to +2"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Minotaur",
+                      "items": [
+                        {
+                          "text": "Reduced protections scaling from +4 to +2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Vs AI",
+          "anchor": "Vs_AI",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Added Ares and Kali bots"
+                },
+                {
+                  "text": "Improved bots’ aim prediction with some ranged projectiles"
+                },
+                {
+                  "text": "Fixed Ra Bot being able to place his A03 beyond maximum range"
+                },
+                {
+                  "text": "Reduced the chance of God Bots using Blink Rune to flee a fight"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Changes from PTS:",
+          "anchor": "Changes_from_PTS:",
+          "level": 3,
+          "content": []
+        },
+        {
+          "title": "Bug Fixes:",
+          "anchor": "Bug_Fixes:",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Some items were giving adaptive stats in addition to their base ones."
+                },
+                {
+                  "text": "Some items were permanently giving stats."
+                },
+                {
+                  "text": "Resolute Mantle was providing significantly higher Health Per Second than listed."
+                },
+                {
+                  "text": "Echo was multi-proccing off some on-damaged effects. (Hecate A01 Mark)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Things we are watching out for:",
+          "anchor": "Things_we_are_watching_out_for:",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Gem of Focus/Tekko-Kagi",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "We did some pretty significant shifts to these items, and they were also benefiting from the Pathfinding issues described above. We may nerf these quickly if needed."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Items",
+          "anchor": "Items",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Plated Metal",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Tier 2 Plating Component"
+                    },
+                    {
+                      "text": "900g"
+                    },
+                    {
+                      "text": "+9 Plating"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Runic Hide",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Tier 2 Dampening Component"
+                    },
+                    {
+                      "text": "850g"
+                    },
+                    {
+                      "text": "+10 Dampening"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Bowl Drum",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Tier 2 Echo Component"
+                    },
+                    {
+                      "text": "750g"
+                    },
+                    {
+                      "text": "+10 Echo"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Combat Boots (!!)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Tier 2 Pathfinding Component"
+                    },
+                    {
+                      "text": "900g"
+                    },
+                    {
+                      "text": "+8 Pathfinding"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Cleric’s Cloak",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Tier 2 Tenacity Component"
+                    },
+                    {
+                      "text": "800g"
+                    },
+                    {
+                      "text": "+15 Tenacity"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Kinetic Cuirass",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "2400g",
+                      "items": [
+                        {
+                          "text": "Builds from : Veve Charm + Plated Metal + 700g"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "+15 Plating"
+                    },
+                    {
+                      "text": "+300 Health",
+                      "items": [
+                        {
+                          "text": "Passive: After being damaged by 5 Attacks from gods, your next Attack unleashes a shockwave, even if it misses. Dealing 40 (+4% of your Health) damage."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Radiant Bulwark",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "2750g",
+                      "items": [
+                        {
+                          "text": "Builds from: Engraved Guard + Plated Metal + 1050g"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "+15 Plating"
+                    },
+                    {
+                      "text": "+20 Physical Protection"
+                    },
+                    {
+                      "text": "+20 Magical Protection",
+                      "items": [
+                        {
+                          "text": "Active: Create a wall of light that protects allies behind you for 6s. Grants them all your Plating, Dampening, and half of your protections from enemies on the other side of the wall. You are slowed, silenced, disarmed, and cannot turn while channeling the bulwark."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Doublet of Binding",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "2550g",
+                      "items": [
+                        {
+                          "text": "Builds from: Veve Charm + Runic Hide + 900g"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "+15 Dampening"
+                    },
+                    {
+                      "text": "+400 Health",
+                      "items": [
+                        {
+                          "text": "Active: Protective Link - Link to a target, redirecting 20% of damage they take, up to 600 health. This damage is mitigated further by your dampening stat."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Wyrmskin Hide",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "2600g",
+                      "items": [
+                        {
+                          "text": "Builds from Battle Axe + Runic Hide + 850g"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "+40 Strength"
+                    },
+                    {
+                      "text": "+10 Dampening"
+                    },
+                    {
+                      "text": "+250 Health",
+                      "items": [
+                        {
+                          "text": "Passive: When you hit a god (once every 8s) you gain 20 dampening against them."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Alchemist Coat",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "2350g",
+                      "items": [
+                        {
+                          "text": "Builds from Mana Tome + Runic Hide + 1000g"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "+15 Dampening"
+                    },
+                    {
+                      "text": "+400 Mana"
+                    },
+                    {
+                      "text": "+ 2.5 Mana Per Second",
+                      "items": [
+                        {
+                          "text": "Passive: When you use a consumable, gain 10 Dampening for 8s. If you have an open inventory slot, gain a Multipotion once every 60s."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Mercury’s Talaria",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "2500g",
+                      "items": [
+                        {
+                          "text": "Builds from Survivor’s Sash + Combat Boots + 600g"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Adaptive: 40 Strength or 70 Intelligence"
+                    },
+                    {
+                      "text": "+12 Pathfinding",
+                      "items": [
+                        {
+                          "text": "Passive: As you move out of combat, store energy. Your next non-ultimate ability deals up to 20% more damage based on the stored energy. If it was a Movement Ability, deal up to 30% more damage instead."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Resolute Mantle",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "2750g",
+                      "items": [
+                        {
+                          "text": "Builds from Veve Charm + Cleric’s Cloak + Xg"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "+550 Health"
+                    },
+                    {
+                      "text": "+20 Tenacity",
+                      "items": [
+                        {
+                          "text": "Passive - When Hard Crowd Controlled by an ability, gain 25 Health Regen and 10 Tenacity for 4s. This effect can stack. When these stacks fall off, gain 0.5 Health Regen and 1 Tenacity permanently. These can stack up to 20 times."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Shroud Of Vengeance",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "+2500g",
+                      "items": [
+                        {
+                          "text": "Builds from Engraved Guard + Cleric’s Cloak + 900g"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "+20 Physical Protection"
+                    },
+                    {
+                      "text": "+20 Magical Protection"
+                    },
+                    {
+                      "text": "+20 Tenacity",
+                      "items": [
+                        {
+                          "text": "Passive - When Hard Crowd Controlled, trigger a shockwave around yourself dealing 50 (+40% of your Protections, up to 650) Physical Damage."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Damaru",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "+2750g",
+                      "items": [
+                        {
+                          "text": "Builds from Kopesh + Bowl Drum + 750g"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "+40 Strength"
+                    },
+                    {
+                      "text": "+20% Critical Strike"
+                    },
+                    {
+                      "text": "+20% Echo",
+                      "items": [
+                        {
+                          "text": "Passive - When you Critically Strike, increase your Ability’s damage by 10% for 5s. When you Echo, increase your Attack’s damage by 10% for 5s. Each can stack 3 times."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Omen Drum",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "+2800g",
+                      "items": [
+                        {
+                          "text": "Builds from Survivor’s Sash + Bowl Drum + 1050g"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Adaptive: +55 Strength or +90 Intelligence"
+                    },
+                    {
+                      "text": "+30% Echo",
+                      "items": [
+                        {
+                          "text": "Active - For 5 seconds, all enemy gods and jungle monsters you hit with an ability are marked. After the duration expires 15% of all ability damage you dealt to marked targets is echoed to all marked targets."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Tekko-Kagi (Stat Change)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Now builds from Skeggox and Hunter’s Bow, cost remains the same."
+                    },
+                    {
+                      "text": "No longer grants Movement Speed: 4% -> 0%"
+                    },
+                    {
+                      "text": "Now grants Pathfinding: 0% -> 7%"
+                    },
+                    {
+                      "text": "Increased Stack Duration: 6s -> 10s"
+                    },
+                    {
+                      "text": "No longer provides Cooldown Reduction: 10% -> 0%"
+                    },
+                    {
+                      "text": "Now grants Attack Speed: 25%"
+                    },
+                    {
+                      "text": "Decreased Strength: 60 -> 50"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Gem of Focus (Stat Change)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "No longer grants Movement Speed: 4% -> 0%"
+                    },
+                    {
+                      "text": "Now grants Pathfinding: 0% -> 7%"
+                    },
+                    {
+                      "text": "Increased Stack Duration: 6s -> 10s"
+                    },
+                    {
+                      "text": "Increased Intelligence: 50 -> 75"
+                    },
+                    {
+                      "text": "Increased Cost: 2350 -> 2550"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The Crusher (Stat Change)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Now built from Lucerne Hammer and Bowl Drum. Cost remains unchanged."
+                    },
+                    {
+                      "text": "No longer grants Cooldown Rate: 15 -> 0"
+                    },
+                    {
+                      "text": "Now grants Echo: 0% -> 25%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The Cosmic Horror (Rework)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Now build from Ring of Dispel and Bowl Drum"
+                    },
+                    {
+                      "text": "No longer grants Mana: 200 -> 0"
+                    },
+                    {
+                      "text": "No longer grants Mana Regen: 3 -> 0"
+                    },
+                    {
+                      "text": "Now grants Echo: 0 -> 20%",
+                      "items": [
+                        {
+                          "text": "New Passive: While your Echo chance is higher than Cooldown Rate, grain +20% Echo Damage. While your Cooldown Rate is higher than your Echo chance, gain +35 Intelligence. If they are equal, gain both effects."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Spectral Armor (Rework)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Now builds from Plated Metal + Veve Charm + 600 Gold",
+                      "items": [
+                        {
+                          "text": "Cost should be the same 2300 it has been."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "No longer grants Physical Protection: 30 -> 0"
+                    },
+                    {
+                      "text": "Now provides Plating: 0 -> 20",
+                      "items": [
+                        {
+                          "text": "New Passive: You take -25% Damage from Critical Strikes. Ability Critical Strikes are mitigated by your Plating."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Spectral Visage (Removed)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Spectral Armor’s rework has focused it on being a more all-in-one counter to Critical Strikes. Spectral Visage was always a band-aid solution for Magical Critical Strikes; but the combination of Plating and mitigating ability Critical hits should cover all cases."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Leviathan’s Hide (Stat Change)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Removed Physical Protection: 40 -> 0"
+                    },
+                    {
+                      "text": "Added Plating: 0 -> 15"
+                    },
+                    {
+                      "text": "Increased Health: 250 -> 300"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Mantle of Discord (Stat Change)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Removed Physical Protection: 30 -> 0"
+                    },
+                    {
+                      "text": "Removed Magical Protection: 20 -> 0"
+                    },
+                    {
+                      "text": "Added Dampening: 0 -> 15"
+                    },
+                    {
+                      "text": "Added Tenacity: 0 -> 20"
+                    },
+                    {
+                      "text": "Increased Cooldown Rate: 10 -> 15"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Shogun’s Ofuda (Stat Change)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Removed Magical Protection: 30 -> 0"
+                    },
+                    {
+                      "text": "Added Dampening: 0 -> 15"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Spirit Robe (Stat Change)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Decreased Physical Protection: 25 -> 20"
+                    },
+                    {
+                      "text": "Decreased Magical Protection: 25 -> 20"
+                    },
+                    {
+                      "text": "Added Tenacity: 0 -> 20"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Pharaoh’s Curse (Stat Change)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Removed Physical Protection: 35 -> 0"
+                    },
+                    {
+                      "text": "Removed Magical Protection: 25 -> 0"
+                    },
+                    {
+                      "text": "Added Plating: 0 -> 20"
+                    },
+                    {
+                      "text": "Increased Attack Speed: 15% -> 20%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Vampiric Shroud (Shift)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Now provides Lifesteal: 0% -> 4%"
+                    },
+                    {
+                      "text": "God Ability Hits no longer provide triple the Health Heal and Mana Recovery effects."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Blood-Soaked Shroud (Shift)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Now provides Lifesteal: 0% -> 8%"
+                    },
+                    {
+                      "text": "God Ability Hits no longer provide double the Health Heal and Mana Recovery effects."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Amaterasu (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Divine Presence (1)",
+                  "items": [
+                    {
+                      "text": "Increased Shield Health: 4/5/6/7/8% -> 8% of Max Health"
+                    },
+                    {
+                      "text": "Increased Attack Speed: 8/11/14/17/20% -> 12/14/16/18/20%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Dazzling Offensive (4)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown: 110/105/100/95/90s -> 90s"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Charon (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Spectral Surge (1)",
+                  "items": [
+                    {
+                      "text": "Reduced cooldown from 15s to 13s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Damnation (2)",
+                  "items": [
+                    {
+                      "text": "Fixed Attack Speed Slow not applying correctly"
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect of the Tollkeeper",
+                  "items": [
+                    {
+                      "text": "Spectral Surge (1)",
+                      "items": [
+                        {
+                          "text": "Deals 40% bonus damage to minions"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Da Ji - (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "One Thousand Cuts (2)",
+                  "items": [
+                    {
+                      "text": "Decreased Movement Speed: 40% -> 30%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Trickster Spirit (3)",
+                  "items": [
+                    {
+                      "text": "Decreased Damage Scaling: 80% -> 70% Strength"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Discordia - (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Erratic Behavior (3)",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown: 14s -> 16/15.5/15/14.5/14s"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Geb (Aspect Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Aspect of Calamity",
+                  "items": [
+                    {
+                      "text": "Base Health and Base Health Per Level decreased by 7.5%"
+                    },
+                    {
+                      "text": "Base Physical Protection and Protection Per Level decreased by 5%"
+                    },
+                    {
+                      "text": "Base Magical Protection and Protection Per Level decreased by 5%"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Hercules (Base Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "General",
+                  "items": [
+                    {
+                      "text": "Decreased Base Health: 567 -> 525"
+                    },
+                    {
+                      "text": "Decreased Health Per Level: 101.5 -> 94",
+                      "items": [
+                        {
+                          "text": "Decreased Health at level 20: 2597 -> 2405"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect of Preservation",
+                  "items": [
+                    {
+                      "text": "Gains +7.5% Base Health and Health Per Level",
+                      "items": [
+                        {
+                          "text": "This puts him very close to his previous health values."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Khepri (Base Buff, Aspect Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Abduct (1)",
+                  "items": [
+                    {
+                      "text": "Increased Protections: 20/28/36/44/52 -> 25/35/45/55/65"
+                    }
+                  ]
+                },
+                {
+                  "text": "Scarab’s Blessing (4)",
+                  "items": [
+                    {
+                      "text": "Increased Strength and Intelligence: 10/20/30/40/50 -> 25/32.5/40/47.5/55"
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect of Laceration",
+                  "items": [
+                    {
+                      "text": "Abduct (1)",
+                      "items": [
+                        {
+                          "text": "Removed: Protections"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Morgan Le Fay (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Consuming Power (4)",
+                  "items": [
+                    {
+                      "text": "Decreased Projectile Damage Scaling: 45% -> 40% Intelligence"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Ne Zha (Aspect Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Aspect of Righteous Flame",
+                  "items": [
+                    {
+                      "text": "Flaming Spear (2)",
+                      "items": [
+                        {
+                          "text": "Decreased Base Heal: 30/45/60/75/90 -> 20/30/40/50/60"
+                        },
+                        {
+                          "text": "Decreased stored Righteous Spirit Heal: 50% -> 35%"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Nut (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Aspect of the Cosmos",
+                  "items": [
+                    {
+                      "text": "Gains -12.5% Base Attack Damage and Attack Damage Per Level"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Pele (Base Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Pyroclast (1)",
+                  "items": [
+                    {
+                      "text": "Increased Damage: 60/100/140/180/220 -> 70/110/150/190/230",
+                      "items": [
+                        {
+                          "text": "Increased Damage Scaling: 60% -> 65% Strength"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Magma Rush (3)",
+                  "items": [
+                    {
+                      "text": "Increased Damage: 10/15/20/25/30 -> 15/20/25/30/35",
+                      "items": [
+                        {
+                          "text": "Increased Amped Damage: 20/35/50/65/80 -> 30/45/60/75/90"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect of Obsidian",
+                  "items": [
+                    {
+                      "text": "The above buffs do not apply to this aspect."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Ra (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Divine Light (2)",
+                  "items": [
+                    {
+                      "text": "Increased Solar Ray Duration: 2/2.5/3/3.5/4s -> 4s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Solar Blessing (3)",
+                  "items": [
+                    {
+                      "text": "Increased Heal Per Tick: 10/17/24/31/38 -> 16/22/28/34/40"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Scylla (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Quick Learner (P)",
+                  "items": [
+                    {
+                      "text": "Increased Mana Regen: 1 -> 2 Per Max Ability"
+                    }
+                  ]
+                },
+                {
+                  "text": "Crush (2)",
+                  "items": [
+                    {
+                      "text": "New: This ability does 20% bonus damage to Minions and Jungle Monsters."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "The Morrigan (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Dark Omen (2)",
+                  "items": [
+                    {
+                      "text": "Increased Damage: 40/70/100/130/160 -> 55/85/115/145/175"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Thor (Aspect Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Aspect of Thunderstruck",
+                  "items": [
+                    {
+                      "text": "Warrior’s Madness (P)",
+                      "items": [
+                        {
+                          "text": "Decreased Protections per stack: 8 -> 5"
+                        },
+                        {
+                          "text": "Decreased Heal: 2% -> 1.5% of Max Health"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Xbalanque (Buff)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Poison Darts (2)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown: 15s -> 13s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Rising Jaguar (3)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown: 16s -> 16/15.5/15/14.5/14s"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed an issue where Gods could get stuck if they used Agility Relic to dash into a Windsprite"
+            },
+            {
+              "text": "Artemis",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Tusky",
+                  "items": [
+                    {
+                      "text": "Parity: Tusky can now target and dash through playermade walls"
+                    },
+                    {
+                      "text": "Fixed cases that lead to the same God being stunned twice"
+                    },
+                    {
+                      "text": "Fixed switching targets while dashing"
+                    },
+                    {
+                      "text": "Fixed dry firing if another enemy is close to his target"
+                    },
+                    {
+                      "text": "Fixed not being able to turn towards targets in his dash"
+                    },
+                    {
+                      "text": "Fixed dash sometimes hitting an enemy that stood between him and his target"
+                    },
+                    {
+                      "text": "Fixed looking at the wrong target before dashing"
+                    },
+                    {
+                      "text": "Fixed not able to hit the Jungle Practice Totem"
+                    },
+                    {
+                      "text": "Known issues that still remain:",
+                      "items": [
+                        {
+                          "text": "Tusky can double-dash the same target if he somehow misses his target the first time"
+                        },
+                        {
+                          "text": "Tusky can miss if his lifetime expires mid-dash"
+                        },
+                        {
+                          "text": "Tusky is the most powerful character in the SMITE universe"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 3/25/26",
+      "anchor": "Hotfix_3/25/26",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Stat Adjustments",
+          "anchor": "Stat_Adjustments",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Echo adjustment to be applied after damage mitigations instead of pre mitigation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Item Adjustments",
+          "anchor": "Item_Adjustments",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Alchemist Cloak",
+                  "bold": true,
+                  "detail": "no longer produces a potion immediately on purchase."
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Doublet of Binding",
+                  "bold": true,
+                  "detail": "is reenabled"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "God Fixes",
+          "anchor": "God_Fixes",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Gilgamesh leap now able to be pulled by Awilix ultimate."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 3/26/26",
+      "anchor": "Hotfix_3/26/26",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Item Adjustments",
+          "anchor": "Item_Adjustments_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Damaru",
+                  "bold": true,
+                  "detail": "now correctly 10% per stack (still multiplicative)."
+                },
+                {
+                  "text": "Damaru",
+                  "bold": true,
+                  "detail": "now only procs once per target per ability. Even if it crits/echos on the same hit."
+                },
+                {
+                  "text": "Shroud of Vengeance",
+                  "bold": true,
+                  "detail": "now correctly does 50 + (40% of protections), rather than 40+100% protections"
+                },
+                {
+                  "text": "Shroud of Vengeance",
+                  "bold": true,
+                  "detail": "now has a small ICD."
+                },
+                {
+                  "text": "Mercury’s Talaria",
+                  "bold": true,
+                  "detail": "- Distance fix and clears on non-movement abilities"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 4/1/26",
+      "anchor": "Hotfix_4/1/26",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Item Adjustments",
+          "anchor": "Item_Adjustments_3",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Echo can no longer proc on effects that can Crit & prevented echo from double procing On Damaged Delegates"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

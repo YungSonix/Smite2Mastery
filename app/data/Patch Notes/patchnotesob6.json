@@ -1,0 +1,1614 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_6",
+    "title": "SMITE 2 Open Beta 6",
+    "infoboxTitle": "OB6 - SMITE 2 Open Beta 6",
+    "releaseDate": "March 24, 2025",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_5",
+      "next": "SMITE_2_Open_Beta_7"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 6,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Ported God",
+      "anchor": "New_Ported_God",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Merlin (Live with the Update!)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "General",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Ranged Basic Attacks"
+                    },
+                    {
+                      "text": "Damage Type: Magical"
+                    },
+                    {
+                      "text": "Scaling Type: Intelligence Scaling"
+                    }
+                  ]
+                },
+                {
+                  "text": "Passive: Overload",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Using an ability provides 1 stack of Overload. Firing a basic attack consumes 1 stack of Overload and deals Magical Damage to enemies hit"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 1: Eclipse/Radiate/Frostbolt",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Eclipse (Arcane Stance)",
+                      "items": [
+                        {
+                          "text": "Conjure a celestial orb that grows in size as it travels, dealing Magical Damage repeatedly to enemies in an area and marking them",
+                          "items": [
+                            {
+                              "text": "Marked enemies take additional Magical Damage if they stay within the outer range of Eclipse"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Radiate (Fire Stance)",
+                      "items": [
+                        {
+                          "text": "Channels a beam of intense fire for 2s that deals Magical Damage every 0.25s.",
+                          "items": [
+                            {
+                              "text": "Each time Radiate hits an enemy, it also applies a Burn, dealing additional Magical Damage over time"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Frostbolt (Ice Stance)",
+                      "items": [
+                        {
+                          "text": "Fire a Frostbolt that explodes when it hits an enemy, dealing Magical Damage in a small area",
+                          "items": [
+                            {
+                              "text": "This ability deals an additional 15% damage if the enemy hit is slowed"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 2: Vortex/Dragonfire/Blizzard",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Vortex (Arcane Stance)",
+                      "items": [
+                        {
+                          "text": "Deploy a field of arcane energy. After a delay, the Vortex deals Magical Damage and Pulls enemies towards the center"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Dragonfire (Fire Stance)",
+                      "items": [
+                        {
+                          "text": "You summon forth two ethereal dragons dealing Magical Damage to enemies every 0.25s.",
+                          "items": [
+                            {
+                              "text": "If caught in the center of the area, enemies are afflicted by the Radiate Burn and Gods have their protections reduced."
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Blizzard (Ice Stance)",
+                      "items": [
+                        {
+                          "text": "Create a Blizzard, dealing Magical Damage repeatedly to enemies in an area.",
+                          "items": [
+                            {
+                              "text": "Enemies hit are debuffed with a stacking Slow"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 3: Flicker",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "You quickly Teleport a short distance. Depending on your current Stance, you gain different effects when using this ability.",
+                      "items": [
+                        {
+                          "text": "Arcane: Heal 30% of the damage taken within the last 4s"
+                        },
+                        {
+                          "text": "Fire: For a short duration, your basic attacks apply the Radiate debuff effect to enemies hit"
+                        },
+                        {
+                          "text": "Ice: Ability Cooldowns are reduced by 5s"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ultimate Ability: Elemental Mastery",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Tap into your inner potential, exploding with energy in your current stance dealing Magical Damage to enemies hit.",
+                      "items": [
+                        {
+                          "text": "After the Explosion reaches its apex, it collapses in on itself dealing Magical Damage again"
+                        },
+                        {
+                          "text": "Enemies suffer different effects depending on which stance’s energy they are hit by",
+                          "items": [
+                            {
+                              "text": "Arcane: Enemies hit are Knocked Up"
+                            },
+                            {
+                              "text": "Fire: Enemies hit are afflicted with the Radiate Burn"
+                            },
+                            {
+                              "text": "Ice: Enemies hit are Slowed"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect releasing March 28: Aspect of Pandemonium",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Elemental Mastery has a reduced cooldown and each time it is used, a random Stance is selected with 2 random primary abilities, Flicker will always persist. Using Elemental Mastery provides an intelligence buff for a short duration."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Skins and Cosmetics",
+      "anchor": "New_Skins_and_Cosmetics",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "NEW SMITE 2 Skins! (purchasable for 50% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Stumble Blade Susano, available in the Blade Chest"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Prisms (purchasable for 100% Diamonds) - This is a new System in SMITE 2! Get more details in the General section below.",
+              "items": [
+                {
+                  "text": "Stumble Blade Amethyst"
+                },
+                {
+                  "text": "Stumble Blade Copper"
+                },
+                {
+                  "text": "Stumble Blade Crimson"
+                }
+              ]
+            },
+            {
+              "text": "Classic Skins (purchasable for 100% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Basscannon Neith"
+                },
+                {
+                  "text": "Heaven’s Rave Zeus"
+                }
+              ]
+            },
+            {
+              "text": "Cross-Gen Skins (purchasable for 50% Legacy Gems)",
+              "items": [
+                {
+                  "text": "Cyberclaw Awilix"
+                },
+                {
+                  "text": "High Honor Mulan"
+                },
+                {
+                  "text": "Dawn Spirit Yemoja"
+                }
+              ]
+            },
+            {
+              "text": "Cosmetics",
+              "items": [
+                {
+                  "text": "Air Slash Jump Stamp + Wind Blade Badge Bundle, available in the Blade Chest"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Gameplay",
+      "anchor": "Gameplay",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Gameplay Movement Adjustments",
+              "items": [
+                {
+                  "text": "The deceleration when changing directions has been adjusted. Gods are able to more rapidly change their velocity when changing directions suddenly."
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Ranked & Matchmaking",
+      "anchor": "Ranked_&amp;_Matchmaking",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "New Pre-Match Team Balancer System Implemented",
+              "items": [
+                {
+                  "text": "Makes up to 3 player swaps after finding a lobby to build the most balanced teams"
+                },
+                {
+                  "text": "Due to this addition, the base matchmaking system was less needed in the act of finding balanced teams – freeing up those resources to optimize for faster wait times and closer lobbies. In Ranked Conquest, these changes resulted in:",
+                  "items": [
+                    {
+                      "text": "~80% reduction in average SR difference between teams: ~100 SR ->  ~20 SR"
+                    },
+                    {
+                      "text": "~20% reduction in average SR range of match: ~1,500 SR -> ~1,200 SR"
+                    },
+                    {
+                      "text": "~25% reduction in average wait time: NA Peak (6pm - 2am EST) 2m 45s -> 2m 05s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Worth noting that this tech was a needed prerequisite for further development into other systems, such as new matchmaking logic for High SR Lobbies – and those changes may also be implemented during the course of this patch with info to follow as soon as possible"
+                }
+              ]
+            },
+            {
+              "text": "Party SR Limitations",
+              "items": [
+                {
+                  "text": "Players over 2,400 SR apart will no longer be able to form a party for Ranked",
+                  "items": [
+                    {
+                      "text": "Note that this value is preliminary, and will be used to gauge further versions that potentially have different SR ranges established based on maximum SR in the party"
+                    }
+                  ]
+                },
+                {
+                  "text": "Players over 4,400 SR (Master 3 Rank) will no longer be able to enter a Trio Queue",
+                  "items": [
+                    {
+                      "text": "Our matchmaking rules previously heavily incentivized away from players at this SR forming a Trio queue, so this first implementation is more of a formality"
+                    }
+                  ]
+                },
+                {
+                  "text": "NOTE: These changes may not be live with the OB6 launch, however they can be expected to be live during the course of this patch"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "General",
+      "anchor": "General",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "NEW System - Prisms",
+              "items": [
+                {
+                  "text": "Prisms are new alternate colors that can be unlocked for skins!"
+                },
+                {
+                  "text": "Prisms are unique to each skin that features them and recolor the base skin model and its VFX."
+                },
+                {
+                  "text": "You must own the base skin in order to unlock any Prisms associated with it."
+                }
+              ]
+            },
+            {
+              "text": "PC Item Shop Filtering QoL Improvements",
+              "items": [
+                {
+                  "text": "Players can now select multiple stats at the same time via a toggle box when using the Centered Item Shop to quickly view Items with more than one stat!"
+                },
+                {
+                  "text": "For Example: Selecting Lifesteal and Attack Speed filters the shop to only display Bloodforge and Nimble Ring"
+                }
+              ]
+            },
+            {
+              "text": "VFX Updates",
+              "items": [
+                {
+                  "text": "Princess Bari",
+                  "items": [
+                    {
+                      "text": "Warding Gust",
+                      "items": [
+                        {
+                          "text": "Added prefire wind to cone area"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Targeters have been updated for the following Gods",
+                  "items": [
+                    {
+                      "text": "Susano"
+                    },
+                    {
+                      "text": "Artemis"
+                    },
+                    {
+                      "text": "Anubis"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "God Roles",
+              "items": [
+                {
+                  "text": "Updated which gods show up in roles filtered based on god playrate in each role."
+                }
+              ]
+            },
+            {
+              "text": "Leaderboard",
+              "items": [
+                {
+                  "text": "Live Ranked Conquest Leaderboard updates will begin during this patch"
+                },
+                {
+                  "text": "Leaderboards will refresh every 5 minutes"
+                },
+                {
+                  "text": "At first this will only be live with Player Skill Rating, with further information like Wins, Losses, etc. to be added at a later time"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Conquest",
+      "anchor": "Conquest",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "New Art",
+              "items": [
+                {
+                  "text": "New environment art has been added for the following camps:",
+                  "items": [
+                    {
+                      "text": "Manticore (Red Buff) Camp"
+                    },
+                    {
+                      "text": "Chimera (Purple Buff) Camp"
+                    },
+                    {
+                      "text": "Satyr (Blue Buff) Camp"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Totem Update",
+              "items": [
+                {
+                  "text": "Reduced Bonus damage reduction given to minions from 25% to 10%"
+                },
+                {
+                  "text": "Reduced Bonus physical power given to minions from 20 to 10"
+                }
+              ]
+            },
+            {
+              "text": "Jungle Boss Updates",
+              "items": [
+                {
+                  "text": "Fire Giant",
+                  "items": [
+                    {
+                      "text": "Reduced base health from 6300 to 4500"
+                    }
+                  ]
+                },
+                {
+                  "text": "Gold Fury",
+                  "items": [
+                    {
+                      "text": "Reduced base health from 2750 to 2200"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ancient Fury",
+                  "items": [
+                    {
+                      "text": "Reduced base health from 3200 to 2560"
+                    }
+                  ]
+                },
+                {
+                  "text": "Queen Naga",
+                  "items": [
+                    {
+                      "text": "Reduced base health from 2250 to 1800"
+                    }
+                  ]
+                },
+                {
+                  "text": "Pyromancer",
+                  "items": [
+                    {
+                      "text": "Reduced base health from 2250 to 1800"
+                    },
+                    {
+                      "text": "When slain, the Pyromancer will deal direct damage to the weakest enemy structure",
+                      "items": [
+                        {
+                          "text": "Deals 250 base damage + 25 per minute that has passed (not including the setup time)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Gold Update",
+              "items": [
+                {
+                  "text": "Reduced First blood gold reward from 200 to 75"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Ares Buff",
+              "items": [
+                {
+                  "text": "Shackles (1)",
+                  "items": [
+                    {
+                      "text": "Increased Strength Scaling from 25% to 35%."
+                    }
+                  ]
+                },
+                {
+                  "text": "Call to Arms (2)",
+                  "items": [
+                    {
+                      "text": "Ares gains 10/15/20/25/30 HPS while the buff is active on himself. This does not apply to his Aspect Call to Arms."
+                    }
+                  ]
+                },
+                {
+                  "text": "No Escape (4)",
+                  "items": [
+                    {
+                      "text": "Initial Damage now has 20% Intelligence Scaling"
+                    },
+                    {
+                      "text": "Pull Damage now has 50% Intelligence Scaling"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Artemis Aspect Nerf",
+              "items": [
+                {
+                  "text": "Aspect of the Wild",
+                  "items": [
+                    {
+                      "text": "Transgressor’s Fate",
+                      "items": [
+                        {
+                          "text": "Decreased Base Damage from 20/30/40/50/60 to 12/24/36/48/60."
+                        },
+                        {
+                          "text": "Increased Strength Scaling from 30% to 35%."
+                        },
+                        {
+                          "text": "Fixed the tooltip not displaying the Talent Damage numbers."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Awilix Shift",
+              "items": [
+                {
+                  "text": "Initiative (P)",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where this was always activating, even if someone damaged you first."
+                    }
+                  ]
+                },
+                {
+                  "text": "Feather Step (2)",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where this was able to be used while crippled."
+                    }
+                  ]
+                },
+                {
+                  "text": "“Due to these two bug fixes, we are going to revert some of the last nerfs we did to address her performance.”"
+                },
+                {
+                  "text": "Summon Suku (1)",
+                  "items": [
+                    {
+                      "text": "Increased Strength Scaling from 70% to 80%. (Revert)"
+                    }
+                  ]
+                },
+                {
+                  "text": "Moonlight Charge (3)",
+                  "items": [
+                    {
+                      "text": "Increased Strength Scaling from 70% to 80%. (Revert)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Baron Samedi Buff",
+              "items": [
+                {
+                  "text": "“Baron Samedi had a bug in CA8 that reduced all enemies’ damage to every target, leading to a massive overperformance across the board. After fixing this, we gave him time to settle since he had been oppressive since his original release in Smite 2. Now, we’ve seen him struggle to perform, so we’re reverting a few of the changes we made before discovering the bug.”"
+                },
+                {
+                  "text": "Vivid Gaze (1)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 11s to 11/10.5/10/9.5/9s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Consign Spirits (2)",
+                  "items": [
+                    {
+                      "text": "Increased Missing Health Heal from 2.5% to 5%."
+                    }
+                  ]
+                },
+                {
+                  "text": "Life of the Party (4)",
+                  "items": [
+                    {
+                      "text": "Increased Vortex Strength by 10%."
+                    },
+                    {
+                      "text": "Increased Hysteria Vortex Strength by 20%."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Fenrir Nerf",
+              "items": [
+                {
+                  "text": "Brutalize (3)",
+                  "items": [
+                    {
+                      "text": "Decreased Empowered Scaling from 70% to 60%."
+                    }
+                  ]
+                },
+                {
+                  "text": "Ragnarok (4)",
+                  "items": [
+                    {
+                      "text": "Decreased Movement Speed while carrying a target from 75% to 40%.",
+                      "items": [
+                        {
+                          "text": "“Because he is carrying someone.”"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Hun Batz Shift",
+              "items": [
+                {
+                  "text": "“Hun Batz relies on his ultimate for the bulk of his power, making it tough to give his other abilities meaningful impact. We’re reducing the maximum Crowd Control it provides, adding some bonus scaling, and with this change we can increase the potency of Overhead Smash. Overhead Smash will no longer go on cooldown if interrupted, which requires us to move the Protection Shred off the channel and backloaded onto the actual Smash.”"
+                },
+                {
+                  "text": "Overhead Smash (2)",
+                  "items": [
+                    {
+                      "text": "Removed the protection shred from the buildup."
+                    },
+                    {
+                      "text": "Now applies the full strength of the Protection Shred on hit. Its own damage will benefit from this Protection Shred."
+                    },
+                    {
+                      "text": "This ability will no longer go on cooldown/consume mana if interrupted before the Smash hits."
+                    }
+                  ]
+                },
+                {
+                  "text": "Fear No Evil (4)",
+                  "items": [
+                    {
+                      "text": "Targets will now be immune to the fear after 3 ticks, making the Maximum duration you can be feared 1s."
+                    },
+                    {
+                      "text": "Increased Strength Scaling from 10% per tick to 12.5% per tick"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Jing Wei Buff",
+              "items": [
+                {
+                  "text": "“Jing Wei took a big hit after we removed the knockup and damage from Persistent Gust for enemies who walked into it after its initial deployment. We’re restoring these effects at a reduced strength, ensuring foes still need to respect the gust when chasing or retreating. At the same time, this adjustment prevents her from regaining the free wave clear that originally prompted the change.”"
+                },
+                {
+                  "text": "Persistent Gust (1)",
+                  "items": [
+                    {
+                      "text": "Again applies a Knockup to enemies who walk into it after the initial burst, at 60% of the initial burst."
+                    },
+                    {
+                      "text": "Again applies Damage to enemies who walk into it after the initial burst, at 60% of the initial burst."
+                    },
+                    {
+                      "text": "Increased Damage from 70/120/170/220/270 to 70/125/180/235/290."
+                    }
+                  ]
+                },
+                {
+                  "text": "Explosive Bolts (2)",
+                  "items": [
+                    {
+                      "text": "Increased Damage Scaling from 100% to 102/104/106/108/110%."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Khepri Buff",
+              "items": [
+                {
+                  "text": "Abduct (1)",
+                  "items": [
+                    {
+                      "text": "Protections gained from the Grabbing a god persist for 3s after the dash ends. This does not apply to the Aspect grab."
+                    },
+                    {
+                      "text": "Increased Protections from 10/20/30/40/50 to 20/28/36/44/52."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Odin Buff",
+              "items": [
+                {
+                  "text": "Basic Attacks",
+                  "items": [
+                    {
+                      "text": "Adjusted hit timing to better match attack animations."
+                    }
+                  ]
+                },
+                {
+                  "text": "Lunge (1)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 16/15/14/13/12s to 14/13.5/13/12.5/12s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Gungnir’s Might (3)",
+                  "items": [
+                    {
+                      "text": "Increased Pulse Intelligence Scaling from 50% to 60%."
+                    },
+                    {
+                      "text": "Increased Projectile Strength Scaling from 60% to 75%."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Princess Bari Nerf",
+              "items": [
+                {
+                  "text": "“Princess Bari launched with a moderate win rate in all modes, which often indicates she’s slightly overtuned—new gods generally take time for players to master. To stay ahead of this learning curve, we’re nerfing Reverent Steps, a key contributor to her late-game strength.”"
+                },
+                {
+                  "text": "Reverent Steps",
+                  "items": [
+                    {
+                      "text": "Decreased Strength Scaling from 130% to 115%."
+                    },
+                    {
+                      "text": "Decreased Intelligence Scaling from 60% to 45%."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Rama Buff",
+              "items": [
+                {
+                  "text": "Astral Strike (1)",
+                  "items": [
+                    {
+                      "text": "Arrows fired now have 10% Strength Scaling.",
+                      "items": [
+                        {
+                          "text": "“The Aspect already has 25% Strength Scaling, this will remain untouched.”"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Susano Buff",
+              "items": [
+                {
+                  "text": "“Susano has continued to struggle despite our recent buff attempts, so we’re implementing more significant changes to help him thrive. His original Smite 1 Passive was a powerhouse, but the newer version proved too difficult to fully utilize. By cutting the stacks in half, Susano can now build and maintain his passive more easily, although it still requires three inhand cancels for its full effect. We’ve also made Storm Kata’s Dash cancellable for smoother follow-up, and increased Typhoon’s quick-fire damage to bring it closer to its Smite 1 parity.”"
+                },
+                {
+                  "text": "Storm’s Edge (P)",
+                  "items": [
+                    {
+                      "text": "Reduced stacks on targets from 6 to 3.",
+                      "items": [
+                        {
+                          "text": "Strength Reduction triggers at 1 stack."
+                        },
+                        {
+                          "text": "Slow triggers at 2 stacks."
+                        },
+                        {
+                          "text": "Damage Dealt increase triggers at 3 stacks."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Debuff Duration is increased from 4s to 5s."
+                    }
+                  ]
+                },
+                {
+                  "text": "Storm Kata (1)",
+                  "items": [
+                    {
+                      "text": "3rd Kata (Dash)",
+                      "items": [
+                        {
+                          "text": "The dash can now be cancelled early."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Typhoon (4)",
+                  "items": [
+                    {
+                      "text": "Increased uncharged damage from 50% Max to 80% Max."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Yemoja Buff",
+              "items": [
+                {
+                  "text": "Mending Waters",
+                  "items": [
+                    {
+                      "text": "Increased Int Scaling from 40% to 50%"
+                    }
+                  ]
+                },
+                {
+                  "text": "New Aspect releasing the week of March 31 - Aspect of Downpour",
+                  "items": [
+                    {
+                      "text": "Mending Waters no longer affects allies but stops and bounces on enemy gods, dealing damage, shield damage and providing Yemoja 6/7/8/9/10 Int per hit, stacking up to 6 times, for 10s.",
+                      "items": [
+                        {
+                          "text": "This ability can bounce to the same god once and hit the same target twice"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Additionally Moonstrike no longer stuns gods but its scaling has increased from 40% to 75%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Zeus Buff",
+              "items": [
+                {
+                  "text": "Chain Lightning (1)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown from 12s to 12/11.5/11/10.5/10s."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "NEW - Runeforged Hammer",
+              "items": [
+                {
+                  "text": "2600g"
+                },
+                {
+                  "text": "40 Strength"
+                },
+                {
+                  "text": "400 Max Health"
+                },
+                {
+                  "text": "5 Health Regen"
+                },
+                {
+                  "text": "Passive: After applying a Hard Crowd Control to an enemy god, mark them with a rune for 5s. Basic Attack them to forge that rune dealing 50 + 50% of your Item Protections as Magical Damage. This can only occur once every 40s. Hard Crowd Control applied to enemy gods while on cooldown reduces the cooldown by 3s."
+                },
+                {
+                  "text": "Builds from"
+                }
+              ]
+            },
+            {
+              "text": "NEW - Ancile",
+              "items": [
+                {
+                  "text": "2450g"
+                },
+                {
+                  "text": "60 Magical Protection"
+                },
+                {
+                  "text": "250 Max Health"
+                },
+                {
+                  "text": "Passive: You take 10% reduced Basic Attack damage. Taking Basic Attack damage reduces this item's cooldown by 2s."
+                },
+                {
+                  "text": "Active: Your next ability that damages an enemy god will silence them for 1.5s. Cooldown: 80s."
+                },
+                {
+                  "text": "Builds from :"
+                }
+              ]
+            },
+            {
+              "text": "NEW - Vampiric Shroud",
+              "items": [
+                {
+                  "text": "650g"
+                },
+                {
+                  "text": "20 Intelligence"
+                },
+                {
+                  "text": "75 Max Health"
+                },
+                {
+                  "text": "Passive: Damaging an enemy with an ability heals 3 Health and 4 Mana, once per target per ability. Heal an additional 3 Health and 4 Mana if this was a god. Requires level 20 to upgrade"
+                }
+              ]
+            },
+            {
+              "text": "NEW - Blood-soaked Shroud",
+              "items": [
+                {
+                  "text": "2150g (1500g to upgrade from Vampiric Shroud)"
+                },
+                {
+                  "text": "60 Intelligence"
+                },
+                {
+                  "text": "225 Max Health"
+                },
+                {
+                  "text": "Passive: Damaging an enemy with an ability heals 1% Health and Mana, once per target per ability. Heal an additional 1% Health and Mana if this was a god. For every Kill you have this game, increase the Heal by 0.1%."
+                }
+              ]
+            },
+            {
+              "text": "Bumba’s Golden Dagger (Starter)",
+              "items": [
+                {
+                  "text": "“Bumba’s Dagger and Spear were seeing significantly less play than Cudgel. We are moving Bumba’s to be more focused for Attack Speed focused Junglers, both in the stats provided by Golden Dagger, but carrying the passive and stats through to Spear.”"
+                },
+                {
+                  "text": "No longer provides 50 Mana."
+                },
+                {
+                  "text": "Now provides 10% Attack Speed."
+                },
+                {
+                  "text": "Increased passive range from 1.5m to 1.92m"
+                }
+              ]
+            },
+            {
+              "text": "Bumba’s Spear (Starter Upgrade)",
+              "items": [
+                {
+                  "text": "No longer provides Cooldown Rate."
+                },
+                {
+                  "text": "Now provides 200 Max Health"
+                },
+                {
+                  "text": "Now provides 25% Attack Speed."
+                },
+                {
+                  "text": "No longer provides a buff and heal upon defeating Jungle Camps, Structures, and Jungle Bosses die."
+                },
+                {
+                  "text": "Now provides “Basic Attacks deal 15% bonus Physical Damage to all enemies within 1.92m of the target.”"
+                }
+              ]
+            },
+            {
+              "text": "Demonic Grip Buff",
+              "items": [
+                {
+                  "text": "Increased Intelligence from 55 to 65."
+                },
+                {
+                  "text": "Fixed the tooltip stating it provided 7.5% Penetration per stack. This was giving 6%, matching The Executioner."
+                }
+              ]
+            },
+            {
+              "text": "Eye of Providence Buff",
+              "items": [
+                {
+                  "text": "Increased Physical Protection from 25 to 30."
+                },
+                {
+                  "text": "Increased Magical Protection from 25 to 30."
+                }
+              ]
+            },
+            {
+              "text": "Helm of Radiance Buff",
+              "items": [
+                {
+                  "text": "Increased Physical Protection from 25 to 35."
+                },
+                {
+                  "text": "Decreased max stack count from 5 to 4."
+                },
+                {
+                  "text": "Increased Physical Protection per stack from 5 to 7."
+                }
+              ]
+            },
+            {
+              "text": "Gauntlet Of Thebes Buff",
+              "items": [
+                {
+                  "text": "Increased Max Health from 150 to 200."
+                },
+                {
+                  "text": "Increased Protections bonus from max stacks from 10 to 15."
+                }
+              ]
+            },
+            {
+              "text": "Golden Blade Shift",
+              "items": [
+                {
+                  "text": "Increased Max Health from 150 to 200."
+                },
+                {
+                  "text": "Decreased Base damage from 25 to 20."
+                },
+                {
+                  "text": "Increased Item Protections scaling from 10% to 15%."
+                }
+              ]
+            },
+            {
+              "text": "Leviathan Buff",
+              "items": [
+                {
+                  "text": "Increased Physical Protection from 40 to 50."
+                }
+              ]
+            },
+            {
+              "text": "Sun Beam Bow Buff",
+              "items": [
+                {
+                  "text": "Increased Strength from 25 to 30."
+                },
+                {
+                  "text": "Increased Intelligence from 25 to 35."
+                },
+                {
+                  "text": "Increased Attack Speed from 15 to 20%."
+                }
+              ]
+            },
+            {
+              "text": "Sunder Buff",
+              "items": [
+                {
+                  "text": "“Sunder was the least purchased and performing Relic. We wanted to give it more offensive lethality but allow players to more frequently use its effect to quickly farm the Jungle and make it easier to have it available for objective control.”"
+                },
+                {
+                  "text": "God Per Level Damage increased from 4 to 6."
+                },
+                {
+                  "text": "Cooldown Reduced by 30s if used only on Jungle Monsters/Bosses."
+                }
+              ]
+            },
+            {
+              "text": "War Flag / Selflessness",
+              "items": [
+                {
+                  "text": "“With our item pacing changes, we reduced gold gain slightly across the map. This adjustment largely keeps War Flag and Selflessness in line with that shift.”"
+                },
+                {
+                  "text": "Decreased Bonus Gold from 8 to 7."
+                }
+              ]
+            },
+            {
+              "text": "Arondight Nerf",
+              "items": [
+                {
+                  "text": "Decreased Reveal debuff and Movement Speed buff durations from 10s to 6s."
+                }
+              ]
+            },
+            {
+              "text": "Hydras Lament",
+              "items": [
+                {
+                  "text": "Fixed an issue where this item was providing extra Mana instead of Mana regen",
+                  "items": [
+                    {
+                      "text": "Decreased Mana regen from 5 to 4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Quality of Life",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Side teleporter now shows cooldown in-world like the base teleporters"
+                },
+                {
+                  "text": "Brute anti-magic shield FX can now be seen from behind the minion"
+                }
+              ]
+            },
+            {
+              "text": "Gods",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Princess Bari",
+                  "items": [
+                    {
+                      "text": "Enhanced Warding Gust (2) Cone VFX will now play more consistently"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Cosmetics",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Jump Stamps Lobby Preview Fix - Hawt Sauce and Heart Candy no longer drop through the floor"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "New Voice Actors",
+      "anchor": "New_Voice_Actors",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Stumble Blade Susano - Jacob Browning"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 3/25/25",
+      "anchor": "Hotfix_3/25/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed an issue with the Prism store screen showing the wrong purchase price in the confirmation"
+                },
+                {
+                  "text": "Replaced home screen animation with a fade animation to improve usability."
+                },
+                {
+                  "text": "Added coins to the currency list while in the Home screen"
+                },
+                {
+                  "text": "Changed the \"What's New\" window to have a Continue button instead of a \"Hold\" on back"
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ares Bug",
+                  "bold": true,
+                  "lead": ":",
+                  "items": [
+                    {
+                      "text": "Ares shipped with a bug granting him infinite HP5 under certain conditions."
+                    },
+                    {
+                      "text": "He was temporarily disabled but has now been re-enabled after a rapid server-side fix."
+                    }
+                  ]
+                },
+                {
+                  "text": "Staff of Myrddin Disabled",
+                  "bold": true,
+                  "lead": ":",
+                  "items": [
+                    {
+                      "text": "The new Staff of Myrddin had an issue with its passive not functioning properly."
+                    },
+                    {
+                      "text": "It was disabled but expected to be re-enabled once the fix is deployed (targeted for the same afternoon)."
+                    }
+                  ]
+                },
+                {
+                  "text": "Eclipse Event Bug",
+                  "bold": true,
+                  "lead": ":",
+                  "items": [
+                    {
+                      "text": "Some players had trouble accessing or progressing the Eclipse event."
+                    },
+                    {
+                      "text": "Quick Fix",
+                      "bold": true,
+                      "detail": ": simply re-log, and it should work properly."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 3/26/25",
+      "anchor": "Hotfix_3/26/25",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "God Balance",
+          "anchor": "God_Balance_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Merlin",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Adjusted the timings of his Basic Attacks to better match his animation."
+                    },
+                    {
+                      "text": "Made adjustments to Frostbolts timing and blending for better feels."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Conquest",
+          "anchor": "Conquest_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Jungle base health changes are reverted"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fire Giant’s base health increased from 4500 to 6300",
+                  "items": [
+                    {
+                      "text": "As an example, Fire Giants spawned health at 15 minutes increased from 10,200 to 12,000"
+                    }
+                  ]
+                },
+                {
+                  "text": "Gold Fury’s base health increased from 2200 to 2750",
+                  "items": [
+                    {
+                      "text": "As an example, Gold Fury spawned health at 5 minutes is now increased from 3850 to 4400"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ancient Fury’s base health increased from 2560 to 3200"
+                },
+                {
+                  "text": "Pyromancer/Naga’s base health increased from 1800 to 2250",
+                  "items": [
+                    {
+                      "text": "As an example, Pyromancer’s spawned health at 10 minutes is now increased from 3870 to 4320"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Item Balance",
+          "anchor": "Item_Balance_2",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Blink Buff",
+                  "items": [
+                    {
+                      "text": "Reduced Cooldown from 240 to 210s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Sunder Nerf",
+                  "items": [
+                    {
+                      "text": "Decreased Per Level damage from 6 to 4."
+                    }
+                  ]
+                },
+                {
+                  "text": "Ancile",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where this was sharing the cooldown with Hide of the Nemean Lion."
+                    }
+                  ]
+                },
+                {
+                  "text": "Arondight Nerf",
+                  "items": [
+                    {
+                      "text": "Decreased Strength from 65 to 50."
+                    }
+                  ]
+                },
+                {
+                  "text": "Avenging Blade",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where the Movement Speed and Shred applied to non-god targets."
+                    }
+                  ]
+                },
+                {
+                  "text": "Bragi’s Harp Nerf",
+                  "items": [
+                    {
+                      "text": "Reduced damage dealt to Structure and Jungle Bosses by 50%."
+                    }
+                  ]
+                },
+                {
+                  "text": "Sun Beam Bow Nerf",
+                  "items": [
+                    {
+                      "text": "Reduced damage dealt to Structure and Jungle Bosses by 50%."
+                    }
+                  ]
+                },
+                {
+                  "text": "Obsidian Shard Shift",
+                  "items": [
+                    {
+                      "text": "Increased cost from 2400 to 3050."
+                    },
+                    {
+                      "text": "Increased Penetration from 15% to 25%",
+                      "items": [
+                        {
+                          "text": "The tooltip currently states 25% but is currently giving 15%."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Titan’s Bane Shift",
+                  "items": [
+                    {
+                      "text": "Increased the cost from 2450 to 3100"
+                    },
+                    {
+                      "text": "Increased Penetration from 15% to 25%",
+                      "items": [
+                        {
+                          "text": "The tooltip currently states 25% but is currently giving 15%."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Warrior’s Axe Nerf",
+                  "items": [
+                    {
+                      "text": "Decreased Strength from 15 to 12."
+                    },
+                    {
+                      "text": "Decreased True Damage Base from 40 to 30."
+                    },
+                    {
+                      "text": "Increased Heal Base from 20 to 30."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Bug Fixes",
+          "anchor": "Bug_Fixes_3",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Merlin Stances and flat cooldown changes fix"
+                },
+                {
+                  "text": "Fixed an issue where Merlin Ability 1 (Eclipse/Radiate/Frostbolt) FX would track dead enemies"
+                },
+                {
+                  "text": "Fixed an issue with Merlin’s Elementary Mastery FX"
+                },
+                {
+                  "text": "Fixed an issue with Merlin's ability and enemy coloration"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 3/28/25",
+      "anchor": "Hotfix_3/28/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Made various lighting fixes to the Home screen"
+            },
+            {
+              "text": "Thor’s Berserker Barrage damage should feel more evenly paced (harder to ‘miss’ hits)"
+            },
+            {
+              "text": "Mulan has a larger window to cancel her Ultimate in between each stage of her attack"
+            },
+            {
+              "text": "Fixed an issue where Founders Packs were not fulfilling correctly on PlayStation 5"
+            },
+            {
+              "text": "The Neith Radiant Skin should now be available again"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

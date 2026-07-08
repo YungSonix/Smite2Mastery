@@ -1,0 +1,1345 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Alpha_Weekend_3",
+    "title": "SMITE 2 Alpha Weekend 3",
+    "infoboxTitle": "AW3 - SMITE 2 Alpha Weekend 3",
+    "releaseDate": "June 27, 2024",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": "1519140",
+    "navigation": {
+      "prev": "SMITE_2_Alpha_Weekend_2",
+      "next": "SMITE_2_Alpha_Weekend_4"
+    },
+    "category": "alpha_weekend",
+    "categoryLabel": "Alpha Weekend Test patch notes",
+    "number": 3,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "NEW GODS",
+      "anchor": "NEW_GODS",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Hecate\nGoddess of Sorcery\nVoiced By: Katiana Sarkissian"
+            },
+            {
+              "text": "Thanatos\nHand of Death\nVoiced By: Erik Braa"
+            },
+            {
+              "text": "The Morrigan\nPhantom Queen\nVoiced By: Elizabeth Maxwell"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "NEW SKINS",
+      "anchor": "NEW_SKINS",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Cosmic Thrawn Hades\nCross-Gen - SMITE Cosmic Tyranny Chest\nVoiced By: Will de Renzy-Martin"
+            },
+            {
+              "text": "Mighty Mutt Fenrir\nCross-Gen - SMITE Summer Sizzle Event\nVoiced By: Troy Allan"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "GAMEPLAY",
+      "anchor": "GAMEPLAY",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Many more adjustments have been made to improve the feel of moving, attacking, and using abilities"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "GENERAL",
+      "anchor": "GENERAL",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "T Screen (Top Stats and Combat Log)",
+              "items": [
+                {
+                  "text": "Players will be able to see who the top performers are on each team"
+                },
+                {
+                  "text": "As well as recent history of the damage they have taken or dealt"
+                }
+              ]
+            },
+            {
+              "text": "Players can now swap between 2 pre-defined HUDs",
+              "items": [
+                {
+                  "text": "Legacy",
+                  "items": [
+                    {
+                      "text": "The default, a HUD intended to emulate the SMITE 1 experience"
+                    }
+                  ]
+                },
+                {
+                  "text": "Novus",
+                  "items": [
+                    {
+                      "text": "A new option, Rearrange Items to be closer to the center for better viewing of SMITE 2’s active items system"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Minimap",
+              "items": [
+                {
+                  "text": "Jungle camp respawn timer updates in segments instead of every second"
+                },
+                {
+                  "text": "This will display in 6 segments, similar to SMITE 1"
+                },
+                {
+                  "text": "In World Timers will still update by the second"
+                }
+              ]
+            },
+            {
+              "text": "Item Store",
+              "items": [
+                {
+                  "text": "Role Filter Subcategories",
+                  "items": [
+                    {
+                      "text": "Items within role filters will now be labeled and divided by their primary stat for easier parsing of item selection."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Updated Ruler to match Smite 1 Lengths, but converted to SMITE 2 Meters"
+            },
+            {
+              "text": "Damage Numbers had further adjustments, related to positioning, spacing, and sizing"
+            },
+            {
+              "text": "Interaction UI has had a visual and technical overhaul"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "CONQUEST",
+      "anchor": "CONQUEST",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "“Conquest is getting various changes to increase the intensity of the game mode, especially in the early to mid-game. Jungle Buffs will now drop at level 1, and players can stack multiple types of Jungle Buffs on each god. Gold gain is being increased to speed up the pace that players get to full build."
+        },
+        {
+          "type": "paragraph",
+          "text": "The side lanes are getting a new camp to fight over - the Cyclops Camp - that provides no XP but more gold than a usual camp. This will help players push their advantage gained in early pvp combat."
+        },
+        {
+          "type": "paragraph",
+          "text": "We are also making some changes to ensure games end on time. Structures are getting easier to kill and Fire Giant will provide a more powerful reward.\""
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "NEW CAMP Side lane gold pickups replaced with Rogue Cyclops",
+              "items": [
+                {
+                  "text": "No longer grants team gold"
+                },
+                {
+                  "text": "Does not grant XP when killed"
+                },
+                {
+                  "text": "Big Rogue Cyclops grants 90 (+10/level) gold"
+                },
+                {
+                  "text": "Small Rogue Cyclops grants 15 (+5/level) gold"
+                }
+              ]
+            },
+            {
+              "text": "Level 1 jungle buffs",
+              "items": [
+                {
+                  "text": "Jungle camps now drop buffs at level 1"
+                }
+              ]
+            },
+            {
+              "text": "Players can now pick up and stack different jungle buffs"
+            },
+            {
+              "text": "Harpy camps will now always spawn as one big harpy plus two small harpies"
+            },
+            {
+              "text": "Adjusted Minion movement speed and spawn timings to ensure all waves meet at 0:30"
+            },
+            {
+              "text": "Minions gain damage reduction over time",
+              "items": [
+                {
+                  "text": "Starts at 0%"
+                },
+                {
+                  "text": "Gains +1.75% every 3 minutes"
+                },
+                {
+                  "text": "Caps at 15.75% at 30 minutes"
+                }
+              ]
+            },
+            {
+              "text": "Map gold changes",
+              "items": [
+                {
+                  "text": "Increased scaling gold per level on minions by 0.5 to 1.5"
+                },
+                {
+                  "text": "Increased scaling gold per level on jungle camps from 1.5 to 3"
+                }
+              ]
+            },
+            {
+              "text": "Phoenix HP/Protections Nerfs",
+              "items": [
+                {
+                  "text": "Decreased Base health from 3000 to 2500"
+                },
+                {
+                  "text": "Decreased Base protections from 145 to 135"
+                }
+              ]
+            },
+            {
+              "text": "Tower HP/Protections Nerfs",
+              "items": [
+                {
+                  "text": "Decreased Base health from 2500 to 2250"
+                },
+                {
+                  "text": "Decreased Base protections from 135 to 130"
+                }
+              ]
+            },
+            {
+              "text": "Titan HP/Physical Penetration Nerfs",
+              "items": [
+                {
+                  "text": "Decreased Base health from 11750 to 10000"
+                },
+                {
+                  "text": "Decreased Base physical penetration from 30% to 15%"
+                }
+              ]
+            },
+            {
+              "text": "Increased Buff Stats from Fire Giant Buff",
+              "items": [
+                {
+                  "text": "Now grants +30 protections on first kill"
+                },
+                {
+                  "text": "Base health regeneration buff increased from 0.8%/s to 1%/s"
+                },
+                {
+                  "text": "Base mana regeneration buff increased from 0.4%/s to 0.5%/s"
+                }
+              ]
+            },
+            {
+              "text": "Jungle buff effect changes",
+              "items": [
+                {
+                  "text": "New Primal buff effects",
+                  "items": [
+                    {
+                      "text": "Level 1",
+                      "items": [
+                        {
+                          "text": "Gain +5 Mana Regeneration."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Level 2",
+                      "items": [
+                        {
+                          "text": "Gain +5 Mana Regeneration."
+                        },
+                        {
+                          "text": "When you take damage from an enemy god, reduce non-ultimate cooldowns by 1 second. Can only occur every 6 seconds."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Level 3",
+                      "items": [
+                        {
+                          "text": "Gain +10 Mana Regeneration."
+                        },
+                        {
+                          "text": "When you take damage from an enemy god, reduce non-ultimate cooldowns by 1 second. Can only occur every 6 seconds."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Level 4",
+                      "items": [
+                        {
+                          "text": "Gain +10 Mana Regeneration."
+                        },
+                        {
+                          "text": "When you take damage from an enemy god, reduce non-ultimate cooldowns by 1 second. Can only occur every 3 seconds."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "New Pathfinder buff effects",
+                  "items": [
+                    {
+                      "text": "Level 1",
+                      "items": [
+                        {
+                          "text": "Gain +10% Movement Speed."
+                        },
+                        {
+                          "text": "When you slay a jungle monster, recover 10% of the monster's health as healing and restore 25 mana."
+                        },
+                        {
+                          "text": "There is a known bug currently where it isn’t giving the correct % of HP, which is fixed in a future patch."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Level 2",
+                      "items": [
+                        {
+                          "text": "Gain +10% Movement Speed."
+                        },
+                        {
+                          "text": "When you slay a jungle monster, recover 10% of the monster's health as healing and restore 25 mana."
+                        },
+                        {
+                          "text": "Abilities that hit enemy gods reduce protections by 10."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Level 3",
+                      "items": [
+                        {
+                          "text": "Gain +15% Movement Speed."
+                        },
+                        {
+                          "text": "When you slay a jungle monster, recover 10% of the monster's health as healing and restore 25 mana."
+                        },
+                        {
+                          "text": "Abilities that hit enemy gods reduce protections by 10."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Level 4",
+                      "items": [
+                        {
+                          "text": "Gain +15% Movement Speed."
+                        },
+                        {
+                          "text": "When you slay a jungle monster, recover 10% of the monster's health as healing and restore 25 mana."
+                        },
+                        {
+                          "text": "Abilities that hit enemy gods reduce protections by 20."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "New Inspiration buff effects",
+                  "items": [
+                    {
+                      "text": "Level 1",
+                      "items": [
+                        {
+                          "text": "Gain +4 STR/INT once per ability hit or basic attack hit. Max 5 stacks."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Level 2",
+                      "items": [
+                        {
+                          "text": "Gain +4 STR/INT once per ability hit or basic attack hit. Max 5 stacks."
+                        },
+                        {
+                          "text": "Nearby minion deaths stores a soul. Hitting an objective or jungle boss fires all of the souls towards the target, dealing 15 damage per soul. Max 30 souls."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Level 3",
+                      "items": [
+                        {
+                          "text": "Gain +8 STR/INT once per ability hit or basic attack hit. Max 5 stacks."
+                        },
+                        {
+                          "text": "Nearby minion deaths stores a soul. Hitting an objective or jungle boss fires all of the souls towards the target, dealing 15 damage per soul. Max 30 souls."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Level 4",
+                      "items": [
+                        {
+                          "text": "Gain +8 STR/INT once per ability hit or basic attack hit. Max 5 stacks."
+                        },
+                        {
+                          "text": "Nearby minion deaths stores a soul. Hitting an objective or jungle boss fires all of the souls towards the target, dealing 15 damage per soul. Max 30 souls."
+                        },
+                        {
+                          "text": "Gain +1 soul every second."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "New Caustic buff effects",
+                  "items": [
+                    {
+                      "text": "Level 1",
+                      "items": [
+                        {
+                          "text": "Attacks and abilities apply poison that deals 2.5% of Max Health over 3 seconds."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Level 2",
+                      "items": [
+                        {
+                          "text": "Attacks and abilities apply poison that deals 5% of Max Health over 3 seconds."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Level 3",
+                      "items": [
+                        {
+                          "text": "Attacks and abilities apply poison that deals 5% of Max Health over 3 seconds."
+                        },
+                        {
+                          "text": "Each tick heals the owner for +10 HP."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Level 4",
+                      "items": [
+                        {
+                          "text": "Attacks and abilities apply poison that deals 10% of Max Health over 3 seconds."
+                        },
+                        {
+                          "text": "Each tick heals the owner for +10 HP."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "New Trinket buff effects",
+                  "items": [
+                    {
+                      "text": "Level 1",
+                      "items": [
+                        {
+                          "text": "Gain a +50HP Shield. Stacks with other Trinkets."
+                        },
+                        {
+                          "text": "Max 900 Shield HP."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Level 2",
+                      "items": [
+                        {
+                          "text": "Gain a +100 HP Shield. Stacks with other Trinkets."
+                        },
+                        {
+                          "text": "Max 900 Shield HP."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Level 3",
+                      "items": [
+                        {
+                          "text": "Gain a +200HP Shield. Stacks with other Trinkets."
+                        },
+                        {
+                          "text": "Max 900 Shield HP."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Level 4",
+                      "items": [
+                        {
+                          "text": "Gain a +300HP Shield. Stacks with other Trinkets."
+                        },
+                        {
+                          "text": "Max 900 Shield HP."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Requirement for leveling up camps reduced by 1 whole clear",
+              "items": [
+                {
+                  "text": "Prev: 3 buff camp clears to go from level 1 -> 2"
+                },
+                {
+                  "text": "Now: 2 buff camp clears to go from level 1 -> 2"
+                }
+              ]
+            },
+            {
+              "text": "Fixed jungle camp special abilities not using their STR/INT for damage",
+              "items": [
+                {
+                  "text": "Was only doing base damage without the scaling"
+                }
+              ]
+            },
+            {
+              "text": "Reduced last hit threshold for Minotaur from 25% of remaining HP to 10%"
+            },
+            {
+              "text": "Fixed Fire Giant’s projectiles getting blocked by deployable walls"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "GODS",
+      "anchor": "GODS",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "NEW",
+          "anchor": "NEW",
+          "level": 3,
+          "content": []
+        },
+        {
+          "title": "BALANCE",
+          "anchor": "BALANCE",
+          "level": 3,
+          "content": []
+        },
+        {
+          "title": "God Balance",
+          "anchor": "God_Balance",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Anhur",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Shifting Sands",
+                      "items": [
+                        {
+                          "text": "Updated timings to better match his animation, and to make it feel more responsive."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Impale",
+                      "items": [
+                        {
+                          "text": "Decreased Stun Duration From 0.85/0.95/1.05/1.15/1.25 seconds to 0.75/0.8/0.85/0.9/0.95 seconds"
+                        },
+                        {
+                          "text": "Updated timings to better match the projectile throw animation."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Desert Fury",
+                      "items": [
+                        {
+                          "text": "Updated Audio cues to better match his throw timing."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Anubis",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Mummify",
+                      "items": [
+                        {
+                          "text": "Decreased Stun Duration From 1.1/1.2/1.3/1.4/1.5 seconds to 0.85/0.95/1.05/1.15/1.25 seconds"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Death Gaze",
+                      "items": [
+                        {
+                          "text": "Increase damage from 23/28/33/38/43 + 18% Intelligence to 25/30/35/40/45 + 20% Intelligence"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Athena",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Confound",
+                      "items": [
+                        {
+                          "text": "Decreased Taunt Duration From 1/1.15/1.3/1.45/1.6 seconds to 0.75/0.9/1.05/1.2/1.35 seconds"
+                        },
+                        {
+                          "text": "Reduced Taunt slow from 65% to 25%. Tooltip incorrectly stated 50%"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Bellona",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Eagle’s Rally",
+                      "items": [
+                        {
+                          "text": "Decreased Stun Duration From 1 seconds to 0.75 seconds At All Ranks"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Cernunnos",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "The Wild Hunt",
+                      "items": [
+                        {
+                          "text": "Decreased Polymorph Duration From 2.25 seconds to 1.5 seconds At All Ranks"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Chaac",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Rain Dance",
+                      "items": [
+                        {
+                          "text": "Decreased Slow from 20/22.5/25/27.5/30% to 15/17.5/20/22.5/25%"
+                        },
+                        {
+                          "text": "Decreased Attack Speed Slow from 15/17.5/20/22.5/25% to 10/12.5/15/17.5/20%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Storm Call",
+                      "items": [
+                        {
+                          "text": "Decreased Silence Duration From 2 seconds to 1.5 seconds At All Ranks"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fenrir",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Unchained",
+                      "items": [
+                        {
+                          "text": "Decreased Stun Duration From 1 seconds to 0.75 seconds At All Ranks"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Seething Howl",
+                      "items": [
+                        {
+                          "text": "Decreased Strength Buff from 15/25/35/45/55 to 15/20/25/30/35"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Ragnarok",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 90 seconds to 100 seconds at all ranks"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Hades",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Shroud of Darkness",
+                      "items": [
+                        {
+                          "text": "Decreased Silence and Fear Durations From 1/1.15/1.3/1.45/1.6 seconds to 0.75/0.85/0.95/1.05/1.15 seconds"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Pillar of Agony",
+                      "items": [
+                        {
+                          "text": "Decreased the Protection Hades gets while channeling from 60/85/110/135/160 to 50/65/80/95/110"
+                        },
+                        {
+                          "text": "Decreased Per Tick Damage from 45/60/75/90/105 + 30% Intelligence per tick to 38/51/64/77/90 + 25% Intelligence"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Kukulkan",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Zephyr",
+                      "items": [
+                        {
+                          "text": "Decreased Mana Cost from 50/60/70/80/90 to 50/55/60/65/70"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Slipstream",
+                      "items": [
+                        {
+                          "text": "Decreased Mana Cost from 55/60/65/70/75 to 40/45/50/55/60"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Whirlwind",
+                      "items": [
+                        {
+                          "text": "Increased base damage per tick from 10/15/20/25/30 to 12/18/24/30/36"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Neith",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Broken Weaves",
+                      "items": [
+                        {
+                          "text": "Fixed an issue where this ability stated that it dealt Physical Damage"
+                        },
+                        {
+                          "text": "It should now display and deal the intended damage type: Magical Damage"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Spirit Arrow",
+                      "items": [
+                        {
+                          "text": "Decreased Root Duration From 1.6/1.7/1.8/1.9/2 seconds to 1/1.1/1.2/1.3/1.4 seconds"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "World Weaver",
+                      "items": [
+                        {
+                          "text": "Decreased Stun Duration From 1.5 seconds to 1 seconds At All Ranks"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Odin",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Gungnir’s Might",
+                      "items": [
+                        {
+                          "text": "Decreased Stun Duration From 1.2 seconds to 1 seconds At All Ranks"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Sol",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Stellar Burst",
+                      "items": [
+                        {
+                          "text": "This ability now grants Sol Haste"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Thanatos",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Soul Reap",
+                      "items": [
+                        {
+                          "text": "Decreased Silence Duration From 1 seconds to 0.75 seconds At All Ranks"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Hovering Death",
+                      "items": [
+                        {
+                          "text": "Decreased Stun Duration From 1.5 seconds to 1 seconds At All Ranks"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The Morrigan",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Deadly Aspects",
+                      "items": [
+                        {
+                          "text": "Decreased Stun Duration From 1 seconds to 0.75 seconds At All Ranks"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ymir",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Frostbite",
+                      "items": [
+                        {
+                          "text": "Increased Damage Reduction from 10% to 15%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Frost Breath",
+                      "items": [
+                        {
+                          "text": "Decreased Stun Duration From 1.2/1.4/1.6/1.8/2 seconds to 0.8/1/1.2/1.4/1.6 seconds"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Zeus",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Detonate Charge",
+                      "items": [
+                        {
+                          "text": "Decreased Stun Duration From 0.75 seconds to 0.5 seconds At All Ranks"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "ITEMS",
+      "anchor": "ITEMS",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "NEW",
+          "anchor": "NEW_2",
+          "level": 3,
+          "content": []
+        },
+        {
+          "title": "REWORKS",
+          "anchor": "REWORKS",
+          "level": 3,
+          "content": []
+        },
+        {
+          "title": "BUFFS",
+          "anchor": "BUFFS",
+          "level": 3,
+          "content": []
+        },
+        {
+          "title": "NERFS",
+          "anchor": "NERFS",
+          "level": 3,
+          "content": []
+        },
+        {
+          "title": "BALANCE",
+          "anchor": "BALANCE_2",
+          "level": 3,
+          "content": []
+        }
+      ]
+    },
+    {
+      "title": "BUG FIXES",
+      "anchor": "BUG_FIXES",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Gameplay",
+              "items": [
+                {
+                  "text": "Fixed issues with Disconnect reposition abuse"
+                },
+                {
+                  "text": "Fixed issues with stacking passives from items would stop working after a disconnect"
+                },
+                {
+                  "text": "Fixed an issue where 3k power potions could be sold after they were used"
+                },
+                {
+                  "text": "Fixed issues with players falling through map volumes on latency"
+                }
+              ]
+            },
+            {
+              "text": "Gods",
+              "items": [
+                {
+                  "text": "Anhur",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where his Impale ability was doing too much damage when it hit two players at once"
+                    }
+                  ]
+                },
+                {
+                  "text": "Fenrir",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where his passive would stop working after a disconnect"
+                    },
+                    {
+                      "text": "Fixed an issue where he could place enemy players into walls"
+                    }
+                  ]
+                },
+                {
+                  "text": "Chaac",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where his passive would stop working after a disconnect"
+                    }
+                  ]
+                },
+                {
+                  "text": "Ymir",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where he could move during his Ultimate and Frost Breath"
+                    }
+                  ]
+                },
+                {
+                  "text": "Bellona",
+                  "items": [
+                    {
+                      "text": "Fixed issues with her alternate weapons visually persisting in the wrong stance",
+                      "items": [
+                        {
+                          "text": "There are still known issues of wrong weapons appearing if she is interrupted after casting"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Zeus",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where the Hand of the Abyss item wasn’t working properly with his basic attack damage bonus"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "UI",
+              "items": [
+                {
+                  "text": "Fixed an issue with Autorun being unable to be re-binded in Settings"
+                },
+                {
+                  "text": "Fixed an issue on Console where getting a party invite while in the Gods Page caused a stuck state.",
+                  "items": [
+                    {
+                      "text": "D-pad navigation currently isn’t functioning properly, press A to accept the party invite or B to decline if you get in this state"
+                    }
+                  ]
+                },
+                {
+                  "text": "Fixed issues with God portrait icons not showing on the minimap sometimes during matches"
+                },
+                {
+                  "text": "Fixed an issue on Console being unable to navigate God abilities with triggers when first viewing the Gods Page"
+                },
+                {
+                  "text": "Fixed an issue where players could bring up picking a role before the screen transitioned into the God Select Lobby"
+                },
+                {
+                  "text": "Fixed an issue where Sensitivity and some Video Settings weren’t being saved between client launches"
+                },
+                {
+                  "text": "Fixed an issue where VGS wasn’t working in Practice Mode"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "KNOWN ISSUES",
+      "anchor": "KNOWN_ISSUES",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Settings - Show targeter 3D elements isn’t working currently"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "UPCOMING FEATURES",
+      "anchor": "UPCOMING_FEATURES",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "More Pre-Game Active Choices",
+              "items": [
+                {
+                  "text": "We are in the process of designing and implementing more powerful Active Effects that players can choose from instead of Blink or Beads"
+                }
+              ]
+            },
+            {
+              "text": "Pre-Game Passive Choices",
+              "items": [
+                {
+                  "text": "We are in the process of designing and implementing a new system that allows players to select a passive effect from a variety of options"
+                },
+                {
+                  "text": "These new Passives will not take up an item slot"
+                },
+                {
+                  "text": "The design goals for these passives will be:",
+                  "items": [
+                    {
+                      "text": "Provide combat-oriented effects, not economy (gold/xp)"
+                    },
+                    {
+                      "text": "Make one effect that clearly fits into each of the 5 roles, but still leave for flexing these effects into other roles"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Reworked God ability text formulas and color coding",
+              "items": [
+                {
+                  "text": "God ability text has a lot of exciting new systems in SMITE 2, but it also has a lot of room for improvement."
+                },
+                {
+                  "text": "A rework of these is in progress to make them shorter, easier to read, and to better highlight scaling stats in formulas."
+                }
+              ]
+            },
+            {
+              "text": "Player Progression",
+              "items": [
+                {
+                  "text": "As we approach our 24/7 Alpha Phase we are hard at work on player progression and content ownership features"
+                },
+                {
+                  "text": "This Includes",
+                  "items": [
+                    {
+                      "text": "Player Level Progression"
+                    },
+                    {
+                      "text": "God Mastery Progression and the new Free/Ascension rewards included in the new Mastery System"
+                    },
+                    {
+                      "text": "A variety of familiar cosmetics, as well as some new ones"
+                    },
+                    {
+                      "text": "Persistent ownership of currency, gods, and cosmetic content"
+                    },
+                    {
+                      "text": "Player customization systems including god-specific cosmetic loadouts"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Player Reporting and Moderation",
+              "items": [
+                {
+                  "text": "A very important aspect of any multiplayer game, and one we plan to prioritize highly throughout our 24/7 gameplay testing phases."
+                },
+                {
+                  "text": "Some early UI and systems are already in early Alpha tests for SMITE 2, with more functionality on the way"
+                }
+              ]
+            },
+            {
+              "text": "K Screen",
+              "items": [
+                {
+                  "text": "The current hover tooltip is a temporary way to view god ability information that we expect to expand upon"
+                },
+                {
+                  "text": "In a near future patch we aim to have the K screen return as a place for players to quickly read their god’s entire kit short descriptions on a single screen"
+                },
+                {
+                  "text": "This screen will also be used as a way for console players to level up their abilities"
+                },
+                {
+                  "text": "And will also come with a QoL change that shows players a quick summary of what parts of the ability will improve when leveled up"
+                }
+              ]
+            },
+            {
+              "text": "Individual Ability Casting Settings",
+              "items": [
+                {
+                  "text": "This potentially will be in a settings menu instead of the K screen, but we understand this is important to players and we are actively pushing to get this feature into SMITE 2"
+                }
+              ]
+            },
+            {
+              "text": "Ranked Modes",
+              "items": [
+                {
+                  "text": "We understand that a Ranked Conquest experience is a highly desired feature for SMITE players, and"
+                },
+                {
+                  "text": "This won't release immediately with 24/7 Alpha, but likely the patch after so we can verify stability long term before ranked progress"
+                },
+                {
+                  "text": "Ranked Systems and Matchmaking will be undergoing a large overhaul as we attempt to solve a lot of the problems in SMITE 1’s ranked systems"
+                },
+                {
+                  "text": "This includes",
+                  "items": [
+                    {
+                      "text": "New Ranked party and matchmaking rules"
+                    },
+                    {
+                      "text": "New Ranked progression System"
+                    },
+                    {
+                      "text": "Ranked Leaderboards"
+                    },
+                    {
+                      "text": "Draft Mode pregame Lobby"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Source"
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

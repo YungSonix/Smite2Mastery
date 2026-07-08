@@ -1,992 +1,2027 @@
 {
-    "patchName": "Open Beta 23 - The Nine-Tailed Fox Update",
-    "summary": "Da Ji added with new Aspect of Ferocity. Yulefest event launched with free skins and cosmetics. Major item balance including anti-heal rework, potion adjustments, and jungle starter changes. Conquest received kill formula adjustments, respawn changes, and moonlight improvements. Multiple god balance changes including healers buffed and ranged supports nerfed.",
-    "gods": [
-      {
-        "type": "god",
-        "name": "Da Ji",
-        "changeType": "new",
-        "changes": [
-          {
-            "section": "General",
-            "description": [
-              "Melee Basic Attacks",
-              "Damage Type: Physical",
-              "Scaling Type: Strength Scaling"
-            ]
-          },
-          {
-            "section": "Passive",
-            "abilityName": "Torture Blades",
-            "abilityNumber": "(P)",
-            "description": [
-              "Attacks and non-ultimate abilities cause enemies to bleed."
-            ]
-          },
-          {
-            "section": "Ability",
-            "abilityName": "Horrible Burns",
-            "abilityNumber": "(1)",
-            "description": [
-              "While active, your next successful attack will slow, deals bonus physical damage and physical damage every 1s.",
-              "The nearest enemy god below a health threshold is marked, reducing this abilities cooldown rapidly",
-              "Hitting a marked enemy God with this ability permanently increases it's damage"
-            ]
-          },
-          {
-            "section": "Ability",
-            "abilityName": "One Thousand Cuts",
-            "abilityNumber": "(2)",
-            "description": [
-              "Strike enemies ahead of you 4 times, dealing physical damage.",
-              "While channeling you gain movement speed and mitigate damage dealt by enemies behind you",
-              "Additionally you are slow immune and immune to strafe and backpedal movement penalties"
-            ]
-          },
-          {
-            "section": "Ability",
-            "abilityName": "Trickster Spirit",
-            "abilityNumber": "(3)",
-            "description": [
-              "Teleport to an enemy or ward after a short delay, dealing physical damage in an area"
-            ]
-          },
-          {
-            "section": "Ability",
-            "abilityName": "Paolao",
-            "abilityNumber": "(4)",
-            "description": [
-              "Rise onto your Paolo and fire 3 snaring chains. Chains deal physical damage, cripple and vortex enemy gods towards the Paolo.",
-              "After 3 shots or on canceling this ability, you can leap to a target location",
-              "Hitting a chained enemy a second time increases the vortex strength.",
-              "If a chained enemy reaches the Paolo they are stunned and take physical damage.",
-              "Enemies near the Paolo also take physical damage every 0.25s"
-            ]
-          },
-          {
-            "section": "Aspect",
-            "abilityName": "Aspect of Ferocity",
-            "releaseDate": "November 21st",
-            "description": [
-              "Horrible Burns no longer burns but provides lifesteal and lasts for a short duration.",
-              "One Thousand Cuts has a shorter cooldown, fires 2 swings, increasing attack speed thresholds and deals attack damage.",
-              "Trickster Spirit does less damage but provides an attack speed buff."
-            ]
-          }
-        ]
-      },
-      {
-        "type": "god",
-        "name": "Hou Yi",
-        "changeType": "shift",
-        "changes": [
-          {
-            "section": "Ability",
-            "abilityName": "Divebomb",
-            "abilityNumber": "(3)",
-            "description": [
-              "Increased Buildup Time: 0s -> 0.066s",
-              "This is still significantly shorter than Smite 1's 0.15s, but we feel removing this creates a disconnect in him still being on the ground but un-damagable/hittable. Going back to 0.15s would likely reintroduce the feeling of the user being off the ground and then being interrupted on the server and being pulled down."
-            ]
-          }
-        ]
-      },
-      {
-        "type": "god",
-        "name": "Anhur",
-        "changeType": "shift",
-        "changes": [
-          {
-            "section": "Ability",
-            "abilityName": "Disperse",
-            "abilityNumber": "(3)",
-            "description": [
-              "Decreased Buildup Time: 0.15s -> 0.1s",
-              "Increased Leap Tween Time: 0.79s to 0.84s",
-              "This ensures the animation will look like it lands at the correct time due to the buildup change."
-            ]
-          }
-        ]
-      },
-      {
-        "type": "god",
-        "name": "Ullr",
-        "changeType": "shift",
-        "changes": [
-          {
-            "section": "Ability",
-            "abilityName": "Glory Bound",
-            "abilityNumber": "(3)",
-            "description": [
-              "Decreased Buildup Time: 0.3s -> 0.2s",
-              "Increased Leap Tween Time: 0.6 to 0.66",
-              "This ensures the animation will look like it lands at the correct time due to the buildup change."
-            ]
-          }
-        ]
-      },
-      {
-        "type": "god",
-        "name": "Neith",
-        "changeType": "shift",
-        "changes": [
-          {
-            "section": "Ability",
-            "abilityName": "Back Flip",
-            "abilityNumber": "(3)",
-            "description": [
-              "Decreased Buildup Time: 0.17s -> 0.1s",
-              "Increased Leap Tween Time: 1 -> 1.07s",
-              "This ensures the animation will look like it lands at the correct time due to the buildup change."
-            ]
-          }
-        ]
-      },
-      {
-        "type": "god",
-        "name": "Kali",
-        "changeType": "buff",
-        "changes": [
-          {
-            "section": "Ability",
-            "abilityName": "Nimble Strike",
-            "abilityNumber": "(1)",
-            "description": [
-              "Decreased Buildup Time: 0.2s -> 0.14s",
-              "Increased Leap Tween Time: 0.6s -> 0.66s",
-              "This ensures the animation will look like it lands at the correct time due to the buildup change."
-            ]
-          }
-        ]
-      },
-      {
-        "type": "god",
-        "name": "Aphrodite",
-        "changeType": "buff",
-        "changes": [
-          {
-            "section": "Ability",
-            "abilityName": "Love Birds",
-            "abilityNumber": "(3)",
-            "description": [
-              "Increased Heal: 10/12/14/16/18 -> 10/13/16/19/22"
-            ]
-          }
-        ]
-      },
-      {
-        "type": "god",
-        "name": "Guan Yu",
-        "changeType": "buff",
-        "changes": [
-          {
-            "section": "Ability",
-            "abilityName": "Conviction",
-            "abilityNumber": "(1)",
-            "description": [
-              "Increased Heal: 45/65/85/105/125 -> 45/70/95/120/145"
-            ]
-          },
-          {
-            "section": "Aspect",
-            "abilityName": "Aspect of the General - Conviction",
-            "abilityNumber": "(1)",
-            "description": [
-              "Increased Heal Over Time: 6/11/16/21/26 -> 7/13/19/25/31"
-            ]
-          }
-        ]
-      },
-      {
-        "type": "god",
-        "name": "Ra",
-        "changeType": "buff",
-        "changes": [
-          {
-            "section": "Ability",
-            "abilityName": "Solar Blessing",
-            "abilityNumber": "(3)",
-            "description": [
-              "Increased Heal: 10/17/24/31/38 -> 10/19/28/37/46"
-            ]
-          },
-          {
-            "section": "Aspect",
-            "abilityName": "Aspect of Thermotherapy - Searing Pain",
-            "abilityNumber": "(4)",
-            "description": [
-              "Increased Heal: 150/250/350/450/550 -> 160/270/380/490/600"
-            ]
-          }
-        ]
-      },
-      {
-        "type": "god",
-        "name": "Baron Samedi",
-        "changeType": "nerf",
-        "changes": [
-          {
-            "section": "Ability",
-            "abilityName": "Vivid Gaze",
-            "abilityNumber": "(1)",
-            "description": [
-              "Decreased Base Damage: 85/145/235/270/330 -> 70/125/180/235/290",
-              "Increased Double Hit Damage Dealt: 25% -> 35%",
-              "Baron's Support playstyle looks to be a solidly even split between his Aspect and Non-Aspect playstyles. As an offensive Aspect, it seeing this much success in the role points to an issue with his overall base damage. Vivid Gaze's Base Damage is overall going down, but the double hit reward, especially with scaling, is going up."
-            ]
-          }
-        ]
-      },
-      {
-        "type": "god",
-        "name": "Yemoja",
-        "changeType": "nerf",
-        "changes": [
-          {
-            "section": "Ability",
-            "abilityName": "Bouncing Bubble",
-            "abilityNumber": "(1)",
-            "description": [
-              "Decreased Base Damage: 65/105/145/185/225 -> 56/98/140/182/224",
-              "Decreased Small Base Damage: 28/49/70/91/112",
-              "Yemoja on the other hand is pretty firmly only using her non-aspect in Support, focusing our adjustments to her Support playstyle to be just nerfs. Her early game pressure is high, but we want her to return to her current strength by as early as mid game. Separately, her Aspect is getting some additional scaling to offset these adjustments and help bring up a struggling Aspect."
-            ]
-          },
-          {
-            "section": "Ability",
-            "abilityName": "Moonstrike",
-            "abilityNumber": "(1)",
-            "description": [
-              "Decreased Outer Damage: 40/65/90/115/140 -> 30/60/90/120/150"
-            ]
-          },
-          {
-            "section": "Aspect",
-            "abilityName": "Aspect of Downpour - Bouncing Bubble",
-            "abilityNumber": "(1)",
-            "description": [
-              "Increased Big Bubble Intelligence Scaling: 50% -> 60%",
-              "Increased Small Bubble Intelligence Scaling: 25% -> 30%"
-            ]
-          }
-        ]
-      },
-      {
-        "type": "god",
-        "name": "Eset",
-        "changeType": "nerf",
-        "changes": [
-          {
-            "section": "Passive",
-            "abilityName": "Funeral Rites",
-            "abilityNumber": "(P)",
-            "description": [
-              "Fixed an issue where God decoys were providing stacks"
-            ]
-          },
-          {
-            "section": "Ability",
-            "abilityName": "Spirit Ball",
-            "abilityNumber": "(2)",
-            "description": [
-              "Increased Cooldown: 10s -> 14/13/12/11/10s"
-            ]
-          },
-          {
-            "section": "Aspect",
-            "abilityName": "Aspect of the Lifewarden - Attack",
-            "description": [
-              "Decreased Protection Scaling Bonus: 8% -> 6%"
-            ]
-          },
-          {
-            "section": "Aspect",
-            "abilityName": "Aspect of the Lifewarden - Wing Gust",
-            "abilityNumber": "(1)",
-            "description": [
-              "Decreased Base Damage: 45/65/85/105/125 -> 40/60/80/100/120",
-              "NEW: If the first hit of a projectile is a Minion, you only gain 50% Healing. You gain an additional 50% if that same projectile hits an enemy god as well"
-            ]
-          }
-        ]
-      },
-      {
-        "type": "god",
-        "name": "Agni",
-        "changeType": "shift",
-        "changes": [
-          {
-            "section": "Aspect",
-            "abilityName": "Aspect - Combustion",
-            "abilityNumber": "(P)",
-            "description": [
-              "Removed: Base Damage Per Ability Rank: 30/60/90/120/150",
-              "Increased Base Damage: 0 -> 10",
-              "Increased Per Level Damage: 0 -> 10",
-              "Decreased Stack Multiplier: 1.2/1.4/1.6/1.8/2 -> 1/1.25/1.5/1.75/2",
-              "This also means at a single stack the damage matches the tooltip. Previously it was impossible to see the tooltip value.",
-              "Level 1 Damage: 36 -> 20",
-              "Level 20 Damage: 180 -> 210",
-              "Agni's Aspect currently scales with the rank of the triggering ability, leading to his early game pressure to be quite high. A level 6 Agni with 3 ranks of Flame Wave will currently deal 108 Base, and potentially up to 180 Base at max stacks before we consider scaling. We are adjusting it to no longer consider the rank of the ability triggering and only consider Agni's Level."
-            ]
-          }
-        ]
-      },
-      {
-        "type": "god",
-        "name": "Aladdin",
-        "changeType": "rework",
-        "changes": [
-          {
-            "section": "General",
-            "description": [
-              "Increased Intelligence Scaling on Basic Attacks: 20% -> 30%",
-              "Increased Base Health: 498 -> 525",
-              "Increased Per Level Health: 92.6 -> 97.5",
-              "Level 20 Health: 2351 -> 2475",
-              "Aladdin's initial tuning and design decisions led him to state where he was the least popular gods in the game, while also being highly frustrating at top levels. Simply nerfing him would not resolve these issues, so we are doing more significant adjustments. We hope these adjustments let him shine better while maintaining him as a god that still requires a high skill ceiling to execute to the fullest."
-            ]
-          },
-          {
-            "section": "Passive",
-            "abilityName": "Three Wishes",
-            "abilityNumber": "(P)",
-            "description": [
-              "Wealth Wish - Reworked: God Kills & Assists provide 33 more gold and gain 7.5% Bonus Gold from all other sources for 180s.",
-              "Decreased Genie Charges: 2 -> 1",
-              "Decreased Genie Charges Cooldown: 15s -> 10s",
-              "NEW: -1s Cooldown for each enemy slain. -5s for gods."
-            ]
-          },
-          {
-            "section": "Ability",
-            "abilityName": "Kufic Invocation",
-            "abilityNumber": "(1)",
-            "description": [
-              "Increase Minimum Time To Fire: 0.1s -> 0.2s",
-              "Increased Prefire on Firing The Projectiles: 0s -> 0.067s",
-              "Decreased Max Starting Angle: 90 -> 75",
-              "Increased Refire Time for Return Projectile to start traveling: 0.3s -> 0.5s",
-              "Adjusted some visual and audio tells for better clarity of these stages.",
-              "Increased Sending Small Damage: 30/50/70/90/110 -> 35/65/95/125/155",
-              "Decreased Sending Small Intelligence Scaling: 45% -> 40%",
-              "Decreased Sending Small Strength Scaling: 40% -> 35%",
-              "Increased Sending Large Damage: 50/100/150/200/250 -> 60/115/170/225/280",
-              "Decreased Sending Large Intelligence Scaling: 81% -> 72%",
-              "Decreased Sending Large Strength Scaling: 72% -> 63%",
-              "Increased Small Return Damage: 20/35/50/65/80 -> 20/40/60/80/100",
-              "Increased Small Return Strength Scaling: 30% -> 35%",
-              "Fixed an issue where being crowd controlled would stop your ability to refire Kufic Invocation."
-            ]
-          },
-          {
-            "section": "Ability",
-            "abilityName": "Sultan's Grace",
-            "abilityNumber": "(2)",
-            "description": [
-              "Increased Damage: 70/120/170/220/270 -> 90/135/180/225/270",
-              "Increased Punch Scaling: 15% Int + 30% Str -> 20% Int + 35% Str"
-            ]
-          },
-          {
-            "section": "Ability",
-            "abilityName": "Agile Run",
-            "abilityNumber": "(3)",
-            "description": [
-              "Increased Landing Intelligence Scaling: 55% -> 70%",
-              "Increased Genie Knockback Duration: 0.5s -> 0.7s",
-              "NEW: Genie Knockback now knocks away from the landing location.",
-              "Fixed an issue where the refire prompt would appear, even if you have no charge to use."
-            ]
-          },
-          {
-            "section": "Ability",
-            "abilityName": "Into the Lamp",
-            "abilityNumber": "(4)",
-            "description": [
-              "Removed: Self Heal up to 50% HP",
-              "Removed: Enemy Heal Up To 50% HP",
-              "Removed: As a result of the above, the Ultimate can deal damage to enemies below this 50% threshold and can kill enemies.",
-              "New: Gain 35% of Aladdin's Max Health as a shield.",
-              "Enemy: Gain 35% Aladdin's Max Health as a shield.",
-              "Reworked the Combat / Non-Combat Interaction",
-              "Combatants are unchanged.",
-              "Non-Combatants are ephemeral. They deal less damage but take less damage, including from Combatants.",
-              "Increased Non-Combatant Damage Done Reduction: 10% -> 33%",
-              "Decreased Non-Combatant Damage Taken: +10% -> -33%",
-              "Increased Base Damage: 80/140/200/260/320 -> 150/250/350/450/550",
-              "Increased Strength Scaling: 50% -> 65%",
-              "Increased Intelligence Scaling: 65% -> 90%",
-              "Decreased Cooldown: 110/107.5/105/102.5/100s -> 90s",
-              "New: Cooldown is increased by a flat 30s on a successful Transfer to the lamp.",
-              "Increased the Interact Size of the Lamp in the main Map: 2m -> 4.5m",
-              "This means players will be less clumped upon leaving the lamp, assuming they interacted at a larger range."
-            ]
-          }
-        ]
-      },
-      {
-        "type": "god",
-        "name": "Bellona",
-        "changeType": "nerf",
-        "changes": [
-          {
-            "section": "Ability",
-            "abilityName": "Shield Bash",
-            "abilityNumber": "(1)",
-            "description": [
-              "Decreased Base Damage: 90/130/170/210/250 -> 75/115/155/195/235"
-            ]
-          },
-          {
-            "section": "Ability",
-            "abilityName": "Scourge",
-            "abilityNumber": "(3)",
-            "description": [
-              "Increased Cooldown: 14/13.5/13/12.5/12 -> 16/15/14/13/12",
-              "Decreased Disarm Duration: 1.5/1.6/1.7/1.8/1.9 -> 1.25/1.4/1.55/1.7/1.85"
-            ]
-          }
-        ]
-      },
-      {
-        "type": "god",
-        "name": "Cernunnos",
-        "changeType": "buff",
-        "changes": [
-          {
-            "section": "Ability",
-            "abilityName": "Bramble Blast",
-            "abilityNumber": "(2)",
-            "description": [
-              "Increased Base Damage: 65/100/135/170/205 -> 65/110/155/200/245"
-            ]
-          },
-          {
-            "section": "Ability",
-            "abilityName": "The Wild Hunt",
-            "abilityNumber": "(4)",
-            "description": [
-              "New: Will now apply your current Season effect to enemies hit."
-            ]
-          }
-        ]
-      },
-      {
-        "type": "god",
-        "name": "Osiris",
-        "changeType": "nerf",
-        "changes": [
-          {
-            "section": "Aspect",
-            "abilityName": "Aspect of the Fragmented - Fragmented",
-            "abilityNumber": "(P)",
-            "description": [
-              "Fixed an issue where this was granting a charge every 3 seconds passively, rather than the listed 4."
-            ]
-          },
-          {
-            "section": "Aspect",
-            "abilityName": "Aspect of the Fragmented - Sickle Strike",
-            "abilityNumber": "(1)",
-            "description": [
-              "Decreased Protection from Item Scaling: 20% -> 15%"
-            ]
-          }
-        ]
-      }
-    ],
-    "items": [
-      {
-        "type": "item",
-        "name": "Health Potion",
-        "changeType": "shift",
-        "changes": [
-          {
-            "description": "Decreased Healing: 15 -> 10"
-          },
-          {
-            "description": "Increased Duration: 14s -> 22s"
-          }
-        ]
-      },
-      {
-        "type": "item",
-        "name": "Health Chalice",
-        "changeType": "shift",
-        "changes": [
-          {
-            "description": "Decreased Healing: 15 -> 10"
-          },
-          {
-            "description": "Increased Duration: 14s -> 22s"
-          }
-        ]
-      },
-      {
-        "type": "item",
-        "name": "Multi Potion",
-        "changeType": "shift",
-        "changes": [
-          {
-            "description": "Decreased Healing: 9 -> 5"
-          },
-          {
-            "description": "Decreased Mana Healing: 8 -> 5"
-          },
-          {
-            "description": "Increased Duration: 14s -> 22s"
-          }
-        ]
-      },
-      {
-        "type": "item",
-        "name": "Elixir of Strength/Intelligence",
-        "changeType": "nerf",
-        "changes": [
-          {
-            "description": "NEW: Now has a duration of 360 seconds (6 minutes)."
-          },
-          {
-            "description": "Removed: Can no longer stack."
-          }
-        ]
-      },
-      {
-        "type": "item",
-        "name": "Agility Relic",
-        "changeType": "nerf",
-        "changes": [
-          {
-            "description": "Increased Cooldown: 10s -> 20s"
-          },
-          {
-            "description": "You can no longer fire abilities while dashing with Agility Relic."
-          },
-          {
-            "description": "Is now enabled in Ranked Conquest"
-          }
-        ]
-      },
-      {
-        "type": "item",
-        "name": "Bumba's Golden Dagger",
-        "changeType": "shift",
-        "changes": [
-          {
-            "description": "Removed: +50 True Damage to Jungle Monsters"
-          },
-          {
-            "description": "Now also increases Attack Damage by 50% to Jungle Monsters"
-          },
-          {
-            "description": "Increased Bonus Damage Cleave: 15% -> 20%"
-          },
-          {
-            "description": "NEW: On Jungle Monster Slain: Health Heal 10% of the slain Monster's Health, +40 Mana."
-          }
-        ]
-      },
-      {
-        "type": "item",
-        "name": "Bumba's Golden Spear",
-        "changeType": "shift",
-        "changes": [
-          {
-            "description": "Removed: +75 True Damage to Jungle Monsters, Bosses, and Structures."
-          },
-          {
-            "description": "Now also increases Attack Damage by 50% to Jungle Monsters & Bosses"
-          },
-          {
-            "description": "Increased Bonus Damage Cleave: 15% -> 20%"
-          },
-          {
-            "description": "Removed: +50% Damage to Structures"
-          }
-        ]
-      },
-      {
-        "type": "item",
-        "name": "Bumba's Cudgel",
-        "changeType": "shift",
-        "changes": [
-          {
-            "description": "Increased Max Health: 50 -> 75"
-          },
-          {
-            "description": "Removed: Attacks deal +50 True Damage to Jungle Monsters"
-          },
-          {
-            "description": "Increased Buffed Attack True Damage: 10 -> 15"
-          },
-          {
-            "description": "Now also increases Attack Damage by 50% to Jungle Monsters"
-          },
-          {
-            "description": "NEW: Now deals the bonus damage in a 1.92m radius of the target."
-          },
-          {
-            "description": "NEW: Increased Buffed Attack True Damage against Jungle Monsters: 10 -> 90"
-          },
-          {
-            "description": "NEW: On Jungle Monster Slain: Health Heal 10% of the slain Monster's Health, +40 Mana."
-          }
-        ]
-      },
-      {
-        "type": "item",
-        "name": "Bumba's Hammer",
-        "changeType": "shift",
-        "changes": [
-          {
-            "description": "Removed: Attacks deal +75 True Damage to Jungle Monsters, Bosses, and Structures"
-          },
-          {
-            "description": "Now also increases Attack Damage by 50% to Jungle Monsters & Bosses"
-          },
-          {
-            "description": "Removed: +50% Damage to Structures"
-          },
-          {
-            "description": "NEW: Increased Buffed Attack True Damage against Jungle Monsters: 40 -> 240"
-          },
-          {
-            "description": "NEW: Now deals the bonus damage in a 1.92m radius of the target."
-          },
-          {
-            "description": "NEW: On Jungle Monster & Boss Slain: +10% Cooldown Rate for 30s"
-          }
-        ]
-      },
-      {
-        "type": "item",
-        "name": "Sanguine Lash",
-        "changeType": "rework",
-        "changes": [
-          {
-            "description": "Decreased Cost: 2800 -> 2650"
-          },
-          {
-            "description": "Increased Strength: 25 -> 35"
-          },
-          {
-            "description": "Decreased Lifesteal: 7.5% -> 5%"
-          },
-          {
-            "description": "Removed: Ticks lower the cooldown of the Active Effect."
-          },
-          {
-            "description": "Removed: Current On Use."
-          },
-          {
-            "description": "NEW: On use: Gain 5% Lifesteal and decrease tick rate to every 0.33s, for 4s."
-          },
-          {
-            "description": "Decreased Cooldown: 100s -> 40s"
-          },
-          {
-            "description": "Decreased Charges: 3 -> 1"
-          }
-        ]
-      },
-      {
-        "type": "item",
-        "name": "Lifebinder",
-        "changeType": "shift",
-        "changes": [
-          {
-            "description": "Decreased Base Damage: 110 -> 60"
-          },
-          {
-            "description": "Increased Per Level Damage: 5 -> 8"
-          },
-          {
-            "description": "Decreased Base Healing: 110 -> 60"
-          },
-          {
-            "description": "Increased Per Level Healing: 5 -> 8"
-          },
-          {
-            "description": "Increased Intelligence: 50 -> 60"
-          },
-          {
-            "description": "Fixed an issue where Lifebinder was dealing 120 + 5 Per Level to Minions. It now matches the listed damage."
-          }
-        ]
-      },
-      {
-        "type": "item",
-        "name": "Devourer's Gauntlets",
-        "changeType": "shift",
-        "changes": [
-          {
-            "description": "Decreased Lifesteal Per Stack: 0.075% -> 0.05%"
-          },
-          {
-            "description": "Increased Strength Bonus for reaching 75 Stacks: 5 -> 10"
-          },
-          {
-            "description": "Final Strength: 70 -> 75"
-          },
-          {
-            "description": "Final Lifesteal: 13.625 -> 11.75%"
-          }
-        ]
-      },
-      {
-        "type": "item",
-        "name": "The Reaper",
-        "changeType": "rework",
-        "changes": [
-          {
-            "description": "Removed: All Stacking Mechanics"
-          },
-          {
-            "description": "Increased Strength: 30 -> 65"
-          },
-          {
-            "description": "Reworked Moonlight Phase Benefit: God Assists also grant the full heal."
-          }
-        ]
-      },
-      {
-        "type": "item",
-        "name": "Sphere Of Negation",
-        "changeType": "rework",
-        "changes": [
-          {
-            "description": "Decreased Cost: 3150 -> 2750"
-          },
-          {
-            "description": "Decreased Intelligence: 60 -> 40"
-          },
-          {
-            "description": "Decreased Magical Protection: 85 -> 70"
-          },
-          {
-            "description": "NEW: Gain 2.5% Max Health Magical Shield every 3s, up to a maximum of 15% Max Health."
-          }
-        ]
-      },
-      {
-        "type": "item",
-        "name": "Brawler's Beatstick",
-        "changeType": "shift",
-        "changes": [
-          {
-            "description": "No changes, but moved into the Anti-Heal Section of the Store."
-          }
-        ]
-      },
-      {
-        "type": "item",
-            "name": "Stygian Anchor",
-        "changeType": "new",
-        "changes": [
-          {
-            "description": "Tank Focused Counter Healing"
-          },
-              {
-            "description": "+25 Physical Protection"
-          },
-          {
-            "description": "+25 Magical Protection"
-          },
-              {
-                "description": "On God Damage Dealt: Apply 1 Stack of Stygian Sludge for 5s. (Max 5)"
-              },
-              {
-                "description": "Triggers only once per ability per target."
-              },
-              {
-                "description": "Per Stack: -3% Movement Speed, -3% Attack Speed, 4% Healing Stolen"
-              }
-            ]
-          },
-          {
-            "type": "item",
-            "name": "Divine Ruin",
-            "changeType": "rework",
-            "changes": [
-              {
-                "description": "Mid Focused Counter Healing"
-              },
-              {
-                "description": "Ability of Attack hit Enemy God: Trigger Chain Lightning that bounces 4.8m"
-              },
-              {
-                "description": "Magical Damage = 40 + 20% Intelligence"
-              },
-              {
-                "description": "Marks enemies for 6s"
-              },
-              {
-                "description": "Can hit the same target more than once."
-              },
-              {
-                "description": "Cooldown: 15s. Mark: On Target Heals 50 Health: -0.25s Cooldown."
-              }
-            ]
-          },
-          {
-            "type": "item",
-            "name": "Qin's Blade",
-            "changeType": "rework",
-            "changes": [
-              {
-                "description": "Carry Focused Counter Healing"
-              },
-              {
-                "description": "Passive: Enemies gain 1 stack for every 100 Health they restored within 12.8m. Stacks last 6s (Max 6)."
-              },
-              {
-                "description": "Attack Hit: +Bonus Physical Damage to enemy hit"
-              },
-              {
-                "description": "Bonus Damage = 1.5% Target Max Health + Choose Highest: +0.5% (Per Mark Stack) Target Max Health OR 7.5% of the how much more Max Health they have"
-              }
-            ]
-          },
-          {
-            "type": "item",
-            "name": "Avenging Blade",
-            "changeType": "rework",
-            "changes": [
-              {
-                "description": "Jungler Focused Counter Healing"
-              },
-              {
-                "description": "Got a new icon"
-              },
-              {
-                "description": "Removed Movement Speed Reduction"
-              },
-              {
-                "description": "Decreased Protections Reduction Per Stack: 5% -> 3.5%"
-              },
-              {
-                "description": "Increased Debuff Duration: 3s -> 4s"
-              },
-              {
-                "description": "NEW: While in the Jungle, or on restoring 5% of their Health, stacks are twice as effective."
-              }
-            ]
-          },
-          {
-            "type": "item",
-            "name": "Contagion",
-            "changeType": "shift",
-            "changes": [
-              {
-                "description": "Tank Focused Counter Lifesteal"
-              },
-              {
-                "description": "No changes, but moved into the Anti-Heal Section of the Store."
-              }
-            ]
-          }
-        ],
-        "gameModes": [
-          {
-            "type": "gameMode",
-            "name": "Conquest",
-            "changes": [
-              {
-                "category": "Conquest Map Updates",
-                "description": [
-                  "New Jungle lighting pass for enhanced jungle vibes",
-                  "Further refined general lighting to fill in and generally improve the look of various areas. Notably Gold Fury and Chaos base",
-                  "Material polish for a variety of map assets - including stealth grass!",
-                  "Subtle god rays for Medium and above settings"
-                ]
-              },
-              {
-                "category": "Pathfinder (Speed/Yellow Buff)",
-                "description": [
-                  "No longer provides Health and Mana on Jungle Monster slain. This has been moved to the Jungle Starters.",
-                  "Fixed an issue where this would only remove Item Protection.",
-                  "Added additional ambient sound effects in jungle camps"
-                ]
-              },
-              {
-                "category": "Kill Formula Adjustment",
-                "description": [
-                  "Decreased XP Base Reward: 130 -> 100",
-                  "Decreased Inferior Victim Reduction Per Level (XP): -0.2 -> -0.15",
-                  "Decreased Superior Victim Bonus Per Level (XP): 0.2 -> 0.15",
-                  "Decreased Inferior Victim Reduction Per Level (Gold): -0.25 -> -0.15",
-                  "Decreased Superior Victim Bonus Per Level (Gold): 0.25 -> 0.2",
-                  "Jungle Practice has been updated to match Conquest's Kill Formulas.",
-                  "We have seen feedback that leads can be wiped away too quickly due to a single pick or two, and that sometimes kills can too quickly become inefficient to go for. We want to bring the extremes a little closer to even. It's still important for shutdowns to properly reward players for the difficulty of their kill, we just think these values were tuned too aggressively. As a side change we also are lowering the base XP reward slightly, as this change does introduce extra volatility into the early game when snowball can be very extreme."
-                ]
-              },
-              {
-                "category": "God Respawns",
-                "description": [
-                  "Decreased respawn duration per level from 3.0s to 2.5s",
-                  "Decreased respawn overtime threshold from 30min to 20min",
-                  "(every minute after 20 adds adds +1 second to respawn time)"
-                ]
-              },
-              {
-                "category": "Base Teleporters",
-                "description": [
-                  "Increased cooldown from 210s to 240s",
-                  "Using a base teleporter before the match starts now applies a reduced cooldown of 10s"
-                ]
-              },
-              {
-                "category": "Moonlight",
-                "description": [
-                  "Increased Moonlight Shard spawn rate at the ritual site by +25% up to +150% when all 5 teammates are standing on the site",
-                  "Fixed an issue where the Ritual site would not begin spawning Shards when it changed hands until after a few seconds.",
-                  "The Ritual site now spawns Moonlight Shards every 2 seconds while it is active, when neither team is standing over it"
-                ]
-              },
-              {
-                "category": "Lane Minion QOL",
-                "description": [
-                  "Overall these changes aim to make Minion movement slightly more smooth and deliberate, and to reduce visual jitter and instant direction changes that can be jarring when trying to clear waves.",
-                  "Animations: Increased Lane Minion animation smoothing, Fixed an issue where Lane Minions would not animate briefly when first coming into view",
-                  "Spread Formations: Adjusted formation spreads so Minions of the same wave more consistently form a line perpendicular to their target, Minions can no longer step backwards when falling into formation",
-                  "Movement: Lane Minions now follow each other more closely while pathing down the lane, Lowered Minion acceleration values overall (Less frantic movement while switching targets, Recovering from hit reactions is no longer instant)",
-                  "Targeting: Slightly decreased Melee and Ranged Minion attack ranges",
-                  "S1 Parity - Increased Hostile Target Decay Time from 1.5s to 2s (This is the duration Lane Minions consider enemy Gods a priority target after they damage a nearby ally God)",
-                  "S1 Parity - Reduced the range at which Minions target other Minions",
-                  "Fixed Ranged Minions (Archers) prioritizing Towers while outside of the Tower's radius"
-                ]
-              }
-            ]
-          },
-          {
-            "type": "gameMode",
-            "name": "Assault",
-            "changes": [
-              {
-                "category": "Respawn Times",
-                "description": [
-                  "Decreased Respawn Duration Level Multiplier: 2.5 -> 1.75",
-                  "This means when you are level 10, your Respawn will be 17.5 Base, down from 25.",
-                  "Decreased Overtime Conversion Rate: 60 -> 30",
-                  "This means for every 30s past the 10 Minute Mark, you will gain 1 second of respawn time, down from 60s.",
-                  "Decreased Teleporter Cooldown in Assault: 240s -> 60s",
-                  "Dying, especially in the first 10 minutes of an assault match can quickly lead to 40s+ respawn timers. We want players to feel like they can be aggressive and dying won't keep them out of the action for that long in Assault, but still allow for later game assault respawn timers to extend long enough for matches to end"
-                ]
-              }
-            ]
-          },
-          {
-            "type": "gameMode",
-            "name": "Arena",
-            "changes": [
-              {
-                "category": "Ticket Count",
-                "description": [
-                  "Increased Ticket Count: 400 -> 425"
-                ]
-              }
-            ]
-          }
-        ]
-      }
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_23",
+    "title": "SMITE 2 Open Beta 23",
+    "infoboxTitle": "OB23 - SMITE 2 Open Beta 23",
+    "releaseDate": "November 18th, 2025",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_22",
+      "next": "SMITE_2_Open_Beta_24"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 23,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Ported God",
+      "anchor": "New_Ported_God",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Da Ji",
+          "anchor": "Da_Ji",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "General"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Melee Basic Attacks"
+                },
+                {
+                  "text": "Damage Type: Physical"
+                },
+                {
+                  "text": "Scaling Type: Strength Scaling"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Passive: Torture Blades"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Attacks and non- ultimate abilities cause enemies to bleed."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 1: Horrible Burns"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "While active, your next successful attack will slow, deals bonus physical damage and physical damage every 1s."
+                },
+                {
+                  "text": "The nearest enemy god below a health threshold is marked, reducing this abilities cooldown rapidly"
+                },
+                {
+                  "text": "Hitting a marked enemy God with this ability permanently increases it’s damage"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 2: One Thousand Cuts"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Strike enemies ahead of you 4 times, dealing physical damage."
+                },
+                {
+                  "text": "While channeling you gain movement speed and mitigate damage dealt by enemies behind you"
+                },
+                {
+                  "text": "Additionally you are slow immune and immune to strafe and backpedal movement penalties"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 3: Trickster Spirit"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Teleport to an enemy or ward after a short delay, dealing physical damage in an area"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ultimate Ability: Paolao"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Rise onto your Paolo and fire 3 snaring chains. Chains deal physical damage, cripple and vortex enemy gods towards the Paolo."
+                },
+                {
+                  "text": "After 3 shots or on canceling this ability, you can leap to a target location"
+                },
+                {
+                  "text": "Hitting a chained enemy a second time increases the vortex strength."
+                },
+                {
+                  "text": "If a chained enemy reaches the Paolo they are stunned and take physical damage."
+                },
+                {
+                  "text": "Enemies near the Paolo also take physical damage every 0.25s"
+                },
+                {
+                  "text": "Aspect releasing November 21st"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Aspect of Ferocity"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Horrible Burns no longer burns but provides lifesteal and lasts for a short duration."
+                },
+                {
+                  "text": "One Thousand Cuts has a shorter cooldown, fires 2 swings, increasing attack speed thresholds and deals attack damage."
+                },
+                {
+                  "text": "Trickster Spirit does less damage but provides an attack speed buff."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Event: Yulefest",
+      "anchor": "New_Event:_Yulefest",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Collect Peppermint Candies to unlock free skins and cosmetics!"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Two Peppermint Candies are available for free. One is in the Advent Calendar, and the other is on the Wandering Market Path."
+            },
+            {
+              "text": "Travelers released during Yulefest also contain Peppermint Candies. In a change from The Reaping, these are now unlocked automatically upon purchasing the Traveler; Candies do not require Wandering Market Coins to unlock."
+            },
+            {
+              "text": "Collecting 2 Peppermint Candies will unlock the Festive Title"
+            },
+            {
+              "text": "Collecting 3 Peppermint Candies will unlock the Aladdin Winter’s Wish Skin"
+            },
+            {
+              "text": "Collecting 4 Peppermint Candies will unlock the Happy YuleFest 2025 Card Effect"
+            },
+            {
+              "text": "Collecting 6 Peppermint Candies will unlock the Scylla Snowday Skin and Traveler"
+            }
+          ]
+        }
+      ],
+      "subsections": [
+        {
+          "title": "Yulefest - Advent Calendar",
+          "anchor": "Yulefest_-_Advent_Calendar",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Available until December 26th."
+                },
+                {
+                  "text": "Login each day (up to 24 days) and earn FREE rewards once per day."
+                },
+                {
+                  "text": "Rewards can be diamonds, chests and more!"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Wandering Market Path Refresh",
+          "anchor": "Wandering_Market_Path_Refresh",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "A new track of 100% FREE rewards awaits you on the Wandering Market Path."
+                },
+                {
+                  "text": "All players are reset to Wandering Market Level 1 for this new update, but you will retain all Coins earned previously."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Yulefest Wandering Market Travelers",
+      "anchor": "Yulefest_Wandering_Market_Travelers",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Knit-Wit Anubis",
+          "anchor": "Knit-Wit_Anubis",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "The God of the Afterlife has traded mummies for mittens!"
+            },
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Festive Knit-Wit Skin (including VXG) - Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Peppermint Candy - Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Festive Nit-Wit - Holly Berry Prism"
+                    },
+                    {
+                      "text": "Festive Nit-Wit - Grumbles Prism"
+                    },
+                    {
+                      "text": "Festive Nit-Wit - Krampus Prism"
+                    },
+                    {
+                      "text": "Knit Wit - Announcer Pack"
+                    },
+                    {
+                      "text": "Home for the Holidays - Recall Skin"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Darkest Knight Xbalanque",
+          "anchor": "Darkest_Knight_Xbalanque",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Moonlight is his ally. Justice his creed."
+            },
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Darkest Knight Skin - Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Peppermint Candy - Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Darkest Knight - Black Mirage Prism"
+                    },
+                    {
+                      "text": "Darkest Knight - Ivory Oath Prism"
+                    },
+                    {
+                      "text": "Darkest Knight - Wrathborn Prism"
+                    },
+                    {
+                      "text": "Darkest Knight - Title"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Royal Blue Pele",
+          "anchor": "Royal_Blue_Pele",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Cloaked in sapphire and frost, bringing regal gifts of elegance and grandeur."
+            },
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Moonlit Flame Pele - Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Peppermint Candy - Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Royal Flame - Animated Badge"
+                    },
+                    {
+                      "text": "Deep Blue - Card Effect"
+                    },
+                    {
+                      "text": "Queen - Title"
+                    },
+                    {
+                      "text": "King - Title"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Supporter Store Cosmetics",
+      "anchor": "New_Supporter_Store_Cosmetics",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "SMITE Kart Teleporter Effects"
+            },
+            {
+              "text": "Drift into midlane with a new pack of Teleporter Effects!"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Quality Of Life and New Player Improvements",
+      "anchor": "Quality_Of_Life_and_New_Player_Improvements",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Conquest Map Updates",
+              "items": [
+                {
+                  "text": "New Jungle lighting pass for enhanced \"jungle\" vibes"
+                },
+                {
+                  "text": "Further refined general lighting to fill in and generally improve the look of various areas. Notably Gold Fury and Chaos base"
+                },
+                {
+                  "text": "Material polish for a variety of map assets-  including stealth grass!"
+                },
+                {
+                  "text": "Subtle god rays for Medium and above settings"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "General",
+              "items": [
+                {
+                  "text": "Added in the Player Badge display in friend and custom game menus"
+                },
+                {
+                  "text": "Brought back the Wandering Market music"
+                },
+                {
+                  "text": "Changed event music for Yulefest"
+                },
+                {
+                  "text": "Fixed an issue with sound effects not playing for the Jormungandr Global Emote"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Game Mode Balance",
+      "anchor": "Game_Mode_Balance",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Conquest",
+          "anchor": "Conquest",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Pathfinder (Speed/Yellow Buff)",
+                  "items": [
+                    {
+                      "text": "No longer provides Health and Mana on Jungle Monster slain. This has been moved to the Jungle Starters."
+                    },
+                    {
+                      "text": "Fixed an issue where this would only remove Item Protection."
+                    },
+                    {
+                      "text": "Added additional ambient sound effects in jungle camps"
+                    }
+                  ]
+                },
+                {
+                  "text": "Kill Formula Adjustment",
+                  "items": [
+                    {
+                      "text": "“We have seen feedback that leads can be wiped away too quickly due to a single pick or two, and that sometimes kills can too quickly become inefficient to go for. We want to bring the extremes a little closer to even. It’s still important for shutdowns to properly reward players for the difficulty of their kill, we just think these values were tuned too aggressively. As a side change we also are lowering the base XP reward slightly, as this change does introduce extra volatility into the early game when snowball can be very extreme.”"
+                    },
+                    {
+                      "text": "Decreased XP Base Reward: 130 -> 100"
+                    },
+                    {
+                      "text": "Decreased Inferior Victim Reduction Per Level (XP): -0.2 -> -0.15"
+                    },
+                    {
+                      "text": "Decreased Superior Victim Bonus Per Level (XP): 0.2 -> 0.15"
+                    },
+                    {
+                      "text": "Decreased Inferior Victim Reduction Per Level (Gold): -0.25 -> -0.15"
+                    },
+                    {
+                      "text": "Decreased Superior Victim Bonus Per Level (Gold): 0.25 -> 0.2"
+                    },
+                    {
+                      "text": "Jungle Practice has been updated to match Conquest’s Kill Formulas."
+                    }
+                  ]
+                },
+                {
+                  "text": "God Respawns",
+                  "items": [
+                    {
+                      "text": "Decreased respawn duration per level from 3.0s to 2.5s"
+                    },
+                    {
+                      "text": "Decreased respawn overtime threshold from 30min to 20min",
+                      "items": [
+                        {
+                          "text": "(every minute after 20 adds adds +1 second to respawn time)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Base Teleporters",
+                  "items": [
+                    {
+                      "text": "Increased cooldown from 210s to 240s"
+                    },
+                    {
+                      "text": "Using a base teleporter before the match starts now applies a reduced cooldown of 10s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Moonlight",
+                  "items": [
+                    {
+                      "text": "Increased Moonlight Shard spawn rate at the ritual site by +25% up to +150% when all 5 teammates are standing on the site"
+                    },
+                    {
+                      "text": "Fixed an issue where the Ritual site would not begin spawning Shards when it changed hands until after a few seconds."
+                    },
+                    {
+                      "text": "The Ritual site now spawns Moonlight Shards every 2 seconds while it is active, when neither team is standing over it"
+                    }
+                  ]
+                },
+                {
+                  "text": "Lane Minion QOL",
+                  "items": [
+                    {
+                      "text": "Overall these changes aim to make Minion movement slightly more smooth and deliberate, and to reduce visual jitter and instant direction changes that can be jarring when trying to clear waves."
+                    },
+                    {
+                      "text": "Animations",
+                      "items": [
+                        {
+                          "text": "Increased Lane Minion animation smoothing"
+                        },
+                        {
+                          "text": "Fixed an issue where Lane Minions would not animate briefly when first coming into view"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Spread Formations",
+                      "items": [
+                        {
+                          "text": "Adjusted formation spreads so Minions of the same wave more consistently form a line perpendicular to their target"
+                        },
+                        {
+                          "text": "Minions can no longer step backwards when falling into formation"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Movement",
+                      "items": [
+                        {
+                          "text": "Lane Minions now follow each other more closely while pathing down the lane"
+                        },
+                        {
+                          "text": "Lowered Minion acceleration values overall",
+                          "items": [
+                            {
+                              "text": "(Less frantic movement while switching targets)"
+                            },
+                            {
+                              "text": "(Recovering from hit reactions is no longer instant)"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Targeting",
+                      "items": [
+                        {
+                          "text": "Slightly decreased Melee and Ranged Minion attack ranges",
+                          "items": [
+                            {
+                              "text": "(These are other changes that were in pre-OB23 but weren’t on patch notes):"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "S1 Parity - Increased Hostile Target Decay Time from 1.5s to 2s",
+                          "items": [
+                            {
+                              "text": "(This is the duration Lane Minions consider enemy Gods a priority target after they damage a nearby ally God)"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "S1 Parity - Reduced the range at which Minions target other Minions"
+                        },
+                        {
+                          "text": "Fixed Ranged Minions (Archers) prioritizing Towers while outside of the Tower's radius"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Assault",
+          "anchor": "Assault",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "“Dying, especially in the first 10 minutes of an assault match can quickly lead to 40s+ respawn timers. We want players to feel like they can be aggressive and dying won’t keep them out of the action for that long in Assault, but still allow for later game assault respawn timers to extend long enough for matches to end”"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Decreased Respawn Duration Level Multiplier: 2.5 -> 1.75",
+                  "items": [
+                    {
+                      "text": "This means when you are level 10, your Respawn will be 17.5 Base, down from 25."
+                    }
+                  ]
+                },
+                {
+                  "text": "Decreased Overtime Conversion Rate: 60 -> 30",
+                  "items": [
+                    {
+                      "text": "This means for every 30s past the 10 Minute Mark, you will gain 1 second of respawn time, down from 60s."
+                    }
+                  ]
+                },
+                {
+                  "text": "Decreased Teleporter Cooldown in Assault: 240s -> 60s"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Arena",
+          "anchor": "Arena",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased Ticket Count: 400 -> 425"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Health Potion (Shift)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Healing: 15 -> 10"
+                },
+                {
+                  "text": "Increased Duration: 14s -> 22s"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Health Chalice (Shift)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Healing: 15 -> 10"
+                },
+                {
+                  "text": "Increased Duration: 14s -> 22s"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Multi Potion (Shift)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Healing: 9 -> 5"
+                },
+                {
+                  "text": "Decreased Mana Healing: 8 -> 5"
+                },
+                {
+                  "text": "Increased Duration: 14s -> 22s"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Elixir of Strength/Intelligence (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "NEW: Now has a duration of 360 seconds (6 minutes)."
+                },
+                {
+                  "text": "Removed: Can no longer stack."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Agility Relic (Nerf)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Increased Cooldown: 10s -> 20s"
+                },
+                {
+                  "text": "You can no longer fire abilities while dashing with Agility Relic."
+                },
+                {
+                  "text": "Is now enabled in Ranked Conquest"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Bumba’s Golden Dagger (Shift)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Removed: +50 True Damage to Jungle Monsters"
+                },
+                {
+                  "text": "Now also increases Attack Damage by 50% to Jungle Monsters"
+                },
+                {
+                  "text": "Increased Bonus Damage Cleave: 15% -> 20%"
+                },
+                {
+                  "text": "NEW: On Jungle Monster Slain: Health Heal 10% of the slain Monster’s Health, +40 Mana."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Bumba’s Golden Spear (Shift)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Removed: +75 True Damage to Jungle Monsters, Bosses, and Structures."
+                },
+                {
+                  "text": "Now also increases Attack Damage by 50% to Jungle Monsters & Bosses"
+                },
+                {
+                  "text": "Increased Bonus Damage Cleave: 15% -> 20%"
+                },
+                {
+                  "text": "Removed: +50% Damage to Structures"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Bumba’s Cudgel (Shift)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Increased Max Health: 50 -> 75"
+                },
+                {
+                  "text": "Removed: Attacks deal +50 True Damage to Jungle Monsters"
+                },
+                {
+                  "text": "Increased Buffed Attack True Damage: 10 -> 15"
+                },
+                {
+                  "text": "Now also increases Attack Damage by 50% to Jungle Monsters"
+                },
+                {
+                  "text": "NEW: Now deals the bonus damage in a 1.92m radius of the target."
+                },
+                {
+                  "text": "NEW: Increased Buffed Attack True Damage against Jungle Monsters: 10 -> 90"
+                },
+                {
+                  "text": "NEW: On Jungle Monster Slain: Health Heal 10% of the slain Monster’s Health, +40 Mana."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Bumba’s Hammer (Shift)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Removed: Attacks deal +75 True Damage to Jungle Monsters, Bosses, and Structures"
+                },
+                {
+                  "text": "Now also increases Attack Damage by 50% to Jungle Monsters & Bosses"
+                },
+                {
+                  "text": "Removed: +50% Damage to Structures"
+                },
+                {
+                  "text": "NEW: Increased Buffed Attack True Damage against Jungle Monsters: 40 -> 240"
+                },
+                {
+                  "text": "NEW: Now deals the bonus damage in a 1.92m radius of the target."
+                },
+                {
+                  "text": "NEW: On Jungle Monster & Boss Slain: +10% Cooldown Rate for 30s"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Sanguine Lash (Rework)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Cost: 2800 -> 2650"
+                },
+                {
+                  "text": "Increased Strength: 25 -> 35"
+                },
+                {
+                  "text": "Decreased Lifesteal: 7.5% -> 5%"
+                },
+                {
+                  "text": "Removed: Ticks lower the cooldown of the Active Effect."
+                },
+                {
+                  "text": "Removed: Current On Use."
+                },
+                {
+                  "text": "NEW: On use: Gain 5% Lifesteal and decrease tick rate to every 0.33s, for 4s."
+                },
+                {
+                  "text": "Decreased Cooldown: 100s -> 40s"
+                },
+                {
+                  "text": "Decreased Charges: 3 -> 1"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Lifebinder (Shift)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Base Damage: 110 -> 60"
+                },
+                {
+                  "text": "Increased Per Level Damage: 5 -> 8"
+                },
+                {
+                  "text": "Decreased Base Healing: 110 -> 60"
+                },
+                {
+                  "text": "Increased Per Level Healing: 5 -> 8"
+                },
+                {
+                  "text": "Increased Intelligence: 50 -> 60"
+                },
+                {
+                  "text": "Fixed an issue where Lifebinder was dealing 120 + 5 Per Level to Minions. It now matches the listed damage."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Devourer’s Gauntlets (Shift)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Lifesteal Per Stack: 0.075% -> 0.05%"
+                },
+                {
+                  "text": "Increased Strength Bonus for reaching 75 Stacks: 5 -> 10"
+                },
+                {
+                  "text": "Final Strength: 70 -> 75"
+                },
+                {
+                  "text": "Final Lifesteal: 13.625 -> 11.75%"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "The Reaper (Rework)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Removed: All Stacking Mechanics"
+                },
+                {
+                  "text": "Increased Strength: 30 -> 65"
+                },
+                {
+                  "text": "Reworked Moonlight Phase Benefit:"
+                },
+                {
+                  "text": "God Assists also grant the full heal."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Sphere Of Negation (Rework)",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Decreased Cost: 3150 -> 2750"
+                },
+                {
+                  "text": "Decreased Intelligence: 60 -> 40"
+                },
+                {
+                  "text": "Decreased Magical Protection: 85 -> 70"
+                },
+                {
+                  "text": "NEW: Gain 2.5% Max Health Magical Shield every 3s, up to a maximum of 15% Max Health."
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": [
+        {
+          "title": "Anti-Heal Item Pass",
+          "anchor": "Anti-Heal_Item_Pass",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "“The last time we discussed Anti-Heal, we wanted to see how our healing pass went and continue to expand upon options for items that are generally good in their own right, but can conditionally be better against healing; rather than the intensity of the previous healing reduction items relied on before."
+            },
+            {
+              "type": "paragraph",
+              "text": "Currently, Item and Lifesteal Healing is probably a touch high; while Healing God Healing is a touch low. We are expanding the pool of Anti-Heal items to fit more roles and allow for more opportunity to build against gods who heavily invest into healing strategies while slightly bumping up Healing gods that need a little oomph added back. Our hope is this achieves a few goals:"
+            },
+            {
+              "type": "paragraph",
+              "text": "General"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The Anti-Heal Section of the Item Shop has returned"
+                },
+                {
+                  "text": "Brawler’s Beatstick (Bruiser Focused Counter Healing)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "No changes, but moved into the Anit-Heal Section of the Store."
+                    }
+                  ]
+                },
+                {
+                  "text": "Stygian Anchor (Tank Focused Counter Healing)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Builds from Engraved Guard (x2) + 950 Gold"
+                    },
+                    {
+                      "text": "Cost: 2550"
+                    },
+                    {
+                      "text": "+25 Physical Protection"
+                    },
+                    {
+                      "text": "+25 Magical Protection"
+                    },
+                    {
+                      "text": "+25 Basic Attack Power"
+                    },
+                    {
+                      "text": "On God Damage Dealt: Apply 1 Stack of Stygian Sludge for 5s. (Max 5)",
+                      "items": [
+                        {
+                          "text": "Triggers only once per ability per target."
+                        },
+                        {
+                          "text": "Per Stack:",
+                          "items": [
+                            {
+                              "text": "-3% Movement Speed"
+                            },
+                            {
+                              "text": "-3% Attack Speed"
+                            },
+                            {
+                              "text": "4% Healing Stolen"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Divine Ruin (Mid Focused Counter Healing)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Ability of Attack hit Enemy God: Trigger Chain Lightning that bounces 4.8m"
+                    },
+                    {
+                      "text": "Magical Damage = 40 + 20% Intelligence"
+                    },
+                    {
+                      "text": "Marks enemies for 6s",
+                      "items": [
+                        {
+                          "text": "Can hit the same target more than once."
+                        },
+                        {
+                          "text": "Cooldown: 15s. Mark: On Target Heals 50 Health: -0.25s Cooldown."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Qin’s Blade (Carry Focused Counter Healing)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Passive: Enemies gain 1 stack for every 100 Health they restored within 12.8m. Stacks last 6s (Max 6).",
+                      "items": [
+                        {
+                          "text": "Attack Hit: +Bonus Physical Damage to enemy hit"
+                        },
+                        {
+                          "text": "Bonus Damage = 1.5% Target Max Health + Choose Highest",
+                          "items": [
+                            {
+                              "text": "+0.5% (Per Mark Stack) Target Max Health"
+                            },
+                            {
+                              "text": "7.5% of the how much more Max Health they have"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Avenging Blade (Jungler Focused Counter Healing)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Got a new icon"
+                    },
+                    {
+                      "text": "Removed Movement Speed Reduction"
+                    },
+                    {
+                      "text": "Decreased Protections Reduction Per Stack: 5% -> 3.5%"
+                    },
+                    {
+                      "text": "Increased Debuff Duration: 3s -> 4s"
+                    },
+                    {
+                      "text": "NEW: While in the Jungle, or on restoring 5% of their Health, stacks are twice as effective."
+                    }
+                  ]
+                },
+                {
+                  "text": "Contagion (Tank Focused Counter Lifesteal)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "No changes, but moved into the Anit-Heal Section of the Store."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "General",
+          "anchor": "General",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ranged Gods",
+                  "items": [
+                    {
+                      "text": "All Standard Attack Projectiles have had their speed adjusted to 17.6m/s.",
+                      "items": [
+                        {
+                          "text": "For most ported “Hunters” this means they stay the same. For most ported “Mages” this means they go faster, up from 16m/s."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Leap Adjustments",
+                  "items": [
+                    {
+                      "text": "Hou Yi",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Dive Bomb (3)",
+                          "items": [
+                            {
+                              "text": "Increased Buildup Time: 0s -> 0.066s",
+                              "items": [
+                                {
+                                  "text": "This is still significantly shorter than Smite 1’s 0.15s, but we feel removing this creates a disconnect in him still being on the ground but un-damagable/hittable. Going back to 0.15s would likely reintroduce the feeling of the user being off the ground and then being interrupted on the server and being pulled down."
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Anhur",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Disperse (3)",
+                          "items": [
+                            {
+                              "text": "Decreased Buildup Time: 0.15s -> 0.1s",
+                              "items": [
+                                {
+                                  "text": "Increased Leap Tween Time: 0.79s to 0.84s",
+                                  "items": [
+                                    {
+                                      "text": "This ensures the animation will look like it lands at the correct time due to the buildup change."
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Ullr",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Glory Bound (3)",
+                          "items": [
+                            {
+                              "text": "Decreased Buildup Time: 0.3s -> 0.2s",
+                              "items": [
+                                {
+                                  "text": "Increased Leap Tween Time: 0.6 to 0.66",
+                                  "items": [
+                                    {
+                                      "text": "This ensures the animation will look like it lands at the correct time due to the buildup change."
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Neith",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Backflip (3)",
+                          "items": [
+                            {
+                              "text": "Decreased Buildup Time: 0.17s -> 0.1s",
+                              "items": [
+                                {
+                                  "text": "Increased Leap Tween Time: 1 -> 1.07s",
+                                  "items": [
+                                    {
+                                      "text": "This ensures the animation will look like it lands at the correct time due to the buildup change."
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Kali",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Nimble Strike (1)",
+                          "items": [
+                            {
+                              "text": "Decreased Buildup Time: 0.2s -> 0.14s",
+                              "items": [
+                                {
+                                  "text": "Increased Leap Tween Time: 0.6s -> 0.66s",
+                                  "items": [
+                                    {
+                                      "text": "This ensures the animation will look like it lands at the correct time due to the buildup change."
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Healers",
+                  "items": [
+                    {
+                      "text": "Aphrodite",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Love Birds (3)",
+                          "items": [
+                            {
+                              "text": "Increased Heal: 10/12/14/16/18 -> 10/13/16/19/22"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Guan Yu",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Conviction (1)",
+                          "items": [
+                            {
+                              "text": "Increased Heal: 45/65/85/105/125 -> 45/70/95/120/145"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Aspect of the General",
+                          "items": [
+                            {
+                              "text": "Conviction (1)",
+                              "items": [
+                                {
+                                  "text": "Increased Heal Over Time: 6/11/16/21/26 -> 7/13/19/25/31"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Ra",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "Solar Blessing (3)",
+                          "items": [
+                            {
+                              "text": "Increased Heal: 10/17/24/31/38 -> 10/19/28/37/46"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Aspect of Thermotherapy (4)",
+                          "items": [
+                            {
+                              "text": "Searing Pain (4)",
+                              "items": [
+                                {
+                                  "text": "Increased Heal: 150/250/350/450/550 -> 160/270/380/490/600"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ranged Supports",
+                  "items": [
+                    {
+                      "text": "“Baron Samedi, Yemoja, and the recent addition of Aspect Eset have been very strong at higher levels of play, pushing out other gods with their high ranged pressure and base damage. We are adjusting all three in different ways tailored to their unique cases. However, wanted to be reserved as Lifebinder, a key rush item, is also receiving adjustments in this patch to reduce that early pressure.”"
+                    },
+                    {
+                      "text": "Baron Samedi",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "“Baron’s Support playstyle looks to be a solidly even split between his Aspect and Non-Aspect playstyles. As an offensive Aspect, it seeing this much success in the role points to an issue with his overall base damage. Vivid Gaze’s Base Damage is overall going down, but the double hit reward, especially with scaling, is going up.”"
+                        },
+                        {
+                          "text": "Vivid Gaze (1)",
+                          "items": [
+                            {
+                              "text": "Decreased Base Damage: 85/145/235/270/330 -> 70/125/180/235/290"
+                            },
+                            {
+                              "text": "Increased Double Hit Damage Dealt: 25% -> 35%"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Yemoja",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "“Yemoja on the other hand is pretty firmly only using her non-aspect in Support, focusing our adjustments to her Support playstyle to be just nerfs. Her early game pressure is high, but we want her to return to her current strength by as early as mid game. Separately, her Aspect is getting some additional scaling to offset these adjustments and help bring up a struggling Aspect.”"
+                        },
+                        {
+                          "text": "Bouncing Bubble (1)",
+                          "items": [
+                            {
+                              "text": "Decreased Base Damage: 65/105/145/185/225 -> 56/98/140/182/224"
+                            },
+                            {
+                              "text": "Decreased Small Base Damage: 28/49/70/91/112"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Moonstrike (1)",
+                          "items": [
+                            {
+                              "text": "Decreased Outer Damage: 40/65/90/115/140 -> 30/60/90/120/150"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Aspect of Downpour",
+                          "items": [
+                            {
+                              "text": "Bouncing Bubble (1)",
+                              "items": [
+                                {
+                                  "text": "Increased Big Bubble Intelligence Scaling: 50% -> 60%"
+                                },
+                                {
+                                  "text": "Increased Small Bubble Intelligence Scaling: 25% -> 30%"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Eset",
+                      "bold": true,
+                      "items": [
+                        {
+                          "text": "“Eset’s Aspect is doing very well in the support role, making her quite dominant in the role. Similar to the above gods, their early pressure contributes to her consistently entering the mid-game in a strong position where her bonus scaling and Movement Speed give her very good team utility and pressure. Toning these down should put her closer to the rest of the support cast.”"
+                        },
+                        {
+                          "text": "Funeral Rites (P)",
+                          "items": [
+                            {
+                              "text": "Fixed an issue where God decoys were providing stacks"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Spirit Ball (2)",
+                          "items": [
+                            {
+                              "text": "Increased Cooldown: 10s -> 14/13/12/11/10s"
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Aspect of the Lifewarden",
+                          "items": [
+                            {
+                              "text": "Attack",
+                              "items": [
+                                {
+                                  "text": "Decreased Protection Scaling Bonus: 8% -> 6%"
+                                }
+                              ]
+                            },
+                            {
+                              "text": "Wing Gust (1)",
+                              "items": [
+                                {
+                                  "text": "Decreased Base Damage: 45/65/85/105/125 -> 40/60/80/100/120"
+                                },
+                                {
+                                  "text": "NEW: If the first hit of a projectile is a Minion, you only gain 50% Healing. You gain an additional 50% if that same projectile hits an enemy god as well"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "General Balance",
+          "anchor": "General_Balance",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Agni Aspect (Shift)",
+                  "items": [
+                    {
+                      "text": "Combustion (P)",
+                      "items": [
+                        {
+                          "text": "“Agni’s Aspect currently scales with the rank of the triggering ability, leading to his early game pressure to be quite high. A level 6 Agni with 3 ranks of Flame Wave will currently deal 108 Base, and potentially up to 180 Base at max stacks before we consider scaling. We are adjusting it to no longer consider the rank of the ability triggering and only consider Agni’s Level. The same situation with the new numbers would be 70 or 140 at max stacks. However, since we are overall reducing his early game lethality, we do want to ensure it scales to be a touch more threatening in the late game.”"
+                        },
+                        {
+                          "text": "Removed: Base Damage Per Ability Rank: 30/60/90/120/150"
+                        },
+                        {
+                          "text": "Increased Base Damage: 0 -> 10"
+                        },
+                        {
+                          "text": "Increased Per Level Damage: 0 -> 10"
+                        },
+                        {
+                          "text": "Decreased Stack Multiplier: 1.2/1.4/1.6/1.8/2 -> 1/1.25/1.5/1.75/2",
+                          "items": [
+                            {
+                              "text": "This also means at a single stack the damage matches the tooltip. Previously it was impossible to see the tooltip value."
+                            },
+                            {
+                              "text": "Level 1 Damage: 36 -> 20"
+                            },
+                            {
+                              "text": "Level 20 Damage: 180 -> 210"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Aladdin Soft Rework",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "“Aladdin’s initial tuning and design decisions led him to state where he was the least popular gods in the game, while also being highly frustrating at top levels. Simply nerfing him would not resolve these issues, so we are doing more significant adjustments. We hope these adjustments let him shine better while maintaining him as a god that still requires a high skill ceiling to execute to the fullest.”"
+                    },
+                    {
+                      "text": "General",
+                      "items": [
+                        {
+                          "text": "Increased Intelligence Scaling on Basic Attacks: 20% -> 30%"
+                        },
+                        {
+                          "text": "Increased Base Health: 498 -> 525"
+                        },
+                        {
+                          "text": "Increased Per Level Health: 92.6 -> 97.5",
+                          "items": [
+                            {
+                              "text": "Level 20 Health: 2351 -> 2475"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Three Wishes (P)",
+                      "items": [
+                        {
+                          "text": "Wealth Wish",
+                          "items": [
+                            {
+                              "text": "Reworked: God Kills & Assists provide 33 more gold and gain 7.5% Bonus Gold from all other sources for 180s."
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Decreased Genie Charges: 2 -> 1"
+                        },
+                        {
+                          "text": "Decreased Genie Charges Cooldown: 15s -> 10s"
+                        },
+                        {
+                          "text": "NEW: -1s Cooldown for each enemy slain. -5s for gods."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Kufic Invocation (1)",
+                      "items": [
+                        {
+                          "text": "Increase Minimum Time To Fire: 0.1s -> 0.2s"
+                        },
+                        {
+                          "text": "Increased Prefire on Firing The Projectiles: 0s -> 0.067s"
+                        },
+                        {
+                          "text": "Decreased Max Starting Angle: 90 -> 75"
+                        },
+                        {
+                          "text": "Increased Refire Time for Return Projectile to start traveling: 0.3s -> 0.5s"
+                        },
+                        {
+                          "text": "Adjusted some visual and audio tells for better clarity of these stages."
+                        },
+                        {
+                          "text": "Increased Sending Small Damage: 30/50/70/90/110 -> 35/65/95/125/155"
+                        },
+                        {
+                          "text": "Decreased Sending Small Intelligence Scaling: 45% -> 40%"
+                        },
+                        {
+                          "text": "Decreased Sending Small Strength Scaling: 40% -> 35%"
+                        },
+                        {
+                          "text": "Increased Sending Large Damage: 50/100/150/200/250 -> 60/115/170/225/280"
+                        },
+                        {
+                          "text": "Decreased Sending Large Intelligence Scaling: 81% -> 72%"
+                        },
+                        {
+                          "text": "Decreased Sending Large Strength Scaling: 72% -> 63%"
+                        },
+                        {
+                          "text": "Increased Small Return Damage: 20/35/50/65/80 -> 20/40/60/80/100"
+                        },
+                        {
+                          "text": "Increased Small Return Strength Scaling: 30% -> 35%"
+                        },
+                        {
+                          "text": "Fixed an issue where being crowd controlled would stop your ability to refire Kufic Invocation."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Sultan’s Grace (2)",
+                      "items": [
+                        {
+                          "text": "Increased Damage: 70/120/170/220/270 -> 90/135/180/225/270"
+                        },
+                        {
+                          "text": "Increased Punch Scaling: 15% Int + 30% Str -> 20% Int + 35% Str"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Agile Run (3)",
+                      "items": [
+                        {
+                          "text": "Increased Landing Intelligence Scaling: 55% -> 70%"
+                        },
+                        {
+                          "text": "Increased Genie Knockback Duration: 0.5s -> 0.7s"
+                        },
+                        {
+                          "text": "NEW: Genie Knockback now knocks away from the landing location."
+                        },
+                        {
+                          "text": "Fixed an issue where the refire prompt would appear, even if you have no charge to use."
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Into the Lamp (4)",
+                      "items": [
+                        {
+                          "text": "Removed: Self Heal up to 50% HP"
+                        },
+                        {
+                          "text": "Removed: Enemy Heal Up to 50% HP"
+                        },
+                        {
+                          "text": "Removed: As a result of the above, the Ultimate can deal damage to enemies below this 50% threshold and can kill enemies."
+                        },
+                        {
+                          "text": "New: Gain 35% of Aladdin’s Max Health as a shield."
+                        },
+                        {
+                          "text": "Enemy: Gain 35% Aladdin’s Max Health as a shield."
+                        },
+                        {
+                          "text": "Reworked the Combat / Non-Combat Interaction",
+                          "items": [
+                            {
+                              "text": "Combatants are unchanged."
+                            },
+                            {
+                              "text": "Non-Combatants are ephemeral. They deal less damage but take less damage, including from Combatants."
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Increased Non-Combatant Damage Done Reduction: 10% -> 33%"
+                        },
+                        {
+                          "text": "Decreased Non-Combatant Damage Taken: +10% -> -33%"
+                        },
+                        {
+                          "text": "Increased Base Damage: 80/140/200/260/320 -> 150/250/350/450/550"
+                        },
+                        {
+                          "text": "Increased Strength Scaling: 50% -> 65%"
+                        },
+                        {
+                          "text": "Increased Intelligence Scaling: 65% -> 90%"
+                        },
+                        {
+                          "text": "Decreased Cooldown: 110/107.5/105/102.5/100s -> 90s"
+                        },
+                        {
+                          "text": "New: Cooldown is increased by a flat 30s on a successful Transfer to the lamp."
+                        },
+                        {
+                          "text": "Increased the Interact Size of the Lamp in the main Map: 2m -> 4.5m",
+                          "items": [
+                            {
+                              "text": "This means players will be less clumped upon leaving the lamp, assuming they interacted at a larger range."
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Bellona (Nerf)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Shield Bash (1)",
+                      "items": [
+                        {
+                          "text": "Decreased Base Damage: 90/130/170/210/250 -> 75/115/155/195/235"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Scourge (3)",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown: 14/13.5/13/12.5/12 -> 16/15/14/13/12"
+                        },
+                        {
+                          "text": "Decreased Disarm Duration: 1.5/1.6/1.7/1.8/1.9 -> 1.25/1.4/1.55/1.7/1.85"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Cernunnos (Buff)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Bramble Blast (2)",
+                      "items": [
+                        {
+                          "text": "Increased Base Damage: 65/100/135/170/205 -> 65/110/155/200/245"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "The Wild Hunt (4)",
+                      "items": [
+                        {
+                          "text": "New: Will now apply your current Season effect to enemies hit."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Osiris (Aspect Nerf)",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Aspect of the Fragmented",
+                      "items": [
+                        {
+                          "text": "Fragmented (P)",
+                          "items": [
+                            {
+                              "text": "Fixed an issue where this was granting a charge every 3 seconds passively, rather than the listed 4."
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Sickle Strike (1)",
+                          "items": [
+                            {
+                              "text": "Decreased Protection from Item Scaling: 20% -> 15%"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 11/18/25 #1",
+      "anchor": "Hotfix_11/18/25_#1",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Cerberus has been caught Smiting Stygian Anchor and has been temporarily disabled."
+            },
+            {
+              "text": "Cerberus outta the dog house and no longer crashing servers."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 11/18/25 #2",
+      "anchor": "Hotfix_11/18/25_#2",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Assault repawn timer longer than intended"
+            },
+            {
+              "text": "Aladdin",
+              "bold": true,
+              "detail": "AO4 Hotfix Balance - Shield from 35% -> 10% + 10% Current Health"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 11/19/25",
+      "anchor": "Hotfix_11/19/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed an issue with Stygian Anchor slow where it couldn't be cleansed"
+            },
+            {
+              "text": "Nu Wa minions now move faster and at parity with Smite 1"
+            },
+            {
+              "text": "Consoles pick up improvement to minimap update tick rate"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 11/20/25",
+      "anchor": "Hotfix_11/20/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Added option in Settings for toggling Ability Help Tips in Settings > Accessibility > Assists > On/Off/Ability Refire Only/Ability Target Only"
+            },
+            {
+              "text": "Fixed an issue where later infamy ranks could grant healing still (yellow buff)"
+            },
+            {
+              "text": "Fixed an issue where Qin's Blade proc'd on each tick of Medusa's Viper Shot DoT"
+            },
+            {
+              "text": "Fix for Agni's Aspect dealing too much base damage (30 when it should have been 10 per patch notes)"
+            },
+            {
+              "text": "Stygian Anchor",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Removed Basic Attack Power"
+                },
+                {
+                  "text": "Increased Physical Protection: 25 -> 35"
+                },
+                {
+                  "text": "Increased Magical Protection: 25 -> 30"
+                },
+                {
+                  "text": "Decreased Stack Duration: 5s -> 1.25s"
+                },
+                {
+                  "text": "Stacks now fall off one at a time"
+                },
+                {
+                  "text": "Healing Stolen does not reduce the initial heal",
+                  "items": [
+                    {
+                      "text": "Tooltip now reads: 4% of their Healing Echoed to you"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 11/22/25",
+      "anchor": "Hotfix_11/22/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed Stygian Anchor not saving in custom builds"
+            },
+            {
+              "text": "Fixed Da Ji Tether tracker not working"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 11/26/25",
+      "anchor": "Hotfix_11/26/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Da Ji"
+            },
+            {
+              "text": "Paolao (Ult)"
+            },
+            {
+              "text": "* Fixed an issue with her sometimes teleporting late"
+            },
+            {
+              "text": "Aspect of Ferocity"
+            },
+            {
+              "text": "Horrible burns (1)"
+            },
+            {
+              "text": "* Decreased Lifesteal: 20% -> 15%"
+            },
+            {
+              "text": "One Thousand Cuts (2)"
+            },
+            {
+              "text": "* Increased Cooldown: 11/10/9/8/7s -> 11s"
+            },
+            {
+              "text": "Trickster Spirit (3)"
+            },
+            {
+              "text": "* Decreased Attack Speed: 30/35/45/45/50% ->  20/25/30/35/40%"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

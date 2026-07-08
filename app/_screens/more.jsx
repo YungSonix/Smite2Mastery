@@ -24,6 +24,7 @@ const FEATURED_TWITCH_CHANNELS = [
 ];
 const DEFAULT_TWITCH_CHANNEL = FEATURED_TWITCH_CHANNELS[0];
 import { useScreenDimensions } from '../../hooks/useScreenDimensions';
+import { WEB_CONTENT_MAX_WIDTH } from '../../lib/webLayout';
 const WordlePage = lazy(() => import('./wordle'));
 const AbilityGamePage = lazy(() => import('./ability'));
 const ProphecyPage = lazy(() => import('./prophecy'));
@@ -292,7 +293,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     ...(IS_WEB && {
-      maxWidth: 1200,
+      maxWidth: WEB_CONTENT_MAX_WIDTH,
       alignSelf: 'center',
       width: '100%',
     }),

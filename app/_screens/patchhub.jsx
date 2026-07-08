@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,15 +10,24 @@ import {
   Linking,
   ActivityIndicator,
   InteractionManager,
-  Modal,
-  Pressable,
 } from 'react-native';
 import { Image } from 'expo-image';
 import { getLocalItemIcon, getLocalGodAsset } from '../localIcons';
 import { useScreenDimensions } from '../../hooks/useScreenDimensions';
+import { WEB_CONTENT_MAX_WIDTH } from '../../lib/webLayout';
 import { flattenBuildsGods } from '../../lib/normalizeBuildsGod';
 import { DEFAULT_TAB_STATE } from '../../config';
 import { UI_THEME } from '../../lib/uiTheme';
+import {
+  CATCH_UP_DEFAULT_PATCH,
+  LATEST_OPEN_BETA_PATCH,
+  getCatchUpPickerPatches,
+} from '../../lib/patchNotesConfig';
+import { loadLatestPatchHighlights } from '../../lib/patchHighlights';
+import { buildSimpleSummary } from '../../lib/patchNotesSummary';
+import { buildCatchUpSummary } from '../../lib/buildCatchUpSummary';
+import PatchHubSimpleSummary from '../../lib/PatchHubSimpleSummary';
+import PatchHubArchive from '../../lib/PatchHubArchive';
 
 const IS_WEB = Platform.OS === 'web';
 
@@ -64,15 +73,22 @@ const storage = {
 export default function PatchHubPage({ subTab = DEFAULT_TAB_STATE.patchHub }) {
   // Use responsive screen dimensions
   const screenDimensions = useScreenDimensions();
-  const [selectedLastPatch, setSelectedLastPatch] = useState(DEFAULT_TAB_STATE.patchHubLastPatch); // Default to OB25 (latest)
-  const [catchUpData, setCatchUpData] = useState(null);
+  const [selectedLastPatch, setSelectedLastPatch] = useState(CATCH_UP_DEFAULT_PATCH);
+  const [catchUpSummary, setCatchUpSummary] = useState(null);
+  const [catchUpSummaryText, setCatchUpSummaryText] = useState('');
   const [catchUpLoading, setCatchUpLoading] = useState(false);
   const [showPatchPicker, setShowPatchPicker] = useState(false);
   const patchPickerScrollRef = React.useRef(null);
-  const [patchData, setPatchData] = useState(null);
+  const [patchNotesRaw, setPatchNotesRaw] = useState(null);
+  const [patchHighlights, setPatchHighlights] = useState(null);
   const [buildsData, setBuildsData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [failedItemIcons, setFailedItemIcons] = useState({}); // Track which item icons failed to load
+  const [failedItemIcons, setFailedItemIcons] = useState({});
+
+  const simpleSummary = useMemo(() => {
+    if (!patchNotesRaw || !patchHighlights) return null;
+    return buildSimpleSummary(patchNotesRaw, patchHighlights);
+  }, [patchNotesRaw, patchHighlights]);
   
   // Track which sections are expanded (for Simple Summary)
   const [expandedSections, setExpandedSections] = useState({
@@ -88,18 +104,6 @@ export default function PatchHubPage({ subTab = DEFAULT_TAB_STATE.patchHub }) {
     gameModes: true,
   });
   
-  // Track which catch up sections are expanded
-  const [catchUpExpandedSections, setCatchUpExpandedSections] = useState({
-    catchUpNewGods: true,
-    catchUpGodsBuffed: true,
-    catchUpNewAspects: true,
-    catchUpGodsNerfed: true,
-    catchUpGodsShifted: true,
-    catchUpItems: true,
-    catchUpItemsNew: true,
-    catchUpGameModes: true,
-  });
-  
   const toggleSection = (section) => {
     setExpandedSections(prev => ({
       ...prev,
@@ -107,15 +111,7 @@ export default function PatchHubPage({ subTab = DEFAULT_TAB_STATE.patchHub }) {
     }));
   };
   
-  const toggleCatchUpSection = (section) => {
-    setCatchUpExpandedSections(prev => ({
-      ...prev,
-      [section]: !prev[section]
-    }));
-  };
   const [tooltipData, setTooltipData] = useState(null);
-  const [catchUpTooltip, setCatchUpTooltip] = useState(null); // For catch up icon tooltips
-  const [expandedAbilities, setExpandedAbilities] = useState({}); // Track expanded abilities in tooltip
 
   // Transform new format (array of god objects with changes array) to grouped format
   const transformPatchData = (rawData) => {
@@ -281,336 +277,19 @@ export default function PatchHubPage({ subTab = DEFAULT_TAB_STATE.patchHub }) {
     return grouped;
   };
 
-  // Static patch file mapping (required for React Native bundle)
-  const patchFiles = {
-    26: require('../data/Patch Notes/patchnotesob26.json'),
-    25: require('../data/Patch Notes/patchnotesob25.json'),
-    24: require('../data/Patch Notes/patchnotesob24.json'),
-    23: require('../data/Patch Notes/patchnotesob23.json'),    
-    22: require('../data/Patch Notes/patchnotesob22.json'),
-    21: require('../data/Patch Notes/patchnotesob21.json'),
-    20: require('../data/Patch Notes/patchnotesob20.json'),
-    
-      // Add more patches as needed: 22, 21, 20, etc.
-  };
-
-  // Function to load a patch file
-  const loadPatchFile = (patchNumber) => {
-    try {
-      return patchFiles[patchNumber] || null;
-    } catch (err) {
-      console.error(`Error loading patch OB${patchNumber}:`, err);
-      return null;
-    }
-  };
-
-  // Function to aggregate changes across all patches from lastPatchNumber to latest
-  const generateCatchUp = (lastPatchNumber) => {
-    if (lastPatchNumber >= 26) {
-      setCatchUpData({
-        summary: "You're already on the latest patch! No changes to catch up on.",
-        gods: { new: [], buffed: [], nerfed: [], shifted: [] },
-        items: { buffed: [], new: [], nerfed: [], changed: [] },
-        gameModes: []
-      });
-      return;
-    }
-    
+  const refreshCatchUp = useCallback((lastPatchNumber) => {
     setCatchUpLoading(true);
-    
     try {
-      // Aggregate all patches from lastPatchNumber + 1 to 24
-      const result = {
-        summary: '',
-        gods: { new: [], buffed: [], nerfed: [], shifted: [] },
-        items: { buffed: [], new: [], nerfed: [], changed: [] },
-        gameModes: []
-      };
-      
-      // Track all gods/items we've seen to avoid duplicates
-      const seenGods = new Set();
-      const seenItems = new Set();
-      const seenItemsNew = new Set();
-      const seenGameModes = new Set();
-      
-      // Load and process each patch from lastPatchNumber + 1 to 24
-      for (let patchNum = lastPatchNumber + 1; patchNum <= 25; patchNum++) {
-        const patch = loadPatchFile(patchNum);
-        if (!patch) continue; // Skip if patch file doesn't exist
-        
-        // Process gods
-        if (patch.gods && Array.isArray(patch.gods)) {
-          patch.gods.forEach(god => {
-            const godKey = god.name.toLowerCase();
-            const changeType = (god.changeType || '').toLowerCase();
-            
-            // Only add if we haven't seen this god yet (new gods) or if change type changed
-            if ((changeType === 'new' || changeType === 'newAspects') && !seenGods.has(godKey)) {
-              if (changeType === 'newAspects') {
-                result.gods.newAspects.push(god);
-              } else {
-                result.gods.new.push(god);
-              }
-              seenGods.add(godKey);
-            } else if ((changeType === 'buff' || changeType === 'buffAspects') && !seenGods.has(`buff-${godKey}`)) {
-              // Check if already added, if so update it
-              const existing = result.gods.buffed.find(g => g.name.toLowerCase() === godKey);
-              if (existing) {
-                // Merge changes
-                if (god.changes && Array.isArray(god.changes)) {
-                  if (!existing.changes) existing.changes = [];
-                  existing.changes.push(...god.changes);
-                }
-              } else {
-                result.gods.buffed.push(god);
-                seenGods.add(`buff-${godKey}`);
-              }
-            } else if ((changeType === 'nerf' || changeType === 'nerfAspects') && !seenGods.has(`nerf-${godKey}`)) {
-              const existing = result.gods.nerfed.find(g => g.name.toLowerCase() === godKey);
-              if (existing) {
-                if (god.changes && Array.isArray(god.changes)) {
-                  if (!existing.changes) existing.changes = [];
-                  existing.changes.push(...god.changes);
-                }
-              } else {
-                result.gods.nerfed.push(god);
-                seenGods.add(`nerf-${godKey}`);
-              }
-            } else if ((changeType === 'shift' || changeType === 'shiftAspects') && !seenGods.has(`shift-${godKey}`)) {
-              const existing = result.gods.shifted.find(g => g.name.toLowerCase() === godKey);
-              if (existing) {
-                if (god.changes && Array.isArray(god.changes)) {
-                  if (!existing.changes) existing.changes = [];
-                  existing.changes.push(...god.changes);
-                }
-              } else {
-                result.gods.shifted.push(god);
-                seenGods.add(`shift-${godKey}`);
-              }
-            }
-          });
-        }
-        
-        // Process items
-        if (patch.items && Array.isArray(patch.items)) {
-          patch.items.forEach(item => {
-            const itemKey = item.name.toLowerCase();
-            const changeType = (item.changeType || '').toLowerCase();
-            
-            if (changeType === 'buff' && !seenItems.has(`buff-${itemKey}`)) {
-              result.items.buffed.push(item);
-              seenItems.add(`buff-${itemKey}`);
-            } else if (changeType === 'nerf' && !seenItems.has(`nerf-${itemKey}`)) {
-              result.items.nerfed.push(item);
-              seenItems.add(`nerf-${itemKey}`);
-            } else if (changeType === 'new' && !seenItems.has(`new-${itemKey}`)) {
-              result.items.new.push(item);
-              seenItems.add(`new-${itemKey}`);
-            } else if (
-              (changeType === 'change' || changeType === 'shift' || changeType === 'fix' || changeType === 'new') &&
-              !seenItems.has(`change-${itemKey}`)
-            ) {
-              // Treat "new" items as "changed" so they appear in the Items Changed section
-              result.items.changed.push(item);
-              seenItems.add(`change-${itemKey}`);
-            }
-          });
-        }
-        
-        // Process game modes
-        if (patch.gameModes && Array.isArray(patch.gameModes)) {
-          patch.gameModes.forEach(mode => {
-            const modeKey = mode.name.toLowerCase();
-            if (!seenGameModes.has(modeKey)) {
-              result.gameModes.push(mode);
-              seenGameModes.add(modeKey);
-            } else {
-              // Merge changes if mode already exists
-              const existing = result.gameModes.find(m => m.name.toLowerCase() === modeKey);
-              if (existing && mode.changes && Array.isArray(mode.changes)) {
-                if (!existing.changes) existing.changes = [];
-                existing.changes.push(...mode.changes);
-              }
-            }
-          });
-        }
-      }
-      
-      // Generate summary
-      const godCounts = {
-        new: result.gods.new.length,
-        buffed: result.gods.buffed.length,
-        nerfed: result.gods.nerfed.length,
-        shifted: result.gods.shifted.length,
-      };
-
-      const itemCount =
-        result.items.buffed.length + result.items.new.length + result.items.nerfed.length + result.items.changed.length;
-      const modeCount = result.gameModes.length;
-
-      // Count how many gods received Aspect-specific changes
-      const allGodEntries = [
-        ...result.gods.new,
-        ...result.gods.buffed,
-        ...result.gods.nerfed,
-        ...result.gods.shifted,
-      ];
-      const aspectGodCount = allGodEntries.filter((g) =>
-        Array.isArray(g.changes) && g.changes.some((c) => c.section === 'Aspect')
-      ).length;
-
-      // Count how many items are brand-new
-      const newItemCount = result.items.new.filter(
-        (it) => (it.changeType || '').toLowerCase() === 'new'
-      ).length;
-
-      result.summary =
-        `Since OB${lastPatchNumber}, there have been ` +
-        `${godCounts.new} new god${godCounts.new !== 1 ? 's' : ''}, ` +
-        `${godCounts.buffed} god${godCounts.buffed !== 1 ? 's' : ''} buffed, ` +
-        `${godCounts.nerfed} god${godCounts.nerfed !== 1 ? 's' : ''} nerfed` +
-        `${godCounts.shifted > 0 ? `, ${godCounts.shifted} god${godCounts.shifted !== 1 ? 's' : ''} shifted` : ''}` +
-        `, ${itemCount} item${itemCount !== 1 ? 's' : ''} changed` +
-        `${newItemCount > 0 ? ` (${newItemCount} new)` : ''}` +
-        `, and ${modeCount} game mode${modeCount !== 1 ? 's' : ''} updated.`;
-      
-      setCatchUpData(result);
+      const result = buildCatchUpSummary(lastPatchNumber);
+      setCatchUpSummary(result.summary);
+      setCatchUpSummaryText(result.summaryText);
     } catch (err) {
       console.error('Error generating catch up:', err);
-      setCatchUpData({
-        summary: `Error generating catch up: ${err.message}`,
-        gods: { new: [], newAspects: [], buffed: [], buffedAspects: [], nerfed: [], nerfedAspects: [], shifted: [] },
-        items: { buffed: [], new: [], nerfed: [], changed: [] },
-        gameModes: []
-      });
+      setCatchUpSummary(null);
+      setCatchUpSummaryText(`Error generating catch up: ${err.message}`);
     }
-    
     setCatchUpLoading(false);
-  };
-
-  // Function to compare two patch files and return differences
-  const comparePatches = (oldPatch,  newPatch) => {
-    const result = {
-      summary: '',
-      gods: { new: [], newAspects: [], buffed: [], buffedAspects: [], nerfed: [], nerfedAspects: [], shifted: [] },
-      items: { buffed: [], new: [], nerfed: [], changed: [] },
-      gameModes: []
-    };
-    
-    const oldGods = {};
-    const newGods = {};
-    
-    if (oldPatch.gods && Array.isArray(oldPatch.gods)) {
-      oldPatch.gods.forEach(god => {
-        oldGods[god.name.toLowerCase()] = god;
-      });
-    }
-    
-    if (newPatch.gods && Array.isArray(newPatch.gods)) {
-      newPatch.gods.forEach(god => {
-        newGods[god.name.toLowerCase()] = god;
-      });
-    }
-    
-    // Find new gods (in new but not in old)
-    Object.keys(newGods).forEach(godName => {
-      if (!oldGods[godName] && (newGods[godName].changeType === 'new' || newGods[godName].changeType === 'newAspects')) {
-        result.gods.new.push(newGods[godName]);
-      }
-    });
-    
-    // Find gods that changed (including Aspect-only buffs/nerfs/shifts)
-    Object.keys(newGods).forEach(godName => {
-      const newGod = newGods[godName];
-      const changeType = (newGod.changeType || '').toLowerCase();
-
-      // We already handled pure "new" gods above; here we care about balance changes
-      if (changeType === 'buff' || changeType === 'buffAspects') {
-        result.gods.buffed.push(newGod);
-      } else if (changeType === 'nerf') {
-        result.gods.nerfed.push(newGod);
-      } else if (changeType === 'shift' || changeType === 'shiftAspects') {
-        result.gods.shifted.push(newGod);
-      }
-    });
-    
-    // Compare items
-    const oldItems = {};
-    const newItems = {};
-    
-    if (oldPatch.items && Array.isArray(oldPatch.items)) {
-      oldPatch.items.forEach(item => {
-        oldItems[item.name.toLowerCase()] = item;
-      });
-    }
-    
-    if (newPatch.items && Array.isArray(newPatch.items)) {
-      newPatch.items.forEach(item => {
-        newItems[item.name.toLowerCase()] = item;
-        const oldItem = oldItems[item.name.toLowerCase()];
-        if (!oldItem || oldItem.changeType !== item.changeType) {
-          if (item.changeType === 'buff' || item.changeType === 'buffAspects') {
-            result.items.buffed.push(item);
-          } else if (item.changeType === 'nerf') {
-            result.items.nerfed.push(item);
-          } else if (item.changeType === 'new') {
-            result.items.new.push(item);
-          } else {
-            result.items.changed.push(item);
-          }
-        }
-      });
-    }
-    
-    // Compare game modes
-    const oldModes = {};
-    const newModes = {};
-    
-    if (oldPatch.gameModes && Array.isArray(oldPatch.gameModes)) {
-      oldPatch.gameModes.forEach(mode => {
-        oldModes[mode.name.toLowerCase()] = mode;
-      });
-    }
-    
-    if (newPatch.gameModes && Array.isArray(newPatch.gameModes)) {
-      newPatch.gameModes.forEach(mode => {
-        newModes[mode.name.toLowerCase()] = mode;
-        // If mode exists in new but not old, or has changes, add it
-        if (!oldModes[mode.name.toLowerCase()] || JSON.stringify(oldModes[mode.name.toLowerCase()]) !== JSON.stringify(mode)) {
-          result.gameModes.push(mode);
-        }
-      });
-    }
-    
-    // Generate summary
-    const godCounts = {
-      new: result.gods.new.length,
-      buffed: result.gods.buffed.length,
-      nerfed: result.gods.nerfed.length,
-      shifted: result.gods.shifted.length
-    };
-    
-    const itemCount = result.items.buffed.length + result.items.new.length + result.items.nerfed.length + result.items.changed.length;
-    const newItemCount = result.items.changed.filter(
-      (it) => (it.changeType || '').toLowerCase() === 'new'
-    ).length;
-    const modeCount = result.gameModes.length;
-    
-    const oldPatchNum = oldPatch.patchName?.match(/OB\s*(\d+)/i)?.[1] || '?';
-    result.summary = `Since OB${oldPatchNum}, there have been ` +
-      `${godCounts.new} new god${godCounts.new !== 1 ? 's' : ''}, ` +
-      `${godCounts.newAspects} new Aspect${godCounts.newAspects !== 1 ? 's' : ''}, ` +
-      `${godCounts.buffed} god${godCounts.buffed !== 1 ? 's' : ''} buffed, ` +
-      `${godCounts.buffedAspects} Aspect${godCounts.buffedAspects !== 1 ? 's' : ''} buffed, ` +
-      `${godCounts.nerfed} god${godCounts.nerfed !== 1 ? 's' : ''} nerfed` +
-      `${godCounts.nerfedAspects} Aspect${godCounts.nerfedAspects !== 1 ? 's' : ''} nerfed, ` +
-      `${godCounts.shifted > 0 ? `, ${godCounts.shifted} god${godCounts.shifted !== 1 ? 's' : ''} shifted` : ''}, ` +
-      `${itemCount} item${itemCount !== 1 ? 's' : ''} changed (${newItemCount} new)` +
-      `${newItemCount > 0 ? ` (${newItemCount} new)` : ''}, ` +
-      `and ${modeCount} game mode${modeCount !== 1 ? 's' : ''} updated.`;
-    
-    return result;
-  };
+  }, []);
 
   // Load patch notes JSON and builds.json
   useEffect(() => {
@@ -619,12 +298,12 @@ export default function PatchHubPage({ subTab = DEFAULT_TAB_STATE.patchHub }) {
     InteractionManager.runAfterInteractions(() => {
       setTimeout(() => {
         try {
-          const patchNotes = require('../data/Patch Notes/patchnotesob27.json');
+          const patchNotes = require('../data/Patch Notes/patchnotesob38.json');
           const builds = require('../../lib/buildsData');
           
           if (isMounted) {
-            const transformedData = transformPatchData(patchNotes);
-            setPatchData(transformedData);
+            setPatchNotesRaw(patchNotes);
+            setPatchHighlights(loadLatestPatchHighlights());
             setBuildsData(builds);
             setLoading(false);
           }
@@ -642,6 +321,10 @@ export default function PatchHubPage({ subTab = DEFAULT_TAB_STATE.patchHub }) {
     };
   }, []);
 
+  useEffect(() => {
+    refreshCatchUp(CATCH_UP_DEFAULT_PATCH);
+  }, [refreshCatchUp]);
+
   // Keyboard navigation for patch picker on web
   useEffect(() => {
     if (!IS_WEB || !showPatchPicker) return;
@@ -649,7 +332,7 @@ export default function PatchHubPage({ subTab = DEFAULT_TAB_STATE.patchHub }) {
     const handleKeyDown = (e) => {
       if (!showPatchPicker) return;
       
-      const patches = Array.from({ length: 24 }, (_, i) => 24 - i);
+      const patches = getCatchUpPickerPatches();
       const currentIndex = patches.indexOf(selectedLastPatch);
       
       if (e.key === 'ArrowDown') {
@@ -682,7 +365,7 @@ export default function PatchHubPage({ subTab = DEFAULT_TAB_STATE.patchHub }) {
         }
       } else if (e.key === 'Enter') {
         e.preventDefault();
-        generateCatchUp(selectedLastPatch);
+        refreshCatchUp(selectedLastPatch);
         setShowPatchPicker(false);
       } else if (e.key === 'Escape') {
         e.preventDefault();
@@ -1384,210 +1067,11 @@ export default function PatchHubPage({ subTab = DEFAULT_TAB_STATE.patchHub }) {
         showsVerticalScrollIndicator={false}
       >
         {subTab === 'simple' && (
-          <View style={styles.content}>
-            <View style={styles.pageHeader}>
-              <Text style={styles.pageTitle}>BALANCE CHANGES</Text>
-              <Text style={styles.pageSubtitle}>
-                {patchData?.summary ? patchData.summary.split('\n')[0] : 'Patch Summary'}
-              </Text>
-            </View>
-
-            {patchData && (
-              <>
-
-                {/* New Gods - At the top */}
-                {patchData.gods?.new && patchData.gods.new.length > 0 && (
-                  <View style={styles.expandableSection}>
-                    <TouchableOpacity
-                      style={styles.sectionHeader}
-                      onPress={() => toggleSection('newGods')}
-                      activeOpacity={0.7}
-                    >
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flex: 1 }}>
-                        <View style={[styles.patchBadge, styles.patchBadgeNew]}>
-                          <Text style={styles.patchBadgeText}>NEW</Text>
-                        </View>
-                        <Text style={styles.sectionTitle}>NEW GOD ({patchData.gods.new.length})</Text>
-                      </View>
-                      <Text style={styles.expandIcon}>{expandedSections.newGods ? '▼' : '▶'}</Text>
-                    </TouchableOpacity>
-                    {expandedSections.newGods && (
-                      <View style={styles.sectionContent}>
-                        {patchData.gods.new.map(god => renderGodCard(god, 'new'))}
-                      </View>
-                    )}
-                  </View>
-                )}
-{/* New Aspects */}
-{patchData.gods?.newAspects && patchData.gods.newAspects.length > 0 && (
-  <View style={styles.expandableSection}>
-    <TouchableOpacity
-      style={styles.sectionHeaderNewAspects}
-      onPress={() => toggleSection('newAspects')}
-      activeOpacity={0.7}
-    >
-      <View style={[{ flexDirection: 'row', alignItems: 'center', gap: 8, flex: 1 }]}>
-        <View style={[styles.patchBadge, styles.patchBadgeNewAspects]}>
-          <Text style={styles.patchBadgeText}>NEW ASPECT</Text>
-        </View>
-        <Text style={styles.sectionTitle}>NEW ASPECT ({patchData.gods.newAspects.length})</Text>
-      </View>
-      <Text style={styles.expandIcon}>{expandedSections.newAspects ? '▼' : '▶'}</Text>
-    </TouchableOpacity>
-    {expandedSections.newAspects && (
-      <View style={styles.sectionContent}>
-        {patchData.gods.newAspects.map(aspect => renderGodCard(aspect, 'new'))}
-      </View>
-    )}
-  </View>
-)}
-                {/* Gods Buffed */}
-                {patchData.gods?.buffed && patchData.gods.buffed.length > 0 && (
-                  <View style={styles.expandableSection}>
-                    <TouchableOpacity
-                      style={[styles.sectionHeader, styles.sectionHeaderBuffed]}
-                      onPress={() => toggleSection('godsBuffed')}
-                      activeOpacity={0.7}
-                    >
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flex: 1 }}>
-                        <View style={[styles.patchBadge, styles.patchBadgeBuffed]}>
-                          <Text style={styles.patchBadgeText}>BUFFED</Text>
-                        </View>
-                        <Text style={styles.sectionTitle}>GOD BUFFS ({patchData.gods.buffed.length})</Text>
-                      </View>
-                      <Text style={styles.expandIcon}>{expandedSections.godsBuffed ? '▼' : '▶'}</Text>
-                    </TouchableOpacity>
-                    {expandedSections.godsBuffed && (
-                      <View style={styles.sectionContent}>
-                        {patchData.gods.buffed.map(god => renderGodCard(god, 'buffed'))}
-                      </View>
-                    )}
-                  </View>
-                )}
-
-                {/* Gods Nerfed */}
-                {patchData.gods?.nerfed && patchData.gods.nerfed.length > 0 && (
-                  <View style={styles.expandableSection}>
-                    <TouchableOpacity
-                      style={[styles.sectionHeader, styles.sectionHeaderNerfed]}
-                      onPress={() => toggleSection('godsNerfed')}
-                      activeOpacity={0.7}
-                    >
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flex: 1 }}>
-                        <View style={[styles.patchBadge, styles.patchBadgeNerfed]}>
-                          <Text style={styles.patchBadgeText}>NERFED</Text>
-                        </View>
-                        <Text style={styles.sectionTitle}>GOD NERFS ({patchData.gods.nerfed.length})</Text>
-                      </View>
-                      <Text style={styles.expandIcon}>{expandedSections.godsNerfed ? '▼' : '▶'}</Text>
-                    </TouchableOpacity>
-                    {expandedSections.godsNerfed && (
-                      <View style={styles.sectionContent}>
-                        {patchData.gods.nerfed.map(god => renderGodCard(god, 'nerfed'))}
-                      </View>
-                    )}
-                  </View>
-                )}
-
-                {/* Gods Shifted */}
-                {patchData.gods?.shifted && patchData.gods.shifted.length > 0 && (
-                  <View style={styles.expandableSection}>
-                    <TouchableOpacity
-                      style={[styles.sectionHeader, styles.sectionHeaderShifted]}
-                      onPress={() => toggleSection('godsShifted')}
-                      activeOpacity={0.7}
-                    >
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flex: 1 }}>
-                        <View style={[styles.patchBadge, styles.patchBadgeShifted]}>
-                          <Text style={styles.patchBadgeText}>SHIFTED</Text>
-                        </View>
-                        <Text style={styles.sectionTitle}>GOD SHIFTS ({patchData.gods.shifted.length})</Text>
-                      </View>
-                      <Text style={styles.expandIcon}>{expandedSections.godsShifted ? '▼' : '▶'}</Text>
-                    </TouchableOpacity>
-                    {expandedSections.godsShifted && (
-                      <View style={styles.sectionContent}>
-                        {patchData.gods.shifted.map(god => renderGodCard(god, 'shifted'))}
-                      </View>
-                    )}
-                  </View>
-                )}
-
-                {/* Item Changes - Consolidated */}
-                {((patchData.items?.buffed && patchData.items.buffed.length > 0) || 
-                  (patchData.items?.nerfed && patchData.items.nerfed.length > 0) || 
-                  (patchData.items?.new && patchData.items.new.length > 0) ||
-                  (patchData.items?.changed && patchData.items.changed.length > 0)) && (
-                  <View style={styles.expandableSection}>
-                    <TouchableOpacity
-                      style={styles.sectionHeader}
-                      onPress={() => toggleSection('itemsBuffed')}
-                      activeOpacity={0.7}
-                    >
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flex: 1 }}>
-                        <Text style={styles.sectionTitle}>ITEM CHANGES ({(patchData.items.buffed?.length || 0) + (patchData.items.new?.length || 0) + (patchData.items.nerfed?.length || 0) + (patchData.items.changed?.length || 0)})</Text>
-                      </View>
-                      <Text style={styles.expandIcon}>{expandedSections.itemsBuffed ? '▼' : '▶'}</Text>
-                    </TouchableOpacity>
-                    {expandedSections.itemsBuffed && (
-                      <View style={styles.sectionContent}>
-                        {patchData.items.buffed && patchData.items.buffed.map(item => {
-                          const changeType = item.changeType || 'buff';
-                          return renderItemCard(item, changeType === 'buff' ? 'buff' : changeType);
-                        })}
-                        {patchData.items.nerfed && patchData.items.nerfed.map(item => {
-                          const changeType = item.changeType || 'nerf';
-                          return renderItemCard(item, changeType === 'nerf' ? 'nerf' : changeType);
-                        })}
-                        {patchData.items.new && patchData.items.new.map(item => {
-                          const changeType = item.changeType || 'new';
-                          return renderItemCard(item, changeType === 'new' ? 'new' : changeType);
-                        })}
-                        {patchData.items.changed && patchData.items.changed.map(item => {
-                          const changeType = (item.changeType || 'changed').toLowerCase();
-                          return renderItemCard(item, changeType === 'fix' ? 'fix' : changeType === 'shift' ? 'shift' : 'changed');
-                        })}
-                      </View>
-                    )}
-                  </View>
-                )}
-
-                {/* Game Modes */}
-                {patchData.gameModes && patchData.gameModes.length > 0 && (
-                  <View style={styles.expandableSection}>
-                    <TouchableOpacity
-                      style={styles.sectionHeader}
-                      onPress={() => toggleSection('gameModes')}
-                      activeOpacity={0.7}
-                    >
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flex: 1 }}>
-                        <Text style={styles.sectionTitle}>GAME MODES ({patchData.gameModes.length})</Text>
-                      </View>
-                      <Text style={styles.expandIcon}>{expandedSections.gameModes ? '▼' : '▶'}</Text>
-                    </TouchableOpacity>
-                    {expandedSections.gameModes && (
-                      <View style={styles.sectionContent}>
-                        {patchData.gameModes.map(mode => renderGameModeCard(mode))}
-                      </View>
-                    )}
-                  </View>
-                )}
-
-                {/* New Features */}
-                {patchData.newFeatures && patchData.newFeatures.length > 0 && (
-                  <View style={styles.card}>
-                    <Text style={styles.cardTitle}>New Features</Text>
-                    {patchData.newFeatures.map((feature, index) => (
-                      <View key={index} style={styles.featureCard}>
-                        <Text style={styles.featureTitle}>{feature.title}</Text>
-                        <Text style={styles.featureContent}>{feature.content?.substring(0, 300)}...</Text>
-                      </View>
-                    ))}
-                  </View>
-                )}
-              </>
-            )}
-          </View>
+          <PatchHubSimpleSummary
+            summary={simpleSummary}
+            buildsData={buildsData}
+            screenWidth={screenDimensions.width}
+          />
         )}
 
         {subTab === 'catchup' && (
@@ -1615,7 +1099,7 @@ export default function PatchHubPage({ subTab = DEFAULT_TAB_STATE.patchHub }) {
                       nestedScrollEnabled
                       {...(IS_WEB && { 'data-patch-picker-scroll': true })}
                     >
-                      {Array.from({ length: 24 }, (_, i) => 24 - i).map(patchNum => (
+                      {getCatchUpPickerPatches().map(patchNum => (
                         <TouchableOpacity
                           key={patchNum}
                           style={[
@@ -1625,7 +1109,7 @@ export default function PatchHubPage({ subTab = DEFAULT_TAB_STATE.patchHub }) {
                           onPress={() => {
                             setSelectedLastPatch(patchNum);
                             setShowPatchPicker(false);
-                            generateCatchUp(patchNum);
+                            refreshCatchUp(patchNum);
                           }}
                         >
                           <Text style={[
@@ -1648,898 +1132,34 @@ export default function PatchHubPage({ subTab = DEFAULT_TAB_STATE.patchHub }) {
                 </View>
               )}
               
-              {catchUpData && (
-                <ScrollView style={styles.catchUpResults} nestedScrollEnabled>
-                  <Text style={styles.catchUpSummary}>
-                    {catchUpData.summary}
-                  </Text>
-                  
-                  {/* New Gods */}
-                  {catchUpData.gods?.new && catchUpData.gods.new.length > 0 && (
-                    <View style={styles.catchUpSection}>
-                      <TouchableOpacity
-                        style={styles.catchUpSectionHeader}
-                        onPress={() => toggleCatchUpSection('catchUpNewGods')}
-                        activeOpacity={0.7}
-                      >
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 }}>
-                          <View style={[styles.patchBadge, styles.patchBadgeNew]}>
-                            <Text style={styles.patchBadgeText}>NEW</Text>
-                          </View>
-                          <Text style={styles.catchUpSectionTitle}>New Gods ({catchUpData.gods.new.length})</Text>
-                        </View>
-                        <Text style={styles.expandIcon}>{catchUpExpandedSections.catchUpNewGods ? '▼' : '▶'}</Text>
-                      </TouchableOpacity>
-                      {catchUpExpandedSections.catchUpNewGods && (
-                        <View style={styles.catchUpIconsGrid}>
-                          {catchUpData.gods.new.map((godEntry, idx) => {
-                            const godName = typeof godEntry === 'string' ? godEntry : godEntry.name;
-                            const changes = typeof godEntry === 'object' && godEntry.changes ? godEntry.changes : [];
-                            const god = findGodByName(godName);
-                            const icon = god && (god.icon || god.GodIcon);
-                            const localIcon = icon ? getLocalGodAsset(icon) : null;
-                            return (
-                              <TouchableOpacity 
-                                key={idx} 
-                                style={[styles.catchUpIconContainer, !IS_WEB && screenDimensions.width < 375 && { flexBasis: '32%', minWidth: '32%', maxWidth: '32%' }]}
-                                onPress={() => setCatchUpTooltip({
-                                  name: godName,
-                                  type: 'god',
-                                  changeType: 'new',
-                                  changes: changes,
-                                })}
-                                activeOpacity={0.7}
-                              >
-                                {localIcon ? (
-                                  <Image 
-                                    source={localIcon} 
-                                    style={styles.catchUpGodIcon} 
-                                    contentFit="cover"
-                                    accessibilityLabel={`${godName} icon`}
-                                  />
-                                ) : (
-                                  <View style={[styles.catchUpIconFallback, { backgroundColor: '#8b5cf640' }]}>
-                                    <Text style={styles.catchUpIconFallbackText}>{godName.charAt(0)}</Text>
-                                  </View>
-                                )}
-                                <Text style={styles.catchUpIconLabel} numberOfLines={1} ellipsizeMode="tail">{godName}</Text>
-                              </TouchableOpacity>
-                            );
-                          })}
-                        </View>
-                      )}
-                    </View>
-                  )}
-                  
-                  {/* Gods Buffed */}
-                  {catchUpData.gods?.buffed && catchUpData.gods.buffed.length > 0 && (
-                    <View style={styles.catchUpSection}>
-                      <TouchableOpacity
-                        style={styles.catchUpSectionHeader}
-                        onPress={() => toggleCatchUpSection('catchUpGodsBuffed')}
-                        activeOpacity={0.7}
-                      >
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 }}>
-                          <View style={[styles.patchBadge, styles.patchBadgeBuffed]}>
-                            <Text style={styles.patchBadgeText}>BUFFED</Text>
-                          </View>
-                          <Text style={styles.catchUpSectionTitle}>Gods Buffed ({catchUpData.gods.buffed.length})</Text>
-                        </View>
-                        <Text style={styles.expandIcon}>{catchUpExpandedSections.catchUpGodsBuffed ? '▼' : '▶'}</Text>
-                      </TouchableOpacity>
-                      {catchUpExpandedSections.catchUpGodsBuffed && (
-                        <View style={styles.catchUpIconsGrid}>
-                        {catchUpData.gods.buffed.map((godEntry, idx) => {
-                          const godName = typeof godEntry === 'string' ? godEntry : godEntry.name;
-                          const changes = typeof godEntry === 'object' && godEntry.changes ? godEntry.changes : [];
-                          const god = findGodByName(godName);
-                          const icon = god && (god.icon || god.GodIcon);
-                          const localIcon = icon ? getLocalGodAsset(icon) : null;
-                          
-                          // Extract ability icons from changes
-                          const abilityIcons = [];
-                          if (Array.isArray(changes)) {
-                            changes.forEach(change => {
-                              // Handle new format: { section, abilityName, abilityNumber, description }
-                              const abilityName = change.abilityName || change.ability;
-                              
-                              if (!god) return;
-                              
-                              // Skip General section
-                              if (change.section === 'General') return;
-                              
-                              if (abilityName && god.abilities) {
-                                const ability = findAbilityByName(god, abilityName);
-                                if (ability && ability.icon) {
-                                  const abIcon = getLocalGodAsset(ability.icon);
-                                  if (abIcon && !abilityIcons.find(a => a.icon === abIcon)) {
-                                    abilityIcons.push({ icon: abIcon, name: abilityName });
-                                  }
-                                } else if (change.section === 'Passive' && god.passive && god.passive.icon) {
-                                  // Handle passive separately
-                                  const abIcon = getLocalGodAsset(god.passive.icon);
-                                  if (abIcon && !abilityIcons.find(a => a.icon === abIcon)) {
-                                    abilityIcons.push({ icon: abIcon, name: 'Passive' });
-                                  }
-                                }
-                              }
-                              
-                              // Aspect changes – use god.aspect icon when present
-                              if (change.section === 'Aspect' && god.aspect && god.aspect.icon) {
-                                const aspectIcon = getLocalGodAsset(god.aspect.icon);
-                                if (aspectIcon && !abilityIcons.find(a => a.icon === aspectIcon)) {
-                                  abilityIcons.push({ icon: aspectIcon, name: change.aspectName || 'Aspect' });
-                                }
-                              }
-                            });
-                          }
-                          
-                          return (
-                            <TouchableOpacity 
-                              key={idx} 
-                              style={styles.catchUpGodWithAbilities}
-                              onPress={() => setCatchUpTooltip({
-                                name: godName,
-                                type: 'god',
-                                changeType: 'buffed',
-                                changes: changes,
-                              })}
-                              activeOpacity={0.7}
-                            >
-                              <View style={styles.catchUpIconContainer}>
-                                {localIcon ? (
-                                  <Image 
-                                    source={localIcon} 
-                                    style={styles.catchUpGodIcon} 
-                                    contentFit="cover"
-                                    accessibilityLabel={`${godName} icon`}
-                                  />
-                                ) : (
-                                  <View style={[styles.catchUpIconFallback, { backgroundColor: '#10b98140' }]}>
-                                    <Text style={styles.catchUpIconFallbackText}>{godName.charAt(0)}</Text>
-                                  </View>
-                                )}
-                                <Text style={styles.catchUpIconLabel} numberOfLines={1} ellipsizeMode="tail">{godName}</Text>
-                              </View>
-                              {abilityIcons.length > 0 && (
-                                <View style={styles.catchUpAbilityIcons}>
-                                  {abilityIcons.slice(0, 4).map((ab, abIdx) => (
-                                    <Image key={abIdx} source={ab.icon} style={styles.catchUpAbilityIcon} contentFit="cover" />
-                                  ))}
-                                </View>
-                              )}
-                            </TouchableOpacity>
-                          );
-                        })}
-                        </View>
-                      )}
-                    </View>
-                  )}
-                  
-                  {/* Gods Nerfed */}
-                  {catchUpData.gods?.nerfed && catchUpData.gods.nerfed.length > 0 && (
-                    <View style={styles.catchUpSection}>
-                      <TouchableOpacity
-                        style={styles.catchUpSectionHeader}
-                        onPress={() => toggleCatchUpSection('catchUpGodsNerfed')}
-                        activeOpacity={0.7}
-                      >
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 }}>
-                          <View style={[styles.patchBadge, styles.patchBadgeNerfed]}>
-                            <Text style={styles.patchBadgeText}>NERFED</Text>
-                          </View>
-                          <Text style={styles.catchUpSectionTitle}>Gods Nerfed ({catchUpData.gods.nerfed.length})</Text>
-                        </View>
-                        <Text style={styles.expandIcon}>{catchUpExpandedSections.catchUpGodsNerfed ? '▼' : '▶'}</Text>
-                      </TouchableOpacity>
-                      {catchUpExpandedSections.catchUpGodsNerfed && (
-                        <View style={styles.catchUpIconsGrid}>
-                        {catchUpData.gods.nerfed.map((godEntry, idx) => {
-                          const godName = typeof godEntry === 'string' ? godEntry : godEntry.name;
-                          const changes = typeof godEntry === 'object' && godEntry.changes ? godEntry.changes : [];
-                          const god = findGodByName(godName);
-                          const icon = god && (god.icon || god.GodIcon);
-                          const localIcon = icon ? getLocalGodAsset(icon) : null;
-                          
-                          // Extract ability icons from changes
-                          const abilityIcons = [];
-                          if (Array.isArray(changes)) {
-                            changes.forEach(change => {
-                              const abilityName = change.abilityName || change.ability;
-                              
-                              if (!god) return;
-                              
-                              if (change.section === 'General') return;
-                              
-                              if (abilityName && god.abilities) {
-                                const ability = findAbilityByName(god, abilityName);
-                                if (ability && ability.icon) {
-                                  const abIcon = getLocalGodAsset(ability.icon);
-                                  if (abIcon && !abilityIcons.find(a => a.icon === abIcon)) {
-                                    abilityIcons.push({ icon: abIcon, name: abilityName });
-                                  }
-                                } else if (change.section === 'Passive' && god.passive && god.passive.icon) {
-                                  const abIcon = getLocalGodAsset(god.passive.icon);
-                                  if (abIcon && !abilityIcons.find(a => a.icon === abIcon)) {
-                                    abilityIcons.push({ icon: abIcon, name: 'Passive' });
-                                  }
-                                }
-                              }
-                              
-                              if (change.section === 'Aspect' && god.aspect && god.aspect.icon) {
-                                const aspectIcon = getLocalGodAsset(god.aspect.icon);
-                                if (aspectIcon && !abilityIcons.find(a => a.icon === aspectIcon)) {
-                                  abilityIcons.push({ icon: aspectIcon, name: change.aspectName || 'Aspect' });
-                                }
-                              }
-                            });
-                          }
-                          
-                          return (
-                            <TouchableOpacity 
-                              key={idx} 
-                              style={styles.catchUpGodWithAbilities}
-                              onPress={() => setCatchUpTooltip({
-                                name: godName,
-                                type: 'god',
-                                changeType: 'nerfed',
-                                changes: changes,
-                              })}
-                              activeOpacity={0.7}
-                            >
-                              <View style={styles.catchUpIconContainer}>
-                                {localIcon ? (
-                                  <Image 
-                                    source={localIcon} 
-                                    style={styles.catchUpGodIcon} 
-                                    contentFit="cover"
-                                    accessibilityLabel={`${godName} icon`}
-                                  />
-                                ) : (
-                                  <View style={[styles.catchUpIconFallback, { backgroundColor: '#ef444440' }]}>
-                                    <Text style={styles.catchUpIconFallbackText}>{godName.charAt(0)}</Text>
-                                  </View>
-                                )}
-                                <Text style={styles.catchUpIconLabel} numberOfLines={1} ellipsizeMode="tail">{godName}</Text>
-                              </View>
-                              {abilityIcons.length > 0 && (
-                                <View style={styles.catchUpAbilityIcons}>
-                                  {abilityIcons.slice(0, 4).map((ab, abIdx) => (
-                                    <Image key={abIdx} source={ab.icon} style={styles.catchUpAbilityIcon} contentFit="cover" />
-                                  ))}
-                                </View>
-                              )}
-                            </TouchableOpacity>
-                          );
-                        })}
-                        </View>
-                      )}
-                    </View>
-                  )}
-                  
-                  {/* Gods Shifted */}
-                  {catchUpData.gods?.shifted && catchUpData.gods.shifted.length > 0 && (
-                    <View style={styles.catchUpSection}>
-                      <TouchableOpacity
-                        style={styles.catchUpSectionHeader}
-                        onPress={() => toggleCatchUpSection('catchUpGodsShifted')}
-                        activeOpacity={0.7}
-                      >
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 }}>
-                          <View style={[styles.patchBadge, styles.patchBadgeShifted]}>
-                            <Text style={styles.patchBadgeText}>SHIFTED</Text>
-                          </View>
-                          <Text style={styles.catchUpSectionTitle}>Gods Shifted ({catchUpData.gods.shifted.length})</Text>
-                        </View>
-                        <Text style={styles.expandIcon}>{catchUpExpandedSections.catchUpGodsShifted ? '▼' : '▶'}</Text>
-                      </TouchableOpacity>
-                      {catchUpExpandedSections.catchUpGodsShifted && (
-                        <View style={styles.catchUpIconsGrid}>
-                        {catchUpData.gods.shifted.map((godEntry, idx) => {
-                          const godName = typeof godEntry === 'string' ? godEntry : godEntry.name;
-                          const changes = typeof godEntry === 'object' && godEntry.changes ? godEntry.changes : [];
-                          const god = findGodByName(godName);
-                          const icon = god && (god.icon || god.GodIcon);
-                          const localIcon = icon ? getLocalGodAsset(icon) : null;
-                          
-                          // Extract ability icons from changes
-                          const abilityIcons = [];
-                          if (Array.isArray(changes)) {
-                            changes.forEach(change => {
-                              const abilityName = change.abilityName || change.ability;
-                              
-                              if (!god) return;
-                              
-                              if (change.section === 'General') return;
-                              
-                              if (abilityName && god.abilities) {
-                                const ability = findAbilityByName(god, abilityName);
-                                if (ability && ability.icon) {
-                                  const abIcon = getLocalGodAsset(ability.icon);
-                                  if (abIcon && !abilityIcons.find(a => a.icon === abIcon)) {
-                                    abilityIcons.push({ icon: abIcon, name: abilityName });
-                                  }
-                                } else if (change.section === 'Passive' && god.passive && god.passive.icon) {
-                                  const abIcon = getLocalGodAsset(god.passive.icon);
-                                  if (abIcon && !abilityIcons.find(a => a.icon === abIcon)) {
-                                    abilityIcons.push({ icon: abIcon, name: 'Passive' });
-                                  }
-                                }
-                              }
-                              
-                              if (change.section === 'Aspect' && god.aspect && god.aspect.icon) {
-                                const aspectIcon = getLocalGodAsset(god.aspect.icon);
-                                if (aspectIcon && !abilityIcons.find(a => a.icon === aspectIcon)) {
-                                  abilityIcons.push({ icon: aspectIcon, name: change.aspectName || 'Aspect' });
-                                }
-                              }
-                            });
-                          }
-                          
-                          return (
-                            <TouchableOpacity 
-                              key={idx} 
-                              style={styles.catchUpGodWithAbilities}
-                              onPress={() => setCatchUpTooltip({
-                                name: godName,
-                                type: 'god',
-                                changeType: 'shifted',
-                                changes: changes,
-                              })}
-                              activeOpacity={0.7}
-                            >
-                              <View style={styles.catchUpIconContainer}>
-                                {localIcon ? (
-                                  <Image 
-                                    source={localIcon} 
-                                    style={styles.catchUpGodIcon} 
-                                    contentFit="cover"
-                                    accessibilityLabel={`${godName} icon`}
-                                  />
-                                ) : (
-                                  <View style={[styles.catchUpIconFallback, { backgroundColor: '#fbbf2440' }]}>
-                                    <Text style={styles.catchUpIconFallbackText}>{godName.charAt(0)}</Text>
-                                  </View>
-                                )}
-                                <Text style={styles.catchUpIconLabel} numberOfLines={1} ellipsizeMode="tail">{godName}</Text>
-                              </View>
-                              {abilityIcons.length > 0 && (
-                                <View style={styles.catchUpAbilityIcons}>
-                                  {abilityIcons.slice(0, 4).map((ab, abIdx) => (
-                                    <Image key={abIdx} source={ab.icon} style={styles.catchUpAbilityIcon} contentFit="cover" />
-                                  ))}
-                                </View>
-                              )}
-                            </TouchableOpacity>
-                          );
-                        })}
-                        </View>
-                      )}
-                    </View>
-                  )}
-                  
-                  {/* Items Changed */}
-                  {catchUpData.items && (catchUpData.items.buffed?.length > 0 || catchUpData.items.nerfed?.length > 0 || catchUpData.items.changed?.length > 0) && (
-                    <View style={styles.catchUpSection}>
-                      <TouchableOpacity
-                        style={styles.catchUpSectionHeader}
-                        onPress={() => toggleCatchUpSection('catchUpItems')}
-                        activeOpacity={0.7}
-                      >
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 }}>
-                          <Text style={styles.catchUpSectionTitle}>Items Changed ({(catchUpData.items.buffed?.length || 0) + (catchUpData.items.nerfed?.length || 0) + (catchUpData.items.changed?.length || 0)})</Text>
-                        </View>
-                        <Text style={styles.expandIcon}>{catchUpExpandedSections.catchUpItems ? '▼' : '▶'}</Text>
-                      </TouchableOpacity>
-                      {catchUpExpandedSections.catchUpItems && (
-                        <View style={styles.catchUpIconsGrid}>
-                        {catchUpData.items.buffed?.map((itemEntry, idx) => {
-                          const itemName = typeof itemEntry === 'string' ? itemEntry : itemEntry.name;
-                          const changes = typeof itemEntry === 'object' && itemEntry.changes ? itemEntry.changes : [];
-                          const summary = typeof itemEntry === 'object' && itemEntry.summary ? itemEntry.summary : '';
-                          const item = findItemByName(itemName);
-                          const itemIcon = item && (item.icon || item.internalName || itemName);
-                          const localItemIcon = itemIcon ? getLocalItemIcon(itemIcon) : null;
-                          const imageSource = localItemIcon?.primary || localItemIcon;
-                          const fallbackSource = localItemIcon?.fallback;
-                          const itemKey = `catchup-item-buff-${itemName}`;
-                          const useFallback = failedItemIcons[itemKey];
-                          
-                          return (
-                            <TouchableOpacity 
-                              key={`buff-${idx}`} 
-                              style={styles.catchUpIconContainer}
-                              onPress={() => setCatchUpTooltip({
-                                name: itemName,
-                                type: 'item',
-                                changeType: 'buff',
-                                changes: changes || summary,
-                              })}
-                              activeOpacity={0.7}
-                            >
-                              {imageSource ? (
-                                fallbackSource && !useFallback ? (
-                                  <Image 
-                                    source={imageSource} 
-                                    style={styles.catchUpItemIcon} 
-                                    contentFit="cover"
-                                    accessibilityLabel={`${itemName} item icon`}
-                                    onError={() => {
-                                      setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
-                                    }}
-                                  />
-                                ) : fallbackSource && useFallback ? (
-                                  <Image 
-                                    source={fallbackSource} 
-                                    style={styles.catchUpItemIcon} 
-                                    contentFit="cover"
-                                    accessibilityLabel={`${itemName} item icon`}
-                                  />
-                                ) : (
-                                  <Image 
-                                    source={imageSource} 
-                                    style={styles.catchUpItemIcon} 
-                                    contentFit="cover"
-                                    accessibilityLabel={`${itemName} item icon`}
-                                  />
-                                )
-                              ) : (
-                                <View style={[styles.catchUpIconFallback, { backgroundColor: '#10b98140' }]}>
-                                  <Text style={styles.catchUpIconFallbackText}>{itemName.charAt(0)}</Text>
-                                </View>
-                              )}
-                              <View style={[styles.patchBadge, styles.patchBadgeBuffed, { marginTop: 4 }]}>
-                                <Text style={styles.patchBadgeText}>BUFF</Text>
-                              </View>
-                              <Text style={styles.catchUpIconLabel} numberOfLines={1} ellipsizeMode="tail">{itemName}</Text>
-                            </TouchableOpacity>
-                          );
-                        })}
-                        {catchUpData.items.nerfed?.map((itemEntry, idx) => {
-                          const itemName = typeof itemEntry === 'string' ? itemEntry : itemEntry.name;
-                          const changes = typeof itemEntry === 'object' && itemEntry.changes ? itemEntry.changes : [];
-                          const summary = typeof itemEntry === 'object' && itemEntry.summary ? itemEntry.summary : '';
-                          const item = findItemByName(itemName);
-                          const itemIcon = item && (item.icon || item.internalName || itemName);
-                          const localItemIcon = itemIcon ? getLocalItemIcon(itemIcon) : null;
-                          const imageSource = localItemIcon?.primary || localItemIcon;
-                          const fallbackSource = localItemIcon?.fallback;
-                          const itemKey = `catchup-item-nerf-${itemName}`;
-                          const useFallback = failedItemIcons[itemKey];
-                          return (
-                            <TouchableOpacity 
-                              key={`nerf-${idx}`} 
-                              style={styles.catchUpIconContainer}
-                              onPress={() => setCatchUpTooltip({
-                                name: itemName,
-                                type: 'item',
-                                changeType: 'nerf',
-                                changes: changes || summary,
-                              })}
-                              activeOpacity={0.7}
-                            >
-                              {imageSource ? (
-                                fallbackSource && !useFallback ? (
-                                  <Image 
-                                    source={imageSource} 
-                                    style={styles.catchUpItemIcon} 
-                                    contentFit="cover"
-                                    accessibilityLabel={`${itemName} item icon`}
-                                    onError={() => {
-                                      setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
-                                    }}
-                                  />
-                                ) : fallbackSource && useFallback ? (
-                                  <Image 
-                                    source={fallbackSource} 
-                                    style={styles.catchUpItemIcon} 
-                                    contentFit="cover"
-                                    accessibilityLabel={`${itemName} item icon`}
-                                  />
-                                ) : (
-                                  <Image 
-                                    source={imageSource} 
-                                    style={styles.catchUpItemIcon} 
-                                    contentFit="cover"
-                                    accessibilityLabel={`${itemName} item icon`}
-                                  />
-                                )
-                              ) : (
-                                <View style={[styles.catchUpIconFallback, { backgroundColor: '#ef444440' }]}>
-                                  <Text style={styles.catchUpIconFallbackText}>{itemName.charAt(0)}</Text>
-                                </View>
-                              )}
-                              <View style={[styles.patchBadge, styles.patchBadgeNerfed, { marginTop: 4 }]}>
-                                <Text style={styles.patchBadgeText}>NERF</Text>
-                              </View>
-                              <Text style={styles.catchUpIconLabel} numberOfLines={1} ellipsizeMode="tail">{itemName}</Text>
-                            </TouchableOpacity>
-                          );
-                        })}
-                        {catchUpData.items.changed?.map((itemEntry, idx) => {
-                          const itemName = typeof itemEntry === 'string' ? itemEntry : itemEntry.name;
-                          const changeType = typeof itemEntry === 'object' ? ((itemEntry.changeType || '').toLowerCase()) : '';
-                          const item = findItemByName(itemName);
-                          const itemIcon = item && (item.icon || item.internalName || itemName);
-                          const localItemIcon = itemIcon ? getLocalItemIcon(itemIcon) : null;
-                          const imageSource = localItemIcon?.primary || localItemIcon;
-                          const fallbackSource = localItemIcon?.fallback;
-                          const itemKey = `catchup-item-change-${itemName}`;
-                          const useFallback = failedItemIcons[itemKey];
-                          
-                          // Determine if this is a shift, fix, or general change
-                          const isShift = changeType === 'shift';
-                          const isFix = changeType === 'fix';
-                          
-                          return (
-                            <View key={`change-${idx}`} style={styles.catchUpIconContainer}>
-                              {imageSource ? (
-                                fallbackSource && !useFallback ? (
-                                  <Image 
-                                    source={imageSource} 
-                                    style={styles.catchUpItemIcon} 
-                                    contentFit="cover"
-                                    accessibilityLabel={`${itemName} item icon`}
-                                    onError={() => {
-                                      setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
-                                    }}
-                                  />
-                                ) : fallbackSource && useFallback ? (
-                                  <Image 
-                                    source={fallbackSource} 
-                                    style={styles.catchUpItemIcon} 
-                                    contentFit="cover"
-                                    accessibilityLabel={`${itemName} item icon`}
-                                  />
-                                ) : (
-                                  <Image 
-                                    source={imageSource} 
-                                    style={styles.catchUpItemIcon} 
-                                    contentFit="cover"
-                                    accessibilityLabel={`${itemName} item icon`}
-                                  />
-                                )
-                              ) : (
-                                <View style={[styles.catchUpIconFallback, { backgroundColor: isShift ? '#fbbf2440' : '#f59e0b40' }]}>
-                                  <Text style={styles.catchUpIconFallbackText}>{itemName.charAt(0)}</Text>
-                                </View>
-                              )}
-                              {isShift && (
-                                <View style={[styles.patchBadge, styles.patchBadgeShifted, { marginTop: 4 }]}>
-                                  <Text style={styles.patchBadgeText}>SHIFT</Text>
-                                </View>
-                              )}
-                              {isFix && (
-                                <View style={[styles.patchBadge, { backgroundColor: '#64748b', marginTop: 4 }]}>
-                                  <Text style={styles.patchBadgeText}>FIXED</Text>
-                                </View>
-                              )}
-                              <Text style={styles.catchUpIconLabel} numberOfLines={1} ellipsizeMode="tail">{itemName}</Text>
-                            </View>
-                          );
-                        })}
-                        </View>
-                      )}
-                    </View>
-                  )}{/* New Items */}
-                  {catchUpData.items && catchUpData.items.new?.length > 0 && (
-                    <View style={styles.catchUpSection}>
-                      <TouchableOpacity
-                        style={styles.catchUpSectionHeader}
-                        onPress={() => toggleCatchUpSection('catchUpNewItems')}
-                        activeOpacity={0.7}
-                      >
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 }}>
-                          <Text style={styles.catchUpSectionTitle}>New Items ({catchUpData.items.new?.length || 0})</Text>
-                        </View>
-                        <Text style={styles.expandIcon}>{catchUpExpandedSections.catchUpNewItems ? '▼' : '▶'}</Text>
-                      </TouchableOpacity>
-                      {catchUpExpandedSections.catchUpNewItems && (
-                        <View style={styles.catchUpIconsGrid}>
-                          {catchUpData.items.new?.map((itemEntry, idx) => {
-                            const itemName = typeof itemEntry === 'string' ? itemEntry : itemEntry.name;
-                            const changes = typeof itemEntry === 'object' && itemEntry.changes ? itemEntry.changes : [];
-                            const summary = typeof itemEntry === 'object' && itemEntry.summary ? itemEntry.summary : '';
-                            const item = findItemByName(itemName);
-                            const itemIcon = item && (item.icon || item.internalName || itemName);
-                            const localItemIcon = itemIcon ? getLocalItemIcon(itemIcon) : null;
-                            const imageSource = localItemIcon?.primary || localItemIcon;
-                            const fallbackSource = localItemIcon?.fallback;
-                            const itemKey = `catchup-item-new-${itemName}`;
-                            const useFallback = failedItemIcons[itemKey];
-                            
-                            return (
-                              <TouchableOpacity 
-                                key={`new-${idx}`} 
-                                style={styles.catchUpIconContainer}
-                                onPress={() => setCatchUpTooltip({
-                                  name: itemName,
-                                  type: 'item',
-                                  changeType: 'new',
-                                  changes: changes || summary,
-                                })}
-                                activeOpacity={0.7}
-                              >
-                                {imageSource ? (
-                                  fallbackSource && !useFallback ? (
-                                    <Image 
-                                      source={imageSource} 
-                                      style={styles.catchUpItemIcon} 
-                                      contentFit="cover"
-                                      accessibilityLabel={`${itemName} item icon`}
-                                      onError={() => {
-                                        setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
-                                      }}
-                                    />
-                                  ) : fallbackSource && useFallback ? (
-                                    <Image 
-                                      source={fallbackSource} 
-                                      style={styles.catchUpItemIcon} 
-                                      contentFit="cover"
-                                      accessibilityLabel={`${itemName} item icon`}
-                                    />
-                                  ) : (
-                                    <Image 
-                                      source={imageSource} 
-                                      style={styles.catchUpItemIcon} 
-                                      contentFit="cover"
-                                      accessibilityLabel={`${itemName} item icon`}
-                                    />
-                                  )
-                                ) : (
-                                  <View style={[styles.catchUpIconFallback, { backgroundColor: '#8b5cf640' }]}>
-                                    <Text style={styles.catchUpIconFallbackText}>{itemName.charAt(0)}</Text>
-                                  </View>
-                                )}
-                                <View style={[styles.patchBadge, styles.patchBadgeNew, { marginTop: 4 }]}>
-                                  <Text style={styles.patchBadgeText}>NEW</Text>
-                                </View>
-                                <Text style={styles.catchUpIconLabel} numberOfLines={1} ellipsizeMode="tail">{itemName}</Text>
-                              </TouchableOpacity>
-                            );
-                          })}
-                        </View>
-                      )}
-                    </View>
-                  )}
-                  
-                  {/* Game Modes */}
-                  {catchUpData.gameModes && catchUpData.gameModes.length > 0 && (
-                    <View style={styles.catchUpSection}>
-                      <TouchableOpacity
-                        style={styles.catchUpSectionHeader}
-                        onPress={() => toggleCatchUpSection('catchUpGameModes')}
-                        activeOpacity={0.7}
-                      >
-                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 }}>
-                          <Text style={styles.catchUpSectionTitle}>Game Modes Updated ({catchUpData.gameModes.length})</Text>
-                        </View>
-                        <Text style={styles.expandIcon}>{catchUpExpandedSections.catchUpGameModes ? '▼' : '▶'}</Text>
-                      </TouchableOpacity>
-                      {catchUpExpandedSections.catchUpGameModes && (
-                        <View style={styles.catchUpGameModesList}>
-                        {catchUpData.gameModes.map((mode, idx) => (
-                          <View key={idx} style={styles.catchUpGameModeItem}>
-                            <Text style={styles.catchUpGameModeName}>{mode.name}</Text>
-                            {mode.changes && mode.changes.length > 0 && (
-                              <Text style={styles.catchUpGameModeCategories}>
-                                {mode.changes.map(c => c.category).filter(Boolean).join(', ')}
-                              </Text>
-                            )}
-                          </View>
-                        ))}
-                        </View>
-                      )}
-                    </View>
-                  )}
-                </ScrollView>
-              )}
-              
+              {catchUpSummaryText ? (
+                <Text style={styles.catchUpSummary}>{catchUpSummaryText}</Text>
+              ) : null}
+
+              {catchUpSummary && !catchUpLoading ? (
+                <PatchHubSimpleSummary
+                  summary={catchUpSummary}
+                  buildsData={buildsData}
+                  screenWidth={screenDimensions.width}
+                />
+              ) : null}
+
               <Text style={styles.infoText}>
-                Select the patch number you last played (OB25 is the latest). 
-                We'll show you all changes from that patch to the current one.
+                Default is one patch behind latest (OB{CATCH_UP_DEFAULT_PATCH}). 
+                We show changes from your pick through OB{LATEST_OPEN_BETA_PATCH}.
               </Text>
             </View>
           </View>
         )}
 
         {subTab === 'archive' && (
-          <View style={styles.content}>
-            <Text style={styles.title}>Patch Archive</Text>
-            <Text style={styles.description}>
-              Browse all previous patches and search by god/item to see change history.
-            </Text>
-            <View style={styles.card}>
-              <Text style={styles.cardTitle}>Timeline View</Text>
-              <Text style={styles.cardText}>
-                Timeline and archive functionality coming soon.
-              </Text>
-            </View>
-          </View>
+          <PatchHubArchive
+            buildsData={buildsData}
+            screenWidth={screenDimensions.width}
+          />
         )}
       </ScrollView>
 
-        {/* Catch Up Tooltip Modal */}
-        <Modal
-          visible={catchUpTooltip !== null}
-          transparent={true}
-          animationType="fade"
-          onRequestClose={() => {
-            setCatchUpTooltip(null);
-            setExpandedAbilities({});
-          }}
-        >
-          <Pressable
-            style={styles.catchUpTooltipOverlay}
-            onPress={() => {
-              setCatchUpTooltip(null);
-              setExpandedAbilities({});
-            }}
-          >
-            <Pressable
-              style={[
-                styles.catchUpTooltipContent,
-                IS_WEB && screenDimensions.width < 768 && {
-                  width: screenDimensions.width < 500 ? '92%' : '90%',
-                  maxWidth: screenDimensions.width < 500 ? '92%' : '90%',
-                  maxHeight: screenDimensions.width < 500 ? '75vh' : '70vh',
-                  padding: screenDimensions.width < 500 ? 12 : 14,
-                },
-                !IS_WEB && {
-                  width: screenDimensions.width < 500 ? '98%' : screenDimensions.width < 768 ? '95%' : '90%',
-                  maxWidth: screenDimensions.width < 500 ? '98%' : screenDimensions.width < 768 ? '95%' : '90%',
-                  maxHeight: screenDimensions.width < 500 ? '80%' : screenDimensions.width < 768 ? '75%' : '70%',
-                  padding: screenDimensions.width < 500 ? 10 : 12,
-                }
-              ]}
-              onPress={(e) => e.stopPropagation()}
-            >
-              {catchUpTooltip && (
-                <View style={{ 
-                  width: '100%', 
-                  ...(!IS_WEB && { 
-                    flex: 1, 
-                    display: 'flex', 
-                    flexDirection: 'column', 
-                    minHeight: 0,
-                    maxHeight: screenDimensions.width < 500 ? screenDimensions.height * 0.8 : screenDimensions.width < 768 ? screenDimensions.height * 0.75 : screenDimensions.height * 0.7,
-                  }),
-                  ...(IS_WEB && screenDimensions.width < 768 && {
-                    maxHeight: screenDimensions.width < 500 ? '75vh' : '70vh',
-                  })
-                }}>
-                  <View style={styles.catchUpTooltipHeader}>
-                    <Text style={[
-                      styles.catchUpTooltipTitle,
-                      IS_WEB && screenDimensions.width < 768 && {
-                        fontSize: screenDimensions.width < 500 ? 16 : 18,
-                      }
-                    ]}>{catchUpTooltip.name}</Text>
-                    <TouchableOpacity
-                      style={styles.catchUpTooltipClose}
-                      onPress={() => {
-              setCatchUpTooltip(null);
-              setExpandedAbilities({});
-            }}
-                    >
-                      <Text style={styles.catchUpTooltipCloseText}>×</Text>
-                    </TouchableOpacity>
-                  </View>
-                  <ScrollView 
-                    style={[
-                      styles.catchUpTooltipBody,
-                      IS_WEB && screenDimensions.width < 768 && {
-                        maxHeight: screenDimensions.width < 500 ? 350 : 400,
-                      }
-                    ]} 
-                    contentContainerStyle={styles.catchUpTooltipBodyContent}
-                    nestedScrollEnabled={true}
-                    showsVerticalScrollIndicator={true}
-                    indicatorStyle="white"
-                    bounces={true}
-                    scrollEnabled={true}
-                    alwaysBounceVertical={false}
-                    removeClippedSubviews={false}
-                    keyboardShouldPersistTaps="handled"
-                  >
-                    {catchUpTooltip.type === 'god' && Array.isArray(catchUpTooltip.changes) && catchUpTooltip.changes.length > 0 && (() => {
-                      const god = findGodByName(catchUpTooltip.name);
-                      return (
-                        <>
-                          {catchUpTooltip.changes.map((change, idx) => {
-                            const abilityName = change.ability || change.abilityName || 'General';
-                            const details = change.details || change.description || (typeof change === 'string' ? change : '');
-                            const isExpanded = expandedAbilities[idx] || false;
-                            
-                            // Find ability icon
-                            let abilityIcon = null;
-                            if (god && abilityName !== 'General') {
-                              const ability = findAbilityByName(god, abilityName);
-                              if (ability && ability.icon) {
-                                abilityIcon = getLocalGodAsset(ability.icon);
-                              } else if (change.section === 'Passive' && god.passive && god.passive.icon) {
-                                abilityIcon = getLocalGodAsset(god.passive.icon);
-                              }
-                            }
-                            
-                            return (
-                              <View key={idx} style={styles.catchUpTooltipChangeItem}>
-                                <TouchableOpacity
-                                  style={styles.catchUpTooltipAbilityHeader}
-                                  onPress={() => setExpandedAbilities(prev => ({
-                                    ...prev,
-                                    [idx]: !prev[idx]
-                                  }))}
-                                  activeOpacity={0.7}
-                                >
-                                  <View style={styles.catchUpTooltipAbilityHeaderContent}>
-                                    {abilityIcon && (
-                                      <Image 
-                                        source={abilityIcon} 
-                                        style={styles.catchUpTooltipAbilityIcon} 
-                                        contentFit="cover"
-                                        accessibilityLabel={`${abilityName} ability icon`}
-                                      />
-                                    )}
-                                    <Text style={[
-                                      styles.catchUpTooltipChangeAbility,
-                                      IS_WEB && screenDimensions.width < 768 && {
-                                        fontSize: screenDimensions.width < 500 ? 12 : 13,
-                                      }
-                                    ]} selectable>
-                                      {abilityName}
-                                    </Text>
-                                  </View>
-                                  <Text style={styles.catchUpTooltipExpandIcon}>
-                                    {isExpanded ? '▼' : '▶'}
-                                  </Text>
-                                </TouchableOpacity>
-                                {isExpanded && (
-                                  <Text style={[
-                                    styles.catchUpTooltipChangeDetails,
-                                    IS_WEB && screenDimensions.width < 768 && {
-                                      fontSize: screenDimensions.width < 500 ? 11 : 12,
-                                      lineHeight: screenDimensions.width < 500 ? 15 : 16,
-                                    }
-                                  ]} selectable>
-                                    {typeof details === 'string' ? details : Array.isArray(details) ? details.join(' | ') : ''}
-                                  </Text>
-                                )}
-                              </View>
-                            );
-                          })}
-                        </>
-                      );
-                    })()}
-                  {catchUpTooltip.type === 'item' && (
-  <Text style={[
-    styles.catchUpTooltipChangeDetails,
-    IS_WEB && screenDimensions.width < 768 && {
-      fontSize: screenDimensions.width < 500 ? 11 : 12,
-      lineHeight: screenDimensions.width < 500 ? 15 : 16,
-    }
-  ]} selectable>
-    {(() => {
-      const changes = catchUpTooltip.changes;
-      if (typeof changes === 'string') {
-        return changes;
-      } else if (Array.isArray(changes)) {
-        return changes.map(c => 
-          typeof c === 'string' ? c : (c.details || c.description || c.summary || '')
-        ).filter(Boolean).join('\n\n');
-      } else if (typeof changes === 'object' && changes !== null) {
-        return changes.details || changes.description || changes.summary || 'No details available';
-      }
-      return 'No details available';
-    })()}
-  </Text>
-)}
-                  </ScrollView>
-                </View>
-              )}
-            </Pressable>
-          </Pressable>
-        </Modal>
     </View>
   );
 };
@@ -2555,7 +1175,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     ...(IS_WEB && {
-      maxWidth: 1200,
+      maxWidth: WEB_CONTENT_MAX_WIDTH,
       alignSelf: 'center',
       width: '100%',
     }),

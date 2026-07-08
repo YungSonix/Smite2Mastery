@@ -4,7 +4,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Image } from 'expo-image';
 import CustomBuildPage from '../_screens/custombuild';
 import buildsData from '../../lib/buildsData';
-import { listDiscordBotSharedBuilds } from '../../lib/discordBotSharedBuildSupabase';
+import { getDiscordBotSharedBuildPayload } from '../../lib/discordBotSharedBuildSupabase';
 import {
   getGodAbilityIcon,
   getLocalGodAsset,
@@ -341,19 +341,28 @@ export default function DiscordBotDraftBuildScreen() {
   }, [buildRows, godCatalog, itemCatalog]);
 
   useEffect(() => {
-    if (activeTab !== 'view') return;
+    if (activeTab !== 'view' || !t) return;
     let cancelled = false;
     (async () => {
       setIsLoadingBuilds(true);
       setLoadError('');
       try {
-        const { data, error } = await listDiscordBotSharedBuilds();
+        const { data, error } = await getDiscordBotSharedBuildPayload(t);
         if (cancelled) return;
         if (error) {
           setLoadError(error.message || String(error));
           setBuildRows([]);
+        } else if (data && typeof data === 'object' && Object.keys(data).length > 0) {
+          setBuildRows([
+            {
+              token: t,
+              payload: data,
+              updated_at: null,
+              created_at: null,
+            },
+          ]);
         } else {
-          setBuildRows(Array.isArray(data) ? data : []);
+          setBuildRows([]);
         }
       } catch (e) {
         if (!cancelled) {
@@ -367,7 +376,7 @@ export default function DiscordBotDraftBuildScreen() {
     return () => {
       cancelled = true;
     };
-  }, [activeTab, reloadTick]);
+  }, [activeTab, reloadTick, t]);
 
   if (activeTab === 'add') {
     return (
@@ -415,7 +424,7 @@ export default function DiscordBotDraftBuildScreen() {
       </View>
 
       <View style={styles.listHeaderRow}>
-        <Text style={styles.listTitle}>All bot builds</Text>
+        <Text style={styles.listTitle}>This draft link</Text>
         <TouchableOpacity
           style={styles.refreshBtn}
           onPress={() => setReloadTick((n) => n + 1)}
@@ -439,7 +448,7 @@ export default function DiscordBotDraftBuildScreen() {
         ) : viewRows.length === 0 ? (
           <View style={styles.centeredListState}>
             <Text style={styles.stateTitle}>No builds yet</Text>
-            <Text style={styles.stateText}>Have the bot create draft rows first, then save from Add Build.</Text>
+            <Text style={styles.stateText}>Open a bot-shared link to view that draft. Listing all drafts is disabled for security.</Text>
           </View>
         ) : (
           viewRows.map((row) => {

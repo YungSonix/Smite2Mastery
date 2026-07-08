@@ -1,0 +1,990 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_19",
+    "title": "SMITE 2 Open Beta 19",
+    "infoboxTitle": "OB19 - SMITE 2 Open Beta 19",
+    "releaseDate": "Sept 23rd, 2025",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_18",
+      "next": "SMITE_2_Open_Beta_20"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 19,
+    "fetchedAt": "2026-06-23T15:34:16.978Z"
+  },
+  "sections": [
+    {
+      "title": "New Ported God",
+      "anchor": "New_Ported_God",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Xbalanque",
+          "anchor": "Xbalanque",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "General"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ranged Basic Attacks"
+                },
+                {
+                  "text": "Damage Type: Physical/Magical"
+                },
+                {
+                  "text": "Scaling Type: Strength & Intelligence Scaling"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Passive: Dead of Night"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Deal damage to enemy Gods to gain stacks. Each Strength of Intelligence, whichever is higher."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 1: Branching Bola"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "While active, your basic attacks deal additional damage. When the bola hits a target, it splits and deals reduced damage."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 2: Poison Darts"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fire 15 dart projectiles in a cone, dealing Physical Damage and poisoning enemies hit."
+                },
+                {
+                  "text": "Poisoned enemies repeatedly take Physical Damage and are slowed."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ability 3: Rising Jaguar"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Dash in the direction you are currently traveling before rising into the air and becoming CC immune."
+                },
+                {
+                  "text": "While in the air, you fire darts at all nearby enemies, dealing Physical Damage."
+                },
+                {
+                  "text": "Enemies affected by poison darts take additional damage."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Ultimate Ability: Darkest of Nights"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Shroud enemy gods in darkness, creating an area they cannot see out of. During this time you have increased basic attack range, basic attack projectile speed, attack speed and movement speed."
+                },
+                {
+                  "text": "If an enemy God leaves the area, they are affected by a decaying slow."
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "text": "Aspect releasing 26th September!"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Aspect of the Night Stalker",
+                  "items": [
+                    {
+                      "text": "Branching Bola is no longer a toggle but provides 3 fires of ability based projectiles. Poison darts require less hits to deal full damage. Darkest of Nights loses existing buffs but resets poison darts and provides increased ability damage."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Saga",
+      "anchor": "New_Saga",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "The Frostwarden Saga",
+          "anchor": "The_Frostwarden_Saga",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Artemis Frostwarden- Whitefrost Sentry Skin - Instantly unlocked after purchasing the Frostwarden Saga"
+                },
+                {
+                  "text": "Saga Contents - Unlock the following items with Wandering Market Coins after purchase of the Saga:",
+                  "items": [
+                    {
+                      "text": "Whitefrost Sentry - Recall Skin"
+                    },
+                    {
+                      "text": "Frost Boar Tusky - Ward Skin"
+                    },
+                    {
+                      "text": "Whitefrost Sentry - Black Ice Skin Prism"
+                    },
+                    {
+                      "text": "Whitefrost Sentry - Ember Herald Prism"
+                    },
+                    {
+                      "text": "Whitefrost Sentry - Neon Mirage Prism"
+                    },
+                    {
+                      "text": "Whitefrost Sentry - Astral Empress Prism"
+                    },
+                    {
+                      "text": "Frostwarden - Kill Effect"
+                    },
+                    {
+                      "text": "Frostwarden - Card"
+                    },
+                    {
+                      "text": "Frostwarden - Title"
+                    },
+                    {
+                      "text": "Frostwarden - Winter’s Champion Skin"
+                    },
+                    {
+                      "text": "Winter’s Champion - Black Ice Prism"
+                    },
+                    {
+                      "text": "Winter’s Champion - Ember Herald Prism"
+                    },
+                    {
+                      "text": "Winter’s Champion - Neon Mirage Prism"
+                    },
+                    {
+                      "text": "Winter’s Champion - Astral Empress Prism"
+                    },
+                    {
+                      "text": "Black Ice - Recall Skin"
+                    },
+                    {
+                      "text": "Ember Herald - Recall Skin"
+                    },
+                    {
+                      "text": "Neon Mirage - Recall Skin"
+                    },
+                    {
+                      "text": "Astral Empress - Recall Skin"
+                    },
+                    {
+                      "text": "Frostwarden - Arctic Monarch Skin"
+                    },
+                    {
+                      "text": "Arctic Monarch - Black Ice Prism"
+                    },
+                    {
+                      "text": "Arctic Monarch - Ember Herald Prism"
+                    },
+                    {
+                      "text": "Arctic Monarch - Neon Mirage Prism"
+                    },
+                    {
+                      "text": "Arctic Monarch - Astral Empress Prism"
+                    },
+                    {
+                      "text": "Black Ice - Kill Effect"
+                    },
+                    {
+                      "text": "Ember Herald - Kill Effect"
+                    },
+                    {
+                      "text": "Neon Mirage - Kill Effect"
+                    },
+                    {
+                      "text": "Astral Empress - Kill Effect"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Wandering Market",
+      "anchor": "New_Wandering_Market",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Feline Fashion - Awilix",
+          "anchor": "Feline_Fashion_-_Awilix",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Awilix Feline Fashion Skin - Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Feline Fashion - Snowfall Chic"
+                    },
+                    {
+                      "text": "Feline Fashion - Purr-ple Passion"
+                    },
+                    {
+                      "text": "Feline Fashion - Cat Burglar"
+                    },
+                    {
+                      "text": "Sneaky Willow - Ward Skin"
+                    },
+                    {
+                      "text": "Pumpkin - Reaping Event"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "SmiteKart",
+          "anchor": "SmiteKart",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "SmiteKart Apollo Ward Skin- Instantly unlocked after purchasing the Premium Traveler Page."
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "SmiteKart Aphrodite - Ward Skin"
+                    },
+                    {
+                      "text": "SmiteKart Sun WuKong - Ward Skin"
+                    },
+                    {
+                      "text": "SmiteKart Zeus - Ward Skin"
+                    },
+                    {
+                      "text": "Clumzy Birthday Badge - Badge"
+                    },
+                    {
+                      "text": "Racer - Title"
+                    },
+                    {
+                      "text": "Pumpkin - Reaping Event"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Skins and Cosmetics",
+      "anchor": "New_Skins_and_Cosmetics",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Cross-Gen Skin",
+              "items": [
+                {
+                  "text": "Hou Yi - Gleaming Archer"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Game Modes",
+      "anchor": "Game_Modes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Conquest",
+          "anchor": "Conquest",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "The Cyclops Warrior camp now drops Cyclops Eye (Replaces Cyclops Ward)"
+                },
+                {
+                  "text": "Cyclops Eye",
+                  "items": [
+                    {
+                      "text": "Instantly reduces the active cooldown of your Curio by 50% and restores 10% Health and Mana"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Item Slot",
+      "anchor": "New_Item_Slot",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Curio",
+          "anchor": "Curio",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Curios are mode-specific items that everyone in that mode has access to. These don’t take up a standard inventory slot and function more like the bonus Starter Item slot. They are automatically granted to players and do not require a purchase."
+                },
+                {
+                  "text": "Items in the Curio Slot are actives that occupy an active item slot.",
+                  "items": [
+                    {
+                      "text": "If you attempt to buy a third Active Item, the Curio slot will disable, allowing the third Active Item to take its place."
+                    },
+                    {
+                      "text": "It will default to the second Active slot for keybind purposes. You can move it to any slot utilizing the existing reordering tools."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "NEW: Riptalon",
+          "anchor": "NEW:_Riptalon",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Cost: 2500g",
+                  "items": [
+                    {
+                      "text": "Builds from Cursed Sickle + Hunter’s Bow + 900g"
+                    }
+                  ]
+                },
+                {
+                  "text": "+25% Attack Speed"
+                },
+                {
+                  "text": "+10% Lifesteal"
+                },
+                {
+                  "text": "+25 Basic Attack Power"
+                },
+                {
+                  "text": "Passive:",
+                  "items": [
+                    {
+                      "text": "While Above 50% Health:",
+                      "items": [
+                        {
+                          "text": "+15% Attack Damage"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "While Below 50% Health:",
+                      "items": [
+                        {
+                          "text": "+25% Attack Damage"
+                        },
+                        {
+                          "text": "+7.5% Lifesteal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "NEW: Warding Chalice",
+          "anchor": "NEW:_Warding_Chalice",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Cost: 400g"
+                },
+                {
+                  "text": "Consume charge: Place a Ward.",
+                  "items": [
+                    {
+                      "text": "Reveals enemies within 7.2m"
+                    },
+                    {
+                      "text": "Lasts 120s or until destroyed"
+                    }
+                  ]
+                },
+                {
+                  "text": "Starts with 2 charges. Refilled when returning to base."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Scepter of Dominion (Fix)",
+          "anchor": "Scepter_of_Dominion_(Fix)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Properly applies Stasis to Jungle Bosses again"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Sanguine Lash (Nerf)",
+          "anchor": "Sanguine_Lash_(Nerf)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Reduced Active Damage: 10% -> 7.5%"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Void Shield (Fix)",
+          "anchor": "Void_Shield_(Fix)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Fixed description to match the intended effect of 30 Physical Protection."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Anhur (Buff)",
+          "anchor": "Anhur_(Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Desert Fury (4)",
+                  "items": [
+                    {
+                      "text": "Increased Damage Per Tick: 65/90/115/140/165 -> 80/110/140/170/200"
+                    },
+                    {
+                      "text": "Increased Final Damage: 125/175/225/275/325 -> 150/200/250/300/350"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Fenrir (Aspect Buff)",
+          "anchor": "Fenrir_(Aspect_Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Aspect of Loyalty",
+                  "items": [
+                    {
+                      "text": "Unchained (1)",
+                      "items": [
+                        {
+                          "text": "Increased Stun Duration: 0.75s -> 1s"
+                        },
+                        {
+                          "text": "Increased Protection Scaling: 30% -> 45%"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Seething Howl (2)",
+                      "items": [
+                        {
+                          "text": "Increased Strength: 5/10/15/20/25 -> 15/17.5/20/22.5/25"
+                        },
+                        {
+                          "text": "Increased Lifesteal healing: 25% -> 30%"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Seething Howl (2)",
+                  "items": [
+                    {
+                      "text": "Fixed the description listing this ability as having higher Strength than intended"
+                    }
+                  ]
+                },
+                {
+                  "text": "Note - There is a known bug where the Unchained Calculated Damage formula in the tooltip is incorrect, using Protections instead of Protections from Items. The actual damage dealt is lower than what is listed."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Hecate (Buff)",
+          "anchor": "Hecate_(Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Triplicate Form (1)",
+                  "items": [
+                    {
+                      "text": "Increased Damage: 70/115/160/205/250 -> 80/125/170/215/260"
+                    },
+                    {
+                      "text": "Fixed an issue where the Hex Form projectile was doing less damage than intended"
+                    }
+                  ]
+                },
+                {
+                  "text": "Open the Gates (4)",
+                  "items": [
+                    {
+                      "text": "Decreased Cooldown: 110/105/100/95/90s -> 90s"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Hua Mulan (Nerf)",
+          "anchor": "Hua_Mulan_(Nerf)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Training Grounds (Passive Consumable)",
+                  "items": [
+                    {
+                      "text": "Decreased Movement Speed: 10% -> 5%"
+                    }
+                  ]
+                },
+                {
+                  "text": "Divine Mastery (4)",
+                  "items": [
+                    {
+                      "text": "Decreased Arrow Base Damage: 180/270/360/450/540 -> 180/260/340/420/500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Jormungandr (Buff)",
+          "anchor": "Jormungandr_(Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased base Health: 525 -> 567"
+                },
+                {
+                  "text": "Increased Health per level: 101.4 -> 105.3"
+                },
+                {
+                  "text": "Increased base Physical Protection: 16.6 -> 17.3"
+                },
+                {
+                  "text": "Increased Physical Protection per level: 3.1 -> 3.2"
+                },
+                {
+                  "text": "Increased base Magical Protection: 27 -> 28.1"
+                },
+                {
+                  "text": "Increased Magical Protection per level: 1.56 -> 1.62"
+                },
+                {
+                  "text": "Note - This is more inline with several other frontline gods"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Nemesis (Nerf / Aspect Nerf)",
+          "anchor": "Nemesis_(Nerf_/_Aspect_Nerf)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Slice and Dice (2)",
+                  "items": [
+                    {
+                      "text": "Decreased Center Damage: 100/160/220/280/340 -> 85/145/205/265/325"
+                    }
+                  ]
+                },
+                {
+                  "text": "Retribution (3)",
+                  "items": [
+                    {
+                      "text": "Increased Cooldown: 14/13.5/13/12.5/12s -> 14s"
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect of Justice",
+                  "items": [
+                    {
+                      "text": "Will now move Nemesis and her target 75% of the way towards the average health amount."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "The Morrigan (Fix)",
+          "anchor": "The_Morrigan_(Fix)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Deadly Aspects (1)",
+                  "items": [
+                    {
+                      "text": "Fixed an issue where this ability could stun structures"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Tsukuyomi (Nerf)",
+          "anchor": "Tsukuyomi_(Nerf)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Kusarigama (2)",
+                  "items": [
+                    {
+                      "text": "Decreased Swing Damage: 35/60/85/110/135 -> 30/55/80/105/130"
+                    },
+                    {
+                      "text": "Decreased Final Damage: 55/100/145/190/235 -> 50/95/140/185/230"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Sun Wukong (Aspect Nerf)",
+          "anchor": "Sun_Wukong_(Aspect_Nerf)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Aspect of Transformation",
+                  "items": [
+                    {
+                      "text": "72 Transformations",
+                      "items": [
+                        {
+                          "text": "Increased Cooldown from 12s -> 14s",
+                          "items": [
+                            {
+                              "text": "Fixed the description to state the raw cooldown value, rather than the percent reduction being applied."
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Yemoja (Aspect Buff)",
+          "anchor": "Yemoja_(Aspect_Buff)",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Aspect of Downpour",
+                  "items": [
+                    {
+                      "text": "Increased Bouncing Bubble Scaling: 30 -> 50%"
+                    },
+                    {
+                      "text": "Increased Small Bubble Scaling: 15% -> 25%"
+                    },
+                    {
+                      "text": "Increased River’s Rebuke Scaling: 70% -> 85%"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hotfix 9/25/25",
+      "anchor": "Hotfix_9/25/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Xbalanque ult will now properly apply its slow"
+            },
+            {
+              "text": "Selling Chalices for full value is now fixed"
+            },
+            {
+              "text": "Heimdallr's Sight now properly follows you"
+            },
+            {
+              "text": "Devourer's Gauntlet will no longer stack from firebrands"
+            },
+            {
+              "text": "Death Embrace nerf",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Lifesteal 7.5% to 5%"
+                },
+                {
+                  "text": "Strength: 40 to 35"
+                }
+              ]
+            },
+            {
+              "text": "Riptalon nerf",
+              "bold": true,
+              "items": [
+                {
+                  "text": "Lifesteal: 10% to 7.5%"
+                },
+                {
+                  "text": "Attack dmg: 15% to 10%"
+                }
+              ]
+            },
+            {
+              "text": "Ra's 2 enhances now counted from the 2 itself: Now only procs items once per target per cast, not on every basic attack"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 9/26/25",
+      "anchor": "Hotfix_9/26/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed Queen Naga not spawning in conquest."
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 9/30/25",
+      "anchor": "Hotfix_9/30/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed Xbalanque causing super zoomed camera on other gods in lobby"
+            },
+            {
+              "text": "FX Fixes for Artemis Frostwarden Traps, Frostwarden Recall, & Sol Vampire ability 1 + Ult - Broken Ornate Rings on Low settings"
+            },
+            {
+              "text": "Fixed Breastplate of Valor healing not counting towards Mulan's ability 2 healing"
+            },
+            {
+              "text": "Removed Pumpkin from Saga featured tile"
+            },
+            {
+              "text": "Changing Split HUD Curio slot to be 1/2 size next to Starter (Similar to scoreboard layout)"
+            },
+            {
+              "text": "Resized Relic slot in Split item store to be similar size to other inventory items"
+            },
+            {
+              "text": "Text for Riptalon change"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Hotfix 10/3/25",
+      "anchor": "Hotfix_10/3/25",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Fixed Sol staying invisible if using Phantom Shell while immune from ability 3"
+            },
+            {
+              "text": "Fixed issue where Curio would disappear from Ul if The Morrigan Ults or on reconnects"
+            },
+            {
+              "text": "Fixed issue where targets could use item actives or relics during Awilix Ult pull"
+            },
+            {
+              "text": "Fixed issue Awilix was blocked from map interactions with ability 3 targeter up"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

@@ -1,0 +1,1725 @@
+{
+  "meta": {
+    "slug": "SMITE_2_Open_Beta_38",
+    "title": "SMITE 2 Open Beta 38",
+    "infoboxTitle": "OB38 - SMITE 2 Open Beta 38",
+    "releaseDate": "June 30th, 2026",
+    "bonusUpdate": null,
+    "hotfixes": null,
+    "clientVersion": null,
+    "navigation": {
+      "prev": "SMITE_2_Open_Beta_37",
+      "next": "SMITE_2_Open_Beta_39?action=edit&amp;redlink=1"
+    },
+    "category": "open_beta",
+    "categoryLabel": "Open Beta patch notes",
+    "number": 38,
+    "fetchedAt": "2026-06-30T16:23:44.544Z"
+  },
+  "sections": [
+    {
+      "title": "New Classic God",
+      "anchor": "New_Classic_God",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Chronos",
+          "anchor": "Chronos",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Passive: Time Lord",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "You become empowered as time flows around you. Over time you gain Intelligence. Stacks have a maximum and are permanent."
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 1: Time Rift",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Create a rift in time that deals magical damage to all enemies in the area. Hitting a god permanently increases the Time Rift damage by 1."
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 2: Accelerate",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Accelerate yourself for a duration. You gain Movement Speed (initial plus increasing over time) and increased Attack Speed. While Accelerate is active, the Wheel of Time stops; the quadrant it stopped on determines which bonus you receive:",
+                      "items": [
+                        {
+                          "text": "Section 1: Heal based on your max health over time"
+                        },
+                        {
+                          "text": "Section 2: Abilities cost no Mana"
+                        },
+                        {
+                          "text": "Section 3: Increased Intelligence"
+                        },
+                        {
+                          "text": "Section 4: Increased Intelligence contribution to your attacks."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "text": "Ability 3: Stop Time",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Fire spinning gears of time forward. Enemies hit have their Attack Speed reduced, ramping into a Stun. They Take Magical Damage on impact and Magical Damage when Stunned."
+                    }
+                  ]
+                },
+                {
+                  "text": "Ultimate Ability: Rewind",
+                  "bold": true,
+                  "items": [
+                    {
+                      "text": "Teleport through time to a recent position, restoring your Health and mana to their earlier values. All your cooldowns reset instantly."
+                    },
+                    {
+                      "text": "You become CC immune while Rewind prepares"
+                    },
+                    {
+                      "text": "The Heal is not affected by Healing Reduction"
+                    }
+                  ]
+                },
+                {
+                  "text": "Aspect of Relativity",
+                  "bold": true,
+                  "lead": "releasing July 2nd",
+                  "items": [
+                    {
+                      "text": "Time Lord no longer grants Intelligence but instead creates a persistent Time Field around you. Allies in your Time Field gain bonuses when you use your other abilities."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "New Wandering Market Travelers",
+      "anchor": "New_Wandering_Market_Travelers",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Traveler: Beach Day Discordia",
+          "anchor": "Traveler:_Beach_Day_Discordia",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Midnight Plunge Prism"
+                    },
+                    {
+                      "text": "Seabreeze Prism"
+                    },
+                    {
+                      "text": "Pool Party Prism"
+                    },
+                    {
+                      "text": "Lil Puffer Ward Skin"
+                    },
+                    {
+                      "text": "Beach Day Announcer Pack"
+                    },
+                    {
+                      "text": "Battle Banners (part of the Dawn of the Darkstar Empire Event)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Traveler: Cat’s Eye Bastet",
+          "anchor": "Traveler:_Cat’s_Eye_Bastet",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing the Premium Traveler Page"
+                },
+                {
+                  "text": "Premium Page Contents - Unlock the following items with Wandering Market Coins",
+                  "items": [
+                    {
+                      "text": "Cat’s Eye Announcer Pack"
+                    },
+                    {
+                      "text": "Empire’s Hoard Chest"
+                    },
+                    {
+                      "text": "Spotted Title",
+                      "items": [
+                        {
+                          "text": "Battle Banners (part of the Dawn of the Darkstar Empire Event)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Supporter Store",
+      "anchor": "Supporter_Store",
+      "level": 2,
+      "subsections": []
+    },
+    {
+      "title": "Independence Celebration Bundle!",
+      "anchor": "Independence_Celebration_Bundle!",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Contents"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Instantly unlocked after purchasing"
+            },
+            {
+              "text": "Name Flair - Independence - American Flag"
+            },
+            {
+              "text": "Name Flair - Independence - Red, Blue and White"
+            },
+            {
+              "text": "Name Flair - Independence - Blue, Red and White"
+            },
+            {
+              "text": "Name Flair - Independence - Red, White and Blue"
+            },
+            {
+              "text": "Quip - Get Down Mr President"
+            },
+            {
+              "text": "Quip - This Land is my land!"
+            },
+            {
+              "text": "Quip - For Freedom!"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Special Store",
+      "anchor": "Special_Store",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "‘Merica Collection!",
+          "anchor": "‘Merica_Collection!",
+          "level": 3,
+          "content": [
+            {
+              "type": "paragraph",
+              "text": "Contents"
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Instantly unlocked after purchasing"
+                },
+                {
+                  "text": "Ra’Merica Classic Skin"
+                },
+                {
+                  "text": "Ra’Merica Chrome Eagle Skin"
+                },
+                {
+                  "text": "USA USA USA! Jump Stamp"
+                },
+                {
+                  "text": "Old Glory Animated Badge"
+                },
+                {
+                  "text": "Patriot Crest Animated and Static Badges"
+                },
+                {
+                  "text": "Victory Star Animated and Static Badges"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Events",
+      "anchor": "Events",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Next Race to Radiant - Chronos",
+          "anchor": "Next_Race_to_Radiant_-_Chronos",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Event runs June 30 - July 7"
+                },
+                {
+                  "text": "Top 100 (up from 50) Get the Mastery Emblem"
+                },
+                {
+                  "text": "Top 200 (up from 100)  Get the Radiant Badge"
+                },
+                {
+                  "text": "Top 500 (up from 200) Get the Tracker with their number"
+                },
+                {
+                  "text": "Everyone who hits Radiant within the event gets a badge"
+                },
+                {
+                  "text": "New: Worshipper earn rate in Co-Op vs. AI will be reduced during the update where they are part of a race."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "New: Race to Exalted",
+          "anchor": "New:_Race_to_Exalted",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Introducing an Exalted race for previously released Gods."
+                },
+                {
+                  "text": "Scylla will be the first event which  will start on July 7 and run through July 14 with the same rules and rewards as the Race to Radiant!"
+                },
+                {
+                  "text": "Each update we will announce a new Race to Exalted for previously released Gods."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Game Modes",
+      "anchor": "Game_Modes",
+      "level": 2,
+      "subsections": [
+        {
+          "title": "Assault",
+          "anchor": "Assault",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Increased width of the lane in front of the Tier 1 Towers by 2m"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Conquest",
+          "anchor": "Conquest",
+          "level": 3,
+          "content": [
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Lane Minions",
+                  "items": [
+                    {
+                      "text": "Melee Minion",
+                      "items": [
+                        {
+                          "text": "Decreased base Max Health 500 -> 480"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Ranged Minion",
+                      "items": [
+                        {
+                          "text": "Decreased base Max Health 250 -> 240"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Minotaur Minion",
+                      "items": [
+                        {
+                          "text": "Decreased base Max Health 975 -> 750"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Jungle Monsters",
+                  "items": [
+                    {
+                      "text": "Buff Monster",
+                      "items": [
+                        {
+                          "text": "Decreased base Max Health 975 -> 780"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Buff Monster (Satyr)",
+                      "items": [
+                        {
+                          "text": "Decreased base Max Health 350 -> 315"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Buff Monster (Contestable Camps)",
+                      "items": [
+                        {
+                          "text": "Decreased base Max Health 675 -> 600"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Cyclops",
+                      "items": [
+                        {
+                          "text": "Decreased base Max Health 700 -> 600"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Cyclops (Side Camps)",
+                      "items": [
+                        {
+                          "text": "Decreased base Max Health 600 -> 520"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Fire Imps",
+                      "items": [
+                        {
+                          "text": "Decreased base Max Health 700 -> 660"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Elder Harpy",
+                      "items": [
+                        {
+                          "text": "Decreased base Max Health 600 -> 540"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Harpy (Roaming)",
+                      "items": [
+                        {
+                          "text": "Decreased base Max Health 500 -> 430"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Oracle",
+                      "items": [
+                        {
+                          "text": "Decreased base Max Health 700 -> 620"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Scorpion",
+                      "items": [
+                        {
+                          "text": "Decreased base Max Health 1200 -> 1000"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Ancient Fury Debuff",
+                  "items": [
+                    {
+                      "text": "Increased %HP damage dealt to Towers & Phoenixes 33% -> 50%"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "list",
+              "items": [
+                {
+                  "text": "Phoenixes",
+                  "items": [
+                    {
+                      "text": "Increased Health Regen 4 -> 8"
+                    },
+                    {
+                      "text": "Fixed an issue where Phoenixes lost 10 Protections while below 50% HP"
+                    }
+                  ]
+                },
+                {
+                  "text": "Totem",
+                  "items": [
+                    {
+                      "text": "Now awards up to 100 XP per team, proportional to how much damage each contributed",
+                      "items": [
+                        {
+                          "text": "Awarded to all contributors, regardless of which team scored the last hit or reached the total damage goal first"
+                        },
+                        {
+                          "text": "Multiple damage contributors on the same team receive split XP"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Increased Damage Mitigation vs damage sources outside of The Pit +50% -> +66%"
+                    },
+                    {
+                      "text": "Fixed an issue where overkill damage was being factored in to Totem kill credit"
+                    }
+                  ]
+                },
+                {
+                  "text": "Lane Minions",
+                  "items": [
+                    {
+                      "text": "Pushed up the start time when Lane Minion strength vs Towers begins increasing from 25min to 20min"
+                    },
+                    {
+                      "text": "Brute Minions (stronger Melees that begin spawning later in the game) now use a different character model than normal Melee Minions"
+                    }
+                  ]
+                },
+                {
+                  "text": "Lane Minion Damage Mitigation",
+                  "items": [
+                    {
+                      "text": "Lane Minion Damage Mitigation now mitigates more ability damage than attack damage. Minions also no longer have this Damage Mitigation for the first 3min"
+                    },
+                    {
+                      "text": "Previously:",
+                      "items": [
+                        {
+                          "text": "Minions had 1.75% base Damage Mitigation that scaled by +1.75% every 3 minutes (max. 19.25%)"
+                        },
+                        {
+                          "text": "Minotaurs gain an additional +3.25% Damage Mitigation per 3min from Magical Damage sources (max. 50%)"
+                        }
+                      ]
+                    },
+                    {
+                      "text": "Now:",
+                      "items": [
+                        {
+                          "text": "Minions no longer have base Damage Mitigation on wave 1, but still gain Damage Mitigation every 3 minutes"
+                        },
+                        {
+                          "text": "Their Damage Mitigation is now split by damage source:",
+                          "items": [
+                            {
+                              "text": "Vs Attack Damage",
+                              "items": [
+                                {
+                                  "text": "+1.4% Damage Mitigation (max. 14%)"
+                                }
+                              ]
+                            },
+                            {
+                              "text": "Vs Ability/Item Damage",
+                              "items": [
+                                {
+                                  "text": "+2.5% Damage Mitigation (max. 25%)"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "text": "Minotaurs gain an additional +2.5% Ability/Item Damage Mitigation per 3min (max. 50%)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "God Balance",
+      "anchor": "God_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Bastet"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Cat Call",
+              "items": [
+                {
+                  "text": "Cat Dash damage reduced from 60/95/130/165/200 + 50% Strength to 40/65/90/115/140 + 50% Strength"
+                },
+                {
+                  "text": "Cat Dash slow reduced from 20/25/30/35/40% to 12/14/16/18/20%"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Base Stat Changes"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "All Gods level 1 basic attack damage is reduced by 20%, across the board. This brings base basic attack damage more in-line with SMITE 1. It still scales as it did before."
+            }
+          ]
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health has been adjusted to have a bigger gap between Gods associated with different traditional roles. Additionally some Gods had some Protections adjusted:"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Agni"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 483.0 → 446.3"
+            },
+            {
+              "text": "Health per Level: 86.5 → 79.9"
+            },
+            {
+              "text": "Total Health at Level 20: 2212.6 → 2044.3"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Ah Puch"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 525.0 → 483.0"
+            },
+            {
+              "text": "Health per Level: 94.0 → 86.5"
+            },
+            {
+              "text": "Total Health at Level 20: 2405.0 → 2212.6"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Aladdin"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Physical Protections: 16 → 14.7"
+            },
+            {
+              "text": "Physical Protections per Level: 16 → 2.8"
+            },
+            {
+              "text": "Physical Protections at Level 20: 76 → 69.9"
+            },
+            {
+              "text": "Base Magical Protections: 26 → 23.9"
+            },
+            {
+              "text": "Magical Protections at Level 20: 56 → 53.9"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Anhur"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Health per Level: 94.0 → 86.5"
+            },
+            {
+              "text": "Total Health at Level 20: 2405.0 → 2254.6"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Anubis"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 483.0 → 446.3"
+            },
+            {
+              "text": "Total Health at Level 20: 2212.6 → 2175.9"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Aphrodite"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Health per Level: 86.5 → 79.9"
+            },
+            {
+              "text": "Total Health at Level 20: 2212.6 → 2081.0"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Apollo"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Health per Level: 94.0 → 86.5"
+            },
+            {
+              "text": "Total Health at Level 20: 2363.0 → 2212.6"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Artemis"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 483.0 → 525.0"
+            },
+            {
+              "text": "Health per Level: 86.5 → 94.0"
+            },
+            {
+              "text": "Total Health at Level 20: 2212.6 → 2405.0"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Artio"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 525.0 → 567.0"
+            },
+            {
+              "text": "Total Health at Level 20: 2555.4 → 2597.4"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Cernunnos"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 483.0 → 525.0"
+            },
+            {
+              "text": "Total Health at Level 20: 2212.6 → 2254.6"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Chaac"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Physical Protections per Level: 3.0 → 3.2"
+            },
+            {
+              "text": "Physical Protections at Level 20: 77.3 → 82.1"
+            },
+            {
+              "text": "Magical Protections per Level: 1.50 → 1.62"
+            },
+            {
+              "text": "Magical Protections at Level 20: 58.1 → 60.5"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Danzaburou"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 483.0 → 525.0"
+            },
+            {
+              "text": "Total Health at Level 20: 2212.6 → 2254.6"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Discordia"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 483.0 → 446.3"
+            },
+            {
+              "text": "Health per Level: 86.5 → 79.9"
+            },
+            {
+              "text": "Total Health at Level 20: 2212.6 → 2044.3"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Eset"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 483.0 → 446.3"
+            },
+            {
+              "text": "Total Health at Level 20: 2212.6 → 2175.9"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Fenrir"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 567.0 → 525.0"
+            },
+            {
+              "text": "Health per Level: 101.5 → 94.0"
+            },
+            {
+              "text": "Total Health at Level 20: 2597.4 → 2405.0"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Guan Yu"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Health per Level: 94.0 → 101.5"
+            },
+            {
+              "text": "Total Health at Level 20: 2447.0 → 2597.4"
+            },
+            {
+              "text": "Base Physical Protections: 16.0 → 17.3"
+            },
+            {
+              "text": "Physical Protections per Level: 3.0 → 3.2"
+            },
+            {
+              "text": "Physical Protections at Level 20: 76.0 → 82.1"
+            },
+            {
+              "text": "Base Magical Protections: 26.0 → 28.1"
+            },
+            {
+              "text": "Magical Protections at Level 20: 56.0 → 58.1"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Hua Mulan"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Health per Level: 94.0 → 101.5"
+            },
+            {
+              "text": "Total Health at Level 20: 2447.0 → 2597.4"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Ishtar"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 525.0 → 483.0"
+            },
+            {
+              "text": "Total Health at Level 20: 2254.6 → 2212.6"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Janus"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 483.0 → 446.3"
+            },
+            {
+              "text": "Total Health at Level 20: 2212.6 → 2175.9"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Jing Wei"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Health per Level: 86.5 → 79.9"
+            },
+            {
+              "text": "Total Health at Level 20: 2212.6 → 2081.0"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Kali"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 525.0 → 483.0"
+            },
+            {
+              "text": "Total Health at Level 20: 2405.0 → 2363.0"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Loki"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 525 → 483"
+            },
+            {
+              "text": "Health per Level: 94 → 86.5"
+            },
+            {
+              "text": "Total Health at Level 20: 2405 → 2212.6"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Merlin"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 483.0 → 446.3"
+            },
+            {
+              "text": "Total Health at Level 20: 2212.6 → 2175.9"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Mordred"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 567.0 → 525.0"
+            },
+            {
+              "text": "Total Health at Level 20: 2447.0 → 2405.0"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Morgan Le Fay"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 483.0 → 446.3"
+            },
+            {
+              "text": "Health per Level: 94.0 → 86.5"
+            },
+            {
+              "text": "Total Health at Level 20: 2363.0 → 2175.9"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Ne Zha"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 525.0 → 483.0"
+            },
+            {
+              "text": "Total Health at Level 20: 2405.0 → 2363.0"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Nemesis"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 525.0 → 567.0"
+            },
+            {
+              "text": "Total Health at Level 20: 2405.0 → 2447.0"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Pele"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 567 → 483"
+            },
+            {
+              "text": "Total Health at Level 20: 2447 → 2363"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Poseidon"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 483.0 → 446.3"
+            },
+            {
+              "text": "Total Health at Level 20: 2212.6 → 2175.9"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Ratatoskr"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 567.0 → 483"
+            },
+            {
+              "text": "Total Health at Level 20: 2447.0 → 2363"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Scylla"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 483.0 → 446.3"
+            },
+            {
+              "text": "Total Health at Level 20: 2212.6 → 2175.9"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Sol"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 483.0 → 446.3"
+            },
+            {
+              "text": "Total Health at Level 20: 2212.6 → 2175.9"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Thor"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Health per Level: 101.5 → 94.0"
+            },
+            {
+              "text": "Total Health at Level 20: 2555.4 → 2405.0"
+            },
+            {
+              "text": "Base Physical Protections: 18.4 → 16.0"
+            },
+            {
+              "text": "Physical Protections at Level 20: 78.4 → 76.0"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Tsukuyomi"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 567.0 → 525.0"
+            },
+            {
+              "text": "Total Health at Level 20: 2447.0 → 2405.0"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Ullr"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Base Health: 525.0 → 483.0"
+            },
+            {
+              "text": "Total Health at Level 20: 2405.0 → 2363.0"
+            },
+            {
+              "text": "Base Physical Protections: 17.3 → 16.0"
+            },
+            {
+              "text": "Physical Protections at Level 20: 72.5 → 71.2"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Item Balance",
+      "anchor": "Item_Balance",
+      "level": 2,
+      "content": [
+        {
+          "type": "paragraph",
+          "text": "Avatar’s Parashu"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Strength reduced from 100 to 90"
+            },
+            {
+              "text": "10% Penetration added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Book of Thoth"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Evolved Intelligence reduced from 20 to 0"
+            },
+            {
+              "text": "10 Evolved Penetration added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Cosmic Horror"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Intelligence reduced from 75 to 65"
+            },
+            {
+              "text": "15 Penetration added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Doom Orb"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Intelligence reduced from 90 to 80"
+            },
+            {
+              "text": "10 Penetration added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Dreamer’s Idol"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Intelligence decreased from 140 to 130"
+            },
+            {
+              "text": "10% Penetration added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Gilded Arrow"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Attack Damage reduced from 25 to 20"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Gluttonous Grimoire"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "10% Penetration added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Heartseeker"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Strength reduced from 55 to 45"
+            },
+            {
+              "text": "10% Penetration added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Jotunns Revenge"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Strength reduced from 40 to 35"
+            },
+            {
+              "text": "5 Penetration added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "New Item: Spear of the Magus"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "95 Intelligence"
+            },
+            {
+              "text": "10% Penetration"
+            },
+            {
+              "text": "Ability Hit a God: That God is marked for 8s. Marked Gods take 5% increased damage from all sources."
+            },
+            {
+              "text": "Builds from Evil Eye and Void Shard"
+            },
+            {
+              "text": "2700 gold"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Oath-Sworn Spear"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Was:",
+              "items": [
+                {
+                  "text": "Ability Hit: Target is -1 Protection per your Level for 4s."
+                }
+              ]
+            },
+            {
+              "text": "Now:",
+              "items": [
+                {
+                  "text": "Ability Hit: Targets Physical Protection is reduced by 5 for 4s"
+                },
+                {
+                  "text": "On god Kill or Assist: This effect increases by 1 Physical Protection.",
+                  "items": [
+                    {
+                      "text": "This effect caps at 15 total Physical Protection reduction"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Obsidian Shard"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Intelligence increased from 60 to 90"
+            },
+            {
+              "text": "Penetration decreased from 35% to 20%"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Pendulum Blade"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Strength reduced from 35 to 30"
+            },
+            {
+              "text": "10% Penetration added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Riptalon"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Attack Damage reduced from 25 to 20"
+            },
+            {
+              "text": "10% Penetration added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Rod of Tahuti"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Intelligence decreased from 85 to 80"
+            },
+            {
+              "text": "10% Penetration added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Soul Gem"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "10 Penetration added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Spear of Desolation"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Intelligence reduced from 100 to 85"
+            },
+            {
+              "text": "15 Penetration added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Tekko-Kagi"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Strength reduced from 45 to 35"
+            },
+            {
+              "text": "10 Penetration added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The Crusher"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Strength reduced from 50 to 45"
+            },
+            {
+              "text": "10 Penetration added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The Reaper"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Strength reduced from 55 to 45"
+            },
+            {
+              "text": "10 Penetration added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Titan’s Bane"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Strength increased from 40 to 60"
+            },
+            {
+              "text": "Penetration reduced from 35% to 20%"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Totem of Death"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "With the penetration adjustments we have removed Totem of Death from the game."
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Transcendence"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Evolved Strength reduced from 15 to 0"
+            },
+            {
+              "text": "10 Evolved Penetration added"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "World Stone"
+        },
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Intelligence reduced from 80 to 70"
+            },
+            {
+              "text": "10 Penetration added"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    },
+    {
+      "title": "Bug Fixes",
+      "anchor": "Bug_Fixes",
+      "level": 2,
+      "content": [
+        {
+          "type": "list",
+          "items": [
+            {
+              "text": "Osiris",
+              "items": [
+                {
+                  "text": "Sickle Strike",
+                  "items": [
+                    {
+                      "text": "Aspect of the Fragmented",
+                      "items": [
+                        {
+                          "text": "Fixed an issue where Sickle Strike was not dealing correct damage to minions."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "Pharoah’s Curse",
+              "items": [
+                {
+                  "text": "Item is now included in the store filter for Magical Protection"
+                }
+              ]
+            },
+            {
+              "text": "War Banner",
+              "items": [
+                {
+                  "text": "Fixed the description to not include Max Health"
+                }
+              ]
+            },
+            {
+              "text": "Increased VO volume for Bastet, Ne Zha Fire Lord, and Tsukuyomi Silver Bullet"
+            },
+            {
+              "text": "Fixed an issue with Sfx not playing for the Da Ji global emote"
+            },
+            {
+              "text": "Fixed an issue where overkill damage on the Totem was being factored in to Totem kill credit"
+            },
+            {
+              "text": "Fixed an issue with Chiron Aspect and the Fire Giant Dagger."
+            },
+            {
+              "text": "Fixed issues around locking when Daily Rewards pop up."
+            },
+            {
+              "text": "Fixed Player names sometimes being cut off on the T screen."
+            },
+            {
+              "text": "Updated description on God Tokens on the Profile screen to make clear that they cannot be used on the most recently released God."
+            },
+            {
+              "text": "Agreeing to the leaver penalty is no longer case sensitive."
+            },
+            {
+              "text": "Fixed an issue where Gods without Aspects would have an uncolored damage type icon"
+            },
+            {
+              "text": "Addressed issue with Horus Ult not Teleporting if it times out and targeter is invalid"
+            },
+            {
+              "text": "Allow Bastet A01 to cancel after first leap for early cooldown start; and no return leap"
+            },
+            {
+              "text": "Address interaction with Awilix A04 not properly stopping Bastet A01 refire window from opening"
+            },
+            {
+              "text": "Fixed an issue where Xbalanque Ult could cause Towers to drop their targets"
+            },
+            {
+              "text": "Fixed Nu Wa exploding her own Mike Typhon"
+            }
+          ]
+        }
+      ],
+      "subsections": []
+    }
+  ]
+}

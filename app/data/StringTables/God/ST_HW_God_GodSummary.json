@@ -1,0 +1,451 @@
+[
+  {
+    "Type": "StringTable",
+    "Name": "ST_HW_God_GodSummary",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Class": "UScriptClass'StringTable'",
+    "Package": "/Game/UI/StringTables/God/ST_HW_God_GodSummary",
+    "StringTable": {
+      "TableNamespace": "HW.God.GodSummary",
+      "KeysToEntries": {
+        "God.Bacchus": "Gets Drunk and Burps Crowd Control",
+        "God.Anhur": "Hurls Spears, Pinning Enemies Against Walls",
+        "God.Anubis": "Mummifies Enemies and Channels Death Magic",
+        "God.Bellona": "Leaps Into Battle With Three Powerful Weapons",
+        "God.Cernunnos": "Throws Glaives, Transforms Enemies Into Pigs",
+        "God.Chaac": "Summons Rain and Thunder With His Mighty Axe",
+        "God.Loki": "Turns Invisible and Backstabs His Foes",
+        "God.Odin": "Cages Foes and Shields Himself",
+        "God.Ymir": "Freezes Foes, Then Smashes Them With His Club",
+        "God.Kukulkan": "Summons Tornadoes and Deadly Winds",
+        "God.Athena": "Teleports to the Rescue and Taunts Enemies",
+        "God.Fenrir": "Empowers Runes and Drags Enemies to Their Doom",
+        "God.Hades": "Spreads Blight and Fear in a Vortex of Agony",
+        "God.Hecate": "Eats Spells, Repels Magic, Creates Portals ",
+        "God.Neith": "Fires Arrows, Explodes Weaves, and Snipes Globally",
+        "God.TheMorrigan": "Copies Gods, Confuses Enemies, Causes Chaos",
+        "God.Zeus": "Hurls Lightning Bolts and Detonates Charges",
+        "God.Thanatos": "Executes Weakened Foes, Sustains Through Killing",
+        "God.Ares": "Chains Foes and Drags Them to Their Death",
+        "God.Achilles": "Adapts With Power or Armor, Executes Weakened Enemies",
+        "God.Agni": "Summons Fire Waves, Rains Meteors On Enemies",
+        "God.AhMuzenCab": "Ah Muzen Cab",
+        "God.AhPuch": "Summon Decaying Corpses, Blow them up for Damage.",
+        "God.Amaterasu": "Empowers Allies With Auras, Slices and Stuns Enemies",
+        "God.AoKuang": "Ao Kuang",
+        "God.Aphrodite": "Links to Allies, Providing Healing and Temporary Invulnerability",
+        "God.Apollo": "Harness melodic might, Take to the Skies in your Chariot",
+        "God.Arachne": "Traps Enemies in Webs and Hunts Them Down",
+        "God.Artemis": "Lays Traps, Rains Arrows, and Controls the Hunt",
+        "God.Aladdin": "Fights Alongside His Genie, Traps Enemies In His Lamp",
+        "God.Artio": "Employs Nature Magic to Trap Targets and Take The Form of a Bear",
+        "God.Atlas": "Throws Astrolabe and uses it to Control Space and Enemies",
+        "God.Awilix": "Rides her Panther and Pulls Airborne Enemies to her Spear",
+        "God.BabaYaga": "Baba Yaga",
+        "God.Bakasura": "Devours Minions and Feasts on His Prey",
+        "God.BakeKujira": "Bake Kujira",
+        "God.BaronSamedi": "Spreads Hysteria and Puts Foes in a Coffin",
+        "God.Bastet": "Pounces on Enemies Alongside Her Cats",
+        "God.Cabrakan": "Creates Tremors and Fissures to Disrupt Enemies",
+        "God.Camazotz": "Camazotz",
+        "God.Cerberus": "Steals Healing, Breathes Poison, Drags Foes to the Underworld",
+        "God.Change": "Chang'e",
+        "God.Charon": "Collects Tolls to Ferry Allies and Control Enemies.",
+        "God.Charybdis": "Charybdis",
+        "God.Chernobog": "Chernobog",
+        "God.Chiron": "Marks Enemy Targets and Rains Arrows Upon Them",
+        "God.Chronos": "Manipulates Time and Rewinds His Own Fate",
+        "God.Cliodhna": "Cliodhna",
+        "God.Cthulhu": "Drives Enemies Mad With Eldritch Power",
+        "God.CuChulainn": "Enters a Berserk Rage and Overwhelms His Enemies",
+        "God.Cupid": "Makes Enemies' Hearts Explode and Shares the Love with Allies",
+        "God.DaJi": "Claw Enemies with Bleeds, Chain Them To Your Paolao",
+        "God.Danzaburou": "Baits Enemies With Tricks, Fires Explosive Shots",
+        "God.Discordia": "Imbue Enemies with Chaos to drive them Mad",
+        "God.ErlangShen": "Erlang Shen",
+        "God.Eset": "Channels Divine Magic and Releases its Power for Protection and Ruin",
+        "God.Fafnir": "Transforms Into a Dragon and Hoards Treasure",
+        "God.Freya": "Freya",
+        "God.Ganesha": "Good Fortune Follows your Allies. Summon Down the Pillars of Righteousness",
+        "God.Geb": "Shields Allies, Crushes Enemies with a Massive Cataclysm",
+        "God.Gilgamesh": "Drop Kick Enemies into Walls. Quest for more Power.",
+        "God.GuanYu": "Rides into Battle, Heals Allies, and Shreds Through Foes",
+        "God.Hachiman": "Fires Empowered Arrows While Charging Into Battle",
+        "God.HeBo": "He Bo",
+        "God.Heimdallr": "Heimdallr",
+        "God.Hel": "Shifts Between Light and Darkness to Heal and Destroy",
+        "God.Hera": "Commands Argus and Punishes Her Enemies",
+        "God.Hercules": "Throws Boulders, Pulls and Pushes Enemies Around",
+        "God.Horus": "Fly to and Protect Allies, Lock Down Enemies",
+        "God.HouYi": "Ricochet Arrows off Walls and Call Down the Sun",
+        "God.HunBatz": "Leaps In and Summons a Totem to Fear Enemies",
+        "God.Ishtar": "Summons Storms and Swords while pelting Enemies with Arrows",
+        "God.IxChel": "Harnesses Rainbow Magic and Heals Her Allies",
+        "God.Izanami": "Throws Spectral Boomerangs, Fades Into the Shadows",
+        "God.Janus": "Creates Portals to aid Allies and Disrupt Enemies",
+        "God.JingWei": "Flies Through Battle With Her Crossbow",
+        "God.Jormungandr": "Spread Poison and Defeat Enemies with your Toxic Breath",
+        "God.Kali": "Marks her Prey, Becomes Undying, Heals from Kills",
+        "God.Khepri": "Resurrects Allies, Pulls Enemies Into His Grasp",
+        "God.KingArthur": "King Arthur",
+        "God.Kumbhakarna": "Kumbhakarna",
+        "God.Kuzenbo": "Kuzenbo",
+        "God.Lancelot": "Lancelot",
+        "God.MamanBrigitte": "Maman Brigitte",
+        "God.Martichoras": "Martichoras",
+        "God.Maui": "Maui",
+        "God.Medusa": "Slays Enemies with Venom and Turns Them to Stone",
+        "God.Mercury": "Move Fast and Strike Faster. Rush Forward Unleash your Fists.",
+        "God.Merlin": "Masters Frost, Fire, and Arcane Magic to Devastate Foes",
+        "God.MorganLeFay": "Curse Enemies, Consume Marks to Empower yourself",
+        "God.Mulan": "Wields a Sword, Spear, and Bow Gaining Power While Fighting",
+        "God.NeZha": "Harass with Bouncing Rings, Engage with Sash and Spear",
+        "God.Nemesis": "Dashes in, Steals Power, and Slices Through Armor",
+        "God.Nike": "Nike",
+        "God.Nox": "Nox",
+        "God.NuWa": "Conjures Clay Soldiers, Then Shatters Them",
+        "God.Olorun": "Olorun",
+        "God.Osiris": "Slow Enemies and Stay Close, Shed Mortal Fragments for Defense",
+        "God.Pele": "Fuels Herself, Unleashes Magma Blasts and Lightning",
+        "God.Persephone": "Persephone",
+        "God.Poseidon": "Commands Tidal Waves and Unleashes the Kraken",
+        "God.Ra": "Blinds Foes, Snipes, and Heals With Solar Beams",
+        "God.Raijin": "Raijin",
+        "God.Rama": "Cripples Foes, Snipes from the Sky with His Arrows",
+        "God.Ratatoskr": "Purchase Acorns to Alter Abilties, Dart and Fly through the Battlefield",
+        "God.Ravana": "Ambushes Enemies With Martial Arts Mastery",
+        "God.Scylla": "Unleashes her Hounds and Reveals the Beast Within",
+        "God.Serqet": "Serqet",
+        "God.Set": "Summons Sand Clones and Descends Into Chaos",
+        "God.Shiva": "Dances Through Battle and Destroys Creation",
+        "God.Skadi": "Hunts Enemies Alongside Her Wolf, Kaldr",
+        "God.Sobek": "Flings Backs Enemies, Lurks Underwater to Execute",
+        "God.Sol": "Throws Fire, Builds Heat, Unleashes a Supernova",
+        "God.SunWukong": "Smashes Foes with his Cudgel and a Trickster’s Transformations",
+        "God.Surtr": "Surtr",
+        "God.Susano": "Pulls Enemies, and Slices Through Like a Storm",
+        "God.Sylvanus": "Heal Friends and Pull Foes. Tend to your Flowers.",
+        "God.Terra": "Terra",
+        "God.Thor": "Soars Skyward, Smashes Down With Mjolnir's Might",
+        "God.Thoth": "Thoth",
+        "God.Tiamat": "Tiamat",
+        "God.Tsukuyomi": "Wield Moon-forged Tonfa. Control Distance, then Finish Foes in Eclipsing Bursts",
+        "God.Tyr": "Tyr",
+        "God.Ullr": "Swaps Between Melee and Ranged Attacks",
+        "God.Vamana": "Grows Into a Giant and Tramples His Enemies",
+        "God.Vulcan": "Hurls Magma Bombs, Bursts Enemies With Explosions",
+        "God.Xbalanque": "Poison Enemies and Enshroud Them in Darkness",
+        "God.XingTian": "Xing Tian",
+        "God.Yemoja": "Heals, Shields, and Walls With Omi Mana",
+        "God.YuHuang": "Yu Huang",
+        "God.ZhongKui": "Zhong Kui",
+        "God.Mordred": "Charges Into Battle and Bleeds His Foes",
+        "God.Unlisted": "Unconfigured",
+        "God.Bari": "Lob and Push Bells, gain Mystic Power to Overpower Foes",
+        "God.Nut": "Descends from the Stars, Blasting Foes with Converging Cosmic Power"
+      },
+      "KeysToMetaData": {
+        "God.Hercules": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Danzaburou": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Ra": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Sobek": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Nemesis": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Thor": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Poseidon": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Khepri": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Izanami": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Anhur": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Amaterasu": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Anubis": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Ares": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Athena": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Bacchus": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.BaronSamedi": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Bellona": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Cernunnos": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Chaac": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Fenrir": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Hades": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Hecate": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.JingWei": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Kukulkan": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Loki": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Mordred": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Neith": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.NuWa": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Odin": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Sol": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Susano": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Thanatos": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.TheMorrigan": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Yemoja": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Ymir": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Zeus": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Cupid": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Aphrodite": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Geb": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Pele": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Medusa": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Agni": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Vulcan": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Cabrakan": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Mulan": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Ullr": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.HunBatz": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Aladdin": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Achilles": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Rama": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Artemis": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Awilix": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Merlin": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.GuanYu": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Kali": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Cerberus": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Apollo": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Scylla": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.SunWukong": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Bari": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Ganesha": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Mercury": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Jormungandr": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Tsukuyomi": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Osiris": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Xbalanque": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Eset": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Sylvanus": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.DaJi": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Artio": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Nut": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Discordia": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Chiron": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.NeZha": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.MorganLeFay": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Gilgamesh": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Charon": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Ratatoskr": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Ishtar": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Atlas": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.AhPuch": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Horus": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.HouYi": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Janus": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Bastet": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Arachne": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Bakasura": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Chronos": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Cthulhu": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Fafnir": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Hachiman": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Hel": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Skadi": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Set": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Ravana": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Vamana": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Shiva": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.IxChel": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.Hera": {
+          "METADATA_ID_COMMENT": ""
+        },
+        "God.CuChulainn": {
+          "METADATA_ID_COMMENT": ""
+        }
+      }
+    }
+  }
+]
