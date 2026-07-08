@@ -14,6 +14,8 @@ export const SUPABASE_CONFIG = {
 export const REMOTE_BASE_URLS = {
   GITHUB_RAW_MAIN_IMG: 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img',
   GITHUB_RAW_MASTER: 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/master',
+  /** Large runtime assets (voice, etc.) on `assets` branch — keeps `master` small for Vercel. */
+  GITHUB_RAW_ASSETS: 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets',
   SMITE_CALCULATOR: 'https://www.smitecalculator.pro',
   SMITE2_NEWS: 'https://www.smite2.com/news',
   WEB_CDN: 'https://webcdn.hirezstudios.com/smite2-cdn',
@@ -41,7 +43,7 @@ export const ICON_PATHS = {
   /** God aspect slot art — [Smite2Mastery `app/data/AspectIcons`](https://github.com/YungSonix/Smite2Mastery/tree/master/app/data/AspectIcons) */
   ASPECT_ICONS: `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/app/data/AspectIcons`,
   SKINS: `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/app/data/Icons/Wallpapers`,
-  VOICE_AUDIO: `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/app/data/VoiceAudio`,
+  VOICE_AUDIO: `${REMOTE_BASE_URLS.GITHUB_RAW_ASSETS}/app/data/VoiceAudio`,
   ROLE_ICONS: `${REMOTE_BASE_URLS.GITHUB_RAW_MASTER}/app/data/Icons/Role%20Icons`,
   PROFILE_BANNERS: `${REMOTE_BASE_URLS.GITHUB_RAW_MAIN_IMG}/Profile%20Banner`,
   BADGES: `${REMOTE_BASE_URLS.GITHUB_RAW_MAIN_IMG}/Badges`,

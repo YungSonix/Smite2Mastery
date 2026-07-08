@@ -1,0 +1,12 @@
+# Shrink Vercel deploy upload (clone size fixed via slim `master` git history)
+app/data/VoiceAudio
+app/data/Voice Audio
+app/data/Icons/God Info
+app/data/Icons/Item Icons
+app/data/God Renders
+app/data/Backups
+.tmp-*
+scripts/god-renders
+scripts/skins-viewer
+Vault
+.cursor
