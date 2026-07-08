@@ -41,6 +41,9 @@ scripts/god-renders/.vision-tag-STOP
 .env*.local
 .env
 
+# Secret templates only — real keys live in .env (local) or Vercel/Expo (deploy)
+!.env.example
+
 # typescript
 *.tsbuildinfo
 tsconfig.json
@@ -70,9 +73,7 @@ output.txt
 Git/
 *.exe
 
-# Note: config/supabase.js is now tracked in git
-# It uses fallback values, so it's safe to commit
-# Environment variables will override fallbacks when set
+# Note: config/supabase.js reads EXPO_PUBLIC_* env vars only — no hardcoded keys in repo
 
 # Patch notes source files (keep JSON, ignore text sources)
 *.txt
@@ -90,6 +91,33 @@ vault.config.json
 .cursor/
 docs/council/
 docs/cursor-agents/
+
+# Visual audit artifacts (Playwright screenshots + agent queue)
+scripts/visual-audit/shots/
+scripts/visual-audit/latest/
+scripts/visual-audit/queue/
+scripts/visual-audit/backups/
+
+# Skins viewer — local dev tool only (npm run skins:viewer)
+scripts/skins-viewer/
+scripts/skins-viewer-server.js
+scripts/skins-viewer.backup*/
+
+# Reddit poll scrape scratch (one-off scripts + HTML/JSON dumps)
+.tmp_reddit*
+scripts/reddit-*.js
+scripts/analyze-reddit-support-poll.js
+
+# Local export / bundle test output
+.tmp-*/
+.tmp_*
+
+# God render agent scratch batches
+scripts/god-renders/.tmp-*
+scripts/god-renders/vision-reviews/
+
+# Dated editor / layout backups
+*backup-pre-*
 
 # Backup and temporary files
 *.backup
