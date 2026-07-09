@@ -1,14 +1,17 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   StyleSheet,
   Text,
   View,
   ScrollView,
   TouchableOpacity,
+  TextInput,
   Platform,
   ActivityIndicator,
   Alert,
   RefreshControl,
+  Animated,
+  Easing,
 } from 'react-native';
 import { Image } from 'expo-image';
 import { useScreenDimensions } from '../../hooks/useScreenDimensions';
@@ -16,20 +19,61 @@ import {
   SHOP_RARITIES,
   CHALLENGES,
   SHOP_ITEM_POOL,
+  SHOP_PACKS,
+  expandOwnedIds,
   DAILY_GOLD_AMOUNT,
 } from '../../lib/shopData';
 import { fetchUserShopData, claimDailyShopGold, purchaseShopItem, fetchLeaderboard } from '../../lib/shopSupabase';
 import { GOLD_ICON } from '../../lib/imageGrabber';
+import { useAppFonts, FONT_FAMILY_BY_KEY } from '../../lib/appFonts';
 
 const IS_WEB = Platform.OS === 'web';
 
 const NAME_FX_ITEMS = SHOP_ITEM_POOL.filter((i) => i.type === 'name_fx');
 const TITLE_ITEMS = SHOP_ITEM_POOL.filter((i) => i.type === 'title');
 const FONT_ITEMS = SHOP_ITEM_POOL.filter((i) => i.type === 'font');
+const ITEM_COST_BY_ID = SHOP_ITEM_POOL.reduce((acc, i) => {
+  acc[i.id] = i.cost;
+  return acc;
+}, {});
+const ITEM_NAME_BY_ID = SHOP_ITEM_POOL.reduce((acc, i) => {
+  acc[i.id] = (i.name || '').replace(/^Title:\s*/, '');
+  return acc;
+}, {});
 
-const DAILY_NAME_FX_COUNT = 18;  // 3 rows x 6 columns
-const DAILY_TITLE_COUNT = 18;
-const DAILY_FONT_COUNT = 18;
+const DAILY_NAME_FX_COUNT = 30;
+const DAILY_TITLE_COUNT = 30;
+const DAILY_FONT_COUNT = 30;
+
+// Animated pack container: a soft pulsing glow border + a shimmer sweep that
+// gives bundles a premium, "unwrap me" feel. Purely presentational.
+function PackCard({ rarity, width, children }) {
+  const shimmer = useRef(new Animated.Value(0)).current;
+  const glow = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    const s = Animated.loop(
+      Animated.timing(shimmer, { toValue: 1, duration: 2600, delay: 400, easing: Easing.linear, useNativeDriver: true })
+    );
+    const g = Animated.loop(
+      Animated.sequence([
+        Animated.timing(glow, { toValue: 1, duration: 1400, easing: Easing.inOut(Easing.ease), useNativeDriver: true }),
+        Animated.timing(glow, { toValue: 0, duration: 1400, easing: Easing.inOut(Easing.ease), useNativeDriver: true }),
+      ])
+    );
+    s.start();
+    g.start();
+    return () => { s.stop(); g.stop(); };
+  }, [shimmer, glow]);
+  const translateX = shimmer.interpolate({ inputRange: [0, 1], outputRange: [-width * 0.5, width * 1.1] });
+  const glowOpacity = glow.interpolate({ inputRange: [0, 1], outputRange: [0.12, 0.7] });
+  return (
+    <View style={[styles.packCard, styles.packCardClip, { width, borderColor: rarity.color, backgroundColor: rarity.bgGlow }]}>
+      <Animated.View pointerEvents="none" style={[styles.packGlow, { borderColor: rarity.color, opacity: glowOpacity }]} />
+      <Animated.View pointerEvents="none" style={[styles.packShimmer, { transform: [{ translateX }, { rotate: '18deg' }] }]} />
+      {children}
+    </View>
+  );
+}
 
 // Deterministic shuffle from date string so shop rotates every 24h (same date = same shop)
 function seededShuffle(pool, dateString) {
@@ -52,99 +96,8 @@ function getDailyShopItems(dateString) {
   };
 }
 
-// Font key -> fontFamily for shop card preview (matches profile PROFILE_FONT_FAMILY_MAP)
-const SHOP_FONT_FAMILY_MAP = {
-  serif: Platform.OS === 'web' ? 'Georgia, serif' : 'Georgia',
-  rounded: Platform.OS === 'web' ? '"Segoe UI", system-ui, sans-serif' : 'System',
-  condensed: Platform.OS === 'web' ? '"Arial Narrow", Arial, sans-serif' : 'System',
-  comic: Platform.OS === 'web' ? 'Comic Sans MS, cursive' : 'System',
-  elegant: Platform.OS === 'web' ? 'Georgia, "Times New Roman", serif' : 'Georgia',
-  royal: Platform.OS === 'web' ? 'Georgia, serif' : 'Georgia',
-  strong: Platform.OS === 'web' ? 'Arial Black, sans-serif' : 'System',
-  narrow: Platform.OS === 'web' ? 'Arial Narrow, Arial, sans-serif' : 'System',
-  wide: Platform.OS === 'web' ? 'Arial Black, sans-serif' : 'System',
-  mono: Platform.OS === 'web' ? 'monospace' : 'System',
-  mythic: Platform.OS === 'web' ? 'Georgia, "Palatino Linotype", serif' : 'Georgia',
-  mystic: Platform.OS === 'web' ? 'Georgia, cursive, serif' : 'Georgia',
-  oracle: Platform.OS === 'web' ? '"Times New Roman", Times, serif' : 'System',
-  rune: Platform.OS === 'web' ? 'monospace, serif' : 'System',
-  titan: Platform.OS === 'web' ? 'Arial Black, Impact, sans-serif' : 'System',
-  celestial: Platform.OS === 'web' ? 'Georgia, "Times New Roman", serif' : 'Georgia',
-  shadow: Platform.OS === 'web' ? 'Arial Black, sans-serif' : 'System',
-  ancient: Platform.OS === 'web' ? '"Times New Roman", Times, serif' : 'System',
-  gothic: Platform.OS === 'web' ? 'Arial Black, sans-serif' : 'System',
-  script: Platform.OS === 'web' ? 'cursive, "Comic Sans MS"' : 'System',
-  bold: Platform.OS === 'web' ? 'Arial Black, sans-serif' : 'System',
-  light: Platform.OS === 'web' ? 'Arial, sans-serif' : 'System',
-  stencil: Platform.OS === 'web' ? 'Impact, Arial Black, sans-serif' : 'System',
-  retro: Platform.OS === 'web' ? 'Georgia, serif' : 'Georgia',
-  tech: Platform.OS === 'web' ? 'monospace, "Courier New"' : 'System',
-  cosmic: Platform.OS === 'web' ? 'Georgia, sans-serif' : 'Georgia',
-  dragon: Platform.OS === 'web' ? 'Arial Black, Impact, sans-serif' : 'System',
-  phoenix: Platform.OS === 'web' ? 'Georgia, "Times New Roman", serif' : 'Georgia',
-  olympian: Platform.OS === 'web' ? 'Georgia, serif' : 'Georgia',
-  egyptian: Platform.OS === 'web' ? '"Times New Roman", serif' : 'System',
-  norse: Platform.OS === 'web' ? 'Georgia, monospace, serif' : 'Georgia',
-  graffiti: Platform.OS === 'web' ? '"Comic Sans MS", "Marker Felt", cursive' : 'System',
-  glitch: Platform.OS === 'web' ? '"Courier New", monospace' : 'System',
-  slime: Platform.OS === 'web' ? '"Comic Sans MS", cursive' : 'System',
-  toxic: Platform.OS === 'web' ? '"Segoe UI", system-ui, sans-serif' : 'System',
-  arcade: Platform.OS === 'web' ? '"Press Start 2P", "Courier New", monospace' : 'System',
-  pixel: Platform.OS === 'web' ? '"Courier New", monospace' : 'System',
-  spooky: Platform.OS === 'web' ? '"Times New Roman", "Creepster", serif' : 'System',
-  agency_fb: Platform.OS === 'web' ? '"Agency FB", sans-serif' : 'System',
-  algerian: Platform.OS === 'web' ? 'Algerian, serif' : 'System',
-  bahnschrift: Platform.OS === 'web' ? 'Bahnschrift, system-ui, sans-serif' : 'System',
-  baskerville_old: Platform.OS === 'web' ? '"Baskerville Old Face", serif' : 'Georgia',
-  bauhaus: Platform.OS === 'web' ? '"Bauhaus 93", cursive' : 'System',
-  bell_mt: Platform.OS === 'web' ? '"Bell MT", serif' : 'Georgia',
-  berlin_sans: Platform.OS === 'web' ? '"Berlin Sans FB", sans-serif' : 'System',
-  bernard: Platform.OS === 'web' ? '"Bernard MT Condensed", serif' : 'System',
-  blackadder: Platform.OS === 'web' ? '"Blackadder ITC", cursive' : 'System',
-  bodoni_mt: Platform.OS === 'web' ? '"Bodoni MT", serif' : 'Georgia',
-  book_antiqua: Platform.OS === 'web' ? '"Book Antiqua", Palatino, serif' : 'Georgia',
-  bookman_old: Platform.OS === 'web' ? '"Bookman Old Style", serif' : 'Georgia',
-  bradley_hand: Platform.OS === 'web' ? '"Bradley Hand ITC", cursive' : 'System',
-  britannic: Platform.OS === 'web' ? '"Britannic Bold", sans-serif' : 'System',
-  broadway: Platform.OS === 'web' ? 'Broadway, serif' : 'System',
-  brush_script: Platform.OS === 'web' ? '"Brush Script MT", cursive' : 'System',
-  calibri: Platform.OS === 'web' ? 'Calibri, system-ui, sans-serif' : 'System',
-  cambria: Platform.OS === 'web' ? 'Cambria, "Times New Roman", serif' : 'Georgia',
-  castellar: Platform.OS === 'web' ? 'Castellar, serif' : 'System',
-  niagara_engraved: Platform.OS === 'web' ? '"Niagara Engraved", serif' : 'System',
-  niagara_solid: Platform.OS === 'web' ? '"Niagara Solid", serif' : 'System',
-  old_english: Platform.OS === 'web' ? '"Old English Text MT", serif' : 'System',
-  onyx: Platform.OS === 'web' ? 'Onyx, serif' : 'System',
-  palace_script: Platform.OS === 'web' ? '"Palace Script MT", cursive' : 'System',
-  palatino: Platform.OS === 'web' ? '"Palatino Linotype", Palatino, serif' : 'Georgia',
-  papyrus: Platform.OS === 'web' ? 'Papyrus, fantasy' : 'System',
-  parchment: Platform.OS === 'web' ? 'Parchment, cursive' : 'System',
-  perpetua: Platform.OS === 'web' ? 'Perpetua, serif' : 'Georgia',
-  playbill: Platform.OS === 'web' ? 'Playbill, serif' : 'System',
-  edwardian: Platform.OS === 'web' ? '"Edwardian Script ITC", cursive' : 'System',
-  elephant: Platform.OS === 'web' ? 'Elephant, serif' : 'System',
-  engravers: Platform.OS === 'web' ? '"Engravers MT", serif' : 'System',
-  felix: Platform.OS === 'web' ? '"Felix Titling MT", serif' : 'System',
-  forte: Platform.OS === 'web' ? 'Forte, cursive' : 'System',
-  franklin_book: Platform.OS === 'web' ? '"Franklin Gothic Book", sans-serif' : 'System',
-  freestyle: Platform.OS === 'web' ? '"Freestyle Script", cursive' : 'System',
-  french_script: Platform.OS === 'web' ? '"French Script MT", cursive' : 'System',
-  gabriola: Platform.OS === 'web' ? 'Gabriola, cursive' : 'System',
-  gadugi: Platform.OS === 'web' ? 'Gadugi, system-ui, sans-serif' : 'System',
-  garamond: Platform.OS === 'web' ? 'Garamond, "Times New Roman", serif' : 'Georgia',
-  gigi: Platform.OS === 'web' ? 'Gigi, cursive' : 'System',
-  sylfaen: Platform.OS === 'web' ? 'Sylfaen, serif' : 'System',
-  tempus: Platform.OS === 'web' ? '"Tempus Sans ITC", sans-serif' : 'System',
-  times_new: Platform.OS === 'web' ? '"Times New Roman", serif' : 'Georgia',
-  trajan: Platform.OS === 'web' ? '"Trajan Pro", serif' : 'System',
-  trebuchet: Platform.OS === 'web' ? '"Trebuchet MS", sans-serif' : 'System',
-  tw_cen: Platform.OS === 'web' ? '"Tw Cen MT", sans-serif' : 'System',
-  verdana: Platform.OS === 'web' ? 'Verdana, Geneva, sans-serif' : 'System',
-  viner: Platform.OS === 'web' ? '"Viner Hand ITC", cursive' : 'System',
-  vivaldi: Platform.OS === 'web' ? 'Vivaldi, cursive' : 'System',
-  vladimir: Platform.OS === 'web' ? '"Vladimir Script", cursive' : 'System',
-  wide_latin: Platform.OS === 'web' ? '"Wide Latin", serif' : 'System',
-};
+// Font key -> loaded fontFamily for shop card preview (identical on web + native).
+const SHOP_FONT_FAMILY_MAP = FONT_FAMILY_BY_KEY;
 
 let AnimatedProfileName = null;
 function getAnimatedProfileName() {
@@ -192,11 +145,13 @@ function getTodayDateString() {
 }
 
 export default function ShopPage({ currentUsername = null, onNavigateToProfile, onNavigateToWordle, onNavigateToAbility }) {
+  useAppFonts();
   const { width: screenWidth } = useScreenDimensions();
   const prefix = getShopPrefix(currentUsername);
 
   const [shopTab, setShopTab] = useState('shop'); // 'shop' | 'challenges' | 'leaderboard'
-  const [shopSection, setShopSection] = useState('name_fx'); // 'name_fx' | 'fonts' | 'titles'
+  const [shopSection, setShopSection] = useState('packs'); // 'packs' | 'name_fx' | 'fonts' | 'titles'
+  const [search, setSearch] = useState('');
   const [gold, setGold] = useState(0);
   const [lastDailyClaim, setLastDailyClaim] = useState(null);
   const [ownedIds, setOwnedIds] = useState([]);
@@ -257,6 +212,24 @@ export default function ShopPage({ currentUsername = null, onNavigateToProfile, 
 
   const today = getTodayDateString();
   const dailyShop = getDailyShopItems(today);
+  const searchLc = search.trim().toLowerCase();
+  const FULL_POOLS = { name_fx: NAME_FX_ITEMS, fonts: FONT_ITEMS, titles: TITLE_ITEMS };
+  const itemsForSection = (key) => {
+    if (searchLc) {
+      return (FULL_POOLS[key] || []).filter(
+        (i) =>
+          (i.name || '').toLowerCase().includes(searchLc) ||
+          String(i.value || '').toLowerCase().includes(searchLc) ||
+          (i.description || '').toLowerCase().includes(searchLc)
+      );
+    }
+    return key === 'name_fx' ? dailyShop.nameFx : key === 'fonts' ? dailyShop.fonts : dailyShop.titles;
+  };
+  const hoursUntilRefresh = (() => {
+    const now = new Date();
+    const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1));
+    return Math.max(1, Math.ceil((next.getTime() - now.getTime()) / 3600000));
+  })();
   const canClaimDaily = lastDailyClaim !== today;
   const dailyGoldAmount = DAILY_GOLD_AMOUNT;
   const AnimatedName = getAnimatedProfileName();
@@ -346,74 +319,171 @@ export default function ShopPage({ currentUsername = null, onNavigateToProfile, 
   }
 
   const contentPadding = 16;
-  const gridGap = 6;
+  const gridGap = 8;
   const isNarrow = screenWidth < 600;
-  const numColumns = isNarrow ? 3 : 6;
-  const rawCardWidth = Math.floor((screenWidth - contentPadding * 2 - gridGap * (numColumns - 1)) / numColumns);
-  const cardWidth = isNarrow ? Math.min(rawCardWidth, 160) : Math.min(rawCardWidth, 140);
-  const cardPadding = isNarrow ? 6 : 10;
+  const maxContent = IS_WEB ? Math.min(screenWidth, 1060) : screenWidth;
+  const numColumns = isNarrow ? 3 : maxContent < 900 ? 4 : 5;
+  const rawCardWidth = Math.floor((maxContent - contentPadding * 2 - gridGap * (numColumns - 1)) / numColumns);
+  const cardWidth = Math.max(102, rawCardWidth);
+  const previewName = currentUsername || 'Your Name';
+  // Items granted by an owned pack count as owned too
+  const ownedSet = new Set(expandOwnedIds(ownedIds));
 
-  const renderItemCard = (item, isNew) => {
+  const renderItemCard = (item) => {
     const rarity = SHOP_RARITIES[item.rarity] || SHOP_RARITIES.common;
-    const owned = ownedIds.includes(item.id);
+    const isFree = !!item.defaultUnlocked && !ownedSet.has(item.id);
+    const owned = ownedSet.has(item.id) || item.defaultUnlocked;
     const canBuy = !owned && gold >= item.cost;
     const isNameFx = item.type === 'name_fx' && item.value;
     const NameComponent = isNameFx ? AnimatedName : null;
+    // Title label: strip the "Title: " prefix for a cleaner preview
+    const titleText = item.type === 'title' ? String(item.value || item.name) : item.name;
     return (
-      <View key={item.id} style={[styles.shopCard, { width: cardWidth, maxWidth: cardWidth, borderColor: rarity.borderColor }]}>
-        {isNew && (
-          <View style={styles.newTag}>
-            <Text style={styles.newTagText}>New</Text>
-          </View>
-        )}
-        <View style={[styles.shopCardInner, { padding: cardPadding }, rarity.bgGlow && { backgroundColor: rarity.bgGlow }]}>
-          <View style={[styles.shopCardRarityBar, isNarrow && { marginBottom: 4 }]}><Text style={[styles.shopCardRarityText, { color: rarity.color }, isNarrow && { fontSize: 9 }]}>{rarity.label}</Text></View>
+      <View key={item.id} style={[styles.card, owned && styles.cardOwned, { width: cardWidth, maxWidth: cardWidth }]}>
+        {/* Preview — shows the player's own name so they can feel the effect */}
+        <View style={styles.cardPreview}>
           {item.type === 'font' ? (
             <Text
-              style={[
-                styles.shopCardName,
-                isNarrow && { fontSize: 11 },
-                SHOP_FONT_FAMILY_MAP[item.value] && { fontFamily: SHOP_FONT_FAMILY_MAP[item.value] }
-              ]}
-              numberOfLines={2}
+              style={[styles.previewText, SHOP_FONT_FAMILY_MAP[item.value] && { fontFamily: SHOP_FONT_FAMILY_MAP[item.value] }]}
+              numberOfLines={1}
             >
-              {item.name}
+              {previewName}
             </Text>
           ) : NameComponent ? (
-            <View style={[styles.shopCardNameWrap, isNarrow && { minHeight: 28 }]}>
-              <NameComponent
-                name={item.name}
-                animationType={item.value}
-                accentColor={rarity.color}
-                style={[styles.shopCardNameAnimated, isNarrow && { fontSize: 11 }]}
-                numberOfLines={2}
-                ellipsizeMode="tail"
-              />
+            <NameComponent
+              name={previewName}
+              animationType={item.value}
+              accentColor={rarity.color}
+              style={styles.previewText}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            />
+          ) : (
+            <Text style={styles.previewTextTitle} numberOfLines={2}>{titleText}</Text>
+          )}
+        </View>
+
+        {/* Rarity box + item name */}
+        <View style={[styles.rarityChip, { borderColor: rarity.color, backgroundColor: rarity.bgGlow }]}>
+          <Text style={[styles.rarityChipText, { color: rarity.color }]} numberOfLines={1}>{rarity.label}</Text>
+        </View>
+        {item.type !== 'title' && (
+          <Text style={styles.cardName} numberOfLines={1}>{item.name}</Text>
+        )}
+
+        {/* Price + action */}
+        <View style={styles.cardFooter}>
+          <View style={styles.priceWrap}>
+            <Image source={GOLD_ICON} style={styles.priceIcon} contentFit="contain" />
+            <Text style={styles.priceText}>{item.cost.toLocaleString()}</Text>
+          </View>
+          {owned ? (
+            <View style={[styles.ownedChip, isFree && styles.freeChip]}>
+              <Text style={[styles.ownedChipText, isFree && styles.freeChipText]}>{isFree ? 'Free' : 'Owned'}</Text>
             </View>
           ) : (
-            <Text style={[styles.shopCardName, isNarrow && { fontSize: 11 }]} numberOfLines={2}>{item.name}</Text>
+            <TouchableOpacity
+              style={[styles.buyBtn, !canBuy && styles.buyBtnDisabled]}
+              onPress={() => handleBuy(item)}
+              disabled={!canBuy}
+              activeOpacity={0.85}
+            >
+              <Text style={[styles.buyBtnText, !canBuy && styles.buyBtnTextDisabled]}>{canBuy ? 'Buy' : 'Locked'}</Text>
+            </TouchableOpacity>
           )}
-          <Text style={[styles.shopCardDesc, isNarrow && { fontSize: 10, marginBottom: 4 }]} numberOfLines={2}>{item.description}</Text>
-          <View style={styles.shopCardCostRow}>
-            <Text style={[styles.shopCardCost, isNarrow && { fontSize: 11 }]}>{item.cost} G</Text>
-            {owned ? (
-              <View style={styles.ownedBadge}><Text style={styles.ownedBadgeText}>Owned</Text></View>
-            ) : (
-              <TouchableOpacity
-                style={[styles.buyButton, !canBuy && styles.buyButtonDisabled]}
-                onPress={() => handleBuy(item)}
-                disabled={!canBuy}
-                activeOpacity={0.8}
-              >
-                <Text style={styles.buyButtonText}>Buy</Text>
-              </TouchableOpacity>
-            )}
-          </View>
         </View>
       </View>
     );
   };
 
+  const mysteryTypeLabel = (id) =>
+    id.startsWith('name_fx_') ? 'Mystery Name Effect'
+      : id.startsWith('font_') ? 'Mystery Font'
+      : id.startsWith('title_') ? 'Mystery Title'
+      : 'Mystery Reward';
+
+  const renderPackCard = (pack) => {
+    const rarity = SHOP_RARITIES[pack.rarity] || SHOP_RARITIES.epic;
+    const owned = ownedIds.includes(pack.id);
+    const canBuy = !owned && gold >= pack.cost;
+    const fullPrice = (pack.itemIds || []).reduce((sum, id) => sum + (ITEM_COST_BY_ID[id] || 0), 0);
+    const savings = Math.max(0, fullPrice - pack.cost);
+    // Mystery packs hide their contents (and value) until unlocked.
+    const hidden = !!pack.mystery && !owned;
+    const showValue = savings > 0 && !hidden;
+    return (
+      <PackCard key={pack.id} rarity={rarity} width={packCardWidth}>
+        <View style={styles.packHeader}>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.packName} numberOfLines={1}>{pack.name}</Text>
+            <Text style={styles.packDesc} numberOfLines={1}>{pack.description}</Text>
+          </View>
+          {hidden ? (
+            <View style={[styles.packSaveChip, { borderColor: rarity.color }]}>
+              <Text style={[styles.packSaveText, { color: rarity.color }]}>MYSTERY</Text>
+            </View>
+          ) : showValue ? (
+            <View style={[styles.packSaveChip, { borderColor: rarity.color }]}>
+              <Text style={[styles.packSaveText, { color: rarity.color }]}>SAVE {savings}</Text>
+            </View>
+          ) : null}
+        </View>
+
+        {/* Animated teaser using the player's own name (masked for mystery packs) */}
+        <View style={[styles.packPreview, { borderColor: rarity.color }]}>
+          {AnimatedName ? (
+            <AnimatedName
+              name={hidden ? '??????' : previewName}
+              animationType={pack.previewFx}
+              accentColor={pack.accent || rarity.color}
+              style={styles.packPreviewText}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            />
+          ) : (
+            <Text style={styles.packPreviewText} numberOfLines={1}>{hidden ? '??????' : previewName}</Text>
+          )}
+        </View>
+
+        {/* Contents list */}
+        <View style={styles.packContents}>
+          {(pack.itemIds || []).map((id) => (
+            <View key={id} style={styles.packContentRow}>
+              <Text style={[styles.packBullet, { color: rarity.color }]}>{hidden ? '?' : '◆'}</Text>
+              <Text style={[styles.packContentText, hidden && styles.packMysteryText]} numberOfLines={1}>
+                {hidden ? mysteryTypeLabel(id) : (ITEM_NAME_BY_ID[id] || id)}
+              </Text>
+              {!hidden && ownedSet.has(id) && !owned && <Text style={styles.packHaveText}>have</Text>}
+            </View>
+          ))}
+        </View>
+
+        {/* Price + action */}
+        <View style={styles.packFooter}>
+          <View style={styles.packPriceWrap}>
+            <Image source={GOLD_ICON} style={styles.priceIcon} contentFit="contain" />
+            <Text style={styles.priceText}>{pack.cost.toLocaleString()}</Text>
+            {showValue && <Text style={styles.packFullPrice}>{fullPrice.toLocaleString()}</Text>}
+          </View>
+          {owned ? (
+            <View style={styles.ownedChip}><Text style={styles.ownedChipText}>Owned</Text></View>
+          ) : (
+            <TouchableOpacity
+              style={[styles.buyBtn, styles.packBuyBtn, !canBuy && styles.buyBtnDisabled]}
+              onPress={() => handleBuy({ id: pack.id, name: pack.name, cost: pack.cost })}
+              disabled={!canBuy}
+              activeOpacity={0.85}
+            >
+              <Text style={[styles.buyBtnText, !canBuy && styles.buyBtnTextDisabled]}>{canBuy ? 'Buy Pack' : 'Locked'}</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </PackCard>
+    );
+  };
+
+  const packCols = maxContent < 520 ? 2 : 3;
+  const packCardWidth = Math.floor((maxContent - contentPadding * 2 - gridGap * (packCols - 1)) / packCols);
   const totalOwnedCosmetics = ownedIds.length;
 
   return (
@@ -427,56 +497,34 @@ export default function ShopPage({ currentUsername = null, onNavigateToProfile, 
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#f59e0b" />}
       showsVerticalScrollIndicator={true}
     >
-      {/* Page header */}
-      <View style={styles.header}>
-        <Text style={styles.pageTitle}>Player Shop</Text>
-        <Text style={styles.pageSubtitle}>
-          Trade your hard‑earned favor for divine cosmetics and titles.
-        </Text>
+      {/* Top bar: title + balance */}
+      <View style={styles.topBar}>
+        <View>
+          <Text style={styles.pageTitle}>Shop</Text>
+          <Text style={styles.pageSubtitle}>{totalOwnedCosmetics} owned · earn Gold in Challenges</Text>
+        </View>
+        <View style={styles.balanceChip}>
+          <Image source={GOLD_ICON} style={styles.balanceIcon} contentFit="contain" />
+          <Text style={styles.balanceValue}>{gold.toLocaleString()}</Text>
+        </View>
       </View>
 
-      {/* Gold display + Tabs */}
-      <View style={styles.goldRow}>
-        <View style={styles.goldBadge}>
-          <Image
-            source={GOLD_ICON}
-            style={styles.goldIcon}
-            contentFit="contain"
-          />
-          <View style={styles.goldBadgeTextWrap}>
-            <Text style={styles.goldLabel}>Gold</Text>
-            <Text style={styles.goldValue}>{gold}</Text>
-          </View>
-        </View>
-        <View style={styles.goldStats}>
-          <Text style={styles.goldStatsText}>
-            Owned cosmetics: <Text style={styles.goldStatsValue}>{totalOwnedCosmetics}</Text>
-          </Text>
-          <Text style={styles.goldStatsHint}>Earn more Gold from minigames and challenges.</Text>
-        </View>
-        <View style={styles.tabRow}>
+      {/* Primary tabs (segmented) */}
+      <View style={styles.segment}>
+        {[
+          { key: 'shop', label: 'Shop' },
+          { key: 'challenges', label: 'Challenges' },
+          { key: 'leaderboard', label: 'Leaderboard' },
+        ].map((t) => (
           <TouchableOpacity
-            style={[styles.tabButton, shopTab === 'shop' && styles.tabButtonActive]}
-            onPress={() => setShopTab('shop')}
-            activeOpacity={0.8}
+            key={t.key}
+            style={[styles.segmentBtn, shopTab === t.key && styles.segmentBtnActive]}
+            onPress={() => setShopTab(t.key)}
+            activeOpacity={0.85}
           >
-            <Text style={[styles.tabButtonText, shopTab === 'shop' && styles.tabButtonTextActive]}>Shop</Text>
+            <Text style={[styles.segmentText, shopTab === t.key && styles.segmentTextActive]}>{t.label}</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.tabButton, shopTab === 'challenges' && styles.tabButtonActive]}
-            onPress={() => setShopTab('challenges')}
-            activeOpacity={0.8}
-          >
-            <Text style={[styles.tabButtonText, shopTab === 'challenges' && styles.tabButtonTextActive]}>Challenges</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.tabButton, shopTab === 'leaderboard' && styles.tabButtonActive]}
-            onPress={() => setShopTab('leaderboard')}
-            activeOpacity={0.8}
-          >
-            <Text style={[styles.tabButtonText, shopTab === 'leaderboard' && styles.tabButtonTextActive]}>Leaderboard</Text>
-          </TouchableOpacity>
-        </View>
+        ))}
       </View>
 
       {shopTab === 'leaderboard' && (
@@ -542,10 +590,11 @@ export default function ShopPage({ currentUsername = null, onNavigateToProfile, 
 
       {shopTab === 'shop' && (
         <>
-          <Text style={styles.shopRotateHint}>Shop refreshes with new items every 24 hours.</Text>
+          {/* Section selector */}
           <View style={styles.sectionTabsRow}>
             {[
-              { key: 'name_fx', label: 'Name effects' },
+              { key: 'packs', label: 'Packs' },
+              { key: 'name_fx', label: 'Name Effects' },
               { key: 'fonts', label: 'Fonts' },
               { key: 'titles', label: 'Titles' },
             ].map((s) => (
@@ -553,40 +602,65 @@ export default function ShopPage({ currentUsername = null, onNavigateToProfile, 
                 key={s.key}
                 style={[styles.sectionTabBtn, shopSection === s.key && styles.sectionTabBtnActive]}
                 onPress={() => setShopSection(s.key)}
-                activeOpacity={0.8}
+                activeOpacity={0.85}
               >
                 <Text style={[styles.sectionTabText, shopSection === s.key && styles.sectionTabTextActive]} numberOfLines={1}>{s.label}</Text>
               </TouchableOpacity>
             ))}
           </View>
-          <View style={[styles.section, { marginBottom: 12 }]}>
-            {shopSection === 'name_fx' && (
-              <>
-                <Text style={styles.sectionSubtitle}>Preview shows the effect. Unlock to use on your profile.</Text>
-                <View style={[styles.shopGridFourRows, { gap: gridGap }]}>
-                  {dailyShop.nameFx.map((item) => renderItemCard(item, true))}
-                </View>
-              </>
-            )}
-            {shopSection === 'fonts' && (
-              <>
-                <Text style={styles.sectionSubtitle}>Unlock fonts to style your display name.</Text>
-                <View style={[styles.shopGridFourRows, { gap: gridGap }]}>
-                  {(dailyShop.fonts || []).map((item) => renderItemCard(item, true))}
-                </View>
-              </>
-            )}
-            {shopSection === 'titles' && (
-              <>
-                <Text style={styles.sectionSubtitle}>Unlock titles to show under your name.</Text>
-                <View style={[styles.shopGridFourRows, { gap: gridGap }]}>
-                  {dailyShop.titles.map((item) => renderItemCard(item, true))}
-                </View>
-              </>
-            )}
-          </View>
+
+          {/* Search (hidden on Packs — the list is short) */}
+          {shopSection !== 'packs' && (
+            <View style={styles.searchWrap}>
+              <TextInput
+                value={search}
+                onChangeText={setSearch}
+                placeholder="Search all items…"
+                placeholderTextColor="#64748b"
+                style={styles.searchInput}
+                autoCorrect={false}
+                autoCapitalize="none"
+              />
+              {search.length > 0 && (
+                <TouchableOpacity onPress={() => setSearch('')} style={styles.searchClear} activeOpacity={0.7}>
+                  <Text style={styles.searchClearText}>✕</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          )}
+
+          {/* Content */}
+          {shopSection === 'packs' ? (
+            <>
+              <Text style={styles.resultLine}>Bundles · save vs buying separately</Text>
+              <View style={styles.packGrid}>
+                {SHOP_PACKS.map((pack) => renderPackCard(pack))}
+              </View>
+            </>
+          ) : (
+            (() => {
+              const items = itemsForSection(shopSection);
+              return (
+                <>
+                  <Text style={styles.resultLine}>
+                    {searchLc
+                      ? `${items.length} result${items.length === 1 ? '' : 's'}`
+                      : `Featured today · refreshes in ${hoursUntilRefresh}h`}
+                  </Text>
+                  {items.length === 0 ? (
+                    <Text style={styles.emptyResults}>No items match “{search}”.</Text>
+                  ) : (
+                    <View style={[styles.grid, { gap: gridGap }]}>
+                      {items.map((item) => renderItemCard(item))}
+                    </View>
+                  )}
+                </>
+              );
+            })()
+          )}
+
           {currentUsername && onNavigateToProfile && (
-            <TouchableOpacity style={styles.profileLink} onPress={onNavigateToProfile} activeOpacity={0.8}>
+            <TouchableOpacity style={styles.profileLink} onPress={onNavigateToProfile} activeOpacity={0.85}>
               <Text style={styles.profileLinkText}>Equip items in Profile →</Text>
             </TouchableOpacity>
           )}
@@ -599,171 +673,328 @@ export default function ShopPage({ currentUsername = null, onNavigateToProfile, 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#071024',
+    backgroundColor: '#0a0e17',
   },
   content: {
     padding: 16,
     paddingBottom: 40,
   },
-  header: {
+  // —— Top bar ——
+  topBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: 16,
   },
   pageTitle: {
-    color: '#fbbf24',
-    fontSize: 26,
+    color: '#f1f5f9',
+    fontSize: 24,
     fontWeight: '800',
-    letterSpacing: 0.5,
+    letterSpacing: 0.2,
   },
   pageSubtitle: {
-    color: '#9ca3af',
-    fontSize: 13,
-    marginTop: 4,
+    color: '#64748b',
+    fontSize: 12.5,
+    marginTop: 2,
   },
+  balanceChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 7,
+    backgroundColor: '#0f1523',
+    borderWidth: 1,
+    borderColor: 'rgba(251, 191, 36, 0.35)',
+    paddingVertical: 8,
+    paddingHorizontal: 13,
+    borderRadius: 999,
+  },
+  balanceIcon: { width: 20, height: 20 },
+  balanceValue: { color: '#fbbf24', fontSize: 17, fontWeight: '800' },
+  // —— Primary segmented tabs ——
+  segment: {
+    flexDirection: 'row',
+    backgroundColor: '#0f1523',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(148, 163, 184, 0.10)',
+    padding: 4,
+    gap: 4,
+    marginBottom: 20,
+  },
+  segmentBtn: {
+    flex: 1,
+    paddingVertical: 9,
+    borderRadius: 9,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  segmentBtnActive: {
+    backgroundColor: 'rgba(125, 211, 252, 0.14)',
+  },
+  segmentText: {
+    color: '#94a3b8',
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  segmentTextActive: {
+    color: '#7dd3fc',
+  },
+  // —— Section tabs ——
+  searchWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#0f1523',
+    borderWidth: 1,
+    borderColor: 'rgba(148, 163, 184, 0.12)',
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    marginBottom: 14,
+  },
+  searchInput: {
+    flex: 1,
+    color: '#e5e7eb',
+    fontSize: 14,
+    paddingVertical: Platform.OS === 'web' ? 10 : 9,
+    ...(Platform.OS === 'web' ? { outlineStyle: 'none' } : null),
+  },
+  searchClear: {
+    paddingLeft: 8,
+    paddingVertical: 4,
+  },
+  searchClearText: { color: '#64748b', fontSize: 14, fontWeight: '700' },
+  resultLine: {
+    color: '#64748b',
+    fontSize: 12,
+    marginBottom: 12,
+  },
+  emptyResults: {
+    color: '#94a3b8',
+    fontSize: 14,
+    textAlign: 'center',
+    paddingVertical: 32,
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    alignSelf: 'stretch',
+  },
+  // —— Item card (compact, ~5 per row) ——
+  card: {
+    backgroundColor: '#0f1523',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(148, 163, 184, 0.10)',
+    padding: 9,
+  },
+  cardOwned: {
+    borderColor: 'rgba(125, 211, 252, 0.28)',
+    backgroundColor: 'rgba(125, 211, 252, 0.05)',
+  },
+  cardPreview: {
+    minHeight: 34,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 8,
+    overflow: 'hidden',
+  },
+  previewText: {
+    color: '#f1f5f9',
+    fontSize: 14,
+    fontWeight: '800',
+    textAlign: 'center',
+  },
+  previewTextTitle: {
+    color: '#f1f5f9',
+    fontSize: 12.5,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  rarityChip: {
+    alignSelf: 'flex-start',
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    marginBottom: 6,
+  },
+  rarityChipText: {
+    fontSize: 9,
+    fontWeight: '800',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  cardName: {
+    color: '#cbd5e1',
+    fontSize: 11,
+    fontWeight: '600',
+    marginBottom: 9,
+  },
+  cardFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 4,
+  },
+  priceWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+    flexShrink: 1,
+  },
+  priceIcon: { width: 13, height: 13 },
+  priceText: { color: '#fbbf24', fontSize: 12, fontWeight: '800' },
+  buyBtn: {
+    backgroundColor: 'rgba(125, 211, 252, 0.16)',
+    borderWidth: 1,
+    borderColor: 'rgba(125, 211, 252, 0.5)',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 7,
+  },
+  buyBtnDisabled: {
+    backgroundColor: 'transparent',
+    borderColor: 'rgba(148, 163, 184, 0.2)',
+  },
+  buyBtnText: { color: '#7dd3fc', fontSize: 11, fontWeight: '800' },
+  buyBtnTextDisabled: { color: '#64748b' },
+  ownedChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 7,
+    backgroundColor: 'rgba(125, 211, 252, 0.10)',
+  },
+  ownedChipText: { color: '#7dd3fc', fontSize: 11, fontWeight: '700' },
+  freeChip: { backgroundColor: 'rgba(74, 222, 128, 0.12)' },
+  freeChipText: { color: '#4ade80' },
+  // —— Packs (bundles) ——
+  packGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    alignSelf: 'stretch',
+  },
+  packCard: {
+    borderRadius: 14,
+    borderWidth: 1.5,
+    padding: 12,
+  },
+  packCardClip: {
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  packGlow: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderRadius: 14,
+    borderWidth: 2,
+  },
+  packShimmer: {
+    position: 'absolute',
+    top: -40,
+    bottom: -40,
+    width: 44,
+    left: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0.12)',
+  },
+  packHeader: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    gap: 8,
+    marginBottom: 10,
+  },
+  packName: { color: '#f8fafc', fontSize: 16, fontWeight: '800', letterSpacing: 0.2 },
+  packDesc: { color: '#94a3b8', fontSize: 11, marginTop: 1 },
+  packSaveChip: {
+    borderWidth: 1,
+    borderRadius: 6,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+  },
+  packSaveText: { fontSize: 9.5, fontWeight: '800', letterSpacing: 0.4 },
+  packPreview: {
+    minHeight: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderRadius: 10,
+    backgroundColor: 'rgba(2, 6, 23, 0.45)',
+    paddingHorizontal: 8,
+    marginBottom: 10,
+    overflow: 'hidden',
+  },
+  packPreviewText: { color: '#f1f5f9', fontSize: 17, fontWeight: '800', textAlign: 'center' },
+  packContents: { gap: 3, marginBottom: 11 },
+  packContentRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  packBullet: { fontSize: 9 },
+  packContentText: { color: '#cbd5e1', fontSize: 12, fontWeight: '600', flexShrink: 1 },
+  packMysteryText: { color: '#94a3b8', fontStyle: 'italic', letterSpacing: 0.3 },
+  packHaveText: {
+    color: '#4ade80',
+    fontSize: 9,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    marginLeft: 2,
+  },
+  packFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 8,
+  },
+  packPriceWrap: { flexDirection: 'row', alignItems: 'center', gap: 5 },
+  packFullPrice: {
+    color: '#64748b',
+    fontSize: 11,
+    fontWeight: '600',
+    textDecorationLine: 'line-through',
+    marginLeft: 2,
+  },
+  packBuyBtn: { paddingVertical: 7, paddingHorizontal: 14 },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#071024',
+    backgroundColor: '#0a0e17',
   },
   loadingText: {
     color: '#94a3b8',
     marginTop: 12,
     fontSize: 14,
   },
-  goldRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 24,
-    flexWrap: 'wrap',
-    gap: 12,
-  },
-  goldBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#0f172a',
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#f59e0b',
-    minWidth: 100,
-    gap: 8,
-  },
-  goldIcon: {
-    width: 28,
-    height: 28,
-  },
-  goldBadgeTextWrap: {
-    alignItems: 'center',
-  },
-  goldLabel: {
-    color: '#94a3b8',
-    fontSize: 12,
-    marginBottom: 2,
-  },
-  goldValue: {
-    color: '#f59e0b',
-    fontSize: 24,
-    fontWeight: '800',
-  },
-  goldStats: {
-    flex: 1,
-    minWidth: 160,
-  },
-  goldStatsText: {
-    color: '#e5e7eb',
-    fontSize: 13,
-    fontWeight: '600',
-  },
-  goldStatsValue: {
-    color: '#fbbf24',
-    fontWeight: '800',
-  },
-  goldStatsHint: {
-    color: '#64748b',
-    fontSize: 11,
-    marginTop: 2,
-  },
-  tabRow: {
-    flexDirection: 'row',
-    gap: 8,
-    alignItems: 'center',
-  },
-  tabButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 18,
-    borderRadius: 999,
-    borderWidth: 1,
-    borderColor: '#1f2937',
-    backgroundColor: '#020617',
-    shadowColor: '#000',
-    shadowOpacity: 0.35,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 3,
-  },
-  tabButtonActive: {
-    borderColor: '#fbbf24',
-    backgroundColor: 'rgba(245, 158, 11, 0.2)',
-  },
-  tabButtonText: {
-    color: '#9ca3af',
-    fontSize: 12,
-    fontWeight: '700',
-    textTransform: 'uppercase',
-    letterSpacing: 0.4,
-  },
-  tabButtonTextActive: {
-    color: '#f59e0b',
-  },
-  categoryTitle: {
-    color: '#f59e0b',
-    fontSize: 18,
-    fontWeight: '700',
-    marginBottom: 4,
-  },
-  shopRotateHint: {
-    color: '#64748b',
-    fontSize: 12,
-    fontStyle: 'italic',
-    marginBottom: 16,
-  },
   sectionTabsRow: {
     flexDirection: 'row',
     gap: 8,
-    marginBottom: 16,
+    marginBottom: 14,
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignSelf: 'stretch',
   },
   sectionTabBtn: {
-    paddingVertical: 9,
-    paddingHorizontal: 14,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
     borderRadius: 999,
     borderWidth: 1,
-    borderColor: '#1f2937',
-    backgroundColor: '#020617',
-    minWidth: 0,
+    borderColor: 'rgba(148, 163, 184, 0.14)',
+    backgroundColor: '#0f1523',
   },
   sectionTabBtnActive: {
-    borderColor: '#a855f7',
-    backgroundColor: 'rgba(88, 28, 135, 0.25)',
+    borderColor: 'rgba(125, 211, 252, 0.5)',
+    backgroundColor: 'rgba(125, 211, 252, 0.12)',
   },
   sectionTabText: {
-    color: '#cbd5f5',
+    color: '#94a3b8',
     fontSize: 13,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   sectionTabTextActive: {
-    color: '#fbbf24',
-  },
-  shopGridFourRows: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-    justifyContent: 'flex-start',
-    alignSelf: 'stretch',
+    color: '#7dd3fc',
   },
   dailyButton: {
     backgroundColor: '#22c55e',
@@ -799,13 +1030,13 @@ const styles = StyleSheet.create({
     marginBottom: 28,
   },
   sectionTitle: {
-    color: '#f59e0b',
-    fontSize: 20,
-    fontWeight: '700',
+    color: '#f1f5f9',
+    fontSize: 18,
+    fontWeight: '800',
     marginBottom: 4,
   },
   sectionSubtitle: {
-    color: '#94a3b8',
+    color: '#64748b',
     fontSize: 13,
     marginBottom: 12,
   },
@@ -816,11 +1047,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#0b1226',
+    backgroundColor: '#0f1523',
     borderRadius: 10,
     padding: 14,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: 'rgba(148, 163, 184, 0.10)',
   },
   challengeInfo: {
     flex: 1,
@@ -853,11 +1084,11 @@ const styles = StyleSheet.create({
   leaderboardRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#0b1226',
+    backgroundColor: '#0f1523',
     borderRadius: 10,
     padding: 12,
     borderWidth: 1,
-    borderColor: '#1e3a5f',
+    borderColor: 'rgba(148, 163, 184, 0.10)',
     gap: 12,
   },
   leaderboardRank: {
@@ -889,117 +1120,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     paddingVertical: 24,
-  },
-  shopGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 12,
-    justifyContent: 'center',
-  },
-  shopCard: {
-    borderRadius: 12,
-    borderWidth: 2,
-    overflow: 'hidden',
-    backgroundColor: '#020617',
-    position: 'relative',
-    shadowColor: '#000',
-    shadowOpacity: 0.4,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 8 },
-    elevation: 6,
-  },
-  newTag: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    zIndex: 1,
-    backgroundColor: '#22c55e',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderBottomLeftRadius: 8,
-  },
-  newTagText: {
-    color: '#0f172a',
-    fontSize: 10,
-    fontWeight: '800',
-    letterSpacing: 0.5,
-  },
-  shopCardInner: {
-    backgroundColor: '#020617',
-    padding: 14,
-  },
-  shopCardRarityBar: {
-    marginBottom: 8,
-  },
-  shopCardRarityText: {
-    fontSize: 11,
-    fontWeight: '700',
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-  },
-  shopCardNameWrap: {
-    minHeight: 40,
-    marginBottom: 4,
-    justifyContent: 'center',
-  },
-  shopCardNameAnimated: {
-    fontSize: 15,
-    fontWeight: '700',
-  },
-  shopCardName: {
-    color: '#f1f5f9',
-    fontSize: 16,
-    fontWeight: '700',
-    marginBottom: 4,
-  },
-  shopCardDesc: {
-    color: '#94a3b8',
-    fontSize: 12,
-    marginBottom: 10,
-  },
-  shopCardCostRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  shopCardCost: {
-    color: '#f59e0b',
-    fontSize: 14,
-    fontWeight: '700',
-  },
-  buyButton: {
-    backgroundColor: '#f97316',
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-    borderRadius: 999,
-    borderWidth: 1,
-    borderColor: '#ea580c',
-    shadowColor: '#f97316',
-    shadowOpacity: 0.5,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 3,
-  },
-  buyButtonDisabled: {
-    backgroundColor: '#334155',
-    borderColor: '#475569',
-    opacity: 0.8,
-  },
-  buyButtonText: {
-    color: '#fff',
-    fontSize: 11,
-    fontWeight: '700',
-  },
-  ownedBadge: {
-    backgroundColor: '#1e3a5f',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-  },
-  ownedBadgeText: {
-    color: '#7dd3fc',
-    fontSize: 12,
-    fontWeight: '600',
   },
   profileLink: {
     alignSelf: 'center',

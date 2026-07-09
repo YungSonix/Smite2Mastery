@@ -66,3 +66,10 @@ export const BUILD_AUTHORS = {
   FEATURED: ['mytharria', 'mendar'],
   CONTRIBUTORS: [''],
 } as const;
+
+/** Smite Wars is hidden (TBD) for public users until `public` is true. */
+export const SMITE_WARS_ACCESS = {
+  public: false,
+  /** Lowercase usernames that can open Smite Wars while it is TBD. */
+  devUsernames: ['mytharria'],
+} as const;

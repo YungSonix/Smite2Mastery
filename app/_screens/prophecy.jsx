@@ -28,6 +28,8 @@ import { buildAlternativeGodCards, buildSkinPoolByGod } from '../../lib/prophecy
 import FoilHoloShine from '../../lib/FoilHoloShine';
 import { UI_THEME } from '../../lib/uiTheme';
 import { finalizeAppLogin, ensureAppWriteSession } from '../../lib/appAuth';
+import { useSmiteWarsAccess } from '../../hooks/useSmiteWarsAccess';
+import { SmiteWarsTbdScreen } from '../../lib/SmiteWarsGate';
 import { applyProphecyGoldDelta } from '../../lib/shopSupabase';
 import { getClassPoolKey, getPooledAbility, getPooledUltimate } from '../../src/data/abilityPools';
 import {
@@ -918,6 +920,7 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   const [screen, setScreen] = useState('start'); // start | leader | battle | gameover
   const [accountLoading, setAccountLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState(null);
+  const { canAccess: smiteWarsCanAccess, loading: smiteWarsAccessLoading } = useSmiteWarsAccess(currentUser);
   const [profileData, setProfileData] = useState(null);
   const [profileBannerUseJpg, setProfileBannerUseJpg] = useState(false);
   const [profileIconUseFallback, setProfileIconUseFallback] = useState(false);
@@ -3709,6 +3712,17 @@ export default function ProphecyPage({ onBack, gameTitle = 'Smite Wars' }) {
   }, [deckShareCodeInput, materializeDeckFromIds]);
 
   const curveMax = Math.max(1, ...Object.values(deckCurve));
+
+  if (smiteWarsAccessLoading) {
+    return (
+      <View style={[styles.container, styles.authRoot, { paddingTop: safeTop, paddingBottom: safeBottom }]}>
+        <ActivityIndicator size="large" color={GOLD_L} />
+      </View>
+    );
+  }
+  if (!smiteWarsCanAccess) {
+    return <SmiteWarsTbdScreen onBack={onBack} gameTitle={gameTitle} />;
+  }
 
   // —— Start screen
   if (screen === 'start') {

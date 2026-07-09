@@ -11,14 +11,23 @@ const root = path.join(__dirname, '..');
 const shopDataPath = path.join(root, 'lib', 'shopData.js');
 const outPath = path.join(root, 'supabase', 'shop_item_catalog_seed.sql');
 
+// Evaluate the real pool (handles spread/dynamically-generated items like titles)
 const source = fs.readFileSync(shopDataPath, 'utf8');
-const re = /id:\s*'([^']+)'[^}]*?cost:\s*(\d+)/g;
+const transformed = source
+  .replace(/import\s+\{[^}]*\}\s+from\s+'[^']*';?/g, '') // drop themeColors import
+  .replace(/export\s+const/g, 'const') // strip exports for Function scope
+  .replace(/export\s+function/g, 'function');
+// eslint-disable-next-line no-new-func
+const getPool = new Function('COLORS', `${transformed}\nreturn SHOP_ITEM_POOL;`);
+const pool = getPool(new Proxy({}, { get: () => '#000000' }));
+
 const rows = [];
-let match;
-while ((match = re.exec(source)) !== null) {
-  const id = match[1].replace(/'/g, "''");
-  const cost = Number(match[2]);
-  if (id && Number.isFinite(cost)) rows.push({ id, cost });
+const seen = new Set();
+for (const item of pool) {
+  if (!item || !item.id || !Number.isFinite(Number(item.cost))) continue;
+  if (seen.has(item.id)) continue;
+  seen.add(item.id);
+  rows.push({ id: String(item.id).replace(/'/g, "''"), cost: Number(item.cost) });
 }
 
 const lines = [

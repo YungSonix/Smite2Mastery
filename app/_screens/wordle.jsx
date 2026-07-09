@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -13,10 +13,14 @@ import {
 import { COLORS } from '../../lib/themeColors';
 import { Image } from 'expo-image';
 import { getLocalGodAsset, getRemoteGodIconByName } from '../localIcons';
+import { MinigameGoldChip } from '../../lib/MinigameShell';
+import { UI_THEME } from '../../lib/uiTheme';
 
 import { WEB_CONTENT_MAX_WIDTH } from '../../lib/webLayout';
 
 const IS_WEB = Platform.OS === 'web';
+const WORDLE_STAT_KEYS = ['pantheon', 'role', 'attackType', 'powerType', 'scalesWith', 'gender'];
+const WORDLE_STAT_LABELS = ['Pantheon', 'Role', 'Attack', 'Power', 'Scales', 'Gender'];
 
 // Import Supabase with a safe fallback (same pattern as profile page)
 let supabase;
@@ -75,6 +79,7 @@ try {
 }
 
 import { getSmite2Gods } from '../../lib/smite2GodsData';
+import { playMinigameSound } from '../../lib/minigameSounds';
 
 // Load gods data from app/data/Smite2Gods.json
 let GODS = [];
@@ -116,6 +121,7 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
   const [leaderboardError, setLeaderboardError] = useState('');
 
   const maxGuesses = 6;
+  const endSoundPlayedRef = useRef(false);
 
   const calculateGoldForWin = (guessesCount, isDaily) => {
     const used = Math.min(Math.max(guessesCount || 1, 1), maxGuesses);
@@ -404,10 +410,10 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
     return feedback;
   };
 
-  const handleSubmitGuess = () => {
+  const handleSubmitGuess = (godNameOverride = null) => {
     if (!targetGod || !Array.isArray(GODS) || GODS.length === 0) return;
     if (isComplete && mode === 'daily') return;
-    const trimmed = guessText.trim();
+    const trimmed = String(godNameOverride || guessText || '').trim();
     if (!trimmed) return;
 
     const key = normalize(trimmed);
@@ -476,6 +482,16 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
     targetGod &&
     normalize(guesses[guesses.length - 1].god.godName) === normalize(targetGod.godName);
 
+  useEffect(() => {
+    if (!isComplete) {
+      endSoundPlayedRef.current = false;
+      return;
+    }
+    if (endSoundPlayedRef.current) return;
+    endSoundPlayedRef.current = true;
+    playMinigameSound(lastGuessCorrect ? 'correct' : 'incorrect');
+  }, [isComplete, lastGuessCorrect]);
+
   const guessesRemaining = Math.max(0, maxGuesses - guesses.length);
 
   // Suggestions for input (autocomplete)
@@ -525,24 +541,18 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
           )}
 
           <View style={styles.header}>
-            <Text style={styles.title}>Smite 2 God Wordle</Text>
-            <Text style={styles.goldText}>Gold: {gold}</Text>
+            <View style={styles.headerTopRow}>
+              <Text style={styles.title}>Smite 2 God Wordle</Text>
+              <MinigameGoldChip gold={gold} />
+            </View>
             <Text style={styles.subtitle}>
-              Guess the hidden daily god by name. You have {maxGuesses} guesses.
+              Guess the daily god in {maxGuesses} tries. Green = match, yellow = close, red = miss.
             </Text>
             <Text style={styles.subtitleSmall}>
-              Each row shows how your guess compares to the hidden god by Pantheon, Role, Attack Type,
-              Power Type, Scales With, Gender, and Release Year.
+              {mode === 'daily'
+                ? `Daily · ${guessesRemaining} left`
+                : 'Freeplay · random puzzles'}
             </Text>
-            {mode === 'daily' ? (
-              <Text style={styles.subtitleSmall}>
-                Daily mode • Guesses remaining: {guessesRemaining}
-              </Text>
-            ) : (
-              <Text style={styles.subtitleSmall}>
-                Freeplay mode • Puzzles are random and do not affect the daily.
-              </Text>
-            )}
           </View>
 
           {(!targetGod || GODS.length === 0) && (
@@ -553,71 +563,75 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
 
           {targetGod && (
             <View style={styles.inputSection}>
-              <Text style={styles.inputLabel}>Your Guess:</Text>
+              <Text style={styles.inputLabel}>Your guess</Text>
               <View style={styles.inputRow}>
-                <TextInput
-                  style={styles.input}
-                  value={guessText}
-                  onChangeText={setGuessText}
-                  placeholder="Type a god name (e.g. Achilles)"
-                  placeholderTextColor={COLORS.slate500}
-                  autoCapitalize="words"
-                  autoCorrect={false}
-                  onSubmitEditing={handleSubmitGuess}
-                  editable={!isComplete}
-                />
+                <View
+                  style={[
+                    styles.searchGroup,
+                    suggestions.length > 0 && !isComplete ? styles.searchGroupOpen : styles.searchGroupClosed,
+                    { flex: 1 },
+                  ]}
+                >
+                  <TextInput
+                    style={[styles.input, suggestions.length > 0 && !isComplete && styles.inputAttached]}
+                    value={guessText}
+                    onChangeText={setGuessText}
+                    placeholder="Type a god name"
+                    placeholderTextColor={COLORS.slate500}
+                    autoCapitalize="words"
+                    autoCorrect={false}
+                    onSubmitEditing={() => handleSubmitGuess()}
+                    editable={!isComplete}
+                  />
+                  {suggestions.length > 0 && !isComplete ? (
+                    <View style={styles.suggestionAttached}>
+                      {suggestions.map((g) => {
+                        const imageSource = getRemoteGodIconByName(g.godName);
+                        return (
+                          <TouchableOpacity
+                            key={g.godName}
+                            style={styles.suggestionRow}
+                            onPress={() => handleSubmitGuess(g.godName)}
+                            activeOpacity={0.7}
+                          >
+                            {imageSource ? (
+                              <Image
+                                source={imageSource}
+                                style={styles.suggestionIcon}
+                                contentFit="cover"
+                                cachePolicy="memory-disk"
+                              />
+                            ) : (
+                              <View style={styles.suggestionIconFallback}>
+                                <Text style={styles.suggestionIconFallbackText}>
+                                  {g.godName.charAt(0)}
+                                </Text>
+                              </View>
+                            )}
+                            <Text style={styles.suggestionText}>{g.godName}</Text>
+                          </TouchableOpacity>
+                        );
+                      })}
+                    </View>
+                  ) : null}
+                </View>
                 <TouchableOpacity
                   style={[styles.submitButton, !guessText.trim() && styles.submitButtonDisabled]}
-                  onPress={handleSubmitGuess}
+                  onPress={() => handleSubmitGuess()}
                   disabled={!guessText.trim() || isComplete}
                 >
                   <Text style={styles.submitButtonText}>Guess</Text>
                 </TouchableOpacity>
               </View>
               {error ? <Text style={styles.errorText}>{error}</Text> : null}
-
-          {suggestions.length > 0 && !isComplete && (
-                <View style={styles.suggestionBox}>
-                  {suggestions.map((g) => {
-                    // Build icon URL directly from the god name using GitHub God Info assets
-                    // Example: "Achilles" -> .../God%20Info/achillesImage.webp
-                    const imageSource = getRemoteGodIconByName(g.godName);
-
-                    return (
-                      <TouchableOpacity
-                        key={g.godName}
-                        style={styles.suggestionRow}
-                        onPress={() => setGuessText(g.godName)}
-                        activeOpacity={0.7}
-                      >
-                        {imageSource ? (
-                          <Image
-                            source={imageSource}
-                            style={styles.suggestionIcon}
-                            contentFit="cover"
-                            cachePolicy="memory-disk"
-                          />
-                        ) : (
-                          <View style={styles.suggestionIconFallback}>
-                            <Text style={styles.suggestionIconFallbackText}>
-                              {g.godName.charAt(0)}
-                            </Text>
-                          </View>
-                        )}
-                        <Text style={styles.suggestionText}>{g.godName}</Text>
-                      </TouchableOpacity>
-                    );
-                  })}
-                </View>
-              )}
             </View>
           )}
 
           {/* Table-style results: 6 rows max, fixed columns */}
           <View style={styles.tableContainer}>
             <View style={styles.tableHeaderRow}>
-              <Text style={[styles.tableHeaderCell, styles.tableHeaderCellFirst]}>#</Text>
-              {['Pantheon', 'Role', 'Attack', 'Power', 'Scales', 'Gender', 'Year'].map((label) => (
+              <Text style={[styles.tableHeaderCell, styles.tableHeaderCellIndex]}>God</Text>
+              {WORDLE_STAT_LABELS.map((label) => (
                 <Text key={label} style={styles.tableHeaderCell}>
                   {label}
                 </Text>
@@ -630,32 +644,44 @@ export default function WordlePage({ gameMode: _initialGameMode = 'daily', onBac
               const feedback = entry?.feedback || {};
               const guessCorrect =
                 god && targetGod && normalize(god.godName) === normalize(targetGod.godName);
+              const godIcon = god ? getRemoteGodIconByName(god.godName) : null;
 
               return (
                 <View key={`row-${rowIdx}`} style={styles.tableRow}>
-                  <Text style={[styles.tableCell, styles.tableCellFirst]}>{rowIdx + 1}</Text>
-                  <Text style={[styles.tableCell, styles.tableCellName]} numberOfLines={1}>
-                    {god ? god.godName : '—'}
-                    {guessCorrect ? ' ✓' : ''}
-                  </Text>
-                  {['pantheon', 'role', 'attackType', 'powerType', 'scalesWith', 'gender', 'year'].map(
-                    (key) => {
+                  <View style={[styles.tableCell, styles.tableCellIndex]}>
+                    {godIcon ? (
+                      <View style={styles.tableGodIconWrap}>
+                        <Image source={godIcon} style={styles.tableGodIcon} contentFit="cover" cachePolicy="memory-disk" />
+                        {guessCorrect ? <Text style={styles.tableGodIconCheck}>✓</Text> : null}
+                      </View>
+                    ) : (
+                      <Text style={styles.tableIndexText}>{rowIdx + 1}</Text>
+                    )}
+                  </View>
+                  {WORDLE_STAT_KEYS.map((key) => {
                       const fb = feedback[key];
-                      let bgColor = 'transparent';
+                      let bgColor = COLORS.slate800;
+                      let textColor = COLORS.wordleTileText;
                       if (fb) {
                         if (fb.color === 'green') bgColor = COLORS.wordleTileGreen;
                         else if (fb.color === 'yellow') bgColor = COLORS.wordleTileYellow;
                         else bgColor = COLORS.wordleTileMiss;
+                      } else {
+                        textColor = COLORS.slate500;
                       }
                       return (
                         <View key={key} style={[styles.tableCell, styles.tableCellStat, { backgroundColor: bgColor }]}>
-                          <Text style={styles.tableCellStatText} numberOfLines={1}>
+                          <Text style={[styles.tableCellStatText, { color: textColor }]} numberOfLines={2}>
                             {fb?.value || '—'}
                           </Text>
+                          {fb?.hint ? (
+                            <Text style={[styles.tableCellHintText, { color: textColor }]} numberOfLines={1}>
+                              {fb.hint}
+                            </Text>
+                          ) : null}
                         </View>
                       );
-                    }
-                  )}
+                    })}
                 </View>
               );
             })}
@@ -785,19 +811,25 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   header: {
-    marginBottom: 20,
+    marginBottom: 16,
+    padding: 14,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: UI_THEME.borderCyan,
+    backgroundColor: UI_THEME.cardBg,
+  },
+  headerTopRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 10,
+    marginBottom: 6,
   },
   title: {
     color: COLORS.skySoft,
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: '800',
-    marginBottom: 6,
-  },
-  goldText: {
-    color: COLORS.statStrength,
-    fontSize: 14,
-    fontWeight: '700',
-    marginBottom: 4,
+    flex: 1,
   },
   subtitle: {
     color: COLORS.slate300,
@@ -819,18 +851,40 @@ const styles = StyleSheet.create({
   inputRow: {
     flexDirection: 'row',
     gap: 8,
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
-  input: {
-    flex: 1,
-    backgroundColor: COLORS.bgDeep,
+  searchGroup: {
     borderRadius: 8,
+    overflow: 'hidden',
+  },
+  searchGroupClosed: {
     borderWidth: 1,
     borderColor: COLORS.surfaceNavy,
+    backgroundColor: COLORS.bgDeep,
+  },
+  searchGroupOpen: {
+    borderWidth: 1,
+    borderColor: COLORS.surfaceNavy,
+    backgroundColor: COLORS.bgDeep,
+  },
+  input: {
     paddingVertical: 10,
     paddingHorizontal: 12,
     color: COLORS.gray200,
     fontSize: 14,
+    backgroundColor: COLORS.bgDeep,
+    borderWidth: 1,
+    borderColor: COLORS.surfaceNavy,
+    borderRadius: 8,
+  },
+  inputAttached: {
+    borderWidth: 0,
+    borderRadius: 0,
+    borderBottomWidth: 0,
+  },
+  suggestionAttached: {
+    borderTopWidth: 1,
+    borderTopColor: COLORS.slate800,
   },
   submitButton: {
     paddingVertical: 10,
@@ -886,8 +940,8 @@ const styles = StyleSheet.create({
   tableHeaderCellFirst: {
     flex: 0.5,
   },
-  tableHeaderName: {
-    flex: 1.5,
+  tableHeaderCellIndex: {
+    flex: 0.55,
   },
   tableRow: {
     flexDirection: 'row',
@@ -904,16 +958,50 @@ const styles = StyleSheet.create({
   tableCellFirst: {
     flex: 0.5,
   },
-  tableCellName: {
-    flex: 1.5,
-    alignItems: 'flex-start',
+  tableCellIndex: {
+    flex: 0.55,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tableGodIconWrap: {
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tableGodIcon: {
+    width: IS_WEB ? 26 : 22,
+    height: IS_WEB ? 26 : 22,
+    borderRadius: 6,
+    backgroundColor: COLORS.slate900,
+  },
+  tableGodIconCheck: {
+    position: 'absolute',
+    right: -6,
+    top: -6,
+    color: COLORS.greenSoft,
+    fontSize: IS_WEB ? 12 : 10,
+    fontWeight: '900',
+  },
+  tableIndexText: {
+    color: COLORS.slate500,
+    fontSize: IS_WEB ? 10 : 9,
+    fontWeight: '700',
   },
   tableCellStat: {
-    minWidth: IS_WEB ? 60 : 45,
+    minWidth: IS_WEB ? 58 : 42,
+    borderLeftWidth: 1,
+    borderLeftColor: 'rgba(15, 23, 42, 0.65)',
   },
   tableCellStatText: {
-    color: COLORS.gray200,
     fontSize: IS_WEB ? 10 : 8,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  tableCellHintText: {
+    fontSize: IS_WEB ? 8 : 7,
+    opacity: 0.9,
+    textAlign: 'center',
+    marginTop: 2,
   },
   resultBox: {
     marginTop: 16,

@@ -10,23 +10,16 @@ import {
   Linking,
 } from 'react-native';
 import { COLORS } from '../../lib/themeColors';
-import { WebView } from 'react-native-webview';
-import { DEFAULT_TAB_STATE, EXTERNAL_LINKS, REMOTE_BASE_URLS } from '../../config';
+import { DEFAULT_TAB_STATE, EXTERNAL_LINKS } from '../../config';
+import { useScreenDimensions } from '../../hooks/useScreenDimensions';
+import { useSmiteWarsAccess } from '../../hooks/useSmiteWarsAccess';
+import { WEB_CONTENT_MAX_WIDTH } from '../../lib/webLayout';
 
 const IS_WEB = Platform.OS === 'web';
-
-// Featured Twitch channels for the More page.
-// These are the channels that can appear in the Featured Streamers section.
-const FEATURED_TWITCH_CHANNELS = [
-  'changebest',
-  'thebiackeye',
-  'bigggtony',
-];
-const DEFAULT_TWITCH_CHANNEL = FEATURED_TWITCH_CHANNELS[0];
-import { useScreenDimensions } from '../../hooks/useScreenDimensions';
-import { WEB_CONTENT_MAX_WIDTH } from '../../lib/webLayout';
 const WordlePage = lazy(() => import('./wordle'));
 const AbilityGamePage = lazy(() => import('./ability'));
+const GuessSkinPage = lazy(() => import('./guessskin'));
+const GuessItemPage = lazy(() => import('./guessitem'));
 const ProphecyPage = lazy(() => import('./prophecy'));
 const ProfilePage = lazy(() => import('./profile'));
 const ShopPage = lazy(() => import('./shop'));
@@ -36,10 +29,7 @@ export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUs
   const screenDimensions = useScreenDimensions();
   const [selectedGame, setSelectedGame] = useState(null);
   const [selectedTool, setSelectedTool] = useState(null);
-  const [featuredChannelIndex, setFeaturedChannelIndex] = useState(0);
-
-  const featuredChannel =
-    FEATURED_TWITCH_CHANNELS[featuredChannelIndex] ?? DEFAULT_TWITCH_CHANNEL;
+  const { canAccess: smiteWarsCanAccess } = useSmiteWarsAccess(currentUsername);
 
   // If a game is selected, show it
   if (selectedGame === 'god-wordle') {
@@ -70,7 +60,35 @@ export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUs
     );
   }
 
-  if (selectedGame === 'prophecy') {
+  if (selectedGame === 'guess-skin') {
+    return (
+      <Suspense
+        fallback={
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color={COLORS.brandBlue} />
+          </View>
+        }
+      >
+        <GuessSkinPage onBack={() => setSelectedGame(null)} />
+      </Suspense>
+    );
+  }
+
+  if (selectedGame === 'guess-item') {
+    return (
+      <Suspense
+        fallback={
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color={COLORS.brandBlue} />
+          </View>
+        }
+      >
+        <GuessItemPage onBack={() => setSelectedGame(null)} />
+      </Suspense>
+    );
+  }
+
+  if (selectedGame === 'prophecy' && smiteWarsCanAccess) {
     return (
       <Suspense
         fallback={
@@ -115,59 +133,6 @@ export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUs
           
           {activeTab === 'minigames' && (
             <>
-              {/* Featured Streamers — Sponsored slot (buy "Featured Streamer" in Shop) */}
-              <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Featured Streamers</Text>
-                <Text style={styles.sectionNote}>
-                  Support streamers. Unlock "Featured Streamer" in the Shop to get your Twitch here.
-                </Text>
-                <View style={styles.featuredStreamerCard}>
-                  {IS_WEB && typeof window !== 'undefined' ? (
-                    <iframe
-                      title="Featured Twitch"
-                      src={`${REMOTE_BASE_URLS.TWITCH_PLAYER}/?channel=${featuredChannel}&parent=${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}`}
-                      style={styles.twitchIframe}
-                      frameBorder="0"
-                      allowFullScreen
-                    />
-                  ) : (
-                    <WebView
-                      source={{
-                        uri: `${REMOTE_BASE_URLS.TWITCH_PLAYER}/?channel=${featuredChannel}&parent=localhost`,
-                      }}
-                      style={styles.twitchIframe}
-                      allowsInlineMediaPlayback
-                      mediaPlaybackRequiresUserAction={false}
-                    />
-                  )}
-                </View>
-                <View style={styles.twitchChannelSelector}>
-                  {FEATURED_TWITCH_CHANNELS.map((channel, index) => {
-                    const isActive = channel === featuredChannel;
-                    return (
-                      <TouchableOpacity
-                        key={channel}
-                        style={[
-                          styles.twitchChannelPill,
-                          isActive && styles.twitchChannelPillActive,
-                        ]}
-                        onPress={() => setFeaturedChannelIndex(index)}
-                        activeOpacity={0.8}
-                      >
-                        <Text
-                          style={[
-                            styles.twitchChannelPillText,
-                            isActive && styles.twitchChannelPillTextActive,
-                          ]}
-                        >
-                          {channel}
-                        </Text>
-                      </TouchableOpacity>
-                    );
-                  })}
-                </View>
-              </View>
-
               {/* Mini Games Section */}
               <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Mini Games</Text>
@@ -192,24 +157,31 @@ export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUs
                     <Text style={styles.cardTitle}>Guess the Ability</Text>
                     <Text style={styles.cardDescription}>Guess the god and ability (1-4).</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity 
-                    style={styles.card} 
-                    onPress={() => {
-                      if (typeof onOpenSmiteWars === 'function') onOpenSmiteWars();
-                      else setSelectedGame('prophecy');
-                    }}
-                    activeOpacity={0.7}
-                  >
-                    <Text style={styles.cardTitle}>Smite Wars</Text>
-                    <Text style={styles.cardDescription}>Full-screen card war with Smite 2 gods. Deploy, attack, win.</Text>
+                  {smiteWarsCanAccess ? (
+                    <TouchableOpacity
+                      style={styles.card}
+                      onPress={() => {
+                        if (typeof onOpenSmiteWars === 'function') onOpenSmiteWars();
+                        else setSelectedGame('prophecy');
+                      }}
+                      activeOpacity={0.7}
+                    >
+                      <Text style={styles.cardTitle}>Smite Wars</Text>
+                      <Text style={styles.cardDescription}>Full-screen card war with Smite 2 gods. Deploy, attack, win.</Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <View style={[styles.card, styles.cardDisabled]}>
+                      <Text style={styles.cardTitle}>Smite Wars (TBD)</Text>
+                      <Text style={styles.cardDescription}>Coming soon</Text>
+                    </View>
+                  )}
+                  <TouchableOpacity style={styles.card} onPress={() => setSelectedGame('guess-skin')} activeOpacity={0.7}>
+                    <Text style={styles.cardTitle}>Guess the Skin</Text>
+                    <Text style={styles.cardDescription}>Name the god from a skin splash card.</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.card} onPress={() => { /* No action, TBD */ }}>
-                    <Text style={styles.cardTitle}>Guess the Skin (TBD)</Text>
-                    <Text style={styles.cardDescription}>Coming Soon</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.card} onPress={() => { /* No action, TBD */ }}>
-                    <Text style={styles.cardTitle}>Guess the Item (TBD)</Text>
-                    <Text style={styles.cardDescription}>Coming Soon</Text>
+                  <TouchableOpacity style={styles.card} onPress={() => setSelectedGame('guess-item')} activeOpacity={0.7}>
+                    <Text style={styles.cardTitle}>Guess the Item</Text>
+                    <Text style={styles.cardDescription}>Name the item from its icon.</Text>
                   </TouchableOpacity>
                 </View>
                 <Text style={styles.sectionNote}>Leaderboards for each game coming soon!</Text>
@@ -322,64 +294,6 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     marginTop: 8,
     textAlign: 'center',
-  },
-  featuredStreamerCard: {
-    backgroundColor: COLORS.bgDeep,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: COLORS.surfaceNavy,
-    overflow: 'hidden',
-    marginTop: 8,
-    minHeight: 220,
-  },
-  twitchIframe: {
-    width: '100%',
-    height: 220,
-    border: 0,
-  },
-  twitchChannelSelector: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: 8,
-    paddingVertical: 10,
-    paddingHorizontal: 8,
-  },
-  twitchChannelPill: {
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 999,
-    borderWidth: 1,
-    borderColor: COLORS.surfaceNavy,
-    backgroundColor: COLORS.void2,
-  },
-  twitchChannelPillActive: {
-    borderColor: COLORS.purple,
-    backgroundColor: COLORS.slate800,
-  },
-  twitchChannelPillText: {
-    color: COLORS.slate400,
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  twitchChannelPillTextActive: {
-    color: COLORS.orange,
-  },
-  twitchPlaceholder: {
-    height: 220,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  twitchPlaceholderText: {
-    color: COLORS.skySoft,
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  twitchPlaceholderSub: {
-    color: COLORS.slate500,
-    fontSize: 13,
   },
   grid: {
     flexDirection: 'row',

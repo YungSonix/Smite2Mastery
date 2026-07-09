@@ -21,6 +21,7 @@ import { useScreenDimensions } from '../hooks/useScreenDimensions';
 import { useWebLayout, WEB_CONTENT_MAX_WIDTH } from '../lib/webLayout';
 import { AppMainNav } from '../lib/appWebChrome';
 import { BeginnerHintBar } from '../lib/BeginnerHintBar';
+import FeaturedStreamPanel from '../lib/FeaturedStreamPanel';
 import {
   BUILD_AUTHORS,
   DEFAULT_TAB_STATE,
@@ -7613,6 +7614,7 @@ export default function App() {
           {appPages}
         </View>
       </ScrollView>
+      <FeaturedStreamPanel />
     </View>
   );
 }

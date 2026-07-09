@@ -25,6 +25,18 @@
     "Type": "Deity"
   },
   {
+    "godName": "Ah Puch",
+    "pantheon": "Maya",
+    "Attack Type": "Ranged",
+    "Power Type": "Magical",
+    "Role": "Mid",
+    "Scales with": "INT",
+    "Gender": "Male",
+    "releaseYear": "2026",
+    "icon": "God Icons/t_GodPortrait_AhPuch.png",
+    "Type": "Deity"
+  },
+  {
     "godName": "Aladdin",
     "pantheon": "Tales",
     "Attack Type": "Melee",
@@ -145,6 +157,18 @@
     "Type": "Deity"
   },
   {
+    "godName": "Atlas",
+    "pantheon": "Greek",
+    "Attack Type": "Melee",
+    "Power Type": "Magical",
+    "Role": "Support",
+    "Scales with": "INT",
+    "Gender": "Male",
+    "releaseYear": "2026",
+    "icon": "God Icons/t_GodPortrait_Atlas.png",
+    "Type": "Titan"
+  },
+  {
     "godName": "Awilix",
     "pantheon": "Maya",
     "Attack Type": "Melee",
@@ -178,6 +202,18 @@
     "Gender": "Male",
     "releaseYear": "2018-06-26",
     "icon": "God Icons/t_GodPortrait_BaronSamedi.png",
+    "Type": "Deity"
+  },
+  {
+    "godName": "Bastet",
+    "pantheon": "Egyptian",
+    "Attack Type": "Melee",
+    "Power Type": "Physical",
+    "Role": "Jungle",
+    "Scales with": "STR",
+    "Gender": "Female",
+    "releaseYear": "2026",
+    "icon": "God Icons/t_GodPortrait_Bastet.png",
     "Type": "Deity"
   },
   {
@@ -241,6 +277,42 @@
     "Type": "Deity"
   },
   {
+    "godName": "Charon",
+    "pantheon": "Greek",
+    "Attack Type": "Melee",
+    "Power Type": "Magical",
+    "Role": "Support",
+    "Scales with": "INT",
+    "Gender": "Male",
+    "releaseYear": "2026",
+    "icon": "God Icons/t_GodPortrait_Charon.png",
+    "Type": "Deity"
+  },
+  {
+    "godName": "Chiron",
+    "pantheon": "Greek",
+    "Attack Type": "Ranged",
+    "Power Type": "Physical",
+    "Role": "ADC",
+    "Scales with": "STR",
+    "Gender": "Male",
+    "releaseYear": "2026",
+    "icon": "God Icons/t_GodPortrait_Chiron.png",
+    "Type": "Demigod"
+  },
+  {
+    "godName": "Chronos",
+    "pantheon": "Greek",
+    "Attack Type": "Ranged",
+    "Power Type": "Magical",
+    "Role": "Mid",
+    "Scales with": "INT",
+    "Gender": "Male",
+    "releaseYear": "2026",
+    "icon": "God Icons/t_GodPortrait_Chronos.png",
+    "Type": "Deity"
+  },
+  {
     "godName": "Cupid",
     "pantheon": "Roman",
     "Attack Type": "Ranged",
@@ -274,6 +346,18 @@
     "Gender": "Male",
     "releaseYear": "2020-12-15",
     "icon": "God Icons/t_GodPortrait_Danzaburou.png",
+    "Type": "Deity"
+  },
+  {
+    "godName": "Discordia",
+    "pantheon": "Roman",
+    "Attack Type": "Ranged",
+    "Power Type": "Magical",
+    "Role": "Mid",
+    "Scales with": "INT",
+    "Gender": "Female",
+    "releaseYear": "2026",
+    "icon": "God Icons/t_GodPortrait_Discordia.png",
     "Type": "Deity"
   },
   {
@@ -325,6 +409,18 @@
     "Type": "Deity"
   },
   {
+    "godName": "Gilgamesh",
+    "pantheon": "Babylonian",
+    "Attack Type": "Melee",
+    "Power Type": "Physical",
+    "Role": "Solo",
+    "Scales with": "STR",
+    "Gender": "Male",
+    "releaseYear": "2026",
+    "icon": "God Icons/t_GodPortrait_Gilgamesh.png",
+    "Type": "Demigod"
+  },
+  {
     "godName": "Guan Yu",
     "pantheon": "Chinese",
     "Attack Type": "Melee",
@@ -373,6 +469,18 @@
     "Type": "Demigod"
   },
   {
+    "godName": "Horus",
+    "pantheon": "Egyptian",
+    "Attack Type": "Melee",
+    "Power Type": "Physical",
+    "Role": "Support",
+    "Scales with": "STR",
+    "Gender": "Male",
+    "releaseYear": "2026",
+    "icon": "God Icons/t_GodPortrait_Horus.png",
+    "Type": "Deity"
+  },
+  {
     "godName": "Hou Yi",
     "pantheon": "Chinese",
     "Attack Type": "Ranged",
@@ -406,6 +514,18 @@
     "Gender": "Male",
     "releaseYear": "2012-05-31",
     "icon": "God Icons/t_GodPortrait_Hun Batz.png",
+    "Type": "Deity"
+  },
+  {
+    "godName": "Ishtar",
+    "pantheon": "Babylonian",
+    "Attack Type": "Ranged",
+    "Power Type": "Physical",
+    "Role": "ADC",
+    "Scales with": "STR",
+    "Gender": "Female",
+    "releaseYear": "2026",
+    "icon": "God Icons/t_GodPortrait_Ishtar.png",
     "Type": "Deity"
   },
   {
@@ -553,6 +673,18 @@
     "Type": "Human"
   },
   {
+    "godName": "Morgan Le Fay",
+    "pantheon": "Arthurian",
+    "Attack Type": "Ranged",
+    "Power Type": "Magical",
+    "Role": "Mid",
+    "Scales with": "INT",
+    "Gender": "Female",
+    "releaseYear": "2026",
+    "icon": "God Icons/t_GodPortrait_MorganLeFay.png",
+    "Type": "Human"
+  },
+  {
     "godName": "Neith",
     "pantheon": "Egyptian",
     "Attack Type": "Ranged",
@@ -574,6 +706,18 @@
     "Gender": "Female",
     "releaseYear": "2014-02-06",
     "icon": "God Icons/t_GodPortrait_Nemesis.png",
+    "Type": "Deity"
+  },
+  {
+    "godName": "Ne Zha",
+    "pantheon": "Chinese",
+    "Attack Type": "Melee",
+    "Power Type": "Physical",
+    "Role": "Jungle",
+    "Scales with": "STR",
+    "Gender": "Male",
+    "releaseYear": "2025",
+    "icon": "God Icons/t_GodPortrait_NeZha.png",
     "Type": "Deity"
   },
   {
@@ -682,6 +826,18 @@
     "Gender": "Male",
     "releaseYear": "2014",
     "icon": "God Icons/t_GodPortrait_Rama.png",
+    "Type": "Deity"
+  },
+  {
+    "godName": "Ratatoskr",
+    "pantheon": "Norse",
+    "Attack Type": "Melee",
+    "Power Type": "Physical",
+    "Role": "Solo",
+    "Scales with": "STR",
+    "Gender": "Male",
+    "releaseYear": "2026",
+    "icon": "God Icons/t_GodPortrait_Ratatoskr.png",
     "Type": "Deity"
   },
   {

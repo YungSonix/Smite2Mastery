@@ -61,6 +61,7 @@ import { getLocalItemIcon, getLocalGodAsset } from '../localIcons';
 import ColorPicker from 'react-native-wheel-color-picker';
 import { EXTERNAL_LINKS, ICON_PATHS, REMOTE_BASE_URLS } from '../../config';
 import { UI_THEME } from '../../lib/uiTheme';
+import { useAppFonts, FONT_FAMILY_BY_KEY } from '../../lib/appFonts';
 import { useAbilityTooltipDetail } from '../../hooks/useAbilityTooltipDetail';
 import { useItemTooltipDetail } from '../../hooks/useItemTooltipDetail';
 import { ABILITY_TOOLTIP_DETAIL } from '../../lib/abilityTooltipDetail';
@@ -400,109 +401,36 @@ const MAX_BADGES = 3;
 // Titles and fonts come from the Shop only (earn in Challenges, buy in Shop)
 let SHOP_TITLE_OPTIONS = [];
 let SHOP_FONT_OPTIONS = [];
+let SHOP_NAME_FX_OPTIONS = [];
+const NAME_FX_ITEM_BY_VALUE = {};
+let expandOwnedIds = (ids) => (Array.isArray(ids) ? ids : []);
 try {
   const shopData = require('../../lib/shopData');
   SHOP_TITLE_OPTIONS = (shopData.SHOP_ITEM_POOL || []).filter((i) => i.type === 'title');
   SHOP_FONT_OPTIONS = (shopData.SHOP_ITEM_POOL || []).filter((i) => i.type === 'font');
+  SHOP_NAME_FX_OPTIONS = (shopData.SHOP_ITEM_POOL || []).filter((i) => i.type === 'name_fx');
+  SHOP_NAME_FX_OPTIONS.forEach((i) => { if (i && i.value) NAME_FX_ITEM_BY_VALUE[i.value] = i; });
+  if (typeof shopData.expandOwnedIds === 'function') expandOwnedIds = shopData.expandOwnedIds;
 } catch (_) {
   SHOP_TITLE_OPTIONS = [];
   SHOP_FONT_OPTIONS = [];
+  SHOP_NAME_FX_OPTIONS = [];
 }
 
-// Map shop font key to platform fontFamily (system/standard fonts for compatibility)
-const PROFILE_FONT_FAMILY_MAP = {
-  default: undefined,
-  serif: Platform.OS === 'web' ? 'Georgia, serif' : 'Georgia',
-  rounded: Platform.OS === 'web' ? '"Segoe UI", system-ui, sans-serif' : 'System',
-  condensed: Platform.OS === 'web' ? '"Arial Narrow", Arial, sans-serif' : 'System',
-  comic: Platform.OS === 'web' ? 'Comic Sans MS, cursive' : 'System',
-  elegant: Platform.OS === 'web' ? 'Georgia, "Times New Roman", serif' : 'Georgia',
-  royal: Platform.OS === 'web' ? 'Georgia, serif' : 'Georgia',
-  strong: Platform.OS === 'web' ? 'Arial Black, sans-serif' : 'System',
-  narrow: Platform.OS === 'web' ? 'Arial Narrow, Arial, sans-serif' : 'System',
-  wide: Platform.OS === 'web' ? 'Arial Black, sans-serif' : 'System',
-  mono: Platform.OS === 'web' ? 'monospace' : 'System',
-  mythic: Platform.OS === 'web' ? 'Georgia, "Palatino Linotype", serif' : 'Georgia',
-  mystic: Platform.OS === 'web' ? 'Georgia, cursive, serif' : 'Georgia',
-  oracle: Platform.OS === 'web' ? '"Times New Roman", Times, serif' : 'System',
-  rune: Platform.OS === 'web' ? 'monospace, serif' : 'System',
-  titan: Platform.OS === 'web' ? 'Arial Black, Impact, sans-serif' : 'System',
-  celestial: Platform.OS === 'web' ? 'Georgia, "Times New Roman", serif' : 'Georgia',
-  shadow: Platform.OS === 'web' ? 'Arial Black, sans-serif' : 'System',
-  ancient: Platform.OS === 'web' ? '"Times New Roman", Times, serif' : 'System',
-  gothic: Platform.OS === 'web' ? 'Arial Black, sans-serif' : 'System',
-  script: Platform.OS === 'web' ? 'cursive, "Comic Sans MS"' : 'System',
-  bold: Platform.OS === 'web' ? 'Arial Black, sans-serif' : 'System',
-  light: Platform.OS === 'web' ? 'Arial, sans-serif' : 'System',
-  stencil: Platform.OS === 'web' ? 'Impact, Arial Black, sans-serif' : 'System',
-  retro: Platform.OS === 'web' ? 'Georgia, serif' : 'Georgia',
-  tech: Platform.OS === 'web' ? 'monospace, "Courier New"' : 'System',
-  cosmic: Platform.OS === 'web' ? 'Georgia, sans-serif' : 'Georgia',
-  dragon: Platform.OS === 'web' ? 'Arial Black, Impact, sans-serif' : 'System',
-  phoenix: Platform.OS === 'web' ? 'Georgia, "Times New Roman", serif' : 'Georgia',
-  olympian: Platform.OS === 'web' ? 'Georgia, serif' : 'Georgia',
-  egyptian: Platform.OS === 'web' ? '"Times New Roman", serif' : 'System',
-  norse: Platform.OS === 'web' ? 'Georgia, monospace, serif' : 'Georgia',
-  graffiti: Platform.OS === 'web' ? '"Comic Sans MS", "Marker Felt", cursive' : 'System',
-  glitch: Platform.OS === 'web' ? '"Courier New", monospace' : 'System',
-  slime: Platform.OS === 'web' ? '"Comic Sans MS", cursive' : 'System',
-  toxic: Platform.OS === 'web' ? '"Segoe UI", system-ui, sans-serif' : 'System',
-  arcade: Platform.OS === 'web' ? '"Press Start 2P", "Courier New", monospace' : 'System',
-  pixel: Platform.OS === 'web' ? '"Courier New", monospace' : 'System',
-  spooky: Platform.OS === 'web' ? '"Times New Roman", "Creepster", serif' : 'System',
-  agency_fb: Platform.OS === 'web' ? '"Agency FB", sans-serif' : 'System',
-  algerian: Platform.OS === 'web' ? 'Algerian, serif' : 'System',
-  bahnschrift: Platform.OS === 'web' ? 'Bahnschrift, system-ui, sans-serif' : 'System',
-  baskerville_old: Platform.OS === 'web' ? '"Baskerville Old Face", serif' : 'Georgia',
-  bauhaus: Platform.OS === 'web' ? '"Bauhaus 93", cursive' : 'System',
-  bell_mt: Platform.OS === 'web' ? '"Bell MT", serif' : 'Georgia',
-  berlin_sans: Platform.OS === 'web' ? '"Berlin Sans FB", sans-serif' : 'System',
-  bernard: Platform.OS === 'web' ? '"Bernard MT Condensed", serif' : 'System',
-  blackadder: Platform.OS === 'web' ? '"Blackadder ITC", cursive' : 'System',
-  bodoni_mt: Platform.OS === 'web' ? '"Bodoni MT", serif' : 'Georgia',
-  book_antiqua: Platform.OS === 'web' ? '"Book Antiqua", Palatino, serif' : 'Georgia',
-  bookman_old: Platform.OS === 'web' ? '"Bookman Old Style", serif' : 'Georgia',
-  bradley_hand: Platform.OS === 'web' ? '"Bradley Hand ITC", cursive' : 'System',
-  britannic: Platform.OS === 'web' ? '"Britannic Bold", sans-serif' : 'System',
-  broadway: Platform.OS === 'web' ? 'Broadway, serif' : 'System',
-  brush_script: Platform.OS === 'web' ? '"Brush Script MT", cursive' : 'System',
-  calibri: Platform.OS === 'web' ? 'Calibri, system-ui, sans-serif' : 'System',
-  cambria: Platform.OS === 'web' ? 'Cambria, "Times New Roman", serif' : 'Georgia',
-  castellar: Platform.OS === 'web' ? 'Castellar, serif' : 'System',
-  niagara_engraved: Platform.OS === 'web' ? '"Niagara Engraved", serif' : 'System',
-  niagara_solid: Platform.OS === 'web' ? '"Niagara Solid", serif' : 'System',
-  old_english: Platform.OS === 'web' ? '"Old English Text MT", serif' : 'System',
-  onyx: Platform.OS === 'web' ? 'Onyx, serif' : 'System',
-  palace_script: Platform.OS === 'web' ? '"Palace Script MT", cursive' : 'System',
-  palatino: Platform.OS === 'web' ? '"Palatino Linotype", Palatino, serif' : 'Georgia',
-  papyrus: Platform.OS === 'web' ? 'Papyrus, fantasy' : 'System',
-  parchment: Platform.OS === 'web' ? 'Parchment, cursive' : 'System',
-  perpetua: Platform.OS === 'web' ? 'Perpetua, serif' : 'Georgia',
-  playbill: Platform.OS === 'web' ? 'Playbill, serif' : 'System',
-  edwardian: Platform.OS === 'web' ? '"Edwardian Script ITC", cursive' : 'System',
-  elephant: Platform.OS === 'web' ? 'Elephant, serif' : 'System',
-  engravers: Platform.OS === 'web' ? '"Engravers MT", serif' : 'System',
-  felix: Platform.OS === 'web' ? '"Felix Titling MT", serif' : 'System',
-  forte: Platform.OS === 'web' ? 'Forte, cursive' : 'System',
-  franklin_book: Platform.OS === 'web' ? '"Franklin Gothic Book", sans-serif' : 'System',
-  freestyle: Platform.OS === 'web' ? '"Freestyle Script", cursive' : 'System',
-  french_script: Platform.OS === 'web' ? '"French Script MT", cursive' : 'System',
-  gabriola: Platform.OS === 'web' ? 'Gabriola, cursive' : 'System',
-  gadugi: Platform.OS === 'web' ? 'Gadugi, system-ui, sans-serif' : 'System',
-  garamond: Platform.OS === 'web' ? 'Garamond, "Times New Roman", serif' : 'Georgia',
-  gigi: Platform.OS === 'web' ? 'Gigi, cursive' : 'System',
-  sylfaen: Platform.OS === 'web' ? 'Sylfaen, serif' : 'System',
-  tempus: Platform.OS === 'web' ? '"Tempus Sans ITC", sans-serif' : 'System',
-  times_new: Platform.OS === 'web' ? '"Times New Roman", serif' : 'Georgia',
-  trajan: Platform.OS === 'web' ? '"Trajan Pro", serif' : 'System',
-  trebuchet: Platform.OS === 'web' ? '"Trebuchet MS", sans-serif' : 'System',
-  tw_cen: Platform.OS === 'web' ? '"Tw Cen MT", sans-serif' : 'System',
-  verdana: Platform.OS === 'web' ? 'Verdana, Geneva, sans-serif' : 'System',
-  viner: Platform.OS === 'web' ? '"Viner Hand ITC", cursive' : 'System',
-  vivaldi: Platform.OS === 'web' ? 'Vivaldi, cursive' : 'System',
-  vladimir: Platform.OS === 'web' ? '"Vladimir Script", cursive' : 'System',
-  wide_latin: Platform.OS === 'web' ? '"Wide Latin", serif' : 'System',
+// A name effect is unlocked if it isn't sold in the shop (basic/free), is a
+// free starter (defaultUnlocked), is owned, or is the one currently equipped.
+const isNameFxUnlocked = (key, ownedIds, equippedKey) => {
+  if (!key || key === 'none') return true;
+  if (equippedKey && key === equippedKey) return true;
+  const item = NAME_FX_ITEM_BY_VALUE[key];
+  if (!item) return true;
+  if (item.defaultUnlocked) return true;
+  return Array.isArray(ownedIds) && ownedIds.includes(item.id);
 };
+
+// Map shop font key to platform fontFamily (system/standard fonts for compatibility)
+// Shared cross-platform font map (identical on web + native). See lib/appFonts.js.
+const PROFILE_FONT_FAMILY_MAP = { default: undefined, ...FONT_FAMILY_BY_KEY };
 
 const HEX_COLOR_REGEX = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
 const normalizeHex = (value) => {
@@ -589,7 +517,607 @@ const NAME_ANIMATION_OPTIONS = [
   { key: 'pantheon_greek', label: 'Pantheon: Greek' },
   { key: 'pantheon_norse', label: 'Pantheon: Norse' },
   { key: 'pantheon_egyptian', label: 'Pantheon: Egyptian' },
+  // —— CSS-inspired flowing color effects (shared fxAnim driver) ——
+  { key: 'rainbow', label: 'Rainbow Warrior' },
+  { key: 'aurora', label: 'Aurora' },
+  { key: 'sunset', label: 'Sunset' },
+  { key: 'holographic', label: 'Holographic' },
+  { key: 'synthwave', label: 'Synthwave' },
+  { key: 'galaxy', label: 'Galaxy' },
+  { key: 'electric', label: 'Electric' },
+  { key: 'toxic_glow', label: 'Toxic' },
+  { key: 'blood', label: 'Blood Oath' },
+  { key: 'gold_shine', label: 'Gold Shine' },
+  { key: 'matrix', label: 'Matrix' },
+  { key: 'emerald', label: 'Emerald' },
+  { key: 'ruby', label: 'Ruby' },
+  { key: 'sapphire', label: 'Sapphire' },
+  { key: 'obsidian', label: 'Obsidian' },
+  { key: 'firefly', label: 'Firefly' },
+  { key: 'plasma', label: 'Plasma' },
+  { key: 'vaporwave', label: 'Vaporwave' },
+  { key: 'nebula', label: 'Nebula' },
+  { key: 'oil_slick', label: 'Oil Slick' },
+  { key: 'magma', label: 'Magma' },
+  { key: 'peacock', label: 'Peacock' },
+  { key: 'cotton_candy', label: 'Cotton Candy' },
+  { key: 'laser', label: 'Laser' },
+  { key: 'venom', label: 'Venom' },
+  { key: 'ultraviolet', label: 'Ultraviolet' },
+  { key: 'royal', label: 'Royal' },
+  { key: 'frostbite', label: 'Frostbite' },
+  { key: 'sunrise', label: 'Sunrise' },
+  { key: 'spectrum', label: 'Spectrum' },
+  { key: 'mint', label: 'Mint' },
+  { key: 'blossom', label: 'Blossom' },
+  { key: 'abyss', label: 'Abyss' },
+  { key: 'radioactive', label: 'Radioactive' },
+  { key: 'disco', label: 'Disco' },
+  // —— Motion / special effects (shared fxAnim driver) ——
+  { key: 'sparkle', label: 'Sparkle' },
+  { key: 'glitch', label: 'Glitch' },
+  { key: 'wave', label: 'Wave' },
+  { key: 'heartbeat', label: 'Heartbeat' },
+  { key: 'bounce', label: 'Bounce' },
+  { key: 'zoom', label: 'Zoom' },
+  { key: 'swing', label: 'Swing' },
+  { key: 'jitter', label: 'Jitter' },
+  { key: 'ghost', label: 'Ghost' },
+  { key: 'flash', label: 'Flash' },
+  // —— Per-letter effects (multi-color gradients, per-letter colors, letter waves) ——
+  { key: 'rainbow_letters', label: 'Rainbow Letters' },
+  { key: 'confetti_letters', label: 'Confetti Letters' },
+  { key: 'fire_letters', label: 'Fire Letters' },
+  { key: 'ocean_letters', label: 'Ocean Letters' },
+  { key: 'sunset_letters', label: 'Sunset Letters' },
+  { key: 'candy_letters', label: 'Candy Letters' },
+  { key: 'toxic_letters', label: 'Toxic Letters' },
+  { key: 'gold_letters', label: 'Gold Letters' },
+  { key: 'ice_letters', label: 'Ice Letters' },
+  { key: 'wave_letters', label: 'Wave Letters' },
+  { key: 'wave_rainbow', label: 'Rainbow Wave' },
+  { key: 'bounce_letters', label: 'Bounce Letters' },
+  { key: 'emerald_letters', label: 'Emerald Letters' },
+  { key: 'violet_letters', label: 'Violet Letters' },
+  { key: 'blood_letters', label: 'Blood Letters' },
+  { key: 'neon_letters', label: 'Neon Letters' },
+  // Two-shade dual gradients
+  { key: 'fire_ice_letters', label: 'Fire & Ice' },
+  { key: 'toxic_void_letters', label: 'Toxic & Void' },
+  { key: 'gold_pink_letters', label: 'Gold & Rose' },
+  { key: 'ocean_sunset_letters', label: 'Ocean & Sunset' },
+  { key: 'cyber_letters', label: 'Cyber Split' },
+  { key: 'frost_fire_wave', label: 'Frost & Fire Wave' },
+  // Layered text-shadow effects (CSS-tutorial style)
+  { key: 'neon_blue', label: 'Neon Blue' },
+  { key: 'neon_pink', label: 'Neon Pink' },
+  { key: 'neon_green', label: 'Neon Green' },
+  { key: 'neon_orange', label: 'Neon Orange' },
+  { key: 'fire_glow', label: 'Fire Glow' },
+  { key: 'retro_vintage', label: 'Retro Vintage' },
+  { key: 'board_game', label: 'Board Game' },
+  { key: 'anaglyph_3d', label: 'Anaglyph 3D' },
+  { key: 'extrude_3d', label: 'Extrude 3D' },
+  { key: 'extrude_gold', label: 'Gold Extrude' },
+  { key: 'long_shadow', label: 'Long Shadow' },
+  { key: 'outline_cyan', label: 'Cyan Outline' },
+  { key: 'outline_gold', label: 'Gold Outline' },
+  { key: 'letterpress', label: 'Letterpress' },
+  { key: 'rgb_split', label: 'RGB Split' },
+  // —— Themed: holidays & seasons ——
+  { key: 'halloween', label: 'Halloween' },
+  { key: 'halloween_letters', label: 'Halloween Split' },
+  { key: 'pumpkin_letters', label: 'Pumpkin' },
+  { key: 'spooky_glow', label: 'Spooky Glow' },
+  { key: 'christmas', label: 'Christmas' },
+  { key: 'mistletoe_letters', label: 'Mistletoe' },
+  { key: 'candy_cane', label: 'Candy Cane' },
+  { key: 'snow_letters', label: 'Snowfall' },
+  { key: 'festive_glow', label: 'Festive Glow' },
+  { key: 'valentines', label: 'Valentines' },
+  { key: 'heart_letters', label: 'Sweetheart' },
+  { key: 'love_glow', label: 'Love Glow' },
+  { key: 'winter', label: 'Winter' },
+  { key: 'frost_glow', label: 'Frost Glow' },
+  { key: 'summer', label: 'Summer' },
+  { key: 'beach_letters', label: 'Beach' },
+  { key: 'spring', label: 'Spring' },
+  { key: 'autumn', label: 'Autumn' },
+  { key: 'autumn_letters', label: 'Autumn Leaves' },
+  { key: 'thanksgiving', label: 'Thanksgiving' },
+  { key: 'st_patrick', label: 'Lucky' },
+  { key: 'easter', label: 'Easter' },
+  { key: 'new_year', label: 'New Year' },
+  { key: 'fireworks', label: 'Fireworks' },
+  { key: 'lunar_new_year', label: 'Lunar New Year' },
+  { key: 'fourth_july', label: 'Independence' },
+  { key: 'diwali', label: 'Diwali' },
+  { key: 'birthday', label: 'Birthday' },
+  { key: 'eclipse', label: 'Eclipse' },
+  // —— Expansion: extra flowing-color variety ——
+  { key: 'twilight', label: 'Twilight' },
+  { key: 'lagoon', label: 'Lagoon' },
+  { key: 'flamingo', label: 'Flamingo' },
+  { key: 'glacier', label: 'Glacier' },
+  { key: 'solar_flare', label: 'Solar Flare' },
+  { key: 'cosmic', label: 'Cosmic' },
+  { key: 'jade', label: 'Jade' },
+  { key: 'amethyst', label: 'Amethyst' },
+  { key: 'citrine', label: 'Citrine' },
+  { key: 'crimson_tide', label: 'Crimson Tide' },
+  { key: 'bubblegum', label: 'Bubblegum' },
+  { key: 'unicorn', label: 'Unicorn' },
+  { key: 'midnight', label: 'Midnight' },
+  { key: 'rose_gold', label: 'Rose Gold' },
+  { key: 'steelforge', label: 'Steelforge' },
+  { key: 'lightning', label: 'Lightning' },
+  { key: 'deep_sea', label: 'Deep Sea' },
+  { key: 'coral_reef', label: 'Coral Reef' },
+  { key: 'molten_gold', label: 'Molten Gold' },
+  { key: 'poison_ivy', label: 'Poison Ivy' },
+  // —— Expansion: extra per-letter variety ——
+  { key: 'galaxy_letters', label: 'Galaxy Letters' },
+  { key: 'pastel_letters', label: 'Pastel Pop' },
+  { key: 'pride_letters', label: 'Pride' },
+  { key: 'mono_letters', label: 'Monochrome' },
+  { key: 'sunrise_letters', label: 'Sunrise Letters' },
+  { key: 'aurora_letters', label: 'Aurora Letters' },
+  { key: 'lava_letters', label: 'Lava Letters' },
+  // —— Expansion: extra neon / 3D / stroke variety ——
+  { key: 'neon_purple', label: 'Neon Purple' },
+  { key: 'neon_red', label: 'Neon Red' },
+  { key: 'gold_glow', label: 'Gold Glow' },
+  { key: 'chrome_3d', label: 'Chrome 3D' },
+  { key: 'comic_pop', label: 'Comic Pop' },
+  { key: 'toon_outline', label: 'Toon' },
+  { key: 'emboss', label: 'Emboss' },
 ];
+
+// Flowing color effects. Only one effect renders at a time, so a single shared
+// Animated.Value drives all of them (0->1 loop, or 0->1->0 ping-pong when seq).
+// colors: flowing color stops · shadow: glow · seq: ping-pong · d: cycle ms
+// glowPulse: pulse the shadow radius · mono: monospace font
+const FX_FLOW_CONFIG = {
+  rainbow: { colors: ['#ff3b3b', '#ff8c00', '#ffd500', '#00d26a', '#00b3ff', '#7b5bff', '#ff3b3b'], shadow: '#ffffff', seq: false, d: 3800 },
+  spectrum: { colors: ['#ff0040', '#ff8c00', '#ffd500', '#00d26a', '#00b3ff', '#7b5bff', '#ff0040'], shadow: '#ffffff', seq: false, d: 1600 },
+  disco: { colors: ['#ef4444', '#f59e0b', '#22c55e', '#3b82f6', '#a855f7', '#ec4899', '#ef4444'], shadow: '#ffffff', seq: false, d: 1300 },
+  aurora: { colors: ['#22d3ee', '#34d399', '#a78bfa', '#22d3ee'], shadow: '#34d399', seq: false, d: 3200 },
+  sunset: { colors: ['#f97316', '#ec4899', '#8b5cf6', '#f97316'], shadow: '#ec4899', seq: false, d: 3400 },
+  sunrise: { colors: ['#f43f5e', '#fb923c', '#fde047', '#fb923c', '#f43f5e'], shadow: '#fb923c', seq: false, d: 2800 },
+  holographic: { colors: ['#67e8f9', '#f0abfc', '#fde047', '#67e8f9'], shadow: '#f0abfc', seq: false, d: 2600 },
+  synthwave: { colors: ['#f472b6', '#22d3ee', '#a855f7', '#f472b6'], shadow: '#f472b6', seq: false, d: 2800 },
+  vaporwave: { colors: ['#ff71ce', '#01cdfe', '#b967ff', '#ff71ce'], shadow: '#01cdfe', seq: false, d: 2600 },
+  galaxy: { colors: ['#312e81', '#6366f1', '#db2777', '#6366f1', '#312e81'], shadow: '#818cf8', seq: false, d: 3600 },
+  nebula: { colors: ['#7c3aed', '#db2777', '#2563eb', '#7c3aed'], shadow: '#a78bfa', seq: false, d: 3400 },
+  abyss: { colors: ['#020617', '#1e3a8a', '#3b82f6', '#0ea5e9', '#1e3a8a'], shadow: '#38bdf8', seq: false, d: 3200 },
+  oil_slick: { colors: ['#0f172a', '#8b5cf6', '#22d3ee', '#ec4899', '#0f172a'], shadow: '#a855f7', seq: false, d: 3000 },
+  plasma: { colors: ['#ec4899', '#8b5cf6', '#22d3ee', '#ec4899'], shadow: '#a855f7', seq: false, d: 2200 },
+  peacock: { colors: ['#0d9488', '#0ea5e9', '#22c55e', '#8b5cf6', '#0d9488'], shadow: '#22d3ee', seq: false, d: 3200 },
+  cotton_candy: { colors: ['#f9a8d4', '#a5b4fc', '#93c5fd', '#f9a8d4'], shadow: '#f9a8d4', seq: false, d: 3000 },
+  royal: { colors: ['#4c1d95', '#a855f7', '#fbbf24', '#a855f7'], shadow: '#c084fc', seq: false, d: 2400 },
+  ultraviolet: { colors: ['#4c1d95', '#7c3aed', '#c084fc', '#e9d5ff', '#7c3aed'], shadow: '#a855f7', seq: true, d: 1400 },
+  electric: { colors: ['#3b82f6', '#e0f2fe', '#60a5fa'], shadow: '#60a5fa', seq: true, d: 520 },
+  laser: { colors: ['#ff0040', '#ff5c8a', '#ff0040'], shadow: '#ff0040', seq: true, d: 420 },
+  toxic_glow: { colors: ['#65a30d', '#bef264', '#22c55e', '#65a30d'], shadow: '#a3e635', seq: true, d: 900 },
+  radioactive: { colors: ['#365314', '#84cc16', '#ecfccb', '#84cc16'], shadow: '#a3e635', seq: true, d: 800, glowPulse: true },
+  venom: { colors: ['#052e16', '#22c55e', '#a3e635', '#166534'], shadow: '#4ade80', seq: true, d: 1600 },
+  mint: { colors: ['#065f46', '#10b981', '#a7f3d0', '#10b981'], shadow: '#34d399', seq: true, d: 1600 },
+  emerald: { colors: ['#065f46', '#34d399', '#d1fae5', '#34d399'], shadow: '#34d399', seq: true, d: 1600 },
+  blossom: { colors: ['#be123c', '#fb7185', '#fecdd3', '#fb7185'], shadow: '#fb7185', seq: true, d: 1600 },
+  ruby: { colors: ['#7f1d1d', '#ef4444', '#fecaca', '#ef4444'], shadow: '#f87171', seq: true, d: 1600 },
+  sapphire: { colors: ['#1e3a8a', '#3b82f6', '#dbeafe', '#3b82f6'], shadow: '#60a5fa', seq: true, d: 1600 },
+  blood: { colors: ['#7f1d1d', '#dc2626', '#450a0a', '#7f1d1d'], shadow: '#dc2626', seq: false, d: 2400 },
+  magma: { colors: ['#450a0a', '#dc2626', '#f59e0b', '#fde047', '#dc2626'], shadow: '#f97316', seq: false, d: 1800 },
+  gold_shine: { colors: ['#b45309', '#fde68a', '#f59e0b', '#b45309'], shadow: '#fbbf24', seq: true, d: 1000 },
+  frostbite: { colors: ['#bae6fd', '#e0f2fe', '#7dd3fc', '#bae6fd'], shadow: '#7dd3fc', seq: true, d: 1400, glowPulse: true },
+  obsidian: { colors: ['#0f172a', '#475569', '#94a3b8', '#334155'], shadow: '#64748b', seq: false, d: 2400 },
+  firefly: { colors: ['#f59e0b', '#fef3c7', '#fbbf24', '#f59e0b'], shadow: '#fbbf24', seq: true, d: 1500, glowPulse: true },
+  matrix: { colors: ['#052e16', '#22c55e', '#86efac', '#22c55e'], shadow: '#22c55e', seq: true, d: 720, mono: true },
+  // —— Themed: holidays & seasons ——
+  halloween: { colors: ['#f97316', '#a855f7', '#f97316'], shadow: '#f97316', seq: true, d: 1400, glowPulse: true },
+  christmas: { colors: ['#dc2626', '#16a34a', '#f8fafc', '#16a34a', '#dc2626'], shadow: '#ef4444', seq: false, d: 2600 },
+  valentines: { colors: ['#be123c', '#fb7185', '#f9a8d4', '#fb7185', '#be123c'], shadow: '#fb7185', seq: false, d: 2400 },
+  winter: { colors: ['#e0f2fe', '#7dd3fc', '#bae6fd', '#e0f2fe'], shadow: '#7dd3fc', seq: true, d: 3000, glowPulse: true },
+  summer: { colors: ['#f59e0b', '#fde047', '#22d3ee', '#fde047', '#f59e0b'], shadow: '#fde047', seq: false, d: 2600 },
+  spring: { colors: ['#f9a8d4', '#a7f3d0', '#fde68a', '#f9a8d4'], shadow: '#a7f3d0', seq: false, d: 3000 },
+  autumn: { colors: ['#b45309', '#ea580c', '#f59e0b', '#7c2d12', '#b45309'], shadow: '#ea580c', seq: false, d: 2800 },
+  thanksgiving: { colors: ['#7c2d12', '#b45309', '#f59e0b', '#eab308', '#7c2d12'], shadow: '#f59e0b', seq: false, d: 3000 },
+  new_year: { colors: ['#fde047', '#f472b6', '#22d3ee', '#a855f7', '#fde047'], shadow: '#ffffff', seq: false, d: 1400, glowPulse: true },
+  fireworks: { colors: ['#ff0040', '#ffd500', '#00b3ff', '#a855f7', '#ff0040'], shadow: '#ffffff', seq: true, d: 600, glowPulse: true },
+  st_patrick: { colors: ['#166534', '#22c55e', '#86efac', '#22c55e'], shadow: '#4ade80', seq: true, d: 1800 },
+  easter: { colors: ['#fbcfe8', '#bfdbfe', '#fef08a', '#bbf7d0', '#fbcfe8'], shadow: '#f0abfc', seq: false, d: 3000 },
+  // —— Expansion: extra flowing-color variety ——
+  twilight: { colors: ['#0f172a', '#6d28d9', '#db2777', '#6d28d9', '#0f172a'], shadow: '#a78bfa', seq: false, d: 3000 },
+  lagoon: { colors: ['#0d9488', '#06b6d4', '#67e8f9', '#0d9488'], shadow: '#22d3ee', seq: true, d: 1800 },
+  flamingo: { colors: ['#f43f5e', '#fb7185', '#fda4af', '#fb7185'], shadow: '#fb7185', seq: true, d: 1600 },
+  glacier: { colors: ['#bae6fd', '#e0f2fe', '#a5f3fc', '#bae6fd'], shadow: '#67e8f9', seq: true, d: 2600, glowPulse: true },
+  solar_flare: { colors: ['#7c2d12', '#ea580c', '#fbbf24', '#fef08a', '#ea580c'], shadow: '#f97316', seq: false, d: 2000, glowPulse: true },
+  cosmic: { colors: ['#1e1b4b', '#7c3aed', '#ec4899', '#38bdf8', '#1e1b4b'], shadow: '#a78bfa', seq: false, d: 3400 },
+  jade: { colors: ['#064e3b', '#059669', '#6ee7b7', '#059669'], shadow: '#34d399', seq: true, d: 1800 },
+  amethyst: { colors: ['#4c1d95', '#9333ea', '#d8b4fe', '#9333ea'], shadow: '#c084fc', seq: true, d: 1800 },
+  citrine: { colors: ['#a16207', '#eab308', '#fef08a', '#eab308'], shadow: '#facc15', seq: true, d: 1600 },
+  crimson_tide: { colors: ['#450a0a', '#b91c1c', '#ef4444', '#7f1d1d'], shadow: '#ef4444', seq: false, d: 2400 },
+  bubblegum: { colors: ['#f472b6', '#38bdf8', '#f472b6'], shadow: '#f9a8d4', seq: false, d: 2000 },
+  unicorn: { colors: ['#f9a8d4', '#c4b5fd', '#a5f3fc', '#fef08a', '#f9a8d4'], shadow: '#f0abfc', seq: false, d: 3200 },
+  midnight: { colors: ['#020617', '#1e293b', '#475569', '#1e293b'], shadow: '#64748b', seq: false, d: 2800 },
+  rose_gold: { colors: ['#9f1239', '#fb7185', '#fecdd3', '#fda4af'], shadow: '#fda4af', seq: true, d: 1800 },
+  steelforge: { colors: ['#334155', '#94a3b8', '#e2e8f0', '#94a3b8'], shadow: '#cbd5e1', seq: true, d: 1600 },
+  lightning: { colors: ['#1e3a8a', '#e0f2fe', '#fef9c3', '#e0f2fe'], shadow: '#fde047', seq: true, d: 400, glowPulse: true },
+  deep_sea: { colors: ['#082f49', '#0e7490', '#22d3ee', '#0e7490'], shadow: '#22d3ee', seq: false, d: 3000 },
+  coral_reef: { colors: ['#f97316', '#fb7185', '#2dd4bf', '#f97316'], shadow: '#fb7185', seq: false, d: 2600 },
+  molten_gold: { colors: ['#78350f', '#f59e0b', '#fde68a', '#f59e0b'], shadow: '#fbbf24', seq: true, d: 1200, glowPulse: true },
+  poison_ivy: { colors: ['#14532d', '#4ade80', '#a3e635', '#22c55e'], shadow: '#4ade80', seq: true, d: 1500 },
+  // —— Expansion: extra themed ——
+  lunar_new_year: { colors: ['#7f1d1d', '#dc2626', '#fbbf24', '#dc2626'], shadow: '#fbbf24', seq: false, d: 2200, glowPulse: true },
+  fourth_july: { colors: ['#dc2626', '#f8fafc', '#2563eb', '#f8fafc', '#dc2626'], shadow: '#ffffff', seq: false, d: 1800 },
+  diwali: { colors: ['#7c2d12', '#f59e0b', '#a855f7', '#f59e0b'], shadow: '#fbbf24', seq: false, d: 2200, glowPulse: true },
+  birthday: { colors: ['#f472b6', '#38bdf8', '#fde047', '#4ade80', '#f472b6'], shadow: '#ffffff', seq: false, d: 1600, glowPulse: true },
+  eclipse: { colors: ['#020617', '#f59e0b', '#fde68a', '#020617'], shadow: '#fbbf24', seq: false, d: 2600, glowPulse: true },
+};
+
+// Motion effects driven by the same shared fxAnim value
+const FX_MOTION_CONFIG = {
+  sparkle: { d: 820, seq: true },
+  glitch: { d: 420, seq: false },
+  wave: { d: 1500, seq: true },
+  heartbeat: { d: 900, seq: true },
+  bounce: { d: 1100, seq: true },
+  zoom: { d: 900, seq: true },
+  swing: { d: 1200, seq: true },
+  jitter: { d: 300, seq: false },
+  ghost: { d: 1800, seq: true },
+  flash: { d: 700, seq: true },
+};
+
+// —— Per-letter effects (each letter its own color / motion; works on web + native) ——
+// palette: color stops · mode 'gradient' (blend across letters) | 'cycle' (one solid color per letter)
+// flow: animate the gradient sliding across letters · motion 'wave' | 'bounce' (staggered per letter)
+// shadow: glow · d: cycle ms
+const FX_LETTER_CONFIG = {
+  rainbow_letters: { palette: ['#ff3b3b', '#ff8c00', '#ffd500', '#00d26a', '#00b3ff', '#7b5bff'], mode: 'gradient', flow: true, shadow: '#ffffff', d: 3000 },
+  confetti_letters: { palette: ['#ef4444', '#f59e0b', '#22c55e', '#38bdf8', '#a855f7', '#ec4899'], mode: 'cycle', shadow: '#0f172a', d: 0 },
+  fire_letters: { palette: ['#dc2626', '#f97316', '#fde047', '#f97316', '#dc2626'], mode: 'gradient', flow: true, shadow: '#f97316', d: 2200 },
+  ocean_letters: { palette: ['#0ea5e9', '#22d3ee', '#2dd4bf', '#3b82f6'], mode: 'gradient', flow: true, shadow: '#22d3ee', d: 3000 },
+  sunset_letters: { palette: ['#f97316', '#ec4899', '#8b5cf6', '#f97316'], mode: 'gradient', flow: true, shadow: '#ec4899', d: 3200 },
+  candy_letters: { palette: ['#f472b6', '#a855f7', '#22d3ee', '#f472b6'], mode: 'gradient', flow: true, shadow: '#f472b6', d: 2800 },
+  toxic_letters: { palette: ['#65a30d', '#a3e635', '#22c55e', '#65a30d'], mode: 'gradient', flow: true, shadow: '#a3e635', d: 2400 },
+  gold_letters: { palette: ['#b45309', '#fbbf24', '#fde68a', '#fbbf24'], mode: 'gradient', flow: true, shadow: '#fbbf24', d: 2600 },
+  ice_letters: { palette: ['#e0f2fe', '#7dd3fc', '#38bdf8', '#e0f2fe'], mode: 'gradient', flow: true, shadow: '#7dd3fc', d: 2800 },
+  wave_letters: { palette: null, mode: 'gradient', motion: 'wave', shadow: null, d: 1600 },
+  wave_rainbow: { palette: ['#ff3b3b', '#ff8c00', '#ffd500', '#00d26a', '#00b3ff', '#7b5bff'], mode: 'gradient', flow: true, motion: 'wave', shadow: '#ffffff', d: 2600 },
+  bounce_letters: { palette: null, mode: 'gradient', motion: 'bounce', shadow: null, d: 1200 },
+  // More per-letter gradients
+  emerald_letters: { palette: ['#065f46', '#34d399', '#a7f3d0'], mode: 'gradient', flow: true, shadow: '#34d399', d: 2600 },
+  violet_letters: { palette: ['#4c1d95', '#a855f7', '#e9d5ff'], mode: 'gradient', flow: true, shadow: '#c084fc', d: 2600 },
+  blood_letters: { palette: ['#450a0a', '#dc2626', '#fca5a5'], mode: 'gradient', flow: true, shadow: '#ef4444', d: 2400 },
+  neon_letters: { palette: ['#22d3ee', '#a855f7', '#ec4899', '#22d3ee'], mode: 'gradient', flow: true, shadow: '#22d3ee', d: 2200 },
+  // Two distinct gradient shades in one name (dual: [paletteA, paletteB])
+  fire_ice_letters: { dual: [['#dc2626', '#f97316', '#fde047'], ['#e0f2fe', '#7dd3fc', '#38bdf8']], shadow: '#f0abfc', d: 0 },
+  toxic_void_letters: { dual: [['#65a30d', '#a3e635', '#ecfccb'], ['#4c1d95', '#a855f7', '#e9d5ff']], shadow: '#a3e635', d: 0 },
+  gold_pink_letters: { dual: [['#b45309', '#fbbf24', '#fde68a'], ['#be123c', '#fb7185', '#fecdd3']], shadow: '#fbbf24', d: 0 },
+  ocean_sunset_letters: { dual: [['#0ea5e9', '#22d3ee', '#a7f3d0'], ['#f97316', '#ec4899', '#8b5cf6']], shadow: '#22d3ee', d: 0 },
+  cyber_letters: { dual: [['#22d3ee', '#0ea5e9', '#67e8f9'], ['#ec4899', '#f472b6', '#fbcfe8']], shadow: '#22d3ee', d: 0 },
+  frost_fire_wave: { dual: [['#e0f2fe', '#7dd3fc', '#38bdf8'], ['#dc2626', '#f97316', '#fde047']], motion: 'wave', shadow: '#ffffff', d: 1800 },
+  // —— Themed per-letter ——
+  candy_cane: { palette: ['#dc2626', '#ffffff'], mode: 'cycle', shadow: '#ef4444', d: 0 },
+  halloween_letters: { dual: [['#f97316', '#fdba74'], ['#7c3aed', '#c4b5fd']], shadow: '#f97316', d: 0 },
+  pumpkin_letters: { palette: ['#7c2d12', '#ea580c', '#fbbf24', '#ea580c'], mode: 'gradient', flow: true, shadow: '#f97316', d: 2400 },
+  mistletoe_letters: { dual: [['#16a34a', '#86efac'], ['#dc2626', '#fca5a5']], shadow: '#4ade80', d: 0 },
+  snow_letters: { palette: ['#ffffff', '#bae6fd', '#7dd3fc', '#ffffff'], mode: 'gradient', flow: true, motion: 'wave', shadow: '#e0f2fe', d: 2600 },
+  heart_letters: { palette: ['#f43f5e', '#fb7185', '#f9a8d4', '#fb7185'], mode: 'gradient', flow: true, motion: 'bounce', shadow: '#fb7185', d: 1400 },
+  autumn_letters: { palette: ['#7c2d12', '#b45309', '#ea580c', '#f59e0b', '#eab308'], mode: 'gradient', flow: true, shadow: '#ea580c', d: 2800 },
+  beach_letters: { dual: [['#0ea5e9', '#22d3ee', '#a7f3d0'], ['#f59e0b', '#fde047', '#fef9c3']], shadow: '#fde047', d: 0 },
+  // —— Expansion: extra per-letter variety ——
+  galaxy_letters: { palette: ['#312e81', '#7c3aed', '#db2777', '#38bdf8'], mode: 'gradient', flow: true, shadow: '#a78bfa', d: 3000 },
+  pastel_letters: { palette: ['#f9a8d4', '#c4b5fd', '#a5f3fc', '#bbf7d0', '#fef9c3'], mode: 'cycle', shadow: '#0f172a', d: 0 },
+  pride_letters: { palette: ['#e40303', '#ff8c00', '#ffed00', '#008026', '#004dff', '#750787'], mode: 'cycle', shadow: '#0f172a', d: 0 },
+  mono_letters: { palette: ['#e2e8f0', '#64748b'], mode: 'cycle', shadow: '#0f172a', d: 0 },
+  sunrise_letters: { palette: ['#f43f5e', '#fb923c', '#fde047'], mode: 'gradient', flow: true, shadow: '#fb923c', d: 2800 },
+  aurora_letters: { palette: ['#22d3ee', '#34d399', '#a78bfa', '#22d3ee'], mode: 'gradient', flow: true, motion: 'wave', shadow: '#34d399', d: 2600 },
+  lava_letters: { palette: ['#450a0a', '#dc2626', '#f97316', '#fde047'], mode: 'gradient', flow: true, shadow: '#f97316', d: 2200 },
+};
+
+// —— Layered text-shadow effects (CSS-tutorial style). RN native only supports a
+// single textShadow, so multi-layer shadows are faked by stacking offset copies
+// of the text — identical on web + native. `layers` render behind the base text
+// (front-most base last). Each layer: { dx, dy, color, radius?, opacity? }.
+// `glow`/`glowRadius` add a soft halo on the base; `flicker` pulses via fxAnim.
+const FX_SHADOW_CONFIG = {
+  // Neon tubes — bright fill + colored halo, flickering like a sign
+  neon_blue: { base: '#e0fbff', glow: '#22d3ee', glowRadius: 16, flicker: true, d: 1700,
+    layers: [{ dx: 0, dy: 0, color: '#22d3ee', radius: 22, opacity: 0.55 }] },
+  neon_pink: { base: '#ffe4f6', glow: '#ff2fd0', glowRadius: 16, flicker: true, d: 1500,
+    layers: [{ dx: 0, dy: 0, color: '#ff2fd0', radius: 22, opacity: 0.55 }] },
+  neon_green: { base: '#eaffea', glow: '#39ff14', glowRadius: 16, flicker: true, d: 1900,
+    layers: [{ dx: 0, dy: 0, color: '#39ff14', radius: 22, opacity: 0.5 }] },
+  neon_orange: { base: '#fff1e0', glow: '#ff7a00', glowRadius: 15, flicker: true, d: 1600,
+    layers: [{ dx: 0, dy: 0, color: '#ff7a00', radius: 20, opacity: 0.55 }] },
+  // Fire — warm halo drifting upward
+  fire_glow: { base: '#fff7d6', glow: '#feec85', glowRadius: 12, flicker: true, d: 1300,
+    layers: [
+      { dx: 0, dy: -2, color: '#ffae34', radius: 16, opacity: 0.8 },
+      { dx: 0, dy: -6, color: '#ec760c', radius: 22, opacity: 0.6 },
+      { dx: 0, dy: -10, color: '#cd4606', radius: 28, opacity: 0.4 },
+    ] },
+  // Retro / vintage — solid offset behind (thin dark drop)
+  retro_vintage: { base: '#f4e2b8',
+    layers: [
+      { dx: 4, dy: 4, color: '#0a0e17' },
+      { dx: 6, dy: 6, color: '#8a6d3b' },
+    ] },
+  // Board game — crisp alternating color offsets, no blur
+  board_game: { base: '#ffffff',
+    layers: [
+      { dx: 3, dy: 3, color: '#ffd217' },
+      { dx: 6, dy: 6, color: '#5ac7ff' },
+      { dx: 9, dy: 9, color: '#ffd217' },
+      { dx: 12, dy: 12, color: '#5ac7ff' },
+    ] },
+  // Anaglyphic 3D — cyan/magenta split (glitchable)
+  anaglyph_3d: { base: '#f8fafc', flicker: true, d: 1400,
+    layers: [
+      { dx: -3, dy: 0, color: 'rgba(255,0,128,0.7)' },
+      { dx: 3, dy: 0, color: 'rgba(0,208,255,0.7)' },
+    ] },
+  // Extruded 3D — stepped darker copies to the lower-right
+  extrude_3d: { base: '#38bdf8',
+    layers: [
+      { dx: 1, dy: 1, color: '#1d6fa5' },
+      { dx: 2, dy: 2, color: '#1a638f' },
+      { dx: 3, dy: 3, color: '#155075' },
+      { dx: 4, dy: 4, color: '#0f3d5c' },
+      { dx: 5, dy: 5, color: '#0a2c44' },
+    ] },
+  extrude_gold: { base: '#fde68a',
+    layers: [
+      { dx: 1, dy: 1, color: '#b45309' },
+      { dx: 2, dy: 2, color: '#92400e' },
+      { dx: 3, dy: 3, color: '#78350f' },
+      { dx: 4, dy: 4, color: '#5c290b' },
+    ] },
+  // Long shadow — flat diagonal
+  long_shadow: { base: '#f8fafc',
+    layers: [
+      { dx: 2, dy: 2, color: 'rgba(2,6,23,0.55)' },
+      { dx: 4, dy: 4, color: 'rgba(2,6,23,0.45)' },
+      { dx: 6, dy: 6, color: 'rgba(2,6,23,0.35)' },
+      { dx: 8, dy: 8, color: 'rgba(2,6,23,0.28)' },
+      { dx: 10, dy: 10, color: 'rgba(2,6,23,0.2)' },
+    ] },
+  // Outline / stroke — copies in 8 directions behind a bright fill
+  outline_cyan: { base: '#0a0e17',
+    layers: [
+      { dx: -1.5, dy: 0, color: '#7dd3fc' }, { dx: 1.5, dy: 0, color: '#7dd3fc' },
+      { dx: 0, dy: -1.5, color: '#7dd3fc' }, { dx: 0, dy: 1.5, color: '#7dd3fc' },
+      { dx: -1.2, dy: -1.2, color: '#7dd3fc' }, { dx: 1.2, dy: -1.2, color: '#7dd3fc' },
+      { dx: -1.2, dy: 1.2, color: '#7dd3fc' }, { dx: 1.2, dy: 1.2, color: '#7dd3fc' },
+    ] },
+  outline_gold: { base: '#1a1205',
+    layers: [
+      { dx: -1.5, dy: 0, color: '#fbbf24' }, { dx: 1.5, dy: 0, color: '#fbbf24' },
+      { dx: 0, dy: -1.5, color: '#fbbf24' }, { dx: 0, dy: 1.5, color: '#fbbf24' },
+      { dx: -1.2, dy: -1.2, color: '#fbbf24' }, { dx: 1.2, dy: -1.2, color: '#fbbf24' },
+      { dx: -1.2, dy: 1.2, color: '#fbbf24' }, { dx: 1.2, dy: 1.2, color: '#fbbf24' },
+    ] },
+  // Letterpress / inset — subtle highlight below
+  letterpress: { base: '#94a3b8',
+    layers: [{ dx: 0, dy: 1.5, color: 'rgba(255,255,255,0.35)' }, { dx: 0, dy: -1, color: 'rgba(2,6,23,0.6)' }] },
+  // RGB split glitch — animated jitter of split copies
+  rgb_split: { base: '#f8fafc', flicker: true, d: 900,
+    layers: [
+      { dx: -2, dy: -1, color: 'rgba(255,0,64,0.75)', flicker: true },
+      { dx: 2, dy: 1, color: 'rgba(0,255,238,0.75)', flicker: true },
+    ] },
+  // —— Themed glow ——
+  spooky_glow: { base: '#f97316', glow: '#a855f7', glowRadius: 16, flicker: true, d: 1400,
+    layers: [{ dx: 0, dy: 0, color: '#7c3aed', radius: 22, opacity: 0.5 }] },
+  frost_glow: { base: '#e0f2fe', glow: '#7dd3fc', glowRadius: 16, flicker: true, d: 2400,
+    layers: [{ dx: 0, dy: 0, color: '#38bdf8', radius: 20, opacity: 0.45 }] },
+  love_glow: { base: '#fecdd3', glow: '#f472b6', glowRadius: 16, flicker: true, d: 1500,
+    layers: [{ dx: 0, dy: 0, color: '#fb7185', radius: 20, opacity: 0.55 }] },
+  festive_glow: { base: '#f8fafc', glow: '#22c55e', glowRadius: 14, flicker: true, d: 1600,
+    layers: [
+      { dx: 0, dy: 0, color: '#dc2626', radius: 18, opacity: 0.5 },
+      { dx: 0, dy: 0, color: '#16a34a', radius: 24, opacity: 0.4 },
+    ] },
+  // —— Expansion: extra neon / 3D / stroke variety ——
+  neon_purple: { base: '#f3e8ff', glow: '#a855f7', glowRadius: 16, flicker: true, d: 1600,
+    layers: [{ dx: 0, dy: 0, color: '#a855f7', radius: 22, opacity: 0.55 }] },
+  neon_red: { base: '#ffe4e6', glow: '#ff2d55', glowRadius: 16, flicker: true, d: 1500,
+    layers: [{ dx: 0, dy: 0, color: '#ff2d55', radius: 22, opacity: 0.55 }] },
+  gold_glow: { base: '#fef3c7', glow: '#fbbf24', glowRadius: 16, flicker: true, d: 2000,
+    layers: [{ dx: 0, dy: 0, color: '#f59e0b', radius: 20, opacity: 0.5 }] },
+  chrome_3d: { base: '#e2e8f0',
+    layers: [
+      { dx: 1, dy: 1, color: '#94a3b8' },
+      { dx: 2, dy: 2, color: '#64748b' },
+      { dx: 3, dy: 3, color: '#475569' },
+      { dx: 4, dy: 4, color: '#334155' },
+    ] },
+  comic_pop: { base: '#fde047',
+    layers: [
+      { dx: -1.6, dy: 0, color: '#0a0e17' }, { dx: 1.6, dy: 0, color: '#0a0e17' },
+      { dx: 0, dy: -1.6, color: '#0a0e17' }, { dx: 0, dy: 1.6, color: '#0a0e17' },
+      { dx: -1.3, dy: -1.3, color: '#0a0e17' }, { dx: 1.3, dy: -1.3, color: '#0a0e17' },
+      { dx: -1.3, dy: 1.3, color: '#0a0e17' }, { dx: 1.3, dy: 1.3, color: '#0a0e17' },
+      { dx: 5, dy: 5, color: '#ef4444' },
+    ] },
+  toon_outline: { base: '#f97316',
+    layers: [
+      { dx: -1.8, dy: 0, color: '#0a0e17' }, { dx: 1.8, dy: 0, color: '#0a0e17' },
+      { dx: 0, dy: -1.8, color: '#0a0e17' }, { dx: 0, dy: 1.8, color: '#0a0e17' },
+      { dx: -1.4, dy: -1.4, color: '#0a0e17' }, { dx: 1.4, dy: -1.4, color: '#0a0e17' },
+      { dx: -1.4, dy: 1.4, color: '#0a0e17' }, { dx: 1.4, dy: 1.4, color: '#0a0e17' },
+    ] },
+  emboss: { base: '#94a3b8',
+    layers: [{ dx: 0, dy: -1, color: 'rgba(255,255,255,0.45)' }, { dx: 0, dy: 1.5, color: 'rgba(2,6,23,0.65)' }] },
+};
+
+// JS color interpolation for static per-letter gradients (no Animated needed)
+function fxHexToRgb(h) {
+  const n = parseInt(String(h).replace('#', ''), 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+function fxRgbToHex(r, g, b) {
+  return '#' + [r, g, b].map((x) => Math.round(x).toString(16).padStart(2, '0')).join('');
+}
+function fxLerpColor(a, b, t) {
+  const A = fxHexToRgb(a);
+  const B = fxHexToRgb(b);
+  return fxRgbToHex(A[0] + (B[0] - A[0]) * t, A[1] + (B[1] - A[1]) * t, A[2] + (B[2] - A[2]) * t);
+}
+function fxSamplePalette(palette, pos) {
+  if (!palette || palette.length === 0) return '#7dd3fc';
+  if (palette.length === 1) return palette[0];
+  const p = Math.max(0, Math.min(1, pos));
+  const seg = p * (palette.length - 1);
+  const i = Math.floor(seg);
+  if (i >= palette.length - 1) return palette[palette.length - 1];
+  return fxLerpColor(palette[i], palette[i + 1], seg - i);
+}
+
+// Renders each character separately so we can do multi-color gradients, per-letter
+// solid colors, and staggered waves on both native and web.
+function LetterFx({ text, cfg, accent, style, numberOfLines }) {
+  const anim = useRef(new Animated.Value(0)).current;
+  const animated = !!(cfg.flow || cfg.motion);
+  useEffect(() => {
+    if (!animated) return undefined;
+    anim.setValue(0);
+    const loop = Animated.loop(
+      Animated.timing(anim, { toValue: 1, duration: cfg.d || 2600, useNativeDriver: false })
+    );
+    loop.start();
+    return () => loop.stop();
+  }, [anim, animated, cfg.d]);
+
+  const chars = String(text || 'Profile').split('');
+  const palette = cfg.palette && cfg.palette.length ? cfg.palette : [accent || '#7dd3fc'];
+  const single = numberOfLines === 1;
+  const half = cfg.dual ? Math.ceil(chars.length / 2) : 0;
+
+  return (
+    <View style={[letterFxStyles.row, single && letterFxStyles.rowSingle]}>
+      {chars.map((ch, i) => {
+        const posBase = chars.length > 1 ? i / (chars.length - 1) : 0;
+        let color;
+        if (cfg.dual) {
+          // Two distinct gradient shades: first half palette A, second half palette B
+          const [palA, palB] = cfg.dual;
+          if (i < half) {
+            color = fxSamplePalette(palA, half > 1 ? i / (half - 1) : 0);
+          } else {
+            const denom = chars.length - half - 1;
+            color = fxSamplePalette(palB, denom > 0 ? (i - half) / denom : 0);
+          }
+        } else if (cfg.mode === 'cycle') {
+          color = palette[i % palette.length];
+        } else if (cfg.flow && palette.length > 1) {
+          const phase = chars.length > 1 ? i / chars.length : 0;
+          const shifted = Animated.modulo(Animated.add(anim, phase), 1);
+          const inputRange = palette.map((_, k) => k / (palette.length - 1));
+          const outputRange = [...palette];
+          color = shifted.interpolate({ inputRange, outputRange });
+        } else {
+          color = fxSamplePalette(palette, posBase);
+        }
+
+        let transform;
+        if (cfg.motion) {
+          const phase = (i * 0.14) % 1;
+          const shifted = Animated.modulo(Animated.add(anim, phase), 1);
+          const outputRange =
+            cfg.motion === 'bounce' ? [0, -8, 0, -3, 0] : [0, -4, 0, 4, 0];
+          const translateY = shifted.interpolate({ inputRange: [0, 0.25, 0.5, 0.75, 1], outputRange });
+          transform = [{ translateY }];
+        }
+
+        const letterStyle = [
+          style,
+          { color },
+          transform ? { transform } : null,
+          cfg.shadow ? { textShadowColor: cfg.shadow, textShadowRadius: 6 } : null,
+        ];
+        return (
+          <Animated.Text key={i} style={letterStyle} allowFontScaling={false}>
+            {ch === ' ' ? '\u00A0' : ch}
+          </Animated.Text>
+        );
+      })}
+    </View>
+  );
+}
+
+const letterFxStyles = StyleSheet.create({
+  row: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' },
+  rowSingle: { flexWrap: 'nowrap', overflow: 'hidden' },
+});
+
+// Renders stacked offset copies of the text to fake CSS multi-layer text-shadows
+// (neon, fire, 3D extrude, board-game, outline, RGB split) — same on web + native.
+function ShadowFx({ text, cfg, accent, style, numberOfLines, fxAnim }) {
+  const label = text || 'Profile';
+  const base = cfg.base || accent || '#e2e8f0';
+  const layers = cfg.layers || [];
+  const flickerOpacity = cfg.flicker
+    ? fxAnim.interpolate({
+        inputRange: [0, 0.06, 0.1, 0.16, 0.5, 0.56, 0.6, 1],
+        outputRange: [1, 0.45, 1, 0.7, 1, 0.5, 1, 1],
+      })
+    : 1;
+  const extra = [
+    cfg.letterSpacing != null ? { letterSpacing: cfg.letterSpacing } : null,
+    cfg.mono ? { fontFamily: Platform.OS === 'web' ? '"Courier New", monospace' : 'monospace' } : null,
+  ];
+  return (
+    <View style={shadowFxStyles.wrap}>
+      {layers.map((ly, i) => (
+        <Animated.Text
+          key={i}
+          numberOfLines={numberOfLines}
+          ellipsizeMode="clip"
+          allowFontScaling={false}
+          style={[
+            style,
+            ...extra,
+            shadowFxStyles.layer,
+            {
+              color: ly.color,
+              transform: [{ translateX: ly.dx || 0 }, { translateY: ly.dy || 0 }],
+              textShadowColor: ly.glow || 'transparent',
+              textShadowRadius: ly.radius || 0,
+              opacity: ly.flicker ? flickerOpacity : ly.opacity != null ? ly.opacity : 1,
+            },
+          ]}
+        >
+          {label}
+        </Animated.Text>
+      ))}
+      <Animated.Text
+        numberOfLines={numberOfLines}
+        ellipsizeMode="clip"
+        allowFontScaling={false}
+        style={[
+          style,
+          ...extra,
+          {
+            color: base,
+            textShadowColor: cfg.glow || 'transparent',
+            textShadowRadius: cfg.glowRadius || 0,
+            opacity: cfg.flicker ? flickerOpacity : 1,
+          },
+        ]}
+      >
+        {label}
+      </Animated.Text>
+    </View>
+  );
+}
+
+const shadowFxStyles = StyleSheet.create({
+  wrap: { position: 'relative', alignSelf: 'center' },
+  layer: { position: 'absolute', top: 0, left: 0 },
+});
 
 // Animated profile name effects used for both own and viewed profiles
 function AnimatedProfileName({ name, animationType, accentColor, style, numberOfLines = 1, ellipsizeMode = 'tail' }) {
@@ -614,9 +1142,28 @@ function AnimatedProfileName({ name, animationType, accentColor, style, numberOf
   const glowBreathAnim = useRef(new Animated.Value(0)).current;
   const outlinePulseAnim = useRef(new Animated.Value(0)).current;
   const frostAnim = useRef(new Animated.Value(0)).current;
+  // Single shared driver for all new CSS-inspired / motion effects (only one active at a time)
+  const fxAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     let loop;
+    const flowCfg = FX_FLOW_CONFIG[animationType];
+    const motionCfg = FX_MOTION_CONFIG[animationType];
+    const shadowFxCfg = FX_SHADOW_CONFIG[animationType];
+    if (flowCfg || motionCfg || (shadowFxCfg && shadowFxCfg.flicker)) {
+      const cfg = flowCfg || motionCfg || shadowFxCfg;
+      fxAnim.setValue(0);
+      loop = Animated.loop(
+        cfg.seq
+          ? Animated.sequence([
+              Animated.timing(fxAnim, { toValue: 1, duration: cfg.d, useNativeDriver: false }),
+              Animated.timing(fxAnim, { toValue: 0, duration: cfg.d, useNativeDriver: false }),
+            ])
+          : Animated.timing(fxAnim, { toValue: 1, duration: cfg.d || 1600, useNativeDriver: false })
+      );
+      loop.start();
+      return () => loop.stop();
+    }
     if (animationType === 'pulse') {
       loop = Animated.loop(
         Animated.sequence([
@@ -813,9 +1360,17 @@ function AnimatedProfileName({ name, animationType, accentColor, style, numberOf
       return () => loop.stop();
     }
     return () => {};
-  }, [animationType, pulseAnim, shimmerAnim, gradientAnim, flameAnim, infernoAnim, emberAnim, voidAnim, arcaneAnim, divineAnim, stormAnim, pantheonAnim, neonAnim, comicAnim, metallicAnim, iceAnim, glowAnim, lavaAnim, shadowDanceAnim, glowBreathAnim, outlinePulseAnim, frostAnim]);
+  }, [animationType, pulseAnim, shimmerAnim, gradientAnim, flameAnim, infernoAnim, emberAnim, voidAnim, arcaneAnim, divineAnim, stormAnim, pantheonAnim, neonAnim, comicAnim, metallicAnim, iceAnim, glowAnim, lavaAnim, shadowDanceAnim, glowBreathAnim, outlinePulseAnim, frostAnim, fxAnim]);
 
   const accent = accentColor || '#7dd3fc';
+  const letterCfg = FX_LETTER_CONFIG[animationType];
+  if (letterCfg) {
+    return <LetterFx text={name} cfg={letterCfg} accent={accent} style={style} numberOfLines={numberOfLines} />;
+  }
+  const shadowCfg = FX_SHADOW_CONFIG[animationType];
+  if (shadowCfg) {
+    return <ShadowFx text={name} cfg={shadowCfg} accent={accent} style={style} numberOfLines={numberOfLines} fxAnim={fxAnim} />;
+  }
   const textStyle = [style, (animationType === 'none') && { color: accent }];
   if (animationType === 'pulse') {
     const scale = pulseAnim.interpolate({ inputRange: [0.72, 1], outputRange: [0.97, 1] });
@@ -1138,6 +1693,153 @@ function AnimatedProfileName({ name, animationType, accentColor, style, numberOf
       </Animated.Text>
     );
   }
+  // —— CSS-inspired flowing color effects (shared fxAnim driver) ——
+  const flowCfg = FX_FLOW_CONFIG[animationType];
+  if (flowCfg) {
+    const stops = flowCfg.colors.length;
+    const inputRange = flowCfg.colors.map((_, i) => (stops === 1 ? 0 : i / (stops - 1)));
+    const animatedColor = fxAnim.interpolate({ inputRange, outputRange: flowCfg.colors });
+    const shadowRadius = flowCfg.glowPulse
+      ? fxAnim.interpolate({ inputRange: [0, 0.5, 1], outputRange: [4, 16, 4] })
+      : 9;
+    return (
+      <Animated.Text
+        numberOfLines={numberOfLines}
+        ellipsizeMode={ellipsizeMode}
+        style={[
+          style,
+          { color: animatedColor, textShadowColor: flowCfg.shadow, textShadowRadius: shadowRadius },
+          flowCfg.mono && { fontFamily: Platform.OS === 'web' ? '"Courier New", monospace' : 'monospace', letterSpacing: 1 },
+        ]}
+      >
+        {name || 'Profile'}
+      </Animated.Text>
+    );
+  }
+  if (animationType === 'sparkle') {
+    const opacity = fxAnim.interpolate({ inputRange: [0, 0.5, 1], outputRange: [0.7, 1, 0.7] });
+    const shadowRadius = fxAnim.interpolate({ inputRange: [0, 0.5, 1], outputRange: [2, 16, 2] });
+    const color = fxAnim.interpolate({ inputRange: [0, 0.5, 1], outputRange: ['#fef9c3', '#ffffff', '#fde68a'] });
+    return (
+      <Animated.Text numberOfLines={numberOfLines} ellipsizeMode={ellipsizeMode} style={[style, { color, opacity, textShadowColor: '#fde047', textShadowRadius: shadowRadius }]}>
+        {name || 'Profile'}
+      </Animated.Text>
+    );
+  }
+  if (animationType === 'glitch') {
+    const translateX = fxAnim.interpolate({ inputRange: [0, 0.2, 0.4, 0.6, 0.8, 1], outputRange: [0, -2, 2, -1, 1.5, 0] });
+    const color = fxAnim.interpolate({ inputRange: [0, 0.25, 0.5, 0.75, 1], outputRange: ['#e2e8f0', '#22d3ee', '#f472b6', '#22d3ee', '#e2e8f0'] });
+    const shadowX = fxAnim.interpolate({ inputRange: [0, 0.5, 1], outputRange: [-2, 2, -2] });
+    return (
+      <Animated.Text
+        numberOfLines={numberOfLines}
+        ellipsizeMode={ellipsizeMode}
+        style={[style, { color, transform: [{ translateX }], textShadowColor: '#f472b6', textShadowOffset: { width: shadowX, height: 0 }, textShadowRadius: 1 }]}
+      >
+        {name || 'Profile'}
+      </Animated.Text>
+    );
+  }
+  if (animationType === 'jitter') {
+    const translateX = fxAnim.interpolate({ inputRange: [0, 0.2, 0.4, 0.6, 0.8, 1], outputRange: [0, -1.5, 1.5, -1, 1, 0] });
+    const translateY = fxAnim.interpolate({ inputRange: [0, 0.3, 0.6, 1], outputRange: [0, 1, -1, 0] });
+    return (
+      <Animated.Text
+        numberOfLines={numberOfLines}
+        ellipsizeMode={ellipsizeMode}
+        style={[style, { color: accent || '#e2e8f0', transform: [{ translateX }, { translateY }], textShadowColor: accent || '#7dd3fc', textShadowRadius: 4 }]}
+      >
+        {name || 'Profile'}
+      </Animated.Text>
+    );
+  }
+  if (animationType === 'wave') {
+    const translateY = fxAnim.interpolate({ inputRange: [0, 0.25, 0.5, 0.75, 1], outputRange: [0, -3, 0, 3, 0] });
+    return (
+      <Animated.Text
+        numberOfLines={numberOfLines}
+        ellipsizeMode={ellipsizeMode}
+        style={[style, { color: accent || '#7dd3fc', transform: [{ translateY }], textShadowColor: accent || '#7dd3fc', textShadowRadius: 6 }]}
+      >
+        {name || 'Profile'}
+      </Animated.Text>
+    );
+  }
+  if (animationType === 'bounce') {
+    const translateY = fxAnim.interpolate({ inputRange: [0, 0.3, 0.5, 0.7, 1], outputRange: [0, -7, 0, -3, 0] });
+    return (
+      <Animated.Text
+        numberOfLines={numberOfLines}
+        ellipsizeMode={ellipsizeMode}
+        style={[style, { color: accent || '#7dd3fc', transform: [{ translateY }], textShadowColor: accent || '#7dd3fc', textShadowRadius: 6 }]}
+      >
+        {name || 'Profile'}
+      </Animated.Text>
+    );
+  }
+  if (animationType === 'zoom') {
+    const scale = fxAnim.interpolate({ inputRange: [0, 0.5, 1], outputRange: [1, 1.18, 1] });
+    return (
+      <Animated.Text
+        numberOfLines={numberOfLines}
+        ellipsizeMode={ellipsizeMode}
+        style={[style, { color: accent || '#7dd3fc', transform: [{ scale }], textShadowColor: accent || '#7dd3fc', textShadowRadius: 8 }]}
+      >
+        {name || 'Profile'}
+      </Animated.Text>
+    );
+  }
+  if (animationType === 'swing') {
+    const rotate = fxAnim.interpolate({ inputRange: [0, 0.5, 1], outputRange: ['-5deg', '5deg', '-5deg'] });
+    return (
+      <Animated.Text
+        numberOfLines={numberOfLines}
+        ellipsizeMode={ellipsizeMode}
+        style={[style, { color: accent || '#7dd3fc', transform: [{ rotate }], textShadowColor: accent || '#7dd3fc', textShadowRadius: 5 }]}
+      >
+        {name || 'Profile'}
+      </Animated.Text>
+    );
+  }
+  if (animationType === 'heartbeat') {
+    const scale = fxAnim.interpolate({ inputRange: [0, 0.12, 0.24, 0.36, 1], outputRange: [1, 1.14, 1, 1.08, 1] });
+    const shadowRadius = fxAnim.interpolate({ inputRange: [0, 0.12, 0.24, 1], outputRange: [4, 14, 6, 4] });
+    return (
+      <Animated.Text
+        numberOfLines={numberOfLines}
+        ellipsizeMode={ellipsizeMode}
+        style={[style, { color: accent || '#f87171', transform: [{ scale }], textShadowColor: '#ef4444', textShadowRadius: shadowRadius }]}
+      >
+        {name || 'Profile'}
+      </Animated.Text>
+    );
+  }
+  if (animationType === 'ghost') {
+    const opacity = fxAnim.interpolate({ inputRange: [0, 0.5, 1], outputRange: [0.25, 1, 0.25] });
+    const translateY = fxAnim.interpolate({ inputRange: [0, 0.5, 1], outputRange: [0, -2, 0] });
+    return (
+      <Animated.Text
+        numberOfLines={numberOfLines}
+        ellipsizeMode={ellipsizeMode}
+        style={[style, { color: '#e2e8f0', opacity, transform: [{ translateY }], textShadowColor: '#cbd5e1', textShadowRadius: 8 }]}
+      >
+        {name || 'Profile'}
+      </Animated.Text>
+    );
+  }
+  if (animationType === 'flash') {
+    const opacity = fxAnim.interpolate({ inputRange: [0, 0.5, 1], outputRange: [1, 0.35, 1] });
+    const shadowRadius = fxAnim.interpolate({ inputRange: [0, 0.5, 1], outputRange: [10, 2, 10] });
+    return (
+      <Animated.Text
+        numberOfLines={numberOfLines}
+        ellipsizeMode={ellipsizeMode}
+        style={[style, { color: accent || '#fef08a', opacity, textShadowColor: '#fde047', textShadowRadius: shadowRadius }]}
+      >
+        {name || 'Profile'}
+      </Animated.Text>
+    );
+  }
   return <Text style={textStyle} numberOfLines={numberOfLines} ellipsizeMode={ellipsizeMode}>{name || 'Profile'}</Text>;
 }
 
@@ -1203,6 +1905,7 @@ const storage = {
 };
 
 export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNavigateToCustomBuild, onNavigateToMyBuilds, viewUsername = null, onNavigateBack = null }) {
+  useAppFonts();
   const { width: screenWidth } = useScreenDimensions();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
@@ -1519,16 +2222,17 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     let owned = [];
     if (shopData != null) {
       gold = shopData.gold;
-      owned = Array.isArray(shopData.shop_owned) ? shopData.shop_owned : [];
+      const rawOwned = Array.isArray(shopData.shop_owned) ? shopData.shop_owned : [];
+      owned = expandOwnedIds(rawOwned); // include items granted by owned packs
       setProfileGold(gold);
       setOwnedShopIds(owned);
       await storage.setItem(prefix + 'gold', String(gold));
-      await storage.setItem(prefix + 'owned', JSON.stringify(owned));
+      await storage.setItem(prefix + 'owned', JSON.stringify(rawOwned));
     } else {
       gold = parseInt(g || '0', 10);
       setProfileGold(gold);
       try {
-        owned = o ? JSON.parse(o) : [];
+        owned = expandOwnedIds(o ? JSON.parse(o) : []);
         setOwnedShopIds(owned);
       } catch (_) {
         setOwnedShopIds([]);
@@ -4830,7 +5534,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
             const { owned } = await loadProfileShopData();
             const ownedIds = Array.isArray(owned) ? owned : [];
             setTempProfileBanner(profileBanner || 'none');
-            const ownedTitleValues = SHOP_TITLE_OPTIONS.filter((i) => ownedIds.includes(i.id)).map((i) => (i.value || '').trim());
+            const ownedTitleValues = SHOP_TITLE_OPTIONS.filter((i) => ownedIds.includes(i.id) || i.defaultUnlocked).map((i) => (i.value || '').trim());
             const current = (profileTitle || '').trim();
             setTempProfileTitle(ownedTitleValues.includes(current) ? current : '');
             const ownedFontValues = SHOP_FONT_OPTIONS.filter((i) => ownedIds.includes(i.id) || i.defaultUnlocked).map((i) => (i.value || '').trim());
@@ -4961,7 +5665,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                         None
                       </Text>
                     </TouchableOpacity>
-                    {SHOP_TITLE_OPTIONS.filter((item) => ownedShopIds.includes(item.id)).map((item) => {
+                    {SHOP_TITLE_OPTIONS.filter((item) => ownedShopIds.includes(item.id) || item.defaultUnlocked).map((item) => {
                       const selected = (tempProfileTitle || '').trim() === (item.value || '').trim();
                       return (
                         <TouchableOpacity
@@ -4976,7 +5680,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                         </TouchableOpacity>
                       );
                     })}
-                    {SHOP_TITLE_OPTIONS.filter((item) => ownedShopIds.includes(item.id)).length === 0 && (
+                    {SHOP_TITLE_OPTIONS.filter((item) => ownedShopIds.includes(item.id) || item.defaultUnlocked).length === 0 && (
                       <Text style={styles.appearanceUnlockHint}>Unlock titles in the Shop with Gold.</Text>
                     )}
                   </ScrollView>
@@ -5090,19 +5794,24 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                     {NAME_ANIMATION_OPTIONS.map((opt) => {
                       const narrowModal = screenWidth < 380;
                       const optBtnWidth = narrowModal ? Math.floor((screenWidth * 0.9 - 48 - 8) / 2) : 140;
+                      const unlocked = isNameFxUnlocked(opt.key, ownedShopIds, nameAnimation);
                       return (
                       <TouchableOpacity
                         key={opt.key}
-                        onPress={() => setTempNameAnimation(opt.key)}
+                        onPress={() => { if (unlocked) setTempNameAnimation(opt.key); }}
                         style={[
                           styles.animationOptionButtonWithPreview,
                           tempNameAnimation === opt.key && styles.animationOptionButtonSelected,
+                          !unlocked && styles.animationOptionButtonLocked,
                           narrowModal && { width: optBtnWidth, minWidth: optBtnWidth, maxWidth: optBtnWidth },
                         ]}
-                        activeOpacity={0.85}
+                        activeOpacity={unlocked ? 0.85 : 1}
                       >
-                        <Text style={styles.animationOptionLabel} numberOfLines={1}>{opt.label}</Text>
-                        <View style={styles.animationPreviewWrap}>
+                        <View style={styles.animationOptionLabelRow}>
+                          <Text style={styles.animationOptionLabel} numberOfLines={1}>{opt.label}</Text>
+                          {!unlocked && <Text style={styles.animationOptionLockIcon}>🔒</Text>}
+                        </View>
+                        <View style={[styles.animationPreviewWrap, !unlocked && { opacity: 0.55 }]}>
                           <AnimatedProfileName
                             name="Preview"
                             animationType={opt.key}
@@ -5112,6 +5821,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                             ellipsizeMode="tail"
                           />
                         </View>
+                        {!unlocked && <Text style={styles.animationOptionLockHint} numberOfLines={1}>Buy in Shop</Text>}
                       </TouchableOpacity>
                     ); })}
                   </ScrollView>
@@ -5867,6 +6577,27 @@ const styles = StyleSheet.create({
   animationOptionButtonSelected: {
     borderColor: UI_THEME.accentSky,
     backgroundColor: 'rgba(30, 144, 255, 0.16)',
+  },
+  animationOptionButtonLocked: {
+    borderColor: 'rgba(51, 65, 85, 0.7)',
+    backgroundColor: 'rgba(15, 23, 42, 0.6)',
+  },
+  animationOptionLabelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 4,
+  },
+  animationOptionLockIcon: {
+    fontSize: 11,
+  },
+  animationOptionLockHint: {
+    marginTop: 4,
+    color: '#f59e0b',
+    fontSize: 10,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 0.4,
   },
   animationOptionButtonText: {
     color: '#cbd5e1',
