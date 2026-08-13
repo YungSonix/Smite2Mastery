@@ -189,11 +189,18 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
     // Answer each scored question in DOM order (skip gates — already filled above)
     for (const q of answerKey) {
       const value = answers[q.id];
-      if (q.type === 'short_answer') {
-        const block = page.locator('section.f-qcard').filter({
-          hasText: q.prompt.slice(0, 48),
-        });
-        const input = block.locator('input[type="text"]').first();
+      const isFillBlank =
+        q.kind === 'fill_blank' || q.meta?.kind === 'fill_blank' || q.addType === 'fill_blank';
+      if (q.type === 'short_answer' || isFillBlank) {
+        const needle = String(q.prompt || '')
+          .replace('{{blank}}', ' ')
+          .replace(/_{3,}/g, ' ')
+          .trim()
+          .slice(0, 36);
+        const block = page.locator('section.f-qcard').filter({ hasText: needle });
+        const fib = block.locator('input.f-fib-inline').first();
+        const plain = block.locator('input[type="text"]').first();
+        const input = (await fib.count()) ? fib : plain;
         await input.waitFor({ state: 'visible', timeout: 10_000 });
         await input.fill(String(value ?? ''));
       } else if (q.type === 'multiple_choice' || q.type === 'true_false') {
@@ -201,6 +208,20 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
         const radio = page.locator(`input[type="radio"][name="${name}"]`).nth(Number(value));
         await radio.waitFor({ state: 'attached', timeout: 10_000 });
         await radio.check({ force: true });
+      }
+
+      // Soft checks that media actually rendered for image/audio items
+      if (q.kind === 'image' || q.meta?.media === 'image') {
+        const img = page.locator('section.f-qcard img').first();
+        if (await img.count()) {
+          /* ok */
+        }
+      }
+      if (q.kind === 'audio' || q.meta?.media === 'audio') {
+        const audio = page.locator('section.f-qcard audio').first();
+        if (!(await audio.count())) {
+          throw new Error('Audio question rendered without <audio> element');
+        }
       }
     }
 
@@ -260,6 +281,13 @@ async function main() {
 
   console.log(`Quiz: ${quizPayload.quiz.title} (${quizPayload.quiz.slug})`);
   console.log(`Take URL: ${UI_BASE}/formative/take/${quizPayload.quiz.slug}`);
+  if (quizPayload.kinds) console.log(`Kinds: ${JSON.stringify(quizPayload.kinds)}`);
+  const missingKinds = ['image', 'audio', 'fill_blank'].filter(
+    (k) => !quizPayload.answerKey?.some((q) => q.kind === k || q.meta?.kind === k || q.meta?.media === k)
+  );
+  if (missingKinds.length) {
+    throw new Error(`Quiz answerKey missing required kinds: ${missingKinds.join(', ')}`);
+  }
   console.log(`Running ${PROFILES.length} browser sims…`);
 
   // Prefer system Chrome for desktop if available; fall back to bundled Chromium

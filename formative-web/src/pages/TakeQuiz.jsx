@@ -8,6 +8,7 @@ import {
   loadTriviaProgress,
   saveTriviaProgress,
 } from '../lib/triviaVariants';
+import { isAudioMediaUrl } from '../lib/mediaUrl';
 
 async function fileToDataUrl(file, maxBytes = 2.5 * 1024 * 1024) {
   if (!file) throw new Error('No file');
@@ -350,14 +351,12 @@ export default function TakeQuiz() {
             const hideScore = Boolean(q.meta?.hide_score);
             const isFillBlank = q.meta?.kind === 'fill_blank';
             const fib = isFillBlank ? splitFillBlankPrompt(q.prompt) : null;
-            const isAudioMedia =
-              q.type === 'audio' || String(q.image_url || '').startsWith('data:audio');
+            const isAudioMedia = isAudioMediaUrl(q.image_url, { type: q.type, meta: q.meta });
             const isImageMedia = Boolean(
               q.image_url &&
                 !isAudioMedia &&
                 q.type !== 'video' &&
-                q.type !== 'embed' &&
-                !String(q.image_url).startsWith('data:audio')
+                q.type !== 'embed'
             );
             const isChoice =
               q.type === 'multiple_choice' || q.type === 'true_false' || q.type === 'dropdown';

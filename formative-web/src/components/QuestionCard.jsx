@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { joinFillBlankPrompt, splitFillBlankPrompt } from '../lib/fillBlank';
 import { readImageAsDataUrl } from '../lib/imageUpload';
+import { isAudioMediaUrl } from '../lib/mediaUrl';
 import {
   MEDIA_ATTACH_CHOICES,
   questionDefaultsForType,
@@ -61,14 +62,12 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
   const isMulti = q.type === 'multiple_selection';
   const isFillBlank = q.meta?.kind === 'fill_blank';
   const isGraphing = q.meta?.kind === 'graphing';
-  const isAudioMedia =
-    q.type === 'audio' || String(q.image_url || '').startsWith('data:audio');
+  const isAudioMedia = isAudioMediaUrl(q.image_url, { type: q.type, meta: q.meta });
   const isImageMedia = Boolean(
     q.image_url &&
       !isAudioMedia &&
       q.type !== 'video' &&
-      q.type !== 'embed' &&
-      !String(q.image_url).startsWith('data:audio')
+      q.type !== 'embed'
   );
   const useMediaSplit =
     !isGate &&
