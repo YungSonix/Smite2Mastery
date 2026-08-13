@@ -218,7 +218,14 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
     }
 
     const shotPath = path.join(shotDir, `${profile.label}.png`);
-    await page.screenshot({ path: shotPath, fullPage: true });
+    const success = page.locator('.f-success-card').first();
+    await success.scrollIntoViewIfNeeded().catch(() => {});
+    // Prefer element shot — WebKit fullPage can produce empty black frames on mobile.
+    if (await success.count()) {
+      await success.screenshot({ path: shotPath });
+    } else {
+      await page.screenshot({ path: shotPath, fullPage: true });
+    }
     result.screenshot = path.relative(ROOT, shotPath);
     result.ok = true;
   } catch (err) {

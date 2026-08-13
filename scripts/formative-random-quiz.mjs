@@ -194,7 +194,26 @@ async function main() {
   if (gods.length < 8) throw new Error('Not enough gods in Smite2Gods.json');
 
   const bank = buildQuestionBank(gods);
-  const selected = pick(bank, QUESTION_COUNT);
+  // Prefer a mix of MC / TF / SA when available
+  const byType = {
+    multiple_choice: shuffle(bank.filter((q) => q.type === 'multiple_choice')),
+    true_false: shuffle(bank.filter((q) => q.type === 'true_false')),
+    short_answer: shuffle(bank.filter((q) => q.type === 'short_answer')),
+  };
+  const selected = [];
+  const order = ['multiple_choice', 'true_false', 'short_answer'];
+  while (selected.length < QUESTION_COUNT) {
+    let added = false;
+    for (const t of order) {
+      if (selected.length >= QUESTION_COUNT) break;
+      const next = byType[t].pop();
+      if (next) {
+        selected.push(next);
+        added = true;
+      }
+    }
+    if (!added) break;
+  }
   if (selected.length < QUESTION_COUNT) {
     throw new Error(`Only built ${selected.length} questions; need ${QUESTION_COUNT}`);
   }
