@@ -207,7 +207,27 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
         const name = `q-${q.id}`;
         const radio = page.locator(`input[type="radio"][name="${name}"]`).nth(Number(value));
         await radio.waitFor({ state: 'attached', timeout: 10_000 });
-        await radio.check({ force: true });
+        // WebKit sometimes reports check() as no-op; click the label row instead.
+        const row = radio.locator('xpath=ancestor::label[1]');
+        if (await row.count()) {
+          await row.click({ force: true });
+        } else {
+          await radio.click({ force: true });
+        }
+        const selected = await radio.isChecked().catch(() => false);
+        if (!selected) {
+          await page.evaluate(
+            ({ n, idx }) => {
+              const inputs = [...document.querySelectorAll(`input[type="radio"][name="${n}"]`)];
+              const el = inputs[idx];
+              if (!el) return;
+              el.checked = true;
+              el.dispatchEvent(new Event('input', { bubbles: true }));
+              el.dispatchEvent(new Event('change', { bubbles: true }));
+            },
+            { n: name, idx: Number(value) }
+          );
+        }
       }
 
       // Soft checks that media actually rendered for image/audio items
