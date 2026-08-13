@@ -92,6 +92,9 @@ vault.config.json
 docs/council/
 docs/cursor-agents/
 
+# Local trivia browser-sim outputs
+artifacts/trivia-sims/
+
 # Visual audit artifacts (Playwright screenshots + agent queue)
 scripts/visual-audit/shots/
 scripts/visual-audit/latest/
