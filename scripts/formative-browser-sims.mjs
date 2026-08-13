@@ -2,8 +2,8 @@
 /**
  * Run 15 Scroll Trivia take-flow simulations in browsers:
  *   5 × desktop web (Chromium / Chrome)
- *   5 × iOS web (WebKit ≈ Safari, iPhone viewport)
- *   5 × Android web (Chromium, Pixel viewport)
+ *   5 × iOS web (WebKit ≈ Safari, iPhone 16)
+ *   5 × Android web (Chromium, Galaxy S26 viewport)
  *
  * Requires quiz.json from formative-random-quiz.mjs (or TRIVIA_SLUG).
  * Starts nothing itself — API (:3000) + formative Vite (:5174) must be up.
@@ -22,6 +22,24 @@ const API_BASE = process.env.FORMATIVE_API_BASE || 'http://localhost:3000';
 const OUT_DIR = path.join(ROOT, 'artifacts', 'trivia-sims');
 const QUIZ_PATH = process.env.TRIVIA_QUIZ_JSON || path.join(OUT_DIR, 'quiz.json');
 
+/** Playwright ships iPhone 16; Galaxy S26 uses published CSS viewport 360×780 @3x. */
+const IPHONE_16 = {
+  ...devices['iPhone 16'],
+  name: 'iPhone 16',
+};
+
+const GALAXY_S26 = {
+  name: 'Galaxy S26',
+  userAgent:
+    'Mozilla/5.0 (Linux; Android 16; SM-S931U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Mobile Safari/537.36',
+  viewport: { width: 360, height: 780 },
+  screen: { width: 360, height: 780 },
+  deviceScaleFactor: 3,
+  isMobile: true,
+  hasTouch: true,
+  defaultBrowserType: 'chromium',
+};
+
 const PROFILES = [
   // Desktop web — Chromium (Chrome engine)
   ...Array.from({ length: 5 }, (_, i) => ({
@@ -31,32 +49,35 @@ const PROFILES = [
     browserType: 'chromium',
     channel: process.env.TRIVIA_CHROME_CHANNEL || undefined, // e.g. 'chrome'
     device: null,
+    deviceName: 'desktop-1440',
     viewport: { width: 1440, height: 900 },
     userAgent: undefined,
     isMobile: false,
     hasTouch: false,
   })),
-  // iOS web — WebKit (Safari engine) + iPhone
+  // iOS web — WebKit (Safari engine) + iPhone 16
   ...Array.from({ length: 5 }, (_, i) => ({
     group: 'ios-web',
     index: i + 1,
     label: `ios-web-${i + 1}`,
     browserType: 'webkit',
     channel: undefined,
-    device: devices['iPhone 14'],
+    device: IPHONE_16,
+    deviceName: 'iPhone 16',
     viewport: null,
     userAgent: undefined,
     isMobile: true,
     hasTouch: true,
   })),
-  // Android web — Chromium + Pixel
+  // Android web — Chromium + Galaxy S26
   ...Array.from({ length: 5 }, (_, i) => ({
     group: 'android-web',
     index: i + 1,
     label: `android-web-${i + 1}`,
     browserType: 'chromium',
     channel: undefined,
-    device: devices['Pixel 7'],
+    device: GALAXY_S26,
+    deviceName: 'Galaxy S26',
     viewport: null,
     userAgent: undefined,
     isMobile: true,
@@ -143,14 +164,12 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
     label: profile.label,
     group: profile.group,
     browser: profile.browserType,
-    device: profile.device?.defaultBrowserType
-      ? profile.device.name || profile.label
-      : profile.device?.userAgent
-        ? Object.keys(devices).find((k) => devices[k] === profile.device) || 'custom'
-        : 'desktop',
+    device: profile.deviceName || profile.device?.name || 'desktop',
+    viewport: profile.device?.viewport || profile.viewport || null,
     ok: false,
     score: null,
     maxScore: null,
+    a11y: null,
     error: null,
     screenshot: null,
     ms: 0,
@@ -183,6 +202,84 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
     const url = `${UI_BASE}/formative/take/${slug}`;
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45_000 });
     await page.waitForSelector('#discord-username', { timeout: 30_000 });
+
+    // Mobile layout / accessibility checks (touch targets + readable contrast)
+    if (profile.isMobile) {
+      const a11y = await page.evaluate(() => {
+        const relLum = (rgb) => {
+          const parts = String(rgb)
+            .replace(/[^\d.,]/g, '')
+            .split(',')
+            .map((n) => Number(n.trim()) / 255);
+          if (parts.length < 3 || parts.some((n) => !Number.isFinite(n))) return 0;
+          const [r, g, b] = parts.map((c) =>
+            c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
+          );
+          return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        };
+        const contrast = (fg, bg) => {
+          const L1 = relLum(fg);
+          const L2 = relLum(bg);
+          const light = Math.max(L1, L2);
+          const dark = Math.min(L1, L2);
+          return (light + 0.05) / (dark + 0.05);
+        };
+        const cs = (el) => getComputedStyle(el);
+        const prompt = document.querySelector('.f-q-prompt');
+        const card = document.querySelector('.f-qcard') || document.querySelector('.f-identity-card');
+        const option = document.querySelector('.f-option-row');
+        const submit = document.querySelector('.f-submit-btn');
+        const input = document.querySelector('#discord-username');
+        const promptCs = prompt ? cs(prompt) : null;
+        const cardCs = card ? cs(card) : null;
+        // Cards use translucent fills; compare against the page token color.
+        const pageBg = 'rgb(7, 11, 20)';
+        const optionRect = option?.getBoundingClientRect();
+        const submitRect = submit?.getBoundingClientRect();
+        const inputRect = input?.getBoundingClientRect();
+        const promptContrast = prompt ? contrast(promptCs.color, pageBg) : 0;
+        const mutedEl = document.querySelector('.f-field-hint, .f-muted, .f-cover-sub');
+        const mutedContrast = mutedEl ? contrast(cs(mutedEl).color, pageBg) : null;
+        return {
+          viewport: { w: window.innerWidth, h: window.innerHeight },
+          optionMinHeight: optionRect ? Math.round(optionRect.height) : 0,
+          submitMinHeight: submitRect ? Math.round(submitRect.height) : 0,
+          inputMinHeight: inputRect ? Math.round(inputRect.height) : 0,
+          promptContrast: Number(promptContrast.toFixed(2)),
+          mutedContrast: mutedContrast != null ? Number(mutedContrast.toFixed(2)) : null,
+          promptColor: promptCs?.color || null,
+          cardBg: cardCs?.backgroundColor || null,
+        };
+      });
+      result.a11y = a11y;
+      const issues = [];
+      if (a11y.optionMinHeight && a11y.optionMinHeight < 44) {
+        issues.push(`option tap target ${a11y.optionMinHeight}px < 44`);
+      }
+      if (a11y.submitMinHeight && a11y.submitMinHeight < 44) {
+        issues.push(`submit tap target ${a11y.submitMinHeight}px < 44`);
+      }
+      if (a11y.inputMinHeight && a11y.inputMinHeight < 44) {
+        issues.push(`input tap target ${a11y.inputMinHeight}px < 44`);
+      }
+      if (a11y.promptContrast && a11y.promptContrast < 4.5) {
+        issues.push(`prompt contrast ${a11y.promptContrast}:1 < 4.5`);
+      }
+      if (a11y.mutedContrast != null && a11y.mutedContrast < 4.5) {
+        issues.push(`muted text contrast ${a11y.mutedContrast}:1 < 4.5`);
+      }
+      if (profile.device?.viewport?.width && a11y.viewport?.w) {
+        // Allow small chrome differences but flag major wrong device sizing
+        const expected = profile.device.viewport.width;
+        if (Math.abs(a11y.viewport.w - expected) > 8) {
+          issues.push(`viewport width ${a11y.viewport.w} != ${expected}`);
+        }
+      }
+      if (issues.length) {
+        throw new Error(`Mobile a11y/layout: ${issues.join('; ')}`);
+      }
+    }
+
     await page.fill('#discord-username', discord);
     await page.fill('#ingame-name', ingame);
 
@@ -388,11 +485,11 @@ async function main() {
     `- iOS web: ${summary.totals.iosWeb}/5`,
     `- Android web: ${summary.totals.androidWeb}/5`,
     '',
-    '| Run | Group | Browser | Score | Status | ms |',
+    '| Run | Group | Device | Score | Status | ms |',
     '|---|---|---|---|---|---|',
     ...results.map(
       (r) =>
-        `| ${r.label} | ${r.group} | ${r.browser}${r.fallback ? ' (fallback)' : ''} | ${
+        `| ${r.label} | ${r.group} | ${r.device || r.browser}${r.fallback ? ' (fallback)' : ''} | ${
           r.score != null ? `${r.score}/${r.maxScore}` : '—'
         } | ${r.ok ? 'PASS' : 'FAIL'} | ${r.ms} |`
     ),

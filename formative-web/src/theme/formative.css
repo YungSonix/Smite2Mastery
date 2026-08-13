@@ -6,16 +6,16 @@
   --f-blue-border: rgba(125, 211, 252, 0.42);
   --f-page: #070b14;
   --f-card: rgba(8, 12, 22, 0.92);
-  --f-text: #f1f5f9;
-  --f-body: #cbd5e1;
-  --f-muted: #94a3b8;
+  --f-text: #f8fafc;
+  --f-body: #d7e0ea;
+  --f-muted: #b8c4d4; /* ~7:1 on --f-page for readable helper copy */
   --f-border: #1e3a5f;
   --f-sidebar: #0b1220;
   --f-panel: #0b1226;
   --f-panel-alt: #0f1724;
   --f-input: #1a2740;
   --f-input-hover: #203050;
-  --f-input-border: #3b5a80;
+  --f-input-border: #4b6f96;
   --f-teal: #2dd4bf;
   --f-red-bar: #f87171;
   --f-totals: rgba(30, 58, 95, 0.55);
@@ -23,10 +23,11 @@
   --f-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
   --f-font: 'Sora', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --f-display: 'Outfit', 'Sora', system-ui, sans-serif;
-  --f-label: #93c5fd;
-  --f-hint: #64748b;
+  --f-label: #bfdbfe;
+  --f-hint: #9fb0c5;
   --f-close: #e6eef8;
   --f-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --f-touch: 48px;
 }
 
 * {
@@ -901,22 +902,34 @@ a {
 .f-option-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   margin-top: 8px;
-  padding: 8px 10px;
+  padding: 12px 14px;
+  min-height: var(--f-touch);
   border: 1px solid var(--f-border);
-  border-radius: 10px;
-  background: rgba(15, 23, 42, 0.35);
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.55);
+  color: var(--f-text);
+  font-size: 16px;
+  line-height: 1.35;
+  -webkit-tap-highlight-color: rgba(125, 211, 252, 0.18);
+  touch-action: manipulation;
 }
 
 .f-option-row:hover {
-  border-color: rgba(125, 211, 252, 0.35);
+  border-color: rgba(125, 211, 252, 0.45);
+  background: rgba(30, 58, 95, 0.45);
+}
+
+.f-option-row:has(input:checked) {
+  border-color: var(--f-blue-border);
+  background: rgba(125, 211, 252, 0.12);
 }
 
 .f-option-row input[type='radio'],
 .f-option-row input[type='checkbox'] {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   margin: 0;
   padding: 0;
   flex-shrink: 0;
@@ -1315,19 +1328,23 @@ a {
   align-items: center;
   gap: 8px;
   margin-top: 8px;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--f-text);
+  line-height: 1.45;
 }
 
 .f-fib-inline {
   width: auto !important;
-  min-width: 120px;
-  max-width: 240px;
-  flex: 0 1 200px;
+  min-width: 140px;
+  max-width: min(240px, 100%);
+  min-height: 44px;
+  flex: 1 1 160px;
   margin-top: 0 !important;
   border-bottom: 2px solid var(--f-blue) !important;
   border-radius: 8px !important;
   text-align: center;
+  font-size: 16px !important;
+  color: var(--f-text) !important;
 }
 
 @media (max-width: 840px) {
@@ -2644,7 +2661,12 @@ a {
 
 .f-take {
   min-height: 100%;
-  padding: 24px 16px 48px;
+  min-height: 100svh;
+  padding:
+    max(20px, env(safe-area-inset-top, 0px))
+    max(16px, env(safe-area-inset-right, 0px))
+    max(48px, env(safe-area-inset-bottom, 0px))
+    max(16px, env(safe-area-inset-left, 0px));
   background:
     radial-gradient(800px 400px at 50% -10%, rgba(56, 189, 248, 0.12), transparent 55%),
     var(--f-page);
@@ -2733,8 +2755,8 @@ a {
 /* Keep choice rows usable even if broader input rules change */
 .f-qcard .f-option-row input[type='radio'],
 .f-qcard .f-option-row input[type='checkbox'] {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   padding: 0;
   margin: 0;
   border: none;
@@ -2763,11 +2785,13 @@ a {
 
 .f-q-prompt {
   margin: 10px 0 0;
-  font-size: 1.05rem;
+  font-size: 1.08rem;
   font-weight: 600;
   display: flex;
   gap: 10px;
   align-items: flex-start;
+  color: var(--f-text);
+  line-height: 1.45;
 }
 
 .f-q-num {
@@ -2794,15 +2818,17 @@ a {
 
 .f-submit-btn {
   width: 100%;
-  min-height: 48px;
+  min-height: 52px;
   margin-top: 4px;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   background: linear-gradient(135deg, #38bdf8, #2dd4bf);
   color: #041018;
   font-family: var(--f-display);
   font-weight: 700;
-  font-size: 15px;
+  font-size: 16px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(45, 212, 191, 0.25);
 }
 
 .f-submit-btn:hover:not(:disabled) {
@@ -2958,6 +2984,7 @@ a {
   }
   .f-quickbar .f-quick-btn {
     flex: 1 1 calc(50% - 8px);
+    min-height: var(--f-touch);
   }
   .f-kpi-row,
   .f-analytics-grid,
@@ -2967,5 +2994,80 @@ a {
   .f-cover {
     aspect-ratio: 16 / 9;
     max-height: 220px;
+  }
+
+  /* Mobile take quiz: flagship phone widths (iPhone 16 ~393, Galaxy S26 ~360) */
+  .f-take {
+    padding-left: max(14px, env(safe-area-inset-left, 0px));
+    padding-right: max(14px, env(safe-area-inset-right, 0px));
+  }
+
+  .f-take .f-qcard,
+  .f-take .f-identity-card,
+  .f-take .f-success-card,
+  .f-take .f-student-instructions {
+    padding: 16px;
+  }
+
+  .f-take .f-field input,
+  .f-take .f-qcard input[type='text'],
+  .f-take .f-qcard input[type='url'],
+  .f-take .f-qcard input[type='number'],
+  .f-take .f-qcard input[type='password'],
+  .f-take .f-qcard textarea,
+  .f-take .f-qcard select,
+  .f-take input[type='text'],
+  .f-take input[type='email'],
+  .f-take textarea,
+  .f-take select {
+    min-height: var(--f-touch);
+    font-size: 16px; /* avoid iOS focus zoom */
+    padding: 12px 14px;
+  }
+
+  .f-take .f-option-row {
+    min-height: 52px;
+    padding: 14px 16px;
+  }
+
+  .f-take .f-submit-btn {
+    min-height: 56px;
+    font-size: 17px;
+    position: sticky;
+    bottom: max(8px, env(safe-area-inset-bottom, 0px));
+    z-index: 2;
+  }
+
+  .f-take .f-q-media-frame {
+    min-height: 180px;
+  }
+
+  .f-take .f-q-media-frame img {
+    max-height: min(280px, 55vw);
+    width: 100%;
+    object-fit: contain;
+  }
+
+  .f-take .f-q-media-audio {
+    min-height: 44px;
+  }
+
+  .f-take .f-q-prompt {
+    font-size: 1.12rem;
+  }
+
+  .f-take .f-field-hint,
+  .f-take .f-muted,
+  .f-take .f-cover-sub {
+    color: var(--f-muted);
+  }
+
+  .f-take .f-type-chip {
+    color: #e0f2fe;
+    border-color: rgba(125, 211, 252, 0.55);
+  }
+
+  .f-take .f-qcard-head .pts {
+    color: #dbeafe;
   }
 }
