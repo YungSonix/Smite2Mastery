@@ -7,6 +7,7 @@ const {
   defaultQuestion,
 } = require('../../lib/server/triviaApi');
 const { isContentType, isManualType } = require('../../lib/server/triviaQuestionTypes');
+const { responsesToCsv } = require('../../lib/server/triviaExport');
 
 function recomputeScore(questions, perQuestion) {
   let score = 0;
@@ -136,6 +137,18 @@ module.exports = async function handler(req, res) {
           .order('submitted_at', { ascending: false }),
       ]);
       if (rErr) return send(res, 500, { error: rErr.message });
+      const format = String(url.searchParams.get('format') || '').toLowerCase();
+      if (format === 'csv' || format === 'excel') {
+        const csv = responsesToCsv(quiz, responses || []);
+        res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+        res.setHeader(
+          'Content-Disposition',
+          `attachment; filename="${String(quiz.slug || 'trivia')}-responses.csv"`
+        );
+        res.statusCode = 200;
+        res.end(csv);
+        return;
+      }
       return send(res, 200, { quiz, questions: questions || [], responses: responses || [] });
     }
 

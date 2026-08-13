@@ -6,6 +6,8 @@
  *   TRIVIA_HOST_SECRET=devsecret npm run formative:dev
  */
 const http = require('http');
+const fs = require('fs');
+const path = require('path');
 const { randomUUID } = require('crypto');
 const {
   scoreAnswers,
@@ -20,6 +22,43 @@ const {
   applyVariant,
   scoreAnswersWithVariants,
 } = require('../lib/server/triviaVariants');
+const { responsesToCsv } = require('../lib/server/triviaExport');
+
+const DATA_ROOT = path.resolve(__dirname, '../app/data');
+const MEDIA_TYPES = {
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.gif': 'image/gif',
+  '.mp3': 'audio/mpeg',
+  '.wav': 'audio/wav',
+  '.ogg': 'audio/ogg',
+  '.m4a': 'audio/mp4',
+  '.svg': 'image/svg+xml',
+};
+
+function serveMedia(req, res, urlPath) {
+  const rel = decodeURIComponent(urlPath.replace(/^\/media\/?/, ''));
+  if (!rel || rel.includes('\0') || path.isAbsolute(rel)) {
+    return json(res, 400, { error: 'Bad media path' });
+  }
+  const abs = path.resolve(DATA_ROOT, rel);
+  if (abs !== DATA_ROOT && !abs.startsWith(DATA_ROOT + path.sep)) {
+    return json(res, 403, { error: 'Forbidden' });
+  }
+  if (!fs.existsSync(abs) || !fs.statSync(abs).isFile()) {
+    return json(res, 404, { error: 'Media not found' });
+  }
+  const ext = path.extname(abs).toLowerCase();
+  const type = MEDIA_TYPES[ext] || 'application/octet-stream';
+  res.writeHead(200, {
+    'Content-Type': type,
+    'Cache-Control': 'public, max-age=3600',
+    'Access-Control-Allow-Origin': '*',
+  });
+  fs.createReadStream(abs).pipe(res);
+}
 
 function recomputeScore(questions, perQuestion) {
   let score = 0;
@@ -167,6 +206,17 @@ async function handleHost(req, res, url) {
     const responses = [...db.responses.values()]
       .filter((r) => r.quiz_id === quiz.id)
       .sort((a, b) => String(b.submitted_at).localeCompare(String(a.submitted_at)));
+    const format = String(url.searchParams.get('format') || '').toLowerCase();
+    if (format === 'csv' || format === 'excel') {
+      const csv = responsesToCsv(quiz, responses);
+      res.writeHead(200, {
+        'Content-Type': 'text/csv; charset=utf-8',
+        'Content-Disposition': `attachment; filename="${String(quiz.slug || 'trivia')}-responses.csv"`,
+        'Access-Control-Allow-Origin': '*',
+      });
+      res.end(csv);
+      return;
+    }
     return json(res, 200, { quiz, questions, responses });
   }
 
@@ -472,6 +522,12 @@ const server = http.createServer(async (req, res) => {
         quizzes: db.quizzes.size,
         responses: db.responses.size,
       });
+    }
+    if (url.pathname === '/media' || url.pathname.startsWith('/media/')) {
+      if (req.method !== 'GET' && req.method !== 'HEAD') {
+        return json(res, 405, { error: 'Method not allowed' });
+      }
+      return serveMedia(req, res, url.pathname);
     }
     return json(res, 404, { error: 'Not found', path: url.pathname });
   } catch (e) {

@@ -5,6 +5,7 @@ import QuestionCard from '../components/QuestionCard';
 import ResponsesGrid from '../components/ResponsesGrid';
 import StudentResponsePanel from '../components/StudentResponsePanel';
 import { hostApi, takeUrl } from '../lib/api';
+import { downloadResponsesCsv } from '../lib/exportResponses';
 import { readImageAsDataUrl } from '../lib/imageUpload';
 import { mergeQuizSettings } from '../lib/quizSettings';
 
@@ -532,6 +533,15 @@ export default function Activity() {
               </button>
               <button type="button" className="f-outline-btn" disabled>
                 Grading method
+              </button>
+              <button
+                type="button"
+                className="f-outline-btn"
+                disabled={!responses?.length}
+                title="Download Excel-friendly CSV of all submissions"
+                onClick={() => downloadResponsesCsv(quiz, questions, responses)}
+              >
+                Export Excel/CSV
               </button>
               <button type="button" className="f-outline-btn" onClick={load}>
                 Refresh
