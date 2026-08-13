@@ -3033,9 +3033,6 @@ a {
   .f-take .f-submit-btn {
     min-height: 56px;
     font-size: 17px;
-    position: sticky;
-    bottom: max(8px, env(safe-area-inset-bottom, 0px));
-    z-index: 2;
   }
 
   .f-take .f-q-media-frame {

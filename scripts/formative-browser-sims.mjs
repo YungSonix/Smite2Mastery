@@ -202,6 +202,21 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
     const url = `${UI_BASE}/formative/take/${slug}`;
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45_000 });
     await page.waitForSelector('#discord-username', { timeout: 30_000 });
+    await page.waitForSelector('section.f-qcard .f-option-row, section.f-qcard input.f-fib-inline', {
+      timeout: 30_000,
+    });
+    // Wait until mobile take styles have applied (avoid measuring pre-CSS layout).
+    await page.waitForFunction(
+      () => {
+        const opt = document.querySelector('.f-option-row');
+        const submit = document.querySelector('.f-submit-btn');
+        if (!opt || !submit) return false;
+        const oh = opt.getBoundingClientRect().height;
+        const sh = submit.getBoundingClientRect().height;
+        return oh >= 44 && sh >= 44;
+      },
+      { timeout: 15_000 }
+    );
 
     // Mobile layout / accessibility checks (touch targets + readable contrast)
     if (profile.isMobile) {
@@ -289,15 +304,24 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
       const isFillBlank =
         q.kind === 'fill_blank' || q.meta?.kind === 'fill_blank' || q.addType === 'fill_blank';
       if (q.type === 'short_answer' || isFillBlank) {
-        const needle = String(q.prompt || '')
-          .replace('{{blank}}', ' ')
-          .replace(/_{3,}/g, ' ')
-          .trim()
-          .slice(0, 36);
-        const block = page.locator('section.f-qcard').filter({ hasText: needle });
-        const fib = block.locator('input.f-fib-inline').first();
-        const plain = block.locator('input[type="text"]').first();
-        const input = (await fib.count()) ? fib : plain;
+        const raw = String(q.prompt || '');
+        const needles = [
+          raw.replace('{{blank}}', ' ').replace(/_{3,}/g, ' ').trim().slice(0, 36),
+          raw.split('{{blank}}')[0].trim().slice(0, 28),
+          raw.split('{{blank}}')[1]?.trim().slice(0, 28),
+        ].filter(Boolean);
+        let input = null;
+        for (const needle of needles) {
+          const block = page.locator('section.f-qcard').filter({ hasText: needle });
+          if (!(await block.count())) continue;
+          const fib = block.locator('input.f-fib-inline').first();
+          const plain = block.locator('input[type="text"]').first();
+          input = (await fib.count()) ? fib : plain;
+          if (await input.count()) break;
+        }
+        if (!input || !(await input.count())) {
+          throw new Error(`Could not find text input for: ${raw.slice(0, 48)}`);
+        }
         await input.waitFor({ state: 'visible', timeout: 10_000 });
         await input.fill(String(value ?? ''));
       } else if (q.type === 'multiple_choice' || q.type === 'true_false') {
@@ -342,7 +366,14 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
       }
     }
 
-    await page.locator('button.f-submit-btn[type="submit"]').click();
+    const submitBtn = page.locator('button.f-submit-btn[type="submit"]');
+    await submitBtn.scrollIntoViewIfNeeded();
+    await submitBtn.click({ force: true });
+    // If native validation blocked submit, surface it.
+    const invalid = await page.locator(':invalid').count();
+    if (invalid > 0) {
+      throw new Error(`Submit blocked by ${invalid} invalid field(s)`);
+    }
     await page.waitForSelector('.f-success-card', { timeout: 30_000 });
 
     const scoreText = await page
