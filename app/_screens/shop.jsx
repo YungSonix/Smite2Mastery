@@ -47,7 +47,7 @@ const DAILY_FONT_COUNT = 30;
 
 // Animated pack container: a soft pulsing glow border + a shimmer sweep that
 // gives bundles a premium, "unwrap me" feel. Purely presentational.
-function PackCard({ rarity, width, children }) {
+function PackCard({ rarity, width, children, compact = false }) {
   const shimmer = useRef(new Animated.Value(0)).current;
   const glow = useRef(new Animated.Value(0)).current;
   useEffect(() => {
@@ -67,7 +67,7 @@ function PackCard({ rarity, width, children }) {
   const translateX = shimmer.interpolate({ inputRange: [0, 1], outputRange: [-width * 0.5, width * 1.1] });
   const glowOpacity = glow.interpolate({ inputRange: [0, 1], outputRange: [0.12, 0.7] });
   return (
-    <View style={[styles.packCard, styles.packCardClip, { width, borderColor: rarity.color, backgroundColor: rarity.bgGlow }]}>
+    <View style={[styles.packCard, compact && styles.packCardCompact, styles.packCardClip, { width, borderColor: rarity.color, backgroundColor: rarity.bgGlow }]}>
       <Animated.View pointerEvents="none" style={[styles.packGlow, { borderColor: rarity.color, opacity: glowOpacity }]} />
       <Animated.View pointerEvents="none" style={[styles.packShimmer, { transform: [{ translateX }, { rotate: '18deg' }] }]} />
       {children}
@@ -325,6 +325,9 @@ export default function ShopPage({ currentUsername = null, onNavigateToProfile, 
   const numColumns = isNarrow ? 3 : maxContent < 900 ? 4 : 5;
   const rawCardWidth = Math.floor((maxContent - contentPadding * 2 - gridGap * (numColumns - 1)) / numColumns);
   const cardWidth = Math.max(102, rawCardWidth);
+  const packCols = IS_WEB ? 4 : 3;
+  const packCompact = !IS_WEB;
+  const packCardWidth = Math.floor((maxContent - contentPadding * 2 - gridGap * (packCols - 1)) / packCols);
   const previewName = currentUsername || 'Your Name';
   // Items granted by an owned pack count as owned too
   const ownedSet = new Set(expandOwnedIds(ownedIds));
@@ -412,45 +415,45 @@ export default function ShopPage({ currentUsername = null, onNavigateToProfile, 
     const hidden = !!pack.mystery && !owned;
     const showValue = savings > 0 && !hidden;
     return (
-      <PackCard key={pack.id} rarity={rarity} width={packCardWidth}>
-        <View style={styles.packHeader}>
+      <PackCard key={pack.id} rarity={rarity} width={packCardWidth} compact={packCompact}>
+        <View style={[styles.packHeader, packCompact && styles.packHeaderCompact]}>
           <View style={{ flex: 1 }}>
-            <Text style={styles.packName} numberOfLines={1}>{pack.name}</Text>
-            <Text style={styles.packDesc} numberOfLines={1}>{pack.description}</Text>
+            <Text style={[styles.packName, packCompact && styles.packNameCompact]} numberOfLines={1}>{pack.name}</Text>
+            <Text style={[styles.packDesc, packCompact && styles.packDescCompact]} numberOfLines={1}>{pack.description}</Text>
           </View>
           {hidden ? (
-            <View style={[styles.packSaveChip, { borderColor: rarity.color }]}>
-              <Text style={[styles.packSaveText, { color: rarity.color }]}>MYSTERY</Text>
+            <View style={[styles.packSaveChip, packCompact && styles.packSaveChipCompact, { borderColor: rarity.color }]}>
+              <Text style={[styles.packSaveText, packCompact && styles.packSaveTextCompact, { color: rarity.color }]}>MYSTERY</Text>
             </View>
           ) : showValue ? (
-            <View style={[styles.packSaveChip, { borderColor: rarity.color }]}>
-              <Text style={[styles.packSaveText, { color: rarity.color }]}>SAVE {savings}</Text>
+            <View style={[styles.packSaveChip, packCompact && styles.packSaveChipCompact, { borderColor: rarity.color }]}>
+              <Text style={[styles.packSaveText, packCompact && styles.packSaveTextCompact, { color: rarity.color }]}>SAVE {savings}</Text>
             </View>
           ) : null}
         </View>
 
         {/* Animated teaser using the player's own name (masked for mystery packs) */}
-        <View style={[styles.packPreview, { borderColor: rarity.color }]}>
+        <View style={[styles.packPreview, packCompact && styles.packPreviewCompact, { borderColor: rarity.color }]}>
           {AnimatedName ? (
             <AnimatedName
               name={hidden ? '??????' : previewName}
               animationType={pack.previewFx}
               accentColor={pack.accent || rarity.color}
-              style={styles.packPreviewText}
+              style={[styles.packPreviewText, packCompact && styles.packPreviewTextCompact]}
               numberOfLines={1}
               ellipsizeMode="tail"
             />
           ) : (
-            <Text style={styles.packPreviewText} numberOfLines={1}>{hidden ? '??????' : previewName}</Text>
+            <Text style={[styles.packPreviewText, packCompact && styles.packPreviewTextCompact]} numberOfLines={1}>{hidden ? '??????' : previewName}</Text>
           )}
         </View>
 
         {/* Contents list */}
-        <View style={styles.packContents}>
+        <View style={[styles.packContents, packCompact && styles.packContentsCompact]}>
           {(pack.itemIds || []).map((id) => (
             <View key={id} style={styles.packContentRow}>
               <Text style={[styles.packBullet, { color: rarity.color }]}>{hidden ? '?' : '◆'}</Text>
-              <Text style={[styles.packContentText, hidden && styles.packMysteryText]} numberOfLines={1}>
+              <Text style={[styles.packContentText, packCompact && styles.packContentTextCompact, hidden && styles.packMysteryText]} numberOfLines={1}>
                 {hidden ? mysteryTypeLabel(id) : (ITEM_NAME_BY_ID[id] || id)}
               </Text>
               {!hidden && ownedSet.has(id) && !owned && <Text style={styles.packHaveText}>have</Text>}
@@ -461,20 +464,20 @@ export default function ShopPage({ currentUsername = null, onNavigateToProfile, 
         {/* Price + action */}
         <View style={styles.packFooter}>
           <View style={styles.packPriceWrap}>
-            <Image source={GOLD_ICON} style={styles.priceIcon} contentFit="contain" />
-            <Text style={styles.priceText}>{pack.cost.toLocaleString()}</Text>
-            {showValue && <Text style={styles.packFullPrice}>{fullPrice.toLocaleString()}</Text>}
+            <Image source={GOLD_ICON} style={[styles.priceIcon, packCompact && styles.priceIconCompact]} contentFit="contain" />
+            <Text style={[styles.priceText, packCompact && styles.priceTextCompact]}>{pack.cost.toLocaleString()}</Text>
+            {showValue && <Text style={[styles.packFullPrice, packCompact && styles.packFullPriceCompact]}>{fullPrice.toLocaleString()}</Text>}
           </View>
           {owned ? (
             <View style={styles.ownedChip}><Text style={styles.ownedChipText}>Owned</Text></View>
           ) : (
             <TouchableOpacity
-              style={[styles.buyBtn, styles.packBuyBtn, !canBuy && styles.buyBtnDisabled]}
+              style={[styles.buyBtn, styles.packBuyBtn, packCompact && styles.packBuyBtnCompact, !canBuy && styles.buyBtnDisabled]}
               onPress={() => handleBuy({ id: pack.id, name: pack.name, cost: pack.cost })}
               disabled={!canBuy}
               activeOpacity={0.85}
             >
-              <Text style={[styles.buyBtnText, !canBuy && styles.buyBtnTextDisabled]}>{canBuy ? 'Buy Pack' : 'Locked'}</Text>
+              <Text style={[styles.buyBtnText, packCompact && styles.buyBtnTextCompact, !canBuy && styles.buyBtnTextDisabled]}>{canBuy ? 'Buy Pack' : 'Locked'}</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -482,16 +485,14 @@ export default function ShopPage({ currentUsername = null, onNavigateToProfile, 
     );
   };
 
-  const packCols = maxContent < 520 ? 2 : 3;
-  const packCardWidth = Math.floor((maxContent - contentPadding * 2 - gridGap * (packCols - 1)) / packCols);
   const totalOwnedCosmetics = ownedIds.length;
 
   return (
     <ScrollView
-      style={styles.container}
+      style={[styles.container, IS_WEB && { maxWidth: maxContent, alignSelf: 'center', width: '100%' }]}
       contentContainerStyle={[
         styles.content,
-        IS_WEB && { maxWidth: 900, alignSelf: 'center', width: '100%' },
+        IS_WEB && { maxWidth: maxContent, alignSelf: 'center', width: '100%' },
         (shopTab === 'shop' || shopTab === 'leaderboard') && { paddingBottom: 320 },
       ]}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#f59e0b" />}
@@ -633,7 +634,7 @@ export default function ShopPage({ currentUsername = null, onNavigateToProfile, 
           {shopSection === 'packs' ? (
             <>
               <Text style={styles.resultLine}>Bundles · save vs buying separately</Text>
-              <View style={styles.packGrid}>
+              <View style={[styles.packGrid, IS_WEB && styles.packGridWeb]}>
                 {SHOP_PACKS.map((pack) => renderPackCard(pack))}
               </View>
             </>
@@ -876,10 +877,18 @@ const styles = StyleSheet.create({
     gap: 8,
     alignSelf: 'stretch',
   },
+  packGridWeb: {
+    justifyContent: 'center',
+  },
   packCard: {
     borderRadius: 14,
     borderWidth: 1.5,
     padding: 12,
+  },
+  packCardCompact: {
+    borderRadius: 10,
+    borderWidth: 1,
+    padding: 8,
   },
   packCardClip: {
     overflow: 'hidden',
@@ -909,15 +918,20 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 10,
   },
+  packHeaderCompact: { gap: 4, marginBottom: 6 },
   packName: { color: '#f8fafc', fontSize: 16, fontWeight: '800', letterSpacing: 0.2 },
+  packNameCompact: { fontSize: 12 },
   packDesc: { color: '#94a3b8', fontSize: 11, marginTop: 1 },
+  packDescCompact: { fontSize: 9, marginTop: 0 },
   packSaveChip: {
     borderWidth: 1,
     borderRadius: 6,
     paddingHorizontal: 6,
     paddingVertical: 2,
   },
+  packSaveChipCompact: { paddingHorizontal: 4, paddingVertical: 1, borderRadius: 4 },
   packSaveText: { fontSize: 9.5, fontWeight: '800', letterSpacing: 0.4 },
+  packSaveTextCompact: { fontSize: 8, letterSpacing: 0.2 },
   packPreview: {
     minHeight: 40,
     alignItems: 'center',
@@ -929,11 +943,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     overflow: 'hidden',
   },
+  packPreviewCompact: { minHeight: 30, borderRadius: 8, paddingHorizontal: 4, marginBottom: 6 },
   packPreviewText: { color: '#f1f5f9', fontSize: 17, fontWeight: '800', textAlign: 'center' },
+  packPreviewTextCompact: { fontSize: 12 },
   packContents: { gap: 3, marginBottom: 11 },
+  packContentsCompact: { gap: 2, marginBottom: 7 },
   packContentRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   packBullet: { fontSize: 9 },
   packContentText: { color: '#cbd5e1', fontSize: 12, fontWeight: '600', flexShrink: 1 },
+  packContentTextCompact: { fontSize: 9.5 },
   packMysteryText: { color: '#94a3b8', fontStyle: 'italic', letterSpacing: 0.3 },
   packHaveText: {
     color: '#4ade80',
@@ -957,6 +975,11 @@ const styles = StyleSheet.create({
     marginLeft: 2,
   },
   packBuyBtn: { paddingVertical: 7, paddingHorizontal: 14 },
+  packBuyBtnCompact: { paddingVertical: 5, paddingHorizontal: 8 },
+  priceIconCompact: { width: 14, height: 14 },
+  priceTextCompact: { fontSize: 12 },
+  packFullPriceCompact: { fontSize: 9 },
+  buyBtnTextCompact: { fontSize: 10 },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',

@@ -12,7 +12,6 @@ import {
   Platform,
   Linking,
   Alert,
-  Share,
   InteractionManager,
 } from 'react-native';
 import CryptoJS from 'crypto-js';
@@ -38,6 +37,8 @@ import { genericTooltipStylesForApp } from '../lib/uiTheme';
 import { getLocalGodAsset, getLocalItemIcon, getPantheonBorderColor, getPantheonIcon, getRoleIcon } from './localIcons';
 import { ItemIconImage } from '../lib/ItemIconImage';
 import { GOLD_ICON } from '../lib/imageGrabber';
+import { getLiveDisplayName, subscribeLiveDisplayNames } from '../lib/profileDisplayNameLive';
+import { FONT_FAMILY_BY_KEY } from '../lib/appFonts';
 import ItemTooltipModal from '../lib/ItemTooltipModal';
 import ItemTooltipTrigger from '../lib/ItemTooltipTrigger';
 import AbilityTooltipTrigger from '../lib/AbilityTooltipTrigger';
@@ -273,6 +274,16 @@ const storage = {
   },
 };
 
+let BuildsAnimatedProfileName = null;
+function getBuildsAnimatedProfileName() {
+  if (!BuildsAnimatedProfileName) {
+    try {
+      BuildsAnimatedProfileName = require('./_screens/profile').AnimatedProfileName;
+    } catch (_) {}
+  }
+  return BuildsAnimatedProfileName;
+}
+
 function BuildsPage({
   onGodIconPress,
   initialTab = 'builds',
@@ -308,7 +319,90 @@ function BuildsPage({
   const [loadingCommunityBuilds, setLoadingCommunityBuilds] = useState(false);
   const [loadingContributorsBuilds, setLoadingContributorsBuilds] = useState(false);
   const [contributorsUsers, setContributorsUsers] = useState(new Set()); // Track contributors usernames
-  const [contributorsUserData, setContributorsUserData] = useState({}); // username -> { display_name, profile_god_icon }
+  const [contributorsUserData, setContributorsUserData] = useState({}); // username -> profile chrome for partners
+
+  const resolveBuildAuthorDisplayName = useCallback((build) => {
+    const authorKey = (build?.author || build?.username || '').toString().trim();
+    if (!authorKey) return build?.authorDisplayName || 'Unknown';
+    return (
+      getLiveDisplayName(authorKey)
+      || contributorsUserData[authorKey]?.display_name
+      || build?.authorDisplayName
+      || authorKey
+    );
+  }, [contributorsUserData]);
+
+  const isContributorAuthor = useCallback((author) => {
+    const key = (author || '').toString().trim();
+    if (!key) return false;
+    return contributorsUsers.has(key) || CONTRIBUTORS_AUTHORS.includes(key.toLowerCase());
+  }, [contributorsUsers]);
+
+  const renderBuildAuthorLine = useCallback((build) => {
+    const authorKey = (build?.author || build?.username || '').toString().trim();
+    if (!authorKey) return null;
+    const displayName = resolveBuildAuthorDisplayName(build);
+    const authorMeta = contributorsUserData[authorKey] || {};
+    const verified = isContributorAuthor(authorKey);
+    const AuthorNameFx = verified ? getBuildsAnimatedProfileName() : null;
+    const authorFont = authorMeta.profile_font && FONT_FAMILY_BY_KEY[authorMeta.profile_font]
+      ? { fontFamily: FONT_FAMILY_BY_KEY[authorMeta.profile_font] }
+      : null;
+
+    return (
+      <View style={styles.buildAuthorInlineRow}>
+        <TouchableOpacity
+          onPress={(e) => {
+            e?.stopPropagation?.();
+            if (onNavigateToUserProfile) onNavigateToUserProfile(authorKey);
+          }}
+          activeOpacity={0.7}
+          style={styles.buildAuthorLinkWrap}
+        >
+          <Text
+            style={[
+              styles.buildAuthor,
+              styles.buildAuthorInline,
+              verified && styles.buildAuthorContributors,
+            ]}
+          >
+            By{' '}
+          </Text>
+          {AuthorNameFx ? (
+            <AuthorNameFx
+              name={displayName}
+              animationType={authorMeta.name_animation || 'none'}
+              accentColor={authorMeta.profile_color || '#7dd3fc'}
+              style={[
+                styles.buildAuthor,
+                styles.buildAuthorInline,
+                styles.buildAuthorContributors,
+                styles.buildAuthorFxName,
+                authorFont,
+              ]}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            />
+          ) : (
+            <Text
+              style={[
+                styles.buildAuthor,
+                styles.buildAuthorInline,
+                { textDecorationLine: 'underline' },
+              ]}
+            >
+              {displayName}
+            </Text>
+          )}
+        </TouchableOpacity>
+        {verified ? (
+          <View style={styles.buildAuthorVerifiedBadge} accessibilityLabel="Verified partner">
+            <Text style={styles.buildAuthorVerifiedCheck}>✓</Text>
+          </View>
+        ) : null}
+      </View>
+    );
+  }, [contributorsUserData, isContributorAuthor, onNavigateToUserProfile, resolveBuildAuthorDisplayName]);
   // Filter dropdown states
   const [roleDropdownVisible, setRoleDropdownVisible] = useState(false);
   const [godDropdownVisible, setGodDropdownVisible] = useState(false);
@@ -629,7 +723,7 @@ function BuildsPage({
     };
   }, [buildCategory]);
 
-  // Fetch display_name and profile_god_icon for contributors when on Contributors tab
+  // Fetch partner profile chrome for build cards + Meet our Partners
   useEffect(() => {
     if (buildCategory !== 'contributors' || contributorsUsers.size === 0) {
       if (buildCategory !== 'contributors') setContributorsUserData({});
@@ -642,7 +736,7 @@ function BuildsPage({
     if (!supabaseClient?.from) return;
     supabaseClient
       .from('user_data')
-      .select('username, display_name, profile_god_icon')
+      .select('username, display_name, profile_god_icon, profile_color, name_animation, profile_font, profile_title')
       .in('username', usernames)
       .then(({ data, error }) => {
         if (!isMounted) return;
@@ -653,14 +747,30 @@ function BuildsPage({
         const map = {};
         (data || []).forEach((row) => {
           map[row.username] = {
-            display_name: row.display_name || row.username,
+            display_name: getLiveDisplayName(row.username) || row.display_name || row.username,
             profile_god_icon: row.profile_god_icon || null,
+            profile_color: row.profile_color || null,
+            name_animation: row.name_animation || null,
+            profile_font: row.profile_font || null,
+            profile_title: row.profile_title || null,
           };
         });
         setContributorsUserData(map);
       });
     return () => { isMounted = false; };
   }, [buildCategory, contributorsUsers]);
+
+  useEffect(() => {
+    return subscribeLiveDisplayNames((username, displayName) => {
+      setContributorsUserData((prev) => ({
+        ...prev,
+        [username]: {
+          ...(prev[username] || {}),
+          display_name: displayName,
+        },
+      }));
+    });
+  }, []);
 
   // Debounce search query to prevent rapid filtering
   useEffect(() => {
@@ -1071,56 +1181,6 @@ function BuildsPage({
       return a.toLowerCase().localeCompare(b.toLowerCase());
     });
   }, [pairs, buildCategory]);
-
-  // Share function for individual builds
-  const handleShareBuild = async (build, buildType = null) => {
-    // Determine build type from buildCategory if not provided
-    const type = buildType || buildCategory || 'community';
-    const IS_WEB = Platform.OS === 'web';
-    
-    const baseUrl = IS_WEB && typeof window !== 'undefined' 
-      ? window.location.origin 
-      : REMOTE_BASE_URLS.APP_PUBLIC_DOMAIN;
-    
-    const buildId = build.databaseId || build.id || `${build.god_name || build.god || 'build'}-${Date.now()}`;
-    const buildUrl = `${baseUrl}/build/${type}/${buildId}`;
-    const buildName = build.build_name || build.name || build.notes || 'Unnamed Build';
-    const godName = build.god_name || build.god || build.godName || 'Unknown';
-    const authorName = build.authorDisplayName || build.username || build.author || 'Unknown';
-    
-    const message = `Check out ${authorName}'s ${type} build "${buildName}" for ${godName}: ${buildUrl}`;
-    
-    try {
-      if (IS_WEB) {
-        // Web: Use Web Share API or copy to clipboard
-        if (navigator.share) {
-          await navigator.share({
-            title: `${buildName} - ${godName} Build`,
-            text: message,
-            url: buildUrl,
-          });
-        } else {
-          // Fallback: Copy to clipboard
-          await navigator.clipboard.writeText(buildUrl);
-          Alert.alert('Copied!', 'Build link copied to clipboard');
-        }
-      } else {
-        // Native: Use React Native Share
-        await Share.share({
-          message: message,
-          url: buildUrl,
-          title: `${buildName} - ${godName} Build`,
-        });
-      }
-    } catch (error) {
-      console.error('Error sharing build:', error);
-      // Fallback: Copy to clipboard on web
-      if (IS_WEB && navigator.clipboard) {
-        await navigator.clipboard.writeText(buildUrl);
-        Alert.alert('Copied!', 'Build link copied to clipboard');
-      }
-    }
-  };
 
   // Memoize filtered results using debounced query and role filter
   const filtered = useMemo(() => {
@@ -3047,9 +3107,14 @@ function BuildsPage({
                           </View>
                         )}
                       </View>
-                      <Text style={styles.contributorName} numberOfLines={1} ellipsizeMode="tail">
-                        {displayName}
-                      </Text>
+                      <View style={styles.contributorNameRow}>
+                        <Text style={styles.contributorName} numberOfLines={1} ellipsizeMode="tail">
+                          {displayName}
+                        </Text>
+                        <View style={styles.contributorVerifiedBadge} accessibilityLabel="Verified partner">
+                          <Text style={styles.contributorVerifiedCheck}>✓</Text>
+                        </View>
+                      </View>
                     </View>
                   );
                 })}
@@ -3290,6 +3355,89 @@ function BuildsPage({
                   .filter(Boolean);
                 return names.length > 0 ? names : null;
               })();
+
+              // Relic slots: starter relic renders inline with the Starter row, final relic with the Final row
+              const relicSlots = (() => {
+                if (!currentBuild) return { starter: null, final: null };
+                const sr = currentBuild.starting_relic || currentBuild.startingRelic;
+                const fr = currentBuild.final_relic || currentBuild.finalRelic;
+                const legacy = currentBuild.relic;
+                const srS = sr && String(sr).trim();
+                const frS = fr && String(fr).trim();
+                const hasLegacy =
+                  legacy &&
+                  (typeof legacy === 'string' ? legacy.trim() : legacy.name || legacy.internalName);
+                return {
+                  starter: srS ? sr : null,
+                  final: frS ? fr : hasLegacy ? legacy : null,
+                };
+              })();
+
+              const renderInlineRelicSlot = (raw, slotId) => {
+                const { meta, lookupName } = resolveRelicItemMeta(findItem, raw);
+                if (!lookupName) return null;
+                const localIcon = meta && meta.icon ? getLocalItemIcon(meta.icon) : null;
+                const itemKey = `relic-${idx}-${slotId}-${lookupName}`;
+                const useFallback = failedItemIcons[itemKey];
+                const imageSource = localIcon ? (localIcon.primary || localIcon) : null;
+                const fallbackSource = localIcon ? localIcon.fallback : null;
+                const resolvedSource =
+                  fallbackSource && useFallback ? fallbackSource : imageSource;
+                return (
+                  <View key={itemKey} style={styles.relicInlineGroup}>
+                    <Text style={styles.relicInlineTag}>Relic</Text>
+                    <ItemTooltipTrigger
+                      tooltip={buildItemTooltip}
+                      item={meta}
+                      itemName={lookupName}
+                      style={styles.iconWrap}
+                    >
+                      <View style={{ position: 'relative' }}>
+                        {resolvedSource ? (
+                          <View style={styles.iconOuterBorder}>
+                            <View style={styles.iconInnerBorder}>
+                              <Image
+                                source={resolvedSource}
+                                style={styles.smallIconImg}
+                                contentFit="cover"
+                                cachePolicy="memory-disk"
+                                transition={0}
+                                recyclingKey={resolvedSource.uri}
+                                accessibilityLabel={`${lookupName} relic icon`}
+                                onError={() => {
+                                  if (fallbackSource && !useFallback) {
+                                    setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
+                                  }
+                                }}
+                              />
+                            </View>
+                          </View>
+                        ) : (
+                          <View style={styles.iconOuterBorder}>
+                            <View style={[styles.iconInnerBorder, styles.iconFallback]}>
+                              <Text style={styles.iconFallbackText}>{lookupName}</Text>
+                            </View>
+                          </View>
+                        )}
+                        {meta && meta.latestPatchChange && (
+                          <PatchBadgeTooltip
+                            changeType={meta.latestPatchChange.type}
+                            version={meta.latestPatchChange.version || 'latest'}
+                            entityType="item"
+                            badgeStyle={[styles.patchBadge, styles.patchBadgeSmall, styles[`patchBadge${meta.latestPatchChange.type.charAt(0).toUpperCase() + meta.latestPatchChange.type.slice(1)}`]]}
+                            textStyle={styles.patchBadgeText}
+                            overlayStyle={styles.tooltipOverlay}
+                            contentStyle={styles.tooltipContent}
+                            tooltipTextStyle={styles.tooltipText}
+                            closeButtonStyle={styles.tooltipCloseButton}
+                            closeTextStyle={styles.tooltipCloseText}
+                          />
+                        )}
+                      </View>
+                    </ItemTooltipTrigger>
+                  </View>
+                );
+              };
               
               // Extract final items - prefer `full_build` when present
               // For DB builds, items are already in the correct format
@@ -3914,43 +4062,7 @@ function BuildsPage({
                                       </Text>
                                     </View>
                                   )}
-                                  {currentBuild.author ? (
-                                    <View style={styles.buildAuthorInlineRow}>
-                                      <TouchableOpacity
-                                        onPress={(e) => {
-                                          e?.stopPropagation?.();
-                                          if (onNavigateToUserProfile) {
-                                            onNavigateToUserProfile(currentBuild.author.toString().trim());
-                                          }
-                                        }}
-                                        activeOpacity={0.7}
-                                      >
-                                        <Text
-                                          style={[
-                                            styles.buildAuthor,
-                                            styles.buildAuthorInline,
-                                            (CONTRIBUTORS_AUTHORS.includes((currentBuild.author || '').toString().trim().toLowerCase()) ||
-                                              contributorsUsers.has((currentBuild.author || '').toString().trim())) && styles.buildAuthorContributors,
-                                            { textDecorationLine: 'underline' },
-                                          ]}
-                                        >
-                                          By {currentBuild.authorDisplayName || currentBuild.author}
-                                        </Text>
-                                      </TouchableOpacity>
-                                      {(buildCategory === 'contributors' || buildCategory === 'community') && (
-                                        <TouchableOpacity
-                                          style={styles.buildShareButton}
-                                          onPress={(e) => {
-                                            e?.stopPropagation?.();
-                                            handleShareBuild(currentBuild);
-                                          }}
-                                          activeOpacity={0.7}
-                                        >
-                                          <Text style={styles.buildShareButtonText}>Share</Text>
-                                        </TouchableOpacity>
-                                      )}
-                                    </View>
-                                  ) : null}
+                                  {currentBuild.author ? renderBuildAuthorLine(currentBuild) : null}
                                 </View>
                               ) : null}
                             </View>
@@ -4007,11 +4119,10 @@ function BuildsPage({
                       )}
                     </View>
 
-                    {isExpanded && (
-                      <View style={styles.cardExpandedContent}>
+                    <View style={styles.cardExpandedContent}>
 
-                        {/* Ability order + Tips: Start | Max | Tips */}
-                        {(() => {
+                        {/* Ability order + Tips: Start | Max | Tips (expanded only) */}
+                        {isExpanded && (() => {
                           const hasStart = startAbilities && startAbilities.length > 0 && startOrder && startOrder.length > 0;
                           const hasMax = levelingAbilities && levelingAbilities.length > 0;
                           const hasBuildTipsText =
@@ -4281,7 +4392,7 @@ function BuildsPage({
                           );
                         })()}
 
-                        {showAspect && aspect && (
+                        {isExpanded && showAspect && aspect && (
                           <View style={styles.aspectContainer}>
                             <AbilityTooltipTrigger
                               style={styles.aspectRow}
@@ -4329,11 +4440,11 @@ function BuildsPage({
                           </View>
                         )}
 
-                      {starterRowNames && (
+                      {(starterRowNames || relicSlots.starter) && (
                         <View style={styles.buildRow}>
                           <Text style={styles.buildLabel}>Starter</Text>
                           <View style={styles.buildIcons}>
-                              {starterRowNames.map((s, si) => {
+                              {(starterRowNames || []).map((s, si) => {
                               let meta = null;
                               try {
                                 meta = findItem(s);
@@ -4441,6 +4552,7 @@ function BuildsPage({
                                   </ItemTooltipTrigger>
                               );
                             })}
+                            {relicSlots.starter ? renderInlineRelicSlot(relicSlots.starter, 'st') : null}
                           </View>
                         </View>
                       )}
@@ -4560,170 +4672,12 @@ function BuildsPage({
                                 </ItemTooltipTrigger>
                             );
                           })}
+                          {relicSlots.final ? renderInlineRelicSlot(relicSlots.final, 'end') : null}
                         </View>
                       </View>
 
-                      {/* Relics: one row — Starter → Final (or single Relic) */}
-                      {currentBuild &&
-                        (() => {
-                          const sr = currentBuild.starting_relic || currentBuild.startingRelic;
-                          const fr = currentBuild.final_relic || currentBuild.finalRelic;
-                          const legacy = currentBuild.relic;
-                          const srS = sr && String(sr).trim();
-                          const frS = fr && String(fr).trim();
-                          const hasLegacy =
-                            legacy &&
-                            (typeof legacy === 'string'
-                              ? legacy.trim()
-                              : legacy.name || legacy.internalName);
-                          const onlyOneRelic = !srS && !frS && !!hasLegacy;
-                          const startSlotRaw = onlyOneRelic ? null : srS ? sr : null;
-                          const endSlotRaw = onlyOneRelic
-                            ? legacy
-                            : frS
-                              ? fr
-                              : srS && hasLegacy && !frS
-                                ? legacy
-                                : null;
-                          if (!startSlotRaw && !endSlotRaw) return null;
-
-                          const renderRelicTouchable = (raw, slotId) => {
-                            const { meta, lookupName } = resolveRelicItemMeta(findItem, raw);
-                            if (!lookupName) return null;
-                            const localIcon = meta && meta.icon ? getLocalItemIcon(meta.icon) : null;
-                            const itemKey = `relic-${idx}-${slotId}-${lookupName}`;
-                            return (
-                              <ItemTooltipTrigger
-                                key={itemKey}
-                                tooltip={buildItemTooltip}
-                                item={meta}
-                                itemName={lookupName}
-                                style={styles.iconWrap}
-                              >
-                                <View style={{ position: 'relative' }}>
-                                  {localIcon ? (() => {
-                                    const imageSource = localIcon.primary || localIcon;
-                                    const fallbackSource = localIcon.fallback;
-                                    const useFallback = failedItemIcons[itemKey];
-                                    if (fallbackSource && !useFallback) {
-                                      return (
-                                        <View style={styles.iconOuterBorder}>
-                                          <View style={styles.iconInnerBorder}>
-                                            <Image
-                                              source={imageSource}
-                                              style={styles.smallIconImg}
-                                              contentFit="cover"
-                                              cachePolicy="memory-disk"
-                                              transition={0}
-                                              recyclingKey={imageSource.uri}
-                                              accessibilityLabel={`${lookupName} relic icon`}
-                                              onError={() => {
-                                                setFailedItemIcons(prev => ({ ...prev, [itemKey]: true }));
-                                              }}
-                                            />
-                                          </View>
-                                        </View>
-                                      );
-                                    }
-                                    if (fallbackSource && useFallback) {
-                                      return (
-                                        <View style={styles.iconOuterBorder}>
-                                          <View style={styles.iconInnerBorder}>
-                                            <Image
-                                              source={fallbackSource}
-                                              style={styles.smallIconImg}
-                                              contentFit="cover"
-                                              cachePolicy="memory-disk"
-                                              transition={0}
-                                              recyclingKey={fallbackSource.uri}
-                                              accessibilityLabel={`${lookupName} relic icon`}
-                                            />
-                                          </View>
-                                        </View>
-                                      );
-                                    }
-                                    return (
-                                      <View style={styles.iconOuterBorder}>
-                                        <View style={styles.iconInnerBorder}>
-                                          <Image
-                                            source={imageSource}
-                                            style={styles.smallIconImg}
-                                            contentFit="cover"
-                                            cachePolicy="memory-disk"
-                                            transition={0}
-                                            recyclingKey={imageSource.uri}
-                                            accessibilityLabel={`${lookupName} relic icon`}
-                                          />
-                                        </View>
-                                      </View>
-                                    );
-                                  })() : (
-                                    <View style={styles.iconOuterBorder}>
-                                      <View style={[styles.iconInnerBorder, styles.iconFallback]}>
-                                        <Text style={styles.iconFallbackText}>{lookupName}</Text>
-                                      </View>
-                                    </View>
-                                  )}
-                                  {meta && meta.latestPatchChange && (
-                                    <PatchBadgeTooltip
-                                      changeType={meta.latestPatchChange.type}
-                                      version={meta.latestPatchChange.version || 'latest'}
-                                      entityType="item"
-                                      badgeStyle={[styles.patchBadge, styles.patchBadgeSmall, styles[`patchBadge${meta.latestPatchChange.type.charAt(0).toUpperCase() + meta.latestPatchChange.type.slice(1)}`]]}
-                                      textStyle={styles.patchBadgeText}
-                                      overlayStyle={styles.tooltipOverlay}
-                                      contentStyle={styles.tooltipContent}
-                                      tooltipTextStyle={styles.tooltipText}
-                                      closeButtonStyle={styles.tooltipCloseButton}
-                                      closeTextStyle={styles.tooltipCloseText}
-                                    />
-                                  )}
-                                </View>
-                              </ItemTooltipTrigger>
-                            );
-                          };
-
-                          return (
-                            <View style={[styles.buildRow, styles.buildRelicsRowWithLabel, { marginTop: 8 }]}>
-                              <Text style={[styles.buildLabel, styles.buildLabelRelicsInline]}>Relics</Text>
-                              <View style={styles.buildRelicsInlineRow}>
-                                {onlyOneRelic ? (
-                                  <View style={styles.relicInlineGroup}>
-                                    <Text style={styles.relicInlineTag}>Relic</Text>
-                                    {renderRelicTouchable(endSlotRaw, 'one')}
-                                  </View>
-                                ) : (
-                                  <>
-                                    {startSlotRaw ? (
-                                      <View style={styles.relicInlineGroup}>
-                                        <Text style={styles.relicInlineTag}>Starter</Text>
-                                        {renderRelicTouchable(startSlotRaw, 'st')}
-                                      </View>
-                                    ) : null}
-                                    {endSlotRaw ? (
-                                      <>
-                                        {startSlotRaw ? (
-                                          <View style={styles.relicArrowAlign}>
-                                            <Text style={styles.relicInlineArrow}>→</Text>
-                                          </View>
-                                        ) : null}
-                                        <View style={styles.relicInlineGroup}>
-                                          <Text style={styles.relicInlineTag}>
-                                            {frS ? 'Final' : 'Relic'}
-                                          </Text>
-                                          {renderRelicTouchable(endSlotRaw, 'end')}
-                                        </View>
-                                      </>
-                                    ) : null}
-                                  </>
-                                )}
-                              </View>
-                            </View>
-                          );
-                        })()}
-
                         {/* Item Swaps: same expand UI as featured; contrib/community use string or object swap.item */}
-                        {currentBuild && currentBuild.itemSwaps && currentBuild.itemSwaps.length > 0 && (() => {
+                        {isExpanded && currentBuild && currentBuild.itemSwaps && currentBuild.itemSwaps.length > 0 && (() => {
                           const sectionKey = `itemSwaps-${idx}-${currentBuildIdx}`;
                           const isSectionOpen = IS_WEB || expandedCardSections[sectionKey] !== false;
                           const content = currentBuild.itemSwaps.map((swap, swapIdx) => {
@@ -4787,7 +4741,6 @@ function BuildsPage({
                           );
                         })()}
                       </View>
-                    )}
                   </View>
                 </View>
               );
@@ -5151,7 +5104,7 @@ function BuildsPage({
                         if (localUser) {
                           const userData = JSON.parse(localUser);
                           if (userData.password_hash === passwordHash) {
-                            await storage.setItem('currentUser', loginUsername.trim());
+                            await finalizeAppLogin(loginUsername.trim(), loginPassword, storage);
                             setCurrentUser(loginUsername.trim());
                             setShowLoginModal(false);
                             setLoginUsername('');
@@ -5172,7 +5125,7 @@ function BuildsPage({
                         if (localUser) {
                           const userData = JSON.parse(localUser);
                           if (userData.password_hash === passwordHash) {
-                            await storage.setItem('currentUser', loginUsername.trim());
+                            await finalizeAppLogin(loginUsername.trim(), loginPassword, storage);
                             setCurrentUser(loginUsername.trim());
                             setShowLoginModal(false);
                             setLoginUsername('');
@@ -5510,7 +5463,30 @@ const styles = StyleSheet.create({
     fontSize: IS_WEB ? 14 : 12,
     fontWeight: '600',
     textAlign: 'center',
+    flexShrink: 1,
+  },
+  contributorNameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     maxWidth: '100%',
+    gap: 4,
+  },
+  contributorVerifiedBadge: {
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: 'rgba(34, 197, 94, 0.18)',
+    borderWidth: 1,
+    borderColor: '#22c55e',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  contributorVerifiedCheck: {
+    color: '#22c55e',
+    fontSize: 10,
+    fontWeight: '800',
+    lineHeight: 12,
   },
   controls: {
     marginBottom: 12,
@@ -6259,20 +6235,31 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 0,
   },
-  buildShareButton: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 6,
-    backgroundColor: '#1e3a5f',
-    borderWidth: 1,
-    borderColor: '#3b82f6',
-    justifyContent: 'center',
+  buildAuthorLinkWrap: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     alignItems: 'center',
+    flexShrink: 1,
   },
-  buildShareButtonText: {
-    color: '#3b82f6',
-    fontSize: 14,
-    fontWeight: '600',
+  buildAuthorFxName: {
+    textDecorationLine: 'underline',
+    flexShrink: 1,
+  },
+  buildAuthorVerifiedBadge: {
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: 'rgba(34, 197, 94, 0.18)',
+    borderWidth: 1,
+    borderColor: '#22c55e',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buildAuthorVerifiedCheck: {
+    color: '#22c55e',
+    fontSize: 10,
+    fontWeight: '800',
+    lineHeight: 12,
   },
   buildAuthor: {
     color: '#94a3b8',
@@ -7339,6 +7326,16 @@ export default function App() {
   const [moreSubTab, setMoreSubTab] = useState(DEFAULT_TAB_STATE.more); // 'minigames', 'profile', 'shop', 'tools'
   const [viewingUserProfile, setViewingUserProfile] = useState(null); // Username of user profile to view
   const [currentUser, setCurrentUser] = useState(null); // Logged-in username for Shop/Profile (read from storage)
+
+  const handleMoreSubTab = useCallback((tab) => {
+    if (tab === 'profile') setViewingUserProfile(null);
+    setMoreSubTab(tab);
+  }, []);
+
+  const openOwnProfile = useCallback(() => {
+    setViewingUserProfile(null);
+    setMoreSubTab('profile');
+  }, []);
   useEffect(() => {
     storage.getItem(STORAGE_KEYS.CURRENT_USER).then((u) => setCurrentUser(u || null));
   }, []);
@@ -7446,9 +7443,10 @@ export default function App() {
               setBuildsSubTab('custom');
             }}
             onNavigateToUserProfile={(username) => {
+              const key = (username || '').toString().trim();
               setCurrentPage('more');
               setMoreSubTab('profile');
-              setViewingUserProfile(username);
+              setViewingUserProfile(key && currentUser && key.toLowerCase() === currentUser.toLowerCase() ? null : key);
             }}
           />
         </View>
@@ -7512,17 +7510,17 @@ export default function App() {
         </Suspense>
       )}
 
-      {currentPage === 'more' && (
+      <View style={currentPage === 'more' ? navStyles.pageVisible : navStyles.pageHidden} pointerEvents={currentPage === 'more' ? 'auto' : 'none'}>
         <Suspense fallback={pageSuspenseFallback}>
           <MorePage
             activeTab={moreSubTab}
             currentUsername={currentUser}
             viewUsername={viewingUserProfile}
-            onSwitchToProfile={() => setMoreSubTab('profile')}
+            onSwitchToProfile={openOwnProfile}
             onOpenSmiteWars={() => setCurrentPage('smitewars')}
             onNavigateBack={() => {
-              setCurrentPage('builds');
               setViewingUserProfile(null);
+              setCurrentPage('builds');
             }}
             onNavigateToBuilds={(godInternalName) => {
               setCurrentPage('builds');
@@ -7580,7 +7578,7 @@ export default function App() {
             }}
           />
         </Suspense>
-      )}
+      </View>
     </>
   );
 
@@ -7597,7 +7595,7 @@ export default function App() {
     patchHubSubTab,
     setPatchHubSubTab,
     moreSubTab,
-    setMoreSubTab,
+    setMoreSubTab: handleMoreSubTab,
     startTransition,
   };
 
@@ -7608,6 +7606,7 @@ export default function App() {
         style={navStyles.outerScrollView}
         contentContainerStyle={navStyles.scrollContent}
         showsVerticalScrollIndicator={isWebDesktop}
+        nestedScrollEnabled
       >
         <View style={[navStyles.container, isWebDesktop && navStyles.containerDesktop]}>
           {!isWebDesktop && <AppMainNav {...mainNavProps} />}

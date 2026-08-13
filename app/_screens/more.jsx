@@ -121,6 +121,31 @@ export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUs
     );
   }
 
+  if (activeTab === 'profile') {
+    return (
+      <View style={styles.container}>
+        <Suspense
+          fallback={
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color={COLORS.brandBlue} />
+            </View>
+          }
+        >
+          <ProfilePage
+            key={`profile-${viewUsername || 'self'}`}
+            currentUsername={currentUsername}
+            onNavigateToBuilds={onNavigateToBuilds}
+            onNavigateToGod={onNavigateToGod}
+            onNavigateToCustomBuild={onNavigateToCustomBuild}
+            onNavigateToMyBuilds={onNavigateToMyBuilds}
+            viewUsername={viewUsername}
+            onNavigateBack={onNavigateBack}
+          />
+        </Suspense>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView 
@@ -187,24 +212,6 @@ export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUs
                 <Text style={styles.sectionNote}>Leaderboards for each game coming soon!</Text>
               </View>
             </>
-          )}
-
-          {activeTab === 'profile' && (
-            <Suspense fallback={
-              <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color={COLORS.brandBlue} />
-              </View>
-            }>
-              <ProfilePage 
-                key={`profile-${activeTab}-${viewUsername || 'self'}`}
-                onNavigateToBuilds={onNavigateToBuilds} 
-                onNavigateToGod={onNavigateToGod}
-                onNavigateToCustomBuild={onNavigateToCustomBuild}
-                onNavigateToMyBuilds={onNavigateToMyBuilds}
-                viewUsername={viewUsername}
-                onNavigateBack={onNavigateBack}
-              />
-            </Suspense>
           )}
 
           {activeTab === 'tools' && (

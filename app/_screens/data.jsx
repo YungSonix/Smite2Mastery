@@ -147,6 +147,8 @@ import {
   GOLD_ICON,
 } from '../../lib/imageGrabber';
 import ItemNameMeta from '../../lib/ItemNameMeta';
+import ConquestNpcStatRows from '../../lib/ConquestNpcStatRows';
+import { getHelpTip } from '../../lib/conquestMapHelpText';
 
 // Buff colors
 const buffColors = {
@@ -853,6 +855,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
   const [conquestSectionsExpanded, setConquestSectionsExpanded] = useState({
     battleground: false,
     threeLanes: false,
+    jungle: false,
     jungleCamps: false,
     objectives: false,
     infamy: false,
@@ -4024,13 +4027,9 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                           The Queen Naga returns as a Neutral Boss that spawns only once in Fire Giant Pit at the start of the 2nd Moonlight Phase. Will despawn if not slain before dawn (18:00). Does not heal when leashed; does not respawn.
                         </Text>
                         <Text style={styles.detailBodyText}>
-                          Moonlight Queen stats (scales every 1 minute):{'\n'}
-                          Max Health: 3250 (+300 + 10*min){'\n'}
-                          Strength: 40 (+8){'\n'}
-                          Protections: 30 (+3){'\n'}
-                          Team XP Reward: 100 (+5){'\n'}
-                          Team Gold Reward: 100 (+6)
+                          Moonlight Queen stats (from CT export @ selected level):
                         </Text>
+                        <ConquestNpcStatRows profileKey="moonlight_queen" stackLevel={5} styles={styles} />
                         <Text style={styles.detailBodyText}>
                           Kill rewards:{'\n'}
                           • Grants all team members Moonlight Queen's Favor{'\n'}
@@ -4108,6 +4107,11 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         <Image source={titanIcons['Titan']} style={styles.detailListItemIcon} contentFit="contain" cachePolicy="memory-disk" />
                         <Text style={styles.detailListItemText}>• <Text style={styles.detailListBold}>The Titan:</Text> The heart of the base. A powerful boss in its own right, it will defend itself fiercely. The first team to destroy the enemy Titan claims victory.</Text>
                       </View>
+                    </View>
+                    <View style={styles.detailSubsection}>
+                      <Text style={styles.detailSubsectionTitle}>Structure stats (from game export)</Text>
+                      <Text style={styles.detailBodyText}>Phoenix, towers, and titans use static CT profiles (no camp reward scaling).</Text>
+                      <ConquestNpcStatRows profileKey="phoenix" stackLevel={0} styles={styles} />
                     </View>
                   </View>
 
@@ -4525,40 +4529,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         </Text>
                       </TouchableOpacity>
                       {expandedBosses['pyromancer'] && (
-                      <View style={styles.detailCampStats}>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{50 + (5 * bossLevel)} (Global)</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{75 + (6 * bossLevel)} (Global)</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Health:</Text>
-                          <Text style={styles.detailCampStatValue}>{Math.min(2250 + (100 * bossLevel), 10000)} (Cap @ 10000)</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
-                          <Text style={styles.detailCampStatValue}>{Math.min(27 + (3 * bossLevel), 100)} (Cap @ 100)</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Power:</Text>
-                          <Text style={styles.detailCampStatValue}>{40 + (8 * bossLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>400</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>1</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
-                          <Text style={styles.detailCampStatValue}>40</Text>
-                        </View>
-                      </View>
+                      <ConquestNpcStatRows profileKey="pyromancer" stackLevel={bossLevel} styles={styles} />
                       )}
                     </View>
 
@@ -4577,40 +4548,12 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         </Text>
                       </TouchableOpacity>
                       {expandedBosses['gold-fury'] && (
-                      <View style={styles.detailCampStats}>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{60 + (5 * bossLevel)} (Global)</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{156 + (6 * bossLevel)} (Global)</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Health:</Text>
-                          <Text style={styles.detailCampStatValue}>{Math.min(2750 + (100 * bossLevel), 11000)} (Cap @ 11000)</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
-                          <Text style={styles.detailCampStatValue}>{Math.min(30 + (3 * bossLevel), 120)} (Cap @ 120)</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Power:</Text>
-                          <Text style={styles.detailCampStatValue}>{67 + (8 * bossLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>450</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>1</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
-                          <Text style={styles.detailCampStatValue}>40</Text>
-                        </View>
-                      </View>
+                      <ConquestNpcStatRows
+                        profileKey="gold_fury"
+                        stackLevel={bossLevel}
+                        styles={styles}
+                        footerNote={getHelpTip('GoldFury.Reward.Description')}
+                      />
                       )}
                     </View>
 
@@ -4629,40 +4572,12 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         </Text>
                       </TouchableOpacity>
                       {expandedBosses['ancient-fury'] && (
-                      <View style={styles.detailCampStats}>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{60 + (5 * bossLevel)} (Global)</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{156 + (6 * bossLevel)} (Global)</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Health:</Text>
-                          <Text style={styles.detailCampStatValue}>{Math.min(3200 + (100 * bossLevel), 12500)} (Cap @ 12500)</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
-                          <Text style={styles.detailCampStatValue}>{Math.min(30 + (3 * bossLevel), 120)} (Cap @ 120)</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Power:</Text>
-                          <Text style={styles.detailCampStatValue}>{80 + (8 * bossLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>450</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>1</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
-                          <Text style={styles.detailCampStatValue}>40</Text>
-                        </View>
-                      </View>
+                      <ConquestNpcStatRows
+                        profileKey="gold_fury"
+                        stackLevel={bossLevel}
+                        styles={styles}
+                        footerNote="Ancient Fury uses Gold Fury CT base stats; Moonlight phase escalation adds enhanced rewards/debuff."
+                      />
                       )}
                     </View>
 
@@ -4681,40 +4596,12 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         </Text>
                       </TouchableOpacity>
                       {expandedBosses['fire-giant'] && (
-                      <View style={styles.detailCampStats}>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{200 + (5 * bossLevel)} (Global)</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{180 + (6 * bossLevel)} (Global)</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Health:</Text>
-                          <Text style={styles.detailCampStatValue}>{Math.min(6300 + (100 * bossLevel), 16500)} (Cap @ 16500)</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
-                          <Text style={styles.detailCampStatValue}>{Math.min(48 + (4 * bossLevel), 150)} (Cap @ 150)</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Power:</Text>
-                          <Text style={styles.detailCampStatValue}>120 str, 60 int + (8 per level)</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>0</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>1</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
-                          <Text style={styles.detailCampStatValue}>40</Text>
-                        </View>
-                      </View>
+                      <ConquestNpcStatRows
+                        profileKey="fire_giant"
+                        stackLevel={bossLevel}
+                        styles={styles}
+                        footerNote={getHelpTip('FireGiant.1.Description')}
+                      />
                       )}
                     </View>
                   </View>
@@ -4742,27 +4629,27 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                     <View style={styles.detailList}>
                       <View style={styles.detailListItem}>
                         <Image source={buffIcons['Caustic']} style={styles.detailListItemIcon} contentFit="contain" cachePolicy="memory-disk" />
-                        <Text style={styles.detailListItemText}>• <Text style={[styles.detailListBold, { color: buffColors['Caustic'] }]}>Red Buff (Caustic):</Text> Attacks and abilities apply poison that deals 2.5% of Max Health over 3 seconds.</Text>
+                        <Text style={styles.detailListItemText}>• <Text style={[styles.detailListBold, { color: buffColors['Caustic'] }]}>Red Buff (Blight):</Text> {getHelpTip('Blight.1.Description')}</Text>
                       </View>
                       <View style={styles.detailListItem}>
                         <Image source={buffIcons['Primal']} style={styles.detailListItemIcon} contentFit="contain" cachePolicy="memory-disk" />
-                        <Text style={styles.detailListItemText}>• <Text style={[styles.detailListBold, { color: buffColors['Primal'] }]}>Blue Buff (Primal):</Text> Gain +5 Mana Regeneration.</Text>
+                        <Text style={styles.detailListItemText}>• <Text style={[styles.detailListBold, { color: buffColors['Primal'] }]}>Blue Buff (Primal):</Text> {getHelpTip('Primal.1.Description')}</Text>
                       </View>
                       <View style={styles.detailListItem}>
                         <Image source={buffIcons['Inspiration']} style={styles.detailListItemIcon} contentFit="contain" cachePolicy="memory-disk" />
-                        <Text style={styles.detailListItemText}>• <Text style={[styles.detailListBold, { color: buffColors['Inspiration'] }]}>Purple Buff (Inspiration):</Text> Gain +4 Strength and Intelligence, once per ability hit or basic attack hit. Max 5 stacks.</Text>
+                        <Text style={styles.detailListItemText}>• <Text style={[styles.detailListBold, { color: buffColors['Inspiration'] }]}>Purple Buff (Inspiration):</Text> {getHelpTip('InspirationV2.1.Description')}</Text>
                       </View>
                       <View style={styles.detailListItem}>
                         <Image source={buffIcons['Pathfinder']} style={styles.detailListItemIcon} contentFit="contain" cachePolicy="memory-disk" />
-                        <Text style={styles.detailListItemText}>• <Text style={[styles.detailListBold, { color: buffColors['Pathfinder'] }]}>Yellow Buff (Pathfinder):</Text> Gain +10% Movement Speed. Recover 10% of the monster's health as healing and restore 25 mana.</Text>
+                        <Text style={styles.detailListItemText}>• <Text style={[styles.detailListBold, { color: buffColors['Pathfinder'] }]}>Yellow Buff (Pathfinder):</Text> {getHelpTip('Pathfinder.1.Description')}</Text>
                       </View>
                     </View>
                   </View>
 
                   <View style={styles.detailSubsection}>
-                    <Text style={styles.detailSubsectionTitle}>Jungle Camps: Levels Every 3 Minutes</Text>
+                    <Text style={styles.detailSubsectionTitle}>Jungle Camps: Reward Scaling Every 3 Minutes</Text>
                     <Text style={styles.detailBodyText}>
-                      Jungle camps level up every 3 minutes, increasing their stats and rewards. Adjust the level below to see values at different stages:
+                      Jungle camps scale rewards over match time (+8% XP and +2% Gold per 3 minutes). Combat stats level every 3 minutes. Adjust the level below to see values at different stages:
                     </Text>
                     
                     <View style={styles.campLevelControls}>
@@ -4801,40 +4688,12 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         </Text>
                       </TouchableOpacity>
                       {expandedCamps['alpha-buff'] && (
-                      <View style={styles.detailCampStats}>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{86 + (9 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{(56 + (0.5 * campLevel)).toFixed(1)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Health:</Text>
-                          <Text style={styles.detailCampStatValue}>{975 + (133 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
-                          <Text style={styles.detailCampStatValue}>{26 + (3 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Power:</Text>
-                          <Text style={styles.detailCampStatValue}>{15 + (3 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>325</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>1</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
-                          <Text style={styles.detailCampStatValue}>10</Text>
-                        </View>
-                      </View>
+                      <ConquestNpcStatRows
+                        profileKey="camp_blue"
+                        stackLevel={campLevel}
+                        styles={styles}
+                        footerNote="Primal (Blue) buff camp · Centaur alpha. Purple and Yellow camps use the same combat values."
+                      />
                       )}
                     </View>
 
@@ -4905,40 +4764,12 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         </Text>
                       </TouchableOpacity>
                       {expandedCamps['alpha-mid'] && (
-                      <View style={styles.detailCampStats}>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{86 + (9 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{(56 + (0.5 * campLevel)).toFixed(1)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Health:</Text>
-                          <Text style={styles.detailCampStatValue}>{675 + (133 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
-                          <Text style={styles.detailCampStatValue}>{18 + (3 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Power:</Text>
-                          <Text style={styles.detailCampStatValue}>{15 + (3 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>325</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>1</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
-                          <Text style={styles.detailCampStatValue}>10</Text>
-                        </View>
-                      </View>
+                      <ConquestNpcStatRows
+                        profileKey="camp_red"
+                        stackLevel={campLevel}
+                        styles={styles}
+                        footerNote="Blight (Red) buff camp · Chimera alpha."
+                      />
                       )}
                     </View>
 
@@ -5009,40 +4840,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         </Text>
                       </TouchableOpacity>
                       {expandedCamps['cyclops'] && (
-                      <View style={styles.detailCampStats}>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{86 + (9 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{(56 + (0.5 * campLevel)).toFixed(1)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Health:</Text>
-                          <Text style={styles.detailCampStatValue}>{702 + (140 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
-                          <Text style={styles.detailCampStatValue}>{19 + (3 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Power:</Text>
-                          <Text style={styles.detailCampStatValue}>{15 + (3 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>325</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>1</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
-                          <Text style={styles.detailCampStatValue}>10</Text>
-                        </View>
-                      </View>
+                      <ConquestNpcStatRows profileKey="camp_cyclops" stackLevel={campLevel} styles={styles} />
                       )}
                     </View>
 
@@ -5113,40 +4911,12 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         </Text>
                       </TouchableOpacity>
                       {expandedCamps['oracle'] && (
-                      <View style={styles.detailCampStats}>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{86 + (9 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{(57 + (0.5 * campLevel)).toFixed(1)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Health:</Text>
-                          <Text style={styles.detailCampStatValue}>{675 + (133 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
-                          <Text style={styles.detailCampStatValue}>{18 + (3 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Power:</Text>
-                          <Text style={styles.detailCampStatValue}>{15 + (3 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>325</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>1</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
-                          <Text style={styles.detailCampStatValue}>10</Text>
-                        </View>
-                      </View>
+                      <ConquestNpcStatRows
+                        profileKey="oracle"
+                        stackLevel={campLevel}
+                        styles={styles}
+                        footerNote={`Killing grants ${getHelpTip('EyesOfTheJungle.Description')}`}
+                      />
                       )}
                     </View>
 
@@ -5165,40 +4935,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         </Text>
                       </TouchableOpacity>
                       {expandedCamps['scorpion'] && (
-                      <View style={styles.detailCampStats}>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{146 + (9 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{(110 + (0.5 * campLevel)).toFixed(1)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Health:</Text>
-                          <Text style={styles.detailCampStatValue}>{1350 + (133 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
-                          <Text style={styles.detailCampStatValue}>{26 + (3 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Power:</Text>
-                          <Text style={styles.detailCampStatValue}>{45 + (3 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>325</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>1</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
-                          <Text style={styles.detailCampStatValue}>10</Text>
-                        </View>
-                      </View>
+                      <ConquestNpcStatRows profileKey="camp_scorpion" stackLevel={campLevel} styles={styles} />
                       )}
                     </View>
 
@@ -5217,40 +4954,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         </Text>
                       </TouchableOpacity>
                       {expandedCamps['rogue-cyclops'] && (
-                      <View style={styles.detailCampStats}>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>0</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{45 + (5 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Health:</Text>
-                          <Text style={styles.detailCampStatValue}>{702 + (140 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
-                          <Text style={styles.detailCampStatValue}>{19 + (3 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Power:</Text>
-                          <Text style={styles.detailCampStatValue}>{12 + (3 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>325</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>1</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
-                          <Text style={styles.detailCampStatValue}>10</Text>
-                        </View>
-                      </View>
+                      <ConquestNpcStatRows profileKey="camp_rogues" stackLevel={campLevel} styles={styles} />
                       )}
                     </View>
 
@@ -5321,40 +5025,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                         </Text>
                       </TouchableOpacity>
                       {expandedCamps['elder-harpy'] && (
-                      <View style={styles.detailCampStats}>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>XP Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{72 + (9 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Gold Reward:</Text>
-                          <Text style={styles.detailCampStatValue}>{(33 + (0.5 * campLevel)).toFixed(1)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Health:</Text>
-                          <Text style={styles.detailCampStatValue}>{619 + (75 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Protections:</Text>
-                          <Text style={styles.detailCampStatValue}>{21 + (1 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Power:</Text>
-                          <Text style={styles.detailCampStatValue}>{15 + (2 * campLevel)}</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Movement Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>325</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Attack Speed:</Text>
-                          <Text style={styles.detailCampStatValue}>1</Text>
-                        </View>
-                        <View style={styles.detailCampStatRow}>
-                          <Text style={styles.detailCampStatLabel}>Max Level:</Text>
-                          <Text style={styles.detailCampStatValue}>10</Text>
-                        </View>
-                      </View>
+                      <ConquestNpcStatRows profileKey="camp_trinket" stackLevel={campLevel} styles={styles} footerNote="Trinket camp · Harpy family." />
                       )}
                     </View>
 
@@ -5571,7 +5242,7 @@ export default function DataPage({ initialSelectedGod = null, initialExpandAbili
                 </View>
 
                 <View style={styles.detailSection}>
-                  <Text style={styles.detailSectionTitle}>Interactive Map(Will be updated later this week)</Text>
+                  <Text style={styles.detailSectionTitle}>Interactive Map</Text>
                   <Text style={styles.detailBodyText}>
                     Explore the Conquest map with this interactive tool. Click on structures, objectives, and jungle camps to learn more about them.
                   </Text>

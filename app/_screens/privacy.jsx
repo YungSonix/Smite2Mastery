@@ -93,6 +93,16 @@ export default function PrivacyPage() {
         </View>
 
         <View style={styles.section}>
+          <Text style={styles.subsectionTitle}>📝 Scroll Trivia contests</Text>
+          <Text style={styles.bodyText}>
+            Optional web contests hosted at /formative (Scroll Trivia) may ask for your Discord
+            Username and In-Game Name. When you submit answers, we may store those identifiers
+            together with your IP address and basic browser user-agent for contest integrity and
+            anti-cheat. Do not submit if you do not agree.
+          </Text>
+        </View>
+
+        <View style={styles.section}>
           <Text style={styles.subsectionTitle}>🌐 External Links</Text>
           <Text style={styles.bodyText}>
             This app may contain links to external websites (such as SMITE 2 news). When you click these links, 
@@ -124,7 +134,7 @@ export default function PrivacyPage() {
             in this page and our Privacy Policy.
           </Text>
           <Text style={styles.updateDate}>
-            Last updated: November 27, 2025
+            Last updated: August 11, 2026
           </Text>
         </View>
 

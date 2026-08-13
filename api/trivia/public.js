@@ -1,0 +1,46 @@
+const { supabaseAdmin, send, sanitizeQuestionForPublic, buildVariantMap, applyVariant } = require('../../lib/server/triviaApi');
+
+module.exports = async function handler(req, res) {
+  if (req.method !== 'GET') return send(res, 405, { error: 'Method not allowed' });
+  try {
+    const url = new URL(req.url, 'http://localhost');
+    const slug = String(url.searchParams.get('slug') || '').trim();
+    const discord = String(url.searchParams.get('discord') || '').trim();
+    if (!slug) return send(res, 400, { error: 'Missing slug' });
+
+    const sb = supabaseAdmin();
+    const { data: quiz, error } = await sb
+      .from('trivia_quizzes')
+      .select('id, slug, title, banner_url, join_code, is_assigned, settings')
+      .eq('slug', slug)
+      .eq('is_assigned', true)
+      .maybeSingle();
+    if (error) return send(res, 500, { error: error.message });
+    if (!quiz) return send(res, 404, { error: 'Quiz not found or not assigned' });
+
+    const { data: questions, error: qErr } = await sb
+      .from('trivia_questions')
+      .select('id, sort_order, type, prompt, points, required, options, image_url, meta')
+      .eq('quiz_id', quiz.id)
+      .order('sort_order', { ascending: true });
+    if (qErr) return send(res, 500, { error: qErr.message });
+
+    const rows = questions || [];
+    // With Discord: resolve one variant per question (anti-share). Without: send sanitized pools.
+    if (discord) {
+      const map = buildVariantMap(rows, slug, discord);
+      const resolved = rows.map((q) => {
+        const applied = applyVariant(q, map[q.id] ?? 0);
+        return sanitizeQuestionForPublic(applied);
+      });
+      return send(res, 200, { quiz, questions: resolved, variant_map: map });
+    }
+
+    return send(res, 200, {
+      quiz,
+      questions: rows.map((q) => sanitizeQuestionForPublic(q)),
+    });
+  } catch (e) {
+    return send(res, 500, { error: e.message || 'Failed to load quiz' });
+  }
+};

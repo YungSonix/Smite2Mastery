@@ -14,6 +14,7 @@ import {
   Platform,
 } from 'react-native';
 import { COLORS } from '../../lib/themeColors';
+import { UI_THEME } from '../../lib/uiTheme';
 import * as Updates from 'expo-updates';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PrivacyPage from './privacy';
@@ -27,6 +28,9 @@ import {
   STORAGE_KEYS,
   VERSION_HISTORY,
 } from '../../config';
+
+const { getNewGodPatchAsset } = require('../../lib/newGodPatchImages');
+const OB38_CHRONOS_HERO = getNewGodPatchAsset('ob38-chronos')?.source;
 
 export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
   // Use responsive screen dimensions
@@ -542,7 +546,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
         <View style={styles.modalOverlay}>
           <View style={styles.updatePopupContainer}>
             <View style={styles.updatePopupHeader}>
-              <Text style={styles.updatePopupTitle}>App Updated</Text>
+              <Text style={styles.updatePopupTitle}>What's New</Text>
               <TouchableOpacity
                 style={styles.updatePopupCloseButton}
                 onPress={async () => {
@@ -1062,7 +1066,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
         {/* Hero Banner with Latest Patch */}
         <View style={styles.heroBanner}>
           <Image
-            source={{ uri: NEWS_CONFIG.openBeta.image }}
+            source={OB38_CHRONOS_HERO ?? { uri: NEWS_CONFIG.openBeta.image }}
             style={styles.heroImage}
             resizeMode="contain"
             contentFit="contain"
@@ -1610,44 +1614,50 @@ const styles = StyleSheet.create({
   // Update Popup Modal Styles
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: UI_THEME.overlayScrim,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
   updatePopupContainer: {
-    backgroundColor: COLORS.bgDeep,
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: COLORS.brandBlue,
+    backgroundColor: UI_THEME.cardBg,
+    borderRadius: UI_THEME.radiusCard,
+    borderWidth: 1,
+    borderColor: UI_THEME.borderCyan,
     width: '100%',
-    maxWidth: 400,
+    maxWidth: 420,
     padding: 20,
-    shadowColor: COLORS.black,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 10,
+    ...(Platform.OS === 'web'
+      ? { boxShadow: '0 8px 32px rgba(0, 0, 0, 0.45), 0 0 24px rgba(125, 211, 252, 0.12)' }
+      : {
+          shadowColor: COLORS.black,
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.35,
+          shadowRadius: 12,
+          elevation: 12,
+        }),
   },
   updatePopupHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 14,
     paddingBottom: 12,
     borderBottomWidth: 1,
-    borderBottomColor: COLORS.surfaceNavy,
+    borderBottomColor: UI_THEME.panelBorderMuted,
   },
   updatePopupTitle: {
-    color: COLORS.skySoft,
-    fontSize: 24,
+    color: UI_THEME.textPrimary,
+    fontSize: 22,
     fontWeight: '700',
   },
   updatePopupCloseButton: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: COLORS.surfaceNavy,
+    backgroundColor: '#1e3a5f',
+    borderWidth: 1,
+    borderColor: UI_THEME.borderCyan,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -1661,20 +1671,26 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   updatePopupVersion: {
-    color: COLORS.brandBlue,
-    fontSize: 18,
+    color: UI_THEME.accentSky,
+    fontSize: 15,
     fontWeight: '700',
-    marginBottom: 16,
+    marginBottom: 14,
     textAlign: 'center',
+    letterSpacing: 0.3,
   },
   updateNotesContainer: {
-    marginTop: 8,
+    marginTop: 4,
+    backgroundColor: UI_THEME.panelBgSection,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: UI_THEME.panelBorderMuted,
+    padding: 12,
   },
   updateNotesTitle: {
-    color: COLORS.skySoft,
-    fontSize: 16,
+    color: UI_THEME.textPrimary,
+    fontSize: 14,
     fontWeight: '700',
-    marginBottom: 12,
+    marginBottom: 10,
   },
   updateNoteItem: {
     flexDirection: 'row',
@@ -1682,25 +1698,25 @@ const styles = StyleSheet.create({
     paddingLeft: 4,
   },
   updateNoteBullet: {
-    color: COLORS.brandBlue,
+    color: UI_THEME.accentSky,
     fontSize: 16,
     fontWeight: '700',
     marginRight: 8,
     width: 20,
   },
   updateNoteText: {
-    color: COLORS.slate300,
+    color: UI_THEME.textBody,
     fontSize: 14,
     lineHeight: 20,
     flex: 1,
   },
   updatePopupButton: {
-    backgroundColor: COLORS.linkBlue,
+    backgroundColor: UI_THEME.accentSky,
     padding: 14,
     borderRadius: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: COLORS.linkBlue,
+    borderColor: UI_THEME.borderCyan,
   },
   updatePopupButtonText: {
     color: COLORS.white,

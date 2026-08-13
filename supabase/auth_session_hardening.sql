@@ -1,8 +1,9 @@
 -- Auth session hardening — economy RPCs require auth.uid() linked to user_data
 -- Run AFTER security_hardening_economy.sql
 --
--- Supabase Dashboard: Authentication → Providers → Email → disable "Confirm email"
--- (or users cannot sign in immediately after register)
+-- Supabase Dashboard (required for cloud sync):
+--   Authentication → Sign In / Providers → Email → ENABLE email provider
+--   Same screen → disable "Confirm email" (or users cannot sign in right after register)
 
 -- Must match lib/appAuth.js usernameToAuthEmail()
 create or replace function public.username_to_auth_email(p_username text)

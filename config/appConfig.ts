@@ -1,16 +1,29 @@
 import { EXTERNAL_LINKS } from './networkConfig';
 
 export const APP_VERSION_CONFIG = {
-  currentVersion: '2.1.0',
-  previousVersion: '2.0.0',
+  currentVersion: '2.2.0',
+  previousVersion: '2.1.0',
   updateNotes: [
-    'Added new Custom Builds page.',
-    'Added new Community Builds page.',
-    'Added new Certification Builds page.',
+    'Interactive Conquest map — day/night toggle and tap POIs for towers, camps, bosses, and objectives.',
+    'Profile refresh — grouped settings, theme colors with gradient border glow, and smoother tab switching.',
+    'Partners show live display names and a green verified checkmark on contributor builds.',
+    'Cloud sync runs automatically when you sign in — no separate Connect step.',
+    'Name effect previews in Profile are easier to read when picking animations.',
   ],
 } as const;
 
 export const VERSION_HISTORY = [
+  {
+    version: '2.2.0',
+    date: '2026-07-10',
+    updateNotes: [
+      'Interactive Conquest map — day/night toggle and tap POIs for towers, camps, bosses, and objectives.',
+      'Profile refresh — grouped settings, theme colors with gradient border glow, and smoother tab switching.',
+      'Partners show live display names and a green verified checkmark on contributor builds.',
+      'Cloud sync runs automatically when you sign in — no separate Connect step.',
+      'Name effect previews in Profile are easier to read when picking animations.',
+    ],
+  },
   {
     version: '2.0.0',
     date: '2026-01-21',
@@ -48,11 +61,11 @@ export const VERSION_HISTORY = [
 
 export const NEWS_CONFIG = {
   openBeta: {
-    version: 27,
-    title: 'Open Beta 27 - The Great Teacher Update',
-    link: EXTERNAL_LINKS.OPEN_BETA_27_NOTES,
+    version: 38,
+    title: 'Open Beta 38 — Chronos, Keeper of Time',
+    link: EXTERNAL_LINKS.OPEN_BETA_38_NOTES,
     image: EXTERNAL_LINKS.OPEN_BETA_27_IMAGE,
-    snippet: 'Read the latest SMITE 2 Open Beta update notes and patch information.',
+    snippet: 'Chronos joins the roster. Global base stat pass, penetration shifts, and Spear of the Magus.',
   },
   latestNews: {
     title: 'SMITE 2 News',

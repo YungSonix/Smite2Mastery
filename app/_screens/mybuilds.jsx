@@ -313,7 +313,7 @@ export default function MyBuildsPage({ onEditBuild = null }) {
                           if (localUser) {
                             const userData = JSON.parse(localUser);
                             if (userData.password_hash === passwordHash) {
-                              await storage.setItem('currentUser', loginUsername.trim());
+                              await finalizeAppLogin(loginUsername.trim(), loginPassword, storage);
                               setCurrentUser(loginUsername.trim());
                               setShowLoginModal(false);
                               setLoginUsername('');
@@ -350,7 +350,7 @@ export default function MyBuildsPage({ onEditBuild = null }) {
                         if (localUser) {
                           const userData = JSON.parse(localUser);
                           if (userData.password_hash === passwordHash) {
-                            await storage.setItem('currentUser', loginUsername.trim());
+                            await finalizeAppLogin(loginUsername.trim(), loginPassword, storage);
                             setCurrentUser(loginUsername.trim());
                             setShowLoginModal(false);
                             setLoginUsername('');

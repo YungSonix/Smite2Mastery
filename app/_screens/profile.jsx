@@ -14,8 +14,8 @@ import {
   AppState,
   Image,
   Linking,
-  Share,
   Animated,
+  Switch,
 } from 'react-native';
 // Import supabase with fallback for missing config
 let supabase;
@@ -61,18 +61,24 @@ import { getLocalItemIcon, getLocalGodAsset } from '../localIcons';
 import ColorPicker from 'react-native-wheel-color-picker';
 import { EXTERNAL_LINKS, ICON_PATHS, REMOTE_BASE_URLS } from '../../config';
 import { UI_THEME } from '../../lib/uiTheme';
+import { setLiveDisplayName } from '../../lib/profileDisplayNameLive';
 import { useAppFonts, FONT_FAMILY_BY_KEY } from '../../lib/appFonts';
 import { useAbilityTooltipDetail } from '../../hooks/useAbilityTooltipDetail';
 import { useItemTooltipDetail } from '../../hooks/useItemTooltipDetail';
-import { ABILITY_TOOLTIP_DETAIL } from '../../lib/abilityTooltipDetail';
-import { ITEM_TOOLTIP_DETAIL } from '../../lib/itemTooltipDetail';
+import { TOOLTIP_DETAIL } from '../../lib/tooltipDetail';
 import {
   finalizeAppLogin,
   completeAppLogout,
-  establishSupabaseAuthSession,
   restoreAppAuthSession,
   ensureAppWriteSession,
 } from '../../lib/appAuth';
+import { syncLocalAccountToCloud, getAccountSyncStatus } from '../../lib/accountSync';
+import { upsertUserProfileFields } from '../../lib/profileCosmeticsSync';
+import { GOLD_ICON } from '../../lib/imageGrabber';
+import {
+  resolveProfileThemeStops,
+  ProfileGradientBorderWrap,
+} from '../../lib/profileGradient';
 
 // Calculate dynamic font size based on text length and optional screen width (for responsive layout)
 const getProfileNameFontSize = (text, screenWidth) => {
@@ -449,6 +455,39 @@ const normalizeGradientStops = (input) => {
   const parsed = raw.map(normalizeHex).filter(Boolean);
   if (parsed.length < 2) return null;
   return parsed.slice(0, 5);
+};
+/** HTML color inputs require lowercase #rrggbb — uppercase hex breaks the picker on web. */
+const hexForColorInput = (value, fallback = '#7dd3fc') => {
+  const normalized = normalizeHex(value);
+  return (normalized || normalizeHex(fallback) || '#7dd3fc').toLowerCase();
+};
+const hexToRgbTriplet = (hex) => {
+  const normalized = normalizeHex(hex);
+  if (!normalized) return null;
+  const raw = normalized.slice(1);
+  const parseChannel = (pair) => parseInt(pair, 16);
+  if (raw.length === 3) {
+    return [parseChannel(raw[0] + raw[0]), parseChannel(raw[1] + raw[1]), parseChannel(raw[2] + raw[2])];
+  }
+  return [parseChannel(raw.slice(0, 2)), parseChannel(raw.slice(2, 4)), parseChannel(raw.slice(4, 6))];
+};
+const hexLuminance01 = (hex) => {
+  const rgb = hexToRgbTriplet(hex);
+  if (!rgb) return 1;
+  return (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255;
+};
+/** Lift dark effect colors so modal previews stay readable on navy tiles. */
+const brightenHexForPreview = (hex, mixTowardWhite = 0.55) => {
+  const rgb = hexToRgbTriplet(hex);
+  if (!rgb) return hex || '#E2E8F0';
+  if (hexLuminance01(hex) >= 0.4) return normalizeHex(hex) || hex;
+  const blend = (channel) => Math.round(channel + (255 - channel) * mixTowardWhite);
+  const toHex = (n) => n.toString(16).padStart(2, '0');
+  return `#${toHex(blend(rgb[0]))}${toHex(blend(rgb[1]))}${toHex(blend(rgb[2]))}`.toUpperCase();
+};
+const previewColorStops = (stops) => {
+  const list = Array.isArray(stops) ? stops : [stops];
+  return list.map((c) => brightenHexForPreview(c));
 };
 const getStatNumber = (obj, candidates = []) => {
   const parseNumericLike = (input) => {
@@ -978,7 +1017,7 @@ function fxSamplePalette(palette, pos) {
 
 // Renders each character separately so we can do multi-color gradients, per-letter
 // solid colors, and staggered waves on both native and web.
-function LetterFx({ text, cfg, accent, style, numberOfLines }) {
+function LetterFx({ text, cfg, accent, style, numberOfLines, previewMode = false }) {
   const anim = useRef(new Animated.Value(0)).current;
   const animated = !!(cfg.flow || cfg.motion);
   useEffect(() => {
@@ -992,7 +1031,8 @@ function LetterFx({ text, cfg, accent, style, numberOfLines }) {
   }, [anim, animated, cfg.d]);
 
   const chars = String(text || 'Profile').split('');
-  const palette = cfg.palette && cfg.palette.length ? cfg.palette : [accent || '#7dd3fc'];
+  const rawPalette = cfg.palette && cfg.palette.length ? cfg.palette : [accent || '#7dd3fc'];
+  const palette = previewMode ? previewColorStops(rawPalette) : rawPalette;
   const single = numberOfLines === 1;
   const half = cfg.dual ? Math.ceil(chars.length / 2) : 0;
 
@@ -1055,9 +1095,10 @@ const letterFxStyles = StyleSheet.create({
 
 // Renders stacked offset copies of the text to fake CSS multi-layer text-shadows
 // (neon, fire, 3D extrude, board-game, outline, RGB split) — same on web + native.
-function ShadowFx({ text, cfg, accent, style, numberOfLines, fxAnim }) {
+function ShadowFx({ text, cfg, accent, style, numberOfLines, fxAnim, previewMode = false }) {
   const label = text || 'Profile';
-  const base = cfg.base || accent || '#e2e8f0';
+  const rawBase = cfg.base || accent || '#e2e8f0';
+  const base = previewMode ? brightenHexForPreview(rawBase) : rawBase;
   const layers = cfg.layers || [];
   const flickerOpacity = cfg.flicker
     ? fxAnim.interpolate({
@@ -1120,7 +1161,7 @@ const shadowFxStyles = StyleSheet.create({
 });
 
 // Animated profile name effects used for both own and viewed profiles
-function AnimatedProfileName({ name, animationType, accentColor, style, numberOfLines = 1, ellipsizeMode = 'tail' }) {
+function AnimatedProfileName({ name, animationType, accentColor, style, numberOfLines = 1, ellipsizeMode = 'tail', previewMode = false }) {
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const shimmerAnim = useRef(new Animated.Value(0)).current;
   const gradientAnim = useRef(new Animated.Value(0)).current;
@@ -1363,28 +1404,32 @@ function AnimatedProfileName({ name, animationType, accentColor, style, numberOf
   }, [animationType, pulseAnim, shimmerAnim, gradientAnim, flameAnim, infernoAnim, emberAnim, voidAnim, arcaneAnim, divineAnim, stormAnim, pantheonAnim, neonAnim, comicAnim, metallicAnim, iceAnim, glowAnim, lavaAnim, shadowDanceAnim, glowBreathAnim, outlinePulseAnim, frostAnim, fxAnim]);
 
   const accent = accentColor || '#7dd3fc';
+  const pv = (colors) => (previewMode ? previewColorStops(colors) : colors);
   const letterCfg = FX_LETTER_CONFIG[animationType];
   if (letterCfg) {
-    return <LetterFx text={name} cfg={letterCfg} accent={accent} style={style} numberOfLines={numberOfLines} />;
+    return <LetterFx text={name} cfg={letterCfg} accent={accent} style={style} numberOfLines={numberOfLines} previewMode={previewMode} />;
   }
   const shadowCfg = FX_SHADOW_CONFIG[animationType];
   if (shadowCfg) {
-    return <ShadowFx text={name} cfg={shadowCfg} accent={accent} style={style} numberOfLines={numberOfLines} fxAnim={fxAnim} />;
+    return <ShadowFx text={name} cfg={shadowCfg} accent={accent} style={style} numberOfLines={numberOfLines} fxAnim={fxAnim} previewMode={previewMode} />;
   }
-  const textStyle = [style, (animationType === 'none') && { color: accent }];
+  const textStyle = [style, { color: accent }];
   if (animationType === 'pulse') {
     const scale = pulseAnim.interpolate({ inputRange: [0.72, 1], outputRange: [0.97, 1] });
+    const opacity = previewMode
+      ? pulseAnim.interpolate({ inputRange: [0.72, 1], outputRange: [0.88, 1] })
+      : pulseAnim;
     return (
-      <Animated.Text numberOfLines={numberOfLines} ellipsizeMode={ellipsizeMode} style={[textStyle, { opacity: pulseAnim, transform: [{ scale }] }]}>
+      <Animated.Text numberOfLines={numberOfLines} ellipsizeMode={ellipsizeMode} style={[textStyle, { opacity, transform: [{ scale }] }]}>
         {name || 'Profile'}
       </Animated.Text>
     );
   }
   if (animationType === 'shimmer') {
-    const opacity = shimmerAnim.interpolate({ inputRange: [0, 1], outputRange: [0.45, 1] });
+    const opacity = shimmerAnim.interpolate({ inputRange: [0, 1], outputRange: previewMode ? [0.78, 1] : [0.45, 1] });
     const scale = shimmerAnim.interpolate({ inputRange: [0, 1], outputRange: [0.985, 1] });
     return (
-      <Animated.Text numberOfLines={numberOfLines} ellipsizeMode={ellipsizeMode} style={[textStyle, { opacity, transform: [{ scale }], textShadowColor: accent, textShadowRadius: 8 }]}>
+      <Animated.Text numberOfLines={numberOfLines} ellipsizeMode={ellipsizeMode} style={[textStyle, { opacity, transform: [{ scale }], textShadowColor: accent, textShadowRadius: previewMode ? 10 : 8 }]}>
         {name || 'Profile'}
       </Animated.Text>
     );
@@ -1426,7 +1471,7 @@ function AnimatedProfileName({ name, animationType, accentColor, style, numberOf
   if (animationType === 'inferno') {
     const animatedColor = infernoAnim.interpolate({
       inputRange: [0, 0.2, 0.4, 0.6, 0.8, 1],
-      outputRange: ['#7f1d1d', '#b91c1c', '#fef3c7', '#fcd34d', '#b91c1c', '#7f1d1d'],
+      outputRange: pv(['#7f1d1d', '#b91c1c', '#fef3c7', '#fcd34d', '#b91c1c', '#7f1d1d']),
     });
     const shadowRadius = infernoAnim.interpolate({
       inputRange: [0, 0.5, 1],
@@ -1445,7 +1490,7 @@ function AnimatedProfileName({ name, animationType, accentColor, style, numberOf
   if (animationType === 'ember') {
     const animatedColor = emberAnim.interpolate({
       inputRange: [0, 0.35, 0.65, 1],
-      outputRange: ['#9a3412', '#ea580c', '#fcd34d', '#9a3412'],
+      outputRange: pv(['#9a3412', '#ea580c', '#fcd34d', '#9a3412']),
     });
     const shadowRadius = emberAnim.interpolate({
       inputRange: [0, 0.5, 1],
@@ -1464,7 +1509,7 @@ function AnimatedProfileName({ name, animationType, accentColor, style, numberOf
   if (animationType === 'void') {
     const animatedColor = voidAnim.interpolate({
       inputRange: [0, 0.33, 0.66, 1],
-      outputRange: ['#1e1b4b', '#4c1d95', '#7c3aed', '#1e1b4b'],
+      outputRange: pv(['#1e1b4b', '#4c1d95', '#7c3aed', '#1e1b4b']),
     });
     const shadowRadius = voidAnim.interpolate({
       inputRange: [0, 0.5, 1],
@@ -1483,7 +1528,7 @@ function AnimatedProfileName({ name, animationType, accentColor, style, numberOf
   if (animationType === 'arcane') {
     const animatedColor = arcaneAnim.interpolate({
       inputRange: [0, 0.25, 0.5, 0.75, 1],
-      outputRange: ['#5b21b6', '#a78bfa', '#c4b5fd', '#a78bfa', '#5b21b6'],
+      outputRange: pv(['#5b21b6', '#a78bfa', '#c4b5fd', '#a78bfa', '#5b21b6']),
     });
     const shadowRadius = arcaneAnim.interpolate({
       inputRange: [0, 0.5, 1],
@@ -1615,7 +1660,7 @@ function AnimatedProfileName({ name, animationType, accentColor, style, numberOf
   if (animationType === 'glow') {
     const animatedColor = glowAnim.interpolate({
       inputRange: [0, 0.5, 1],
-      outputRange: ['#6d28d9', '#a78bfa', '#6d28d9'],
+      outputRange: pv(['#6d28d9', '#a78bfa', '#6d28d9']),
     });
     const shadowRadius = glowAnim.interpolate({ inputRange: [0, 0.5, 1], outputRange: [8, 16, 8] });
     return (
@@ -1627,7 +1672,7 @@ function AnimatedProfileName({ name, animationType, accentColor, style, numberOf
   if (animationType === 'lava') {
     const animatedColor = lavaAnim.interpolate({
       inputRange: [0, 0.2, 0.5, 0.8, 1],
-      outputRange: ['#431407', '#c2410c', '#fdba74', '#c2410c', '#431407'],
+      outputRange: pv(['#431407', '#c2410c', '#fdba74', '#c2410c', '#431407']),
     });
     const shadowRadius = lavaAnim.interpolate({ inputRange: [0, 0.5, 1], outputRange: [6, 12, 6] });
     return (
@@ -1670,11 +1715,12 @@ function AnimatedProfileName({ name, animationType, accentColor, style, numberOf
   }
   if (animationType === 'outline_pulse') {
     const shadowRadius = outlinePulseAnim.interpolate({ inputRange: [0, 0.5, 1], outputRange: [6, 14, 6] });
+    const fillColor = previewMode ? brightenHexForPreview('#0f172a', 0.72) : '#0f172a';
     return (
       <Animated.Text
         numberOfLines={numberOfLines}
         ellipsizeMode={ellipsizeMode}
-        style={[style, { color: '#0f172a', textShadowColor: accent || '#38bdf8', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: shadowRadius }]}
+        style={[textStyle, { color: fillColor, textShadowColor: accent || '#38bdf8', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: shadowRadius }]}
       >
         {name || 'Profile'}
       </Animated.Text>
@@ -1696,9 +1742,9 @@ function AnimatedProfileName({ name, animationType, accentColor, style, numberOf
   // —— CSS-inspired flowing color effects (shared fxAnim driver) ——
   const flowCfg = FX_FLOW_CONFIG[animationType];
   if (flowCfg) {
-    const stops = flowCfg.colors.length;
-    const inputRange = flowCfg.colors.map((_, i) => (stops === 1 ? 0 : i / (stops - 1)));
-    const animatedColor = fxAnim.interpolate({ inputRange, outputRange: flowCfg.colors });
+    const stops = pv(flowCfg.colors);
+    const inputRange = stops.length === 1 ? [0] : stops.map((_, i) => i / (stops.length - 1));
+    const animatedColor = fxAnim.interpolate({ inputRange, outputRange: stops });
     const shadowRadius = flowCfg.glowPulse
       ? fxAnim.interpolate({ inputRange: [0, 0.5, 1], outputRange: [4, 16, 4] })
       : 9;
@@ -1852,6 +1898,48 @@ const getGodIconUrl = (godName) => {
 };
 
 const IS_WEB = Platform.OS === 'web';
+const WEB_COLOR_INPUT_FULL = IS_WEB
+  ? { width: '100%', height: 44, borderRadius: 8, border: 'none', background: '#0f1724', cursor: 'pointer' }
+  : undefined;
+const WEB_COLOR_INPUT_COMPACT = IS_WEB
+  ? { width: 48, height: 44, border: 'none', borderRadius: 8, background: 'transparent', cursor: 'pointer', flexShrink: 0 }
+  : undefined;
+const WEB_COLOR_INPUT_OVERLAY = IS_WEB
+  ? {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      opacity: 0,
+      cursor: 'pointer',
+      border: 'none',
+      padding: 0,
+      margin: 0,
+    }
+  : undefined;
+
+const stopWebEvent = (e) => {
+  e?.stopPropagation?.();
+};
+function WebColorInput({ value, fallback = '#7dd3fc', onChange, compact = false, overlay = false }) {
+  if (!IS_WEB) return null;
+  const style = overlay ? WEB_COLOR_INPUT_OVERLAY : compact ? WEB_COLOR_INPUT_COMPACT : WEB_COLOR_INPUT_FULL;
+  return (
+    <input
+      type="color"
+      value={hexForColorInput(value, fallback)}
+      onChange={(e) => {
+        stopWebEvent(e);
+        onChange(e?.target?.value || '');
+      }}
+      onClick={stopWebEvent}
+      onMouseDown={stopWebEvent}
+      onPointerDown={stopWebEvent}
+      style={style}
+    />
+  );
+}
 
 // Gods will be loaded from builds.json (like data.jsx and tierlist.jsx)
 
@@ -1904,11 +1992,12 @@ const storage = {
   },
 };
 
-export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNavigateToCustomBuild, onNavigateToMyBuilds, viewUsername = null, onNavigateBack = null }) {
+export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNavigateToCustomBuild, onNavigateToMyBuilds, viewUsername = null, onNavigateBack = null, currentUsername = null }) {
   useAppFonts();
   const { width: screenWidth } = useScreenDimensions();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [authChecked, setAuthChecked] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!currentUsername);
+  const [currentUser, setCurrentUser] = useState(currentUsername);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
@@ -1968,6 +2057,14 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   const [showPreferredRolesModal, setShowPreferredRolesModal] = useState(false);
   const [abilityTooltipDetail, setAbilityTooltipDetail] = useAbilityTooltipDetail();
   const [itemTooltipDetail, setItemTooltipDetail] = useItemTooltipDetail();
+  const combinedTooltipDetail = abilityTooltipDetail;
+  const setCombinedTooltipDetail = useCallback(
+    (level) => {
+      setAbilityTooltipDetail(level);
+      setItemTooltipDetail(level);
+    },
+    [setAbilityTooltipDetail, setItemTooltipDetail]
+  );
   // Profile color and gradient (saved to Supabase; others see when viewing profile)
   const [profileColor, setProfileColor] = useState(null);
   const [profileGradient, setProfileGradient] = useState(null); // [hex, hex] or null
@@ -1992,10 +2089,15 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   const [tempBadgeSearch, setTempBadgeSearch] = useState('');
   const [tempTitleSearch, setTempTitleSearch] = useState('');
   const [appearanceSection, setAppearanceSection] = useState('banner'); // 'banner' | 'title' | 'font' | 'badges' | 'animation'
-  const [colorSection, setColorSection] = useState('preset'); // 'preset' | 'custom'
+  const [showAdvancedGradient, setShowAdvancedGradient] = useState(false);
+  const [activeNativePicker, setActiveNativePicker] = useState(null); // 'accent' | 'end'
+  const [themePresetTarget, setThemePresetTarget] = useState('accent'); // 'accent' | 'end'
   const [remoteBadgeFiles, setRemoteBadgeFiles] = useState([]);
   const [profileGold, setProfileGold] = useState(0); // Gold from Shop (shop_${username}_gold)
   const [ownedShopIds, setOwnedShopIds] = useState([]); // Owned shop item ids for titles
+  const [isSavingAppearance, setIsSavingAppearance] = useState(false);
+  const lastCloudSyncUserRef = useRef(null);
+  const profileSavedAtRef = useRef(0);
   const livePickerRafRef = useRef(null);
   const livePickerQueuedColorRef = useRef(null);
 
@@ -2181,7 +2283,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       if (currentUser && isLoggedIn && isActive) {
         reloadData();
       }
-    }, 4000);
+    }, 15000);
     
     // For web, also listen to visibility changes
     if (Platform.OS === 'web' && typeof document !== 'undefined') {
@@ -2251,6 +2353,42 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     loadProfileShopData();
   }, [currentUser, loadProfileShopData]);
 
+  /** Silent background sync — runs after login/register and once per profile session. */
+  const runCloudAccountSync = useCallback(async (username) => {
+    if (!username) return { ok: false };
+    const status = await getAccountSyncStatus(username);
+    if (!status.connected) return { ok: false, reason: status.reason };
+    const push = await syncLocalAccountToCloud(username, storage);
+    const prefix = `shop_${username}_`;
+    try {
+      const { fetchUserShopData } = require('../../lib/shopSupabase');
+      const shopData = await fetchUserShopData(username);
+      if (shopData != null) {
+        setProfileGold(shopData.gold);
+        await storage.setItem(prefix + 'gold', String(shopData.gold));
+        await storage.setItem(prefix + 'owned', JSON.stringify(shopData.shop_owned || []));
+      }
+    } catch (_) {}
+    return { ok: push.ok !== false, reason: push.reason };
+  }, []);
+
+  useEffect(() => {
+    if (!currentUser || !isLoggedIn) {
+      lastCloudSyncUserRef.current = null;
+      return;
+    }
+    if (lastCloudSyncUserRef.current === currentUser) return;
+    lastCloudSyncUserRef.current = currentUser;
+    let cancelled = false;
+    (async () => {
+      await runCloudAccountSync(currentUser);
+      if (!cancelled) await loadUserData();
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [currentUser, isLoggedIn]);
+
   useEffect(() => {
     return () => {
       if (livePickerRafRef.current && typeof cancelAnimationFrame === 'function') {
@@ -2269,6 +2407,8 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       setViewingUserCertifiedBuilds([]);
       setViewingUserContributorBuilds([]);
       setViewingUserTierlist(null);
+      setExpandedContributorBuilds(true);
+      setExpandedCommunityBuilds(true);
       loadOtherUserProfile(viewUsername);
       checkIfFollowing(viewUsername);
     } else if (!viewUsername && viewingUser) {
@@ -2407,7 +2547,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       // Load user data (including preferred roles)
       const { data: userData, error: userError } = await supabase
         .from('user_data')
-        .select('profile_god_icon, username, display_name, preferred_roles, profile_color, profile_gradient, profile_banner, profile_title, profile_badges, name_animation')
+        .select('profile_god_icon, username, display_name, preferred_roles, profile_color, profile_gradient, profile_banner, profile_title, profile_badges, name_animation, profile_font')
         .eq('username', username)
         .single();
       
@@ -2561,13 +2701,20 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
   };
 
   const checkLoginStatus = async () => {
-    const restored = await restoreAppAuthSession();
-    const loggedInUser = restored || (await storage.getItem('currentUser'));
-    if (loggedInUser) {
-      if (restored) await storage.setItem('currentUser', restored);
-      setCurrentUser(loggedInUser);
-      setIsLoggedIn(true);
-      await loadUserData();
+    try {
+      const restored = await restoreAppAuthSession();
+      const loggedInUser = restored || (await storage.getItem('currentUser'));
+      if (loggedInUser) {
+        if (restored) await storage.setItem('currentUser', restored);
+        setCurrentUser(loggedInUser);
+        setIsLoggedIn(true);
+        await loadUserData();
+      } else {
+        setCurrentUser(null);
+        setIsLoggedIn(false);
+      }
+    } finally {
+      setAuthChecked(true);
     }
   };
 
@@ -2585,6 +2732,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     // Set display name from local storage if available
     if (localDisplayName) {
       setDisplayName(localDisplayName);
+      setLiveDisplayName(currentUser, localDisplayName);
     }
     
     let pinnedBuilds = localPinnedBuilds ? JSON.parse(localPinnedBuilds) : [];
@@ -2625,7 +2773,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       // Try to load from Supabase
       const { data, error } = await supabase
         .from('user_data')
-        .select('pinned_builds, pinned_gods, saved_builds, profile_god_icon, display_name, preferred_roles, profile_color, profile_gradient, profile_banner, profile_title, profile_badges, name_animation, updated_at')
+        .select('pinned_builds, pinned_gods, saved_builds, profile_god_icon, display_name, preferred_roles, profile_color, profile_gradient, profile_banner, profile_title, profile_badges, profile_font, name_animation, updated_at')
         .eq('username', currentUser)
         .single();
       
@@ -2658,21 +2806,31 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         }
         if (supabaseProfileColor) setProfileColor(supabaseProfileColor);
         if (supabaseProfileGradient) setProfileGradient(supabaseProfileGradient);
-        if (data.profile_banner != null) setProfileBanner(data.profile_banner || null);
-        if (data.profile_title != null) setProfileTitle(data.profile_title || '');
-        if (data.profile_badges) {
-          try {
-            const badges = typeof data.profile_badges === 'string' ? JSON.parse(data.profile_badges) : data.profile_badges;
-            setProfileBadges(Array.isArray(badges) ? badges.slice(0, MAX_BADGES) : []);
-          } catch (_) { setProfileBadges([]); }
-        }
-        if (data.name_animation && NAME_ANIMATION_OPTIONS.some(o => o.key === data.name_animation)) {
-          setNameAnimation(data.name_animation);
+        const skipAppearancePull = Date.now() - profileSavedAtRef.current < 15000;
+        if (!skipAppearancePull) {
+          if (data.profile_banner != null) setProfileBanner(data.profile_banner || null);
+          if (data.profile_title != null) setProfileTitle(data.profile_title || '');
+          if (data.profile_badges) {
+            try {
+              const badges = typeof data.profile_badges === 'string' ? JSON.parse(data.profile_badges) : data.profile_badges;
+              setProfileBadges(Array.isArray(badges) ? badges.slice(0, MAX_BADGES) : []);
+            } catch (_) { setProfileBadges([]); }
+          }
+          if (data.name_animation && NAME_ANIMATION_OPTIONS.some(o => o.key === data.name_animation)) {
+            setNameAnimation(data.name_animation);
+          }
+          if (data.profile_font != null) {
+            const fontKey = data.profile_font || '';
+            setProfileFont(fontKey);
+            if (fontKey) await storage.setItem(`profile_font_${currentUser}`, fontKey);
+            else await storage.removeItem(`profile_font_${currentUser}`);
+          }
         }
         // Set display name from Supabase
         if (supabaseDisplayName) {
           setDisplayName(supabaseDisplayName);
           await storage.setItem(`displayName_${currentUser}`, supabaseDisplayName);
+          setLiveDisplayName(currentUser, supabaseDisplayName);
         } else {
           // Fallback to username if no display name
           setDisplayName(null);
@@ -2915,13 +3073,14 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
           const userData = JSON.parse(localUser);
           if (userData.password_hash === passwordHash) {
             console.log('Login successful via local storage');
-            await storage.setItem('currentUser', username.trim());
+            await finalizeAppLogin(username.trim(), password, storage);
             setCurrentUser(username.trim());
             setIsLoggedIn(true);
             setShowLoginModal(false);
             setUsername('');
             setPassword('');
-            await loadUserDataFromLocal();
+            await loadUserData();
+            await runCloudAccountSync(username.trim());
             setShowLoginSuccess(true);
             setTimeout(() => setShowLoginSuccess(false), 3000);
             setIsLoggingIn(false);
@@ -2950,13 +3109,14 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
           const userData = JSON.parse(localUser);
           if (userData.password_hash === passwordHash) {
             console.log('Login successful via local storage fallback');
-            await storage.setItem('currentUser', username.trim());
+            await finalizeAppLogin(username.trim(), password, storage);
             setCurrentUser(username.trim());
             setIsLoggedIn(true);
             setShowLoginModal(false);
             setUsername('');
             setPassword('');
-            await loadUserDataFromLocal();
+            await loadUserData();
+            await runCloudAccountSync(username.trim());
             setShowLoginSuccess(true);
             setTimeout(() => setShowLoginSuccess(false), 3000);
             setIsLoggingIn(false);
@@ -2983,6 +3143,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         setUsername('');
         setPassword('');
         await loadUserData();
+        await runCloudAccountSync(username.trim());
         if (Platform.OS === 'web') {
           alert('Login successful!');
         }
@@ -3147,7 +3308,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
         console.error('Error creating user data:', dataError);
       }
 
-      await establishSupabaseAuthSession(usernameTrimmed, registerPassword);
+      await finalizeAppLogin(usernameTrimmed, registerPassword, storage);
 
       // Store username temporarily so we can log in after they see the code
       await storage.setItem('pendingRegistrationUsername', usernameTrimmed);
@@ -3408,6 +3569,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
       // Update local storage
       await storage.setItem(`displayName_${currentUser}`, trimmedNewDisplayName);
       setDisplayName(trimmedNewDisplayName);
+      setLiveDisplayName(currentUser, trimmedNewDisplayName);
       
       // Close modal and reset state
       setShowChangeDisplayNameModal(false);
@@ -3428,20 +3590,11 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     if (!currentUser) return;
     setProfileGodIcon(godIconPath);
     await storage.setItem(`profileGodIcon_${currentUser}`, godIconPath || '');
-    
-    // Save to Supabase
-    try {
-      await supabase
-        .from('user_data')
-        .upsert({
-          username: currentUser,
-          profile_god_icon: godIconPath || null,
-          updated_at: new Date().toISOString(),
-        }, {
-          onConflict: 'username'
-        });
-    } catch (error) {
-      console.error('Error saving profile icon to Supabase:', error);
+    const result = await upsertUserProfileFields(currentUser, {
+      profile_god_icon: godIconPath || null,
+    });
+    if (!result.ok) {
+      console.warn('Profile icon saved locally only:', result.reason);
     }
   };
 
@@ -3451,179 +3604,89 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     const normalizedGradient = normalizeGradientStops(gradient);
     setProfileColor(normalizedColor);
     setProfileGradient(normalizedGradient);
-    try {
-      await supabase
-        .from('user_data')
-        .upsert({
-          username: currentUser,
-          profile_color: normalizedColor,
-          profile_gradient: normalizedGradient ? JSON.stringify(normalizedGradient) : null,
-          updated_at: new Date().toISOString(),
-        }, { onConflict: 'username' });
-    } catch (error) {
-      console.error('Error saving profile theme to Supabase:', error);
+    profileSavedAtRef.current = Date.now();
+    const result = await upsertUserProfileFields(currentUser, {
+      profile_color: normalizedColor,
+      profile_gradient: normalizedGradient ? JSON.stringify(normalizedGradient) : null,
+    });
+    if (!result.ok) {
+      Alert.alert('Saved on this device', 'Sign out and sign in with your password to sync profile color to the cloud.');
     }
   };
+
+  const applyAccentColor = useCallback((raw) => {
+    setTempProfileColor(raw);
+    const normalized = normalizeHex(raw);
+    if (normalized) setLivePickerColor(normalized);
+    if (tempUseGradient) {
+      const first = normalized || normalizeHex(tempProfileColor) || PROFILE_COLOR_PRESETS[0].color;
+      const second = normalizeHex(tempProfileGradient?.[1]) || PROFILE_COLOR_PRESETS[1].color;
+      setTempProfileGradient([first, second]);
+      setTempGradientStopsInput(`${first}, ${second}`);
+    }
+  }, [tempUseGradient, tempProfileGradient, tempProfileColor]);
+
+  const applyEndColor = useCallback((raw) => {
+    const first = normalizeHex(tempProfileColor) || PROFILE_COLOR_PRESETS[0].color;
+    const second = normalizeHex(raw) || raw;
+    setTempProfileGradient([first, second]);
+    setTempGradientStopsInput(`${first}, ${second}`);
+  }, [tempProfileColor]);
 
   const saveProfileAppearance = async (banner, title, font, badges, animation) => {
-    if (!currentUser) return;
+    if (!currentUser) return { ok: false, reason: 'not_logged_in' };
+    const fontKey = (font || '').trim();
+    const titleTrimmed = (title || '').trim();
+    const badgeList = Array.isArray(badges) ? badges.slice(0, MAX_BADGES) : [];
+    const animationKey =
+      animation && NAME_ANIMATION_OPTIONS.some((o) => o.key === animation) ? animation : 'none';
+
     setProfileBanner(banner || null);
-    setProfileTitle((title || '').trim());
-    const fontKey = (font || '').trim() || '';
+    setProfileTitle(titleTrimmed);
     setProfileFont(fontKey);
+    setProfileBadges(badgeList);
+    if (animationKey !== 'none') setNameAnimation(animationKey);
+
     if (fontKey) await storage.setItem(`profile_font_${currentUser}`, fontKey);
     else await storage.removeItem(`profile_font_${currentUser}`);
-    setProfileBadges(Array.isArray(badges) ? badges.slice(0, MAX_BADGES) : []);
-    if (animation && NAME_ANIMATION_OPTIONS.some(o => o.key === animation)) setNameAnimation(animation);
-    try {
-      await supabase
-        .from('user_data')
-        .upsert({
-          username: currentUser,
-          profile_banner: banner || null,
-          profile_title: (title || '').trim() || null,
-          profile_badges: (Array.isArray(badges) ? badges.slice(0, MAX_BADGES) : []).length ? JSON.stringify((Array.isArray(badges) ? badges : []).slice(0, MAX_BADGES)) : null,
-          name_animation: animation && animation !== 'none' ? animation : null,
-          updated_at: new Date().toISOString(),
-        }, { onConflict: 'username' });
-    } catch (error) {
-      console.error('Error saving profile appearance to Supabase:', error);
-    }
+
+    profileSavedAtRef.current = Date.now();
+
+    const result = await upsertUserProfileFields(currentUser, {
+      profile_banner: banner || null,
+      profile_title: titleTrimmed || null,
+      profile_font: fontKey || null,
+      profile_badges: badgeList.length ? JSON.stringify(badgeList) : null,
+      name_animation: animationKey !== 'none' ? animationKey : null,
+    });
+    return result;
   };
 
-  const shareProfile = async () => {
-    if (!currentUser) return;
-    
-    const baseUrl = IS_WEB && typeof window !== 'undefined' 
-      ? window.location.origin 
-      : REMOTE_BASE_URLS.APP_PUBLIC_DOMAIN;
-    
-    const profileUrl = `${baseUrl}/profile/${currentUser}`;
-    
-    const message = `Check out my Smite 2 profile: ${profileUrl}`;
-    
+  const handleSaveProfileAppearance = async () => {
+    if (!currentUser || isSavingAppearance) return;
+    setIsSavingAppearance(true);
     try {
-      if (IS_WEB) {
-        // Web: Use Web Share API or copy to clipboard
-        if (navigator.share) {
-          await navigator.share({
-            title: `${currentUser}'s Smite 2 Profile`,
-            text: message,
-            url: profileUrl,
-          });
-        } else {
-          // Fallback: Copy to clipboard
-          await navigator.clipboard.writeText(profileUrl);
-          Alert.alert('Copied!', 'Profile link copied to clipboard');
-        }
+      const result = await saveProfileAppearance(
+        tempProfileBanner,
+        tempProfileTitle,
+        tempProfileFont,
+        tempProfileBadges,
+        tempNameAnimation
+      );
+      if (result.ok) {
+        setShowProfileAppearanceModal(false);
       } else {
-        // Native: Use React Native Share
-        await Share.share({
-          message: message,
-          url: profileUrl,
-          title: `${currentUser}'s Smite 2 Profile`,
-        });
+        Alert.alert(
+          'Saved on this device only',
+          'Sign out and sign in again to sync across devices.'
+        );
       }
     } catch (error) {
-      console.error('Error sharing profile:', error);
-      // Fallback: Copy to clipboard on web
-      if (IS_WEB && navigator.clipboard) {
-        await navigator.clipboard.writeText(profileUrl);
-        Alert.alert('Copied!', 'Profile link copied to clipboard');
-      }
+      Alert.alert('Save failed', error?.message || 'Could not save profile appearance.');
+    } finally {
+      setIsSavingAppearance(false);
     }
   };
-
-  // Share function for viewing other users' profiles
-  const handleShareProfile = async () => {
-    if (!viewingUser) return;
-    
-    const baseUrl = IS_WEB && typeof window !== 'undefined' 
-      ? window.location.origin 
-      : REMOTE_BASE_URLS.APP_PUBLIC_DOMAIN;
-    
-    const profileUrl = `${baseUrl}/profile/${viewingUser}`;
-    const message = `Check out ${viewingUser}'s Smite 2 profile: ${profileUrl}`;
-    
-    try {
-      if (IS_WEB) {
-        // Web: Use Web Share API or copy to clipboard
-        if (navigator.share) {
-          await navigator.share({
-            title: `${viewingUser}'s Smite 2 Profile`,
-            text: message,
-            url: profileUrl,
-          });
-        } else {
-          // Fallback: Copy to clipboard
-          await navigator.clipboard.writeText(profileUrl);
-          Alert.alert('Copied!', 'Profile link copied to clipboard');
-        }
-      } else {
-        // Native: Use React Native Share
-        await Share.share({
-          message: message,
-          url: profileUrl,
-          title: `${viewingUser}'s Smite 2 Profile`,
-        });
-      }
-    } catch (error) {
-      console.error('Error sharing profile:', error);
-      // Fallback: Copy to clipboard on web
-      if (IS_WEB && navigator.clipboard) {
-        await navigator.clipboard.writeText(profileUrl);
-        Alert.alert('Copied!', 'Profile link copied to clipboard');
-      }
-    }
-  };
-
-  // Share function for individual builds
-  const handleShareBuild = async (build, buildType = 'community') => {
-    const baseUrl = IS_WEB && typeof window !== 'undefined' 
-      ? window.location.origin 
-      : REMOTE_BASE_URLS.APP_PUBLIC_DOMAIN;
-    
-    const buildId = build.databaseId || build.id || `${build.god_name || build.god || 'build'}-${Date.now()}`;
-    const buildUrl = `${baseUrl}/build/${buildType}/${buildId}`;
-    const buildName = build.build_name || build.name || 'Unnamed Build';
-    const godName = build.god_name || build.god || build.godName || 'Unknown';
-    const authorUsername = build.username || build.author || viewingUser || 'Unknown';
-    const authorDisplayName = displayNameCache[authorUsername] || authorUsername;
-    
-    const message = `Check out ${authorDisplayName}'s ${buildType} build "${buildName}" for ${godName}: ${buildUrl}`;
-    
-    try {
-      if (IS_WEB) {
-        // Web: Use Web Share API or copy to clipboard
-        if (navigator.share) {
-          await navigator.share({
-            title: `${buildName} - ${godName} Build`,
-            text: message,
-            url: buildUrl,
-          });
-        } else {
-          // Fallback: Copy to clipboard
-          await navigator.clipboard.writeText(buildUrl);
-          Alert.alert('Copied!', 'Build link copied to clipboard');
-        }
-      } else {
-        // Native: Use React Native Share
-        await Share.share({
-          message: message,
-          url: buildUrl,
-          title: `${buildName} - ${godName} Build`,
-        });
-      }
-    } catch (error) {
-      console.error('Error sharing build:', error);
-      // Fallback: Copy to clipboard on web
-      if (IS_WEB && navigator.clipboard) {
-        await navigator.clipboard.writeText(buildUrl);
-        Alert.alert('Copied!', 'Build link copied to clipboard');
-      }
-    }
-  };
-
 
   const saveUserDataToSupabase = async (
     newPinnedBuilds = null,
@@ -3796,6 +3859,84 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
     await saveUserDataToSupabase(null, null, newSaved);
   };
 
+  // Shared icon renderer for viewed-profile build rows (items and relics)
+  const renderViewedBuildIcon = (entry, iconKey) => {
+    const entryName = typeof entry === 'string' ? entry : (entry?.name || entry?.internalName || '');
+    if (!entryName) return null;
+    const item = findItemByName(entryName);
+    const icon = item?.icon || (typeof entry === 'object' && entry?.icon) || null;
+    const localItemIcon = icon ? getLocalItemIcon(icon) : null;
+    const useFallback = failedItemIcons[iconKey];
+    return (
+      <View key={iconKey} style={styles.itemSlot}>
+        {localItemIcon ? (
+          <Image
+            source={
+              localItemIcon.fallback && useFallback
+                ? localItemIcon.fallback
+                : (localItemIcon.primary || localItemIcon)
+            }
+            style={styles.itemIcon}
+            contentFit="cover"
+            cachePolicy="memory-disk"
+            transition={200}
+            onError={() => {
+              if (localItemIcon.fallback && !useFallback) {
+                setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
+              }
+            }}
+          />
+        ) : (
+          <View style={styles.itemIconFallback}>
+            <Text style={styles.itemIconFallbackText}>{entryName.charAt(0)}</Text>
+          </View>
+        )}
+      </View>
+    );
+  };
+
+  // Starter row (starting items + starter relic) and Final row (items + final relic), always visible
+  const renderViewedBuildRows = (build, keyPrefix) => {
+    const relicName = (relic) =>
+      typeof relic === 'string' ? relic : (relic?.name || relic?.internalName || '');
+    const finalItems = Array.isArray(build.items) ? build.items.filter(Boolean) : [];
+    const starterItems = Array.isArray(build.starting_items || build.startingItems)
+      ? (build.starting_items || build.startingItems).filter(Boolean)
+      : [];
+    const starterRelic = build.starting_relic || build.startingRelic || null;
+    const finalRelic = build.final_relic || build.finalRelic || build.relic || null;
+    const hasStarterRelic = !!relicName(starterRelic);
+    const hasFinalRelic = !!relicName(finalRelic);
+
+    const renderRow = (label, itemsArr, relic, hasRelic, rowKey) => {
+      if (itemsArr.length === 0 && !hasRelic) return null;
+      return (
+        <View style={styles.buildItemsRow} key={rowKey}>
+          <Text style={styles.buildItemsRowLabel}>{label}</Text>
+          <View style={styles.buildItemsRowIcons}>
+            {itemsArr.map((it, i) => renderViewedBuildIcon(it, `${rowKey}-item-${i}`))}
+            {hasRelic ? (
+              <>
+                <View style={styles.buildRelicDivider} />
+                {renderViewedBuildIcon(relic, `${rowKey}-relic`)}
+              </>
+            ) : null}
+          </View>
+        </View>
+      );
+    };
+
+    if (finalItems.length === 0 && starterItems.length === 0 && !hasStarterRelic && !hasFinalRelic) {
+      return <Text style={styles.emptyText}>No items</Text>;
+    }
+    return (
+      <>
+        {renderRow('STARTER', starterItems, starterRelic, hasStarterRelic, `${keyPrefix}-starter`)}
+        {renderRow('FINAL', finalItems, finalRelic, hasFinalRelic, `${keyPrefix}-final`)}
+      </>
+    );
+  };
+
   // If viewing another user's profile, allow it even when logged out
   if (viewingUser && viewingUser !== currentUser) {
     // Single source of truth for other user's display name (works before viewingUserData loads, e.g. on app)
@@ -3803,8 +3944,8 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
 
     return (
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          {/* Header: web = single row (Back | Name | Share); mobile = two rows (Back+Share then Name) */}
+        <View style={styles.scrollContent}>
+          {/* Header: web = single row (Back | Name); mobile = two rows */}
           {IS_WEB ? (
             <View style={styles.headerWebWrapper}>
             <View style={styles.header}>
@@ -3822,9 +3963,6 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                   {otherUserDisplayName}
                 </Text>
               </View>
-              <TouchableOpacity style={styles.shareButton} onPress={handleShareProfile}>
-                <Text style={styles.shareButtonText}>Share</Text>
-              </TouchableOpacity>
               {currentUser && (
                 <TouchableOpacity
                   style={[styles.followButton, isFollowing && styles.followingButton]}
@@ -3847,9 +3985,6 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                   <Text style={styles.backButtonText}>← Back</Text>
                 </TouchableOpacity>
                 <View style={styles.headerSpacer} />
-                <TouchableOpacity style={styles.shareButton} onPress={handleShareProfile}>
-                  <Text style={styles.shareButtonText}>Share</Text>
-                </TouchableOpacity>
                 {currentUser && (
                   <TouchableOpacity
                     style={[styles.followButton, isFollowing && styles.followingButton]}
@@ -3904,18 +4039,26 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                 const otherAccentColor = viewingUserData?.profile_color || (otherGradient && otherGradient[0]) || UI_THEME.accentSky;
                 const otherBannerPreset = PROFILE_BANNER_PRESETS.find((p) => p.key === viewingUserData?.profile_banner);
                 const hasOtherBannerImage = !!(otherBannerPreset && otherBannerPreset.key !== 'none' && otherBannerPreset.image);
-                const otherGradientStyle = !hasOtherBannerImage && otherGradient && otherGradient.length >= 2
-                  ? (IS_WEB
-                    ? { backgroundImage: `linear-gradient(120deg, ${otherGradient.join(', ')})` }
-                    : { backgroundColor: otherGradient[0] })
-                  : null;
+                const otherGradientStops = resolveProfileThemeStops(
+                  viewingUserData?.profile_color,
+                  otherGradient
+                );
+                const hasOtherThemeChrome = !!otherGradientStops;
                 const otherBannerTintStyle = hasOtherBannerImage ? styles.profileBannerTintDark : null;
+                const otherIconBorderColor = otherGradientStops ? otherGradientStops[0] : otherAccentColor;
                 const otherTitle = (viewingUserData?.profile_title || '').trim();
                 const otherAnimation = NAME_ANIMATION_OPTIONS.some((o) => o.key === viewingUserData?.name_animation)
                   ? viewingUserData?.name_animation
                   : 'none';
-                return (
-              <View style={[styles.profileHeader, IS_WEB && styles.profileHeaderWeb, { padding: headerPadding, position: 'relative', borderColor: otherAccentColor }, otherGradientStyle]}>
+                const otherFontKey = viewingUserData?.profile_font;
+                const otherProfileCard = (
+              <View style={[
+                styles.profileHeader,
+                IS_WEB && styles.profileHeaderWeb,
+                { padding: headerPadding, position: 'relative' },
+                hasOtherThemeChrome && styles.profileHeaderGradientInner,
+                !hasOtherThemeChrome && { borderColor: otherAccentColor },
+              ]}>
                 {otherBannerPreset && otherBannerPreset.key !== 'none' && otherBannerPreset.image && (
                   <Image
                     source={{ uri: otherBannerPreset.image }}
@@ -3923,11 +4066,11 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                     resizeMode="cover"
                   />
                 )}
-                {otherBannerPreset && otherBannerPreset.key !== 'none' && otherBannerPreset.image && (
+                {hasOtherBannerImage ? (
                   <View style={[styles.profileBannerTint, IS_WEB && styles.profileBannerTintWeb, otherBannerTintStyle]} />
-                )}
+                ) : null}
                 <View style={styles.profileHeaderContent}>
-                  <View style={[styles.profileIconContainer, { width: iconSize, height: iconSize, borderRadius: iconSize / 2, borderColor: otherAccentColor, marginRight: narrow ? 12 : (Platform.OS === 'web' ? 20 : 16) }]}>
+                  <View style={[styles.profileIconContainer, { width: iconSize, height: iconSize, borderRadius: iconSize / 2, borderColor: otherIconBorderColor, marginRight: narrow ? 12 : (Platform.OS === 'web' ? 20 : 16) }]}>
                     {viewingUserData?.profile_god_icon ? (() => {
                       const godName = viewingUserData.profile_god_icon;
                       const iconUrl = getGodIconUrl(godName);
@@ -3962,7 +4105,8 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                         style={[
                           styles.profileDisplayName,
                           { fontSize: getProfileNameFontSize(otherUserDisplayName, screenWidth) },
-                          viewingUserContributorBuilds.length > 0 && styles.profileNameContributor
+                          viewingUserContributorBuilds.length > 0 && styles.profileNameContributor,
+                          otherFontKey && PROFILE_FONT_FAMILY_MAP[otherFontKey] && { fontFamily: PROFILE_FONT_FAMILY_MAP[otherFontKey] },
                         ]}
                         numberOfLines={1}
                         ellipsizeMode="tail"
@@ -4030,11 +4174,16 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                   <View style={styles.contributorBadgeBottomRight}>
                     <View style={styles.contributorBadge}>
                       <Text style={styles.contributorCheckmark}>✓</Text>
-                      <Text style={styles.contributorText}>Contributor</Text>
+                      <Text style={styles.contributorText}>Partner</Text>
                     </View>
                   </View>
                 )}
               </View>
+                );
+                return (
+                  <ProfileGradientBorderWrap gradient={hasOtherThemeChrome ? otherGradientStops : null}>
+                    {otherProfileCard}
+                  </ProfileGradientBorderWrap>
                 );
               })()}
 
@@ -4045,7 +4194,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                     onPress={() => setExpandedContributorBuilds(!expandedContributorBuilds)}
                     style={styles.sectionHeader}
                   >
-                    <Text style={styles.sectionTitle}> Contributor Builds</Text>
+                    <Text style={styles.sectionTitle}>Partner Builds</Text>
                     <Text style={styles.expandIcon}>{expandedContributorBuilds ? '▼' : '▶'}</Text>
                   </TouchableOpacity>
                   {expandedContributorBuilds && viewingUserContributorBuilds.map((build, idx) => {
@@ -4055,7 +4204,6 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                     const godIcon = build.godIcon || (god && (god.icon || god.GodIcon || (god.abilities && god.abilities.A01 && god.abilities.A01.icon)));
                     const localGodIcon = godIcon ? getLocalGodAsset(godIcon) : null;
                     const buildName = build.build_name || build.name || 'Unnamed Build';
-                    const items = build.items || [];
                     
                     return (
                       <View key={build.databaseId || `contributor-build-${idx}`} style={styles.buildCard}>
@@ -4080,145 +4228,13 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                             <View style={styles.buildInfo}>
                               <View style={styles.buildNameRow}>
                                 <Text style={styles.buildName}>{buildName}</Text>
-                                <TouchableOpacity 
-                                  style={styles.buildShareButton}
-                                  onPress={() => handleShareBuild(build, 'contributor')}
-                                >
-                                  <Text style={styles.buildShareButtonText}>Share</Text>
-                                </TouchableOpacity>
                               </View>
                               <Text style={styles.buildGod}>{godName}</Text>
                               <Text style={styles.buildLevel}>Level {build.god_level || build.godLevel || 20}</Text>
                             </View>
                           </View>
                         </View>
-                        <View style={styles.itemsContainer}>
-                          {items && items.length > 0 ? (
-                            items.map((itemData, itemIndex) => {
-                              const itemName = itemData.name || itemData.internalName;
-                              const item = findItemByName(itemName);
-                              const icon = item?.icon || itemData.icon;
-                              const localItemIcon = icon ? getLocalItemIcon(icon) : null;
-                              const iconKey = `view-contributor-${idx}-${itemIndex}`;
-                              const useFallback = failedItemIcons[iconKey];
-                              return (
-                                <View key={itemIndex} style={styles.itemSlot}>
-                                  {localItemIcon ? (() => {
-                                    const imageSource = localItemIcon.primary || localItemIcon;
-                                    const fallbackSource = localItemIcon.fallback;
-                                    if (fallbackSource && !useFallback) {
-                                      return (
-                                        <Image
-                                          source={imageSource}
-                                          style={styles.itemIcon}
-                                          contentFit="cover"
-                                          cachePolicy="memory-disk"
-                                          transition={200}
-                                          onError={() => {
-                                            setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
-                                          }}
-                                        />
-                                      );
-                                    }
-                                    if (fallbackSource && useFallback) {
-                                      return (
-                                        <Image
-                                          source={fallbackSource}
-                                          style={styles.itemIcon}
-                                          contentFit="cover"
-                                          cachePolicy="memory-disk"
-                                          transition={200}
-                                        />
-                                      );
-                                    }
-                                    return (
-                                      <Image
-                                        source={imageSource}
-                                        style={styles.itemIcon}
-                                        contentFit="cover"
-                                        cachePolicy="memory-disk"
-                                        transition={200}
-                                      />
-                                    );
-                                  })() : (
-                                    <View style={styles.itemIconFallback}>
-                                      <Text style={styles.itemIconFallbackText}>
-                                        {itemName ? itemName.charAt(0) : '?'}
-                                      </Text>
-                                    </View>
-                                  )}
-                                </View>
-                              );
-                            })
-                          ) : (
-                            <Text style={styles.emptyText}>No items</Text>
-                          )}
-                        </View>
-                        
-                        {/* Relic Section */}
-                        {build.relic && (() => {
-                          const relic = build.relic;
-                          const relicName = typeof relic === 'string' ? relic : (relic.name || relic.internalName || '');
-                          if (!relicName) return null;
-                          
-                          const item = findItemByName(relicName);
-                          const icon = item?.icon || (typeof relic === 'object' && relic.icon);
-                          const localItemIcon = icon ? getLocalItemIcon(icon) : null;
-                          const iconKey = `view-contributor-relic-${idx}`;
-                          const useFallback = failedItemIcons[iconKey];
-                          
-                          return (
-                            <View style={styles.itemsContainer}>
-                              <Text style={styles.sectionSubtitle}>Relic</Text>
-                              <View style={styles.itemSlot}>
-                                {localItemIcon ? (() => {
-                                  const imageSource = localItemIcon.primary || localItemIcon;
-                                  const fallbackSource = localItemIcon.fallback;
-                                  if (fallbackSource && !useFallback) {
-                                    return (
-                                      <Image
-                                        source={imageSource}
-                                        style={styles.itemIcon}
-                                        contentFit="cover"
-                                        cachePolicy="memory-disk"
-                                        transition={200}
-                                        onError={() => {
-                                          setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
-                                        }}
-                                      />
-                                    );
-                                  }
-                                  if (fallbackSource && useFallback) {
-                                    return (
-                                      <Image
-                                        source={fallbackSource}
-                                        style={styles.itemIcon}
-                                        contentFit="cover"
-                                        cachePolicy="memory-disk"
-                                        transition={200}
-                                      />
-                                    );
-                                  }
-                                  return (
-                                    <Image
-                                      source={imageSource}
-                                      style={styles.itemIcon}
-                                      contentFit="cover"
-                                      cachePolicy="memory-disk"
-                                      transition={200}
-                                    />
-                                  );
-                                })() : (
-                                  <View style={styles.itemIconFallback}>
-                                    <Text style={styles.itemIconFallbackText}>
-                                      {relicName ? relicName.charAt(0) : '?'}
-                                    </Text>
-                                  </View>
-                                )}
-                              </View>
-                            </View>
-                          );
-                        })()}
+                        {renderViewedBuildRows(build, `view-contributor-${idx}`)}
                       </View>
                     );
                   })}
@@ -4232,7 +4248,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                     onPress={() => setExpandedCommunityBuilds(!expandedCommunityBuilds)}
                     style={styles.sectionHeader}
                   >
-                    <Text style={styles.sectionTitle}> Community Builds</Text>
+                    <Text style={styles.sectionTitle}>Community Builds</Text>
                     <Text style={styles.expandIcon}>{expandedCommunityBuilds ? '▼' : '▶'}</Text>
                   </TouchableOpacity>
                   {expandedCommunityBuilds && viewingUserCommunityBuilds.map((build, idx) => {
@@ -4242,7 +4258,6 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                     const godIcon = build.godIcon || (god && (god.icon || god.GodIcon || (god.abilities && god.abilities.A01 && god.abilities.A01.icon)));
                     const localGodIcon = godIcon ? getLocalGodAsset(godIcon) : null;
                     const buildName = build.build_name || build.name || 'Unnamed Build';
-                    const items = build.items || [];
                     
                     return (
                       <View key={build.databaseId || `community-build-${idx}`} style={styles.buildCard}>
@@ -4267,145 +4282,13 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                             <View style={styles.buildInfo}>
                               <View style={styles.buildNameRow}>
                                 <Text style={styles.buildName}>{buildName}</Text>
-                                <TouchableOpacity 
-                                  style={styles.buildShareButton}
-                                  onPress={() => handleShareBuild(build, 'community')}
-                                >
-                                  <Text style={styles.buildShareButtonText}>Share</Text>
-                                </TouchableOpacity>
                               </View>
                               <Text style={styles.buildGod}>{godName}</Text>
                               <Text style={styles.buildLevel}>Level {build.god_level || build.godLevel || 20}</Text>
                             </View>
                           </View>
                         </View>
-                        <View style={styles.itemsContainer}>
-                          {items && items.length > 0 ? (
-                            items.map((itemData, itemIndex) => {
-                              const itemName = itemData.name || itemData.internalName;
-                              const item = findItemByName(itemName);
-                              const icon = item?.icon || itemData.icon;
-                              const localItemIcon = icon ? getLocalItemIcon(icon) : null;
-                              const iconKey = `view-community-${idx}-${itemIndex}`;
-                              const useFallback = failedItemIcons[iconKey];
-                              return (
-                                <View key={itemIndex} style={styles.itemSlot}>
-                                  {localItemIcon ? (() => {
-                                    const imageSource = localItemIcon.primary || localItemIcon;
-                                    const fallbackSource = localItemIcon.fallback;
-                                    if (fallbackSource && !useFallback) {
-                                      return (
-                                        <Image
-                                          source={imageSource}
-                                          style={styles.itemIcon}
-                                          contentFit="cover"
-                                          cachePolicy="memory-disk"
-                                          transition={200}
-                                          onError={() => {
-                                            setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
-                                          }}
-                                        />
-                                      );
-                                    }
-                                    if (fallbackSource && useFallback) {
-                                      return (
-                                        <Image
-                                          source={fallbackSource}
-                                          style={styles.itemIcon}
-                                          contentFit="cover"
-                                          cachePolicy="memory-disk"
-                                          transition={200}
-                                        />
-                                      );
-                                    }
-                                    return (
-                                      <Image
-                                        source={imageSource}
-                                        style={styles.itemIcon}
-                                        contentFit="cover"
-                                        cachePolicy="memory-disk"
-                                        transition={200}
-                                      />
-                                    );
-                                  })() : (
-                                    <View style={styles.itemIconFallback}>
-                                      <Text style={styles.itemIconFallbackText}>
-                                        {itemName ? itemName.charAt(0) : '?'}
-                                      </Text>
-                                    </View>
-                                  )}
-                                </View>
-                              );
-                            })
-                          ) : (
-                            <Text style={styles.emptyText}>No items</Text>
-                          )}
-                        </View>
-                        
-                        {/* Relic Section */}
-                        {build.relic && (() => {
-                          const relic = build.relic;
-                          const relicName = typeof relic === 'string' ? relic : (relic.name || relic.internalName || '');
-                          if (!relicName) return null;
-                          
-                          const item = findItemByName(relicName);
-                          const icon = item?.icon || (typeof relic === 'object' && relic.icon);
-                          const localItemIcon = icon ? getLocalItemIcon(icon) : null;
-                          const iconKey = `view-community-relic-${idx}`;
-                          const useFallback = failedItemIcons[iconKey];
-                          
-                          return (
-                            <View style={styles.itemsContainer}>
-                              <Text style={styles.sectionSubtitle}>Relic</Text>
-                              <View style={styles.itemSlot}>
-                                {localItemIcon ? (() => {
-                                  const imageSource = localItemIcon.primary || localItemIcon;
-                                  const fallbackSource = localItemIcon.fallback;
-                                  if (fallbackSource && !useFallback) {
-                                    return (
-                                      <Image
-                                        source={imageSource}
-                                        style={styles.itemIcon}
-                                        contentFit="cover"
-                                        cachePolicy="memory-disk"
-                                        transition={200}
-                                        onError={() => {
-                                          setFailedItemIcons(prev => ({ ...prev, [iconKey]: true }));
-                                        }}
-                                      />
-                                    );
-                                  }
-                                  if (fallbackSource && useFallback) {
-                                    return (
-                                      <Image
-                                        source={fallbackSource}
-                                        style={styles.itemIcon}
-                                        contentFit="cover"
-                                        cachePolicy="memory-disk"
-                                        transition={200}
-                                      />
-                                    );
-                                  }
-                                  return (
-                                    <Image
-                                      source={imageSource}
-                                      style={styles.itemIcon}
-                                      contentFit="cover"
-                                      cachePolicy="memory-disk"
-                                      transition={200}
-                                    />
-                                  );
-                                })() : (
-                                  <View style={styles.itemIconFallback}>
-                                    <Text style={styles.itemIconFallbackText}>
-                                      {relicName ? relicName.charAt(0) : '?'}
-                                    </Text>
-                                  </View>
-                                )}
-                              </View>
-                            </View>
-                          );
-                        })()}
+                        {renderViewedBuildRows(build, `view-community-${idx}`)}
                       </View>
                     );
                   })}
@@ -4427,7 +4310,15 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
               )}
             </>
           )}
-        </ScrollView>
+        </View>
+      </View>
+    );
+  }
+
+  if (!viewingUser && !authChecked) {
+    return (
+      <View style={[styles.container, styles.loadingContainer]}>
+        <ActivityIndicator size="large" color={UI_THEME.accentSky} />
       </View>
     );
   }
@@ -4618,12 +4509,13 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                       setCurrentUser(pendingUsername);
                       setIsLoggedIn(true);
                       await loadUserData();
+                      await runCloudAccountSync(pendingUsername);
                     } else if (forgotPasswordUsername) {
-                      // Fallback if pendingUsername wasn't set
                       await storage.setItem('currentUser', forgotPasswordUsername);
                       setCurrentUser(forgotPasswordUsername);
                       setIsLoggedIn(true);
                       await loadUserData();
+                      await runCloudAccountSync(forgotPasswordUsername);
                     }
                     
                     setShowRecoveryCodeModal(false);
@@ -4714,51 +4606,36 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <View style={styles.scrollContent}>
         <View style={styles.header}>
-          <View style={styles.headerTitleRow}>
-            <Text 
-              style={styles.title}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-            >
-              {displayName || currentUser || 'Profile'}
-            </Text>
-            {currentUser && (
-              <TouchableOpacity
-                style={styles.headerEditButton}
-                onPress={() => {
-                  setNewDisplayName(displayName || '');
-                  setShowChangeDisplayNameModal(true);
-                }}
-                activeOpacity={0.7}
-              >
-                <Text style={styles.usernameEditIcon}>✎</Text>
-              </TouchableOpacity>
-            )}
-          </View>
-          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-            <Text style={styles.logoutButtonText}>Sign Out</Text>
-          </TouchableOpacity>
+          <Text style={styles.pageTitle}>Profile</Text>
         </View>
 
-        {/* Profile Header with Icon - responsive to screen width */}
+        {currentUser && !viewingUser ? (
+          <View style={styles.accountIdentityRow}>
+            <Text style={styles.accountIdentityLabel}>Account</Text>
+            <Text style={styles.accountIdentityValue}>{currentUser}</Text>
+          </View>
+        ) : null}
         {(() => {
           const accentColor = profileColor || (profileGradient && profileGradient[0]) || UI_THEME.accentSky;
           const bannerPreset = PROFILE_BANNER_PRESETS.find(p => p.key === profileBanner);
           const hasBannerImage = !!(bannerPreset && bannerPreset.key !== 'none' && bannerPreset.image);
-          const profileGradientStyle = !hasBannerImage && profileGradient && profileGradient.length >= 2
-            ? (IS_WEB
-              ? { backgroundImage: `linear-gradient(120deg, ${profileGradient.join(', ')})` }
-              : { backgroundColor: profileGradient[0] })
-            : null;
+          const gradientStops = resolveProfileThemeStops(profileColor, profileGradient);
+          const hasThemeChrome = !!gradientStops;
           const profileBannerTintStyle = hasBannerImage ? styles.profileBannerTintDark : null;
-          const headerBorderStyle = {
+          const iconBorderColor = gradientStops ? gradientStops[0] : accentColor;
+          const profileCard = (
+        <View style={[
+          styles.profileHeader,
+          IS_WEB && styles.profileHeaderWeb,
+          screenWidth < 420 && { padding: 12 },
+          hasThemeChrome && styles.profileHeaderGradientInner,
+          !hasThemeChrome && {
             borderColor: accentColor,
             ...(IS_WEB && profileColor && { boxShadow: `0 4px 20px ${accentColor}40` }),
-          };
-          return (
-        <View style={[styles.profileHeader, IS_WEB && styles.profileHeaderWeb, screenWidth < 420 && { padding: 12 }, headerBorderStyle, profileGradientStyle]}>
+          },
+        ]}>
           {bannerPreset && bannerPreset.key !== 'none' && bannerPreset.image && (
             <Image
               source={{ uri: bannerPreset.image }}
@@ -4766,13 +4643,13 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
               resizeMode="cover"
             />
           )}
-          {bannerPreset && bannerPreset.key !== 'none' && bannerPreset.image && (
+          {hasBannerImage ? (
             <View style={[styles.profileBannerTint, IS_WEB && styles.profileBannerTintWeb, profileBannerTintStyle]} />
-          )}
+          ) : null}
           <View style={styles.profileHeaderContent}>
             <View style={[styles.profileIconWrapper, screenWidth < 420 && { marginRight: 12 }]}>
               <TouchableOpacity 
-                style={[styles.profileIconContainer, screenWidth < 420 && { width: 80, height: 80, borderRadius: 40, marginRight: 0 }, { borderColor: accentColor }]}
+                style={[styles.profileIconContainer, screenWidth < 420 && { width: 80, height: 80, borderRadius: 40, marginRight: 0 }, { borderColor: iconBorderColor }]}
                 onPress={() => {
                   setTempSelectedGodIcon(profileGodIcon);
                   setShowGodIconPicker(true);
@@ -4851,15 +4728,35 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                   })}
                 </View>
               )}
-              <Text style={styles.profileSubtitle}>
-                {savedBuilds.length + communityBuilds.length + certifiedBuilds.length} Total Builds
-              </Text>
-              {currentUser && !viewingUser && (
-                <View style={styles.profileGoldBadge}>
-                  <Text style={styles.profileGoldLabel}>Gold</Text>
-                  <Text style={styles.profileGoldValue}>{profileGold}</Text>
+              {currentUser && !viewingUser ? (
+                <View style={styles.profileMetaRow}>
+                  <View style={[styles.profileStatChip, styles.profileGoldStatChip]}>
+                    <Image source={GOLD_ICON} style={styles.profileGoldCoinIcon} resizeMode="contain" />
+                    <View style={styles.profileGoldStatTextCol}>
+                      <Text style={styles.profileStatLabel}>Gold</Text>
+                      <Text style={styles.profileGoldStatValue}>{profileGold.toLocaleString()}</Text>
+                    </View>
+                  </View>
+                  <View style={styles.profileStatChip}>
+                    <Text style={styles.profileStatLabel}>Builds</Text>
+                    <Text style={styles.profileStatValue}>
+                      {savedBuilds.length + communityBuilds.length + certifiedBuilds.length}
+                    </Text>
+                  </View>
                 </View>
-              )}
+              ) : null}
+              {currentUser && !viewingUser ? (
+                <TouchableOpacity
+                  style={styles.profileCustomizeBtn}
+                  onPress={() => {
+                    setAppearanceSection('banner');
+                    setShowProfileAppearanceModal(true);
+                  }}
+                  activeOpacity={0.85}
+                >
+                  <Text style={styles.profileCustomizeBtnText}>Customize profile</Text>
+                </TouchableOpacity>
+              ) : null}
             </View>
           </View>
           {/* Current user's preferred roles summary (now placed under the profile icon/header) */}
@@ -4893,24 +4790,21 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
           </View>
           {currentUser && !viewingUser ? (
             <View style={styles.appPrefsSection}>
-              <Text style={styles.preferredRolesLabel}>Ability tooltips</Text>
-              <Text style={styles.preferredRolesHint}>
-                Minimal = short summary and quick stats. Descriptive = full per-rank values (0/10/30…).
-              </Text>
+              <Text style={styles.preferredRolesLabel}>Tooltips</Text>
               <View style={styles.abilityDetailToggleRow}>
                 <TouchableOpacity
                   style={[
                     styles.abilityDetailChip,
-                    abilityTooltipDetail === ABILITY_TOOLTIP_DETAIL.MINIMAL &&
+                    combinedTooltipDetail === TOOLTIP_DETAIL.MINIMAL &&
                       styles.abilityDetailChipActive,
                   ]}
-                  onPress={() => setAbilityTooltipDetail(ABILITY_TOOLTIP_DETAIL.MINIMAL)}
+                  onPress={() => setCombinedTooltipDetail(TOOLTIP_DETAIL.MINIMAL)}
                   activeOpacity={0.8}
                 >
                   <Text
                     style={[
                       styles.abilityDetailChipText,
-                      abilityTooltipDetail === ABILITY_TOOLTIP_DETAIL.MINIMAL &&
+                      combinedTooltipDetail === TOOLTIP_DETAIL.MINIMAL &&
                         styles.abilityDetailChipTextActive,
                     ]}
                   >
@@ -4920,61 +4814,16 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                 <TouchableOpacity
                   style={[
                     styles.abilityDetailChip,
-                    abilityTooltipDetail === ABILITY_TOOLTIP_DETAIL.DESCRIPTIVE &&
+                    combinedTooltipDetail === TOOLTIP_DETAIL.DESCRIPTIVE &&
                       styles.abilityDetailChipActive,
                   ]}
-                  onPress={() => setAbilityTooltipDetail(ABILITY_TOOLTIP_DETAIL.DESCRIPTIVE)}
+                  onPress={() => setCombinedTooltipDetail(TOOLTIP_DETAIL.DESCRIPTIVE)}
                   activeOpacity={0.8}
                 >
                   <Text
                     style={[
                       styles.abilityDetailChipText,
-                      abilityTooltipDetail === ABILITY_TOOLTIP_DETAIL.DESCRIPTIVE &&
-                        styles.abilityDetailChipTextActive,
-                    ]}
-                  >
-                    Descriptive
-                  </Text>
-                </TouchableOpacity>
-              </View>
-
-              <Text style={[styles.preferredRolesLabel, styles.appPrefsSubLabel]}>Item tooltips</Text>
-              <Text style={styles.preferredRolesHint}>
-                Minimal = tagline and stats. Descriptive = full passive and active text.
-              </Text>
-              <View style={styles.abilityDetailToggleRow}>
-                <TouchableOpacity
-                  style={[
-                    styles.abilityDetailChip,
-                    itemTooltipDetail === ITEM_TOOLTIP_DETAIL.MINIMAL &&
-                      styles.abilityDetailChipActive,
-                  ]}
-                  onPress={() => setItemTooltipDetail(ITEM_TOOLTIP_DETAIL.MINIMAL)}
-                  activeOpacity={0.8}
-                >
-                  <Text
-                    style={[
-                      styles.abilityDetailChipText,
-                      itemTooltipDetail === ITEM_TOOLTIP_DETAIL.MINIMAL &&
-                        styles.abilityDetailChipTextActive,
-                    ]}
-                  >
-                    Minimal
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[
-                    styles.abilityDetailChip,
-                    itemTooltipDetail === ITEM_TOOLTIP_DETAIL.DESCRIPTIVE &&
-                      styles.abilityDetailChipActive,
-                  ]}
-                  onPress={() => setItemTooltipDetail(ITEM_TOOLTIP_DETAIL.DESCRIPTIVE)}
-                  activeOpacity={0.8}
-                >
-                  <Text
-                    style={[
-                      styles.abilityDetailChipText,
-                      itemTooltipDetail === ITEM_TOOLTIP_DETAIL.DESCRIPTIVE &&
+                      combinedTooltipDetail === TOOLTIP_DETAIL.DESCRIPTIVE &&
                         styles.abilityDetailChipTextActive,
                     ]}
                   >
@@ -4986,60 +4835,115 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
           ) : null}
         </View>
           );
+          return (
+            <ProfileGradientBorderWrap gradient={hasThemeChrome ? gradientStops : null}>
+              {profileCard}
+            </ProfileGradientBorderWrap>
+          );
         })()}
 
-        {/* Account Settings Section */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Account Settings</Text>
-          </View>
-          <View style={styles.accountSettingsGrid}>
-            <TouchableOpacity
-              style={styles.accountSettingCard}
-              onPress={() => {
-                setNewUsername('');
-                setShowChangeUsernameModal(true);
-              }}
-              activeOpacity={0.8}
-            >
-              <Text style={styles.accountSettingIcon}>U</Text>
-              <View style={styles.accountSettingContent}>
-                <Text style={styles.accountSettingTitle}>Username</Text>
-                <Text style={styles.accountSettingDescription}>Update your login name across your account.</Text>
+        {/* Profile & account settings */}
+        {currentUser && !viewingUser ? (
+          <>
+            <View style={styles.settingsGroup}>
+              <Text style={styles.settingsGroupLabel}>Profile</Text>
+              <View style={styles.settingsList}>
+                <TouchableOpacity
+                  style={styles.settingsRow}
+                  onPress={() => {
+                    setTempSelectedGodIcon(profileGodIcon);
+                    setShowGodIconPicker(true);
+                  }}
+                  activeOpacity={0.8}
+                >
+                  <Text style={styles.settingsRowTitle}>Profile icon</Text>
+                  <Text style={styles.settingsRowMeta} numberOfLines={1}>{profileGodIcon || 'Default'}</Text>
+                  <Text style={styles.settingsRowChevron}>›</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.settingsRow}
+                  onPress={() => {
+                    setNewDisplayName(displayName || '');
+                    setShowChangeDisplayNameModal(true);
+                  }}
+                  activeOpacity={0.8}
+                >
+                  <Text style={styles.settingsRowTitle}>Display name</Text>
+                  <Text style={styles.settingsRowMeta} numberOfLines={1}>{displayName || currentUser}</Text>
+                  <Text style={styles.settingsRowChevron}>›</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.settingsRow}
+                  onPress={() => setShowProfileColorModal(true)}
+                  activeOpacity={0.8}
+                >
+                  <Text style={styles.settingsRowTitle}>Theme color</Text>
+                  <View style={styles.settingsRowSwatchWrap}>
+                    {profileGradient && profileGradient.length >= 2 ? (
+                      <View style={[styles.settingsRowSwatch, styles.settingsRowSwatchGradient]}>
+                        <View style={[styles.settingsRowSwatchHalf, { backgroundColor: profileGradient[0] }]} />
+                        <View style={[styles.settingsRowSwatchHalf, { backgroundColor: profileGradient[1] }]} />
+                      </View>
+                    ) : (
+                      <View style={[styles.settingsRowSwatch, { backgroundColor: profileColor || UI_THEME.accentSky }]} />
+                    )}
+                  </View>
+                  <Text style={styles.settingsRowChevron}>›</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.settingsRow}
+                  onPress={() => {
+                    setAppearanceSection('banner');
+                    setShowProfileAppearanceModal(true);
+                  }}
+                  activeOpacity={0.8}
+                >
+                  <Text style={styles.settingsRowTitle}>Banner, badges & FX</Text>
+                  <Text style={styles.settingsRowMeta} numberOfLines={1}>
+                    {profileBanner !== 'none' ? 'Banner on' : 'Default'} · {profileBadges.length} badge{profileBadges.length === 1 ? '' : 's'}
+                  </Text>
+                  <Text style={styles.settingsRowChevron}>›</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.settingsRow, styles.settingsRowLast]}
+                  onPress={() => setShowPreferredRolesModal(true)}
+                  activeOpacity={0.8}
+                >
+                  <Text style={styles.settingsRowTitle}>Preferred roles</Text>
+                  <Text style={styles.settingsRowMeta} numberOfLines={1}>
+                    {preferredRoles.length ? preferredRoles.join(', ') : 'Not set'}
+                  </Text>
+                  <Text style={styles.settingsRowChevron}>›</Text>
+                </TouchableOpacity>
               </View>
-              <Text style={styles.accountSettingArrow}>›</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.accountSettingCard}
-              onPress={() => {
-                setShowProfileColorModal(true);
-              }}
-              activeOpacity={0.8}
-            >
-              <Text style={styles.accountSettingIcon}>C</Text>
-              <View style={styles.accountSettingContent}>
-                <Text style={styles.accountSettingTitle}>Profile Background Color</Text>
-                <Text style={styles.accountSettingDescription}>Tune your base color and gradient aura.</Text>
+            </View>
+
+            <View style={styles.settingsGroup}>
+              <Text style={styles.settingsGroupLabel}>Account</Text>
+              <View style={styles.settingsList}>
+                <TouchableOpacity
+                  style={styles.settingsRow}
+                  onPress={() => {
+                    setNewUsername('');
+                    setShowChangeUsernameModal(true);
+                  }}
+                  activeOpacity={0.8}
+                >
+                  <Text style={styles.settingsRowTitle}>Username</Text>
+                  <Text style={styles.settingsRowMeta} numberOfLines={1}>{currentUser}</Text>
+                  <Text style={styles.settingsRowChevron}>›</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.settingsRow, styles.settingsRowLast, styles.settingsRowDestructive]}
+                  onPress={handleLogout}
+                  activeOpacity={0.8}
+                >
+                  <Text style={styles.settingsRowTitleDestructive}>Sign out</Text>
+                </TouchableOpacity>
               </View>
-              <Text style={styles.accountSettingArrow}>›</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.accountSettingCard}
-              onPress={() => {
-                setAppearanceSection('banner');
-                setShowProfileAppearanceModal(true);
-              }}
-              activeOpacity={0.8}
-            >
-              <Text style={styles.accountSettingIcon}>FX</Text>
-              <View style={styles.accountSettingContent}>
-                <Text style={styles.accountSettingTitle}>Banner, Badges & FX</Text>
-                <Text style={styles.accountSettingDescription}>Set your title, icon badges, and name animation.</Text>
-              </View>
-              <Text style={styles.accountSettingArrow}>›</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+            </View>
+          </>
+        ) : null}
 
 
         {/* God Icon Picker Modal - Must be outside ScrollView for proper modal rendering */}
@@ -5268,7 +5172,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
           </Pressable>
         </Modal>
 
-        {/* Profile color & gradient modal */}
+        {/* Profile theme color modal */}
         <Modal
           visible={showProfileColorModal}
           transparent={true}
@@ -5279,7 +5183,9 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
             setLivePickerColor(normalizeHex(profileColor) || PROFILE_COLOR_PRESETS[0].color);
             setTempProfileGradient(profileGradient && profileGradient.length >= 2 ? profileGradient : null);
             setTempUseGradient(!!(profileGradient && profileGradient.length >= 2));
-            setColorSection('preset');
+            setShowAdvancedGradient(false);
+            setActiveNativePicker(null);
+            setThemePresetTarget('accent');
             setTempGradientStopsInput(
               profileGradient && profileGradient.length >= 2
                 ? profileGradient.join(', ')
@@ -5288,219 +5194,294 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
           }}
         >
           <Pressable style={styles.modalOverlay} onPress={() => setShowProfileColorModal(false)}>
-            <Pressable style={styles.modalContainer} onPress={(e) => e.stopPropagation()}>
-              <Text style={styles.modalTitle}>Profile color & gradient</Text>
-              <Text style={styles.modalSubtitle}>Others will see this when viewing your profile.</Text>
-              <View style={styles.appearanceSectionTabs}>
-                {[
-                  { key: 'preset', label: 'Presets' },
-                  { key: 'custom', label: 'Custom Picker' },
-                ].map((s) => (
-                  <TouchableOpacity
-                    key={s.key}
-                    onPress={() => setColorSection(s.key)}
-                    style={[styles.appearanceSectionTabBtn, colorSection === s.key && styles.appearanceSectionTabBtnActive]}
-                    activeOpacity={0.85}
-                  >
-                    <Text numberOfLines={1} style={[styles.appearanceSectionTabText, colorSection === s.key && styles.appearanceSectionTabTextActive]}>{s.label}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-              <Text style={[styles.preferredRolesLabel, { marginTop: 12 }]}>Color</Text>
-              {colorSection === 'preset' ? (
-                <View style={styles.colorPresetRow}>
-                  {PROFILE_COLOR_PRESETS.map((p) => (
-                    <TouchableOpacity
-                      key={p.color}
-                      onPress={() => {
-                        setTempProfileColor(p.color);
-                        if (tempUseGradient && tempProfileGradient && tempProfileGradient[0]) {
-                          setTempProfileGradient([p.color, tempProfileGradient[1] || p.color]);
-                          setTempGradientStopsInput(`${p.color}, ${tempProfileGradient[1] || p.color}`);
-                        }
-                      }}
-                      style={[
-                        styles.colorPresetButton,
-                        { backgroundColor: p.color },
-                        (tempProfileColor === p.color) && styles.colorPresetButtonSelected,
-                      ]}
-                      activeOpacity={0.8}
-                    />
-                  ))}
-                </View>
-              ) : (
-                <>
-                  {!IS_WEB ? (
-                    <View style={styles.nativeColorPickerPanel}>
-                      <ColorPicker
-                        color={normalizeHex(tempProfileColor) || UI_THEME.accentSky}
-                        onColorChangeComplete={(color) => {
-                          const v = normalizeHex(color);
-                          if (v) {
-                            setLivePickerColor(v);
-                            setTempProfileColor(v);
-                          }
-                        }}
-                        onColorChange={(color) => {
-                          const v = normalizeHex(color);
-                          if (!v) return;
-                          livePickerQueuedColorRef.current = v;
-                          if (livePickerRafRef.current) return;
-                          if (typeof requestAnimationFrame === 'function') {
-                            livePickerRafRef.current = requestAnimationFrame(() => {
-                              livePickerRafRef.current = null;
-                              if (livePickerQueuedColorRef.current) {
-                                setLivePickerColor(livePickerQueuedColorRef.current);
-                              }
-                            });
-                            return;
-                          }
-                          setLivePickerColor(v);
-                        }}
-                        thumbSize={26}
-                        sliderSize={24}
-                        noSnap
-                        row={false}
-                        swatches={false}
-                        useNativeDriver
-                        useNativeLayout
-                      />
-                    </View>
-                  ) : (
-                    <View style={styles.customColorSwatchGrid}>
-                      {CUSTOM_COLOR_SWATCHES.map((swatch) => (
-                        <TouchableOpacity
-                          key={swatch}
-                          onPress={() => setTempProfileColor(swatch)}
-                          style={[
-                            styles.customColorSwatch,
-                            { backgroundColor: swatch },
-                            normalizeHex(tempProfileColor) === swatch && styles.customColorSwatchSelected,
-                          ]}
-                          activeOpacity={0.8}
-                        />
-                      ))}
-                    </View>
-                  )}
-                  {IS_WEB ? (
-                    <input
-                      type="color"
-                      value={normalizeHex(tempProfileColor) || UI_THEME.accentSky}
-                      onChange={(e) => {
-                        const v = normalizeHex(e?.target?.value || '');
-                        if (v) setTempProfileColor(v);
-                      }}
-                      style={{ width: '100%', height: 42, border: 'none', borderRadius: 8, background: '#0f1724' }}
-                    />
-                  ) : null}
-                  <View style={styles.colorLivePreviewRow}>
-                    <View
-                      style={[
-                        styles.colorLivePreviewSwatch,
-                        { backgroundColor: normalizeHex(livePickerColor || tempProfileColor) || UI_THEME.accentSky },
-                      ]}
-                    />
-                    <Text style={styles.colorLivePreviewHex}>
-                      {normalizeHex(livePickerColor || tempProfileColor) || '#1E90FF'}
+            <Pressable
+              style={[styles.modalContainer, styles.appearanceModalContainer, styles.profileColorModalContainer]}
+              onPress={(e) => e.stopPropagation()}
+            >
+              <Text style={styles.modalTitleCompact}>Theme color</Text>
+
+              {(() => {
+                const previewColor = normalizeHex(livePickerColor || tempProfileColor) || UI_THEME.accentSky;
+                const previewGradient = tempUseGradient
+                  ? (normalizeGradientStops(tempGradientStopsInput)
+                    || normalizeGradientStops(tempProfileGradient)
+                    || [previewColor, PROFILE_COLOR_PRESETS[1].color])
+                  : null;
+                const previewStyle = previewGradient && previewGradient.length >= 2
+                  ? (IS_WEB
+                    ? { backgroundImage: `linear-gradient(120deg, ${previewGradient.join(', ')})` }
+                    : { backgroundColor: previewGradient[0] })
+                  : { backgroundColor: previewColor };
+                return (
+                  <View style={[styles.themePreviewStrip, previewStyle]}>
+                    <Text style={styles.themePreviewHex} numberOfLines={1}>
+                      {previewGradient ? previewGradient.join(' → ') : previewColor}
                     </Text>
                   </View>
-                </>
-              )}
-              <TextInput
-                style={styles.appearanceTextInput}
-                placeholder="#1E90FF"
-                placeholderTextColor="#64748b"
-                value={tempProfileColor || ''}
-                onChangeText={setTempProfileColor}
-                autoCapitalize="none"
-                autoCorrect={false}
-              />
-              {IS_WEB ? (
-                <View style={styles.webColorPickerRow}>
-                  <Text style={styles.preferredRolesHint}>Color picker</Text>
-                  <input
-                    type="color"
-                    value={normalizeHex(tempProfileColor) || UI_THEME.accentSky}
-                    onChange={(e) => {
-                      const v = normalizeHex(e?.target?.value || '');
-                      if (v) setTempProfileColor(v);
-                    }}
-                    style={{ width: 56, height: 34, border: 'none', background: 'transparent' }}
-                  />
-                </View>
-              ) : null}
-              <TouchableOpacity
-                onPress={() => setTempUseGradient(!tempUseGradient)}
-                style={[styles.gradientToggle, tempUseGradient && styles.gradientToggleOn]}
-                activeOpacity={0.8}
+                );
+              })()}
+
+              <ScrollView
+                style={styles.themeColorModalScroll}
+                contentContainerStyle={styles.themeColorModalScrollContent}
+                nestedScrollEnabled
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator
               >
-                <Text style={styles.gradientToggleText}>Use gradient</Text>
-              </TouchableOpacity>
-              {tempUseGradient && (
-                <>
-                  <Text style={[styles.preferredRolesLabel, { marginTop: 8 }]}>Second color</Text>
-                  <View style={styles.colorPresetRow}>
-                    {PROFILE_COLOR_PRESETS.map((p) => (
+                {tempUseGradient ? (
+                  <View style={styles.themePresetTargetRow}>
+                    {[
+                      { key: 'accent', label: 'Start' },
+                      { key: 'end', label: 'End' },
+                    ].map((t) => (
                       <TouchableOpacity
-                        key={`g2-${p.color}`}
-                        onPress={() => {
-                          const first = tempProfileColor || PROFILE_COLOR_PRESETS[0].color;
-                          setTempProfileGradient([first, p.color]);
-                          setTempGradientStopsInput(`${first}, ${p.color}`);
-                        }}
+                        key={t.key}
                         style={[
-                          styles.colorPresetButton,
-                          { backgroundColor: p.color },
-                          tempProfileGradient && tempProfileGradient[1] === p.color && styles.colorPresetButtonSelected,
+                          styles.themePresetTargetBtn,
+                          themePresetTarget === t.key && styles.themePresetTargetBtnActive,
                         ]}
-                        activeOpacity={0.8}
-                      />
+                        onPress={() => setThemePresetTarget(t.key)}
+                        activeOpacity={0.85}
+                      >
+                        <Text
+                          style={[
+                            styles.themePresetTargetText,
+                            themePresetTarget === t.key && styles.themePresetTargetTextActive,
+                          ]}
+                        >
+                          {t.label}
+                        </Text>
+                      </TouchableOpacity>
                     ))}
                   </View>
-                  <TextInput
-                    style={styles.appearanceTextInput}
-                    placeholder="#57C785"
-                    placeholderTextColor="#64748b"
-                    value={(tempProfileGradient && tempProfileGradient[1]) || ''}
-                    onChangeText={(v) => {
-                      const first = normalizeHex(tempProfileColor) || PROFILE_COLOR_PRESETS[0].color;
-                      setTempProfileGradient([first, v]);
-                    }}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                  />
-                  {IS_WEB ? (
-                    <View style={styles.webColorPickerRow}>
-                      <Text style={styles.preferredRolesHint}>Second stop picker</Text>
-                      <input
-                        type="color"
-                        value={normalizeHex((tempProfileGradient && tempProfileGradient[1]) || '') || '#57c785'}
-                        onChange={(e) => {
-                          const first = normalizeHex(tempProfileColor) || PROFILE_COLOR_PRESETS[0].color;
-                          const second = normalizeHex(e?.target?.value || '');
-                          if (second) {
-                            setTempProfileGradient([first, second]);
-                            setTempGradientStopsInput(`${first}, ${second}`);
-                          }
+                ) : null}
+
+                <View style={styles.colorPresetRowCompact}>
+                  {PROFILE_COLOR_PRESETS.map((p) => {
+                    const accentSelected = normalizeHex(tempProfileColor) === p.color;
+                    const endSelected = tempUseGradient && normalizeHex(tempProfileGradient?.[1]) === p.color;
+                    const selected = tempUseGradient
+                      ? (themePresetTarget === 'end' ? endSelected : accentSelected)
+                      : accentSelected;
+                    return (
+                      <TouchableOpacity
+                        key={p.color}
+                        onPress={() => {
+                          if (tempUseGradient && themePresetTarget === 'end') applyEndColor(p.color);
+                          else applyAccentColor(p.color);
                         }}
-                        style={{ width: 56, height: 34, border: 'none', background: 'transparent' }}
+                        style={[
+                          styles.colorPresetButtonCompact,
+                          { backgroundColor: p.color },
+                          selected && styles.colorPresetButtonSelected,
+                        ]}
+                        activeOpacity={0.8}
+                        accessibilityLabel={p.label}
+                      />
+                    );
+                  })}
+                </View>
+
+                <View style={tempUseGradient ? styles.themeDualCustomRow : null}>
+                  <View style={styles.colorCustomRowCompact}>
+                    {tempUseGradient ? (
+                      <Text style={styles.colorCustomRowMiniLabel}>Start</Text>
+                    ) : null}
+                    <View style={styles.colorCustomSwatchWrapCompact}>
+                      <View
+                        style={[
+                          styles.colorCustomSwatch,
+                          { backgroundColor: normalizeHex(tempProfileColor) || UI_THEME.accentSky },
+                        ]}
+                      />
+                      {IS_WEB ? (
+                        <WebColorInput
+                          overlay
+                          value={tempProfileColor}
+                          fallback={UI_THEME.accentSky}
+                          onChange={(raw) => {
+                            const v = normalizeHex(raw);
+                            if (v) applyAccentColor(v);
+                          }}
+                        />
+                      ) : (
+                        <TouchableOpacity
+                          style={styles.colorCustomSwatchHit}
+                          onPress={() => setActiveNativePicker((k) => (k === 'accent' ? null : 'accent'))}
+                          activeOpacity={0.9}
+                          accessibilityLabel="Open color picker"
+                        />
+                      )}
+                    </View>
+                    <TextInput
+                      style={styles.colorCustomHexInputCompact}
+                      placeholder="#7dd3fc"
+                      placeholderTextColor="#64748b"
+                      value={tempProfileColor || ''}
+                      onChangeText={applyAccentColor}
+                      onFocus={() => {
+                        setThemePresetTarget('accent');
+                        if (!IS_WEB) setActiveNativePicker('accent');
+                      }}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                    />
+                  </View>
+
+                  {tempUseGradient ? (
+                    <View style={styles.colorCustomRowCompact}>
+                      <Text style={styles.colorCustomRowMiniLabel}>End</Text>
+                      <View style={styles.colorCustomSwatchWrapCompact}>
+                        <View
+                          style={[
+                            styles.colorCustomSwatch,
+                            {
+                              backgroundColor:
+                                normalizeHex(tempProfileGradient?.[1]) || PROFILE_COLOR_PRESETS[1].color,
+                            },
+                          ]}
+                        />
+                        {IS_WEB ? (
+                          <WebColorInput
+                            overlay
+                            value={(tempProfileGradient && tempProfileGradient[1]) || ''}
+                            fallback="#22c55e"
+                            onChange={(raw) => {
+                              const v = normalizeHex(raw);
+                              if (v) applyEndColor(v);
+                            }}
+                          />
+                        ) : (
+                          <TouchableOpacity
+                            style={styles.colorCustomSwatchHit}
+                            onPress={() => setActiveNativePicker((k) => (k === 'end' ? null : 'end'))}
+                            activeOpacity={0.9}
+                            accessibilityLabel="Open end color picker"
+                          />
+                        )}
+                      </View>
+                      <TextInput
+                        style={styles.colorCustomHexInputCompact}
+                        placeholder="#22c55e"
+                        placeholderTextColor="#64748b"
+                        value={(tempProfileGradient && tempProfileGradient[1]) || ''}
+                        onChangeText={applyEndColor}
+                        onFocus={() => {
+                          setThemePresetTarget('end');
+                          if (!IS_WEB) setActiveNativePicker('end');
+                        }}
+                        autoCapitalize="none"
+                        autoCorrect={false}
                       />
                     </View>
                   ) : null}
-                  <Text style={[styles.preferredRolesLabel, { marginTop: 8 }]}>Custom gradient stops (comma separated hex)</Text>
-                  <TextInput
-                    style={styles.appearanceTextInput}
-                    placeholder="#2A7B9B, #57C785, #EDDD53"
-                    placeholderTextColor="#64748b"
-                    value={tempGradientStopsInput}
-                    onChangeText={setTempGradientStopsInput}
-                    autoCapitalize="none"
-                    autoCorrect={false}
+                </View>
+
+                {!IS_WEB && activeNativePicker === 'accent' ? (
+                  <View style={styles.nativeColorPickerPanelCompact}>
+                    <ColorPicker
+                      color={normalizeHex(tempProfileColor) || UI_THEME.accentSky}
+                      onColorChangeComplete={(color) => {
+                        const v = normalizeHex(color);
+                        if (v) applyAccentColor(v);
+                      }}
+                      onColorChange={(color) => {
+                        const v = normalizeHex(color);
+                        if (!v) return;
+                        livePickerQueuedColorRef.current = v;
+                        if (livePickerRafRef.current) return;
+                        if (typeof requestAnimationFrame === 'function') {
+                          livePickerRafRef.current = requestAnimationFrame(() => {
+                            livePickerRafRef.current = null;
+                            if (livePickerQueuedColorRef.current) {
+                              setLivePickerColor(livePickerQueuedColorRef.current);
+                            }
+                          });
+                          return;
+                        }
+                        setLivePickerColor(v);
+                      }}
+                      thumbSize={20}
+                      sliderSize={18}
+                      noSnap
+                      row={false}
+                      swatches={false}
+                      useNativeDriver
+                      useNativeLayout
+                    />
+                  </View>
+                ) : null}
+                {!IS_WEB && activeNativePicker === 'end' ? (
+                  <View style={styles.nativeColorPickerPanelCompact}>
+                    <ColorPicker
+                      color={normalizeHex(tempProfileGradient?.[1]) || PROFILE_COLOR_PRESETS[1].color}
+                      onColorChangeComplete={(color) => {
+                        const v = normalizeHex(color);
+                        if (v) applyEndColor(v);
+                      }}
+                      onColorChange={(color) => {
+                        const v = normalizeHex(color);
+                        if (v) applyEndColor(v);
+                      }}
+                      thumbSize={20}
+                      sliderSize={18}
+                      noSnap
+                      row={false}
+                      swatches={false}
+                      useNativeDriver
+                      useNativeLayout
+                    />
+                  </View>
+                ) : null}
+
+                <View style={styles.settingsToggleRowCompact}>
+                  <Text style={styles.settingsToggleTitle}>Gradient</Text>
+                  <Switch
+                    value={tempUseGradient}
+                    onValueChange={(enabled) => {
+                      setTempUseGradient(enabled);
+                      if (enabled && (!tempProfileGradient || tempProfileGradient.length < 2)) {
+                        const first = normalizeHex(tempProfileColor) || PROFILE_COLOR_PRESETS[0].color;
+                        const second = PROFILE_COLOR_PRESETS[1].color;
+                        setTempProfileGradient([first, second]);
+                        setTempGradientStopsInput(`${first}, ${second}`);
+                      }
+                      if (!enabled) setThemePresetTarget('accent');
+                    }}
+                    trackColor={{ false: '#334155', true: 'rgba(125, 211, 252, 0.45)' }}
+                    thumbColor={tempUseGradient ? UI_THEME.accentSky : '#94a3b8'}
                   />
-                  <Text style={styles.preferredRolesHint}>Use any hex colors. Minimum 2 stops.</Text>
-                </>
-              )}
-              <View style={styles.modalButtons}>
+                </View>
+
+                {tempUseGradient ? (
+                  <>
+                    <TouchableOpacity
+                      style={styles.advancedToggleRowCompact}
+                      onPress={() => setShowAdvancedGradient((v) => !v)}
+                      activeOpacity={0.8}
+                    >
+                      <Text style={styles.advancedToggleText}>
+                        {showAdvancedGradient ? '▾' : '▸'} More stops
+                      </Text>
+                    </TouchableOpacity>
+                    {showAdvancedGradient ? (
+                      <>
+                        <TextInput
+                          style={styles.appearanceTextInputCompact}
+                          placeholder="#7dd3fc, #22c55e"
+                          placeholderTextColor="#64748b"
+                          value={tempGradientStopsInput}
+                          onChangeText={setTempGradientStopsInput}
+                          autoCapitalize="none"
+                          autoCorrect={false}
+                        />
+                      </>
+                    ) : null}
+                  </>
+                ) : null}
+              </ScrollView>
+
+              <View style={styles.themeColorModalFooter}>
                 <TouchableOpacity style={styles.cancelButton} onPress={() => setShowProfileColorModal(false)}>
                   <Text style={styles.cancelButtonText}>Cancel</Text>
                 </TouchableOpacity>
@@ -5536,9 +5517,8 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
             setTempProfileBanner(profileBanner || 'none');
             const ownedTitleValues = SHOP_TITLE_OPTIONS.filter((i) => ownedIds.includes(i.id) || i.defaultUnlocked).map((i) => (i.value || '').trim());
             const current = (profileTitle || '').trim();
-            setTempProfileTitle(ownedTitleValues.includes(current) ? current : '');
-            const ownedFontValues = SHOP_FONT_OPTIONS.filter((i) => ownedIds.includes(i.id) || i.defaultUnlocked).map((i) => (i.value || '').trim());
-            setTempProfileFont(ownedFontValues.includes(profileFont || '') ? (profileFont || '') : '');
+            setTempProfileTitle(ownedTitleValues.includes(current) ? current : current);
+            setTempProfileFont(profileFont || '');
             setTempProfileBadges(Array.isArray(profileBadges) ? profileBadges.slice(0, MAX_BADGES) : []);
             setTempNameAnimation(nameAnimation || 'none');
             setTempBadgeSearch('');
@@ -5547,9 +5527,16 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
           }}
         >
           <Pressable style={styles.modalOverlay} onPress={() => setShowProfileAppearanceModal(false)}>
-            <Pressable style={[styles.modalContainer, styles.appearanceModalContainer]} onPress={(e) => e.stopPropagation()}>
-              <Text style={styles.modalTitle}>Profile appearance</Text>
-              <Text style={styles.modalSubtitle}>Banner, title, badges, and animated display name.</Text>
+            <View style={[styles.modalContainer, styles.appearanceModalContainer]}>
+              <Text style={styles.modalTitleCompact}>Profile appearance</Text>
+              <Text style={[styles.modalSubtitle, styles.modalSubtitleLeft]}>Banner, title, font, badges, and name animation.</Text>
+              <ScrollView
+                style={styles.appearanceModalScroll}
+                contentContainerStyle={styles.appearanceModalScrollContent}
+                nestedScrollEnabled
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator
+              >
               {(() => {
                 const previewBanner = PROFILE_BANNER_PRESETS.find((p) => p.key === tempProfileBanner);
                 const previewName = (displayName || currentUser || 'Profile').trim() || 'Profile';
@@ -5599,7 +5586,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                 );
               })()}
 
-              <View style={styles.appearanceSectionTabs}>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.appearanceSectionTabsScroll} contentContainerStyle={styles.appearanceSectionTabs}>
                 {[
                   { key: 'banner', label: 'Banner' },
                   { key: 'title', label: 'Title' },
@@ -5616,7 +5603,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                     <Text numberOfLines={1} style={[styles.appearanceSectionTabText, appearanceSection === s.key && styles.appearanceSectionTabTextActive]}>{s.label}</Text>
                   </TouchableOpacity>
                 ))}
-              </View>
+              </ScrollView>
 
               {appearanceSection === 'banner' && (
                 <>
@@ -5689,17 +5676,16 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
 
               {appearanceSection === 'font' && (
                 <>
-                  <Text style={[styles.preferredRolesLabel, { marginTop: 12 }]}>Display name font</Text>
-                  <Text style={[styles.sectionNote, { marginBottom: 8 }]}>Fonts are earned in the Shop (More → Shop).</Text>
-                  <ScrollView style={styles.titlePresetScroll} contentContainerStyle={styles.titlePresetRowCompact}>
+                  <Text style={styles.appearanceSectionLabel}>Display name font</Text>
+                  <Text style={styles.sectionNote}>Pick a font you own from the Shop. Preview uses your display name.</Text>
+                  <View style={styles.fontPresetGrid}>
                     <TouchableOpacity
                       onPress={() => setTempProfileFont('')}
-                      style={[styles.titlePresetChip, !(tempProfileFont || '').trim() && styles.titlePresetChipSelected]}
+                      style={[styles.fontPresetCard, !(tempProfileFont || '').trim() && styles.fontPresetCardSelected]}
                       activeOpacity={0.85}
                     >
-                      <Text style={[styles.titlePresetChipText, !(tempProfileFont || '').trim() && styles.titlePresetChipTextSelected]} numberOfLines={1}>
-                        Default
-                      </Text>
+                      <Text style={[styles.fontPresetSample, !(tempProfileFont || '').trim() && styles.fontPresetSampleSelected]}>Aa</Text>
+                      <Text style={[styles.fontPresetName, !(tempProfileFont || '').trim() && styles.fontPresetNameSelected]}>Default</Text>
                     </TouchableOpacity>
                     {SHOP_FONT_OPTIONS.filter((item) => ownedShopIds.includes(item.id) || item.defaultUnlocked).map((item) => {
                       const selected = (tempProfileFont || '').trim() === (item.value || '').trim();
@@ -5708,19 +5694,20 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                         <TouchableOpacity
                           key={item.id}
                           onPress={() => setTempProfileFont(item.value || '')}
-                          style={[styles.titlePresetChip, selected && styles.titlePresetChipSelected]}
+                          style={[styles.fontPresetCard, selected && styles.fontPresetCardSelected]}
                           activeOpacity={0.85}
                         >
-                          <Text style={[styles.titlePresetChipText, selected && styles.titlePresetChipTextSelected, fontFamily && { fontFamily }]} numberOfLines={1}>
+                          <Text style={[styles.fontPresetSample, selected && styles.fontPresetSampleSelected, fontFamily && { fontFamily }]}>Aa</Text>
+                          <Text style={[styles.fontPresetName, selected && styles.fontPresetNameSelected, fontFamily && { fontFamily }]} numberOfLines={1}>
                             {item.name}
                           </Text>
                         </TouchableOpacity>
                       );
                     })}
-                    {SHOP_FONT_OPTIONS.filter((item) => ownedShopIds.includes(item.id) || item.defaultUnlocked).length === 0 && (
-                      <Text style={styles.appearanceUnlockHint}>Unlock fonts in the Shop with Gold.</Text>
-                    )}
-                  </ScrollView>
+                  </View>
+                  {SHOP_FONT_OPTIONS.filter((item) => ownedShopIds.includes(item.id) || item.defaultUnlocked).length === 0 && (
+                    <Text style={styles.appearanceUnlockHint}>Unlock fonts in the Shop with Gold.</Text>
+                  )}
                 </>
               )}
 
@@ -5811,7 +5798,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                           <Text style={styles.animationOptionLabel} numberOfLines={1}>{opt.label}</Text>
                           {!unlocked && <Text style={styles.animationOptionLockIcon}>🔒</Text>}
                         </View>
-                        <View style={[styles.animationPreviewWrap, !unlocked && { opacity: 0.55 }]}>
+                        <View style={styles.animationPreviewWrap}>
                           <AnimatedProfileName
                             name="Preview"
                             animationType={opt.key}
@@ -5819,6 +5806,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                             style={styles.animationPreviewText}
                             numberOfLines={1}
                             ellipsizeMode="tail"
+                            previewMode
                           />
                         </View>
                         {!unlocked && <Text style={styles.animationOptionLockHint} numberOfLines={1}>Buy in Shop</Text>}
@@ -5828,21 +5816,21 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
                 </>
               )}
 
+              </ScrollView>
+
               <View style={styles.modalButtons}>
                 <TouchableOpacity style={styles.cancelButton} onPress={() => setShowProfileAppearanceModal(false)}>
                   <Text style={styles.cancelButtonText}>Cancel</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={styles.confirmButton}
-                  onPress={() => {
-                    saveProfileAppearance(tempProfileBanner, tempProfileTitle, tempProfileFont, tempProfileBadges, tempNameAnimation);
-                    setShowProfileAppearanceModal(false);
-                  }}
+                  style={[styles.confirmButton, isSavingAppearance && styles.confirmButtonDisabled]}
+                  onPress={handleSaveProfileAppearance}
+                  disabled={isSavingAppearance}
                 >
-                  <Text style={styles.confirmButtonText}>Save</Text>
+                  <Text style={styles.confirmButtonText}>{isSavingAppearance ? 'Saving…' : 'Save'}</Text>
                 </TouchableOpacity>
               </View>
-            </Pressable>
+            </View>
           </Pressable>
         </Modal>
 
@@ -5909,7 +5897,7 @@ export default function ProfilePage({ onNavigateToBuilds, onNavigateToGod, onNav
             </Pressable>
           </Pressable>
         </Modal>
-      </ScrollView>
+      </View>
     </View>
   );
 }
@@ -6033,11 +6021,11 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   container: {
-    flex: 1,
     backgroundColor: '#071024',
   },
   scrollContent: {
     padding: 20,
+    paddingBottom: 40,
     ...(IS_WEB && {
       maxWidth: WEB_CONTENT_MAX_WIDTH,
       alignSelf: 'center',
@@ -6111,15 +6099,24 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     borderWidth: 2,
     borderColor: UI_THEME.accentSky,
+    overflow: 'hidden',
+    position: 'relative',
     ...(IS_WEB && {
       boxShadow: '0 4px 20px rgba(30, 144, 255, 0.3)',
+    }),
+  },
+  profileHeaderGradientInner: {
+    marginBottom: 0,
+    borderWidth: 0,
+    backgroundColor: UI_THEME.panelBgSection,
+    ...(IS_WEB && {
+      boxShadow: 'none',
     }),
   },
   profileHeaderWeb: {
     width: '100%',
     maxWidth: 980,
     alignSelf: 'center',
-    minHeight: 250,
     paddingTop: 92,
   },
   profileBannerStrip: {
@@ -6171,15 +6168,581 @@ const styles = StyleSheet.create({
     textShadowRadius: 8,
   },
   profileColorModalContainer: {
-    maxHeight: '88%',
+    maxHeight: '90%',
+    padding: 14,
+    ...(IS_WEB && {
+      maxWidth: 440,
+      maxHeight: '86vh',
+    }),
+  },
+  modalTitleCompact: {
+    color: UI_THEME.accentSky,
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 8,
+    textAlign: 'left',
+  },
+  themePreviewStrip: {
+    marginTop: 2,
+    marginBottom: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: UI_THEME.borderCyanSoft,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    minHeight: 40,
+    justifyContent: 'center',
+  },
+  themePreviewLabel: {
+    color: 'rgba(248, 250, 252, 0.85)',
+    fontSize: 11,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 0.6,
+    marginBottom: 4,
+  },
+  themePreviewHex: {
+    color: '#f8fafc',
+    fontSize: 12,
+    fontWeight: '600',
+    textShadowColor: 'rgba(0,0,0,0.45)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 4,
+  },
+  themeColorModalScroll: {
+    flexGrow: 1,
+    flexShrink: 1,
+    minHeight: 0,
+    maxHeight: IS_WEB ? 360 : 300,
+  },
+  themeColorModalScrollContent: {
+    paddingBottom: 4,
+  },
+  themeColorModalFooter: {
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 10,
+    flexShrink: 0,
+  },
+  themePresetTargetRow: {
+    flexDirection: 'row',
+    gap: 6,
+    marginBottom: 8,
+  },
+  themePresetTargetBtn: {
+    flex: 1,
+    paddingVertical: 6,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: UI_THEME.panelBorder,
+    backgroundColor: UI_THEME.panelBgAlt,
+    alignItems: 'center',
+    minHeight: 32,
+    justifyContent: 'center',
+    ...(IS_WEB && { cursor: 'pointer' }),
+  },
+  themePresetTargetBtnActive: {
+    borderColor: UI_THEME.borderCyan,
+    backgroundColor: UI_THEME.borderCyanFill10,
+  },
+  themePresetTargetText: {
+    color: UI_THEME.textMuted,
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  themePresetTargetTextActive: {
+    color: UI_THEME.accentSky,
+  },
+  themeDualCustomRow: {
+    flexDirection: IS_WEB ? 'row' : 'column',
+    gap: 8,
+    marginTop: 8,
+  },
+  colorPresetRowCompact: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+  },
+  colorPresetButtonCompact: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    borderWidth: 2,
+    borderColor: 'transparent',
+    ...(IS_WEB && { cursor: 'pointer' }),
+  },
+  colorCustomRowCompact: {
+    flex: IS_WEB ? 1 : undefined,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingVertical: 5,
+    paddingHorizontal: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: UI_THEME.borderCyanSoft,
+    backgroundColor: UI_THEME.panelBgAlt,
+    minWidth: 0,
+  },
+  colorCustomRowMiniLabel: {
+    color: UI_THEME.textMuted,
+    fontSize: 10,
+    fontWeight: '700',
+    width: 28,
+  },
+  colorCustomSwatchWrapCompact: {
+    width: 28,
+    height: 28,
+    borderRadius: 6,
+    overflow: 'hidden',
+    position: 'relative',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.25)',
+    flexShrink: 0,
+  },
+  colorCustomHexInputCompact: {
+    flex: 1,
+    minWidth: 0,
+    backgroundColor: UI_THEME.mediaBg,
+    borderWidth: 1,
+    borderColor: UI_THEME.panelBorder,
+    borderRadius: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    color: UI_THEME.textBright,
+    fontSize: 12,
+    fontWeight: '600',
+    ...(IS_WEB && { outlineStyle: 'none', minHeight: 32 }),
+  },
+  settingsToggleRowCompact: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 10,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: UI_THEME.panelBorder,
+    backgroundColor: UI_THEME.panelBgAlt,
+  },
+  advancedToggleRowCompact: {
+    marginTop: 6,
+    paddingVertical: 4,
+    ...(IS_WEB && { cursor: 'pointer' }),
+  },
+  appearanceTextInputCompact: {
+    backgroundColor: UI_THEME.mediaBg,
+    borderWidth: 1,
+    borderColor: UI_THEME.panelBorder,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    color: UI_THEME.textBright,
+    fontSize: 12,
+    marginTop: 4,
+    ...(IS_WEB && { outlineStyle: 'none', minHeight: 36 }),
+  },
+  themeColorSection: {
+    marginBottom: 4,
+  },
+  themeColorSectionHint: {
+    color: UI_THEME.textMuted,
+    fontSize: 12,
+    lineHeight: 17,
+    marginBottom: 10,
+    marginTop: -2,
+  },
+  themeColorDivider: {
+    height: 1,
+    backgroundColor: UI_THEME.panelBorder,
+    marginVertical: 14,
+    opacity: 0.85,
+  },
+  colorCustomRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    marginTop: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: UI_THEME.borderCyanSoft,
+    backgroundColor: UI_THEME.panelBgAlt,
+  },
+  colorCustomSwatchWrap: {
+    width: 40,
+    height: 40,
+    borderRadius: 10,
+    overflow: 'hidden',
+    position: 'relative',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.25)',
+  },
+  colorCustomSwatch: {
+    width: '100%',
+    height: '100%',
+  },
+  colorCustomSwatchHit: {
+    ...StyleSheet.absoluteFillObject,
+    ...(IS_WEB && { cursor: 'pointer' }),
+  },
+  colorCustomHexInput: {
+    flex: 1,
+    minWidth: 0,
+    backgroundColor: UI_THEME.mediaBg,
+    borderWidth: 1,
+    borderColor: UI_THEME.panelBorder,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    color: UI_THEME.textBright,
+    fontSize: 14,
+    fontWeight: '600',
+    letterSpacing: 0.3,
+    ...(IS_WEB && { outlineStyle: 'none', minHeight: 40 }),
+  },
+  colorCustomRowLabel: {
+    color: UI_THEME.textMuted,
+    fontSize: 11,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    paddingRight: 2,
+  },
+  nativeColorPickerPanelCompact: {
+    marginTop: 8,
+    borderWidth: 1,
+    borderColor: UI_THEME.panelBorder,
+    borderRadius: 8,
+    backgroundColor: UI_THEME.mediaBg,
+    overflow: 'hidden',
+    padding: 6,
+    minHeight: 160,
+  },
+  segmentedControl: {
+    flexDirection: 'row',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: UI_THEME.panelBorder,
+    backgroundColor: UI_THEME.panelBgAlt,
+    padding: 3,
+    marginBottom: 12,
+  },
+  segmentedControlBtn: {
+    flex: 1,
+    paddingVertical: 10,
+    borderRadius: 8,
+    alignItems: 'center',
+    minHeight: 44,
+    justifyContent: 'center',
+    ...(IS_WEB && { cursor: 'pointer' }),
+  },
+  segmentedControlBtnActive: {
+    backgroundColor: UI_THEME.borderCyanFill12,
+    borderWidth: 1,
+    borderColor: UI_THEME.borderCyanSoft,
+  },
+  segmentedControlText: {
+    color: UI_THEME.textMuted,
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  segmentedControlTextActive: {
+    color: UI_THEME.accentSky,
+  },
+  colorHexChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    marginTop: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: UI_THEME.panelBorder,
+    backgroundColor: UI_THEME.panelBgAlt,
+  },
+  colorHexChipSwatch: {
+    width: 28,
+    height: 28,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#64748b',
+  },
+  colorHexChipText: {
+    color: UI_THEME.textBody,
+    fontSize: 14,
+    fontWeight: '700',
+    letterSpacing: 0.4,
+  },
+  colorHexRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  colorHexInputFlex: {
+    flex: 1,
+    marginBottom: 0,
+  },
+  settingsToggleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+    marginTop: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: UI_THEME.panelBorder,
+    backgroundColor: UI_THEME.panelBgAlt,
+  },
+  settingsToggleCopy: {
+    flex: 1,
+    minWidth: 0,
+  },
+  settingsToggleTitle: {
+    color: UI_THEME.textBright,
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  settingsToggleHint: {
+    color: UI_THEME.textMuted,
+    fontSize: 12,
+    marginTop: 2,
+    lineHeight: 16,
+  },
+  advancedToggleRow: {
+    marginTop: 10,
+    paddingVertical: 8,
+    ...(IS_WEB && { cursor: 'pointer' }),
+  },
+  advancedToggleText: {
+    color: UI_THEME.labelSoft,
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  pageTitle: {
+    color: UI_THEME.accentSky,
+    fontSize: 22,
+    fontWeight: '700',
+  },
+  profileStatChip: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: UI_THEME.borderCyanSoft,
+    backgroundColor: UI_THEME.borderCyanFill08,
+    minWidth: 72,
+  },
+  profileStatLabel: {
+    color: UI_THEME.textMuted,
+    fontSize: 11,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.4,
+  },
+  profileStatValue: {
+    color: UI_THEME.textBright,
+    fontSize: 16,
+    fontWeight: '700',
+    marginTop: 2,
+  },
+  profileGoldStatChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    borderColor: 'rgba(245, 158, 11, 0.55)',
+    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+  },
+  profileGoldCoinIcon: {
+    width: 24,
+    height: 24,
+  },
+  profileGoldStatTextCol: {
+    minWidth: 0,
+  },
+  profileGoldStatValue: {
+    color: '#fbbf24',
+    fontSize: 16,
+    fontWeight: '800',
+    marginTop: 2,
+  },
+  profileCustomizeBtn: {
+    marginTop: 12,
+    alignSelf: 'flex-start',
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: UI_THEME.borderCyan,
+    backgroundColor: UI_THEME.borderCyanFill10,
+    minHeight: 44,
+    justifyContent: 'center',
+    ...(IS_WEB && { cursor: 'pointer' }),
+  },
+  profileCustomizeBtnText: {
+    color: UI_THEME.accentSky,
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  settingsGroup: {
+    marginTop: 20,
+    marginBottom: 4,
+  },
+  settingsGroupLabel: {
+    color: UI_THEME.textMuted,
+    fontSize: 12,
+    fontWeight: '700',
+    letterSpacing: 0.8,
+    marginBottom: 8,
+    marginLeft: 4,
+  },
+  settingsList: {
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: UI_THEME.panelBorder,
+    backgroundColor: UI_THEME.panelBgAlt,
+    overflow: 'hidden',
+  },
+  settingsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 14,
+    paddingVertical: 13,
+    minHeight: 48,
+    borderBottomWidth: 1,
+    borderBottomColor: UI_THEME.panelBorder,
+    gap: 8,
+    ...(IS_WEB && { cursor: 'pointer' }),
+  },
+  settingsRowLast: {
+    borderBottomWidth: 0,
+  },
+  settingsRowTitle: {
+    color: UI_THEME.textBright,
+    fontSize: 15,
+    fontWeight: '600',
+    flex: 1,
+    minWidth: 0,
+  },
+  settingsRowMeta: {
+    color: UI_THEME.textMuted,
+    fontSize: 13,
+    maxWidth: '42%',
+    textAlign: 'right',
+  },
+  settingsRowChevron: {
+    color: UI_THEME.labelSoft,
+    fontSize: 20,
+    lineHeight: 22,
+    marginLeft: 2,
+  },
+  settingsRowSwatchWrap: {
+    marginRight: 2,
+  },
+  settingsRowSwatch: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.35)',
+    overflow: 'hidden',
+  },
+  settingsRowSwatchGradient: {
+    flexDirection: 'row',
+  },
+  settingsRowSwatchHalf: {
+    flex: 1,
+    height: '100%',
+  },
+  settingsRowDestructive: {
+    justifyContent: 'center',
+  },
+  settingsRowTitleDestructive: {
+    color: '#f87171',
+    fontSize: 15,
+    fontWeight: '600',
+    textAlign: 'center',
+    flex: 1,
   },
   appearanceModalContainer: {
-    maxHeight: '88%',
+    maxHeight: '92%',
+    borderColor: UI_THEME.borderCyan,
+    borderWidth: 1,
+    backgroundColor: UI_THEME.cardBg,
     ...(IS_WEB && {
       width: '94%',
       maxWidth: 860,
       maxHeight: '88vh',
     }),
+  },
+  appearanceModalScroll: {
+    flexGrow: 0,
+    flexShrink: 1,
+    maxHeight: IS_WEB ? 520 : 440,
+  },
+  appearanceModalScrollContent: {
+    paddingBottom: 8,
+  },
+  appearanceSectionTabsScroll: {
+    marginTop: 4,
+    marginBottom: 12,
+  },
+  appearanceSectionLabel: {
+    color: UI_THEME.textBright,
+    fontSize: 14,
+    fontWeight: '700',
+    marginTop: 4,
+    marginBottom: 6,
+  },
+  sectionNote: {
+    color: UI_THEME.textBody,
+    fontSize: 13,
+    lineHeight: 19,
+    marginBottom: 10,
+  },
+  fontPresetGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  fontPresetCard: {
+    width: '30%',
+    minWidth: 96,
+    flexGrow: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: UI_THEME.panelBorder,
+    backgroundColor: UI_THEME.panelBgAlt,
+    alignItems: 'center',
+  },
+  fontPresetCardSelected: {
+    borderColor: UI_THEME.borderCyan,
+    backgroundColor: UI_THEME.borderCyanFill12,
+  },
+  fontPresetSample: {
+    color: UI_THEME.textBright,
+    fontSize: 22,
+    fontWeight: '700',
+    marginBottom: 4,
+  },
+  fontPresetSampleSelected: {
+    color: UI_THEME.accentSky,
+  },
+  fontPresetName: {
+    color: UI_THEME.textMuted,
+    fontSize: 11,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  fontPresetNameSelected: {
+    color: UI_THEME.accentSky,
   },
   webColorPickerRow: {
     marginTop: 8,
@@ -6547,17 +7110,26 @@ const styles = StyleSheet.create({
   },
   animationPreviewWrap: {
     marginTop: 6,
-    minHeight: 20,
+    minHeight: 26,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(148, 163, 184, 0.16)',
+    borderRadius: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 5,
   },
   animationPreviewText: {
     fontSize: 14,
     fontWeight: '600',
+    color: UI_THEME.textBody,
   },
   appearanceUnlockHint: {
-    color: '#64748b',
+    color: UI_THEME.textBody,
     fontSize: 13,
     fontStyle: 'italic',
-    marginTop: 8,
+    marginTop: 10,
+    lineHeight: 18,
   },
   animationOptionButton: {
     borderWidth: 1,
@@ -6680,15 +7252,16 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   colorPresetButton: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
     borderWidth: 2,
     borderColor: 'transparent',
+    ...(IS_WEB && { cursor: 'pointer' }),
   },
   colorPresetButtonSelected: {
-    borderColor: '#fff',
-    borderWidth: 3,
+    borderColor: '#f8fafc',
+    borderWidth: 2,
   },
   gradientToggle: {
     marginTop: 16,
@@ -6712,6 +7285,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 16,
+    zIndex: 2,
   },
   profileIconWrapper: {
     position: 'relative',
@@ -6871,6 +7445,31 @@ const styles = StyleSheet.create({
     color: '#f59e0b',
     fontSize: 16,
     fontWeight: '800',
+  },
+  accountIdentityRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 8,
+    paddingHorizontal: 4,
+  },
+  accountIdentityLabel: {
+    color: UI_THEME.textHint,
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  accountIdentityValue: {
+    color: UI_THEME.accentSky,
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  profileMetaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginTop: 8,
   },
   trackerStatsCard: {
     marginTop: 10,
@@ -7324,6 +7923,28 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: 8,
   },
+  buildItemsRow: {
+    marginTop: 10,
+  },
+  buildItemsRowLabel: {
+    color: '#7dd3fc',
+    fontSize: 12,
+    fontWeight: '700',
+    letterSpacing: 1,
+    marginBottom: 6,
+  },
+  buildItemsRowIcons: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    gap: 8,
+  },
+  buildRelicDivider: {
+    width: 1,
+    height: 44,
+    backgroundColor: UI_THEME.panelBorder,
+    marginHorizontal: 4,
+  },
   itemSlot: {
     width: 60,
     height: 60,
@@ -7500,6 +8121,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
     lineHeight: 20,
+  },
+  modalSubtitleLeft: {
+    textAlign: 'left',
+    marginBottom: 12,
+    color: UI_THEME.textMuted,
   },
   recoveryCodeContainer: {
     backgroundColor: UI_THEME.panelBorder,

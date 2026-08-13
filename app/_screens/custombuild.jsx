@@ -22,6 +22,7 @@ import { WEB_CONTENT_MAX_WIDTH, useWebLayout } from '../../lib/webLayout';
 import { flattenBuildsGods } from '../../lib/normalizeBuildsGod';
 import { resolveBuildCatalogItem, resolveBuildCatalogRelic } from '../../lib/buildCatalog';
 import { parseItemGoldCost, formatItemGoldCost, getItemGoldCostParts, getBuildStatDisplayRows, getBaseStatsForGodAtLevel, computeTotalBuildStats } from '../../lib/buildStats';
+import { getGodStanceOptions } from '../../lib/customBuildGodPassives';
 import {
   getDiscordBotSharedBuildPayload,
   saveDiscordBotSharedBuildPayload,
@@ -40,6 +41,7 @@ import { BuildStatChartModal } from '../../lib/BuildStatChart';
 import { resolveChartIconUri } from '../../lib/buildStatChartConfig';
 import { computeBuildProgressionSeries, optimizeItemOrder } from '../../lib/buildStatProgression';
 import { loadBuildsGodsData, loadBuildsItemsData, getBuildsDataSync } from '../../lib/loadBuildsData';
+import { getLiveDisplayName } from '../../lib/profileDisplayNameLive';
 
 const IS_WEB = Platform.OS === 'web';
 
@@ -272,6 +274,7 @@ export default function CustomBuildPage({
   const [dataLoading, setDataLoading] = useState(true);
   const [selectedGod, setSelectedGod] = useState(null);
   const [godLevel, setGodLevel] = useState(20);
+  const [godStance, setGodStance] = useState(null);
   const [selectedItems, setSelectedItems] = useState(Array(7).fill(null));
   const [startingItems, setStartingItems] = useState(Array(5).fill(null)); // 5 starting item slots
   const [startingRelic, setStartingRelic] = useState(null);
@@ -319,6 +322,7 @@ export default function CustomBuildPage({
   const [swapItem, setSwapItem] = useState(null);
   const [swapReasoning, setSwapReasoning] = useState('');
   const [isUserCertified, setIsUserCertified] = useState(false); // Track if user is certified
+  const [postAsDisplayName, setPostAsDisplayName] = useState('');
   const [showStartingAbilityPicker, setShowStartingAbilityPicker] = useState(false);
   const [currentStartingAbilityLevel, setCurrentStartingAbilityLevel] = useState(0); // 0-4 for levels 1-5
   const [showPostToCertifiedModal, setShowPostToCertifiedModal] = useState(false);
@@ -340,6 +344,17 @@ export default function CustomBuildPage({
   useEffect(() => {
     if (isWebBuilderLayout) setGodStatsExpanded(true);
   }, [isWebBuilderLayout]);
+
+  useEffect(() => {
+    const opts = getGodStanceOptions(selectedGod);
+    if (!opts) {
+      setGodStance(null);
+      return;
+    }
+    setGodStance((prev) =>
+      prev && opts.stances.some((s) => s.id === prev) ? prev : opts.defaultStance
+    );
+  }, [selectedGod]);
 
   // Check certification status on mount and periodically
   useEffect(() => {
@@ -1033,19 +1048,38 @@ export default function CustomBuildPage({
     [selectedItems, items]
   );
 
-  const totalStats = useMemo(() => {
-    if (!selectedGod) return {};
-    return computeTotalBuildStats(
-      selectedGod,
-      godLevel,
-      resolvedFinalItems.filter(Boolean)
-    ).totalStats;
-  }, [selectedGod, godLevel, resolvedFinalItems]);
+  const resolvedStartingItems = useMemo(
+    () => startingItems.map((it) => (it ? resolveBuildCatalogItem(it, items) : null)),
+    [startingItems, items]
+  );
+
+  /** Starters + final relic (e.g. Bumba's, Aladdin's Lamp) stay in stat totals. */
+  const equippedItemsForStats = useMemo(() => {
+    const list = [...resolvedStartingItems, ...resolvedFinalItems].filter(Boolean);
+    const relic = finalRelic ? resolveBuildCatalogRelic(finalRelic, relics) : null;
+    if (relic) list.push(relic);
+    return list;
+  }, [resolvedStartingItems, resolvedFinalItems, finalRelic, relics]);
+
+  const godStanceOptions = useMemo(() => getGodStanceOptions(selectedGod), [selectedGod]);
+
+  const buildStatsResult = useMemo(() => {
+    if (!selectedGod) return { totalStats: {} };
+    return computeTotalBuildStats(selectedGod, godLevel, equippedItemsForStats, { godStance });
+  }, [selectedGod, godLevel, equippedItemsForStats, godStance]);
+
+  const totalStats = buildStatsResult.totalStats;
 
   const statProgression = useMemo(() => {
     if (!selectedGod) return [];
-    return computeBuildProgressionSeries(selectedGod, godLevel, resolvedFinalItems);
-  }, [selectedGod, godLevel, resolvedFinalItems]);
+    return computeBuildProgressionSeries(
+      selectedGod,
+      godLevel,
+      resolvedFinalItems.filter(Boolean),
+      resolvedStartingItems.filter(Boolean),
+      { godStance }
+    );
+  }, [selectedGod, godLevel, resolvedFinalItems, resolvedStartingItems, godStance]);
 
   // Build header gold: final slots + relics only (starting items are free for display)
   const totalGold = useMemo(() => {
@@ -1516,6 +1550,32 @@ export default function CustomBuildPage({
     );
   };
 
+  const renderStanceSwitcher = () => {
+    if (!godStanceOptions || godStanceOptions.stances.length < 2) return null;
+    return (
+      <View style={[styles.stanceSwitcherBlock, isWebBuilderLayout && styles.stanceSwitcherBlockDesktop]}>
+        <Text style={styles.stanceSwitcherLabel}>Stance</Text>
+        <View style={styles.stanceSwitcherRow}>
+          {godStanceOptions.stances.map((stance) => {
+            const active = godStance === stance.id;
+            return (
+              <TouchableOpacity
+                key={stance.id}
+                style={[styles.stanceSwitcherBtn, active && styles.stanceSwitcherBtnActive]}
+                onPress={() => setGodStance(stance.id)}
+                activeOpacity={0.85}
+              >
+                <Text style={[styles.stanceSwitcherBtnText, active && styles.stanceSwitcherBtnTextActive]}>
+                  {stance.label}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      </View>
+    );
+  };
+
   const renderStatsSection = () => {
     if (!selectedGod) {
       if (isWebBuilderLayout) {
@@ -1538,6 +1598,7 @@ export default function CustomBuildPage({
             <Text style={styles.godStatsExpandHeaderMeta}>Lv {Math.round(godLevel)}</Text>
           </View>
           {renderLevelSlider()}
+          {renderStanceSwitcher()}
           <View style={[styles.statsGrid, styles.statsGridDesktop]}>{renderTotalStatsGrid()}</View>
           </View>
         );
@@ -1560,6 +1621,7 @@ export default function CustomBuildPage({
         {godStatsExpanded ? (
           <View style={styles.statsExpandedBody}>
             {renderLevelSlider()}
+            {renderStanceSwitcher()}
             <View style={styles.statsGrid}>{renderTotalStatsGrid()}</View>
           </View>
         ) : null}
@@ -2121,11 +2183,36 @@ export default function CustomBuildPage({
         return false;
       }
 
+      // Partners: new posts also go to the partner (contributor) listing
+      let partnerPostFailed = false;
+      if (!isEditing && isUserCertified) {
+        const partnerResult = await supabase.from('contributor_builds').insert({
+          username: currentUser,
+          ...updateData,
+          created_at: new Date().toISOString(),
+        });
+        if (partnerResult.error && partnerResult.error.code !== 'MISSING_CONFIG') {
+          console.error('Error posting to partner builds:', partnerResult.error);
+          partnerPostFailed = true;
+        }
+      }
+
       setShowPostToCommunityModal(false);
       setCommunityBuildName('');
       setSelectedGamemodes(['All Modes']);
       if (isEditing && onEditComplete) onEditComplete();
-      Alert.alert('Success', `Your community build has been ${isEditing ? 'updated' : 'posted'}!`);
+      if (isEditing) {
+        Alert.alert('Success', 'Your community build has been updated!');
+      } else if (isUserCertified) {
+        Alert.alert(
+          'Success',
+          partnerPostFailed
+            ? 'Posted to Community builds! Partner listing failed — try again later.'
+            : 'Your build has been posted to Community and Partner builds!'
+        );
+      } else {
+        Alert.alert('Success', 'Your build has been posted to Community builds!');
+      }
       return true;
     } catch (error) {
       console.error('Exception posting to community:', error);
@@ -2136,11 +2223,25 @@ export default function CustomBuildPage({
     }
   };
 
-  const promptQuickCommunityPost = () => {
+  const resolvePostDisplayName = async (currentUser) => {
+    try {
+      const live = getLiveDisplayName(currentUser);
+      if (live && live.trim()) return live.trim();
+    } catch {}
+    try {
+      const cached = await storage.getItem(`displayName_${currentUser}`);
+      if (cached && cached.trim()) return cached.trim();
+    } catch {}
+    return currentUser || '';
+  };
+
+  const promptQuickCommunityPost = (displayName) => {
     const defaultName = buildDefaultCommunityName(selectedGod, selectedRoles);
+    const destination = isUserCertified ? 'Community and Partner builds' : 'Community builds';
+    const asName = displayName ? ` as ${displayName}` : '';
     Alert.alert(
-      'Quick post to community?',
-      `Post "${defaultName}" for All Modes. Tap Customize to change the name or modes first.`,
+      'Post build?',
+      `Post "${defaultName}"${asName} to ${destination} for All Modes. Tap Customize to change the name or modes first.`,
       [
         { text: 'Cancel', style: 'cancel' },
         {
@@ -2194,15 +2295,20 @@ export default function CustomBuildPage({
 
   const handleQuickPostCommunity = async () => {
     setPostMenuVisible(false);
-    if (!(await requireLoggedInUser())) return;
+    const currentUser = await requireLoggedInUser();
+    if (!currentUser) return;
     if (!requireBuildHasItems()) return;
-    promptQuickCommunityPost();
+    const displayName = await resolvePostDisplayName(currentUser);
+    setPostAsDisplayName(displayName);
+    promptQuickCommunityPost(displayName);
   };
 
   const handleCustomizePost = async () => {
     setPostMenuVisible(false);
-    if (!(await requireLoggedInUser())) return;
+    const currentUser = await requireLoggedInUser();
+    if (!currentUser) return;
     if (!requireBuildHasItems()) return;
+    setPostAsDisplayName(await resolvePostDisplayName(currentUser));
     setCommunityBuildName(buildDefaultCommunityName(selectedGod, selectedRoles));
     setSelectedGamemodes(['All Modes']);
     setShowPostToCommunityModal(true);
@@ -2309,25 +2415,23 @@ export default function CustomBuildPage({
   const getPostMenuItems = useCallback(() => {
     const showContributorUpdate =
       isUserCertified && buildToEdit?.databaseTable === 'contributor_builds' && buildToEdit?.databaseId;
-    const showContributorPost =
-      isUserCertified && !(buildToEdit?.databaseTable === 'contributor_builds' && buildToEdit?.databaseId);
 
     const menuItems = [
       {
         key: 'save',
-        title: 'Save to profile',
+        title: 'Save to Profile',
         hint: 'My Builds on your account',
         onPress: handleSaveBuildToProfile,
       },
       {
         key: 'quick',
-        title: 'Quick post to community',
-        hint: 'Default name · all modes',
+        title: 'Post',
+        hint: isUserCertified ? 'Community + Partner builds' : 'Post to community builds',
         onPress: handleQuickPostCommunity,
       },
       {
         key: 'custom',
-        title: 'Customize & post',
+        title: 'Customize Post',
         hint: 'Name, modes, and notes',
         onPress: handleCustomizePost,
       },
@@ -2335,17 +2439,9 @@ export default function CustomBuildPage({
     if (showContributorUpdate) {
       menuItems.push({
         key: 'contrib-update',
-        title: 'Update contributor build',
-        hint: 'Save edits to certified listing',
+        title: 'Update partner build',
+        hint: 'Save edits to partner listing',
         onPress: handleUpdateContributorBuild,
-      });
-    }
-    if (showContributorPost) {
-      menuItems.push({
-        key: 'contrib-post',
-        title: 'Post to contributor builds',
-        hint: 'Certified author listing',
-        onPress: handleOpenContributorPost,
       });
     }
     return menuItems;
@@ -4654,7 +4750,7 @@ export default function CustomBuildPage({
           >
             <View style={styles.saveBuildModalHeader}>
               <Text style={styles.saveBuildModalTitle}>
-                {buildToEdit && buildToEdit.databaseTable === 'community_builds' ? 'Edit Community Build' : 'Post to Community Builds'}
+                {buildToEdit && buildToEdit.databaseTable === 'community_builds' ? 'Edit Community Build' : 'Post Build'}
               </Text>
               <TouchableOpacity
                 style={styles.modalCloseButton}
@@ -4664,6 +4760,14 @@ export default function CustomBuildPage({
               </TouchableOpacity>
             </View>
 
+            {postAsDisplayName ? (
+              <Text style={styles.saveBuildModalPostingAs}>
+                Posting as <Text style={styles.saveBuildModalPostingAsName}>{postAsDisplayName}</Text>
+                {isUserCertified && !(buildToEdit && buildToEdit.databaseTable === 'community_builds')
+                  ? ' · Community + Partner builds'
+                  : ''}
+              </Text>
+            ) : null}
             <Text style={styles.saveBuildModalHint}>
               Name defaults to your god and roles. Gamemodes default to All Modes.
             </Text>
@@ -4833,7 +4937,7 @@ export default function CustomBuildPage({
                         if (localUser) {
                           const userData = JSON.parse(localUser);
                           if (userData.password_hash === passwordHash) {
-                            await storage.setItem('currentUser', loginUsername.trim());
+                            await finalizeAppLogin(loginUsername.trim(), loginPassword, storage);
                             setShowLoginModal(false);
                             setLoginUsername('');
                             setLoginPassword('');
@@ -4866,7 +4970,7 @@ export default function CustomBuildPage({
                       if (localUser) {
                         const userData = JSON.parse(localUser);
                         if (userData.password_hash === passwordHash) {
-                          await storage.setItem('currentUser', loginUsername.trim());
+                          await finalizeAppLogin(loginUsername.trim(), loginPassword, storage);
                           setShowLoginModal(false);
                           setLoginUsername('');
                           setLoginPassword('');
@@ -5638,6 +5742,47 @@ const styles = StyleSheet.create({
   statsEmbedLevelBlockDesktop: {
     marginBottom: 6,
     paddingBottom: 6,
+  },
+  stanceSwitcherBlock: {
+    marginBottom: IS_WEB ? 10 : 8,
+    paddingBottom: IS_WEB ? 10 : 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1e3a5f',
+  },
+  stanceSwitcherBlockDesktop: {
+    marginBottom: 6,
+    paddingBottom: 6,
+  },
+  stanceSwitcherLabel: {
+    color: '#64748b',
+    fontSize: IS_WEB ? 11 : 10,
+    fontWeight: '600',
+    marginBottom: IS_WEB ? 6 : 5,
+  },
+  stanceSwitcherRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+  },
+  stanceSwitcherBtn: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#334155',
+    backgroundColor: '#0f172a',
+  },
+  stanceSwitcherBtnActive: {
+    borderColor: '#7dd3fc',
+    backgroundColor: 'rgba(125, 211, 252, 0.12)',
+  },
+  stanceSwitcherBtnText: {
+    color: '#94a3b8',
+    fontSize: IS_WEB ? 12 : 11,
+    fontWeight: '700',
+  },
+  stanceSwitcherBtnTextActive: {
+    color: '#7dd3fc',
   },
   statsEmbedLevelHeading: {
     color: '#64748b',
@@ -6921,6 +7066,16 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 18,
     marginBottom: 14,
+  },
+  saveBuildModalPostingAs: {
+    color: '#94a3b8',
+    fontSize: 13,
+    lineHeight: 18,
+    marginBottom: 6,
+  },
+  saveBuildModalPostingAsName: {
+    color: '#7dd3fc',
+    fontWeight: '700',
   },
   saveBuildModalInput: {
     backgroundColor: '#0f1724',
