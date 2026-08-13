@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /**
- * Run 15 Scroll Trivia take-flow simulations in browsers:
- *   5 × desktop web (Chromium / Chrome)
- *   5 × iOS web (WebKit ≈ Safari, iPhone 16)
- *   5 × Android web (Chromium, Galaxy S26 viewport)
+ * Run 15 Scroll Trivia take-flow simulations across old + new devices:
+ *   5 × desktop web (common laptop widths)
+ *   5 × iOS web (WebKit ≈ Safari: SE → iPhone 16)
+ *   5 × Android web (Galaxy S5 → Galaxy S26)
  *
  * Requires quiz.json from formative-random-quiz.mjs (or TRIVIA_SLUG).
  * Starts nothing itself — API (:3000) + formative Vite (:5174) must be up.
@@ -19,14 +19,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const UI_BASE = process.env.FORMATIVE_UI_BASE || 'http://localhost:5174';
 const API_BASE = process.env.FORMATIVE_API_BASE || 'http://localhost:3000';
+const HOST_USER = process.env.TRIVIA_HOST_USER || 'teacher';
+const HOST_SECRET = process.env.TRIVIA_HOST_SECRET || 'devsecret';
 const OUT_DIR = path.join(ROOT, 'artifacts', 'trivia-sims');
 const QUIZ_PATH = process.env.TRIVIA_QUIZ_JSON || path.join(OUT_DIR, 'quiz.json');
-
-/** Playwright ships iPhone 16; Galaxy S26 uses published CSS viewport 360×780 @3x. */
-const IPHONE_16 = {
-  ...devices['iPhone 16'],
-  name: 'iPhone 16',
-};
 
 const GALAXY_S26 = {
   name: 'Galaxy S26',
@@ -40,49 +36,73 @@ const GALAXY_S26 = {
   defaultBrowserType: 'chromium',
 };
 
-const PROFILES = [
-  // Desktop web — Chromium (Chrome engine)
-  ...Array.from({ length: 5 }, (_, i) => ({
+function desktopProfile(index, width, height, name) {
+  return {
     group: 'web',
-    index: i + 1,
-    label: `web-${i + 1}`,
+    index,
+    label: `web-${index}`,
     browserType: 'chromium',
-    channel: process.env.TRIVIA_CHROME_CHANNEL || undefined, // e.g. 'chrome'
+    channel: process.env.TRIVIA_CHROME_CHANNEL || undefined,
     device: null,
-    deviceName: 'desktop-1440',
-    viewport: { width: 1440, height: 900 },
-    userAgent: undefined,
+    deviceName: name,
+    viewport: { width, height },
     isMobile: false,
     hasTouch: false,
-  })),
-  // iOS web — WebKit (Safari engine) + iPhone 16
-  ...Array.from({ length: 5 }, (_, i) => ({
+  };
+}
+
+function iosProfile(index, deviceKey) {
+  const device = { ...devices[deviceKey], name: deviceKey };
+  return {
     group: 'ios-web',
-    index: i + 1,
-    label: `ios-web-${i + 1}`,
+    index,
+    label: `ios-web-${index}`,
     browserType: 'webkit',
-    channel: undefined,
-    device: IPHONE_16,
-    deviceName: 'iPhone 16',
+    device,
+    deviceName: deviceKey,
     viewport: null,
-    userAgent: undefined,
     isMobile: true,
     hasTouch: true,
-  })),
-  // Android web — Chromium + Galaxy S26
-  ...Array.from({ length: 5 }, (_, i) => ({
+  };
+}
+
+function androidProfile(index, deviceKeyOrCustom) {
+  const device =
+    typeof deviceKeyOrCustom === 'string'
+      ? { ...devices[deviceKeyOrCustom], name: deviceKeyOrCustom }
+      : deviceKeyOrCustom;
+  return {
     group: 'android-web',
-    index: i + 1,
-    label: `android-web-${i + 1}`,
+    index,
+    label: `android-web-${index}`,
     browserType: 'chromium',
-    channel: undefined,
-    device: GALAXY_S26,
-    deviceName: 'Galaxy S26',
+    device,
+    deviceName: device.name || String(deviceKeyOrCustom),
     viewport: null,
-    userAgent: undefined,
     isMobile: true,
     hasTouch: true,
-  })),
+  };
+}
+
+const PROFILES = [
+  // Desktop — older common laptop widths through modern
+  desktopProfile(1, 1024, 768, 'desktop-1024x768'),
+  desktopProfile(2, 1280, 720, 'desktop-1280x720'),
+  desktopProfile(3, 1366, 768, 'desktop-1366x768'),
+  desktopProfile(4, 1440, 900, 'desktop-1440x900'),
+  desktopProfile(5, 1920, 1080, 'desktop-1920x1080'),
+  // iOS web — older small phones through current
+  iosProfile(1, 'iPhone SE'),
+  iosProfile(2, 'iPhone 8'),
+  iosProfile(3, 'iPhone 11'),
+  iosProfile(4, 'iPhone 13'),
+  iosProfile(5, 'iPhone 16'),
+  // Android web — older flagships through current
+  androidProfile(1, 'Galaxy S5'),
+  androidProfile(2, 'Galaxy S8'),
+  androidProfile(3, 'Pixel 5'),
+  androidProfile(4, 'Galaxy S24'),
+  androidProfile(5, GALAXY_S26),
 ];
 
 function loadQuiz() {
@@ -470,7 +490,7 @@ async function main() {
     if (profile.browserType === 'webkit' && !webkitBrowser) {
       launcher = chromiumBrowser;
       effective.browserType = 'chromium';
-      effective.device = devices['iPhone 14'];
+      // Keep the intended iPhone descriptor; only the engine falls back.
       effective.fallback = 'chromium-iphone-emulation';
     }
     process.stdout.write(`  → ${effective.label} (${effective.browserType}${effective.fallback ? ' fallback' : ''})… `);
@@ -483,8 +503,90 @@ async function main() {
   await chromiumBrowser.close().catch(() => {});
   await webkitBrowser?.close().catch(() => {});
 
+  // Verify submissions were stored with required fields (memory API or Supabase via host API)
+  let storage = { ok: false, checked: 0, missing: [], error: null };
+  try {
+    const quizId = quizPayload.quiz.id;
+    const res = await fetch(`${API_BASE}/api/trivia/host?action=responses&quizId=${quizId}`, {
+      headers: {
+        'x-host-username': HOST_USER,
+        'x-host-secret': HOST_SECRET,
+      },
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || `responses ${res.status}`);
+    const byDiscord = new Map(
+      (data.responses || []).map((r) => [String(r.discord_username || '').toLowerCase(), r])
+    );
+    const missing = [];
+    for (const r of results.filter((x) => x.ok)) {
+      const row = byDiscord.get(String(r.discord || '').toLowerCase());
+      if (!row) {
+        missing.push(`${r.label}: response not found for ${r.discord}`);
+        continue;
+      }
+      if (!row.ingame_name) missing.push(`${r.label}: missing ingame_name`);
+      if (row.score == null || row.max_score == null) missing.push(`${r.label}: missing score fields`);
+      if (!row.answers || typeof row.answers !== 'object') {
+        missing.push(`${r.label}: missing answers object`);
+      }
+      if (!row.submitted_at) missing.push(`${r.label}: missing submitted_at`);
+    }
+    storage = {
+      ok: missing.length === 0,
+      checked: results.filter((x) => x.ok).length,
+      storedTotal: (data.responses || []).length,
+      missing,
+      sample: (data.responses || [])[0]
+        ? {
+            discord_username: data.responses[0].discord_username,
+            ingame_name: data.responses[0].ingame_name,
+            score: data.responses[0].score,
+            max_score: data.responses[0].max_score,
+            hasAnswers: Boolean(data.responses[0].answers),
+          }
+        : null,
+    };
+    // Excel-friendly CSV snapshot of stored rows (UTF-8 BOM)
+    const csvEscape = (v) => {
+      const s = v == null ? '' : String(v);
+      return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+    };
+    const headers = [
+      'submitted_at',
+      'discord_username',
+      'ingame_name',
+      'score',
+      'max_score',
+      'ip_address',
+      'user_agent',
+      'response_id',
+    ];
+    const lines = [
+      headers.join(','),
+      ...(data.responses || []).map((r) =>
+        [
+          r.submitted_at,
+          r.discord_username,
+          r.ingame_name,
+          r.score,
+          r.max_score,
+          r.ip_address,
+          r.user_agent,
+          r.id,
+        ]
+          .map(csvEscape)
+          .join(',')
+      ),
+    ];
+    fs.writeFileSync(path.join(OUT_DIR, 'responses-export.csv'), `\uFEFF${lines.join('\n')}\n`);
+    storage.csvPath = path.relative(ROOT, path.join(OUT_DIR, 'responses-export.csv'));
+  } catch (err) {
+    storage = { ok: false, checked: 0, missing: [], error: err.message || String(err) };
+  }
+
   const summary = {
-    ok: results.every((r) => r.ok),
+    ok: results.every((r) => r.ok) && storage.ok,
     quiz: {
       id: quizPayload.quiz.id,
       slug: quizPayload.quiz.slug,
@@ -499,6 +601,7 @@ async function main() {
       iosWeb: results.filter((r) => r.group === 'ios-web' && r.ok).length,
       androidWeb: results.filter((r) => r.group === 'android-web' && r.ok).length,
     },
+    storage,
     results,
     generatedAt: new Date().toISOString(),
   };
@@ -515,6 +618,9 @@ async function main() {
     `- Desktop web: ${summary.totals.web}/5`,
     `- iOS web: ${summary.totals.iosWeb}/5`,
     `- Android web: ${summary.totals.androidWeb}/5`,
+    `- Storage check: **${storage.ok ? 'PASS' : 'FAIL'}** (checked ${storage.checked}, stored ${storage.storedTotal ?? '—'})`,
+    storage.error ? `- Storage error: ${storage.error}` : '',
+    ...(storage.missing || []).map((m) => `- Storage issue: ${m}`),
     '',
     '| Run | Group | Device | Score | Status | ms |',
     '|---|---|---|---|---|---|',
@@ -525,7 +631,7 @@ async function main() {
         } | ${r.ok ? 'PASS' : 'FAIL'} | ${r.ms} |`
     ),
     '',
-  ];
+  ].filter(Boolean);
   fs.writeFileSync(path.join(OUT_DIR, 'sim-results.md'), md.join('\n'));
 
   console.log('\n' + md.join('\n'));

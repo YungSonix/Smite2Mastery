@@ -22,6 +22,7 @@ const {
   applyVariant,
   scoreAnswersWithVariants,
 } = require('../lib/server/triviaVariants');
+const { responsesToCsv } = require('../lib/server/triviaExport');
 
 const DATA_ROOT = path.resolve(__dirname, '../app/data');
 const MEDIA_TYPES = {
@@ -205,6 +206,17 @@ async function handleHost(req, res, url) {
     const responses = [...db.responses.values()]
       .filter((r) => r.quiz_id === quiz.id)
       .sort((a, b) => String(b.submitted_at).localeCompare(String(a.submitted_at)));
+    const format = String(url.searchParams.get('format') || '').toLowerCase();
+    if (format === 'csv' || format === 'excel') {
+      const csv = responsesToCsv(quiz, responses);
+      res.writeHead(200, {
+        'Content-Type': 'text/csv; charset=utf-8',
+        'Content-Disposition': `attachment; filename="${String(quiz.slug || 'trivia')}-responses.csv"`,
+        'Access-Control-Allow-Origin': '*',
+      });
+      res.end(csv);
+      return;
+    }
     return json(res, 200, { quiz, questions, responses });
   }
 

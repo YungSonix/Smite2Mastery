@@ -3068,3 +3068,48 @@ a {
     color: #dbeafe;
   }
 }
+
+/* Very small / older phones (iPhone SE, Galaxy S5 ~320–360 CSS px) */
+@media (max-width: 380px) {
+  .f-take {
+    padding-left: max(10px, env(safe-area-inset-left, 0px));
+    padding-right: max(10px, env(safe-area-inset-right, 0px));
+  }
+
+  .f-take .f-cover-title {
+    font-size: clamp(1.35rem, 7vw, 1.7rem);
+  }
+
+  .f-take .f-qcard,
+  .f-take .f-identity-card,
+  .f-take .f-success-card,
+  .f-take .f-student-instructions {
+    padding: 14px 12px;
+    border-radius: 12px;
+  }
+
+  .f-take .f-option-row {
+    min-height: 52px;
+    padding: 12px 12px;
+    font-size: 15px;
+  }
+
+  .f-take .f-fib-inline {
+    min-width: 110px;
+    flex-basis: 120px;
+  }
+
+  .f-take .f-q-media-frame {
+    min-height: 150px;
+  }
+
+  .f-responses-tools {
+    flex-wrap: wrap;
+    justify-content: stretch;
+  }
+
+  .f-responses-tools .f-outline-btn {
+    min-height: 44px;
+    flex: 1 1 calc(50% - 8px);
+  }
+}
