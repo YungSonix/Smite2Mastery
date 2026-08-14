@@ -6,9 +6,21 @@ module.exports = async function handler(req, res) {
     const url = new URL(req.url, 'http://localhost');
     const slug = String(url.searchParams.get('slug') || '').trim();
     const discord = String(url.searchParams.get('discord') || '').trim();
-    if (!slug) return send(res, 400, { error: 'Missing slug' });
-
     const sb = supabaseAdmin();
+
+    // Latest assigned quiz for More → Scroll Trivia card (no slug).
+    if (!slug) {
+      const { data, error } = await sb
+        .from('trivia_quizzes')
+        .select('id, slug, title, banner_url, updated_at')
+        .eq('is_assigned', true)
+        .order('updated_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (error) return send(res, 500, { error: error.message });
+      return send(res, 200, { quiz: data || null });
+    }
+
     const { data: quiz, error } = await sb
       .from('trivia_quizzes')
       .select('id, slug, title, banner_url, join_code, is_assigned, settings')

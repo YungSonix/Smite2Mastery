@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { joinFillBlankPrompt, splitFillBlankPrompt } from '../lib/fillBlank';
 import { readImageAsDataUrl } from '../lib/imageUpload';
+import { isAudioMediaUrl, resolveMediaUrl } from '../lib/mediaUrl';
 import {
   MEDIA_ATTACH_CHOICES,
   questionDefaultsForType,
@@ -61,14 +62,13 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
   const isMulti = q.type === 'multiple_selection';
   const isFillBlank = q.meta?.kind === 'fill_blank';
   const isGraphing = q.meta?.kind === 'graphing';
-  const isAudioMedia =
-    q.type === 'audio' || String(q.image_url || '').startsWith('data:audio');
+  const isAudioMedia = isAudioMediaUrl(q.image_url, { type: q.type, meta: q.meta });
+  const mediaSrc = resolveMediaUrl(q.image_url);
   const isImageMedia = Boolean(
     q.image_url &&
       !isAudioMedia &&
       q.type !== 'video' &&
-      q.type !== 'embed' &&
-      !String(q.image_url).startsWith('data:audio')
+      q.type !== 'embed'
   );
   const useMediaSplit =
     !isGate &&
@@ -210,11 +210,11 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
     <div className={`f-q-media-pane ${isAudioMedia ? 'is-audio' : ''}`}>
       <div className="f-q-media-label">{isAudioMedia ? 'Audio' : 'Image'}</div>
       {isAudioMedia && q.image_url ? (
-        <audio controls src={q.image_url} className="f-q-media-audio" />
+        <audio controls src={mediaSrc} className="f-q-media-audio" />
       ) : null}
       {isImageMedia ? (
         <div className="f-q-media-frame">
-          <img src={q.image_url} alt="" />
+          <img src={mediaSrc} alt="" />
         </div>
       ) : null}
       {!q.image_url ? (
@@ -646,13 +646,13 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
           {uploadError ? <div className="f-error">{uploadError}</div> : null}
           {q.image_url?.startsWith('data:image') || (q.image_url && q.type !== 'audio') ? (
             <img
-              src={q.image_url}
+              src={mediaSrc}
               alt=""
               style={{ marginTop: 10, maxWidth: 220, borderRadius: 8, border: '1px solid #1e3a5f' }}
             />
           ) : null}
           {q.type === 'audio' && q.image_url ? (
-            <audio controls src={q.image_url} style={{ marginTop: 10, width: '100%' }} />
+            <audio controls src={mediaSrc} style={{ marginTop: 10, width: '100%' }} />
           ) : null}
         </div>
       ) : null}

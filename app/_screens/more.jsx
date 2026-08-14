@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import {
   StyleSheet,
   Text,
@@ -14,6 +14,7 @@ import { DEFAULT_TAB_STATE, EXTERNAL_LINKS } from '../../config';
 import { useScreenDimensions } from '../../hooks/useScreenDimensions';
 import { useSmiteWarsAccess } from '../../hooks/useSmiteWarsAccess';
 import { WEB_CONTENT_MAX_WIDTH } from '../../lib/webLayout';
+import { fetchCurrentAssignedTrivia, openTriviaTake } from '../../lib/currentTriviaQuiz';
 
 const IS_WEB = Platform.OS === 'web';
 const WordlePage = lazy(() => import('./wordle'));
@@ -29,7 +30,19 @@ export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUs
   const screenDimensions = useScreenDimensions();
   const [selectedGame, setSelectedGame] = useState(null);
   const [selectedTool, setSelectedTool] = useState(null);
+  const [currentTrivia, setCurrentTrivia] = useState(null);
   const { canAccess: smiteWarsCanAccess } = useSmiteWarsAccess(currentUsername);
+
+  useEffect(() => {
+    if (activeTab !== 'minigames') return;
+    let alive = true;
+    fetchCurrentAssignedTrivia().then((quiz) => {
+      if (alive) setCurrentTrivia(quiz);
+    });
+    return () => {
+      alive = false;
+    };
+  }, [activeTab]);
 
   // If a game is selected, show it
   if (selectedGame === 'god-wordle') {
@@ -208,6 +221,21 @@ export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUs
                     <Text style={styles.cardTitle}>Guess the Item</Text>
                     <Text style={styles.cardDescription}>Name the item from its icon.</Text>
                   </TouchableOpacity>
+                  {currentTrivia?.slug ? (
+                    <TouchableOpacity
+                      style={styles.card}
+                      onPress={() => openTriviaTake(currentTrivia.slug)}
+                      activeOpacity={0.7}
+                    >
+                      <Text style={styles.cardTitle}>Scroll Trivia</Text>
+                      <Text style={styles.cardDescription}>{currentTrivia.title || 'Play the current quiz'}</Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <View style={[styles.card, styles.cardDisabled]}>
+                      <Text style={styles.cardTitle}>Scroll Trivia</Text>
+                      <Text style={styles.cardDescription}>None</Text>
+                    </View>
+                  )}
                 </View>
                 <Text style={styles.sectionNote}>Leaderboards for each game coming soon!</Text>
               </View>

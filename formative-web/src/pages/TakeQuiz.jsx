@@ -8,6 +8,7 @@ import {
   loadTriviaProgress,
   saveTriviaProgress,
 } from '../lib/triviaVariants';
+import { isAudioMediaUrl, resolveMediaUrl } from '../lib/mediaUrl';
 
 async function fileToDataUrl(file, maxBytes = 2.5 * 1024 * 1024) {
   if (!file) throw new Error('No file');
@@ -350,14 +351,13 @@ export default function TakeQuiz() {
             const hideScore = Boolean(q.meta?.hide_score);
             const isFillBlank = q.meta?.kind === 'fill_blank';
             const fib = isFillBlank ? splitFillBlankPrompt(q.prompt) : null;
-            const isAudioMedia =
-              q.type === 'audio' || String(q.image_url || '').startsWith('data:audio');
+            const isAudioMedia = isAudioMediaUrl(q.image_url, { type: q.type, meta: q.meta });
+            const mediaSrc = resolveMediaUrl(q.image_url);
             const isImageMedia = Boolean(
               q.image_url &&
                 !isAudioMedia &&
                 q.type !== 'video' &&
-                q.type !== 'embed' &&
-                !String(q.image_url).startsWith('data:audio')
+                q.type !== 'embed'
             );
             const isChoice =
               q.type === 'multiple_choice' || q.type === 'true_false' || q.type === 'dropdown';
@@ -393,11 +393,11 @@ export default function TakeQuiz() {
                 {q.meta?.passage ? <p className="f-passage">{q.meta.passage}</p> : null}
 
                 {!useMediaSplit && q.type === 'audio' && q.image_url ? (
-                  <audio controls src={q.image_url} style={{ marginTop: 10, width: '100%' }} />
+                  <audio controls src={mediaSrc} style={{ marginTop: 10, width: '100%' }} />
                 ) : null}
                 {(q.type === 'video' || q.type === 'embed') && q.image_url ? (
                   <div className="f-embed-frame">
-                    <iframe title="embed" src={q.image_url} allowFullScreen />
+                    <iframe title="embed" src={mediaSrc} allowFullScreen />
                   </div>
                 ) : null}
                 {!useMediaSplit &&
@@ -418,7 +418,7 @@ export default function TakeQuiz() {
                       setAnswer(q.id, { x, y });
                     }}
                   >
-                    <img src={q.image_url} alt="" />
+                    <img src={mediaSrc} alt="" />
                     {q.type === 'hot_spot' && answers[q.id]?.x != null ? (
                       <span
                         className="f-hotspot-mark"
@@ -574,7 +574,7 @@ export default function TakeQuiz() {
                     <div className={`f-q-media-pane ${isAudioMedia ? 'is-audio' : ''}`}>
                       <div className="f-q-media-label">{isAudioMedia ? 'Audio' : 'Image'}</div>
                       {isAudioMedia && q.image_url ? (
-                        <audio controls src={q.image_url} className="f-q-media-audio" />
+                        <audio controls src={mediaSrc} className="f-q-media-audio" />
                       ) : null}
                       {isImageMedia ? (
                         <button
@@ -589,7 +589,7 @@ export default function TakeQuiz() {
                             setAnswer(q.id, { x, y });
                           }}
                         >
-                          <img src={q.image_url} alt="" />
+                          <img src={mediaSrc} alt="" />
                           {q.type === 'hot_spot' && answers[q.id]?.x != null ? (
                             <span
                               className="f-hotspot-mark"

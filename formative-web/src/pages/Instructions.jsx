@@ -35,7 +35,11 @@ const STEPS = [
   },
   {
     title: 'Watch Responses',
-    body: 'Open the Responses tab for Discord, In-Game Name, scores, and IP Address. Guests never see this screen. Local testing shows IP as localhost (::1).',
+    body: 'Open the Responses tab for Discord, In-Game Name, scores, and IP Address. Guests never see this screen. Local testing shows IP as localhost (::1). Export Excel/CSV downloads a spreadsheet; live data stays in the API/database.',
+  },
+  {
+    title: 'Repo media vs database',
+    body: 'Portraits and audio can come from the GitHub app/data folder (local /media URLs). Supabase only needs to store submissions. Generate a mixed Smite 2 quiz with npm run formative:trivia:quiz while the API is running.',
   },
   {
     title: 'Analytics',

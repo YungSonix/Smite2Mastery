@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { resolveMediaUrl } from '../lib/mediaUrl';
 import { formatIp } from '../lib/quizSettings';
 import { TYPE_LABEL } from '../lib/questionTypes';
 
@@ -400,7 +401,7 @@ export default function StudentResponsePanel({
                 </div>
               </div>
               {q.image_url ? (
-                <img className="f-answer-img" src={q.image_url} alt="" />
+                <img className="f-answer-img" src={resolveMediaUrl(q.image_url)} alt="" />
               ) : null}
               <div className="f-answer-value">
                 {answerText != null ? (
