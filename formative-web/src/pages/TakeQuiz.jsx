@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import RichText from '../components/RichText';
+import MediaStack from '../components/MediaStack';
 import { submitTrivia } from '../lib/api';
 import { splitFillBlankPrompt } from '../lib/fillBlank';
+import { listMediaUrls } from '../lib/questionMedia';
 import { typeLabel } from '../lib/questionTypes';
 import {
   clearTriviaProgress,
   loadTriviaProgress,
   saveTriviaProgress,
 } from '../lib/triviaVariants';
-import { isAudioMediaUrl, resolveMediaUrl } from '../lib/mediaUrl';
 import { quizWindowState } from '../lib/quizSettings';
 
 async function fileToDataUrl(file, maxBytes = 2.5 * 1024 * 1024) {
@@ -364,7 +366,7 @@ export default function TakeQuiz() {
         {String(quiz.settings?.instructions || '').trim() ? (
           <section className="f-student-instructions f-fade-up">
             <h2>Instructions</h2>
-            <p>{String(quiz.settings.instructions).trim()}</p>
+            <RichText className="f-md" text={String(quiz.settings.instructions).trim()} />
           </section>
         ) : null}
 
@@ -440,22 +442,39 @@ export default function TakeQuiz() {
             const hideScore = Boolean(q.meta?.hide_score);
             const isFillBlank = q.meta?.kind === 'fill_blank';
             const fib = isFillBlank ? splitFillBlankPrompt(q.prompt) : null;
-            const isAudioMedia = isAudioMediaUrl(q.image_url, { type: q.type, meta: q.meta });
-            const mediaSrc = resolveMediaUrl(q.image_url);
-            const isImageMedia = Boolean(
-              q.image_url &&
-                !isAudioMedia &&
-                q.type !== 'video' &&
-                q.type !== 'embed'
-            );
+            const mediaUrls = listMediaUrls(q);
             const isChoice =
               q.type === 'multiple_choice' || q.type === 'true_false' || q.type === 'dropdown';
             const isMulti = q.type === 'multiple_selection';
             const useMediaSplit =
               q.type === 'image' ||
               q.type === 'audio' ||
+              q.type === 'video' ||
+              q.type === 'embed' ||
               q.type === 'hot_spot' ||
-              ((isChoice || isMulti || q.type === 'short_answer') && (isImageMedia || isAudioMedia));
+              ((isChoice || isMulti || q.type === 'short_answer') && mediaUrls.length > 0);
+
+            const mediaBlock = mediaUrls.length ? (
+              <MediaStack
+                urls={mediaUrls}
+                hotspot={q.type === 'hot_spot'}
+                onHotspot={(e) => {
+                  if (q.type !== 'hot_spot') return;
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = Math.round(((e.clientX - rect.left) / rect.width) * 100);
+                  const y = Math.round(((e.clientY - rect.top) / rect.height) * 100);
+                  setAnswer(q.id, { x, y });
+                }}
+                hotspotMark={
+                  q.type === 'hot_spot' && answers[q.id]?.x != null ? (
+                    <span
+                      className="f-hotspot-mark"
+                      style={{ left: `${answers[q.id].x}%`, top: `${answers[q.id].y}%` }}
+                    />
+                  ) : null
+                }
+              />
+            ) : null;
 
             const answerBody = (
               <>
@@ -474,48 +493,14 @@ export default function TakeQuiz() {
                     <span>{fib.after}</span>
                   </div>
                 ) : (
-                  <h3 className="f-q-prompt">
+                  <div className="f-q-prompt">
                     <span className="f-q-num">{idx + 1}</span>
-                    {q.prompt}
-                  </h3>
+                    <RichText className="f-md" text={q.prompt} />
+                  </div>
                 )}
                 {q.meta?.passage ? <p className="f-passage">{q.meta.passage}</p> : null}
 
-                {!useMediaSplit && q.type === 'audio' && q.image_url ? (
-                  <audio controls src={mediaSrc} style={{ marginTop: 10, width: '100%' }} />
-                ) : null}
-                {(q.type === 'video' || q.type === 'embed') && q.image_url ? (
-                  <div className="f-embed-frame">
-                    <iframe title="embed" src={mediaSrc} allowFullScreen />
-                  </div>
-                ) : null}
-                {!useMediaSplit &&
-                q.image_url &&
-                q.type !== 'audio' &&
-                q.type !== 'video' &&
-                q.type !== 'embed' &&
-                !String(q.image_url).startsWith('data:audio') ? (
-                  <button
-                    type="button"
-                    className="f-hotspot-wrap"
-                    disabled={q.type !== 'hot_spot'}
-                    onClick={(e) => {
-                      if (q.type !== 'hot_spot') return;
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      const x = Math.round(((e.clientX - rect.left) / rect.width) * 100);
-                      const y = Math.round(((e.clientY - rect.top) / rect.height) * 100);
-                      setAnswer(q.id, { x, y });
-                    }}
-                  >
-                    <img src={mediaSrc} alt="" />
-                    {q.type === 'hot_spot' && answers[q.id]?.x != null ? (
-                      <span
-                        className="f-hotspot-mark"
-                        style={{ left: `${answers[q.id].x}%`, top: `${answers[q.id].y}%` }}
-                      />
-                    ) : null}
-                  </button>
-                ) : null}
+                {!useMediaSplit ? mediaBlock : null}
 
                 {q.type === 'short_answer' && !(isFillBlank && fib?.hasBlank) ? (
                   <input
@@ -660,33 +645,9 @@ export default function TakeQuiz() {
                 </div>
                 {useMediaSplit ? (
                   <div className="f-q-split">
-                    <div className={`f-q-media-pane ${isAudioMedia ? 'is-audio' : ''}`}>
-                      <div className="f-q-media-label">{isAudioMedia ? 'Audio' : 'Image'}</div>
-                      {isAudioMedia && q.image_url ? (
-                        <audio controls src={mediaSrc} className="f-q-media-audio" />
-                      ) : null}
-                      {isImageMedia ? (
-                        <button
-                          type="button"
-                          className="f-q-media-frame f-hotspot-wrap"
-                          disabled={q.type !== 'hot_spot'}
-                          onClick={(e) => {
-                            if (q.type !== 'hot_spot') return;
-                            const rect = e.currentTarget.getBoundingClientRect();
-                            const x = Math.round(((e.clientX - rect.left) / rect.width) * 100);
-                            const y = Math.round(((e.clientY - rect.top) / rect.height) * 100);
-                            setAnswer(q.id, { x, y });
-                          }}
-                        >
-                          <img src={mediaSrc} alt="" />
-                          {q.type === 'hot_spot' && answers[q.id]?.x != null ? (
-                            <span
-                              className="f-hotspot-mark"
-                              style={{ left: `${answers[q.id].x}%`, top: `${answers[q.id].y}%` }}
-                            />
-                          ) : null}
-                        </button>
-                      ) : null}
+                    <div className="f-q-media-pane">
+                      <div className="f-q-media-label">Media</div>
+                      {mediaBlock}
                     </div>
                     <div className="f-q-main-pane">{answerBody}</div>
                   </div>

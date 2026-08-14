@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import AddItemModal from '../components/AddItemModal';
+import FormatToolbar from '../components/FormatToolbar';
 import QuestionCard from '../components/QuestionCard';
 import ResponsesGrid from '../components/ResponsesGrid';
 import StudentResponsePanel from '../components/StudentResponsePanel';
@@ -46,9 +47,11 @@ export default function Activity() {
   const [assignOpen, setAssignOpen] = useState(false);
   const [selectedResponse, setSelectedResponse] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [dirty, setDirty] = useState(false);
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleDraft, setTitleDraft] = useState('');
   const [titleEditAt, setTitleEditAt] = useState(null); // 'top' | 'cover'
+  const instructionsRef = useRef(null);
 
   const setTab = (t) => {
     const next = new URLSearchParams(params);
@@ -64,6 +67,7 @@ export default function Activity() {
       const data = await hostApi(`/api/trivia/host?action=quiz&quizId=${quizId}`);
       setQuiz(data.quiz);
       setQuestions(data.questions || []);
+      setDirty(false);
       if (tab === 'responses' || tab === 'insights') {
         const r = await hostApi(`/api/trivia/host?action=responses&quizId=${quizId}`);
         setResponses(r.responses || []);
@@ -148,30 +152,82 @@ export default function Activity() {
     setTitleDraft(quiz?.title || '');
   };
 
-  const saveQuestion = async (q) => {
+  const saveQuestion = (q) => {
     setQuestions((prev) => prev.map((x) => (x.id === q.id ? q : x)));
+    setDirty(true);
+  };
+
+  const persistQuestion = async (q) => {
+    await hostApi('/api/trivia/host', {
+      method: 'PUT',
+      body: {
+        action: 'update_question',
+        questionId: q.id,
+        patch: {
+          prompt: q.prompt,
+          points: q.points,
+          required: q.required,
+          options: q.options,
+          correct: q.correct,
+          image_url: q.image_url,
+          type: q.type,
+          meta: q.meta,
+        },
+      },
+    });
+  };
+
+  const saveAll = useCallback(async () => {
+    if (!quiz) return false;
+    setSaving(true);
+    setError('');
     try {
-      await hostApi('/api/trivia/host', {
+      const data = await hostApi('/api/trivia/host', {
         method: 'PUT',
         body: {
-          action: 'update_question',
-          questionId: q.id,
+          action: 'update_quiz',
+          quizId,
           patch: {
-            prompt: q.prompt,
-            points: q.points,
-            required: q.required,
-            options: q.options,
-            correct: q.correct,
-            image_url: q.image_url,
-            type: q.type,
-            meta: q.meta,
+            title: quiz.title,
+            settings: quiz.settings,
+            banner_url: quiz.banner_url,
           },
         },
       });
+      setQuiz(data.quiz);
+      for (const q of questions) {
+        await persistQuestion(q);
+      }
+      setDirty(false);
+      return true;
     } catch (e) {
       setError(e.message);
+      return false;
+    } finally {
+      setSaving(false);
     }
-  };
+  }, [quiz, questions, quizId]);
+
+  useEffect(() => {
+    const onBefore = (e) => {
+      if (!dirty) return;
+      e.preventDefault();
+      e.returnValue = '';
+    };
+    window.addEventListener('beforeunload', onBefore);
+    return () => window.removeEventListener('beforeunload', onBefore);
+  }, [dirty]);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if ((e.ctrlKey || e.metaKey) && String(e.key).toLowerCase() === 's') {
+        e.preventDefault();
+        saveAll();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [saveAll]);
 
   const addQuestion = async (type, patch) => {
     try {
@@ -196,6 +252,7 @@ export default function Activity() {
   };
 
   const assign = async () => {
+    if (dirty) await saveAll();
     await saveQuizPatch({ is_assigned: true });
     setAssignOpen(true);
   };
@@ -347,6 +404,14 @@ export default function Activity() {
               ))}
             </div>
           ) : null}
+          <button
+            type="button"
+            className={`f-save-btn ${dirty ? 'is-dirty' : ''}`}
+            onClick={saveAll}
+            disabled={saving}
+          >
+            {saving ? 'Saving…' : dirty ? 'Save' : 'Saved'}
+          </button>
           <button type="button" className="f-assign-btn" onClick={assign}>
             Assign
           </button>
@@ -411,7 +476,7 @@ export default function Activity() {
                     try {
                       const dataUrl = await readImageAsDataUrl(file);
                       setQuiz({ ...quiz, banner_url: dataUrl });
-                      await saveQuizPatch({ banner_url: dataUrl });
+                      setDirty(true);
                     } catch (err) {
                       setError(err.message || 'Banner upload failed');
                     }
@@ -425,7 +490,7 @@ export default function Activity() {
                   title="Remove banner"
                   onClick={() => {
                     setQuiz({ ...quiz, banner_url: null });
-                    saveQuizPatch({ banner_url: null });
+                    setDirty(true);
                   }}
                 >
                   Clear
@@ -484,23 +549,30 @@ export default function Activity() {
             </div>
             <p className="f-field-hint" style={{ marginTop: 0 }}>
               Write rules, prize info, or how to play. Students see this under the cover on the take
-              page.
+              page. Use the toolbar for bold, italics, and lists. Click Save when you are done.
             </p>
+            <FormatToolbar
+              value={quiz.settings?.instructions ?? ''}
+              textareaRef={instructionsRef}
+              onChange={(next) => {
+                setQuiz({
+                  ...quiz,
+                  settings: { ...(quiz.settings || {}), instructions: next },
+                });
+                setDirty(true);
+              }}
+            />
             <textarea
+              ref={instructionsRef}
               className="f-instructions-input"
               rows={5}
               value={quiz.settings?.instructions ?? ''}
-              onChange={(e) =>
+              onChange={(e) => {
                 setQuiz({
                   ...quiz,
                   settings: { ...(quiz.settings || {}), instructions: e.target.value },
-                })
-              }
-              onBlur={(e) => {
-                const instructions = String(e.target.value || '').trim();
-                const settings = { ...(quiz.settings || {}), instructions };
-                setQuiz({ ...quiz, settings });
-                saveQuizPatch({ settings });
+                });
+                setDirty(true);
               }}
               placeholder="e.g. Answer all questions. Use your Discord + in-game name. One entry per person. Good luck!"
             />

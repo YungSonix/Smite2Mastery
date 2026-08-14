@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { resolveMediaUrl } from '../lib/mediaUrl';
+import MediaStack from './MediaStack';
+import { listMediaUrls } from '../lib/questionMedia';
 import { formatIp } from '../lib/quizSettings';
 import { TYPE_LABEL } from '../lib/questionTypes';
 
@@ -400,9 +401,7 @@ export default function StudentResponsePanel({
                   <div>{q.prompt || 'Untitled question'}</div>
                 </div>
               </div>
-              {q.image_url ? (
-                <img className="f-answer-img" src={resolveMediaUrl(q.image_url)} alt="" />
-              ) : null}
+              <MediaStack urls={listMediaUrls(q)} />
               <div className="f-answer-value">
                 {answerText != null ? (
                   <pre>{answerText}</pre>

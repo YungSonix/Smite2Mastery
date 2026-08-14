@@ -1,5 +1,7 @@
 /** Client helpers for question variants + take-page progress. */
 
+import { listImageUrls } from './questionMedia';
+
 function cloneJson(v) {
   return v == null ? v : JSON.parse(JSON.stringify(v));
 }
@@ -11,17 +13,20 @@ export function listVariants(q) {
     options: cloneJson(q.options != null ? q.options : []),
     correct: cloneJson(q.correct != null ? q.correct : {}),
     image_url: q.image_url || null,
+    image_urls: listImageUrls(q),
   };
   const out = [base];
   const extras = Array.isArray(q.meta?.variants) ? q.meta.variants : [];
   for (const raw of extras) {
     if (!raw || typeof raw !== 'object') continue;
     if (out.length >= 3) break;
+    const urls = listImageUrls(raw);
     out.push({
       prompt: raw.prompt != null ? String(raw.prompt) : base.prompt,
       options: raw.options != null ? cloneJson(raw.options) : cloneJson(base.options),
       correct: raw.correct != null ? cloneJson(raw.correct) : cloneJson(base.correct),
-      image_url: raw.image_url !== undefined ? raw.image_url : base.image_url,
+      image_url: urls[0] || (raw.image_url !== undefined ? raw.image_url : base.image_url),
+      image_urls: urls.length ? urls : base.image_urls,
     });
   }
   return out;
@@ -59,7 +64,7 @@ export function applyVariant(q, index) {
     prompt: v.prompt,
     options: v.options,
     image_url: v.image_url,
-    meta: { ...meta, variant_index: i },
+    meta: { ...meta, variant_index: i, image_urls: v.image_urls || listImageUrls(v) },
   };
 }
 

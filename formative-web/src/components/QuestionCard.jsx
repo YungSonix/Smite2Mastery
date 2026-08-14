@@ -1,7 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import FormatToolbar from './FormatToolbar';
+import MediaStack from './MediaStack';
 import { joinFillBlankPrompt, splitFillBlankPrompt } from '../lib/fillBlank';
 import { readImageAsDataUrl } from '../lib/imageUpload';
-import { isAudioMediaUrl, resolveMediaUrl } from '../lib/mediaUrl';
+import {
+  MAX_VERSION_MEDIA,
+  listMediaUrls,
+  withMediaUrlsOnQuestion,
+  withMediaUrlsOnVariant,
+} from '../lib/questionMedia';
 import {
   MEDIA_ATTACH_CHOICES,
   questionDefaultsForType,
@@ -27,6 +34,9 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
   const [uploadError, setUploadError] = useState('');
   const [attachOpen, setAttachOpen] = useState(false);
   const [variantTab, setVariantTab] = useState(0); // 0=A, 1=B, 2=C
+  const [urlDraft, setUrlDraft] = useState('');
+  const promptRef = useRef(null);
+  const variantPromptRef = useRef(null);
   useEffect(() => {
     setQ(question);
   }, [question]);
@@ -62,53 +72,38 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
   const isMulti = q.type === 'multiple_selection';
   const isFillBlank = q.meta?.kind === 'fill_blank';
   const isGraphing = q.meta?.kind === 'graphing';
-  const isAudioMedia = isAudioMediaUrl(q.image_url, { type: q.type, meta: q.meta });
-  const mediaSrc = resolveMediaUrl(q.image_url);
-  const isImageMedia = Boolean(
-    q.image_url &&
-      !isAudioMedia &&
-      q.type !== 'video' &&
-      q.type !== 'embed'
-  );
+  const variantExtras = Array.isArray(q.meta?.variants) ? q.meta.variants : [];
+  const activeMediaUrls =
+    variantTab === 0
+      ? listMediaUrls(q)
+      : listMediaUrls(variantExtras[variantTab - 1] || {});
+  const firstMedia = activeMediaUrls[0] || null;
   const useMediaSplit =
     !isGate &&
     (q.type === 'image' ||
       q.type === 'audio' ||
+      q.type === 'video' ||
+      q.type === 'embed' ||
       q.type === 'hot_spot' ||
-      ((isChoice || isMulti || q.type === 'short_answer') && (isImageMedia || isAudioMedia)));
+      ((isChoice || isMulti || q.type === 'short_answer') &&
+        (activeMediaUrls.length > 0 || variantTab > 0)));
 
-  const local = (patch) => setQ((prev) => ({ ...prev, ...patch }));
+  const local = (patch) => {
+    const merged = { ...q, ...patch };
+    setQ(merged);
+    onChange(merged);
+  };
   const commit = (next) => {
     const merged = next || q;
     setQ(merged);
     onChange(merged);
   };
 
-  const onPickImage = async (e) => {
-    const file = e.target.files?.[0];
-    e.target.value = '';
-    if (!file) return;
-    setUploadError('');
-    try {
-      const dataUrl = await readImageAsDataUrl(file);
-      commit({ ...q, image_url: dataUrl });
-    } catch (err) {
-      setUploadError(err.message || 'Upload failed');
-    }
-  };
-
-  const onPickAudio = async (e) => {
-    const file = e.target.files?.[0];
-    e.target.value = '';
-    if (!file) return;
-    setUploadError('');
-    try {
-      const dataUrl = await readFileAsDataUrl(file, { acceptPrefix: 'audio/' });
-      commit({ ...q, image_url: dataUrl });
-    } catch (err) {
-      setUploadError(err.message || 'Upload failed');
-    }
-  };
+  const isBareMedia = q.type === 'image' || q.type === 'audio';
+  const supportsVariants =
+    !isGate &&
+    !isBareMedia &&
+    !['image', 'audio', 'video', 'embed', 'content'].includes(q.type);
 
   const matchingPairs = Array.isArray(q.options) ? q.options : [];
   const categorize =
@@ -136,25 +131,65 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
     });
   };
 
-  const isBareMedia = q.type === 'image' || q.type === 'audio';
-  const supportsVariants =
-    !isGate &&
-    !isBareMedia &&
-    !['image', 'audio', 'video', 'embed', 'content'].includes(q.type);
-
-  const variantExtras = Array.isArray(q.meta?.variants) ? q.meta.variants : [];
   const ensureVariantSlot = (slotIndex) => {
-    // slotIndex 0 => B, 1 => C
     const variants = [...variantExtras];
+    const aUrls = listMediaUrls(q);
     while (variants.length <= slotIndex) {
       variants.push({
         prompt: q.prompt || '',
         options: Array.isArray(q.options) ? [...q.options] : q.options,
         correct: q.correct ? JSON.parse(JSON.stringify(q.correct)) : {},
-        image_url: q.image_url || null,
+        image_url: aUrls[0] || null,
+        image_urls: aUrls,
       });
     }
     return variants;
+  };
+
+  const setActiveMedia = (urls) => {
+    if (variantTab === 0) {
+      commit(withMediaUrlsOnQuestion(q, urls));
+      return;
+    }
+    const slot = variantTab - 1;
+    const variants = ensureVariantSlot(slot);
+    variants[slot] = withMediaUrlsOnVariant(variants[slot] || {}, urls);
+    commit({ ...q, meta: { ...(q.meta || {}), variants } });
+  };
+
+  const appendFiles = async (files, readFile) => {
+    if (!files.length) return;
+    setUploadError('');
+    try {
+      const next = [...activeMediaUrls];
+      for (const file of files) {
+        if (next.length >= MAX_VERSION_MEDIA) break;
+        next.push(await readFile(file));
+      }
+      setActiveMedia(next);
+    } catch (err) {
+      setUploadError(err.message || 'Upload failed');
+    }
+  };
+
+  const onPickImage = async (e) => {
+    const files = [...(e.target.files || [])];
+    e.target.value = '';
+    await appendFiles(files, (file) => readImageAsDataUrl(file));
+  };
+
+  const onPickAudio = async (e) => {
+    const files = [...(e.target.files || [])];
+    e.target.value = '';
+    await appendFiles(files, (file) => readFileAsDataUrl(file, { acceptPrefix: 'audio/' }));
+  };
+
+  const onPickVideo = async (e) => {
+    const files = [...(e.target.files || [])];
+    e.target.value = '';
+    await appendFiles(files, (file) =>
+      readFileAsDataUrl(file, { acceptPrefix: 'video/', maxBytes: 8 * 1024 * 1024 })
+    );
   };
 
   const patchVariantSlot = (slotIndex, patch) => {
@@ -200,58 +235,63 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
       ...defaults,
       image_url: q.image_url,
       meta: {
+        ...(q.meta || {}),
         ...(defaults.meta || {}),
+        image_urls: q.meta?.image_urls,
         attached_from: q.type === 'audio' ? 'audio' : 'image',
       },
     });
   };
 
   const mediaPane = (
-    <div className={`f-q-media-pane ${isAudioMedia ? 'is-audio' : ''}`}>
-      <div className="f-q-media-label">{isAudioMedia ? 'Audio' : 'Image'}</div>
-      {isAudioMedia && q.image_url ? (
-        <audio controls src={mediaSrc} className="f-q-media-audio" />
-      ) : null}
-      {isImageMedia ? (
-        <div className="f-q-media-frame">
-          <img src={mediaSrc} alt="" />
-        </div>
-      ) : null}
-      {!q.image_url ? (
+    <div className="f-q-media-pane">
+      <div className="f-q-media-label">Media</div>
+      {activeMediaUrls.length ? (
+        <MediaStack
+          urls={activeMediaUrls}
+          editable
+          onRemove={(i) => setActiveMedia(activeMediaUrls.filter((_, j) => j !== i))}
+        />
+      ) : (
         <div className="f-q-media-empty">
-          <p className="f-muted">Add media for a side-by-side question</p>
+          <p className="f-muted">Add images, audio, or video for this version</p>
         </div>
-      ) : null}
+      )}
       <div className="f-q-media-tools">
-        {!isAudioMedia ? (
-          <label className="f-outline-btn f-file-btn">
-            Upload image
-            <input type="file" accept="image/*" onChange={onPickImage} />
-          </label>
+        {activeMediaUrls.length < MAX_VERSION_MEDIA ? (
+          <>
+            <label className="f-outline-btn f-file-btn">
+              Add image
+              <input type="file" accept="image/*" multiple onChange={onPickImage} />
+            </label>
+            <label className="f-outline-btn f-file-btn">
+              Add audio
+              <input type="file" accept="audio/*" multiple onChange={onPickAudio} />
+            </label>
+            <label className="f-outline-btn f-file-btn">
+              Add video
+              <input type="file" accept="video/*" multiple onChange={onPickVideo} />
+            </label>
+          </>
         ) : null}
-        {q.type === 'audio' || isAudioMedia || (!q.image_url && (isChoice || isMulti)) ? (
-          <label className="f-outline-btn f-file-btn">
-            Upload audio
-            <input type="file" accept="audio/*" onChange={onPickAudio} />
-          </label>
-        ) : null}
-        {q.image_url ? (
-          <button
-            type="button"
-            className="f-ghost-btn"
-            onClick={() => commit({ ...q, image_url: null })}
-          >
+        {activeMediaUrls.length ? (
+          <button type="button" className="f-ghost-btn" onClick={() => setActiveMedia([])}>
             Clear media
           </button>
         ) : null}
       </div>
-      {!q.image_url?.startsWith('data:') ? (
+      {activeMediaUrls.length < MAX_VERSION_MEDIA ? (
         <input
           type="url"
-          value={q.image_url || ''}
-          onChange={(e) => local({ image_url: e.target.value })}
-          onBlur={() => commit()}
-          placeholder={isAudioMedia || q.type === 'audio' ? 'Audio URL' : 'Image URL'}
+          value={urlDraft}
+          onChange={(e) => setUrlDraft(e.target.value)}
+          onBlur={() => {
+            const next = urlDraft.trim();
+            if (!next) return;
+            setActiveMedia([...activeMediaUrls, next]);
+            setUrlDraft('');
+          }}
+          placeholder="Paste an image, audio, or video URL"
         />
       ) : null}
       {uploadError ? <div className="f-error">{uploadError}</div> : null}
@@ -417,13 +457,21 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
     ) : (
       <div className="f-q-prompt-edit">
         <span className="f-q-num">{index + 1}.</span>
-        <textarea
-          value={q.prompt || ''}
-          onChange={(e) => local({ prompt: e.target.value })}
-          onBlur={() => commit()}
-          placeholder="Question prompt"
-          rows={useMediaSplit ? 2 : 3}
-        />
+        <div className="f-fmt-field">
+          <FormatToolbar
+            value={q.prompt || ''}
+            textareaRef={promptRef}
+            onChange={(next) => local({ prompt: next })}
+          />
+          <textarea
+            ref={promptRef}
+            value={q.prompt || ''}
+            onChange={(e) => local({ prompt: e.target.value })}
+            onBlur={() => commit()}
+            placeholder="Question prompt"
+            rows={useMediaSplit ? 2 : 3}
+          />
+        </div>
       </div>
     )
   ) : (
@@ -506,12 +554,16 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
       {(isChoice || isMulti) && !useMediaSplit ? (
         <div className="f-attach-row">
           <label className="f-outline-btn f-file-btn">
-            Attach image
-            <input type="file" accept="image/*" onChange={onPickImage} />
+            Attach images
+            <input type="file" accept="image/*" multiple onChange={onPickImage} />
           </label>
           <label className="f-outline-btn f-file-btn">
             Attach audio
-            <input type="file" accept="audio/*" onChange={onPickAudio} />
+            <input type="file" accept="audio/*" multiple onChange={onPickAudio} />
+          </label>
+          <label className="f-outline-btn f-file-btn">
+            Attach video
+            <input type="file" accept="video/*" multiple onChange={onPickVideo} />
           </label>
         </div>
       ) : null}
@@ -626,53 +678,48 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
         </div>
       ) : null}
 
-      {!useMediaSplit && (isMediaContent || q.type === 'hot_spot' || q.image_url) && !isGate ? (
+      {!useMediaSplit && (isMediaContent || q.type === 'hot_spot' || firstMedia) && !isGate ? (
         <div style={{ marginTop: 10 }}>
-          {q.type === 'audio' || q.type === 'audio_response' ? null : (
+          <div className="f-q-media-tools">
+            {q.type !== 'audio_response' ? (
+              <label className="f-outline-btn f-file-btn">
+                Add image
+                <input type="file" accept="image/*" multiple onChange={onPickImage} />
+              </label>
+            ) : null}
             <label className="f-outline-btn f-file-btn">
-              Upload image
-              <input type="file" accept="image/*" onChange={onPickImage} />
+              Add audio
+              <input type="file" accept="audio/*" multiple onChange={onPickAudio} />
             </label>
-          )}
-          {q.type === 'audio' ? (
-            <label className="f-outline-btn f-file-btn">
-              Upload audio
-              <input type="file" accept="audio/*" onChange={onPickAudio} />
-            </label>
-          ) : null}
-          {q.type === 'video' || q.type === 'embed' ? (
+            {q.type !== 'audio_response' ? (
+              <label className="f-outline-btn f-file-btn">
+                Add video
+                <input type="file" accept="video/*" multiple onChange={onPickVideo} />
+              </label>
+            ) : null}
+          </div>
+          {activeMediaUrls.length < MAX_VERSION_MEDIA ? (
             <input
               type="url"
-              value={q.image_url?.startsWith('data:') ? '' : q.image_url || ''}
-              onChange={(e) => local({ image_url: e.target.value })}
-              onBlur={() => commit()}
-              placeholder={q.type === 'video' ? 'Video URL (YouTube / mp4)' : 'Embed URL'}
+              value={urlDraft}
+              onChange={(e) => setUrlDraft(e.target.value)}
+              onBlur={() => {
+                const next = urlDraft.trim();
+                if (!next) return;
+                setActiveMedia([...activeMediaUrls, next]);
+                setUrlDraft('');
+              }}
+              placeholder={
+                q.type === 'embed' ? 'Embed URL' : 'Paste an image, audio, or video URL'
+              }
             />
-          ) : (
-            <>
-              <div className="f-muted" style={{ fontSize: 12, marginTop: 8 }}>
-                Or paste a URL
-              </div>
-              <input
-                type="url"
-                value={q.image_url?.startsWith('data:') ? '' : q.image_url || ''}
-                onChange={(e) => local({ image_url: e.target.value })}
-                onBlur={() => commit()}
-                placeholder="https://…"
-              />
-            </>
-          )}
+          ) : null}
           {uploadError ? <div className="f-error">{uploadError}</div> : null}
-          {q.image_url?.startsWith('data:image') || (q.image_url && q.type !== 'audio') ? (
-            <img
-              src={mediaSrc}
-              alt=""
-              style={{ marginTop: 10, maxWidth: 220, borderRadius: 8, border: '1px solid #1e3a5f' }}
-            />
-          ) : null}
-          {q.type === 'audio' && q.image_url ? (
-            <audio controls src={mediaSrc} style={{ marginTop: 10, width: '100%' }} />
-          ) : null}
+          <MediaStack
+            urls={activeMediaUrls}
+            editable
+            onRemove={(i) => setActiveMedia(activeMediaUrls.filter((_, j) => j !== i))}
+          />
         </div>
       ) : null}
 
@@ -853,7 +900,13 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
         </p>
         <label className="f-fib-field">
           <span>Prompt</span>
+          <FormatToolbar
+            value={activeVariantFields.prompt}
+            textareaRef={variantPromptRef}
+            onChange={(next) => patchVariantSlot(variantTab - 1, { prompt: next })}
+          />
           <textarea
+            ref={variantPromptRef}
             rows={3}
             value={activeVariantFields.prompt}
             onChange={(e) => patchVariantSlot(variantTab - 1, { prompt: e.target.value })}
@@ -930,7 +983,8 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
                 prompt: q.prompt || '',
                 options: Array.isArray(q.options) ? [...q.options] : q.options,
                 correct: q.correct ? JSON.parse(JSON.stringify(q.correct)) : {},
-                image_url: q.image_url || null,
+                image_url: listMediaUrls(q)[0] || null,
+                image_urls: listMediaUrls(q),
               })
             }
           >

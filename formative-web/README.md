@@ -52,7 +52,10 @@ Sims cover desktop plus older-to-newer iOS/Android web widths. Gallery screensho
 ## Host features
 
 - Pencil rename on the top bar and quiz cover
+- **Save** in the top bar (Ctrl/Cmd+S). Instructions, questions, images, and cover wait for Save. Assign settings still write when you change them.
+- Instructions and prompts: **B / I / bullets / numbered list** (markdown). Players see formatted text on the take page.
 - Image/Audio blocks: **+** to pick question type (keeps the media)
+- Up to **8 media files per version** (A/B/C): images, audio, and video/embed URLs in one list. Extra URLs live on `meta.image_urls` / `variant.image_urls`.
 - Fill in the blank: sentence + blank + correct answer
 - Question **Version A / B / C** — each Discord name gets one version
 - Assign settings: hide scores from players by default
