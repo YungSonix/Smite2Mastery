@@ -1,0 +1,103 @@
+{
+  "title": "SMITE 2 TRIVIA",
+  "assign": true,
+  "settings": {
+    "show_scores": false,
+    "show_answers": false,
+    "allow_retake": false,
+    "after_submission": "hidden",
+    "time_limit_seconds": 480,
+    "opens_at": "2026-08-14T17:00:00-04:00",
+    "closes_at": "2026-08-18T15:00:00-04:00",
+    "discord_field_label": "Discord IGN (First Last)",
+    "ingame_field_label": "In-Game Name",
+    "instructions": "Trivia Quiz for Smite Discord Community\n\nStart Time: 8/14/26 5PM Eastern\nTime Limit: 8 minutes (starts when you click Start)\nEnd Time: 8/18/26 3PM Eastern\n\nFAILURE TO PUT FIRST NAME / LAST NAME AS YOUR DISCORD IGN WILL RESULT IN DISQUALIFICATION\n\nPLEASE NO CHEATING!\n\nCOMPETITION IS NOT AFFILIATED WITH HI-REZ\n\nPlease no sharing answers or discussing until after the event is over!\n\nIf there are any ties, the two people will have to answer a set of 3 questions I will provide at that time.\n\nOnly one attempt per user — I will know.\n\nLastly have fun with it and let me know what I can do better next time.\n\nNote: You will need a speaker or some way to play audio, as there is one audio question. (If it doesn't work for you, let me know what browser/device you are on.)\n\nIf you have any questions feel free to DM @YungSonix on Discord.\n\nHeader Art by https://www.deviantart.com/kaiology\n\nRewards:\n1st — Saga code + Diamonds + 1 Dapper Demon Ah Puch Traveler\n2nd — 1 Silkshade Daji Traveler + 1 Dapper Demon Ah Puch Traveler\n3rd — 1 Silkshade Daji Traveler + 1 Dapper Demon Ah Puch Traveler\n4th — 1 Hot Diggity Odin Traveler\n5th — 1 Hot Diggity Odin Traveler\n\nWorks for Console / PC\nWinners HAVE 24 HOURS TO DM ME FOR THEIR CODE — otherwise a runner-up will be chosen."
+  },
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "prompt": "What was this item originally called in the Smite Alpha?",
+      "options": ["Obsidian Shard", "Titans Shard", "Baylor's Eye", "Evil Eye"],
+      "correct": { "index": 2 },
+      "points": 1,
+      "required": true,
+      "image_url": "/media/Trivia/smite2-community/obsidian-shard.png",
+      "meta": { "randomize_order": true }
+    },
+    {
+      "type": "multiple_choice",
+      "prompt": "How many Vulcan Mods are there?",
+      "options": ["9", "11", "7", "6", "12"],
+      "correct": { "index": 0 },
+      "points": 1,
+      "required": true,
+      "meta": { "randomize_order": true }
+    },
+    {
+      "type": "multiple_choice",
+      "prompt": "What is this item called?",
+      "options": ["Wish Granting Pearl", "Wish-Granting Pearl", "Flaming Pearl", "Nimble Pearl"],
+      "correct": { "index": 1 },
+      "points": 1,
+      "required": true,
+      "image_url": "/media/Trivia/smite2-community/wish-granting-pearl.png",
+      "meta": { "randomize_order": true }
+    },
+    {
+      "type": "multiple_choice",
+      "prompt": "Choose the correct god this skin belongs to.",
+      "options": ["Neith", "Sol", "Da Ji", "Discordia"],
+      "correct": { "index": 2 },
+      "points": 1,
+      "required": true,
+      "image_url": "/media/Trivia/smite2-community/silkshade-daji-crop.png",
+      "meta": { "randomize_order": true, "media": "image" }
+    },
+    {
+      "type": "multiple_choice",
+      "prompt": "Choose the correct god this voice line belongs to.",
+      "options": ["Amaterasu", "Artio", "Neith", "Cupid", "Sol"],
+      "correct": { "index": 0 },
+      "points": 1,
+      "required": true,
+      "image_url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Amaterasu/Skin00_Base/VGS/VOX_VGS_Emote_Yes.WAV",
+      "meta": { "randomize_order": true, "media": "audio", "attached_from": "audio" }
+    },
+    {
+      "type": "multiple_selection",
+      "prompt": "Pick the God that has this aspect icon. (May or may not be more than one God)",
+      "options": ["Achilles", "Kali", "Thor", "Khepri", "Hun Batz", "Sun Wukong", "Ne Zha", "Charon", "Athena", "Neith"],
+      "correct": { "indices": [0, 1, 5, 8] },
+      "points": 4,
+      "required": true,
+      "image_url": "/media/Trivia/smite2-community/aspect-upward-arrow.png",
+      "meta": { "randomize_order": true, "allow_partial_credit": true }
+    },
+    {
+      "type": "true_false",
+      "prompt": "There was 15 Gods that were released with the first weekend of the Smite 2 Alpha.",
+      "options": ["True", "False"],
+      "correct": { "index": 1 },
+      "points": 1,
+      "required": true
+    },
+    {
+      "type": "multiple_choice",
+      "prompt": "Who was the first official \"new\" god that came to Smite 2?",
+      "options": ["Hecate", "Aladdin", "Mordred", "Nut", "Princess Bari"],
+      "correct": { "index": 0 },
+      "points": 1,
+      "required": true,
+      "meta": { "randomize_order": true }
+    },
+    {
+      "type": "fill_blank",
+      "prompt": "Achilles Aspect is called Aspect of the {{blank}}",
+      "options": [],
+      "correct": { "answers": ["Prowess", "prowess"] },
+      "points": 1,
+      "required": true,
+      "meta": { "kind": "fill_blank" }
+    }
+  ]
+}

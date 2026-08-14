@@ -15,6 +15,21 @@ const MORE_ITEMS = [
   { id: 'duplicate', label: 'Duplicate quiz', wire: true },
 ];
 
+function toLocalInput(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return '';
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function fromLocalInput(value) {
+  if (!value) return '';
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return '';
+  return d.toISOString();
+}
+
 export default function Activity() {
   const { quizId } = useParams();
   const [params, setParams] = useSearchParams();
@@ -729,6 +744,45 @@ export default function Activity() {
                     <option value="hide">Don&apos;t show scores</option>
                     <option value="show">Show scores</option>
                   </select>
+                </label>
+                <label className="f-assign-row">
+                  <span>
+                    Time limit (minutes)
+                    <small>0 = no timer. Starts when they click Start.</small>
+                  </span>
+                  <input
+                    type="number"
+                    min="0"
+                    step="1"
+                    value={Math.round(Number(settings.time_limit_seconds || 0) / 60) || 0}
+                    onChange={(e) =>
+                      patchSettings({
+                        time_limit_seconds: Math.max(0, Number(e.target.value) || 0) * 60,
+                      })
+                    }
+                  />
+                </label>
+                <label className="f-assign-row">
+                  <span>
+                    Opens
+                    <small>Empty = already open. Times use this computer&apos;s timezone.</small>
+                  </span>
+                  <input
+                    type="datetime-local"
+                    value={toLocalInput(settings.opens_at)}
+                    onChange={(e) => patchSettings({ opens_at: fromLocalInput(e.target.value) })}
+                  />
+                </label>
+                <label className="f-assign-row">
+                  <span>
+                    Closes
+                    <small>Empty = no end.</small>
+                  </span>
+                  <input
+                    type="datetime-local"
+                    value={toLocalInput(settings.closes_at)}
+                    onChange={(e) => patchSettings({ closes_at: fromLocalInput(e.target.value) })}
+                  />
                 </label>
                 <label className="f-assign-row">
                   <span>

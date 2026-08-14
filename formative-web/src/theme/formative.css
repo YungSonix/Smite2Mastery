@@ -752,6 +752,26 @@ a {
   line-height: 1.5;
 }
 
+.f-timer-bar {
+  position: sticky;
+  top: 8px;
+  z-index: 5;
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--f-blue-border);
+  background: rgba(8, 12, 22, 0.94);
+  color: var(--f-blue);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.f-timer-bar.is-low {
+  color: #fecaca;
+  border-color: rgba(248, 113, 113, 0.55);
+}
+
 .f-banner {
   position: relative;
   border-radius: 12px;
@@ -2306,7 +2326,8 @@ a {
   font-size: 11px;
 }
 
-.f-assign-row select {
+.f-assign-row select,
+.f-assign-row input {
   width: 100%;
   border: 1px solid var(--f-input-border);
   background: var(--f-input);

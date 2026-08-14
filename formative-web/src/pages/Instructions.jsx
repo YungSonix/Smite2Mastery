@@ -39,7 +39,7 @@ const STEPS = [
   },
   {
     title: 'Repo media vs database',
-    body: 'Portraits and audio can come from the GitHub app/data folder (local /media URLs). Supabase only needs to store submissions. Generate a mixed Smite 2 quiz with npm run formative:trivia:quiz while the API is running.',
+    body: 'Portraits and audio can come from the GitHub app/data folder. Supabase only stores submissions. Seed the Discord contest with npm run trivia:community (API running).',
   },
   {
     title: 'Analytics',

@@ -7,6 +7,7 @@ const {
   readBody,
   applyVariant,
 } = require('../../lib/server/triviaApi');
+const { quizWindowState } = require('../../lib/server/triviaWindow');
 
 module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') {
@@ -50,6 +51,14 @@ module.exports = async function handler(req, res) {
 
     if (quizErr) return send(res, 500, { error: quizErr.message });
     if (!quiz) return send(res, 404, { error: 'Quiz not found or not assigned' });
+
+    const win = quizWindowState(quiz.settings);
+    if (win.status === 'not_open') {
+      return send(res, 403, { error: `This quiz opens ${win.opensAt}` });
+    }
+    if (win.status === 'closed') {
+      return send(res, 403, { error: 'This quiz is closed' });
+    }
 
     const { data: questions, error: qErr } = await sb
       .from('trivia_questions')

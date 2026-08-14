@@ -6,7 +6,7 @@ import './theme/formative.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter basename="/formative">
+    <BrowserRouter basename="/trivia">
       <App />
     </BrowserRouter>
   </StrictMode>

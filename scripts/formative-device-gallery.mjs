@@ -81,7 +81,7 @@ async function main() {
       locale: 'en-US',
     });
     const page = await context.newPage();
-    const url = `${UI_BASE}/formative/take/${slug}`;
+    const url = `${UI_BASE}/trivia/take/${slug}`;
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45_000 });
     await page.waitForSelector('#discord-username', { timeout: 30_000 });
     await page.waitForTimeout(400);

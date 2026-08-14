@@ -122,14 +122,14 @@ async function waitForUi(timeoutMs = 60_000) {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
     try {
-      const res = await fetch(`${UI_BASE}/formative/`);
+      const res = await fetch(`${UI_BASE}/trivia/`);
       if (res.ok || res.status === 304) return;
     } catch {
       /* retry */
     }
     await new Promise((r) => setTimeout(r, 500));
   }
-  throw new Error(`Formative UI not reachable at ${UI_BASE}/formative/`);
+  throw new Error(`Trivia UI not reachable at ${UI_BASE}/trivia/`);
 }
 
 function correctAnswerFor(q) {
@@ -219,7 +219,7 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
     }
 
     page = await context.newPage();
-    const url = `${UI_BASE}/formative/take/${slug}`;
+    const url = `${UI_BASE}/trivia/take/${slug}`;
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45_000 });
     await page.waitForSelector('#discord-username', { timeout: 30_000 });
     await page.waitForSelector('section.f-qcard .f-option-row, section.f-qcard input.f-fib-inline', {
@@ -448,7 +448,7 @@ async function main() {
   if (!quizPayload.answerKey?.length) throw new Error('answerKey missing — regenerate quiz');
 
   console.log(`Quiz: ${quizPayload.quiz.title} (${quizPayload.quiz.slug})`);
-  console.log(`Take URL: ${UI_BASE}/formative/take/${quizPayload.quiz.slug}`);
+  console.log(`Take URL: ${UI_BASE}/trivia/take/${quizPayload.quiz.slug}`);
   if (quizPayload.kinds) console.log(`Kinds: ${JSON.stringify(quizPayload.kinds)}`);
   const missingKinds = ['image', 'audio', 'fill_blank'].filter(
     (k) => !quizPayload.answerKey?.some((q) => q.kind === k || q.meta?.kind === k || q.meta?.media === k)
@@ -591,7 +591,7 @@ async function main() {
       id: quizPayload.quiz.id,
       slug: quizPayload.quiz.slug,
       title: quizPayload.quiz.title,
-      takeUrl: `${UI_BASE}/formative/take/${quizPayload.quiz.slug}`,
+      takeUrl: `${UI_BASE}/trivia/take/${quizPayload.quiz.slug}`,
     },
     totals: {
       all: results.length,

@@ -101,6 +101,6 @@ export function joinCode() {
 }
 
 export function takeUrl(slug) {
-  if (typeof window === 'undefined') return `/formative/take/${slug}`;
-  return `${window.location.origin}/formative/take/${slug}`;
+  if (typeof window === 'undefined') return `/trivia/take/${slug}`;
+  return `${window.location.origin}/trivia/take/${slug}`;
 }

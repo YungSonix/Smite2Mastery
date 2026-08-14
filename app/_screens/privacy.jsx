@@ -95,7 +95,7 @@ export default function PrivacyPage() {
         <View style={styles.section}>
           <Text style={styles.subsectionTitle}>📝 Scroll Trivia contests</Text>
           <Text style={styles.bodyText}>
-            Optional web contests hosted at /formative (Scroll Trivia) may ask for your Discord
+            Optional web contests hosted at /trivia (Scroll Trivia) may ask for your Discord
             Username and In-Game Name. When you submit answers, we may store those identifiers
             together with your IP address and basic browser user-agent for contest integrity and
             anti-cheat. Do not submit if you do not agree.

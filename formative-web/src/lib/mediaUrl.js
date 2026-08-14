@@ -5,7 +5,7 @@ const AUDIO_EXT = /\.(mp3|wav|ogg|m4a|aac|flac|webm)(\?|#|$)/i;
 const GITHUB_DATA =
   'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/master/app/data';
 
-/** Local `/media/...` is proxied by formative-dev-api. On Vercel, load the same files from GitHub. */
+/** Local `/media/...` is proxied by the trivia API. On Vercel, load the same files from GitHub. */
 export function resolveMediaUrl(url) {
   const s = String(url || '');
   if (!s.startsWith('/media/')) return s;

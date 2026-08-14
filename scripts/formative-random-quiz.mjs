@@ -432,7 +432,7 @@ async function main() {
     ),
     answerKey,
     kinds,
-    takeUrl: `/formative/take/${(loaded.quiz || quiz).slug}`,
+    takeUrl: `/trivia/take/${(loaded.quiz || quiz).slug}`,
   };
 
   if (kinds.image < 1 || kinds.audio < 1 || kinds.fill_blank < 1) {

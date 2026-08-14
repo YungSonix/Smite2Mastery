@@ -17,13 +17,13 @@
 --   per-question grades, IP, user-agent, timestamp.
 --   Excel/CSV is export from the host UI, not the live store.
 --
--- Host app: /formative  (formative-web/)
--- Local: TRIVIA_HOST_SECRET=devsecret npm run formative:api
---        TRIVIA_HOST_SECRET=devsecret npm run formative:dev
--- Seed:  npm run formative:trivia:quiz
+-- Host app: /trivia
+-- Local: TRIVIA_HOST_SECRET=devsecret npm run trivia:api
+--        TRIVIA_HOST_SECRET=devsecret npm run trivia:dev
+-- Contest seed: supabase/trivia_smite2_community_seed.sql
 --
 -- Vercel env (server only, never VITE_ / EXPO_PUBLIC_):
 --   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, TRIVIA_HOST_SECRET
 --   optional TRIVIA_HOST_ALLOWLIST
 --
-select 1 as formative_trivia_notes;
+select 1 as trivia_notes;

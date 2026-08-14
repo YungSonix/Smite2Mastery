@@ -19,7 +19,14 @@ export default function Home() {
         const data = await hostApi('/api/trivia/host?action=list');
         if (alive) setQuizzes(data.quizzes || []);
       } catch (e) {
-        if (alive) setError(e.message || 'Failed to load activities');
+        const network = e.message === 'Failed to fetch' || e.name === 'TypeError';
+        if (alive) {
+          setError(
+            network
+              ? 'Cannot reach the trivia API. If you are on localhost, run npm run trivia:api. On the live site, Vercel needs SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY.'
+              : e.message || 'Failed to load quizzes'
+          );
+        }
       } finally {
         if (alive) setLoading(false);
       }

@@ -283,7 +283,7 @@ export default function StudentResponsePanel({
     { id: 'timeline', label: 'View student timeline', icon: 'timeline', disabled: true },
     {
       id: 'view',
-      label: 'View activity',
+      label: 'View quiz',
       icon: 'external',
       onClick: () => {
         setMenuOpen(false);

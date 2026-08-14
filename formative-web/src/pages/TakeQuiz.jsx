@@ -9,6 +9,7 @@ import {
   saveTriviaProgress,
 } from '../lib/triviaVariants';
 import { isAudioMediaUrl, resolveMediaUrl } from '../lib/mediaUrl';
+import { quizWindowState } from '../lib/quizSettings';
 
 async function fileToDataUrl(file, maxBytes = 2.5 * 1024 * 1024) {
   if (!file) throw new Error('No file');
@@ -104,6 +105,20 @@ function DrawingPad({ value, onChange }) {
   );
 }
 
+function formatRemain(ms) {
+  const total = Math.max(0, Math.ceil(ms / 1000));
+  const m = Math.floor(total / 60);
+  const s = total % 60;
+  return `${m}:${String(s).padStart(2, '0')}`;
+}
+
+function formatWhen(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return String(iso);
+  return d.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+}
+
 function isGate(q) {
   return Boolean(q?.meta?.is_discord_gate || q?.meta?.is_ingame_gate);
 }
@@ -121,7 +136,10 @@ export default function TakeQuiz() {
   const [error, setError] = useState('');
   const [result, setResult] = useState(null);
   const [busy, setBusy] = useState(false);
+  const [startedAt, setStartedAt] = useState(null);
+  const [now, setNow] = useState(() => Date.now());
   const restoredRef = useRef(false);
+  const submittingRef = useRef(false);
 
   useEffect(() => {
     let alive = true;
@@ -141,6 +159,7 @@ export default function TakeQuiz() {
           if (saved.discord) setDiscord(String(saved.discord));
           if (saved.ingame) setIngame(String(saved.ingame));
           if (saved.answers && typeof saved.answers === 'object') setAnswers(saved.answers);
+          if (saved.startedAt) setStartedAt(Number(saved.startedAt) || saved.startedAt);
           if (saved.variantMap && typeof saved.variantMap === 'object') {
             setVariantMap(saved.variantMap);
           }
@@ -190,22 +209,55 @@ export default function TakeQuiz() {
       ingame,
       answers,
       variantMap,
+      startedAt,
     });
-  }, [slug, discord, ingame, answers, variantMap, result, loading]);
+  }, [slug, discord, ingame, answers, variantMap, startedAt, result, loading]);
 
   const playable = useMemo(() => (questions || []).filter((q) => !isGate(q)), [questions]);
 
   const setAnswer = (id, value) => setAnswers((a) => ({ ...a, [id]: value }));
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const settings = quiz ? quiz.settings || {} : {};
+  const timeLimitSec = Math.max(0, Number(settings.time_limit_seconds) || 0);
+  const windowState = quizWindowState(settings, now);
+  const timed = timeLimitSec > 0;
+  const remainingMs = startedAt && timed ? startedAt + timeLimitSec * 1000 - now : null;
+  const quizLocked = windowState.status !== 'open';
+  const showQuestions = !quizLocked && (!timed || Boolean(startedAt));
+
+  useEffect(() => {
+    if (!timed || !startedAt || result) return undefined;
+    const t = setInterval(() => setNow(Date.now()), 250);
+    return () => clearInterval(t);
+  }, [timed, startedAt, result]);
+
+  useEffect(() => {
+    if (quizLocked) {
+      const t = setInterval(() => setNow(Date.now()), 1000);
+      return () => clearInterval(t);
+    }
+    return undefined;
+  }, [quizLocked]);
+
+  const onSubmit = async (e, opts = {}) => {
+    e?.preventDefault?.();
+    if (submittingRef.current) return;
+    submittingRef.current = true;
     setBusy(true);
     setError('');
     try {
-      for (const q of playable) {
-        if (['image', 'content', 'audio', 'video', 'embed'].includes(q.type)) continue;
-        if (q.required && (answers[q.id] === undefined || answers[q.id] === '')) {
-          throw new Error(`Please answer: ${q.prompt || 'required question'}`);
+      if (windowState.status === 'not_open') {
+        throw new Error(`This quiz opens ${formatWhen(windowState.opensAt)}.`);
+      }
+      if (windowState.status === 'closed') {
+        throw new Error('This quiz is closed.');
+      }
+      if (!opts.force) {
+        for (const q of playable) {
+          if (['image', 'content', 'audio', 'video', 'embed'].includes(q.type)) continue;
+          if (q.required && (answers[q.id] === undefined || answers[q.id] === '')) {
+            throw new Error(`Please answer: ${q.prompt || 'required question'}`);
+          }
         }
       }
       const data = await submitTrivia({
@@ -219,10 +271,17 @@ export default function TakeQuiz() {
       setResult(data);
     } catch (err) {
       setError(err.message || 'Submit failed');
+      submittingRef.current = false;
     } finally {
       setBusy(false);
     }
   };
+
+  useEffect(() => {
+    if (!timed || !startedAt || result || remainingMs == null || remainingMs > 0) return;
+    onSubmit(null, { force: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [remainingMs, timed, startedAt, result]);
 
   if (loading) {
     return (
@@ -309,25 +368,43 @@ export default function TakeQuiz() {
           </section>
         ) : null}
 
-        <form className="f-take-form" onSubmit={onSubmit}>
+        {windowState.status === 'not_open' ? (
+          <div className="f-notice f-fade-up">
+            Opens {formatWhen(windowState.opensAt)}. You can read the rules now — Start unlocks then.
+          </div>
+        ) : null}
+        {windowState.status === 'closed' ? (
+          <div className="f-notice f-fade-up">This quiz closed {formatWhen(windowState.closesAt)}.</div>
+        ) : null}
+
+        {timed && startedAt && showQuestions ? (
+          <div className={`f-timer-bar ${remainingMs != null && remainingMs < 30000 ? 'is-low' : ''}`}>
+            Time left {formatRemain(remainingMs ?? 0)}
+          </div>
+        ) : null}
+
+        <form className="f-take-form" onSubmit={(e) => onSubmit(e)}>
           <section className="f-identity-card f-fade-up">
             <h2>Your details</h2>
-            <p className="f-field-hint">Used so hosts can match entries. Required.</p>
+            <p className="f-field-hint">
+              Discord IGN must be First Last. Wrong format is a DQ.
+            </p>
             <div className="f-field-grid">
               <label className="f-field" htmlFor="discord-username">
-                <span>Discord Username</span>
+                <span>{settings.discord_field_label || 'Discord Username'}</span>
                 <input
                   id="discord-username"
                   type="text"
                   required
                   value={discord}
                   onChange={(e) => setDiscord(e.target.value)}
-                  placeholder="e.g. sonix"
+                  placeholder="First Last"
                   autoComplete="off"
+                  disabled={Boolean(startedAt) && timed}
                 />
               </label>
               <label className="f-field" htmlFor="ingame-name">
-                <span>In-Game Name</span>
+                <span>{settings.ingame_field_label || 'In-Game Name'}</span>
                 <input
                   id="ingame-name"
                   type="text"
@@ -336,12 +413,24 @@ export default function TakeQuiz() {
                   onChange={(e) => setIngame(e.target.value)}
                   placeholder="Your Smite 2 name"
                   autoComplete="off"
+                  disabled={Boolean(startedAt) && timed}
                 />
               </label>
             </div>
           </section>
 
-          {playable.map((q, idx) => {
+          {timed && !startedAt && !quizLocked ? (
+            <button
+              type="button"
+              className="f-submit-btn"
+              disabled={!String(discord).trim() || !String(ingame).trim()}
+              onClick={() => setStartedAt(Date.now())}
+            >
+              Start {Math.round(timeLimitSec / 60)}-minute quiz
+            </button>
+          ) : null}
+
+          {showQuestions ? playable.map((q, idx) => {
             const opts = Array.isArray(q.options) ? q.options : [];
             const choices = choiceRows(q);
             const categorize =
@@ -606,13 +695,14 @@ export default function TakeQuiz() {
                 )}
               </section>
             );
-          })}
-
+          }) : null}
 
           {error ? <div className="f-error">{error}</div> : null}
-          <button type="submit" className="f-submit-btn" disabled={busy}>
-            {busy ? 'Submitting…' : 'Submit answers'}
-          </button>
+          {showQuestions ? (
+            <button type="submit" className="f-submit-btn" disabled={busy}>
+              {busy ? 'Submitting…' : 'Submit answers'}
+            </button>
+          ) : null}
         </form>
       </div>
     </div>

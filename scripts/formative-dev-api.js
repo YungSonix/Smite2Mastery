@@ -23,6 +23,7 @@ const {
   scoreAnswersWithVariants,
 } = require('../lib/server/triviaVariants');
 const { responsesToCsv } = require('../lib/server/triviaExport');
+const { quizWindowState } = require('../lib/server/triviaWindow');
 
 const DATA_ROOT = path.resolve(__dirname, '../app/data');
 const MEDIA_TYPES = {
@@ -471,6 +472,13 @@ async function handleSubmit(req, res) {
 
   const quiz = [...db.quizzes.values()].find((q) => q.slug === slug && q.is_assigned);
   if (!quiz) return json(res, 404, { error: 'Quiz not found or not assigned' });
+  const win = quizWindowState(quiz.settings);
+  if (win.status === 'not_open') {
+    return json(res, 403, { error: `This quiz opens ${win.opensAt}` });
+  }
+  if (win.status === 'closed') {
+    return json(res, 403, { error: 'This quiz is closed' });
+  }
 
   const questions = questionsForQuiz(quiz.id);
   const allowRetake = Boolean(quiz.settings?.allow_retake);

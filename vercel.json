@@ -186,18 +186,30 @@
       ]
     }
   ],
-  "rewrites": [
+  "redirects": [
     {
       "source": "/formative",
-      "destination": "/formative/index.html"
+      "destination": "/trivia",
+      "permanent": true
     },
     {
-      "source": "/formative/",
-      "destination": "/formative/index.html"
+      "source": "/formative/:path*",
+      "destination": "/trivia/:path*",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/trivia",
+      "destination": "/trivia/index.html"
     },
     {
-      "source": "/formative/(.*)",
-      "destination": "/formative/index.html"
+      "source": "/trivia/",
+      "destination": "/trivia/index.html"
+    },
+    {
+      "source": "/trivia/(.*)",
+      "destination": "/trivia/index.html"
     },
     {
       "source": "/(.*)",

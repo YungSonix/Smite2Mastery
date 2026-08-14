@@ -1,10 +1,12 @@
-const HOST_USER_KEY = 'formativeHostUsername';
-const HOST_SECRET_KEY = 'formativeHostSecret';
+const HOST_USER_KEY = 'triviaHostUsername';
+const HOST_SECRET_KEY = 'triviaHostSecret';
+const LEGACY_USER_KEY = 'formativeHostUsername';
+const LEGACY_SECRET_KEY = 'formativeHostSecret';
 
 export function getHostSession() {
   try {
-    const username = localStorage.getItem(HOST_USER_KEY) || '';
-    const secret = localStorage.getItem(HOST_SECRET_KEY) || '';
+    const username = localStorage.getItem(HOST_USER_KEY) || localStorage.getItem(LEGACY_USER_KEY) || '';
+    const secret = localStorage.getItem(HOST_SECRET_KEY) || localStorage.getItem(LEGACY_SECRET_KEY) || '';
     if (!username || !secret) return null;
     return { username, secret };
   } catch {

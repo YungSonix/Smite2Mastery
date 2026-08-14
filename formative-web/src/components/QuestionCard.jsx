@@ -31,7 +31,7 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
     setQ(question);
   }, [question]);
 
-  // Fill-in-blank always has one Text #1 marker (Formative-style).
+  // Fill-in-blank always has one blank marker.
   useEffect(() => {
     if (!question?.meta?.kind || question.meta.kind !== 'fill_blank') return;
     const parts = splitFillBlankPrompt(question.prompt);
@@ -550,6 +550,25 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
                 commit({
                   ...q,
                   meta: { ...(q.meta || {}), randomize_order: e.target.checked },
+                })
+              }
+            />
+          </label>
+        ) : null}
+        {isMulti ? (
+          <label className="f-toggle-row">
+            <span>
+              Allow partial credit
+              <small>Score = (correct picks minus extras) / number of correct options</small>
+            </span>
+            <input
+              type="checkbox"
+              className="f-toggle"
+              checked={Boolean(q.meta?.allow_partial_credit)}
+              onChange={(e) =>
+                commit({
+                  ...q,
+                  meta: { ...(q.meta || {}), allow_partial_credit: e.target.checked },
                 })
               }
             />
