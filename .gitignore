@@ -81,6 +81,7 @@ Git/
 
 # Local docs / agent notes (keep on disk; not for GitHub)
 *.md
+!formative-web/README.md
 GOALS.md
 BUGS.md
 TASKS.md

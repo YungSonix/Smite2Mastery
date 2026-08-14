@@ -1,5 +1,9 @@
 -- Scroll Trivia host (Smite Scroll)
--- Run in Supabase SQL Editor.
+-- Canonical schema. Paste this into the Supabase SQL Editor (new projects).
+-- If tables already exist online, skip this and run the incremental files:
+--   formative_trivia_types_expand.sql
+--   formative_trivia_ingame_name.sql
+-- Notes / storage split: formative_trivia_notes.sql
 
 create extension if not exists "pgcrypto";
 

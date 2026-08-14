@@ -1,0 +1,29 @@
+-- Scroll Trivia — what lives in Supabase vs GitHub
+-- (comment-only; safe to run, does nothing)
+--
+-- Run schema in this folder, in order:
+--   1. formative_trivia.sql              (tables, indexes, RLS)
+--   2. formative_trivia_types_expand.sql (no-op if step 1 already has types)
+--   3. formative_trivia_ingame_name.sql  (no-op if step 1 already has column)
+--
+-- GitHub repo (static)
+--   Question text, options, answer keys, portraits/audio under app/data/.
+--   Quizzes store /media/... paths. Local API serves them; Vercel loads
+--   the same files from GitHub raw.
+--
+-- Supabase (live contest data only)
+--   trivia_quizzes, trivia_questions, trivia_responses.
+--   Each submission: Discord, in-game name, answers JSON, score,
+--   per-question grades, IP, user-agent, timestamp.
+--   Excel/CSV is export from the host UI, not the live store.
+--
+-- Host app: /formative  (formative-web/)
+-- Local: TRIVIA_HOST_SECRET=devsecret npm run formative:api
+--        TRIVIA_HOST_SECRET=devsecret npm run formative:dev
+-- Seed:  npm run formative:trivia:quiz
+--
+-- Vercel env (server only, never VITE_ / EXPO_PUBLIC_):
+--   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, TRIVIA_HOST_SECRET
+--   optional TRIVIA_HOST_ALLOWLIST
+--
+select 1 as formative_trivia_notes;
