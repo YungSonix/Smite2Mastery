@@ -225,7 +225,7 @@ export default function TakeQuiz() {
   const timed = timeLimitSec > 0;
   const remainingMs = startedAt && timed ? startedAt + timeLimitSec * 1000 - now : null;
   const quizLocked = windowState.status !== 'open';
-  const showQuestions = !quizLocked && (!timed || Boolean(startedAt));
+  const showQuestions = !quizLocked && Boolean(startedAt);
 
   useEffect(() => {
     if (!timed || !startedAt || result) return undefined;
@@ -352,7 +352,7 @@ export default function TakeQuiz() {
             <div className="f-cover-body">
               <p className="f-kicker">Scroll Trivia</p>
               <h1 className="f-cover-title">{quiz.title}</h1>
-              <p className="f-cover-sub">Answer the questions below, then submit when you're ready.</p>
+              <p className="f-cover-sub">Read the instructions, enter your names, then start.</p>
             </div>
           )}
         </header>
@@ -402,7 +402,7 @@ export default function TakeQuiz() {
                   onChange={(e) => setDiscord(e.target.value)}
                   placeholder="First Last"
                   autoComplete="off"
-                  disabled={Boolean(startedAt) && timed}
+                  disabled={Boolean(startedAt)}
                 />
               </label>
               <label className="f-field" htmlFor="ingame-name">
@@ -415,20 +415,22 @@ export default function TakeQuiz() {
                   onChange={(e) => setIngame(e.target.value)}
                   placeholder="Your Smite 2 name"
                   autoComplete="off"
-                  disabled={Boolean(startedAt) && timed}
+                  disabled={Boolean(startedAt)}
                 />
               </label>
             </div>
           </section>
 
-          {timed && !startedAt && !quizLocked ? (
+          {!startedAt && !quizLocked ? (
             <button
               type="button"
               className="f-submit-btn"
               disabled={!String(discord).trim() || !String(ingame).trim()}
               onClick={() => setStartedAt(Date.now())}
             >
-              Start {Math.round(timeLimitSec / 60)}-minute quiz
+              {timed
+                ? `Start ${Math.round(timeLimitSec / 60)}-minute quiz`
+                : 'Start quiz'}
             </button>
           ) : null}
 
@@ -457,6 +459,7 @@ export default function TakeQuiz() {
             const mediaBlock = mediaUrls.length ? (
               <MediaStack
                 urls={mediaUrls}
+                opaque
                 hotspot={q.type === 'hot_spot'}
                 onHotspot={(e) => {
                   if (q.type !== 'hot_spot') return;

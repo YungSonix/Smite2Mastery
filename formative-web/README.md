@@ -53,7 +53,8 @@ Sims cover desktop plus older-to-newer iOS/Android web widths. Gallery screensho
 
 - Pencil rename on the top bar and quiz cover
 - **Save** in the top bar (Ctrl/Cmd+S). Instructions, questions, images, and cover wait for Save. Assign settings still write when you change them.
-- Instructions and prompts: **B / I / bullets / numbered list** (markdown). Players see formatted text on the take page.
+- Instructions and prompts: chat-style toolbar (bold, italic, underline, strike, link, code, spoiler, heading, quote, lists). Players see formatted text on the take page.
+- Take page shows cover + instructions + name fields until **Start**. Question images load as blob URLs so hover does not show filenames.
 - Image/Audio blocks: **+** to pick question type (keeps the media)
 - Up to **8 media files per version** (A/B/C): images, audio, and video/embed URLs in one list. Extra URLs live on `meta.image_urls` / `variant.image_urls`.
 - Fill in the blank: sentence + blank + correct answer

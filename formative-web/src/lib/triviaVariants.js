@@ -21,12 +21,14 @@ export function listVariants(q) {
     if (!raw || typeof raw !== 'object') continue;
     if (out.length >= 3) break;
     const urls = listImageUrls(raw);
+    const hasOwnMedia =
+      raw.image_url !== undefined || Array.isArray(raw.image_urls);
     out.push({
       prompt: raw.prompt != null ? String(raw.prompt) : base.prompt,
       options: raw.options != null ? cloneJson(raw.options) : cloneJson(base.options),
       correct: raw.correct != null ? cloneJson(raw.correct) : cloneJson(base.correct),
-      image_url: urls[0] || (raw.image_url !== undefined ? raw.image_url : base.image_url),
-      image_urls: urls.length ? urls : base.image_urls,
+      image_url: hasOwnMedia ? urls[0] || null : base.image_url,
+      image_urls: hasOwnMedia ? urls : base.image_urls,
     });
   }
   return out;

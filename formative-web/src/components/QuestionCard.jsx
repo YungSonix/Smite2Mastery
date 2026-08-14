@@ -29,6 +29,12 @@ async function readFileAsDataUrl(file, { maxBytes = 2.5 * 1024 * 1024, acceptPre
   });
 }
 
+function parseCommaAnswers(raw, { clean = false } = {}) {
+  const parts = String(raw ?? '').split(',');
+  if (clean) return parts.map((s) => s.trim()).filter(Boolean);
+  return parts.map((s, i) => (i === parts.length - 1 ? s.replace(/^\s+/, '') : s.trim()));
+}
+
 export default function QuestionCard({ question, index, onChange, onDelete }) {
   const [q, setQ] = useState(question);
   const [uploadError, setUploadError] = useState('');
@@ -85,8 +91,7 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
       q.type === 'video' ||
       q.type === 'embed' ||
       q.type === 'hot_spot' ||
-      ((isChoice || isMulti || q.type === 'short_answer') &&
-        (activeMediaUrls.length > 0 || variantTab > 0)));
+      ((isChoice || isMulti || q.type === 'short_answer') && activeMediaUrls.length > 0));
 
   const local = (patch) => {
     const merged = { ...q, ...patch };
@@ -97,6 +102,23 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
     const merged = next || q;
     setQ(merged);
     onChange(merged);
+  };
+
+  const setAllowMultiple = (multi) => {
+    if (q.type === 'true_false' || q.type === 'dropdown') return;
+    if (multi === isMulti) return;
+    if (multi) {
+      const idx = Number.isFinite(Number(q.correct?.index)) ? Number(q.correct.index) : 0;
+      const fromList = Array.isArray(q.correct?.indices)
+        ? q.correct.indices.map(Number).filter((n) => Number.isFinite(n))
+        : [];
+      const indices = fromList.length ? fromList : [idx];
+      commit({ ...q, type: 'multiple_selection', correct: { indices } });
+      return;
+    }
+    const indices = (q.correct?.indices || []).map(Number).filter((n) => Number.isFinite(n));
+    const index = indices.length ? indices[0] : Number(q.correct?.index) || 0;
+    commit({ ...q, type: 'multiple_choice', correct: { index } });
   };
 
   const isBareMedia = q.type === 'image' || q.type === 'audio';
@@ -133,14 +155,13 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
 
   const ensureVariantSlot = (slotIndex) => {
     const variants = [...variantExtras];
-    const aUrls = listMediaUrls(q);
     while (variants.length <= slotIndex) {
       variants.push({
         prompt: q.prompt || '',
         options: Array.isArray(q.options) ? [...q.options] : q.options,
         correct: q.correct ? JSON.parse(JSON.stringify(q.correct)) : {},
-        image_url: aUrls[0] || null,
-        image_urls: aUrls,
+        image_url: null,
+        image_urls: [],
       });
     }
     return variants;
@@ -274,9 +295,9 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
             </label>
           </>
         ) : null}
-        {activeMediaUrls.length ? (
+        {activeMediaUrls.length || variantTab > 0 ? (
           <button type="button" className="f-ghost-btn" onClick={() => setActiveMedia([])}>
-            Clear media
+            Remove media
           </button>
         ) : null}
       </div>
@@ -480,6 +501,37 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
 
   const choiceBlock = (isChoice || isMulti) && (
     <div className="f-choice-list">
+      {q.type === 'multiple_choice' || isMulti ? (
+        <div className="f-pick-mode">
+          <span className="f-pick-mode-label">Players can pick</span>
+          <div className="f-pick-mode-btns" role="group" aria-label="How many options players can select">
+            <button
+              type="button"
+              className={!isMulti ? 'is-on' : ''}
+              onClick={() => setAllowMultiple(false)}
+            >
+              One option
+            </button>
+            <button
+              type="button"
+              className={isMulti ? 'is-on' : ''}
+              onClick={() => setAllowMultiple(true)}
+            >
+              More than one
+            </button>
+          </div>
+          <p className="f-pick-mode-hint">
+            {isMulti
+              ? 'Checkboxes — mark every correct answer.'
+              : 'Circles — mark the one correct answer.'}
+          </p>
+        </div>
+      ) : q.type === 'true_false' ? (
+        <p className="f-pick-mode-hint">
+          True or False is always one answer. Use Multiple Choice if you need extra options or more
+          than one correct pick.
+        </p>
+      ) : null}
       {options.map((opt, i) => (
         <div className="f-option-row" key={i}>
           {isMulti ? (
@@ -735,14 +787,19 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
               local({
                 correct: {
                   ...q.correct,
-                  answers: e.target.value
-                    .split(',')
-                    .map((s) => s.trim())
-                    .filter(Boolean),
+                  answers: parseCommaAnswers(e.target.value),
                 },
               })
             }
-            onBlur={() => commit()}
+            onBlur={(e) =>
+              commit({
+                ...q,
+                correct: {
+                  ...q.correct,
+                  answers: parseCommaAnswers(e.target.value, { clean: true }),
+                },
+              })
+            }
             placeholder="Correct answer"
           />
         </div>
@@ -948,9 +1005,59 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
                     patchVariantSlot(variantTab - 1, { options: next });
                   }}
                   onBlur={() => commit()}
+                  placeholder={`Option ${i + 1}`}
                 />
+                {q.type !== 'true_false' ? (
+                  <button
+                    type="button"
+                    className="f-ghost-btn"
+                    title="Remove option"
+                    onClick={() => {
+                      const current = [...(activeVariantFields.options || [])];
+                      if (current.length <= 2) return;
+                      const next = current.filter((_, idx) => idx !== i);
+                      if (isMulti) {
+                        const indices = (activeVariantFields.correct?.indices || [])
+                          .map(Number)
+                          .filter((x) => x !== i)
+                          .map((x) => (x > i ? x - 1 : x));
+                        patchVariantSlot(variantTab - 1, {
+                          options: next,
+                          correct: { indices },
+                        });
+                      } else {
+                        const cur = Number(activeVariantFields.correct?.index);
+                        const correctIndex =
+                          cur === i ? 0 : cur > i ? cur - 1 : cur;
+                        patchVariantSlot(variantTab - 1, {
+                          options: next,
+                          correct: { index: correctIndex || 0 },
+                        });
+                      }
+                    }}
+                  >
+                    ✕
+                  </button>
+                ) : null}
               </div>
             ))}
+            {q.type !== 'true_false' ? (
+              <button
+                type="button"
+                className="f-outline-btn"
+                style={{ marginTop: 8 }}
+                onClick={() =>
+                  patchVariantSlot(variantTab - 1, {
+                    options: [
+                      ...(activeVariantFields.options || []),
+                      `Option ${(activeVariantFields.options || []).length + 1}`,
+                    ],
+                  })
+                }
+              >
+                + Option
+              </button>
+            ) : null}
           </div>
         )}
         {q.type === 'short_answer' || isFillBlank ? (
@@ -963,16 +1070,39 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
                 patchVariantSlot(variantTab - 1, {
                   correct: {
                     ...(activeVariantFields.correct || {}),
-                    answers: e.target.value
-                      .split(',')
-                      .map((s) => s.trim())
-                      .filter(Boolean),
+                    answers: parseCommaAnswers(e.target.value),
                   },
                 })
               }
-              onBlur={() => commit()}
+              onBlur={(e) =>
+                patchVariantSlot(variantTab - 1, {
+                  correct: {
+                    ...(activeVariantFields.correct || {}),
+                    answers: parseCommaAnswers(e.target.value, { clean: true }),
+                  },
+                })
+              }
             />
           </label>
+        ) : null}
+        {!useMediaSplit ? (
+          <div className="f-attach-row" style={{ marginTop: 12 }}>
+            <label className="f-outline-btn f-file-btn">
+              Attach images
+              <input type="file" accept="image/*" multiple onChange={onPickImage} />
+            </label>
+            <label className="f-outline-btn f-file-btn">
+              Attach audio
+              <input type="file" accept="audio/*" multiple onChange={onPickAudio} />
+            </label>
+            <label className="f-outline-btn f-file-btn">
+              Attach video
+              <input type="file" accept="video/*" multiple onChange={onPickVideo} />
+            </label>
+            <button type="button" className="f-ghost-btn" onClick={() => setActiveMedia([])}>
+              Remove media
+            </button>
+          </div>
         ) : null}
         <div style={{ display: 'flex', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
           <button

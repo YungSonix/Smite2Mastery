@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import AddItemModal from '../components/AddItemModal';
 import FormatToolbar from '../components/FormatToolbar';
 import QuestionCard from '../components/QuestionCard';
+import RichText from '../components/RichText';
 import ResponsesGrid from '../components/ResponsesGrid';
 import StudentResponsePanel from '../components/StudentResponsePanel';
 import { hostApi, takeUrl } from '../lib/api';
@@ -47,7 +48,9 @@ export default function Activity() {
   const [assignOpen, setAssignOpen] = useState(false);
   const [selectedResponse, setSelectedResponse] = useState(null);
   const [saving, setSaving] = useState(false);
-  const [dirty, setDirty] = useState(false);
+  const [quizDirty, setQuizDirty] = useState(false);
+  const [bannerDirty, setBannerDirty] = useState(false);
+  const [dirtyIds, setDirtyIds] = useState([]);
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleDraft, setTitleDraft] = useState('');
   const [titleEditAt, setTitleEditAt] = useState(null); // 'top' | 'cover'
@@ -67,7 +70,9 @@ export default function Activity() {
       const data = await hostApi(`/api/trivia/host?action=quiz&quizId=${quizId}`);
       setQuiz(data.quiz);
       setQuestions(data.questions || []);
-      setDirty(false);
+      setQuizDirty(false);
+      setBannerDirty(false);
+      setDirtyIds([]);
       if (tab === 'responses' || tab === 'insights') {
         const r = await hostApi(`/api/trivia/host?action=responses&quizId=${quizId}`);
         setResponses(r.responses || []);
@@ -152,9 +157,11 @@ export default function Activity() {
     setTitleDraft(quiz?.title || '');
   };
 
+  const dirty = quizDirty || bannerDirty || dirtyIds.length > 0;
+
   const saveQuestion = (q) => {
     setQuestions((prev) => prev.map((x) => (x.id === q.id ? q : x)));
-    setDirty(true);
+    setDirtyIds((ids) => (ids.includes(q.id) ? ids : [...ids, q.id]));
   };
 
   const persistQuestion = async (q) => {
@@ -182,23 +189,29 @@ export default function Activity() {
     setSaving(true);
     setError('');
     try {
-      const data = await hostApi('/api/trivia/host', {
-        method: 'PUT',
-        body: {
-          action: 'update_quiz',
-          quizId,
-          patch: {
-            title: quiz.title,
-            settings: quiz.settings,
-            banner_url: quiz.banner_url,
+      if (quizDirty || bannerDirty) {
+        const patch = {
+          title: quiz.title,
+          settings: quiz.settings,
+        };
+        if (bannerDirty) patch.banner_url = quiz.banner_url;
+        const data = await hostApi('/api/trivia/host', {
+          method: 'PUT',
+          body: {
+            action: 'update_quiz',
+            quizId,
+            patch,
           },
-        },
-      });
-      setQuiz(data.quiz);
-      for (const q of questions) {
-        await persistQuestion(q);
+        });
+        setQuiz(data.quiz);
       }
-      setDirty(false);
+      const changed = questions.filter((q) => dirtyIds.includes(q.id));
+      if (changed.length) {
+        await Promise.all(changed.map((q) => persistQuestion(q)));
+      }
+      setQuizDirty(false);
+      setBannerDirty(false);
+      setDirtyIds([]);
       return true;
     } catch (e) {
       setError(e.message);
@@ -206,7 +219,7 @@ export default function Activity() {
     } finally {
       setSaving(false);
     }
-  }, [quiz, questions, quizId]);
+  }, [quiz, questions, quizId, quizDirty, bannerDirty, dirtyIds]);
 
   useEffect(() => {
     const onBefore = (e) => {
@@ -476,7 +489,8 @@ export default function Activity() {
                     try {
                       const dataUrl = await readImageAsDataUrl(file);
                       setQuiz({ ...quiz, banner_url: dataUrl });
-                      setDirty(true);
+                      setQuizDirty(true);
+                      setBannerDirty(true);
                     } catch (err) {
                       setError(err.message || 'Banner upload failed');
                     }
@@ -490,7 +504,8 @@ export default function Activity() {
                   title="Remove banner"
                   onClick={() => {
                     setQuiz({ ...quiz, banner_url: null });
-                    setDirty(true);
+                    setQuizDirty(true);
+                    setBannerDirty(true);
                   }}
                 >
                   Clear
@@ -549,7 +564,8 @@ export default function Activity() {
             </div>
             <p className="f-field-hint" style={{ marginTop: 0 }}>
               Write rules, prize info, or how to play. Students see this under the cover on the take
-              page. Use the toolbar for bold, italics, and lists. Click Save when you are done.
+              page. Highlight text, then use the toolbar (bold, italic, underline, lists, links).
+              Click Save when you are done.
             </p>
             <FormatToolbar
               value={quiz.settings?.instructions ?? ''}
@@ -559,7 +575,7 @@ export default function Activity() {
                   ...quiz,
                   settings: { ...(quiz.settings || {}), instructions: next },
                 });
-                setDirty(true);
+                setQuizDirty(true);
               }}
             />
             <textarea
@@ -572,10 +588,16 @@ export default function Activity() {
                   ...quiz,
                   settings: { ...(quiz.settings || {}), instructions: e.target.value },
                 });
-                setDirty(true);
+                setQuizDirty(true);
               }}
               placeholder="e.g. Answer all questions. Use your Discord + in-game name. One entry per person. Good luck!"
             />
+            {String(quiz.settings?.instructions || '').trim() ? (
+              <div className="f-md-preview">
+                <span className="f-fib-preview-label">Student preview</span>
+                <RichText className="f-md" text={quiz.settings.instructions} />
+              </div>
+            ) : null}
           </section>
 
           {questions.map((q, idx) => (
