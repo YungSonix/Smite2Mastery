@@ -5,6 +5,8 @@ const {
   readBody,
   getEnv,
   defaultQuestion,
+  isQuizKeyUuid,
+  shortQuizSlug,
 } = require('../../lib/server/triviaApi');
 const { isContentType, isManualType } = require('../../lib/server/triviaQuestionTypes');
 const { responsesToCsv } = require('../../lib/server/triviaExport');
@@ -28,13 +30,29 @@ function recomputeScore(questions, perQuestion) {
   return { score, maxScore };
 }
 
-function randomSlug(title) {
-  const base = String(title || 'quiz')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
-    .slice(0, 40);
-  return `${base || 'quiz'}-${Math.random().toString(36).slice(2, 7)}`;
+async function insertQuizWithUniqueSlug(sb, row) {
+  let lastError = null;
+  for (let i = 0; i < 8; i += 1) {
+    const { data, error } = await sb
+      .from('trivia_quizzes')
+      .insert({ ...row, slug: shortQuizSlug(7) })
+      .select('*')
+      .single();
+    if (!error) return { data, error: null };
+    lastError = error;
+    if (error.code !== '23505' && !String(error.message || '').toLowerCase().includes('duplicate')) {
+      return { data: null, error };
+    }
+  }
+  return { data: null, error: lastError || { message: 'Could not allocate a short link' } };
+}
+
+async function findOwnedQuiz(sb, username, key, columns = '*') {
+  const k = String(key || '').trim();
+  if (!k) return { data: null, error: null };
+  let q = sb.from('trivia_quizzes').select(columns).eq('owner_username', username);
+  q = isQuizKeyUuid(k) ? q.eq('id', k) : q.eq('slug', k);
+  return q.maybeSingle();
 }
 
 function joinCode() {
@@ -98,12 +116,7 @@ module.exports = async function handler(req, res) {
     }
 
     if (req.method === 'GET' && action === 'quiz') {
-      const { data: quiz, error } = await sb
-        .from('trivia_quizzes')
-        .select('*')
-        .eq('id', quizId)
-        .eq('owner_username', username)
-        .maybeSingle();
+      const { data: quiz, error } = await findOwnedQuiz(sb, username, quizId);
       if (error) return send(res, 500, { error: error.message });
       if (!quiz) return send(res, 404, { error: 'Quiz not found' });
       const { data: questions, error: qErr } = await sb
@@ -116,12 +129,7 @@ module.exports = async function handler(req, res) {
     }
 
     if (req.method === 'GET' && action === 'responses') {
-      const { data: quiz, error } = await sb
-        .from('trivia_quizzes')
-        .select('*')
-        .eq('id', quizId)
-        .eq('owner_username', username)
-        .maybeSingle();
+      const { data: quiz, error } = await findOwnedQuiz(sb, username, quizId);
       if (error) return send(res, 500, { error: error.message });
       if (!quiz) return send(res, 404, { error: 'Quiz not found' });
       const [{ data: questions }, { data: responses, error: rErr }] = await Promise.all([
@@ -184,7 +192,6 @@ module.exports = async function handler(req, res) {
         const title = String(body.title || 'Untitled Scroll Trivia').trim() || 'Untitled Scroll Trivia';
         const row = {
           title,
-          slug: randomSlug(title),
           banner_url: body.banner_url || null,
           owner_username: username,
           join_code: joinCode(),
@@ -199,7 +206,7 @@ module.exports = async function handler(req, res) {
             ...(body.settings || {}),
           },
         };
-        const { data, error } = await sb.from('trivia_quizzes').insert(row).select('*').single();
+        const { data, error } = await insertQuizWithUniqueSlug(sb, row);
         if (error) return send(res, 500, { error: error.message });
 
         // Default identity gates (not scored)
@@ -232,12 +239,7 @@ module.exports = async function handler(req, res) {
       }
 
       if (body.action === 'duplicate') {
-        const { data: quiz } = await sb
-          .from('trivia_quizzes')
-          .select('*')
-          .eq('id', body.quizId)
-          .eq('owner_username', username)
-          .maybeSingle();
+        const { data: quiz } = await findOwnedQuiz(sb, username, body.quizId);
         if (!quiz) return send(res, 404, { error: 'Quiz not found' });
         const { data: questions } = await sb
           .from('trivia_questions')
@@ -246,14 +248,13 @@ module.exports = async function handler(req, res) {
           .order('sort_order', { ascending: true });
         const copy = {
           title: `${quiz.title} (copy)`,
-          slug: randomSlug(quiz.title),
           banner_url: quiz.banner_url,
           owner_username: username,
           join_code: joinCode(),
           is_assigned: false,
           settings: quiz.settings || {},
         };
-        const { data: newQuiz, error } = await sb.from('trivia_quizzes').insert(copy).select('*').single();
+        const { data: newQuiz, error } = await insertQuizWithUniqueSlug(sb, copy);
         if (error) return send(res, 500, { error: error.message });
         if (questions?.length) {
           await sb.from('trivia_questions').insert(
@@ -275,12 +276,7 @@ module.exports = async function handler(req, res) {
       }
 
       if (body.action === 'add_question') {
-        const { data: quiz } = await sb
-          .from('trivia_quizzes')
-          .select('id')
-          .eq('id', body.quizId)
-          .eq('owner_username', username)
-          .maybeSingle();
+        const { data: quiz } = await findOwnedQuiz(sb, username, body.quizId, 'id');
         if (!quiz) return send(res, 404, { error: 'Quiz not found' });
         const { count } = await sb
           .from('trivia_questions')
@@ -304,10 +300,12 @@ module.exports = async function handler(req, res) {
         const patch = { ...body.patch, updated_at: new Date().toISOString() };
         delete patch.id;
         delete patch.owner_username;
+        const { data: owned } = await findOwnedQuiz(sb, username, body.quizId, 'id');
+        if (!owned) return send(res, 404, { error: 'Quiz not found' });
         const { data, error } = await sb
           .from('trivia_quizzes')
           .update(patch)
-          .eq('id', body.quizId)
+          .eq('id', owned.id)
           .eq('owner_username', username)
           .select('*')
           .single();
@@ -350,7 +348,10 @@ module.exports = async function handler(req, res) {
             .update({ sort_order: row.sort_order, updated_at: new Date().toISOString() })
             .eq('id', row.id);
         }
-        if (body.quizId) await touchQuiz(sb, body.quizId);
+        if (body.quizId) {
+          const { data: owned } = await findOwnedQuiz(sb, username, body.quizId, 'id');
+          if (owned) await touchQuiz(sb, owned.id);
+        }
         return send(res, 200, { ok: true });
       }
       if (body.action === 'update_response') {
@@ -445,10 +446,12 @@ module.exports = async function handler(req, res) {
       }
       if (action === 'quiz' && (quizId || id)) {
         const qid = quizId || id;
+        const { data: owned } = await findOwnedQuiz(sb, username, qid, 'id');
+        if (!owned) return send(res, 404, { error: 'Quiz not found' });
         const { error } = await sb
           .from('trivia_quizzes')
           .delete()
-          .eq('id', qid)
+          .eq('id', owned.id)
           .eq('owner_username', username);
         if (error) return send(res, 500, { error: error.message });
         return send(res, 200, { ok: true });

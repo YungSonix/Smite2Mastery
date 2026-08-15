@@ -18,6 +18,7 @@ const {
   isContentType,
   isManualType,
 } = require('../lib/server/triviaQuestionTypes');
+const { isQuizKeyUuid, shortQuizSlug } = require('../lib/server/triviaApi');
 const {
   sanitizeQuestionForPublic,
   buildVariantMap,
@@ -137,13 +138,24 @@ function assertHost(req) {
   return username;
 }
 
-function slugify(title) {
-  const base = String(title || 'quiz')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
-    .slice(0, 40);
-  return `${base || 'quiz'}-${Math.random().toString(36).slice(2, 7)}`;
+function uniqueShortSlug() {
+  for (let i = 0; i < 12; i += 1) {
+    const slug = shortQuizSlug(7);
+    const taken = [...db.quizzes.values()].some((q) => q.slug === slug);
+    if (!taken) return slug;
+  }
+  return shortQuizSlug(10);
+}
+
+function findOwnedQuiz(username, key) {
+  const k = String(key || '').trim();
+  if (!k) return null;
+  if (isQuizKeyUuid(k)) {
+    const quiz = db.quizzes.get(k);
+    if (quiz && quiz.owner_username === username) return quiz;
+    return null;
+  }
+  return [...db.quizzes.values()].find((q) => q.slug === k && q.owner_username === username) || null;
 }
 
 function joinCode() {
@@ -191,14 +203,14 @@ async function handleHost(req, res, url) {
   }
 
   if (req.method === 'GET' && action === 'quiz') {
-    const quiz = db.quizzes.get(quizId);
-    if (!quiz || quiz.owner_username !== username) return json(res, 404, { error: 'Quiz not found' });
+    const quiz = findOwnedQuiz(username, quizId);
+    if (!quiz) return json(res, 404, { error: 'Quiz not found' });
     return json(res, 200, { quiz, questions: questionsForQuiz(quiz.id) });
   }
 
   if (req.method === 'GET' && action === 'responses') {
-    const quiz = db.quizzes.get(quizId);
-    if (!quiz || quiz.owner_username !== username) return json(res, 404, { error: 'Quiz not found' });
+    const quiz = findOwnedQuiz(username, quizId);
+    if (!quiz) return json(res, 404, { error: 'Quiz not found' });
     const questions = questionsForQuiz(quiz.id);
     const responses = [...db.responses.values()]
       .filter((r) => r.quiz_id === quiz.id)
@@ -234,7 +246,7 @@ async function handleHost(req, res, url) {
       const quiz = {
         id: randomUUID(),
         title,
-        slug: slugify(title),
+        slug: uniqueShortSlug(),
         banner_url: body.banner_url || null,
         owner_username: username,
         join_code: joinCode(),
@@ -288,14 +300,14 @@ async function handleHost(req, res, url) {
       return json(res, 200, { quiz });
     }
     if (body.action === 'duplicate') {
-      const quiz = db.quizzes.get(body.quizId);
-      if (!quiz || quiz.owner_username !== username) return json(res, 404, { error: 'Quiz not found' });
+      const quiz = findOwnedQuiz(username, body.quizId);
+      if (!quiz) return json(res, 404, { error: 'Quiz not found' });
       const now = new Date().toISOString();
       const copy = {
         ...quiz,
         id: randomUUID(),
         title: `${quiz.title} (copy)`,
-        slug: slugify(quiz.title),
+        slug: uniqueShortSlug(),
         join_code: joinCode(),
         is_assigned: false,
         created_at: now,
@@ -309,8 +321,8 @@ async function handleHost(req, res, url) {
       return json(res, 200, { quiz: copy });
     }
     if (body.action === 'add_question') {
-      const quiz = db.quizzes.get(body.quizId);
-      if (!quiz || quiz.owner_username !== username) return json(res, 404, { error: 'Quiz not found' });
+      const quiz = findOwnedQuiz(username, body.quizId);
+      if (!quiz) return json(res, 404, { error: 'Quiz not found' });
       const count = questionsForQuiz(quiz.id).length;
       const now = new Date().toISOString();
       const q = {
@@ -329,11 +341,10 @@ async function handleHost(req, res, url) {
 
   if (req.method === 'PUT' || req.method === 'PATCH') {
     if (body.action === 'update_quiz') {
-      const quiz = db.quizzes.get(body.quizId);
-      if (!quiz || quiz.owner_username !== username) return json(res, 404, { error: 'Quiz not found' });
+      const quiz = findOwnedQuiz(username, body.quizId);
+      if (!quiz) return json(res, 404, { error: 'Quiz not found' });
       Object.assign(quiz, body.patch || {}, { updated_at: new Date().toISOString() });
-      delete quiz.id;
-      quiz.id = body.quizId;
+      delete quiz.owner_username;
       quiz.owner_username = username;
       db.quizzes.set(quiz.id, quiz);
       return json(res, 200, { quiz });
@@ -401,13 +412,13 @@ async function handleHost(req, res, url) {
     }
     if (action === 'quiz' && (quizId || id)) {
       const qid = quizId || id;
-      const quiz = db.quizzes.get(qid);
-      if (!quiz || quiz.owner_username !== username) return json(res, 404, { error: 'Not found' });
-      for (const q of questionsForQuiz(qid)) db.questions.delete(q.id);
+      const quiz = findOwnedQuiz(username, qid);
+      if (!quiz) return json(res, 404, { error: 'Not found' });
+      for (const q of questionsForQuiz(quiz.id)) db.questions.delete(q.id);
       for (const [rid, r] of db.responses) {
-        if (r.quiz_id === qid) db.responses.delete(rid);
+        if (r.quiz_id === quiz.id) db.responses.delete(rid);
       }
-      db.quizzes.delete(qid);
+      db.quizzes.delete(quiz.id);
       return json(res, 200, { ok: true });
     }
   }

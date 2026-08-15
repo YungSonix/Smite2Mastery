@@ -86,14 +86,16 @@ export function gradeOne(q, raw) {
   return false;
 }
 
-export function slugify(title) {
-  const base = String(title || 'quiz')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
-    .slice(0, 40);
-  const suffix = Math.random().toString(36).slice(2, 7);
-  return `${base || 'quiz'}-${suffix}`;
+export function activityHref(quiz) {
+  const key = quiz?.slug || quiz?.id;
+  return `/activity/${encodeURIComponent(key || '')}`;
+}
+
+export function slugify() {
+  const alphabet = 'abcdefghjkmnpqrstuvwxyz23456789';
+  let out = '';
+  for (let i = 0; i < 7; i += 1) out += alphabet[Math.floor(Math.random() * alphabet.length)];
+  return out;
 }
 
 export function joinCode() {

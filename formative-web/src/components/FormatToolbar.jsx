@@ -3,14 +3,18 @@ import { applyLinePrefix, applyLink, applyWrap } from '../lib/richText';
 export default function FormatToolbar({ value, onChange, textareaRef }) {
   const run = (fn) => {
     const el = textareaRef?.current;
-    const start = el?.selectionStart ?? String(value || '').length;
+    const current = el?.value ?? String(value || '');
+    const start = el?.selectionStart ?? current.length;
     const end = el?.selectionEnd ?? start;
-    const next = fn(String(value || ''), start, end);
+    const next = fn(current, start, end);
+    const scrollTop = el?.scrollTop ?? 0;
+    if (el) el.value = next.value;
     onChange(next.value);
     requestAnimationFrame(() => {
       if (!el) return;
       el.focus();
       el.setSelectionRange(next.start, next.end);
+      el.scrollTop = scrollTop;
     });
   };
 

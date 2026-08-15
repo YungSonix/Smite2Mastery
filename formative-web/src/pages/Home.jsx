@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HostShell from '../components/HostShell';
-import { hostApi } from '../lib/api';
+import { hostApi, takeUrl, activityHref } from '../lib/api';
 
 const ICON = `${import.meta.env.BASE_URL}scroll-icon.png`;
 
@@ -42,7 +42,7 @@ export default function Home() {
         method: 'POST',
         body: { action: 'create', title: 'Untitled Scroll Trivia' },
       });
-      nav(`/activity/${data.quiz.id}`);
+      nav(activityHref(data.quiz));
     } catch (e) {
       setError(e.message || 'Create failed');
     }
@@ -97,8 +97,8 @@ export default function Home() {
               <div
                 key={q.id}
                 className="f-activity-card"
-                onClick={() => nav(`/activity/${q.id}`)}
-                onKeyDown={(e) => e.key === 'Enter' && nav(`/activity/${q.id}`)}
+                onClick={() => nav(activityHref(q))}
+                onKeyDown={(e) => e.key === 'Enter' && nav(activityHref(q))}
                 role="button"
                 tabIndex={0}
               >
@@ -110,7 +110,7 @@ export default function Home() {
                 <div className="f-activity-meta">
                   <strong>{q.title}</strong>
                   <span>
-                    {q.is_assigned ? `Assigned · ${q.slug}` : 'Draft'} ·{' '}
+                    {q.is_assigned ? 'Assigned' : 'Draft'} · {q.slug} ·{' '}
                     {new Date(q.updated_at).toLocaleString()}
                   </span>
                 </div>

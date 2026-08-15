@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import AddItemModal from '../components/AddItemModal';
-import FormatToolbar from '../components/FormatToolbar';
+import InstructionsEditor from '../components/InstructionsEditor';
 import QuestionCard from '../components/QuestionCard';
-import RichText from '../components/RichText';
 import ResponsesGrid from '../components/ResponsesGrid';
 import StudentResponsePanel from '../components/StudentResponsePanel';
-import { hostApi, takeUrl } from '../lib/api';
+import { hostApi, takeUrl, activityHref } from '../lib/api';
 import { downloadResponsesCsv } from '../lib/exportResponses';
 import { readImageAsDataUrl } from '../lib/imageUpload';
 import { mergeQuizSettings } from '../lib/quizSettings';
@@ -59,7 +58,7 @@ export default function Activity() {
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleDraft, setTitleDraft] = useState('');
   const [titleEditAt, setTitleEditAt] = useState(null); // 'top' | 'cover'
-  const instructionsRef = useRef(null);
+  const instructionsLiveRef = useRef('');
 
   const setTab = (t) => {
     const next = new URLSearchParams(params);
@@ -72,14 +71,17 @@ export default function Activity() {
     setLoading(true);
     setError('');
     try {
-      const data = await hostApi(`/api/trivia/host?action=quiz&quizId=${quizId}`);
+      const data = await hostApi(
+        `/api/trivia/host?action=quiz&quizId=${encodeURIComponent(quizId)}`
+      );
       setQuiz(data.quiz);
       setQuestions(data.questions || []);
+      instructionsLiveRef.current = data.quiz?.settings?.instructions ?? '';
       setQuizDirty(false);
       setBannerDirty(false);
       setDirtyIds([]);
       if (tab === 'responses' || tab === 'insights') {
-        const r = await hostApi(`/api/trivia/host?action=responses&quizId=${quizId}`);
+        const r = await hostApi(`/api/trivia/host?action=responses&quizId=${encodeURIComponent(quizId)}`);
         setResponses(r.responses || []);
       }
     } catch (e) {
@@ -94,10 +96,17 @@ export default function Activity() {
   }, [load]);
 
   useEffect(() => {
+    if (!quiz?.slug || !quizId) return;
+    if (decodeURIComponent(String(quizId)) === quiz.slug) return;
+    const qs = params.toString();
+    nav(`${activityHref(quiz)}${qs ? `?${qs}` : ''}`, { replace: true });
+  }, [quiz, quizId, nav, params]);
+
+  useEffect(() => {
     if (tab !== 'responses' && tab !== 'insights') return undefined;
     const id = setInterval(async () => {
       try {
-        const r = await hostApi(`/api/trivia/host?action=responses&quizId=${quizId}`);
+        const r = await hostApi(`/api/trivia/host?action=responses&quizId=${encodeURIComponent(quizId)}`);
         setResponses(r.responses || []);
       } catch {
         /* ignore poll errors */
@@ -109,15 +118,6 @@ export default function Activity() {
   const points = useMemo(
     () =>
       questions.reduce((sum, q) => {
-        if (
-          ['image', 'content', 'audio', 'video', 'embed', 'file_response', 'audio_response', 'drawing'].includes(
-            q.type
-          ) ||
-          q.meta?.is_discord_gate ||
-          q.meta?.is_ingame_gate
-        ) {
-          return sum;
-        }
         const pts = Number(q.points);
         return sum + (Number.isFinite(pts) ? pts : 0);
       }, 0),
@@ -197,7 +197,10 @@ export default function Activity() {
       if (quizDirty || bannerDirty) {
         const patch = {
           title: quiz.title,
-          settings: quiz.settings,
+          settings: {
+            ...mergeQuizSettings(quiz.settings),
+            instructions: instructionsLiveRef.current,
+          },
         };
         if (bannerDirty) patch.banner_url = quiz.banner_url;
         const data = await hostApi('/api/trivia/host', {
@@ -309,7 +312,7 @@ export default function Activity() {
           method: 'POST',
           body: { action: 'duplicate', quizId },
         });
-        nav(`/activity/${data.quiz.id}`);
+        nav(activityHref(data.quiz));
       } catch (e) {
         setError(e.message);
       }
@@ -349,7 +352,11 @@ export default function Activity() {
 
   const patchSettings = (partial) => {
     if (!quiz) return;
-    const next = { ...mergeQuizSettings(quiz.settings), ...partial };
+    const next = {
+      ...mergeQuizSettings(quiz.settings),
+      ...partial,
+      instructions: instructionsLiveRef.current,
+    };
     setQuiz({ ...quiz, settings: next });
     saveQuizPatch({ settings: next });
   };
@@ -445,6 +452,12 @@ export default function Activity() {
               ))}
             </div>
           ) : null}
+          <div className="f-topbar-points" aria-live="polite">
+            <span className="f-topbar-points-label">Total</span>
+            <span className="f-topbar-points-value">
+              {points} pt{points === 1 ? '' : 's'}
+            </span>
+          </div>
           <button
             type="button"
             className={`f-save-btn ${dirty ? 'is-dirty' : ''}`}
@@ -482,9 +495,6 @@ export default function Activity() {
           >
             Insights
           </button>
-        </div>
-        <div className="f-points">
-          {points} points {saving ? '· Saving…' : ''}
         </div>
       </div>
 
@@ -585,48 +595,20 @@ export default function Activity() {
             </div>
           </header>
 
-          <section className="f-instructions-card">
-            <div className="f-qcard-head">
-              <span>Instructions</span>
-              <span className="pts">Shown to students</span>
-            </div>
-            <p className="f-field-hint" style={{ marginTop: 0 }}>
-              Write rules, prize info, or how to play. Students see this under the cover on the take
-              page. Highlight text, then use the toolbar (bold, italic, underline, lists, links).
-              Click Save when you are done.
-            </p>
-            <FormatToolbar
-              value={quiz.settings?.instructions ?? ''}
-              textareaRef={instructionsRef}
-              onChange={(next) => {
-                setQuiz({
-                  ...quiz,
-                  settings: { ...(quiz.settings || {}), instructions: next },
-                });
-                setQuizDirty(true);
-              }}
-            />
-            <textarea
-              ref={instructionsRef}
-              className="f-instructions-input"
-              rows={5}
-              value={quiz.settings?.instructions ?? ''}
-              onChange={(e) => {
-                setQuiz({
-                  ...quiz,
-                  settings: { ...(quiz.settings || {}), instructions: e.target.value },
-                });
-                setQuizDirty(true);
-              }}
-              placeholder="e.g. Answer all questions. Use your Discord + in-game name. One entry per person. Good luck!"
-            />
-            {String(quiz.settings?.instructions || '').trim() ? (
-              <div className="f-md-preview">
-                <span className="f-fib-preview-label">Student preview</span>
-                <RichText className="f-md" text={quiz.settings.instructions} />
-              </div>
-            ) : null}
-          </section>
+          <InstructionsEditor
+            quizId={quiz.id}
+            initialValue={quiz.settings?.instructions ?? ''}
+            liveRef={instructionsLiveRef}
+            onDirty={() => setQuizDirty(true)}
+            onCommit={(text) => {
+              instructionsLiveRef.current = text;
+              setQuiz((prev) =>
+                prev
+                  ? { ...prev, settings: { ...(prev.settings || {}), instructions: text } }
+                  : prev
+              );
+            }}
+          />
 
           {questions.map((q, idx) => (
             <QuestionCard
