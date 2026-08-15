@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import MediaStack from './MediaStack';
 import { listMediaUrls } from '../lib/questionMedia';
 import { formatIp } from '../lib/quizSettings';
-import { TYPE_LABEL } from '../lib/questionTypes';
+import { typeLabel } from '../lib/questionTypes';
 
 const CONTENT_TYPES = new Set(['image', 'content', 'audio', 'video', 'embed']);
 
@@ -15,7 +15,13 @@ function isScoredQuestion(q) {
   return Number(q.points) > 0;
 }
 
-function formatAnswer(q, raw) {
+function formatAnswer(q, raw, response) {
+  if (q?.meta?.is_discord_gate) {
+    return response?.discord_username || (typeof raw === 'string' && raw.trim() ? raw : null);
+  }
+  if (q?.meta?.is_ingame_gate) {
+    return response?.ingame_name || (typeof raw === 'string' && raw.trim() ? raw : null);
+  }
   if (raw == null || raw === '') return null;
   const type = q?.type;
   if (type === 'multiple_choice' || type === 'true_false' || type === 'dropdown') {
@@ -40,9 +46,13 @@ function formatAnswer(q, raw) {
   if (type === 'matching' || type === 'categorize') {
     if (raw && typeof raw === 'object') {
       return Object.entries(raw)
-        .map(([k, v]) => `${k} → ${v}`)
+        .map(([k, v]) => `${k} → ${Array.isArray(v) ? v.join(', ') : v}`)
         .join('\n');
     }
+    return String(raw);
+  }
+  if (type === 'ordering' || type === 'drag_drop') {
+    if (Array.isArray(raw)) return raw.map((s, i) => `${i + 1}. ${s}`).join('\n');
     return String(raw);
   }
   if (type === 'hot_spot' && raw && typeof raw === 'object') {
@@ -385,7 +395,7 @@ export default function StudentResponsePanel({
 
       <div className="f-student-panel-body">
         {reviewQuestions.map((q, i) => {
-          const answerText = formatAnswer(q, response.answers?.[q.id]);
+          const answerText = formatAnswer(q, response.answers?.[q.id], response);
           const scored = isScoredQuestion(q);
           const maxPts = Number(q.points) || 0;
           const stored = response.per_question?.[q.id];
@@ -397,8 +407,8 @@ export default function StudentResponsePanel({
               <div className="f-answer-card-head">
                 <span className="f-q-num">{i + 1}</span>
                 <div className="f-answer-card-prompt">
-                  <div className="f-answer-type">{TYPE_LABEL[q.type] || q.type}</div>
-                  <div>{q.prompt || 'Untitled question'}</div>
+                  <div className="f-answer-type">{typeLabel(q)}</div>
+                  <div>{q.prompt || typeLabel(q)}</div>
                 </div>
               </div>
               <MediaStack urls={listMediaUrls(q)} />

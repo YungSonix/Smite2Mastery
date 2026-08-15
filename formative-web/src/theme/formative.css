@@ -946,6 +946,66 @@ label.f-file-btn:hover {
   line-height: 1.5;
 }
 
+.f-take-fold {
+  padding: 0;
+}
+
+.f-take-fold > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  list-style: none;
+  cursor: pointer;
+  padding: 12px 18px;
+}
+
+.f-take-fold > summary::-webkit-details-marker,
+.f-take-fold > summary::marker {
+  display: none;
+  content: '';
+}
+
+.f-take-fold > summary h2 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--f-blue);
+}
+
+.f-take-fold .f-fold-meta {
+  flex: 1;
+  min-width: 0;
+  text-align: right;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--f-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.f-take-fold .f-chevron {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  margin-top: -4px;
+  color: var(--f-blue);
+  transition: transform 180ms var(--f-ease);
+}
+
+.f-take-fold .f-take-fold-body {
+  padding: 0 18px 16px;
+  border-top: 1px solid var(--f-blue-border);
+}
+
+.f-take-fold[open] .f-chevron {
+  transform: rotate(-135deg);
+  margin-top: 4px;
+}
+
 .f-timer-bar {
   position: sticky;
   top: 8px;
@@ -1106,6 +1166,131 @@ label.f-file-btn:hover {
   font-size: 13px;
   font-weight: 600;
   margin-bottom: 10px;
+}
+
+.f-type-switch select {
+  min-height: 36px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--f-blue-border);
+  background: var(--f-input);
+  color: var(--f-text);
+  font-weight: 700;
+  max-width: min(220px, 52vw);
+}
+
+.f-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.f-order-idx {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--f-blue-soft);
+  color: var(--f-blue);
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.f-match-prompt {
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+
+.f-match-multi {
+  flex: 1;
+  min-width: 0;
+}
+
+.f-match-take {
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.f-match-take select {
+  min-width: min(220px, 100%);
+  flex: 1;
+}
+
+.f-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+.f-cat-col {
+  min-height: 140px;
+  padding: 10px;
+  border: 1px dashed var(--f-blue-border);
+  border-radius: 12px;
+  background: var(--f-input);
+}
+
+.f-cat-col.over,
+.f-cat-col.can-drop {
+  border-style: solid;
+  border-color: var(--f-blue);
+  background: var(--f-blue-soft);
+}
+
+.f-cat-col-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  color: var(--f-blue);
+  margin-bottom: 8px;
+}
+
+.f-cat-col-head input[type='text'] {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+
+.f-cat-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.f-cat-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--f-border);
+  background: var(--f-card);
+  cursor: grab;
+  min-height: var(--f-touch);
+}
+
+.f-cat-chip.picked {
+  border-color: var(--f-blue);
+  background: var(--f-blue-soft);
+}
+
+.f-cat-chip input[type='text'] {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  padding: 0;
 }
 
 .f-qcard-head .pts {

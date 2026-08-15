@@ -7,6 +7,13 @@ import { splitFillBlankPrompt } from '../lib/fillBlank';
 import { listMediaUrls } from '../lib/questionMedia';
 import { typeLabel } from '../lib/questionTypes';
 import {
+  isOrderingQuestion,
+  matchingAllRights,
+  matchingCorrectRights,
+  matchingPrompts,
+} from '../lib/matching';
+import CategorizeBoard from '../components/CategorizeBoard';
+import {
   clearTriviaProgress,
   loadTriviaProgress,
   saveTriviaProgress,
@@ -140,7 +147,7 @@ function isAnswered(q, answers) {
   if (typeof v === 'object') {
     if (v.x != null || v.y != null) return true;
     if (v.data || v.url) return true;
-    return Object.keys(v).length > 0;
+    return Object.values(v).some((x) => (Array.isArray(x) ? x.length > 0 : String(x || '').trim()));
   }
   return true;
 }
@@ -159,6 +166,7 @@ export default function TakeQuiz() {
   const [result, setResult] = useState(null);
   const [busy, setBusy] = useState(false);
   const [startedAt, setStartedAt] = useState(null);
+  const [shuffleSeed, setShuffleSeed] = useState(null);
   const [now, setNow] = useState(() => Date.now());
   const [missingConfirm, setMissingConfirm] = useState(null);
   const restoredRef = useRef(false);
@@ -183,6 +191,10 @@ export default function TakeQuiz() {
           if (saved.ingame) setIngame(String(saved.ingame));
           if (saved.answers && typeof saved.answers === 'object') setAnswers(saved.answers);
           if (saved.startedAt) setStartedAt(Number(saved.startedAt) || saved.startedAt);
+          if (saved.shuffleSeed) setShuffleSeed(String(saved.shuffleSeed));
+          else if (saved.startedAt) {
+            setShuffleSeed(`${slug}|${saved.discord || ''}|${saved.ingame || ''}`);
+          }
           if (saved.variantMap && typeof saved.variantMap === 'object') {
             setVariantMap(saved.variantMap);
           }
@@ -202,7 +214,7 @@ export default function TakeQuiz() {
   // After Discord is entered, lock in that player's question variants.
   useEffect(() => {
     const name = String(discord || '').trim();
-    if (!slug || !name || name.length < 2) return undefined;
+    if (!slug || !name || name.length < 2 || startedAt) return undefined;
     let alive = true;
     const t = setTimeout(async () => {
       try {
@@ -221,7 +233,7 @@ export default function TakeQuiz() {
       alive = false;
       clearTimeout(t);
     };
-  }, [slug, discord]);
+  }, [slug, discord, startedAt]);
 
   // Autosave progress for tab reopen.
   useEffect(() => {
@@ -233,15 +245,16 @@ export default function TakeQuiz() {
       answers,
       variantMap,
       startedAt,
+      shuffleSeed,
     });
-  }, [slug, discord, ingame, answers, variantMap, startedAt, result, loading]);
+  }, [slug, discord, ingame, answers, variantMap, startedAt, shuffleSeed, result, loading]);
 
   const playable = useMemo(() => (questions || []).filter((q) => !isGate(q)), [questions]);
   const settings = quiz ? quiz.settings || {} : {};
   const orderedPlayable = useMemo(() => {
     if (!settings.shuffle_questions) return playable;
-    return seededShuffle(playable, `${slug}|${discord}|${ingame}`);
-  }, [playable, settings.shuffle_questions, slug, discord, ingame]);
+    return seededShuffle(playable, shuffleSeed || `${slug}|${discord}|${ingame}`);
+  }, [playable, settings.shuffle_questions, slug, discord, ingame, shuffleSeed]);
 
   const setAnswer = (id, value) => {
     setAnswers((prev) => {
@@ -253,6 +266,7 @@ export default function TakeQuiz() {
           answers: next,
           variantMap,
           startedAt,
+          shuffleSeed,
         });
       }
       return next;
@@ -265,6 +279,22 @@ export default function TakeQuiz() {
   const remainingMs = startedAt && timed ? startedAt + timeLimitSec * 1000 - now : null;
   const quizLocked = windowState.status !== 'open';
   const showQuestions = !quizLocked && Boolean(startedAt);
+
+  useEffect(() => {
+    if (!showQuestions) return;
+    setAnswers((prev) => {
+      let changed = false;
+      const next = { ...prev };
+      playable.forEach((q) => {
+        if (!isOrderingQuestion(q) || next[q.id] != null) return;
+        const items = Array.isArray(q.correct?.order) ? q.correct.order : q.options || [];
+        if (!Array.isArray(items) || !items.length) return;
+        next[q.id] = seededShuffle(items, `${slug}|${q.id}|ord`);
+        changed = true;
+      });
+      return changed ? next : prev;
+    });
+  }, [showQuestions, playable, slug]);
 
   useEffect(() => {
     if (!timed || !startedAt || result) return undefined;
@@ -420,10 +450,22 @@ export default function TakeQuiz() {
         ) : null}
 
         {String(quiz.settings?.instructions || '').trim() ? (
-          <section className="f-student-instructions f-fade-up">
-            <h2>Instructions</h2>
-            <RichText className="f-md" text={String(quiz.settings.instructions).trim()} />
-          </section>
+          showQuestions ? (
+            <details className="f-student-instructions f-take-fold f-fade-up">
+              <summary>
+                <h2>Instructions</h2>
+                <span className="f-chevron" aria-hidden="true" />
+              </summary>
+              <div className="f-take-fold-body">
+                <RichText className="f-md" text={String(quiz.settings.instructions).trim()} />
+              </div>
+            </details>
+          ) : (
+            <section className="f-student-instructions f-fade-up">
+              <h2>Instructions</h2>
+              <RichText className="f-md" text={String(quiz.settings.instructions).trim()} />
+            </section>
+          )
         ) : null}
 
         {windowState.status === 'not_open' ? (
@@ -436,40 +478,80 @@ export default function TakeQuiz() {
         ) : null}
 
         <form className="f-take-form" onSubmit={(e) => onSubmit(e)}>
-          <section className="f-identity-card f-fade-up">
-            <h2>Your details</h2>
-            <p className="f-field-hint">
-              Discord IGN must be First Last. Wrong format is a DQ.
-            </p>
-            <div className="f-field-grid">
-              <label className="f-field" htmlFor="discord-username">
-                <span>{settings.discord_field_label || 'Discord Username'}</span>
-                <input
-                  id="discord-username"
-                  type="text"
-                  required
-                  value={discord}
-                  onChange={(e) => setDiscord(e.target.value)}
-                  placeholder="First Last"
-                  autoComplete="off"
-                  disabled={Boolean(startedAt)}
-                />
-              </label>
-              <label className="f-field" htmlFor="ingame-name">
-                <span>{settings.ingame_field_label || 'In-Game Name'}</span>
-                <input
-                  id="ingame-name"
-                  type="text"
-                  required
-                  value={ingame}
-                  onChange={(e) => setIngame(e.target.value)}
-                  placeholder="Your Smite 2 name"
-                  autoComplete="off"
-                  disabled={Boolean(startedAt)}
-                />
-              </label>
-            </div>
-            {!startedAt ? (
+          {showQuestions ? (
+            <details className="f-identity-card f-take-fold f-fade-up">
+              <summary>
+                <h2>Your details</h2>
+                <span className="f-fold-meta">
+                  {[String(discord).trim(), String(ingame).trim()].filter(Boolean).join(' · ')}
+                </span>
+                <span className="f-chevron" aria-hidden="true" />
+              </summary>
+              <div className="f-take-fold-body">
+                <p className="f-field-hint">
+                  Discord IGN must be First Last. Wrong format is a DQ. You can still fix a typo
+                  here before submit.
+                </p>
+                <div className="f-field-grid">
+                  <label className="f-field" htmlFor="discord-username">
+                    <span>{settings.discord_field_label || 'Discord Username'}</span>
+                    <input
+                      id="discord-username"
+                      type="text"
+                      required
+                      value={discord}
+                      onChange={(e) => setDiscord(e.target.value)}
+                      placeholder="First Last"
+                      autoComplete="off"
+                    />
+                  </label>
+                  <label className="f-field" htmlFor="ingame-name">
+                    <span>{settings.ingame_field_label || 'In-Game Name'}</span>
+                    <input
+                      id="ingame-name"
+                      type="text"
+                      required
+                      value={ingame}
+                      onChange={(e) => setIngame(e.target.value)}
+                      placeholder="Your Smite 2 name"
+                      autoComplete="off"
+                    />
+                  </label>
+                </div>
+              </div>
+            </details>
+          ) : (
+            <section className="f-identity-card f-fade-up">
+              <h2>Your details</h2>
+              <p className="f-field-hint">
+                Discord IGN must be First Last. Wrong format is a DQ.
+              </p>
+              <div className="f-field-grid">
+                <label className="f-field" htmlFor="discord-username">
+                  <span>{settings.discord_field_label || 'Discord Username'}</span>
+                  <input
+                    id="discord-username"
+                    type="text"
+                    required
+                    value={discord}
+                    onChange={(e) => setDiscord(e.target.value)}
+                    placeholder="First Last"
+                    autoComplete="off"
+                  />
+                </label>
+                <label className="f-field" htmlFor="ingame-name">
+                  <span>{settings.ingame_field_label || 'In-Game Name'}</span>
+                  <input
+                    id="ingame-name"
+                    type="text"
+                    required
+                    value={ingame}
+                    onChange={(e) => setIngame(e.target.value)}
+                    placeholder="Your Smite 2 name"
+                    autoComplete="off"
+                  />
+                </label>
+              </div>
               <button
                 type="button"
                 className="f-submit-btn"
@@ -479,6 +561,7 @@ export default function TakeQuiz() {
                 }
                 onClick={() => {
                   if (quizLocked) return;
+                  setShuffleSeed(`${slug}|${discord}|${ingame}`);
                   setStartedAt(Date.now());
                 }}
               >
@@ -490,8 +573,8 @@ export default function TakeQuiz() {
                       ? `Next — start ${Math.round(timeLimitSec / 60)}-minute quiz`
                       : 'Next'}
               </button>
-            ) : null}
-          </section>
+            </section>
+          )}
 
           {showQuestions ? orderedPlayable.map((q, idx) => {
             const opts = Array.isArray(q.options) ? q.options : [];
@@ -500,6 +583,10 @@ export default function TakeQuiz() {
               q.options && !Array.isArray(q.options) && typeof q.options === 'object'
                 ? q.options
                 : null;
+            const matchRights =
+              q.type === 'matching'
+                ? seededShuffle(matchingAllRights(q), `${slug}|${q.id}|match`)
+                : [];
             const hideScore = Boolean(q.meta?.hide_score);
             const isFillBlank = q.meta?.kind === 'fill_blank';
             const fib = isFillBlank ? splitFillBlankPrompt(q.prompt) : null;
@@ -624,53 +711,114 @@ export default function TakeQuiz() {
 
                 {q.type === 'matching' ? (
                   <div style={{ marginTop: 8 }}>
-                    {opts.map((pair, i) => {
-                      const rights = opts.map((p) => p.right);
+                    <p className="f-muted" style={{ fontSize: 12, margin: '0 0 8px' }}>
+                      Answers are shuffled. Extra answers may not belong to any prompt.
+                    </p>
+                    {matchingPrompts(q).map((pair) => {
                       const map = answers[q.id] || {};
+                      const multi = matchingCorrectRights(q, pair.left).length > 1;
+                      const selected = multi
+                        ? Array.isArray(map[pair.left])
+                          ? map[pair.left]
+                          : map[pair.left]
+                            ? [map[pair.left]]
+                            : []
+                        : map[pair.left] || '';
                       return (
-                        <div className="f-option-row" key={i}>
-                          <span style={{ minWidth: 100 }}>{pair.left}</span>
-                          <select
-                            value={map[pair.left] || ''}
-                            onChange={(e) =>
-                              setAnswer(q.id, { ...map, [pair.left]: e.target.value })
-                            }
-                          >
-                            <option value="">Match…</option>
-                            {rights.map((r) => (
-                              <option key={r} value={r}>
-                                {r}
-                              </option>
-                            ))}
-                          </select>
+                        <div className="f-option-row f-match-take" key={pair.left}>
+                          <span className="f-match-prompt">{pair.left}</span>
+                          {multi ? (
+                            <div className="f-match-multi">
+                              <div className="f-muted" style={{ fontSize: 12 }}>
+                                Select every correct match
+                              </div>
+                              {matchRights.map((r) => {
+                                const on = selected.includes(r);
+                                return (
+                                  <label key={r} className="f-option-row" style={{ marginTop: 6 }}>
+                                    <input
+                                      type="checkbox"
+                                      checked={on}
+                                      onChange={() => {
+                                        const next = new Set(selected);
+                                        if (on) next.delete(r);
+                                        else next.add(r);
+                                        setAnswer(q.id, { ...map, [pair.left]: [...next] });
+                                      }}
+                                    />
+                                    <span>{r}</span>
+                                  </label>
+                                );
+                              })}
+                            </div>
+                          ) : (
+                            <select
+                              value={selected}
+                              onChange={(e) =>
+                                setAnswer(q.id, { ...map, [pair.left]: e.target.value })
+                              }
+                            >
+                              <option value="">Match…</option>
+                              {matchRights.map((r) => (
+                                <option key={r} value={r}>
+                                  {r}
+                                </option>
+                              ))}
+                            </select>
+                          )}
                         </div>
                       );
                     })}
                   </div>
                 ) : null}
 
-                {q.type === 'categorize' && categorize ? (
-                  <div style={{ marginTop: 8 }}>
-                    {(categorize.items || []).map((item) => {
-                      const map = answers[q.id] || {};
-                      return (
-                        <div className="f-option-row" key={item}>
-                          <span style={{ minWidth: 100 }}>{item}</span>
-                          <select
-                            value={map[item] || ''}
-                            onChange={(e) => setAnswer(q.id, { ...map, [item]: e.target.value })}
-                          >
-                            <option value="">Category…</option>
-                            {(categorize.categories || []).map((c) => (
-                              <option key={c} value={c}>
-                                {c}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      );
-                    })}
+                {isOrderingQuestion(q) ? (
+                  <div className="f-order-take" style={{ marginTop: 8 }}>
+                    <p className="f-muted" style={{ fontSize: 12, margin: '0 0 8px' }}>
+                      Put these in order, top to bottom. Use the arrows to move items.
+                    </p>
+                    {(Array.isArray(answers[q.id]) ? answers[q.id] : []).map((item, i, list) => (
+                      <div className="f-option-row f-order-row" key={`${item}-${i}`}>
+                        <span className="f-order-idx">{i + 1}</span>
+                        <span style={{ flex: 1 }}>{item}</span>
+                        <button
+                          type="button"
+                          className="f-ghost-btn"
+                          disabled={i === 0}
+                          onClick={() => {
+                            const next = [...list];
+                            [next[i - 1], next[i]] = [next[i], next[i - 1]];
+                            setAnswer(q.id, next);
+                          }}
+                        >
+                          ↑
+                        </button>
+                        <button
+                          type="button"
+                          className="f-ghost-btn"
+                          disabled={i === list.length - 1}
+                          onClick={() => {
+                            const next = [...list];
+                            [next[i + 1], next[i]] = [next[i], next[i + 1]];
+                            setAnswer(q.id, next);
+                          }}
+                        >
+                          ↓
+                        </button>
+                      </div>
+                    ))}
                   </div>
+                ) : null}
+
+                {q.type === 'categorize' && categorize ? (
+                  <CategorizeBoard
+                    mode="take"
+                    categories={categorize.categories || []}
+                    items={categorize.items || []}
+                    map={answers[q.id] || {}}
+                    shuffleSeed={`${slug}|${q.id}|cat`}
+                    onChange={(next) => setAnswer(q.id, next.map)}
+                  />
                 ) : null}
 
                 {q.type === 'file_response' || q.type === 'audio_response' ? (

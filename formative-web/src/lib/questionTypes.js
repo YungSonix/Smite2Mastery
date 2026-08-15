@@ -29,7 +29,7 @@ export const ADD_GROUPS = [
       { id: 'match', label: 'Matching', type: 'matching', icon: 'link' },
       { id: 'matchtable', label: 'Match Table Grid', type: 'match_table', icon: 'grid' },
       { id: 'cat', label: 'Categorize', type: 'categorize', icon: 'folders' },
-      { id: 'drag', label: 'Drag and Drop', type: 'drag_drop', icon: 'drag' },
+      { id: 'order', label: 'Order list', type: 'ordering', icon: 'drag' },
     ],
   },
   {
@@ -68,6 +68,8 @@ export const TYPE_LABEL = {
   dropdown: 'Dropdown',
   matching: 'Matching',
   categorize: 'Categorize',
+  ordering: 'Order list',
+  drag_drop: 'Order list',
   file_response: 'File Response',
   audio_response: 'Audio Response',
   drawing: 'Drawing',
@@ -86,8 +88,28 @@ export function typeLabel(q) {
   if (q?.meta?.kind === 'fill_blank') return 'Fill in the Blank';
   if (q?.meta?.kind === 'graphing') return 'Graphing';
   if (q?.meta?.kind === 'hot_text') return 'Hot Text';
-  if (q?.meta?.kind === 'drag_drop') return 'Drag and Drop';
+  if (q?.type === 'ordering' || q?.meta?.kind === 'order') return 'Order list';
+  if (q?.meta?.kind === 'drag_drop') return 'Categorize';
   return TYPE_LABEL[q?.type] || q?.type || 'Question';
+}
+
+export const SWITCHABLE_TYPES = [
+  { id: 'multiple_choice', label: 'Multiple Choice' },
+  { id: 'multiple_selection', label: 'Multiple Selection' },
+  { id: 'true_false', label: 'True or False' },
+  { id: 'dropdown', label: 'Dropdown' },
+  { id: 'short_answer', label: 'Short Answer' },
+  { id: 'fill_blank', label: 'Fill in the Blank' },
+  { id: 'matching', label: 'Matching' },
+  { id: 'ordering', label: 'Order list' },
+  { id: 'categorize', label: 'Categorize' },
+];
+
+export function switchTypeValue(q) {
+  if (q?.meta?.kind === 'fill_blank') return 'fill_blank';
+  if (q?.type === 'ordering' || q?.meta?.kind === 'order') return 'ordering';
+  if (q?.meta?.kind === 'drag_drop') return 'categorize';
+  return q?.type || 'multiple_choice';
 }
 
 /** Question types you can attach to an Image / Audio content block via +. */
@@ -178,6 +200,45 @@ export function questionDefaultsForType(type) {
       required: false,
       options: [],
       correct: { x: 50, y: 50, r: 10 },
+      meta: {},
+    };
+  }
+  if (requested === 'matching' || requested === 'match_table') {
+    return {
+      type: 'matching',
+      prompt: 'Match each item',
+      points: 1,
+      required: false,
+      options: [
+        { left: 'Left 1', right: 'Right 1' },
+        { left: 'Left 2', right: 'Right 2' },
+      ],
+      correct: { map: { 'Left 1': 'Right 1', 'Left 2': 'Right 2' } },
+      meta: {},
+    };
+  }
+  if (requested === 'ordering' || requested === 'drag_drop') {
+    return {
+      type: 'ordering',
+      prompt: 'Put these in the correct order, top to bottom.',
+      points: 1,
+      required: false,
+      options: ['First', 'Second', 'Third', 'Fourth'],
+      correct: { order: ['First', 'Second', 'Third', 'Fourth'] },
+      meta: { kind: 'order' },
+    };
+  }
+  if (requested === 'categorize') {
+    return {
+      type: 'categorize',
+      prompt: 'Sort each item into a category',
+      points: 1,
+      required: false,
+      options: {
+        categories: ['Category A', 'Category B'],
+        items: ['Item 1', 'Item 2', 'Item 3'],
+      },
+      correct: { map: { 'Item 1': 'Category A', 'Item 2': 'Category B', 'Item 3': 'Category A' } },
       meta: {},
     };
   }

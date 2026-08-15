@@ -11,9 +11,19 @@ import {
 } from '../lib/questionMedia';
 import {
   MEDIA_ATTACH_CHOICES,
+  SWITCHABLE_TYPES,
   questionDefaultsForType,
+  switchTypeValue,
   typeLabel,
 } from '../lib/questionTypes';
+import {
+  buildMatchingSave,
+  isOrderingQuestion,
+  matchingEditorRows,
+  matchingExtraRightsEditor,
+} from '../lib/matching';
+import CategorizeBoard from './CategorizeBoard';
+import { parseCategorize } from '../lib/categorize';
 import { remixQuestionFromA, fillAnswersFromPrompt, randomizeQuestion } from '../lib/triviaRemix';
 
 async function readFileAsDataUrl(file, { maxBytes = 2.5 * 1024 * 1024, acceptPrefix } = {}) {
@@ -131,15 +141,40 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
     commit({ ...q, type: 'multiple_choice', correct: { index } });
   };
 
+  const convertType = (nextId) => {
+    if (isGate) return;
+    const current = switchTypeValue(q);
+    if (nextId === current) return;
+    const d = questionDefaultsForType(nextId);
+    const nextMeta = { ...(q.meta || {}) };
+    delete nextMeta.kind;
+    delete nextMeta.passage;
+    delete nextMeta.extra_rights;
+    Object.assign(nextMeta, d.meta || {});
+    commit({
+      ...q,
+      type: d.type,
+      options: d.options,
+      correct: d.correct,
+      meta: nextMeta,
+      prompt: q.prompt || d.prompt,
+    });
+  };
+
   const isBareMedia = q.type === 'image' || q.type === 'audio';
   const supportsVariants =
     !isGate &&
     !isBareMedia &&
     !['image', 'audio', 'video', 'embed', 'content'].includes(q.type);
 
-  const matchingPairs = Array.isArray(q.options) ? q.options : [];
-  const categorize =
-    q.options && !Array.isArray(q.options) && typeof q.options === 'object' ? q.options : null;
+  const matchRows = matchingEditorRows(q);
+  const matchExtras = matchingExtraRightsEditor(q);
+  const orderItems = isOrderingQuestion(q)
+    ? Array.isArray(q.options)
+      ? q.options.map(String)
+      : []
+    : [];
+  const catState = q.type === 'categorize' ? parseCategorize(q) : null;
 
   const fibRaw = splitFillBlankPrompt(q.prompt);
   const fib = fibRaw.hasBlank
@@ -853,45 +888,47 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
       {choiceBlock}
 
       {q.type === 'matching' ? (
-        <div style={{ marginTop: 10 }}>
-          {matchingPairs.map((pair, i) => (
-            <div className="f-option-row" key={i}>
+        <div className="f-match-editor">
+          <p className="f-muted" style={{ fontSize: 12, margin: '10px 0 6px' }}>
+            Prompts on the left. Correct answer(s) on the right — comma-separate if more than one is
+            right. Extra answers below have no prompt; players still see them mixed in.
+          </p>
+          {matchRows.map((row, i) => (
+            <div className="f-option-row" key={`m-${i}`}>
               <input
                 type="text"
-                value={pair.left || ''}
-                placeholder="Left"
+                value={row.left}
+                placeholder="Prompt"
                 onChange={(e) => {
-                  const next = matchingPairs.map((p, idx) =>
-                    idx === i ? { ...p, left: e.target.value } : p
+                  const rows = matchRows.map((r, idx) =>
+                    idx === i ? { ...r, left: e.target.value } : r
                   );
-                  local({ options: next });
-                }}
-                onBlur={() => {
-                  const map = {};
-                  matchingPairs.forEach((p) => {
-                    if (p.left) map[p.left] = p.right || '';
+                  const saved = buildMatchingSave(rows, matchExtras);
+                  local({
+                    options: saved.options,
+                    correct: saved.correct,
+                    meta: { ...q.meta, extra_rights: saved.extra_rights },
                   });
-                  commit({ ...q, options: matchingPairs, correct: { map } });
                 }}
+                onBlur={() => commit()}
               />
               <span className="f-muted">→</span>
               <input
                 type="text"
-                value={pair.right || ''}
-                placeholder="Right"
+                value={row.rightsText}
+                placeholder="Correct answer, or several with commas"
                 onChange={(e) => {
-                  const next = matchingPairs.map((p, idx) =>
-                    idx === i ? { ...p, right: e.target.value } : p
+                  const rows = matchRows.map((r, idx) =>
+                    idx === i ? { ...r, rightsText: e.target.value } : r
                   );
-                  local({ options: next });
-                }}
-                onBlur={() => {
-                  const map = {};
-                  matchingPairs.forEach((p) => {
-                    if (p.left) map[p.left] = p.right || '';
+                  const saved = buildMatchingSave(rows, matchExtras);
+                  local({
+                    options: saved.options,
+                    correct: saved.correct,
+                    meta: { ...q.meta, extra_rights: saved.extra_rights },
                   });
-                  commit({ ...q, options: matchingPairs, correct: { map } });
                 }}
+                onBlur={() => commit()}
               />
             </div>
           ))}
@@ -899,68 +936,135 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
             type="button"
             className="f-outline-btn"
             style={{ marginTop: 8 }}
-            onClick={() =>
+            onClick={() => {
+              const saved = buildMatchingSave(
+                [...matchRows, { left: `Prompt ${matchRows.length + 1}`, rightsText: '' }],
+                matchExtras
+              );
               commit({
                 ...q,
-                options: [...matchingPairs, { left: '', right: '' }],
-              })
-            }
+                options: saved.options,
+                correct: saved.correct,
+                meta: { ...q.meta, extra_rights: saved.extra_rights },
+              });
+            }}
           >
-            + Pair
+            + Prompt
+          </button>
+          <p className="f-muted" style={{ fontSize: 12, margin: '14px 0 6px' }}>
+            Extra answers (no prompt)
+          </p>
+          {matchExtras.map((extra, i) => (
+            <div className="f-option-row" key={`x-${i}`}>
+              <input
+                type="text"
+                value={extra}
+                placeholder="Decoy answer"
+                onChange={(e) => {
+                  const extras = matchExtras.map((x, idx) => (idx === i ? e.target.value : x));
+                  const saved = buildMatchingSave(matchRows, extras);
+                  local({
+                    options: saved.options,
+                    correct: saved.correct,
+                    meta: { ...q.meta, extra_rights: saved.extra_rights },
+                  });
+                }}
+                onBlur={() => commit()}
+              />
+            </div>
+          ))}
+          <button
+            type="button"
+            className="f-outline-btn"
+            style={{ marginTop: 8 }}
+            onClick={() => {
+              const saved = buildMatchingSave(matchRows, [...matchExtras, '']);
+              commit({
+                ...q,
+                options: saved.options,
+                correct: saved.correct,
+                meta: { ...q.meta, extra_rights: saved.extra_rights },
+              });
+            }}
+          >
+            + Extra answer
           </button>
         </div>
       ) : null}
 
-      {q.type === 'categorize' && categorize ? (
-        <div style={{ marginTop: 10 }}>
-          <div className="f-muted" style={{ fontSize: 12 }}>
-            Categories (comma-separated)
-          </div>
-          <input
-            type="text"
-            value={(categorize.categories || []).join(', ')}
-            onChange={(e) =>
-              local({
-                options: {
-                  ...categorize,
-                  categories: e.target.value.split(',').map((s) => s.trim()).filter(Boolean),
-                },
-              })
-            }
-            onBlur={() => commit()}
-          />
-          <div className="f-muted" style={{ fontSize: 12, marginTop: 8 }}>
-            Items (comma-separated)
-          </div>
-          <input
-            type="text"
-            value={(categorize.items || []).join(', ')}
-            onChange={(e) =>
-              local({
-                options: {
-                  ...categorize,
-                  items: e.target.value.split(',').map((s) => s.trim()).filter(Boolean),
-                },
-              })
-            }
-            onBlur={() => commit()}
-          />
-          <div className="f-muted" style={{ fontSize: 12, marginTop: 8 }}>
-            Correct map JSON e.g. {"{"}&quot;Item 1&quot;:&quot;Category A&quot;{"}"}
-          </div>
-          <input
-            type="text"
-            value={JSON.stringify(q.correct?.map || {})}
-            onChange={(e) => {
-              try {
-                local({ correct: { map: JSON.parse(e.target.value || '{}') } });
-              } catch {
-                /* ignore while typing */
-              }
+      {isOrderingQuestion(q) ? (
+        <div className="f-order-editor">
+          <p className="f-muted" style={{ fontSize: 12, margin: '10px 0 6px' }}>
+            Top to bottom is the correct order. Players get these shuffled and must put them back.
+          </p>
+          {orderItems.map((item, i) => (
+            <div className="f-option-row f-order-row" key={`o-${i}`}>
+              <span className="f-order-idx">{i + 1}</span>
+              <input
+                type="text"
+                value={item}
+                placeholder={`Item ${i + 1}`}
+                onChange={(e) => {
+                  const next = orderItems.map((x, idx) => (idx === i ? e.target.value : x));
+                  local({ options: next, correct: { order: next } });
+                }}
+                onBlur={() => commit()}
+              />
+              <button
+                type="button"
+                className="f-ghost-btn"
+                disabled={i === 0}
+                onClick={() => {
+                  const next = [...orderItems];
+                  [next[i - 1], next[i]] = [next[i], next[i - 1]];
+                  commit({ ...q, options: next, correct: { order: next } });
+                }}
+              >
+                ↑
+              </button>
+              <button
+                type="button"
+                className="f-ghost-btn"
+                disabled={i === orderItems.length - 1}
+                onClick={() => {
+                  const next = [...orderItems];
+                  [next[i + 1], next[i]] = [next[i], next[i + 1]];
+                  commit({ ...q, options: next, correct: { order: next } });
+                }}
+              >
+                ↓
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            className="f-outline-btn"
+            style={{ marginTop: 8 }}
+            onClick={() => {
+              const next = [...orderItems, `Item ${orderItems.length + 1}`];
+              commit({ ...q, options: next, correct: { order: next } });
             }}
-            onBlur={() => commit()}
-          />
+          >
+            + Item
+          </button>
         </div>
+      ) : null}
+
+      {q.type === 'categorize' && catState ? (
+        <CategorizeBoard
+          mode="editor"
+          categories={catState.categories}
+          items={catState.items}
+          map={catState.map}
+          onChange={(next, opts) => {
+            const patch = {
+              options: { categories: next.categories, items: next.items },
+              correct: { map: next.map },
+            };
+            if (opts?.commit) commit({ ...q, ...patch });
+            else local(patch);
+          }}
+        />
       ) : null}
 
       {['file_response', 'audio_response', 'drawing'].includes(q.type) ? (
@@ -1182,7 +1286,27 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
     <div className={`f-qcard ${useMediaSplit ? 'f-qcard-media' : ''} ${isFillBlank ? 'f-qcard-fib' : ''}`}>
       <div className="f-qcard-head">
         <span>≡</span>
-        <span>{isDiscord ? 'Discord Username' : isIngame ? 'In-Game Name' : typeLabel(q)}</span>
+        {isGate ? (
+          <span>{isDiscord ? 'Discord Username' : 'In-Game Name'}</span>
+        ) : (
+          <label className="f-type-switch">
+            <span className="f-sr-only">Question type</span>
+            <select
+              value={switchTypeValue(q)}
+              onChange={(e) => convertType(e.target.value)}
+              aria-label="Question type"
+            >
+              {SWITCHABLE_TYPES.map((t) => (
+                <option key={t.id} value={t.id}>
+                  {t.label}
+                </option>
+              ))}
+              {!SWITCHABLE_TYPES.some((t) => t.id === switchTypeValue(q)) ? (
+                <option value={switchTypeValue(q)}>{typeLabel(q)}</option>
+              ) : null}
+            </select>
+          </label>
+        )}
         <span className="pts">
           <input
             type="number"

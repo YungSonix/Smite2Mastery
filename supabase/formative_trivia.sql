@@ -37,6 +37,8 @@ create table if not exists public.trivia_questions (
     'dropdown',
     'matching',
     'categorize',
+    'ordering',
+    'drag_drop',
     'file_response',
     'audio_response',
     'drawing',
