@@ -1246,13 +1246,15 @@ label.f-file-btn:hover {
   background: rgba(3, 7, 18, 0.55);
   display: grid;
   place-items: center;
-  padding: 20px;
+  padding: 16px;
 }
 
 .f-missing-card {
-  width: min(440px, 100%);
-  background: rgba(8, 12, 22, 0.98);
-  border: 1px solid rgba(125, 211, 252, 0.42);
+  width: min(480px, 100%);
+  max-height: min(80vh, 640px);
+  overflow: auto;
+  background: var(--f-card, #fff);
+  border: 1px solid var(--f-border);
   border-radius: 12px;
   padding: 20px 22px;
   color: var(--f-text);
@@ -1262,6 +1264,7 @@ label.f-file-btn:hover {
 .f-missing-card h2 {
   margin: 0 0 10px;
   font-size: 1.15rem;
+  color: var(--f-text);
 }
 
 .f-missing-card p {
@@ -1269,9 +1272,25 @@ label.f-file-btn:hover {
   color: var(--f-muted);
 }
 
-.f-missing-card ul {
+.f-missing-list {
   margin: 0 0 16px;
-  padding-left: 1.2em;
+  padding: 0;
+  list-style: none;
+}
+
+.f-missing-jump {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: var(--f-input, transparent);
+  border: 1px solid var(--f-border);
+  border-radius: 10px;
+  color: var(--f-text);
+  cursor: pointer;
+  padding: 12px 14px;
+  min-height: 48px;
+  margin: 0 0 8px;
+  font-size: 15px;
 }
 
 .f-missing-actions {
@@ -1280,11 +1299,11 @@ label.f-file-btn:hover {
   flex-wrap: wrap;
 }
 
-.f-missing-actions .f-submit-btn {
+.f-missing-actions .f-submit-btn,
+.f-missing-actions .f-outline-btn {
   width: auto;
-  min-height: 44px;
-  margin: 0;
-  padding: 10px 16px;
+  flex: 1 1 140px;
+  min-height: 48px;
 }
 
 .f-banner {
@@ -1354,10 +1373,50 @@ label.f-file-btn:hover {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
   color: var(--f-muted);
   font-size: 13px;
   font-weight: 600;
   margin-bottom: 10px;
+}
+
+.f-qcard-head-meta {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.f-req-head {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  color: var(--f-label, #b45309);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.f-take-req {
+  color: var(--f-label, #b45309);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.f-q-prompt-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.f-q-prompt-copy .f-take-req {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+.f-qcard.is-missing {
+  box-shadow: 0 0 0 2px var(--f-label, #c4a35a);
 }
 
 .f-type-switch select {

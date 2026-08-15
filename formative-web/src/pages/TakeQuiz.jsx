@@ -140,6 +140,20 @@ function isGate(q) {
 
 const SKIP_UNANSWERED = new Set(['image', 'content', 'audio', 'video', 'embed']);
 
+function promptPlain(q) {
+  return String(q?.prompt || '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function isRequiredTake(q, settings) {
+  if (!q || SKIP_UNANSWERED.has(q.type)) return false;
+  if (q.meta?.extra_credit && !q.required) return false;
+  return Boolean(q.required || settings?.require_all);
+}
+
 function isAnswered(q, answers) {
   const v = answers?.[q.id];
   if (v == null || v === '') return false;
@@ -169,6 +183,7 @@ export default function TakeQuiz() {
   const [shuffleSeed, setShuffleSeed] = useState(null);
   const [now, setNow] = useState(() => Date.now());
   const [missingConfirm, setMissingConfirm] = useState(null);
+  const [highlightId, setHighlightId] = useState(null);
   const restoredRef = useRef(false);
   const submittingRef = useRef(false);
 
@@ -310,21 +325,50 @@ export default function TakeQuiz() {
     return undefined;
   }, [quizLocked]);
 
-  const unansweredNums = useMemo(() => {
-    const nums = [];
-    playable.forEach((q, idx) => {
-      if (SKIP_UNANSWERED.has(q.type)) return;
-      if (!isAnswered(q, answers)) nums.push(idx + 1);
+  useEffect(() => {
+    if (!highlightId) return;
+    const q = orderedPlayable.find((item) => item.id === highlightId);
+    if (q && isAnswered(q, answers)) setHighlightId(null);
+  }, [answers, highlightId, orderedPlayable]);
+
+  const missingRequired = useMemo(() => {
+    const items = [];
+    orderedPlayable.forEach((q, idx) => {
+      if (!isRequiredTake(q, settings) || isAnswered(q, answers)) return;
+      items.push({ id: q.id, num: idx + 1, preview: promptPlain(q) });
     });
-    return nums;
-  }, [playable, answers]);
+    return items;
+  }, [orderedPlayable, answers, settings]);
+
+  const missingOptional = useMemo(() => {
+    const items = [];
+    orderedPlayable.forEach((q, idx) => {
+      if (SKIP_UNANSWERED.has(q.type) || isRequiredTake(q, settings) || isAnswered(q, answers)) return;
+      items.push({ id: q.id, num: idx + 1, preview: promptPlain(q) });
+    });
+    return items;
+  }, [orderedPlayable, answers, settings]);
+
+  const jumpToQuestion = (id) => {
+    setMissingConfirm(null);
+    setHighlightId(id);
+    window.setTimeout(() => {
+      document.getElementById(`take-q-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 50);
+  };
 
   const onSubmit = async (e, opts = {}) => {
     e?.preventDefault?.();
     if (submittingRef.current) return;
-    if (!opts.force && !opts.confirmed && unansweredNums.length) {
-      setMissingConfirm(unansweredNums);
-      return;
+    if (!opts.force && !opts.confirmed) {
+      if (missingRequired.length) {
+        setMissingConfirm({ kind: 'required', items: missingRequired });
+        return;
+      }
+      if (missingOptional.length) {
+        setMissingConfirm({ kind: 'optional', items: missingOptional });
+        return;
+      }
     }
     submittingRef.current = true;
     setBusy(true);
@@ -625,6 +669,7 @@ export default function TakeQuiz() {
               />
             ) : null;
 
+            const mustAnswer = isRequiredTake(q, settings);
             const answerBody = (
               <>
                 {isFillBlank && fib?.hasBlank ? (
@@ -636,15 +681,18 @@ export default function TakeQuiz() {
                       className="f-fib-inline"
                       value={answers[q.id] ?? ''}
                       onChange={(e) => setAnswer(q.id, e.target.value)}
-                      required={q.required || settings.require_all}
                       placeholder="…"
                     />
                     <span>{fib.after}</span>
+                    {mustAnswer ? <span className="f-take-req">* Required</span> : null}
                   </div>
                 ) : (
                   <div className="f-q-prompt">
                     <span className="f-q-num">{idx + 1}</span>
-                    <RichText className="f-md" text={q.prompt} />
+                    <div className="f-q-prompt-copy">
+                      <RichText className="f-md" text={q.prompt} />
+                      {mustAnswer ? <span className="f-take-req">* Required</span> : null}
+                    </div>
                   </div>
                 )}
                 {q.meta?.passage ? <p className="f-passage">{q.meta.passage}</p> : null}
@@ -656,7 +704,6 @@ export default function TakeQuiz() {
                     type="text"
                     value={answers[q.id] ?? ''}
                     onChange={(e) => setAnswer(q.id, e.target.value)}
-                    required={q.required || settings.require_all}
                   />
                 ) : null}
 
@@ -668,7 +715,6 @@ export default function TakeQuiz() {
                         name={`q-${q.id}`}
                         checked={Number(answers[q.id]) === originalIndex}
                         onChange={() => setAnswer(q.id, originalIndex)}
-                        required={q.required || settings.require_all}
                       />
                       <span>{label}</span>
                     </label>
@@ -678,7 +724,6 @@ export default function TakeQuiz() {
                   <select
                     value={answers[q.id] ?? ''}
                     onChange={(e) => setAnswer(q.id, Number(e.target.value))}
-                    required={q.required || settings.require_all}
                   >
                     <option value="">Select…</option>
                     {choices.map(({ label, originalIndex }) => (
@@ -845,13 +890,17 @@ export default function TakeQuiz() {
 
             return (
               <section
-                className={`f-qcard f-fade-up ${useMediaSplit ? 'f-qcard-media' : ''}`}
+                className={`f-qcard f-fade-up ${useMediaSplit ? 'f-qcard-media' : ''} ${highlightId === q.id ? 'is-missing' : ''}`}
                 key={q.id}
+                id={`take-q-${q.id}`}
                 style={{ animationDelay: `${idx * 40}ms` }}
               >
                 <div className="f-qcard-head">
                   <span className="f-type-chip">{typeLabel(q)}</span>
-                  {!hideScore ? <span className="pts">{q.points || 0} pts</span> : null}
+                  <span className="f-qcard-head-meta">
+                    {mustAnswer ? <span className="f-take-req">* Required</span> : null}
+                    {!hideScore ? <span className="pts">{q.points || 0} pts</span> : null}
+                  </span>
                 </div>
                 {useMediaSplit ? (
                   <div className="f-q-split">
@@ -876,28 +925,48 @@ export default function TakeQuiz() {
           ) : null}
         </form>
       </div>
-      {missingConfirm?.length ? (
+      {missingConfirm?.items?.length ? (
         <div className="f-missing-scrim" role="dialog" aria-modal="true" aria-labelledby="f-missing-title">
           <div className="f-missing-card">
-            <h2 id="f-missing-title">Are you sure you want to submit?</h2>
-            <p>You didn’t answer {missingConfirm.length === 1 ? 'this question' : 'these questions'}:</p>
-            <ul>
-              {missingConfirm.map((n) => (
-                <li key={n}>Question {n}</li>
+            <h2 id="f-missing-title">
+              {missingConfirm.kind === 'required' ? 'Required questions are unanswered' : 'Some questions are blank'}
+            </h2>
+            <p>
+              {missingConfirm.kind === 'required'
+                ? 'Finish these before you can submit:'
+                : `You skipped ${missingConfirm.items.length === 1 ? 'this question' : 'these questions'}:`}
+            </p>
+            <ul className="f-missing-list">
+              {missingConfirm.items.map((item) => (
+                <li key={item.id}>
+                  <button type="button" className="f-missing-jump" onClick={() => jumpToQuestion(item.id)}>
+                    Question {item.num}
+                    {item.preview ? ` — ${item.preview.slice(0, 80)}${item.preview.length > 80 ? '…' : ''}` : ''}
+                  </button>
+                </li>
               ))}
             </ul>
             <div className="f-missing-actions">
-              <button type="button" className="f-outline-btn" onClick={() => setMissingConfirm(null)}>
-                Go back
-              </button>
               <button
                 type="button"
                 className="f-submit-btn"
-                disabled={busy}
-                onClick={() => onSubmit(null, { confirmed: true })}
+                onClick={() => jumpToQuestion(missingConfirm.items[0].id)}
               >
-                Submit anyway
+                Go to question {missingConfirm.items[0].num}
               </button>
+              <button type="button" className="f-outline-btn" onClick={() => setMissingConfirm(null)}>
+                Close
+              </button>
+              {missingConfirm.kind === 'optional' ? (
+                <button
+                  type="button"
+                  className="f-outline-btn"
+                  disabled={busy}
+                  onClick={() => onSubmit(null, { confirmed: true })}
+                >
+                  Submit anyway
+                </button>
+              ) : null}
             </div>
           </div>
         </div>

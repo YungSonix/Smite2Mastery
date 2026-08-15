@@ -1311,6 +1311,16 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
           />{' '}
           Point{Number(q.points) === 1 ? '' : 's'}
         </span>
+        {!isGate ? (
+          <label className="f-req-head">
+            <input
+              type="checkbox"
+              checked={Boolean(q.required)}
+              onChange={(e) => commit({ ...q, required: e.target.checked })}
+            />
+            Required
+          </label>
+        ) : null}
       </div>
 
       {supportsVariants ? (
