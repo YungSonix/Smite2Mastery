@@ -338,12 +338,14 @@ async function main() {
   const created = await host({
     action: 'create',
     title: 'Smite 2 Trivia',
-    settings: {
-      instructions:
-        'Smite 2 trivia with text, images, audio, and fill-in-the-blank. Fill Discord + in-game name, then answer all questions.',
-      show_scores: true,
-      allow_retake: false,
-    },
+        settings: {
+          instructions:
+            'Smite 2 trivia with text, images, audio, and fill-in-the-blank. Fill Discord + in-game name, then answer all questions.',
+          show_scores: true,
+          allow_retake: false,
+          theme: 'scroll',
+          time_limit_seconds: 480,
+        },
   });
   const quiz = created.quiz;
 

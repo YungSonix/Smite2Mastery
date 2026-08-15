@@ -3,7 +3,7 @@
  * Concurrent submit burst against the local trivia API.
  *   node scripts/formative-load-test.mjs
  *
- * Env: TRIVIA_LOAD_N (default 50), FORMATIVE_API_BASE, TRIVIA_QUIZ_JSON
+ * Env: TRIVIA_LOAD_N (default 300), FORMATIVE_API_BASE, TRIVIA_QUIZ_JSON
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const API_BASE = process.env.FORMATIVE_API_BASE || 'http://localhost:3000';
-const N = Math.max(1, Number(process.env.TRIVIA_LOAD_N || 50));
+const N = Math.max(1, Number(process.env.TRIVIA_LOAD_N || 300));
 const QUIZ_PATH = process.env.TRIVIA_QUIZ_JSON || path.join(ROOT, 'artifacts', 'trivia-sims', 'quiz.json');
 
 function percentile(sorted, p) {
@@ -80,6 +80,37 @@ async function main() {
   fs.mkdirSync(outDir, { recursive: true });
   fs.writeFileSync(path.join(outDir, 'load-test.json'), JSON.stringify(summary, null, 2));
   console.log(JSON.stringify(summary, null, 2));
+
+  let stored = { checked: false };
+  try {
+    const quizId = payload.quiz?.id;
+    if (quizId) {
+      const res = await fetch(`${API_BASE}/api/trivia/host?action=responses&quizId=${quizId}`, {
+        headers: {
+          'x-host-username': process.env.TRIVIA_HOST_USER || 'teacher',
+          'x-host-secret': process.env.TRIVIA_HOST_SECRET || 'devsecret',
+        },
+      });
+      const data = await res.json();
+      const bots = (data.responses || []).filter((r) =>
+        String(r.discord_username || '').startsWith(`LoadBot`) && String(r.discord_username).includes(String(started))
+      );
+      const withAnswers = bots.filter((r) => r.answers && Object.keys(r.answers).length);
+      stored = {
+        checked: true,
+        matched: bots.length,
+        withAnswers: withAnswers.length,
+        sampleKeys: withAnswers[0] ? Object.keys(withAnswers[0].answers).length : 0,
+      };
+      summary.storage = stored;
+      fs.writeFileSync(path.join(outDir, 'load-test.json'), JSON.stringify(summary, null, 2));
+      console.log(`Stored ${stored.matched}/${N} load bots; ${stored.withAnswers} have answer payloads`);
+      if (stored.matched < N) process.exitCode = 1;
+    }
+  } catch (err) {
+    console.warn('Could not verify stored answers:', err.message || err);
+  }
+
   if (failed.length) process.exitCode = 1;
 }
 

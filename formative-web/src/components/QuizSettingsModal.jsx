@@ -60,8 +60,7 @@ export default function QuizSettingsModal({ settings, onChange, onClose }) {
   return (
     <div className="f-overlay" onClick={onClose} role="presentation">
       <div
-        className="f-modal f-modal-wide"
-        style={{ maxWidth: 520 }}
+        className="f-modal f-settings-modal"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-labelledby="f-quiz-settings-title"
@@ -157,54 +156,59 @@ export default function QuizSettingsModal({ settings, onChange, onClose }) {
                   type="button"
                   role="option"
                   aria-selected={theme.id === preset.id}
-                  className={`f-theme-strip ${theme.id === preset.id ? 'active' : ''}`}
+                  className={`f-theme-kit ${theme.id === preset.id ? 'active' : ''}`}
                   onClick={() => onChange(applyPresetPatch(preset.id))}
                 >
-                  <span className="f-theme-strip-bar" aria-hidden="true">
-                    <span style={{ background: preset.page, flex: 5 }} />
-                    <span style={{ background: preset.accent, flex: 1.2 }} />
-                    <span style={{ background: preset.secondary, flex: 1.2 }} />
+                  <span className="f-theme-kit-swatches" aria-hidden="true">
+                    <span className="f-theme-kit-page" style={{ background: preset.page }} />
+                    <span className="f-theme-kit-chip" style={{ background: preset.accent }} />
+                    <span className="f-theme-kit-chip" style={{ background: preset.secondary }} />
                   </span>
-                  <span className="f-theme-strip-name">{preset.label}</span>
+                  <span className="f-theme-kit-name">{preset.label}</span>
                 </button>
               ))}
             </div>
           </section>
 
-          <section className="f-assign-section">
-            <h4>Colors</h4>
-            <div className="f-theme-tiles">
-              <ColorTile label="Page" value={theme.page} fallback="#ece8df" onChange={(v) => onChange({ theme_page: v })} />
-              <ColorTile label="Card" value={theme.card} fallback="#f4f1ea" onChange={(v) => onChange({ theme_card: v })} />
-              <ColorTile label="Ink" value={theme.text} fallback="#2c3546" onChange={(v) => onChange({ theme_text: v })} />
-              <ColorTile label="Button" value={theme.accent} fallback="#5b8ab0" onChange={(v) => onChange({ theme_accent: v })} />
-              <ColorTile label="Gold" value={theme.secondary} fallback="#c4a35a" onChange={(v) => onChange({ theme_secondary: v })} />
-            </div>
-          </section>
-
-          <section className="f-assign-section">
-            <h4>Type</h4>
-            <ChipRow options={QUIZ_FONTS} value={theme.font} onChange={(id) => onChange({ theme_font: id })} />
-          </section>
-          <section className="f-assign-section">
-            <h4>Corners</h4>
-            <ChipRow options={QUIZ_CORNERS} value={theme.corners} onChange={(id) => onChange({ theme_corners: id })} />
-          </section>
-          <section className="f-assign-section">
-            <h4>Background texture</h4>
-            <ChipRow options={QUIZ_PATTERNS} value={theme.pattern} onChange={(id) => onChange({ theme_pattern: id })} />
-          </section>
-          <section className="f-assign-section">
-            <h4>Card density</h4>
-            <ChipRow
-              options={[
-                { id: 'cozy', label: 'Cozy' },
-                { id: 'compact', label: 'Compact' },
-              ]}
-              value={theme.density}
-              onChange={(id) => onChange({ theme_density: id })}
-            />
-          </section>
+          <details className="f-settings-details">
+            <summary>
+              Colors, type, and layout
+              <span className="f-chevron" aria-hidden="true" />
+            </summary>
+            <section className="f-assign-section">
+              <h4>Colors</h4>
+              <div className="f-theme-tiles">
+                <ColorTile label="Page" value={theme.page} fallback="#ece8df" onChange={(v) => onChange({ theme_page: v })} />
+                <ColorTile label="Card" value={theme.card} fallback="#f4f1ea" onChange={(v) => onChange({ theme_card: v })} />
+                <ColorTile label="Ink" value={theme.text} fallback="#2c3546" onChange={(v) => onChange({ theme_text: v })} />
+                <ColorTile label="Button" value={theme.accent} fallback="#5b8ab0" onChange={(v) => onChange({ theme_accent: v })} />
+                <ColorTile label="Gold" value={theme.secondary} fallback="#c4a35a" onChange={(v) => onChange({ theme_secondary: v })} />
+              </div>
+            </section>
+            <section className="f-assign-section">
+              <h4>Type</h4>
+              <ChipRow options={QUIZ_FONTS} value={theme.font} onChange={(id) => onChange({ theme_font: id })} />
+            </section>
+            <section className="f-assign-section">
+              <h4>Corners</h4>
+              <ChipRow options={QUIZ_CORNERS} value={theme.corners} onChange={(id) => onChange({ theme_corners: id })} />
+            </section>
+            <section className="f-assign-section">
+              <h4>Background texture</h4>
+              <ChipRow options={QUIZ_PATTERNS} value={theme.pattern} onChange={(id) => onChange({ theme_pattern: id })} />
+            </section>
+            <section className="f-assign-section">
+              <h4>Card density</h4>
+              <ChipRow
+                options={[
+                  { id: 'cozy', label: 'Cozy' },
+                  { id: 'compact', label: 'Compact' },
+                ]}
+                value={theme.density}
+                onChange={(id) => onChange({ theme_density: id })}
+              />
+            </section>
+          </details>
         </div>
       </div>
     </div>

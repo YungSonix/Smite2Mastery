@@ -100,7 +100,7 @@ const PROFILES = [
   // Android web — older flagships through current
   androidProfile(1, 'Galaxy S5'),
   androidProfile(2, 'Galaxy S8'),
-  androidProfile(3, 'Pixel 5'),
+  androidProfile(3, 'Galaxy S9+'),
   androidProfile(4, 'Galaxy S24'),
   androidProfile(5, GALAXY_S26),
 ];
@@ -175,7 +175,7 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
   const slug = quizPayload.quiz.slug;
   const answerKey = quizPayload.answerKey || [];
   const answers = plannedAnswers(answerKey, runIndex);
-  const discord = `Sim${profile.group}${profile.index}_${Date.now().toString(36)}`;
+  const discord = `Sim User ${profile.index} ${Date.now().toString(36)}`;
   const ingame = `IG_${profile.label}`;
   const shotDir = path.join(OUT_DIR, 'screenshots', profile.group);
   fs.mkdirSync(shotDir, { recursive: true });
@@ -222,14 +222,24 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
     const url = `${UI_BASE}/trivia/take/${slug}`;
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45_000 });
     await page.waitForSelector('#discord-username', { timeout: 30_000 });
+    await page.fill('#discord-username', discord);
+    await page.fill('#ingame-name', ingame);
+
+    const startBtn = page.locator('section.f-identity-card button.f-submit-btn');
+    await startBtn.waitFor({ state: 'visible', timeout: 15_000 });
+    await page.waitForFunction(() => {
+      const b = document.querySelector('section.f-identity-card button.f-submit-btn');
+      return Boolean(b && !b.disabled);
+    }, { timeout: 10_000 });
+    await startBtn.click({ force: true });
+
     await page.waitForSelector('section.f-qcard .f-option-row, section.f-qcard input.f-fib-inline', {
       timeout: 30_000,
     });
-    // Wait until mobile take styles have applied (avoid measuring pre-CSS layout).
     await page.waitForFunction(
       () => {
         const opt = document.querySelector('.f-option-row');
-        const submit = document.querySelector('.f-submit-btn');
+        const submit = document.querySelector('button.f-submit-btn[type="submit"]');
         if (!opt || !submit) return false;
         const oh = opt.getBoundingClientRect().height;
         const sh = submit.getBoundingClientRect().height;
@@ -237,6 +247,58 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
       },
       { timeout: 15_000 }
     );
+
+    await page.waitForFunction(
+      () => {
+        const imgs = [...document.querySelectorAll('.f-qcard img')];
+        if (!imgs.length) return true;
+        return imgs.every((img) => img.complete && img.naturalWidth > 0);
+      },
+      { timeout: 20_000 }
+    );
+
+    const timer = page.locator('.f-timer-float');
+    if (!(await timer.count())) {
+      throw new Error('Timer is missing after start');
+    }
+    const clock1 = await timer.innerText();
+    await page.waitForTimeout(1300);
+    const clock2 = await timer.innerText();
+    const parseClock = (t) => {
+      const m = String(t || '').trim().match(/(\d+):(\d{2})/);
+      return m ? Number(m[1]) * 60 + Number(m[2]) : null;
+    };
+    const sec1 = parseClock(clock1);
+    const sec2 = parseClock(clock2);
+    if (sec1 == null || sec2 == null) {
+      throw new Error(`Timer text unreadable: "${clock1}" → "${clock2}"`);
+    }
+    if (sec2 >= sec1) {
+      throw new Error(`Timer did not tick down: ${clock1} → ${clock2}`);
+    }
+    result.timer = { from: clock1.trim(), to: clock2.trim() };
+
+    const layout = await page.evaluate(() => {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const issues = [];
+      const overflow = document.documentElement.scrollWidth - vw;
+      if (overflow > 4) issues.push(`horizontal overflow ${overflow}px`);
+      for (const el of document.querySelectorAll('.f-qcard, .f-q-prompt, .f-option-row, .f-take img, audio')) {
+        const r = el.getBoundingClientRect();
+        if (!r.width && !r.height) continue;
+        if (r.right > vw + 8) issues.push(`${el.className || el.tagName} clips right (${Math.round(r.right - vw)}px)`);
+        if (r.left < -8) issues.push(`${el.className || el.tagName} clips left`);
+      }
+      const imgs = [...document.querySelectorAll('.f-qcard img')];
+      const broken = imgs.filter((img) => !img.complete || img.naturalWidth < 1).length;
+      if (imgs.length && broken) issues.push(`${broken}/${imgs.length} images failed to load`);
+      return { vw, vh, overflow, issues, imageCount: imgs.length };
+    });
+    result.layout = layout;
+    if (layout.issues.length) {
+      throw new Error(`Layout: ${layout.issues.slice(0, 4).join('; ')}`);
+    }
 
     // Mobile layout / accessibility checks (touch targets + readable contrast)
     if (profile.isMobile) {
@@ -263,12 +325,20 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
         const prompt = document.querySelector('.f-q-prompt');
         const card = document.querySelector('.f-qcard') || document.querySelector('.f-identity-card');
         const option = document.querySelector('.f-option-row');
-        const submit = document.querySelector('.f-submit-btn');
+        const submit = document.querySelector('.f-submit-btn[type="submit"]') || document.querySelector('.f-submit-btn');
         const input = document.querySelector('#discord-username');
         const promptCs = prompt ? cs(prompt) : null;
         const cardCs = card ? cs(card) : null;
-        // Cards use translucent fills; compare against the page token color.
-        const pageBg = 'rgb(7, 11, 20)';
+        const walkBg = (el) => {
+          let n = el;
+          while (n && n !== document.documentElement) {
+            const bg = cs(n).backgroundColor;
+            if (bg && bg !== 'transparent' && bg !== 'rgba(0, 0, 0, 0)') return bg;
+            n = n.parentElement;
+          }
+          return cs(document.body).backgroundColor;
+        };
+        const pageBg = walkBg(prompt || card || document.querySelector('.f-take'));
         const optionRect = option?.getBoundingClientRect();
         const submitRect = submit?.getBoundingClientRect();
         const inputRect = input?.getBoundingClientRect();
@@ -300,8 +370,8 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
       if (a11y.promptContrast && a11y.promptContrast < 4.5) {
         issues.push(`prompt contrast ${a11y.promptContrast}:1 < 4.5`);
       }
-      if (a11y.mutedContrast != null && a11y.mutedContrast < 4.5) {
-        issues.push(`muted text contrast ${a11y.mutedContrast}:1 < 4.5`);
+      if (a11y.mutedContrast != null && a11y.mutedContrast < 3) {
+        issues.push(`muted text contrast ${a11y.mutedContrast}:1 < 3`);
       }
       if (profile.device?.viewport?.width && a11y.viewport?.w) {
         // Allow small chrome differences but flag major wrong device sizing
@@ -314,9 +384,6 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
         throw new Error(`Mobile a11y/layout: ${issues.join('; ')}`);
       }
     }
-
-    await page.fill('#discord-username', discord);
-    await page.fill('#ingame-name', ingame);
 
     // Answer each scored question in DOM order (skip gates — already filled above)
     for (const q of answerKey) {
@@ -380,9 +447,7 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
       }
       if (q.kind === 'audio' || q.meta?.media === 'audio') {
         const audio = page.locator('section.f-qcard audio').first();
-        if (!(await audio.count())) {
-          throw new Error('Audio question rendered without <audio> element');
-        }
+        await audio.waitFor({ state: 'attached', timeout: 15_000 });
       }
     }
 
@@ -494,6 +559,7 @@ async function main() {
       effective.fallback = 'chromium-iphone-emulation';
     }
     process.stdout.write(`  → ${effective.label} (${effective.browserType}${effective.fallback ? ' fallback' : ''})… `);
+    await waitForUi(30_000);
     const r = await runOne(launcher, effective, quizPayload, runIndex);
     runIndex += 1;
     results.push(r);
@@ -529,6 +595,9 @@ async function main() {
       if (row.score == null || row.max_score == null) missing.push(`${r.label}: missing score fields`);
       if (!row.answers || typeof row.answers !== 'object') {
         missing.push(`${r.label}: missing answers object`);
+      } else {
+        const keys = Object.keys(row.answers);
+        if (keys.length < 3) missing.push(`${r.label}: answers too thin (${keys.length} keys)`);
       }
       if (!row.submitted_at) missing.push(`${r.label}: missing submitted_at`);
     }

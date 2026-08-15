@@ -6,7 +6,7 @@ function OpaqueSrc({ url, children }) {
   const [src, setSrc] = useState(() =>
     String(resolved || '').startsWith('data:') || String(resolved || '').startsWith('blob:')
       ? resolved
-      : ''
+      : resolved || ''
   );
 
   useEffect(() => {
