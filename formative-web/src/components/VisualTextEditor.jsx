@@ -22,6 +22,8 @@ export default function VisualTextEditor({
   onChange,
   onBlur,
 }) {
+  const skipInput = useRef(false);
+  const userEdited = useRef(false);
   const editorRef = useRef(null);
   const [active, setActive] = useState({});
   const [empty, setEmpty] = useState(() => isEmptyHtml(toEditorHtml(initialValue)));
@@ -30,9 +32,15 @@ export default function VisualTextEditor({
     const el = editorRef.current;
     if (!el) return;
     if (document.activeElement === el) return;
+    skipInput.current = true;
+    userEdited.current = false;
     const html = toEditorHtml(initialValue);
     if (el.innerHTML !== html) el.innerHTML = html;
     setEmpty(isEmptyHtml(html));
+    const frame = requestAnimationFrame(() => {
+      skipInput.current = false;
+    });
+    return () => cancelAnimationFrame(frame);
   }, [initialValue]);
 
   const emit = () => {
@@ -41,6 +49,11 @@ export default function VisualTextEditor({
     const html = el.innerHTML;
     setEmpty(isEmptyHtml(html));
     onChange?.(html);
+  };
+
+  const markAndEmit = () => {
+    userEdited.current = true;
+    emit();
   };
 
   const run = (fn) => {
@@ -53,7 +66,7 @@ export default function VisualTextEditor({
       /* ignore */
     }
     fn(el);
-    emit();
+    markAndEmit();
     syncActive();
   };
 
@@ -212,10 +225,13 @@ export default function VisualTextEditor({
         aria-label={placeholder || 'Text'}
         data-placeholder={placeholder}
         style={{ minHeight }}
-        onInput={emit}
+        onInput={() => {
+          if (skipInput.current) return;
+          markAndEmit();
+        }}
         onBlur={() => {
           const el = editorRef.current;
-          if (el) {
+          if (el && userEdited.current) {
             el.innerHTML = sanitizeRichHtml(el.innerHTML);
             emit();
           }

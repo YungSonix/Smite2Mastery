@@ -574,8 +574,10 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
             initialValue={q.prompt || ''}
             placeholder="Question prompt"
             minHeight={useMediaSplit ? 72 : 96}
-            onChange={(next) => local({ prompt: next })}
-            onBlur={() => commit()}
+            onChange={(next) => {
+              if (next === q.prompt) return;
+              local({ prompt: next });
+            }}
           />
         </div>
       </div>
@@ -1091,8 +1093,10 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
             initialValue={activeVariantFields.prompt}
             placeholder="Version prompt"
             minHeight={96}
-            onChange={(next) => patchVariantSlot(variantTab - 1, { prompt: next })}
-            onBlur={() => commit()}
+            onChange={(next) => {
+              if (next === activeVariantFields.prompt) return;
+              patchVariantSlot(variantTab - 1, { prompt: next });
+            }}
           />
         </label>
         {(isChoice || isMulti || q.type === 'true_false') && (

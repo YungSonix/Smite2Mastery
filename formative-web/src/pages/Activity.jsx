@@ -100,7 +100,7 @@ export default function Activity() {
     if (decodeURIComponent(String(quizId)) === quiz.slug) return;
     const qs = params.toString();
     nav(`${activityHref(quiz)}${qs ? `?${qs}` : ''}`, { replace: true });
-  }, [quiz, quizId, nav, params]);
+  }, [quiz?.slug, quizId, nav, params]);
 
   useEffect(() => {
     if (tab !== 'responses' && tab !== 'insights') return undefined;
@@ -169,28 +169,21 @@ export default function Activity() {
     setDirtyIds((ids) => (ids.includes(q.id) ? ids : [...ids, q.id]));
   };
 
-  const persistQuestion = async (q) => {
-    await hostApi('/api/trivia/host', {
-      method: 'PUT',
-      body: {
-        action: 'update_question',
-        questionId: q.id,
-        patch: {
-          prompt: q.prompt,
-          points: q.points,
-          required: q.required,
-          options: q.options,
-          correct: q.correct,
-          image_url: q.image_url,
-          type: q.type,
-          meta: q.meta,
-        },
-      },
-    });
-  };
+  const questionPatch = (q) => ({
+    prompt: q.prompt,
+    points: q.points,
+    required: q.required,
+    options: q.options,
+    correct: q.correct,
+    image_url: q.image_url,
+    type: q.type,
+    meta: q.meta,
+  });
 
   const saveAll = useCallback(async () => {
     if (!quiz) return false;
+    const changed = questions.filter((q) => dirtyIds.includes(q.id));
+    if (!quizDirty && !bannerDirty && !changed.length) return true;
     setSaving(true);
     setError('');
     try {
@@ -213,9 +206,14 @@ export default function Activity() {
         });
         setQuiz(data.quiz);
       }
-      const changed = questions.filter((q) => dirtyIds.includes(q.id));
       if (changed.length) {
-        await Promise.all(changed.map((q) => persistQuestion(q)));
+        await hostApi('/api/trivia/host', {
+          method: 'PUT',
+          body: {
+            action: 'update_questions',
+            questions: changed.map((q) => ({ id: q.id, patch: questionPatch(q) })),
+          },
+        });
       }
       setQuizDirty(false);
       setBannerDirty(false);
@@ -462,7 +460,7 @@ export default function Activity() {
             type="button"
             className={`f-save-btn ${dirty ? 'is-dirty' : ''}`}
             onClick={saveAll}
-            disabled={saving}
+            disabled={saving || !dirty}
           >
             {saving ? 'Saving…' : dirty ? 'Save' : 'Saved'}
           </button>

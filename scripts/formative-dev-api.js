@@ -349,6 +349,29 @@ async function handleHost(req, res, url) {
       db.quizzes.set(quiz.id, quiz);
       return json(res, 200, { quiz });
     }
+    if (body.action === 'update_questions') {
+      const items = Array.isArray(body.questions) ? body.questions : [];
+      if (!items.length) return json(res, 200, { ok: true });
+      const now = new Date().toISOString();
+      let quizIdForTouch = null;
+      for (const item of items) {
+        const q = db.questions.get(item.id);
+        if (!q) return json(res, 404, { error: 'Question not found' });
+        const quiz = db.quizzes.get(q.quiz_id);
+        if (!quiz || quiz.owner_username !== username) return json(res, 403, { error: 'Forbidden' });
+        if (quizIdForTouch && quizIdForTouch !== quiz.id) {
+          return json(res, 400, { error: 'Questions must belong to one quiz' });
+        }
+        quizIdForTouch = quiz.id;
+        Object.assign(q, item.patch || {}, { updated_at: now });
+        q.id = item.id;
+        q.quiz_id = quiz.id;
+        db.questions.set(q.id, q);
+      }
+      const quiz = db.quizzes.get(quizIdForTouch);
+      if (quiz) quiz.updated_at = now;
+      return json(res, 200, { ok: true });
+    }
     if (body.action === 'update_question') {
       const q = db.questions.get(body.questionId);
       if (!q) return json(res, 404, { error: 'Question not found' });

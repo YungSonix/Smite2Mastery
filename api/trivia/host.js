@@ -312,6 +312,36 @@ module.exports = async function handler(req, res) {
         if (error) return send(res, 500, { error: error.message });
         return send(res, 200, { quiz: data });
       }
+      if (body.action === 'update_questions') {
+        const items = Array.isArray(body.questions) ? body.questions : [];
+        if (!items.length) return send(res, 200, { ok: true });
+        const ids = items.map((item) => String(item.id || '')).filter(Boolean);
+        const { data: rows } = await sb.from('trivia_questions').select('id, quiz_id').in('id', ids);
+        const quizIds = [...new Set((rows || []).map((row) => row.quiz_id))];
+        if (!rows?.length || quizIds.length !== 1 || rows.length !== ids.length) {
+          return send(res, 400, { error: 'Questions must belong to one quiz' });
+        }
+        const { data: quiz } = await sb
+          .from('trivia_quizzes')
+          .select('id, owner_username')
+          .eq('id', quizIds[0])
+          .eq('owner_username', username)
+          .maybeSingle();
+        if (!quiz) return send(res, 403, { error: 'Not your quiz' });
+        const now = new Date().toISOString();
+        const updates = await Promise.all(
+          items.map((item) => {
+            const patch = { ...(item.patch || {}), updated_at: now };
+            delete patch.id;
+            delete patch.quiz_id;
+            return sb.from('trivia_questions').update(patch).eq('id', item.id);
+          }),
+        );
+        const failed = updates.find((result) => result.error);
+        if (failed?.error) return send(res, 500, { error: failed.error.message });
+        await touchQuiz(sb, quiz.id);
+        return send(res, 200, { ok: true });
+      }
       if (body.action === 'update_question') {
         const { data: qq } = await sb
           .from('trivia_questions')
@@ -337,7 +367,6 @@ module.exports = async function handler(req, res) {
           .select('*')
           .single();
         if (error) return send(res, 500, { error: error.message });
-        await touchQuiz(sb, qq.quiz_id);
         return send(res, 200, { question: data });
       }
       if (body.action === 'reorder') {
