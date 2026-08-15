@@ -18,7 +18,21 @@ A few thousand submissions are still small (kilobytes to a few megabytes). Large
 
 ## Local
 
-Two processes:
+Two **separate** terminals. Do not paste both commands on one line.
+
+The API already defaults to secret `devsecret`. You do **not** need `TRIVIA_HOST_SECRET=...` on Windows PowerShell (that `VAR=value` form is bash-only and will error).
+
+**PowerShell (this machine)**
+
+```powershell
+npm run trivia:api
+```
+
+```powershell
+npm run trivia:dev
+```
+
+**bash / mac / Git Bash** (optional explicit secret)
 
 ```bash
 TRIVIA_HOST_SECRET=devsecret npm run trivia:api
@@ -26,9 +40,16 @@ TRIVIA_HOST_SECRET=devsecret npm run trivia:dev
 ```
 
 Open http://localhost:5174/trivia/  
-Host login: any username + secret `devsecret`.
+Host login: any username + password `devsecret`.
 
 API: http://localhost:3000 (`/api/trivia/*` and `/media/*` from `app/data/`).
+
+To set the secret in PowerShell if you ever need a different one:
+
+```powershell
+$env:TRIVIA_HOST_SECRET="devsecret"
+npm run trivia:api
+```
 
 ## Generate a Smite 2 quiz from repo data
 

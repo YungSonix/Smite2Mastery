@@ -14,6 +14,7 @@ import {
   questionDefaultsForType,
   typeLabel,
 } from '../lib/questionTypes';
+import { remixQuestionFromA, fillAnswersFromPrompt, randomizeQuestion } from '../lib/triviaRemix';
 
 async function readFileAsDataUrl(file, { maxBytes = 2.5 * 1024 * 1024, acceptPrefix } = {}) {
   if (!file) throw new Error('No file selected');
@@ -33,6 +34,15 @@ function parseCommaAnswers(raw, { clean = false } = {}) {
   const parts = String(raw ?? '').split(',');
   if (clean) return parts.map((s) => s.trim()).filter(Boolean);
   return parts.map((s, i) => (i === parts.length - 1 ? s.replace(/^\s+/, '') : s.trim()));
+}
+
+function AttachFileButton({ onChange, accept = 'image/*,audio/*,video/*' }) {
+  return (
+    <label className="f-outline-btn f-file-btn">
+      Attach file
+      <input type="file" accept={accept} multiple onChange={onChange} />
+    </label>
+  );
 }
 
 export default function QuestionCard({ question, index, onChange, onDelete }) {
@@ -162,6 +172,7 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
         correct: q.correct ? JSON.parse(JSON.stringify(q.correct)) : {},
         image_url: null,
         image_urls: [],
+        enabled: true,
       });
     }
     return variants;
@@ -193,25 +204,76 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
     }
   };
 
-  const onPickImage = async (e) => {
+  const onPickFile = async (e) => {
     const files = [...(e.target.files || [])];
     e.target.value = '';
-    await appendFiles(files, (file) => readImageAsDataUrl(file));
+    await appendFiles(files, (file) => {
+      const type = String(file.type || '');
+      if (type.startsWith('image/')) return readImageAsDataUrl(file);
+      if (type.startsWith('audio/')) return readFileAsDataUrl(file, { acceptPrefix: 'audio/' });
+      if (type.startsWith('video/')) {
+        return readFileAsDataUrl(file, { acceptPrefix: 'video/', maxBytes: 8 * 1024 * 1024 });
+      }
+      throw new Error('Please choose an image, audio, or video file');
+    });
   };
 
-  const onPickAudio = async (e) => {
-    const files = [...(e.target.files || [])];
-    e.target.value = '';
-    await appendFiles(files, (file) => readFileAsDataUrl(file, { acceptPrefix: 'audio/' }));
+  const applyGeneratedPatch = (result) => {
+    if (result.error) {
+      setUploadError(result.error);
+      return;
+    }
+    setUploadError('');
+    const patch = result.patch || {};
+    const meta = { ...(q.meta || {}), ...(patch.meta || {}), variants: q.meta?.variants };
+    if (patch.clearMedia) delete meta.image_urls;
+    let next = { ...q, ...patch, meta };
+    if (patch.clearMedia) {
+      next = withMediaUrlsOnQuestion({ ...next, image_url: null }, []);
+    } else if (patch.image_urls || patch.image_url) {
+      next = withMediaUrlsOnQuestion(next, patch.image_urls || [patch.image_url].filter(Boolean));
+    }
+    if (variantTab > 0) {
+      const { meta: _m, type: _t, points: _p, required: _r, clearMedia: _c, ...slot } = patch;
+      if (patch.clearMedia) {
+        patchVariantSlot(variantTab - 1, { ...slot, image_url: null, image_urls: [] });
+      } else {
+        patchVariantSlot(variantTab - 1, slot);
+      }
+      return;
+    }
+    delete next.clearMedia;
+    commit(next);
   };
 
-  const onPickVideo = async (e) => {
-    const files = [...(e.target.files || [])];
-    e.target.value = '';
-    await appendFiles(files, (file) =>
-      readFileAsDataUrl(file, { acceptPrefix: 'video/', maxBytes: 8 * 1024 * 1024 })
-    );
-  };
+  const generateButtons = !isGate ? (
+    <>
+      <button
+        type="button"
+        className="f-outline-btn"
+        title="Keep this prompt; fill real answers and mark the correct one from builds.json"
+        onClick={() => {
+          const extras = Array.isArray(q.meta?.variants) ? q.meta.variants : [];
+          const src = variantTab === 0 ? q : { ...q, ...(extras[variantTab - 1] || {}) };
+          applyGeneratedPatch(fillAnswersFromPrompt(src));
+        }}
+      >
+        Random answers
+      </button>
+      <button
+        type="button"
+        className="f-outline-btn"
+        title="Write a new question and answers from builds.json"
+        onClick={() => {
+          const extras = Array.isArray(q.meta?.variants) ? q.meta.variants : [];
+          const src = variantTab === 0 ? q : { ...q, ...(extras[variantTab - 1] || {}) };
+          applyGeneratedPatch(randomizeQuestion(src));
+        }}
+      >
+        Random question
+      </button>
+    </>
+  ) : null;
 
   const patchVariantSlot = (slotIndex, patch) => {
     const variants = ensureVariantSlot(slotIndex);
@@ -224,6 +286,14 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
       commit({ ...q, meta: { ...(q.meta || {}), variants: ensureVariantSlot(tab - 1) } });
     }
     setVariantTab(tab);
+  };
+
+  const toggleVariantEnabled = (tab) => {
+    if (tab <= 0) return;
+    if (variantExtras.length < tab) return;
+    patchVariantSlot(tab - 1, {
+      enabled: variantExtras[tab - 1]?.enabled === false,
+    });
   };
 
   const activeVariantFields =
@@ -280,20 +350,7 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
       )}
       <div className="f-q-media-tools">
         {activeMediaUrls.length < MAX_VERSION_MEDIA ? (
-          <>
-            <label className="f-outline-btn f-file-btn">
-              Add image
-              <input type="file" accept="image/*" multiple onChange={onPickImage} />
-            </label>
-            <label className="f-outline-btn f-file-btn">
-              Add audio
-              <input type="file" accept="audio/*" multiple onChange={onPickAudio} />
-            </label>
-            <label className="f-outline-btn f-file-btn">
-              Add video
-              <input type="file" accept="video/*" multiple onChange={onPickVideo} />
-            </label>
-          </>
+          <AttachFileButton onChange={onPickFile} />
         ) : null}
         {activeMediaUrls.length || variantTab > 0 ? (
           <button type="button" className="f-ghost-btn" onClick={() => setActiveMedia([])}>
@@ -474,6 +531,7 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
             + Also accept another spelling
           </button>
         )}
+        {generateButtons ? <div className="f-q-action-row">{generateButtons}</div> : null}
       </div>
     ) : (
       <div className="f-q-prompt-edit">
@@ -593,32 +651,20 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
           ) : null}
         </div>
       ))}
-      {q.type !== 'true_false' ? (
-        <button
-          type="button"
-          className="f-outline-btn"
-          style={{ marginTop: 8 }}
-          onClick={() => commit({ ...q, options: [...options, `Option ${options.length + 1}`] })}
-        >
-          + Option
-        </button>
-      ) : null}
-      {(isChoice || isMulti) && !useMediaSplit ? (
-        <div className="f-attach-row">
-          <label className="f-outline-btn f-file-btn">
-            Attach images
-            <input type="file" accept="image/*" multiple onChange={onPickImage} />
-          </label>
-          <label className="f-outline-btn f-file-btn">
-            Attach audio
-            <input type="file" accept="audio/*" multiple onChange={onPickAudio} />
-          </label>
-          <label className="f-outline-btn f-file-btn">
-            Attach video
-            <input type="file" accept="video/*" multiple onChange={onPickVideo} />
-          </label>
-        </div>
-      ) : null}
+      <div className="f-q-action-row">
+        {q.type !== 'true_false' ? (
+          <button
+            type="button"
+            className="f-outline-btn"
+            onClick={() => commit({ ...q, options: [...options, `Option ${options.length + 1}`] })}
+          >
+            + Option
+          </button>
+        ) : null}
+        {(isChoice || isMulti) && !useMediaSplit ? <AttachFileButton onChange={onPickFile} /> : null}
+        {isChoice || isMulti ? generateButtons : null}
+      </div>
+      {uploadError && (isChoice || isMulti) ? <div className="f-error">{uploadError}</div> : null}
     </div>
   );
 
@@ -733,22 +779,10 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
       {!useMediaSplit && (isMediaContent || q.type === 'hot_spot' || firstMedia) && !isGate ? (
         <div style={{ marginTop: 10 }}>
           <div className="f-q-media-tools">
-            {q.type !== 'audio_response' ? (
-              <label className="f-outline-btn f-file-btn">
-                Add image
-                <input type="file" accept="image/*" multiple onChange={onPickImage} />
-              </label>
-            ) : null}
-            <label className="f-outline-btn f-file-btn">
-              Add audio
-              <input type="file" accept="audio/*" multiple onChange={onPickAudio} />
-            </label>
-            {q.type !== 'audio_response' ? (
-              <label className="f-outline-btn f-file-btn">
-                Add video
-                <input type="file" accept="video/*" multiple onChange={onPickVideo} />
-              </label>
-            ) : null}
+            <AttachFileButton
+              onChange={onPickFile}
+              accept={q.type === 'audio_response' ? 'audio/*' : undefined}
+            />
           </div>
           {activeMediaUrls.length < MAX_VERSION_MEDIA ? (
             <input
@@ -1085,26 +1119,8 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
             />
           </label>
         ) : null}
-        {!useMediaSplit ? (
-          <div className="f-attach-row" style={{ marginTop: 12 }}>
-            <label className="f-outline-btn f-file-btn">
-              Attach images
-              <input type="file" accept="image/*" multiple onChange={onPickImage} />
-            </label>
-            <label className="f-outline-btn f-file-btn">
-              Attach audio
-              <input type="file" accept="audio/*" multiple onChange={onPickAudio} />
-            </label>
-            <label className="f-outline-btn f-file-btn">
-              Attach video
-              <input type="file" accept="video/*" multiple onChange={onPickVideo} />
-            </label>
-            <button type="button" className="f-ghost-btn" onClick={() => setActiveMedia([])}>
-              Remove media
-            </button>
-          </div>
-        ) : null}
-        <div style={{ display: 'flex', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
+        <div className="f-variant-toolbar">
+          {!useMediaSplit ? <AttachFileButton onChange={onPickFile} /> : null}
           <button
             type="button"
             className="f-outline-btn"
@@ -1122,17 +1138,41 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
           </button>
           <button
             type="button"
-            className="f-ghost-btn"
+            className="f-outline-btn"
+            title="Swap using builds.json names (items, gods, aspects, OB patches) and attach matching art"
             onClick={() => {
-              const variants = [...variantExtras];
-              variants.splice(variantTab - 1);
-              commit({ ...q, meta: { ...(q.meta || {}), variants } });
-              setVariantTab(0);
+              const avoid = variantExtras
+                .map((v, i) => (i === variantTab - 1 ? '' : v?.prompt))
+                .filter(Boolean);
+              const result = remixQuestionFromA(q, { avoidTexts: avoid });
+              if (result.error) {
+                setUploadError(result.error);
+                return;
+              }
+              setUploadError('');
+              patchVariantSlot(variantTab - 1, result.patch);
             }}
           >
-            Remove version {['A', 'B', 'C'][variantTab]}
+            Change question/answer
+          </button>
+          <button
+            type="button"
+            className="f-outline-btn"
+            title="Keep this prompt; fill real answers from builds.json"
+            onClick={() => applyGeneratedPatch(fillAnswersFromPrompt({ ...q, ...activeVariantFields }))}
+          >
+            Random answers
+          </button>
+          <button
+            type="button"
+            className="f-outline-btn"
+            title="Write a new question and answers from builds.json"
+            onClick={() => applyGeneratedPatch(randomizeQuestion({ ...q, ...activeVariantFields }))}
+          >
+            Random question
           </button>
         </div>
+        {uploadError ? <div className="f-error">{uploadError}</div> : null}
       </div>
     ) : null;
 
@@ -1160,19 +1200,28 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
 
       {supportsVariants ? (
         <div className="f-variant-tabs">
-          {['A', 'B', 'C'].map((label, i) => (
-            <button
-              key={label}
-              type="button"
-              className={variantTab === i ? 'active' : ''}
-              onClick={() => openVariantTab(i)}
-            >
-              Version {label}
-              {i > 0 && variantExtras.length >= i ? ' · on' : ''}
-            </button>
-          ))}
+          {['A', 'B', 'C'].map((label, i) => {
+            const exists = i === 0 || variantExtras.length >= i;
+            const on =
+              i === 0 ||
+              (exists && variantExtras[i - 1]?.enabled !== false);
+            return (
+              <button
+                key={label}
+                type="button"
+                className={variantTab === i ? 'active' : ''}
+                title={i > 0 ? 'Double-click to turn this version off or on' : undefined}
+                onClick={() => openVariantTab(i)}
+                onDoubleClick={() => toggleVariantEnabled(i)}
+              >
+                Version {label}
+                {i > 0 && exists ? (on ? ' · on' : ' · off') : ''}
+              </button>
+            );
+          })}
           <span className="f-variant-hint">
-            Up to 3 versions — each Discord name gets one (harder to share answers)
+            Version A is always on. Double-click B or C to turn that version off or on. Off
+            versions are not given to players.
           </span>
         </div>
       ) : null}

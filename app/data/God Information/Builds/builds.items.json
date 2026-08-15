@@ -1,6 +1,6 @@
 {
     "_generatedFrom": "builds.json",
-    "_generatedAt": "2026-07-07T00:12:42.858Z",
+    "_generatedAt": "2026-08-15T14:28:50.452Z",
     "items": [
         [
             {
@@ -477,7 +477,7 @@
                 "icon": "/icons/agilityRelic.webp",
                 "internalName": "AgilityRelic",
                 "name": "Agility Relic",
-                "passive": "Active: Dash in the direction you are currently moving. \nPassive:\n\rMelee Gods: -15% Basic Attack Movement Penalty \n\rRanged Gods:+40% Projectile Speed  \nCooldown: 20s.",
+                "passive": "Active: Dash in the direction you are currently moving.\nPassive:\nMelee Gods: -15% Basic Attack Movement Penalty\nRanged Gods:+40% Projectile Speed\nCooldown: 20s.",
                 "stats": {},
                 "stepCost": 0,
                 "tier": 1,
@@ -726,9 +726,9 @@
                 "aspectStats": {
                     "Health": 50
                 },
-                "stepCost": 650,
+                "stepCost": 0,
                 "tier": 1,
-                "totalCost": 650,
+                "totalCost": 0,
                 "__v": 0,
                 "createdAt": "2026-04-21T21:18:32.552Z",
                 "updatedAt": "2026-04-21T21:18:32.552Z"
@@ -817,7 +817,7 @@
                 "icon": "/icons/PurificationBeads.webp",
                 "internalName": "PurificationBeads",
                 "name": "Purification Beads",
-                "passive": "Active: You become CC Immune for 2 seconds. \nCooldown:150s",
+                "passive": "Active: You become CC Immune for 2 seconds.\nCooldown:150s",
                 "stats": {},
                 "stepCost": 0,
                 "tier": 1,
@@ -1082,7 +1082,7 @@
                 "icon": "/icons/sunderingArc.webp",
                 "internalName": "sunderingArc",
                 "name": "Sundering Arc",
-                "passive": "Active: Instantly deals 175 + 25 per level true damage to Jungle Monsters and Jungle Bosses. Deals 500 damage at level 13 and above. \nHits Gods, dealing 20 + 3 per level True Damage 3 times over 2s. The cooldown is reduced by 30s when used only on Jungle Bosses or Jungle Camps. \nCooldown: 120s.",
+                "passive": "Active: Instantly deals 175 + 25 per level true damage to Jungle Monsters and Jungle Bosses. Deals 500 damage at level 13 and above.\nHits Gods, dealing 20 + 3 per level True Damage 3 times over 2s. The cooldown is reduced by 30s when used only on Jungle Bosses or Jungle Camps.\nCooldown: 120s.",
                 "stats": {
                     "N/A": 0
                 },
@@ -1193,7 +1193,7 @@
                 "stats": {
                     "Echo": 10
                 },
-                "stepCost": 50,
+                "stepCost": 750,
                 "tier": 2,
                 "totalCost": 750
             },
@@ -1883,9 +1883,9 @@
                 "name": "Survivor's Sash",
                 "passive": "",
                 "stats": {},
-                "stepCost": 150,
+                "stepCost": 400,
                 "tier": 2,
-                "totalCost": 750
+                "totalCost": 1000
             },
             {
                 "buildsFromT1": [
@@ -1953,7 +1953,7 @@
                 "icon": "/icons/AgilityGreaves.webp",
                 "internalName": "AgilityGreaves",
                 "name": "Agility Greaves",
-                "passive": "    On Use: Dash in the direction you are currently moving\n    Cooldown: 20s\n    You can own up to 3 active items at once\n    Passive: +7.5% of all Stats from Items\n    Ranged Gods: +40% Attack projectile speed. +80% for 3s after using this active.\n    Melee Gods: -15% Attack movement penalty. -30% for 3s after using this active.",
+                "passive": "On Use: Dash in the direction you are currently moving\nCooldown: 20s\nYou can own up to 3 active items at once\nPassive: +7.5% of all Stats from Items\nRanged Gods: +40% Attack projectile speed. +80% for 3s after using this active.\nMelee Gods: -15% Attack movement penalty. -30% for 3s after using this active.",
                 "stats": {
                     "Movement Speed": 5
                 },
@@ -2000,12 +2000,12 @@
                 "icon": "/icons/RestorativeAmanita.webp",
                 "internalName": "RestorativeAmanita",
                 "name": "Amanita Charm",
-                "passive": "    On Use: Create a Healing Mushroom (6.4m radius) for 4.5s.\n+3% Health Heal every 1.5s\n    +1 Stack of Damage Reduction per Heal\n    10% Basic and Ability Damage Reduction per Stack\n    5% Ultimate Damage Reduction per Stack\n    All Stacks removed after triggering\nCooldown: 60s\n    You can own up to 3 active items at once",
+                "passive": "On Use: Create a Healing Mushroom (6.4m radius) for 4.5s.\n+3% Health Heal every 1.5s\n+1 Stack of Damage Reduction per Heal\n10% Basic and Ability Damage Reduction per Stack\n5% Ultimate Damage Reduction per Stack\nAll Stacks removed after triggering\nCooldown: 60s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Health": 300,
                     "Health Regen": 4,
-                    "Magical Protection": 15,
-                    "Physical Protection": 15
+                    "Magical Protection": 25,
+                    "Physical Protection": 25
                 },
                 "stepCost": 850,
                 "tier": 3,
@@ -2045,7 +2045,7 @@
                 "icon": "/icons/Ancile.webp",
                 "internalName": "Ancile",
                 "name": "Ancile",
-                "passive": "    On Use: Your next Ability that damages a god\n    Silences them for 1.5s\nCooldown: 80s\n    You can own up to 3 active items at once",
+                "passive": "On Use: Your next Ability that damages a god\nSilences them for 1.5s\nCooldown: 80s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Health": 300,
                     "Magical Protection": 55
@@ -2075,7 +2075,7 @@
                 "icon": "/icons/Arondight.webp",
                 "internalName": "Arondight",
                 "name": "Arondight",
-                "passive": "    On Use: Reveal enemy Gods within 17.6m for 6s\n    Reveal persists through Stealth\n    If any God is revealed; \n+25% Movement\n    Speed for 6s\n    First time you damage a revealed God: +50 (50% STR) Bonus Physical Damage\nCooldown:60s  \n  You can own up to 3 active items at once",
+                "passive": "On Use: Reveal enemy Gods within 17.6m for 6s\nReveal persists through Stealth\nIf any God is revealed;\n+25% Movement\nSpeed for 6s\nFirst time you damage a revealed God: +50 (50% STR) Bonus Physical Damage\nCooldown:60s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Cooldown Rate": 15,
                     "Strength": 55
@@ -2118,10 +2118,10 @@
                 "icon": "/icons/AvatarsParashu.webp",
                 "internalName": "AvatarsParashu",
                 "name": "Avatar's Parashu",
-                "passive": "    On Use:\n+25% Strength\n    Become Immune to Displacement\n    Buff lasts 10s\nCooldown: 120s\n    You can own up to 3 active items at once",
+                "passive": "On Use:\n+25% Strength\nBecome Immune to Displacement\nBuff lasts 10s\nCooldown: 120s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Strength": 90,
-                    "PercentPhysicalPenetration": 10
+                    "Penetration": 10
                 },
                 "stepCost": 1700,
                 "tier": 3,
@@ -2161,7 +2161,7 @@
                 "icon": "/icons/BancroftsTalon.webp",
                 "internalName": "BancroftsTalon",
                 "name": "Bancroft's Talon",
-                "passive": "    Gain bonus Intelligence and Lifesteal scaled from missing Health.\nCaps at +60 INT and 10% Lifesteal at 40% Health\n",
+                "passive": "Gain bonus Intelligence and Lifesteal scaled from missing Health.\nCaps at +60 INT and 10% Lifesteal at 40% Health\n",
                 "stats": {
                     "Intelligence": 55,
                     "Lifesteal": 7.5,
@@ -2210,11 +2210,12 @@
                 "icon": "/icons/BerserkersShield.webp",
                 "internalName": "BerserkersShield",
                 "name": "Berserker's Shield",
-                "passive": "   When falling below 60% Health you become Berserk for 8s. While Berserk, you gain 65% Protections from items and 25% Attack Speed. This effect only occurs when dropping below 60% Health. ",
+                "passive": "When falling below 60% Health you become Berserk for 8s. While Berserk, you gain 15 Physical Protection, 15 Magical Protection, and 25% Attack Speed. This effect only occurs when dropping below 60% Health.",
                 "stats": {
                     "Attack Speed": 20,
-                    "Magical Protection": 15,
-                    "Physical Protection": 30
+                    "Physical Protection": 50,
+                    "Health": 200,
+                    "Health Regen": 4
                 },
                 "stepCost": 750,
                 "tier": 3,
@@ -2233,7 +2234,7 @@
                 "icon": "/icons/BlinkingAbyss.webp",
                 "internalName": "BlinkingAbyss",
                 "name": "Blinking Abyss",
-                "passive": "Adaptive Stat: +20 STR / +35 INT (based on highest stat)\nOn Use: Teleport up to 5.6m.\n1s after Teleport: Deal 25 (+10% Strength or Intelligence) in a 3.2m radius. If this damages a god, reduce cooldown -65s.\n+5% Stats from Items\nCooldown: 200s.\nNotes: Can be used in combat. Cannot be used while firing an ability. Cannot be used while Crippled.\nYou can own up to 3 active items at once",
+                "passive": "Adaptive Stat: +20 STR / +35 INT (based on highest stat)\n+5% Stats from Items\nNotes: Can be used in combat. Cannot be used while firing an ability. Cannot be used while Crippled.\nYou can own up to 3 active items at once\nOn Use: Teleport up to 5.6m.\n1s after Teleport: Deal 25 (+10% Strength or Intelligence) in a 3.2m radius. If this damages a god, reduce cooldown -65s.\nCooldown: 200s.",
                 "stats": {},
                 "stepCost": 1350,
                 "tier": 3,
@@ -2254,7 +2255,7 @@
                 "icon": "/icons/Blood-BoundBook.webp",
                 "internalName": "Blood-BoundBook",
                 "name": "Blood-Bound Book",
-                "passive": "On Use: + Health Shield 6s.\nShield = 7.5% Max Health + 75% INT from Items\nWhile Shielded: \n+10% Lifesteal\n\nCooldown:80s\n    You can own up to 3 active items at once",
+                "passive": "On Use: + Health Shield 6s.\nShield = 7.5% Max Health + 75% INT from Items\nWhile Shielded:\n+10% Lifesteal\n\nCooldown:80s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Intelligence": 70,
                     "Lifesteal": 7.5
@@ -2278,7 +2279,7 @@
                 "icon": "/icons/BloodForge.webp",
                 "internalName": "BloodForge",
                 "name": "Bloodforge",
-                "passive": "    On Use:\n(10% Max Health + 150% STR) Shield for 6 seconds.\nWhile Shielded: 10% Lifesteal\nCooldown: 80s. \nKill a God: -25% Cooldown.\n    You can own up to 3 active items at once",
+                "passive": "On Use:\n(10% Max Health + 150% STR) Shield for 6 seconds.\nWhile Shielded: 10% Lifesteal\nCooldown: 80s.\nKill a God: -25% Cooldown.\nYou can own up to 3 active items at once",
                 "stats": {
                     "Lifesteal": 7.5,
                     "Strength": 40
@@ -2300,7 +2301,7 @@
                 "icon": "/icons/baseBookOfThoth.webp",
                 "internalName": "BookOfThoth",
                 "name": "Book of Thoth",
-                "passive": "Gain Intelligence equal to 5% of Mana from Items.\n    Deal 900 Damage to Minions/Jungle Minions or 450 to Enemy Gods: \n+1 Stack\nPer Stack: +10 Mana (Mana Infusion, max 50 stacks, shared with Transcendence).\n    At 50 Stacks, item evolves and gains:\nAdditional Intelligence equal to 2% of Mana from Items\n+10% Penetration\n+100 Mana",
+                "passive": "Gain Intelligence equal to 5% of Mana from Items.\n    Deal 900 Damage to Minions/Jungle Minions or 450 to Enemy Gods: \n+1 Stack\nPer Stack: +10 Mana (Mana Infusion, max 50 stacks, shared with Transcendence).\n    At 50 Stacks, item evolves and gains:\nAdditional Intelligence equal to 2% of Mana from Items\n+5 Penetration\n+100 Mana",
                 "stats": {
                     "Intelligence": 30,
                     "Mana": 350,
@@ -2394,7 +2395,7 @@
                     "Cooldown Rate": 20,
                     "Mana": 200,
                     "Mana Regen": 2,
-                    "Physical Protection": 35
+                    "Physical Protection": 45
                 },
                 "stepCost": 1100,
                 "tier": 3,
@@ -2479,7 +2480,7 @@
                 "icon": "/icons/CircesHexstone.webp",
                 "internalName": "CircesHexstone",
                 "name": "Circe's Hexstone",
-                "passive": "    On Use:\n    Become Polymorphed\n    Dash Forward; dealing 50 Physical Damage\n    +CC Immune\n    On Enemy God Hit:\n    Knock Up\n    Bonus Damage equal to 10% of your Current Health\nCooldown:120s\n    You can own up to 3 active items at once",
+                "passive": "On Use:\nBecome Polymorphed\nDash Forward; dealing 50 Physical Damage\n+CC Immune\nOn Enemy God Hit:\nKnock Up\nBonus Damage equal to 10% of your Current Health\nCooldown:120s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Cooldown Rate": 10,
                     "Health": 250,
@@ -2524,7 +2525,7 @@
                 "icon": "/icons/DaggerOfFrenzy.webp",
                 "internalName": "DaggerOfFrenzy",
                 "name": "Dagger of Frenzy",
-                "passive": "    On Use:\n +10 (+4 per Level) Attack Damage\n +20% + 1% per Level Attack Speed\n    Buff lasts 6 Attacks:\n    Killing a God refreshes Cooldown.\nCooldown: 15s\n   You can own up to 3 active items at once",
+                "passive": "On Use:\n+10 (+4 per Level) Attack Damage\n+20% + 1% per Level Attack Speed\nBuff lasts 6 Attacks:\nKilling a God refreshes Cooldown.\nCooldown: 15s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Attack Speed": 25,
                     "Attack Damage": 25
@@ -2555,15 +2556,15 @@
                 "icon": "/icons/damaru.webp",
                 "internalName": "Damaru",
                 "name": "Damaru",
-                "passive": "When you Critically Strike, increase your Ability damage by 8% for 5s. When you Echo, increase your Attack damage by 8% for 5s. Each can stack 3 times.",
+                "passive": "Adaptive Stat: +35 Strength or +50 Intelligence (based on highest item stat)\nEach time you Echo hitting a God or Jungle Boss: Gain +1 Stack of Rhythm\nEach Stack: +2% Movement Speed\nStacks last for 5s. Stacks up to 5 times.\nAt 5 Stacks of Rhythm: Remove all Stacks of Rhythm and gain Harmonized\nHarmonized: +15% Movement Speed for 10s.\nYou cannot gain Stacks of Rhythm while Harmonized.",
                 "stats": {
-                    "Strength": 35,
-                    "Critical Chance": 20,
-                    "Echo": 20
+                    "Mana Regen": 5,
+                    "Echo": 20,
+                    "Cooldown Rate": 10
                 },
-                "stepCost": 750,
+                "stepCost": 850,
                 "tier": 3,
-                "totalCost": 2750
+                "totalCost": 2500
             },
             {
                 "name": "Daybreak Gavel",
@@ -2594,7 +2595,7 @@
                 "icon": "/icons/DeathMetal.webp",
                 "internalName": "DeathMetal",
                 "name": "Death Metal",
-                "passive": "    On Use: Sets Intelligence to 0, provides 66% of lost Intelligence as Strength for buff duration.\n+20% Critical Chance\n    Buff lasts 6s.\nCooldown:45s\n    You can own up to 3 active items at once",
+                "passive": "On Use: Sets Intelligence to 0, provides 66% of lost Intelligence as Strength for buff duration.\n+20% Critical Chance\nBuff lasts 6s.\nCooldown:45s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Critical Chance": 20,
                     "Intelligence": 40,
@@ -2692,6 +2693,38 @@
                 "totalCost": 2500
             },
             {
+                "_id": "6a68bab8206718349dd5c820",
+                "name": "Dominance",
+                "__v": 0,
+                "active": false,
+                "buildsFromT1": [],
+                "components": [],
+                "createdAt": "2026-07-28T14:20:41.948Z",
+                "icon": "/icons/Dominance.webp",
+                "internalName": "Dominance",
+                "passive": "Basic attacks penetrate 20% more protections.",
+                "stats": {
+                    "Strength": 40,
+                    "Mana": 250,
+                    "Mana Regen": 4,
+                    "Attack Speed": 15
+                },
+                "stepCost": 0,
+                "tags": [
+                    "Attack Speed",
+                    "Mana",
+                    "Offensive",
+                    "Passive",
+                    "Physical",
+                    "STR",
+                    "Strength",
+                    "Tier3"
+                ],
+                "tier": 3,
+                "totalCost": 2600,
+                "updatedAt": "2026-07-28T14:21:44.564Z"
+            },
+            {
                 "buildsFromT1": [
                     "Circlet",
                     "Gem",
@@ -2751,11 +2784,11 @@
                 "icon": "/icons/draconicScale.webp",
                 "internalName": "DraconicScale",
                 "name": "Draconic Scale",
-                "passive": "Damaged by a God:\n    Gain 2 Protections (+3% bonus Protections from items) against that God's damage type\n    Stacks last 1.5s (max 7)\n    Stacks decay 1 at a time",
+                "passive": "Damaged by a God:\n    Gain 4 Protections against that God's damage type\n    Stacks last 1.5s (max 7)\n    Stacks decay 1 at a time",
                 "stats": {
                     "Health": 300,
-                    "Magical Protection": 20,
-                    "Physical Protection": 20
+                    "Magical Protection": 30,
+                    "Physical Protection": 30
                 },
                 "stepCost": 750,
                 "tier": 3,
@@ -2774,10 +2807,10 @@
                 "icon": "/icons/DreamersIdol.webp",
                 "internalName": "DreamersIdol",
                 "name": "Dreamer's Idol",
-                "passive": "    On Use:\n+25% Intelligence\n    Become Immune to Displacement\n    Buff lasts 10s\nCooldown: 120s\n    You can own up to 3 active items at once",
+                "passive": "On Use:\n+25% Intelligence\nBecome Immune to Displacement\nBuff lasts 10s\nCooldown: 120s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Intelligence": 130,
-                    "PercentMagicalPenetration": 10
+                    "Penetration": 10
                 },
                 "stepCost": 1700,
                 "tier": 3,
@@ -2796,10 +2829,10 @@
                 "icon": "/icons/dwarvenPlate.webp",
                 "internalName": "DwarvenPlate",
                 "name": "Dwarven Plate",
-                "passive": "+10% bonus Physical Protections from Items\n+30% bonus Magical Protections from Items\nOn Use: Switch which Protection is increased more. (10%/30% toggle)\nCooldown:30s\n    You can own up to 3 active items at once",
+                "passive": "Gain Bonus Protections from Items: \n+15 Bonus Physical Protections\n+35 Bonus Magical Protections\nOn Use: Switch which Protections are increased more.\nCooldown:30s\nYou can own up to 3 active items at once",
                 "stats": {
-                    "Magical Protection": 40,
-                    "Physical Protection": 40
+                    "Magical Protection": 35,
+                    "Physical Protection": 35
                 },
                 "stepCost": 850,
                 "tier": 3,
@@ -2818,7 +2851,7 @@
                 "icon": "/icons/erosBow.webp",
                 "internalName": "ErosBow",
                 "name": "Eros' Bow",
-                "passive": "    On Use: Mark an ally\n    Only one ally may be Marked at a time\n    Mark breaks if ally is more than 2Om away\n    On Attack Hit:\n    Heal the Marked ally for +2% of your Max\n    Health\nCooldown: 1s\n    You can own up to 3 active items at once",
+                "passive": "On Use: Mark an ally\nOnly one ally may be Marked at a time\nMark breaks if ally is more than 2Om away\nOn Attack Hit:\nHeal the Marked ally for +2% of your Max\nHealth\nCooldown: 1s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Attack Speed": 30,
                     "Health": 250
@@ -2849,6 +2882,43 @@
                 "stepCost": 750,
                 "tier": 3,
                 "totalCost": 2400
+            },
+            {
+                "_id": "6a5575368229c8d1a705cc6f",
+                "name": "Ethereal Staff",
+                "__v": 0,
+                "active": false,
+                "buildsFromT1": [
+                    "Circlet",
+                    "Gem",
+                    "Sash"
+                ],
+                "components": [],
+                "createdAt": "2026-07-13T23:31:02.249Z",
+                "icon": "/icons/Ethereal Staff.webp",
+                "internalName": "EtherealStaff",
+                "passive": "Ability Hit a God:\nSteal 6% Max Health and Mana from a single target\nTriggers once per Ability\nStacks last 60s\nStacks decay 1 at a time\nCooldown: 15s",
+                "stats": {
+                    "Intelligence": 60,
+                    "Health": 250,
+                    "Tenacity": 15
+                },
+                "tags": [
+                    "Health",
+                    "INT",
+                    "Intelligence",
+                    "Mage",
+                    "Magical",
+                    "Magical Power",
+                    "Offensive",
+                    "Passive",
+                    "Tenacity",
+                    "Tier3",
+                    "Utility"
+                ],
+                "tier": 3,
+                "totalCost": 2550,
+                "updatedAt": "2026-07-16T19:30:41.615Z"
             },
             {
                 "buildsFromT1": [
@@ -2976,7 +3046,7 @@
                 "icon": "/icons/eyeOfErebus.webp",
                 "internalName": "EyeofErebus",
                 "name": "Eye of Erebus",
-                "passive": "Adaptive Stat: +35 STR/50 INT (based on highest item stat) \nOn use: Spawn a Watchful Eye that lasts 40s. \n Enemy enters 5m radius: Fires seeking projectile: \n Deals Magical Damage equal to 15% enemy max health.\n +25% Slow and Reveal for 2.5s\n During Moonlight Phase: Each time you deal damage to a god: -2s Cooldown of this item (Once per target, per Attack or Ability).\nCooldown:40s",
+                "passive": "Adaptive Stat: +35 STR/50 INT (based on highest item stat)\nOn use: Spawn a Watchful Eye that lasts 40s.\nEnemy enters 5m radius: Fires seeking projectile:\nDeals Magical Damage equal to 15% enemy max health.\n+25% Slow and Reveal for 2.5s\nDuring Moonlight Phase: Each time you deal damage to a god: -2s Cooldown of this item (Once per target, per Attack or Ability).\nCooldown:40s",
                 "stats": {
                     "Health": 350,
                     "Cooldown Rate": 15
@@ -2999,7 +3069,7 @@
                 "icon": "/icons/EyeOfProvidence.webp",
                 "internalName": "EyeOfProvidence",
                 "name": "Eye of Providence",
-                "passive": "    Destroy a Ward: +50 Gold\n    On Use: Place a Ward:\n    Reveals enemies and enemy wards within 7.2m\n    Lasts 120s or until destroyed\nCooldown:60s\n    You can own up to 3 active items at once",
+                "passive": "Open Consumable slot: Gain a Sentry Ward once every 120s",
                 "stats": {
                     "Health": 250,
                     "Magical Protection": 30,
@@ -3024,15 +3094,15 @@
                 "icon": "/icons/EyeOfTheStorm.webp",
                 "internalName": "EyeOfTheStorm",
                 "name": "Eye of the Storm",
-                "passive": "    On Use: Toggle Vortex around you:\n    Pulls enemies toward you\nDeals 6% of your Max Health to yourself as Magical Damage per second.\nDeactivates at 200 Health. \n    You can own up to 3 active items at once",
+                "passive": "Each time you Echo: Gain +1 Stack\nAt 20 Stacks, the next time you Echo: Open a storm within 4.8m, dealing Physical Damage every .5s for 3s = 10 (+15% of your Strength)\nStorm will only spawn when hitting a God or Jungle Boss.",
                 "stats": {
-                    "Health": 200,
-                    "Magical Protection": 35,
-                    "Strength": 25
+                    "Strength": 40,
+                    "Health Regen": 4,
+                    "Echo": 20
                 },
-                "stepCost": 800,
+                "stepCost": 850,
                 "tier": 3,
-                "totalCost": 2500
+                "totalCost": 2600
             },
             {
                 "buildsFromT1": [
@@ -3047,10 +3117,10 @@
                 "icon": "/icons/freyasTears.webp",
                 "internalName": "FreyasTears",
                 "name": "Freya's Tears",
-                "passive": "Lose 25% Max Health:\n+15% of Protections from items for 5s\nCan stack up to 2 times",
+                "passive": "On 25% health lost gain 15 Physical and Magical Protections for 5 seconds",
                 "stats": {
-                    "Magical Protection": 25,
-                    "Physical Protection": 20,
+                    "Magical Protection": 35,
+                    "Physical Protection": 30,
                     "Cooldown Rate": 20
                 },
                 "stepCost": 1000,
@@ -3135,10 +3205,10 @@
                 "icon": "/icons/GenjisGuard.webp",
                 "internalName": "GenjisGuard",
                 "name": "Genji's Guard",
-                "passive": "Hit by Magical Ability Damage: -3s Cooldowns\nCooldown: 15s\n",
+                "passive": "Hit by Magical Ability Damage: -3s Cooldowns\nCooldown: 20s\n",
                 "stats": {
                     "Cooldown Rate": 15,
-                    "Magical Protection": 50,
+                    "Magical Protection": 55,
                     "Mana": 200,
                     "Mana Regen": 5
                 },
@@ -3184,7 +3254,7 @@
                 "icon": "/icons/GloriousPridwen.webp",
                 "internalName": "GloriousPridwen",
                 "name": "Glorious Pridwen",
-                "passive": "    On Use:\n    Explode (4.8m radius):\n    Deal Magical Damage (40% of Protections)\n    +25% Slow for 3s\n    Gain a Shield (125% of Protections) for 5s.\n    When the Shield expires or breaks: Explode\n    again: Deal Magic Damage (70% of your Protections)\nCooldown:45s\n    You can own up to 3 active items at once",
+                "passive": "On Use:\nExplode (4.8m radius):\nDeal Magical Damage (40% of Protections)\n+25% Slow for 3s\nGain a Shield (125% of Protections) for 5s.\nWhen the Shield expires or breaks: Explode\nagain: Deal Magic Damage (70% of your Protections)\nCooldown:45s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Cooldown Rate": 12,
                     "Magical Protection": 20,
@@ -3201,7 +3271,7 @@
                     "Intelligence": 55,
                     "Health": 150,
                     "Lifesteal": 10,
-                    "PercentMagicalPenetration": 10
+                    "Penetration": 10
                 },
                 "icon": "/icons/glutGrimoire.webp",
                 "components": [
@@ -3292,7 +3362,7 @@
                     "Mana": 250,
                     "Mana Regen": 2,
                     "Strength": 45,
-                    "PercentPhysicalPenetration": 10
+                    "Penetration": 10
                 },
                 "stepCost": 700,
                 "tier": 3,
@@ -3304,7 +3374,6 @@
                 "stats": {
                     "Mana": 250,
                     "Health": 400,
-                    "Mana Regen": 5,
                     "Cooldown Rate": 10
                 },
                 "icon": "/icons/heartWoodCharm.webp",
@@ -3330,7 +3399,7 @@
                 "icon": "/icons/HelmOfDarkness.webp",
                 "internalName": "HelmOfDarkness",
                 "name": "Helm of Darkness",
-                "passive": "    On Use: Become Stealthed and pass through\n    players and walls for 6s.\n    Cannot use while Casting.\nDuring Moonlight Phase: \nWhile Stealthed: +15% MS\nPass through enemy god: Deal Physical Damage equal to 15% of YOUR Max Health. \nCooldown: 90s\n    You can own up to 3 active items at once",
+                "passive": "On Use: Become Stealthed and pass through\nplayers and walls for 6s.\nCannot use while Casting.\nDuring Moonlight Phase:\nWhile Stealthed: +15% MS\nPass through enemy god: Deal Physical Damage equal to 15% of YOUR Max Health.\nCooldown: 90s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Intelligence": 40,
                     "Magical Protection": 25,
@@ -3376,7 +3445,7 @@
                 "icon": "/icons/HideOfNemean.webp",
                 "internalName": "HideOfNemean",
                 "name": "Hide of the Nemean Lion",
-                "passive": "    On Use: Reflect:\n    40% of pre-mitigated Attack Damage\n    20% of pre-mitigated Ability Damage\n    Damage is Reflected as Physical Damage\n    Buff lasts 4s.\nCooldown:60s\n    You can own up to 3 active items at once",
+                "passive": "On Use: Reflect:\n40% of pre-mitigated Attack Damage\n20% of pre-mitigated Ability Damage\nDamage is Reflected as Physical Damage\nBuff lasts 4s.\nCooldown:60s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Health": 350,
                     "Health Regen": 4,
@@ -3403,8 +3472,8 @@
                 "passive": "    You are Immune to Slows:",
                 "stats": {
                     "Health": 500,
-                    "Magical Protection": 25,
-                    "Physical Protection": 25
+                    "Magical Protection": 35,
+                    "Physical Protection": 35
                 },
                 "stepCost": 1300,
                 "tier": 3,
@@ -3448,7 +3517,7 @@
                 "icon": "/icons/JadeScepter.webp",
                 "internalName": "JadeScepter",
                 "name": "Jade Scepter",
-                "passive": "    On Use: Any god hit will be knocked back towards the caster. If the caster was also hit, they will be knocked back in the direction the caster was hit.\nCooldown:60s\n    You can own up to 3 active items at once",
+                "passive": "On Use: Any god hit will be knocked back towards the caster. If the caster was also hit, they will be knocked back in the direction the caster was hit.\nCooldown:60s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Health": 250,
                     "Intelligence": 100
@@ -3498,8 +3567,8 @@
                 "stats": {
                     "Health": 300,
                     "Plating": 5,
-                    "Physical Protection": 15,
-                    "Magical Protection": 15
+                    "Physical Protection": 25,
+                    "Magical Protection": 25
                 },
                 "stepCost": 700,
                 "tier": 3,
@@ -3519,7 +3588,7 @@
                 "icon": "/icons/LernaeanBow.webp",
                 "internalName": "LernaeanBow",
                 "name": "Lernaean Bow",
-                "passive": "    On Use: Fire 3 arrows that pierce enemies in a 10.5m line \nDeals 40% of your Attack Damage as Physical Damage \n-50% Shield\n    Can Critically Strike\n    Passes through walls.\n    Cooldown:30s \nYou can own up to 3 active items at once",
+                "passive": "On Use: Fire 3 arrows that pierce enemies in a 10.5m line\nDeals 40% of your Attack Damage as Physical Damage\n-50% Shield\nCan Critically Strike\nPasses through walls.\nCooldown:30s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Attack Speed": 30,
                     "Strength": 40
@@ -3544,7 +3613,7 @@
                 "stats": {
                     "Health": 300,
                     "Plating": 5,
-                    "Physical Protection": 35
+                    "Physical Protection": 45
                 },
                 "stepCost": 950,
                 "tier": 3,
@@ -3565,7 +3634,7 @@
                 "icon": "/icons/LifeBinder.webp",
                 "internalName": "LifeBinder",
                 "name": "Lifebinder",
-                "passive": "    On Use: Fire a projectile that deals 60 (+8 per Level) Magic Damage\n    Marks enemy Gods for 6s\n    First ally to damage a Marked target:\n    +60 (+8 per Level) Heal\n    +60 (+8 per Level) Shield\n    Consumes the Mark\nCooldown:20s\n    You can own up to 3 active items at once",
+                "passive": "On Use: Fire a projectile that deals 60 (+8 per Level) Magic Damage\nMarks enemy Gods for 6s\nFirst ally to damage a Marked target:\n+60 (+8 per Level) Heal\n+60 (+8 per Level) Shield\nConsumes the Mark\nCooldown:20s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Health": 300,
                     "Health Regen": 3,
@@ -3701,10 +3770,10 @@
                 "icon": "/icons/MysticalMail.webp",
                 "internalName": "MysticalMail",
                 "name": "Mystical Mail",
-                "passive": "    Enemies Within 4m: 15 (+1 per Level) Magical Damage per 1s.\n    Range Scaling Damage:\n    +50% at Close Range\n    -50% at Maximum Range",
+                "passive": "    Enemies Within 4m: 15 (+1 per Level) Magical Damage per 1s.\n    Range Scaling Damage:\n    +50% at Close Range\n    -50% at Maximum Range\nRemoves 25% of Health Shields every 1s.",
                 "stats": {
                     "Health": 300,
-                    "Physical Protection": 25
+                    "Physical Protection": 40
                 },
                 "stepCost": 900,
                 "tier": 3,
@@ -3794,10 +3863,10 @@
                 "icon": "/icons/BalorsEye.webp",
                 "internalName": "BalorsEye",
                 "name": "Obsidian Shard",
-                "passive": "",
+                "passive": "First Ability Cast: Gains +20% Penetration\nCooldown: 10s",
                 "stats": {
-                    "Intelligence": 90,
-                    "PercentMagicalPenetration": 20
+                    "Intelligence": 70,
+                    "Penetration": 20
                 },
                 "stepCost": 650,
                 "tier": 3,
@@ -3837,7 +3906,7 @@
                 "icon": "/icons/omenDrum.webp",
                 "internalName": "OmenDrum",
                 "name": "Omen Drum",
-                "passive": "Adaptive Stat: +55 STR / +90 INT (based on highest item stat)\nFor 5 seconds, all enemy gods and jungle monsters you hit with an ability are marked. After the duration expires, 15% of all ability damage you dealt to marked targets is echoed to all marked targets.",
+                "passive": "Adaptive Stat: +50 Strength or +75 Intelligence (based on highest item stat)\nEach time you Echo: Gain +1 Stack of Dark Resonance\nEach Stack: +10% Echo Damage\nStacks up to 30 times\nStacks last for 6s. When duration ends, stacks are halved.\nWhile Damaru is Harmonized: +100% Echo Damage",
                 "stats": {
                     "Echo": 30
                 },
@@ -3861,7 +3930,7 @@
                 "passive": "    For each enemy within 8.8m: +4% Damage Mitigation\n    Max 3 stacks",
                 "stats": {
                     "Health": 150,
-                    "Magical Protection": 40,
+                    "Magical Protection": 50,
                     "Mana": 200,
                     "Mana Regen": 8
                 },
@@ -3883,11 +3952,11 @@
                 "icon": "/icons/PendulumBlade.webp",
                 "internalName": "PendulumBlade",
                 "name": "Pendulum Blade",
-                "passive": "    On use: -4s Ability Cooldowns\n    \n Cooldown: 40s\n You can own up to 3 active items at once",
+                "passive": "On use: -4s Ability Cooldowns\n\nCooldown: 40s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Cooldown Rate": 10,
                     "Strength": 30,
-                    "PercentPhysicalPenetration": 10
+                    "Penetration": 10
                 },
                 "stepCost": 550,
                 "tier": 3,
@@ -3907,7 +3976,7 @@
                 "icon": "/icons/PharaohsCurse.webp",
                 "internalName": "PharaohsCurse",
                 "name": "Pharaoh's Curse",
-                "passive": "    On Use: Enemies within 5.6m:\n    -50% Shields\n    -20% Movement Speed\n -40% Attack Speed \n    Debuff lasts 4s.\nCooldown:45s\n    You can own up to 3 active items at once",
+                "passive": "On Use: Enemies within 5.6m:\n-50% Shields\n-20% Movement Speed\n-40% Attack Speed\nDebuff lasts 4s.\nCooldown:45s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Attack Speed": 20,
                     "Plating": 5,
@@ -3932,7 +4001,7 @@
                 "icon": "/icons/PhoenixAmulet.webp",
                 "internalName": "PhoenixAmulet",
                 "name": "Phoenix Feather",
-                "passive": "    On Use: Fire 3 Pulses that Heal you and True\n    Damage enemies within 3.2m.\n    True Damage = 3% Max Health from Items\nHeal = 75 Health + 7.5% Missing Health\nCooldown: 120s\n    You can own up to 3 active items at once\n    Max",
+                "passive": "On Use: Fire 3 Pulses that Heal you and True\nDamage enemies within 3.2m.\nTrue Damage = 3% Max Health from Items\nHeal = 75 Health + 7.5% Missing Health\nCooldown: 120s\nYou can own up to 3 active items at once\nMax",
                 "stats": {
                     "Health": 300,
                     "Magical Protection": 35,
@@ -4132,12 +4201,12 @@
                 "icon": "/icons/RipTalon.webp",
                 "internalName": "Riptalon",
                 "name": "Riptalon",
-                "passive": "While Above 50% Health: +10% Attack Damage\r\nWhile Below 50% Health: + 25% Attack Damage and 7.5% Lifesteal",
+                "passive": "While Above 50% Health: +10% Attack Damage\nWhile Below 50% Health: + 25% Attack Damage and 7.5% Lifesteal",
                 "stats": {
                     "Lifesteal": 7.5,
                     "Attack Damage": 20,
                     "Attack Speed": 20,
-                    "PercentPhysicalPenetration": 10
+                    "Penetration": 10
                 },
                 "stepCost": 1100,
                 "tier": 3,
@@ -4157,7 +4226,7 @@
                 "icon": "/icons/rodOfAsclepius.webp",
                 "internalName": "RodOfAsclepius",
                 "name": "Rod Of Asclepius",
-                "passive": "    On Use: Heal all allies within 8.8m:\n10% Health Heal over 10s\n    Counts as Ability healing\n    If target has 6 debuffs:\nHeal 10% Health Instantly\n    Grants all non-damage immunities for 1s\nCost: 15% Mana\nCooldown:90s\n    You can own up to 3 active items at once",
+                "passive": "On Use: Heal all allies within 8.8m:\n10% Health Heal over 10s\nCounts as Ability healing\nIf target has 6 debuffs:\nHeal 10% Health Instantly\nGrants all non-damage immunities for 1s\nCost: 15% Mana\nCooldown:90s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Health": 225,
                     "Health Regen": 3,
@@ -4184,7 +4253,7 @@
                     "Intelligence": 80,
                     "Mana": 250,
                     "Mana Regen": 2,
-                    "PercentMagicalPenetration": 5
+                    "Penetration": 5
                 },
                 "stepCost": 1500,
                 "tier": 3,
@@ -4230,7 +4299,7 @@
                 ],
                 "totalCost": 2650,
                 "tier": 3,
-                "passive": "Enemies within 4m: -0.75% Health (Max 200) as Physical Damage per 1s.\n    On Use: Decrease tick rate to every 0.33s, for 4s. .\n Bosses take 50% Damage\n    Now only damages gods.\nCooldown:60s\nYou can own up to 3 active items at once",
+                "passive": "Enemies within 4m: -0.75% Health (Max 200) as Physical Damage per 1s.\nOn Use: Decrease tick rate to every 0.33s, for 4s. .\nBosses take 50% Damage\nNow only damages gods.\nCooldown:60s\nYou can own up to 3 active items at once",
                 "patchChanges": {
                     "ob26": [
                         "nerfed"
@@ -4255,7 +4324,7 @@
                 "icon": "/icons/ScepterOfDominion.webp",
                 "internalName": "ScepterOfDominion",
                 "name": "Scepter of Dominion",
-                "passive": "    On Use: Create a zone that puts gods into Stasis.\n    The Zone appears after 1s\n    The Stasis lasts 2s\nCooldown: 90s\n    You can own up to 3 active items at once",
+                "passive": "On Use: Create a zone that puts gods into Stasis.\nThe Zone appears after 1s\nThe Stasis lasts 2s\nCooldown: 90s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Health": 150,
                     "Intelligence": 30,
@@ -4281,7 +4350,7 @@
                 "icon": "/icons/ScreechingGargoyle.webp",
                 "internalName": "ScreechingGargoyle",
                 "name": "Screeching Gargoyle",
-                "passive": "    On Use: Enemies in front of you:\n    Silenced for 1s\n    -10% Protections for 4s\n During Moonlight Phase: Hits enemies around you\nSilence Lasts 1.5s\n-15% Protections \nCooldown: 90s\n    You can own up to 3 active items at once",
+                "passive": "On Use: Enemies in front of you:\nSilenced for 1s\n-10% Protections for 4s\nDuring Moonlight Phase: Hits enemies around you\nSilence Lasts 1.5s\n-15% Protections\nCooldown: 90s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Cooldown Rate": 15,
                     "Magical Protection": 50
@@ -4303,7 +4372,7 @@
                 "icon": "/icons/ShellOfRebuke.webp",
                 "internalName": "ShellOfRebuke",
                 "name": "Shell of Rebuke",
-                "passive": "Active: Create an area of safety at your location, granting a shield/phantom effect to allied gods when they first touch the area. The area mitigates 35% of all damage, up to a maximum of 400 + 50 Per Level Damage. Shields allies  who enter the area for 100 + 10 Per Level. Lasts 5s. \n+7.5% Stats from Items\nCooldown: 120s.\nYou can own up to 3 active items at once",
+                "passive": "Active: Create an area of safety at your location, granting a shield/phantom effect to allied gods when they first touch the area. The area mitigates 35% of all damage, up to a maximum of 400 + 50 Per Level Damage. Shields allies  who enter the area for 100 + 10 Per Level. Lasts 5s.\nCooldown: 120s.\nYou can own up to 3 active items at once\n+7.5% Stats from Items",
                 "stats": {
                     "Physical Protection": 20,
                     "Magical Protection": 20
@@ -4330,7 +4399,7 @@
                 "stats": {
                     "Cooldown Rate": 10,
                     "Health": 225,
-                    "Physical Protection": 25,
+                    "Physical Protection": 35,
                     "Plating": 5
                 },
                 "stepCost": 900,
@@ -4351,7 +4420,7 @@
                 "icon": "/icons/shieldSplitter.webp",
                 "internalName": "ShieldSplitter",
                 "name": "Shield Splitter",
-                "passive": "    On Use: Fire a projectile 11.2m forward:\n    +40 (+5 per Level) True Damage\n    If an enemy is Shielded:\n    -70% Shield\n    You gain Shield equal to the amount of Shield reduced\n\nCooldown: 15s\n    You can own up to 3 active items at once gain",
+                "passive": "On Use: Fire a projectile 11.2m forward:\n+40 (+5 per Level) True Damage\nIf an enemy is Shielded:\n-70% Shield\nYou gain Shield equal to the amount of Shield reduced\n\nCooldown: 15s\nYou can own up to 3 active items at once gain",
                 "stats": {
                     "Magical Protection": 15,
                     "Physical Protection": 15,
@@ -4375,15 +4444,16 @@
                 "icon": "/icons/ShiftersShieldV2.webp",
                 "internalName": "ShiftersShieldV2",
                 "name": "Shifter's Shield",
-                "passive": "    Over 75% Health: \n+45 STR/55 INT (whichever is higher)\nUnder 75% Health:\n+20 Physical/Magical Protection",
+                "passive": "    Over 75% Health: \n+30 STR/40 INT (whichever is higher)\nUnder 75% Health:\n+20 Physical/Magical Protection",
                 "stats": {
-                    "Health": 300,
-                    "Magical Protection": 15,
-                    "Physical Protection": 15
+                    "Health": 200,
+                    "Magical Protection": 25,
+                    "Physical Protection": 25,
+                    "Health Regen": 4
                 },
-                "stepCost": 1050,
+                "stepCost": 1150,
                 "tier": 3,
-                "totalCost": 2650
+                "totalCost": 2750
             },
             {
                 "buildsFromT1": [
@@ -4432,6 +4502,37 @@
                 "totalCost": 2500
             },
             {
+                "_id": "6a68bab8206718349dd5c823",
+                "name": "Silverbranch Bow",
+                "__v": 0,
+                "active": false,
+                "buildsFromT1": [],
+                "components": [],
+                "createdAt": "2026-07-28T14:20:42.007Z",
+                "icon": "/icons/silverbranchBow.webp",
+                "internalName": "SilverbranchBow",
+                "passive": "Every 3rd Basic Attack: Fire a homing silver arrow at your target, dealing 25% of your basic attack damage.\nFire 1 arrow for every 1 Attack Speed you have.",
+                "stats": {
+                    "Attack Damage": 25,
+                    "Attack Speed": 30,
+                    "Penetration": 10
+                },
+                "stepCost": 0,
+                "tags": [
+                    "Attack Damage",
+                    "Attack Speed",
+                    "Carry",
+                    "Offensive",
+                    "Passive",
+                    "Penetration",
+                    "Physical",
+                    "Tier3"
+                ],
+                "tier": 3,
+                "totalCost": 2700,
+                "updatedAt": "2026-07-28T14:20:42.007Z"
+            },
+            {
                 "buildsFromT1": [
                     "Ring",
                     "Scythe"
@@ -4448,7 +4549,7 @@
                     "Cooldown Rate": 10,
                     "Intelligence": 60,
                     "Lifesteal": 7.5,
-                    "Flat Penetration": 10
+                    "Flat Penetration": 5
                 },
                 "stepCost": 350,
                 "tier": 3,
@@ -4490,11 +4591,11 @@
                 "icon": "/icons/SpeareOfDesolation.webp",
                 "internalName": "SpearOfDesolation",
                 "name": "Spear of Desolation",
-                "passive": "    God Kill: \n -3s Non Ultimate Cooldowns\n -10s Ultimate Cooldown God Assist: \n -1.5s Non Ultimate Cooldowns \n -5s Ultimate Cooldown",
+                "passive": "God Kill: \n -3s Non Ultimate Cooldowns\n -10s Ultimate Cooldown \nGod Assist: \n -1.5s Non Ultimate Cooldowns \n -5s Ultimate Cooldown",
                 "stats": {
                     "Intelligence": 75,
                     "Cooldown Rate": 10,
-                    "Flat Penetration": 15
+                    "Flat Penetration": 10
                 },
                 "stepCost": 600,
                 "tier": 3,
@@ -4525,7 +4626,7 @@
                 "passive": "Ability Hit on God: That God is marked for 8s. Marked Gods take 5% increased damage from all sources.",
                 "stats": {
                     "Intelligence": 75,
-                    "PercentMagicalPenetration": 10
+                    "Penetration": 10
                 },
                 "stepCost": 750,
                 "tags": [
@@ -4636,7 +4737,7 @@
                 "icon": "/icons/StaffOfMyrddin.webp",
                 "internalName": "StaffOfMyrddin",
                 "name": "Staff of Myrddin",
-                "passive": "    On Use: Next non-Ultimate Ability used will have no cooldown.\nCooldown:80s \n    You can own up to 3 active items at once",
+                "passive": "On Use: Next non-Ultimate Ability used will have no cooldown.\nCooldown:80s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Cooldown Rate": 10,
                     "Intelligence": 75
@@ -4659,7 +4760,7 @@
                 "icon": "/icons/Stampede.webp",
                 "internalName": "Stampede",
                 "name": "Stampede",
-                "passive": "    On Use: You and allies within 6.4m gain:\n    Slow Immunity\n    +60% Movement Speed that decays to +20%\n    over 4s\nCooldown:90s\n    You can own up to 3 active items at once\n    gain:",
+                "passive": "On Use: You and allies within 6.4m gain:\nSlow Immunity\n+60% Movement Speed that decays to +20%\nover 4s\nCooldown:90s\nYou can own up to 3 active items at once\ngain:",
                 "stats": {
                     "Health": 250,
                     "Health Regen": 5,
@@ -4684,7 +4785,7 @@
                 "name": "Stone of Binding",
                 "passive": "    Hard Crowd Control an Enemy: \nApply -7 Physical and Magical protections for 6s.\n Stacks up to 3 times, stacks fall off 1 at a time.",
                 "stats": {
-                    "Magical Protection": 25,
+                    "Magical Protection": 35,
                     "Physical Protection": 35,
                     "Dampening": 5
                 },
@@ -4729,7 +4830,7 @@
                 "icon": "/icons/sunBeamBow.webp",
                 "internalName": "SunBeamBow",
                 "name": "Sun Beam Bow",
-                "passive": "    Adaptive Stat: +20 STR/40 INT (based on highest item stat):\n    On Use: Fire +2 Projectiles per Attack\n    Deals 10 +30% Attack Damage as Magical Damage\n    8.8m Range\n    Toggleable\nDrains -5% Max Mana per second while active.\n    Structures and Bosses take 25% damage from\n    Sun Beam Bow.\n    You can own up to 3 active items at once",
+                "passive": "Adaptive Stat: +20 STR/40 INT (based on highest item stat):\nOn Use: Fire +2 Projectiles per Attack\nDeals 10 +30% Attack Damage as Magical Damage\n8.8m Range\nToggleable\nDrains -5% Max Mana per second while active.\nStructures and Bosses take 25% damage from Sun Beam Bow.\nYou can own up to 3 active items at once",
                 "stats": {
                     "Attack Speed": 10,
                     "Attack Damage": 20
@@ -4760,7 +4861,7 @@
                 "icon": "/icons/SunderingEcho.webp",
                 "internalName": "SunderingEcho",
                 "name": "Sundering Echo",
-                "passive": "Adaptive Stat: +20 STR / +35 INT (based on highest stat) On Use: Bleed Enemies, dealing 25 (+4 per Level) True Damage 5 times over 4s. Jungle Monsters/Bosses take 50 (+8 per Level) instead.\nEnemies who die explode, applying this effect to nearby enemies.\nOver 3s\n+7.5% Stats from Items\nCooldown: 120s, -30s if used on Jungle Bosses or Jungle Camps\nYou can own up to 3 active items at once",
+                "passive": "Adaptive Stat: +20 STR / +35 INT (based on highest stat)\n+7.5% Stats from Items\nOn Use: Bleed Enemies, dealing 25 (+4 per Level) True Damage 5 times over 4s. Jungle Monsters/Bosses take 50 (+8 per Level) instead.\nEnemies who die explode, applying this effect to nearby enemies.\nOver 3s\nCooldown: 120s, -30s if used on Jungle Bosses or Jungle Camps\nYou can own up to 3 active items at once",
                 "stats": {
                     "Strength": 25,
                     "Intelligence": 45
@@ -4782,7 +4883,7 @@
                 "icon": "/icons/TalismanOfPurification.webp",
                 "internalName": "TalismanOfPurification",
                 "name": "Talisman of Purification",
-                "passive": "    On Use: You and Allies within 6.4m:\n    Are Cleansed of all Crowd Control\n    Gain Crowd Control Immunity for 1s\nCooldown:140s\n   \n7.5% Stats from Items\n You can own up to 3 active items at once",
+                "passive": "On Use: You and Allies within 6.4m:\nAre Cleansed of all Crowd Control\nGain Crowd Control Immunity for 1s\nCooldown:140s\n\nYou can own up to 3 active items at once\n7.5% Stats from Items",
                 "stats": {
                     "Cooldown Rate": 20
                 },
@@ -4826,11 +4927,11 @@
                 "icon": "/icons/StaffOfCosmicHorror.webp",
                 "internalName": "StaffOfCosmicHorror",
                 "name": "The Cosmic Horror",
-                "passive": "While your Echo chance is higher than Cooldown Rate, gain +20% Echo Damage. While your Cooldown Rate is higher than your Echo chance, gain +35 Intelligence. If they are equal, gain both effects.",
+                "passive": "Each time you Echo: Gain +1 Stack\nAt 3 Stacks, the next time you Echo: Spawn a tentacle dealing Bonus Magical Damage = 45% of your total Intelligence over 1.5s.\nRemoves the Stacks\nTentacles can only spawn once every second.\nTentacles will only spawn when hitting a God or Jungle Boss.\n[Assumes 3 stacks at rotation start for SMITE 2 Calculator]",
                 "stats": {
-                    "Echo": 20,
                     "Intelligence": 55,
-                    "Flat Penetration": 15
+                    "Flat Penetration": 10,
+                    "Echo": 20
                 },
                 "stepCost": 950,
                 "tier": 3,
@@ -4848,10 +4949,9 @@
                 "icon": "/icons/TheCrusher.webp",
                 "internalName": "TheCrusher",
                 "name": "The Crusher",
-                "passive": "    Ability Hit: +Physical Damage:\n    Damage = 35% Strength\n    Damage is dealt over 1s\n    Subsequent hits on the same target deal 33% bonus Damage, over 3s.",
+                "passive": "On ability hit, deal 35% of your Strength as Physical Damage over 1s.\nSubsequent hits on the same target deal 33% of the damage over 3s.",
                 "stats": {
-                    "Echo": 25,
-                    "Strength": 45,
+                    "Strength": 55,
                     "Flat Penetration": 10
                 },
                 "stepCost": 550,
@@ -4870,9 +4970,9 @@
                 "icon": "/icons/TheExecutioner.webp",
                 "internalName": "TheExecutioner",
                 "name": "The Executioner",
-                "passive": "    Adaptive Stat: +30 STR/55 INT (based on highest item stat)\n    Attack a God or Boss: Apply 1 Stack of Piercing:\n    Piercing reduces 6% Protections for 4s. Stacks up to 5 times",
+                "passive": "    Adaptive Stat: +30 STR/55 INT (based on highest item stat)\n    Attack a God or Boss: Apply 1 Stack of Piercing:\n    Piercing reduces 7% Protections for 4s. Stacks up to 4 times",
                 "stats": {
-                    "Attack Speed": 15
+                    "Attack Speed": 20
                 },
                 "stepCost": 950,
                 "tier": 3,
@@ -4968,7 +5068,7 @@
                 "icon": "/icons/TimeLockAegis.webp",
                 "internalName": "TimeLockAegis",
                 "name": "Time-Lock Aegis",
-                "passive": "Active: You become Invulnerable to all damage and healing for 3s, but you are Rooted and unable to act. You can reactivate to end this effect early.\nWhile in Stasis, regenerate 15s worth of Health, 15s worth of Mana, and 7.5s worth of Ability Cooldowns.\n+6% Stats from Items\nCooldown: 140s\nYou can own up to 3 active items at once",
+                "passive": "Active: You become Invulnerable to all damage and healing for 3s, but you are Rooted and unable to act. You can reactivate to end this effect early.\nWhile in Stasis, regenerate 15s worth of Health, 15s worth of Mana, and 7.5s worth of Ability Cooldowns.\nCooldown: 140s\nYou can own up to 3 active items at once\n+6% Stats from Items",
                 "stats": {
                     "Physical Protection": 15,
                     "Magical Protection": 15
@@ -4989,10 +5089,10 @@
                 "icon": "/icons/SerpentSpear.webp",
                 "internalName": "SerpentSpear",
                 "name": "Titan's Bane",
-                "passive": "",
+                "passive": "First Ability Cast: Gains +20% Penetration",
                 "stats": {
-                    "Strength": 60,
-                    "PercentPhysicalPenetration": 20
+                    "Strength": 40,
+                    "Penetration": 20
                 },
                 "stepCost": 950,
                 "tier": 3,
@@ -5010,14 +5110,48 @@
                 "icon": "/icons/TotemOfDeath.webp",
                 "internalName": "TotemOfDeath",
                 "name": "Totem of Death",
-                "passive": "    Ability Hit a God or Boss: Apply 1 Stack of Piercing:\n    Piercing reduces 6% Protections for 4s. Stacks up to 5 times:",
+                "passive": "Each time you Echo:\nDeal Bonus Magical Damage = 10% of the target's Missing Health\nOnly affects Gods and Jungle Bosses.\nCan only occur once every second.",
                 "stats": {
-                    "Cooldown Rate": 15,
-                    "Intelligence": 60
+                    "Intelligence": 55,
+                    "Echo": 10,
+                    "Cooldown Rate": 20
                 },
-                "stepCost": 1150,
+                "stepCost": 950,
                 "tier": 3,
                 "totalCost": 2800
+            },
+            {
+                "_id": "6a68bab8206718349dd5c825",
+                "name": "Toxic Blade",
+                "__v": 0,
+                "active": false,
+                "buildsFromT1": [],
+                "components": [],
+                "createdAt": "2026-07-28T14:20:42.070Z",
+                "icon": "/icons/toxicBlade.webp",
+                "internalName": "ToxicBlade",
+                "passive": "Hit a God with an Attack:\nApply 25% Healing Reduction and 7% Attack Speed Reduction for 5 seconds.\nGain 7% Attack Speed for 5 seconds.\nAttack Speed Buff and Debuff can stack up to 3 times.",
+                "stats": {
+                    "Attack Damage": 25,
+                    "Health": 100,
+                    "Attack Speed": 20,
+                    "Flat Penetration": 10
+                },
+                "stepCost": 0,
+                "tags": [
+                    "Attack Damage",
+                    "Attack Speed",
+                    "Carry",
+                    "Health",
+                    "Offensive",
+                    "Passive",
+                    "Penetration",
+                    "Physical",
+                    "Tier3"
+                ],
+                "tier": 3,
+                "totalCost": 2700,
+                "updatedAt": "2026-07-28T14:20:42.070Z"
             },
             {
                 "buildsFromT1": [
@@ -5032,7 +5166,7 @@
                 "icon": "/icons/baseTranscendence.webp",
                 "internalName": "Transcendence",
                 "name": "Transcendence",
-                "passive": "Gain Bonus Strength equal to 3% of Mana from Items.\n    Deal 700 Damage to Minions/Jungle Monsters or 450 Damage to Enemy Gods: \n+1 Stack\nPer Stack: +10 Mana (Mana Infusion, max 50 stacks, shared with Book of Thoth)\n    At 50 Stacks, item evolves and gains:\n+10% Penetration\n+100 Mana",
+                "passive": "Gain Bonus Strength equal to 3% of Mana from Items.\n    Deal 700 Damage to Minions/Jungle Monsters or 450 Damage to Enemy Gods: \n+1 Stack\nPer Stack: +10 Mana (Mana Infusion, max 50 stacks, shared with Book of Thoth)\n    At 50 Stacks, item evolves and gains:\n+10 Flat Penetration\n+100 Mana",
                 "stats": {
                     "Mana": 250,
                     "Mana Regen": 4,
@@ -5103,7 +5237,7 @@
                 },
                 "stepCost": 600,
                 "tier": 3,
-                "totalCost": 2600,
+                "totalCost": 2400,
                 "patchChanges": {
                     "ob26": [
                         "shifted"
@@ -5251,7 +5385,7 @@
                 "icon": "/icons/xibalbanEffigy.webp",
                 "internalName": "XibalbanEffigy",
                 "name": "Xibalban Effigy",
-                "passive": "On Use: Take 50% Damage for 4s. \n After: Take Physical damage equal to the mitigated damage over 4 seconds. \n This damage cannot drop you below 5% Health. \n During Moonlight Phase: Only 50% of the mitigated damage is dealt back. \nCooldown:90s\n    You can own up to 3 active items at once",
+                "passive": "On Use: Take 50% Damage for 4s.\nAfter: Take Physical damage equal to the mitigated damage over 4 seconds.\nThis damage cannot drop you below 5% Health.\nDuring Moonlight Phase: Only 50% of the mitigated damage is dealt back.\nCooldown:90s\nYou can own up to 3 active items at once",
                 "stats": {
                     "Magical Protection": 30,
                     "Physical Protection": 30,
@@ -5289,11 +5423,95 @@
         ],
         [
             {
+                "_id": "6a63c531860dab6f2d7472c8",
+                "active": false,
+                "buildsFromT1": [],
+                "components": [],
+                "createdAt": "2026-07-24T20:04:01.230Z",
+                "god": "Vulcan",
+                "icon": "/icons/alternatorMod.webp",
+                "internalName": "AlternatorMod",
+                "key": "Item.Vulcan.AlternatorMod",
+                "name": "Alternator Mod",
+                "passive": "Gain access to the Thumper Turret by alternating between an Inferno Cannon and Thumper each ability activation.\nThumper pulses out an attack around it every 1s that deals 20/30/40/50/60 + 8% INT Magical Damage to all enemies in the area.\nThumper's Rank will match Inferno Cannon's. Cooldown 6s.",
+                "requiresLevel": 1,
+                "set": 1,
+                "starter": false,
+                "stats": {},
+                "stepCost": 0,
+                "tags": [
+                    "God",
+                    "Vulcan",
+                    "Mod",
+                    "Set One",
+                    "Level 1"
+                ],
+                "tier": 0,
+                "totalCost": 0,
+                "updatedAt": "2026-07-24T20:04:01.229Z"
+            },
+            {
+                "_id": "6a63c531860dab6f2d7472c9",
+                "active": false,
+                "buildsFromT1": [],
+                "components": [],
+                "createdAt": "2026-07-24T20:04:01.288Z",
+                "god": "Vulcan",
+                "icon": "/icons/dualMod.webp",
+                "internalName": "DualMod",
+                "key": "Item.Vulcan.DualMod",
+                "name": "Dual Mod",
+                "passive": "Gain access to the Thumper Turret in your first consumable slot. This will occupy this slot for the entire game.\nThumper pulses out an attack around it every 1s that deals 20/30/40/50/60 + 8% INT Magical Damage to all enemies in the area.\nThumper's Rank will match Inferno Cannon's. Cooldown 20s.",
+                "requiresLevel": 1,
+                "set": 1,
+                "starter": false,
+                "stats": {},
+                "stepCost": 0,
+                "tags": [
+                    "God",
+                    "Vulcan",
+                    "Mod",
+                    "Set One",
+                    "Level 1"
+                ],
+                "tier": 0,
+                "totalCost": 0,
+                "updatedAt": "2026-07-24T20:04:01.229Z"
+            },
+            {
+                "_id": "6a63c531860dab6f2d7472ca",
+                "active": false,
+                "buildsFromT1": [],
+                "components": [],
+                "createdAt": "2026-07-24T20:04:01.321Z",
+                "god": "Vulcan",
+                "icon": "/icons/efficiencyMod.webp",
+                "internalName": "EfficiencyMod",
+                "key": "Item.Vulcan.EfficiencyMod",
+                "name": "Efficiency Mod",
+                "passive": "Do not gain access to the Thumper ability, instead your passive grants 20 CDR and 5 + 1 per level INT in addition to the other effects when triggered.",
+                "requiresLevel": 1,
+                "set": 1,
+                "starter": false,
+                "stats": {},
+                "stepCost": 0,
+                "tags": [
+                    "God",
+                    "Vulcan",
+                    "Mod",
+                    "Set One",
+                    "Level 1"
+                ],
+                "tier": 0,
+                "totalCost": 0,
+                "updatedAt": "2026-07-24T20:04:01.229Z"
+            },
+            {
                 "consumable": true,
                 "internalName": "HealthPotion",
                 "name": "Health Potion",
                 "icon": "/icons/healthPotion.webp",
-                "passive": "Active: Item is consumed to heal 10 health per second for 22 seconds. Can carry up to 3 of this item.  ",
+                "passive": "Active: Item is consumed to heal 10 health per second for 22 seconds. Can carry up to 3 of this item.",
                 "stepCost": 50
             },
             {
@@ -5301,16 +5519,184 @@
                 "internalName": "ManaPotion",
                 "name": "Mana Potion",
                 "icon": "/icons/manaPotion.webp",
-                "passive": "Active: Item is consumed to heal 12 mana per second for 10 seconds. Can carry up to 3 of this item.  ",
+                "passive": "Active: Item is consumed to heal 12 mana per second for 10 seconds. Can carry up to 3 of this item.",
                 "stepCost": 50
+            },
+            {
+                "_id": "6a63c531860dab6f2d7472ce",
+                "active": false,
+                "buildsFromT1": [],
+                "components": [],
+                "createdAt": "2026-07-24T20:04:01.455Z",
+                "god": "Vulcan",
+                "icon": "/icons/masterworkMod.webp",
+                "internalName": "MasterworkMod",
+                "key": "Item.Vulcan.MasterworkMod",
+                "name": "Masterwork Mod",
+                "passive": "Thumper gains 300 increased HP and applies a 10/20/30/40/50 Physical and Magical Protection buff to allied gods hit for 3s.",
+                "requiresLevel": 14,
+                "set": 3,
+                "starter": false,
+                "stats": {},
+                "stepCost": 0,
+                "tags": [
+                    "God",
+                    "Vulcan",
+                    "Mod",
+                    "Set Three",
+                    "Level 14"
+                ],
+                "tier": 0,
+                "totalCost": 0,
+                "updatedAt": "2026-07-24T20:04:01.229Z"
             },
             {
                 "consumable": true,
                 "internalName": "MultiPotion",
                 "name": "Multi Potion",
                 "icon": "/icons/multiPotion.webp",
-                "passive": "Active: Item is consumed to heal 5 health and 5 mana per second for 22 seconds. Can carry up to 3 of this item.  ",
+                "passive": "Active: Item is consumed to heal 5 health and 5 mana per second for 22 seconds. Can carry up to 3 of this item.",
                 "stepCost": 50
+            },
+            {
+                "_id": "6a63c531860dab6f2d7472cb",
+                "active": false,
+                "buildsFromT1": [],
+                "components": [],
+                "createdAt": "2026-07-24T20:04:01.350Z",
+                "god": "Vulcan",
+                "icon": "/icons/resonatorMod.webp",
+                "internalName": "ResonatorMod",
+                "key": "Item.Vulcan.ResonatorMod",
+                "name": "Resonator Mod",
+                "passive": "Thumper gains 150 increased HP and applies an 10/15/20/25/30% Attack Speed debuff for 3s on hit.",
+                "requiresLevel": 7,
+                "set": 2,
+                "starter": false,
+                "stats": {},
+                "stepCost": 0,
+                "tags": [
+                    "God",
+                    "Vulcan",
+                    "Mod",
+                    "Set Two",
+                    "Level 7"
+                ],
+                "tier": 0,
+                "totalCost": 0,
+                "updatedAt": "2026-07-24T20:04:01.229Z"
+            },
+            {
+                "_id": "6a63c531860dab6f2d7472d0",
+                "active": false,
+                "buildsFromT1": [],
+                "components": [],
+                "createdAt": "2026-07-24T20:04:01.511Z",
+                "god": "Vulcan",
+                "icon": "/icons/seismicMod.webp",
+                "internalName": "SeismicMod",
+                "key": "Item.Vulcan.SeismicMod",
+                "name": "Seismic Mod",
+                "passive": "Earthshaker Trembles and Knocks Up enemies it hits for 2s.",
+                "requiresLevel": 14,
+                "set": 3,
+                "starter": false,
+                "stats": {},
+                "stepCost": 0,
+                "tags": [
+                    "God",
+                    "Vulcan",
+                    "Mod",
+                    "Set Three",
+                    "Level 14"
+                ],
+                "tier": 0,
+                "totalCost": 0,
+                "updatedAt": "2026-07-24T20:04:01.229Z"
+            },
+            {
+                "_id": "6a63c531860dab6f2d7472cd",
+                "active": false,
+                "buildsFromT1": [],
+                "components": [],
+                "createdAt": "2026-07-24T20:04:01.421Z",
+                "god": "Vulcan",
+                "icon": "/icons/shrapnelMod.webp",
+                "internalName": "ShrapnelMod",
+                "key": "Item.Vulcan.ShrapnelMod",
+                "name": "Shrapnel Mod",
+                "passive": "Inferno Cannon applies additional damage over time on hit. Hits 6 times over 3s for 2/4/6/8/10 + 2% INT per hit.",
+                "requiresLevel": 7,
+                "set": 2,
+                "starter": false,
+                "stats": {},
+                "stepCost": 0,
+                "tags": [
+                    "God",
+                    "Vulcan",
+                    "Mod",
+                    "Set Two",
+                    "Level 7"
+                ],
+                "tier": 0,
+                "totalCost": 0,
+                "updatedAt": "2026-07-24T20:04:01.229Z"
+            },
+            {
+                "_id": "6a63c531860dab6f2d7472cf",
+                "active": false,
+                "buildsFromT1": [],
+                "components": [],
+                "createdAt": "2026-07-24T20:04:01.486Z",
+                "god": "Vulcan",
+                "icon": "/icons/surplusMod.webp",
+                "internalName": "SurplusMod",
+                "key": "Item.Vulcan.SurplusMod",
+                "name": "Surplus Mod",
+                "passive": "You can have 2 Inferno Cannons deployed at the same time.",
+                "requiresLevel": 14,
+                "set": 3,
+                "starter": false,
+                "stats": {},
+                "stepCost": 0,
+                "tags": [
+                    "God",
+                    "Vulcan",
+                    "Mod",
+                    "Set Three",
+                    "Level 14"
+                ],
+                "tier": 0,
+                "totalCost": 0,
+                "updatedAt": "2026-07-24T20:04:01.229Z"
+            },
+            {
+                "_id": "6a63c531860dab6f2d7472cc",
+                "active": false,
+                "buildsFromT1": [],
+                "components": [],
+                "createdAt": "2026-07-24T20:04:01.390Z",
+                "god": "Vulcan",
+                "icon": "/icons/thermalMod.webp",
+                "internalName": "ThermalMod",
+                "key": "Item.Vulcan.ThermalMod",
+                "name": "Thermal Mod",
+                "passive": "Backfire and Magma Bomb deal 20 + 15% INT Bonus Magical Damage.",
+                "requiresLevel": 7,
+                "set": 2,
+                "starter": false,
+                "stats": {},
+                "stepCost": 0,
+                "tags": [
+                    "God",
+                    "Vulcan",
+                    "Mod",
+                    "Set Two",
+                    "Level 7"
+                ],
+                "tier": 0,
+                "totalCost": 0,
+                "updatedAt": "2026-07-24T20:04:01.229Z"
             }
         ]
     ]

@@ -12,6 +12,7 @@ import {
   saveTriviaProgress,
 } from '../lib/triviaVariants';
 import { quizWindowState } from '../lib/quizSettings';
+import { quizThemeProps } from '../lib/quizThemes';
 
 async function fileToDataUrl(file, maxBytes = 2.5 * 1024 * 1024) {
   if (!file) throw new Error('No file');
@@ -25,21 +26,26 @@ async function fileToDataUrl(file, maxBytes = 2.5 * 1024 * 1024) {
 }
 
 /** Stable shuffle so re-renders don't reshuffle mid-answer. */
-function choiceRows(q) {
-  const opts = Array.isArray(q.options) ? q.options : [];
-  const rows = opts.map((label, originalIndex) => ({ label, originalIndex }));
-  if (!q.meta?.randomize_order || rows.length < 2) return rows;
+function seededShuffle(list, seedStr) {
+  const out = [...list];
   let seed = 0;
-  const id = String(q.id || '');
+  const id = String(seedStr || '');
   for (let i = 0; i < id.length; i += 1) seed = (seed * 31 + id.charCodeAt(i)) >>> 0;
-  for (let i = rows.length - 1; i > 0; i -= 1) {
+  for (let i = out.length - 1; i > 0; i -= 1) {
     seed = (seed * 1664525 + 1013904223) >>> 0;
     const j = seed % (i + 1);
-    const tmp = rows[i];
-    rows[i] = rows[j];
-    rows[j] = tmp;
+    const tmp = out[i];
+    out[i] = out[j];
+    out[j] = tmp;
   }
-  return rows;
+  return out;
+}
+
+function choiceRows(q, quizRandomize) {
+  const opts = Array.isArray(q.options) ? q.options : [];
+  const rows = opts.map((label, originalIndex) => ({ label, originalIndex }));
+  if (!(q.meta?.randomize_order || quizRandomize) || rows.length < 2) return rows;
+  return seededShuffle(rows, q.id);
 }
 
 function DrawingPad({ value, onChange }) {
@@ -125,6 +131,20 @@ function isGate(q) {
   return Boolean(q?.meta?.is_discord_gate || q?.meta?.is_ingame_gate);
 }
 
+const SKIP_UNANSWERED = new Set(['image', 'content', 'audio', 'video', 'embed']);
+
+function isAnswered(q, answers) {
+  const v = answers?.[q.id];
+  if (v == null || v === '') return false;
+  if (Array.isArray(v)) return v.length > 0;
+  if (typeof v === 'object') {
+    if (v.x != null || v.y != null) return true;
+    if (v.data || v.url) return true;
+    return Object.keys(v).length > 0;
+  }
+  return true;
+}
+
 export default function TakeQuiz() {
   const { slug } = useParams();
   const [quiz, setQuiz] = useState(null);
@@ -140,6 +160,7 @@ export default function TakeQuiz() {
   const [busy, setBusy] = useState(false);
   const [startedAt, setStartedAt] = useState(null);
   const [now, setNow] = useState(() => Date.now());
+  const [missingConfirm, setMissingConfirm] = useState(null);
   const restoredRef = useRef(false);
   const submittingRef = useRef(false);
 
@@ -216,10 +237,28 @@ export default function TakeQuiz() {
   }, [slug, discord, ingame, answers, variantMap, startedAt, result, loading]);
 
   const playable = useMemo(() => (questions || []).filter((q) => !isGate(q)), [questions]);
-
-  const setAnswer = (id, value) => setAnswers((a) => ({ ...a, [id]: value }));
-
   const settings = quiz ? quiz.settings || {} : {};
+  const orderedPlayable = useMemo(() => {
+    if (!settings.shuffle_questions) return playable;
+    return seededShuffle(playable, `${slug}|${discord}|${ingame}`);
+  }, [playable, settings.shuffle_questions, slug, discord, ingame]);
+
+  const setAnswer = (id, value) => {
+    setAnswers((prev) => {
+      const next = { ...prev, [id]: value };
+      if (slug) {
+        saveTriviaProgress(slug, {
+          discord,
+          ingame,
+          answers: next,
+          variantMap,
+          startedAt,
+        });
+      }
+      return next;
+    });
+  };
+
   const timeLimitSec = Math.max(0, Number(settings.time_limit_seconds) || 0);
   const windowState = quizWindowState(settings, now);
   const timed = timeLimitSec > 0;
@@ -241,26 +280,32 @@ export default function TakeQuiz() {
     return undefined;
   }, [quizLocked]);
 
+  const unansweredNums = useMemo(() => {
+    const nums = [];
+    playable.forEach((q, idx) => {
+      if (SKIP_UNANSWERED.has(q.type)) return;
+      if (!isAnswered(q, answers)) nums.push(idx + 1);
+    });
+    return nums;
+  }, [playable, answers]);
+
   const onSubmit = async (e, opts = {}) => {
     e?.preventDefault?.();
     if (submittingRef.current) return;
+    if (!opts.force && !opts.confirmed && unansweredNums.length) {
+      setMissingConfirm(unansweredNums);
+      return;
+    }
     submittingRef.current = true;
     setBusy(true);
     setError('');
+    setMissingConfirm(null);
     try {
       if (windowState.status === 'not_open') {
         throw new Error(`This quiz opens ${formatWhen(windowState.opensAt)}.`);
       }
       if (windowState.status === 'closed') {
         throw new Error('This quiz is closed.');
-      }
-      if (!opts.force) {
-        for (const q of playable) {
-          if (['image', 'content', 'audio', 'video', 'embed'].includes(q.type)) continue;
-          if (q.required && (answers[q.id] === undefined || answers[q.id] === '')) {
-            throw new Error(`Please answer: ${q.prompt || 'required question'}`);
-          }
-        }
       }
       const data = await submitTrivia({
         slug,
@@ -304,10 +349,12 @@ export default function TakeQuiz() {
     );
   }
 
+  const theme = quizThemeProps(settings);
+
   if (result) {
     const showScores = Boolean(quiz.settings?.show_scores);
     return (
-      <div className="f-take">
+      <div className={`f-take ${theme.className}`} style={theme.style}>
         <div className="f-take-shell">
           <div className="f-success-card f-fade-up">
             <p className="f-kicker">Scroll Trivia</p>
@@ -338,7 +385,16 @@ export default function TakeQuiz() {
   }
 
   return (
-    <div className="f-take">
+    <div className={`f-take ${theme.className}`} style={theme.style}>
+      {timed && startedAt && showQuestions ? (
+        <div
+          className={`f-timer-float ${remainingMs != null && remainingMs < 30000 ? 'is-low' : ''}`}
+          role="timer"
+          aria-live="polite"
+        >
+          {formatRemain(remainingMs ?? 0)}
+        </div>
+      ) : null}
       <div className="f-take-shell">
         <header className={`f-cover ${quiz.banner_url ? 'has-art' : ''}`}>
           {quiz.banner_url ? <img className="f-cover-img" src={quiz.banner_url} alt="" /> : null}
@@ -379,12 +435,6 @@ export default function TakeQuiz() {
           <div className="f-notice f-fade-up">This quiz closed {formatWhen(windowState.closesAt)}.</div>
         ) : null}
 
-        {timed && startedAt && showQuestions ? (
-          <div className={`f-timer-bar ${remainingMs != null && remainingMs < 30000 ? 'is-low' : ''}`}>
-            Time left {formatRemain(remainingMs ?? 0)}
-          </div>
-        ) : null}
-
         <form className="f-take-form" onSubmit={(e) => onSubmit(e)}>
           <section className="f-identity-card f-fade-up">
             <h2>Your details</h2>
@@ -419,24 +469,33 @@ export default function TakeQuiz() {
                 />
               </label>
             </div>
+            {!startedAt ? (
+              <button
+                type="button"
+                className="f-submit-btn"
+                style={{ marginTop: 16 }}
+                disabled={
+                  quizLocked || !String(discord).trim() || !String(ingame).trim()
+                }
+                onClick={() => {
+                  if (quizLocked) return;
+                  setStartedAt(Date.now());
+                }}
+              >
+                {windowState.status === 'not_open'
+                  ? `Opens ${formatWhen(windowState.opensAt)}`
+                  : windowState.status === 'closed'
+                    ? 'Quiz closed'
+                    : timed
+                      ? `Next — start ${Math.round(timeLimitSec / 60)}-minute quiz`
+                      : 'Next'}
+              </button>
+            ) : null}
           </section>
 
-          {!startedAt && !quizLocked ? (
-            <button
-              type="button"
-              className="f-submit-btn"
-              disabled={!String(discord).trim() || !String(ingame).trim()}
-              onClick={() => setStartedAt(Date.now())}
-            >
-              {timed
-                ? `Start ${Math.round(timeLimitSec / 60)}-minute quiz`
-                : 'Start quiz'}
-            </button>
-          ) : null}
-
-          {showQuestions ? playable.map((q, idx) => {
+          {showQuestions ? orderedPlayable.map((q, idx) => {
             const opts = Array.isArray(q.options) ? q.options : [];
-            const choices = choiceRows(q);
+            const choices = choiceRows(q, settings.randomize_order);
             const categorize =
               q.options && !Array.isArray(q.options) && typeof q.options === 'object'
                 ? q.options
@@ -490,7 +549,7 @@ export default function TakeQuiz() {
                       className="f-fib-inline"
                       value={answers[q.id] ?? ''}
                       onChange={(e) => setAnswer(q.id, e.target.value)}
-                      required={q.required}
+                      required={q.required || settings.require_all}
                       placeholder="…"
                     />
                     <span>{fib.after}</span>
@@ -510,7 +569,7 @@ export default function TakeQuiz() {
                     type="text"
                     value={answers[q.id] ?? ''}
                     onChange={(e) => setAnswer(q.id, e.target.value)}
-                    required={q.required}
+                    required={q.required || settings.require_all}
                   />
                 ) : null}
 
@@ -522,7 +581,7 @@ export default function TakeQuiz() {
                         name={`q-${q.id}`}
                         checked={Number(answers[q.id]) === originalIndex}
                         onChange={() => setAnswer(q.id, originalIndex)}
-                        required={q.required}
+                        required={q.required || settings.require_all}
                       />
                       <span>{label}</span>
                     </label>
@@ -532,7 +591,7 @@ export default function TakeQuiz() {
                   <select
                     value={answers[q.id] ?? ''}
                     onChange={(e) => setAnswer(q.id, Number(e.target.value))}
-                    required={q.required}
+                    required={q.required || settings.require_all}
                   >
                     <option value="">Select…</option>
                     {choices.map(({ label, originalIndex }) => (
@@ -669,6 +728,32 @@ export default function TakeQuiz() {
           ) : null}
         </form>
       </div>
+      {missingConfirm?.length ? (
+        <div className="f-missing-scrim" role="dialog" aria-modal="true" aria-labelledby="f-missing-title">
+          <div className="f-missing-card">
+            <h2 id="f-missing-title">Are you sure you want to submit?</h2>
+            <p>You didn’t answer {missingConfirm.length === 1 ? 'this question' : 'these questions'}:</p>
+            <ul>
+              {missingConfirm.map((n) => (
+                <li key={n}>Question {n}</li>
+              ))}
+            </ul>
+            <div className="f-missing-actions">
+              <button type="button" className="f-outline-btn" onClick={() => setMissingConfirm(null)}>
+                Go back
+              </button>
+              <button
+                type="button"
+                className="f-submit-btn"
+                disabled={busy}
+                onClick={() => onSubmit(null, { confirmed: true })}
+              >
+                Submit anyway
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

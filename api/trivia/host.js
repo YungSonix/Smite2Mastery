@@ -195,6 +195,7 @@ module.exports = async function handler(req, res) {
             after_submission: 'hidden',
             show_scores: false,
             show_answers: false,
+            theme: 'scroll',
             ...(body.settings || {}),
           },
         };

@@ -3,7 +3,9 @@
  * Mirrors /api/trivia/host|public|submit without Supabase.
  *
  *   node scripts/formative-dev-api.js
- *   TRIVIA_HOST_SECRET=devsecret npm run formative:dev
+ *   npm run trivia:api
+ *   npm run trivia:dev
+ *   (optional) $env:TRIVIA_HOST_SECRET="devsecret"  # PowerShell
  */
 const http = require('http');
 const fs = require('fs');
@@ -243,6 +245,7 @@ async function handleHost(req, res, url) {
           after_submission: 'hidden',
           show_scores: false,
           show_answers: false,
+          theme: 'scroll',
           ...(body.settings || {}),
         },
         created_at: now,

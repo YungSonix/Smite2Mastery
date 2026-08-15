@@ -24,6 +24,22 @@ export const DEFAULT_QUIZ_SETTINGS = {
   closes_at: '',
   discord_field_label: '',
   ingame_field_label: '',
+  theme: 'scroll',
+  theme_mode: '',
+  theme_accent: '',
+  theme_secondary: '',
+  theme_page: '',
+  theme_card: '',
+  theme_text: '',
+  theme_border: '',
+  theme_font: '',
+  theme_corners: 'round',
+  theme_pattern: '',
+  theme_density: 'cozy',
+  randomize_order: false,
+  shuffle_questions: false,
+  require_all: false,
+  auto_random_questions: false,
 };
 
 export function quizWindowState(settings, nowMs = Date.now()) {

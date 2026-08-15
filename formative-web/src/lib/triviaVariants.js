@@ -19,6 +19,7 @@ export function listVariants(q) {
   const extras = Array.isArray(q.meta?.variants) ? q.meta.variants : [];
   for (const raw of extras) {
     if (!raw || typeof raw !== 'object') continue;
+    if (raw.enabled === false) continue;
     if (out.length >= 3) break;
     const urls = listImageUrls(raw);
     const hasOwnMedia =

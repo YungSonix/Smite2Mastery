@@ -1,0 +1,8039 @@
+{
+  "gods": [
+    {
+      "name": "Achilles",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/achillesImage.webp"
+    },
+    {
+      "name": "Agni",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/agniImage.webp"
+    },
+    {
+      "name": "Ah Puch",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/puchImage.webp"
+    },
+    {
+      "name": "Aladdin",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/aladdinImage.webp"
+    },
+    {
+      "name": "Amaterasu",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/amaImage.webp"
+    },
+    {
+      "name": "Anhur",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/anhurImage.webp"
+    },
+    {
+      "name": "Anubis",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/anubisImage.webp"
+    },
+    {
+      "name": "Aphrodite",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/aphroImage.webp"
+    },
+    {
+      "name": "Apollo",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/apolloImage.webp"
+    },
+    {
+      "name": "Ares",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/aresImage.webp"
+    },
+    {
+      "name": "Artemis",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/artemisImage.webp"
+    },
+    {
+      "name": "Artio",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/artioImage.webp"
+    },
+    {
+      "name": "Athena",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/athenaImage.webp"
+    },
+    {
+      "name": "Atlas",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/atlasImage.webp"
+    },
+    {
+      "name": "Awilix",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/awilixImage.webp"
+    },
+    {
+      "name": "Bacchus",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/bacchusImage.webp"
+    },
+    {
+      "name": "Baron Samedi",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/baronImage.webp"
+    },
+    {
+      "name": "Bastet",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/bastetImage.webp"
+    },
+    {
+      "name": "Bellona",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/bellonaImage.webp"
+    },
+    {
+      "name": "Cabrakan",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/cabImage.webp"
+    },
+    {
+      "name": "Cerberus",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/cerbImage.webp"
+    },
+    {
+      "name": "Cernunnos",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/cernunnosImage.webp"
+    },
+    {
+      "name": "Chaac",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/chaacImage.webp"
+    },
+    {
+      "name": "Charon",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/charonImage.webp"
+    },
+    {
+      "name": "Chiron",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/chironImage.webp"
+    },
+    {
+      "name": "Chronos",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/chronosImage.webp"
+    },
+    {
+      "name": "Cu Chulainn",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/cuchuImage.webp"
+    },
+    {
+      "name": "Cupid",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/cupidImage.webp"
+    },
+    {
+      "name": "Da Ji",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/daJiImage.webp"
+    },
+    {
+      "name": "Danzaburou",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/danzaImage.webp"
+    },
+    {
+      "name": "Discordia",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/discoImage.webp"
+    },
+    {
+      "name": "Eset",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/esetImage.webp"
+    },
+    {
+      "name": "Fenrir",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/fenrirImage.webp"
+    },
+    {
+      "name": "Ganesha",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/ganeshaImage.webp"
+    },
+    {
+      "name": "Geb",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/gebImage.webp"
+    },
+    {
+      "name": "Gilgamesh",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/gilgaImage.webp"
+    },
+    {
+      "name": "Guan Yu",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/guanImage.webp"
+    },
+    {
+      "name": "Hades",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/hadesImage.webp"
+    },
+    {
+      "name": "Hecate",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/hecateImage.webp"
+    },
+    {
+      "name": "Hercules",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/hercImage.webp"
+    },
+    {
+      "name": "Horus",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/horusImage.webp"
+    },
+    {
+      "name": "Hou Yi",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/houYiImage.webp"
+    },
+    {
+      "name": "Hua Mulan",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/mulanImage.webp"
+    },
+    {
+      "name": "Hun Batz",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/batzImage.webp"
+    },
+    {
+      "name": "Ishtar",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/ishtarImage.webp"
+    },
+    {
+      "name": "Ix Chel",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/ixchelImage.webp"
+    },
+    {
+      "name": "Izanami",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/izaImage.webp"
+    },
+    {
+      "name": "Janus",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/janusImage.webp"
+    },
+    {
+      "name": "Jing Wei",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/jingImage.webp"
+    },
+    {
+      "name": "Jormungandr",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/jormImage.webp"
+    },
+    {
+      "name": "Kali",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/kaliImage.webp"
+    },
+    {
+      "name": "Khepri",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/khepImage.webp"
+    },
+    {
+      "name": "Kukulkan",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/kukuImage.webp"
+    },
+    {
+      "name": "Loki",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/lokiImage.webp"
+    },
+    {
+      "name": "Medusa",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/medusaImage.webp"
+    },
+    {
+      "name": "Mercury",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/mercImage.webp"
+    },
+    {
+      "name": "Merlin",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/merlinImage.webp"
+    },
+    {
+      "name": "Mordred",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/mordredImage.webp"
+    },
+    {
+      "name": "Morgan Le Fay",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/morganLeFayImage.webp"
+    },
+    {
+      "name": "Ne Zha",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/neZhaImage.webp"
+    },
+    {
+      "name": "Neith",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/neithImage.webp"
+    },
+    {
+      "name": "Nemesis",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/nemImage.webp"
+    },
+    {
+      "name": "Nu Wa",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/nuWaImage.webp"
+    },
+    {
+      "name": "Nut",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/nutImage.webp"
+    },
+    {
+      "name": "Odin",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/odinImage.webp"
+    },
+    {
+      "name": "Osiris",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/osirisImage.webp"
+    },
+    {
+      "name": "Pele",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/peleImage.webp"
+    },
+    {
+      "name": "Poseidon",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/posImage.webp"
+    },
+    {
+      "name": "Princess Bari",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/bariImage.webp"
+    },
+    {
+      "name": "Ra",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/raImage.webp"
+    },
+    {
+      "name": "Rama",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/ramaImage.webp"
+    },
+    {
+      "name": "Ratatoskr",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/ratImage.webp"
+    },
+    {
+      "name": "Scylla",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/scyllaImage.webp"
+    },
+    {
+      "name": "Sobek",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/sobekImage.webp"
+    },
+    {
+      "name": "Sol",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/solImage.webp"
+    },
+    {
+      "name": "Sun Wukong",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/wukongImage.webp"
+    },
+    {
+      "name": "Susano",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/susanoImage.webp"
+    },
+    {
+      "name": "Sylvanus",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/sylvanusImage.webp"
+    },
+    {
+      "name": "Thanatos",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/thanatosImage.webp"
+    },
+    {
+      "name": "The Morrigan",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/morriganImage.webp"
+    },
+    {
+      "name": "Thor",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/thorImage.webp"
+    },
+    {
+      "name": "Tsukuyomi",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/tsukuImage.webp"
+    },
+    {
+      "name": "Ullr",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/ullrImage.webp"
+    },
+    {
+      "name": "Vulcan",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/vulcanImage.webp"
+    },
+    {
+      "name": "Xbalanque",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/xbalImage.webp"
+    },
+    {
+      "name": "Xing Tian",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/xingImage.webp"
+    },
+    {
+      "name": "Yemoja",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/yemImage.webp"
+    },
+    {
+      "name": "Ymir",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/ymirImage.webp"
+    },
+    {
+      "name": "Zeus",
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info/zeusImage.webp"
+    }
+  ],
+  "items": [
+    {
+      "name": "Adamantine Sickle",
+      "tags": [
+        "tier2",
+        "lifesteal",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "lifesteal": 4,
+        "strength": 10,
+        "cost": 1100,
+        "step cost": 200
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Axe",
+        "Scythe"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/AdamantineSickle.webp"
+    },
+    {
+      "name": "Adroit Ring",
+      "tags": [
+        "tier2",
+        "cooldown rate",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 10,
+        "cost": 650,
+        "step cost": 250
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Ring"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/AdroitRing.webp"
+    },
+    {
+      "name": "Aegis Of Acceleration",
+      "tags": [
+        "tier1"
+      ],
+      "stats": {},
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/AegisOfAcceleration.webp"
+    },
+    {
+      "name": "Agility Greaves",
+      "tags": [
+        "tier3",
+        "movement speed",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "movement speed": 5,
+        "cost": 2500,
+        "step cost": 1250
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "AgilityRune",
+        "Mote of Chaos"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/AgilityGreaves.webp"
+    },
+    {
+      "name": "Agility Relic",
+      "tags": [
+        "tier1"
+      ],
+      "stats": {},
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/agilityRelic.webp"
+    },
+    {
+      "name": "Aladdin's Lamp",
+      "tags": [
+        "tier1",
+        "step cost"
+      ],
+      "stats": {
+        "step cost": 450
+      },
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/aladdinsLamp.webp"
+    },
+    {
+      "name": "Alchemist Coat",
+      "tags": [
+        "tier3",
+        "dampening",
+        "mana regen",
+        "intelligence",
+        "health",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "dampening": 15,
+        "mana regen": 2.5,
+        "intelligence": 30,
+        "health": 250,
+        "cost": 2350,
+        "step cost": 1000
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Mana Tome",
+        "Runic Hide"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/alchemistCoat.webp"
+    },
+    {
+      "name": "Alternator Mod",
+      "tags": [],
+      "stats": {},
+      "tier": null,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/alternatorMod.webp"
+    },
+    {
+      "name": "Amanita Charm",
+      "tags": [
+        "tier3",
+        "health",
+        "health regen",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 300,
+        "health regen": 4,
+        "magical protection": 25,
+        "physical protection": 25,
+        "cost": 2450,
+        "step cost": 850
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Engraved Guard",
+        "Olmec Blue"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/RestorativeAmanita.webp"
+    },
+    {
+      "name": "Ancient Signet",
+      "tags": [
+        "tier3",
+        "mana",
+        "intelligence",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "mana": 250,
+        "intelligence": 90,
+        "cost": 2600,
+        "step cost": 450
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Cursed Sickle",
+        "Ring of Dispel"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/ancientSignet.webp"
+    },
+    {
+      "name": "Ancile",
+      "tags": [
+        "tier3",
+        "health",
+        "magical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 300,
+        "magical protection": 55,
+        "cost": 2450,
+        "step cost": 900
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Veve Charm",
+        "Circle of Protection"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Ancile.webp"
+    },
+    {
+      "name": "Archmage's Gem",
+      "tags": [
+        "starter",
+        "tier2",
+        "mana",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "mana": 150,
+        "mana regen": 4,
+        "cost": 2150,
+        "step cost": 1500
+      },
+      "tier": 2,
+      "starter": true,
+      "from": [
+        "Conduit Gem"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/ArchmagesGem.webp"
+    },
+    {
+      "name": "Arondight",
+      "tags": [
+        "tier3",
+        "cooldown rate",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 15,
+        "strength": 55,
+        "cost": 2650,
+        "step cost": 1000
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Skeggox",
+        "Adroit Ring"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Arondight.webp"
+    },
+    {
+      "name": "Ashwhorl Acorn",
+      "tags": [
+        "tier3",
+        "strength",
+        "attack speed",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "strength": 45,
+        "attack speed": 15,
+        "cost": 2400,
+        "step cost": 900
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/thickBark.webp"
+    },
+    {
+      "name": "Avatar's Parashu",
+      "tags": [
+        "tier3",
+        "strength",
+        "penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "strength": 90,
+        "penetration": 10,
+        "cost": 3700,
+        "step cost": 1700
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Skeggox"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/AvatarsParashu.webp"
+    },
+    {
+      "name": "Avenging Blade",
+      "tags": [
+        "tier3",
+        "health",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 200,
+        "strength": 60,
+        "cost": 2650,
+        "step cost": 750
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Battle Axe",
+        "Skeggox"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/avengingBlade.webp"
+    },
+    {
+      "name": "Axe",
+      "tags": [
+        "tier1",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "strength": 5,
+        "cost": 450,
+        "step cost": 450
+      },
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/axe.webp"
+    },
+    {
+      "name": "Bancroft's Talon",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "lifesteal",
+        "mana",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 55,
+        "lifesteal": 7.5,
+        "mana": 150,
+        "mana regen": 2,
+        "cost": 2300,
+        "step cost": 600
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Oracle Staff",
+        "Cursed Sickle"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BancroftsTalon.webp"
+    },
+    {
+      "name": "Barbed Carver",
+      "tags": [
+        "tier3",
+        "strength",
+        "lifesteal",
+        "cost"
+      ],
+      "stats": {
+        "strength": 40,
+        "lifesteal": 7.5,
+        "cost": 2500
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Cursed Sickle",
+        "Skeggox"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/barbedCarver.webp"
+    },
+    {
+      "name": "Battle Axe",
+      "tags": [
+        "tier2",
+        "health",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 100,
+        "strength": 15,
+        "cost": 900,
+        "step cost": 150
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Engraved Guard"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BattleAxe.webp"
+    },
+    {
+      "name": "Berserker's Shield",
+      "tags": [
+        "tier3",
+        "attack speed",
+        "physical protection",
+        "health",
+        "health regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 20,
+        "physical protection": 50,
+        "health": 200,
+        "health regen": 4,
+        "cost": 2400,
+        "step cost": 750
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Engraved Guard",
+        "Hunter's Bow"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BerserkersShield.webp"
+    },
+    {
+      "name": "Blink Rune",
+      "tags": [
+        "tier1"
+      ],
+      "stats": {},
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BlinkRune.webp"
+    },
+    {
+      "name": "Blinking Abyss",
+      "tags": [
+        "tier3",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cost": 2600,
+        "step cost": 1350
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Blink Rune",
+        "Mote of Chaos"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BlinkingAbyss.webp"
+    },
+    {
+      "name": "Blood-Bound Book",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "lifesteal",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 70,
+        "lifesteal": 7.5,
+        "cost": 2500,
+        "step cost": 400
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Cursed Sickle",
+        "Flaming Pearl"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Blood-BoundBook.webp"
+    },
+    {
+      "name": "Blood-Soaked Shroud",
+      "tags": [
+        "starter",
+        "tier2",
+        "health",
+        "lifesteal",
+        "strength",
+        "intelligence",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 350,
+        "lifesteal": 8,
+        "strength": 35,
+        "intelligence": 60,
+        "cost": 2150,
+        "step cost": 1500
+      },
+      "tier": 2,
+      "starter": true,
+      "from": [
+        "Vampiric Shroud"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/bloodSoaked.webp"
+    },
+    {
+      "name": "Bloodforge",
+      "tags": [
+        "tier3",
+        "lifesteal",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "lifesteal": 7.5,
+        "strength": 40,
+        "cost": 2450,
+        "step cost": 450
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Adamantine Sickle",
+        "Manchu Bow"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BloodForge.webp"
+    },
+    {
+      "name": "Bluestone Brooch",
+      "tags": [
+        "starter",
+        "tier2",
+        "health",
+        "health regen",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 200,
+        "health regen": 4,
+        "mana regen": 2.5,
+        "cost": 2150,
+        "step cost": 1500
+      },
+      "tier": 2,
+      "starter": true,
+      "from": [
+        "Bluestone Pendant"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BlueStoneBrooch.webp"
+    },
+    {
+      "name": "Bluestone Pendant",
+      "tags": [
+        "starter",
+        "tier1",
+        "health regen",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health regen": 1,
+        "mana regen": 1.5,
+        "cost": 600,
+        "step cost": 600
+      },
+      "tier": 1,
+      "starter": true,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BlueStonePendant.webp"
+    },
+    {
+      "name": "Book of Thoth",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "mana",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 30,
+        "mana": 350,
+        "mana regen": 4,
+        "cost": 2300,
+        "step cost": 850
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Mana Tome",
+        "Oracle Staff"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/baseBookOfThoth.webp"
+    },
+    {
+      "name": "Bow",
+      "tags": [
+        "tier1",
+        "attack speed",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 5,
+        "cost": 300,
+        "step cost": 300
+      },
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Bow.webp"
+    },
+    {
+      "name": "Bowl Drum",
+      "tags": [
+        "tier2",
+        "echo",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "echo": 10,
+        "cost": 750,
+        "step cost": 750
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Bow",
+        "Ring"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/bowlDrum.webp"
+    },
+    {
+      "name": "Bracer of The Abyss",
+      "tags": [
+        "tier3",
+        "attack speed",
+        "intelligence",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 30,
+        "intelligence": 60,
+        "cost": 2500,
+        "step cost": 700
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Hunter's Bow",
+        "Killing Stone"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/HandOfTheAbyss.webp"
+    },
+    {
+      "name": "Bragi's Harp",
+      "tags": [
+        "tier3",
+        "attack speed",
+        "intelligence",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 10,
+        "intelligence": 25,
+        "strength": 35,
+        "cost": 2550,
+        "step cost": 500
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Manchu Bow",
+        "Zither"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BragisHarp.webp"
+    },
+    {
+      "name": "Brawler's Beat Stick",
+      "tags": [
+        "tier3",
+        "physical protection",
+        "magical protection",
+        "cost",
+        "step cost",
+        "antiheal"
+      ],
+      "stats": {
+        "physical protection": 15,
+        "magical protection": 15,
+        "cost": 2450,
+        "step cost": 650
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Survivor's Sash",
+        "Engraved Guard"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BrawlersRuin.webp"
+    },
+    {
+      "name": "Breastplate of Valor",
+      "tags": [
+        "tier3",
+        "cooldown rate",
+        "mana",
+        "mana regen",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 20,
+        "mana": 200,
+        "mana regen": 2,
+        "physical protection": 45,
+        "cost": 2400,
+        "step cost": 1100
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Captain's Ring",
+        "Mana Tome"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BreastplateOfValor.webp"
+    },
+    {
+      "name": "Briskberry Acorn",
+      "tags": [
+        "tier3",
+        "strength",
+        "pathfinding",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "strength": 45,
+        "pathfinding": 8,
+        "cost": 2400,
+        "step cost": 900
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/bristleBush.webp"
+    },
+    {
+      "name": "Bumba's Cudgel",
+      "tags": [
+        "starter",
+        "tier1",
+        "health",
+        "mana",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 75,
+        "mana": 50,
+        "cost": 650,
+        "step cost": 650
+      },
+      "tier": 1,
+      "starter": true,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BumbasCudgel.webp"
+    },
+    {
+      "name": "Bumba's Golden Dagger",
+      "tags": [
+        "starter",
+        "tier1",
+        "health",
+        "attack speed",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 50,
+        "attack speed": 10,
+        "cost": 650,
+        "step cost": 650
+      },
+      "tier": 1,
+      "starter": true,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BumbasGoldenDagger.webp"
+    },
+    {
+      "name": "Bumba's Hammer",
+      "tags": [
+        "starter",
+        "tier2",
+        "cooldown rate",
+        "health",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 10,
+        "health": 200,
+        "cost": 2150,
+        "step cost": 1500
+      },
+      "tier": 2,
+      "starter": true,
+      "from": [
+        "Bumba's Cudgel"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BumbasHammer.webp"
+    },
+    {
+      "name": "Bumba's Spear",
+      "tags": [
+        "starter",
+        "tier2",
+        "attack speed",
+        "health",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 30,
+        "health": 200,
+        "cost": 2150,
+        "step cost": 1500
+      },
+      "tier": 2,
+      "starter": true,
+      "from": [
+        "Bumba's Golden Dagger"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BumbasSpear.webp"
+    },
+    {
+      "name": "Caestus",
+      "tags": [
+        "tier2",
+        "cooldown rate",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 10,
+        "strength": 10,
+        "cost": 1000,
+        "step cost": 150
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Axe",
+        "Ring"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Caestus.webp"
+    },
+    {
+      "name": "Captain's Ring",
+      "tags": [
+        "tier2",
+        "cooldown rate",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 10,
+        "physical protection": 10,
+        "cost": 800,
+        "step cost": 100
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Rune",
+        "Shield"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/CaptainsRing.webp"
+    },
+    {
+      "name": "Chandra's Grace",
+      "tags": [
+        "tier3",
+        "health",
+        "cooldown rate",
+        "plating",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 350,
+        "cooldown rate": 20,
+        "plating": 5,
+        "cost": 2300,
+        "step cost": 950
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Adroit Ring",
+        "Veve Charm"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/chandrasDisgrace.webp"
+    },
+    {
+      "name": "Chronos' Pendant",
+      "tags": [
+        "tier3",
+        "cooldown rate",
+        "intelligence",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 25,
+        "intelligence": 55,
+        "cost": 2400,
+        "step cost": 800
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Adroit Ring",
+        "Ring of Dispel"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/ChronosPendant.webp"
+    },
+    {
+      "name": "Circe's Hexstone",
+      "tags": [
+        "tier3",
+        "cooldown rate",
+        "health",
+        "health regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 10,
+        "health": 250,
+        "health regen": 4,
+        "cost": 2750,
+        "step cost": 1250
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Adroit Ring",
+        "Olmec Blue"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/CircesHexstone.webp"
+    },
+    {
+      "name": "Circle of Protection",
+      "tags": [
+        "tier2",
+        "magical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "magical protection": 26,
+        "cost": 750,
+        "step cost": 450
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Rune"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Zisurru.webp"
+    },
+    {
+      "name": "Circlet",
+      "tags": [
+        "tier1",
+        "mana",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "mana": 150,
+        "cost": 300,
+        "step cost": 300
+      },
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Circlet.webp"
+    },
+    {
+      "name": "Cleric's Cloak",
+      "tags": [
+        "tier2",
+        "tenacity",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "tenacity": 5,
+        "cost": 800,
+        "step cost": 200
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Rune",
+        "Sash"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/clericsCloak.webp"
+    },
+    {
+      "name": "Combat Boots",
+      "tags": [
+        "tier2",
+        "pathfinding",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "pathfinding": 8,
+        "cost": 900,
+        "step cost": 300
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Bow",
+        "Sash"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/combatBoots.webp"
+    },
+    {
+      "name": "Conduit Gem",
+      "tags": [
+        "starter",
+        "tier1",
+        "mana",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "mana": 100,
+        "mana regen": 1,
+        "cost": 650,
+        "step cost": 650
+      },
+      "tier": 1,
+      "starter": true,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/ConduitGem.webp"
+    },
+    {
+      "name": "Contagion",
+      "tags": [
+        "tier3",
+        "health",
+        "health regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 425,
+        "health regen": 6,
+        "cost": 2400,
+        "step cost": 850
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Veve Charm",
+        "Olmec Blue"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/contagion.webp"
+    },
+    {
+      "name": "Cursed Sickle",
+      "tags": [
+        "tier2",
+        "lifesteal",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "lifesteal": 15,
+        "cost": 1100,
+        "step cost": 650
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Scythe"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/CursedSickle.webp"
+    },
+    {
+      "name": "Dagger of Frenzy",
+      "tags": [
+        "tier3",
+        "attack speed",
+        "attack damage",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 25,
+        "attack damage": 25,
+        "cost": 2400,
+        "step cost": 800
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Manchu Bow",
+        "Skeggox"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/DaggerOfFrenzy.webp"
+    },
+    {
+      "name": "Damaru",
+      "tags": [
+        "tier3",
+        "mana regen",
+        "echo",
+        "cooldown rate",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "mana regen": 5,
+        "echo": 20,
+        "cooldown rate": 10,
+        "cost": 2500,
+        "step cost": 850
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Kopesh",
+        "Bowl Drum"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/damaru.webp"
+    },
+    {
+      "name": "Daybreak Gavel",
+      "tags": [
+        "tier3",
+        "health",
+        "cost"
+      ],
+      "stats": {
+        "health": 300,
+        "cost": 2500
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Survivor's Sash",
+        "Veve Charm"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/daybreakGavel.webp"
+    },
+    {
+      "name": "Death Metal",
+      "tags": [
+        "tier3",
+        "critical chance",
+        "intelligence",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "critical chance": 20,
+        "intelligence": 40,
+        "strength": 35,
+        "cost": 2700,
+        "step cost": 750
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Hooked Sword",
+        "Zither"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/DeathMetal.webp"
+    },
+    {
+      "name": "Death's Embrace",
+      "tags": [
+        "starter",
+        "tier2",
+        "health",
+        "lifesteal",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 150,
+        "lifesteal": 7.5,
+        "cost": 2150,
+        "step cost": 1500
+      },
+      "tier": 2,
+      "starter": true,
+      "from": [
+        "Death's Toll"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/DeathsEmbrace.webp"
+    },
+    {
+      "name": "Death's Toll",
+      "tags": [
+        "starter",
+        "tier1",
+        "health",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 100,
+        "cost": 650,
+        "step cost": 650
+      },
+      "tier": 1,
+      "starter": true,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/DeathsToll.webp"
+    },
+    {
+      "name": "Deathbringer",
+      "tags": [
+        "tier3",
+        "critical chance",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "critical chance": 20,
+        "strength": 45,
+        "cost": 2900,
+        "step cost": 650
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Kopesh",
+        "Skeggox"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Deathbringer.webp"
+    },
+    {
+      "name": "Demon Blade",
+      "tags": [
+        "tier3",
+        "attack speed",
+        "critical chance",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 15,
+        "critical chance": 15,
+        "strength": 30,
+        "cost": 2750,
+        "step cost": 750
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Hunter's Bow",
+        "Kopesh"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BanefulRapier.webp"
+    },
+    {
+      "name": "Devourer's Gauntlet",
+      "tags": [
+        "tier3",
+        "lifesteal",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "lifesteal": 5,
+        "strength": 35,
+        "cost": 2500,
+        "step cost": 250
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Adamantine Sickle",
+        "Skeggox"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/baseDevourersGauntlet.webp"
+    },
+    {
+      "name": "Divine Ruin",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "cost",
+        "step cost",
+        "antiheal"
+      ],
+      "stats": {
+        "intelligence": 85,
+        "cost": 2500,
+        "step cost": 700
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Killing Stone",
+        "Evil Eye"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/DivineRuin.webp"
+    },
+    {
+      "name": "Dominance",
+      "tags": [
+        "tier3",
+        "strength",
+        "mana",
+        "mana regen",
+        "attack speed",
+        "cost"
+      ],
+      "stats": {
+        "strength": 40,
+        "mana": 250,
+        "mana regen": 4,
+        "attack speed": 15,
+        "cost": 2600
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Dominance.webp"
+    },
+    {
+      "name": "Doom Orb",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "mana",
+        "mana regen",
+        "flat penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 70,
+        "mana": 200,
+        "mana regen": 2,
+        "flat penetration": 10,
+        "cost": 2700,
+        "step cost": 900
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Evil Eye",
+        "Oracle Staff"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/DoomOrb.webp"
+    },
+    {
+      "name": "Doublet of Binding",
+      "tags": [
+        "tier3",
+        "health",
+        "dampening",
+        "magical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 200,
+        "dampening": 5,
+        "magical protection": 50,
+        "cost": 2700,
+        "step cost": 1050
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Veve Charm",
+        "Runic Hide"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/doubletOfBinding.webp"
+    },
+    {
+      "name": "Draconic Scale",
+      "tags": [
+        "tier3",
+        "health",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 300,
+        "magical protection": 30,
+        "physical protection": 30,
+        "cost": 2700,
+        "step cost": 750
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Veve Charm",
+        "StalwartSigil"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/draconicScale.webp"
+    },
+    {
+      "name": "Dreamer's Idol",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 130,
+        "penetration": 10,
+        "cost": 3500,
+        "step cost": 1700
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Killing Stone"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/DreamersIdol.webp"
+    },
+    {
+      "name": "Druid Club",
+      "tags": [
+        "tier2",
+        "mana regen",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "mana regen": 2,
+        "strength": 25,
+        "cost": 1150,
+        "step cost": 700
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Axe"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/DruidClub.webp"
+    },
+    {
+      "name": "Dual Mod",
+      "tags": [],
+      "stats": {},
+      "tier": null,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/dualMod.webp"
+    },
+    {
+      "name": "Dwarven Plate",
+      "tags": [
+        "tier3",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "magical protection": 35,
+        "physical protection": 35,
+        "cost": 2800,
+        "step cost": 850
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Engraved Guard",
+        "StalwartSigil"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/dwarvenPlate.webp"
+    },
+    {
+      "name": "Efficiency Mod",
+      "tags": [],
+      "stats": {},
+      "tier": null,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/efficiencyMod.webp"
+    },
+    {
+      "name": "Engraved Guard",
+      "tags": [
+        "tier2",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "magical protection": 10,
+        "physical protection": 10,
+        "cost": 800,
+        "step cost": 200
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Shield",
+        "Rune"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/EngravedGuard.webp"
+    },
+    {
+      "name": "Eros' Bow",
+      "tags": [
+        "tier3",
+        "attack speed",
+        "health",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 30,
+        "health": 250,
+        "cost": 2300,
+        "step cost": 750
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Hunter's Bow",
+        "Veve Charm"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/erosBow.webp"
+    },
+    {
+      "name": "Erosion",
+      "tags": [
+        "tier3",
+        "health",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 250,
+        "magical protection": 20,
+        "physical protection": 30,
+        "cost": 2400,
+        "step cost": 750
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Medal of Defense",
+        "Engraved Guard"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/erosion.webp"
+    },
+    {
+      "name": "Ethereal Staff",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "health",
+        "tenacity",
+        "cost"
+      ],
+      "stats": {
+        "intelligence": 60,
+        "health": 250,
+        "tenacity": 15,
+        "cost": 2550
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Ethereal%20Staff.webp"
+    },
+    {
+      "name": "Evil Eye",
+      "tags": [
+        "tier2",
+        "intelligence",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 45,
+        "cost": 1200,
+        "step cost": 550
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/EvilEye.webp"
+    },
+    {
+      "name": "Evolved Book of Thoth",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "mana",
+        "mana regen",
+        "flat penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 30,
+        "mana": 450,
+        "mana regen": 4,
+        "flat penetration": 5,
+        "cost": 2300,
+        "step cost": 850
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Mana Tome",
+        "Oracle Staff"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BookOfThoth.webp"
+    },
+    {
+      "name": "Evolved Devourer's Gauntlet",
+      "tags": [
+        "tier3",
+        "lifesteal",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "lifesteal": 11.75,
+        "strength": 75,
+        "cost": 2500,
+        "step cost": 250
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Adamantine Sickle",
+        "Skeggox"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/DevourersGauntlet.webp"
+    },
+    {
+      "name": "Evolved Prophetic Cloak",
+      "tags": [
+        "tier3",
+        "cooldown rate",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 10,
+        "magical protection": 47,
+        "physical protection": 47,
+        "cost": 2400,
+        "step cost": 850
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Legionnaire Armor",
+        "Sage's Ring"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/PropheticCloak.webp"
+    },
+    {
+      "name": "Evolved Rage",
+      "tags": [
+        "tier3",
+        "critical chance",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "critical chance": 50,
+        "strength": 30,
+        "cost": 2450,
+        "step cost": 650
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Kopesh",
+        "Skeggox"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/evolvedRage.webp"
+    },
+    {
+      "name": "Evolved Transcendence",
+      "tags": [
+        "tier3",
+        "mana",
+        "mana regen",
+        "strength",
+        "flat penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "mana": 350,
+        "mana regen": 4,
+        "strength": 35,
+        "flat penetration": 10,
+        "cost": 2400,
+        "step cost": 850
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Infused Axe",
+        "Mana Tome"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/evolvedTrans.webp"
+    },
+    {
+      "name": "Eye of Erebus",
+      "tags": [
+        "tier3",
+        "health",
+        "cooldown rate",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 350,
+        "cooldown rate": 15,
+        "cost": 2600,
+        "step cost": 950
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Adroit Ring",
+        "Survivor's Sash"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/eyeOfErebus.webp"
+    },
+    {
+      "name": "Eye of Providence",
+      "tags": [
+        "tier3",
+        "health",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 250,
+        "magical protection": 30,
+        "physical protection": 30,
+        "cost": 2300,
+        "step cost": 700
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Engraved Guard",
+        "Veve Charm"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/EyeOfProvidence.webp"
+    },
+    {
+      "name": "Eye of the Storm",
+      "tags": [
+        "tier3",
+        "strength",
+        "health regen",
+        "echo",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "strength": 40,
+        "health regen": 4,
+        "echo": 20,
+        "cost": 2600,
+        "step cost": 850
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Battle Axe",
+        "Engraved Guard"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/EyeOfTheStorm.webp"
+    },
+    {
+      "name": "Fencer's Buckler",
+      "tags": [
+        "tier2",
+        "attack speed",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 10,
+        "physical protection": 8,
+        "cost": 800,
+        "step cost": 200
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Bow",
+        "Shield"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/FencersBuckler.webp"
+    },
+    {
+      "name": "Flaming Pearl",
+      "tags": [
+        "tier2",
+        "health",
+        "intelligence",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 100,
+        "intelligence": 25,
+        "cost": 950,
+        "step cost": 200
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Gem",
+        "Medallion"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/FlamingPearl.webp"
+    },
+    {
+      "name": "Freya's Tears",
+      "tags": [
+        "tier3",
+        "magical protection",
+        "physical protection",
+        "cooldown rate",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "magical protection": 35,
+        "physical protection": 30,
+        "cooldown rate": 20,
+        "cost": 2600,
+        "step cost": 1000
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Sage's Ring",
+        "Captain's Ring"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/freyasTears.webp"
+    },
+    {
+      "name": "Gauntlet of Thebes",
+      "tags": [
+        "tier3",
+        "health",
+        "mana",
+        "physical protection",
+        "magical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 900,
+        "mana": 150,
+        "physical protection": 10,
+        "magical protection": 10,
+        "cost": 2200,
+        "step cost": 1400
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Odigba"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/TheNemes.webp"
+    },
+    {
+      "name": "Gem",
+      "tags": [
+        "tier1",
+        "intelligence",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 15,
+        "cost": 450,
+        "step cost": 450
+      },
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Gem.webp"
+    },
+    {
+      "name": "Gem of Focus",
+      "tags": [
+        "tier3",
+        "cooldown rate",
+        "intelligence",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 20,
+        "intelligence": 65,
+        "cost": 2550,
+        "step cost": 800
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Adroit Ring",
+        "Killing Stone"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/GemOfFocus.webp"
+    },
+    {
+      "name": "Gem of Isolation",
+      "tags": [
+        "tier3",
+        "health",
+        "intelligence",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 250,
+        "intelligence": 50,
+        "cost": 2500,
+        "step cost": 750
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Flaming Pearl",
+        "Veve Charm"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/GemOfIsolation.webp"
+    },
+    {
+      "name": "Genji's Guard",
+      "tags": [
+        "tier3",
+        "cooldown rate",
+        "magical protection",
+        "mana",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 15,
+        "magical protection": 55,
+        "mana": 200,
+        "mana regen": 5,
+        "cost": 2350,
+        "step cost": 1050
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Mana Tome",
+        "Sage's Ring"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/GenjisGuard.webp"
+    },
+    {
+      "name": "Gilded Arrow",
+      "tags": [
+        "starter",
+        "tier1",
+        "attack damage",
+        "attack speed",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack damage": 20,
+        "attack speed": 10,
+        "cost": 650,
+        "step cost": 650
+      },
+      "tier": 1,
+      "starter": true,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/gildedArrow.webp"
+    },
+    {
+      "name": "Gladiator's Shield",
+      "tags": [
+        "tier3",
+        "cooldown rate",
+        "health",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 10,
+        "health": 200,
+        "physical protection": 25,
+        "cost": 2450,
+        "step cost": 800
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Captain's Ring",
+        "Medal of Defense"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/LorgMor.webp"
+    },
+    {
+      "name": "Glorious Pridwen",
+      "tags": [
+        "tier3",
+        "cooldown rate",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 12,
+        "magical protection": 20,
+        "physical protection": 20,
+        "cost": 2550,
+        "step cost": 1100
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Adroit Ring",
+        "Engraved Guard"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/GloriousPridwen.webp"
+    },
+    {
+      "name": "Gluttonous Grimoire",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "health",
+        "lifesteal",
+        "penetration",
+        "cost"
+      ],
+      "stats": {
+        "intelligence": 55,
+        "health": 150,
+        "lifesteal": 10,
+        "penetration": 10,
+        "cost": 2600
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Flaming Pearl",
+        "Cursed Sickle"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/glutGrimoire.webp"
+    },
+    {
+      "name": "Golden Blade",
+      "tags": [
+        "tier3",
+        "attack speed",
+        "health",
+        "strength",
+        "attack damage",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 20,
+        "health": 200,
+        "strength": 15,
+        "attack damage": 10,
+        "cost": 2450,
+        "step cost": 800
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Battle Axe",
+        "Manchu Bow"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/MeteorHammer.webp"
+    },
+    {
+      "name": "Hastened Fatalis",
+      "tags": [
+        "tier3",
+        "attack speed",
+        "attack damage",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 25,
+        "attack damage": 25,
+        "cost": 2650,
+        "step cost": 1600
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Manchu Bow",
+        "Hunter's Bow"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/AtalantasBow.webp"
+    },
+    {
+      "name": "Health Chalice",
+      "tags": [
+        "consumable",
+        "tier1",
+        "step cost"
+      ],
+      "stats": {
+        "step cost": 300
+      },
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/healthChalice.webp"
+    },
+    {
+      "name": "Health Potion",
+      "tags": [
+        "consumable",
+        "step cost"
+      ],
+      "stats": {
+        "step cost": 50
+      },
+      "tier": null,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/healthPotion.webp"
+    },
+    {
+      "name": "Heartseeker",
+      "tags": [
+        "tier3",
+        "mana",
+        "mana regen",
+        "strength",
+        "penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "mana": 250,
+        "mana regen": 2,
+        "strength": 45,
+        "penetration": 10,
+        "cost": 3000,
+        "step cost": 700
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Infused Axe",
+        "Void Shard"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Heartseeker.webp"
+    },
+    {
+      "name": "Heartwood Charm",
+      "tags": [
+        "tier3",
+        "mana",
+        "health",
+        "cooldown rate",
+        "cost"
+      ],
+      "stats": {
+        "mana": 250,
+        "health": 400,
+        "cooldown rate": 10,
+        "cost": 2650
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Adroit Ring",
+        "Odigba"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/heartWoodCharm.webp"
+    },
+    {
+      "name": "Helm of Darkness",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 40,
+        "magical protection": 25,
+        "physical protection": 20,
+        "cost": 2700,
+        "step cost": 1000
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Engraved Guard",
+        "Killing Stone"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/HelmOfDarkness.webp"
+    },
+    {
+      "name": "Helm of Radiance",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 65,
+        "physical protection": 35,
+        "cost": 2500,
+        "step cost": 650
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Killing Stone",
+        "Legionnaire Armor"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/HelmOfRadiance.webp"
+    },
+    {
+      "name": "Heroism",
+      "tags": [
+        "starter",
+        "tier2",
+        "health",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 250,
+        "magical protection": 45,
+        "physical protection": 45,
+        "cost": 1800,
+        "step cost": 1250
+      },
+      "tier": 2,
+      "starter": true,
+      "from": [
+        "Selflessness"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Heroism.webp"
+    },
+    {
+      "name": "Hide of the Nemean Lion",
+      "tags": [
+        "tier3",
+        "health",
+        "health regen",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 350,
+        "health regen": 4,
+        "physical protection": 35,
+        "cost": 2550,
+        "step cost": 1000
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Medal of Defense",
+        "Olmec Blue"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/HideOfNemean.webp"
+    },
+    {
+      "name": "Hooked Sword",
+      "tags": [
+        "tier2",
+        "critical chance",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "critical chance": 15,
+        "cost": 1000,
+        "step cost": 450
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/HookedSword.webp"
+    },
+    {
+      "name": "Hunter's Bow",
+      "tags": [
+        "tier2",
+        "attack speed",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 15,
+        "cost": 750,
+        "step cost": 450
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Bow"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/HuntersBow.webp"
+    },
+    {
+      "name": "Hunter's Cowl",
+      "tags": [
+        "starter",
+        "tier2",
+        "lifesteal",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "lifesteal": 5,
+        "mana regen": 2.5,
+        "cost": 2150,
+        "step cost": 1500
+      },
+      "tier": 2,
+      "starter": true,
+      "from": [
+        "Leather Cowl"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/HuntersCowl.webp"
+    },
+    {
+      "name": "Hussar's Wings",
+      "tags": [
+        "tier3",
+        "health",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 500,
+        "magical protection": 35,
+        "physical protection": 35,
+        "cost": 3500,
+        "step cost": 1300
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Medal of Defense",
+        "Medal of Disruption"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/HussarsWings.webp"
+    },
+    {
+      "name": "Hydra's Lament",
+      "tags": [
+        "tier3",
+        "cooldown rate",
+        "mana",
+        "mana regen",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 10,
+        "mana": 200,
+        "mana regen": 4,
+        "strength": 45,
+        "cost": 2450,
+        "step cost": 550
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Adroit Ring",
+        "Infused Axe"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/HydrasLament.webp"
+    },
+    {
+      "name": "Infused Axe",
+      "tags": [
+        "tier2",
+        "mana",
+        "mana regen",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "mana": 150,
+        "mana regen": 1,
+        "strength": 15,
+        "cost": 1050,
+        "step cost": 300
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Axe",
+        "Circlet"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/InfusedAxe.webp"
+    },
+    {
+      "name": "Jade Scepter",
+      "tags": [
+        "tier3",
+        "health",
+        "intelligence",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 250,
+        "intelligence": 100,
+        "cost": 2750,
+        "step cost": 900
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Flaming Pearl",
+        "Killing Stone"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/JadeScepter.webp"
+    },
+    {
+      "name": "Jotunn's Revenge",
+      "tags": [
+        "tier3",
+        "cooldown rate",
+        "strength",
+        "mana",
+        "flat penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 25,
+        "strength": 35,
+        "mana": 250,
+        "flat penetration": 5,
+        "cost": 2400,
+        "step cost": 400
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Caestus",
+        "Skeggox"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/JotunnsRevenge.webp"
+    },
+    {
+      "name": "Killing Stone",
+      "tags": [
+        "tier2",
+        "intelligence",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 35,
+        "cost": 900,
+        "step cost": 550
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Gem"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/KillingStone.webp"
+    },
+    {
+      "name": "Kinetic Cuirass",
+      "tags": [
+        "tier3",
+        "health",
+        "plating",
+        "physical protection",
+        "magical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 300,
+        "plating": 5,
+        "physical protection": 25,
+        "magical protection": 25,
+        "cost": 2400,
+        "step cost": 700
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Veve Charm",
+        "Plated Metal"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/kineticCuirass.webp"
+    },
+    {
+      "name": "Kopesh",
+      "tags": [
+        "tier2",
+        "critical chance",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "critical chance": 10,
+        "strength": 10,
+        "cost": 1250,
+        "step cost": 250
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Axe",
+        "Sabre"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Kopesh.webp"
+    },
+    {
+      "name": "Leather Cowl",
+      "tags": [
+        "starter",
+        "tier1",
+        "lifesteal",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "lifesteal": 4,
+        "mana regen": 1.5,
+        "cost": 650,
+        "step cost": 650
+      },
+      "tier": 1,
+      "starter": true,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/LeatherCowl.webp"
+    },
+    {
+      "name": "Legionnaire Armor",
+      "tags": [
+        "tier2",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "physical protection": 18,
+        "cost": 750,
+        "step cost": 450
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Shield"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/LegionnaireArmor.webp"
+    },
+    {
+      "name": "Lernaean Bow",
+      "tags": [
+        "tier3",
+        "attack speed",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 30,
+        "strength": 40,
+        "cost": 2400,
+        "step cost": 850
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Skeggox",
+        "Hunter's Bow"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/LernaeanBow.webp"
+    },
+    {
+      "name": "Leviathan's Hide",
+      "tags": [
+        "tier3",
+        "health",
+        "plating",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 300,
+        "plating": 5,
+        "physical protection": 45,
+        "cost": 2500,
+        "step cost": 950
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Legionnaire Armor",
+        "Veve Charm"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/LevianthansHide.webp"
+    },
+    {
+      "name": "Lifebinder",
+      "tags": [
+        "tier3",
+        "health",
+        "health regen",
+        "intelligence",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 300,
+        "health regen": 3,
+        "intelligence": 40,
+        "cost": 2400,
+        "step cost": 750
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Flaming Pearl",
+        "Olmec Blue"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/LifeBinder.webp"
+    },
+    {
+      "name": "Lively Acorn",
+      "tags": [
+        "tier2",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "strength": 15,
+        "cost": 1500,
+        "step cost": 850
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/tierTwoAcorn.webp"
+    },
+    {
+      "name": "Lucerne Hammer",
+      "tags": [
+        "tier2",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "strength": 20,
+        "cost": 1250,
+        "step cost": 1250
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/LucerneHammer.webp"
+    },
+    {
+      "name": "Magi's Cloak",
+      "tags": [
+        "tier3",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "magical protection": 35,
+        "physical protection": 35,
+        "cost": 2400,
+        "step cost": 950
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Engraved Guard",
+        "Legionnaire Armor"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/MagisCloak.webp"
+    },
+    {
+      "name": "Magic Acorn",
+      "tags": [
+        "tier1",
+        "strength"
+      ],
+      "stats": {
+        "strength": 5
+      },
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/tierOneAcorn.webp"
+    },
+    {
+      "name": "Mana Potion",
+      "tags": [
+        "consumable",
+        "step cost"
+      ],
+      "stats": {
+        "step cost": 50
+      },
+      "tier": null,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/manaPotion.webp"
+    },
+    {
+      "name": "Mana Tome",
+      "tags": [
+        "tier2",
+        "mana",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "mana": 250,
+        "mana regen": 2,
+        "cost": 500,
+        "step cost": 200
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Circlet"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/ManaTome.webp"
+    },
+    {
+      "name": "Manchu Bow",
+      "tags": [
+        "tier2",
+        "attack speed",
+        "attack damage",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 8,
+        "attack damage": 10,
+        "cost": 950,
+        "step cost": 650
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Axe",
+        "Bow"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/ManchuBow.webp"
+    },
+    {
+      "name": "Mantle Of Discord",
+      "tags": [
+        "tier3",
+        "physical protection",
+        "magical protection",
+        "tenacity",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "physical protection": 35,
+        "magical protection": 35,
+        "tenacity": 15,
+        "cost": 2600,
+        "step cost": 1050
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Engraved Guard",
+        "Legionnaire Armor"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/MantleOfDiscord.webp"
+    },
+    {
+      "name": "Masterwork Mod",
+      "tags": [],
+      "stats": {},
+      "tier": null,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/masterworkMod.webp"
+    },
+    {
+      "name": "Medal of Defense",
+      "tags": [
+        "tier2",
+        "physical protection",
+        "health",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "physical protection": 10,
+        "health": 125,
+        "cost": 1100,
+        "step cost": 200
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/MedalOfDefense.webp"
+    },
+    {
+      "name": "Medal of Disruption",
+      "tags": [
+        "tier2",
+        "health",
+        "magical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 150,
+        "magical protection": 12,
+        "cost": 850,
+        "step cost": 250
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Medallion",
+        "Rune"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/MedalOfDisruption.webp"
+    },
+    {
+      "name": "Medallion",
+      "tags": [
+        "tier1",
+        "health",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 75,
+        "cost": 300,
+        "step cost": 300
+      },
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Medallion.webp"
+    },
+    {
+      "name": "Mercury's Talaria",
+      "tags": [
+        "tier3",
+        "pathfinding",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "pathfinding": 12,
+        "cost": 2500,
+        "step cost": 600
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Survivor's Sash",
+        "Combat Boots"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/mercurysTalaria.webp"
+    },
+    {
+      "name": "Midgardian Mail",
+      "tags": [
+        "tier3",
+        "physical protection",
+        "health",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "physical protection": 50,
+        "health": 250,
+        "cost": 2400,
+        "step cost": 850
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Legionnaire Armor",
+        "Veve Charm"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/midgardianMail.webp"
+    },
+    {
+      "name": "Mote of Chaos",
+      "tags": [
+        "tier2",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cost": 1250,
+        "step cost": 1250
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/moteOfChaos.webp"
+    },
+    {
+      "name": "Multi Potion",
+      "tags": [
+        "consumable",
+        "step cost"
+      ],
+      "stats": {
+        "step cost": 50
+      },
+      "tier": null,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/multiPotion.webp"
+    },
+    {
+      "name": "Musashi's Dual Swords",
+      "tags": [
+        "tier3",
+        "critical chance",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "critical chance": 30,
+        "strength": 35,
+        "cost": 2700,
+        "step cost": 500
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Hooked Sword",
+        "Kopesh"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/MusashisDualSwords.webp"
+    },
+    {
+      "name": "Mystical Mail",
+      "tags": [
+        "tier3",
+        "health",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 300,
+        "physical protection": 40,
+        "cost": 2550,
+        "step cost": 900
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Medal of Defense",
+        "Veve Charm"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/MysticalMail.webp"
+    },
+    {
+      "name": "Necronomicon",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "mana",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 50,
+        "mana": 300,
+        "mana regen": 5,
+        "cost": 2550,
+        "step cost": 850
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Killing Stone",
+        "Void Shard"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Necronomicon.webp"
+    },
+    {
+      "name": "Nimble Ring",
+      "tags": [
+        "tier3",
+        "attack speed",
+        "intelligence",
+        "lifesteal",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 20,
+        "intelligence": 35,
+        "lifesteal": 7.5,
+        "cost": 2500,
+        "step cost": 900
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "EnchantedBracelet",
+        "Cursed Sickle"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/nimbleRing.webp"
+    },
+    {
+      "name": "Oath-Sworn Spear",
+      "tags": [
+        "tier3",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "strength": 50,
+        "cost": 2550,
+        "step cost": 550
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Lucerne Hammer",
+        "Skeggox"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/ObsidianMacuahuitl.webp"
+    },
+    {
+      "name": "Obsidian Shard",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 70,
+        "penetration": 20,
+        "cost": 3050,
+        "step cost": 650
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Evil Eye",
+        "Void Shard"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BalorsEye.webp"
+    },
+    {
+      "name": "Odigba",
+      "tags": [
+        "tier2",
+        "health",
+        "mana",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 125,
+        "mana": 150,
+        "cost": 800,
+        "step cost": 200
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Odigba.webp"
+    },
+    {
+      "name": "Odysseus' Bow",
+      "tags": [
+        "tier3",
+        "attack speed",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 45,
+        "cost": 2450,
+        "step cost": 950
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Hunter's Bow"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/OdysseusBow.webp"
+    },
+    {
+      "name": "Olmec Blue",
+      "tags": [
+        "tier2",
+        "health",
+        "health regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 185,
+        "health regen": 2,
+        "cost": 700,
+        "step cost": 100
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Medallion",
+        "Sash"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/OlmecBlue.webp"
+    },
+    {
+      "name": "Omen Drum",
+      "tags": [
+        "tier3",
+        "echo",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "echo": 30,
+        "cost": 2800,
+        "step cost": 1050
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Survivor's Sash",
+        "Bowl Drum"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/omenDrum.webp"
+    },
+    {
+      "name": "Oni Hunter's Garb",
+      "tags": [
+        "tier3",
+        "health",
+        "magical protection",
+        "mana",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 150,
+        "magical protection": 50,
+        "mana": 200,
+        "mana regen": 8,
+        "cost": 2500,
+        "step cost": 1150
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Mana Tome",
+        "Medal of Disruption"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/OniHuntersGarb.webp"
+    },
+    {
+      "name": "Oracle Staff",
+      "tags": [
+        "tier2",
+        "intelligence",
+        "mana",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 20,
+        "mana": 150,
+        "mana regen": 1,
+        "cost": 950,
+        "step cost": 200
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Circlet",
+        "Gem"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/OracleStaff.webp"
+    },
+    {
+      "name": "Pendulum Blade",
+      "tags": [
+        "tier3",
+        "cooldown rate",
+        "strength",
+        "penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 10,
+        "strength": 30,
+        "penetration": 10,
+        "cost": 2750,
+        "step cost": 550
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Caestus",
+        "Skeggox"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/PendulumBlade.webp"
+    },
+    {
+      "name": "Pendulum Of The Ages",
+      "tags": [
+        "starter",
+        "tier2",
+        "cooldown rate",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 20,
+        "mana regen": 4,
+        "cost": 2150,
+        "step cost": 1500
+      },
+      "tier": 2,
+      "starter": true,
+      "from": [
+        "Sands Of Time"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/PendulumOfTheAges.webp"
+    },
+    {
+      "name": "Phantom Shell",
+      "tags": [
+        "tier1"
+      ],
+      "stats": {},
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/PhantomShell.webp"
+    },
+    {
+      "name": "Pharaoh's Curse",
+      "tags": [
+        "tier3",
+        "attack speed",
+        "plating",
+        "health",
+        "magical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 20,
+        "plating": 5,
+        "health": 250,
+        "magical protection": 30,
+        "cost": 2450,
+        "step cost": 900
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Engraved Guard",
+        "Hunter's Bow"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/PharaohsCurse.webp"
+    },
+    {
+      "name": "Phoenix Feather",
+      "tags": [
+        "tier3",
+        "health",
+        "magical protection",
+        "dampening",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 300,
+        "magical protection": 35,
+        "dampening": 5,
+        "cost": 2400,
+        "step cost": 800
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Medal of Disruption",
+        "Circle of Protection"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/PhoenixAmulet.webp"
+    },
+    {
+      "name": "Plated Metal",
+      "tags": [
+        "tier2",
+        "plating",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "plating": 9,
+        "cost": 900,
+        "step cost": 300
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Medallion",
+        "Shield"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/platedMetal.webp"
+    },
+    {
+      "name": "Polynomicon",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "mana",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 75,
+        "mana": 200,
+        "mana regen": 3,
+        "cost": 2550,
+        "step cost": 550
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Killing Stone",
+        "Oracle Staff"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Polynomicon.webp"
+    },
+    {
+      "name": "Prophetic Cloak",
+      "tags": [
+        "tier3",
+        "cooldown rate",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 10,
+        "magical protection": 22,
+        "physical protection": 22,
+        "cost": 2400,
+        "step cost": 850
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/basePropheticCloak.webp"
+    },
+    {
+      "name": "Purification Beads",
+      "tags": [
+        "tier1"
+      ],
+      "stats": {},
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/PurificationBeads.webp"
+    },
+    {
+      "name": "Qin's Blade",
+      "tags": [
+        "tier3",
+        "attack speed",
+        "attack damage",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 25,
+        "attack damage": 30,
+        "cost": 2600,
+        "step cost": 900
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Hunter's Bow",
+        "Manchu Bow"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/QinsBlade.webp"
+    },
+    {
+      "name": "Radiant Bulwark",
+      "tags": [
+        "tier3",
+        "plating",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "plating": 15,
+        "magical protection": 20,
+        "physical protection": 20,
+        "cost": 2750,
+        "step cost": 1050
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Engraved Guard",
+        "Plated Metal"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/radiantBulwark.webp"
+    },
+    {
+      "name": "Rage",
+      "tags": [
+        "tier3",
+        "critical chance",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "critical chance": 20,
+        "strength": 30,
+        "cost": 2450,
+        "step cost": 650
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Kopesh",
+        "Skeggox"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Rage.webp"
+    },
+    {
+      "name": "Ragnarok's Wake",
+      "tags": [
+        "tier3",
+        "health",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 250,
+        "physical protection": 45,
+        "cost": 2600,
+        "step cost": 900
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Medal of Defense"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/RagnaroksWake.webp"
+    },
+    {
+      "name": "Regrowth Striders",
+      "tags": [
+        "tier3",
+        "physical protection",
+        "mana regen",
+        "cooldown rate",
+        "cost"
+      ],
+      "stats": {
+        "physical protection": 35,
+        "mana regen": 3,
+        "cooldown rate": 10,
+        "cost": 2550
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Legionnaire Armor",
+        "Captain's Ring"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/regrowthStriders.webp"
+    },
+    {
+      "name": "Reliquary",
+      "tags": [
+        "tier1",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "mana regen": 2,
+        "cost": 300,
+        "step cost": 300
+      },
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Reliquary.webp"
+    },
+    {
+      "name": "Resolute Mantle",
+      "tags": [
+        "tier3",
+        "health",
+        "tenacity",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 550,
+        "tenacity": 15,
+        "cost": 2750,
+        "step cost": 850
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Veve Charm",
+        "Cleric's Cloak"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/resoluteMantle.webp"
+    },
+    {
+      "name": "Resonator Mod",
+      "tags": [],
+      "stats": {},
+      "tier": null,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/resonatorMod.webp"
+    },
+    {
+      "name": "Ring",
+      "tags": [
+        "tier1",
+        "cooldown rate",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 5,
+        "cost": 400,
+        "step cost": 400
+      },
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Ring.webp"
+    },
+    {
+      "name": "Ring of Dispel",
+      "tags": [
+        "tier2",
+        "cooldown rate",
+        "intelligence",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 10,
+        "intelligence": 20,
+        "cost": 950,
+        "step cost": 100
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Gem",
+        "Ring"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/RingOfDispel.webp"
+    },
+    {
+      "name": "Riptalon",
+      "tags": [
+        "tier3",
+        "lifesteal",
+        "attack damage",
+        "attack speed",
+        "penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "lifesteal": 7.5,
+        "attack damage": 20,
+        "attack speed": 20,
+        "penetration": 10,
+        "cost": 2700,
+        "step cost": 1100
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Hunter's Bow",
+        "Cursed Sickle"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/RipTalon.webp"
+    },
+    {
+      "name": "Rod Of Asclepius",
+      "tags": [
+        "tier3",
+        "health",
+        "health regen",
+        "intelligence",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 225,
+        "health regen": 3,
+        "intelligence": 65,
+        "cost": 2350,
+        "step cost": 750
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Killing Stone",
+        "Olmec Blue"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/rodOfAsclepius.webp"
+    },
+    {
+      "name": "Rod of Tahuti",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "mana",
+        "mana regen",
+        "penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 80,
+        "mana": 250,
+        "mana regen": 2,
+        "penetration": 5,
+        "cost": 3000,
+        "step cost": 1500
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Evil Eye",
+        "Mana Tome"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/EldritchOrb.webp"
+    },
+    {
+      "name": "Rune",
+      "tags": [
+        "tier1",
+        "magical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "magical protection": 7,
+        "cost": 300,
+        "step cost": 300
+      },
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Rune.webp"
+    },
+    {
+      "name": "Runeforged Hammer",
+      "tags": [
+        "tier3",
+        "health",
+        "health regen",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 350,
+        "health regen": 3,
+        "strength": 45,
+        "cost": 2550,
+        "step cost": 950
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Battle Axe",
+        "Engraved Guard"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/runeForged.webp"
+    },
+    {
+      "name": "Runic Bomb",
+      "tags": [
+        "consumable",
+        "tier1"
+      ],
+      "stats": {},
+      "tier": 1,
+      "starter": false,
+      "from": [
+        "N/A"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/runicBomb.webp"
+    },
+    {
+      "name": "Runic Hide",
+      "tags": [
+        "tier2",
+        "dampening",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "dampening": 10,
+        "cost": 850,
+        "step cost": 250
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Rune",
+        "Shield"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/runicHide.webp"
+    },
+    {
+      "name": "Sabre",
+      "tags": [
+        "tier1",
+        "critical chance",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "critical chance": 7,
+        "cost": 550,
+        "step cost": 550
+      },
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Sabre.webp"
+    },
+    {
+      "name": "Sage's Ring",
+      "tags": [
+        "tier2",
+        "cooldown rate",
+        "magical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 10,
+        "magical protection": 12,
+        "cost": 800,
+        "step cost": 100
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Ring",
+        "Rune"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/SagesRing.webp"
+    },
+    {
+      "name": "Sands Of Time",
+      "tags": [
+        "starter",
+        "tier1",
+        "cooldown rate",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 10,
+        "mana regen": 2,
+        "cost": 650,
+        "step cost": 650
+      },
+      "tier": 1,
+      "starter": true,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/SandsOfTime.webp"
+    },
+    {
+      "name": "Sanguine Lash",
+      "tags": [
+        "tier3",
+        "strength",
+        "magical protection",
+        "lifesteal",
+        "cost"
+      ],
+      "stats": {
+        "strength": 25,
+        "magical protection": 30,
+        "lifesteal": 5,
+        "cost": 2650
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Circle of Protection",
+        "Adamantine Sickle"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/sanguineLash.webp"
+    },
+    {
+      "name": "Sash",
+      "tags": [
+        "tier1",
+        "health regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health regen": 2,
+        "cost": 300,
+        "step cost": 300
+      },
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Sash.webp"
+    },
+    {
+      "name": "Scepter of Dominion",
+      "tags": [
+        "tier3",
+        "health",
+        "intelligence",
+        "mana",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 150,
+        "intelligence": 30,
+        "mana": 200,
+        "mana regen": 3,
+        "cost": 2600,
+        "step cost": 950
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Flaming Pearl",
+        "Mana Tome"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/ScepterOfDominion.webp"
+    },
+    {
+      "name": "Screeching Gargoyle",
+      "tags": [
+        "tier3",
+        "cooldown rate",
+        "magical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 15,
+        "magical protection": 50,
+        "cost": 2400,
+        "step cost": 850
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Sage's Ring",
+        "Circle of Protection"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/ScreechingGargoyle.webp"
+    },
+    {
+      "name": "Scythe",
+      "tags": [
+        "tier1",
+        "lifesteal",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "lifesteal": 3,
+        "cost": 450,
+        "step cost": 450
+      },
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Scythe.webp"
+    },
+    {
+      "name": "Seismic Mod",
+      "tags": [],
+      "stats": {},
+      "tier": null,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/seismicMod.webp"
+    },
+    {
+      "name": "Selflessness",
+      "tags": [
+        "starter",
+        "tier1",
+        "health",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 100,
+        "magical protection": 10,
+        "physical protection": 10,
+        "cost": 550,
+        "step cost": 550
+      },
+      "tier": 1,
+      "starter": true,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Selflessness.webp"
+    },
+    {
+      "name": "Sharpshooter's Arrow",
+      "tags": [
+        "starter",
+        "tier2",
+        "attack speed",
+        "critical chance",
+        "attack damage",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 25,
+        "critical chance": 15,
+        "attack damage": 60,
+        "cost": 2150,
+        "step cost": 1500
+      },
+      "tier": 2,
+      "starter": true,
+      "from": [
+        "Gilded Arrow"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/SharpshootersArrow.webp"
+    },
+    {
+      "name": "Shell of Rebuke",
+      "tags": [
+        "tier3",
+        "physical protection",
+        "magical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "physical protection": 20,
+        "magical protection": 20,
+        "cost": 2500,
+        "step cost": 1250
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Phantom Shell",
+        "Mote of Chaos"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/ShellOfRebuke.webp"
+    },
+    {
+      "name": "Shield",
+      "tags": [
+        "tier1",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "physical protection": 6,
+        "cost": 300,
+        "step cost": 300
+      },
+      "tier": 1,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Shield.webp"
+    },
+    {
+      "name": "Shield of the Phoenix",
+      "tags": [
+        "tier3",
+        "cooldown rate",
+        "health",
+        "physical protection",
+        "plating",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 10,
+        "health": 225,
+        "physical protection": 35,
+        "plating": 5,
+        "cost": 2400,
+        "step cost": 900
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Adroit Ring",
+        "Medal of Defense"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/ShieldOfThePhoenix.webp"
+    },
+    {
+      "name": "Shield Splitter",
+      "tags": [
+        "tier3",
+        "magical protection",
+        "physical protection",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "magical protection": 15,
+        "physical protection": 15,
+        "strength": 40,
+        "cost": 2400,
+        "step cost": 800
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Engraved Guard",
+        "Skeggox"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/shieldSplitter.webp"
+    },
+    {
+      "name": "Shifter's Shield",
+      "tags": [
+        "tier3",
+        "health",
+        "magical protection",
+        "physical protection",
+        "health regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 200,
+        "magical protection": 25,
+        "physical protection": 25,
+        "health regen": 4,
+        "cost": 2750,
+        "step cost": 1150
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Engraved Guard",
+        "Odigba"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/ShiftersShieldV2.webp"
+    },
+    {
+      "name": "Shogun's Ofuda",
+      "tags": [
+        "tier3",
+        "attack speed",
+        "health",
+        "dampening",
+        "magical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 15,
+        "health": 200,
+        "dampening": 5,
+        "magical protection": 40,
+        "cost": 2500,
+        "step cost": 900
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Medal of Disruption",
+        "Hunter's Bow"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/ShogunsOfuda.webp"
+    },
+    {
+      "name": "Shrapnel Mod",
+      "tags": [],
+      "stats": {},
+      "tier": null,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/shrapnelMod.webp"
+    },
+    {
+      "name": "Shroud of Vengeance",
+      "tags": [
+        "tier3",
+        "physical protection",
+        "magical protection",
+        "tenacity",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "physical protection": 20,
+        "magical protection": 20,
+        "tenacity": 15,
+        "cost": 2500,
+        "step cost": 900
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Engraved Guard",
+        "Cleric's Cloak"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/shroudOfVengeance.webp"
+    },
+    {
+      "name": "Silverbranch Bow",
+      "tags": [
+        "tier3",
+        "attack damage",
+        "attack speed",
+        "penetration",
+        "cost"
+      ],
+      "stats": {
+        "attack damage": 25,
+        "attack speed": 30,
+        "penetration": 10,
+        "cost": 2700
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/silverbranchBow.webp"
+    },
+    {
+      "name": "Skeggox",
+      "tags": [
+        "tier2",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "strength": 15,
+        "cost": 1000,
+        "step cost": 550
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Skeggox.webp"
+    },
+    {
+      "name": "Soul Gem",
+      "tags": [
+        "tier3",
+        "cooldown rate",
+        "intelligence",
+        "lifesteal",
+        "flat penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 10,
+        "intelligence": 60,
+        "lifesteal": 7.5,
+        "flat penetration": 5,
+        "cost": 2500,
+        "step cost": 350
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Cursed Sickle",
+        "Ring of Dispel"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/SoulGem.webp"
+    },
+    {
+      "name": "Soul Reaver",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "mana",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 85,
+        "mana": 250,
+        "mana regen": 5,
+        "cost": 2950,
+        "step cost": 1100
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Oracle Staff",
+        "Soul Reliquary"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/SoulDevourer.webp"
+    },
+    {
+      "name": "Soul Reliquary",
+      "tags": [
+        "tier2",
+        "intelligence",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 20,
+        "mana regen": 4,
+        "cost": 900,
+        "step cost": 150
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Reliquary",
+        "Gem"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/SoulReliquary.webp"
+    },
+    {
+      "name": "Spear of Desolation",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "cooldown rate",
+        "flat penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 75,
+        "cooldown rate": 10,
+        "flat penetration": 10,
+        "cost": 2650,
+        "step cost": 600
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Evil Eye",
+        "OfDispel"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/SpeareOfDesolation.webp"
+    },
+    {
+      "name": "Spear of the Magus",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 75,
+        "penetration": 10,
+        "cost": 2700,
+        "step cost": 750
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Evil Eye",
+        "OfDispel"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/spearOfTheMagus.webp"
+    },
+    {
+      "name": "Spectral Armor",
+      "tags": [
+        "tier3",
+        "health",
+        "plating",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 450,
+        "plating": 10,
+        "physical protection": 20,
+        "cost": 2300,
+        "step cost": 600
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Legionnaire Armor",
+        "Medal of Defense"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/SilkenMailcoat.webp"
+    },
+    {
+      "name": "Sphere of Negation",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "magical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 40,
+        "magical protection": 50,
+        "cost": 2750,
+        "step cost": 1500
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Killing Stone",
+        "Circle of Protection"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/SphereOfNegation.webp"
+    },
+    {
+      "name": "Spirit Robe",
+      "tags": [
+        "tier3",
+        "magical protection",
+        "physical protection",
+        "tenacity",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "magical protection": 20,
+        "physical protection": 20,
+        "tenacity": 15,
+        "cost": 2500,
+        "step cost": 1000
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Legionnaire Armor",
+        "Circle of Protection"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/SpiritRobe.webp"
+    },
+    {
+      "name": "Staff of Myrddin",
+      "tags": [
+        "tier3",
+        "cooldown rate",
+        "intelligence",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 10,
+        "intelligence": 75,
+        "cost": 2900,
+        "step cost": 900
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Killing Stone",
+        "Ring of Dispel"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/StaffOfMyrddin.webp"
+    },
+    {
+      "name": "Stampede",
+      "tags": [
+        "tier3",
+        "health",
+        "health regen",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 250,
+        "health regen": 5,
+        "physical protection": 30,
+        "cost": 2400,
+        "step cost": 950
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Legionnaire Armor",
+        "Olmec Blue"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Stampede.webp"
+    },
+    {
+      "name": "Stone of Binding",
+      "tags": [
+        "tier3",
+        "magical protection",
+        "physical protection",
+        "dampening",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "magical protection": 35,
+        "physical protection": 35,
+        "dampening": 5,
+        "cost": 2550,
+        "step cost": 700
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Engraved Guard",
+        "Legionnaire Armor"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/BindingsOfLyngvi.webp"
+    },
+    {
+      "name": "Stygian Anchor",
+      "tags": [
+        "tier3",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost",
+        "antiheal"
+      ],
+      "stats": {
+        "magical protection": 30,
+        "physical protection": 35,
+        "cost": 2550,
+        "step cost": 950
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Engraved Guard"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/stygianAnchor.webp"
+    },
+    {
+      "name": "Sun Beam Bow",
+      "tags": [
+        "tier3",
+        "attack speed",
+        "attack damage",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 10,
+        "attack damage": 20,
+        "cost": 2400,
+        "step cost": 550
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Manchu Bow",
+        "Survivor's Sash"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/sunBeamBow.webp"
+    },
+    {
+      "name": "Sundering Arc",
+      "tags": [
+        "tier1"
+      ],
+      "stats": {},
+      "tier": 1,
+      "starter": false,
+      "from": [
+        "N/A"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/sunderingArc.webp"
+    },
+    {
+      "name": "Sundering Axe",
+      "tags": [
+        "starter",
+        "tier2",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "magical protection": 30,
+        "physical protection": 30,
+        "cost": 2150,
+        "step cost": 1500
+      },
+      "tier": 2,
+      "starter": true,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/sunderingaxe.webp"
+    },
+    {
+      "name": "Sundering Echo",
+      "tags": [
+        "tier3",
+        "strength",
+        "intelligence",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "strength": 25,
+        "intelligence": 45,
+        "cost": 2500,
+        "step cost": 1250
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Sundering Arc",
+        "Mote of Chaos"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/SunderingEcho.webp"
+    },
+    {
+      "name": "Surplus Mod",
+      "tags": [],
+      "stats": {},
+      "tier": null,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/surplusMod.webp"
+    },
+    {
+      "name": "Survivor's Sash",
+      "tags": [
+        "tier2",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cost": 1000,
+        "step cost": 400
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Rune",
+        "Sash"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/SurvivorsSash.webp"
+    },
+    {
+      "name": "Talisman of Purification",
+      "tags": [
+        "tier3",
+        "cooldown rate",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "cooldown rate": 20,
+        "cost": 2500,
+        "step cost": 1000
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Purification Beads",
+        "Mote of Chaos"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/TalismanOfPurification.webp"
+    },
+    {
+      "name": "Tekko-Kagi",
+      "tags": [
+        "tier3",
+        "attack speed",
+        "strength",
+        "flat penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 20,
+        "strength": 35,
+        "flat penetration": 10,
+        "cost": 2700,
+        "step cost": 1050
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Adroit Ring",
+        "Skeggox"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/TekkoKagi.webp"
+    },
+    {
+      "name": "The Cosmic Horror",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "flat penetration",
+        "echo",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 55,
+        "flat penetration": 10,
+        "echo": 20,
+        "cost": 2650,
+        "step cost": 950
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Adroit Ring",
+        "Oracle Staff"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/StaffOfCosmicHorror.webp"
+    },
+    {
+      "name": "The Crusher",
+      "tags": [
+        "tier3",
+        "strength",
+        "flat penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "strength": 55,
+        "flat penetration": 10,
+        "cost": 2800,
+        "step cost": 550
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Caestus",
+        "Void Shard"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/TheCrusher.webp"
+    },
+    {
+      "name": "The Executioner",
+      "tags": [
+        "tier3",
+        "attack speed",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 20,
+        "cost": 2550,
+        "step cost": 950
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Survivor's Sash",
+        "Hunter's Bow"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/TheExecutioner.webp"
+    },
+    {
+      "name": "The Reaper",
+      "tags": [
+        "tier3",
+        "lifesteal",
+        "strength",
+        "flat penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "lifesteal": 7.5,
+        "strength": 45,
+        "flat penetration": 10,
+        "cost": 2600,
+        "step cost": 450
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Adamantine Sickle",
+        "Cursed Sickle"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/TheReaper.webp"
+    },
+    {
+      "name": "The World Stone",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "mana",
+        "mana regen",
+        "flat penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 70,
+        "mana": 250,
+        "mana regen": 3,
+        "flat penetration": 10,
+        "cost": 2800,
+        "step cost": 900
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Oracle Staff"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/TheWorldStone.webp"
+    },
+    {
+      "name": "Thermal Mod",
+      "tags": [],
+      "stats": {},
+      "tier": null,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/thermalMod.webp"
+    },
+    {
+      "name": "Thistlethorn Acorn",
+      "tags": [
+        "tier3",
+        "strength",
+        "lifesteal",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "strength": 45,
+        "lifesteal": 5,
+        "cost": 2400,
+        "step cost": 900
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/thistleThorn.webp"
+    },
+    {
+      "name": "Time-Lock Aegis",
+      "tags": [
+        "tier3",
+        "physical protection",
+        "magical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "physical protection": 15,
+        "magical protection": 15,
+        "cost": 2500,
+        "step cost": 1250
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Aegis Of Acceleration",
+        "Mote of Chaos"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/TimeLockAegis.webp"
+    },
+    {
+      "name": "Titan's Bane",
+      "tags": [
+        "tier3",
+        "strength",
+        "penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "strength": 40,
+        "penetration": 20,
+        "cost": 3100,
+        "step cost": 950
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Lucerne Hammer",
+        "Void Shard"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/SerpentSpear.webp"
+    },
+    {
+      "name": "Totem of Death",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "echo",
+        "cooldown rate",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 55,
+        "echo": 10,
+        "cooldown rate": 20,
+        "cost": 2800,
+        "step cost": 950
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Adroit Ring",
+        "Evil Eye"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/TotemOfDeath.webp"
+    },
+    {
+      "name": "Toxic Blade",
+      "tags": [
+        "tier3",
+        "attack damage",
+        "health",
+        "attack speed",
+        "flat penetration",
+        "cost",
+        "antiheal"
+      ],
+      "stats": {
+        "attack damage": 25,
+        "health": 100,
+        "attack speed": 20,
+        "flat penetration": 10,
+        "cost": 2700
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/toxicBlade.webp"
+    },
+    {
+      "name": "Transcendence",
+      "tags": [
+        "tier3",
+        "mana",
+        "mana regen",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "mana": 250,
+        "mana regen": 4,
+        "strength": 35,
+        "cost": 2400,
+        "step cost": 850
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Infused Axe",
+        "Mana Tome"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/baseTranscendence.webp"
+    },
+    {
+      "name": "Triton's Conch",
+      "tags": [
+        "tier3",
+        "health",
+        "intelligence",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 250,
+        "intelligence": 40,
+        "strength": 25,
+        "cost": 2700,
+        "step cost": 900
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Veve Charm",
+        "Zither"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/TritonsConch.webp"
+    },
+    {
+      "name": "Typhon's Heart",
+      "tags": [
+        "tier3",
+        "intelligence",
+        "lifesteal",
+        "cost"
+      ],
+      "stats": {
+        "intelligence": 80,
+        "lifesteal": 7.5,
+        "cost": 2600
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Killing Stone",
+        "Cursed Sickle"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/typhonsHeart.webp"
+    },
+    {
+      "name": "Tyrfing",
+      "tags": [
+        "tier3",
+        "attack speed",
+        "strength",
+        "attack damage",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 10,
+        "strength": 25,
+        "attack damage": 25,
+        "cost": 2400,
+        "step cost": 600
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Infused Axe",
+        "Manchu Bow"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Tyrfing.webp"
+    },
+    {
+      "name": "Umbral Link",
+      "tags": [
+        "tier3",
+        "physical protection",
+        "lifesteal",
+        "cost"
+      ],
+      "stats": {
+        "physical protection": 40,
+        "lifesteal": 10,
+        "cost": 2500
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Legionnaire Armor",
+        "Cursed Sickle"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/umbralLink.webp"
+    },
+    {
+      "name": "Vampiric Shroud",
+      "tags": [
+        "starter",
+        "tier1",
+        "health",
+        "lifesteal",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 100,
+        "lifesteal": 4,
+        "cost": 600,
+        "step cost": 600
+      },
+      "tier": 1,
+      "starter": true,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/vampiricShroud.webp"
+    },
+    {
+      "name": "Veve Charm",
+      "tags": [
+        "tier2",
+        "health",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 240,
+        "cost": 800,
+        "step cost": 500
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Medallion"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/VeveCharm.webp"
+    },
+    {
+      "name": "Vital Amplifier",
+      "tags": [
+        "tier3",
+        "health",
+        "health regen",
+        "attack speed",
+        "cost"
+      ],
+      "stats": {
+        "health": 200,
+        "health regen": 3,
+        "attack speed": 10,
+        "cost": 2500
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Survivor's Sash",
+        "Olmec Blue"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/vitalAmplifier.webp"
+    },
+    {
+      "name": "Void Shard",
+      "tags": [
+        "tier2",
+        "penetration",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "penetration": 10,
+        "cost": 750,
+        "step cost": 750
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/VoidShard.webp"
+    },
+    {
+      "name": "Void Shield",
+      "tags": [
+        "tier3",
+        "health",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 100,
+        "physical protection": 55,
+        "cost": 2600,
+        "step cost": 950
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Battle Axe",
+        "Legionnaire Armor"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/VoidShield.webp"
+    },
+    {
+      "name": "Void Stone",
+      "tags": [
+        "tier3",
+        "health",
+        "magical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 150,
+        "magical protection": 60,
+        "cost": 2650,
+        "step cost": 950
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Flaming Pearl",
+        "Circle of Protection"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/VoidStone.webp"
+    },
+    {
+      "name": "War Banner",
+      "tags": [
+        "starter",
+        "tier2",
+        "attack speed",
+        "health",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 30,
+        "health": 200,
+        "magical protection": 30,
+        "physical protection": 30,
+        "cost": 1800,
+        "step cost": 1250
+      },
+      "tier": 2,
+      "starter": true,
+      "from": [
+        "War Flag"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/WarBanner.webp"
+    },
+    {
+      "name": "War Flag",
+      "tags": [
+        "starter",
+        "tier1",
+        "attack speed",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "attack speed": 15,
+        "magical protection": 10,
+        "physical protection": 10,
+        "cost": 550,
+        "step cost": 550
+      },
+      "tier": 1,
+      "starter": true,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/WarFlag.webp"
+    },
+    {
+      "name": "Warrior's Axe",
+      "tags": [
+        "starter",
+        "tier1",
+        "magical protection",
+        "physical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "magical protection": 10,
+        "physical protection": 10,
+        "cost": 650,
+        "step cost": 650
+      },
+      "tier": 1,
+      "starter": true,
+      "from": [],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/sunderingaxe.webp"
+    },
+    {
+      "name": "Wish-Granting Pearl",
+      "tags": [
+        "tier3",
+        "health",
+        "intelligence",
+        "mana",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 425,
+        "intelligence": 120,
+        "mana": 200,
+        "cost": 3550,
+        "step cost": 1800
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Flaming Pearl",
+        "Odigba"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Wish-GrantingPearl.webp"
+    },
+    {
+      "name": "Wyrmskin Hide",
+      "tags": [
+        "tier3",
+        "strength",
+        "dampening",
+        "health",
+        "magical protection",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "strength": 20,
+        "dampening": 5,
+        "health": 300,
+        "magical protection": 15,
+        "cost": 2600,
+        "step cost": 850
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Battle Axe",
+        "Runic Hide"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/wyrmskinHide.webp"
+    },
+    {
+      "name": "Xibalban Effigy",
+      "tags": [
+        "tier3",
+        "magical protection",
+        "physical protection",
+        "mana",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "magical protection": 30,
+        "physical protection": 30,
+        "mana": 300,
+        "mana regen": 4,
+        "cost": 2750,
+        "step cost": 850
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Mana Tome",
+        "StalwartSigil"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/xibalbanEffigy.webp"
+    },
+    {
+      "name": "Yogi's Necklace",
+      "tags": [
+        "tier3",
+        "health",
+        "health regen",
+        "mana",
+        "mana regen",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "health": 325,
+        "health regen": 6,
+        "mana": 250,
+        "mana regen": 6,
+        "cost": 2250,
+        "step cost": 1050
+      },
+      "tier": 3,
+      "starter": false,
+      "from": [
+        "Mana Tome",
+        "Olmec Blue"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/YogisNecklace.webp"
+    },
+    {
+      "name": "Zither",
+      "tags": [
+        "tier2",
+        "intelligence",
+        "strength",
+        "cost",
+        "step cost"
+      ],
+      "stats": {
+        "intelligence": 20,
+        "strength": 12,
+        "cost": 1100,
+        "step cost": 200
+      },
+      "tier": 2,
+      "starter": false,
+      "from": [
+        "Axe",
+        "Gem"
+      ],
+      "image": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons/Zither.webp"
+    }
+  ],
+  "aspects": [
+    {
+      "god": "Achilles",
+      "aspect": "Aspect of Prowess",
+      "blank": "Prowess",
+      "usesThe": false
+    },
+    {
+      "god": "Agni",
+      "aspect": "Aspect of Combustion",
+      "blank": "Combustion",
+      "usesThe": false
+    },
+    {
+      "god": "Ah Puch",
+      "aspect": "Aspect of the Death March",
+      "blank": "Death March",
+      "usesThe": true
+    },
+    {
+      "god": "Amaterasu",
+      "aspect": "Aspect Of Valor",
+      "blank": "Valor",
+      "usesThe": false
+    },
+    {
+      "god": "Anhur",
+      "aspect": "Aspect of Pride",
+      "blank": "Pride",
+      "usesThe": false
+    },
+    {
+      "god": "Apollo",
+      "aspect": "Aspect of Harmony",
+      "blank": "Harmony",
+      "usesThe": false
+    },
+    {
+      "god": "Ares",
+      "aspect": "Aspect of Reverberation",
+      "blank": "Reverberation",
+      "usesThe": false
+    },
+    {
+      "god": "Artemis",
+      "aspect": "Aspect of the Wild",
+      "blank": "Wild",
+      "usesThe": true
+    },
+    {
+      "god": "Artio",
+      "aspect": "Aspect of the Denmother",
+      "blank": "Denmother",
+      "usesThe": true
+    },
+    {
+      "god": "Athena",
+      "aspect": "Aspect of War",
+      "blank": "War",
+      "usesThe": false
+    },
+    {
+      "god": "Atlas",
+      "aspect": "Aspect of The Unburdened",
+      "blank": "Unburdened",
+      "usesThe": true
+    },
+    {
+      "god": "Bacchus",
+      "aspect": "Aspect of Revelry",
+      "blank": "Revelry",
+      "usesThe": false
+    },
+    {
+      "god": "Baron Samedi",
+      "aspect": "Aspect of Hysteria",
+      "blank": "Hysteria",
+      "usesThe": false
+    },
+    {
+      "god": "Bastet",
+      "aspect": "Aspect of the Watchful Pride",
+      "blank": "Watchful Pride",
+      "usesThe": true
+    },
+    {
+      "god": "Bellona",
+      "aspect": "Aspect of Vindication",
+      "blank": "Vindication",
+      "usesThe": false
+    },
+    {
+      "god": "Cabrakan",
+      "aspect": "Aspect of Rotund Jotunn",
+      "blank": "Rotund Jotunn",
+      "usesThe": false
+    },
+    {
+      "god": "Cerberus",
+      "aspect": "Aspect of Souls",
+      "blank": "Souls",
+      "usesThe": false
+    },
+    {
+      "god": "Cernunnos",
+      "aspect": "Aspect of Strife",
+      "blank": "Strife",
+      "usesThe": false
+    },
+    {
+      "god": "Chaac",
+      "aspect": "Aspect of Fulmination",
+      "blank": "Fulmination",
+      "usesThe": false
+    },
+    {
+      "god": "Charon",
+      "aspect": "Aspect of the Tollkeeper",
+      "blank": "Tollkeeper",
+      "usesThe": true
+    },
+    {
+      "god": "Chiron",
+      "aspect": "Aspect of the Heroic Tutor",
+      "blank": "Heroic Tutor",
+      "usesThe": true
+    },
+    {
+      "god": "Chronos",
+      "aspect": "Aspect of Relativity",
+      "blank": "Relativity",
+      "usesThe": false
+    },
+    {
+      "god": "Cu Chulainn",
+      "aspect": "Aspect of the Warped",
+      "blank": "Warped",
+      "usesThe": true
+    },
+    {
+      "god": "Cupid",
+      "aspect": "Aspect of Love",
+      "blank": "Love",
+      "usesThe": false
+    },
+    {
+      "god": "Da Ji",
+      "aspect": "Aspect of Ferocity",
+      "blank": "Ferocity",
+      "usesThe": false
+    },
+    {
+      "god": "Danzaburou",
+      "aspect": "Aspect of Fellowship",
+      "blank": "Fellowship",
+      "usesThe": false
+    },
+    {
+      "god": "Discordia",
+      "aspect": "Aspect of the Gilded Victor",
+      "blank": "Gilded Victor",
+      "usesThe": true
+    },
+    {
+      "god": "Eset",
+      "aspect": "Aspect of Lifewarden",
+      "blank": "Lifewarden",
+      "usesThe": false
+    },
+    {
+      "god": "Fenrir",
+      "aspect": "Aspect of Loyalty",
+      "blank": "Loyalty",
+      "usesThe": false
+    },
+    {
+      "god": "Ganesha",
+      "aspect": "Aspect of the Triumphant",
+      "blank": "Triumphant",
+      "usesThe": true
+    },
+    {
+      "god": "Geb",
+      "aspect": "Aspect of Calamity",
+      "blank": "Calamity",
+      "usesThe": false
+    },
+    {
+      "god": "Gilgamesh",
+      "aspect": "Aspect of Shamash",
+      "blank": "Shamash",
+      "usesThe": false
+    },
+    {
+      "god": "Guan Yu",
+      "aspect": "Aspect of The General",
+      "blank": "General",
+      "usesThe": true
+    },
+    {
+      "god": "Hecate",
+      "aspect": "Aspect of Ruin",
+      "blank": "Ruin",
+      "usesThe": false
+    },
+    {
+      "god": "Hercules",
+      "aspect": "Aspect of Preservation",
+      "blank": "Preservation",
+      "usesThe": false
+    },
+    {
+      "god": "Horus",
+      "aspect": "Aspect of The Falcon",
+      "blank": "Falcon",
+      "usesThe": true
+    },
+    {
+      "god": "Hou Yi",
+      "aspect": "Aspect of the Mark",
+      "blank": "Mark",
+      "usesThe": true
+    },
+    {
+      "god": "Hun Batz",
+      "aspect": "Aspect of Disruption",
+      "blank": "Disruption",
+      "usesThe": false
+    },
+    {
+      "god": "Ishtar",
+      "aspect": "Aspect of the Passionate Storm",
+      "blank": "Passionate Storm",
+      "usesThe": true
+    },
+    {
+      "god": "Ix Chel",
+      "aspect": "Aspect of the Mother's Light",
+      "blank": "Mother's Light",
+      "usesThe": true
+    },
+    {
+      "god": "Jormungandr",
+      "aspect": "Aspect of the Unyielding",
+      "blank": "Unyielding",
+      "usesThe": true
+    },
+    {
+      "god": "Kali",
+      "aspect": "Aspect of Unbound Destruction",
+      "blank": "Unbound Destruction",
+      "usesThe": false
+    },
+    {
+      "god": "Khepri",
+      "aspect": "Aspect of Laceration",
+      "blank": "Laceration",
+      "usesThe": false
+    },
+    {
+      "god": "Kukulkan",
+      "aspect": "Aspect of the Squall",
+      "blank": "Squall",
+      "usesThe": true
+    },
+    {
+      "god": "Loki",
+      "aspect": "Aspect of Agony",
+      "blank": "Agony",
+      "usesThe": false
+    },
+    {
+      "god": "Merlin",
+      "aspect": "Aspect of Pandamonium",
+      "blank": "Pandamonium",
+      "usesThe": false
+    },
+    {
+      "god": "Mordred",
+      "aspect": "Aspect of Rage",
+      "blank": "Rage",
+      "usesThe": false
+    },
+    {
+      "god": "Morgan Le Fay",
+      "aspect": "Aspect of the Cursed Crown",
+      "blank": "Cursed Crown",
+      "usesThe": true
+    },
+    {
+      "god": "Ne Zha",
+      "aspect": "Aspect of Righteous Flame",
+      "blank": "Righteous Flame",
+      "usesThe": false
+    },
+    {
+      "god": "Neith",
+      "aspect": "Aspect of Wind",
+      "blank": "Wind",
+      "usesThe": false
+    },
+    {
+      "god": "Nemesis",
+      "aspect": "Aspect of Justice",
+      "blank": "Justice",
+      "usesThe": false
+    },
+    {
+      "god": "Nu Wa",
+      "aspect": "Aspect of Shining Mist",
+      "blank": "Shining Mist",
+      "usesThe": false
+    },
+    {
+      "god": "Nut",
+      "aspect": "Aspect of the Cosmos",
+      "blank": "Cosmos",
+      "usesThe": true
+    },
+    {
+      "god": "Osiris",
+      "aspect": "Aspect of the Fragmented",
+      "blank": "Fragmented",
+      "usesThe": true
+    },
+    {
+      "god": "Pele",
+      "aspect": "Aspect of Obsidian",
+      "blank": "Obsidian",
+      "usesThe": false
+    },
+    {
+      "god": "Poseidon",
+      "aspect": "Aspect of the Trident",
+      "blank": "Trident",
+      "usesThe": true
+    },
+    {
+      "god": "Ra",
+      "aspect": "Aspect of Thermotherapy",
+      "blank": "Thermotherapy",
+      "usesThe": false
+    },
+    {
+      "god": "Rama",
+      "aspect": "Aspect of Precision",
+      "blank": "Precision",
+      "usesThe": false
+    },
+    {
+      "god": "Ratatoskr",
+      "aspect": "Aspect of the Thickbark",
+      "blank": "Thickbark",
+      "usesThe": true
+    },
+    {
+      "god": "Scylla",
+      "aspect": "Aspect of the Devourer",
+      "blank": "Devourer",
+      "usesThe": true
+    },
+    {
+      "god": "Sobek",
+      "aspect": "Aspect of Prey",
+      "blank": "Prey",
+      "usesThe": false
+    },
+    {
+      "god": "Sol",
+      "aspect": "Aspect of Conflagration",
+      "blank": "Conflagration",
+      "usesThe": false
+    },
+    {
+      "god": "Sun Wukong",
+      "aspect": "Aspect of Transformation",
+      "blank": "Transformation",
+      "usesThe": false
+    },
+    {
+      "god": "Sylvanus",
+      "aspect": "Aspect of Grover's Wrath",
+      "blank": "Grover's Wrath",
+      "usesThe": false
+    },
+    {
+      "god": "Thanatos",
+      "aspect": "Aspect of Reaping",
+      "blank": "Reaping",
+      "usesThe": false
+    },
+    {
+      "god": "The Morrigan",
+      "aspect": "Aspect of Mischief",
+      "blank": "Mischief",
+      "usesThe": false
+    },
+    {
+      "god": "Thor",
+      "aspect": "Aspect of Thunderstruck",
+      "blank": "Thunderstruck",
+      "usesThe": false
+    },
+    {
+      "god": "Tsukuyomi",
+      "aspect": "Aspect of Mangestu",
+      "blank": "Mangestu",
+      "usesThe": false
+    },
+    {
+      "god": "Vulcan",
+      "aspect": "Aspect of Fortification",
+      "blank": "Fortification",
+      "usesThe": false
+    },
+    {
+      "god": "Xbalanque",
+      "aspect": "Aspect of the Nightstalker",
+      "blank": "Nightstalker",
+      "usesThe": true
+    },
+    {
+      "god": "Xing Tian",
+      "aspect": "Aspect of Relentless Spite",
+      "blank": "Relentless Spite",
+      "usesThe": false
+    },
+    {
+      "god": "Yemoja",
+      "aspect": "Aspect of Downpour",
+      "blank": "Downpour",
+      "usesThe": false
+    }
+  ],
+  "abilities": [
+    {
+      "god": "Sun Wukong",
+      "name": "72 Transformations"
+    },
+    {
+      "god": "Khepri",
+      "name": "Abduct"
+    },
+    {
+      "god": "Chronos",
+      "name": "Accelerate"
+    },
+    {
+      "god": "Medusa",
+      "name": "Acid Spray"
+    },
+    {
+      "god": "Ratatoskr",
+      "name": "Acorn Blast"
+    },
+    {
+      "god": "Ratatoskr",
+      "name": "Acorn of Yggdrasil"
+    },
+    {
+      "god": "Apollo",
+      "name": "Across the Sky"
+    },
+    {
+      "god": "Aladdin",
+      "name": "Agile Run"
+    },
+    {
+      "god": "Jing Wei",
+      "name": "Agility"
+    },
+    {
+      "god": "Loki",
+      "name": "Agonizing Visions"
+    },
+    {
+      "god": "Jing Wei",
+      "name": "Air Strike"
+    },
+    {
+      "god": "Danzaburou",
+      "name": "Alluring Spirits"
+    },
+    {
+      "god": "Thor",
+      "name": "Anvil of Dawn"
+    },
+    {
+      "god": "Hercules",
+      "name": "Apotheosis"
+    },
+    {
+      "god": "Ne Zha",
+      "name": "Armillary Sash"
+    },
+    {
+      "god": "Loki",
+      "name": "Assassinate"
+    },
+    {
+      "god": "Rama",
+      "name": "Astral Barrage"
+    },
+    {
+      "god": "Rama",
+      "name": "Astral Quiver"
+    },
+    {
+      "god": "Rama",
+      "name": "Astral Strike"
+    },
+    {
+      "god": "Apollo",
+      "name": "Audacity"
+    },
+    {
+      "god": "Neith",
+      "name": "Back Flip"
+    },
+    {
+      "god": "Aphrodite",
+      "name": "Back Off!"
+    },
+    {
+      "god": "Vulcan",
+      "name": "Backfire"
+    },
+    {
+      "god": "Guan Yu",
+      "name": "Battle Fervor"
+    },
+    {
+      "god": "Loki",
+      "name": "Behind You"
+    },
+    {
+      "god": "Bacchus",
+      "name": "Belch Of The Gods"
+    },
+    {
+      "god": "Bacchus",
+      "name": "Belly Flop"
+    },
+    {
+      "god": "Cu Chulainn",
+      "name": "Berserk"
+    },
+    {
+      "god": "Thor",
+      "name": "Berserker Barrage"
+    },
+    {
+      "god": "Ishtar",
+      "name": "Blades of Retribution"
+    },
+    {
+      "god": "Ares",
+      "name": "Blessed Armaments"
+    },
+    {
+      "god": "Sobek",
+      "name": "Blessing of the Nile"
+    },
+    {
+      "god": "Hades",
+      "name": "Blight"
+    },
+    {
+      "god": "Mordred",
+      "name": "Bloodrage"
+    },
+    {
+      "god": "Bellona",
+      "name": "Bludgeon"
+    },
+    {
+      "god": "Yemoja",
+      "name": "Bouncing Bubble (Moonstrike)"
+    },
+    {
+      "god": "Cernunnos",
+      "name": "Bramble Blast"
+    },
+    {
+      "god": "Xbalanque",
+      "name": "Branching Bola"
+    },
+    {
+      "god": "Neith",
+      "name": "Broken Weave"
+    },
+    {
+      "god": "Fenrir",
+      "name": "Brutalize"
+    },
+    {
+      "god": "Ares",
+      "name": "Call To Arms"
+    },
+    {
+      "god": "Artemis",
+      "name": "Calydonian Boar"
+    },
+    {
+      "god": "Bastet",
+      "name": "Cat Call"
+    },
+    {
+      "god": "Geb",
+      "name": "Cataclysm"
+    },
+    {
+      "god": "Guan Yu",
+      "name": "Cavalry Charge"
+    },
+    {
+      "god": "Ra",
+      "name": "Celestial Beam"
+    },
+    {
+      "god": "Chiron",
+      "name": "Centaurus"
+    },
+    {
+      "god": "Aphrodite",
+      "name": "Center of Attention"
+    },
+    {
+      "god": "Zeus",
+      "name": "Chain Lightning"
+    },
+    {
+      "god": "The Morrigan",
+      "name": "Changeling"
+    },
+    {
+      "god": "Poseidon",
+      "name": "Changing Tides"
+    },
+    {
+      "god": "Sobek",
+      "name": "Charge Prey"
+    },
+    {
+      "god": "Bacchus",
+      "name": "Chug"
+    },
+    {
+      "god": "Eset",
+      "name": "Circle of Protection"
+    },
+    {
+      "god": "Nu Wa",
+      "name": "Clay Soldiers"
+    },
+    {
+      "god": "Achilles",
+      "name": "Combat Dodge"
+    },
+    {
+      "god": "Agni",
+      "name": "Combustion"
+    },
+    {
+      "god": "Athena",
+      "name": "Confound"
+    },
+    {
+      "god": "The Morrigan",
+      "name": "Confusion"
+    },
+    {
+      "god": "Baron Samedi",
+      "name": "Consign Spirits"
+    },
+    {
+      "god": "Jormungandr",
+      "name": "Consuming Bellow"
+    },
+    {
+      "god": "Morgan Le Fay",
+      "name": "Consuming Power"
+    },
+    {
+      "god": "Discordia",
+      "name": "Contest of Gods"
+    },
+    {
+      "god": "Nut",
+      "name": "Convergence"
+    },
+    {
+      "god": "Guan Yu",
+      "name": "Conviction"
+    },
+    {
+      "god": "Ah Puch",
+      "name": "Corpse Explosion"
+    },
+    {
+      "god": "Nut",
+      "name": "Crashing Comet"
+    },
+    {
+      "god": "Hua Mulan",
+      "name": "Cross Strike"
+    },
+    {
+      "god": "Mordred",
+      "name": "Cruel Strikes"
+    },
+    {
+      "god": "Scylla",
+      "name": "Crush"
+    },
+    {
+      "god": "Charon",
+      "name": "Damnation"
+    },
+    {
+      "god": "Tsukuyomi",
+      "name": "Dark Moon Shuriken"
+    },
+    {
+      "god": "The Morrigan",
+      "name": "Dark Omen"
+    },
+    {
+      "god": "Izanami",
+      "name": "Dark Portal"
+    },
+    {
+      "god": "Xbalanque",
+      "name": "Darkest of Nights"
+    },
+    {
+      "god": "Ratatoskr",
+      "name": "Dart"
+    },
+    {
+      "god": "Amaterasu",
+      "name": "Dazzling Offensive"
+    },
+    {
+      "god": "Xbalanque",
+      "name": "Dead of Night"
+    },
+    {
+      "god": "The Morrigan",
+      "name": "Deadly Aspects"
+    },
+    {
+      "god": "Izanami",
+      "name": "Death Draws Nigh"
+    },
+    {
+      "god": "Hades",
+      "name": "Death From Below"
+    },
+    {
+      "god": "Anubis",
+      "name": "Death Gaze"
+    },
+    {
+      "god": "Thanatos",
+      "name": "Death Scythe"
+    },
+    {
+      "god": "Artio",
+      "name": "Decompose"
+    },
+    {
+      "god": "Athena",
+      "name": "Defender Of Olympus"
+    },
+    {
+      "god": "Anhur",
+      "name": "Desert Fury"
+    },
+    {
+      "god": "Kali",
+      "name": "Destruction"
+    },
+    {
+      "god": "Zeus",
+      "name": "Detonate Charge"
+    },
+    {
+      "god": "Hades",
+      "name": "Devour Souls"
+    },
+    {
+      "god": "Ganesha",
+      "name": "Dharmic Pillars"
+    },
+    {
+      "god": "Sol",
+      "name": "Disapparate"
+    },
+    {
+      "god": "Danzaburou",
+      "name": "Dishonest Duplication"
+    },
+    {
+      "god": "Eset",
+      "name": "Dispel Magic"
+    },
+    {
+      "god": "Anhur",
+      "name": "Disperse"
+    },
+    {
+      "god": "Hou Yi",
+      "name": "Divebomb"
+    },
+    {
+      "god": "Nemesis",
+      "name": "Divine Judgement"
+    },
+    {
+      "god": "Ra",
+      "name": "Divine Light"
+    },
+    {
+      "god": "Hua Mulan",
+      "name": "Divine Mastery"
+    },
+    {
+      "god": "Amaterasu",
+      "name": "Divine Presence"
+    },
+    {
+      "god": "The Morrigan",
+      "name": "Doomsayer"
+    },
+    {
+      "god": "Morgan Le Fay",
+      "name": "Dragonflight"
+    },
+    {
+      "god": "Hercules",
+      "name": "Driving Strike"
+    },
+    {
+      "god": "Gilgamesh",
+      "name": "Drop Kick"
+    },
+    {
+      "god": "Bacchus",
+      "name": "Drunk-O-Meter"
+    },
+    {
+      "god": "Bellona",
+      "name": "Eagle's Rally"
+    },
+    {
+      "god": "Hercules",
+      "name": "Earthbreaker"
+    },
+    {
+      "god": "Vulcan",
+      "name": "Earthshaker"
+    },
+    {
+      "god": "Morgan Le Fay",
+      "name": "Empowered Blade"
+    },
+    {
+      "god": "Ah Puch",
+      "name": "Empty the Crypts"
+    },
+    {
+      "god": "Anhur",
+      "name": "Enfeeble"
+    },
+    {
+      "god": "Bastet",
+      "name": "Ensnaring Claw"
+    },
+    {
+      "god": "Gilgamesh",
+      "name": "Epic of Gilgamesh"
+    },
+    {
+      "god": "Discordia",
+      "name": "Erratic Behavior"
+    },
+    {
+      "god": "Pele",
+      "name": "Eruption"
+    },
+    {
+      "god": "Pele",
+      "name": "Everlasting Flame"
+    },
+    {
+      "god": "Hercules",
+      "name": "Excavate"
+    },
+    {
+      "god": "Jing Wei",
+      "name": "Explosive Bolts"
+    },
+    {
+      "god": "Izanami",
+      "name": "Fade Away"
+    },
+    {
+      "god": "Mercury",
+      "name": "Fastest God Alive"
+    },
+    {
+      "god": "Achilles",
+      "name": "Fatal Strike"
+    },
+    {
+      "god": "Hun Batz",
+      "name": "Fear No Evil"
+    },
+    {
+      "god": "Awilix",
+      "name": "Feather Step"
+    },
+    {
+      "god": "Charon",
+      "name": "Ferryman of Souls"
+    },
+    {
+      "god": "Cupid",
+      "name": "Fields of Love"
+    },
+    {
+      "god": "Nu Wa",
+      "name": "Fire Shards"
+    },
+    {
+      "god": "Agni",
+      "name": "Flame Wave"
+    },
+    {
+      "god": "Ne Zha",
+      "name": "Flaming Spear"
+    },
+    {
+      "god": "Ah Puch",
+      "name": "Fleeting Breath"
+    },
+    {
+      "god": "Ratatoskr",
+      "name": "Flurry"
+    },
+    {
+      "god": "Loki",
+      "name": "Flurry Strike"
+    },
+    {
+      "god": "Cupid",
+      "name": "Flutter"
+    },
+    {
+      "god": "Nut",
+      "name": "Flux"
+    },
+    {
+      "god": "Danzaburou",
+      "name": "Fool's Gold"
+    },
+    {
+      "god": "Khepri",
+      "name": "Fortitude"
+    },
+    {
+      "god": "Horus",
+      "name": "Fracture"
+    },
+    {
+      "god": "Osiris",
+      "name": "Fragmented"
+    },
+    {
+      "god": "Ymir",
+      "name": "Frost Breath"
+    },
+    {
+      "god": "Ymir",
+      "name": "Frostbite"
+    },
+    {
+      "god": "Eset",
+      "name": "Funeral Rites"
+    },
+    {
+      "god": "Xing Tian",
+      "name": "Furious Roar"
+    },
+    {
+      "god": "Atlas",
+      "name": "Gamma-Ray Burst"
+    },
+    {
+      "god": "Cerberus",
+      "name": "Ghastly Breath"
+    },
+    {
+      "god": "Chiron",
+      "name": "Giddyup!"
+    },
+    {
+      "god": "Achilles",
+      "name": "Gift of the Gods"
+    },
+    {
+      "god": "Ymir",
+      "name": "Glacial Strike"
+    },
+    {
+      "god": "Ix Chel",
+      "name": "Gleaming Blast"
+    },
+    {
+      "god": "Amaterasu",
+      "name": "Glorious Charge"
+    },
+    {
+      "god": "Discordia",
+      "name": "Golden Apple of Discord"
+    },
+    {
+      "god": "Ganesha",
+      "name": "Good Fortune"
+    },
+    {
+      "god": "Hua Mulan",
+      "name": "Grapple"
+    },
+    {
+      "god": "Anubis",
+      "name": "Grasping Hands"
+    },
+    {
+      "god": "Atlas",
+      "name": "Gravity Pull"
+    },
+    {
+      "god": "Awilix",
+      "name": "Gravity Surge"
+    },
+    {
+      "god": "Ix Chel",
+      "name": "Great End"
+    },
+    {
+      "god": "Odin",
+      "name": "Gungnir's Might"
+    },
+    {
+      "god": "Geb",
+      "name": "Hard as Rock"
+    },
+    {
+      "god": "Thanatos",
+      "name": "Harvester of Souls"
+    },
+    {
+      "god": "Cupid",
+      "name": "Heart Bomb"
+    },
+    {
+      "god": "Mordred",
+      "name": "Heart Slash"
+    },
+    {
+      "god": "Amaterasu",
+      "name": "Heavenly Reflection"
+    },
+    {
+      "god": "Cernunnos",
+      "name": "Heavy Glaive"
+    },
+    {
+      "god": "Chiron",
+      "name": "Herbal Medicine"
+    },
+    {
+      "god": "Gilgamesh",
+      "name": "Hero's Advance"
+    },
+    {
+      "god": "Ah Puch",
+      "name": "Hollow Ground"
+    },
+    {
+      "god": "Xing Tian",
+      "name": "Hook Slam"
+    },
+    {
+      "god": "Cernunnos",
+      "name": "Horn Charge"
+    },
+    {
+      "god": "Da Ji",
+      "name": "Horrible Burns"
+    },
+    {
+      "god": "Thanatos",
+      "name": "Hovering Death"
+    },
+    {
+      "god": "Baron Samedi",
+      "name": "Hysteria"
+    },
+    {
+      "god": "Scylla",
+      "name": "I'm a Monster"
+    },
+    {
+      "god": "Ymir",
+      "name": "Ice Wall"
+    },
+    {
+      "god": "Amaterasu",
+      "name": "Illuminating Strike"
+    },
+    {
+      "god": "Ishtar",
+      "name": "Imbue Arrows"
+    },
+    {
+      "god": "Jormungandr",
+      "name": "Immovable"
+    },
+    {
+      "god": "Anhur",
+      "name": "Impale"
+    },
+    {
+      "god": "Kali",
+      "name": "Incense"
+    },
+    {
+      "god": "Vulcan",
+      "name": "Inferno Cannon"
+    },
+    {
+      "god": "Rama",
+      "name": "Infinite Arrows"
+    },
+    {
+      "god": "Hun Batz",
+      "name": "Infused Strikes"
+    },
+    {
+      "god": "Awilix",
+      "name": "Initiative"
+    },
+    {
+      "god": "Aladdin",
+      "name": "Into The Lamp"
+    },
+    {
+      "god": "Bacchus",
+      "name": "Intoxicate"
+    },
+    {
+      "god": "Susano",
+      "name": "Jet Stream"
+    },
+    {
+      "god": "Ishtar",
+      "name": "Jolt"
+    },
+    {
+      "god": "Osiris",
+      "name": "Judgement Tether"
+    },
+    {
+      "god": "Atlas",
+      "name": "Kinetic Charge"
+    },
+    {
+      "god": "Aphrodite",
+      "name": "Kiss"
+    },
+    {
+      "god": "Aladdin",
+      "name": "Kufic Invocation"
+    },
+    {
+      "god": "Tsukuyomi",
+      "name": "Kusarigama"
+    },
+    {
+      "god": "Medusa",
+      "name": "Lacerate"
+    },
+    {
+      "god": "Kali",
+      "name": "Lash"
+    },
+    {
+      "god": "Baron Samedi",
+      "name": "Life of the Party"
+    },
+    {
+      "god": "Zeus",
+      "name": "Lightning Storm"
+    },
+    {
+      "god": "Osiris",
+      "name": "Lord of the Afterlife"
+    },
+    {
+      "god": "Aphrodite",
+      "name": "Love Birds"
+    },
+    {
+      "god": "Cupid",
+      "name": "Lovestruck"
+    },
+    {
+      "god": "Ix Chel",
+      "name": "Lunar Invocation"
+    },
+    {
+      "god": "Odin",
+      "name": "Lunge"
+    },
+    {
+      "god": "Sobek",
+      "name": "Lurking in the Waters"
+    },
+    {
+      "god": "Mercury",
+      "name": "Made You Look"
+    },
+    {
+      "god": "Vulcan",
+      "name": "Magma Bomb"
+    },
+    {
+      "god": "Pele",
+      "name": "Magma Rush"
+    },
+    {
+      "god": "Hou Yi",
+      "name": "Mark of the Golden Crow"
+    },
+    {
+      "god": "Ishtar",
+      "name": "Mark of Vengeance"
+    },
+    {
+      "god": "Kali",
+      "name": "Marked for Death"
+    },
+    {
+      "god": "Vulcan",
+      "name": "Master Craftsman"
+    },
+    {
+      "god": "Bellona",
+      "name": "Master Of War"
+    },
+    {
+      "god": "Sun Wukong",
+      "name": "Master's Will"
+    },
+    {
+      "god": "Chiron",
+      "name": "Masterful Shot"
+    },
+    {
+      "god": "Mercury",
+      "name": "Maximum Velocity"
+    },
+    {
+      "god": "Yemoja",
+      "name": "Mending Waters"
+    },
+    {
+      "god": "Hercules",
+      "name": "Mitigate Wounds"
+    },
+    {
+      "god": "Thor",
+      "name": "Mjolnir's Attunement"
+    },
+    {
+      "god": "Awilix",
+      "name": "Moonlight Charge"
+    },
+    {
+      "god": "Anubis",
+      "name": "Mummify"
+    },
+    {
+      "god": "Nu Wa",
+      "name": "Mysterious Fog"
+    },
+    {
+      "god": "Princess Bari",
+      "name": "Mystic Surge"
+    },
+    {
+      "god": "Hecate",
+      "name": "Mythic Ritual"
+    },
+    {
+      "god": "Sylvanus",
+      "name": "Nature's Bounty"
+    },
+    {
+      "god": "Sylvanus",
+      "name": "Nature's Grasp"
+    },
+    {
+      "god": "Bastet",
+      "name": "Nightstalker"
+    },
+    {
+      "god": "Kali",
+      "name": "Nimble Strike"
+    },
+    {
+      "god": "Ares",
+      "name": "No Escape"
+    },
+    {
+      "god": "Agni",
+      "name": "Noxious Fumes"
+    },
+    {
+      "god": "Da Ji",
+      "name": "One Thousand Cuts"
+    },
+    {
+      "god": "Hecate",
+      "name": "Open the Gates"
+    },
+    {
+      "god": "Zeus",
+      "name": "Overcharge"
+    },
+    {
+      "god": "Chaac",
+      "name": "Overflow"
+    },
+    {
+      "god": "Hun Batz",
+      "name": "Overhand Smash"
+    },
+    {
+      "god": "Merlin",
+      "name": "Overload"
+    },
+    {
+      "god": "Da Ji",
+      "name": "Paolao"
+    },
+    {
+      "god": "Cerberus",
+      "name": "Paralyzing Spit"
+    },
+    {
+      "god": "Janus",
+      "name": "Passages"
+    },
+    {
+      "god": "Agni",
+      "name": "Path of Flames"
+    },
+    {
+      "god": "Odin",
+      "name": "Path to Valhalla"
+    },
+    {
+      "god": "Jing Wei",
+      "name": "Persistent Gust"
+    },
+    {
+      "god": "Medusa",
+      "name": "Petrify"
+    },
+    {
+      "god": "Tsukuyomi",
+      "name": "Piercing Moonlight"
+    },
+    {
+      "god": "Hades",
+      "name": "Pillar Of Agony"
+    },
+    {
+      "god": "Anubis",
+      "name": "Plague Of Locusts"
+    },
+    {
+      "god": "Xbalanque",
+      "name": "Poison Darts"
+    },
+    {
+      "god": "Janus",
+      "name": "Portal"
+    },
+    {
+      "god": "Bastet",
+      "name": "Pounce"
+    },
+    {
+      "god": "Kukulkan",
+      "name": "Power Of The Wind Jewel"
+    },
+    {
+      "god": "Athena",
+      "name": "Preemptive Strike"
+    },
+    {
+      "god": "Horus",
+      "name": "Protector's Surge"
+    },
+    {
+      "god": "Pele",
+      "name": "Pyroclast"
+    },
+    {
+      "god": "Scylla",
+      "name": "Quick Learner"
+    },
+    {
+      "god": "Sol",
+      "name": "Radiance"
+    },
+    {
+      "god": "Achilles",
+      "name": "Radiant Glory"
+    },
+    {
+      "god": "Fenrir",
+      "name": "Ragnarok"
+    },
+    {
+      "god": "Chaac",
+      "name": "Rain Dance"
+    },
+    {
+      "god": "Agni",
+      "name": "Rain Fire"
+    },
+    {
+      "god": "Ix Chel",
+      "name": "Rainbow Crash"
+    },
+    {
+      "god": "Ix Chel",
+      "name": "Rainbow Weaver"
+    },
+    {
+      "god": "Jing Wei",
+      "name": "Rapid Reincarnation"
+    },
+    {
+      "god": "Odin",
+      "name": "Raven Shout"
+    },
+    {
+      "god": "Bastet",
+      "name": "Razor Whip"
+    },
+    {
+      "god": "Athena",
+      "name": "Reach"
+    },
+    {
+      "god": "Cabrakan",
+      "name": "Refraction Shield"
+    },
+    {
+      "god": "Poseidon",
+      "name": "Release the Kraken!"
+    },
+    {
+      "god": "Ganesha",
+      "name": "Remove Obstacles"
+    },
+    {
+      "god": "Hecate",
+      "name": "Repel Magic"
+    },
+    {
+      "god": "Horus",
+      "name": "Resolute"
+    },
+    {
+      "god": "Nemesis",
+      "name": "Retribution"
+    },
+    {
+      "god": "Princess Bari",
+      "name": "Reverent Steps"
+    },
+    {
+      "god": "Chronos",
+      "name": "Rewind"
+    },
+    {
+      "god": "Hou Yi",
+      "name": "Ricochet"
+    },
+    {
+      "god": "Ne Zha",
+      "name": "Righteous Spirit"
+    },
+    {
+      "god": "Odin",
+      "name": "Ring Of Spears"
+    },
+    {
+      "god": "Yemoja",
+      "name": "Riptide"
+    },
+    {
+      "god": "Khepri",
+      "name": "Rising Dawn"
+    },
+    {
+      "god": "Xbalanque",
+      "name": "Rising Jaguar"
+    },
+    {
+      "god": "Yemoja",
+      "name": "River's Rebuke"
+    },
+    {
+      "god": "Geb",
+      "name": "Roll Out"
+    },
+    {
+      "god": "Rama",
+      "name": "Rolling Assault"
+    },
+    {
+      "god": "Ishtar",
+      "name": "Rolling Thunder"
+    },
+    {
+      "god": "Princess Bari",
+      "name": "Sacred Bell"
+    },
+    {
+      "god": "Hun Batz",
+      "name": "Sacred Monkey"
+    },
+    {
+      "god": "Nemesis",
+      "name": "Scales of Fate"
+    },
+    {
+      "god": "Khepri",
+      "name": "Scarab's Blessing"
+    },
+    {
+      "god": "Thanatos",
+      "name": "Scent of Death"
+    },
+    {
+      "god": "Bellona",
+      "name": "Scourge"
+    },
+    {
+      "god": "Ares",
+      "name": "Searing Flesh"
+    },
+    {
+      "god": "Ra",
+      "name": "Searing Pain"
+    },
+    {
+      "god": "Fenrir",
+      "name": "Seething Howl"
+    },
+    {
+      "god": "Cabrakan",
+      "name": "Seismic Crush"
+    },
+    {
+      "god": "Scylla",
+      "name": "Sentinel"
+    },
+    {
+      "god": "Apollo",
+      "name": "Serenade"
+    },
+    {
+      "god": "Mordred",
+      "name": "Severing Slice"
+    },
+    {
+      "god": "Ares",
+      "name": "Shackles"
+    },
+    {
+      "god": "Cabrakan",
+      "name": "Shadow Zone"
+    },
+    {
+      "god": "Ymir",
+      "name": "Shards Of Ice"
+    },
+    {
+      "god": "Cupid",
+      "name": "Share the Love"
+    },
+    {
+      "god": "Bellona",
+      "name": "Shield Bash"
+    },
+    {
+      "god": "Achilles",
+      "name": "Shield of Achilles"
+    },
+    {
+      "god": "Athena",
+      "name": "Shield Wall"
+    },
+    {
+      "god": "Cernunnos",
+      "name": "Shifter Of Seasons"
+    },
+    {
+      "god": "Anhur",
+      "name": "Shifting Sands"
+    },
+    {
+      "god": "Tsukuyomi",
+      "name": "Shingetsu & Mangetsu"
+    },
+    {
+      "god": "Nu Wa",
+      "name": "Shining Metal"
+    },
+    {
+      "god": "Geb",
+      "name": "Shock Wave"
+    },
+    {
+      "god": "Mordred",
+      "name": "Shoulder Charge"
+    },
+    {
+      "god": "Hades",
+      "name": "Shroud Of Darkness"
+    },
+    {
+      "god": "Morgan Le Fay",
+      "name": "Shroud of Wildfire"
+    },
+    {
+      "god": "Scylla",
+      "name": "Sic 'Em"
+    },
+    {
+      "god": "Sobek",
+      "name": "Sickening Strike"
+    },
+    {
+      "god": "Izanami",
+      "name": "Sickle Storm"
+    },
+    {
+      "god": "Osiris",
+      "name": "Sickle Strike"
+    },
+    {
+      "god": "Medusa",
+      "name": "Sidewinder"
+    },
+    {
+      "god": "Morgan Le Fay",
+      "name": "Sigil Mastery"
+    },
+    {
+      "god": "Tsukuyomi",
+      "name": "Silver Moon Caltrops"
+    },
+    {
+      "god": "Xing Tian",
+      "name": "Sky-Cutting Axe"
+    },
+    {
+      "god": "Nut",
+      "name": "Skyfall"
+    },
+    {
+      "god": "Nemesis",
+      "name": "Slice and Dice"
+    },
+    {
+      "god": "Kukulkan",
+      "name": "Slipstream"
+    },
+    {
+      "god": "Xing Tian",
+      "name": "Smouldering Rage"
+    },
+    {
+      "god": "Apollo",
+      "name": "So Beautiful"
+    },
+    {
+      "god": "Ra",
+      "name": "Solar Blessing"
+    },
+    {
+      "god": "Khepri",
+      "name": "Solar Flare"
+    },
+    {
+      "god": "Hun Batz",
+      "name": "Somersault"
+    },
+    {
+      "god": "Sun Wukong",
+      "name": "Somersault Cloud"
+    },
+    {
+      "god": "Mercury",
+      "name": "Sonic Boom"
+    },
+    {
+      "god": "Cerberus",
+      "name": "Soul Expulsion"
+    },
+    {
+      "god": "Thanatos",
+      "name": "Soul Reap"
+    },
+    {
+      "god": "Hua Mulan",
+      "name": "Spear Thrust"
+    },
+    {
+      "god": "Mercury",
+      "name": "Special Delivery"
+    },
+    {
+      "god": "Izanami",
+      "name": "Spectral Projection"
+    },
+    {
+      "god": "Charon",
+      "name": "Spectral Surge"
+    },
+    {
+      "god": "Ra",
+      "name": "Speed of Light"
+    },
+    {
+      "god": "Hecate",
+      "name": "Spell Eater"
+    },
+    {
+      "god": "Neith",
+      "name": "Spirit Arrow"
+    },
+    {
+      "god": "Eset",
+      "name": "Spirit Ball"
+    },
+    {
+      "god": "Osiris",
+      "name": "Spirit Flail"
+    },
+    {
+      "god": "Cerberus",
+      "name": "Spirit of Death"
+    },
+    {
+      "god": "Kukulkan",
+      "name": "Spirit Of The Nine Winds"
+    },
+    {
+      "god": "Princess Bari",
+      "name": "Spirit's Cadence"
+    },
+    {
+      "god": "Sol",
+      "name": "Stellar Burst"
+    },
+    {
+      "god": "Artemis",
+      "name": "Still Target"
+    },
+    {
+      "god": "Geb",
+      "name": "Stone Shield"
+    },
+    {
+      "god": "Chronos",
+      "name": "Stop Time"
+    },
+    {
+      "god": "Chaac",
+      "name": "Storm Call"
+    },
+    {
+      "god": "Susano",
+      "name": "Storm Kata"
+    },
+    {
+      "god": "Susano",
+      "name": "Storm's Edge"
+    },
+    {
+      "god": "Nu Wa",
+      "name": "Strength of Wood"
+    },
+    {
+      "god": "Discordia",
+      "name": "Strife"
+    },
+    {
+      "god": "Cerberus",
+      "name": "Stygian Torment"
+    },
+    {
+      "god": "Jormungandr",
+      "name": "Submerge"
+    },
+    {
+      "god": "Aladdin",
+      "name": "Sultan's Grace"
+    },
+    {
+      "god": "Charon",
+      "name": "Summon Styx"
+    },
+    {
+      "god": "Awilix",
+      "name": "Summon Suku"
+    },
+    {
+      "god": "Gilgamesh",
+      "name": "Sun-forged Scimitar"
+    },
+    {
+      "god": "Hou Yi",
+      "name": "Sunbreaker"
+    },
+    {
+      "god": "Hou Yi",
+      "name": "Suntouched"
+    },
+    {
+      "god": "Sol",
+      "name": "Supernova"
+    },
+    {
+      "god": "Artemis",
+      "name": "Suppress the Insolent"
+    },
+    {
+      "god": "Nemesis",
+      "name": "Swift Vengeance"
+    },
+    {
+      "god": "Charon",
+      "name": "Swift Voyage"
+    },
+    {
+      "god": "Sobek",
+      "name": "Tail Whip"
+    },
+    {
+      "god": "Danzaburou",
+      "name": "Tanuki Trickery"
+    },
+    {
+      "god": "Guan Yu",
+      "name": "Taolu Assault"
+    },
+    {
+      "god": "Thor",
+      "name": "Tectonic Rift"
+    },
+    {
+      "god": "Cabrakan",
+      "name": "Tectonic Shift"
+    },
+    {
+      "god": "Atlas",
+      "name": "The Astrolabe"
+    },
+    {
+      "god": "Sun Wukong",
+      "name": "The Magic Cudgel"
+    },
+    {
+      "god": "Apollo",
+      "name": "The Moves"
+    },
+    {
+      "god": "Anubis",
+      "name": "The Scales"
+    },
+    {
+      "god": "Cernunnos",
+      "name": "The Wild Hunt"
+    },
+    {
+      "god": "Jormungandr",
+      "name": "The World Serpent"
+    },
+    {
+      "god": "Aladdin",
+      "name": "Three Wishes"
+    },
+    {
+      "god": "Janus",
+      "name": "Threshold"
+    },
+    {
+      "god": "Janus",
+      "name": "Through Space and Time"
+    },
+    {
+      "god": "Ratatoskr",
+      "name": "Through the Cosmos"
+    },
+    {
+      "god": "Vulcan",
+      "name": "Thumper XXV"
+    },
+    {
+      "god": "Chaac",
+      "name": "Thunder Strike"
+    },
+    {
+      "god": "Zeus",
+      "name": "Thunderclap"
+    },
+    {
+      "god": "Poseidon",
+      "name": "Tidal Surge"
+    },
+    {
+      "god": "Chronos",
+      "name": "Time Lord"
+    },
+    {
+      "god": "Chronos",
+      "name": "Time Rift"
+    },
+    {
+      "god": "Horus",
+      "name": "To The Skies!"
+    },
+    {
+      "god": "Chaac",
+      "name": "Torrent"
+    },
+    {
+      "god": "Da Ji",
+      "name": "Torture Blades"
+    },
+    {
+      "god": "Hua Mulan",
+      "name": "Training Arc"
+    },
+    {
+      "god": "Chiron",
+      "name": "Training Exercise"
+    },
+    {
+      "god": "Artemis",
+      "name": "Transgressor's Fate"
+    },
+    {
+      "god": "Cabrakan",
+      "name": "Tremors"
+    },
+    {
+      "god": "Da Ji",
+      "name": "Trickster Spirit"
+    },
+    {
+      "god": "Poseidon",
+      "name": "Trident"
+    },
+    {
+      "god": "Hecate",
+      "name": "Triplicate Form"
+    },
+    {
+      "god": "Ganesha",
+      "name": "Turn of Fate"
+    },
+    {
+      "god": "Susano",
+      "name": "Typhoon"
+    },
+    {
+      "god": "Fenrir",
+      "name": "Unbound Runes"
+    },
+    {
+      "god": "Atlas",
+      "name": "Unburden"
+    },
+    {
+      "god": "Fenrir",
+      "name": "Unchained"
+    },
+    {
+      "god": "Ah Puch",
+      "name": "Undead Surge"
+    },
+    {
+      "god": "Sun Wukong",
+      "name": "Undefeated Body"
+    },
+    {
+      "god": "Aphrodite",
+      "name": "Undying Love"
+    },
+    {
+      "god": "Ne Zha",
+      "name": "Universe Ring Toss"
+    },
+    {
+      "god": "Neith",
+      "name": "Unravel"
+    },
+    {
+      "god": "Discordia",
+      "name": "Unruly Magic"
+    },
+    {
+      "god": "Sol",
+      "name": "Unstable Manifestation"
+    },
+    {
+      "god": "Janus",
+      "name": "Unstable Vortex"
+    },
+    {
+      "god": "Horus",
+      "name": "Updraft"
+    },
+    {
+      "god": "Danzaburou",
+      "name": "Uproarious Rocket"
+    },
+    {
+      "god": "Loki",
+      "name": "Vanish"
+    },
+    {
+      "god": "Artemis",
+      "name": "Vengeful Assault"
+    },
+    {
+      "god": "Jormungandr",
+      "name": "Venomous Haze"
+    },
+    {
+      "god": "Sylvanus",
+      "name": "Verdant Growth"
+    },
+    {
+      "god": "Medusa",
+      "name": "Viper Shot"
+    },
+    {
+      "god": "Baron Samedi",
+      "name": "Vivid Gaze"
+    },
+    {
+      "god": "Pele",
+      "name": "Volcanic Lightning"
+    },
+    {
+      "god": "Princess Bari",
+      "name": "Warding Gust"
+    },
+    {
+      "god": "Nut",
+      "name": "Warp"
+    },
+    {
+      "god": "Thor",
+      "name": "Warrior's Madness"
+    },
+    {
+      "god": "Guan Yu",
+      "name": "Warrior's Will"
+    },
+    {
+      "god": "Ullr",
+      "name": "Weapon Master"
+    },
+    {
+      "god": "Poseidon",
+      "name": "Whirlpool"
+    },
+    {
+      "god": "Kukulkan",
+      "name": "Whirlwind"
+    },
+    {
+      "god": "Xing Tian",
+      "name": "Whirlwind of Rage and Steel"
+    },
+    {
+      "god": "Ne Zha",
+      "name": "Wind Fire Wheels"
+    },
+    {
+      "god": "Susano",
+      "name": "Wind Siphon"
+    },
+    {
+      "god": "Gilgamesh",
+      "name": "Winds of Shamash"
+    },
+    {
+      "god": "Eset",
+      "name": "Wing Gust"
+    },
+    {
+      "god": "Sylvanus",
+      "name": "Wisps"
+    },
+    {
+      "god": "Neith",
+      "name": "World Weaver"
+    },
+    {
+      "god": "Baron Samedi",
+      "name": "Wrap It Up"
+    },
+    {
+      "god": "Sylvanus",
+      "name": "Wrath of Terra"
+    },
+    {
+      "god": "Mordred",
+      "name": "Wrath of the Forsaken"
+    },
+    {
+      "god": "Kukulkan",
+      "name": "Zephyr"
+    }
+  ],
+  "releases": [
+    {
+      "patch": 1,
+      "god": "Agni"
+    },
+    {
+      "patch": 1,
+      "god": "Aladdin"
+    },
+    {
+      "patch": 1,
+      "god": "Geb"
+    },
+    {
+      "patch": 1,
+      "god": "Mulan"
+    },
+    {
+      "patch": 1,
+      "god": "Ullr"
+    },
+    {
+      "patch": 2,
+      "god": "Hun Batz"
+    },
+    {
+      "patch": 2,
+      "god": "Vulcan"
+    },
+    {
+      "patch": 4,
+      "god": "Artemis"
+    },
+    {
+      "patch": 4,
+      "god": "Awilix"
+    },
+    {
+      "patch": 27,
+      "god": "Chiron"
+    },
+    {
+      "patch": 28,
+      "god": "Ne Zha"
+    },
+    {
+      "patch": 29,
+      "god": "Morgan Le Fay"
+    },
+    {
+      "patch": 30,
+      "god": "Charon"
+    },
+    {
+      "patch": 31,
+      "god": "Gilgamesh"
+    },
+    {
+      "patch": 32,
+      "god": "Ratatoskr"
+    },
+    {
+      "patch": 33,
+      "god": "Ishtar"
+    },
+    {
+      "patch": 34,
+      "god": "Atlas"
+    },
+    {
+      "patch": 35,
+      "god": "Ah Puch"
+    },
+    {
+      "patch": 36,
+      "god": "Horus"
+    },
+    {
+      "patch": 37,
+      "god": "Bastet"
+    },
+    {
+      "patch": 38,
+      "god": "Chronos"
+    },
+    {
+      "patch": 39,
+      "god": "Xing Tian"
+    },
+    {
+      "patch": 40,
+      "god": "Cu Chulainn"
+    }
+  ]
+}

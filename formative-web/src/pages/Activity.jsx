@@ -10,11 +10,15 @@ import { hostApi, takeUrl } from '../lib/api';
 import { downloadResponsesCsv } from '../lib/exportResponses';
 import { readImageAsDataUrl } from '../lib/imageUpload';
 import { mergeQuizSettings } from '../lib/quizSettings';
+import { quizThemeProps } from '../lib/quizThemes';
+import { randomizeQuestion } from '../lib/triviaRemix';
+import QuizSettingsModal from '../components/QuizSettingsModal';
 
 const MORE_ITEMS = [
   { id: 'join', label: 'Join instructions', wire: true },
   { id: 'share', label: 'Share link', wire: true },
   { id: 'duplicate', label: 'Duplicate quiz', wire: true },
+  { id: 'settings', label: 'Quiz Settings', wire: true },
 ];
 
 function toLocalInput(iso) {
@@ -46,6 +50,7 @@ export default function Activity() {
   const [addOpen, setAddOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const [assignOpen, setAssignOpen] = useState(false);
+  const [quizSettingsOpen, setQuizSettingsOpen] = useState(false);
   const [selectedResponse, setSelectedResponse] = useState(null);
   const [saving, setSaving] = useState(false);
   const [quizDirty, setQuizDirty] = useState(false);
@@ -248,7 +253,25 @@ export default function Activity() {
         method: 'POST',
         body: { action: 'add_question', quizId, type, patch },
       });
-      setQuestions((prev) => [...prev, data.question]);
+      let nextQ = data.question;
+      const auto = mergeQuizSettings(quiz?.settings).auto_random_questions;
+      const canFill = ['multiple_choice', 'multiple_selection', 'dropdown', 'short_answer', 'fill_blank'].includes(
+        nextQ?.type
+      ) || nextQ?.meta?.kind === 'fill_blank';
+      if (auto && canFill) {
+        const gen = randomizeQuestion(nextQ);
+        if (gen.patch) {
+          nextQ = {
+            ...nextQ,
+            ...gen.patch,
+            meta: { ...(nextQ.meta || {}), ...(gen.patch.meta || {}) },
+          };
+        }
+      }
+      setQuestions((prev) => [...prev, nextQ]);
+      if (auto && nextQ?.id) {
+        setDirtyIds((ids) => (ids.includes(nextQ.id) ? ids : [...ids, nextQ.id]));
+      }
       setAddOpen(false);
     } catch (e) {
       setError(e.message);
@@ -274,6 +297,10 @@ export default function Activity() {
     setMoreOpen(false);
     if (id === 'share' || id === 'join') {
       setAssignOpen(true);
+      return;
+    }
+    if (id === 'settings') {
+      setQuizSettingsOpen(true);
       return;
     }
     if (id === 'duplicate') {
@@ -329,8 +356,9 @@ export default function Activity() {
 
   const link = quiz ? takeUrl(quiz.slug) : '';
 
+  const theme = quizThemeProps(settings);
   return (
-    <div className="f-activity-shell">
+    <div className={`f-activity-shell ${theme.className}`} style={theme.style}>
       <header className="f-topbar">
         <button type="button" className="f-icon-btn" onClick={() => nav('/')} aria-label="Menu">
           ☰
@@ -747,6 +775,14 @@ export default function Activity() {
       ) : null}
 
       <AddItemModal open={addOpen} onClose={() => setAddOpen(false)} onAdd={addQuestion} />
+
+      {quizSettingsOpen ? (
+        <QuizSettingsModal
+          settings={settings}
+          onChange={patchSettings}
+          onClose={() => setQuizSettingsOpen(false)}
+        />
+      ) : null}
 
       {assignOpen ? (
         <div className="f-overlay" onClick={() => setAssignOpen(false)} role="presentation">
