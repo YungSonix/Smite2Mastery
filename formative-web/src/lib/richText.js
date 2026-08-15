@@ -92,6 +92,127 @@ export function markdownToSafeHtml(raw) {
   return out.join('');
 }
 
+export function looksLikeHtml(raw) {
+  const s = String(raw || '').trim();
+  return s.startsWith('<') && /<\/?[a-z][\s\S]*>/i.test(s);
+}
+
+const RICH_TAGS = new Set([
+  'P',
+  'BR',
+  'STRONG',
+  'B',
+  'EM',
+  'I',
+  'U',
+  'S',
+  'STRIKE',
+  'DEL',
+  'A',
+  'UL',
+  'OL',
+  'LI',
+  'H3',
+  'H4',
+  'H5',
+  'BLOCKQUOTE',
+  'SPAN',
+  'CODE',
+  'DIV',
+  'FONT',
+]);
+
+function filterStyle(style) {
+  const keep = [];
+  for (const part of String(style || '').split(';')) {
+    const idx = part.indexOf(':');
+    if (idx < 0) continue;
+    const key = part.slice(0, idx).trim().toLowerCase();
+    const val = part.slice(idx + 1).trim();
+    if (!val || /expression|javascript|url\s*\(/i.test(val)) continue;
+    if (
+      [
+        'color',
+        'background-color',
+        'font-size',
+        'font-weight',
+        'font-style',
+        'text-align',
+        'text-decoration',
+      ].includes(key)
+    ) {
+      keep.push(`${key}: ${val}`);
+    }
+  }
+  return keep.join('; ');
+}
+
+function unwrap(el) {
+  const parent = el.parentNode;
+  if (!parent) {
+    el.remove();
+    return;
+  }
+  while (el.firstChild) parent.insertBefore(el.firstChild, el);
+  parent.removeChild(el);
+}
+
+/** Allowlisted HTML for stored instructions / prompts. Browser only. */
+export function sanitizeRichHtml(html) {
+  if (typeof DOMParser === 'undefined') return String(html || '');
+  const doc = new DOMParser().parseFromString(`<div id="f-rich-root">${html || ''}</div>`, 'text/html');
+  const root = doc.getElementById('f-rich-root') || doc.body;
+  const walk = (node) => {
+    [...node.childNodes].forEach((child) => {
+      if (child.nodeType === 3) return;
+      if (child.nodeType !== 1) {
+        child.remove();
+        return;
+      }
+      const tag = child.tagName;
+      if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'IFRAME' || tag === 'OBJECT') {
+        child.remove();
+        return;
+      }
+      walk(child);
+      if (!RICH_TAGS.has(tag)) {
+        unwrap(child);
+        return;
+      }
+      [...child.attributes].forEach((attr) => {
+        const n = attr.name.toLowerCase();
+        if (n === 'href' && tag === 'A') {
+          const href = String(attr.value || '').trim();
+          if (!/^https?:\/\//i.test(href)) child.removeAttribute('href');
+          else {
+            child.setAttribute('href', href);
+            child.setAttribute('target', '_blank');
+            child.setAttribute('rel', 'noopener noreferrer');
+          }
+          return;
+        }
+        if (n === 'style') {
+          const next = filterStyle(attr.value);
+          if (next) child.setAttribute('style', next);
+          else child.removeAttribute('style');
+          return;
+        }
+        if (n === 'class' && /\bf-md-h\b|\bf-spoiler\b/.test(attr.value)) return;
+        child.removeAttribute(attr.name);
+      });
+    });
+  };
+  walk(root);
+  return root.innerHTML;
+}
+
+export function toEditorHtml(raw) {
+  const s = String(raw || '');
+  if (!s.trim()) return '';
+  if (looksLikeHtml(s)) return sanitizeRichHtml(s);
+  return markdownToSafeHtml(s);
+}
+
 export function applyWrap(value, start, end, before, after) {
   const s = Math.max(0, start);
   const e = Math.max(s, end);

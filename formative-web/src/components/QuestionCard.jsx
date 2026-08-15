@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import FormatToolbar from './FormatToolbar';
+import { useEffect, useState } from 'react';
+import VisualTextEditor from './VisualTextEditor';
 import MediaStack from './MediaStack';
 import { joinFillBlankPrompt, splitFillBlankPrompt } from '../lib/fillBlank';
 import { readImageAsDataUrl } from '../lib/imageUpload';
@@ -61,8 +61,6 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
   const [attachOpen, setAttachOpen] = useState(false);
   const [variantTab, setVariantTab] = useState(0); // 0=A, 1=B, 2=C
   const [urlDraft, setUrlDraft] = useState('');
-  const promptRef = useRef(null);
-  const variantPromptRef = useRef(null);
   useEffect(() => {
     setQ(question);
   }, [question]);
@@ -572,18 +570,12 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
       <div className="f-q-prompt-edit">
         <span className="f-q-num">{index + 1}.</span>
         <div className="f-fmt-field">
-          <FormatToolbar
-            value={q.prompt || ''}
-            textareaRef={promptRef}
-            onChange={(next) => local({ prompt: next })}
-          />
-          <textarea
-            ref={promptRef}
-            value={q.prompt || ''}
-            onChange={(e) => local({ prompt: e.target.value })}
-            onBlur={() => commit()}
+          <VisualTextEditor
+            initialValue={q.prompt || ''}
             placeholder="Question prompt"
-            rows={useMediaSplit ? 2 : 3}
+            minHeight={useMediaSplit ? 72 : 96}
+            onChange={(next) => local({ prompt: next })}
+            onBlur={() => commit()}
           />
         </div>
       </div>
@@ -1095,16 +1087,11 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
         </p>
         <label className="f-fib-field">
           <span>Prompt</span>
-          <FormatToolbar
-            value={activeVariantFields.prompt}
-            textareaRef={variantPromptRef}
+          <VisualTextEditor
+            initialValue={activeVariantFields.prompt}
+            placeholder="Version prompt"
+            minHeight={96}
             onChange={(next) => patchVariantSlot(variantTab - 1, { prompt: next })}
-          />
-          <textarea
-            ref={variantPromptRef}
-            rows={3}
-            value={activeVariantFields.prompt}
-            onChange={(e) => patchVariantSlot(variantTab - 1, { prompt: e.target.value })}
             onBlur={() => commit()}
           />
         </label>

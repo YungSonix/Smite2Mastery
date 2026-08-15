@@ -821,6 +821,108 @@ label.f-file-btn:hover {
   color: var(--f-on-accent, #fff);
 }
 
+.f-fmt-bar-docs {
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--f-border);
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  background: var(--f-card);
+}
+
+.f-fmt-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-right: 8px;
+  border-right: 1px solid var(--f-border);
+}
+
+.f-fmt-group:last-child {
+  border-right: 0;
+  padding-right: 0;
+}
+
+.f-fmt-bar-docs button {
+  min-width: 32px;
+  min-height: 32px;
+  padding: 4px 8px;
+}
+
+.f-fmt-bar-docs button.on {
+  background: var(--f-blue);
+  color: var(--f-on-accent, #fff);
+  border-color: var(--f-blue);
+}
+
+.f-fmt-swatches {
+  gap: 6px;
+}
+
+.f-swatch {
+  width: 22px !important;
+  min-width: 22px !important;
+  height: 22px !important;
+  min-height: 22px !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+}
+
+.f-swatch.ink {
+  background: var(--f-text);
+}
+.f-swatch.accent {
+  background: var(--f-blue);
+}
+.f-swatch.gold {
+  background: var(--f-label);
+}
+.f-swatch.muted {
+  background: var(--f-muted);
+}
+.f-swatch.mark-gold {
+  background: color-mix(in srgb, var(--f-label) 45%, var(--f-card));
+}
+.f-swatch.mark-off {
+  background: var(--f-card);
+}
+
+.f-visual-wrap {
+  border: 1px solid var(--f-input-border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--f-input);
+}
+
+.f-visual-wrap .f-fmt-bar-docs {
+  border: 0;
+  border-bottom: 1px solid var(--f-border);
+  border-radius: 0;
+}
+
+.f-visual-editor {
+  min-height: 160px;
+  max-height: 420px;
+  overflow: auto;
+  overflow-anchor: none;
+  padding: 12px 14px;
+  color: var(--f-text);
+  outline: none;
+}
+
+.f-visual-editor.is-empty:before {
+  content: attr(data-placeholder);
+  color: var(--f-muted);
+  pointer-events: none;
+}
+
+.f-visual-editor h3 {
+  margin: 0.2em 0 0.4em;
+  font-size: 1.15em;
+  color: inherit;
+}
+
 .f-fmt-field {
   flex: 1;
   min-width: 0;
@@ -845,8 +947,16 @@ label.f-file-btn:hover {
   padding: 0;
 }
 
-.f-md strong {
-  color: #f1f5f9;
+.f-md strong,
+.f-md b {
+  color: inherit;
+  font-weight: 700;
+}
+
+.f-md em,
+.f-md i {
+  color: inherit;
+  font-style: italic;
 }
 
 .f-md u {
@@ -861,8 +971,9 @@ label.f-file-btn:hover {
 .f-md code {
   font-family: ui-monospace, Consolas, monospace;
   font-size: 0.92em;
-  background: #020617;
-  border: 1px solid var(--f-border);
+  background: var(--f-blue-soft);
+  color: inherit;
+  border: 1px solid var(--f-blue-border);
   border-radius: 4px;
   padding: 0 4px;
 }
@@ -902,7 +1013,8 @@ label.f-file-btn:hover {
   padding: 12px;
   border-radius: 10px;
   border: 1px dashed var(--f-blue-border);
-  background: rgba(2, 6, 23, 0.55);
+  background: var(--f-input);
+  color: var(--f-text);
 }
 
 .f-media-grid {
