@@ -1,13 +1,5 @@
-const {
-  supabaseAdmin,
-  readIp,
-  scoreAnswersWithVariants,
-  playerFacingScore,
-  send,
-  readBody,
-  applyVariant,
-} = require('../../lib/server/triviaApi');
-const { quizWindowState } = require('../../lib/server/triviaWindow');
+const { supabaseAdmin, readIp, send, readBody } = require('../../lib/server/triviaApi');
+const { commitGuestAttempt } = require('../../lib/server/triviaCommit');
 
 module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') {
@@ -52,14 +44,6 @@ module.exports = async function handler(req, res) {
     if (quizErr) return send(res, 500, { error: quizErr.message });
     if (!quiz) return send(res, 404, { error: 'Quiz not found or not assigned' });
 
-    const win = quizWindowState(quiz.settings);
-    if (win.status === 'not_open') {
-      return send(res, 403, { error: `This quiz opens ${win.opensAt}` });
-    }
-    if (win.status === 'closed') {
-      return send(res, 403, { error: 'This quiz is closed' });
-    }
-
     const { data: questions, error: qErr } = await sb
       .from('trivia_questions')
       .select('*')
@@ -68,66 +52,17 @@ module.exports = async function handler(req, res) {
 
     if (qErr) return send(res, 500, { error: qErr.message });
 
-    const allowRetake = Boolean(quiz.settings?.allow_retake);
-    if (!allowRetake) {
-      const { data: existing } = await sb
-        .from('trivia_responses')
-        .select('id')
-        .eq('quiz_id', quiz.id)
-        .ilike('discord_username', discord)
-        .maybeSingle();
-      if (existing) {
-        return send(res, 409, { error: 'You already submitted with this Discord Username' });
-      }
-    }
-
-    const graded = scoreAnswersWithVariants(questions || [], cleanAnswers, variantMap);
-    const resolvedForFacing = (questions || []).map((q) =>
-      applyVariant(q, variantMap[q.id] ?? 0)
-    );
-    const ip = readIp(req);
-    const ua = req.headers['user-agent'] || null;
-
-    const row = {
-      quiz_id: quiz.id,
-      discord_username: discord,
-      ingame_name: ingame,
-      answers: { ...cleanAnswers, __variant_map: variantMap },
-      score: graded.score,
-      max_score: graded.maxScore,
-      per_question: graded.perQuestion,
-      ip_address: ip,
-      user_agent: ua,
-      submitted_at: new Date().toISOString(),
-    };
-
-    if (allowRetake) {
-      await sb
-        .from('trivia_responses')
-        .delete()
-        .eq('quiz_id', quiz.id)
-        .ilike('discord_username', discord);
-    }
-
-    const { data: inserted, error: insErr } = await sb
-      .from('trivia_responses')
-      .insert(row)
-      .select('*')
-      .single();
-
-    if (insErr) return send(res, 500, { error: insErr.message });
-
-    const showScores = Boolean(quiz.settings?.show_scores);
-    const payload = {
-      ok: true,
-      responseId: inserted.id,
-    };
-    if (showScores) {
-      const visible = playerFacingScore(resolvedForFacing, graded);
-      payload.score = visible.score;
-      payload.maxScore = visible.maxScore;
-      payload.percent = visible.percent;
-    }
+    const payload = await commitGuestAttempt(sb, {
+      quiz,
+      questions: questions || [],
+      discord,
+      ingame,
+      answers: cleanAnswers,
+      variantMap,
+      ip: readIp(req),
+      ua: req.headers['user-agent'] || null,
+      allowClosedWindow: Boolean(body.force_timeout),
+    });
     return send(res, 200, payload);
   } catch (e) {
     console.error('trivia submit error', e);

@@ -23,82 +23,73 @@ export default function PrivacyPage() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Privacy & Security</Text>
           <Text style={styles.bodyText}>
-            Your privacy and data security are our top priorities. This app is designed with privacy-first principles.
+            Game data you browse (gods, items, patch notes) can stay on your device. If you create
+            an account, post builds, use the shop, or play Scroll Trivia, some information is sent
+            to our servers so those features work.
           </Text>
         </View>
 
         <View style={styles.section}>
           <Text style={styles.subsectionTitle}>🔒 Security Measures</Text>
           <Text style={styles.bodyText}>
-            We have implemented multiple layers of security to protect your information:
+            We use HTTPS for network calls and keep contest and account data on our host (not sold
+            as an ad profile). Details:
           </Text>
           
           <View style={styles.securityItem}>
-            <Text style={styles.securityTitle}>• No Data Collection</Text>
+            <Text style={styles.securityTitle}>• What stays on your device</Text>
             <Text style={styles.securityText}>
-              This app does not collect, store, or transmit any personal information. All data remains on your device.
+              Offline-style caches, builder drafts, and some minigame progress can stay in local
+              storage on this device.
             </Text>
           </View>
 
           <View style={styles.securityItem}>
-            <Text style={styles.securityTitle}>• Local Data Storage</Text>
+            <Text style={styles.securityTitle}>• What we store if you use accounts or contests</Text>
             <Text style={styles.securityText}>
-              All game data is stored locally on your device. No information is sent to external servers.
+              Login and profile (display name, cosmetics, gold) and saved or posted builds. Scroll
+              Trivia live-tab data is only for that contest and is deleted when the event closes
+              (see the bottom of this page).
             </Text>
           </View>
 
           <View style={styles.securityItem}>
             <Text style={styles.securityTitle}>• Secure Network Communication</Text>
             <Text style={styles.securityText}>
-              When accessing external resources (like news articles), we only use HTTPS encrypted connections.
+              Connections to our APIs and to linked sites use HTTPS.
             </Text>
           </View>
 
           <View style={styles.securityItem}>
             <Text style={styles.securityTitle}>• Input Validation</Text>
             <Text style={styles.securityText}>
-              All user inputs are validated and sanitized to prevent malicious data injection.
+              Inputs are checked to reduce abuse (spam, injection). That is not a guarantee against
+              every attack.
             </Text>
           </View>
 
           <View style={styles.securityItem}>
-            <Text style={styles.securityTitle}>• No Third-Party Tracking</Text>
+            <Text style={styles.securityTitle}>• Ads and analytics</Text>
             <Text style={styles.securityText}>
-              We do not use analytics, tracking, or advertising services that could collect your data.
-            </Text>
-          </View>
-
-          <View style={styles.securityItem}>
-            <Text style={styles.securityTitle}>• Secure Code Practices</Text>
-            <Text style={styles.securityText}>
-              Our codebase follows security best practices to prevent vulnerabilities and data leaks.
+              We do not run third-party advertising in the app. On web we use Vercel Analytics and
+              Speed Insights for traffic and performance, not to build an ad profile.
             </Text>
           </View>
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.subsectionTitle}>📋 What Data We Don't Collect</Text>
+          <Text style={styles.subsectionTitle}>📋 What we do not collect</Text>
           <Text style={styles.bodyText}>
-            To be completely transparent, here's what we explicitly do NOT collect:
+            We do not collect:
           </Text>
           <View style={styles.listContainer}>
-            <Text style={styles.listItem}>• Personal identification information</Text>
-            <Text style={styles.listItem}>• Device identifiers</Text>
-            <Text style={styles.listItem}>• Location data</Text>
-            <Text style={styles.listItem}>• Usage analytics</Text>
-            <Text style={styles.listItem}>• User preferences or settings</Text>
-            <Text style={styles.listItem}>• Search queries or browsing history</Text>
-            <Text style={styles.listItem}>• Any information sent to external servers</Text>
+            <Text style={styles.listItem}>• Government ID, phone book, or payment card numbers</Text>
+            <Text style={styles.listItem}>• GPS / precise device location</Text>
+            <Text style={styles.listItem}>• Other websites or apps you have open (we cannot see those)</Text>
+            <Text style={styles.listItem}>• What you type outside Smite Scroll / Scroll Trivia</Text>
           </View>
-        </View>
-
-        <View style={styles.section}>
-          <Text style={styles.subsectionTitle}>📝 Scroll Trivia contests</Text>
           <Text style={styles.bodyText}>
-            Optional web contests hosted at /trivia (Scroll Trivia) may ask for your Discord
-            Username and In-Game Name. When you submit answers, we may store those identifiers
-            together with your IP address and basic browser user-agent for contest integrity and
-            anti-cheat. Do not submit if you do not agree.
+            We do not sell your contest or account data to advertisers.
           </Text>
         </View>
 
@@ -134,7 +125,7 @@ export default function PrivacyPage() {
             in this page and our Privacy Policy.
           </Text>
           <Text style={styles.updateDate}>
-            Last updated: August 11, 2026
+            Last updated: August 15, 2026
           </Text>
         </View>
 
@@ -165,6 +156,27 @@ export default function PrivacyPage() {
               I'm also in the official SMITE Discord server, so you can ping me there!
             </Text>
           </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.subsectionTitle}>📝 Scroll Trivia contests</Text>
+          <Text style={styles.bodyText}>
+            Live tab tracking is only for Scroll Trivia events. It is not used for shop, profile,
+            builds, or anything else in Smite Scroll.
+          </Text>
+          <Text style={styles.bodyText}>
+            Optional contests at /trivia ask for Discord Username and In-Game Name. While a contest
+            is open, hosts can see who is taking it, roughly how many questions they have filled,
+            whether the quiz tab is in front or in the background, and how many times that tab went
+            to the background. We cannot see other sites, other tabs, or what you typed outside this
+            quiz. Tab-away counts are not proof of cheating.
+          </Text>
+          <Text style={styles.bodyText}>
+            When the event ends (close time, or the host unassigns the quiz), we delete those live
+            session records (who is in the quiz, tab-away counts, in-progress pings). Submitted
+            answers and names stay only so the host can pick winners, then the host can remove them.
+            Do not play if you do not agree.
+          </Text>
         </View>
 
         <View style={styles.trademarkFooter}>

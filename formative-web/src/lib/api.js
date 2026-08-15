@@ -30,12 +30,20 @@ export async function hostApi(path, { method = 'GET', body } = {}) {
   return parseJson(res);
 }
 
-export async function submitTrivia(payload) {
+export async function submitTrivia(payload, { keepalive = false } = {}) {
   const res = await fetch('/api/trivia/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
+    keepalive,
   });
+  if (keepalive) {
+    try {
+      return await parseJson(res);
+    } catch {
+      return { ok: true };
+    }
+  }
   return parseJson(res);
 }
 

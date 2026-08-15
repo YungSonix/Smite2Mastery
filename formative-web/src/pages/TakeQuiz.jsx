@@ -20,6 +20,7 @@ import {
 } from '../lib/triviaVariants';
 import { quizWindowState } from '../lib/quizSettings';
 import { quizThemeProps } from '../lib/quizThemes';
+import { pingTriviaPresence, compactDraftAnswers } from '../lib/triviaPresence';
 
 async function fileToDataUrl(file, maxBytes = 2.5 * 1024 * 1024) {
   if (!file) throw new Error('No file');
@@ -186,6 +187,9 @@ export default function TakeQuiz() {
   const [highlightId, setHighlightId] = useState(null);
   const restoredRef = useRef(false);
   const submittingRef = useRef(false);
+  const resultRef = useRef(null);
+  const payloadRef = useRef({});
+  resultRef.current = result;
 
   useEffect(() => {
     let alive = true;
@@ -274,6 +278,7 @@ export default function TakeQuiz() {
   const setAnswer = (id, value) => {
     setAnswers((prev) => {
       const next = { ...prev, [id]: value };
+      payloadRef.current = { ...payloadRef.current, answers: next };
       if (slug) {
         saveTriviaProgress(slug, {
           discord,
@@ -294,6 +299,14 @@ export default function TakeQuiz() {
   const remainingMs = startedAt && timed ? startedAt + timeLimitSec * 1000 - now : null;
   const quizLocked = windowState.status !== 'open';
   const showQuestions = !quizLocked && Boolean(startedAt);
+  payloadRef.current = {
+    slug,
+    discord,
+    ingame,
+    answers,
+    variantMap,
+    startedAt,
+  };
 
   useEffect(() => {
     if (!showQuestions) return;
@@ -316,6 +329,61 @@ export default function TakeQuiz() {
     const t = setInterval(() => setNow(Date.now()), 250);
     return () => clearInterval(t);
   }, [timed, startedAt, result]);
+
+  const answeredCount = useMemo(() => {
+    let n = 0;
+    playable.forEach((q) => {
+      if (SKIP_UNANSWERED.has(q.type)) return;
+      if (isAnswered(q, answers)) n += 1;
+    });
+    return n;
+  }, [playable, answers]);
+
+  const scoredQuestionCount = useMemo(
+    () => playable.filter((q) => !SKIP_UNANSWERED.has(q.type)).length,
+    [playable]
+  );
+
+  useEffect(() => {
+    if (!startedAt || result || !slug) return undefined;
+    const name = String(discord || '').trim();
+    if (name.length < 2) return undefined;
+
+    const sendPing = (extra = {}) => {
+      const hidden = typeof document !== 'undefined' && document.hidden;
+      const p = payloadRef.current;
+      pingTriviaPresence(
+        {
+          slug: p.slug || slug,
+          discord_username: name,
+          ingame_name: String(p.ingame || ingame || '').trim(),
+          answered_count: answeredCount,
+          question_count: scoredQuestionCount,
+          currently_hidden: extra.left_page ? true : hidden,
+          hidden_inc: extra.hidden_inc || 0,
+          left_page: Boolean(extra.left_page),
+          answers: compactDraftAnswers(p.answers),
+          variant_map: p.variantMap || {},
+          started_at: p.startedAt || startedAt,
+        },
+        { keepalive: Boolean(extra.left_page) }
+      );
+    };
+
+    sendPing();
+    const tick = setInterval(() => sendPing(), 5000);
+    const onVis = () => {
+      sendPing({ hidden_inc: document.hidden ? 1 : 0 });
+    };
+    const onHide = () => sendPing({ left_page: true });
+    document.addEventListener('visibilitychange', onVis);
+    window.addEventListener('pagehide', onHide);
+    return () => {
+      clearInterval(tick);
+      document.removeEventListener('visibilitychange', onVis);
+      window.removeEventListener('pagehide', onHide);
+    };
+  }, [startedAt, result, slug, discord, ingame, answeredCount, scoredQuestionCount]);
 
   useEffect(() => {
     if (quizLocked) {
@@ -359,7 +427,7 @@ export default function TakeQuiz() {
 
   const onSubmit = async (e, opts = {}) => {
     e?.preventDefault?.();
-    if (submittingRef.current) return;
+    if (submittingRef.current || resultRef.current) return;
     if (!opts.force && !opts.confirmed) {
       if (missingRequired.length) {
         setMissingConfirm({ kind: 'required', items: missingRequired });
@@ -370,26 +438,40 @@ export default function TakeQuiz() {
         return;
       }
     }
+    const p = payloadRef.current;
+    const discordName = String(p.discord || '').trim();
+    const ingameName = String(p.ingame || '').trim();
+    if (!p.slug || !discordName || !ingameName) {
+      if (opts.force) return;
+      setError('Discord Username and In-Game Name are required.');
+      return;
+    }
     submittingRef.current = true;
     setBusy(true);
     setError('');
     setMissingConfirm(null);
     try {
-      if (windowState.status === 'not_open') {
+      if (!opts.force && windowState.status === 'not_open') {
         throw new Error(`This quiz opens ${formatWhen(windowState.opensAt)}.`);
       }
-      if (windowState.status === 'closed') {
+      if (!opts.force && windowState.status === 'closed') {
         throw new Error('This quiz is closed.');
       }
-      const data = await submitTrivia({
-        slug,
-        discord_username: discord,
-        ingame_name: ingame,
-        answers,
-        variant_map: variantMap,
-      });
-      clearTriviaProgress(slug);
-      setResult(data);
+      const data = await submitTrivia(
+        {
+          slug: p.slug,
+          discord_username: discordName,
+          ingame_name: ingameName,
+          answers: p.answers,
+          variant_map: p.variantMap,
+          force_timeout: Boolean(opts.force),
+        },
+        { keepalive: Boolean(opts.keepalive) },
+      );
+      clearTriviaProgress(p.slug);
+      resultRef.current = data || { ok: true };
+      if (!opts.keepalive) setResult(data);
+      else setResult(data || { ok: true });
     } catch (err) {
       setError(err.message || 'Submit failed');
       submittingRef.current = false;
@@ -398,11 +480,33 @@ export default function TakeQuiz() {
     }
   };
 
+  const onSubmitRef = useRef(onSubmit);
+  onSubmitRef.current = onSubmit;
+
   useEffect(() => {
-    if (!timed || !startedAt || result || remainingMs == null || remainingMs > 0) return;
-    onSubmit(null, { force: true });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [remainingMs, timed, startedAt, result]);
+    if (!timed || !startedAt || result) return undefined;
+    const deadline = Number(startedAt) + timeLimitSec * 1000;
+    const fire = (keepalive = false) => {
+      if (Date.now() < deadline) return;
+      onSubmitRef.current?.(null, { force: true, keepalive });
+    };
+    const wait = Math.max(0, deadline - Date.now());
+    const tid = window.setTimeout(() => fire(false), wait);
+    const retry = window.setInterval(() => fire(false), 2000);
+    const onVis = () => fire(false);
+    const onHide = () => fire(true);
+    document.addEventListener('visibilitychange', onVis);
+    window.addEventListener('focus', onVis);
+    window.addEventListener('pagehide', onHide);
+    fire(false);
+    return () => {
+      window.clearTimeout(tid);
+      window.clearInterval(retry);
+      document.removeEventListener('visibilitychange', onVis);
+      window.removeEventListener('focus', onVis);
+      window.removeEventListener('pagehide', onHide);
+    };
+  }, [timed, startedAt, timeLimitSec, result]);
 
   if (loading) {
     return (

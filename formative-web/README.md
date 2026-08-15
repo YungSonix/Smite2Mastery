@@ -12,6 +12,8 @@ Question text, options, answer keys, and media files under `app/data/` (god port
 **In Supabase (live contest data only)**  
 Each submission is one row: Discord name, in-game name, answers JSON, score, per-question grades, IP, user-agent, timestamp.
 
+In-progress players (after **Next**) are rows in `trivia_sessions`: last seen, answers filled, and how many times the quiz tab went to the background. That count is not the other site they opened. Host Responses shows them live. Run `supabase/formative_trivia_sessions.sql` if the table is missing.
+
 Keep Supabase as the live store. Use **Export Excel/CSV** when you want a spreadsheet. Do not replace the database with Excel.
 
 A few thousand submissions are still small (kilobytes to a few megabytes). Large cost only happens if you embed huge image/audio data URLs in question rows instead of repo `/media` paths.
@@ -76,6 +78,7 @@ Sims cover desktop plus older-to-newer iOS/Android web widths. Gallery screensho
 - **Save** in the top bar (Ctrl/Cmd+S). Instructions, questions, images, and cover wait for Save. Assign settings still write when you change them.
 - Instructions and prompts: chat-style toolbar (bold, italic, underline, strike, link, code, spoiler, heading, quote, lists). Players see formatted text on the take page.
 - Take page shows cover + instructions + name fields until **Start**. Question images load as blob URLs so hover does not show filenames.
+- Responses **Live now**: who started, on-quiz vs tab-in-background vs left the page, answered count, left-tab count (host-only).
 - Image/Audio blocks: **+** to pick question type (keeps the media)
 - Up to **8 media files per version** (A/B/C): images, audio, and video/embed URLs in one list. Extra URLs live on `meta.image_urls` / `variant.image_urls`.
 - Fill in the blank: sentence + blank + correct answer

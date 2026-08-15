@@ -10,6 +10,8 @@ const {
 } = require('../../lib/server/triviaApi');
 const { isContentType, isManualType } = require('../../lib/server/triviaQuestionTypes');
 const { responsesToCsv } = require('../../lib/server/triviaExport');
+const { flushQuizDrafts } = require('../../lib/server/triviaCommit');
+const { shouldPurgeLiveSessions, purgeLiveSessions } = require('../../lib/server/triviaWindow');
 
 function recomputeScore(questions, perQuestion) {
   let score = 0;
@@ -132,6 +134,10 @@ module.exports = async function handler(req, res) {
       const { data: quiz, error } = await findOwnedQuiz(sb, username, quizId);
       if (error) return send(res, 500, { error: error.message });
       if (!quiz) return send(res, 404, { error: 'Quiz not found' });
+      await flushQuizDrafts(sb, quiz).catch((err) => console.warn('trivia flush on responses', err.message));
+      if (shouldPurgeLiveSessions(quiz)) {
+        await purgeLiveSessions(sb, quiz.id);
+      }
       const [{ data: questions }, { data: responses, error: rErr }] = await Promise.all([
         sb
           .from('trivia_questions')
@@ -145,6 +151,30 @@ module.exports = async function handler(req, res) {
           .order('submitted_at', { ascending: false }),
       ]);
       if (rErr) return send(res, 500, { error: rErr.message });
+      let sessions = [];
+      if (!shouldPurgeLiveSessions(quiz)) {
+      const { data: sessionRows, error: sErr } = await sb
+        .from('trivia_sessions')
+        .select('*')
+        .eq('quiz_id', quiz.id)
+        .order('last_seen_at', { ascending: false });
+      if (!sErr) {
+        const submitted = new Set(
+          (responses || []).map((r) => String(r.discord_username || '').toLowerCase())
+        );
+        const cutoff = Date.now() - 15 * 60 * 1000;
+        sessions = (sessionRows || [])
+          .filter((s) => {
+            if (submitted.has(String(s.discord_username || '').toLowerCase())) return false;
+            const last = Date.parse(s.last_seen_at);
+            return Number.isFinite(last) && last >= cutoff;
+          })
+          .map((s) => {
+            const { draft_answers: _d, variant_map: _v, ...rest } = s;
+            return rest;
+          });
+      }
+      }
       const format = String(url.searchParams.get('format') || '').toLowerCase();
       if (format === 'csv' || format === 'excel') {
         const csv = responsesToCsv(quiz, responses || [], questions || []);
@@ -157,7 +187,12 @@ module.exports = async function handler(req, res) {
         res.end(csv);
         return;
       }
-      return send(res, 200, { quiz, questions: questions || [], responses: responses || [] });
+      return send(res, 200, {
+        quiz,
+        questions: questions || [],
+        responses: responses || [],
+        sessions,
+      });
     }
 
     if (req.method === 'GET' && action === 'analytics') {
@@ -310,6 +345,7 @@ module.exports = async function handler(req, res) {
           .select('*')
           .single();
         if (error) return send(res, 500, { error: error.message });
+        if (shouldPurgeLiveSessions(data)) await purgeLiveSessions(sb, data.id);
         return send(res, 200, { quiz: data });
       }
       if (body.action === 'update_questions') {

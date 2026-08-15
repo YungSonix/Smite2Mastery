@@ -2926,14 +2926,20 @@ label.f-file-btn:hover {
 }
 
 .f-grid .totals-col {
-  background: var(--f-totals);
-  font-weight: 700;
-  width: 40px;
-  min-width: 40px;
-  max-width: 44px;
-  color: var(--f-blue);
-  font-size: 11px;
-  padding: 8px 2px;
+  background: color-mix(in srgb, var(--f-blue) 22%, var(--f-card));
+  font-weight: 800;
+  width: 52px;
+  min-width: 52px;
+  max-width: 60px;
+  color: var(--f-text);
+  font-size: 12px;
+  padding: 8px 4px;
+}
+
+.f-grid tbody tr:hover .totals-col,
+.f-grid tbody tr.is-selected .totals-col {
+  background: color-mix(in srgb, var(--f-blue) 32%, var(--f-card));
+  color: var(--f-text);
 }
 
 .f-grid .col-q {
@@ -2949,6 +2955,74 @@ label.f-file-btn:hover {
   max-width: 88px;
   white-space: nowrap;
   padding: 8px 4px;
+}
+
+.f-live-block {
+  margin-bottom: 18px;
+}
+
+.f-live-heading {
+  margin: 0 0 6px;
+  font-family: var(--f-display);
+  font-size: 0.95rem;
+  color: var(--f-blue);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.f-live-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--f-blue-soft);
+  border: 1px solid var(--f-blue-border);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.f-live-note {
+  margin: 0 0 10px;
+  font-size: 12px;
+  max-width: 52rem;
+}
+
+.f-status-pill {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--f-blue-border);
+  white-space: nowrap;
+}
+
+.f-status-pill.is-live {
+  background: color-mix(in srgb, #34d399 22%, var(--f-card));
+  color: #6ee7b7;
+  border-color: color-mix(in srgb, #34d399 45%, var(--f-border));
+}
+
+.f-status-pill.is-away {
+  background: color-mix(in srgb, #fbbf24 18%, var(--f-card));
+  color: #fcd34d;
+  border-color: color-mix(in srgb, #fbbf24 40%, var(--f-border));
+}
+
+.f-status-pill.is-left {
+  background: color-mix(in srgb, #94a3b8 16%, var(--f-card));
+  color: #cbd5e1;
+}
+
+.f-grid .col-status,
+.f-grid .col-progress,
+.f-grid .col-focus {
+  white-space: nowrap;
+  font-size: 12px;
 }
 
 .f-student {

@@ -3,6 +3,7 @@
 -- If tables already exist online, skip this and run the incremental files:
 --   formative_trivia_types_expand.sql
 --   formative_trivia_ingame_name.sql
+--   formative_trivia_session_drafts.sql  (creates trivia_sessions if missing + draft columns)
 -- Notes / storage split: formative_trivia_notes.sql
 
 create extension if not exists "pgcrypto";
@@ -75,9 +76,35 @@ create index if not exists trivia_responses_quiz_idx on public.trivia_responses 
 create unique index if not exists trivia_responses_quiz_discord_uidx
   on public.trivia_responses (quiz_id, lower(discord_username));
 
+create table if not exists public.trivia_sessions (
+  id uuid primary key default gen_random_uuid(),
+  quiz_id uuid not null references public.trivia_quizzes(id) on delete cascade,
+  discord_username text not null,
+  ingame_name text,
+  started_at timestamptz not null default now(),
+  last_seen_at timestamptz not null default now(),
+  answered_count int not null default 0,
+  question_count int not null default 0,
+  hidden_count int not null default 0,
+  currently_hidden boolean not null default false,
+  left_page boolean not null default false,
+  draft_answers jsonb,
+  variant_map jsonb,
+  client_started_at timestamptz,
+  ip_address text,
+  user_agent text
+);
+
+create unique index if not exists trivia_sessions_quiz_discord_uidx
+  on public.trivia_sessions (quiz_id, lower(discord_username));
+
+create index if not exists trivia_sessions_quiz_seen_idx
+  on public.trivia_sessions (quiz_id, last_seen_at desc);
+
 alter table public.trivia_quizzes enable row level security;
 alter table public.trivia_questions enable row level security;
 alter table public.trivia_responses enable row level security;
+alter table public.trivia_sessions enable row level security;
 
 -- Guests can read assigned quizzes + their questions by slug (anon).
 drop policy if exists trivia_quizzes_public_read_assigned on public.trivia_quizzes;
@@ -100,3 +127,4 @@ create policy trivia_questions_public_read_assigned
 
 comment on table public.trivia_quizzes is 'Scroll Trivia quizzes for Smite Scroll host';
 comment on table public.trivia_responses is 'Guest submissions; IP stored server-side only';
+comment on table public.trivia_sessions is 'In-progress take sessions; host-only via service role';

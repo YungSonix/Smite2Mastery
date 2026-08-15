@@ -44,6 +44,7 @@ export default function Activity() {
   const [quiz, setQuiz] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [responses, setResponses] = useState([]);
+  const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [addOpen, setAddOpen] = useState(false);
@@ -83,6 +84,7 @@ export default function Activity() {
       if (tab === 'responses' || tab === 'insights') {
         const r = await hostApi(`/api/trivia/host?action=responses&quizId=${encodeURIComponent(quizId)}`);
         setResponses(r.responses || []);
+        setSessions(r.sessions || []);
       }
     } catch (e) {
       setError(e.message || 'Failed to load');
@@ -108,10 +110,11 @@ export default function Activity() {
       try {
         const r = await hostApi(`/api/trivia/host?action=responses&quizId=${encodeURIComponent(quizId)}`);
         setResponses(r.responses || []);
+        setSessions(r.sessions || []);
       } catch {
         /* ignore poll errors */
       }
-    }, 8000);
+    }, 5000);
     return () => clearInterval(id);
   }, [tab, quizId]);
 
@@ -669,6 +672,7 @@ export default function Activity() {
             <ResponsesGrid
               questions={questions}
               responses={responses}
+              sessions={sessions}
               selectedId={selectedResponse?.id}
               onSelect={setSelectedResponse}
             />

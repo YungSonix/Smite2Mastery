@@ -1,6 +1,7 @@
 import { formatIp } from '../lib/quizSettings';
+import { presenceLabel, presenceStatus } from '../lib/triviaPresence';
 
-export default function ResponsesGrid({ questions, responses, onSelect, selectedId }) {
+export default function ResponsesGrid({ questions, responses, sessions, onSelect, selectedId }) {
   const scored = (questions || []).filter(
     (q) =>
       !['image', 'content', 'audio', 'video', 'embed', 'file_response', 'audio_response', 'drawing'].includes(
@@ -35,8 +36,77 @@ export default function ResponsesGrid({ questions, responses, onSelect, selected
     return Math.round((ok / n) * 100);
   };
 
+  const live = (sessions || []).filter((s) => presenceStatus(s) !== 'gone');
+
   return (
     <div className="f-grid-wrap">
+      {live.length ? (
+        <div className="f-live-block">
+          <h3 className="f-live-heading">
+            Live now <span className="f-live-count">{live.length}</span>
+          </h3>
+          <p className="f-muted f-live-note">
+            Tab in background = they left this quiz tab (notification, Discord, another site). Left
+            this page = they closed it or opened a different page in the same tab. Neither shows
+            where they went.
+          </p>
+          <table className="f-grid f-live-grid">
+            <thead>
+              <tr>
+                <th className="col-discord">Discord</th>
+                <th className="col-ingame">In-Game</th>
+                <th className="col-status">Status</th>
+                <th className="col-progress">Answered</th>
+                <th className="col-focus">Left tab</th>
+                <th className="ip-col">IP</th>
+              </tr>
+            </thead>
+            <tbody>
+              {live.map((s) => {
+                const status = presenceStatus(s);
+                const initial = (s.discord_username || '?').charAt(0).toUpperCase();
+                const qn = Number(s.question_count) || 0;
+                const an = Number(s.answered_count) || 0;
+                return (
+                  <tr key={s.id || s.discord_username}>
+                    <td className="col-discord">
+                      <div className="f-student">
+                        <div className="f-avatar" style={{ width: 22, height: 22, fontSize: 11 }}>
+                          {initial}
+                        </div>
+                        <span className="f-student-name" title={s.discord_username}>
+                          {s.discord_username}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="col-ingame" title={s.ingame_name || ''}>
+                      {s.ingame_name || '—'}
+                    </td>
+                    <td className="col-status">
+                      <span className={`f-status-pill is-${status}`}>{presenceLabel(status)}</span>
+                    </td>
+                    <td className="col-progress">
+                      {qn ? `${an}/${qn}` : an || '—'}
+                    </td>
+                    <td className="col-focus" title="Times the quiz tab went to the background">
+                      {Number(s.hidden_count) || 0}
+                    </td>
+                    <td className="ip-col">
+                      <code className="f-ip" title={s.ip_address || ''}>
+                        {formatIp(s.ip_address)}
+                      </code>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <p className="f-muted" style={{ padding: '4px 4px 12px' }}>
+          No one is in the quiz right now. They show up here after they hit Next.
+        </p>
+      )}
       <table className="f-grid">
         <thead>
           <tr>

@@ -1208,8 +1208,7 @@ export default function HomePage({ setCurrentPage, setPatchHubSubTab }) {
               {/* Privacy & Security Subsection */}
               <Text style={styles.subSectionTitle}>Privacy & Security</Text>
           <Text style={styles.bioText}>
-            Your privacy is important to us. This app does not collect or store any personal information. 
-            All data remains on your device.
+            Tap below to read what we store and how Scroll Trivia events work.
           </Text>
           <TouchableOpacity
             style={styles.privacyButton}

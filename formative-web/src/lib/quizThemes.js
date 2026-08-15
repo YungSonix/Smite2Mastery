@@ -241,6 +241,7 @@ export function quizThemeStyle(settings) {
     '--f-qcard-pad': pad,
     '--f-on-accent': onAccentColor(t.accent),
     '--f-shadow': t.mode === 'light' ? '0 10px 28px rgba(20, 33, 61, 0.08)' : '0 12px 40px rgba(0, 0, 0, 0.45)',
+    '--f-totals': t.mode === 'light' ? rgba(t.accent, 0.2) : 'rgba(125, 211, 252, 0.18)',
   };
 }
 

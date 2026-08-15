@@ -26,7 +26,8 @@ const {
   scoreAnswersWithVariants,
 } = require('../lib/server/triviaVariants');
 const { responsesToCsv } = require('../lib/server/triviaExport');
-const { quizWindowState } = require('../lib/server/triviaWindow');
+const { quizWindowState, shouldPurgeLiveSessions } = require('../lib/server/triviaWindow');
+const { compactDraftAnswers, sessionDraftDue } = require('../lib/server/triviaCommit');
 
 const DATA_ROOT = path.resolve(__dirname, '../app/data');
 const MEDIA_TYPES = {
@@ -93,6 +94,7 @@ const db = {
   quizzes: new Map(),
   questions: new Map(),
   responses: new Map(),
+  sessions: new Map(),
 };
 
 function json(res, status, body) {
@@ -168,6 +170,120 @@ function questionsForQuiz(quizId) {
     .sort((a, b) => a.sort_order - b.sort_order);
 }
 
+function sessionKey(quizId, discord) {
+  return `${quizId}|${String(discord || '').toLowerCase()}`;
+}
+
+function purgeMemorySessions(quizId) {
+  for (const [key, s] of db.sessions) {
+    if (s.quiz_id === quizId) db.sessions.delete(key);
+  }
+}
+
+function liveSessionsForQuiz(quiz, responses) {
+  if (shouldPurgeLiveSessions(quiz)) {
+    purgeMemorySessions(quiz.id);
+    return [];
+  }
+  const submitted = new Set(
+    (responses || []).map((r) => String(r.discord_username || '').toLowerCase())
+  );
+  const cutoff = Date.now() - 15 * 60 * 1000;
+  return [...db.sessions.values()]
+    .filter((s) => {
+      if (s.quiz_id !== quiz.id) return false;
+      if (submitted.has(String(s.discord_username || '').toLowerCase())) return false;
+      const last = Date.parse(s.last_seen_at);
+      return Number.isFinite(last) && last >= cutoff;
+    })
+    .map((s) => {
+      const { draft_answers: _d, variant_map: _v, ...rest } = s;
+      return rest;
+    })
+    .sort((a, b) => String(b.last_seen_at).localeCompare(String(a.last_seen_at)));
+}
+
+function flushMemoryDrafts(quiz) {
+  if (!quiz) return;
+  const questions = questionsForQuiz(quiz.id);
+  const allowRetake = Boolean(quiz.settings?.allow_retake);
+  for (const [key, session] of [...db.sessions.entries()]) {
+    if (session.quiz_id !== quiz.id || !sessionDraftDue(session, quiz.settings)) continue;
+    const discord = String(session.discord_username || '').trim();
+    const ingame = String(session.ingame_name || '').trim();
+    if (!discord || !ingame) continue;
+    const existing = [...db.responses.values()].find(
+      (r) => r.quiz_id === quiz.id && r.discord_username.toLowerCase() === discord.toLowerCase()
+    );
+    if (existing && !allowRetake) {
+      db.sessions.delete(key);
+      continue;
+    }
+    if (existing && allowRetake) db.responses.delete(existing.id);
+    const answers = compactDraftAnswers(session.draft_answers || {});
+    const variantMap = session.variant_map && typeof session.variant_map === 'object' ? session.variant_map : {};
+    const graded = scoreAnswersWithVariants(scoreAnswers, questions, answers, variantMap);
+    const row = {
+      id: randomUUID(),
+      quiz_id: quiz.id,
+      discord_username: discord,
+      ingame_name: ingame,
+      answers: { ...answers, __variant_map: variantMap },
+      score: graded.score,
+      max_score: graded.maxScore,
+      per_question: graded.perQuestion,
+      ip_address: session.ip_address || null,
+      user_agent: session.user_agent || null,
+      submitted_at: new Date().toISOString(),
+    };
+    db.responses.set(row.id, row);
+    db.sessions.delete(key);
+  }
+}
+
+async function handlePresence(req, res) {
+  const body = await readBody(req);
+  const slug = String(body.slug || '').trim();
+  const discord = String(body.discord_username || body.discordUsername || '').trim();
+  const ingame = String(body.ingame_name || body.ingameName || '').trim();
+  if (!slug) return json(res, 400, { error: 'Missing quiz slug' });
+  if (!discord || discord.length < 2) return json(res, 400, { error: 'Discord Username required' });
+  const quiz = [...db.quizzes.values()].find((q) => q.slug === slug && q.is_assigned);
+  if (!quiz) return json(res, 404, { error: 'Quiz not found or not assigned' });
+  if (shouldPurgeLiveSessions(quiz) || quizWindowState(quiz.settings).status !== 'open') {
+    purgeMemorySessions(quiz.id);
+    return json(res, 403, { error: 'This quiz is closed' });
+  }
+  const key = sessionKey(quiz.id, discord);
+  const existing = db.sessions.get(key);
+  const hiddenInc = Math.min(1, Math.max(0, Number(body.hidden_inc) || 0));
+  const now = new Date().toISOString();
+  const leftPage = Boolean(body.left_page);
+  const started = Number(body.started_at);
+  db.sessions.set(key, {
+    id: existing?.id || randomUUID(),
+    quiz_id: quiz.id,
+    discord_username: discord,
+    ingame_name: ingame || existing?.ingame_name || null,
+    started_at: existing?.started_at || now,
+    last_seen_at: now,
+    answered_count: Math.max(0, Number(body.answered_count) || 0),
+    question_count: Math.max(0, Number(body.question_count) || 0),
+    hidden_count: Number(existing?.hidden_count || 0) + hiddenInc,
+    currently_hidden: leftPage ? true : Boolean(body.currently_hidden),
+    left_page: leftPage,
+    draft_answers: body.answers ? compactDraftAnswers(body.answers) : existing?.draft_answers || null,
+    variant_map: body.variant_map && typeof body.variant_map === 'object' ? body.variant_map : existing?.variant_map || null,
+    client_started_at:
+      existing?.client_started_at ||
+      (Number.isFinite(started) && started > 0 ? new Date(started).toISOString() : null),
+    ip_address: readIp(req),
+    user_agent: req.headers['user-agent'] || existing?.user_agent || null,
+  });
+  flushMemoryDrafts(quiz);
+  return json(res, 200, { ok: true });
+}
+
 function readIp(req) {
   const xf = req.headers['x-forwarded-for'];
   if (typeof xf === 'string' && xf.trim()) return xf.split(',')[0].trim();
@@ -211,6 +327,7 @@ async function handleHost(req, res, url) {
   if (req.method === 'GET' && action === 'responses') {
     const quiz = findOwnedQuiz(username, quizId);
     if (!quiz) return json(res, 404, { error: 'Quiz not found' });
+    flushMemoryDrafts(quiz);
     const questions = questionsForQuiz(quiz.id);
     const responses = [...db.responses.values()]
       .filter((r) => r.quiz_id === quiz.id)
@@ -226,7 +343,7 @@ async function handleHost(req, res, url) {
       res.end(csv);
       return;
     }
-    return json(res, 200, { quiz, questions, responses });
+    return json(res, 200, { quiz, questions, responses, sessions: liveSessionsForQuiz(quiz, responses) });
   }
 
   if (req.method === 'GET' && action === 'analytics') {
@@ -347,6 +464,7 @@ async function handleHost(req, res, url) {
       delete quiz.owner_username;
       quiz.owner_username = username;
       db.quizzes.set(quiz.id, quiz);
+      if (shouldPurgeLiveSessions(quiz)) purgeMemorySessions(quiz.id);
       return json(res, 200, { quiz });
     }
     if (body.action === 'update_questions') {
@@ -543,6 +661,7 @@ async function handleSubmit(req, res) {
     submitted_at: new Date().toISOString(),
   };
   db.responses.set(row.id, row);
+  db.sessions.delete(sessionKey(quiz.id, discord));
   const showScores = Boolean(quiz.settings?.show_scores);
   const payload = { ok: true, responseId: row.id };
   if (showScores) {
@@ -563,6 +682,10 @@ const server = http.createServer(async (req, res) => {
     if (url.pathname === '/api/trivia/submit') {
       if (req.method !== 'POST') return json(res, 405, { error: 'Method not allowed' });
       return await handleSubmit(req, res);
+    }
+    if (url.pathname === '/api/trivia/presence') {
+      if (req.method !== 'POST') return json(res, 405, { error: 'Method not allowed' });
+      return await handlePresence(req, res);
     }
     if (url.pathname === '/api/trivia/health') {
       return json(res, 200, {
