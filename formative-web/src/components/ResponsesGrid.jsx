@@ -1,7 +1,14 @@
 import { formatIp } from '../lib/quizSettings';
 import { presenceLabel, presenceStatus } from '../lib/triviaPresence';
 
-export default function ResponsesGrid({ questions, responses, sessions, onSelect, selectedId }) {
+export default function ResponsesGrid({
+  questions,
+  responses,
+  sessions,
+  sessionsError,
+  onSelect,
+  selectedId,
+}) {
   const scored = (questions || []).filter(
     (q) =>
       !['image', 'content', 'audio', 'video', 'embed', 'file_response', 'audio_response', 'drawing'].includes(
@@ -37,9 +44,17 @@ export default function ResponsesGrid({ questions, responses, sessions, onSelect
   };
 
   const live = (sessions || []).filter((s) => presenceStatus(s) !== 'gone');
+  const submittedNames = new Set(
+    (responses || []).map((r) => String(r.discord_username || '').toLowerCase())
+  );
 
   return (
     <div className="f-grid-wrap">
+      {sessionsError ? (
+        <p className="f-error" style={{ padding: '4px 4px 12px' }}>
+          {sessionsError}
+        </p>
+      ) : null}
       {live.length ? (
         <div className="f-live-block">
           <h3 className="f-live-heading">
@@ -76,6 +91,9 @@ export default function ResponsesGrid({ questions, responses, sessions, onSelect
                         </div>
                         <span className="f-student-name" title={s.discord_username}>
                           {s.discord_username}
+                          {submittedNames.has(String(s.discord_username || '').toLowerCase())
+                            ? ' (submitted)'
+                            : ''}
                         </span>
                       </div>
                     </td>
@@ -104,7 +122,8 @@ export default function ResponsesGrid({ questions, responses, sessions, onSelect
         </div>
       ) : (
         <p className="f-muted" style={{ padding: '4px 4px 12px' }}>
-          No one is in the quiz right now. They show up here after they hit Next.
+          No one is in the quiz right now. They show up here after Next, including people who
+          already submitted if they open it again.
         </p>
       )}
       <table className="f-grid">

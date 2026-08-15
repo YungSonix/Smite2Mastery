@@ -45,6 +45,7 @@ export default function Activity() {
   const [questions, setQuestions] = useState([]);
   const [responses, setResponses] = useState([]);
   const [sessions, setSessions] = useState([]);
+  const [sessionsError, setSessionsError] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [addOpen, setAddOpen] = useState(false);
@@ -85,6 +86,7 @@ export default function Activity() {
         const r = await hostApi(`/api/trivia/host?action=responses&quizId=${encodeURIComponent(quizId)}`);
         setResponses(r.responses || []);
         setSessions(r.sessions || []);
+        setSessionsError(r.sessionsError || '');
       }
     } catch (e) {
       setError(e.message || 'Failed to load');
@@ -111,6 +113,7 @@ export default function Activity() {
         const r = await hostApi(`/api/trivia/host?action=responses&quizId=${encodeURIComponent(quizId)}`);
         setResponses(r.responses || []);
         setSessions(r.sessions || []);
+        setSessionsError(r.sessionsError || '');
       } catch {
         /* ignore poll errors */
       }
@@ -673,6 +676,7 @@ export default function Activity() {
               questions={questions}
               responses={responses}
               sessions={sessions}
+              sessionsError={sessionsError}
               selectedId={selectedResponse?.id}
               onSelect={setSelectedResponse}
             />

@@ -152,28 +152,32 @@ module.exports = async function handler(req, res) {
       ]);
       if (rErr) return send(res, 500, { error: rErr.message });
       let sessions = [];
+      let sessionsError = null;
       if (!shouldPurgeLiveSessions(quiz)) {
-      const { data: sessionRows, error: sErr } = await sb
-        .from('trivia_sessions')
-        .select('*')
-        .eq('quiz_id', quiz.id)
-        .order('last_seen_at', { ascending: false });
-      if (!sErr) {
-        const submitted = new Set(
-          (responses || []).map((r) => String(r.discord_username || '').toLowerCase())
-        );
-        const cutoff = Date.now() - 15 * 60 * 1000;
-        sessions = (sessionRows || [])
-          .filter((s) => {
-            if (submitted.has(String(s.discord_username || '').toLowerCase())) return false;
-            const last = Date.parse(s.last_seen_at);
-            return Number.isFinite(last) && last >= cutoff;
-          })
-          .map((s) => {
-            const { draft_answers: _d, variant_map: _v, ...rest } = s;
-            return rest;
-          });
-      }
+        const { data: sessionRows, error: sErr } = await sb
+          .from('trivia_sessions')
+          .select('*')
+          .eq('quiz_id', quiz.id)
+          .order('last_seen_at', { ascending: false });
+        if (sErr) {
+          const msg = String(sErr.message || sErr.code || '');
+          if (sErr.code === '42P01' || sErr.code === 'PGRST205' || /trivia_sessions/i.test(msg)) {
+            sessionsError = 'Live takers need the trivia_sessions table. Run supabase/formative_trivia_sessions.sql.';
+          } else {
+            sessionsError = sErr.message;
+          }
+        } else {
+          const cutoff = Date.now() - 15 * 60 * 1000;
+          sessions = (sessionRows || [])
+            .filter((s) => {
+              const last = Date.parse(s.last_seen_at);
+              return Number.isFinite(last) && last >= cutoff;
+            })
+            .map((s) => {
+              const { draft_answers: _d, variant_map: _v, ...rest } = s;
+              return rest;
+            });
+        }
       }
       const format = String(url.searchParams.get('format') || '').toLowerCase();
       if (format === 'csv' || format === 'excel') {
@@ -192,6 +196,7 @@ module.exports = async function handler(req, res) {
         questions: questions || [],
         responses: responses || [],
         sessions,
+        sessionsError,
       });
     }
 

@@ -1,4 +1,4 @@
-export const LIVE_MS = 25000;
+export const LIVE_MS = 90000;
 export const KEEP_MS = 15 * 60 * 1000;
 
 export function compactDraftAnswers(answers) {

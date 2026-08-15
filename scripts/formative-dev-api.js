@@ -185,14 +185,10 @@ function liveSessionsForQuiz(quiz, responses) {
     purgeMemorySessions(quiz.id);
     return [];
   }
-  const submitted = new Set(
-    (responses || []).map((r) => String(r.discord_username || '').toLowerCase())
-  );
   const cutoff = Date.now() - 15 * 60 * 1000;
   return [...db.sessions.values()]
     .filter((s) => {
       if (s.quiz_id !== quiz.id) return false;
-      if (submitted.has(String(s.discord_username || '').toLowerCase())) return false;
       const last = Date.parse(s.last_seen_at);
       return Number.isFinite(last) && last >= cutoff;
     })
