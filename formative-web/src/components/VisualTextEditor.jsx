@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { sanitizeRichHtml, toEditorHtml } from '../lib/richText';
+import { escapeHtml, normalizeHttpUrl, sanitizeRichHtml, toEditorHtml } from '../lib/richText';
 
 function cssVar(el, name, fallback) {
   if (!el) return fallback;
@@ -25,8 +25,13 @@ export default function VisualTextEditor({
   const skipInput = useRef(false);
   const userEdited = useRef(false);
   const editorRef = useRef(null);
+  const savedRange = useRef(null);
+  const wrapRef = useRef(null);
   const [active, setActive] = useState({});
   const [empty, setEmpty] = useState(() => isEmptyHtml(toEditorHtml(initialValue)));
+  const [linkOpen, setLinkOpen] = useState(false);
+  const [linkUrl, setLinkUrl] = useState('https://');
+  const [linkLabel, setLinkLabel] = useState('');
 
   useEffect(() => {
     const el = editorRef.current;
@@ -138,8 +143,78 @@ export default function VisualTextEditor({
 
   const hold = (e) => e.preventDefault();
 
+  const snapshotRange = () => {
+    const el = editorRef.current;
+    const sel = window.getSelection();
+    if (!el || !sel || !sel.rangeCount) {
+      savedRange.current = null;
+      return '';
+    }
+    if (!el.contains(sel.anchorNode)) {
+      savedRange.current = null;
+      return '';
+    }
+    savedRange.current = sel.getRangeAt(0).cloneRange();
+    return sel.toString();
+  };
+
+  const restoreRange = () => {
+    const el = editorRef.current;
+    const range = savedRange.current;
+    if (!el || !range) return;
+    el.focus();
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  };
+
+  const decorateLinks = () => {
+    const el = editorRef.current;
+    if (!el) return;
+    el.querySelectorAll('a[href]').forEach((a) => {
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', 'noopener noreferrer');
+    });
+  };
+
+  const openLinkPanel = () => {
+    const selected = savedRange.current?.toString?.() || snapshotRange();
+    const fromText = normalizeHttpUrl(selected);
+    setLinkUrl(fromText || 'https://');
+    setLinkLabel(fromText ? '' : selected);
+    setLinkOpen(true);
+  };
+
+  const applyLink = () => {
+    const href = normalizeHttpUrl(linkUrl);
+    if (!href) return;
+    restoreRange();
+    const sel = window.getSelection();
+    const hasSelection = sel && !sel.isCollapsed;
+    if (hasSelection) {
+      document.execCommand('createLink', false, href);
+    } else {
+      const label = String(linkLabel || href).trim() || href;
+      document.execCommand(
+        'insertHTML',
+        false,
+        `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`,
+      );
+    }
+    decorateLinks();
+    markAndEmit();
+    setLinkOpen(false);
+  };
+
+  const removeLink = () => {
+    restoreRange();
+    document.execCommand('unlink');
+    markAndEmit();
+    setLinkOpen(false);
+  };
+
   return (
-    <div className="f-visual-wrap">
+    <div className="f-visual-wrap" ref={wrapRef}>
       <div className="f-fmt-bar f-fmt-bar-docs" role="toolbar" aria-label="Text formatting">
         <div className="f-fmt-group">
           <button type="button" title="Bold" className={active.bold ? 'on' : ''} onMouseDown={hold} onClick={() => run(() => document.execCommand('bold'))}>
@@ -194,17 +269,13 @@ export default function VisualTextEditor({
         <div className="f-fmt-group">
           <button
             type="button"
-            title="Link"
-            onMouseDown={hold}
-            onClick={() =>
-              run(() => {
-                const href = window.prompt('Link URL', 'https://');
-                if (!href) return;
-                const safe = String(href).trim();
-                if (!/^https?:\/\//i.test(safe)) return;
-                document.execCommand('createLink', false, safe);
-              })
-            }
+            title="Attach link to selected text"
+            className={linkOpen ? 'on' : ''}
+            onMouseDown={(e) => {
+              hold(e);
+              snapshotRange();
+            }}
+            onClick={openLinkPanel}
           >
             Link
           </button>
@@ -216,6 +287,53 @@ export default function VisualTextEditor({
           </button>
         </div>
       </div>
+      {linkOpen ? (
+        <div className="f-link-pop">
+          <p className="f-link-pop-hint">
+            Highlight words, then paste a URL — or type link text below if nothing is selected.
+          </p>
+          <input
+            className="f-link-pop-input"
+            type="text"
+            inputMode="url"
+            value={linkUrl}
+            placeholder="https://…"
+            autoFocus
+            onChange={(e) => setLinkUrl(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                applyLink();
+              }
+              if (e.key === 'Escape') setLinkOpen(false);
+            }}
+          />
+          <input
+            className="f-link-pop-input"
+            type="text"
+            value={linkLabel}
+            placeholder="Text to show (if nothing is highlighted)"
+            onChange={(e) => setLinkLabel(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                applyLink();
+              }
+            }}
+          />
+          <div className="f-link-pop-actions">
+            <button type="button" onClick={applyLink}>
+              Attach
+            </button>
+            <button type="button" onClick={removeLink}>
+              Remove
+            </button>
+            <button type="button" onClick={() => setLinkOpen(false)}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      ) : null}
       <div
         ref={editorRef}
         className={`f-visual-editor f-md ${empty ? 'is-empty' : ''}`}
@@ -229,7 +347,26 @@ export default function VisualTextEditor({
           if (skipInput.current) return;
           markAndEmit();
         }}
-        onBlur={() => {
+        onPaste={(e) => {
+          const text = e.clipboardData?.getData('text/plain') || '';
+          const href = normalizeHttpUrl(text);
+          if (!href || /\s/.test(text.trim())) return;
+          e.preventDefault();
+          const sel = window.getSelection();
+          if (sel && !sel.isCollapsed) document.execCommand('createLink', false, href);
+          else {
+            document.execCommand(
+              'insertHTML',
+              false,
+              `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(text.trim())}</a>`,
+            );
+          }
+          decorateLinks();
+          markAndEmit();
+        }}
+        onBlur={(e) => {
+          const wrap = wrapRef.current;
+          if (wrap && e.relatedTarget && wrap.contains(e.relatedTarget)) return;
           const el = editorRef.current;
           if (el && userEdited.current) {
             el.innerHTML = sanitizeRichHtml(el.innerHTML);

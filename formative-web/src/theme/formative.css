@@ -856,6 +856,47 @@ label.f-file-btn:hover {
   border-color: var(--f-blue);
 }
 
+.f-link-pop {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--f-border);
+  background: var(--f-card);
+}
+
+.f-link-pop-hint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--f-muted);
+}
+
+.f-link-pop-input {
+  width: 100%;
+  border: 1px solid var(--f-input-border);
+  border-radius: 8px;
+  background: var(--f-input);
+  color: var(--f-text);
+  padding: 8px 10px;
+  font-size: 14px;
+}
+
+.f-link-pop-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.f-link-pop-actions button {
+  min-height: 32px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--f-border);
+  background: var(--f-blue-soft);
+  color: var(--f-text);
+  cursor: pointer;
+}
+
 .f-fmt-swatches {
   gap: 6px;
 }
@@ -991,8 +1032,10 @@ label.f-file-btn:hover {
   font-size: 1.05em;
 }
 
-.f-md a {
+.f-md a,
+.f-visual-editor a {
   color: var(--f-blue);
+  text-decoration: underline;
 }
 
 .f-spoiler {

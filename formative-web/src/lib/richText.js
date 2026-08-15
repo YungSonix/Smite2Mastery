@@ -6,12 +6,22 @@ export function escapeHtml(s) {
     .replace(/"/g, '&quot;');
 }
 
+export function normalizeHttpUrl(raw) {
+  let u = String(raw || '').trim();
+  if (!u) return '';
+  if (!/^https?:\/\//i.test(u)) u = `https://${u}`;
+  try {
+    const parsed = new URL(u);
+    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') return '';
+    return parsed.href;
+  } catch {
+    return '';
+  }
+}
+
 function safeHref(raw) {
-  const u = String(raw || '')
-    .trim()
-    .replace(/&amp;/g, '&');
-  if (!/^https?:\/\//i.test(u)) return '';
-  return escapeHtml(u);
+  const u = normalizeHttpUrl(String(raw || '').replace(/&amp;/g, '&'));
+  return u ? escapeHtml(u) : '';
 }
 
 function inlineMd(s) {

@@ -183,16 +183,18 @@ export default function Activity() {
   const saveAll = useCallback(async () => {
     if (!quiz) return false;
     const changed = questions.filter((q) => dirtyIds.includes(q.id));
-    if (!quizDirty && !bannerDirty && !changed.length) return true;
+    const instructionsNow = instructionsLiveRef.current;
+    const instructionsDirty = instructionsNow !== (quiz.settings?.instructions ?? '');
+    if (!quizDirty && !bannerDirty && !instructionsDirty && !changed.length) return true;
     setSaving(true);
     setError('');
     try {
-      if (quizDirty || bannerDirty) {
+      if (quizDirty || bannerDirty || instructionsDirty) {
         const patch = {
           title: quiz.title,
           settings: {
             ...mergeQuizSettings(quiz.settings),
-            instructions: instructionsLiveRef.current,
+            instructions: instructionsNow,
           },
         };
         if (bannerDirty) patch.banner_url = quiz.banner_url;

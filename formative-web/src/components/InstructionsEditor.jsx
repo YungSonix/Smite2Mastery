@@ -3,13 +3,11 @@ import VisualTextEditor from './VisualTextEditor';
 import { sanitizeRichHtml } from '../lib/richText';
 
 export default function InstructionsEditor({ quizId, initialValue, liveRef, onDirty, onCommit }) {
-  const markedDirty = useRef(false);
   const onCommitRef = useRef(onCommit);
   onCommitRef.current = onCommit;
 
   useEffect(() => {
     liveRef.current = initialValue || '';
-    markedDirty.current = false;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quizId]);
 
@@ -35,10 +33,7 @@ export default function InstructionsEditor({ quizId, initialValue, liveRef, onDi
         minHeight={200}
         onChange={(html) => {
           liveRef.current = html;
-          if (!markedDirty.current) {
-            markedDirty.current = true;
-            onDirty();
-          }
+          onDirty();
         }}
       />
     </section>
