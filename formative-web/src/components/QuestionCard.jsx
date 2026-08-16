@@ -409,8 +409,8 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
         <MediaStack
           urls={activeMediaUrls}
           editable
-          imageCrop={bodyForCard?.meta?.media_crop}
-          imageCropSeed={bodyForCard?.meta?.media_seed}
+          imageCrop={q.meta?.media_crop}
+          imageCropSeed={q.meta?.media_seed}
           onRemove={(i) => setActiveMedia(activeMediaUrls.filter((_, j) => j !== i))}
         />
       ) : (
