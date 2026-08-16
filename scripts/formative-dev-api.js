@@ -28,6 +28,16 @@ const {
 const { responsesToCsv } = require('../lib/server/triviaExport');
 const { quizWindowState, shouldPurgeLiveSessions } = require('../lib/server/triviaWindow');
 const { compactDraftAnswers, sessionDraftDue } = require('../lib/server/triviaCommit');
+const {
+  storedHintList,
+  questionHintsEnabled,
+  mergeLifelineCounts,
+  totalLifelinesUsed,
+  extractLifelines,
+  lifelineMultiplier,
+  LIFELINES_PER_ATTEMPT,
+  HINTS_PER_QUESTION,
+} = require('../lib/server/triviaHints');
 
 const DATA_ROOT = path.resolve(__dirname, '../app/data');
 const MEDIA_TYPES = {
@@ -660,6 +670,11 @@ async function handleSubmit(req, res) {
   }
   if (existing && allowRetake) db.responses.delete(existing.id);
 
+  const live = db.sessions.get(sessionKey(quiz.id, discord));
+  answers.__lifelines = mergeLifelineCounts(
+    extractLifelines(live?.draft_answers),
+    extractLifelines(answers)
+  );
   const graded = scoreAnswersWithVariants(scoreAnswers, questions, answers, variantMap);
   const resolved = questions.map((q) => applyVariant(q, variantMap[q.id] ?? 0));
   const row = {
@@ -688,6 +703,48 @@ async function handleSubmit(req, res) {
   return json(res, 200, payload);
 }
 
+async function handleHint(req, res) {
+  const body = await readBody(req);
+  const slug = String(body.slug || '').trim();
+  const discord = String(body.discord_username || body.discordUsername || '').trim();
+  const questionId = String(body.questionId || body.question_id || '').trim();
+  const variantMap = body.variant_map && typeof body.variant_map === 'object' ? body.variant_map : {};
+  if (!slug) return json(res, 400, { error: 'Missing quiz slug' });
+  if (!discord || discord.length < 2) return json(res, 400, { error: 'Discord Username required' });
+  if (!questionId) return json(res, 400, { error: 'Missing question' });
+  const quiz = [...db.quizzes.values()].find((q) => q.slug === slug && q.is_assigned);
+  if (!quiz) return json(res, 404, { error: 'Quiz not found or not assigned' });
+  if (!quiz.settings?.lifelines_enabled) return json(res, 403, { error: 'Hints are off for this quiz' });
+  const question = questionsForQuiz(quiz.id).find((q) => q.id === questionId);
+  if (!question) return json(res, 404, { error: 'Question not found' });
+  const applied = applyVariant(question, variantMap[question.id] ?? 0);
+  if (!questionHintsEnabled(applied)) return json(res, 400, { error: 'This question has no hints' });
+  const list = storedHintList(applied);
+  const key = sessionKey(quiz.id, discord);
+  const session = db.sessions.get(key);
+  const draft = session?.draft_answers && typeof session.draft_answers === 'object' ? session.draft_answers : {};
+  const counts = extractLifelines(draft);
+  const usedOnQ = Number(counts[questionId]) || 0;
+  if (usedOnQ >= HINTS_PER_QUESTION) return json(res, 400, { error: 'No more hints on this question' });
+  if (totalLifelinesUsed(counts) >= LIFELINES_PER_ATTEMPT) return json(res, 400, { error: 'No lifelines left' });
+  const text = list[usedOnQ];
+  if (!text) return json(res, 400, { error: 'No hint text for this tier' });
+  const nextCounts = mergeLifelineCounts(counts, { [questionId]: usedOnQ + 1 });
+  const nextDraft = compactDraftAnswers({ ...draft, __lifelines: nextCounts });
+  if (session) {
+    session.draft_answers = nextDraft;
+    db.sessions.set(key, session);
+  }
+  const total = totalLifelinesUsed(nextCounts);
+  return json(res, 200, {
+    text,
+    tier: usedOnQ + 1,
+    usedOnQuestion: nextCounts[questionId],
+    remaining: Math.max(0, LIFELINES_PER_ATTEMPT - total),
+    multiplier: lifelineMultiplier(nextCounts[questionId]),
+  });
+}
+
 const server = http.createServer(async (req, res) => {
   try {
     if (req.method === 'OPTIONS') return json(res, 204, {});
@@ -697,6 +754,10 @@ const server = http.createServer(async (req, res) => {
     if (url.pathname === '/api/trivia/submit') {
       if (req.method !== 'POST') return json(res, 405, { error: 'Method not allowed' });
       return await handleSubmit(req, res);
+    }
+    if (url.pathname === '/api/trivia/hint') {
+      if (req.method !== 'POST') return json(res, 405, { error: 'Method not allowed' });
+      return await handleHint(req, res);
     }
     if (url.pathname === '/api/trivia/presence') {
       if (req.method !== 'POST') return json(res, 405, { error: 'Method not allowed' });

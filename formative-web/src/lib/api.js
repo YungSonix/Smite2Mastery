@@ -30,6 +30,15 @@ export async function hostApi(path, { method = 'GET', body } = {}) {
   return parseJson(res);
 }
 
+export async function requestTriviaHint(payload) {
+  const res = await fetch('/api/trivia/hint', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  return parseJson(res);
+}
+
 export async function submitTrivia(payload, { keepalive = false } = {}) {
   const res = await fetch('/api/trivia/submit', {
     method: 'POST',

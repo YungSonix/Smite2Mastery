@@ -26,6 +26,11 @@ import CategorizeBoard from './CategorizeBoard';
 import { parseCategorize } from '../lib/categorize';
 import { remixQuestionFromA, fillAnswersFromPrompt, randomizeQuestion } from '../lib/triviaRemix';
 import { MAX_QUESTION_VARIANTS, variantLetter } from '../lib/triviaVariants';
+import {
+  questionHintUiAllowed,
+  storedHintList,
+  withGeneratedHints,
+} from '../lib/triviaHints';
 
 async function readFileAsDataUrl(file, { maxBytes = 2.5 * 1024 * 1024, acceptPrefix } = {}) {
   if (!file) throw new Error('No file selected');
@@ -66,7 +71,7 @@ function AttachFileButton({ onChange, accept = 'image/*,audio/*,video/*' }) {
   );
 }
 
-export default function QuestionCard({ question, index, onChange, onDelete }) {
+export default function QuestionCard({ question, index, onChange, onDelete, autoHints = false }) {
   const [q, setQ] = useState(question);
   const [uploadError, setUploadError] = useState('');
   const [attachOpen, setAttachOpen] = useState(false);
@@ -291,6 +296,12 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
       next = withMediaUrlsOnQuestion({ ...next, image_url: null }, []);
     } else if (patch.image_urls || patch.image_url) {
       next = withMediaUrlsOnQuestion(next, patch.image_urls || [patch.image_url].filter(Boolean));
+    }
+    if (autoHints || next.meta?.hints_enabled) {
+      next = withGeneratedHints(next, {
+        enable: Boolean(autoHints || next.meta?.hints_enabled),
+        overwrite: false,
+      });
     }
     if (variantTab > 0) {
       const { meta: _m, type: _t, points: _p, required: _r, clearMedia: _c, ...slot } = patch;
@@ -810,6 +821,55 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
             onChange={(e) => commit({ ...q, required: e.target.checked })}
           />
         </label>
+        {questionHintUiAllowed(q) || q.meta?.hints_enabled ? (
+          <>
+            <label className="f-toggle-row">
+              <span>
+                Hints
+                <small>Guests can spend lifelines here. Draft text is filled in; edit below.</small>
+              </span>
+              <input
+                type="checkbox"
+                className="f-toggle"
+                checked={Boolean(q.meta?.hints_enabled)}
+                onChange={(e) => {
+                  const on = e.target.checked;
+                  if (on) {
+                    commit(withGeneratedHints({ ...q, meta: { ...(q.meta || {}), hints_enabled: true } }, { enable: true }));
+                    return;
+                  }
+                  commit({ ...q, meta: { ...(q.meta || {}), hints_enabled: false } });
+                }}
+              />
+            </label>
+            {q.meta?.hints_enabled ? (
+              <div className="f-hint-editor">
+                {storedHintList(q).map((text, i) => (
+                  <label key={i} className="f-hint-field">
+                    <span>Hint {i + 1}</span>
+                    <textarea
+                      rows={2}
+                      value={text}
+                      onChange={(e) => {
+                        const hints = storedHintList(q);
+                        hints[i] = e.target.value;
+                        local({ meta: { ...(q.meta || {}), hints } });
+                      }}
+                      onBlur={() => commit()}
+                    />
+                  </label>
+                ))}
+                <button
+                  type="button"
+                  className="f-outline-btn"
+                  onClick={() => commit(withGeneratedHints(q, { enable: true, overwrite: true }))}
+                >
+                  Regenerate drafts
+                </button>
+              </div>
+            ) : null}
+          </>
+        ) : null}
       </div>
     </details>
   ) : (

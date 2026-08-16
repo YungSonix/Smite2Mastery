@@ -12,6 +12,7 @@ import { readImageAsDataUrl } from '../lib/imageUpload';
 import { mergeQuizSettings } from '../lib/quizSettings';
 import { quizThemeProps } from '../lib/quizThemes';
 import { randomizeQuestion } from '../lib/triviaRemix';
+import { withGeneratedHints } from '../lib/triviaHints';
 import { presenceStatus } from '../lib/triviaPresence';
 import QuizSettingsModal from '../components/QuizSettingsModal';
 import {
@@ -380,7 +381,8 @@ export default function Activity() {
         body: { action: 'add_question', quizId, type, patch },
       });
       let nextQ = data.question;
-      const auto = mergeQuizSettings(quiz?.settings).auto_random_questions;
+      const merged = mergeQuizSettings(quiz?.settings);
+      const auto = merged.auto_random_questions;
       const canFill = ['multiple_choice', 'multiple_selection', 'dropdown', 'short_answer', 'fill_blank'].includes(
         nextQ?.type
       ) || nextQ?.meta?.kind === 'fill_blank';
@@ -394,8 +396,11 @@ export default function Activity() {
           };
         }
       }
+      if (merged.auto_hints) {
+        nextQ = withGeneratedHints(nextQ, { enable: true });
+      }
       setQuestions((prev) => [...prev, nextQ]);
-      if (auto && nextQ?.id) {
+      if ((auto || merged.auto_hints) && nextQ?.id) {
         setDirtyIds((ids) => (ids.includes(nextQ.id) ? ids : [...ids, nextQ.id]));
       }
       setAddOpen(false);
@@ -824,6 +829,7 @@ export default function Activity() {
               key={q.id}
               question={q}
               index={idx}
+              autoHints={Boolean(mergeQuizSettings(quiz?.settings).auto_hints)}
               onChange={saveQuestion}
               onDelete={() => deleteQuestion(q.id)}
             />

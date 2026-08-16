@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import RichText from '../components/RichText';
 import MediaStack from '../components/MediaStack';
-import { submitTrivia } from '../lib/api';
+import { submitTrivia, requestTriviaHint } from '../lib/api';
 import { splitFillBlankPrompt } from '../lib/fillBlank';
 import { listMediaUrls } from '../lib/questionMedia';
 import { typeLabel } from '../lib/questionTypes';
@@ -21,6 +21,7 @@ import {
 import { quizWindowState } from '../lib/quizSettings';
 import { quizThemeProps } from '../lib/quizThemes';
 import { pingTriviaPresence, compactDraftAnswers } from '../lib/triviaPresence';
+import { LIFELINES_PER_ATTEMPT, totalLifelinesUsed, lifelineMultiplier } from '../lib/triviaHints';
 import { allChoicesHaveArt, lookupChoiceArt } from '../lib/choiceArt';
 
 async function fileToDataUrl(file, maxBytes = 2.5 * 1024 * 1024) {
@@ -222,6 +223,9 @@ export default function TakeQuiz() {
   const [missingConfirm, setMissingConfirm] = useState(null);
   const [highlightId, setHighlightId] = useState(null);
   const [visibleQ, setVisibleQ] = useState(1);
+  const [hintTexts, setHintTexts] = useState({});
+  const [hintCounts, setHintCounts] = useState({});
+  const [hintBusy, setHintBusy] = useState('');
   const restoredRef = useRef(false);
   const submittingRef = useRef(false);
   const resultRef = useRef(null);
@@ -340,9 +344,34 @@ export default function TakeQuiz() {
     slug,
     discord,
     ingame,
-    answers,
+    answers: { ...answers, __lifelines: hintCounts },
     variantMap,
     startedAt,
+  };
+
+  const lifelinesLeft = Math.max(0, LIFELINES_PER_ATTEMPT - totalLifelinesUsed(hintCounts));
+
+  const spendHint = async (q) => {
+    if (!q?.id || hintBusy || lifelinesLeft <= 0) return;
+    setHintBusy(q.id);
+    setError('');
+    try {
+      const data = await requestTriviaHint({
+        slug,
+        discord_username: discord,
+        questionId: q.id,
+        variant_map: variantMap,
+      });
+      setHintTexts((prev) => ({
+        ...prev,
+        [q.id]: [...(prev[q.id] || []), data.text].filter(Boolean),
+      }));
+      setHintCounts((prev) => ({ ...prev, [q.id]: data.usedOnQuestion }));
+    } catch (e) {
+      setError(e.message || 'Hint failed');
+    } finally {
+      setHintBusy('');
+    }
   };
 
   useEffect(() => {
@@ -895,6 +924,40 @@ export default function TakeQuiz() {
                   </div>
                 )}
                 {q.meta?.passage ? <p className="f-passage">{q.meta.passage}</p> : null}
+
+                {settings.lifelines_enabled && q.meta?.hints_enabled ? (
+                  <div className="f-lifeline">
+                    {(hintTexts[q.id] || []).map((line, hi) => (
+                      <p key={hi} className="f-lifeline-text">
+                        <strong>Hint {hi + 1}.</strong> {line}
+                      </p>
+                    ))}
+                    <button
+                      type="button"
+                      className="f-outline-btn f-lifeline-btn"
+                      disabled={
+                        busy ||
+                        hintBusy === q.id ||
+                        lifelinesLeft <= 0 ||
+                        (Number(hintCounts[q.id]) || 0) >= 3
+                      }
+                      onClick={() => spendHint(q)}
+                    >
+                      {hintBusy === q.id
+                        ? '…'
+                        : (Number(hintCounts[q.id]) || 0) >= 3
+                          ? 'No more hints here'
+                          : lifelinesLeft <= 0
+                            ? 'No lifelines left'
+                            : `Use hint (${lifelinesLeft} left)`}
+                    </button>
+                    {(Number(hintCounts[q.id]) || 0) > 0 ? (
+                      <span className="f-muted f-lifeline-cost">
+                        This question is worth {Math.round(lifelineMultiplier(hintCounts[q.id]) * 100)}% if you get it right.
+                      </span>
+                    ) : null}
+                  </div>
+                ) : null}
 
                 {!useMediaSplit ? mediaBlock : null}
 

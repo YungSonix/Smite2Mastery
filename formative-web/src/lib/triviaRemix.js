@@ -700,7 +700,7 @@ export function randomizeQuestion(question) {
         prompt: `${row.god} Aspect is called ${row.usesThe ? 'Aspect of the' : 'Aspect of'} {{blank}}`,
         options: [],
         correct: { answers: [...new Set([row.blank, row.blank.toLowerCase()])] },
-        meta: { kind: 'fill_blank' },
+        meta: { kind: 'fill_blank', remix_kind: 'aspect_blank', hint_context: { god: row.god } },
         image_url: null,
         image_urls: [],
         clearMedia: true,

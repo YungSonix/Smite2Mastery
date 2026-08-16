@@ -237,14 +237,19 @@ export default function QuizSettingsModal({ settings, onChange, onClose }) {
                 />
               </section>
 
-              <section className="f-settings-card f-settings-card-soon">
+              <section className="f-settings-card">
                 <h4>Lifelines</h4>
                 <Toggle
                   label="Allow 3 lifelines per guest"
-                  hint="Coming soon — text hints that reduce points (see docs/SCROLL_TRIVIA_LIFELINES.md)"
+                  hint="Guests can spend up to 3 hints on the take page. Each hint on a question lowers that question’s points (100% → 75% → 50% → 35%)."
                   checked={settings.lifelines_enabled}
-                  disabled
                   onChange={(v) => onChange({ lifelines_enabled: v })}
+                />
+                <Toggle
+                  label="Auto-fill hint text"
+                  hint="New and random questions get three draft hints you can edit under question Settings."
+                  checked={settings.auto_hints}
+                  onChange={(v) => onChange({ auto_hints: v })}
                 />
               </section>
 

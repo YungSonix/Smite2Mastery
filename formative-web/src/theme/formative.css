@@ -2669,6 +2669,65 @@ label.f-file-btn:hover {
   padding: 4px 0;
 }
 
+.f-hint-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 8px 0 4px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--f-blue-border);
+  background: color-mix(in srgb, var(--f-page) 55%, var(--f-card));
+}
+
+.f-hint-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--f-muted);
+}
+
+.f-hint-field textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 48px;
+  border-radius: 8px;
+  border: 1px solid var(--f-input-border);
+  background: var(--f-input);
+  color: var(--f-text);
+  font: inherit;
+  padding: 8px 10px;
+}
+
+.f-lifeline {
+  margin: 10px 0 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--f-blue-border);
+  background: color-mix(in srgb, var(--f-blue) 8%, var(--f-card));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.f-lifeline-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.f-lifeline-btn {
+  align-self: flex-start;
+}
+
+.f-lifeline-cost {
+  font-size: 12px;
+}
+  border-top: 1px solid var(--f-border);
+  padding: 4px 0;
+}
+
 .f-toggle-row {
   display: grid;
   grid-template-columns: 1fr auto;
