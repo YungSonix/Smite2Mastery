@@ -28,7 +28,17 @@ import { remixQuestionFromA, fillAnswersFromPrompt, randomizeQuestion } from '..
 
 async function readFileAsDataUrl(file, { maxBytes = 2.5 * 1024 * 1024, acceptPrefix } = {}) {
   if (!file) throw new Error('No file selected');
-  if (acceptPrefix && !String(file.type || '').startsWith(acceptPrefix)) {
+  const type = String(file.type || '');
+  const name = String(file.name || '').toLowerCase();
+  const audioByName = /\.(wav|mp3|m4a|ogg|aac|flac)$/i.test(name);
+  const videoByName = /\.(mp4|webm|mov)$/i.test(name);
+  if (acceptPrefix === 'audio/' && !(type.startsWith('audio/') || audioByName)) {
+    throw new Error('Please choose an audio file');
+  }
+  if (acceptPrefix === 'video/' && !(type.startsWith('video/') || videoByName)) {
+    throw new Error('Please choose a video file');
+  }
+  if (acceptPrefix && acceptPrefix !== 'audio/' && acceptPrefix !== 'video/' && !type.startsWith(acceptPrefix)) {
     throw new Error(`Please choose a ${acceptPrefix.replace('/', '')} file`);
   }
   if (file.size > maxBytes) throw new Error('File too large (max ~2.5MB)');
@@ -242,9 +252,14 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
     e.target.value = '';
     await appendFiles(files, (file) => {
       const type = String(file.type || '');
-      if (type.startsWith('image/')) return readImageAsDataUrl(file);
-      if (type.startsWith('audio/')) return readFileAsDataUrl(file, { acceptPrefix: 'audio/' });
-      if (type.startsWith('video/')) {
+      const name = String(file.name || '').toLowerCase();
+      if (type.startsWith('image/') || /\.(png|jpe?g|gif|webp|svg)$/i.test(name)) {
+        return readImageAsDataUrl(file);
+      }
+      if (type.startsWith('audio/') || /\.(wav|mp3|m4a|ogg|aac|flac)$/i.test(name)) {
+        return readFileAsDataUrl(file, { acceptPrefix: 'audio/' });
+      }
+      if (type.startsWith('video/') || /\.(mp4|webm|mov)$/i.test(name)) {
         return readFileAsDataUrl(file, { acceptPrefix: 'video/', maxBytes: 8 * 1024 * 1024 });
       }
       throw new Error('Please choose an image, audio, or video file');
@@ -441,8 +456,11 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
     isFillBlank ? (
       <div className="f-fib-editor">
         <div className="f-fib-how">
-          <strong>
-            {index + 1}. Fill in the blank
+          <strong className="f-fib-how-title">
+            <span className="f-q-num" title={`Question ${index + 1}`} aria-label={`Question ${index + 1}`}>
+              {index + 1}
+            </span>
+            Fill in the blank
           </strong>
           <p>
             Students get a sentence with one missing word. Write the sentence, then the answer that
@@ -568,7 +586,9 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
       </div>
     ) : (
       <div className="f-q-prompt-edit">
-        <span className="f-q-num">{index + 1}.</span>
+        <span className="f-q-num" title={`Question ${index + 1}`} aria-label={`Question ${index + 1}`}>
+          {index + 1}
+        </span>
         <div className="f-fmt-field">
           <VisualTextEditor
             initialValue={q.prompt || ''}
@@ -1277,6 +1297,9 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
     <div className={`f-qcard ${useMediaSplit ? 'f-qcard-media' : ''} ${isFillBlank ? 'f-qcard-fib' : ''}`}>
       <div className="f-qcard-head">
         <span>≡</span>
+        <span className="f-q-num f-q-num-head" title={`Question ${index + 1}`} aria-label={`Question ${index + 1}`}>
+          {index + 1}
+        </span>
         {isGate ? (
           <span>{isDiscord ? 'Discord Username' : 'In-Game Name'}</span>
         ) : (
@@ -1347,6 +1370,14 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
           <span className="f-variant-hint">
             Version A is always on. Double-click B or C to turn that version off or on. Off
             versions are not given to players.
+            {variantTab > 0 && String(q.prompt || '') === 'Multiple choice question' ? (
+              <>
+                {' '}
+                You are editing Version {['A', 'B', 'C'][variantTab]}. Version A is still the
+                default “Multiple choice question” — most players may get A. Put the real prompt
+                and media on A, or Save then test with the same Discord name.
+              </>
+            ) : null}
           </span>
         </div>
       ) : null}

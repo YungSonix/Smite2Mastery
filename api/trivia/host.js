@@ -350,6 +350,13 @@ module.exports = async function handler(req, res) {
           .select('*')
           .single();
         if (error) return send(res, 500, { error: error.message });
+        if (patch.is_assigned === true) {
+          await sb
+            .from('trivia_quizzes')
+            .update({ is_assigned: false, updated_at: new Date().toISOString() })
+            .eq('owner_username', username)
+            .neq('id', data.id);
+        }
         if (shouldPurgeLiveSessions(data)) await purgeLiveSessions(sb, data.id);
         return send(res, 200, { quiz: data });
       }

@@ -460,6 +460,11 @@ async function handleHost(req, res, url) {
       delete quiz.owner_username;
       quiz.owner_username = username;
       db.quizzes.set(quiz.id, quiz);
+      if (body.patch && body.patch.is_assigned === true) {
+        for (const other of db.quizzes.values()) {
+          if (other.owner_username === username && other.id !== quiz.id) other.is_assigned = false;
+        }
+      }
       if (shouldPurgeLiveSessions(quiz)) purgeMemorySessions(quiz.id);
       return json(res, 200, { quiz });
     }

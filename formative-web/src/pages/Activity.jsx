@@ -28,6 +28,39 @@ function toLocalInput(iso) {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
+function editorDraftKey(quizId) {
+  return `scroll_trivia_editor_draft:${String(quizId || '').trim()}`;
+}
+
+function readEditorDraft(quizId) {
+  try {
+    const raw = localStorage.getItem(editorDraftKey(quizId));
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    if (!data || !Array.isArray(data.questions) || !data.questions.length) return null;
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+function writeEditorDraft(quizId, payload) {
+  try {
+    localStorage.setItem(editorDraftKey(quizId), JSON.stringify(payload));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function clearEditorDraft(quizId) {
+  try {
+    localStorage.removeItem(editorDraftKey(quizId));
+  } catch {
+    /* quota / private mode */
+  }
+}
+
 function fromLocalInput(value) {
   if (!value) return '';
   const d = new Date(value);
@@ -77,11 +110,30 @@ export default function Activity() {
         `/api/trivia/host?action=quiz&quizId=${encodeURIComponent(quizId)}`
       );
       setQuiz(data.quiz);
-      setQuestions(data.questions || []);
+      const draft = readEditorDraft(quizId);
+      if (draft?.questions?.length) {
+        setQuestions(draft.questions);
+        setDirtyIds(
+          Array.isArray(draft.dirtyIds) && draft.dirtyIds.length
+            ? draft.dirtyIds
+            : draft.questions.map((q) => q.id).filter(Boolean)
+        );
+        if (draft.quiz && typeof draft.quiz === 'object') {
+          setQuiz({
+            ...data.quiz,
+            ...draft.quiz,
+            settings: { ...(data.quiz.settings || {}), ...(draft.quiz.settings || {}) },
+          });
+          setQuizDirty(true);
+        }
+        setBannerDirty(Boolean(draft.bannerDirty));
+      } else {
+        setQuestions(data.questions || []);
+        setQuizDirty(false);
+        setBannerDirty(false);
+        setDirtyIds([]);
+      }
       instructionsLiveRef.current = data.quiz?.settings?.instructions ?? '';
-      setQuizDirty(false);
-      setBannerDirty(false);
-      setDirtyIds([]);
       if (tab === 'responses' || tab === 'insights') {
         const r = await hostApi(`/api/trivia/host?action=responses&quizId=${encodeURIComponent(quizId)}`);
         setResponses(r.responses || []);
@@ -215,17 +267,21 @@ export default function Activity() {
         setQuiz(data.quiz);
       }
       if (changed.length) {
-        await hostApi('/api/trivia/host', {
-          method: 'PUT',
-          body: {
-            action: 'update_questions',
-            questions: changed.map((q) => ({ id: q.id, patch: questionPatch(q) })),
-          },
-        });
+        for (const q of changed) {
+          await hostApi('/api/trivia/host', {
+            method: 'PUT',
+            body: {
+              action: 'update_question',
+              questionId: q.id,
+              patch: questionPatch(q),
+            },
+          });
+        }
       }
       setQuizDirty(false);
       setBannerDirty(false);
       setDirtyIds([]);
+      clearEditorDraft(quizId);
       return true;
     } catch (e) {
       setError(e.message);
@@ -234,6 +290,28 @@ export default function Activity() {
       setSaving(false);
     }
   }, [quiz, questions, quizId, quizDirty, bannerDirty, dirtyIds]);
+
+  useEffect(() => {
+    if (!quizId || !questions.length || !dirty) return undefined;
+    const t = setTimeout(() => {
+      const ok = writeEditorDraft(quizId, {
+        questions,
+        dirtyIds,
+        quizDirty,
+        bannerDirty,
+        quiz: quiz
+          ? { title: quiz.title, banner_url: quiz.banner_url, settings: quiz.settings }
+          : null,
+        savedAt: Date.now(),
+      });
+      if (!ok) {
+        setError(
+          'Browser backup is full (audio clips are large). Click Save now so this is stored on the server.'
+        );
+      }
+    }, 400);
+    return () => clearTimeout(t);
+  }, [quizId, questions, dirtyIds, dirty, quiz, quizDirty, bannerDirty]);
 
   useEffect(() => {
     const onBefore = (e) => {
@@ -297,7 +375,10 @@ export default function Activity() {
   };
 
   const assign = async () => {
-    if (dirty) await saveAll();
+    if (dirty) {
+      const ok = await saveAll();
+      if (!ok) return;
+    }
     await saveQuizPatch({ is_assigned: true });
     setAssignOpen(true);
   };
@@ -793,6 +874,8 @@ export default function Activity() {
                 <p className="f-muted" style={{ marginTop: 0 }}>
                   Guests open this link, enter Discord + In-Game Name, and submit. Join code:{' '}
                   <strong>{quiz.join_code}</strong>
+                  {' '}Assigning this quiz unassigns your other quizzes. Same Discord cannot submit
+                  twice unless Total attempts is Unlimited.
                 </p>
                 <input type="text" readOnly value={link} onFocus={(e) => e.target.select()} />
                 <div style={{ display: 'flex', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>

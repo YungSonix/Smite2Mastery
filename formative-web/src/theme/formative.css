@@ -1944,9 +1944,7 @@ label.f-file-btn:hover {
 }
 
 .f-q-prompt-edit .f-q-num {
-  margin-top: 10px;
-  color: var(--f-blue);
-  flex-shrink: 0;
+  margin-top: 8px;
 }
 
 .f-q-prompt-edit textarea {
@@ -2006,6 +2004,15 @@ label.f-file-btn:hover {
   border-radius: 10px;
   border: 1px solid var(--f-blue-border);
   background: rgba(125, 211, 252, 0.08);
+}
+
+.f-fib-how-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--f-text);
+  font-size: 14px;
+  margin-bottom: 4px;
 }
 
 .f-fib-how strong {
@@ -2746,16 +2753,24 @@ label.f-file-btn:hover {
 }
 
 .f-q-num {
-  width: 26px;
-  height: 26px;
+  min-width: 36px;
+  height: 32px;
+  padding: 0 8px;
   border-radius: 999px;
-  display: grid;
+  display: inline-grid;
   place-items: center;
-  background: rgba(125, 211, 252, 0.16);
+  background: color-mix(in srgb, var(--f-blue) 22%, var(--f-card));
   color: var(--f-blue);
-  font-size: 12px;
-  font-weight: 700;
+  border: 1px solid var(--f-blue-border);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
   flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.f-q-num-head {
+  margin: 0;
 }
 
 .f-answer-card-prompt {
@@ -3757,14 +3772,18 @@ label.f-file-btn:hover {
 }
 
 .f-q-num {
+  min-width: 36px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 999px;
   display: inline-grid;
   place-items: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  background: rgba(125, 211, 252, 0.14);
+  background: color-mix(in srgb, var(--f-blue) 22%, var(--f-card));
   color: var(--f-blue);
-  font-size: 13px;
+  border: 1px solid var(--f-blue-border);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
   flex-shrink: 0;
 }
 

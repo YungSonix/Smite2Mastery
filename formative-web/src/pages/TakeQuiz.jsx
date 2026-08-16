@@ -778,7 +778,9 @@ export default function TakeQuiz() {
               <>
                 {isFillBlank && fib?.hasBlank ? (
                   <div className="f-fib-take f-q-prompt">
-                    <span className="f-q-num">{idx + 1}</span>
+                    <span className="f-q-num" title={`Question ${idx + 1}`} aria-label={`Question ${idx + 1}`}>
+                      {idx + 1}
+                    </span>
                     <span>{fib.before}</span>
                     <input
                       type="text"
@@ -792,7 +794,9 @@ export default function TakeQuiz() {
                   </div>
                 ) : (
                   <div className="f-q-prompt">
-                    <span className="f-q-num">{idx + 1}</span>
+                    <span className="f-q-num" title={`Question ${idx + 1}`} aria-label={`Question ${idx + 1}`}>
+                      {idx + 1}
+                    </span>
                     <div className="f-q-prompt-copy">
                       <RichText className="f-md" text={q.prompt} />
                       {mustAnswer ? <span className="f-take-req">* Required</span> : null}
@@ -1000,6 +1004,9 @@ export default function TakeQuiz() {
                 style={{ animationDelay: `${idx * 40}ms` }}
               >
                 <div className="f-qcard-head">
+                  <span className="f-q-num f-q-num-head" title={`Question ${idx + 1}`} aria-label={`Question ${idx + 1}`}>
+                    {idx + 1}
+                  </span>
                   <span className="f-type-chip">{typeLabel(q)}</span>
                   <span className="f-qcard-head-meta">
                     {mustAnswer ? <span className="f-take-req">* Required</span> : null}
