@@ -25,6 +25,7 @@ import {
 import CategorizeBoard from './CategorizeBoard';
 import { parseCategorize } from '../lib/categorize';
 import { remixQuestionFromA, fillAnswersFromPrompt, randomizeQuestion } from '../lib/triviaRemix';
+import { MAX_QUESTION_VARIANTS, variantLetter } from '../lib/triviaVariants';
 
 async function readFileAsDataUrl(file, { maxBytes = 2.5 * 1024 * 1024, acceptPrefix } = {}) {
   if (!file) throw new Error('No file selected');
@@ -69,7 +70,7 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
   const [q, setQ] = useState(question);
   const [uploadError, setUploadError] = useState('');
   const [attachOpen, setAttachOpen] = useState(false);
-  const [variantTab, setVariantTab] = useState(0); // 0=A, 1=B, 2=C
+  const [variantTab, setVariantTab] = useState(0); // 0=A, extras in meta.variants
   const [urlDraft, setUrlDraft] = useState('');
   useEffect(() => {
     setQ(question);
@@ -208,7 +209,9 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
 
   const ensureVariantSlot = (slotIndex) => {
     const variants = [...variantExtras];
-    while (variants.length <= slotIndex) {
+    const maxExtras = MAX_QUESTION_VARIANTS - 1;
+    const target = Math.min(slotIndex, maxExtras - 1);
+    while (variants.length <= target && variants.length < maxExtras) {
       variants.push({
         prompt: q.prompt || '',
         options: Array.isArray(q.options) ? [...q.options] : q.options,
@@ -219,6 +222,14 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
       });
     }
     return variants;
+  };
+
+  const addQuestionVersion = () => {
+    const maxExtras = MAX_QUESTION_VARIANTS - 1;
+    if (variantExtras.length >= maxExtras) return;
+    const variants = ensureVariantSlot(variantExtras.length);
+    commit({ ...q, meta: { ...(q.meta || {}), variants } });
+    setVariantTab(variants.length);
   };
 
   const setActiveMedia = (urls) => {
@@ -330,9 +341,7 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
   };
 
   const openVariantTab = (tab) => {
-    if (tab > 0 && variantExtras.length < tab) {
-      commit({ ...q, meta: { ...(q.meta || {}), variants: ensureVariantSlot(tab - 1) } });
-    }
+    if (tab > 0 && variantExtras.length < tab) return;
     setVariantTab(tab);
   };
 
@@ -389,6 +398,8 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
         <MediaStack
           urls={activeMediaUrls}
           editable
+          imageCrop={bodyForCard?.meta?.media_crop}
+          imageCropSeed={bodyForCard?.meta?.media_seed}
           onRemove={(i) => setActiveMedia(activeMediaUrls.filter((_, j) => j !== i))}
         />
       ) : (
@@ -853,6 +864,8 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
           <MediaStack
             urls={activeMediaUrls}
             editable
+            imageCrop={q.meta?.media_crop}
+            imageCropSeed={q.meta?.media_seed}
             onRemove={(i) => setActiveMedia(activeMediaUrls.filter((_, j) => j !== i))}
           />
         </div>
@@ -1104,7 +1117,7 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
     supportsVariants && variantTab > 0 ? (
       <div className="f-variant-editor">
         <p className="f-muted" style={{ marginTop: 0, fontSize: 13 }}>
-          Version {['A', 'B', 'C'][variantTab]} — different players may see this wording instead of A.
+          Version {variantLetter(variantTab)} — different players may see this wording instead of A.
           Keep difficulty similar.
         </p>
         <label className="f-fib-field">
@@ -1351,34 +1364,44 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
 
       {supportsVariants ? (
         <div className="f-variant-tabs">
-          {['A', 'B', 'C'].map((label, i) => {
-            const exists = i === 0 || variantExtras.length >= i;
-            const on =
-              i === 0 ||
-              (exists && variantExtras[i - 1]?.enabled !== false);
+          {Array.from({ length: 1 + variantExtras.length }, (_, i) => {
+            const on = i === 0 || variantExtras[i - 1]?.enabled !== false;
             return (
               <button
-                key={label}
+                key={variantLetter(i)}
                 type="button"
                 className={variantTab === i ? 'active' : ''}
                 title={i > 0 ? 'Double-click to turn this version off or on' : undefined}
                 onClick={() => openVariantTab(i)}
                 onDoubleClick={() => toggleVariantEnabled(i)}
               >
-                Version {label}
-                {i > 0 && exists ? (on ? ' · on' : ' · off') : ''}
+                Version {variantLetter(i)}
+                {i > 0 ? (on ? ' · on' : ' · off') : ''}
               </button>
             );
           })}
+          <button
+            type="button"
+            className="f-variant-add"
+            disabled={variantExtras.length >= MAX_QUESTION_VARIANTS - 1}
+            title={
+              variantExtras.length >= MAX_QUESTION_VARIANTS - 1
+                ? `Maximum ${MAX_QUESTION_VARIANTS} versions`
+                : 'Add another version for this question'
+            }
+            onClick={addQuestionVersion}
+          >
+            Add version
+          </button>
           <span className="f-variant-hint">
-            Version A is always on. Double-click B or C to turn that version off or on. Off
-            versions are not given to players.
+            Version A is always on. Add extra versions (up to {MAX_QUESTION_VARIANTS} total).
+            Double-click an extra version to turn it off. Off versions are not given to players.
             {variantTab > 0 && String(q.prompt || '') === 'Multiple choice question' ? (
               <>
                 {' '}
-                You are editing Version {['A', 'B', 'C'][variantTab]}. Version A is still the
-                default “Multiple choice question” — most players may get A. Put the real prompt
-                and media on A, or Save then test with the same Discord name.
+                You are editing Version {variantLetter(variantTab)}. Version A is still the
+                default “Multiple choice question” — put the real prompt and media on A, or on
+                this version.
               </>
             ) : null}
           </span>

@@ -1,0 +1,562 @@
+{
+  "voiceClips": [
+    {
+      "god": "Achilles",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Achilles/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Agni",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Agni/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Ah Puch",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Ah_Puch/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Aladdin",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Aladdin/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Amaterasu",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Amaterasu/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Anhur",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Anhur/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Anubis",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Anubis/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Aphrodite",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Aphrodite/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Apollo",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Apollo/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Ares",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Ares/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Artemis",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Artemis/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Artio",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Artio/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Athena",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Athena/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Atlas",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Atlas/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Awilix",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Awilix/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Bacchus",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Bacchus/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Baron Samedi",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/BaronSamedi/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Bastet",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Bastet/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Bellona",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Bellona/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Cabrakan",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Cabrakan/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Cerberus",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Cerberus/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Cernunnos",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Cernunnos/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Chaac",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Chaac/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Charon",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Charon/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Chiron",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Chiron/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Chronos",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Chronos/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Cupid",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Cupid/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Da Ji",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Da_Ji/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Danzaburou",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Danzaburou/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Discordia",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Discordia/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Eset",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Eset/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Fenrir",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Fenrir/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Ganesha",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Ganesha/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Geb",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Geb/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Gilgamesh",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Gilgamesh/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Guan Yu",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Guan_Yu/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Hades",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Hades/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Hecate",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Hecate/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Hercules",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Hercules/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Horus",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Horus/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Hou Yi",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/HouYi/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Hua Mulan",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Hua_Mulan/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Hun Batz",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/HunBatz/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Ishtar",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Ishtar/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Izanami",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Izanami/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Janus",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Janus/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Jing Wei",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/JingWei/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Jormungandr",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Jormungandr/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Kali",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Kali/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Khepri",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Khepri/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Kukulkan",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Kukulkan/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Loki",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Loki/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Medusa",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Medusa/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Mercury",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Mercury/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Merlin",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Merlin/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Mordred",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Mordred/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Morgan Le Fay",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Morgan_Le_Fay/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Neith",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Neith/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Nemesis",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Nemesis/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Ne Zha",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Ne%20Zha/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Nu Wa",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/NuWa/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Nut",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Nut/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Odin",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Odin/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Osiris",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Osiris/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Pele",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Pele/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Poseidon",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Poseidon/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Princess Bari",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Princess_Bari/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Ra",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Ra/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Rama",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Rama/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Ratatoskr",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Ratatoskr/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Scylla",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Scylla/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Sobek",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Sobek/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Sol",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Sol/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Sun Wukong",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/SunWukong/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Susano",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Susano/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Sylvanus",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Sylvanus/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Thanatos",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Thanatos/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "The Morrigan",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/The_Morrigan/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Thor",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Thor/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Tsukuyomi",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Tsukuyomi/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Ullr",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Ullr/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Vulcan",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Vulcan/Skin00_Base/VOX/Select.WAV"
+    },
+    {
+      "god": "Xbalanque",
+      "skin": "Base",
+      "kind": "taunt",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Xbalanque/Skin00_Base/VOX/Taunt_1.WAV"
+    },
+    {
+      "god": "Yemoja",
+      "skin": "Base",
+      "kind": "joke",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Yemoja/Skin00_Base/VOX/Joke_1.WAV"
+    },
+    {
+      "god": "Ymir",
+      "skin": "Base",
+      "kind": "intro",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Ymir/Skin00_Base/VOX/Intro_1.WAV"
+    },
+    {
+      "god": "Zeus",
+      "skin": "Base",
+      "kind": "select",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/VoiceAudio/Zeus/Skin00_Base/VOX/Select.WAV"
+    }
+  ],
+  "skinCards": [
+    {
+      "god": "Da Ji",
+      "skinName": "Silkshade",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/NewGodSkins/Da_Ji/Skins/Silkshade/t_DaJi_Card_Silkshade.png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "World Weaver",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/NewGodSkins/Neith/Skins/WorldWeaver/t_Neith_Card_WorldWeaver.png"
+    },
+    {
+      "god": "Thor",
+      "skinName": "Heavy Metal",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/NewGodSkins/Thor/Skins/HeavyMetal/t_Thor_Card_HeavyMetal.png"
+    },
+    {
+      "god": "Ra",
+      "skinName": "Solar Sentinel",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/NewGodSkins/Ra/Skins/SolarSentinel/t_Ra_Card_SolarSentinel.png"
+    },
+    {
+      "god": "Loki",
+      "skinName": "Graveyard Shift",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/NewGodSkins/Loki/Skins/GraveyardShift/t_Loki_Card_GraveyardShift.png"
+    },
+    {
+      "god": "Medusa",
+      "skinName": "Black Heart",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/NewGodSkins/Medusa/Skins/BlackHeart/t_Medusa_Card_BlackHeart.png"
+    },
+    {
+      "god": "Susano",
+      "skinName": "Swashbuckler",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/NewGodSkins/Susano/Skins/Swashbuckler/t_Susano_Card_Swashbuckler.png"
+    },
+    {
+      "god": "Cerberus",
+      "skinName": "Hellwatch",
+      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/NewGodSkins/Cerberus/Skins/Hellwatch/t_Cerberus_Card_Hellwatch.png"
+    }
+  ]
+}

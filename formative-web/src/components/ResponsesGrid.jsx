@@ -8,6 +8,8 @@ export default function ResponsesGrid({
   sessionsError,
   onSelect,
   selectedId,
+  onLiveSelect,
+  selectedLiveId,
 }) {
   const scored = (questions || []).filter(
     (q) =>
@@ -49,21 +51,20 @@ export default function ResponsesGrid({
   );
 
   return (
-    <div className="f-grid-wrap">
+    <div className="f-grid-wrap f-responses-shell">
       {sessionsError ? (
         <p className="f-error" style={{ padding: '4px 4px 12px' }}>
           {sessionsError}
         </p>
       ) : null}
       {live.length ? (
-        <div className="f-live-block">
+        <div className="f-live-block f-panel-card">
           <h3 className="f-live-heading">
             Live now <span className="f-live-count">{live.length}</span>
           </h3>
           <p className="f-muted f-live-note">
-            Tab in background = they left this quiz tab (notification, Discord, another site). Left
-            this page = they closed it or opened a different page in the same tab. Neither shows
-            where they went.
+            Click a row to open their in-progress answers. Tab in background = they left this quiz tab.
+            Left this page = they closed it or navigated away.
           </p>
           <table className="f-grid f-live-grid">
             <thead>
@@ -83,7 +84,12 @@ export default function ResponsesGrid({
                 const qn = Number(s.question_count) || 0;
                 const an = Number(s.answered_count) || 0;
                 return (
-                  <tr key={s.id || s.discord_username}>
+                  <tr
+                    key={s.id || s.discord_username}
+                    className={selectedLiveId === s.id ? 'is-selected is-live' : 'is-live'}
+                    style={{ cursor: onLiveSelect ? 'pointer' : undefined }}
+                    onClick={() => onLiveSelect?.(s)}
+                  >
                     <td className="col-discord">
                       <div className="f-student">
                         <div className="f-avatar" style={{ width: 22, height: 22, fontSize: 11 }}>
@@ -126,6 +132,11 @@ export default function ResponsesGrid({
           already submitted if they open it again.
         </p>
       )}
+      <div className="f-panel-card f-submissions-card">
+        <div className="f-panel-card-head">
+          <h3 className="f-panel-card-title">Submissions</h3>
+          <span className="f-live-count">{responses?.length || 0}</span>
+        </div>
       <table className="f-grid">
         <thead>
           <tr>
@@ -213,6 +224,7 @@ export default function ResponsesGrid({
           (host-only). Local testing shows IP as localhost.
         </p>
       ) : null}
+      </div>
     </div>
   );
 }

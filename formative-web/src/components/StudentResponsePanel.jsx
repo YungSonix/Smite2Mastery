@@ -3,6 +3,7 @@ import MediaStack from './MediaStack';
 import { listMediaUrls } from '../lib/questionMedia';
 import { formatIp } from '../lib/quizSettings';
 import { typeLabel } from '../lib/questionTypes';
+import { promptPlain } from '../lib/promptPlain';
 
 const CONTENT_TYPES = new Set(['image', 'content', 'audio', 'video', 'embed']);
 
@@ -220,6 +221,7 @@ export default function StudentResponsePanel({
 
   if (!response) return null;
 
+  const initial = (response.discord_username || '?').charAt(0).toUpperCase();
   const totalScore = Number(response.score) || 0;
   const maxScore = Number(response.max_score) || 0;
   const submitted = response.submitted_at
@@ -306,10 +308,10 @@ export default function StudentResponsePanel({
 
   return (
     <aside
-      className={`f-student-panel ${fullscreen ? 'fullscreen' : ''}`}
+      className={`f-student-panel f-student-panel-v2 ${fullscreen ? 'fullscreen' : ''}`}
       aria-label={`Responses for ${response.discord_username}`}
     >
-      <header className="f-student-panel-head">
+      <header className="f-student-panel-head f-student-panel-head-v2">
         <button
           type="button"
           className="f-icon-btn"
@@ -319,11 +321,13 @@ export default function StudentResponsePanel({
         >
           ‹
         </button>
-        <div className="f-student-panel-title">
-          <div className="f-student-panel-name">{response.discord_username}</div>
-          <div className="f-muted f-student-panel-sub">
-            {response.ingame_name ? `${response.ingame_name} · ` : ''}
-            Submitted {submitted}
+        <div className="f-student-hero">
+          <div className="f-avatar f-avatar-lg">{initial}</div>
+          <div className="f-student-panel-title">
+            <div className="f-student-panel-name">{response.discord_username}</div>
+            <div className="f-muted f-student-panel-sub">
+              {response.ingame_name || '—'} · {submitted}
+            </div>
           </div>
         </div>
         <button
@@ -408,7 +412,7 @@ export default function StudentResponsePanel({
                 <span className="f-q-num">{i + 1}</span>
                 <div className="f-answer-card-prompt">
                   <div className="f-answer-type">{typeLabel(q)}</div>
-                  <div>{q.prompt || typeLabel(q)}</div>
+                  <div>{promptPlain(q.prompt) || typeLabel(q)}</div>
                 </div>
               </div>
               <MediaStack urls={listMediaUrls(q)} />

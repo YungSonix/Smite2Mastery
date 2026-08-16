@@ -40,7 +40,33 @@ module.exports = async function handler(req, res) {
     const rows = questions || [];
     // With Discord: resolve one variant per question (anti-share). Without: send sanitized pools.
     if (discord) {
-      const map = buildVariantMap(rows, slug, discord);
+      const assign = url.searchParams.get('assign') === '1';
+      let sessionMap = null;
+      let previousMap = null;
+      const { data: session } = await sb
+        .from('trivia_sessions')
+        .select('variant_map')
+        .eq('quiz_id', quiz.id)
+        .ilike('discord_username', discord)
+        .maybeSingle();
+      if (session?.variant_map && typeof session.variant_map === 'object' && Object.keys(session.variant_map).length) {
+        sessionMap = session.variant_map;
+      }
+      const { data: last } = await sb
+        .from('trivia_responses')
+        .select('answers')
+        .eq('quiz_id', quiz.id)
+        .ilike('discord_username', discord)
+        .maybeSingle();
+      const nested = last?.answers?.__variant_map;
+      if (nested && typeof nested === 'object') previousMap = nested;
+
+      let map;
+      if (assign) {
+        map = buildVariantMap(rows, slug, discord, sessionMap || previousMap, String(Date.now()));
+      } else {
+        map = sessionMap || buildVariantMap(rows, slug, discord, previousMap, '');
+      }
       const resolved = rows.map((q) => {
         const applied = applyVariant(q, map[q.id] ?? 0);
         return sanitizeQuestionForPublic(applied);

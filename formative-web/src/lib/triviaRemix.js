@@ -1,4 +1,6 @@
 import catalog from './triviaRemixCatalog.json' with { type: 'json' };
+import mediaCatalog from './triviaMediaCatalog.json' with { type: 'json' };
+import godMeta from './triviaGodMeta.json' with { type: 'json' };
 
 function clone(v) {
   return v == null ? v : JSON.parse(JSON.stringify(v));
@@ -454,7 +456,7 @@ function misspellName(name) {
 /**
  * Mix real catalog names with mashups + misspellings so identify questions aren't all real items/gods.
  */
-function trickishDistractors(correctLabel, realNames, count, { prefer = [] } = {}) {
+function trickishDistractors(correctLabel, realNames, count, { prefer = [], realOnly = false } = {}) {
   const need = Math.max(0, count);
   const exclude = new Set([norm(correctLabel)]);
   const out = [];
@@ -465,13 +467,32 @@ function trickishDistractors(correctLabel, realNames, count, { prefer = [] } = {
   };
   const pool = (realNames || []).filter((n) => n && norm(n) !== norm(correctLabel));
   for (const n of prefer) add(n);
-  add(mashNames(correctLabel, pool));
-  add(misspellName(correctLabel));
+  if (!realOnly) {
+    add(mashNames(correctLabel, pool));
+    add(misspellName(correctLabel));
+  }
   for (const n of shuffle(pool)) {
     if (out.length >= need) break;
     add(n);
   }
   return out.slice(0, need);
+}
+
+function godNeighborNames(correctName) {
+  const me = godMeta[String(correctName || '').trim()] || null;
+  if (!me) return [];
+  const pantheon = String(me.pantheon || '').toLowerCase();
+  const role = String(me.role || '').toLowerCase();
+  const samePantheon = [];
+  const sameRole = [];
+  for (const g of catalog.gods || []) {
+    if (norm(g.name) === norm(correctName)) continue;
+    const row = godMeta[g.name];
+    if (!row) continue;
+    if (pantheon && String(row.pantheon || '').toLowerCase() === pantheon) samePantheon.push(g.name);
+    else if (role && String(row.role || '').toLowerCase() === role) sameRole.push(g.name);
+  }
+  return [...shuffle(samePantheon), ...shuffle(sameRole)];
 }
 
 function itemLowerTierNames(itemOrName) {
@@ -484,7 +505,10 @@ function itemLowerTierNames(itemOrName) {
 
 function itemIdentifyDistractors(correctLabel, count) {
   const wrong = catalog.items.map((i) => i.name).filter((n) => norm(n) !== norm(correctLabel));
-  return trickishDistractors(correctLabel, wrong, count, { prefer: itemLowerTierNames(correctLabel) });
+  return trickishDistractors(correctLabel, wrong, count, {
+    prefer: itemLowerTierNames(correctLabel),
+    realOnly: true,
+  });
 }
 
 function popularStats() {
@@ -617,7 +641,10 @@ export function fillAnswersFromPrompt(question) {
     return packMc({
       prompt,
       correctLabel: hit.god,
-      distractors: trickishDistractors(hit.god, wrong, count - 1),
+      distractors: trickishDistractors(hit.god, wrong, count - 1, {
+        prefer: godNeighborNames(hit.god),
+        realOnly: true,
+      }),
       count,
     });
   }
@@ -728,7 +755,10 @@ export function randomizeQuestion(question) {
       return packMc({
         prompt: `What god was released in OB${rel.patch}?`,
         correctLabel: rel.god,
-        distractors: trickishDistractors(rel.god, wrong, count - 1),
+        distractors: trickishDistractors(rel.god, wrong, count - 1, {
+          prefer: godNeighborNames(rel.god),
+          realOnly: true,
+        }),
         count,
       });
     },
@@ -742,6 +772,94 @@ export function randomizeQuestion(question) {
         distractors: trickishDistractors(row.blank, wrong, count - 1),
         count,
       });
+    },
+    () => {
+      const clips = mediaCatalog.voiceClips || [];
+      if (clips.length < 4) return null;
+      const clip = pickOne(clips);
+      const wrong = trickishDistractors(
+        clip.god,
+        catalog.gods.map((g) => g.name).filter((n) => norm(n) !== norm(clip.god)),
+        count - 1,
+        { prefer: godNeighborNames(clip.god), realOnly: true }
+      );
+      return packMc({
+        prompt: 'Choose the correct god this voice line belongs to.',
+        correctLabel: clip.god,
+        distractors: wrong,
+        count,
+        image: clip.url,
+        extraMeta: {
+          media: 'audio',
+          remix_kind: 'voice_line',
+          hint_context: { god: clip.god, skin: clip.skin, kind: clip.kind },
+        },
+      });
+    },
+    () => {
+      const cards = mediaCatalog.skinCards || [];
+      if (cards.length < 4) return null;
+      const card = pickOne(cards);
+      const wrong = trickishDistractors(
+        card.god,
+        catalog.gods.map((g) => g.name).filter((n) => norm(n) !== norm(card.god)),
+        count - 1,
+        { prefer: godNeighborNames(card.god), realOnly: true }
+      );
+      const seed = `${card.god}|${card.skinName}`;
+      return packMc({
+        prompt: 'Choose the correct god this skin belongs to.',
+        correctLabel: card.god,
+        distractors: wrong,
+        count,
+        image: card.url,
+        extraMeta: {
+          media: 'image',
+          media_crop: 'skin_zoom_center',
+          media_seed: seed,
+          remix_kind: 'skin_guess',
+          hint_context: { god: card.god, skin: card.skinName },
+        },
+      });
+    },
+    () => {
+      const ordered = [];
+      const seen = new Set();
+      for (const r of catalog.releases) {
+        const k = norm(r.god);
+        if (seen.has(k)) continue;
+        seen.add(k);
+        ordered.push(r);
+      }
+      if (ordered.length < 6) return null;
+      const anchorIdx = 1 + Math.floor(Math.random() * (ordered.length - 4));
+      const anchor = ordered[anchorIdx];
+      const afterGods = ordered.slice(anchorIdx + 1).map((r) => r.god);
+      if (afterGods.length < 2) return null;
+      const correctPick = pickDistinct(afterGods, Math.min(2, afterGods.length), new Set());
+      const beforeGods = ordered.slice(0, anchorIdx).map((r) => r.god);
+      const needWrong = Math.max(2, count - correctPick.length);
+      const wrong = pickDistinct(beforeGods, needWrong, new Set(correctPick.map(norm)));
+      const options = shuffle([...correctPick, ...wrong].slice(0, count));
+      const indices = correctPick
+        .map((g) => options.findIndex((o) => norm(o) === norm(g)))
+        .filter((i) => i >= 0);
+      return {
+        patch: {
+          type: 'multiple_selection',
+          prompt: `Select the God or Gods who were released after ${anchor.god}.`,
+          options,
+          correct: { indices },
+          meta: {
+            randomize_order: true,
+            remix_kind: 'release_after',
+            hint_context: { anchor_god: anchor.god, anchor_patch: anchor.patch },
+          },
+          image_url: null,
+          image_urls: [],
+          clearMedia: true,
+        },
+      };
     },
   ];
 

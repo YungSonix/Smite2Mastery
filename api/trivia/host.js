@@ -168,15 +168,10 @@ module.exports = async function handler(req, res) {
           }
         } else {
           const cutoff = Date.now() - 15 * 60 * 1000;
-          sessions = (sessionRows || [])
-            .filter((s) => {
-              const last = Date.parse(s.last_seen_at);
-              return Number.isFinite(last) && last >= cutoff;
-            })
-            .map((s) => {
-              const { draft_answers: _d, variant_map: _v, ...rest } = s;
-              return rest;
-            });
+          sessions = (sessionRows || []).filter((s) => {
+            const last = Date.parse(s.last_seen_at);
+            return Number.isFinite(last) && last >= cutoff;
+          });
         }
       }
       const format = String(url.searchParams.get('format') || '').toLowerCase();

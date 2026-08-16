@@ -1,5 +1,46 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { classifyMediaUrl, resolveMediaUrl } from '../lib/mediaUrl';
+import SkinCropThumb from './SkinCropThumb';
+
+function TakeAudioPlayer({ src }) {
+  const audioRef = useRef(null);
+  const [phase, setPhase] = useState('idle');
+
+  useEffect(() => {
+    setPhase('idle');
+    const el = audioRef.current;
+    if (el) {
+      el.pause();
+      el.currentTime = 0;
+    }
+  }, [src]);
+
+  const play = () => {
+    const el = audioRef.current;
+    if (!el || !src) return;
+    el.play()
+      .then(() => setPhase('playing'))
+      .catch(() => setPhase('idle'));
+  };
+
+  return (
+    <div className="f-take-audio">
+      <audio
+        ref={audioRef}
+        src={src}
+        preload="auto"
+        onEnded={() => setPhase('ended')}
+      />
+      {phase === 'playing' ? (
+        <p className="f-take-audio-status">Playing voice line…</p>
+      ) : (
+        <button type="button" className="f-take-audio-btn" onClick={play}>
+          {phase === 'ended' ? 'Replay' : 'Play voice line'}
+        </button>
+      )}
+    </div>
+  );
+}
 
 function OpaqueSrc({ url, children }) {
   const resolved = resolveMediaUrl(url);
@@ -61,6 +102,8 @@ export default function MediaStack({
   hotspot = false,
   hotspotMark = null,
   onHotspot,
+  imageCrop = '',
+  imageCropSeed = '',
 }) {
   const list = (urls || []).filter(Boolean);
   if (!list.length) return null;
@@ -73,7 +116,11 @@ export default function MediaStack({
           if (!src) return <div className="f-media-thumb f-muted">Loading…</div>;
           let body = null;
           if (kind === 'audio') {
-            body = <audio controls src={src} className="f-q-media-audio" title="" controlsList="nodownload" />;
+            body = opaque ? (
+              <TakeAudioPlayer src={src} />
+            ) : (
+              <audio controls src={src} className="f-q-media-audio" title="" controlsList="nodownload" />
+            );
           } else if (kind === 'video') {
             body = (
               <video
@@ -97,6 +144,12 @@ export default function MediaStack({
                 <img {...mediaProps(src)} />
                 {hotspotMark}
               </button>
+            );
+          } else if (imageCrop === 'skin_zoom_center' && i === 0) {
+            body = (
+              <div className="f-media-thumb f-media-thumb-crop">
+                <SkinCropThumb src={src} seed={imageCropSeed || src} />
+              </div>
             );
           } else {
             body = (

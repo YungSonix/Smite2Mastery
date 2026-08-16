@@ -40,6 +40,7 @@ export const DEFAULT_QUIZ_SETTINGS = {
   shuffle_questions: false,
   require_all: false,
   auto_random_questions: false,
+  lifelines_enabled: false,
 };
 
 export function quizWindowState(settings, nowMs = Date.now()) {

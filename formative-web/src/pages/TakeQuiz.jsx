@@ -21,6 +21,7 @@ import {
 import { quizWindowState } from '../lib/quizSettings';
 import { quizThemeProps } from '../lib/quizThemes';
 import { pingTriviaPresence, compactDraftAnswers } from '../lib/triviaPresence';
+import { allChoicesHaveArt, lookupChoiceArt } from '../lib/choiceArt';
 
 async function fileToDataUrl(file, maxBytes = 2.5 * 1024 * 1024) {
   if (!file) throw new Error('No file');
@@ -54,6 +55,41 @@ function choiceRows(q, quizRandomize) {
   const rows = opts.map((label, originalIndex) => ({ label, originalIndex }));
   if (!(q.meta?.randomize_order || quizRandomize) || rows.length < 2) return rows;
   return seededShuffle(rows, q.id);
+}
+
+function TakeChoices({ q, choices, answers, setAnswer, multi = false }) {
+  const useTiles = allChoicesHaveArt(choices.map((row) => row.label));
+  const arr = Array.isArray(answers[q.id]) ? answers[q.id] : [];
+  const items = choices.map(({ label, originalIndex }) => {
+    const art = useTiles ? lookupChoiceArt(label) : null;
+    const checked = multi ? arr.includes(originalIndex) : Number(answers[q.id]) === originalIndex;
+    return (
+      <label
+        key={originalIndex}
+        className={useTiles ? 'f-choice-tile' : 'f-option-row'}
+        style={{ cursor: 'pointer' }}
+      >
+        <input
+          type={multi ? 'checkbox' : 'radio'}
+          name={multi ? undefined : `q-${q.id}`}
+          checked={checked}
+          onChange={() => {
+            if (!multi) {
+              setAnswer(q.id, originalIndex);
+              return;
+            }
+            const next = new Set(arr);
+            if (next.has(originalIndex)) next.delete(originalIndex);
+            else next.add(originalIndex);
+            setAnswer(q.id, [...next].sort((a, b) => a - b));
+          }}
+        />
+        {art ? <img className="f-choice-tile-art" src={art.image} alt="" draggable={false} /> : null}
+        <span>{label}</span>
+      </label>
+    );
+  });
+  return useTiles ? <div className="f-choice-tiles">{items}</div> : <>{items}</>;
 }
 
 function DrawingPad({ value, onChange }) {
@@ -185,6 +221,7 @@ export default function TakeQuiz() {
   const [now, setNow] = useState(() => Date.now());
   const [missingConfirm, setMissingConfirm] = useState(null);
   const [highlightId, setHighlightId] = useState(null);
+  const [visibleQ, setVisibleQ] = useState(1);
   const restoredRef = useRef(false);
   const submittingRef = useRef(false);
   const resultRef = useRef(null);
@@ -214,7 +251,7 @@ export default function TakeQuiz() {
           else if (saved.startedAt) {
             setShuffleSeed(`${slug}|${saved.discord || ''}|${saved.ingame || ''}`);
           }
-          if (saved.variantMap && typeof saved.variantMap === 'object') {
+          if (saved.startedAt && saved.variantMap && typeof saved.variantMap === 'object') {
             setVariantMap(saved.variantMap);
           }
           setResumed(true);
@@ -307,6 +344,37 @@ export default function TakeQuiz() {
     variantMap,
     startedAt,
   };
+
+  useEffect(() => {
+    if (!showQuestions || !orderedPlayable.length) {
+      setVisibleQ(1);
+      return undefined;
+    }
+    let io = null;
+    const frame = requestAnimationFrame(() => {
+      const nodes = orderedPlayable
+        .map((q) => document.getElementById(`take-q-${q.id}`))
+        .filter(Boolean);
+      if (!nodes.length) return;
+      io = new IntersectionObserver(
+        (entries) => {
+          const vis = entries
+            .filter((e) => e.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (!vis?.target?.id) return;
+          const id = vis.target.id.replace(/^take-q-/, '');
+          const i = orderedPlayable.findIndex((q) => q.id === id);
+          if (i >= 0) setVisibleQ(i + 1);
+        },
+        { rootMargin: '-18% 0px -55% 0px', threshold: [0.15, 0.4, 0.7] }
+      );
+      nodes.forEach((el) => io.observe(el));
+    });
+    return () => {
+      cancelAnimationFrame(frame);
+      io?.disconnect();
+    };
+  }, [showQuestions, orderedPlayable]);
 
   useEffect(() => {
     if (!showQuestions) return;
@@ -564,6 +632,11 @@ export default function TakeQuiz() {
 
   return (
     <div className={`f-take ${theme.className}`} style={theme.style}>
+      {showQuestions ? (
+        <div className="f-take-progress" aria-live="polite">
+          Question {visibleQ} of {orderedPlayable.length}
+        </div>
+      ) : null}
       {timed && startedAt && showQuestions ? (
         <div
           className={`f-timer-float ${remainingMs != null && remainingMs < 30000 ? 'is-low' : ''}`}
@@ -705,12 +778,28 @@ export default function TakeQuiz() {
                 className="f-submit-btn"
                 style={{ marginTop: 16 }}
                 disabled={
-                  quizLocked || !String(discord).trim() || !String(ingame).trim()
+                  busy || quizLocked || !String(discord).trim() || !String(ingame).trim()
                 }
-                onClick={() => {
-                  if (quizLocked) return;
-                  setShuffleSeed(`${slug}|${discord}|${ingame}`);
-                  setStartedAt(Date.now());
+                onClick={async () => {
+                  if (quizLocked || busy) return;
+                  const name = String(discord || '').trim();
+                  setBusy(true);
+                  try {
+                    if (name.length >= 2) {
+                      const res = await fetch(
+                        `/api/trivia/public?slug=${encodeURIComponent(slug)}&discord=${encodeURIComponent(name)}&assign=1`
+                      );
+                      const data = await res.json().catch(() => ({}));
+                      if (res.ok) {
+                        if (data.questions) setQuestions(data.questions);
+                        if (data.variant_map) setVariantMap(data.variant_map);
+                      }
+                    }
+                    setShuffleSeed(`${slug}|${discord}|${ingame}|${Date.now()}`);
+                    setStartedAt(Date.now());
+                  } finally {
+                    setBusy(false);
+                  }
                 }}
               >
                 {windowState.status === 'not_open'
@@ -754,6 +843,8 @@ export default function TakeQuiz() {
               <MediaStack
                 urls={mediaUrls}
                 opaque
+                imageCrop={q.meta?.media_crop}
+                imageCropSeed={q.meta?.media_seed}
                 hotspot={q.type === 'hot_spot'}
                 onHotspot={(e) => {
                   if (q.type !== 'hot_spot') return;
@@ -815,18 +906,9 @@ export default function TakeQuiz() {
                   />
                 ) : null}
 
-                {(q.type === 'multiple_choice' || q.type === 'true_false') &&
-                  choices.map(({ label, originalIndex }) => (
-                    <label key={originalIndex} className="f-option-row" style={{ cursor: 'pointer' }}>
-                      <input
-                        type="radio"
-                        name={`q-${q.id}`}
-                        checked={Number(answers[q.id]) === originalIndex}
-                        onChange={() => setAnswer(q.id, originalIndex)}
-                      />
-                      <span>{label}</span>
-                    </label>
-                  ))}
+                {(q.type === 'multiple_choice' || q.type === 'true_false') ? (
+                  <TakeChoices q={q} choices={choices} answers={answers} setAnswer={setAnswer} />
+                ) : null}
 
                 {q.type === 'dropdown' ? (
                   <select
@@ -842,25 +924,9 @@ export default function TakeQuiz() {
                   </select>
                 ) : null}
 
-                {q.type === 'multiple_selection' &&
-                  choices.map(({ label, originalIndex }) => {
-                    const arr = Array.isArray(answers[q.id]) ? answers[q.id] : [];
-                    return (
-                      <label key={originalIndex} className="f-option-row" style={{ cursor: 'pointer' }}>
-                        <input
-                          type="checkbox"
-                          checked={arr.includes(originalIndex)}
-                          onChange={() => {
-                            const next = new Set(arr);
-                            if (next.has(originalIndex)) next.delete(originalIndex);
-                            else next.add(originalIndex);
-                            setAnswer(q.id, [...next].sort((a, b) => a - b));
-                          }}
-                        />
-                        <span>{label}</span>
-                      </label>
-                    );
-                  })}
+                {q.type === 'multiple_selection' ? (
+                  <TakeChoices q={q} choices={choices} answers={answers} setAnswer={setAnswer} multi />
+                ) : null}
 
                 {q.type === 'matching' ? (
                   <div style={{ marginTop: 8 }}>
@@ -1009,6 +1075,9 @@ export default function TakeQuiz() {
                   </span>
                   <span className="f-type-chip">{typeLabel(q)}</span>
                   <span className="f-qcard-head-meta">
+                    <span className="f-q-of">
+                      {idx + 1} / {orderedPlayable.length}
+                    </span>
                     {mustAnswer ? <span className="f-take-req">* Required</span> : null}
                     {!hideScore ? <span className="pts">{q.points || 0} pts</span> : null}
                   </span>

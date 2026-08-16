@@ -595,7 +595,21 @@ async function handlePublic(req, res, url) {
     settings: quiz.settings,
   };
   if (discord) {
-    const map = buildVariantMap(questions, slug, discord);
+    const assign = url.searchParams.get('assign') === '1';
+    const existingSession = db.sessions.get(sessionKey(quiz.id, discord));
+    const sessionMap =
+      existingSession?.variant_map &&
+      typeof existingSession.variant_map === 'object' &&
+      Object.keys(existingSession.variant_map).length
+        ? existingSession.variant_map
+        : null;
+    const last = [...db.responses.values()].find(
+      (r) => r.quiz_id === quiz.id && String(r.discord_username || '').toLowerCase() === discord.toLowerCase()
+    );
+    const previous = last?.answers?.__variant_map;
+    const map = assign
+      ? buildVariantMap(questions, slug, discord, sessionMap || previous, String(Date.now()))
+      : sessionMap || buildVariantMap(questions, slug, discord, previous, '');
     return json(res, 200, {
       quiz: quizOut,
       questions: questions.map((q) => sanitizeQuestionForPublic(applyVariant(q, map[q.id] ?? 0))),

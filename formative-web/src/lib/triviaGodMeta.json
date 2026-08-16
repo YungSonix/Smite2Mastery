@@ -1,0 +1,346 @@
+{
+  "Achilles": {
+    "pantheon": "Greek",
+    "role": "Solo"
+  },
+  "Agni": {
+    "pantheon": "Hindu",
+    "role": "Mid"
+  },
+  "Ah Puch": {
+    "pantheon": "Maya",
+    "role": "Mid"
+  },
+  "Aladdin": {
+    "pantheon": "Tales",
+    "role": "Jungle"
+  },
+  "Amaterasu": {
+    "pantheon": "Japanese",
+    "role": "Solo"
+  },
+  "Anhur": {
+    "pantheon": "Egyptian",
+    "role": "ADC"
+  },
+  "Anubis": {
+    "pantheon": "Egyptian",
+    "role": "Mid"
+  },
+  "Aphrodite": {
+    "pantheon": "Greek",
+    "role": "Mid"
+  },
+  "Apollo": {
+    "pantheon": "Greek",
+    "role": "ADC"
+  },
+  "Ares": {
+    "pantheon": "Greek",
+    "role": "Support"
+  },
+  "Artemis": {
+    "pantheon": "Greek",
+    "role": "ADC"
+  },
+  "Artio": {
+    "pantheon": "Celtic",
+    "role": "Support"
+  },
+  "Athena": {
+    "pantheon": "Greek",
+    "role": "Support"
+  },
+  "Atlas": {
+    "pantheon": "Greek",
+    "role": "Support"
+  },
+  "Awilix": {
+    "pantheon": "Maya",
+    "role": "Jungle"
+  },
+  "Bacchus": {
+    "pantheon": "Roman",
+    "role": "Support"
+  },
+  "Baron Samedi": {
+    "pantheon": "Voodoo",
+    "role": "Mid"
+  },
+  "Bastet": {
+    "pantheon": "Egyptian",
+    "role": "Jungle"
+  },
+  "Bellona": {
+    "pantheon": "Roman",
+    "role": "Solo"
+  },
+  "Cabrakan": {
+    "pantheon": "Maya",
+    "role": "Support"
+  },
+  "Cerberus": {
+    "pantheon": "Greek",
+    "role": "Support"
+  },
+  "Cernunnos": {
+    "pantheon": "Celtic",
+    "role": "ADC"
+  },
+  "Chaac": {
+    "pantheon": "Maya",
+    "role": "Solo"
+  },
+  "Charon": {
+    "pantheon": "Greek",
+    "role": "Support"
+  },
+  "Chiron": {
+    "pantheon": "Greek",
+    "role": "ADC"
+  },
+  "Chronos": {
+    "pantheon": "Greek",
+    "role": "Mid"
+  },
+  "Cupid": {
+    "pantheon": "Roman",
+    "role": "ADC"
+  },
+  "Da Ji": {
+    "pantheon": "Chinese",
+    "role": "Jungle"
+  },
+  "Danzaburou": {
+    "pantheon": "Japanese",
+    "role": "ADC"
+  },
+  "Discordia": {
+    "pantheon": "Roman",
+    "role": "Mid"
+  },
+  "Eset": {
+    "pantheon": "Egyptian",
+    "role": "Mid"
+  },
+  "Fenrir": {
+    "pantheon": "Norse",
+    "role": "Jungle"
+  },
+  "Ganesha": {
+    "pantheon": "Hindu",
+    "role": "Support"
+  },
+  "Geb": {
+    "pantheon": "Egyptian",
+    "role": "Support"
+  },
+  "Gilgamesh": {
+    "pantheon": "Babylonian",
+    "role": "Solo"
+  },
+  "Guan Yu": {
+    "pantheon": "Chinese",
+    "role": "Solo"
+  },
+  "Hades": {
+    "pantheon": "Greek",
+    "role": "Mid"
+  },
+  "Hecate": {
+    "pantheon": "Greek",
+    "role": "Mid"
+  },
+  "Hercules": {
+    "pantheon": "Roman",
+    "role": "Solo"
+  },
+  "Horus": {
+    "pantheon": "Egyptian",
+    "role": "Support"
+  },
+  "Hou Yi": {
+    "pantheon": "Chinese",
+    "role": "ADC"
+  },
+  "Hua Mulan": {
+    "pantheon": "Chinese",
+    "role": "Solo"
+  },
+  "Hun Batz": {
+    "pantheon": "Maya",
+    "role": "Jungle"
+  },
+  "Ishtar": {
+    "pantheon": "Babylonian",
+    "role": "ADC"
+  },
+  "Izanami": {
+    "pantheon": "Japanese",
+    "role": "ADC"
+  },
+  "Janus": {
+    "pantheon": "Roman",
+    "role": "Mid"
+  },
+  "Jing Wei": {
+    "pantheon": "Chinese",
+    "role": "ADC"
+  },
+  "Jormungandr": {
+    "pantheon": "Norse",
+    "role": "Solo"
+  },
+  "Kali": {
+    "pantheon": "Hindu",
+    "role": "Jungle"
+  },
+  "Khepri": {
+    "pantheon": "Egyptian",
+    "role": "Support"
+  },
+  "Kukulkan": {
+    "pantheon": "Maya",
+    "role": "Mid"
+  },
+  "Loki": {
+    "pantheon": "Norse",
+    "role": "Jungle"
+  },
+  "Medusa": {
+    "pantheon": "Greek",
+    "role": "ADC"
+  },
+  "Mercury": {
+    "pantheon": "Roman",
+    "role": "Jungle"
+  },
+  "Merlin": {
+    "pantheon": "Arthurian",
+    "role": "Mid"
+  },
+  "Mordred": {
+    "pantheon": "Arthurian",
+    "role": "Solo"
+  },
+  "Morgan Le Fay": {
+    "pantheon": "Arthurian",
+    "role": "Mid"
+  },
+  "Neith": {
+    "pantheon": "Egyptian",
+    "role": "ADC"
+  },
+  "Nemesis": {
+    "pantheon": "Greek",
+    "role": "Jungle"
+  },
+  "Ne Zha": {
+    "pantheon": "Chinese",
+    "role": "Jungle"
+  },
+  "Nu Wa": {
+    "pantheon": "Chinese",
+    "role": "Mid"
+  },
+  "Nut": {
+    "pantheon": "Egyptian",
+    "role": "Support"
+  },
+  "Odin": {
+    "pantheon": "Norse",
+    "role": "Solo"
+  },
+  "Osiris": {
+    "pantheon": "Egyptian",
+    "role": "Solo"
+  },
+  "Pele": {
+    "pantheon": "Polynesian",
+    "role": "Jungle"
+  },
+  "Poseidon": {
+    "pantheon": "Greek",
+    "role": "Mid"
+  },
+  "Princess Bari": {
+    "pantheon": "Korean",
+    "role": "ADC"
+  },
+  "Ra": {
+    "pantheon": "Egyptian",
+    "role": "Mid"
+  },
+  "Rama": {
+    "pantheon": "Hindu",
+    "role": "ADC"
+  },
+  "Ratatoskr": {
+    "pantheon": "Norse",
+    "role": "Solo"
+  },
+  "Scylla": {
+    "pantheon": "Greek",
+    "role": "Mid"
+  },
+  "Sobek": {
+    "pantheon": "Egyptian",
+    "role": "Support"
+  },
+  "Sol": {
+    "pantheon": "Norse",
+    "role": "Mid"
+  },
+  "Sun Wukong": {
+    "pantheon": "Chinese",
+    "role": "Solo"
+  },
+  "Susano": {
+    "pantheon": "Japanese",
+    "role": "Jungle"
+  },
+  "Sylvanus": {
+    "pantheon": "Roman",
+    "role": "Support"
+  },
+  "Thanatos": {
+    "pantheon": "Greek",
+    "role": "Jungle"
+  },
+  "The Morrigan": {
+    "pantheon": "Celtic",
+    "role": "Mid"
+  },
+  "Thor": {
+    "pantheon": "Norse",
+    "role": "Jungle"
+  },
+  "Tsukuyomi": {
+    "pantheon": "Japanese",
+    "role": "Jungle"
+  },
+  "Ullr": {
+    "pantheon": "Norse",
+    "role": "ADC"
+  },
+  "Vulcan": {
+    "pantheon": "Roman",
+    "role": "Mid"
+  },
+  "Xbalanque": {
+    "pantheon": "Maya",
+    "role": "ADC"
+  },
+  "Yemoja": {
+    "pantheon": "Yoruba",
+    "role": "Support"
+  },
+  "Ymir": {
+    "pantheon": "Norse",
+    "role": "Support"
+  },
+  "Zeus": {
+    "pantheon": "Greek",
+    "role": "Mid"
+  }
+}

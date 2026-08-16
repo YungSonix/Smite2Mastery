@@ -12,6 +12,7 @@
     "trivia:dev": "npm run dev --prefix formative-web",
     "trivia:api": "node scripts/formative-dev-api.js",
     "trivia:community": "node scripts/formative-community-trivia.mjs",
+    "trivia:media-catalog": "node scripts/gen-trivia-media-catalog.mjs",
     "formative:dev": "npm run trivia:dev",
     "formative:build": "npm run build --prefix formative-web",
     "formative:api": "npm run trivia:api",

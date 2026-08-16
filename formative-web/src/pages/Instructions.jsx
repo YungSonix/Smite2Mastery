@@ -26,8 +26,8 @@ const STEPS = [
     body: 'Assign opens share link plus grading options: hide scores from players (default), attempts, and feedback. Scores stay visible to you in Responses. Per question: open Settings → Don’t show score to hide that item’s points on the take page.',
   },
   {
-    title: 'Question versions (A/B/C)',
-    body: 'On a scored question, open Version B or C to write alternate wording/answers. Each Discord name gets one version so sharing answers mid-contest is harder. Keep difficulty fair across versions.',
+    title: 'Question versions',
+    body: 'On a scored question, use Add version for up to 10 alternates (A plus extras). Each new take gets a different version when more than one exists, so sharing answers mid-contest is harder. Keep difficulty fair across versions.',
   },
   {
     title: 'Guest progress',

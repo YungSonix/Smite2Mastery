@@ -5,13 +5,21 @@ import InstructionsEditor from '../components/InstructionsEditor';
 import QuestionCard from '../components/QuestionCard';
 import ResponsesGrid from '../components/ResponsesGrid';
 import StudentResponsePanel from '../components/StudentResponsePanel';
+import LiveSessionPanel from '../components/LiveSessionPanel';
 import { hostApi, takeUrl, activityHref } from '../lib/api';
 import { downloadResponsesCsv } from '../lib/exportResponses';
 import { readImageAsDataUrl } from '../lib/imageUpload';
 import { mergeQuizSettings } from '../lib/quizSettings';
 import { quizThemeProps } from '../lib/quizThemes';
 import { randomizeQuestion } from '../lib/triviaRemix';
+import { presenceStatus } from '../lib/triviaPresence';
 import QuizSettingsModal from '../components/QuizSettingsModal';
+import {
+  clearEditorDraft,
+  loadEditorDraft,
+  saveEditorDraft,
+} from '../lib/editorDraftStorage';
+import { promptPlain } from '../lib/promptPlain';
 
 const MORE_ITEMS = [
   { id: 'join', label: 'Join instructions', wire: true },
@@ -27,39 +35,6 @@ function toLocalInput(iso) {
   if (Number.isNaN(d.getTime())) return '';
   const pad = (n) => String(n).padStart(2, '0');
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-}
-
-function editorDraftKey(quizId) {
-  return `scroll_trivia_editor_draft:${String(quizId || '').trim()}`;
-}
-
-function readEditorDraft(quizId) {
-  try {
-    const raw = localStorage.getItem(editorDraftKey(quizId));
-    if (!raw) return null;
-    const data = JSON.parse(raw);
-    if (!data || !Array.isArray(data.questions) || !data.questions.length) return null;
-    return data;
-  } catch {
-    return null;
-  }
-}
-
-function writeEditorDraft(quizId, payload) {
-  try {
-    localStorage.setItem(editorDraftKey(quizId), JSON.stringify(payload));
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function clearEditorDraft(quizId) {
-  try {
-    localStorage.removeItem(editorDraftKey(quizId));
-  } catch {
-    /* quota / private mode */
-  }
 }
 
 function fromLocalInput(value) {
@@ -82,19 +57,33 @@ export default function Activity() {
   const [sessionsError, setSessionsError] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [draftWarning, setDraftWarning] = useState('');
   const [addOpen, setAddOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const [assignOpen, setAssignOpen] = useState(false);
   const [quizSettingsOpen, setQuizSettingsOpen] = useState(false);
   const [selectedResponse, setSelectedResponse] = useState(null);
+  const [selectedSession, setSelectedSession] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [autoSaveHint, setAutoSaveHint] = useState('');
   const [quizDirty, setQuizDirty] = useState(false);
   const [bannerDirty, setBannerDirty] = useState(false);
   const [dirtyIds, setDirtyIds] = useState([]);
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleDraft, setTitleDraft] = useState('');
   const [titleEditAt, setTitleEditAt] = useState(null); // 'top' | 'cover'
+  const [activeQuestionId, setActiveQuestionId] = useState(null);
   const instructionsLiveRef = useRef('');
+  const indexNavRef = useRef(null);
+  const jumpLockUntil = useRef(0);
+  const dirtyRef = useRef(false);
+  const savingRef = useRef(false);
+  const saveAllRef = useRef(null);
+  const quizRef = useRef(null);
+  const dirtyStampRef = useRef('');
+  const autoFailStampRef = useRef('');
+  const autoHintTimerRef = useRef(null);
+  const saveLockRef = useRef(false);
 
   const setTab = (t) => {
     const next = new URLSearchParams(params);
@@ -111,7 +100,7 @@ export default function Activity() {
         `/api/trivia/host?action=quiz&quizId=${encodeURIComponent(quizId)}`
       );
       setQuiz(data.quiz);
-      const draft = readEditorDraft(quizId);
+      const draft = await loadEditorDraft(quizId);
       if (draft?.questions?.length) {
         setQuestions(draft.questions);
         setDirtyIds(
@@ -239,12 +228,15 @@ export default function Activity() {
     meta: q.meta,
   });
 
-  const saveAll = useCallback(async () => {
+  const saveAll = useCallback(async (source) => {
+    if (source && typeof source !== 'string') source = undefined;
     if (!quiz) return false;
+    if (saveLockRef.current) return 'busy';
     const changed = questions.filter((q) => dirtyIds.includes(q.id));
     const instructionsNow = instructionsLiveRef.current;
     const instructionsDirty = instructionsNow !== (quiz.settings?.instructions ?? '');
     if (!quizDirty && !bannerDirty && !instructionsDirty && !changed.length) return true;
+    saveLockRef.current = true;
     setSaving(true);
     setError('');
     try {
@@ -282,20 +274,55 @@ export default function Activity() {
       setQuizDirty(false);
       setBannerDirty(false);
       setDirtyIds([]);
+      setDraftWarning('');
+      autoFailStampRef.current = '';
       clearEditorDraft(quizId);
+      if (source === 'auto') {
+        setAutoSaveHint('Autosaved');
+        clearTimeout(autoHintTimerRef.current);
+        autoHintTimerRef.current = setTimeout(() => setAutoSaveHint(''), 3500);
+      } else {
+        setAutoSaveHint('');
+      }
       return true;
     } catch (e) {
-      setError(e.message);
+      setError(source === 'auto' ? `Autosave failed: ${e.message}` : e.message);
       return false;
     } finally {
+      saveLockRef.current = false;
       setSaving(false);
     }
   }, [quiz, questions, quizId, quizDirty, bannerDirty, dirtyIds]);
 
+  dirtyRef.current = dirty;
+  savingRef.current = saving;
+  saveAllRef.current = saveAll;
+  quizRef.current = quiz;
+  dirtyStampRef.current = `${quizDirty}|${bannerDirty}|${dirtyIds.join(',')}|${quiz?.settings?.instructions ?? ''}|${instructionsLiveRef.current}`;
+
+  useEffect(() => {
+    const id = setInterval(async () => {
+      const q = quizRef.current;
+      const instructionsDirty = Boolean(
+        q && instructionsLiveRef.current !== (q.settings?.instructions ?? '')
+      );
+      if ((!dirtyRef.current && !instructionsDirty) || savingRef.current) return;
+      const stamp = dirtyStampRef.current;
+      if (autoFailStampRef.current && autoFailStampRef.current === stamp) return;
+      const ok = await saveAllRef.current?.('auto');
+      if (ok === false) autoFailStampRef.current = stamp;
+    }, 45000);
+    return () => {
+      clearInterval(id);
+      clearTimeout(autoHintTimerRef.current);
+    };
+  }, []);
+
   useEffect(() => {
     if (!quizId || !questions.length || !dirty) return undefined;
+    let alive = true;
     const t = setTimeout(() => {
-      const ok = writeEditorDraft(quizId, {
+      saveEditorDraft(quizId, {
         questions,
         dirtyIds,
         quizDirty,
@@ -304,14 +331,25 @@ export default function Activity() {
           ? { title: quiz.title, banner_url: quiz.banner_url, settings: quiz.settings }
           : null,
         savedAt: Date.now(),
+      }).then((result) => {
+        if (!alive) return;
+        if (result.status === 'fail') {
+          setDraftWarning(
+            'Local backup failed — your browser storage is full. Click Save (top right) so the quiz is stored on the server.'
+          );
+        } else if (result.status === 'lite' && !result.idb) {
+          setDraftWarning(
+            'Audio is saved on the server after you click Save. Local backup kept text only (WAV clips are too large for browser storage).'
+          );
+        } else {
+          setDraftWarning('');
+        }
       });
-      if (!ok) {
-        setError(
-          'Browser backup is full (audio clips are large). Click Save now so this is stored on the server.'
-        );
-      }
     }, 400);
-    return () => clearTimeout(t);
+    return () => {
+      alive = false;
+      clearTimeout(t);
+    };
   }, [quizId, questions, dirtyIds, dirty, quiz, quizDirty, bannerDirty]);
 
   useEffect(() => {
@@ -424,8 +462,42 @@ export default function Activity() {
   };
 
   const jumpToHostQuestion = (id) => {
+    jumpLockUntil.current = Date.now() + 700;
+    setActiveQuestionId(id);
     document.getElementById(`host-q-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
+
+  const updateActiveFromScroll = useCallback(() => {
+    if (Date.now() < jumpLockUntil.current) return;
+    if (!questions.length) return;
+    const marker = 110;
+    let active = questions[0].id;
+    for (const q of questions) {
+      const el = document.getElementById(`host-q-${q.id}`);
+      if (!el) continue;
+      if (el.getBoundingClientRect().top <= marker) active = q.id;
+    }
+    setActiveQuestionId((prev) => (prev === active ? prev : active));
+  }, [questions]);
+
+  useEffect(() => {
+    if (tab !== 'edit' || !questions.length) return undefined;
+    setActiveQuestionId((prev) => prev || questions[0].id);
+    updateActiveFromScroll();
+    const onScroll = () => updateActiveFromScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [tab, questions, updateActiveFromScroll]);
+
+  useEffect(() => {
+    if (tab !== 'edit' || !activeQuestionId || !indexNavRef.current) return;
+    const btn = indexNavRef.current.querySelector(`[data-qid="${activeQuestionId}"]`);
+    btn?.scrollIntoView({ block: 'nearest' });
+  }, [activeQuestionId, tab]);
 
   const insights = useMemo(() => {
     const scored = questions.filter((q) => q.type !== 'image' && q.type !== 'content');
@@ -567,10 +639,15 @@ export default function Activity() {
               {points} pt{points === 1 ? '' : 's'}
             </span>
           </div>
+          {autoSaveHint ? (
+            <span className="f-autosave-hint" role="status" aria-live="polite">
+              {autoSaveHint}
+            </span>
+          ) : null}
           <button
             type="button"
             className={`f-save-btn ${dirty ? 'is-dirty' : ''}`}
-            onClick={saveAll}
+            onClick={() => saveAll()}
             disabled={saving || !dirty}
           >
             {saving ? 'Saving…' : dirty ? 'Save' : 'Saved'}
@@ -612,17 +689,24 @@ export default function Activity() {
           {error}
         </div>
       ) : null}
+      {draftWarning ? (
+        <div className="f-banner-warn" role="status">
+          {draftWarning}
+        </div>
+      ) : null}
 
       {tab === 'edit' && (
         <div className="f-edit-layout">
           {questions.length ? (
-            <nav className="f-q-index" aria-label="Jump to question">
+            <nav className="f-q-index" aria-label="Jump to question" ref={indexNavRef}>
               {questions.map((q, idx) => (
                 <button
                   key={q.id}
                   type="button"
-                  className="f-q-index-btn"
+                  data-qid={q.id}
+                  className={`f-q-index-btn ${activeQuestionId === q.id ? 'active' : ''}`}
                   title={`Question ${idx + 1}`}
+                  aria-current={activeQuestionId === q.id ? 'true' : undefined}
                   onClick={() => jumpToHostQuestion(q.id)}
                 >
                   {idx + 1}
@@ -770,7 +854,7 @@ export default function Activity() {
       )}
 
       {tab === 'responses' && (
-        <div className={`f-responses ${selectedResponse ? 'has-panel' : ''}`}>
+        <div className={`f-responses ${selectedResponse || selectedSession ? 'has-panel' : ''}`}>
           <div className="f-responses-main">
             <div className="f-responses-tools">
               <button type="button" className="f-outline-btn" disabled>
@@ -798,9 +882,26 @@ export default function Activity() {
               sessions={sessions}
               sessionsError={sessionsError}
               selectedId={selectedResponse?.id}
-              onSelect={setSelectedResponse}
+              selectedLiveId={selectedSession?.id}
+              onSelect={(r) => {
+                setSelectedSession(null);
+                setSelectedResponse(r);
+              }}
+              onLiveSelect={(s) => {
+                setSelectedResponse(null);
+                setSelectedSession(s);
+              }}
             />
           </div>
+          {selectedSession ? (
+            <LiveSessionPanel
+              session={sessions.find((s) => s.id === selectedSession.id) || selectedSession}
+              sessions={sessions.filter((s) => presenceStatus(s) !== 'gone')}
+              questions={questions}
+              onClose={() => setSelectedSession(null)}
+              onSelect={setSelectedSession}
+            />
+          ) : null}
           {selectedResponse ? (
             <StudentResponsePanel
               response={
@@ -858,22 +959,36 @@ export default function Activity() {
       )}
 
       {tab === 'insights' && (
-        <div className="f-insights">
-          <h2 style={{ marginTop: 0 }}>Insights</h2>
-          <p className="f-muted">{responses.length} submission(s)</p>
-          {insights.map(({ q, i, pct, n }) => (
-            <div className="f-insight-row" key={q.id}>
-              <div style={{ width: 28, fontWeight: 700 }}>{i + 1}</div>
-              <div style={{ width: 220, fontSize: 13 }}>{q.prompt?.slice(0, 60) || 'Question'}</div>
-              <div className="f-insight-bar-track">
-                <div className="f-insight-bar-fill" style={{ width: `${pct}%` }} />
-              </div>
-              <div style={{ width: 72, textAlign: 'right', fontWeight: 600 }}>{pct}%</div>
-              <div className="f-muted" style={{ width: 64, fontSize: 12 }}>
-                n={n}
-              </div>
+        <div className="f-insights f-insights-v2">
+          <header className="f-insights-head">
+            <div>
+              <h2>Insights</h2>
+              <p className="f-muted">{responses.length} submission(s)</p>
             </div>
-          ))}
+          </header>
+          <div className="f-insights-list">
+            {insights.map(({ q, i, pct, n }) => {
+              const label = promptPlain(q.prompt) || 'Question';
+              const tone = pct >= 70 ? 'high' : pct >= 40 ? 'mid' : 'low';
+              return (
+                <div className="f-insight-row" key={q.id}>
+                  <span className="f-insight-num">{i + 1}</span>
+                  <div className="f-insight-copy">
+                    <div className="f-insight-prompt" title={label}>
+                      {label}
+                    </div>
+                    <div className="f-insight-bar-track">
+                      <div className={`f-insight-bar-fill is-${tone}`} style={{ width: `${pct}%` }} />
+                    </div>
+                  </div>
+                  <div className="f-insight-stats">
+                    <strong>{pct}%</strong>
+                    <span className="f-muted">n={n}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
           {!insights.length ? <p className="f-muted">Add scored questions to see insights.</p> : null}
         </div>
       )}
@@ -883,6 +998,24 @@ export default function Activity() {
           +
         </button>
       ) : null}
+
+      <button
+        type="button"
+        className={`f-fab f-fab-up ${tab === 'edit' ? 'with-add' : ''}`}
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        aria-label="Back to top"
+        title="Back to top"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="M12 19V5M12 5 6 11M12 5l6 6"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
 
       <AddItemModal open={addOpen} onClose={() => setAddOpen(false)} onAdd={addQuestion} />
 

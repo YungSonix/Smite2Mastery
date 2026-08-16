@@ -2,6 +2,13 @@
 
 import { listImageUrls } from './questionMedia';
 
+export const MAX_QUESTION_VARIANTS = 10;
+
+export function variantLetter(index) {
+  const i = Math.max(0, Math.min(25, Number(index) || 0));
+  return String.fromCharCode(65 + i);
+}
+
 function cloneJson(v) {
   return v == null ? v : JSON.parse(JSON.stringify(v));
 }
@@ -20,7 +27,7 @@ export function listVariants(q) {
   for (const raw of extras) {
     if (!raw || typeof raw !== 'object') continue;
     if (raw.enabled === false) continue;
-    if (out.length >= 3) break;
+    if (out.length >= MAX_QUESTION_VARIANTS) break;
     const urls = listImageUrls(raw);
     const hasOwnMedia =
       raw.image_url !== undefined || Array.isArray(raw.image_urls);
@@ -49,10 +56,14 @@ function hashSeed(parts) {
   return h >>> 0;
 }
 
-export function pickVariantIndex(slug, discord, questionId, count) {
+export function pickVariantIndex(slug, discord, questionId, count, previousIndex, salt) {
   const n = Math.max(1, Number(count) || 1);
   if (n <= 1) return 0;
-  return hashSeed([slug, discord, questionId]) % n;
+  if (previousIndex != null && previousIndex !== '' && Number.isFinite(Number(previousIndex))) {
+    const prev = ((Math.trunc(Number(previousIndex)) % n) + n) % n;
+    return (prev + 1) % n;
+  }
+  return hashSeed([slug, discord, questionId, salt || '']) % n;
 }
 
 export function applyVariant(q, index) {
@@ -71,10 +82,20 @@ export function applyVariant(q, index) {
   };
 }
 
-export function buildVariantMap(questions, slug, discord) {
+export function extractVariantMap(answersOrMap) {
+  if (!answersOrMap || typeof answersOrMap !== 'object') return null;
+  const nested = answersOrMap.__variant_map;
+  const map = nested && typeof nested === 'object' ? nested : answersOrMap;
+  const keys = Object.keys(map).filter((k) => k !== '__variant_map');
+  if (!keys.length) return null;
+  return map;
+}
+
+export function buildVariantMap(questions, slug, discord, previousMap, salt) {
+  const prev = extractVariantMap(previousMap) || {};
   const map = {};
   for (const q of questions || []) {
-    map[q.id] = pickVariantIndex(slug, discord, q.id, variantCount(q));
+    map[q.id] = pickVariantIndex(slug, discord, q.id, variantCount(q), prev[q.id], salt);
   }
   return map;
 }

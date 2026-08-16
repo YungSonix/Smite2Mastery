@@ -257,12 +257,13 @@ export function quizThemeProps(settings) {
   };
 }
 
-export function applyPresetPatch(id) {
+export function applyPresetPatch(id, mode) {
   const p = presetById(id);
-  const pal = paletteForMode(p, p.mode);
+  const nextMode = mode === 'light' || mode === 'dark' ? mode : p.mode;
+  const pal = paletteForMode(p, nextMode);
   return {
     theme: p.id,
-    theme_mode: p.mode,
+    theme_mode: nextMode,
     theme_accent: pal.accent || p.accent,
     theme_secondary: pal.secondary || p.secondary || p.accent,
     theme_page: pal.page,
