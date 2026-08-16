@@ -69,6 +69,25 @@ function fromLocalInput(value) {
   return d.toISOString();
 }
 
+function isIdentityGate(q) {
+  return Boolean(q?.meta?.is_discord_gate || q?.meta?.is_ingame_gate);
+}
+
+/** Player-facing numbers: Discord / In-Game gates are not counted on the take page. */
+function playableNumberMap(questions) {
+  const map = new Map();
+  let n = 0;
+  for (const q of questions || []) {
+    if (isIdentityGate(q)) {
+      map.set(q.id, null);
+    } else {
+      n += 1;
+      map.set(q.id, n);
+    }
+  }
+  return map;
+}
+
 export default function Activity() {
   const { quizId } = useParams();
   const [params, setParams] = useSearchParams();
@@ -182,6 +201,8 @@ export default function Activity() {
       }, 0),
     [questions]
   );
+
+  const playableNumbers = useMemo(() => playableNumberMap(questions), [questions]);
 
   const saveQuizPatch = async (patch) => {
     setSaving(true);
@@ -428,7 +449,9 @@ export default function Activity() {
   };
 
   const insights = useMemo(() => {
-    const scored = questions.filter((q) => q.type !== 'image' && q.type !== 'content');
+    const scored = questions.filter(
+      (q) => q.type !== 'image' && q.type !== 'content' && !isIdentityGate(q)
+    );
     return scored.map((q, i) => {
       let n = 0;
       let ok = 0;
@@ -617,17 +640,31 @@ export default function Activity() {
         <div className="f-edit-layout">
           {questions.length ? (
             <nav className="f-q-index" aria-label="Jump to question">
-              {questions.map((q, idx) => (
-                <button
-                  key={q.id}
-                  type="button"
-                  className="f-q-index-btn"
-                  title={`Question ${idx + 1}`}
-                  onClick={() => jumpToHostQuestion(q.id)}
-                >
-                  {idx + 1}
-                </button>
-              ))}
+              {questions.map((q) => {
+                const num = playableNumbers.get(q.id);
+                const gate = isIdentityGate(q);
+                const label = gate
+                  ? q.meta?.is_discord_gate
+                    ? 'D'
+                    : 'N'
+                  : String(num);
+                const title = gate
+                  ? q.meta?.is_discord_gate
+                    ? 'Discord Username (not scored — take page form)'
+                    : 'In-Game Name (not scored — take page form)'
+                  : `Question ${num}`;
+                return (
+                  <button
+                    key={q.id}
+                    type="button"
+                    className={`f-q-index-btn${gate ? ' is-gate' : ''}`}
+                    title={title}
+                    onClick={() => jumpToHostQuestion(q.id)}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
             </nav>
           ) : null}
           <div className="f-edit-scroll">
@@ -740,6 +777,7 @@ export default function Activity() {
               key={q.id}
               question={q}
               index={idx}
+              number={playableNumbers.get(q.id)}
               onChange={saveQuestion}
               onDelete={() => deleteQuestion(q.id)}
             />

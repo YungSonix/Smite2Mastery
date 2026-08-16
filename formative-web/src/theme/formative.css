@@ -812,6 +812,13 @@ label.f-file-btn:hover {
   color: var(--f-on-accent, #fff);
 }
 
+.f-q-index-btn.is-gate {
+  background: color-mix(in srgb, var(--f-muted, #888) 12%, var(--f-card));
+  border-color: color-mix(in srgb, var(--f-muted, #888) 35%, var(--f-blue-border));
+  color: var(--f-muted, #666);
+  font-size: 12px;
+}
+
 .f-edit-scroll {
   padding: 24px 16px 80px;
   max-width: 920px;
