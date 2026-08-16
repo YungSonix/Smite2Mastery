@@ -65,7 +65,7 @@ function AttachFileButton({ onChange, accept = 'image/*,audio/*,video/*' }) {
   );
 }
 
-export default function QuestionCard({ question, index, onChange, onDelete }) {
+export default function QuestionCard({ question, index, number, onChange, onDelete }) {
   const [q, setQ] = useState(question);
   const [uploadError, setUploadError] = useState('');
   const [attachOpen, setAttachOpen] = useState(false);
@@ -74,6 +74,11 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
   useEffect(() => {
     setQ(question);
   }, [question]);
+
+  const displayNum = number != null ? number : index + 1;
+  const numLabel = number === null ? '—' : String(displayNum);
+  const numTitle =
+    number === null ? 'Identity field (not numbered on take page)' : `Question ${displayNum}`;
 
   // Fill-in-blank always has one blank marker.
   useEffect(() => {
@@ -457,8 +462,8 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
       <div className="f-fib-editor">
         <div className="f-fib-how">
           <strong className="f-fib-how-title">
-            <span className="f-q-num" title={`Question ${index + 1}`} aria-label={`Question ${index + 1}`}>
-              {index + 1}
+            <span className="f-q-num" title={numTitle} aria-label={numTitle}>
+              {numLabel}
             </span>
             Fill in the blank
           </strong>
@@ -586,8 +591,8 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
       </div>
     ) : (
       <div className="f-q-prompt-edit">
-        <span className="f-q-num" title={`Question ${index + 1}`} aria-label={`Question ${index + 1}`}>
-          {index + 1}
+        <span className="f-q-num" title={numTitle} aria-label={numTitle}>
+          {numLabel}
         </span>
         <div className="f-fmt-field">
           <VisualTextEditor
@@ -1300,8 +1305,8 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
     >
       <div className="f-qcard-head">
         <span>≡</span>
-        <span className="f-q-num f-q-num-head" title={`Question ${index + 1}`} aria-label={`Question ${index + 1}`}>
-          {index + 1}
+        <span className="f-q-num f-q-num-head" title={numTitle} aria-label={numTitle}>
+          {numLabel}
         </span>
         {isGate ? (
           <span>{isDiscord ? 'Discord Username' : 'In-Game Name'}</span>
