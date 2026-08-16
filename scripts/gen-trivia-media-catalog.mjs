@@ -8,8 +8,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const ASSETS =
-  'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data';
+const ASSETS = '/media';
 
 const GOD_FOLDER_MAP = {
   'Guan Yu': 'Guan_Yu',

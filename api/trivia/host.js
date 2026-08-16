@@ -7,6 +7,7 @@ const {
   defaultQuestion,
   isQuizKeyUuid,
   shortQuizSlug,
+  rewriteQuestionMedia,
 } = require('../../lib/server/triviaApi');
 const { isContentType, isManualType } = require('../../lib/server/triviaQuestionTypes');
 const { responsesToCsv } = require('../../lib/server/triviaExport');
@@ -127,7 +128,10 @@ module.exports = async function handler(req, res) {
         .eq('quiz_id', quiz.id)
         .order('sort_order', { ascending: true });
       if (qErr) return send(res, 500, { error: qErr.message });
-      return send(res, 200, { quiz, questions: questions || [] });
+      return send(res, 200, {
+        quiz,
+        questions: (questions || []).map((q) => rewriteQuestionMedia(q)),
+      });
     }
 
     if (req.method === 'GET' && action === 'responses') {
@@ -377,6 +381,12 @@ module.exports = async function handler(req, res) {
             const patch = { ...(item.patch || {}), updated_at: now };
             delete patch.id;
             delete patch.quiz_id;
+            const rewritten = rewriteQuestionMedia({
+              image_url: patch.image_url,
+              meta: patch.meta,
+            });
+            if (patch.image_url !== undefined) patch.image_url = rewritten.image_url;
+            if (patch.meta !== undefined) patch.meta = rewritten.meta;
             return sb.from('trivia_questions').update(patch).eq('id', item.id);
           }),
         );
@@ -403,6 +413,12 @@ module.exports = async function handler(req, res) {
         const patch = { ...body.patch, updated_at: new Date().toISOString() };
         delete patch.id;
         delete patch.quiz_id;
+        const rewritten = rewriteQuestionMedia({
+          image_url: patch.image_url,
+          meta: patch.meta,
+        });
+        if (patch.image_url !== undefined) patch.image_url = rewritten.image_url;
+        if (patch.meta !== undefined) patch.meta = rewritten.meta;
         const { data, error } = await sb
           .from('trivia_questions')
           .update(patch)
@@ -410,7 +426,7 @@ module.exports = async function handler(req, res) {
           .select('*')
           .single();
         if (error) return send(res, 500, { error: error.message });
-        return send(res, 200, { question: data });
+        return send(res, 200, { question: rewriteQuestionMedia(data) });
       }
       if (body.action === 'reorder') {
         const orders = Array.isArray(body.orders) ? body.orders : [];

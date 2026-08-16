@@ -25,6 +25,7 @@ const {
   applyVariant,
   scoreAnswersWithVariants,
 } = require('../lib/server/triviaVariants');
+const { rewriteQuestionMedia } = require('../lib/server/triviaMediaRewrite');
 const { responsesToCsv } = require('../lib/server/triviaExport');
 const { quizWindowState, shouldPurgeLiveSessions } = require('../lib/server/triviaWindow');
 const { compactDraftAnswers, sessionDraftDue } = require('../lib/server/triviaCommit');
@@ -327,7 +328,10 @@ async function handleHost(req, res, url) {
   if (req.method === 'GET' && action === 'quiz') {
     const quiz = findOwnedQuiz(username, quizId);
     if (!quiz) return json(res, 404, { error: 'Quiz not found' });
-    return json(res, 200, { quiz, questions: questionsForQuiz(quiz.id) });
+    return json(res, 200, {
+      quiz,
+      questions: questionsForQuiz(quiz.id).map((q) => rewriteQuestionMedia(q)),
+    });
   }
 
   if (req.method === 'GET' && action === 'responses') {
@@ -492,7 +496,7 @@ async function handleHost(req, res, url) {
           return json(res, 400, { error: 'Questions must belong to one quiz' });
         }
         quizIdForTouch = quiz.id;
-        Object.assign(q, item.patch || {}, { updated_at: now });
+        Object.assign(q, rewriteQuestionMedia({ ...q, ...(item.patch || {}) }), { updated_at: now });
         q.id = item.id;
         q.quiz_id = quiz.id;
         db.questions.set(q.id, q);
@@ -506,7 +510,9 @@ async function handleHost(req, res, url) {
       if (!q) return json(res, 404, { error: 'Question not found' });
       const quiz = db.quizzes.get(q.quiz_id);
       if (!quiz || quiz.owner_username !== username) return json(res, 403, { error: 'Forbidden' });
-      Object.assign(q, body.patch || {}, { updated_at: new Date().toISOString() });
+      Object.assign(q, rewriteQuestionMedia({ ...q, ...(body.patch || {}) }), {
+        updated_at: new Date().toISOString(),
+      });
       q.id = body.questionId;
       q.quiz_id = quiz.id;
       db.questions.set(q.id, q);

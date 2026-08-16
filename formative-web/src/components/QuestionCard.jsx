@@ -273,7 +273,9 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
         return readImageAsDataUrl(file);
       }
       if (type.startsWith('audio/') || /\.(wav|mp3|m4a|ogg|aac|flac)$/i.test(name)) {
-        return readFileAsDataUrl(file, { acceptPrefix: 'audio/' });
+        throw new Error(
+          'Do not embed audio files in the quiz. Paste a /media/VoiceAudio/… or GitHub VoiceAudio URL instead.'
+        );
       }
       if (type.startsWith('video/') || /\.(mp4|webm|mov)$/i.test(name)) {
         return readFileAsDataUrl(file, { acceptPrefix: 'video/', maxBytes: 8 * 1024 * 1024 });

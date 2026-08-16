@@ -4,15 +4,19 @@ const AUDIO_EXT = /\.(mp3|wav|ogg|m4a|aac|flac)(\?|#|$)/i;
 const VIDEO_EXT = /\.(mp4|webm|mov|m4v)(\?|#|$)/i;
 const IMAGE_EXT = /\.(png|jpe?g|gif|webp|svg|avif|bmp)(\?|#|$)/i;
 
-const GITHUB_DATA =
+const GITHUB_MASTER =
   'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/master/app/data';
+const GITHUB_ASSETS =
+  'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data';
 
-/** Local `/media/...` is proxied by the trivia API. On Vercel, load the same files from GitHub. */
+/** Local `/media/...` is proxied by the trivia API. VoiceAudio is gitignored — load from the assets branch. */
 export function resolveMediaUrl(url) {
   const s = String(url || '');
   if (!s.startsWith('/media/')) return s;
+  const rel = s.slice('/media/'.length);
+  if (rel.startsWith('VoiceAudio/')) return `${GITHUB_ASSETS}/${rel}`;
   if (typeof import.meta !== 'undefined' && import.meta.env?.DEV) return s;
-  return `${GITHUB_DATA}/${s.slice('/media/'.length)}`;
+  return `${GITHUB_MASTER}/${rel}`;
 }
 
 /** Per-URL kind. Does not use question type — mixed lists are allowed. */
