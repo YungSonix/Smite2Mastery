@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import VisualTextEditor from './VisualTextEditor';
 import MediaStack from './MediaStack';
 import { joinFillBlankPrompt, splitFillBlankPrompt } from '../lib/fillBlank';
-import { readImageAsDataUrl } from '../lib/imageUpload';
 import {
   MAX_VERSION_MEDIA,
   listMediaUrls,
@@ -270,7 +269,9 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
       const type = String(file.type || '');
       const name = String(file.name || '').toLowerCase();
       if (type.startsWith('image/') || /\.(png|jpe?g|gif|webp|svg)$/i.test(name)) {
-        return readImageAsDataUrl(file);
+        throw new Error(
+          'Do not embed image files in the quiz. Paste a /media/… URL, a GitHub app/data URL, or use Random question.'
+        );
       }
       if (type.startsWith('audio/') || /\.(wav|mp3|m4a|ogg|aac|flac)$/i.test(name)) {
         throw new Error(
