@@ -507,6 +507,19 @@ a {
   font-size: 12px;
 }
 
+.f-quiz-delete {
+  flex-shrink: 0;
+  color: var(--f-red-bar);
+  border-color: color-mix(in srgb, var(--f-red-bar) 45%, var(--f-border));
+  background: color-mix(in srgb, var(--f-red-bar) 12%, var(--f-card));
+}
+
+.f-quiz-delete:hover:not(:disabled) {
+  background: var(--f-red-bar);
+  color: #fff;
+  border-color: var(--f-red-bar);
+}
+
 .f-kebab {
   border: none;
   background: transparent;
@@ -760,12 +773,52 @@ label.f-file-btn:hover {
   font-weight: 600;
 }
 
+.f-edit-layout {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 920px);
+  justify-content: center;
+  align-items: start;
+  gap: 4px 8px;
+  width: 100%;
+}
+
+.f-q-index {
+  position: sticky;
+  top: 72px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: calc(100vh - 88px);
+  overflow-y: auto;
+  padding: 8px 4px 24px;
+  z-index: 12;
+}
+
+.f-q-index-btn {
+  min-width: 36px;
+  height: 32px;
+  padding: 0 6px;
+  border-radius: 999px;
+  border: 1px solid var(--f-blue-border);
+  background: color-mix(in srgb, var(--f-blue) 18%, var(--f-card));
+  color: var(--f-blue);
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.f-q-index-btn:hover {
+  background: var(--f-blue);
+  color: var(--f-on-accent, #fff);
+}
+
 .f-edit-scroll {
   padding: 24px 16px 80px;
   max-width: 920px;
   margin: 0 auto;
   width: 100%;
   overflow-anchor: none;
+  min-width: 0;
 }
 
 .f-instructions-card {
@@ -1367,6 +1420,7 @@ label.f-file-btn:hover {
   padding: var(--f-qcard-pad, 16px 18px);
   margin-bottom: 12px;
   box-shadow: var(--f-shadow);
+  scroll-margin-top: 80px;
 }
 
 .f-qcard-head {
@@ -2537,6 +2591,15 @@ label.f-file-btn:hover {
 .f-menu button:hover:not(:disabled) {
   background: var(--f-blue-soft);
   color: var(--f-blue);
+}
+
+.f-menu button.f-menu-danger {
+  color: var(--f-red-bar);
+}
+
+.f-menu button.f-menu-danger:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--f-red-bar) 16%, var(--f-card));
+  color: var(--f-red-bar);
 }
 
 .f-menu button:disabled {
@@ -3924,6 +3987,22 @@ label.f-file-btn:hover {
 @media (max-width: 840px) {
   .f-sidebar {
     display: none;
+  }
+
+  .f-edit-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .f-q-index {
+    flex-direction: row;
+    flex-wrap: wrap;
+    top: 64px;
+    max-height: none;
+    background: color-mix(in srgb, var(--f-page) 92%, transparent);
+    backdrop-filter: blur(8px);
+    padding: 8px 12px;
+    margin: 0;
+    border-bottom: 1px solid var(--f-border);
   }
   .f-topnav {
     grid-template-columns: 1fr;

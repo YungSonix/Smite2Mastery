@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HostShell from '../components/HostShell';
-import { hostApi, takeUrl, activityHref } from '../lib/api';
+import { hostApi, activityHref } from '../lib/api';
 
 const ICON = `${import.meta.env.BASE_URL}scroll-icon.png`;
 
@@ -11,6 +11,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [bannerDismissed, setBannerDismissed] = useState(false);
+  const [deletingId, setDeletingId] = useState('');
 
   useEffect(() => {
     let alive = true;
@@ -35,6 +36,26 @@ export default function Home() {
       alive = false;
     };
   }, []);
+
+  const deleteQuiz = async (quiz) => {
+    const title = String(quiz?.title || 'this quiz').trim() || 'this quiz';
+    const extra = quiz?.is_assigned
+      ? ' This quiz is assigned — take links stop working and all responses are removed.'
+      : ' Questions and responses for it are removed.';
+    if (!window.confirm(`Delete “${title}”?${extra}`)) return;
+    setError('');
+    setDeletingId(quiz.id);
+    try {
+      await hostApi(`/api/trivia/host?action=quiz&quizId=${encodeURIComponent(quiz.id)}`, {
+        method: 'DELETE',
+      });
+      setQuizzes((prev) => prev.filter((row) => row.id !== quiz.id));
+    } catch (e) {
+      setError(e.message || 'Delete failed');
+    } finally {
+      setDeletingId('');
+    }
+  };
 
   const createQuiz = async () => {
     try {
@@ -114,6 +135,18 @@ export default function Home() {
                     {new Date(q.updated_at).toLocaleString()}
                   </span>
                 </div>
+                <button
+                  type="button"
+                  className="f-outline-btn f-quiz-delete"
+                  disabled={deletingId === q.id}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteQuiz(q);
+                  }}
+                  onKeyDown={(e) => e.stopPropagation()}
+                >
+                  {deletingId === q.id ? 'Deleting…' : 'Delete'}
+                </button>
               </div>
             ))}
           </div>

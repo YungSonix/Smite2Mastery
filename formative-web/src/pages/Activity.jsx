@@ -18,6 +18,7 @@ const MORE_ITEMS = [
   { id: 'share', label: 'Share link', wire: true },
   { id: 'duplicate', label: 'Duplicate quiz', wire: true },
   { id: 'settings', label: 'Quiz Settings', wire: true },
+  { id: 'delete', label: 'Delete quiz', wire: true, danger: true },
 ];
 
 function toLocalInput(iso) {
@@ -403,7 +404,27 @@ export default function Activity() {
       } catch (e) {
         setError(e.message);
       }
+      return;
     }
+    if (id === 'delete') {
+      const title = String(quiz?.title || 'this quiz').trim() || 'this quiz';
+      const extra = quiz?.is_assigned
+        ? ' This quiz is assigned — take links stop working and all responses are removed.'
+        : ' Questions and responses for it are removed.';
+      if (!window.confirm(`Delete “${title}”?${extra}`)) return;
+      try {
+        await hostApi(`/api/trivia/host?action=quiz&quizId=${encodeURIComponent(quiz.id)}`, {
+          method: 'DELETE',
+        });
+        nav('/');
+      } catch (e) {
+        setError(e.message || 'Delete failed');
+      }
+    }
+  };
+
+  const jumpToHostQuestion = (id) => {
+    document.getElementById(`host-q-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const insights = useMemo(() => {
@@ -531,6 +552,7 @@ export default function Activity() {
                 <button
                   key={item.id}
                   type="button"
+                  className={item.danger ? 'f-menu-danger' : undefined}
                   disabled={!item.wire}
                   onClick={() => onMore(item.id)}
                 >
@@ -592,7 +614,23 @@ export default function Activity() {
       ) : null}
 
       {tab === 'edit' && (
-        <div className="f-edit-scroll">
+        <div className="f-edit-layout">
+          {questions.length ? (
+            <nav className="f-q-index" aria-label="Jump to question">
+              {questions.map((q, idx) => (
+                <button
+                  key={q.id}
+                  type="button"
+                  className="f-q-index-btn"
+                  title={`Question ${idx + 1}`}
+                  onClick={() => jumpToHostQuestion(q.id)}
+                >
+                  {idx + 1}
+                </button>
+              ))}
+            </nav>
+          ) : null}
+          <div className="f-edit-scroll">
           <header className={`f-cover f-cover-edit ${quiz.banner_url ? 'has-art' : ''}`}>
             {quiz.banner_url ? <img className="f-cover-img" src={quiz.banner_url} alt="" /> : null}
             <div className="f-cover-scrim" />
@@ -726,6 +764,7 @@ export default function Activity() {
             <button type="button" className="f-quick-btn" onClick={() => addQuestion('audio')}>
               Audio
             </button>
+          </div>
           </div>
         </div>
       )}

@@ -1294,7 +1294,10 @@ export default function QuestionCard({ question, index, onChange, onDelete }) {
   const bodyForCard = variantEditor || mainBody;
 
   return (
-    <div className={`f-qcard ${useMediaSplit ? 'f-qcard-media' : ''} ${isFillBlank ? 'f-qcard-fib' : ''}`}>
+    <div
+      className={`f-qcard ${useMediaSplit ? 'f-qcard-media' : ''} ${isFillBlank ? 'f-qcard-fib' : ''}`}
+      id={`host-q-${q.id}`}
+    >
       <div className="f-qcard-head">
         <span>≡</span>
         <span className="f-q-num f-q-num-head" title={`Question ${index + 1}`} aria-label={`Question ${index + 1}`}>
