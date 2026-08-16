@@ -111,7 +111,7 @@ module.exports = async function handler(req, res) {
     if (req.method === 'GET' && (action === 'list' || !action)) {
       const { data, error } = await sb
         .from('trivia_quizzes')
-        .select('*')
+        .select('id, slug, title, banner_url, join_code, is_assigned, updated_at, created_at')
         .eq('owner_username', username)
         .order('updated_at', { ascending: false });
       if (error) return send(res, 500, { error: error.message });
@@ -134,23 +134,48 @@ module.exports = async function handler(req, res) {
       });
     }
 
+    if (req.method === 'GET' && action === 'session') {
+      const { data: quiz, error } = await findOwnedQuiz(sb, username, quizId, 'id');
+      if (error) return send(res, 500, { error: error.message });
+      if (!quiz) return send(res, 404, { error: 'Quiz not found' });
+      const sessionId = String(url.searchParams.get('sessionId') || id || '').trim();
+      if (!sessionId) return send(res, 400, { error: 'Missing sessionId' });
+      const { data: session, error: sErr } = await sb
+        .from('trivia_sessions')
+        .select(
+          'id, quiz_id, discord_username, ingame_name, last_seen_at, answered_count, question_count, hidden_count, currently_hidden, left_page, ip_address, started_at, client_started_at, draft_answers, variant_map'
+        )
+        .eq('quiz_id', quiz.id)
+        .eq('id', sessionId)
+        .maybeSingle();
+      if (sErr) return send(res, 500, { error: sErr.message });
+      if (!session) return send(res, 404, { error: 'Session not found' });
+      return send(res, 200, { session });
+    }
+
     if (req.method === 'GET' && action === 'responses') {
       const { data: quiz, error } = await findOwnedQuiz(sb, username, quizId);
       if (error) return send(res, 500, { error: error.message });
       if (!quiz) return send(res, 404, { error: 'Quiz not found' });
+      const format = String(url.searchParams.get('format') || '').toLowerCase();
+      const asCsv = format === 'csv' || format === 'excel';
       await flushQuizDrafts(sb, quiz).catch((err) => console.warn('trivia flush on responses', err.message));
       if (shouldPurgeLiveSessions(quiz)) {
         await purgeLiveSessions(sb, quiz.id);
       }
       const [{ data: questions }, { data: responses, error: rErr }] = await Promise.all([
-        sb
-          .from('trivia_questions')
-          .select('id, sort_order, type, prompt, points, meta')
-          .eq('quiz_id', quiz.id)
-          .order('sort_order', { ascending: true }),
+        asCsv
+          ? sb
+              .from('trivia_questions')
+              .select('id, sort_order, type, prompt, points, meta')
+              .eq('quiz_id', quiz.id)
+              .order('sort_order', { ascending: true })
+          : Promise.resolve({ data: [] }),
         sb
           .from('trivia_responses')
-          .select('*')
+          .select(
+            'id, quiz_id, discord_username, ingame_name, score, max_score, per_question, submitted_at, ip_address, answers'
+          )
           .eq('quiz_id', quiz.id)
           .order('submitted_at', { ascending: false }),
       ]);
@@ -160,7 +185,9 @@ module.exports = async function handler(req, res) {
       if (!shouldPurgeLiveSessions(quiz)) {
         const { data: sessionRows, error: sErr } = await sb
           .from('trivia_sessions')
-          .select('*')
+          .select(
+            'id, quiz_id, discord_username, ingame_name, last_seen_at, answered_count, question_count, hidden_count, currently_hidden, left_page, ip_address, started_at, client_started_at'
+          )
           .eq('quiz_id', quiz.id)
           .order('last_seen_at', { ascending: false });
         if (sErr) {
@@ -178,8 +205,7 @@ module.exports = async function handler(req, res) {
           });
         }
       }
-      const format = String(url.searchParams.get('format') || '').toLowerCase();
-      if (format === 'csv' || format === 'excel') {
+      if (asCsv) {
         const csv = responsesToCsv(quiz, responses || [], questions || []);
         res.setHeader('Content-Type', 'text/csv; charset=utf-8');
         res.setHeader(
@@ -191,8 +217,6 @@ module.exports = async function handler(req, res) {
         return;
       }
       return send(res, 200, {
-        quiz,
-        questions: questions || [],
         responses: responses || [],
         sessions,
         sessionsError,
@@ -202,7 +226,7 @@ module.exports = async function handler(req, res) {
     if (req.method === 'GET' && action === 'analytics') {
       const { data: quizzes, error } = await sb
         .from('trivia_quizzes')
-        .select('*')
+        .select('id, slug, title, updated_at')
         .eq('owner_username', username)
         .order('updated_at', { ascending: false });
       if (error) return send(res, 500, { error: error.message });
@@ -211,10 +235,10 @@ module.exports = async function handler(req, res) {
         return send(res, 200, { quizzes: [], questions: [], responses: [] });
       }
       const [{ data: questions }, { data: responses, error: rErr }] = await Promise.all([
-        sb.from('trivia_questions').select('*').in('quiz_id', quizIds),
+        sb.from('trivia_questions').select('id, quiz_id, type, points, prompt').in('quiz_id', quizIds),
         sb
           .from('trivia_responses')
-          .select('*')
+          .select('id, quiz_id, discord_username, score, max_score, per_question, submitted_at, ip_address')
           .in('quiz_id', quizIds)
           .order('submitted_at', { ascending: false }),
       ]);
@@ -319,7 +343,7 @@ module.exports = async function handler(req, res) {
         if (!quiz) return send(res, 404, { error: 'Quiz not found' });
         const { count } = await sb
           .from('trivia_questions')
-          .select('*', { count: 'exact', head: true })
+          .select('id', { count: 'exact', head: true })
           .eq('quiz_id', quiz.id);
         const type = body.type || 'multiple_choice';
         const defaults = defaultQuestion(type, count || 0);

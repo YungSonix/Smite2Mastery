@@ -318,7 +318,11 @@ export default function TakeQuiz() {
 
   const setAnswer = (id, value) => {
     setAnswers((prev) => {
-      const next = { ...prev, [id]: value };
+      const timings = { ...(prev.__timings || {}) };
+      if (timings[id] == null && startedAt) {
+        timings[id] = Math.max(0, Date.now() - Number(startedAt));
+      }
+      const next = { ...prev, [id]: value, __timings: timings };
       payloadRef.current = { ...payloadRef.current, answers: next };
       if (slug) {
         saveTriviaProgress(slug, {
@@ -344,7 +348,11 @@ export default function TakeQuiz() {
     slug,
     discord,
     ingame,
-    answers: { ...answers, __lifelines: hintCounts },
+    answers: {
+      ...answers,
+      __lifelines: hintCounts,
+      __duration_ms: startedAt ? Math.max(0, Date.now() - Number(startedAt)) : undefined,
+    },
     variantMap,
     startedAt,
   };
@@ -468,7 +476,7 @@ export default function TakeQuiz() {
     };
 
     sendPing();
-    const tick = setInterval(() => sendPing(), 5000);
+    const tick = setInterval(() => sendPing(), 15000);
     const onVis = () => {
       sendPing({ hidden_inc: document.hidden ? 1 : 0 });
     };

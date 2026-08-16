@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  QUIZ_APPEARANCE,
   QUIZ_CORNERS,
   QUIZ_FONTS,
   QUIZ_PATTERNS,
@@ -31,7 +32,7 @@ function Toggle({ label, hint, checked, onChange, disabled }) {
       </span>
       <input
         type="checkbox"
-        className="f-toggle"
+        className="f-switch"
         checked={Boolean(checked)}
         disabled={disabled}
         onChange={(e) => onChange(e.target.checked)}
@@ -139,6 +140,15 @@ function ModeIcon({ mode }) {
       </svg>
     );
   }
+  if (mode === 'dim') {
+    return (
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <circle cx="8" cy="8" r="5.1" stroke="currentColor" strokeWidth="1.4" />
+        <path d="M8 2.9v10.2" stroke="currentColor" strokeWidth="1.4" />
+        <path d="M8 2.9a5.1 5.1 0 0 0 0 10.2" fill="currentColor" opacity="0.45" />
+      </svg>
+    );
+  }
   return (
     <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
       <circle cx="8" cy="8" r="3.1" stroke="currentColor" strokeWidth="1.4" />
@@ -165,12 +175,16 @@ export default function QuizSettingsModal({ settings, onChange, onClose }) {
   const onModeKey = (e) => {
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Home' && e.key !== 'End') return;
     e.preventDefault();
-    if (e.key === 'ArrowLeft' || e.key === 'Home') setMode('light');
-    else setMode('dark');
+    const ids = QUIZ_APPEARANCE.map((m) => m.id);
+    const i = Math.max(0, ids.indexOf(theme.mode));
+    if (e.key === 'Home') setMode(ids[0]);
+    else if (e.key === 'End') setMode(ids[ids.length - 1]);
+    else if (e.key === 'ArrowLeft') setMode(ids[Math.max(0, i - 1)]);
+    else setMode(ids[Math.min(ids.length - 1, i + 1)]);
   };
 
   return (
-    <div className="f-overlay" onClick={onClose} role="presentation">
+    <div className="f-overlay f-settings-chrome" onClick={onClose} role="presentation">
       <div
         className="f-modal f-settings-modal f-settings-modal-v2"
         onClick={(e) => e.stopPropagation()}
@@ -268,22 +282,22 @@ export default function QuizSettingsModal({ settings, onChange, onClose }) {
               <div
                 className={`f-seg f-seg-mode f-seg-mode-${theme.mode}`}
                 role="radiogroup"
-                aria-label="Light or dark"
+                aria-label="Appearance"
                 onKeyDown={onModeKey}
               >
-                {['light', 'dark'].map((mode) => {
-                  const on = theme.mode === mode;
+                {QUIZ_APPEARANCE.map((opt) => {
+                  const on = theme.mode === opt.id;
                   return (
                     <button
-                      key={mode}
+                      key={opt.id}
                       type="button"
                       role="radio"
                       aria-checked={on}
                       className={`f-seg-item ${on ? 'is-on' : ''}`}
-                      onClick={() => setMode(mode)}
+                      onClick={() => setMode(opt.id)}
                     >
-                      <ModeIcon mode={mode} />
-                      {mode === 'light' ? 'Light' : 'Dark'}
+                      <ModeIcon mode={opt.id} />
+                      {opt.label}
                     </button>
                   );
                 })}

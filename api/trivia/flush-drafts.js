@@ -9,7 +9,7 @@ module.exports = async function handler(req, res) {
     const sb = supabaseAdmin();
     const { data: quizzes, error } = await sb
       .from('trivia_quizzes')
-      .select('*')
+      .select('id, settings')
       .eq('is_assigned', true);
     if (error) return send(res, 500, { error: error.message });
     let flushed = 0;

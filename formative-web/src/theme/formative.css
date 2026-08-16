@@ -1304,6 +1304,7 @@ label.f-file-btn:hover {
   display: flex;
   flex-direction: column;
   gap: 3px;
+  flex: 1 1 auto;
   min-width: 0;
 }
 
@@ -1400,7 +1401,7 @@ label.f-file-btn:hover {
 .f-seg-mode {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   margin-bottom: 18px;
 }
 
@@ -1866,7 +1867,7 @@ label.f-file-btn:hover {
 .f-qcard input[type='password'],
 .f-qcard select,
 .f-login input,
-.f-modal input,
+.f-modal input:not([type='checkbox']):not([type='radio']):not([type='color']),
 .f-modal textarea,
 .f-modal select,
 .f-take input[type='text'],
@@ -2754,20 +2755,28 @@ label.f-file-btn:hover {
   font-weight: 400;
 }
 
-.f-toggle {
+.f-toggle,
+.f-switch {
   appearance: none;
-  width: 42px;
+  -webkit-appearance: none;
+  width: 44px;
   height: 24px;
+  min-width: 44px;
+  max-width: 44px;
+  margin: 0;
+  padding: 0;
   border-radius: 999px;
   background: #1a2740;
   border: 1px solid var(--f-border);
   position: relative;
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease;
-  flex-shrink: 0;
+  flex: 0 0 44px;
+  align-self: center;
 }
 
-.f-toggle::after {
+.f-toggle::after,
+.f-switch::after {
   content: '';
   position: absolute;
   top: 2px;
@@ -2779,18 +2788,32 @@ label.f-file-btn:hover {
   transition: transform 0.15s ease;
 }
 
-.f-toggle:checked {
+.f-toggle:checked,
+.f-switch:checked {
   background: var(--f-blue);
   border-color: var(--f-blue-border);
 }
 
-.f-toggle:checked::after {
-  transform: translateX(18px);
+.f-toggle:checked::after,
+.f-switch:checked::after {
+  transform: translateX(20px);
 }
 
-.f-toggle:focus-visible {
+.f-toggle:focus-visible,
+.f-switch:focus-visible {
   outline: 2px solid var(--f-blue);
   outline-offset: 2px;
+}
+
+.f-modal input.f-switch,
+.f-settings-toggle .f-switch {
+  width: 44px;
+  height: 24px;
+  min-width: 44px;
+  max-width: 44px;
+  margin: 0;
+  padding: 0;
+  border-radius: 999px;
 }
 
 .f-file-btn {
@@ -2829,6 +2852,31 @@ label.f-file-btn:hover {
   place-items: center;
   z-index: 50;
   padding: 12px 20px;
+}
+
+/* Host chrome for Quiz settings — do not inherit take-page theme tokens. */
+.f-settings-chrome {
+  --f-blue: #7dd3fc;
+  --f-blue-hover: #38bdf8;
+  --f-blue-soft: rgba(125, 211, 252, 0.12);
+  --f-blue-border: rgba(125, 211, 252, 0.42);
+  --f-page: #070b14;
+  --f-card: rgba(8, 12, 22, 0.98);
+  --f-text: #f8fafc;
+  --f-body: #d7e0ea;
+  --f-muted: #b8c4d4;
+  --f-border: #1e3a5f;
+  --f-input: #1a2740;
+  --f-input-hover: #203050;
+  --f-input-border: #4b6f96;
+  --f-label: #bfdbfe;
+  --f-close: #e6eef8;
+  --f-font: 'Sora', system-ui, sans-serif;
+  --f-display: 'Outfit', 'Sora', system-ui, sans-serif;
+  --f-radius: 14px;
+  --f-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  color: var(--f-text);
+  font-family: var(--f-font);
 }
 
 .f-modal {
@@ -3863,7 +3911,8 @@ label.f-file-btn:hover {
 
 .f-bar-chart-track {
   height: 10px;
-  background: #1e293b;
+  background: color-mix(in srgb, var(--f-page) 72%, var(--f-card));
+  border: 1px solid color-mix(in srgb, var(--f-border) 70%, transparent);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -3886,10 +3935,26 @@ label.f-file-btn:hover {
 }
 
 .f-donut {
+  position: relative;
+  display: grid;
+  place-items: center;
   width: 110px;
   height: 110px;
+  flex-shrink: 0;
   border-radius: 50%;
   border: 1px solid var(--f-border);
+}
+
+.f-donut-center {
+  position: absolute;
+  inset: 26px;
+  border-radius: 50%;
+  background: var(--f-card);
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--f-text);
 }
 
 .f-donut-legend {
@@ -5081,7 +5146,7 @@ label.f-file-btn:hover {
 }
 
 .f-insights-v2 {
-  max-width: 960px;
+  max-width: 1120px;
   padding: 28px 20px 64px;
 }
 

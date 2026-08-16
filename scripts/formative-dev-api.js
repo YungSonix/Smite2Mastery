@@ -681,6 +681,9 @@ async function handleSubmit(req, res) {
     extractLifelines(live?.draft_answers),
     extractLifelines(answers)
   );
+  const start = Date.parse(live?.client_started_at || live?.started_at);
+  if (Number.isFinite(start)) answers.__duration_ms = Math.max(0, Date.now() - start);
+  else if (!Number.isFinite(Number(answers.__duration_ms))) delete answers.__duration_ms;
   const graded = scoreAnswersWithVariants(scoreAnswers, questions, answers, variantMap);
   const resolved = questions.map((q) => applyVariant(q, variantMap[q.id] ?? 0));
   const row = {

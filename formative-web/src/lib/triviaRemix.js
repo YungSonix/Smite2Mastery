@@ -313,6 +313,16 @@ function remixAspect(source, avoidTexts) {
 }
 
 function remixRelease(source, avoidTexts) {
+  if (isReleaseAfterPrompt(source.prompt) || source?.meta?.remix_kind === 'release_after') {
+    const avoidGods = usedNames(avoidTexts);
+    const current = releaseAfterAnchorName(source.prompt);
+    if (current) avoidGods.add(norm(current));
+    return (
+      makeReleaseAfterQuestion({ count: optionCount(source), avoidGods }) || {
+        error: 'No other release-after gods left to swap to.',
+      }
+    );
+  }
   const m = String(source.prompt || '').match(/\b(?:OB|Open Beta)\s*0*(\d+)\b/i);
   if (!m) return null;
   const patchNum = Number(m[1]);
@@ -570,6 +580,102 @@ function isIdentifyItemPrompt(prompt) {
   );
 }
 
+function isReleaseAfterPrompt(prompt) {
+  return /(?:\bcame|\breleased)\s+after\b/i.test(String(prompt || ''));
+}
+
+function orderedReleases() {
+  const ordered = [];
+  const seen = new Set();
+  for (const r of catalog.releases || []) {
+    const k = norm(r.god);
+    if (!k || seen.has(k)) continue;
+    seen.add(k);
+    ordered.push(r);
+  }
+  return ordered;
+}
+
+function releaseAfterAnchorName(prompt) {
+  const text = String(prompt || '');
+  const m = text.match(/(?:came|released)\s+after\s+(.+)$/i);
+  const chunk = String(m?.[1] || text)
+    .replace(/[?.!]+$/g, '')
+    .trim();
+  const releaseNames = (catalog.releases || []).map((r) => r.god);
+  const godNames = (catalog.gods || []).map((g) => g.name);
+  return findNameInText(chunk, releaseNames, { min: 3 }) || findNameInText(chunk, godNames, { min: 3 });
+}
+
+function godNamePool() {
+  return (catalog.gods || []).map((g) => g.name).filter(Boolean);
+}
+
+/** “Who came after X?” / “Which god(s) were released after X?” — options are always god names. */
+function makeReleaseAfterQuestion({
+  anchorName,
+  prompt,
+  count = 4,
+  avoidGods = new Set(),
+  keepPrompt = false,
+} = {}) {
+  const ordered = orderedReleases();
+  if (ordered.length < 3) return null;
+  const usable = ordered
+    .map((r, i) => ({ r, i }))
+    .filter(({ r, i }) => i < ordered.length - 1 && !avoidGods.has(norm(r.god)));
+  if (!usable.length) return null;
+
+  let idx = ordered.findIndex((r) => norm(r.god) === norm(anchorName));
+  if (idx < 0 || idx >= ordered.length - 1 || avoidGods.has(norm(ordered[idx].god))) {
+    idx = pickOne(usable).i;
+  }
+  const row = ordered[idx];
+  const afterGods = ordered.slice(idx + 1).map((r) => r.god);
+  const beforeGods = ordered.slice(0, idx).map((r) => r.god);
+  if (!afterGods.length) return null;
+
+  const single = afterGods.length === 1;
+  const type = single ? 'multiple_choice' : 'multiple_selection';
+  const correctPick = single
+    ? [afterGods[0]]
+    : pickDistinct(afterGods, Math.min(2, afterGods.length), new Set());
+  const needWrong = Math.max(single ? count - 1 : 2, count - correctPick.length);
+  const taken = new Set(correctPick.map(norm));
+  let wrong = pickDistinct(beforeGods, needWrong, taken);
+  if (wrong.length < needWrong) {
+    const extra = godNamePool().filter((n) => !afterGods.some((g) => norm(g) === norm(n)) && !taken.has(norm(n)));
+    wrong = [...wrong, ...pickDistinct(extra, needWrong - wrong.length, new Set(wrong.map(norm)))];
+  }
+  const options = shuffle([...correctPick, ...wrong].slice(0, Math.max(count, correctPick.length + 1)));
+  const indices = correctPick
+    .map((g) => options.findIndex((o) => norm(o) === norm(g)))
+    .filter((i) => i >= 0);
+  if (!indices.length) return null;
+  const canKeep = keepPrompt && prompt && idx >= 0 && norm(ordered[idx].god) === norm(anchorName);
+  const nextPrompt = canKeep
+    ? prompt
+    : single
+      ? `Who came after ${row.god}?`
+      : `Which god(s) were released after ${row.god}?`;
+  return {
+    patch: {
+      type,
+      prompt: nextPrompt,
+      options,
+      correct: single ? { index: indices[0] } : { indices },
+      meta: {
+        randomize_order: true,
+        remix_kind: 'release_after',
+        hint_context: { anchor_god: row.god, anchor_patch: row.patch },
+      },
+      image_url: null,
+      image_urls: [],
+      clearMedia: true,
+    },
+  };
+}
+
 /** Fill options + correct from the current prompt (keeps the wording). */
 export function fillAnswersFromPrompt(question) {
   const prompt = String(question?.prompt || '').trim();
@@ -594,6 +700,17 @@ export function fillAnswersFromPrompt(question) {
         },
       },
     };
+  }
+
+  if (isReleaseAfterPrompt(prompt) || question?.meta?.remix_kind === 'release_after') {
+    const hit = makeReleaseAfterQuestion({
+      anchorName: releaseAfterAnchorName(prompt),
+      prompt,
+      count,
+      keepPrompt: true,
+    });
+    if (hit?.patch) return hit;
+    return { error: 'No release-order gods to fill answers. Try Random question.' };
   }
 
   if (namedItem && stats.length) {
@@ -706,6 +823,12 @@ export function randomizeQuestion(question) {
         clearMedia: true,
       },
     };
+  }
+
+  if (isReleaseAfterPrompt(question?.prompt) || question?.meta?.remix_kind === 'release_after') {
+    const avoidGods = usedNames([question?.prompt]);
+    const hit = makeReleaseAfterQuestion({ count, avoidGods });
+    if (hit?.patch) return hit;
   }
 
   const makers = [
@@ -822,45 +945,9 @@ export function randomizeQuestion(question) {
         },
       });
     },
-    () => {
-      const ordered = [];
-      const seen = new Set();
-      for (const r of catalog.releases) {
-        const k = norm(r.god);
-        if (seen.has(k)) continue;
-        seen.add(k);
-        ordered.push(r);
-      }
-      if (ordered.length < 6) return null;
-      const anchorIdx = 1 + Math.floor(Math.random() * (ordered.length - 4));
-      const anchor = ordered[anchorIdx];
-      const afterGods = ordered.slice(anchorIdx + 1).map((r) => r.god);
-      if (afterGods.length < 2) return null;
-      const correctPick = pickDistinct(afterGods, Math.min(2, afterGods.length), new Set());
-      const beforeGods = ordered.slice(0, anchorIdx).map((r) => r.god);
-      const needWrong = Math.max(2, count - correctPick.length);
-      const wrong = pickDistinct(beforeGods, needWrong, new Set(correctPick.map(norm)));
-      const options = shuffle([...correctPick, ...wrong].slice(0, count));
-      const indices = correctPick
-        .map((g) => options.findIndex((o) => norm(o) === norm(g)))
-        .filter((i) => i >= 0);
-      return {
-        patch: {
-          type: 'multiple_selection',
-          prompt: `Select the God or Gods who were released after ${anchor.god}.`,
-          options,
-          correct: { indices },
-          meta: {
-            randomize_order: true,
-            remix_kind: 'release_after',
-            hint_context: { anchor_god: anchor.god, anchor_patch: anchor.patch },
-          },
-          image_url: null,
-          image_urls: [],
-          clearMedia: true,
-        },
-      };
-    },
+    () => makeReleaseAfterQuestion({ count }),
+    // Weighted so Random question actually lands on this template.
+    () => makeReleaseAfterQuestion({ count }),
   ];
 
   const picked = shuffle(makers);
@@ -877,6 +964,7 @@ export function remixQuestionFromA(questionA, { avoidTexts = [] } = {}) {
     prompt: questionA?.prompt || '',
     options: Array.isArray(questionA?.options) ? [...questionA.options] : questionA?.options,
     correct: clone(questionA?.correct) || {},
+    meta: questionA?.meta,
   };
   const avoid = [source.prompt, ...avoidTexts];
   const tries = [remixRelease, remixItem, remixAspect, remixAbility, remixGod];

@@ -106,21 +106,16 @@ alter table public.trivia_questions enable row level security;
 alter table public.trivia_responses enable row level security;
 alter table public.trivia_sessions enable row level security;
 
--- Guests can read assigned quizzes + their questions by slug (anon).
+-- Guests must not dump questions (including `correct` and fat `meta`) via the anon key.
+-- Assigned quiz cards stay readable so the app can list the current contest.
+-- Take payloads go through /api/trivia/public (service role, sanitized).
+
 drop policy if exists trivia_quizzes_public_read_assigned on public.trivia_quizzes;
 create policy trivia_quizzes_public_read_assigned
   on public.trivia_quizzes for select
   using (is_assigned = true);
 
 drop policy if exists trivia_questions_public_read_assigned on public.trivia_questions;
-create policy trivia_questions_public_read_assigned
-  on public.trivia_questions for select
-  using (
-    exists (
-      select 1 from public.trivia_quizzes q
-      where q.id = trivia_questions.quiz_id and q.is_assigned = true
-    )
-  );
 
 -- Responses are host-only via service role API (no anon policies for insert/select).
 -- Host CRUD also goes through service role API.

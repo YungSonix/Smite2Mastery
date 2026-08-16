@@ -148,7 +148,7 @@ function inferKind(q) {
   const prompt = promptPlain(q?.prompt);
   if (/voice line belongs/i.test(prompt)) return 'voice_line';
   if (/skin belongs/i.test(prompt)) return 'skin_guess';
-  if (/released after/i.test(prompt)) return 'release_after';
+  if (/(?:came|released)\s+after/i.test(prompt)) return 'release_after';
   if (/what is this item called|name of this item/i.test(prompt)) return 'item_identify';
   if (q?.meta?.kind === 'fill_blank' || /aspect of/i.test(prompt)) return 'aspect_blank';
   if (/released in\s*(OB|Open Beta)/i.test(prompt)) return 'ob_release';

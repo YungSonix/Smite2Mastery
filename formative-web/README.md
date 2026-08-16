@@ -16,7 +16,7 @@ In-progress players (after **Next**) are rows in `trivia_sessions`: last seen, a
 
 Keep Supabase as the live store. Use **Export Excel/CSV** when you want a spreadsheet. Do not replace the database with Excel.
 
-A few thousand submissions are still small (kilobytes to a few megabytes). Large cost only happens if you embed huge image/audio data URLs in question rows instead of repo `/media` paths.
+A few thousand submissions are still small (kilobytes to a few megabytes). Large cost is **egress** (bytes leaving Postgres), not disk: host Responses used to re-download full question `meta` and every live `draft_answers` every 5 seconds. Polls are now 20s with thin columns; take presence is 15s and only auto-submits **that** session when time is up or they leave. After deploy, run `supabase/formative_trivia_rls_tighten.sql` so the anon key cannot `select` question rows (answers + fat `meta`) via PostgREST. Take pages use `/api/trivia/public`.
 
 ## Local
 

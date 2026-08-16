@@ -1,67 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import HostShell from '../components/HostShell';
+import { BarChart, Donut } from '../components/HostCharts';
 import { hostApi } from '../lib/api';
-
-function BarChart({ title, rows, valueKey = 'value', labelKey = 'label', maxHint }) {
-  const max = Math.max(1, maxHint || Math.max(0, ...rows.map((r) => Number(r[valueKey]) || 0)));
-  return (
-    <div className="f-chart-card">
-      <h3>{title}</h3>
-      {!rows.length ? (
-        <p className="f-muted">No data yet</p>
-      ) : (
-        <div className="f-bar-chart">
-          {rows.map((r) => (
-            <div className="f-bar-chart-row" key={r[labelKey]}>
-              <div className="f-bar-chart-label" title={r[labelKey]}>
-                {r[labelKey]}
-              </div>
-              <div className="f-bar-chart-track">
-                <div
-                  className="f-bar-chart-fill"
-                  style={{ width: `${Math.round(((Number(r[valueKey]) || 0) / max) * 100)}%` }}
-                />
-              </div>
-              <div className="f-bar-chart-val">{r[valueKey]}</div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function Donut({ title, parts }) {
-  const total = parts.reduce((s, p) => s + p.value, 0) || 1;
-  let acc = 0;
-  const stops = parts
-    .map((p) => {
-      const start = (acc / total) * 100;
-      acc += p.value;
-      const end = (acc / total) * 100;
-      return `${p.color} ${start}% ${end}%`;
-    })
-    .join(', ');
-  return (
-    <div className="f-chart-card">
-      <h3>{title}</h3>
-      <div className="f-donut-wrap">
-        <div
-          className="f-donut"
-          style={{ background: `conic-gradient(${stops || '#1e3a5f 0 100%'})` }}
-        />
-        <ul className="f-donut-legend">
-          {parts.map((p) => (
-            <li key={p.label}>
-              <span style={{ background: p.color }} />
-              {p.label}: {p.value}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-}
 
 export default function Analytics() {
   const [data, setData] = useState({ quizzes: [], questions: [], responses: [] });

@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import AddItemModal from '../components/AddItemModal';
 import InstructionsEditor from '../components/InstructionsEditor';
 import QuestionCard from '../components/QuestionCard';
+import InsightsPanel from '../components/InsightsPanel';
 import ResponsesGrid from '../components/ResponsesGrid';
 import StudentResponsePanel from '../components/StudentResponsePanel';
 import LiveSessionPanel from '../components/LiveSessionPanel';
@@ -20,7 +21,6 @@ import {
   loadEditorDraft,
   saveEditorDraft,
 } from '../lib/editorDraftStorage';
-import { promptPlain } from '../lib/promptPlain';
 
 const MORE_ITEMS = [
   { id: 'join', label: 'Join instructions', wire: true },
@@ -85,6 +85,8 @@ export default function Activity() {
   const autoFailStampRef = useRef('');
   const autoHintTimerRef = useRef(null);
   const saveLockRef = useRef(false);
+  const selectedSessionRef = useRef(null);
+  selectedSessionRef.current = selectedSession;
 
   const setTab = (t) => {
     const next = new URLSearchParams(params);
@@ -155,12 +157,19 @@ export default function Activity() {
       try {
         const r = await hostApi(`/api/trivia/host?action=responses&quizId=${encodeURIComponent(quizId)}`);
         setResponses(r.responses || []);
-        setSessions(r.sessions || []);
+        setSessions((prev) => {
+          const next = r.sessions || [];
+          const open = selectedSessionRef.current;
+          if (!open?.draft_answers) return next;
+          return next.map((s) =>
+            s.id === open.id ? { ...s, draft_answers: open.draft_answers, variant_map: open.variant_map } : s
+          );
+        });
         setSessionsError(r.sessionsError || '');
       } catch {
         /* ignore poll errors */
       }
-    }, 5000);
+    }, 20000);
     return () => clearInterval(id);
   }, [tab, quizId]);
 
@@ -503,22 +512,6 @@ export default function Activity() {
     const btn = indexNavRef.current.querySelector(`[data-qid="${activeQuestionId}"]`);
     btn?.scrollIntoView({ block: 'nearest' });
   }, [activeQuestionId, tab]);
-
-  const insights = useMemo(() => {
-    const scored = questions.filter((q) => q.type !== 'image' && q.type !== 'content');
-    return scored.map((q, i) => {
-      let n = 0;
-      let ok = 0;
-      for (const r of responses) {
-        const v = r.per_question?.[q.id];
-        if (v == null) continue;
-        n += 1;
-        ok += Number(v) ? 1 : 0;
-      }
-      const pct = n ? Math.round((ok / n) * 100) : 0;
-      return { q, i, pct, n };
-    });
-  }, [questions, responses]);
 
   if (loading && !quiz) {
     return <div className="f-content">Loading…</div>;
@@ -893,9 +886,22 @@ export default function Activity() {
                 setSelectedSession(null);
                 setSelectedResponse(r);
               }}
-              onLiveSelect={(s) => {
+              onLiveSelect={async (s) => {
                 setSelectedResponse(null);
                 setSelectedSession(s);
+                try {
+                  const r = await hostApi(
+                    `/api/trivia/host?action=session&quizId=${encodeURIComponent(quizId)}&sessionId=${encodeURIComponent(s.id)}`
+                  );
+                  if (r.session) {
+                    setSelectedSession(r.session);
+                    setSessions((prev) =>
+                      prev.map((row) => (row.id === r.session.id ? { ...row, ...r.session } : row))
+                    );
+                  }
+                } catch {
+                  /* list row still shows status without drafts */
+                }
               }}
             />
           </div>
@@ -965,38 +971,11 @@ export default function Activity() {
       )}
 
       {tab === 'insights' && (
-        <div className="f-insights f-insights-v2">
-          <header className="f-insights-head">
-            <div>
-              <h2>Insights</h2>
-              <p className="f-muted">{responses.length} submission(s)</p>
-            </div>
-          </header>
-          <div className="f-insights-list">
-            {insights.map(({ q, i, pct, n }) => {
-              const label = promptPlain(q.prompt) || 'Question';
-              const tone = pct >= 70 ? 'high' : pct >= 40 ? 'mid' : 'low';
-              return (
-                <div className="f-insight-row" key={q.id}>
-                  <span className="f-insight-num">{i + 1}</span>
-                  <div className="f-insight-copy">
-                    <div className="f-insight-prompt" title={label}>
-                      {label}
-                    </div>
-                    <div className="f-insight-bar-track">
-                      <div className={`f-insight-bar-fill is-${tone}`} style={{ width: `${pct}%` }} />
-                    </div>
-                  </div>
-                  <div className="f-insight-stats">
-                    <strong>{pct}%</strong>
-                    <span className="f-muted">n={n}</span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-          {!insights.length ? <p className="f-muted">Add scored questions to see insights.</p> : null}
-        </div>
+        <InsightsPanel
+          questions={questions}
+          responses={responses}
+          timeLimitSeconds={settings.time_limit_seconds}
+        />
       )}
 
       {tab === 'edit' ? (

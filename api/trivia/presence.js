@@ -1,5 +1,5 @@
 const { supabaseAdmin, send, readBody, readIp } = require('../../lib/server/triviaApi');
-const { compactDraftAnswers, flushQuizDrafts } = require('../../lib/server/triviaCommit');
+const { compactDraftAnswers, flushSessionIfDue, sessionDraftDue } = require('../../lib/server/triviaCommit');
 const { quizWindowState, shouldPurgeLiveSessions, purgeLiveSessions } = require('../../lib/server/triviaWindow');
 
 function tableMissing(err) {
@@ -50,7 +50,7 @@ module.exports = async function handler(req, res) {
     const sb = supabaseAdmin();
     const { data: quiz, error: quizErr } = await sb
       .from('trivia_quizzes')
-      .select('*')
+      .select('id, slug, is_assigned, settings')
       .eq('slug', slug)
       .eq('is_assigned', true)
       .maybeSingle();
@@ -70,7 +70,9 @@ module.exports = async function handler(req, res) {
 
     const { data: existing, error: findErr } = await sb
       .from('trivia_sessions')
-      .select('*')
+      .select(
+        'id, hidden_count, ingame_name, user_agent, client_started_at, started_at, left_page, discord_username'
+      )
       .eq('quiz_id', quiz.id)
       .ilike('discord_username', discord)
       .maybeSingle();
@@ -94,25 +96,35 @@ module.exports = async function handler(req, res) {
     };
     const extra = draftPatch(body, existing);
 
+    const saveCols =
+      'id, left_page, client_started_at, started_at, discord_username, ingame_name, ip_address, user_agent';
     const save = async (payload) => {
-      if (existing) return sb.from('trivia_sessions').update(payload).eq('id', existing.id);
-      return sb.from('trivia_sessions').insert({ ...payload, started_at: now });
+      if (existing) {
+        return sb.from('trivia_sessions').update(payload).eq('id', existing.id).select(saveCols).maybeSingle();
+      }
+      return sb
+        .from('trivia_sessions')
+        .insert({ ...payload, started_at: now })
+        .select(saveCols)
+        .maybeSingle();
     };
 
-    let { error } = await save({ ...row, ...extra });
-    if (error && draftUnsupported(error) && Object.keys(extra).length) {
-      ({ error } = await save(row));
+    let saved = await save({ ...row, ...extra });
+    if (saved.error && draftUnsupported(saved.error) && Object.keys(extra).length) {
+      saved = await save(row);
     }
-    if (error) {
-      if (tableMissing(error)) return send(res, 200, { ok: false, skipped: true });
-      if (error.code === '23505') {
-        await flushQuizDrafts(sb, quiz).catch(() => null);
-        return send(res, 200, { ok: true });
-      }
-      return send(res, 500, { error: error.message });
+    if (saved.error) {
+      if (tableMissing(saved.error)) return send(res, 200, { ok: false, skipped: true });
+      if (saved.error.code === '23505') return send(res, 200, { ok: true });
+      return send(res, 500, { error: saved.error.message });
     }
 
-    await flushQuizDrafts(sb, quiz).catch((err) => console.warn('trivia flush after presence', err.message));
+    const lite = saved.data || existing;
+    if (lite && (leftPage || sessionDraftDue({ ...existing, ...row, ...lite }, quiz.settings))) {
+      await flushSessionIfDue(sb, quiz, lite).catch((err) =>
+        console.warn('trivia flush after presence', err.message)
+      );
+    }
     return send(res, 200, { ok: true });
   } catch (e) {
     console.error('trivia presence error', e);

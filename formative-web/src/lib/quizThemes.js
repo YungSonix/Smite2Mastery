@@ -27,12 +27,29 @@ const DARK_SURFACES = {
   border: '#4a4250',
 };
 
+const DIM_SURFACES = {
+  page: '#5a5e66',
+  card: '#6b7078',
+  text: '#f1f2f4',
+  border: '#81868e',
+};
+
 const LIGHT_SURFACES = {
   page: '#ece8df',
   card: '#f4f1ea',
   text: '#2c3546',
   border: '#d4cbb8',
 };
+
+export const QUIZ_APPEARANCE = [
+  { id: 'light', label: 'Light' },
+  { id: 'dim', label: 'Dim' },
+  { id: 'dark', label: 'Dark' },
+];
+
+export function isQuizAppearance(mode) {
+  return mode === 'light' || mode === 'dim' || mode === 'dark';
+}
 
 const THEME_ALIASES = {
   indigo: 'ink',
@@ -73,6 +90,14 @@ export const QUIZ_THEMES = [
       accent: '#7aa3c4',
       secondary: '#d4b45a',
     },
+    dim: {
+      page: '#585c66',
+      card: '#686e78',
+      text: '#eef0f3',
+      border: '#7e8490',
+      accent: '#7aa3c4',
+      secondary: '#d4b45a',
+    },
   },
   {
     id: 'bluebook',
@@ -85,6 +110,12 @@ export const QUIZ_THEMES = [
     accent: '#4d7eb0',
     secondary: '#c4a35a',
     font: 'basic',
+    dim: {
+      page: '#565c64',
+      card: '#666e78',
+      text: '#eef1f4',
+      border: '#7c8490',
+    },
   },
   {
     id: 'clay',
@@ -97,6 +128,12 @@ export const QUIZ_THEMES = [
     accent: '#8c3f24',
     secondary: '#2c4a6e',
     font: 'playful',
+    dim: {
+      page: '#5e5a56',
+      card: '#6f6a64',
+      text: '#f3f0ec',
+      border: '#86817b',
+    },
   },
   {
     id: 'sage',
@@ -109,6 +146,12 @@ export const QUIZ_THEMES = [
     accent: '#3d6b4f',
     secondary: '#c4a056',
     font: 'basic',
+    dim: {
+      page: '#575c59',
+      card: '#686e6a',
+      text: '#eef2ef',
+      border: '#7e8580',
+    },
   },
   {
     id: 'ink',
@@ -168,6 +211,9 @@ export function paletteForMode(preset, mode) {
   if (mode === 'dark') {
     return preset.dark ? { ...preset, ...preset.dark } : preset.mode === 'dark' ? preset : { ...preset, ...DARK_SURFACES };
   }
+  if (mode === 'dim') {
+    return preset.dim ? { ...preset, ...preset.dim } : { ...preset, ...DIM_SURFACES };
+  }
   return preset.light ? { ...preset, ...preset.light } : preset.mode === 'light' ? preset : { ...preset, ...LIGHT_SURFACES };
 }
 
@@ -188,9 +234,7 @@ function liveHex(settings, key, fallback, stale) {
 
 export function resolvedQuizTheme(settings) {
   const preset = presetById(quizThemeId(settings));
-  const mode = settings?.theme_mode === 'light' || settings?.theme_mode === 'dark'
-    ? settings.theme_mode
-    : preset.mode;
+  const mode = isQuizAppearance(settings?.theme_mode) ? settings.theme_mode : preset.mode;
   const surfaces = paletteForMode(preset, mode);
   const stale = preset.id === 'scroll' ? STALE_SCROLL : null;
   return {
@@ -230,7 +274,7 @@ export function quizThemeStyle(settings) {
     '--f-sidebar': t.mode === 'light' ? t.page : t.card,
     '--f-panel': t.card,
     '--f-panel-alt': t.page,
-    '--f-input': t.mode === 'light' ? rgba(t.text, 0.04) : rgba(t.text, 0.08),
+    '--f-input': t.mode === 'light' ? rgba(t.text, 0.04) : rgba(t.text, 0.1),
     '--f-input-hover': rgba(t.accent, 0.12),
     '--f-input-border': t.border,
     '--f-close': t.text,
@@ -240,7 +284,12 @@ export function quizThemeStyle(settings) {
     '--f-qcard-radius': corners.radius,
     '--f-qcard-pad': pad,
     '--f-on-accent': onAccentColor(t.accent),
-    '--f-shadow': t.mode === 'light' ? '0 10px 28px rgba(20, 33, 61, 0.08)' : '0 12px 40px rgba(0, 0, 0, 0.45)',
+    '--f-shadow':
+      t.mode === 'light'
+        ? '0 10px 28px rgba(20, 33, 61, 0.08)'
+        : t.mode === 'dim'
+          ? '0 12px 32px rgba(20, 22, 28, 0.28)'
+          : '0 12px 40px rgba(0, 0, 0, 0.45)',
     '--f-totals': t.mode === 'light' ? rgba(t.accent, 0.2) : 'rgba(125, 211, 252, 0.18)',
   };
 }
@@ -259,7 +308,7 @@ export function quizThemeProps(settings) {
 
 export function applyPresetPatch(id, mode) {
   const p = presetById(id);
-  const nextMode = mode === 'light' || mode === 'dark' ? mode : p.mode;
+  const nextMode = isQuizAppearance(mode) ? mode : p.mode;
   const pal = paletteForMode(p, nextMode);
   return {
     theme: p.id,
@@ -276,9 +325,10 @@ export function applyPresetPatch(id, mode) {
 }
 
 export function applyModePatch(settings, mode) {
-  const pal = paletteForMode(presetById(quizThemeId(settings)), mode);
+  const nextMode = isQuizAppearance(mode) ? mode : 'light';
+  const pal = paletteForMode(presetById(quizThemeId(settings)), nextMode);
   return {
-    theme_mode: mode,
+    theme_mode: nextMode,
     theme_page: pal.page,
     theme_card: pal.card,
     theme_text: pal.text,

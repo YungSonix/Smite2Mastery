@@ -144,7 +144,7 @@ export default function ResponsesGrid({
               Discord <span className="f-ok-bolt">⚡</span>
             </th>
             <th className="col-ingame">In-Game</th>
-            <th className="totals-col">Tot</th>
+            <th className="totals-col">%</th>
             {scored.map((q, i) => (
               <th key={q.id} className="col-q">
                 {i + 1}
