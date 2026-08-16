@@ -2724,9 +2724,6 @@ label.f-file-btn:hover {
 .f-lifeline-cost {
   font-size: 12px;
 }
-  border-top: 1px solid var(--f-border);
-  padding: 4px 0;
-}
 
 .f-toggle-row {
   display: grid;
