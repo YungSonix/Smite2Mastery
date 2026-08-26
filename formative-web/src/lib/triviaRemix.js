@@ -1,6 +1,8 @@
 import catalog from './triviaRemixCatalog.json' with { type: 'json' };
 import mediaCatalog from './triviaMediaCatalog.json' with { type: 'json' };
 import godMeta from './triviaGodMeta.json' with { type: 'json' };
+import abilitySfxSimilarity from './triviaAbilitySfxSimilarity.json' with { type: 'json' };
+import { formatAbilitySfxLabel } from './abilitySfxLabel.js';
 
 function clone(v) {
   return v == null ? v : JSON.parse(JSON.stringify(v));
@@ -504,12 +506,30 @@ function isAbilitySoundPrompt(source) {
 }
 
 function abilityOptionLabel(row) {
-  return `${row.god} — ${row.ability}`;
+  if (!row) return '';
+  if (row.label) return String(row.label);
+  return formatAbilitySfxLabel(row);
+}
+
+/** Labels of clips that sound similar (cross-god), from audio-feature neighbor map. */
+function similarAbilityLabels(clip) {
+  const entry = abilitySfxSimilarity?.byUrl?.[clip?.url];
+  const similar = Array.isArray(entry?.similar) ? entry.similar : [];
+  const out = [];
+  const seen = new Set();
+  for (const nb of similar) {
+    const label = nb?.label || abilityOptionLabel(nb);
+    if (!label || seen.has(norm(label))) continue;
+    seen.add(norm(label));
+    out.push(label);
+  }
+  return out;
 }
 
 function makeAbilitySoundQuestion({ count, avoidUrls = new Set() } = {}) {
   const clips = mediaCatalog.abilitySounds || [];
   if (clips.length < 4) return null;
+  // Pool includes base ability casts + skin_activate when present in catalog.
   let pool = clips.filter((c) => c?.url && !avoidUrls.has(c.url));
   if (!pool.length) pool = clips.filter((c) => c?.url);
   const clip = pickOne(pool);
@@ -518,10 +538,12 @@ function makeAbilitySoundQuestion({ count, avoidUrls = new Set() } = {}) {
   const wrongPool = clips
     .filter((c) => norm(abilityOptionLabel(c)) !== norm(correctLabel))
     .map(abilityOptionLabel);
+  const sameGod = clips
+    .filter((c) => c.god === clip.god && norm(abilityOptionLabel(c)) !== norm(correctLabel))
+    .map(abilityOptionLabel);
+  const prefer = [...similarAbilityLabels(clip), ...sameGod];
   const wrong = trickishDistractors(correctLabel, wrongPool, count - 1, {
-    prefer: clips
-      .filter((c) => c.god === clip.god && norm(abilityOptionLabel(c)) !== norm(correctLabel))
-      .map(abilityOptionLabel),
+    prefer,
     realOnly: true,
   });
   return packMc({
@@ -533,7 +555,14 @@ function makeAbilitySoundQuestion({ count, avoidUrls = new Set() } = {}) {
     extraMeta: {
       media: 'audio',
       remix_kind: 'ability_sound',
-      hint_context: { god: clip.god, ability: clip.ability, slot: clip.slot },
+      hint_context: {
+        god: clip.god,
+        ability: clip.ability,
+        slot: clip.slot,
+        slots: clip.slots || null,
+        skin: clip.skin || null,
+        kind: clip.kind || null,
+      },
     },
   });
 }

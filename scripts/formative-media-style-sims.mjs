@@ -385,6 +385,39 @@ async function main() {
     }
   }
 
+  // Ability-sound labels + similar distractors (when neighbor map present)
+  {
+    const simMod = await import(
+      pathToFileURL(path.join(ROOT, 'formative-web/src/lib/triviaAbilitySfxSimilarity.json')).href,
+      { with: { type: 'json' } }
+    );
+    const byUrl = simMod.default?.byUrl || simMod.byUrl || {};
+    const hasSim = Object.keys(byUrl).length >= 4;
+    for (let i = 1; i <= 5; i += 1) {
+      const id = `ability-sfx-similar:${i}`;
+      const built = makeRandomQuestionByStyle('ability_sound', blankMc(4));
+      if (built.error) {
+        record(id, false, { reason: built.error });
+        continue;
+      }
+      const q = applyRemixPatchToQuestion(blankMc(4), built).question;
+      const opts = Array.isArray(q.options) ? q.options : [];
+      const correct = opts[Number(q.correct?.index)];
+      const labelOk = /^.+ - .+\(\d/.test(String(correct || ''));
+      const url = mediaUrlOf(q);
+      const simLabels = new Set((byUrl[url]?.similar || []).map((s) => s.label).filter(Boolean));
+      const wrong = opts.filter((_, idx) => idx !== Number(q.correct?.index));
+      const similarHits = wrong.filter((o) => simLabels.has(o)).length;
+      const ok = labelOk && (!hasSim || similarHits >= 1 || wrong.length === 0);
+      record(id, ok, {
+        correct,
+        similarHits,
+        options: opts,
+        reason: ok ? undefined : !labelOk ? 'bad-label' : 'no-similar-distractor',
+      });
+    }
+  }
+
   while (results.length < TARGET) {
     const id = `pad:${results.length + 1}`;
     const styled = applyPromptTextStyle(STYLE_SAMPLE, `Pad question ${results.length + 1}?`);

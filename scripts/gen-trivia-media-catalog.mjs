@@ -3,12 +3,15 @@
  * Voice/skin/ability-sound identify catalog for Scroll Trivia remix.
  * Voice lines: Intro / Select / Taunt / Joke under every skin’s VOX folder
  * (Skin00_Base + alt skins). Remix/random prefer non-base skins at pick time.
- * Ability cast SFX: Skin00_Base/Ability1–4 files whose names contain Activate or Start.
+ * Ability cast SFX: Skin00_Base/Ability1–4 Activate/Start WAVs (kind=ability).
+ * Skin activate SFX: non-base skins’ Ability1–4 Activate/Start (kind=skin_activate).
+ * Run `npm run trivia:ability-sfx-similarity` after regen for neighbor map.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
+import { formatAbilitySfxLabel } from '../formative-web/src/lib/abilitySfxLabel.js';
 
 const require = createRequire(import.meta.url);
 const { flattenBuildsGods } = require('../lib/normalizeBuildsGod.js');
@@ -88,9 +91,10 @@ function findClipFile(voxDir, logicalName) {
   return files.find((f) => f.toLowerCase() === want) || null;
 }
 
-function abilitySoundUrl(godFolder, abilityDir, filename) {
+function abilitySoundUrl(godFolder, skinFolder, abilityDir, filename) {
   const folder = encodeURIComponent(godFolder).replace(/%2F/g, '/');
-  return `${ASSETS}/VoiceAudio/${folder}/Skin00_Base/${abilityDir}/${encodeURIComponent(filename)}`;
+  const skin = encodeURIComponent(skinFolder).replace(/%2F/g, '/');
+  return `${ASSETS}/VoiceAudio/${folder}/${skin}/${abilityDir}/${encodeURIComponent(filename)}`;
 }
 
 function norm(s) {
@@ -110,6 +114,10 @@ function pickActivateOrStart(files) {
       else if (/start/.test(n)) score = 20;
       if (!score) return null;
       if (isAspect) score -= 10;
+      // Prefer one-shot ST / Activate over loop beds
+      if (/_lp\b|_loop|loop_/i.test(n)) score -= 12;
+      if (/_st\.wav$|_st_/i.test(n)) score += 6;
+      if (/layer/i.test(n)) score -= 3;
       // Prefer bare Activate / Activate_01 over _02+
       const num = n.match(/_0*(\d+)\.wav$/);
       if (num) score -= Math.min(5, Number(num[1]) || 0);
@@ -242,29 +250,78 @@ if (fs.existsSync(VOICE_ROOT)) {
   for (const ent of fs.readdirSync(VOICE_ROOT, { withFileTypes: true })) {
     if (!ent.isDirectory()) continue;
     const godFolder = ent.name;
-    const god =
-      folderToGod.get(godFolder) ||
-      folderToGod.get(norm(godFolder)) ||
-      folderToGod.get(godFolder.replace(/_/g, ' ')) ||
-      null;
+    const god = resolveGodFromFolder(godFolder);
     if (!god) continue;
-    for (const slot of ABILITY_SLOTS) {
-      const dir = path.join(VOICE_ROOT, godFolder, 'Skin00_Base', slot.dir);
-      if (!fs.existsSync(dir)) continue;
-      const files = fs.readdirSync(dir);
-      const file = pickActivateOrStart(files);
-      if (!file) continue;
-      const ability =
-        abilityByGodSlot.get(`${norm(god)}|${slot.slot}`) || `Ability ${slot.slot}`;
-      abilitySounds.push({
-        god,
-        ability,
-        slot: slot.slot,
-        file,
-        url: abilitySoundUrl(godFolder, slot.dir, file),
-      });
+    const godPath = path.join(VOICE_ROOT, godFolder);
+    for (const skinEnt of fs.readdirSync(godPath, { withFileTypes: true })) {
+      if (!skinEnt.isDirectory()) continue;
+      const skinFolder = skinEnt.name;
+      const baseSkin = isBaseSkinFolder(skinFolder);
+      const skinLabel = skinDisplayName(skinFolder);
+      for (const slot of ABILITY_SLOTS) {
+        const dir = path.join(godPath, skinFolder, slot.dir);
+        if (!fs.existsSync(dir)) continue;
+        let files = [];
+        try {
+          files = fs.readdirSync(dir);
+        } catch {
+          continue;
+        }
+        const file = pickActivateOrStart(files);
+        if (!file) continue;
+        const ability =
+          abilityByGodSlot.get(`${norm(god)}|${slot.slot}`) || `Ability ${slot.slot}`;
+        if (baseSkin) {
+          abilitySounds.push({
+            id: `ability:${norm(god)}:${slot.slot}:${file}`,
+            kind: 'ability',
+            god,
+            ability,
+            slot: slot.slot,
+            slots: [slot.slot],
+            skin: 'Base',
+            skinFolder,
+            file,
+            url: abilitySoundUrl(godFolder, skinFolder, slot.dir, file),
+          });
+        } else {
+          abilitySounds.push({
+            id: `skin_activate:${norm(god)}:${norm(skinFolder)}:${slot.slot}:${file}`,
+            kind: 'skin_activate',
+            god,
+            ability,
+            slot: slot.slot,
+            slots: [slot.slot],
+            skin: skinLabel,
+            skinFolder,
+            file,
+            url: abilitySoundUrl(godFolder, skinFolder, slot.dir, file),
+          });
+        }
+      }
     }
   }
+}
+
+/** Merge duplicate labels that share the same url under multiple slots (rare). */
+function mergeAbilitySoundSlots(rows) {
+  const byUrl = new Map();
+  for (const row of rows) {
+    const key = row.url;
+    const prev = byUrl.get(key);
+    if (!prev) {
+      byUrl.set(key, { ...row, slots: [...(row.slots || [row.slot].filter(Boolean))] });
+      continue;
+    }
+    const slotSet = new Set([...(prev.slots || []), ...(row.slots || [row.slot].filter(Boolean))]);
+    const slots = [...slotSet].filter((n) => Number.isFinite(n)).sort((a, b) => a - b);
+    byUrl.set(key, {
+      ...prev,
+      slots,
+      slot: slots[0] ?? prev.slot,
+    });
+  }
+  return [...byUrl.values()];
 }
 
 const destMedia = path.join(ROOT, 'formative-web/src/lib/triviaMediaCatalog.json');
@@ -490,7 +547,18 @@ function buildSkinCardsFromGodRenders() {
 
 const skinCardsFromNew = buildSkinCardsFromNewGodSkins();
 const skinCards = skinCardsFromNew.length ? skinCardsFromNew : buildSkinCardsFromGodRenders();
-const finalAbilitySounds = abilitySounds.length ? abilitySounds : prevAbilitySounds;
+const mergedAbilitySounds = mergeAbilitySoundSlots(abilitySounds).map((row) => ({
+  ...row,
+  label: formatAbilitySfxLabel(row),
+}));
+mergedAbilitySounds.sort(
+  (a, b) =>
+    a.god.localeCompare(b.god) ||
+    String(a.skinFolder || '').localeCompare(String(b.skinFolder || '')) ||
+    (a.slot || 0) - (b.slot || 0) ||
+    String(a.file || '').localeCompare(String(b.file || ''))
+);
+const finalAbilitySounds = mergedAbilitySounds.length ? mergedAbilitySounds : prevAbilitySounds;
 
 fs.writeFileSync(
   destMedia,
@@ -502,6 +570,8 @@ fs.writeFileSync(destMeta, `${JSON.stringify(meta, null, 2)}\n`);
 
 const skinnedVoice = voiceClips.filter((c) => !isBaseSkinFolder(c.skinFolder)).length;
 const skinnedSkinCards = skinCards.filter((c) => !c.isDefault && !/\/Default\//i.test(c.url)).length;
+const abilityCount = finalAbilitySounds.filter((c) => c.kind !== 'skin_activate').length;
+const skinActivateCount = finalAbilitySounds.filter((c) => c.kind === 'skin_activate').length;
 console.log(
-  `Wrote ${voiceClips.length} voice clips (${skinnedVoice} non-base), ${finalAbilitySounds.length} ability sounds (Activate/Start under Skin00_Base Ability1–4), ${skinCards.length} skin cards (${skinnedSkinCards} non-default; source=${skinCards[0]?.source || 'none'}), ${Object.keys(meta).length} god meta rows`
+  `Wrote ${voiceClips.length} voice clips (${skinnedVoice} non-base), ${finalAbilitySounds.length} ability sounds (${abilityCount} base cast + ${skinActivateCount} skin activate), ${skinCards.length} skin cards (${skinnedSkinCards} non-default; source=${skinCards[0]?.source || 'none'}), ${Object.keys(meta).length} god meta rows`
 );

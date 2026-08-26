@@ -13,6 +13,8 @@
     "trivia:api": "node scripts/formative-dev-api.js",
     "trivia:community": "node scripts/formative-community-trivia.mjs",
     "trivia:media-catalog": "node scripts/gen-trivia-media-catalog.mjs",
+    "trivia:ability-sfx-similarity": "node scripts/analyze-ability-sfx-similarity.mjs && node scripts/merge-ability-sfx-similarity.mjs",
+    "trivia:ability-sfx-similarity:merge": "node scripts/merge-ability-sfx-similarity.mjs",
     "trivia:god-emojis": "node scripts/gen-trivia-god-emojis.mjs",
     "trivia:god-emojis:validate": "node scripts/validate-god-emoji-clues.mjs",
     "trivia:god-emojis:gallery": "node scripts/shot-god-emoji-gallery.mjs",
