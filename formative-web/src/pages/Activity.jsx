@@ -489,7 +489,7 @@ export default function Activity() {
   const updateActiveFromScroll = useCallback(() => {
     if (Date.now() < jumpLockUntil.current) return;
     if (!questions.length) return;
-    const marker = 110;
+    const marker = 140;
     let active = questions[0].id;
     for (const q of questions) {
       const el = document.getElementById(`host-q-${q.id}`);

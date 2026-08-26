@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import VisualTextEditor from './VisualTextEditor';
 import MediaStack from './MediaStack';
 import { joinFillBlankPrompt, splitFillBlankPrompt } from '../lib/fillBlank';
@@ -25,7 +25,8 @@ import CategorizeBoard from './CategorizeBoard';
 import { parseCategorize } from '../lib/categorize';
 import { remixQuestionFromA, fillAnswersFromPrompt, makeRandomQuestionByStyle, RANDOM_QUESTION_STYLES, RANDOM_QUESTION_QUICK } from '../lib/triviaRemix';
 import { applyPromptTextStyle } from '../lib/richText';
-import { MAX_QUESTION_VARIANTS, variantLetter } from '../lib/triviaVariants';import {
+import { MAX_QUESTION_VARIANTS, variantLetter } from '../lib/triviaVariants';
+import {
   questionHintUiAllowed,
   storedHintList,
   withGeneratedHints,
@@ -172,12 +173,30 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
   const [q, setQ] = useState(question);
   const [uploadError, setUploadError] = useState('');
   const [attachOpen, setAttachOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
   const [variantTab, setVariantTab] = useState(0); // 0=A, extras in meta.variants
   const [urlDraft, setUrlDraft] = useState('');
   const [mediaPreviewToken, setMediaPreviewToken] = useState(null);
   useEffect(() => {
     setQ(question);
   }, [question]);
+
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const onDoc = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) setMenuOpen(false);
+    };
+    const onKey = (e) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    document.addEventListener('mousedown', onDoc);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDoc);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [menuOpen]);
 
   // Fill-in-blank always has one blank marker.
   useEffect(() => {
@@ -1433,17 +1452,6 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
           Guest uploads / draws on the take page. Host reviews in Responses (not auto-scored).
         </div>
       ) : null}
-
-      {settingsBlock}
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <div style={{ flex: 1 }} />
-        {!isGate ? (
-          <button type="button" className="f-ghost-btn" style={{ marginTop: 8 }} onClick={onDelete}>
-            Delete
-          </button>
-        ) : null}
-      </div>
     </>
   );
 
@@ -1621,6 +1629,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
     ) : null;
 
   const bodyForCard = variantEditor || mainBody;
+  const showCardChrome = !isGate && !(useMediaSplit && isBareMedia);
 
   return (
     <div
@@ -1628,7 +1637,34 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
       id={`host-q-${q.id}`}
     >
       <div className="f-qcard-head">
-        <span>≡</span>
+        <div className="f-qcard-menu-wrap" ref={menuRef}>
+          <button
+            type="button"
+            className={`f-icon-btn f-qcard-menu-btn ${menuOpen ? 'open' : ''}`}
+            aria-label="Question menu"
+            aria-expanded={menuOpen}
+            title="Question menu"
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            ≡
+          </button>
+          {menuOpen ? (
+            <div className="f-menu f-qcard-menu" role="menu">
+              <button
+                type="button"
+                className="f-menu-danger"
+                role="menuitem"
+                disabled={isGate}
+                onClick={() => {
+                  setMenuOpen(false);
+                  if (!isGate) onDelete?.();
+                }}
+              >
+                Delete question
+              </button>
+            </div>
+          ) : null}
+        </div>
         <span className="f-q-num f-q-num-head" title={`Question ${index + 1}`} aria-label={`Question ${index + 1}`}>
           {index + 1}
         </span>
@@ -1774,6 +1810,17 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
       ) : (
         bodyForCard
       )}
+
+      {showCardChrome ? (
+        <div className="f-qcard-foot">
+          {settingsBlock}
+          <div className="f-qcard-foot-actions">
+            <button type="button" className="f-ghost-btn" onClick={onDelete}>
+              Delete
+            </button>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

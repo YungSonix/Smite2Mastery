@@ -793,6 +793,7 @@ label.f-file-btn:hover {
   align-items: start;
   gap: 4px 8px;
   width: 100%;
+  overflow: visible;
 }
 
 .f-q-index {
@@ -832,10 +833,11 @@ label.f-file-btn:hover {
 }
 
 .f-edit-scroll {
-  padding: 24px 16px 80px;
+  padding: 24px 16px max(240px, 32vh, calc(120px + env(safe-area-inset-bottom, 0px)));
   max-width: 920px;
   margin: 0 auto;
   width: 100%;
+  overflow: visible;
   overflow-anchor: none;
   min-width: 0;
 }
@@ -1695,7 +1697,11 @@ label.f-file-btn:hover {
   padding: var(--f-qcard-pad, 16px 18px);
   margin-bottom: 12px;
   box-shadow: var(--f-shadow);
-  scroll-margin-top: 80px;
+  scroll-margin-top: 120px;
+  scroll-margin-bottom: 120px;
+  overflow: visible;
+  position: relative;
+  z-index: 1;
 }
 
 .f-qcard-head {
@@ -1707,6 +1713,42 @@ label.f-file-btn:hover {
   font-size: 13px;
   font-weight: 600;
   margin-bottom: 10px;
+  position: relative;
+  z-index: 2;
+  overflow: visible;
+}
+
+.f-qcard-menu-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.f-qcard-menu-btn {
+  width: 36px;
+  height: 36px;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.f-qcard-menu {
+  left: 0;
+  right: auto;
+  top: calc(100% + 6px);
+  min-width: 200px;
+}
+
+.f-qcard-foot {
+  margin-top: 12px;
+  padding-top: 4px;
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+}
+
+.f-qcard-foot-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
 }
 
 .f-qcard-head-meta {
@@ -2240,8 +2282,9 @@ label.f-file-btn:hover {
   grid-template-columns: minmax(220px, 0.95fr) minmax(280px, 1.15fr);
   gap: 0;
   border-top: 1px solid var(--f-border);
-  margin: 0 -18px -4px;
+  margin: 0 -18px 0;
   min-height: 220px;
+  overflow: visible;
 }
 
 .f-q-media-pane {
@@ -4694,6 +4737,10 @@ label.f-file-btn:hover {
     padding: 8px 12px;
     margin: 0;
     border-bottom: 1px solid var(--f-border);
+  }
+
+  .f-qcard {
+    scroll-margin-top: 160px;
   }
   .f-topnav {
     grid-template-columns: 1fr;
