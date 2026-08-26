@@ -60,12 +60,17 @@ export function MinigameHeader({ title, subtitle, gold = null }) {
   );
 }
 
-export function MinigameStreakLine({ current = 0, best = 0 }) {
+export function MinigameStreakLine({
+  current = 0,
+  best = 0,
+  currentLabel = 'Streak',
+  bestLabel = 'Best',
+}) {
   return (
     <Text style={shell.streakLine}>
-      Streak <Text style={shell.streakValue}>{current}</Text>
+      {currentLabel} <Text style={shell.streakValue}>{current}</Text>
       {' · '}
-      Best <Text style={shell.streakValue}>{best}</Text>
+      {bestLabel} <Text style={shell.streakValue}>{best}</Text>
     </Text>
   );
 }
@@ -193,6 +198,35 @@ export function MinigameItemSearch({
   );
 }
 
+export function MinigameTextField({
+  label,
+  value,
+  onChangeText,
+  placeholder,
+  onSubmitEditing,
+  editable = true,
+  autoCapitalize = 'characters',
+  autoCorrect = false,
+}) {
+  return (
+    <View style={shell.field}>
+      {label ? <Text style={shell.fieldLabel}>{label}</Text> : null}
+      <TextInput
+        style={[shell.input, shell.inputStandalone]}
+        value={value}
+        onChangeText={onChangeText}
+        placeholder={placeholder}
+        placeholderTextColor={COLORS.slate500}
+        autoCapitalize={autoCapitalize}
+        autoCorrect={autoCorrect}
+        autoComplete="off"
+        onSubmitEditing={onSubmitEditing}
+        editable={editable}
+      />
+    </View>
+  );
+}
+
 export function MinigameChipRow({ options, value, onChange, label }) {
   return (
     <View style={shell.field}>
@@ -225,6 +259,20 @@ export function MinigamePrimaryButton({ label, onPress, disabled }) {
       activeOpacity={0.88}
     >
       <Text style={shell.primaryBtnText}>{label}</Text>
+    </TouchableOpacity>
+  );
+}
+
+/** Ghost / secondary action — same chrome as back button (Reveal, Skip, etc.). */
+export function MinigameSecondaryButton({ label, onPress, disabled }) {
+  return (
+    <TouchableOpacity
+      style={[shell.secondaryBtn, disabled && shell.secondaryBtnDisabled]}
+      onPress={onPress}
+      disabled={disabled}
+      activeOpacity={0.85}
+    >
+      <Text style={shell.secondaryBtnText}>{label}</Text>
     </TouchableOpacity>
   );
 }
@@ -455,6 +503,23 @@ const shell = StyleSheet.create({
     fontSize: 15,
     fontWeight: '800',
     letterSpacing: 0.3,
+  },
+  secondaryBtn: {
+    marginTop: 4,
+    marginBottom: 4,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    borderRadius: UI_THEME.radiusPanel,
+    borderWidth: 1,
+    borderColor: UI_THEME.panelBorder,
+    backgroundColor: UI_THEME.panelBg,
+    alignItems: 'center',
+  },
+  secondaryBtnDisabled: { opacity: 0.45 },
+  secondaryBtnText: {
+    color: UI_THEME.accentSky,
+    fontSize: 14,
+    fontWeight: '700',
   },
   banner: {
     marginBottom: 12,

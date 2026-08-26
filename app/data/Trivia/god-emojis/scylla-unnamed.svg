@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="640" height="220" viewBox="0 0 640 220" role="img" aria-label="God emojis">
+  <rect width="640" height="220" rx="16" fill="#0b1220"/>
+  <rect x="10" y="10" width="620" height="200" rx="12" fill="none" stroke="rgba(125,211,252,0.42)" stroke-width="2"/>
+  <text x="170" y="139.4" text-anchor="middle" font-size="84" font-family="Segoe UI Emoji, Apple Color Emoji, Noto Color Emoji, sans-serif">👧</text>
+  <text x="320" y="139.4" text-anchor="middle" font-size="84" font-family="Segoe UI Emoji, Apple Color Emoji, Noto Color Emoji, sans-serif">🐕</text>
+  <text x="470" y="139.4" text-anchor="middle" font-size="84" font-family="Segoe UI Emoji, Apple Color Emoji, Noto Color Emoji, sans-serif">🌊</text>
+  
+</svg>

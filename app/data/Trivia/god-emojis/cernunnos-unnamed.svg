@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="640" height="220" viewBox="0 0 640 220" role="img" aria-label="God emojis">
+  <rect width="640" height="220" rx="16" fill="#0b1220"/>
+  <rect x="10" y="10" width="620" height="200" rx="12" fill="none" stroke="rgba(125,211,252,0.42)" stroke-width="2"/>
+  <text x="170" y="139.4" text-anchor="middle" font-size="84" font-family="Segoe UI Emoji, Apple Color Emoji, Noto Color Emoji, sans-serif">🦌</text>
+  <text x="320" y="139.4" text-anchor="middle" font-size="84" font-family="Segoe UI Emoji, Apple Color Emoji, Noto Color Emoji, sans-serif">🍃</text>
+  <image href="data:image/svg+xml;utf8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22128%22%20height%3D%22128%22%20viewBox%3D%220%200%20128%20128%22%20role%3D%22img%22%20aria-label%3D%22bow%22%3E%20%3Crect%20width%3D%22128%22%20height%3D%22128%22%20rx%3D%2216%22%20fill%3D%22%230b1220%22%2F%3E%20%3Cpath%20d%3D%22M40%2020%20Q88%2064%2040%20108%22%20fill%3D%22none%22%20stroke%3D%22%23a78bfa%22%20stroke-width%3D%228%22%20stroke-linecap%3D%22round%22%2F%3E%20%3Cline%20x1%3D%2240%22%20y1%3D%2220%22%20x2%3D%2240%22%20y2%3D%22108%22%20stroke%3D%22%23e2e8f0%22%20stroke-width%3D%224%22%2F%3E%20%3C%2Fsvg%3E" x="426" y="66" width="88" height="88" preserveAspectRatio="xMidYMid meet"/>
+  
+</svg>

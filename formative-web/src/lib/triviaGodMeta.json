@@ -1,346 +1,862 @@
 {
   "Achilles": {
     "pantheon": "Greek",
-    "role": "Solo"
+    "role": "Solo",
+    "gender": "Male",
+    "emojis": [
+      "icons/spear.png",
+      "🛡️",
+      "🪖"
+    ]
   },
   "Agni": {
     "pantheon": "Hindu",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Male",
+    "emojis": [
+      "🔥",
+      "✋",
+      "☄️"
+    ]
   },
   "Ah Puch": {
     "pantheon": "Maya",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Male",
+    "emojis": [
+      "💀",
+      "🦴",
+      "🪰"
+    ]
   },
   "Aladdin": {
     "pantheon": "Tales",
-    "role": "Jungle"
+    "role": "Jungle",
+    "gender": "Male",
+    "emojis": [
+      "🧞",
+      "🪔",
+      "🐒"
+    ]
   },
   "Amaterasu": {
     "pantheon": "Japanese",
-    "role": "Solo"
+    "role": "Solo",
+    "gender": "Female",
+    "emojis": [
+      "🪞",
+      "🌅",
+      "⚔️"
+    ]
   },
   "Anhur": {
     "pantheon": "Egyptian",
-    "role": "ADC"
+    "role": "ADC",
+    "gender": "Male",
+    "emojis": [
+      "🦁",
+      "icons/spear.png",
+      "🏜️"
+    ]
   },
   "Anubis": {
     "pantheon": "Egyptian",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Male",
+    "emojis": [
+      "🐕",
+      "⚖️",
+      "⚱️"
+    ]
   },
   "Aphrodite": {
     "pantheon": "Greek",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Female",
+    "emojis": [
+      "💋",
+      "💕",
+      "🦢"
+    ]
   },
   "Apollo": {
     "pantheon": "Greek",
-    "role": "ADC"
+    "role": "ADC",
+    "gender": "Male",
+    "emojis": [
+      "☀️",
+      "🎵",
+      "🏹"
+    ]
   },
   "Ares": {
     "pantheon": "Greek",
-    "role": "Support"
+    "role": "Support",
+    "gender": "Male",
+    "emojis": [
+      "⛓️",
+      "🪖",
+      "🔥"
+    ]
   },
   "Artemis": {
     "pantheon": "Greek",
-    "role": "ADC"
+    "role": "ADC",
+    "gender": "Female",
+    "emojis": [
+      "🐗",
+      "🏹",
+      "🚫"
+    ]
   },
   "Artio": {
     "pantheon": "Celtic",
-    "role": "Support"
+    "role": "Support",
+    "gender": "Female",
+    "emojis": [
+      "🐻",
+      "🍃",
+      "🔄"
+    ]
   },
   "Athena": {
     "pantheon": "Greek",
-    "role": "Support"
+    "role": "Support",
+    "gender": "Female",
+    "emojis": [
+      "🦉",
+      "🛡️",
+      "🪖"
+    ]
   },
   "Atlas": {
     "pantheon": "Greek",
-    "role": "Support"
+    "role": "Support",
+    "gender": "Male",
+    "emojis": [
+      "🌍",
+      "🏋️",
+      "🌌"
+    ]
   },
   "Awilix": {
     "pantheon": "Maya",
-    "role": "Jungle"
+    "role": "Jungle",
+    "gender": "Female",
+    "emojis": [
+      "🐆",
+      "🌛",
+      "icons/pluck.svg"
+    ]
   },
   "Bacchus": {
     "pantheon": "Roman",
-    "role": "Support"
+    "role": "Support",
+    "gender": "Male",
+    "emojis": [
+      "🍇",
+      "🍷",
+      "🤢"
+    ]
   },
   "Baron Samedi": {
     "pantheon": "Voodoo",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Male",
+    "emojis": [
+      "🎩",
+      "💀",
+      "🍸"
+    ]
   },
   "Bastet": {
     "pantheon": "Egyptian",
-    "role": "Jungle"
+    "role": "Jungle",
+    "gender": "Female",
+    "emojis": [
+      "🐱",
+      "🐾",
+      "🌙"
+    ]
   },
   "Bellona": {
     "pantheon": "Roman",
-    "role": "Solo"
+    "role": "Solo",
+    "gender": "Female",
+    "emojis": [
+      "⚔️",
+      "🔨",
+      "🛡️"
+    ]
   },
   "Cabrakan": {
     "pantheon": "Maya",
-    "role": "Support"
+    "role": "Support",
+    "gender": "Male",
+    "emojis": [
+      "🌋",
+      "icons/wall.svg",
+      "🌍"
+    ]
   },
   "Cerberus": {
     "pantheon": "Greek",
-    "role": "Support"
+    "role": "Support",
+    "gender": "Male",
+    "emojis": [
+      "🐕",
+      "3️⃣",
+      "🔥"
+    ]
   },
   "Cernunnos": {
     "pantheon": "Celtic",
-    "role": "ADC"
+    "role": "ADC",
+    "gender": "Male",
+    "emojis": [
+      "🦌",
+      "🍃",
+      "🪓"
+    ]
   },
   "Chaac": {
     "pantheon": "Maya",
-    "role": "Solo"
+    "role": "Solo",
+    "gender": "Male",
+    "emojis": [
+      "🌧️",
+      "🪓",
+      "⚡"
+    ]
   },
   "Charon": {
     "pantheon": "Greek",
-    "role": "Support"
+    "role": "Support",
+    "gender": "Male",
+    "emojis": [
+      "⛵",
+      "🪙",
+      "☠️"
+    ]
   },
   "Chiron": {
     "pantheon": "Greek",
-    "role": "ADC"
+    "role": "ADC",
+    "gender": "Male",
+    "emojis": [
+      "🐴",
+      "🏹",
+      "📖"
+    ]
   },
   "Chronos": {
     "pantheon": "Greek",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Male",
+    "emojis": [
+      "⏳",
+      "🔄",
+      "⚙️"
+    ]
   },
   "Cupid": {
     "pantheon": "Roman",
-    "role": "ADC"
+    "role": "ADC",
+    "gender": "Male",
+    "emojis": [
+      "💕",
+      "🏹",
+      "😇"
+    ]
   },
   "Da Ji": {
     "pantheon": "Chinese",
-    "role": "Jungle"
+    "role": "Jungle",
+    "gender": "Female",
+    "emojis": [
+      "🦊",
+      "⛓️",
+      "💔"
+    ]
   },
   "Danzaburou": {
     "pantheon": "Japanese",
-    "role": "ADC"
+    "role": "ADC",
+    "gender": "Male",
+    "emojis": [
+      "🦝",
+      "💰",
+      "🍃"
+    ]
   },
   "Discordia": {
     "pantheon": "Roman",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Female",
+    "emojis": [
+      "🍎",
+      "🌩️",
+      "🎭"
+    ]
   },
   "Eset": {
     "pantheon": "Egyptian",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Female",
+    "emojis": [
+      "🪽",
+      "🪄",
+      "🐦"
+    ]
   },
   "Fenrir": {
     "pantheon": "Norse",
-    "role": "Jungle"
+    "role": "Jungle",
+    "gender": "Male",
+    "emojis": [
+      "🐺",
+      "⛓️",
+      "🌑"
+    ]
   },
   "Ganesha": {
     "pantheon": "Hindu",
-    "role": "Support"
+    "role": "Support",
+    "gender": "Male",
+    "emojis": [
+      "🐘",
+      "🚫",
+      "🙏"
+    ]
   },
   "Geb": {
     "pantheon": "Egyptian",
-    "role": "Support"
+    "role": "Support",
+    "gender": "Male",
+    "emojis": [
+      "🌍",
+      "🪨",
+      "🛡️"
+    ]
   },
   "Gilgamesh": {
     "pantheon": "Babylonian",
-    "role": "Solo"
+    "role": "Solo",
+    "gender": "Male",
+    "emojis": [
+      "🧱",
+      "🦵",
+      "⚔️"
+    ]
   },
   "Guan Yu": {
     "pantheon": "Chinese",
-    "role": "Solo"
+    "role": "Solo",
+    "gender": "Male",
+    "emojis": [
+      "🐴",
+      "⚔️",
+      "💚"
+    ]
   },
   "Hades": {
     "pantheon": "Greek",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Male",
+    "emojis": [
+      "🌀",
+      "💀",
+      "🚫"
+    ]
   },
   "Hecate": {
     "pantheon": "Greek",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Female",
+    "emojis": [
+      "🌙",
+      "🐕",
+      "🔮"
+    ]
   },
   "Hercules": {
     "pantheon": "Roman",
-    "role": "Solo"
+    "role": "Solo",
+    "gender": "Male",
+    "emojis": [
+      "💪",
+      "🦁",
+      "🪨"
+    ]
   },
   "Horus": {
     "pantheon": "Egyptian",
-    "role": "Support"
+    "role": "Support",
+    "gender": "Male",
+    "emojis": [
+      "🐦",
+      "👁️",
+      "🛡️"
+    ]
   },
   "Hou Yi": {
     "pantheon": "Chinese",
-    "role": "ADC"
+    "role": "ADC",
+    "gender": "Male",
+    "emojis": [
+      "🏹",
+      "☀️",
+      "🐦"
+    ]
   },
   "Hua Mulan": {
     "pantheon": "Chinese",
-    "role": "Solo"
+    "role": "Solo",
+    "gender": "Female",
+    "emojis": [
+      "🪖",
+      "🌸",
+      "⚔️"
+    ]
   },
   "Hun Batz": {
     "pantheon": "Maya",
-    "role": "Jungle"
+    "role": "Jungle",
+    "gender": "Male",
+    "emojis": [
+      "🐒",
+      "🪃",
+      "🎭"
+    ]
   },
   "Ishtar": {
     "pantheon": "Babylonian",
-    "role": "ADC"
+    "role": "ADC",
+    "gender": "Female",
+    "emojis": [
+      "⭐",
+      "🏹",
+      "⚔️"
+    ]
   },
   "Izanami": {
     "pantheon": "Japanese",
-    "role": "ADC"
+    "role": "ADC",
+    "gender": "Female",
+    "emojis": [
+      "🪃",
+      "🎭",
+      "🌑"
+    ]
   },
   "Janus": {
     "pantheon": "Roman",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Male",
+    "emojis": [
+      "🚪",
+      "🌀",
+      "🎭"
+    ]
   },
   "Jing Wei": {
     "pantheon": "Chinese",
-    "role": "ADC"
+    "role": "ADC",
+    "gender": "Female",
+    "emojis": [
+      "🐦",
+      "🌊",
+      "🪨"
+    ]
   },
   "Jormungandr": {
     "pantheon": "Norse",
-    "role": "Solo"
+    "role": "Solo",
+    "gender": "Male",
+    "emojis": [
+      "🐍",
+      "🌍",
+      "🌊"
+    ]
   },
   "Kali": {
     "pantheon": "Hindu",
-    "role": "Jungle"
+    "role": "Jungle",
+    "gender": "Female",
+    "emojis": [
+      "👅",
+      "🗡️",
+      "💀"
+    ]
   },
   "Khepri": {
     "pantheon": "Egyptian",
-    "role": "Support"
+    "role": "Support",
+    "gender": "Male",
+    "emojis": [
+      "🪲",
+      "🌅",
+      "♻️"
+    ]
   },
   "Kukulkan": {
     "pantheon": "Maya",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Male",
+    "emojis": [
+      "🐍",
+      "💨",
+      "🌪️"
+    ]
   },
   "Loki": {
     "pantheon": "Norse",
-    "role": "Jungle"
+    "role": "Jungle",
+    "gender": "Male",
+    "emojis": [
+      "🗡️",
+      "🫥",
+      "🐍"
+    ]
   },
   "Medusa": {
     "pantheon": "Greek",
-    "role": "ADC"
+    "role": "ADC",
+    "gender": "Female",
+    "emojis": [
+      "🐍",
+      "👁️",
+      "🗿"
+    ]
   },
   "Mercury": {
     "pantheon": "Roman",
-    "role": "Jungle"
+    "role": "Jungle",
+    "gender": "Male",
+    "emojis": [
+      "👟",
+      "💨",
+      "🪽"
+    ]
   },
   "Merlin": {
     "pantheon": "Arthurian",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Male",
+    "emojis": [
+      "🔥",
+      "❄️",
+      "⚡"
+    ]
   },
   "Mordred": {
     "pantheon": "Arthurian",
-    "role": "Solo"
+    "role": "Solo",
+    "gender": "Male",
+    "emojis": [
+      "🩸",
+      "⚔️",
+      "☠️"
+    ]
   },
   "Morgan Le Fay": {
     "pantheon": "Arthurian",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Female",
+    "emojis": [
+      "🐉",
+      "🪄",
+      "🔥"
+    ]
   },
   "Neith": {
     "pantheon": "Egyptian",
-    "role": "ADC"
+    "role": "ADC",
+    "gender": "Female",
+    "emojis": [
+      "🧵",
+      "🏹",
+      "👘"
+    ]
   },
   "Nemesis": {
     "pantheon": "Greek",
-    "role": "Jungle"
+    "role": "Jungle",
+    "gender": "Female",
+    "emojis": [
+      "⚖️",
+      "⚔️",
+      "🪞"
+    ]
   },
   "Ne Zha": {
     "pantheon": "Chinese",
-    "role": "Jungle"
+    "role": "Jungle",
+    "gender": "Male",
+    "emojis": [
+      "⭕",
+      "🔥",
+      "🪷"
+    ]
   },
   "Nu Wa": {
     "pantheon": "Chinese",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Female",
+    "emojis": [
+      "🐍",
+      "🌫️",
+      "👥"
+    ]
   },
   "Nut": {
     "pantheon": "Egyptian",
-    "role": "Support"
+    "role": "Support",
+    "gender": "Female",
+    "emojis": [
+      "🌌",
+      "⭐",
+      "🏹"
+    ]
   },
   "Odin": {
     "pantheon": "Norse",
-    "role": "Solo"
+    "role": "Solo",
+    "gender": "Male",
+    "emojis": [
+      "🐦‍⬛",
+      "⭕",
+      "icons/spear.png"
+    ]
   },
   "Osiris": {
     "pantheon": "Egyptian",
-    "role": "Solo"
+    "role": "Solo",
+    "gender": "Male",
+    "emojis": [
+      "🧟",
+      "🌾",
+      "icons/scythe.svg"
+    ]
   },
   "Pele": {
     "pantheon": "Polynesian",
-    "role": "Jungle"
+    "role": "Jungle",
+    "gender": "Female",
+    "emojis": [
+      "🌋",
+      "💃",
+      "🌺"
+    ]
   },
   "Poseidon": {
     "pantheon": "Greek",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Male",
+    "emojis": [
+      "🌊",
+      "🔱",
+      "🐙"
+    ]
   },
   "Princess Bari": {
     "pantheon": "Korean",
-    "role": "ADC"
+    "role": "ADC",
+    "gender": "Female",
+    "emojis": [
+      "🔔",
+      "🌸",
+      "💨"
+    ]
   },
   "Ra": {
     "pantheon": "Egyptian",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Male",
+    "emojis": [
+      "☀️",
+      "🐦",
+      "👁️"
+    ]
   },
   "Rama": {
     "pantheon": "Hindu",
-    "role": "ADC"
+    "role": "ADC",
+    "gender": "Male",
+    "emojis": [
+      "🏹",
+      "👑",
+      "🐒"
+    ]
   },
   "Ratatoskr": {
     "pantheon": "Norse",
-    "role": "Solo"
+    "role": "Solo",
+    "gender": "Male",
+    "emojis": [
+      "🐿️",
+      "🌳",
+      "🥜"
+    ]
   },
   "Scylla": {
     "pantheon": "Greek",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Female",
+    "emojis": [
+      "👧",
+      "🐕",
+      "🌊"
+    ]
   },
   "Sobek": {
     "pantheon": "Egyptian",
-    "role": "Support"
+    "role": "Support",
+    "gender": "Male",
+    "emojis": [
+      "🐊",
+      "🌊",
+      "icons/pluck.svg"
+    ]
   },
   "Sol": {
     "pantheon": "Norse",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Female",
+    "emojis": [
+      "☀️",
+      "🔥",
+      "💫"
+    ]
   },
   "Sun Wukong": {
     "pantheon": "Chinese",
-    "role": "Solo"
+    "role": "Solo",
+    "gender": "Male",
+    "emojis": [
+      "🐒",
+      "🪵",
+      "☁️"
+    ]
   },
   "Susano": {
     "pantheon": "Japanese",
-    "role": "Jungle"
+    "role": "Jungle",
+    "gender": "Male",
+    "emojis": [
+      "🌪️",
+      "⚔️",
+      "🌊"
+    ]
   },
   "Sylvanus": {
     "pantheon": "Roman",
-    "role": "Support"
+    "role": "Support",
+    "gender": "Male",
+    "emojis": [
+      "🌳",
+      "🦉",
+      "🍃"
+    ]
   },
   "Thanatos": {
     "pantheon": "Greek",
-    "role": "Jungle"
+    "role": "Jungle",
+    "gender": "Male",
+    "emojis": [
+      "🪽",
+      "icons/scythe.svg",
+      "🩸"
+    ]
   },
   "The Morrigan": {
     "pantheon": "Celtic",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Female",
+    "emojis": [
+      "🐦‍⬛",
+      "👥",
+      "🔮"
+    ]
   },
   "Thor": {
     "pantheon": "Norse",
-    "role": "Jungle"
+    "role": "Jungle",
+    "gender": "Male",
+    "emojis": [
+      "⚡",
+      "🔨",
+      "🌩️"
+    ]
   },
   "Tsukuyomi": {
     "pantheon": "Japanese",
-    "role": "Jungle"
+    "role": "Jungle",
+    "gender": "Male",
+    "emojis": [
+      "🌙",
+      "🥷",
+      "🗡️"
+    ]
   },
   "Ullr": {
     "pantheon": "Norse",
-    "role": "ADC"
+    "role": "ADC",
+    "gender": "Male",
+    "emojis": [
+      "🏹",
+      "🪓",
+      "❄️"
+    ]
   },
   "Vulcan": {
     "pantheon": "Roman",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Male",
+    "emojis": [
+      "🔨",
+      "🤖",
+      "🌋"
+    ]
   },
   "Xbalanque": {
     "pantheon": "Maya",
-    "role": "ADC"
+    "role": "ADC",
+    "gender": "Male",
+    "emojis": [
+      "🌙",
+      "🌃",
+      "☀️"
+    ]
   },
   "Yemoja": {
     "pantheon": "Yoruba",
-    "role": "Support"
+    "role": "Support",
+    "gender": "Female",
+    "emojis": [
+      "💧",
+      "🌊",
+      "⭕"
+    ]
   },
   "Ymir": {
     "pantheon": "Norse",
-    "role": "Support"
+    "role": "Support",
+    "gender": "Male",
+    "emojis": [
+      "🧊",
+      "👹",
+      "❄️"
+    ]
   },
   "Zeus": {
     "pantheon": "Greek",
-    "role": "Mid"
+    "role": "Mid",
+    "gender": "Male",
+    "emojis": [
+      "⚡",
+      "☁️",
+      "💫"
+    ]
   }
 }

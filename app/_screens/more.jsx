@@ -21,6 +21,8 @@ const WordlePage = lazy(() => import('./wordle'));
 const AbilityGamePage = lazy(() => import('./ability'));
 const GuessSkinPage = lazy(() => import('./guessskin'));
 const GuessItemPage = lazy(() => import('./guessitem'));
+const GuessEmojiPage = lazy(() => import('./guessemoji'));
+const LearnVgsPage = lazy(() => import('./learnvgs'));
 const ProphecyPage = lazy(() => import('./prophecy'));
 const ProfilePage = lazy(() => import('./profile'));
 const ShopPage = lazy(() => import('./shop'));
@@ -97,6 +99,34 @@ export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUs
         }
       >
         <GuessItemPage onBack={() => setSelectedGame(null)} />
+      </Suspense>
+    );
+  }
+
+  if (selectedGame === 'guess-emoji') {
+    return (
+      <Suspense
+        fallback={
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color={COLORS.brandBlue} />
+          </View>
+        }
+      >
+        <GuessEmojiPage onBack={() => setSelectedGame(null)} />
+      </Suspense>
+    );
+  }
+
+  if (selectedGame === 'learn-vgs') {
+    return (
+      <Suspense
+        fallback={
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color={COLORS.brandBlue} />
+          </View>
+        }
+      >
+        <LearnVgsPage onBack={() => setSelectedGame(null)} />
       </Suspense>
     );
   }
@@ -220,6 +250,14 @@ export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUs
                   <TouchableOpacity style={styles.card} onPress={() => setSelectedGame('guess-item')} activeOpacity={0.7}>
                     <Text style={styles.cardTitle}>Guess the Item</Text>
                     <Text style={styles.cardDescription}>Name the item from its icon.</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.card} onPress={() => setSelectedGame('guess-emoji')} activeOpacity={0.7}>
+                    <Text style={styles.cardTitle}>Guess the Emoji</Text>
+                    <Text style={styles.cardDescription}>Name the god from emoji clues. Easy, Hard, or Classic.</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.card} onPress={() => setSelectedGame('learn-vgs')} activeOpacity={0.7}>
+                    <Text style={styles.cardTitle}>Learn the VGS</Text>
+                    <Text style={styles.cardDescription}>Type PC VGS codes from callouts or a god voiceline. Full command sheet included.</Text>
                   </TouchableOpacity>
                   {currentTrivia?.slug ? (
                     <TouchableOpacity

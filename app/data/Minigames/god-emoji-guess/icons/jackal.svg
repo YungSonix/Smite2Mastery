@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="jackal">
+  <rect width="128" height="128" rx="16" fill="#0b1220"/>
+  <!-- Anubis-style jackal head: tall pointed ears -->
+  <path d="M40 78 C40 52 52 40 64 40 C76 40 88 52 88 78 L88 92 C88 102 78 108 64 108 C50 108 40 102 40 92 Z" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M48 42 L40 14 L56 38" fill="none" stroke="#7dd3fc" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M80 42 L88 14 L72 38" fill="none" stroke="#7dd3fc" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="54" cy="70" r="4" fill="#7dd3fc"/>
+  <circle cx="74" cy="70" r="4" fill="#7dd3fc"/>
+  <path d="M58 86 L64 92 L70 86" fill="none" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+</svg>

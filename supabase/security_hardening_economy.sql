@@ -103,6 +103,7 @@ insert into public.shop_challenge_defs (condition_key, gold_reward, repeatable) 
   ('daily_login', 50, true),
   ('wordle_win', 75, true),
   ('ability_win', 75, true),
+  ('vgs_win', 75, true),
   ('save_build', 100, true),
   ('first_build', 150, false),
   ('profile_theme', 50, false),

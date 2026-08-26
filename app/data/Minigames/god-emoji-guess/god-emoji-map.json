@@ -1,0 +1,435 @@
+{
+  "_readme": "Guess-the-Emoji Set A easy snapshot (flat). Full A/B/C: god-emoji-sets.json. Author: emoji-clues.json. Trivia twin: app/data/Trivia/god-emojis/god-emoji-map.json",
+  "gods": {
+    "Achilles": [
+      "icons/spear.png",
+      "🛡️",
+      "🦶"
+    ],
+    "Agni": [
+      "🔥",
+      "💨",
+      "☄️"
+    ],
+    "Ah Puch": [
+      "💀",
+      "🦴",
+      "🪰"
+    ],
+    "Aladdin": [
+      "🧞",
+      "🪔",
+      "✨"
+    ],
+    "Amaterasu": [
+      "☀️",
+      "🪞",
+      "⚔️"
+    ],
+    "Anhur": [
+      "🦁",
+      "icons/spear.png",
+      "🪨"
+    ],
+    "Anubis": [
+      "icons/jackal.svg",
+      "⚖️",
+      "⚱️"
+    ],
+    "Aphrodite": [
+      "💋",
+      "💕",
+      "🦢"
+    ],
+    "Apollo": [
+      "🎵",
+      "☀️",
+      "icons/bow.svg"
+    ],
+    "Ares": [
+      "🪖",
+      "⛓️",
+      "🔥"
+    ],
+    "Artemis": [
+      "🐗",
+      "icons/bow.svg",
+      "🌙"
+    ],
+    "Artio": [
+      "🐻",
+      "🍃",
+      "2️⃣"
+    ],
+    "Athena": [
+      "🛡️",
+      "icons/spear.png",
+      "👥"
+    ],
+    "Atlas": [
+      "🌌",
+      "🏋️",
+      "🌍"
+    ],
+    "Awilix": [
+      "🐆",
+      "🌙",
+      "icons/pluck.svg"
+    ],
+    "Bacchus": [
+      "🍷",
+      "🍇",
+      "🤢"
+    ],
+    "Baron Samedi": [
+      "🎩",
+      "💀",
+      "🍸"
+    ],
+    "Bastet": [
+      "🐱",
+      "icons/whip.svg",
+      "🐾"
+    ],
+    "Bellona": [
+      "🛡️",
+      "🔨",
+      "icons/whip.svg"
+    ],
+    "Cabrakan": [
+      "🌍",
+      "icons/wall.svg",
+      "🛡️"
+    ],
+    "Cerberus": [
+      "🐕",
+      "3️⃣",
+      "👻"
+    ],
+    "Cernunnos": [
+      "🦌",
+      "🍃",
+      "icons/bow.svg"
+    ],
+    "Chaac": [
+      "🌧️",
+      "🪓",
+      "⚡"
+    ],
+    "Charon": [
+      "⛵",
+      "🪙",
+      "🌊"
+    ],
+    "Chiron": [
+      "🐴",
+      "icons/bow.svg",
+      "🧑‍🏫"
+    ],
+    "Chronos": [
+      "⏳",
+      "⚙️",
+      "⌛"
+    ],
+    "Cupid": [
+      "💕",
+      "icons/bow.svg",
+      "😇"
+    ],
+    "Da Ji": [
+      "🦊",
+      "⛓️",
+      "🩸"
+    ],
+    "Danzaburou": [
+      "🦝",
+      "💰",
+      "🍃"
+    ],
+    "Discordia": [
+      "🍎",
+      "🌩️",
+      "🌪️"
+    ],
+    "Eset": [
+      "🪽",
+      "icons/staff.svg",
+      "🐦"
+    ],
+    "Fenrir": [
+      "🐺",
+      "⛓️",
+      "🦷"
+    ],
+    "Ganesha": [
+      "🐘",
+      "🚫",
+      "🪷"
+    ],
+    "Geb": [
+      "🌍",
+      "🪨",
+      "icons/wall.svg"
+    ],
+    "Gilgamesh": [
+      "🦵",
+      "⚔️",
+      "🧱"
+    ],
+    "Guan Yu": [
+      "🐴",
+      "icons/spear.png",
+      "💚"
+    ],
+    "Hades": [
+      "💀",
+      "icons/whirl.svg",
+      "🌑"
+    ],
+    "Hecate": [
+      "🌙",
+      "3️⃣",
+      "🪄"
+    ],
+    "Hercules": [
+      "💪",
+      "🏏",
+      "🪨"
+    ],
+    "Horus": [
+      "🐦",
+      "👁️",
+      "🪽"
+    ],
+    "Hou Yi": [
+      "icons/bow.svg",
+      "☀️",
+      "9️⃣"
+    ],
+    "Hua Mulan": [
+      "🚩",
+      "⚔️",
+      "🌸"
+    ],
+    "Hun Batz": [
+      "🐒",
+      "🥁",
+      "🪃"
+    ],
+    "Ishtar": [
+      "⭐",
+      "icons/bow.svg",
+      "👑"
+    ],
+    "Izanami": [
+      "🪃",
+      "👻",
+      "icons/scythe.svg"
+    ],
+    "Janus": [
+      "🚪",
+      "🌀",
+      "2️⃣"
+    ],
+    "Jing Wei": [
+      "🐦",
+      "🌊",
+      "🪨"
+    ],
+    "Jormungandr": [
+      "🐍",
+      "icons/poison.svg",
+      "🌍"
+    ],
+    "Kali": [
+      "👅",
+      "🗡️",
+      "💀"
+    ],
+    "Khepri": [
+      "🪲",
+      "☀️",
+      "♻️"
+    ],
+    "Kukulkan": [
+      "🐍",
+      "💨",
+      "🌪️"
+    ],
+    "Loki": [
+      "🗡️",
+      "🫥",
+      "👥"
+    ],
+    "Medusa": [
+      "🐍",
+      "👁️",
+      "🗿"
+    ],
+    "Mercury": [
+      "👟",
+      "💨",
+      "🪽"
+    ],
+    "Merlin": [
+      "🔥",
+      "❄️",
+      "icons/staff.svg"
+    ],
+    "Mordred": [
+      "2️⃣",
+      "⚔️",
+      "🩸"
+    ],
+    "Morgan Le Fay": [
+      "🐉",
+      "🪄",
+      "🔥"
+    ],
+    "Ne Zha": [
+      "⭕",
+      "icons/spear.png",
+      "🪷"
+    ],
+    "Neith": [
+      "🧵",
+      "icons/bow.svg",
+      "🕸️"
+    ],
+    "Nemesis": [
+      "⚖️",
+      "⚔️",
+      "🪞"
+    ],
+    "Nu Wa": [
+      "🌫️",
+      "👥",
+      "🪨"
+    ],
+    "Nut": [
+      "🌌",
+      "⭐",
+      "🌃"
+    ],
+    "Odin": [
+      "🐦‍⬛",
+      "icons/spear.png",
+      "⭕"
+    ],
+    "Osiris": [
+      "🧟",
+      "icons/scythe.svg",
+      "🌾"
+    ],
+    "Pele": [
+      "🌋",
+      "🔥",
+      "🌺"
+    ],
+    "Poseidon": [
+      "🌊",
+      "🔱",
+      "🐙"
+    ],
+    "Princess Bari": [
+      "🔔",
+      "💚",
+      "🌸"
+    ],
+    "Ra": [
+      "☀️",
+      "🐦",
+      "🔆"
+    ],
+    "Rama": [
+      "icons/bow.svg",
+      "👑",
+      "🐒"
+    ],
+    "Ratatoskr": [
+      "🐿️",
+      "🥜",
+      "🌳"
+    ],
+    "Scylla": [
+      "👧",
+      "🐕",
+      "🌊"
+    ],
+    "Sobek": [
+      "🐊",
+      "🌊",
+      "icons/pluck.svg"
+    ],
+    "Sol": [
+      "☀️",
+      "🔥",
+      "💫"
+    ],
+    "Sun Wukong": [
+      "🐒",
+      "icons/staff.svg",
+      "☁️"
+    ],
+    "Susano": [
+      "⚔️",
+      "🌪️",
+      "🌩️"
+    ],
+    "Sylvanus": [
+      "🌳",
+      "🍃",
+      "icons/pluck.svg"
+    ],
+    "Thanatos": [
+      "icons/scythe.svg",
+      "🪽",
+      "☠️"
+    ],
+    "The Morrigan": [
+      "🐦‍⬛",
+      "🎭",
+      "👥"
+    ],
+    "Thor": [
+      "🔨",
+      "⚡",
+      "icons/wall.svg"
+    ],
+    "Tsukuyomi": [
+      "🌙",
+      "🥷",
+      "⭐"
+    ],
+    "Ullr": [
+      "icons/bow.svg",
+      "🪓",
+      "❄️"
+    ],
+    "Vulcan": [
+      "🔨",
+      "⚙️",
+      "🔥"
+    ],
+    "Xbalanque": [
+      "🌃",
+      "🎯",
+      "icons/poison.svg"
+    ],
+    "Yemoja": [
+      "💧",
+      "🌊",
+      "💚"
+    ],
+    "Ymir": [
+      "🧊",
+      "icons/wall.svg",
+      "❄️"
+    ],
+    "Zeus": [
+      "⚡",
+      "☁️",
+      "💫"
+    ]
+  }
+}

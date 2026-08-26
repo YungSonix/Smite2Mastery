@@ -96,7 +96,7 @@ function rewriteAspectPrompt(prompt, fromGod, toRow) {
   return next;
 }
 
-function applySwap(source, fromName, toName, { distractors = [], image, prefer = [] } = {}) {
+function applySwap(source, fromName, toName, { distractors = [], image, prefer = [], realOnly = false } = {}) {
   const prompt = fromName ? replaceWord(source.prompt, fromName, toName) : source.prompt;
   const patch = { prompt, correct: clone(source.correct) || {} };
   if (Array.isArray(source.correct?.answers)) {
@@ -113,7 +113,7 @@ function applySwap(source, fromName, toName, { distractors = [], image, prefer =
       unique.push(d);
     }
     const need = Math.max(1, (source.options || []).length - 1);
-    const mixed = trickishDistractors(toName, unique, need, { prefer });
+    const mixed = trickishDistractors(toName, unique, need, { prefer, realOnly });
     const options = shuffle([toName, ...mixed]);
     patch.options = options;
     if (Array.isArray(source.correct?.indices)) {
@@ -367,6 +367,219 @@ function remixAbility(source, avoidTexts) {
   });
 }
 
+function godEmojiSlug(name) {
+  return String(name || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+const GOD_EMOJI_SET_LETTERS = ['a', 'b', 'c'];
+
+function pickGodEmojiSetLetter() {
+  return GOD_EMOJI_SET_LETTERS[Math.floor(Math.random() * GOD_EMOJI_SET_LETTERS.length)];
+}
+
+/** Unnamed card URL. Pass setLetter 'a'|'b'|'c' for anti-repeat variants (from emoji-clues sets). */
+function godEmojiUnnamedUrl(name, setLetter = '') {
+  const slug = godEmojiSlug(name);
+  const letter = String(setLetter || '').toLowerCase();
+  if (GOD_EMOJI_SET_LETTERS.includes(letter)) {
+    return `/media/Trivia/god-emojis/${slug}-${letter}-unnamed.svg`;
+  }
+  return `/media/Trivia/god-emojis/${slug}-unnamed.svg`;
+}
+
+function isGodEmojiPrompt(source) {
+  return (
+    source?.meta?.remix_kind === 'god_emoji' ||
+    /three emojis|emojis represent/i.test(source?.prompt || '')
+  );
+}
+
+function makeGodEmojiQuestion({ count, avoidGods = new Set(), correctName = null } = {}) {
+  const gods = (catalog.gods || []).filter((g) => g?.name && !avoidGods.has(norm(g.name)));
+  if (gods.length < 4) return null;
+  let god = null;
+  if (correctName) {
+    god = gods.find((g) => norm(g.name) === norm(correctName)) || null;
+  }
+  if (!god) god = pickOne(gods);
+  if (!god) return null;
+  const wrong = godEmojiDistractors(god.name, count - 1);
+  if (wrong.length < count - 1) return null;
+  const setLetter = pickGodEmojiSetLetter();
+  return packMc({
+    prompt: 'Which god do these three emojis represent?',
+    correctLabel: god.name,
+    distractors: wrong,
+    count,
+    image: godEmojiUnnamedUrl(god.name, setLetter),
+    extraMeta: {
+      media: 'image',
+      remix_kind: 'god_emoji',
+      emoji_set: setLetter,
+      hint_context: { god: god.name },
+    },
+  });
+}
+
+function isVoiceLinePrompt(source) {
+  return (
+    source?.meta?.remix_kind === 'voice_line' ||
+    source?.meta?.media === 'audio' ||
+    /voice line belongs/i.test(source?.prompt || '')
+  );
+}
+
+function isSkinGuessPrompt(source) {
+  return (
+    source?.meta?.remix_kind === 'skin_guess' ||
+    source?.meta?.media_crop === 'skin_zoom_center' ||
+    /skin belongs/i.test(source?.prompt || '')
+  );
+}
+
+function isAbilitySoundPrompt(source) {
+  return (
+    source?.meta?.remix_kind === 'ability_sound' ||
+    /which ability is this sound/i.test(source?.prompt || '')
+  );
+}
+
+function abilityOptionLabel(row) {
+  return `${row.god} — ${row.ability}`;
+}
+
+function makeAbilitySoundQuestion({ count, avoidUrls = new Set() } = {}) {
+  const clips = mediaCatalog.abilitySounds || [];
+  if (clips.length < 4) return null;
+  let pool = clips.filter((c) => c?.url && !avoidUrls.has(c.url));
+  if (!pool.length) pool = clips.filter((c) => c?.url);
+  const clip = pickOne(pool);
+  if (!clip) return null;
+  const correctLabel = abilityOptionLabel(clip);
+  const wrongPool = clips
+    .filter((c) => norm(abilityOptionLabel(c)) !== norm(correctLabel))
+    .map(abilityOptionLabel);
+  const wrong = trickishDistractors(correctLabel, wrongPool, count - 1, {
+    prefer: clips
+      .filter((c) => c.god === clip.god && norm(abilityOptionLabel(c)) !== norm(correctLabel))
+      .map(abilityOptionLabel),
+    realOnly: true,
+  });
+  return packMc({
+    prompt: 'Which ability is this sound from?',
+    correctLabel,
+    distractors: wrong,
+    count,
+    image: clip.url,
+    extraMeta: {
+      media: 'audio',
+      remix_kind: 'ability_sound',
+      hint_context: { god: clip.god, ability: clip.ability, slot: clip.slot },
+    },
+  });
+}
+
+function correctGodFromSource(source) {
+  const opts = Array.isArray(source?.options) ? source.options : [];
+  const idx = Number(source?.correct?.index);
+  if (Number.isFinite(idx) && opts[idx] && String(opts[idx]).trim()) {
+    return String(opts[idx]).trim();
+  }
+  const fromHint = source?.meta?.hint_context?.god;
+  if (fromHint) return fromHint;
+  return findNameInText(blobOf(source), catalog.gods.map((g) => g.name), { min: 3 });
+}
+
+function remixVoiceLine(source, avoidTexts) {
+  if (!isVoiceLinePrompt(source)) return null;
+  const clips = mediaCatalog.voiceClips || [];
+  if (clips.length < 4) return { error: 'No voice clips left to swap to.' };
+  const currentGod = correctGodFromSource(source);
+  const currentUrl = source.image_url || source.image_urls?.[0] || null;
+  const taken = usedNames(avoidTexts);
+  if (currentGod) taken.add(norm(currentGod));
+  let pool = clips.filter((c) => c.url !== currentUrl && !taken.has(norm(c.god)));
+  if (!pool.length) pool = clips.filter((c) => c.url !== currentUrl);
+  if (!pool.length && clips.length > 1) pool = clips.filter((c) => norm(c.god) !== norm(currentGod));
+  const clip = pickOne(pool);
+  if (!clip) return { error: 'No other voice clips left to swap to.' };
+  const count = optionCount(source);
+  const wrong = godIdentifyDistractors(clip.god, count - 1);
+  return packMc({
+    prompt: source.prompt || 'Choose the correct god this voice line belongs to.',
+    correctLabel: clip.god,
+    distractors: wrong,
+    count,
+    image: clip.url,
+    extraMeta: {
+      media: 'audio',
+      remix_kind: 'voice_line',
+      hint_context: { god: clip.god, skin: clip.skin, kind: clip.kind },
+    },
+    clearMedia: false,
+  });
+}
+
+function remixSkinGuess(source, avoidTexts) {
+  if (!isSkinGuessPrompt(source)) return null;
+  const cards = mediaCatalog.skinCards || [];
+  if (cards.length < 4) return { error: 'No skin cards left to swap to.' };
+  const currentGod = correctGodFromSource(source);
+  const currentUrl = source.image_url || source.image_urls?.[0] || null;
+  const taken = usedNames(avoidTexts);
+  if (currentGod) taken.add(norm(currentGod));
+  let pool = cards.filter((c) => c.url !== currentUrl && !taken.has(norm(c.god)));
+  if (!pool.length) pool = cards.filter((c) => c.url !== currentUrl);
+  if (!pool.length && cards.length > 1) pool = cards.filter((c) => norm(c.god) !== norm(currentGod));
+  const card = pickOne(pool);
+  if (!card) return { error: 'No other skin cards left to swap to.' };
+  const count = optionCount(source);
+  const wrong = godIdentifyDistractors(card.god, count - 1);
+  const seed = `${card.god}|${card.skinName}`;
+  return packMc({
+    prompt: source.prompt || 'Choose the correct god this skin belongs to.',
+    correctLabel: card.god,
+    distractors: wrong,
+    count,
+    image: card.url,
+    extraMeta: {
+      media: 'image',
+      media_crop: 'skin_zoom_center',
+      media_seed: seed,
+      remix_kind: 'skin_guess',
+      hint_context: { god: card.god, skin: card.skinName },
+    },
+    clearMedia: false,
+  });
+}
+
+function remixAbilitySound(source, avoidTexts) {
+  if (!isAbilitySoundPrompt(source)) return null;
+  const clips = mediaCatalog.abilitySounds || [];
+  if (clips.length < 4) return { error: 'No ability cast sounds left to swap to.' };
+  const currentUrl = source.image_url || source.image_urls?.[0] || null;
+  const avoidUrls = new Set([currentUrl].filter(Boolean));
+  const hit = makeAbilitySoundQuestion({ count: optionCount(source), avoidUrls });
+  if (!hit?.patch) return { error: 'No other ability cast sounds left to swap to.' };
+  // keep avoidTexts from colliding labels when possible
+  const used = usedNames(avoidTexts);
+  if (used.size && Array.isArray(hit.patch.options)) {
+    const label = hit.patch.options[hit.patch.correct?.index];
+    if (label && used.has(norm(label))) {
+      const retry = makeAbilitySoundQuestion({
+        count: optionCount(source),
+        avoidUrls: new Set([...avoidUrls, hit.patch.image_url].filter(Boolean)),
+      });
+      if (retry?.patch) return retry;
+    }
+  }
+  return hit;
+}
+
 function remixGod(source, avoidTexts) {
   const names = catalog.gods.map((g) => g.name);
   const fromName =
@@ -382,12 +595,26 @@ function remixGod(source, avoidTexts) {
   if (!fromName) return null;
   const taken = usedNames(avoidTexts);
   taken.add(norm(fromName));
+
+  if (isGodEmojiPrompt(source)) {
+    const hit = makeGodEmojiQuestion({ count: optionCount(source), avoidGods: taken });
+    if (hit?.patch) return hit;
+    return { error: 'No other emoji-god cards left to swap to.' };
+  }
+
   const pool = catalog.gods.filter((g) => !taken.has(norm(g.name)));
-  const next = pickOne(pool);
-  if (!next) return { error: 'No other gods left to swap to.' };
+  const preferSameGender = godSameGenderNames(fromName);
+  const nextName =
+    pickOne(preferSameGender.filter((n) => !taken.has(norm(n)))) ||
+    pickOne(pool.map((g) => g.name));
+  if (!nextName) return { error: 'No other gods left to swap to.' };
+  const next = pool.find((g) => g.name === nextName) || { name: nextName };
+  const distractors = godIdentifyDistractors(next.name, Math.max(3, optionCount(source) - 1));
   return applySwap(source, fromName, next.name, {
-    distractors: pool.map((g) => g.name),
+    distractors,
+    prefer: distractors,
     image: next.image,
+    realOnly: true,
   });
 }
 
@@ -493,16 +720,105 @@ function godNeighborNames(correctName) {
   if (!me) return [];
   const pantheon = String(me.pantheon || '').toLowerCase();
   const role = String(me.role || '').toLowerCase();
+  const gender = String(me.gender || '').toLowerCase();
   const samePantheon = [];
   const sameRole = [];
+  const sameGender = [];
   for (const g of catalog.gods || []) {
     if (norm(g.name) === norm(correctName)) continue;
     const row = godMeta[g.name];
     if (!row) continue;
+    const gGender = String(row.gender || '').toLowerCase();
+    if (gender && gGender && gGender !== gender) continue;
     if (pantheon && String(row.pantheon || '').toLowerCase() === pantheon) samePantheon.push(g.name);
     else if (role && String(row.role || '').toLowerCase() === role) sameRole.push(g.name);
+    else sameGender.push(g.name);
   }
-  return [...shuffle(samePantheon), ...shuffle(sameRole)];
+  return [...shuffle(samePantheon), ...shuffle(sameRole), ...shuffle(sameGender)];
+}
+
+function godSameGenderNames(correctName) {
+  const gender = String(godMeta[String(correctName || '').trim()]?.gender || '')
+    .trim()
+    .toLowerCase();
+  if (!gender) return catalog.gods.map((g) => g.name).filter((n) => norm(n) !== norm(correctName));
+  return (catalog.gods || [])
+    .filter((g) => {
+      if (norm(g.name) === norm(correctName)) return false;
+      return String(godMeta[g.name]?.gender || '')
+        .trim()
+        .toLowerCase() === gender;
+    })
+    .map((g) => g.name);
+}
+
+function emojiOverlapScore(a, b) {
+  const left = Array.isArray(a) ? a : [];
+  const right = new Set(Array.isArray(b) ? b : []);
+  let score = 0;
+  for (const e of left) {
+    if (right.has(e)) score += 1;
+  }
+  return score;
+}
+
+/** Same gender first, then shared emoji glyphs, then pantheon/role — never items. */
+function godEmojiDistractors(correctName, count) {
+  const me = godMeta[String(correctName || '').trim()] || {};
+  const gender = String(me.gender || '')
+    .trim()
+    .toLowerCase();
+  const myEmojis = Array.isArray(me.emojis) ? me.emojis : [];
+  const myPantheon = String(me.pantheon || '')
+    .trim()
+    .toLowerCase();
+  const myRole = String(me.role || '')
+    .trim()
+    .toLowerCase();
+
+  const scoreRow = (g, { requireGender }) => {
+    if (norm(g.name) === norm(correctName)) return null;
+    const row = godMeta[g.name] || {};
+    const gGender = String(row.gender || '')
+      .trim()
+      .toLowerCase();
+    if (requireGender && gender && gGender && gGender !== gender) return null;
+    const overlap = emojiOverlapScore(myEmojis, row.emojis);
+    let score = overlap * 100;
+    if (gender && gGender === gender) score += 40;
+    if (myPantheon && String(row.pantheon || '').toLowerCase() === myPantheon) score += 12;
+    if (myRole && String(row.role || '').toLowerCase() === myRole) score += 6;
+    score += Math.random() * 0.5;
+    return { name: g.name, score, overlap };
+  };
+
+  let ranked = (catalog.gods || [])
+    .map((g) => scoreRow(g, { requireGender: true }))
+    .filter(Boolean)
+    .sort((a, b) => b.score - a.score);
+
+  if (ranked.length < count) {
+    ranked = (catalog.gods || [])
+      .map((g) => scoreRow(g, { requireGender: false }))
+      .filter(Boolean)
+      .sort((a, b) => b.score - a.score);
+  }
+
+  const withOverlap = ranked.filter((r) => r.overlap > 0);
+  const prefer = (withOverlap.length >= count ? withOverlap : ranked).map((r) => r.name);
+  return trickishDistractors(correctName, prefer, count, {
+    prefer,
+    realOnly: true,
+  });
+}
+
+function godIdentifyDistractors(correctName, count) {
+  return trickishDistractors(
+    correctName,
+    catalog.gods.map((g) => g.name).filter((n) => norm(n) !== norm(correctName)),
+    count,
+    { prefer: godNeighborNames(correctName), realOnly: true }
+  );
 }
 
 function itemLowerTierNames(itemOrName) {
@@ -713,6 +1029,92 @@ export function fillAnswersFromPrompt(question) {
     return { error: 'No release-order gods to fill answers. Try Random question.' };
   }
 
+  if (isGodEmojiPrompt(question)) {
+    const markedRaw = currentCorrectLabel(question);
+    const markedGod =
+      markedRaw &&
+      !isPlaceholderOption(markedRaw) &&
+      catalog.gods.find((g) => norm(g.name) === norm(markedRaw));
+    const hit = makeGodEmojiQuestion({
+      count,
+      correctName: markedGod?.name || question?.meta?.hint_context?.god || null,
+    });
+    if (hit?.patch) {
+      return {
+        patch: {
+          ...hit.patch,
+          prompt, // keep host wording
+        },
+      };
+    }
+    return { error: 'Not enough gods for emoji answers.' };
+  }
+
+  if (isVoiceLinePrompt(question) || isSkinGuessPrompt(question) || isAbilitySoundPrompt(question)) {
+    const kind = question?.meta?.remix_kind;
+    if (kind === 'ability_sound' || isAbilitySoundPrompt(question)) {
+      const hit = makeAbilitySoundQuestion({ count });
+      if (hit?.patch) return { patch: { ...hit.patch, prompt } };
+    }
+    if (kind === 'skin_guess' || isSkinGuessPrompt(question)) {
+      const cards = mediaCatalog.skinCards || [];
+      const card = pickOne(cards);
+      if (card) {
+        return packMc({
+          prompt,
+          correctLabel: card.god,
+          distractors: godIdentifyDistractors(card.god, count - 1),
+          count,
+          image: card.url,
+          extraMeta: {
+            media: 'image',
+            media_crop: 'skin_zoom_center',
+            media_seed: `${card.god}|${card.skinName}`,
+            remix_kind: 'skin_guess',
+            hint_context: { god: card.god, skin: card.skinName },
+          },
+        });
+      }
+    }
+    const clips = mediaCatalog.voiceClips || [];
+    const clip = pickOne(clips);
+    if (clip) {
+      return packMc({
+        prompt,
+        correctLabel: clip.god,
+        distractors: godIdentifyDistractors(clip.god, count - 1),
+        count,
+        image: clip.url,
+        extraMeta: {
+          media: 'audio',
+          remix_kind: 'voice_line',
+          hint_context: { god: clip.god, skin: clip.skin, kind: clip.kind },
+        },
+      });
+    }
+  }
+
+  const godNames = catalog.gods.map((g) => g.name);
+  const markedRawEarly = currentCorrectLabel(question);
+  const markedGodEarly =
+    markedRawEarly &&
+    !isPlaceholderOption(markedRawEarly) &&
+    catalog.gods.find((g) => norm(g.name) === norm(markedRawEarly));
+  const optionGodName = exactOptionHit(question?.options || [], godNames);
+  if (markedGodEarly || optionGodName) {
+    const correctLabel = markedGodEarly?.name || optionGodName;
+    return packMc({
+      prompt,
+      correctLabel,
+      distractors: isGodEmojiPrompt(question)
+        ? godEmojiDistractors(correctLabel, count - 1)
+        : godIdentifyDistractors(correctLabel, count - 1),
+      count,
+      image: question?.image_url || question?.image_urls?.[0],
+      clearMedia: false,
+    });
+  }
+
   if (namedItem && stats.length) {
     const item = catalog.items.find((i) => i.name === namedItem);
     const stat = stats.find((s) => item?.stats?.[s] != null) || stats[0];
@@ -782,12 +1184,14 @@ export function fillAnswersFromPrompt(question) {
   const optionItemName = exactOptionHit(question?.options || [], itemNames);
   const markedRaw = currentCorrectLabel(question);
   const marked = markedRaw && !isPlaceholderOption(markedRaw) ? markedRaw : null;
+  const markedIsGod = marked && catalog.gods.some((g) => norm(g.name) === norm(marked));
+  const markedIsItem = marked && catalog.items.some((i) => norm(i.name) === norm(marked));
   const item =
     (namedItem && catalog.items.find((i) => i.name === namedItem)) ||
-    (marked && catalog.items.find((i) => norm(i.name) === norm(marked))) ||
+    (markedIsItem && catalog.items.find((i) => norm(i.name) === norm(marked))) ||
     (optionItemName && catalog.items.find((i) => i.name === optionItemName));
-  if (item || isIdentifyItemPrompt(prompt) || marked) {
-    const correctLabel = marked || item?.name || pickOne(catalog.items)?.name;
+  if ((item || isIdentifyItemPrompt(prompt) || markedIsItem) && !markedIsGod) {
+    const correctLabel = (markedIsItem && marked) || item?.name || pickOne(catalog.items)?.name;
     if (!correctLabel) return { error: 'No item names to fill answers.' };
     const existingImage = question?.image_url || question?.image_urls?.[0];
     const keepImage = isIdentifyItemPrompt(prompt) || Boolean(existingImage && item);
@@ -804,35 +1208,63 @@ export function fillAnswersFromPrompt(question) {
   return { error: 'Could not read this prompt. Name a stat, item, god, aspect, or OB patch.' };
 }
 
-/** Invent a new question + answers from builds.json so you are not starting from a blank. */
-export function randomizeQuestion(question) {
-  const count = optionCount(question);
-  const fillBlank = question?.meta?.kind === 'fill_blank';
-  if (fillBlank) {
-    const row = pickOne(catalog.aspects);
-    if (!row) return { error: 'No aspect data.' };
-    return {
-      patch: {
-        type: 'short_answer',
-        prompt: `${row.god} Aspect is called ${row.usesThe ? 'Aspect of the' : 'Aspect of'} {{blank}}`,
-        options: [],
-        correct: { answers: [...new Set([row.blank, row.blank.toLowerCase()])] },
-        meta: { kind: 'fill_blank', remix_kind: 'aspect_blank', hint_context: { god: row.god } },
-        image_url: null,
-        image_urls: [],
-        clearMedia: true,
-      },
-    };
-  }
+/** Host picker + auto-fill: each id builds one question template. */
+export const RANDOM_QUESTION_STYLES = [
+  {
+    id: 'item_has_stat',
+    label: 'Item has this stat',
+    blurb: 'Multiple choice — which item grants a named stat',
+  },
+  {
+    id: 'item_stat_amount',
+    label: 'How much stat on item',
+    blurb: 'Multiple choice — numeric amount for one item stat',
+  },
+  {
+    id: 'item_identify',
+    label: 'Identify the item',
+    blurb: 'Name the item from its icon',
+  },
+  {
+    id: 'ob_release',
+    label: 'OB release god',
+    blurb: 'Which god released in a given Open Beta patch',
+  },
+  {
+    id: 'aspect_name',
+    label: 'Aspect name',
+    blurb: 'Fill the Aspect of ____ blank for a god',
+  },
+  {
+    id: 'voice_line',
+    label: 'Guess the voice line',
+    blurb: 'Audio — which god speaks this Skin00_Base VOX line',
+  },
+  {
+    id: 'ability_sound',
+    label: 'Guess the ability sound',
+    blurb: 'Audio — Skin00_Base Ability1–4 Activate/Start cast SFX',
+  },
+  {
+    id: 'skin_guess',
+    label: 'Guess the skin (zoomed)',
+    blurb: 'Zoomed skin card — which god it belongs to',
+  },
+  {
+    id: 'release_after',
+    label: 'Who came after',
+    blurb: 'Select all gods released after a named god',
+  },
+  {
+    id: 'god_emoji',
+    label: 'Guess from emojis',
+    blurb: 'Three-emoji card — which god',
+  },
+];
 
-  if (isReleaseAfterPrompt(question?.prompt) || question?.meta?.remix_kind === 'release_after') {
-    const avoidGods = usedNames([question?.prompt]);
-    const hit = makeReleaseAfterQuestion({ count, avoidGods });
-    if (hit?.patch) return hit;
-  }
-
-  const makers = [
-    () => {
+function styleMakers(count) {
+  return {
+    item_has_stat: () => {
       const stat = pickOne(popularStats());
       const withStat = catalog.items.filter((i) => i.stats?.[stat] != null);
       const without = catalog.items.filter((i) => i.stats?.[stat] == null);
@@ -845,13 +1277,15 @@ export function randomizeQuestion(question) {
         count,
       });
     },
-    () => {
+    item_stat_amount: () => {
       const stat = pickOne(popularStats());
       const withStat = catalog.items.filter((i) => i.stats?.[stat] != null);
       const item = pickOne(withStat);
       if (!item) return null;
       const val = item.stats[stat];
-      const others = [...new Set(withStat.filter((i) => i.stats[stat] !== val).map((i) => String(i.stats[stat])))];
+      const others = [
+        ...new Set(withStat.filter((i) => i.stats[stat] !== val).map((i) => String(i.stats[stat]))),
+      ];
       if (others.length < 3) return null;
       return packMc({
         prompt: `How much ${stat} does ${item.name} give?`,
@@ -860,7 +1294,7 @@ export function randomizeQuestion(question) {
         count,
       });
     },
-    () => {
+    item_identify: () => {
       const item = pickOne(catalog.items.filter((i) => i.image && (i.tier === 3 || i.starter)));
       if (!item) return null;
       return packMc({
@@ -871,7 +1305,7 @@ export function randomizeQuestion(question) {
         image: item.image,
       });
     },
-    () => {
+    ob_release: () => {
       const rel = pickOne(catalog.releases);
       if (!rel) return null;
       const wrong = catalog.gods.map((g) => g.name).filter((n) => norm(n) !== norm(rel.god));
@@ -885,7 +1319,7 @@ export function randomizeQuestion(question) {
         count,
       });
     },
-    () => {
+    aspect_name: () => {
       const row = pickOne(catalog.aspects);
       if (!row) return null;
       const wrong = catalog.aspects.filter((a) => a.god !== row.god).map((a) => a.blank);
@@ -896,16 +1330,11 @@ export function randomizeQuestion(question) {
         count,
       });
     },
-    () => {
+    voice_line: () => {
       const clips = mediaCatalog.voiceClips || [];
       if (clips.length < 4) return null;
       const clip = pickOne(clips);
-      const wrong = trickishDistractors(
-        clip.god,
-        catalog.gods.map((g) => g.name).filter((n) => norm(n) !== norm(clip.god)),
-        count - 1,
-        { prefer: godNeighborNames(clip.god), realOnly: true }
-      );
+      const wrong = godIdentifyDistractors(clip.god, count - 1);
       return packMc({
         prompt: 'Choose the correct god this voice line belongs to.',
         correctLabel: clip.god,
@@ -919,16 +1348,12 @@ export function randomizeQuestion(question) {
         },
       });
     },
-    () => {
+    ability_sound: () => makeAbilitySoundQuestion({ count }),
+    skin_guess: () => {
       const cards = mediaCatalog.skinCards || [];
       if (cards.length < 4) return null;
       const card = pickOne(cards);
-      const wrong = trickishDistractors(
-        card.god,
-        catalog.gods.map((g) => g.name).filter((n) => norm(n) !== norm(card.god)),
-        count - 1,
-        { prefer: godNeighborNames(card.god), realOnly: true }
-      );
+      const wrong = godIdentifyDistractors(card.god, count - 1);
       const seed = `${card.god}|${card.skinName}`;
       return packMc({
         prompt: 'Choose the correct god this skin belongs to.',
@@ -945,14 +1370,59 @@ export function randomizeQuestion(question) {
         },
       });
     },
-    () => makeReleaseAfterQuestion({ count }),
-    // Weighted so Random question actually lands on this template.
-    () => makeReleaseAfterQuestion({ count }),
-  ];
+    release_after: () => makeReleaseAfterQuestion({ count }),
+    god_emoji: () => makeGodEmojiQuestion({ count }),
+  };
+}
 
-  const picked = shuffle(makers);
-  for (const make of picked) {
+/** Build one question from a host-picked style id. */
+export function makeRandomQuestionByStyle(styleId, question) {
+  const count = optionCount(question);
+  const fillBlank = question?.meta?.kind === 'fill_blank';
+  if (fillBlank || styleId === 'aspect_blank') {
+    const row = pickOne(catalog.aspects);
+    if (!row) return { error: 'No aspect data.' };
+    return {
+      patch: {
+        type: 'short_answer',
+        prompt: `${row.god} Aspect is called ${row.usesThe ? 'Aspect of the' : 'Aspect of'} {{blank}}`,
+        options: [],
+        correct: { answers: [...new Set([row.blank, row.blank.toLowerCase()])] },
+        meta: { kind: 'fill_blank', remix_kind: 'aspect_blank', hint_context: { god: row.god } },
+        image_url: null,
+        image_urls: [],
+        clearMedia: true,
+      },
+    };
+  }
+
+  const makers = styleMakers(count);
+  const make = makers[styleId];
+  if (!make) return { error: `Unknown question style: ${styleId}` };
+  for (let i = 0; i < 10; i += 1) {
     const result = make();
+    if (result?.patch) return result;
+    if (result?.error) return result;
+  }
+  return { error: `Could not build a “${styleId}” question from the current catalogs.` };
+}
+
+/** Invent a new question + answers (random style). Prefer makeRandomQuestionByStyle from the host picker. */
+export function randomizeQuestion(question) {
+  const count = optionCount(question);
+  const fillBlank = question?.meta?.kind === 'fill_blank';
+  if (fillBlank) return makeRandomQuestionByStyle('aspect_blank', question);
+
+  if (isReleaseAfterPrompt(question?.prompt) || question?.meta?.remix_kind === 'release_after') {
+    const avoidGods = usedNames([question?.prompt]);
+    const hit = makeReleaseAfterQuestion({ count, avoidGods });
+    if (hit?.patch) return hit;
+  }
+
+  const makers = styleMakers(count);
+  const order = shuffle(Object.keys(makers));
+  for (const id of order) {
+    const result = makers[id]();
     if (result?.patch) return result;
   }
   return { error: 'Could not build a random question from builds.json.' };
@@ -967,7 +1437,16 @@ export function remixQuestionFromA(questionA, { avoidTexts = [] } = {}) {
     meta: questionA?.meta,
   };
   const avoid = [source.prompt, ...avoidTexts];
-  const tries = [remixRelease, remixItem, remixAspect, remixAbility, remixGod];
+  const tries = [
+    remixAbilitySound,
+    remixVoiceLine,
+    remixSkinGuess,
+    remixRelease,
+    remixItem,
+    remixAspect,
+    remixAbility,
+    remixGod,
+  ];
   for (const fn of tries) {
     const result = fn(source, avoid);
     if (result?.error) return result;

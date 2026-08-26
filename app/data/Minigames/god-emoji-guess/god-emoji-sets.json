@@ -1,0 +1,2069 @@
+{
+  "_readme": "Guess-the-Emoji Set A easy+hard only (B/C unused in gamemode for now). Author: emoji-clues.json.",
+  "gods": {
+    "Achilles": {
+      "a": {
+        "easy": [
+          "icons/spear.png",
+          "🛡️",
+          "🦶"
+        ],
+        "hard": [
+          "🛡️",
+          "💧",
+          "🏹"
+        ],
+        "easyTokens": [
+          "spear",
+          "shield",
+          "heel"
+        ],
+        "hardTokens": [
+          "armor",
+          "water",
+          "arrow"
+        ]
+      }
+    },
+    "Agni": {
+      "a": {
+        "easy": [
+          "🔥",
+          "💨",
+          "☄️"
+        ],
+        "hard": [
+          "🌊",
+          "✋",
+          "💫"
+        ],
+        "easyTokens": [
+          "fire",
+          "smoke",
+          "comet"
+        ],
+        "hardTokens": [
+          "wave",
+          "hand",
+          "spark"
+        ]
+      }
+    },
+    "Ah Puch": {
+      "a": {
+        "easy": [
+          "💀",
+          "🦴",
+          "🪰"
+        ],
+        "hard": [
+          "⚰️",
+          "🧟",
+          "💥"
+        ],
+        "easyTokens": [
+          "skull",
+          "bone",
+          "fly"
+        ],
+        "hardTokens": [
+          "coffin",
+          "zombie",
+          "explosion"
+        ]
+      }
+    },
+    "Aladdin": {
+      "a": {
+        "easy": [
+          "🧞",
+          "🪔",
+          "✨"
+        ],
+        "hard": [
+          "icons/wall.svg",
+          "👟",
+          "3️⃣"
+        ],
+        "easyTokens": [
+          "genie",
+          "lamp",
+          "sparkle"
+        ],
+        "hardTokens": [
+          "wall",
+          "shoes",
+          "three"
+        ]
+      }
+    },
+    "Amaterasu": {
+      "a": {
+        "easy": [
+          "☀️",
+          "🪞",
+          "⚔️"
+        ],
+        "hard": [
+          "🔄",
+          "👟",
+          "🔮"
+        ],
+        "easyTokens": [
+          "sun",
+          "mirror",
+          "sword"
+        ],
+        "hardTokens": [
+          "reload",
+          "shoes",
+          "crystal"
+        ]
+      }
+    },
+    "Anhur": {
+      "a": {
+        "easy": [
+          "🦁",
+          "icons/spear.png",
+          "🪨"
+        ],
+        "hard": [
+          "🏜️",
+          "🏜️",
+          "icons/spear.png"
+        ],
+        "easyTokens": [
+          "lion",
+          "spear",
+          "rock"
+        ],
+        "hardTokens": [
+          "desert",
+          "sand",
+          "spear"
+        ]
+      }
+    },
+    "Anubis": {
+      "a": {
+        "easy": [
+          "icons/jackal.svg",
+          "⚖️",
+          "⚱️"
+        ],
+        "hard": [
+          "icons/ankh.svg",
+          "⚖️",
+          "🌑"
+        ],
+        "easyTokens": [
+          "jackal",
+          "scales",
+          "urn"
+        ],
+        "hardTokens": [
+          "ankh",
+          "scales",
+          "dark"
+        ]
+      }
+    },
+    "Aphrodite": {
+      "a": {
+        "easy": [
+          "💋",
+          "💕",
+          "🦢"
+        ],
+        "hard": [
+          "🐦",
+          "icons/pluck.svg",
+          "✨"
+        ],
+        "easyTokens": [
+          "kiss",
+          "heart",
+          "swan"
+        ],
+        "hardTokens": [
+          "bird",
+          "pluck",
+          "sparkle"
+        ]
+      }
+    },
+    "Apollo": {
+      "a": {
+        "easy": [
+          "🎵",
+          "☀️",
+          "icons/bow.svg"
+        ],
+        "hard": [
+          "🐴",
+          "💃",
+          "🪽"
+        ],
+        "easyTokens": [
+          "music",
+          "sun",
+          "bow"
+        ],
+        "hardTokens": [
+          "horse",
+          "dance",
+          "wings"
+        ]
+      }
+    },
+    "Ares": {
+      "a": {
+        "easy": [
+          "🪖",
+          "⛓️",
+          "🔥"
+        ],
+        "hard": [
+          "⛓️",
+          "🩸",
+          "icons/pluck.svg"
+        ],
+        "easyTokens": [
+          "helmet",
+          "chain",
+          "fire"
+        ],
+        "hardTokens": [
+          "chain",
+          "blood",
+          "pluck"
+        ]
+      }
+    },
+    "Artemis": {
+      "a": {
+        "easy": [
+          "🐗",
+          "icons/bow.svg",
+          "🌙"
+        ],
+        "hard": [
+          "🦌",
+          "🌙",
+          "🏹"
+        ],
+        "easyTokens": [
+          "boar",
+          "bow",
+          "moon"
+        ],
+        "hardTokens": [
+          "deer",
+          "moon",
+          "arrow"
+        ]
+      }
+    },
+    "Artio": {
+      "a": {
+        "easy": [
+          "🐻",
+          "🍃",
+          "2️⃣"
+        ],
+        "hard": [
+          "💚",
+          "🐾",
+          "🌳"
+        ],
+        "easyTokens": [
+          "bear",
+          "leaf",
+          "two"
+        ],
+        "hardTokens": [
+          "heal",
+          "paw",
+          "tree"
+        ]
+      }
+    },
+    "Athena": {
+      "a": {
+        "easy": [
+          "🛡️",
+          "icons/spear.png",
+          "👥"
+        ],
+        "hard": [
+          "🦉",
+          "icons/wall.svg",
+          "📖"
+        ],
+        "easyTokens": [
+          "shield",
+          "spear",
+          "people"
+        ],
+        "hardTokens": [
+          "owl",
+          "wall",
+          "book"
+        ]
+      }
+    },
+    "Atlas": {
+      "a": {
+        "easy": [
+          "🌌",
+          "🏋️",
+          "🌍"
+        ],
+        "hard": [
+          "icons/pluck.svg",
+          "🔆",
+          "💪"
+        ],
+        "easyTokens": [
+          "galaxy",
+          "lift",
+          "earth"
+        ],
+        "hardTokens": [
+          "pluck",
+          "beam",
+          "strength"
+        ]
+      }
+    },
+    "Awilix": {
+      "a": {
+        "easy": [
+          "🐆",
+          "🌙",
+          "icons/pluck.svg"
+        ],
+        "hard": [
+          "🪶",
+          "👟",
+          "🏋️"
+        ],
+        "easyTokens": [
+          "leopard",
+          "moon",
+          "pluck"
+        ],
+        "hardTokens": [
+          "feather",
+          "shoes",
+          "lift"
+        ]
+      }
+    },
+    "Bacchus": {
+      "a": {
+        "easy": [
+          "🍷",
+          "🍇",
+          "🤢"
+        ],
+        "hard": [
+          "🍖",
+          "🌊",
+          "🥱"
+        ],
+        "easyTokens": [
+          "wine",
+          "grape",
+          "nausea"
+        ],
+        "hardTokens": [
+          "feast",
+          "wave",
+          "yawn"
+        ]
+      }
+    },
+    "Baron Samedi": {
+      "a": {
+        "easy": [
+          "🎩",
+          "💀",
+          "🍸"
+        ],
+        "hard": [
+          "⚰️",
+          "🐍",
+          "icons/whirl.svg"
+        ],
+        "easyTokens": [
+          "hat",
+          "skull",
+          "cocktail"
+        ],
+        "hardTokens": [
+          "coffin",
+          "snake",
+          "whirl"
+        ]
+      }
+    },
+    "Bastet": {
+      "a": {
+        "easy": [
+          "🐱",
+          "icons/whip.svg",
+          "🐾"
+        ],
+        "hard": [
+          "👟",
+          "🩸",
+          "👥"
+        ],
+        "easyTokens": [
+          "cat",
+          "whip",
+          "paw"
+        ],
+        "hardTokens": [
+          "shoes",
+          "blood",
+          "clone"
+        ]
+      }
+    },
+    "Bellona": {
+      "a": {
+        "easy": [
+          "🛡️",
+          "🔨",
+          "icons/whip.svg"
+        ],
+        "hard": [
+          "🚩",
+          "🐦",
+          "icons/whip.svg"
+        ],
+        "easyTokens": [
+          "shield",
+          "hammer",
+          "whip"
+        ],
+        "hardTokens": [
+          "flag",
+          "bird",
+          "whip"
+        ]
+      }
+    },
+    "Cabrakan": {
+      "a": {
+        "easy": [
+          "🌍",
+          "icons/wall.svg",
+          "🛡️"
+        ],
+        "hard": [
+          "🫨",
+          "🪨",
+          "⛰️"
+        ],
+        "easyTokens": [
+          "earth",
+          "wall",
+          "shield"
+        ],
+        "hardTokens": [
+          "tremor",
+          "rock",
+          "mountain"
+        ]
+      }
+    },
+    "Cerberus": {
+      "a": {
+        "easy": [
+          "🐕",
+          "3️⃣",
+          "👻"
+        ],
+        "hard": [
+          "icons/poison.svg",
+          "👻",
+          "🏋️"
+        ],
+        "easyTokens": [
+          "dog",
+          "three",
+          "ghost"
+        ],
+        "hardTokens": [
+          "poison",
+          "ghost",
+          "lift"
+        ]
+      }
+    },
+    "Cernunnos": {
+      "a": {
+        "easy": [
+          "🦌",
+          "🍃",
+          "icons/bow.svg"
+        ],
+        "hard": [
+          "❄️",
+          "☀️",
+          "🐗"
+        ],
+        "easyTokens": [
+          "deer",
+          "leaf",
+          "bow"
+        ],
+        "hardTokens": [
+          "snow",
+          "sun",
+          "boar"
+        ]
+      }
+    },
+    "Chaac": {
+      "a": {
+        "easy": [
+          "🌧️",
+          "🪓",
+          "⚡"
+        ],
+        "hard": [
+          "💚",
+          "🌩️",
+          "☁️"
+        ],
+        "easyTokens": [
+          "rain",
+          "axe",
+          "lightning"
+        ],
+        "hardTokens": [
+          "heal",
+          "storm",
+          "cloud"
+        ]
+      }
+    },
+    "Charon": {
+      "a": {
+        "easy": [
+          "⛵",
+          "🪙",
+          "🌊"
+        ],
+        "hard": [
+          "🌫️",
+          "💀",
+          "🪙"
+        ],
+        "easyTokens": [
+          "ship",
+          "coin",
+          "wave"
+        ],
+        "hardTokens": [
+          "fog",
+          "skull",
+          "coin"
+        ]
+      }
+    },
+    "Chiron": {
+      "a": {
+        "easy": [
+          "🐴",
+          "icons/bow.svg",
+          "🧑‍🏫"
+        ],
+        "hard": [
+          "💚",
+          "⭐",
+          "🏹"
+        ],
+        "easyTokens": [
+          "horse",
+          "bow",
+          "teacher"
+        ],
+        "hardTokens": [
+          "heal",
+          "star",
+          "arrow"
+        ]
+      }
+    },
+    "Chronos": {
+      "a": {
+        "easy": [
+          "⏳",
+          "⚙️",
+          "⌛"
+        ],
+        "hard": [
+          "🔄",
+          "❄️",
+          "🌀"
+        ],
+        "easyTokens": [
+          "clock",
+          "gear",
+          "hourglass"
+        ],
+        "hardTokens": [
+          "reload",
+          "freeze",
+          "rift"
+        ]
+      }
+    },
+    "Cupid": {
+      "a": {
+        "easy": [
+          "💕",
+          "icons/bow.svg",
+          "😇"
+        ],
+        "hard": [
+          "💣",
+          "💚",
+          "😴"
+        ],
+        "easyTokens": [
+          "heart",
+          "bow",
+          "angel"
+        ],
+        "hardTokens": [
+          "bomb",
+          "heal",
+          "sleep"
+        ]
+      }
+    },
+    "Da Ji": {
+      "a": {
+        "easy": [
+          "🦊",
+          "⛓️",
+          "🩸"
+        ],
+        "hard": [
+          "9️⃣",
+          "🔥",
+          "🐾"
+        ],
+        "easyTokens": [
+          "fox",
+          "chain",
+          "blood"
+        ],
+        "hardTokens": [
+          "nine",
+          "fire",
+          "paw"
+        ]
+      }
+    },
+    "Danzaburou": {
+      "a": {
+        "easy": [
+          "🦝",
+          "💰",
+          "🍃"
+        ],
+        "hard": [
+          "👥",
+          "💣",
+          "🍷"
+        ],
+        "easyTokens": [
+          "raccoon",
+          "money",
+          "leaf"
+        ],
+        "hardTokens": [
+          "clone",
+          "bomb",
+          "wine"
+        ]
+      }
+    },
+    "Discordia": {
+      "a": {
+        "easy": [
+          "🍎",
+          "🌩️",
+          "🌪️"
+        ],
+        "hard": [
+          "🍎",
+          "👥",
+          "💫"
+        ],
+        "easyTokens": [
+          "apple",
+          "storm",
+          "cyclone"
+        ],
+        "hardTokens": [
+          "apple",
+          "people",
+          "spark"
+        ]
+      }
+    },
+    "Eset": {
+      "a": {
+        "easy": [
+          "🪽",
+          "icons/staff.svg",
+          "🐦"
+        ],
+        "hard": [
+          "🔮",
+          "🤫",
+          "🔮"
+        ],
+        "easyTokens": [
+          "wings",
+          "staff",
+          "bird"
+        ],
+        "hardTokens": [
+          "orb",
+          "silence",
+          "crystal"
+        ]
+      }
+    },
+    "Fenrir": {
+      "a": {
+        "easy": [
+          "🐺",
+          "⛓️",
+          "🦷"
+        ],
+        "hard": [
+          "🗿",
+          "😡",
+          "🌙"
+        ],
+        "easyTokens": [
+          "wolf",
+          "chain",
+          "maw"
+        ],
+        "hardTokens": [
+          "giant",
+          "rage",
+          "moon"
+        ]
+      }
+    },
+    "Ganesha": {
+      "a": {
+        "easy": [
+          "🐘",
+          "🚫",
+          "🪷"
+        ],
+        "hard": [
+          "🙏",
+          "icons/wall.svg",
+          "🤫"
+        ],
+        "easyTokens": [
+          "elephant",
+          "stop",
+          "lotus"
+        ],
+        "hardTokens": [
+          "prayer",
+          "wall",
+          "silence"
+        ]
+      }
+    },
+    "Geb": {
+      "a": {
+        "easy": [
+          "🌍",
+          "🪨",
+          "icons/wall.svg"
+        ],
+        "hard": [
+          "🫨",
+          "⚽",
+          "icons/pluck.svg"
+        ],
+        "easyTokens": [
+          "earth",
+          "rock",
+          "wall"
+        ],
+        "hardTokens": [
+          "tremor",
+          "ball",
+          "pluck"
+        ]
+      }
+    },
+    "Gilgamesh": {
+      "a": {
+        "easy": [
+          "🦵",
+          "⚔️",
+          "🧱"
+        ],
+        "hard": [
+          "💨",
+          "👟",
+          "💪"
+        ],
+        "easyTokens": [
+          "leg",
+          "sword",
+          "brick"
+        ],
+        "hardTokens": [
+          "wind",
+          "shoes",
+          "strength"
+        ]
+      }
+    },
+    "Guan Yu": {
+      "a": {
+        "easy": [
+          "🐴",
+          "icons/spear.png",
+          "💚"
+        ],
+        "hard": [
+          "💚",
+          "🐉",
+          "💪"
+        ],
+        "easyTokens": [
+          "horse",
+          "spear",
+          "heal"
+        ],
+        "hardTokens": [
+          "green",
+          "dragon",
+          "strength"
+        ]
+      }
+    },
+    "Hades": {
+      "a": {
+        "easy": [
+          "💀",
+          "icons/whirl.svg",
+          "🌑"
+        ],
+        "hard": [
+          "🤫",
+          "💚",
+          "👑"
+        ],
+        "easyTokens": [
+          "skull",
+          "whirl",
+          "dark"
+        ],
+        "hardTokens": [
+          "silence",
+          "heal",
+          "crown"
+        ]
+      }
+    },
+    "Hecate": {
+      "a": {
+        "easy": [
+          "🌙",
+          "3️⃣",
+          "🪄"
+        ],
+        "hard": [
+          "🌀",
+          "🐕",
+          "📜"
+        ],
+        "easyTokens": [
+          "moon",
+          "three",
+          "wand"
+        ],
+        "hardTokens": [
+          "portal",
+          "dog",
+          "glyph"
+        ]
+      }
+    },
+    "Hercules": {
+      "a": {
+        "easy": [
+          "💪",
+          "🏏",
+          "🪨"
+        ],
+        "hard": [
+          "💚",
+          "icons/pluck.svg",
+          "🦁"
+        ],
+        "easyTokens": [
+          "strength",
+          "club",
+          "rock"
+        ],
+        "hardTokens": [
+          "heal",
+          "pluck",
+          "lion"
+        ]
+      }
+    },
+    "Horus": {
+      "a": {
+        "easy": [
+          "🐦",
+          "👁️",
+          "🪽"
+        ],
+        "hard": [
+          "💚",
+          "🏋️",
+          "👥"
+        ],
+        "easyTokens": [
+          "bird",
+          "eye",
+          "wings"
+        ],
+        "hardTokens": [
+          "heal",
+          "lift",
+          "people"
+        ]
+      }
+    },
+    "Hou Yi": {
+      "a": {
+        "easy": [
+          "icons/bow.svg",
+          "☀️",
+          "9️⃣"
+        ],
+        "hard": [
+          "🐰",
+          "🐦",
+          "🏹"
+        ],
+        "easyTokens": [
+          "bow",
+          "sun",
+          "nine"
+        ],
+        "hardTokens": [
+          "rabbit",
+          "bird",
+          "arrow"
+        ]
+      }
+    },
+    "Hua Mulan": {
+      "a": {
+        "easy": [
+          "🚩",
+          "⚔️",
+          "🌸"
+        ],
+        "hard": [
+          "🔄",
+          "icons/spear.png",
+          "🐴"
+        ],
+        "easyTokens": [
+          "banner",
+          "sword",
+          "flower"
+        ],
+        "hardTokens": [
+          "reload",
+          "spear",
+          "horse"
+        ]
+      }
+    },
+    "Hun Batz": {
+      "a": {
+        "easy": [
+          "🐒",
+          "🥁",
+          "🪃"
+        ],
+        "hard": [
+          "👻",
+          "🏋️",
+          "icons/staff.svg"
+        ],
+        "easyTokens": [
+          "monkey",
+          "drum",
+          "boomerang"
+        ],
+        "hardTokens": [
+          "ghost",
+          "lift",
+          "staff"
+        ]
+      }
+    },
+    "Ishtar": {
+      "a": {
+        "easy": [
+          "⭐",
+          "icons/bow.svg",
+          "👑"
+        ],
+        "hard": [
+          "⚡",
+          "⚔️",
+          "🌩️"
+        ],
+        "easyTokens": [
+          "star",
+          "bow",
+          "crown"
+        ],
+        "hardTokens": [
+          "lightning",
+          "sword",
+          "storm"
+        ]
+      }
+    },
+    "Izanami": {
+      "a": {
+        "easy": [
+          "🪃",
+          "👻",
+          "icons/scythe.svg"
+        ],
+        "hard": [
+          "🫥",
+          "🌀",
+          "💀"
+        ],
+        "easyTokens": [
+          "boomerang",
+          "ghost",
+          "scythe"
+        ],
+        "hardTokens": [
+          "invisible",
+          "portal",
+          "skull"
+        ]
+      }
+    },
+    "Janus": {
+      "a": {
+        "easy": [
+          "🚪",
+          "🌀",
+          "2️⃣"
+        ],
+        "hard": [
+          "🌀",
+          "icons/wall.svg",
+          "🌌"
+        ],
+        "easyTokens": [
+          "door",
+          "portal",
+          "two"
+        ],
+        "hardTokens": [
+          "rift",
+          "wall",
+          "galaxy"
+        ]
+      }
+    },
+    "Jing Wei": {
+      "a": {
+        "easy": [
+          "🐦",
+          "🌊",
+          "🪨"
+        ],
+        "hard": [
+          "💨",
+          "icons/bow.svg",
+          "🪽"
+        ],
+        "easyTokens": [
+          "bird",
+          "wave",
+          "rock"
+        ],
+        "hardTokens": [
+          "wind",
+          "bow",
+          "wings"
+        ]
+      }
+    },
+    "Jormungandr": {
+      "a": {
+        "easy": [
+          "🐍",
+          "icons/poison.svg",
+          "🌍"
+        ],
+        "hard": [
+          "🌊",
+          "🦷",
+          "🌊"
+        ],
+        "easyTokens": [
+          "snake",
+          "poison",
+          "earth"
+        ],
+        "hardTokens": [
+          "wave",
+          "maw",
+          "ocean"
+        ]
+      }
+    },
+    "Kali": {
+      "a": {
+        "easy": [
+          "👅",
+          "🗡️",
+          "💀"
+        ],
+        "hard": [
+          "4️⃣",
+          "💃",
+          "🩸"
+        ],
+        "easyTokens": [
+          "tongue",
+          "dagger",
+          "skull"
+        ],
+        "hardTokens": [
+          "four",
+          "dance",
+          "blood"
+        ]
+      }
+    },
+    "Khepri": {
+      "a": {
+        "easy": [
+          "🪲",
+          "☀️",
+          "♻️"
+        ],
+        "hard": [
+          "🛡️",
+          "icons/pluck.svg",
+          "💚"
+        ],
+        "easyTokens": [
+          "bug",
+          "sun",
+          "recycle"
+        ],
+        "hardTokens": [
+          "shield",
+          "pluck",
+          "heal"
+        ]
+      }
+    },
+    "Kukulkan": {
+      "a": {
+        "easy": [
+          "🐍",
+          "💨",
+          "🌪️"
+        ],
+        "hard": [
+          "🪽",
+          "icons/whirl.svg",
+          "🌩️"
+        ],
+        "easyTokens": [
+          "snake",
+          "wind",
+          "cyclone"
+        ],
+        "hardTokens": [
+          "wings",
+          "whirl",
+          "storm"
+        ]
+      }
+    },
+    "Loki": {
+      "a": {
+        "easy": [
+          "🗡️",
+          "🫥",
+          "👥"
+        ],
+        "hard": [
+          "🎭",
+          "🐍",
+          "🌑"
+        ],
+        "easyTokens": [
+          "dagger",
+          "invisible",
+          "clone"
+        ],
+        "hardTokens": [
+          "masks",
+          "snake",
+          "dark"
+        ]
+      }
+    },
+    "Medusa": {
+      "a": {
+        "easy": [
+          "🐍",
+          "👁️",
+          "🗿"
+        ],
+        "hard": [
+          "icons/bow.svg",
+          "icons/poison.svg",
+          "🏹"
+        ],
+        "easyTokens": [
+          "snake",
+          "eye",
+          "statue"
+        ],
+        "hardTokens": [
+          "bow",
+          "poison",
+          "arrow"
+        ]
+      }
+    },
+    "Mercury": {
+      "a": {
+        "easy": [
+          "👟",
+          "💨",
+          "🪽"
+        ],
+        "hard": [
+          "👊",
+          "🎒",
+          "icons/pluck.svg"
+        ],
+        "easyTokens": [
+          "shoes",
+          "wind",
+          "wings"
+        ],
+        "hardTokens": [
+          "fist",
+          "bag",
+          "pluck"
+        ]
+      }
+    },
+    "Merlin": {
+      "a": {
+        "easy": [
+          "🔥",
+          "❄️",
+          "icons/staff.svg"
+        ],
+        "hard": [
+          "3️⃣",
+          "🧙",
+          "🔮"
+        ],
+        "easyTokens": [
+          "fire",
+          "freeze",
+          "staff"
+        ],
+        "hardTokens": [
+          "three",
+          "wizard",
+          "crystal"
+        ]
+      }
+    },
+    "Mordred": {
+      "a": {
+        "easy": [
+          "2️⃣",
+          "⚔️",
+          "🩸"
+        ],
+        "hard": [
+          "😡",
+          "☠️",
+          "🛡️"
+        ],
+        "easyTokens": [
+          "two",
+          "sword",
+          "blood"
+        ],
+        "hardTokens": [
+          "rage",
+          "execute",
+          "armor"
+        ]
+      }
+    },
+    "Morgan Le Fay": {
+      "a": {
+        "easy": [
+          "🐉",
+          "🪄",
+          "🔥"
+        ],
+        "hard": [
+          "⚔️",
+          "🌫️",
+          "🧙‍♀️"
+        ],
+        "easyTokens": [
+          "dragon",
+          "wand",
+          "fire"
+        ],
+        "hardTokens": [
+          "sword",
+          "fog",
+          "witch"
+        ]
+      }
+    },
+    "Ne Zha": {
+      "a": {
+        "easy": [
+          "⭕",
+          "icons/spear.png",
+          "🪷"
+        ],
+        "hard": [
+          "🔥",
+          "💨",
+          "👟"
+        ],
+        "easyTokens": [
+          "ring",
+          "spear",
+          "lotus"
+        ],
+        "hardTokens": [
+          "fire",
+          "wind",
+          "shoes"
+        ]
+      }
+    },
+    "Neith": {
+      "a": {
+        "easy": [
+          "🧵",
+          "icons/bow.svg",
+          "🕸️"
+        ],
+        "hard": [
+          "💚",
+          "🌌",
+          "🏹"
+        ],
+        "easyTokens": [
+          "thread",
+          "bow",
+          "web"
+        ],
+        "hardTokens": [
+          "heal",
+          "galaxy",
+          "arrow"
+        ]
+      }
+    },
+    "Nemesis": {
+      "a": {
+        "easy": [
+          "⚖️",
+          "⚔️",
+          "🪞"
+        ],
+        "hard": [
+          "☠️",
+          "🛡️",
+          "🌑"
+        ],
+        "easyTokens": [
+          "scales",
+          "sword",
+          "mirror"
+        ],
+        "hardTokens": [
+          "execute",
+          "shield",
+          "dark"
+        ]
+      }
+    },
+    "Nu Wa": {
+      "a": {
+        "easy": [
+          "🌫️",
+          "👥",
+          "🪨"
+        ],
+        "hard": [
+          "🐍",
+          "🔥",
+          "🔮"
+        ],
+        "easyTokens": [
+          "fog",
+          "people",
+          "rock"
+        ],
+        "hardTokens": [
+          "snake",
+          "fire",
+          "crystal"
+        ]
+      }
+    },
+    "Nut": {
+      "a": {
+        "easy": [
+          "🌌",
+          "⭐",
+          "🌃"
+        ],
+        "hard": [
+          "☄️",
+          "🌀",
+          "2️⃣"
+        ],
+        "easyTokens": [
+          "galaxy",
+          "star",
+          "night"
+        ],
+        "hardTokens": [
+          "comet",
+          "rift",
+          "two"
+        ]
+      }
+    },
+    "Odin": {
+      "a": {
+        "easy": [
+          "🐦‍⬛",
+          "icons/spear.png",
+          "⭕"
+        ],
+        "hard": [
+          "icons/wall.svg",
+          "👁️",
+          "🛡️"
+        ],
+        "easyTokens": [
+          "raven",
+          "spear",
+          "ring"
+        ],
+        "hardTokens": [
+          "wall",
+          "eye",
+          "shield"
+        ]
+      }
+    },
+    "Osiris": {
+      "a": {
+        "easy": [
+          "🧟",
+          "icons/scythe.svg",
+          "🌾"
+        ],
+        "hard": [
+          "icons/whip.svg",
+          "🧵",
+          "🦴"
+        ],
+        "easyTokens": [
+          "zombie",
+          "scythe",
+          "wheat"
+        ],
+        "hardTokens": [
+          "whip",
+          "thread",
+          "bone"
+        ]
+      }
+    },
+    "Pele": {
+      "a": {
+        "easy": [
+          "🌋",
+          "🔥",
+          "🌺"
+        ],
+        "hard": [
+          "⚡",
+          "👟",
+          "🪨"
+        ],
+        "easyTokens": [
+          "volcano",
+          "fire",
+          "hibiscus"
+        ],
+        "hardTokens": [
+          "lightning",
+          "shoes",
+          "rock"
+        ]
+      }
+    },
+    "Poseidon": {
+      "a": {
+        "easy": [
+          "🌊",
+          "🔱",
+          "🐙"
+        ],
+        "hard": [
+          "icons/whirl.svg",
+          "🌊",
+          "icons/pluck.svg"
+        ],
+        "easyTokens": [
+          "wave",
+          "trident",
+          "octopus"
+        ],
+        "hardTokens": [
+          "whirl",
+          "tide",
+          "pluck"
+        ]
+      }
+    },
+    "Princess Bari": {
+      "a": {
+        "easy": [
+          "🔔",
+          "💚",
+          "🌸"
+        ],
+        "hard": [
+          "👻",
+          "💃",
+          "👥"
+        ],
+        "easyTokens": [
+          "bell",
+          "heal",
+          "flower"
+        ],
+        "hardTokens": [
+          "ghost",
+          "dance",
+          "people"
+        ]
+      }
+    },
+    "Ra": {
+      "a": {
+        "easy": [
+          "☀️",
+          "🐦",
+          "🔆"
+        ],
+        "hard": [
+          "💚",
+          "👁️",
+          "💡"
+        ],
+        "easyTokens": [
+          "sun",
+          "bird",
+          "beam"
+        ],
+        "hardTokens": [
+          "heal",
+          "eye",
+          "light"
+        ]
+      }
+    },
+    "Rama": {
+      "a": {
+        "easy": [
+          "icons/bow.svg",
+          "👑",
+          "🐒"
+        ],
+        "hard": [
+          "⭐",
+          "3️⃣",
+          "👟"
+        ],
+        "easyTokens": [
+          "bow",
+          "crown",
+          "monkey"
+        ],
+        "hardTokens": [
+          "star",
+          "three",
+          "shoes"
+        ]
+      }
+    },
+    "Ratatoskr": {
+      "a": {
+        "easy": [
+          "🐿️",
+          "🥜",
+          "🌳"
+        ],
+        "hard": [
+          "🎯",
+          "👟",
+          "3️⃣"
+        ],
+        "easyTokens": [
+          "squirrel",
+          "nut",
+          "tree"
+        ],
+        "hardTokens": [
+          "dart",
+          "shoes",
+          "three"
+        ]
+      }
+    },
+    "Scylla": {
+      "a": {
+        "easy": [
+          "👧",
+          "🐕",
+          "🌊"
+        ],
+        "hard": [
+          "👹",
+          "🦷",
+          "4️⃣"
+        ],
+        "easyTokens": [
+          "girl",
+          "dog",
+          "wave"
+        ],
+        "hardTokens": [
+          "monster",
+          "maw",
+          "four"
+        ]
+      }
+    },
+    "Sobek": {
+      "a": {
+        "easy": [
+          "🐊",
+          "🌊",
+          "icons/pluck.svg"
+        ],
+        "hard": [
+          "💚",
+          "🌊",
+          "💪"
+        ],
+        "easyTokens": [
+          "crocodile",
+          "wave",
+          "pluck"
+        ],
+        "hardTokens": [
+          "heal",
+          "tide",
+          "strength"
+        ]
+      }
+    },
+    "Sol": {
+      "a": {
+        "easy": [
+          "☀️",
+          "🔥",
+          "💫"
+        ],
+        "hard": [
+          "💚",
+          "💥",
+          "💃"
+        ],
+        "easyTokens": [
+          "sun",
+          "fire",
+          "spark"
+        ],
+        "hardTokens": [
+          "heal",
+          "explosion",
+          "dance"
+        ]
+      }
+    },
+    "Sun Wukong": {
+      "a": {
+        "easy": [
+          "🐒",
+          "icons/staff.svg",
+          "☁️"
+        ],
+        "hard": [
+          "👥",
+          "🎭",
+          "🐦"
+        ],
+        "easyTokens": [
+          "monkey",
+          "staff",
+          "cloud"
+        ],
+        "hardTokens": [
+          "clone",
+          "masks",
+          "bird"
+        ]
+      }
+    },
+    "Susano": {
+      "a": {
+        "easy": [
+          "⚔️",
+          "🌪️",
+          "🌩️"
+        ],
+        "hard": [
+          "icons/pluck.svg",
+          "3️⃣",
+          "🐍"
+        ],
+        "easyTokens": [
+          "sword",
+          "cyclone",
+          "storm"
+        ],
+        "hardTokens": [
+          "pluck",
+          "three",
+          "snake"
+        ]
+      }
+    },
+    "Sylvanus": {
+      "a": {
+        "easy": [
+          "🌳",
+          "🍃",
+          "icons/pluck.svg"
+        ],
+        "hard": [
+          "💚",
+          "🌸",
+          "🐸"
+        ],
+        "easyTokens": [
+          "tree",
+          "leaf",
+          "pluck"
+        ],
+        "hardTokens": [
+          "heal",
+          "flower",
+          "frog"
+        ]
+      }
+    },
+    "Thanatos": {
+      "a": {
+        "easy": [
+          "icons/scythe.svg",
+          "🪽",
+          "☠️"
+        ],
+        "hard": [
+          "🩸",
+          "🤫",
+          "💚"
+        ],
+        "easyTokens": [
+          "scythe",
+          "wings",
+          "execute"
+        ],
+        "hardTokens": [
+          "blood",
+          "silence",
+          "heal"
+        ]
+      }
+    },
+    "The Morrigan": {
+      "a": {
+        "easy": [
+          "🐦‍⬛",
+          "🎭",
+          "👥"
+        ],
+        "hard": [
+          "🫥",
+          "🌫️",
+          "3️⃣"
+        ],
+        "easyTokens": [
+          "raven",
+          "masks",
+          "clone"
+        ],
+        "hardTokens": [
+          "invisible",
+          "fog",
+          "three"
+        ]
+      }
+    },
+    "Thor": {
+      "a": {
+        "easy": [
+          "🔨",
+          "⚡",
+          "icons/wall.svg"
+        ],
+        "hard": [
+          "🪃",
+          "🌪️",
+          "🌩️"
+        ],
+        "easyTokens": [
+          "hammer",
+          "lightning",
+          "wall"
+        ],
+        "hardTokens": [
+          "boomerang",
+          "cyclone",
+          "storm"
+        ]
+      }
+    },
+    "Tsukuyomi": {
+      "a": {
+        "easy": [
+          "🌙",
+          "🥷",
+          "⭐"
+        ],
+        "hard": [
+          "⛓️",
+          "icons/scythe.svg",
+          "🌑"
+        ],
+        "easyTokens": [
+          "moon",
+          "ninja",
+          "star"
+        ],
+        "hardTokens": [
+          "chain",
+          "scythe",
+          "dark"
+        ]
+      }
+    },
+    "Ullr": {
+      "a": {
+        "easy": [
+          "icons/bow.svg",
+          "🪓",
+          "❄️"
+        ],
+        "hard": [
+          "2️⃣",
+          "👟",
+          "🏹"
+        ],
+        "easyTokens": [
+          "bow",
+          "axe",
+          "snow"
+        ],
+        "hardTokens": [
+          "two",
+          "shoes",
+          "arrow"
+        ]
+      }
+    },
+    "Vulcan": {
+      "a": {
+        "easy": [
+          "🔨",
+          "⚙️",
+          "🔥"
+        ],
+        "hard": [
+          "💣",
+          "🤖",
+          "💥"
+        ],
+        "easyTokens": [
+          "hammer",
+          "gear",
+          "fire"
+        ],
+        "hardTokens": [
+          "bomb",
+          "robot",
+          "explosion"
+        ]
+      }
+    },
+    "Xbalanque": {
+      "a": {
+        "easy": [
+          "🌃",
+          "🎯",
+          "icons/poison.svg"
+        ],
+        "hard": [
+          "⚽",
+          "2️⃣",
+          "🌙"
+        ],
+        "easyTokens": [
+          "night",
+          "dart",
+          "poison"
+        ],
+        "hardTokens": [
+          "ball",
+          "two",
+          "moon"
+        ]
+      }
+    },
+    "Yemoja": {
+      "a": {
+        "easy": [
+          "💧",
+          "🌊",
+          "💚"
+        ],
+        "hard": [
+          "⭕",
+          "icons/wall.svg",
+          "🌙"
+        ],
+        "easyTokens": [
+          "water",
+          "wave",
+          "heal"
+        ],
+        "hardTokens": [
+          "ring",
+          "wall",
+          "moon"
+        ]
+      }
+    },
+    "Ymir": {
+      "a": {
+        "easy": [
+          "🧊",
+          "icons/wall.svg",
+          "❄️"
+        ],
+        "hard": [
+          "🏏",
+          "🗿",
+          "❄️"
+        ],
+        "easyTokens": [
+          "ice",
+          "wall",
+          "freeze"
+        ],
+        "hardTokens": [
+          "club",
+          "giant",
+          "snow"
+        ]
+      }
+    },
+    "Zeus": {
+      "a": {
+        "easy": [
+          "⚡",
+          "☁️",
+          "💫"
+        ],
+        "hard": [
+          "⛓️",
+          "3️⃣",
+          "💥"
+        ],
+        "easyTokens": [
+          "lightning",
+          "cloud",
+          "spark"
+        ],
+        "hardTokens": [
+          "chain",
+          "three",
+          "explosion"
+        ]
+      }
+    }
+  }
+}

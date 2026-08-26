@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="640" height="300" viewBox="0 0 640 300" role="img" aria-label="Cabrakan">
+  <rect width="640" height="300" rx="16" fill="#0b1220"/>
+  <rect x="10" y="10" width="620" height="280" rx="12" fill="none" stroke="rgba(125,211,252,0.42)" stroke-width="2"/>
+  <text x="170" y="143.2" text-anchor="middle" font-size="72" font-family="Segoe UI Emoji, Apple Color Emoji, Noto Color Emoji, sans-serif">🌍</text>
+  <image href="data:image/svg+xml;utf8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22128%22%20height%3D%22128%22%20viewBox%3D%220%200%20128%20128%22%20role%3D%22img%22%20aria-label%3D%22wall%22%3E%20%3Crect%20width%3D%22128%22%20height%3D%22128%22%20rx%3D%2216%22%20fill%3D%22%230b1220%22%2F%3E%20%3Crect%20x%3D%2224%22%20y%3D%2236%22%20width%3D%2280%22%20height%3D%2256%22%20rx%3D%224%22%20fill%3D%22%231e3a5f%22%20stroke%3D%22%237dd3fc%22%20stroke-width%3D%224%22%2F%3E%20%3Cline%20x1%3D%2224%22%20y1%3D%2264%22%20x2%3D%22104%22%20y2%3D%2264%22%20stroke%3D%22%237dd3fc%22%20stroke-width%3D%223%22%2F%3E%20%3Cline%20x1%3D%2264%22%20y1%3D%2236%22%20x2%3D%2264%22%20y2%3D%2292%22%20stroke%3D%22%237dd3fc%22%20stroke-width%3D%223%22%2F%3E%20%3C%2Fsvg%3E" x="281" y="79" width="78" height="78" preserveAspectRatio="xMidYMid meet"/>
+  <text x="470" y="143.2" text-anchor="middle" font-size="72" font-family="Segoe UI Emoji, Apple Color Emoji, Noto Color Emoji, sans-serif">🛡️</text>
+  <text x="320" y="248" text-anchor="middle" fill="#e2e8f0" font-size="28" font-family="Segoe UI, system-ui, sans-serif" letter-spacing="0.22em" font-weight="700">Cabrakan</text>
+</svg>

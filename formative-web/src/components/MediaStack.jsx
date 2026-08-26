@@ -2,6 +2,32 @@ import { useEffect, useRef, useState } from 'react';
 import { classifyMediaUrl, resolveMediaUrl } from '../lib/mediaUrl';
 import SkinCropThumb from './SkinCropThumb';
 
+function HostAudioPlayer({ src, autoPlayToken }) {
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    if (!autoPlayToken || !src) return undefined;
+    const el = audioRef.current;
+    if (!el) return undefined;
+    el.pause();
+    el.currentTime = 0;
+    const playPromise = el.play();
+    if (playPromise?.catch) playPromise.catch(() => {});
+    return undefined;
+  }, [autoPlayToken, src]);
+
+  return (
+    <audio
+      ref={audioRef}
+      controls
+      src={src}
+      className="f-q-media-audio"
+      title=""
+      controlsList="nodownload"
+    />
+  );
+}
+
 function TakeAudioPlayer({ src }) {
   const audioRef = useRef(null);
   const [phase, setPhase] = useState('idle');
@@ -104,6 +130,7 @@ export default function MediaStack({
   onHotspot,
   imageCrop = '',
   imageCropSeed = '',
+  autoPlayAudioToken = null,
 }) {
   const list = (urls || []).filter(Boolean);
   if (!list.length) return null;
@@ -119,7 +146,7 @@ export default function MediaStack({
             body = opaque ? (
               <TakeAudioPlayer src={src} />
             ) : (
-              <audio controls src={src} className="f-q-media-audio" title="" controlsList="nodownload" />
+              <HostAudioPlayer src={src} autoPlayToken={autoPlayAudioToken} />
             );
           } else if (kind === 'video') {
             body = (

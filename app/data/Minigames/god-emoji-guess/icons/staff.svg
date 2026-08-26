@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="staff">
+  <rect width="128" height="128" rx="16" fill="#0b1220"/>
+  <line x1="64" y1="20" x2="64" y2="108" stroke="#c4b5fd" stroke-width="8" stroke-linecap="round"/>
+     <circle cx="64" cy="24" r="12" fill="#7dd3fc"/>
+</svg>

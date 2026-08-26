@@ -1165,20 +1165,24 @@ label.f-file-btn:hover {
   place-items: center;
 }
 
-.f-media-thumb img {
+/* Do not constrain crop thumbs — zoom math uses oversized absolute imgs */
+.f-media-thumb:not(.f-media-thumb-crop) img {
   max-width: 100%;
   max-height: 280px;
+  width: auto;
+  height: auto;
   object-fit: contain;
   display: block;
 }
 
 .f-media-thumb-crop {
-  min-height: 220px;
+  min-height: 180px;
   max-height: 320px;
   aspect-ratio: 4 / 3;
   width: 100%;
   display: block;
   place-items: stretch;
+  background: #030712;
 }
 
 .f-skin-crop {
@@ -1187,10 +1191,24 @@ label.f-file-btn:hover {
   border-radius: 10px;
   background: #030712;
   width: 100%;
+  height: 100%;
+  min-height: 180px;
   aspect-ratio: 4 / 3;
-  min-height: 220px;
   max-height: 320px;
   margin: 0 auto;
+}
+
+.f-skin-crop img {
+  max-width: none !important;
+  max-height: none !important;
+  display: block;
+}
+
+.f-skin-crop-fallback {
+  margin: 0;
+  padding: 24px 12px;
+  text-align: center;
+  font-size: 13px;
 }
 
 .f-grid tr.is-live:hover td {
@@ -2383,6 +2401,67 @@ label.f-file-btn:hover {
   color: var(--f-blue);
 }
 
+.f-random-style-wrap {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.f-random-style-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 8;
+  min-width: min(320px, 86vw);
+  max-height: min(420px, 70vh);
+  overflow: auto;
+  background: var(--f-card);
+  border: 1px solid var(--f-blue-border);
+  border-radius: 10px;
+  box-shadow: var(--f-shadow);
+  padding: 6px;
+  text-align: left;
+}
+
+.f-random-style-menu-title {
+  padding: 8px 10px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--f-blue);
+}
+
+.f-random-style-menu button {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--f-text);
+  text-align: left;
+  padding: 9px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.f-random-style-menu button:hover {
+  background: rgba(125, 211, 252, 0.12);
+}
+
+.f-random-style-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--f-text);
+}
+
+.f-random-style-blurb {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--f-muted);
+  line-height: 1.35;
+}
+
 .f-q-prompt-edit {
   display: flex;
   gap: 8px;
@@ -2616,6 +2695,19 @@ label.f-file-btn:hover {
   .f-q-media-pane {
     border-right: none;
     border-bottom: 1px solid var(--f-border);
+  }
+
+  .f-media-thumb:not(.f-media-thumb-crop) img,
+  .f-q-media-frame img {
+    max-height: min(280px, 55vw);
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .f-media-thumb-crop,
+  .f-skin-crop {
+    min-height: 160px;
   }
 }
 

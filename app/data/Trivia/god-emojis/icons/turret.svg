@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="turret">
+  <rect width="128" height="128" rx="16" fill="#0b1220"/>
+  <!-- Vulcan-style cannon / turret -->
+  <rect x="34" y="78" width="60" height="22" rx="4" fill="none" stroke="#94a3b8" stroke-width="6"/>
+  <path d="M48 78 L48 48 L80 48 L80 78" fill="none" stroke="#94a3b8" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M80 54 L108 46 L108 60 L80 68 Z" fill="none" stroke="#7dd3fc" stroke-width="6" stroke-linejoin="round"/>
+  <circle cx="64" cy="62" r="5" fill="#7dd3fc"/>
+  <path d="M42 100 L42 108 M64 100 L64 108 M86 100 L86 108" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+</svg>

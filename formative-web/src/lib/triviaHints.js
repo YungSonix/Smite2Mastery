@@ -147,6 +147,7 @@ function inferKind(q) {
   if (kind) return kind;
   const prompt = promptPlain(q?.prompt);
   if (/voice line belongs/i.test(prompt)) return 'voice_line';
+  if (/which ability is this sound/i.test(prompt)) return 'ability_sound';
   if (/skin belongs/i.test(prompt)) return 'skin_guess';
   if (/(?:came|released)\s+after/i.test(prompt)) return 'release_after';
   if (/what is this item called|name of this item/i.test(prompt)) return 'item_identify';
@@ -173,6 +174,16 @@ export function generateHintList(q) {
 
   if (kind === 'voice_line' || kind === 'skin_guess' || kind === 'ob_release') {
     return godFactTiers(godGuess, opts);
+  }
+
+  if (kind === 'ability_sound') {
+    const god = q?.meta?.hint_context?.god || String(godGuess).split('—')[0].trim();
+    const slot = Number(q?.meta?.hint_context?.slot) || 0;
+    const out = godFactTiers(god, opts.map((o) => String(o).split('—')[0].trim()));
+    if (slot >= 1 && slot <= 4) {
+      out.unshift(`This is ability ${slot}.`);
+    }
+    return out.slice(0, HINTS_PER_QUESTION);
   }
 
   if (kind === 'release_after' || kind === 'pick_all') {

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 function hashSeed(str) {
   let h = 0;
@@ -9,34 +9,46 @@ function hashSeed(str) {
   return Math.abs(h);
 }
 
-/** Centered zoom crop for skin-guess trivia (web). */
-export default function SkinCropThumb({ src, seed = 'skin', size = 280 }) {
+/** Centered zoom crop for skin-guess trivia (web). Uses % sizing so mobile width does not break the crop. */
+export default function SkinCropThumb({ src, seed = 'skin' }) {
+  const [failed, setFailed] = useState(false);
   const crop = useMemo(() => {
     const h = hashSeed(seed);
     const scale = 2.35 + (h % 40) / 100;
-    const imgSize = size * scale;
-    const shift = Math.max(0, (imgSize - size) / 2);
-    return { imgSize, left: -shift, top: -shift };
-  }, [seed, size]);
+    const shiftPct = -((scale - 1) / 2) * 100;
+    return {
+      width: `${scale * 100}%`,
+      height: `${scale * 100}%`,
+      left: `${shiftPct}%`,
+      top: `${shiftPct}%`,
+    };
+  }, [seed]);
 
   if (!src) return null;
 
   return (
-    <div className="f-skin-crop" style={{ width: size, maxWidth: '100%' }}>
-      <img
-        src={src}
-        alt=""
-        draggable={false}
-        onContextMenu={(e) => e.preventDefault()}
-        style={{
-          position: 'absolute',
-          width: crop.imgSize,
-          height: crop.imgSize,
-          left: crop.left,
-          top: crop.top,
-          objectFit: 'cover',
-        }}
-      />
+    <div className="f-skin-crop">
+      {failed ? (
+        <p className="f-skin-crop-fallback f-muted">Image failed to load</p>
+      ) : (
+        <img
+          src={src}
+          alt=""
+          draggable={false}
+          onContextMenu={(e) => e.preventDefault()}
+          onError={() => setFailed(true)}
+          style={{
+            position: 'absolute',
+            width: crop.width,
+            height: crop.height,
+            left: crop.left,
+            top: crop.top,
+            maxWidth: 'none',
+            maxHeight: 'none',
+            objectFit: 'cover',
+          }}
+        />
+      )}
     </div>
   );
 }

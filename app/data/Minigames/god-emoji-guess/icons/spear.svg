@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="spear">
+  <rect width="128" height="128" rx="16" fill="#0b1220"/>
+  <line x1="24" y1="104" x2="104" y2="24" stroke="#7dd3fc" stroke-width="8" stroke-linecap="round"/>
+     <polygon points="104,24 88,28 100,40" fill="#e2e8f0"/>
+</svg>

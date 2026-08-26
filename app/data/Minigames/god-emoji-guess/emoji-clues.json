@@ -1,0 +1,2280 @@
+{
+  "Achilles": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "spear",
+          "shield",
+          "heel"
+        ],
+        "hard": [
+          "armor",
+          "water",
+          "arrow"
+        ]
+      }
+    ]
+  },
+  "Agni": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "fire",
+          "smoke",
+          "comet"
+        ],
+        "hard": [
+          "wave",
+          "hand",
+          "spark"
+        ]
+      }
+    ]
+  },
+  "Ah Puch": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "skull",
+          "bone",
+          "fly"
+        ],
+        "hard": [
+          "coffin",
+          "zombie",
+          "explosion"
+        ]
+      }
+    ]
+  },
+  "Aladdin": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "genie",
+          "lamp",
+          "sparkle"
+        ],
+        "hard": [
+          "wall",
+          "shoes",
+          "three"
+        ]
+      }
+    ]
+  },
+  "Amaterasu": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "sun",
+          "mirror",
+          "sword"
+        ],
+        "hard": [
+          "reload",
+          "shoes",
+          "crystal"
+        ]
+      }
+    ]
+  },
+  "Anhur": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "lion",
+          "spear",
+          "rock"
+        ],
+        "hard": [
+          "desert",
+          "sand",
+          "spear"
+        ]
+      }
+    ]
+  },
+  "Anubis": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "jackal",
+          "scales",
+          "urn"
+        ],
+        "hard": [
+          "ankh",
+          "scales",
+          "dark"
+        ]
+      }
+    ]
+  },
+  "Aphrodite": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "kiss",
+          "heart",
+          "swan"
+        ],
+        "hard": [
+          "bird",
+          "pluck",
+          "sparkle"
+        ]
+      }
+    ]
+  },
+  "Apollo": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "music",
+          "sun",
+          "bow"
+        ],
+        "hard": [
+          "horse",
+          "dance",
+          "wings"
+        ]
+      }
+    ]
+  },
+  "Ares": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "helmet",
+          "chain",
+          "fire"
+        ],
+        "hard": [
+          "chain",
+          "blood",
+          "pluck"
+        ]
+      }
+    ]
+  },
+  "Artemis": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "boar",
+          "bow",
+          "moon"
+        ],
+        "hard": [
+          "deer",
+          "moon",
+          "arrow"
+        ]
+      }
+    ]
+  },
+  "Artio": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "bear",
+          "leaf",
+          "two"
+        ],
+        "hard": [
+          "heal",
+          "paw",
+          "tree"
+        ]
+      }
+    ]
+  },
+  "Athena": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "shield",
+          "spear",
+          "people"
+        ],
+        "hard": [
+          "owl",
+          "wall",
+          "book"
+        ]
+      }
+    ]
+  },
+  "Atlas": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "galaxy",
+          "lift",
+          "earth"
+        ],
+        "hard": [
+          "pluck",
+          "beam",
+          "strength"
+        ]
+      }
+    ]
+  },
+  "Awilix": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "leopard",
+          "moon",
+          "pluck"
+        ],
+        "hard": [
+          "feather",
+          "shoes",
+          "lift"
+        ]
+      }
+    ]
+  },
+  "Bacchus": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "wine",
+          "grape",
+          "nausea"
+        ],
+        "hard": [
+          "feast",
+          "wave",
+          "yawn"
+        ]
+      }
+    ]
+  },
+  "Baron Samedi": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "hat",
+          "skull",
+          "cocktail"
+        ],
+        "hard": [
+          "coffin",
+          "snake",
+          "whirl"
+        ]
+      }
+    ]
+  },
+  "Bastet": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "cat",
+          "whip",
+          "paw"
+        ],
+        "hard": [
+          "shoes",
+          "blood",
+          "clone"
+        ]
+      }
+    ]
+  },
+  "Bellona": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "shield",
+          "hammer",
+          "whip"
+        ],
+        "hard": [
+          "flag",
+          "bird",
+          "whip"
+        ]
+      }
+    ]
+  },
+  "Cabrakan": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "earth",
+          "wall",
+          "shield"
+        ],
+        "hard": [
+          "tremor",
+          "rock",
+          "mountain"
+        ]
+      }
+    ]
+  },
+  "Cerberus": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "dog",
+          "three",
+          "ghost"
+        ],
+        "hard": [
+          "poison",
+          "ghost",
+          "lift"
+        ]
+      }
+    ]
+  },
+  "Cernunnos": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "deer",
+          "leaf",
+          "bow"
+        ],
+        "hard": [
+          "snow",
+          "sun",
+          "boar"
+        ]
+      }
+    ]
+  },
+  "Chaac": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "rain",
+          "axe",
+          "lightning"
+        ],
+        "hard": [
+          "heal",
+          "storm",
+          "cloud"
+        ]
+      }
+    ]
+  },
+  "Charon": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "ship",
+          "coin",
+          "wave"
+        ],
+        "hard": [
+          "fog",
+          "skull",
+          "coin"
+        ]
+      }
+    ]
+  },
+  "Chiron": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "horse",
+          "bow",
+          "teacher"
+        ],
+        "hard": [
+          "heal",
+          "star",
+          "arrow"
+        ]
+      }
+    ]
+  },
+  "Chronos": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "clock",
+          "gear",
+          "hourglass"
+        ],
+        "hard": [
+          "reload",
+          "freeze",
+          "rift"
+        ]
+      }
+    ]
+  },
+  "Cupid": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "heart",
+          "bow",
+          "angel"
+        ],
+        "hard": [
+          "bomb",
+          "heal",
+          "sleep"
+        ]
+      }
+    ]
+  },
+  "Da Ji": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "fox",
+          "chain",
+          "blood"
+        ],
+        "hard": [
+          "nine",
+          "fire",
+          "paw"
+        ]
+      }
+    ]
+  },
+  "Danzaburou": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "raccoon",
+          "money",
+          "leaf"
+        ],
+        "hard": [
+          "clone",
+          "bomb",
+          "wine"
+        ]
+      }
+    ]
+  },
+  "Discordia": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "apple",
+          "storm",
+          "cyclone"
+        ],
+        "hard": [
+          "apple",
+          "people",
+          "spark"
+        ]
+      }
+    ]
+  },
+  "Eset": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "wings",
+          "staff",
+          "bird"
+        ],
+        "hard": [
+          "orb",
+          "silence",
+          "crystal"
+        ]
+      }
+    ]
+  },
+  "Fenrir": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "wolf",
+          "chain",
+          "maw"
+        ],
+        "hard": [
+          "giant",
+          "rage",
+          "moon"
+        ]
+      }
+    ]
+  },
+  "Ganesha": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "elephant",
+          "stop",
+          "lotus"
+        ],
+        "hard": [
+          "prayer",
+          "wall",
+          "silence"
+        ]
+      }
+    ]
+  },
+  "Geb": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "earth",
+          "rock",
+          "wall"
+        ],
+        "hard": [
+          "tremor",
+          "ball",
+          "pluck"
+        ]
+      }
+    ]
+  },
+  "Gilgamesh": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "leg",
+          "sword",
+          "brick"
+        ],
+        "hard": [
+          "wind",
+          "shoes",
+          "strength"
+        ]
+      }
+    ]
+  },
+  "Guan Yu": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "horse",
+          "spear",
+          "heal"
+        ],
+        "hard": [
+          "green",
+          "dragon",
+          "strength"
+        ]
+      }
+    ]
+  },
+  "Hades": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "skull",
+          "whirl",
+          "dark"
+        ],
+        "hard": [
+          "silence",
+          "heal",
+          "crown"
+        ]
+      }
+    ]
+  },
+  "Hecate": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "moon",
+          "three",
+          "wand"
+        ],
+        "hard": [
+          "portal",
+          "dog",
+          "glyph"
+        ]
+      }
+    ]
+  },
+  "Hercules": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "strength",
+          "club",
+          "rock"
+        ],
+        "hard": [
+          "heal",
+          "pluck",
+          "lion"
+        ]
+      }
+    ]
+  },
+  "Horus": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "bird",
+          "eye",
+          "wings"
+        ],
+        "hard": [
+          "heal",
+          "lift",
+          "people"
+        ]
+      }
+    ]
+  },
+  "Hou Yi": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "bow",
+          "sun",
+          "nine"
+        ],
+        "hard": [
+          "rabbit",
+          "bird",
+          "arrow"
+        ]
+      }
+    ]
+  },
+  "Hua Mulan": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "banner",
+          "sword",
+          "flower"
+        ],
+        "hard": [
+          "reload",
+          "spear",
+          "horse"
+        ]
+      }
+    ]
+  },
+  "Hun Batz": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "monkey",
+          "drum",
+          "boomerang"
+        ],
+        "hard": [
+          "ghost",
+          "lift",
+          "staff"
+        ]
+      }
+    ]
+  },
+  "Ishtar": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "star",
+          "bow",
+          "crown"
+        ],
+        "hard": [
+          "lightning",
+          "sword",
+          "storm"
+        ]
+      }
+    ]
+  },
+  "Izanami": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "boomerang",
+          "ghost",
+          "scythe"
+        ],
+        "hard": [
+          "invisible",
+          "portal",
+          "skull"
+        ]
+      }
+    ]
+  },
+  "Janus": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "door",
+          "portal",
+          "two"
+        ],
+        "hard": [
+          "rift",
+          "wall",
+          "galaxy"
+        ]
+      }
+    ]
+  },
+  "Jing Wei": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "bird",
+          "wave",
+          "rock"
+        ],
+        "hard": [
+          "wind",
+          "bow",
+          "wings"
+        ]
+      }
+    ]
+  },
+  "Jormungandr": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "snake",
+          "poison",
+          "earth"
+        ],
+        "hard": [
+          "wave",
+          "maw",
+          "ocean"
+        ]
+      }
+    ]
+  },
+  "Kali": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "tongue",
+          "dagger",
+          "skull"
+        ],
+        "hard": [
+          "four",
+          "dance",
+          "blood"
+        ]
+      }
+    ]
+  },
+  "Khepri": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "bug",
+          "sun",
+          "recycle"
+        ],
+        "hard": [
+          "shield",
+          "pluck",
+          "heal"
+        ]
+      }
+    ]
+  },
+  "Kukulkan": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "snake",
+          "wind",
+          "cyclone"
+        ],
+        "hard": [
+          "wings",
+          "whirl",
+          "storm"
+        ]
+      }
+    ]
+  },
+  "Loki": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "dagger",
+          "invisible",
+          "clone"
+        ],
+        "hard": [
+          "masks",
+          "snake",
+          "dark"
+        ]
+      }
+    ]
+  },
+  "Medusa": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "snake",
+          "eye",
+          "statue"
+        ],
+        "hard": [
+          "bow",
+          "poison",
+          "arrow"
+        ]
+      }
+    ]
+  },
+  "Mercury": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "shoes",
+          "wind",
+          "wings"
+        ],
+        "hard": [
+          "fist",
+          "bag",
+          "pluck"
+        ]
+      }
+    ]
+  },
+  "Merlin": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "fire",
+          "freeze",
+          "staff"
+        ],
+        "hard": [
+          "three",
+          "wizard",
+          "crystal"
+        ]
+      }
+    ]
+  },
+  "Mordred": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "two",
+          "sword",
+          "blood"
+        ],
+        "hard": [
+          "rage",
+          "execute",
+          "armor"
+        ]
+      }
+    ]
+  },
+  "Morgan Le Fay": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "dragon",
+          "wand",
+          "fire"
+        ],
+        "hard": [
+          "sword",
+          "fog",
+          "witch"
+        ]
+      }
+    ]
+  },
+  "Neith": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "thread",
+          "bow",
+          "web"
+        ],
+        "hard": [
+          "heal",
+          "galaxy",
+          "arrow"
+        ]
+      }
+    ]
+  },
+  "Nemesis": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "scales",
+          "sword",
+          "mirror"
+        ],
+        "hard": [
+          "execute",
+          "shield",
+          "dark"
+        ]
+      }
+    ]
+  },
+  "Ne Zha": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "ring",
+          "spear",
+          "lotus"
+        ],
+        "hard": [
+          "fire",
+          "wind",
+          "shoes"
+        ]
+      }
+    ]
+  },
+  "Nu Wa": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "fog",
+          "people",
+          "rock"
+        ],
+        "hard": [
+          "snake",
+          "fire",
+          "crystal"
+        ]
+      }
+    ]
+  },
+  "Nut": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "galaxy",
+          "star",
+          "night"
+        ],
+        "hard": [
+          "comet",
+          "rift",
+          "two"
+        ]
+      }
+    ]
+  },
+  "Odin": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "raven",
+          "spear",
+          "ring"
+        ],
+        "hard": [
+          "wall",
+          "eye",
+          "shield"
+        ]
+      }
+    ]
+  },
+  "Osiris": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "zombie",
+          "scythe",
+          "wheat"
+        ],
+        "hard": [
+          "whip",
+          "thread",
+          "bone"
+        ]
+      }
+    ]
+  },
+  "Pele": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "volcano",
+          "fire",
+          "hibiscus"
+        ],
+        "hard": [
+          "lightning",
+          "shoes",
+          "rock"
+        ]
+      }
+    ]
+  },
+  "Poseidon": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "wave",
+          "trident",
+          "octopus"
+        ],
+        "hard": [
+          "whirl",
+          "tide",
+          "pluck"
+        ]
+      }
+    ]
+  },
+  "Princess Bari": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "bell",
+          "heal",
+          "flower"
+        ],
+        "hard": [
+          "ghost",
+          "dance",
+          "people"
+        ]
+      }
+    ]
+  },
+  "Ra": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "sun",
+          "bird",
+          "beam"
+        ],
+        "hard": [
+          "heal",
+          "eye",
+          "light"
+        ]
+      }
+    ]
+  },
+  "Rama": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "bow",
+          "crown",
+          "monkey"
+        ],
+        "hard": [
+          "star",
+          "three",
+          "shoes"
+        ]
+      }
+    ]
+  },
+  "Ratatoskr": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "squirrel",
+          "nut",
+          "tree"
+        ],
+        "hard": [
+          "dart",
+          "shoes",
+          "three"
+        ]
+      }
+    ]
+  },
+  "Scylla": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "girl",
+          "dog",
+          "wave"
+        ],
+        "hard": [
+          "monster",
+          "maw",
+          "four"
+        ]
+      }
+    ]
+  },
+  "Sobek": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "crocodile",
+          "wave",
+          "pluck"
+        ],
+        "hard": [
+          "heal",
+          "tide",
+          "strength"
+        ]
+      }
+    ]
+  },
+  "Sol": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "sun",
+          "fire",
+          "spark"
+        ],
+        "hard": [
+          "heal",
+          "explosion",
+          "dance"
+        ]
+      }
+    ]
+  },
+  "Sun Wukong": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "monkey",
+          "staff",
+          "cloud"
+        ],
+        "hard": [
+          "clone",
+          "masks",
+          "bird"
+        ]
+      }
+    ]
+  },
+  "Susano": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "sword",
+          "cyclone",
+          "storm"
+        ],
+        "hard": [
+          "pluck",
+          "three",
+          "snake"
+        ]
+      }
+    ]
+  },
+  "Sylvanus": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "tree",
+          "leaf",
+          "pluck"
+        ],
+        "hard": [
+          "heal",
+          "flower",
+          "frog"
+        ]
+      }
+    ]
+  },
+  "Thanatos": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "scythe",
+          "wings",
+          "execute"
+        ],
+        "hard": [
+          "blood",
+          "silence",
+          "heal"
+        ]
+      }
+    ]
+  },
+  "The Morrigan": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "raven",
+          "masks",
+          "clone"
+        ],
+        "hard": [
+          "invisible",
+          "fog",
+          "three"
+        ]
+      }
+    ]
+  },
+  "Thor": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "hammer",
+          "lightning",
+          "wall"
+        ],
+        "hard": [
+          "boomerang",
+          "cyclone",
+          "storm"
+        ]
+      }
+    ]
+  },
+  "Tsukuyomi": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "moon",
+          "ninja",
+          "star"
+        ],
+        "hard": [
+          "chain",
+          "scythe",
+          "dark"
+        ]
+      }
+    ]
+  },
+  "Ullr": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "bow",
+          "axe",
+          "snow"
+        ],
+        "hard": [
+          "two",
+          "shoes",
+          "arrow"
+        ]
+      }
+    ]
+  },
+  "Vulcan": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "hammer",
+          "gear",
+          "fire"
+        ],
+        "hard": [
+          "bomb",
+          "robot",
+          "explosion"
+        ]
+      }
+    ]
+  },
+  "Xbalanque": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "night",
+          "dart",
+          "poison"
+        ],
+        "hard": [
+          "ball",
+          "two",
+          "moon"
+        ]
+      }
+    ]
+  },
+  "Yemoja": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "water",
+          "wave",
+          "heal"
+        ],
+        "hard": [
+          "ring",
+          "wall",
+          "moon"
+        ]
+      }
+    ]
+  },
+  "Ymir": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "ice",
+          "wall",
+          "freeze"
+        ],
+        "hard": [
+          "club",
+          "giant",
+          "snow"
+        ]
+      }
+    ]
+  },
+  "Zeus": {
+    "game": "smite2",
+    "sets": [
+      {
+        "easy": [
+          "lightning",
+          "cloud",
+          "spark"
+        ],
+        "hard": [
+          "chain",
+          "three",
+          "explosion"
+        ]
+      }
+    ]
+  },
+  "Ah Muzen Cab": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "bee",
+          "honey",
+          "hive"
+        ],
+        "hard": [
+          "bee",
+          "dart",
+          "honey"
+        ]
+      }
+    ]
+  },
+  "Ao Kuang": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "dragon",
+          "sword",
+          "water"
+        ],
+        "hard": [
+          "execute",
+          "dragon",
+          "wave"
+        ]
+      }
+    ]
+  },
+  "Arachne": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "spider",
+          "web",
+          "egg"
+        ],
+        "hard": [
+          "web",
+          "spider",
+          "cocoon"
+        ]
+      }
+    ]
+  },
+  "Baba Yaga": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "witch",
+          "house",
+          "potion"
+        ],
+        "hard": [
+          "house",
+          "potion",
+          "fire"
+        ]
+      }
+    ]
+  },
+  "Bake Kujira": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "whale",
+          "ghost",
+          "wave"
+        ],
+        "hard": [
+          "whale",
+          "clock",
+          "wave"
+        ]
+      }
+    ]
+  },
+  "Bakasura": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "ogre",
+          "tongue",
+          "feast"
+        ],
+        "hard": [
+          "ogre",
+          "nausea",
+          "feast"
+        ]
+      }
+    ]
+  },
+  "Camazotz": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "bat",
+          "blood",
+          "cave"
+        ],
+        "hard": [
+          "bat",
+          "blood",
+          "wings"
+        ]
+      }
+    ]
+  },
+  "Chang'e": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "moon",
+          "rabbit",
+          "dance"
+        ],
+        "hard": [
+          "flower",
+          "moon",
+          "heal"
+        ]
+      }
+    ]
+  },
+  "Charybdis": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "whirl",
+          "wave",
+          "octopus"
+        ],
+        "hard": [
+          "whirl",
+          "tide",
+          "maw"
+        ]
+      }
+    ]
+  },
+  "Chernobog": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "dark",
+          "crystal",
+          "wings"
+        ],
+        "hard": [
+          "wall",
+          "clone",
+          "crystal"
+        ]
+      }
+    ]
+  },
+  "Cliodhna": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "ghost",
+          "scream",
+          "wall"
+        ],
+        "hard": [
+          "ghost",
+          "wall",
+          "rift"
+        ]
+      }
+    ]
+  },
+  "Cthulhu": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "octopus",
+          "madness",
+          "ocean"
+        ],
+        "hard": [
+          "octopus",
+          "madness",
+          "wings"
+        ]
+      }
+    ]
+  },
+  "Cu Chulainn": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "spear",
+          "rage",
+          "monster"
+        ],
+        "hard": [
+          "rage",
+          "spear",
+          "berserk"
+        ]
+      }
+    ]
+  },
+  "Erlang Shen": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "dog",
+          "spear",
+          "turtle"
+        ],
+        "hard": [
+          "dog",
+          "reload",
+          "turtle"
+        ]
+      }
+    ]
+  },
+  "Fafnir": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "dwarf",
+          "dragon",
+          "coin"
+        ],
+        "hard": [
+          "coin",
+          "dragon",
+          "fire"
+        ]
+      }
+    ]
+  },
+  "Freya": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "wings",
+          "sword",
+          "sparkle"
+        ],
+        "hard": [
+          "wings",
+          "sword",
+          "feather"
+        ]
+      }
+    ]
+  },
+  "Hachiman": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "horse",
+          "arrow",
+          "banner"
+        ],
+        "hard": [
+          "horse",
+          "arrow",
+          "sword"
+        ]
+      }
+    ]
+  },
+  "He Bo": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "water",
+          "wave",
+          "scroll"
+        ],
+        "hard": [
+          "wave",
+          "water",
+          "cyclone"
+        ]
+      }
+    ]
+  },
+  "Heimdallr": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "horn",
+          "rainbow",
+          "eye"
+        ],
+        "hard": [
+          "rainbow",
+          "horn",
+          "portal"
+        ]
+      }
+    ]
+  },
+  "Hel": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "masks",
+          "dark",
+          "light"
+        ],
+        "hard": [
+          "reload",
+          "dark",
+          "light"
+        ]
+      }
+    ]
+  },
+  "Hera": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "crown",
+          "peacock",
+          "robot"
+        ],
+        "hard": [
+          "wand",
+          "people",
+          "crown"
+        ]
+      }
+    ]
+  },
+  "Ix Chel": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "rainbow",
+          "moon",
+          "thread"
+        ],
+        "hard": [
+          "rainbow",
+          "heal",
+          "moon"
+        ]
+      }
+    ]
+  },
+  "King Arthur": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "sword",
+          "crown",
+          "armor"
+        ],
+        "hard": [
+          "sword",
+          "reload",
+          "crown"
+        ]
+      }
+    ]
+  },
+  "Kumbhakarna": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "sleep",
+          "ogre",
+          "yawn"
+        ],
+        "hard": [
+          "sleep",
+          "ogre",
+          "fist"
+        ]
+      }
+    ]
+  },
+  "Kuzenbo": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "turtle",
+          "shell",
+          "water"
+        ],
+        "hard": [
+          "turtle",
+          "shell",
+          "reflect"
+        ]
+      }
+    ]
+  },
+  "Lancelot": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "horse",
+          "spear",
+          "shield"
+        ],
+        "hard": [
+          "horse",
+          "spear",
+          "joust"
+        ]
+      }
+    ]
+  },
+  "Maman Brigitte": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "ghost",
+          "snake",
+          "orb"
+        ],
+        "hard": [
+          "skull",
+          "explosion",
+          "dark"
+        ]
+      }
+    ]
+  },
+  "Martichoras": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "lion",
+          "wings",
+          "poison"
+        ],
+        "hard": [
+          "dart",
+          "grass",
+          "poison"
+        ]
+      }
+    ]
+  },
+  "Maui": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "hook",
+          "sun",
+          "island"
+        ],
+        "hard": [
+          "hook",
+          "sun",
+          "wave"
+        ]
+      }
+    ]
+  },
+  "Nike": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "wings",
+          "crown",
+          "shield"
+        ],
+        "hard": [
+          "wings",
+          "shield",
+          "banner"
+        ]
+      }
+    ]
+  },
+  "Nox": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "night",
+          "candle",
+          "silence"
+        ],
+        "hard": [
+          "night",
+          "silence",
+          "portal"
+        ]
+      }
+    ]
+  },
+  "Olorun": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "sun",
+          "clock",
+          "crown"
+        ],
+        "hard": [
+          "sun",
+          "clock",
+          "spark"
+        ]
+      }
+    ]
+  },
+  "Persephone": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "flower",
+          "skull",
+          "plant"
+        ],
+        "hard": [
+          "pomegranate",
+          "dark",
+          "skull"
+        ]
+      }
+    ]
+  },
+  "Raijin": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "drum",
+          "lightning",
+          "cloud"
+        ],
+        "hard": [
+          "drum",
+          "lightning",
+          "four"
+        ]
+      }
+    ]
+  },
+  "Ravana": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "fist",
+          "chain",
+          "shield"
+        ],
+        "hard": [
+          "fist",
+          "chain",
+          "eight"
+        ]
+      }
+    ]
+  },
+  "Serqet": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "scorpion",
+          "poison",
+          "dagger"
+        ],
+        "hard": [
+          "scorpion",
+          "poison",
+          "three"
+        ]
+      }
+    ]
+  },
+  "Set": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "desert",
+          "spear",
+          "clone"
+        ],
+        "hard": [
+          "clone",
+          "desert",
+          "four"
+        ]
+      }
+    ]
+  },
+  "Shiva": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "trident",
+          "dance",
+          "fire"
+        ],
+        "hard": [
+          "dance",
+          "trident",
+          "drum"
+        ]
+      }
+    ]
+  },
+  "Skadi": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "wolf",
+          "ice",
+          "spear"
+        ],
+        "hard": [
+          "wolf",
+          "ice",
+          "snow"
+        ]
+      }
+    ]
+  },
+  "Surtr": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "fire",
+          "sword",
+          "giant"
+        ],
+        "hard": [
+          "fire",
+          "sword",
+          "meteor"
+        ]
+      }
+    ]
+  },
+  "Terra": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "earth",
+          "rock",
+          "statue"
+        ],
+        "hard": [
+          "earth",
+          "wall",
+          "heal"
+        ]
+      }
+    ]
+  },
+  "Thoth": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "bird",
+          "book",
+          "glyph"
+        ],
+        "hard": [
+          "bird",
+          "book",
+          "eye"
+        ]
+      }
+    ]
+  },
+  "Tiamat": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "dragon",
+          "wave",
+          "wings"
+        ],
+        "hard": [
+          "dragon",
+          "reload",
+          "snake"
+        ]
+      }
+    ]
+  },
+  "Tyr": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "sword",
+          "scales",
+          "hand"
+        ],
+        "hard": [
+          "sword",
+          "reload",
+          "scales"
+        ]
+      }
+    ]
+  },
+  "Vamana": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "umbrella",
+          "giant",
+          "dwarf"
+        ],
+        "hard": [
+          "giant",
+          "umbrella",
+          "reload"
+        ]
+      }
+    ]
+  },
+  "Xing Tian": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "axe",
+          "rage",
+          "headless"
+        ],
+        "hard": [
+          "axe",
+          "rage",
+          "cyclone"
+        ]
+      }
+    ]
+  },
+  "Yu Huang": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "dragon",
+          "crown",
+          "cloud"
+        ],
+        "hard": [
+          "dragon",
+          "crown",
+          "yin"
+        ]
+      }
+    ]
+  },
+  "Zhong Kui": {
+    "game": "smite1",
+    "sets": [
+      {
+        "easy": [
+          "ghost",
+          "bag",
+          "brush"
+        ],
+        "hard": [
+          "fire",
+          "skull",
+          "brush"
+        ]
+      }
+    ]
+  }
+}

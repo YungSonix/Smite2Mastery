@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="scythe">
+  <rect width="128" height="128" rx="16" fill="#0b1220"/>
+  <path d="M36 108 L36 40 Q36 20 70 28 Q100 36 92 56" fill="none" stroke="#94a3b8" stroke-width="8" stroke-linecap="round"/>
+     <path d="M70 28 Q100 20 108 48" fill="none" stroke="#7dd3fc" stroke-width="10" stroke-linecap="round"/>
+</svg>

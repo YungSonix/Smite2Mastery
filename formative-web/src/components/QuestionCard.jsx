@@ -23,7 +23,8 @@ import {
 } from '../lib/matching';
 import CategorizeBoard from './CategorizeBoard';
 import { parseCategorize } from '../lib/categorize';
-import { remixQuestionFromA, fillAnswersFromPrompt, randomizeQuestion } from '../lib/triviaRemix';
+import { remixQuestionFromA, fillAnswersFromPrompt, makeRandomQuestionByStyle, RANDOM_QUESTION_STYLES } from '../lib/triviaRemix';
+import { classifyMediaUrl } from '../lib/mediaUrl';
 import { MAX_QUESTION_VARIANTS, variantLetter } from '../lib/triviaVariants';
 import {
   questionHintUiAllowed,
@@ -70,12 +71,53 @@ function AttachFileButton({ onChange, accept = 'image/*,audio/*,video/*' }) {
   );
 }
 
+function RandomQuestionPicker({ onPick, fillBlank }) {
+  const [open, setOpen] = useState(false);
+  const styles = fillBlank
+    ? [{ id: 'aspect_blank', label: 'Aspect fill-in-blank', blurb: 'God Aspect of ____' }]
+    : RANDOM_QUESTION_STYLES;
+
+  return (
+    <div className="f-random-style-wrap">
+      <button
+        type="button"
+        className="f-outline-btn"
+        title="Pick a question template, then roll a fresh example"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+      >
+        Random question
+      </button>
+      {open ? (
+        <div className="f-random-style-menu" role="menu">
+          <div className="f-random-style-menu-title">Question style</div>
+          {styles.map((s) => (
+            <button
+              key={s.id}
+              type="button"
+              role="menuitem"
+              onClick={() => {
+                setOpen(false);
+                onPick(s.id);
+              }}
+            >
+              <span className="f-random-style-label">{s.label}</span>
+              {s.blurb ? <span className="f-random-style-blurb">{s.blurb}</span> : null}
+            </button>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 export default function QuestionCard({ question, index, onChange, onDelete, autoHints = false }) {
   const [q, setQ] = useState(question);
   const [uploadError, setUploadError] = useState('');
   const [attachOpen, setAttachOpen] = useState(false);
   const [variantTab, setVariantTab] = useState(0); // 0=A, extras in meta.variants
   const [urlDraft, setUrlDraft] = useState('');
+  const [mediaPreviewToken, setMediaPreviewToken] = useState(null);
   useEffect(() => {
     setQ(question);
   }, [question]);
@@ -285,6 +327,75 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
     });
   };
 
+  const triggerChangeRemixPreview = (patch) => {
+    const meta = patch?.meta || {};
+    const url = patch.image_url || patch.image_urls?.[0] || '';
+    const isAudio =
+      meta.remix_kind === 'voice_line' ||
+      meta.remix_kind === 'ability_sound' ||
+      meta.media === 'audio' ||
+      classifyMediaUrl(url) === 'audio';
+    const isSkin =
+      meta.remix_kind === 'skin_guess' || meta.media_crop === 'skin_zoom_center';
+    if (!isAudio && !isSkin) return;
+    setMediaPreviewToken(`${Date.now()}|${url}|${meta.media_seed || ''}`);
+  };
+
+  const applyChangeQuestionAnswer = () => {
+    const avoid =
+      variantTab > 0
+        ? variantExtras.map((v, i) => (i === variantTab - 1 ? '' : v?.prompt)).filter(Boolean)
+        : [];
+    const result = remixQuestionFromA(q, { avoidTexts: avoid });
+    if (result.error) {
+      setUploadError(result.error);
+      return;
+    }
+    setUploadError('');
+    const patch = result.patch || {};
+    const metaFields = patch.meta || {};
+
+    if (variantTab > 0) {
+      const slot = variantTab - 1;
+      const variants = ensureVariantSlot(slot);
+      const { meta: _m, type: _t, points: _p, required: _r, clearMedia: _c, ...slotPatch } = patch;
+      let slotNext = { ...(variants[slot] || {}), ...slotPatch };
+      if (patch.clearMedia) {
+        slotNext = { ...slotNext, image_url: null, image_urls: [] };
+      } else if (patch.image_urls || patch.image_url) {
+        slotNext = withMediaUrlsOnVariant(
+          slotNext,
+          patch.image_urls || [patch.image_url].filter(Boolean)
+        );
+      }
+      variants[slot] = slotNext;
+      commit({
+        ...q,
+        meta: { ...(q.meta || {}), ...metaFields, variants },
+      });
+    } else {
+      let next = {
+        ...q,
+        ...patch,
+        meta: { ...(q.meta || {}), ...metaFields, variants: q.meta?.variants },
+      };
+      if (patch.clearMedia) {
+        next = withMediaUrlsOnQuestion({ ...next, image_url: null }, []);
+      } else if (patch.image_urls || patch.image_url) {
+        next = withMediaUrlsOnQuestion(next, patch.image_urls || [patch.image_url].filter(Boolean));
+      }
+      delete next.clearMedia;
+      if (autoHints || next.meta?.hints_enabled) {
+        next = withGeneratedHints(next, {
+          enable: Boolean(autoHints || next.meta?.hints_enabled),
+          overwrite: false,
+        });
+      }
+      commit(next);
+    }
+    triggerChangeRemixPreview(patch);
+  };
+
   const applyGeneratedPatch = (result) => {
     if (result.error) {
       setUploadError(result.error);
@@ -313,14 +424,30 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
       } else {
         patchVariantSlot(variantTab - 1, slot);
       }
+      triggerChangeRemixPreview(patch);
       return;
     }
     delete next.clearMedia;
     commit(next);
+    triggerChangeRemixPreview(patch);
+  };
+
+  const pickRandomStyle = (styleId) => {
+    const extras = Array.isArray(q.meta?.variants) ? q.meta.variants : [];
+    const src = variantTab === 0 ? q : { ...q, ...(extras[variantTab - 1] || {}) };
+    applyGeneratedPatch(makeRandomQuestionByStyle(styleId, src));
   };
 
   const generateButtons = !isGate ? (
     <>
+      <button
+        type="button"
+        className="f-outline-btn"
+        title="Swap using builds.json names (items, gods, aspects, OB patches) and attach matching art"
+        onClick={applyChangeQuestionAnswer}
+      >
+        Change question/answer
+      </button>
       <button
         type="button"
         className="f-outline-btn"
@@ -333,18 +460,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
       >
         Random answers
       </button>
-      <button
-        type="button"
-        className="f-outline-btn"
-        title="Write a new question and answers from builds.json"
-        onClick={() => {
-          const extras = Array.isArray(q.meta?.variants) ? q.meta.variants : [];
-          const src = variantTab === 0 ? q : { ...q, ...(extras[variantTab - 1] || {}) };
-          applyGeneratedPatch(randomizeQuestion(src));
-        }}
-      >
-        Random question
-      </button>
+      <RandomQuestionPicker fillBlank={isFillBlank} onPick={pickRandomStyle} />
     </>
   ) : null;
 
@@ -414,6 +530,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
           editable
           imageCrop={q.meta?.media_crop}
           imageCropSeed={q.meta?.media_seed}
+          autoPlayAudioToken={mediaPreviewToken}
           onRemove={(i) => setActiveMedia(activeMediaUrls.filter((_, j) => j !== i))}
         />
       ) : (
@@ -929,6 +1046,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
             editable
             imageCrop={q.meta?.media_crop}
             imageCropSeed={q.meta?.media_seed}
+            autoPlayAudioToken={mediaPreviewToken}
             onRemove={(i) => setActiveMedia(activeMediaUrls.filter((_, j) => j !== i))}
           />
         </div>
@@ -1331,18 +1449,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
             type="button"
             className="f-outline-btn"
             title="Swap using builds.json names (items, gods, aspects, OB patches) and attach matching art"
-            onClick={() => {
-              const avoid = variantExtras
-                .map((v, i) => (i === variantTab - 1 ? '' : v?.prompt))
-                .filter(Boolean);
-              const result = remixQuestionFromA(q, { avoidTexts: avoid });
-              if (result.error) {
-                setUploadError(result.error);
-                return;
-              }
-              setUploadError('');
-              patchVariantSlot(variantTab - 1, result.patch);
-            }}
+            onClick={applyChangeQuestionAnswer}
           >
             Change question/answer
           </button>
@@ -1354,14 +1461,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
           >
             Random answers
           </button>
-          <button
-            type="button"
-            className="f-outline-btn"
-            title="Write a new question and answers from builds.json"
-            onClick={() => applyGeneratedPatch(randomizeQuestion({ ...q, ...activeVariantFields }))}
-          >
-            Random question
-          </button>
+          <RandomQuestionPicker fillBlank={isFillBlank} onPick={pickRandomStyle} />
         </div>
         {uploadError ? <div className="f-error">{uploadError}</div> : null}
       </div>

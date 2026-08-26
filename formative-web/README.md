@@ -63,6 +63,15 @@ npm run trivia:community
 
 Creates an assigned quiz with mixed types (multiple choice, true/false, short answer, image, audio, fill-in-the-blank) seeded from `app/data/Smite2Gods.json` plus portraits/audio already in the repo. Prints the take URL and an answer key.
 
+Host emoji sheet: `app/data/Trivia/god-emojis/index.html`. Gallery PNG: `app/data/Trivia/god-emojis/gallery-all-gods.png`. Trivia images: `/media/Trivia/god-emojis/{slug}-a|b|c-unnamed.svg` (random set on remix) plus legacy `{slug}-unnamed.svg` (= set a).
+
+**Trivia vs Minigame maps** (same source, separate files):
+- Author: `app/data/Minigames/god-emoji-guess/emoji-clues.json`
+- Trivia flat Set A: `app/data/Trivia/god-emojis/god-emoji-map.json`
+- Minigame flat Set A: `app/data/Minigames/god-emoji-guess/god-emoji-map.json`
+- Minigame full A/B/C: `app/data/Minigames/god-emoji-guess/god-emoji-sets.json`
+- Regen: `npm run trivia:god-emojis` · validate: `npm run trivia:god-emojis:validate` · gallery: `npm run trivia:god-emojis:gallery`
+
 ## Device checks
 
 ```bash
@@ -81,6 +90,7 @@ Sims cover desktop plus older-to-newer iOS/Android web widths. Gallery screensho
 - Responses **Live now**: who started, on-quiz vs tab-in-background vs left the page, answered count, left-tab count (host-only).
 - Image/Audio blocks: **+** to pick question type (keeps the media)
 - Up to **8 media files per version** (A/B/C): images, audio, and video/embed URLs in one list. Extra URLs live on `meta.image_urls` / `variant.image_urls`.
+- **Random question** opens a style menu (item ID, voice line, zoomed skin, emoji, **ability cast sound**, etc.) instead of rolling a blind template. Ability sounds use `Skin00_Base/Ability1–4` Activate/Start WAVs (`npm run trivia:media-catalog`).
 - Fill in the blank: sentence + blank + correct answer
 - Question **Version A / B / C** — each Discord name gets one version
 - Assign settings: hide scores from players by default

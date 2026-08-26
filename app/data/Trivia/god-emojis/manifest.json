@@ -1,0 +1,4566 @@
+{
+  "count": 86,
+  "source": "app/data/Minigames/god-emoji-guess/emoji-clues.json",
+  "unnamedPattern": "/media/Trivia/god-emojis/{slug}-{a|b|c}-unnamed.svg",
+  "galleryImage": "app/data/Trivia/god-emojis/gallery-all-gods.png",
+  "gods": [
+    {
+      "name": "Achilles",
+      "slug": "achilles",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "spear",
+            "shield",
+            "heel"
+          ],
+          "hard": [
+            "armor",
+            "water",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/achilles-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/achilles-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "spear",
+            "shield",
+            "heel"
+          ],
+          "hard": [
+            "armor",
+            "water",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/achilles-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/achilles-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "spear",
+            "shield",
+            "heel"
+          ],
+          "hard": [
+            "armor",
+            "water",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/achilles-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/achilles-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/achilles-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/achilles-named.svg"
+    },
+    {
+      "name": "Agni",
+      "slug": "agni",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "fire",
+            "smoke",
+            "comet"
+          ],
+          "hard": [
+            "wave",
+            "hand",
+            "spark"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/agni-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/agni-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "fire",
+            "smoke",
+            "comet"
+          ],
+          "hard": [
+            "wave",
+            "hand",
+            "spark"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/agni-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/agni-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "fire",
+            "smoke",
+            "comet"
+          ],
+          "hard": [
+            "wave",
+            "hand",
+            "spark"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/agni-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/agni-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/agni-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/agni-named.svg"
+    },
+    {
+      "name": "Ah Puch",
+      "slug": "ah-puch",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "skull",
+            "bone",
+            "fly"
+          ],
+          "hard": [
+            "coffin",
+            "zombie",
+            "explosion"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ah-puch-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ah-puch-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "skull",
+            "bone",
+            "fly"
+          ],
+          "hard": [
+            "coffin",
+            "zombie",
+            "explosion"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ah-puch-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ah-puch-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "skull",
+            "bone",
+            "fly"
+          ],
+          "hard": [
+            "coffin",
+            "zombie",
+            "explosion"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ah-puch-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ah-puch-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/ah-puch-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/ah-puch-named.svg"
+    },
+    {
+      "name": "Aladdin",
+      "slug": "aladdin",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "genie",
+            "lamp",
+            "sparkle"
+          ],
+          "hard": [
+            "wall",
+            "shoes",
+            "three"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/aladdin-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/aladdin-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "genie",
+            "lamp",
+            "sparkle"
+          ],
+          "hard": [
+            "wall",
+            "shoes",
+            "three"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/aladdin-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/aladdin-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "genie",
+            "lamp",
+            "sparkle"
+          ],
+          "hard": [
+            "wall",
+            "shoes",
+            "three"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/aladdin-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/aladdin-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/aladdin-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/aladdin-named.svg"
+    },
+    {
+      "name": "Amaterasu",
+      "slug": "amaterasu",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "sun",
+            "mirror",
+            "sword"
+          ],
+          "hard": [
+            "reload",
+            "shoes",
+            "crystal"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/amaterasu-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/amaterasu-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "sun",
+            "mirror",
+            "sword"
+          ],
+          "hard": [
+            "reload",
+            "shoes",
+            "crystal"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/amaterasu-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/amaterasu-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "sun",
+            "mirror",
+            "sword"
+          ],
+          "hard": [
+            "reload",
+            "shoes",
+            "crystal"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/amaterasu-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/amaterasu-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/amaterasu-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/amaterasu-named.svg"
+    },
+    {
+      "name": "Anhur",
+      "slug": "anhur",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "lion",
+            "spear",
+            "rock"
+          ],
+          "hard": [
+            "desert",
+            "sand",
+            "spear"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/anhur-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/anhur-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "lion",
+            "spear",
+            "rock"
+          ],
+          "hard": [
+            "desert",
+            "sand",
+            "spear"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/anhur-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/anhur-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "lion",
+            "spear",
+            "rock"
+          ],
+          "hard": [
+            "desert",
+            "sand",
+            "spear"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/anhur-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/anhur-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/anhur-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/anhur-named.svg"
+    },
+    {
+      "name": "Anubis",
+      "slug": "anubis",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "jackal",
+            "scales",
+            "urn"
+          ],
+          "hard": [
+            "ankh",
+            "scales",
+            "dark"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/anubis-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/anubis-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "jackal",
+            "scales",
+            "urn"
+          ],
+          "hard": [
+            "ankh",
+            "scales",
+            "dark"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/anubis-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/anubis-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "jackal",
+            "scales",
+            "urn"
+          ],
+          "hard": [
+            "ankh",
+            "scales",
+            "dark"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/anubis-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/anubis-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/anubis-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/anubis-named.svg"
+    },
+    {
+      "name": "Aphrodite",
+      "slug": "aphrodite",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "kiss",
+            "heart",
+            "swan"
+          ],
+          "hard": [
+            "bird",
+            "pluck",
+            "sparkle"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/aphrodite-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/aphrodite-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "kiss",
+            "heart",
+            "swan"
+          ],
+          "hard": [
+            "bird",
+            "pluck",
+            "sparkle"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/aphrodite-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/aphrodite-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "kiss",
+            "heart",
+            "swan"
+          ],
+          "hard": [
+            "bird",
+            "pluck",
+            "sparkle"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/aphrodite-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/aphrodite-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/aphrodite-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/aphrodite-named.svg"
+    },
+    {
+      "name": "Apollo",
+      "slug": "apollo",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "music",
+            "sun",
+            "bow"
+          ],
+          "hard": [
+            "horse",
+            "dance",
+            "wings"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/apollo-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/apollo-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "music",
+            "sun",
+            "bow"
+          ],
+          "hard": [
+            "horse",
+            "dance",
+            "wings"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/apollo-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/apollo-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "music",
+            "sun",
+            "bow"
+          ],
+          "hard": [
+            "horse",
+            "dance",
+            "wings"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/apollo-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/apollo-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/apollo-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/apollo-named.svg"
+    },
+    {
+      "name": "Ares",
+      "slug": "ares",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "helmet",
+            "chain",
+            "fire"
+          ],
+          "hard": [
+            "chain",
+            "blood",
+            "pluck"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ares-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ares-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "helmet",
+            "chain",
+            "fire"
+          ],
+          "hard": [
+            "chain",
+            "blood",
+            "pluck"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ares-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ares-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "helmet",
+            "chain",
+            "fire"
+          ],
+          "hard": [
+            "chain",
+            "blood",
+            "pluck"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ares-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ares-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/ares-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/ares-named.svg"
+    },
+    {
+      "name": "Artemis",
+      "slug": "artemis",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "boar",
+            "bow",
+            "moon"
+          ],
+          "hard": [
+            "deer",
+            "moon",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/artemis-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/artemis-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "boar",
+            "bow",
+            "moon"
+          ],
+          "hard": [
+            "deer",
+            "moon",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/artemis-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/artemis-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "boar",
+            "bow",
+            "moon"
+          ],
+          "hard": [
+            "deer",
+            "moon",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/artemis-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/artemis-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/artemis-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/artemis-named.svg"
+    },
+    {
+      "name": "Artio",
+      "slug": "artio",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "bear",
+            "leaf",
+            "two"
+          ],
+          "hard": [
+            "heal",
+            "paw",
+            "tree"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/artio-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/artio-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "bear",
+            "leaf",
+            "two"
+          ],
+          "hard": [
+            "heal",
+            "paw",
+            "tree"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/artio-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/artio-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "bear",
+            "leaf",
+            "two"
+          ],
+          "hard": [
+            "heal",
+            "paw",
+            "tree"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/artio-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/artio-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/artio-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/artio-named.svg"
+    },
+    {
+      "name": "Athena",
+      "slug": "athena",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "shield",
+            "spear",
+            "people"
+          ],
+          "hard": [
+            "owl",
+            "wall",
+            "book"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/athena-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/athena-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "shield",
+            "spear",
+            "people"
+          ],
+          "hard": [
+            "owl",
+            "wall",
+            "book"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/athena-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/athena-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "shield",
+            "spear",
+            "people"
+          ],
+          "hard": [
+            "owl",
+            "wall",
+            "book"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/athena-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/athena-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/athena-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/athena-named.svg"
+    },
+    {
+      "name": "Atlas",
+      "slug": "atlas",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "galaxy",
+            "lift",
+            "earth"
+          ],
+          "hard": [
+            "pluck",
+            "beam",
+            "strength"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/atlas-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/atlas-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "galaxy",
+            "lift",
+            "earth"
+          ],
+          "hard": [
+            "pluck",
+            "beam",
+            "strength"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/atlas-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/atlas-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "galaxy",
+            "lift",
+            "earth"
+          ],
+          "hard": [
+            "pluck",
+            "beam",
+            "strength"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/atlas-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/atlas-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/atlas-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/atlas-named.svg"
+    },
+    {
+      "name": "Awilix",
+      "slug": "awilix",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "leopard",
+            "moon",
+            "pluck"
+          ],
+          "hard": [
+            "feather",
+            "shoes",
+            "lift"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/awilix-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/awilix-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "leopard",
+            "moon",
+            "pluck"
+          ],
+          "hard": [
+            "feather",
+            "shoes",
+            "lift"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/awilix-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/awilix-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "leopard",
+            "moon",
+            "pluck"
+          ],
+          "hard": [
+            "feather",
+            "shoes",
+            "lift"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/awilix-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/awilix-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/awilix-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/awilix-named.svg"
+    },
+    {
+      "name": "Bacchus",
+      "slug": "bacchus",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "wine",
+            "grape",
+            "nausea"
+          ],
+          "hard": [
+            "feast",
+            "wave",
+            "yawn"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/bacchus-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/bacchus-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "wine",
+            "grape",
+            "nausea"
+          ],
+          "hard": [
+            "feast",
+            "wave",
+            "yawn"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/bacchus-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/bacchus-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "wine",
+            "grape",
+            "nausea"
+          ],
+          "hard": [
+            "feast",
+            "wave",
+            "yawn"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/bacchus-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/bacchus-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/bacchus-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/bacchus-named.svg"
+    },
+    {
+      "name": "Baron Samedi",
+      "slug": "baron-samedi",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "hat",
+            "skull",
+            "cocktail"
+          ],
+          "hard": [
+            "coffin",
+            "snake",
+            "whirl"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/baron-samedi-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/baron-samedi-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "hat",
+            "skull",
+            "cocktail"
+          ],
+          "hard": [
+            "coffin",
+            "snake",
+            "whirl"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/baron-samedi-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/baron-samedi-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "hat",
+            "skull",
+            "cocktail"
+          ],
+          "hard": [
+            "coffin",
+            "snake",
+            "whirl"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/baron-samedi-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/baron-samedi-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/baron-samedi-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/baron-samedi-named.svg"
+    },
+    {
+      "name": "Bastet",
+      "slug": "bastet",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "cat",
+            "whip",
+            "paw"
+          ],
+          "hard": [
+            "shoes",
+            "blood",
+            "clone"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/bastet-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/bastet-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "cat",
+            "whip",
+            "paw"
+          ],
+          "hard": [
+            "shoes",
+            "blood",
+            "clone"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/bastet-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/bastet-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "cat",
+            "whip",
+            "paw"
+          ],
+          "hard": [
+            "shoes",
+            "blood",
+            "clone"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/bastet-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/bastet-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/bastet-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/bastet-named.svg"
+    },
+    {
+      "name": "Bellona",
+      "slug": "bellona",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "shield",
+            "hammer",
+            "whip"
+          ],
+          "hard": [
+            "flag",
+            "bird",
+            "whip"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/bellona-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/bellona-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "shield",
+            "hammer",
+            "whip"
+          ],
+          "hard": [
+            "flag",
+            "bird",
+            "whip"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/bellona-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/bellona-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "shield",
+            "hammer",
+            "whip"
+          ],
+          "hard": [
+            "flag",
+            "bird",
+            "whip"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/bellona-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/bellona-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/bellona-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/bellona-named.svg"
+    },
+    {
+      "name": "Cabrakan",
+      "slug": "cabrakan",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "earth",
+            "wall",
+            "shield"
+          ],
+          "hard": [
+            "tremor",
+            "rock",
+            "mountain"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/cabrakan-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/cabrakan-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "earth",
+            "wall",
+            "shield"
+          ],
+          "hard": [
+            "tremor",
+            "rock",
+            "mountain"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/cabrakan-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/cabrakan-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "earth",
+            "wall",
+            "shield"
+          ],
+          "hard": [
+            "tremor",
+            "rock",
+            "mountain"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/cabrakan-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/cabrakan-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/cabrakan-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/cabrakan-named.svg"
+    },
+    {
+      "name": "Cerberus",
+      "slug": "cerberus",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "dog",
+            "three",
+            "ghost"
+          ],
+          "hard": [
+            "poison",
+            "ghost",
+            "lift"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/cerberus-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/cerberus-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "dog",
+            "three",
+            "ghost"
+          ],
+          "hard": [
+            "poison",
+            "ghost",
+            "lift"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/cerberus-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/cerberus-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "dog",
+            "three",
+            "ghost"
+          ],
+          "hard": [
+            "poison",
+            "ghost",
+            "lift"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/cerberus-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/cerberus-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/cerberus-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/cerberus-named.svg"
+    },
+    {
+      "name": "Cernunnos",
+      "slug": "cernunnos",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "deer",
+            "leaf",
+            "bow"
+          ],
+          "hard": [
+            "snow",
+            "sun",
+            "boar"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/cernunnos-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/cernunnos-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "deer",
+            "leaf",
+            "bow"
+          ],
+          "hard": [
+            "snow",
+            "sun",
+            "boar"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/cernunnos-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/cernunnos-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "deer",
+            "leaf",
+            "bow"
+          ],
+          "hard": [
+            "snow",
+            "sun",
+            "boar"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/cernunnos-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/cernunnos-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/cernunnos-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/cernunnos-named.svg"
+    },
+    {
+      "name": "Chaac",
+      "slug": "chaac",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "rain",
+            "axe",
+            "lightning"
+          ],
+          "hard": [
+            "heal",
+            "storm",
+            "cloud"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/chaac-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/chaac-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "rain",
+            "axe",
+            "lightning"
+          ],
+          "hard": [
+            "heal",
+            "storm",
+            "cloud"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/chaac-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/chaac-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "rain",
+            "axe",
+            "lightning"
+          ],
+          "hard": [
+            "heal",
+            "storm",
+            "cloud"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/chaac-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/chaac-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/chaac-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/chaac-named.svg"
+    },
+    {
+      "name": "Charon",
+      "slug": "charon",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "ship",
+            "coin",
+            "wave"
+          ],
+          "hard": [
+            "fog",
+            "skull",
+            "coin"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/charon-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/charon-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "ship",
+            "coin",
+            "wave"
+          ],
+          "hard": [
+            "fog",
+            "skull",
+            "coin"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/charon-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/charon-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "ship",
+            "coin",
+            "wave"
+          ],
+          "hard": [
+            "fog",
+            "skull",
+            "coin"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/charon-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/charon-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/charon-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/charon-named.svg"
+    },
+    {
+      "name": "Chiron",
+      "slug": "chiron",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "horse",
+            "bow",
+            "teacher"
+          ],
+          "hard": [
+            "heal",
+            "star",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/chiron-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/chiron-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "horse",
+            "bow",
+            "teacher"
+          ],
+          "hard": [
+            "heal",
+            "star",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/chiron-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/chiron-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "horse",
+            "bow",
+            "teacher"
+          ],
+          "hard": [
+            "heal",
+            "star",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/chiron-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/chiron-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/chiron-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/chiron-named.svg"
+    },
+    {
+      "name": "Chronos",
+      "slug": "chronos",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "clock",
+            "gear",
+            "hourglass"
+          ],
+          "hard": [
+            "reload",
+            "freeze",
+            "rift"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/chronos-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/chronos-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "clock",
+            "gear",
+            "hourglass"
+          ],
+          "hard": [
+            "reload",
+            "freeze",
+            "rift"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/chronos-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/chronos-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "clock",
+            "gear",
+            "hourglass"
+          ],
+          "hard": [
+            "reload",
+            "freeze",
+            "rift"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/chronos-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/chronos-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/chronos-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/chronos-named.svg"
+    },
+    {
+      "name": "Cupid",
+      "slug": "cupid",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "heart",
+            "bow",
+            "angel"
+          ],
+          "hard": [
+            "bomb",
+            "heal",
+            "sleep"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/cupid-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/cupid-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "heart",
+            "bow",
+            "angel"
+          ],
+          "hard": [
+            "bomb",
+            "heal",
+            "sleep"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/cupid-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/cupid-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "heart",
+            "bow",
+            "angel"
+          ],
+          "hard": [
+            "bomb",
+            "heal",
+            "sleep"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/cupid-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/cupid-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/cupid-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/cupid-named.svg"
+    },
+    {
+      "name": "Da Ji",
+      "slug": "da-ji",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "fox",
+            "chain",
+            "blood"
+          ],
+          "hard": [
+            "nine",
+            "fire",
+            "paw"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/da-ji-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/da-ji-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "fox",
+            "chain",
+            "blood"
+          ],
+          "hard": [
+            "nine",
+            "fire",
+            "paw"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/da-ji-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/da-ji-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "fox",
+            "chain",
+            "blood"
+          ],
+          "hard": [
+            "nine",
+            "fire",
+            "paw"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/da-ji-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/da-ji-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/da-ji-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/da-ji-named.svg"
+    },
+    {
+      "name": "Danzaburou",
+      "slug": "danzaburou",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "raccoon",
+            "money",
+            "leaf"
+          ],
+          "hard": [
+            "clone",
+            "bomb",
+            "wine"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/danzaburou-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/danzaburou-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "raccoon",
+            "money",
+            "leaf"
+          ],
+          "hard": [
+            "clone",
+            "bomb",
+            "wine"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/danzaburou-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/danzaburou-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "raccoon",
+            "money",
+            "leaf"
+          ],
+          "hard": [
+            "clone",
+            "bomb",
+            "wine"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/danzaburou-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/danzaburou-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/danzaburou-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/danzaburou-named.svg"
+    },
+    {
+      "name": "Discordia",
+      "slug": "discordia",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "apple",
+            "storm",
+            "cyclone"
+          ],
+          "hard": [
+            "apple",
+            "people",
+            "spark"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/discordia-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/discordia-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "apple",
+            "storm",
+            "cyclone"
+          ],
+          "hard": [
+            "apple",
+            "people",
+            "spark"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/discordia-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/discordia-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "apple",
+            "storm",
+            "cyclone"
+          ],
+          "hard": [
+            "apple",
+            "people",
+            "spark"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/discordia-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/discordia-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/discordia-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/discordia-named.svg"
+    },
+    {
+      "name": "Eset",
+      "slug": "eset",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "wings",
+            "staff",
+            "bird"
+          ],
+          "hard": [
+            "orb",
+            "silence",
+            "crystal"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/eset-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/eset-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "wings",
+            "staff",
+            "bird"
+          ],
+          "hard": [
+            "orb",
+            "silence",
+            "crystal"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/eset-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/eset-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "wings",
+            "staff",
+            "bird"
+          ],
+          "hard": [
+            "orb",
+            "silence",
+            "crystal"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/eset-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/eset-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/eset-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/eset-named.svg"
+    },
+    {
+      "name": "Fenrir",
+      "slug": "fenrir",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "wolf",
+            "chain",
+            "maw"
+          ],
+          "hard": [
+            "giant",
+            "rage",
+            "moon"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/fenrir-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/fenrir-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "wolf",
+            "chain",
+            "maw"
+          ],
+          "hard": [
+            "giant",
+            "rage",
+            "moon"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/fenrir-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/fenrir-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "wolf",
+            "chain",
+            "maw"
+          ],
+          "hard": [
+            "giant",
+            "rage",
+            "moon"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/fenrir-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/fenrir-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/fenrir-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/fenrir-named.svg"
+    },
+    {
+      "name": "Ganesha",
+      "slug": "ganesha",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "elephant",
+            "stop",
+            "lotus"
+          ],
+          "hard": [
+            "prayer",
+            "wall",
+            "silence"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ganesha-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ganesha-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "elephant",
+            "stop",
+            "lotus"
+          ],
+          "hard": [
+            "prayer",
+            "wall",
+            "silence"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ganesha-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ganesha-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "elephant",
+            "stop",
+            "lotus"
+          ],
+          "hard": [
+            "prayer",
+            "wall",
+            "silence"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ganesha-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ganesha-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/ganesha-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/ganesha-named.svg"
+    },
+    {
+      "name": "Geb",
+      "slug": "geb",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "earth",
+            "rock",
+            "wall"
+          ],
+          "hard": [
+            "tremor",
+            "ball",
+            "pluck"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/geb-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/geb-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "earth",
+            "rock",
+            "wall"
+          ],
+          "hard": [
+            "tremor",
+            "ball",
+            "pluck"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/geb-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/geb-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "earth",
+            "rock",
+            "wall"
+          ],
+          "hard": [
+            "tremor",
+            "ball",
+            "pluck"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/geb-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/geb-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/geb-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/geb-named.svg"
+    },
+    {
+      "name": "Gilgamesh",
+      "slug": "gilgamesh",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "leg",
+            "sword",
+            "brick"
+          ],
+          "hard": [
+            "wind",
+            "shoes",
+            "strength"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/gilgamesh-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/gilgamesh-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "leg",
+            "sword",
+            "brick"
+          ],
+          "hard": [
+            "wind",
+            "shoes",
+            "strength"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/gilgamesh-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/gilgamesh-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "leg",
+            "sword",
+            "brick"
+          ],
+          "hard": [
+            "wind",
+            "shoes",
+            "strength"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/gilgamesh-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/gilgamesh-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/gilgamesh-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/gilgamesh-named.svg"
+    },
+    {
+      "name": "Guan Yu",
+      "slug": "guan-yu",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "horse",
+            "spear",
+            "heal"
+          ],
+          "hard": [
+            "green",
+            "dragon",
+            "strength"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/guan-yu-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/guan-yu-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "horse",
+            "spear",
+            "heal"
+          ],
+          "hard": [
+            "green",
+            "dragon",
+            "strength"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/guan-yu-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/guan-yu-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "horse",
+            "spear",
+            "heal"
+          ],
+          "hard": [
+            "green",
+            "dragon",
+            "strength"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/guan-yu-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/guan-yu-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/guan-yu-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/guan-yu-named.svg"
+    },
+    {
+      "name": "Hades",
+      "slug": "hades",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "skull",
+            "whirl",
+            "dark"
+          ],
+          "hard": [
+            "silence",
+            "heal",
+            "crown"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/hades-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/hades-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "skull",
+            "whirl",
+            "dark"
+          ],
+          "hard": [
+            "silence",
+            "heal",
+            "crown"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/hades-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/hades-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "skull",
+            "whirl",
+            "dark"
+          ],
+          "hard": [
+            "silence",
+            "heal",
+            "crown"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/hades-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/hades-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/hades-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/hades-named.svg"
+    },
+    {
+      "name": "Hecate",
+      "slug": "hecate",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "moon",
+            "three",
+            "wand"
+          ],
+          "hard": [
+            "portal",
+            "dog",
+            "glyph"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/hecate-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/hecate-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "moon",
+            "three",
+            "wand"
+          ],
+          "hard": [
+            "portal",
+            "dog",
+            "glyph"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/hecate-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/hecate-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "moon",
+            "three",
+            "wand"
+          ],
+          "hard": [
+            "portal",
+            "dog",
+            "glyph"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/hecate-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/hecate-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/hecate-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/hecate-named.svg"
+    },
+    {
+      "name": "Hercules",
+      "slug": "hercules",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "strength",
+            "club",
+            "rock"
+          ],
+          "hard": [
+            "heal",
+            "pluck",
+            "lion"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/hercules-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/hercules-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "strength",
+            "club",
+            "rock"
+          ],
+          "hard": [
+            "heal",
+            "pluck",
+            "lion"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/hercules-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/hercules-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "strength",
+            "club",
+            "rock"
+          ],
+          "hard": [
+            "heal",
+            "pluck",
+            "lion"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/hercules-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/hercules-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/hercules-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/hercules-named.svg"
+    },
+    {
+      "name": "Horus",
+      "slug": "horus",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "bird",
+            "eye",
+            "wings"
+          ],
+          "hard": [
+            "heal",
+            "lift",
+            "people"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/horus-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/horus-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "bird",
+            "eye",
+            "wings"
+          ],
+          "hard": [
+            "heal",
+            "lift",
+            "people"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/horus-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/horus-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "bird",
+            "eye",
+            "wings"
+          ],
+          "hard": [
+            "heal",
+            "lift",
+            "people"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/horus-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/horus-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/horus-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/horus-named.svg"
+    },
+    {
+      "name": "Hou Yi",
+      "slug": "hou-yi",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "bow",
+            "sun",
+            "nine"
+          ],
+          "hard": [
+            "rabbit",
+            "bird",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/hou-yi-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/hou-yi-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "bow",
+            "sun",
+            "nine"
+          ],
+          "hard": [
+            "rabbit",
+            "bird",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/hou-yi-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/hou-yi-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "bow",
+            "sun",
+            "nine"
+          ],
+          "hard": [
+            "rabbit",
+            "bird",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/hou-yi-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/hou-yi-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/hou-yi-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/hou-yi-named.svg"
+    },
+    {
+      "name": "Hua Mulan",
+      "slug": "hua-mulan",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "banner",
+            "sword",
+            "flower"
+          ],
+          "hard": [
+            "reload",
+            "spear",
+            "horse"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/hua-mulan-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/hua-mulan-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "banner",
+            "sword",
+            "flower"
+          ],
+          "hard": [
+            "reload",
+            "spear",
+            "horse"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/hua-mulan-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/hua-mulan-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "banner",
+            "sword",
+            "flower"
+          ],
+          "hard": [
+            "reload",
+            "spear",
+            "horse"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/hua-mulan-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/hua-mulan-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/hua-mulan-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/hua-mulan-named.svg"
+    },
+    {
+      "name": "Hun Batz",
+      "slug": "hun-batz",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "monkey",
+            "drum",
+            "boomerang"
+          ],
+          "hard": [
+            "ghost",
+            "lift",
+            "staff"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/hun-batz-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/hun-batz-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "monkey",
+            "drum",
+            "boomerang"
+          ],
+          "hard": [
+            "ghost",
+            "lift",
+            "staff"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/hun-batz-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/hun-batz-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "monkey",
+            "drum",
+            "boomerang"
+          ],
+          "hard": [
+            "ghost",
+            "lift",
+            "staff"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/hun-batz-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/hun-batz-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/hun-batz-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/hun-batz-named.svg"
+    },
+    {
+      "name": "Ishtar",
+      "slug": "ishtar",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "star",
+            "bow",
+            "crown"
+          ],
+          "hard": [
+            "lightning",
+            "sword",
+            "storm"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ishtar-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ishtar-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "star",
+            "bow",
+            "crown"
+          ],
+          "hard": [
+            "lightning",
+            "sword",
+            "storm"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ishtar-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ishtar-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "star",
+            "bow",
+            "crown"
+          ],
+          "hard": [
+            "lightning",
+            "sword",
+            "storm"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ishtar-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ishtar-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/ishtar-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/ishtar-named.svg"
+    },
+    {
+      "name": "Izanami",
+      "slug": "izanami",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "boomerang",
+            "ghost",
+            "scythe"
+          ],
+          "hard": [
+            "invisible",
+            "portal",
+            "skull"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/izanami-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/izanami-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "boomerang",
+            "ghost",
+            "scythe"
+          ],
+          "hard": [
+            "invisible",
+            "portal",
+            "skull"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/izanami-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/izanami-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "boomerang",
+            "ghost",
+            "scythe"
+          ],
+          "hard": [
+            "invisible",
+            "portal",
+            "skull"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/izanami-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/izanami-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/izanami-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/izanami-named.svg"
+    },
+    {
+      "name": "Janus",
+      "slug": "janus",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "door",
+            "portal",
+            "two"
+          ],
+          "hard": [
+            "rift",
+            "wall",
+            "galaxy"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/janus-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/janus-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "door",
+            "portal",
+            "two"
+          ],
+          "hard": [
+            "rift",
+            "wall",
+            "galaxy"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/janus-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/janus-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "door",
+            "portal",
+            "two"
+          ],
+          "hard": [
+            "rift",
+            "wall",
+            "galaxy"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/janus-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/janus-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/janus-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/janus-named.svg"
+    },
+    {
+      "name": "Jing Wei",
+      "slug": "jing-wei",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "bird",
+            "wave",
+            "rock"
+          ],
+          "hard": [
+            "wind",
+            "bow",
+            "wings"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/jing-wei-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/jing-wei-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "bird",
+            "wave",
+            "rock"
+          ],
+          "hard": [
+            "wind",
+            "bow",
+            "wings"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/jing-wei-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/jing-wei-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "bird",
+            "wave",
+            "rock"
+          ],
+          "hard": [
+            "wind",
+            "bow",
+            "wings"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/jing-wei-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/jing-wei-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/jing-wei-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/jing-wei-named.svg"
+    },
+    {
+      "name": "Jormungandr",
+      "slug": "jormungandr",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "snake",
+            "poison",
+            "earth"
+          ],
+          "hard": [
+            "wave",
+            "maw",
+            "ocean"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/jormungandr-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/jormungandr-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "snake",
+            "poison",
+            "earth"
+          ],
+          "hard": [
+            "wave",
+            "maw",
+            "ocean"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/jormungandr-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/jormungandr-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "snake",
+            "poison",
+            "earth"
+          ],
+          "hard": [
+            "wave",
+            "maw",
+            "ocean"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/jormungandr-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/jormungandr-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/jormungandr-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/jormungandr-named.svg"
+    },
+    {
+      "name": "Kali",
+      "slug": "kali",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "tongue",
+            "dagger",
+            "skull"
+          ],
+          "hard": [
+            "four",
+            "dance",
+            "blood"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/kali-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/kali-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "tongue",
+            "dagger",
+            "skull"
+          ],
+          "hard": [
+            "four",
+            "dance",
+            "blood"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/kali-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/kali-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "tongue",
+            "dagger",
+            "skull"
+          ],
+          "hard": [
+            "four",
+            "dance",
+            "blood"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/kali-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/kali-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/kali-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/kali-named.svg"
+    },
+    {
+      "name": "Khepri",
+      "slug": "khepri",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "bug",
+            "sun",
+            "recycle"
+          ],
+          "hard": [
+            "shield",
+            "pluck",
+            "heal"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/khepri-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/khepri-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "bug",
+            "sun",
+            "recycle"
+          ],
+          "hard": [
+            "shield",
+            "pluck",
+            "heal"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/khepri-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/khepri-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "bug",
+            "sun",
+            "recycle"
+          ],
+          "hard": [
+            "shield",
+            "pluck",
+            "heal"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/khepri-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/khepri-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/khepri-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/khepri-named.svg"
+    },
+    {
+      "name": "Kukulkan",
+      "slug": "kukulkan",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "snake",
+            "wind",
+            "cyclone"
+          ],
+          "hard": [
+            "wings",
+            "whirl",
+            "storm"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/kukulkan-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/kukulkan-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "snake",
+            "wind",
+            "cyclone"
+          ],
+          "hard": [
+            "wings",
+            "whirl",
+            "storm"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/kukulkan-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/kukulkan-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "snake",
+            "wind",
+            "cyclone"
+          ],
+          "hard": [
+            "wings",
+            "whirl",
+            "storm"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/kukulkan-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/kukulkan-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/kukulkan-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/kukulkan-named.svg"
+    },
+    {
+      "name": "Loki",
+      "slug": "loki",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "dagger",
+            "invisible",
+            "clone"
+          ],
+          "hard": [
+            "masks",
+            "snake",
+            "dark"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/loki-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/loki-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "dagger",
+            "invisible",
+            "clone"
+          ],
+          "hard": [
+            "masks",
+            "snake",
+            "dark"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/loki-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/loki-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "dagger",
+            "invisible",
+            "clone"
+          ],
+          "hard": [
+            "masks",
+            "snake",
+            "dark"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/loki-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/loki-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/loki-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/loki-named.svg"
+    },
+    {
+      "name": "Medusa",
+      "slug": "medusa",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "snake",
+            "eye",
+            "statue"
+          ],
+          "hard": [
+            "bow",
+            "poison",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/medusa-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/medusa-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "snake",
+            "eye",
+            "statue"
+          ],
+          "hard": [
+            "bow",
+            "poison",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/medusa-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/medusa-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "snake",
+            "eye",
+            "statue"
+          ],
+          "hard": [
+            "bow",
+            "poison",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/medusa-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/medusa-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/medusa-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/medusa-named.svg"
+    },
+    {
+      "name": "Mercury",
+      "slug": "mercury",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "shoes",
+            "wind",
+            "wings"
+          ],
+          "hard": [
+            "fist",
+            "bag",
+            "pluck"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/mercury-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/mercury-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "shoes",
+            "wind",
+            "wings"
+          ],
+          "hard": [
+            "fist",
+            "bag",
+            "pluck"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/mercury-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/mercury-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "shoes",
+            "wind",
+            "wings"
+          ],
+          "hard": [
+            "fist",
+            "bag",
+            "pluck"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/mercury-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/mercury-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/mercury-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/mercury-named.svg"
+    },
+    {
+      "name": "Merlin",
+      "slug": "merlin",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "fire",
+            "freeze",
+            "staff"
+          ],
+          "hard": [
+            "three",
+            "wizard",
+            "crystal"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/merlin-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/merlin-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "fire",
+            "freeze",
+            "staff"
+          ],
+          "hard": [
+            "three",
+            "wizard",
+            "crystal"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/merlin-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/merlin-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "fire",
+            "freeze",
+            "staff"
+          ],
+          "hard": [
+            "three",
+            "wizard",
+            "crystal"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/merlin-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/merlin-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/merlin-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/merlin-named.svg"
+    },
+    {
+      "name": "Mordred",
+      "slug": "mordred",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "two",
+            "sword",
+            "blood"
+          ],
+          "hard": [
+            "rage",
+            "execute",
+            "armor"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/mordred-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/mordred-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "two",
+            "sword",
+            "blood"
+          ],
+          "hard": [
+            "rage",
+            "execute",
+            "armor"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/mordred-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/mordred-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "two",
+            "sword",
+            "blood"
+          ],
+          "hard": [
+            "rage",
+            "execute",
+            "armor"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/mordred-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/mordred-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/mordred-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/mordred-named.svg"
+    },
+    {
+      "name": "Morgan Le Fay",
+      "slug": "morgan-le-fay",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "dragon",
+            "wand",
+            "fire"
+          ],
+          "hard": [
+            "sword",
+            "fog",
+            "witch"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/morgan-le-fay-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/morgan-le-fay-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "dragon",
+            "wand",
+            "fire"
+          ],
+          "hard": [
+            "sword",
+            "fog",
+            "witch"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/morgan-le-fay-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/morgan-le-fay-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "dragon",
+            "wand",
+            "fire"
+          ],
+          "hard": [
+            "sword",
+            "fog",
+            "witch"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/morgan-le-fay-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/morgan-le-fay-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/morgan-le-fay-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/morgan-le-fay-named.svg"
+    },
+    {
+      "name": "Ne Zha",
+      "slug": "ne-zha",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "ring",
+            "spear",
+            "lotus"
+          ],
+          "hard": [
+            "fire",
+            "wind",
+            "shoes"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ne-zha-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ne-zha-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "ring",
+            "spear",
+            "lotus"
+          ],
+          "hard": [
+            "fire",
+            "wind",
+            "shoes"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ne-zha-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ne-zha-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "ring",
+            "spear",
+            "lotus"
+          ],
+          "hard": [
+            "fire",
+            "wind",
+            "shoes"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ne-zha-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ne-zha-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/ne-zha-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/ne-zha-named.svg"
+    },
+    {
+      "name": "Neith",
+      "slug": "neith",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "thread",
+            "bow",
+            "web"
+          ],
+          "hard": [
+            "heal",
+            "galaxy",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/neith-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/neith-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "thread",
+            "bow",
+            "web"
+          ],
+          "hard": [
+            "heal",
+            "galaxy",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/neith-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/neith-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "thread",
+            "bow",
+            "web"
+          ],
+          "hard": [
+            "heal",
+            "galaxy",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/neith-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/neith-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/neith-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/neith-named.svg"
+    },
+    {
+      "name": "Nemesis",
+      "slug": "nemesis",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "scales",
+            "sword",
+            "mirror"
+          ],
+          "hard": [
+            "execute",
+            "shield",
+            "dark"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/nemesis-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/nemesis-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "scales",
+            "sword",
+            "mirror"
+          ],
+          "hard": [
+            "execute",
+            "shield",
+            "dark"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/nemesis-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/nemesis-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "scales",
+            "sword",
+            "mirror"
+          ],
+          "hard": [
+            "execute",
+            "shield",
+            "dark"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/nemesis-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/nemesis-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/nemesis-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/nemesis-named.svg"
+    },
+    {
+      "name": "Nu Wa",
+      "slug": "nu-wa",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "fog",
+            "people",
+            "rock"
+          ],
+          "hard": [
+            "snake",
+            "fire",
+            "crystal"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/nu-wa-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/nu-wa-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "fog",
+            "people",
+            "rock"
+          ],
+          "hard": [
+            "snake",
+            "fire",
+            "crystal"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/nu-wa-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/nu-wa-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "fog",
+            "people",
+            "rock"
+          ],
+          "hard": [
+            "snake",
+            "fire",
+            "crystal"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/nu-wa-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/nu-wa-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/nu-wa-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/nu-wa-named.svg"
+    },
+    {
+      "name": "Nut",
+      "slug": "nut",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "galaxy",
+            "star",
+            "night"
+          ],
+          "hard": [
+            "comet",
+            "rift",
+            "two"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/nut-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/nut-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "galaxy",
+            "star",
+            "night"
+          ],
+          "hard": [
+            "comet",
+            "rift",
+            "two"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/nut-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/nut-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "galaxy",
+            "star",
+            "night"
+          ],
+          "hard": [
+            "comet",
+            "rift",
+            "two"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/nut-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/nut-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/nut-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/nut-named.svg"
+    },
+    {
+      "name": "Odin",
+      "slug": "odin",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "raven",
+            "spear",
+            "ring"
+          ],
+          "hard": [
+            "wall",
+            "eye",
+            "shield"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/odin-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/odin-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "raven",
+            "spear",
+            "ring"
+          ],
+          "hard": [
+            "wall",
+            "eye",
+            "shield"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/odin-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/odin-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "raven",
+            "spear",
+            "ring"
+          ],
+          "hard": [
+            "wall",
+            "eye",
+            "shield"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/odin-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/odin-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/odin-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/odin-named.svg"
+    },
+    {
+      "name": "Osiris",
+      "slug": "osiris",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "zombie",
+            "scythe",
+            "wheat"
+          ],
+          "hard": [
+            "whip",
+            "thread",
+            "bone"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/osiris-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/osiris-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "zombie",
+            "scythe",
+            "wheat"
+          ],
+          "hard": [
+            "whip",
+            "thread",
+            "bone"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/osiris-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/osiris-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "zombie",
+            "scythe",
+            "wheat"
+          ],
+          "hard": [
+            "whip",
+            "thread",
+            "bone"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/osiris-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/osiris-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/osiris-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/osiris-named.svg"
+    },
+    {
+      "name": "Pele",
+      "slug": "pele",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "volcano",
+            "fire",
+            "hibiscus"
+          ],
+          "hard": [
+            "lightning",
+            "shoes",
+            "rock"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/pele-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/pele-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "volcano",
+            "fire",
+            "hibiscus"
+          ],
+          "hard": [
+            "lightning",
+            "shoes",
+            "rock"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/pele-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/pele-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "volcano",
+            "fire",
+            "hibiscus"
+          ],
+          "hard": [
+            "lightning",
+            "shoes",
+            "rock"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/pele-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/pele-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/pele-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/pele-named.svg"
+    },
+    {
+      "name": "Poseidon",
+      "slug": "poseidon",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "wave",
+            "trident",
+            "octopus"
+          ],
+          "hard": [
+            "whirl",
+            "tide",
+            "pluck"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/poseidon-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/poseidon-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "wave",
+            "trident",
+            "octopus"
+          ],
+          "hard": [
+            "whirl",
+            "tide",
+            "pluck"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/poseidon-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/poseidon-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "wave",
+            "trident",
+            "octopus"
+          ],
+          "hard": [
+            "whirl",
+            "tide",
+            "pluck"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/poseidon-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/poseidon-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/poseidon-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/poseidon-named.svg"
+    },
+    {
+      "name": "Princess Bari",
+      "slug": "princess-bari",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "bell",
+            "heal",
+            "flower"
+          ],
+          "hard": [
+            "ghost",
+            "dance",
+            "people"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/princess-bari-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/princess-bari-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "bell",
+            "heal",
+            "flower"
+          ],
+          "hard": [
+            "ghost",
+            "dance",
+            "people"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/princess-bari-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/princess-bari-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "bell",
+            "heal",
+            "flower"
+          ],
+          "hard": [
+            "ghost",
+            "dance",
+            "people"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/princess-bari-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/princess-bari-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/princess-bari-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/princess-bari-named.svg"
+    },
+    {
+      "name": "Ra",
+      "slug": "ra",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "sun",
+            "bird",
+            "beam"
+          ],
+          "hard": [
+            "heal",
+            "eye",
+            "light"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ra-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ra-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "sun",
+            "bird",
+            "beam"
+          ],
+          "hard": [
+            "heal",
+            "eye",
+            "light"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ra-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ra-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "sun",
+            "bird",
+            "beam"
+          ],
+          "hard": [
+            "heal",
+            "eye",
+            "light"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ra-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ra-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/ra-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/ra-named.svg"
+    },
+    {
+      "name": "Rama",
+      "slug": "rama",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "bow",
+            "crown",
+            "monkey"
+          ],
+          "hard": [
+            "star",
+            "three",
+            "shoes"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/rama-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/rama-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "bow",
+            "crown",
+            "monkey"
+          ],
+          "hard": [
+            "star",
+            "three",
+            "shoes"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/rama-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/rama-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "bow",
+            "crown",
+            "monkey"
+          ],
+          "hard": [
+            "star",
+            "three",
+            "shoes"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/rama-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/rama-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/rama-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/rama-named.svg"
+    },
+    {
+      "name": "Ratatoskr",
+      "slug": "ratatoskr",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "squirrel",
+            "nut",
+            "tree"
+          ],
+          "hard": [
+            "dart",
+            "shoes",
+            "three"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ratatoskr-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ratatoskr-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "squirrel",
+            "nut",
+            "tree"
+          ],
+          "hard": [
+            "dart",
+            "shoes",
+            "three"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ratatoskr-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ratatoskr-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "squirrel",
+            "nut",
+            "tree"
+          ],
+          "hard": [
+            "dart",
+            "shoes",
+            "three"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ratatoskr-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ratatoskr-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/ratatoskr-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/ratatoskr-named.svg"
+    },
+    {
+      "name": "Scylla",
+      "slug": "scylla",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "girl",
+            "dog",
+            "wave"
+          ],
+          "hard": [
+            "monster",
+            "maw",
+            "four"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/scylla-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/scylla-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "girl",
+            "dog",
+            "wave"
+          ],
+          "hard": [
+            "monster",
+            "maw",
+            "four"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/scylla-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/scylla-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "girl",
+            "dog",
+            "wave"
+          ],
+          "hard": [
+            "monster",
+            "maw",
+            "four"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/scylla-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/scylla-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/scylla-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/scylla-named.svg"
+    },
+    {
+      "name": "Sobek",
+      "slug": "sobek",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "crocodile",
+            "wave",
+            "pluck"
+          ],
+          "hard": [
+            "heal",
+            "tide",
+            "strength"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/sobek-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/sobek-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "crocodile",
+            "wave",
+            "pluck"
+          ],
+          "hard": [
+            "heal",
+            "tide",
+            "strength"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/sobek-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/sobek-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "crocodile",
+            "wave",
+            "pluck"
+          ],
+          "hard": [
+            "heal",
+            "tide",
+            "strength"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/sobek-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/sobek-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/sobek-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/sobek-named.svg"
+    },
+    {
+      "name": "Sol",
+      "slug": "sol",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "sun",
+            "fire",
+            "spark"
+          ],
+          "hard": [
+            "heal",
+            "explosion",
+            "dance"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/sol-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/sol-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "sun",
+            "fire",
+            "spark"
+          ],
+          "hard": [
+            "heal",
+            "explosion",
+            "dance"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/sol-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/sol-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "sun",
+            "fire",
+            "spark"
+          ],
+          "hard": [
+            "heal",
+            "explosion",
+            "dance"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/sol-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/sol-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/sol-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/sol-named.svg"
+    },
+    {
+      "name": "Sun Wukong",
+      "slug": "sun-wukong",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "monkey",
+            "staff",
+            "cloud"
+          ],
+          "hard": [
+            "clone",
+            "masks",
+            "bird"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/sun-wukong-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/sun-wukong-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "monkey",
+            "staff",
+            "cloud"
+          ],
+          "hard": [
+            "clone",
+            "masks",
+            "bird"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/sun-wukong-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/sun-wukong-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "monkey",
+            "staff",
+            "cloud"
+          ],
+          "hard": [
+            "clone",
+            "masks",
+            "bird"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/sun-wukong-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/sun-wukong-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/sun-wukong-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/sun-wukong-named.svg"
+    },
+    {
+      "name": "Susano",
+      "slug": "susano",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "sword",
+            "cyclone",
+            "storm"
+          ],
+          "hard": [
+            "pluck",
+            "three",
+            "snake"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/susano-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/susano-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "sword",
+            "cyclone",
+            "storm"
+          ],
+          "hard": [
+            "pluck",
+            "three",
+            "snake"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/susano-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/susano-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "sword",
+            "cyclone",
+            "storm"
+          ],
+          "hard": [
+            "pluck",
+            "three",
+            "snake"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/susano-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/susano-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/susano-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/susano-named.svg"
+    },
+    {
+      "name": "Sylvanus",
+      "slug": "sylvanus",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "tree",
+            "leaf",
+            "pluck"
+          ],
+          "hard": [
+            "heal",
+            "flower",
+            "frog"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/sylvanus-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/sylvanus-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "tree",
+            "leaf",
+            "pluck"
+          ],
+          "hard": [
+            "heal",
+            "flower",
+            "frog"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/sylvanus-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/sylvanus-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "tree",
+            "leaf",
+            "pluck"
+          ],
+          "hard": [
+            "heal",
+            "flower",
+            "frog"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/sylvanus-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/sylvanus-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/sylvanus-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/sylvanus-named.svg"
+    },
+    {
+      "name": "Thanatos",
+      "slug": "thanatos",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "scythe",
+            "wings",
+            "execute"
+          ],
+          "hard": [
+            "blood",
+            "silence",
+            "heal"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/thanatos-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/thanatos-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "scythe",
+            "wings",
+            "execute"
+          ],
+          "hard": [
+            "blood",
+            "silence",
+            "heal"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/thanatos-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/thanatos-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "scythe",
+            "wings",
+            "execute"
+          ],
+          "hard": [
+            "blood",
+            "silence",
+            "heal"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/thanatos-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/thanatos-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/thanatos-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/thanatos-named.svg"
+    },
+    {
+      "name": "The Morrigan",
+      "slug": "the-morrigan",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "raven",
+            "masks",
+            "clone"
+          ],
+          "hard": [
+            "invisible",
+            "fog",
+            "three"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/the-morrigan-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/the-morrigan-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "raven",
+            "masks",
+            "clone"
+          ],
+          "hard": [
+            "invisible",
+            "fog",
+            "three"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/the-morrigan-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/the-morrigan-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "raven",
+            "masks",
+            "clone"
+          ],
+          "hard": [
+            "invisible",
+            "fog",
+            "three"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/the-morrigan-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/the-morrigan-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/the-morrigan-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/the-morrigan-named.svg"
+    },
+    {
+      "name": "Thor",
+      "slug": "thor",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "hammer",
+            "lightning",
+            "wall"
+          ],
+          "hard": [
+            "boomerang",
+            "cyclone",
+            "storm"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/thor-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/thor-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "hammer",
+            "lightning",
+            "wall"
+          ],
+          "hard": [
+            "boomerang",
+            "cyclone",
+            "storm"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/thor-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/thor-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "hammer",
+            "lightning",
+            "wall"
+          ],
+          "hard": [
+            "boomerang",
+            "cyclone",
+            "storm"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/thor-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/thor-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/thor-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/thor-named.svg"
+    },
+    {
+      "name": "Tsukuyomi",
+      "slug": "tsukuyomi",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "moon",
+            "ninja",
+            "star"
+          ],
+          "hard": [
+            "chain",
+            "scythe",
+            "dark"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/tsukuyomi-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/tsukuyomi-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "moon",
+            "ninja",
+            "star"
+          ],
+          "hard": [
+            "chain",
+            "scythe",
+            "dark"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/tsukuyomi-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/tsukuyomi-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "moon",
+            "ninja",
+            "star"
+          ],
+          "hard": [
+            "chain",
+            "scythe",
+            "dark"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/tsukuyomi-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/tsukuyomi-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/tsukuyomi-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/tsukuyomi-named.svg"
+    },
+    {
+      "name": "Ullr",
+      "slug": "ullr",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "bow",
+            "axe",
+            "snow"
+          ],
+          "hard": [
+            "two",
+            "shoes",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ullr-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ullr-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "bow",
+            "axe",
+            "snow"
+          ],
+          "hard": [
+            "two",
+            "shoes",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ullr-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ullr-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "bow",
+            "axe",
+            "snow"
+          ],
+          "hard": [
+            "two",
+            "shoes",
+            "arrow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ullr-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ullr-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/ullr-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/ullr-named.svg"
+    },
+    {
+      "name": "Vulcan",
+      "slug": "vulcan",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "hammer",
+            "gear",
+            "fire"
+          ],
+          "hard": [
+            "bomb",
+            "robot",
+            "explosion"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/vulcan-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/vulcan-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "hammer",
+            "gear",
+            "fire"
+          ],
+          "hard": [
+            "bomb",
+            "robot",
+            "explosion"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/vulcan-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/vulcan-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "hammer",
+            "gear",
+            "fire"
+          ],
+          "hard": [
+            "bomb",
+            "robot",
+            "explosion"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/vulcan-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/vulcan-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/vulcan-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/vulcan-named.svg"
+    },
+    {
+      "name": "Xbalanque",
+      "slug": "xbalanque",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "night",
+            "dart",
+            "poison"
+          ],
+          "hard": [
+            "ball",
+            "two",
+            "moon"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/xbalanque-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/xbalanque-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "night",
+            "dart",
+            "poison"
+          ],
+          "hard": [
+            "ball",
+            "two",
+            "moon"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/xbalanque-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/xbalanque-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "night",
+            "dart",
+            "poison"
+          ],
+          "hard": [
+            "ball",
+            "two",
+            "moon"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/xbalanque-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/xbalanque-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/xbalanque-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/xbalanque-named.svg"
+    },
+    {
+      "name": "Yemoja",
+      "slug": "yemoja",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "water",
+            "wave",
+            "heal"
+          ],
+          "hard": [
+            "ring",
+            "wall",
+            "moon"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/yemoja-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/yemoja-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "water",
+            "wave",
+            "heal"
+          ],
+          "hard": [
+            "ring",
+            "wall",
+            "moon"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/yemoja-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/yemoja-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "water",
+            "wave",
+            "heal"
+          ],
+          "hard": [
+            "ring",
+            "wall",
+            "moon"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/yemoja-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/yemoja-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/yemoja-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/yemoja-named.svg"
+    },
+    {
+      "name": "Ymir",
+      "slug": "ymir",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "ice",
+            "wall",
+            "freeze"
+          ],
+          "hard": [
+            "club",
+            "giant",
+            "snow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ymir-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ymir-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "ice",
+            "wall",
+            "freeze"
+          ],
+          "hard": [
+            "club",
+            "giant",
+            "snow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ymir-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ymir-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "ice",
+            "wall",
+            "freeze"
+          ],
+          "hard": [
+            "club",
+            "giant",
+            "snow"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/ymir-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/ymir-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/ymir-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/ymir-named.svg"
+    },
+    {
+      "name": "Zeus",
+      "slug": "zeus",
+      "sets": [
+        {
+          "id": "a",
+          "easy": [
+            "lightning",
+            "cloud",
+            "spark"
+          ],
+          "hard": [
+            "chain",
+            "three",
+            "explosion"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/zeus-a-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/zeus-a-named.svg"
+        },
+        {
+          "id": "b",
+          "easy": [
+            "lightning",
+            "cloud",
+            "spark"
+          ],
+          "hard": [
+            "chain",
+            "three",
+            "explosion"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/zeus-b-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/zeus-b-named.svg"
+        },
+        {
+          "id": "c",
+          "easy": [
+            "lightning",
+            "cloud",
+            "spark"
+          ],
+          "hard": [
+            "chain",
+            "three",
+            "explosion"
+          ],
+          "unnamed": "/media/Trivia/god-emojis/zeus-c-unnamed.svg",
+          "named": "/media/Trivia/god-emojis/zeus-c-named.svg"
+        }
+      ],
+      "unnamed": "/media/Trivia/god-emojis/zeus-unnamed.svg",
+      "named": "/media/Trivia/god-emojis/zeus-named.svg"
+    }
+  ]
+}

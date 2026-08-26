@@ -1,0 +1,1002 @@
+{
+  "angel": {
+    "kind": "emoji",
+    "glyph": "😇"
+  },
+  "apple": {
+    "kind": "emoji",
+    "glyph": "🍎"
+  },
+  "armor": {
+    "kind": "emoji",
+    "glyph": "🛡️"
+  },
+  "arrow": {
+    "kind": "emoji",
+    "glyph": "🏹"
+  },
+  "axe": {
+    "kind": "emoji",
+    "glyph": "🪓"
+  },
+  "bag": {
+    "kind": "emoji",
+    "glyph": "🎒"
+  },
+  "ball": {
+    "kind": "emoji",
+    "glyph": "⚽"
+  },
+  "banner": {
+    "kind": "emoji",
+    "glyph": "🚩"
+  },
+  "bat": {
+    "kind": "icon",
+    "file": "bat.svg",
+    "glyph": "🦇",
+    "flaticonSearch": "bat"
+  },
+  "beam": {
+    "kind": "emoji",
+    "glyph": "🔆"
+  },
+  "bear": {
+    "kind": "emoji",
+    "glyph": "🐻"
+  },
+  "bee": {
+    "kind": "emoji",
+    "glyph": "🐝"
+  },
+  "bell": {
+    "kind": "emoji",
+    "glyph": "🔔"
+  },
+  "berserk": {
+    "kind": "emoji",
+    "glyph": "👹"
+  },
+  "bird": {
+    "kind": "emoji",
+    "glyph": "🐦"
+  },
+  "blood": {
+    "kind": "emoji",
+    "glyph": "🩸"
+  },
+  "boar": {
+    "kind": "emoji",
+    "glyph": "🐗"
+  },
+  "bomb": {
+    "kind": "emoji",
+    "glyph": "💣"
+  },
+  "bone": {
+    "kind": "emoji",
+    "glyph": "🦴"
+  },
+  "book": {
+    "kind": "emoji",
+    "glyph": "📖"
+  },
+  "boomerang": {
+    "kind": "emoji",
+    "glyph": "🪃"
+  },
+  "bow": {
+    "kind": "icon",
+    "file": "bow.svg",
+    "glyph": "🏹",
+    "flaticonSearch": "bow"
+  },
+  "brick": {
+    "kind": "emoji",
+    "glyph": "🧱"
+  },
+  "brush": {
+    "kind": "emoji",
+    "glyph": "🖌️"
+  },
+  "bug": {
+    "kind": "emoji",
+    "glyph": "🪲"
+  },
+  "candle": {
+    "kind": "emoji",
+    "glyph": "🕯️"
+  },
+  "cat": {
+    "kind": "emoji",
+    "glyph": "🐱"
+  },
+  "cave": {
+    "kind": "emoji",
+    "glyph": "🕳️"
+  },
+  "chain": {
+    "kind": "emoji",
+    "glyph": "⛓️"
+  },
+  "clock": {
+    "kind": "emoji",
+    "glyph": "⏳"
+  },
+  "clone": {
+    "kind": "emoji",
+    "glyph": "👥"
+  },
+  "clothing": {
+    "kind": "emoji",
+    "glyph": "👘"
+  },
+  "cloud": {
+    "kind": "emoji",
+    "glyph": "☁️"
+  },
+  "club": {
+    "kind": "emoji",
+    "glyph": "🏏"
+  },
+  "cocktail": {
+    "kind": "emoji",
+    "glyph": "🍸"
+  },
+  "cocoon": {
+    "kind": "emoji",
+    "glyph": "🕸️"
+  },
+  "coffin": {
+    "kind": "emoji",
+    "glyph": "⚰️"
+  },
+  "coin": {
+    "kind": "emoji",
+    "glyph": "🪙"
+  },
+  "comet": {
+    "kind": "emoji",
+    "glyph": "☄️"
+  },
+  "compass": {
+    "kind": "emoji",
+    "glyph": "🧭"
+  },
+  "crocodile": {
+    "kind": "emoji",
+    "glyph": "🐊"
+  },
+  "crown": {
+    "kind": "emoji",
+    "glyph": "👑"
+  },
+  "crystal": {
+    "kind": "emoji",
+    "glyph": "🔮"
+  },
+  "cyclone": {
+    "kind": "emoji",
+    "glyph": "🌪️"
+  },
+  "dagger": {
+    "kind": "emoji",
+    "glyph": "🗡️"
+  },
+  "dance": {
+    "kind": "emoji",
+    "glyph": "💃"
+  },
+  "dark": {
+    "kind": "emoji",
+    "glyph": "🌑"
+  },
+  "dart": {
+    "kind": "emoji",
+    "glyph": "🎯"
+  },
+  "deer": {
+    "kind": "emoji",
+    "glyph": "🦌"
+  },
+  "desert": {
+    "kind": "emoji",
+    "glyph": "🏜️"
+  },
+  "dog": {
+    "kind": "emoji",
+    "glyph": "🐕"
+  },
+  "door": {
+    "kind": "emoji",
+    "glyph": "🚪"
+  },
+  "dragon": {
+    "kind": "emoji",
+    "glyph": "🐉"
+  },
+  "drum": {
+    "kind": "emoji",
+    "glyph": "🥁"
+  },
+  "dwarf": {
+    "kind": "emoji",
+    "glyph": "🧔"
+  },
+  "earth": {
+    "kind": "emoji",
+    "glyph": "🌍"
+  },
+  "egg": {
+    "kind": "emoji",
+    "glyph": "🥚"
+  },
+  "eight": {
+    "kind": "emoji",
+    "glyph": "8️⃣"
+  },
+  "elephant": {
+    "kind": "emoji",
+    "glyph": "🐘"
+  },
+  "execute": {
+    "kind": "emoji",
+    "glyph": "☠️"
+  },
+  "explosion": {
+    "kind": "emoji",
+    "glyph": "💥"
+  },
+  "eye": {
+    "kind": "emoji",
+    "glyph": "👁️"
+  },
+  "feast": {
+    "kind": "emoji",
+    "glyph": "🍖"
+  },
+  "feather": {
+    "kind": "emoji",
+    "glyph": "🪶"
+  },
+  "fire": {
+    "kind": "emoji",
+    "glyph": "🔥"
+  },
+  "fist": {
+    "kind": "emoji",
+    "glyph": "👊"
+  },
+  "flag": {
+    "kind": "emoji",
+    "glyph": "🚩"
+  },
+  "flame": {
+    "kind": "emoji",
+    "glyph": "🔥"
+  },
+  "flower": {
+    "kind": "emoji",
+    "glyph": "🌸"
+  },
+  "fly": {
+    "kind": "emoji",
+    "glyph": "🪰"
+  },
+  "fog": {
+    "kind": "emoji",
+    "glyph": "🌫️"
+  },
+  "four": {
+    "kind": "emoji",
+    "glyph": "4️⃣"
+  },
+  "fox": {
+    "kind": "emoji",
+    "glyph": "🦊"
+  },
+  "freeze": {
+    "kind": "emoji",
+    "glyph": "❄️"
+  },
+  "frog": {
+    "kind": "emoji",
+    "glyph": "🐸"
+  },
+  "galaxy": {
+    "kind": "emoji",
+    "glyph": "🌌"
+  },
+  "game": {
+    "kind": "emoji",
+    "glyph": "🎲"
+  },
+  "gear": {
+    "kind": "emoji",
+    "glyph": "⚙️"
+  },
+  "genie": {
+    "kind": "emoji",
+    "glyph": "🧞"
+  },
+  "ghost": {
+    "kind": "emoji",
+    "glyph": "👻"
+  },
+  "giant": {
+    "kind": "emoji",
+    "glyph": "🗿"
+  },
+  "girl": {
+    "kind": "emoji",
+    "glyph": "👧"
+  },
+  "glyph": {
+    "kind": "emoji",
+    "glyph": "📜"
+  },
+  "goat": {
+    "kind": "emoji",
+    "glyph": "🐐"
+  },
+  "grape": {
+    "kind": "emoji",
+    "glyph": "🍇"
+  },
+  "grass": {
+    "kind": "emoji",
+    "glyph": "🌿"
+  },
+  "greed": {
+    "kind": "emoji",
+    "glyph": "🤑"
+  },
+  "green": {
+    "kind": "emoji",
+    "glyph": "💚"
+  },
+  "hammer": {
+    "kind": "emoji",
+    "glyph": "🔨"
+  },
+  "hand": {
+    "kind": "emoji",
+    "glyph": "✋"
+  },
+  "hat": {
+    "kind": "emoji",
+    "glyph": "🎩"
+  },
+  "headless": {
+    "kind": "emoji",
+    "glyph": "🫥"
+  },
+  "heal": {
+    "kind": "emoji",
+    "glyph": "💚"
+  },
+  "heart": {
+    "kind": "emoji",
+    "glyph": "💕"
+  },
+  "heartbreak": {
+    "kind": "emoji",
+    "glyph": "💔"
+  },
+  "heel": {
+    "kind": "emoji",
+    "glyph": "🦶"
+  },
+  "helmet": {
+    "kind": "emoji",
+    "glyph": "🪖"
+  },
+  "hibiscus": {
+    "kind": "emoji",
+    "glyph": "🌺"
+  },
+  "hive": {
+    "kind": "emoji",
+    "glyph": "🪺"
+  },
+  "honey": {
+    "kind": "icon",
+    "file": "honey.svg",
+    "glyph": "🍯",
+    "flaticonSearch": "honey"
+  },
+  "hook": {
+    "kind": "emoji",
+    "glyph": "🪝"
+  },
+  "horn": {
+    "kind": "emoji",
+    "glyph": "📯"
+  },
+  "horse": {
+    "kind": "emoji",
+    "glyph": "🐴"
+  },
+  "hourglass": {
+    "kind": "emoji",
+    "glyph": "⌛"
+  },
+  "house": {
+    "kind": "emoji",
+    "glyph": "🏠"
+  },
+  "ice": {
+    "kind": "emoji",
+    "glyph": "🧊"
+  },
+  "invisible": {
+    "kind": "emoji",
+    "glyph": "🫥"
+  },
+  "island": {
+    "kind": "emoji",
+    "glyph": "🏝️"
+  },
+  "joust": {
+    "kind": "emoji",
+    "glyph": "🐎"
+  },
+  "kiss": {
+    "kind": "emoji",
+    "glyph": "💋"
+  },
+  "lamp": {
+    "kind": "emoji",
+    "glyph": "🪔"
+  },
+  "leaf": {
+    "kind": "emoji",
+    "glyph": "🍃"
+  },
+  "leg": {
+    "kind": "emoji",
+    "glyph": "🦵"
+  },
+  "leopard": {
+    "kind": "emoji",
+    "glyph": "🐆"
+  },
+  "lift": {
+    "kind": "emoji",
+    "glyph": "🏋️"
+  },
+  "light": {
+    "kind": "emoji",
+    "glyph": "💡"
+  },
+  "lightning": {
+    "kind": "emoji",
+    "glyph": "⚡"
+  },
+  "lion": {
+    "kind": "emoji",
+    "glyph": "🦁"
+  },
+  "lotus": {
+    "kind": "emoji",
+    "glyph": "🪷"
+  },
+  "madness": {
+    "kind": "emoji",
+    "glyph": "🤪"
+  },
+  "masks": {
+    "kind": "emoji",
+    "glyph": "🎭"
+  },
+  "maw": {
+    "kind": "emoji",
+    "glyph": "🦷"
+  },
+  "meteor": {
+    "kind": "emoji",
+    "glyph": "☄️"
+  },
+  "mirror": {
+    "kind": "emoji",
+    "glyph": "🪞"
+  },
+  "money": {
+    "kind": "emoji",
+    "glyph": "💰"
+  },
+  "monkey": {
+    "kind": "emoji",
+    "glyph": "🐒"
+  },
+  "monster": {
+    "kind": "emoji",
+    "glyph": "👹"
+  },
+  "moon": {
+    "kind": "emoji",
+    "glyph": "🌙"
+  },
+  "moon_face": {
+    "kind": "emoji",
+    "glyph": "🌛"
+  },
+  "mountain": {
+    "kind": "emoji",
+    "glyph": "⛰️"
+  },
+  "mushroom": {
+    "kind": "emoji",
+    "glyph": "🍄"
+  },
+  "music": {
+    "kind": "emoji",
+    "glyph": "🎵"
+  },
+  "nausea": {
+    "kind": "emoji",
+    "glyph": "🤢"
+  },
+  "night": {
+    "kind": "emoji",
+    "glyph": "🌃"
+  },
+  "nine": {
+    "kind": "emoji",
+    "glyph": "9️⃣"
+  },
+  "ninja": {
+    "kind": "emoji",
+    "glyph": "🥷"
+  },
+  "nut": {
+    "kind": "emoji",
+    "glyph": "🥜"
+  },
+  "ocean": {
+    "kind": "emoji",
+    "glyph": "🌊"
+  },
+  "octopus": {
+    "kind": "emoji",
+    "glyph": "🐙"
+  },
+  "ogre": {
+    "kind": "emoji",
+    "glyph": "👹"
+  },
+  "orb": {
+    "kind": "emoji",
+    "glyph": "🔮"
+  },
+  "owl": {
+    "kind": "emoji",
+    "glyph": "🦉"
+  },
+  "paw": {
+    "kind": "emoji",
+    "glyph": "🐾"
+  },
+  "peacock": {
+    "kind": "emoji",
+    "glyph": "🦚"
+  },
+  "people": {
+    "kind": "emoji",
+    "glyph": "👥"
+  },
+  "pillow": {
+    "kind": "emoji",
+    "glyph": "🛏️"
+  },
+  "plant": {
+    "kind": "emoji",
+    "glyph": "🌿"
+  },
+  "pluck": {
+    "kind": "icon",
+    "file": "pluck.svg",
+    "glyph": "🤚",
+    "flaticonSearch": "pluck"
+  },
+  "poison": {
+    "kind": "icon",
+    "file": "poison.svg",
+    "glyph": "🟢",
+    "flaticonSearch": "poison"
+  },
+  "pomegranate": {
+    "kind": "emoji",
+    "glyph": "🍎"
+  },
+  "portal": {
+    "kind": "emoji",
+    "glyph": "🌀"
+  },
+  "potion": {
+    "kind": "emoji",
+    "glyph": "🧪"
+  },
+  "prayer": {
+    "kind": "emoji",
+    "glyph": "🙏"
+  },
+  "rabbit": {
+    "kind": "emoji",
+    "glyph": "🐰"
+  },
+  "raccoon": {
+    "kind": "emoji",
+    "glyph": "🦝"
+  },
+  "rage": {
+    "kind": "emoji",
+    "glyph": "😡"
+  },
+  "rain": {
+    "kind": "emoji",
+    "glyph": "🌧️"
+  },
+  "rainbow": {
+    "kind": "emoji",
+    "glyph": "🌈"
+  },
+  "raven": {
+    "kind": "emoji",
+    "glyph": "🐦‍⬛"
+  },
+  "recycle": {
+    "kind": "emoji",
+    "glyph": "♻️"
+  },
+  "reflect": {
+    "kind": "emoji",
+    "glyph": "↩️"
+  },
+  "reload": {
+    "kind": "emoji",
+    "glyph": "🔄"
+  },
+  "retrieve": {
+    "kind": "emoji",
+    "glyph": "↩️"
+  },
+  "rift": {
+    "kind": "emoji",
+    "glyph": "🌀"
+  },
+  "ring": {
+    "kind": "emoji",
+    "glyph": "⭕"
+  },
+  "robot": {
+    "kind": "emoji",
+    "glyph": "🤖"
+  },
+  "rock": {
+    "kind": "emoji",
+    "glyph": "🪨"
+  },
+  "sand": {
+    "kind": "emoji",
+    "glyph": "🏜️"
+  },
+  "scales": {
+    "kind": "emoji",
+    "glyph": "⚖️"
+  },
+  "scorpion": {
+    "kind": "emoji",
+    "glyph": "🦂"
+  },
+  "scream": {
+    "kind": "emoji",
+    "glyph": "😱"
+  },
+  "scroll": {
+    "kind": "emoji",
+    "glyph": "📜"
+  },
+  "scythe": {
+    "kind": "icon",
+    "file": "scythe.svg",
+    "glyph": "⚔️",
+    "flaticonSearch": "scythe"
+  },
+  "shell": {
+    "kind": "emoji",
+    "glyph": "🐢"
+  },
+  "shield": {
+    "kind": "emoji",
+    "glyph": "🛡️"
+  },
+  "ship": {
+    "kind": "emoji",
+    "glyph": "⛵"
+  },
+  "shoes": {
+    "kind": "emoji",
+    "glyph": "👟"
+  },
+  "silence": {
+    "kind": "emoji",
+    "glyph": "🤫"
+  },
+  "skull": {
+    "kind": "emoji",
+    "glyph": "💀"
+  },
+  "sleep": {
+    "kind": "emoji",
+    "glyph": "😴"
+  },
+  "smoke": {
+    "kind": "emoji",
+    "glyph": "💨"
+  },
+  "snake": {
+    "kind": "emoji",
+    "glyph": "🐍"
+  },
+  "snow": {
+    "kind": "emoji",
+    "glyph": "❄️"
+  },
+  "spark": {
+    "kind": "emoji",
+    "glyph": "💫"
+  },
+  "sparkle": {
+    "kind": "emoji",
+    "glyph": "✨"
+  },
+  "spear": {
+    "kind": "icon",
+    "file": "spear.svg",
+    "glyph": "🗡️",
+    "flaticonSearch": "spear"
+  },
+  "spider": {
+    "kind": "emoji",
+    "glyph": "🕷️"
+  },
+  "squirrel": {
+    "kind": "emoji",
+    "glyph": "🐿️"
+  },
+  "staff": {
+    "kind": "icon",
+    "file": "staff.svg",
+    "glyph": "🪄",
+    "flaticonSearch": "staff"
+  },
+  "star": {
+    "kind": "emoji",
+    "glyph": "⭐"
+  },
+  "statue": {
+    "kind": "emoji",
+    "glyph": "🗿"
+  },
+  "stop": {
+    "kind": "emoji",
+    "glyph": "🚫"
+  },
+  "storm": {
+    "kind": "emoji",
+    "glyph": "🌩️"
+  },
+  "strength": {
+    "kind": "emoji",
+    "glyph": "💪"
+  },
+  "sun": {
+    "kind": "emoji",
+    "glyph": "☀️"
+  },
+  "sunrise": {
+    "kind": "emoji",
+    "glyph": "🌅"
+  },
+  "swan": {
+    "kind": "emoji",
+    "glyph": "🦢"
+  },
+  "swarm": {
+    "kind": "emoji",
+    "glyph": "🐝"
+  },
+  "sword": {
+    "kind": "emoji",
+    "glyph": "⚔️"
+  },
+  "teacher": {
+    "kind": "emoji",
+    "glyph": "🧑‍🏫"
+  },
+  "thread": {
+    "kind": "emoji",
+    "glyph": "🧵"
+  },
+  "three": {
+    "kind": "emoji",
+    "glyph": "3️⃣"
+  },
+  "tide": {
+    "kind": "emoji",
+    "glyph": "🌊"
+  },
+  "tongue": {
+    "kind": "emoji",
+    "glyph": "👅"
+  },
+  "tree": {
+    "kind": "emoji",
+    "glyph": "🌳"
+  },
+  "tremor": {
+    "kind": "emoji",
+    "glyph": "🫨"
+  },
+  "trident": {
+    "kind": "emoji",
+    "glyph": "🔱"
+  },
+  "turtle": {
+    "kind": "emoji",
+    "glyph": "🐢"
+  },
+  "two": {
+    "kind": "emoji",
+    "glyph": "2️⃣"
+  },
+  "umbrella": {
+    "kind": "emoji",
+    "glyph": "☂️"
+  },
+  "urn": {
+    "kind": "emoji",
+    "glyph": "⚱️"
+  },
+  "volcano": {
+    "kind": "emoji",
+    "glyph": "🌋"
+  },
+  "wall": {
+    "kind": "icon",
+    "file": "wall.svg",
+    "glyph": "🧱",
+    "flaticonSearch": "wall"
+  },
+  "wand": {
+    "kind": "emoji",
+    "glyph": "🪄"
+  },
+  "water": {
+    "kind": "emoji",
+    "glyph": "💧"
+  },
+  "wave": {
+    "kind": "emoji",
+    "glyph": "🌊"
+  },
+  "web": {
+    "kind": "emoji",
+    "glyph": "🕸️"
+  },
+  "whale": {
+    "kind": "emoji",
+    "glyph": "🐋"
+  },
+  "wheat": {
+    "kind": "emoji",
+    "glyph": "🌾"
+  },
+  "whip": {
+    "kind": "icon",
+    "file": "whip.svg",
+    "glyph": "🪢",
+    "flaticonSearch": "whip"
+  },
+  "whirl": {
+    "kind": "icon",
+    "file": "whirl.svg",
+    "glyph": "🌊",
+    "flaticonSearch": "whirl"
+  },
+  "wind": {
+    "kind": "emoji",
+    "glyph": "💨"
+  },
+  "wine": {
+    "kind": "emoji",
+    "glyph": "🍷"
+  },
+  "wings": {
+    "kind": "emoji",
+    "glyph": "🪽"
+  },
+  "witch": {
+    "kind": "emoji",
+    "glyph": "🧙‍♀️"
+  },
+  "wizard": {
+    "kind": "emoji",
+    "glyph": "🧙"
+  },
+  "wolf": {
+    "kind": "emoji",
+    "glyph": "🐺"
+  },
+  "wood": {
+    "kind": "emoji",
+    "glyph": "🪵"
+  },
+  "yawn": {
+    "kind": "emoji",
+    "glyph": "🥱"
+  },
+  "yin": {
+    "kind": "emoji",
+    "glyph": "☯️"
+  },
+  "zombie": {
+    "kind": "emoji",
+    "glyph": "🧟"
+  },
+  "jackal": {
+    "kind": "icon",
+    "file": "jackal.svg",
+    "glyph": "🐕",
+    "flaticonSearch": "jackal anubis"
+  },
+  "guandao": {
+    "kind": "icon",
+    "file": "guandao.svg",
+    "glyph": "⚔️",
+    "flaticonSearch": "guandao halberd"
+  },
+  "turret": {
+    "kind": "icon",
+    "file": "turret.svg",
+    "glyph": "🤖",
+    "flaticonSearch": "turret cannon"
+  },
+  "ankh": {
+    "kind": "icon",
+    "file": "ankh.svg",
+    "glyph": "☥",
+    "flaticonSearch": "ankh"
+  },
+  "sickle": {
+    "kind": "icon",
+    "file": "sickle.svg",
+    "glyph": "🪃",
+    "flaticonSearch": "sickle kama"
+  },
+  "bandage": {
+    "kind": "emoji",
+    "glyph": "🩹"
+  },
+  "rocket": {
+    "kind": "emoji",
+    "glyph": "🚀"
+  },
+  "metal": {
+    "kind": "emoji",
+    "glyph": "🔩"
+  },
+  "fan": {
+    "kind": "emoji",
+    "glyph": "🪭"
+  },
+  "metal_bar": {
+    "kind": "emoji",
+    "glyph": "🔩"
+  },
+  "soul": {
+    "kind": "emoji",
+    "glyph": "👻"
+  }
+}

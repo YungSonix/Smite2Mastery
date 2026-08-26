@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="whip">
+  <rect width="128" height="128" rx="16" fill="#0b1220"/>
+  <path d="M28 96 Q48 40 80 48 Q104 56 96 88" fill="none" stroke="#fbbf24" stroke-width="8" stroke-linecap="round"/>
+     <circle cx="28" cy="100" r="8" fill="#e2e8f0"/>
+</svg>
