@@ -2410,7 +2410,7 @@ label.f-file-btn:hover {
   position: absolute;
   top: calc(100% + 8px);
   left: 0;
-  z-index: 8;
+  z-index: 40;
   min-width: min(320px, 86vw);
   max-height: min(420px, 70vh);
   overflow: auto;
@@ -2480,11 +2480,11 @@ label.f-file-btn:hover {
 
 .f-q-action-row {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
   margin-top: 10px;
-  overflow-x: auto;
+  overflow: visible;
 }
 
 .f-q-action-row .f-outline-btn,
@@ -2504,11 +2504,11 @@ label.f-file-btn:hover {
 
 .f-variant-toolbar {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
   margin-top: 12px;
-  overflow-x: auto;
+  overflow: visible;
 }
 
 .f-variant-toolbar .f-outline-btn,
