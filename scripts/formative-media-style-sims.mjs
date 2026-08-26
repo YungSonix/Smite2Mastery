@@ -13,7 +13,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const OUT_DIR = path.join(ROOT, 'artifacts', 'trivia-media-style-sims');
 const API_BASE = process.env.FORMATIVE_API_BASE || 'http://localhost:3000';
-const TARGET = 50;
+const TARGET = 85;
 
 const remixUrl = pathToFileURL(path.join(ROOT, 'formative-web/src/lib/triviaRemix.js')).href;
 const richUrl = pathToFileURL(path.join(ROOT, 'formative-web/src/lib/richText.js')).href;
@@ -25,6 +25,8 @@ const {
   applyRemixPatchToVariant,
   hasCollectibleCorrect,
   optionsAreValid,
+  isBaseVoiceClip,
+  isDefaultSkinCard,
 } = await import(remixUrl);
 const { applyPromptTextStyle, htmlToPlainText } = await import(richUrl);
 
@@ -261,6 +263,126 @@ async function main() {
       media: load,
       reason: ok ? undefined : !styleOk ? 'no-style' : !mediaOk ? 'media' : 'invalid',
     });
+  }
+
+  // 51–70: voice_line prefers non-Skin00_Base when catalog has skinned VOX
+  {
+    const catalogMod = await import(
+      pathToFileURL(path.join(ROOT, 'formative-web/src/lib/triviaMediaCatalog.json')).href,
+      { with: { type: 'json' } }
+    );
+    const voiceClips = catalogMod.default?.voiceClips || catalogMod.voiceClips || [];
+    const skinnedCatalog = voiceClips.filter((c) => c?.url && !isBaseVoiceClip(c));
+    const hasSkinned = skinnedCatalog.length >= 4;
+
+    for (let i = 1; i <= 15; i += 1) {
+      const id = `voice-prefer-skinned:${i}`;
+      if (!hasSkinned) {
+        record(id, true, { skipped: 'no-skinned-in-catalog' });
+        continue;
+      }
+      const built = makeRandomQuestionByStyle('voice_line', blankMc(4));
+      if (built.error) {
+        record(id, false, { reason: built.error });
+        continue;
+      }
+      const q = applyRemixPatchToQuestion(blankMc(4), built).question;
+      const url = mediaUrlOf(q);
+      const skin = q.meta?.hint_context?.skin;
+      const ok = Boolean(url) && !/\/Skin00_Base\//i.test(url) && !isBaseVoiceClip({ url, skin });
+      record(id, ok, {
+        url,
+        skin: skin || null,
+        reason: ok ? undefined : 'picked-base-skin',
+      });
+    }
+
+    for (let i = 1; i <= 5; i += 1) {
+      const id = `voice-remix-prefer-skinned:${i}`;
+      if (!hasSkinned) {
+        record(id, true, { skipped: 'no-skinned-in-catalog' });
+        continue;
+      }
+      const baseClip = voiceClips.find((c) => isBaseVoiceClip(c));
+      const seed = {
+        type: 'multiple_choice',
+        prompt: 'Choose the correct god this voice line belongs to.',
+        options: [baseClip?.god || 'Achilles', 'Agni', 'Zeus', 'Ra'],
+        correct: { index: 0 },
+        image_url: baseClip?.url || '/media/VoiceAudio/Achilles/Skin00_Base/VOX/Intro_1.WAV',
+        meta: {
+          media: 'audio',
+          remix_kind: 'voice_line',
+          hint_context: { god: baseClip?.god || 'Achilles', skin: 'Base', kind: 'intro' },
+        },
+      };
+      const remixed = remixQuestionFromA(seed);
+      if (remixed.error) {
+        record(id, false, { reason: remixed.error });
+        continue;
+      }
+      const next = applyRemixPatchToQuestion(seed, remixed).question;
+      const url = mediaUrlOf(next);
+      const ok =
+        next.meta?.remix_kind === 'voice_line' &&
+        Boolean(url) &&
+        url !== seed.image_url &&
+        !/\/Skin00_Base\//i.test(url);
+      record(id, ok, {
+        url,
+        from: seed.image_url,
+        reason: ok ? undefined : 'remix-stayed-base',
+      });
+    }
+  }
+
+  // 71–85: skin_guess uses NewGodSkins (non-Default) + assets-resolvable item/skin samples
+  {
+    const catalogMod = await import(
+      pathToFileURL(path.join(ROOT, 'formative-web/src/lib/triviaMediaCatalog.json')).href,
+      { with: { type: 'json' } }
+    );
+    const skinCards = catalogMod.default?.skinCards || catalogMod.skinCards || [];
+    const skinnedCards = skinCards.filter((c) => c?.url && !isDefaultSkinCard(c));
+
+    for (let i = 1; i <= 10; i += 1) {
+      const id = `skin-newgodskins:${i}`;
+      const built = makeRandomQuestionByStyle('skin_guess', blankMc(4));
+      if (built.error) {
+        record(id, false, { reason: built.error });
+        continue;
+      }
+      const q = applyRemixPatchToQuestion(blankMc(4), built).question;
+      const url = mediaUrlOf(q);
+      const ok =
+        Boolean(url) &&
+        /NewGodSkins/i.test(url) &&
+        !/\/Default\//i.test(url) &&
+        (skinnedCards.length < 4 || !isDefaultSkinCard({ url, skinName: q.meta?.hint_context?.skin }));
+      record(id, ok, {
+        url,
+        skin: q.meta?.hint_context?.skin || null,
+        reason: ok ? undefined : 'not-newgodskins-or-default',
+      });
+    }
+
+    for (let i = 1; i <= 5; i += 1) {
+      const id = `item-identify-path:${i}`;
+      const built = makeRandomQuestionByStyle('item_identify', blankMc(4));
+      if (built.error) {
+        record(id, false, { reason: built.error });
+        continue;
+      }
+      const q = applyRemixPatchToQuestion(blankMc(4), built).question;
+      const url = mediaUrlOf(q);
+      const load = await checkMediaLoads(url);
+      const ok = /Item Icons/i.test(String(url || '')) && (load.ok || load.warn);
+      record(id, ok, {
+        url,
+        media: load,
+        reason: ok ? undefined : load.reason || 'item-path',
+      });
+    }
   }
 
   while (results.length < TARGET) {

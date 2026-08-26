@@ -19,7 +19,7 @@ function preferLocalMediaProxy() {
   }
 }
 
-/** Local `/media/...` is proxied by the trivia API. VoiceAudio + God Renders are gitignored — load from the assets branch. */
+/** Local `/media/...` is proxied by the trivia API. Large/gitignored trees load from the assets branch. */
 export function resolveMediaUrl(url) {
   const s = String(url || '');
   if (!s.startsWith('/media/')) return s;
@@ -32,15 +32,20 @@ export function resolveMediaUrl(url) {
   }
   const toAssets = () =>
     `${GITHUB_ASSETS}/${rel.split('/').map(encodeURIComponent).join('/')}`;
-  // VoiceAudio + God Renders are gitignored on master — always load from the assets branch
-  // (unless VITE_TRIVIA_LOCAL_MEDIA=1 to force trivia:api /media proxy).
-  if (rel.startsWith('VoiceAudio/') || relRaw.startsWith('VoiceAudio/')) {
-    if (preferLocalMediaProxy()) return s;
-    return toAssets();
-  }
-  if (rel.startsWith('God Renders/') || relRaw.startsWith('God%20Renders/')) {
-    if (preferLocalMediaProxy()) return s;
-    return toAssets();
+  // These live on the `assets` branch (often missing/404 on master). Always use assets
+  // unless VITE_TRIVIA_LOCAL_MEDIA=1 forces the local /media proxy.
+  const assetsPrefixes = [
+    ['VoiceAudio/', 'VoiceAudio/'],
+    ['God Renders/', 'God%20Renders/'],
+    ['NewGodSkins/', 'NewGodSkins/'],
+    ['Icons/Item Icons/', 'Icons/Item%20Icons/'],
+    ['Icons/Item Icons/', 'Icons/Item Icons/'],
+  ];
+  for (const [decoded, encoded] of assetsPrefixes) {
+    if (rel.startsWith(decoded) || relRaw.startsWith(encoded) || relRaw.startsWith(decoded)) {
+      if (preferLocalMediaProxy()) return s;
+      return toAssets();
+    }
   }
   if (typeof import.meta !== 'undefined' && import.meta.env?.DEV) return s;
   return `${GITHUB_MASTER}/${rel.split('/').map(encodeURIComponent).join('/')}`;

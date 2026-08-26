@@ -34,7 +34,7 @@ export default function SkinCropThumb({ src, seed = 'skin' }) {
       {failed ? (
         <p className="f-skin-crop-fallback f-muted">
           Image failed to load
-          {/God%20Renders|God Renders|raw\.githubusercontent\.com\/.*\/assets\//i.test(
+          {/NewGodSkins|God%20Renders|God Renders|raw\.githubusercontent\.com\/.*\/assets\//i.test(
             String(src || '')
           ) ? (
             <>

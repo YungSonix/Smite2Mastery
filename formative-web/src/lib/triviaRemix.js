@@ -24,6 +24,52 @@ function pickOne(list) {
   return list[Math.floor(Math.random() * list.length)];
 }
 
+/** Default/base VOX: Skin00_Base folder, or skin label Base/Default. */
+export function isBaseVoiceClip(clip) {
+  const skin = String(clip?.skin || '').trim();
+  const folder = String(clip?.skinFolder || '').trim();
+  const url = String(clip?.url || '');
+  if (/\/Skin00_Base\//i.test(url)) return true;
+  if (/^Skin00_Base$/i.test(folder)) return true;
+  if (/^(Base|Default)$/i.test(skin)) return true;
+  return false;
+}
+
+/** Prefer non-base skins when any exist; fall back to full pool otherwise. */
+export function preferSkinnedVoiceClips(pool) {
+  const list = (Array.isArray(pool) ? pool : []).filter((c) => c?.url && c?.god);
+  if (!list.length) return [];
+  const skinned = list.filter((c) => !isBaseVoiceClip(c));
+  return skinned.length ? skinned : list;
+}
+
+function pickVoiceClip(pool) {
+  return pickOne(preferSkinnedVoiceClips(pool));
+}
+
+/** Default NewGodSkins card (Default folder / isDefault) — prefer alt skins for skin-guess. */
+export function isDefaultSkinCard(card) {
+  if (!card) return true;
+  if (card.isDefault === true) return true;
+  const folder = String(card.skinFolder || '').trim();
+  const name = String(card.skinName || '').trim();
+  const url = String(card.url || '');
+  if (/^Default$/i.test(folder) || /^Default$/i.test(name)) return true;
+  if (/\/Default\//i.test(url)) return true;
+  return false;
+}
+
+export function preferSkinnedSkinCards(pool) {
+  const list = (Array.isArray(pool) ? pool : []).filter((c) => c?.url && c?.god);
+  if (!list.length) return [];
+  const skinned = list.filter((c) => !isDefaultSkinCard(c));
+  return skinned.length ? skinned : list;
+}
+
+function pickSkinCard(pool) {
+  return pickOne(preferSkinnedSkinCards(pool));
+}
+
 function replaceWord(text, from, to) {
   if (!from || !to) return String(text || '');
   return String(text || '').replace(new RegExp(escapeRe(from), 'gi'), to);
@@ -514,7 +560,8 @@ function remixVoiceLine(source, avoidTexts) {
   let pool = clips.filter((c) => c.url !== currentUrl && !taken.has(norm(c.god)));
   if (!pool.length) pool = clips.filter((c) => c.url !== currentUrl);
   if (!pool.length && clips.length > 1) pool = clips.filter((c) => norm(c.god) !== norm(currentGod));
-  const clip = pickOne(pool);
+  // Prefer skinned VOX; only use Skin00_Base when no skinned candidates remain.
+  const clip = pickVoiceClip(pool);
   if (!clip) return { error: 'No other voice clips left to swap to.' };
   const count = optionCount(source);
   const wrong = godIdentifyDistractors(clip.god, count - 1);
@@ -527,7 +574,12 @@ function remixVoiceLine(source, avoidTexts) {
     extraMeta: {
       media: 'audio',
       remix_kind: 'voice_line',
-      hint_context: { god: clip.god, skin: clip.skin, kind: clip.kind },
+      hint_context: {
+        god: clip.god,
+        skin: clip.skin,
+        skinFolder: clip.skinFolder || null,
+        kind: clip.kind,
+      },
     },
     clearMedia: false,
   });
@@ -544,7 +596,7 @@ function remixSkinGuess(source, avoidTexts) {
   let pool = cards.filter((c) => c.url !== currentUrl && !taken.has(norm(c.god)));
   if (!pool.length) pool = cards.filter((c) => c.url !== currentUrl);
   if (!pool.length && cards.length > 1) pool = cards.filter((c) => norm(c.god) !== norm(currentGod));
-  const card = pickOne(pool);
+  const card = pickSkinCard(pool);
   if (!card) return { error: 'No other skin cards left to swap to.' };
   const count = optionCount(source);
   const wrong = godIdentifyDistractors(card.god, count - 1);
@@ -1090,7 +1142,7 @@ export function fillAnswersFromPrompt(question) {
     }
     if (kind === 'skin_guess' || isSkinGuessPrompt(question)) {
       const cards = mediaCatalog.skinCards || [];
-      const card = pickOne(cards);
+      const card = pickSkinCard(cards);
       if (card) {
         return packMc({
           prompt,
@@ -1109,7 +1161,7 @@ export function fillAnswersFromPrompt(question) {
       }
     }
     const clips = mediaCatalog.voiceClips || [];
-    const clip = pickOne(clips);
+    const clip = pickVoiceClip(clips);
     if (clip) {
       return packMc({
         prompt,
@@ -1120,7 +1172,12 @@ export function fillAnswersFromPrompt(question) {
         extraMeta: {
           media: 'audio',
           remix_kind: 'voice_line',
-          hint_context: { god: clip.god, skin: clip.skin, kind: clip.kind },
+          hint_context: {
+            god: clip.god,
+            skin: clip.skin,
+            skinFolder: clip.skinFolder || null,
+            kind: clip.kind,
+          },
         },
       });
     }
@@ -1287,7 +1344,7 @@ export const RANDOM_QUESTION_STYLES = [
   {
     id: 'voice_line',
     label: 'Guess the voice line',
-    blurb: 'Audio — which god speaks this Skin00_Base VOX line',
+    blurb: 'Audio — which god speaks this VOX line (prefers skin packs over Skin00_Base)',
     group: 'Media',
   },
   {
@@ -1299,7 +1356,7 @@ export const RANDOM_QUESTION_STYLES = [
   {
     id: 'skin_guess',
     label: 'Guess the skin (zoomed)',
-    blurb: 'Zoomed God Render screenshot — which god',
+    blurb: 'Zoomed NewGodSkins card — which god (prefers non-Default)',
     group: 'Media',
   },
 ];
@@ -1512,7 +1569,8 @@ function styleMakers(count) {
     voice_line: () => {
       const clips = mediaCatalog.voiceClips || [];
       if (clips.length < 4) return null;
-      const clip = pickOne(clips);
+      const clip = pickVoiceClip(clips);
+      if (!clip) return null;
       const wrong = godIdentifyDistractors(clip.god, count - 1);
       return packMc({
         prompt: 'Choose the correct god this voice line belongs to.',
@@ -1523,7 +1581,12 @@ function styleMakers(count) {
         extraMeta: {
           media: 'audio',
           remix_kind: 'voice_line',
-          hint_context: { god: clip.god, skin: clip.skin, kind: clip.kind },
+          hint_context: {
+            god: clip.god,
+            skin: clip.skin,
+            skinFolder: clip.skinFolder || null,
+            kind: clip.kind,
+          },
         },
       });
     },
@@ -1531,7 +1594,8 @@ function styleMakers(count) {
     skin_guess: () => {
       const cards = mediaCatalog.skinCards || [];
       if (cards.length < 4) return null;
-      const card = pickOne(cards);
+      const card = pickSkinCard(cards);
+      if (!card) return null;
       const wrong = godIdentifyDistractors(card.god, count - 1);
       const seed = `${card.god}|${card.file || card.skinName}`;
       return packMc({
