@@ -385,6 +385,131 @@ async function main() {
     }
   }
 
+  // Aspect-icon: image + MC/multi, no skin crop
+  {
+    for (let i = 1; i <= 8; i += 1) {
+      const id = `aspect-icon-media:${i}`;
+      const built = makeRandomQuestionByStyle('aspect_icon', blankMc(5));
+      if (built.error) {
+        record(id, false, { reason: built.error });
+        continue;
+      }
+      const q = applyRemixPatchToQuestion(blankMc(5), built).question;
+      const url = mediaUrlOf(q);
+      const load = url ? await checkMediaLoads(url) : { ok: false, reason: 'no-url' };
+      const ok =
+        q.meta?.remix_kind === 'aspect_icon' &&
+        /AspectIcons/i.test(String(url || '')) &&
+        q.meta?.media_crop !== 'skin_zoom_center' &&
+        (q.type === 'multiple_choice' || q.type === 'multiple_selection') &&
+        hasCollectibleCorrect(q) &&
+        optionsAreValid(q) &&
+        (load.ok || load.warn);
+      record(id, ok, {
+        url,
+        type: q.type,
+        media: load,
+        reason: ok ? undefined : load.reason || 'aspect-icon',
+      });
+    }
+
+    for (let i = 1; i <= 4; i += 1) {
+      const id = `aspect-icon-change:${i}`;
+      const seed = applyRemixPatchToQuestion(
+        blankMc(5),
+        makeRandomQuestionByStyle('aspect_icon', blankMc(5))
+      ).question;
+      if (!seed || seed.error) {
+        record(id, false, { reason: 'seed-fail' });
+        continue;
+      }
+      const remixed = remixQuestionFromA(seed);
+      if (remixed.error) {
+        record(id, false, { reason: remixed.error });
+        continue;
+      }
+      const next = applyRemixPatchToQuestion(seed, remixed).question;
+      const url = mediaUrlOf(next);
+      const ok =
+        next.meta?.remix_kind === 'aspect_icon' &&
+        /AspectIcons/i.test(String(url || '')) &&
+        url !== mediaUrlOf(seed) &&
+        hasCollectibleCorrect(next);
+      record(id, ok, {
+        from: mediaUrlOf(seed),
+        url,
+        reason: ok ? undefined : 'change-stuck-or-wrong-kind',
+      });
+    }
+  }
+
+  // item_has_stat: no images + rotates stats (not stuck on health)
+  {
+    const statsSeen = new Set();
+    for (let i = 1; i <= 12; i += 1) {
+      const id = `item-has-stat-no-media:${i}`;
+      const poisoned = {
+        ...blankMc(5),
+        image_url: '/media/Icons/Item Icons/Axe.webp',
+        meta: { media: 'image' },
+      };
+      const built = makeRandomQuestionByStyle('item_has_stat', poisoned);
+      if (built.error) {
+        record(id, false, { reason: built.error });
+        continue;
+      }
+      const q = applyRemixPatchToQuestion(poisoned, built).question;
+      const m = String(q.prompt || '').match(/What item has (.+)\?/i);
+      if (m) statsSeen.add(String(m[1]).toLowerCase());
+      const url = mediaUrlOf(q);
+      const ok =
+        q.meta?.remix_kind === 'item_has_stat' &&
+        !url &&
+        hasCollectibleCorrect(q) &&
+        optionsAreValid(q);
+      record(id, ok, {
+        prompt: q.prompt,
+        url,
+        reason: ok ? undefined : url ? 'still-has-image' : 'invalid',
+      });
+    }
+
+    for (let i = 1; i <= 6; i += 1) {
+      const id = `item-has-stat-rotate:${i}`;
+      const seed = {
+        ...blankMc(5),
+        prompt: 'What item has health?',
+        image_url: '/media/Icons/Item Icons/Axe.webp',
+        meta: { remix_kind: 'item_has_stat', hint_context: { stat: 'health' } },
+      };
+      const remixed = remixQuestionFromA(seed);
+      if (remixed.error) {
+        record(id, false, { reason: remixed.error });
+        continue;
+      }
+      const next = applyRemixPatchToQuestion(seed, remixed).question;
+      const m = String(next.prompt || '').match(/What item has (.+)\?/i);
+      const stat = m ? String(m[1]).toLowerCase() : '';
+      const url = mediaUrlOf(next);
+      const ok =
+        next.meta?.remix_kind === 'item_has_stat' &&
+        !url &&
+        stat &&
+        stat !== 'health' &&
+        hasCollectibleCorrect(next);
+      record(id, ok, {
+        stat,
+        url,
+        reason: ok ? undefined : !stat || stat === 'health' ? 'stat-not-rotated' : 'still-has-image',
+      });
+    }
+
+    record('item-has-stat-diversity', statsSeen.size >= 3, {
+      stats: [...statsSeen].sort(),
+      reason: statsSeen.size >= 3 ? undefined : 'too-few-stats',
+    });
+  }
+
   // Ability-sound labels + similar distractors (when neighbor map present)
   {
     const simMod = await import(

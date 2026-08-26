@@ -1,6 +1,6 @@
 {
     "_generatedFrom": "builds.json",
-    "_generatedAt": "2026-08-15T14:28:50.452Z",
+    "_generatedAt": "2026-08-26T03:43:30.621Z",
     "items": [
         [
             {
@@ -36,9 +36,7 @@
                 "starter": true,
                 "stats": {
                     "Health": 350,
-                    "Lifesteal": 8,
-                    "Strength": 35,
-                    "Intelligence": 60
+                    "Lifesteal": 8
                 },
                 "stepCost": 1500,
                 "tier": 2,
@@ -2368,7 +2366,7 @@
                 "icon": "/icons/BrawlersRuin.webp",
                 "internalName": "BrawlersBeatstick",
                 "name": "Brawler's Beat Stick",
-                "passive": "    Adaptive Stat: +30 Strength or +45 Intelligence (based on highest item stat).\n    On God Damage Dealt: Apply 25% Healing Reduction for 5s.\n    While in Combat: +2% Strength, +2% Intelligence, and +2% Protections every 1.5s. Stacks up to 5 times.\n    While Out of Combat: -1 stack every 0.5s.\n    Additional Notes: Healing Reduction does not stack with other similar effects. Combat lasts for 6s upon dealing or taking damage.",
+                "passive": "    Adaptive Stat: +30 Strength or +45 Intelligence (based on highest item stat).\n    On God Damage Dealt: Apply 40% Healing Reduction for 5s.\n    While in Combat: +2% Strength, +2% Intelligence, and +2% Protections every 1.5s. Stacks up to 5 times.\n    While Out of Combat: -1 stack every 0.5s.\n    Additional Notes: Healing Reduction does not stack with other similar effects. Combat lasts for 6s upon dealing or taking damage.",
                 "stats": {
                     "Physical Protection": 15,
                     "Magical Protection": 15
@@ -2684,7 +2682,7 @@
                 "icon": "/icons/DivineRuin.webp",
                 "internalName": "DivineRuin",
                 "name": "Divine Ruin",
-                "passive": "Ability or Attack Hit Enemy God: Apply 25% Healing Reduction. Does not stack with God Anti Heal.\nTrigger Chain Lightning:\n    Magical Damage = 40 + 20% INT\n    Hits enemy and up to 4 nearby enemies.\n    Chain Lightning applies 25% Healing Reduction.\n    Bounce Range: 4.8m\nCooldown: 15s\n\nCan hit the same target more than once",
+                "passive": "Ability or Attack Hit Enemy God: Apply 40% Healing Reduction. Does not stack with God Anti Heal.\nTrigger Chain Lightning:\n    Magical Damage = 40 + 20% INT\n    Hits enemy and up to 4 nearby enemies.\n    Chain Lightning applies 40% Healing Reduction.\n    Bounce Range: 4.8m\nCooldown: 15s\n\nCan hit the same target more than once",
                 "stats": {
                     "Intelligence": 85
                 },
@@ -3117,7 +3115,7 @@
                 "icon": "/icons/freyasTears.webp",
                 "internalName": "FreyasTears",
                 "name": "Freya's Tears",
-                "passive": "On 25% health lost gain 15 Physical and Magical Protections for 5 seconds",
+                "passive": "On 25% health lost gain 15 Physical and Magical Protections for 5 seconds up to 2 stacks.",
                 "stats": {
                     "Magical Protection": 35,
                     "Physical Protection": 30,
@@ -4806,7 +4804,7 @@
                 "icon": "/icons/stygianAnchor.webp",
                 "internalName": "StygianAnchor",
                 "name": "Stygian Anchor",
-                "passive": "On Ability or Basic Attack Hit: Apply a stack of Stygian Sludge for 1.25s. (Max 5 Stacks, falls off 1 at a time.)\n Per Stack of Stygian Sludge: \n5% Healing Echoed to you. \n-3% Attack Speed\nApply 25% Healing Reduction from your Abilities or Attacks. \n",
+                "passive": "On Ability or Basic Attack Hit: Apply a stack of Stygian Sludge for 1.25s. (Max 5 Stacks, falls off 1 at a time.)\n Per Stack of Stygian Sludge: \n5% Healing Echoed to you. \n-3% Attack Speed\nApply 40% Healing Reduction from your Abilities or Attacks. \n",
                 "stats": {
                     "Magical Protection": 30,
                     "Physical Protection": 35
@@ -5130,7 +5128,7 @@
                 "createdAt": "2026-07-28T14:20:42.070Z",
                 "icon": "/icons/toxicBlade.webp",
                 "internalName": "ToxicBlade",
-                "passive": "Hit a God with an Attack:\nApply 25% Healing Reduction and 7% Attack Speed Reduction for 5 seconds.\nGain 7% Attack Speed for 5 seconds.\nAttack Speed Buff and Debuff can stack up to 3 times.",
+                "passive": "Hit a God with an Attack:\nApply 40% Healing Reduction and 7% Attack Speed Reduction for 5 seconds.\nGain 7% Attack Speed for 5 seconds.\nAttack Speed Buff and Debuff can stack up to 3 times.",
                 "stats": {
                     "Attack Damage": 25,
                     "Health": 100,

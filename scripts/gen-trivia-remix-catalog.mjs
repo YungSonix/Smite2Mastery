@@ -25,6 +25,35 @@ function iconKey(name) {
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ITEM_ICON_BASE = '/media/Icons/Item Icons';
 const GOD_ICON_BASE = '/media/Icons/God Info';
+const ASPECT_ICON_BASE = '/media/AspectIcons';
+
+/** Shared aspect slot art under `app/data/AspectIcons/` (assets branch). */
+const ASPECT_POOL_FILENAMES = new Set(
+  [
+    'arrowAspect.webp',
+    'eyeAspect.webp',
+    'fatArrowAspect.webp',
+    'fatHeartAspect.webp',
+    'fistAspect.webp',
+    'handAspect.webp',
+    'heartAspect.webp',
+    'radarAspect.webp',
+    'shieldAspect.webp',
+    'stickyFootAspect.webp',
+    'stunAspect.webp',
+    'swirlAspect.webp',
+    'swordAspect.webp',
+    'swordsAspect.webp',
+  ].map((s) => s.toLowerCase())
+);
+
+function aspectImage(iconPath) {
+  const file = String(iconPath || '')
+    .split(/[/\\]/)
+    .pop();
+  if (!file || !ASPECT_POOL_FILENAMES.has(file.toLowerCase())) return null;
+  return mediaFileUrl(ASPECT_ICON_BASE, file);
+}
 
 function flatten(arr) {
   if (!arr) return [];
@@ -171,7 +200,18 @@ for (const raw of flatten(builds.gods)) {
   if (/^aspect of/i.test(aspectName)) {
     const usesThe = /^aspect of the /i.test(aspectName);
     const blank = aspectName.replace(/^aspect of(?: the)?\s+/i, '').trim();
-    aspects.push({ god: name, aspect: aspectName, blank, usesThe });
+    const iconFile = String(god.aspect?.icon || '')
+      .split(/[/\\]/)
+      .pop() || null;
+    const image = aspectImage(god.aspect?.icon);
+    aspects.push({
+      god: name,
+      aspect: aspectName,
+      blank,
+      usesThe,
+      ...(iconFile ? { icon: iconFile } : {}),
+      ...(image ? { image } : {}),
+    });
   }
 
   const kit = [god.passive, ...Object.values(god.abilities || {})];

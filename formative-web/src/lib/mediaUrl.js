@@ -38,6 +38,7 @@ export function resolveMediaUrl(url) {
     ['VoiceAudio/', 'VoiceAudio/'],
     ['God Renders/', 'God%20Renders/'],
     ['NewGodSkins/', 'NewGodSkins/'],
+    ['AspectIcons/', 'AspectIcons/'],
     ['Icons/Item Icons/', 'Icons/Item%20Icons/'],
     ['Icons/Item Icons/', 'Icons/Item Icons/'],
   ];

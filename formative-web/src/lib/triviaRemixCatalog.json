@@ -289,6 +289,10 @@
       "image": "/media/Icons/God Info/ratImage.webp"
     },
     {
+      "name": "Ravana",
+      "image": "/media/Icons/God Info/ravImage.webp"
+    },
+    {
       "name": "Scylla",
       "image": "/media/Icons/God Info/scyllaImage.webp"
     },
@@ -853,16 +857,12 @@
         "tier2",
         "health",
         "lifesteal",
-        "strength",
-        "intelligence",
         "cost",
         "step cost"
       ],
       "stats": {
         "health": 350,
         "lifesteal": 8,
-        "strength": 35,
-        "intelligence": 60,
         "cost": 2150,
         "step cost": 1500
       },
@@ -5795,436 +5795,583 @@
       "god": "Achilles",
       "aspect": "Aspect of Prowess",
       "blank": "Prowess",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "arrowAspect.webp",
+      "image": "/media/AspectIcons/arrowAspect.webp"
     },
     {
       "god": "Agni",
       "aspect": "Aspect of Combustion",
       "blank": "Combustion",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swirlAspect.webp",
+      "image": "/media/AspectIcons/swirlAspect.webp"
     },
     {
       "god": "Ah Puch",
       "aspect": "Aspect of the Death March",
       "blank": "Death March",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "handAspect.webp",
+      "image": "/media/AspectIcons/handAspect.webp"
     },
     {
       "god": "Amaterasu",
       "aspect": "Aspect Of Valor",
       "blank": "Valor",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swordAspect.webp",
+      "image": "/media/AspectIcons/swordAspect.webp"
     },
     {
       "god": "Anhur",
       "aspect": "Aspect of Pride",
       "blank": "Pride",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swordAspect.webp",
+      "image": "/media/AspectIcons/swordAspect.webp"
     },
     {
       "god": "Apollo",
       "aspect": "Aspect of Harmony",
       "blank": "Harmony",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "fatArrowAspect.webp",
+      "image": "/media/AspectIcons/fatArrowAspect.webp"
     },
     {
       "god": "Ares",
       "aspect": "Aspect of Reverberation",
       "blank": "Reverberation",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swirlAspect.webp",
+      "image": "/media/AspectIcons/swirlAspect.webp"
     },
     {
       "god": "Artemis",
       "aspect": "Aspect of the Wild",
       "blank": "Wild",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "fatArrowAspect.webp",
+      "image": "/media/AspectIcons/fatArrowAspect.webp"
     },
     {
       "god": "Artio",
       "aspect": "Aspect of the Denmother",
       "blank": "Denmother",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "fatArrowAspect.webp",
+      "image": "/media/AspectIcons/fatArrowAspect.webp"
     },
     {
       "god": "Athena",
       "aspect": "Aspect of War",
       "blank": "War",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "arrowAspect.webp",
+      "image": "/media/AspectIcons/arrowAspect.webp"
     },
     {
       "god": "Atlas",
       "aspect": "Aspect of The Unburdened",
       "blank": "Unburdened",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "fatArrowAspect.webp",
+      "image": "/media/AspectIcons/fatArrowAspect.webp"
     },
     {
       "god": "Bacchus",
       "aspect": "Aspect of Revelry",
       "blank": "Revelry",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swordAspect.webp",
+      "image": "/media/AspectIcons/swordAspect.webp"
     },
     {
       "god": "Baron Samedi",
       "aspect": "Aspect of Hysteria",
       "blank": "Hysteria",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swirlAspect.webp",
+      "image": "/media/AspectIcons/swirlAspect.webp"
     },
     {
       "god": "Bastet",
       "aspect": "Aspect of the Watchful Pride",
       "blank": "Watchful Pride",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "bastetAspect.webp"
     },
     {
       "god": "Bellona",
       "aspect": "Aspect of Vindication",
       "blank": "Vindication",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "shieldAspect.webp",
+      "image": "/media/AspectIcons/shieldAspect.webp"
     },
     {
       "god": "Cabrakan",
       "aspect": "Aspect of Rotund Jotunn",
       "blank": "Rotund Jotunn",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swirlAspect.webp",
+      "image": "/media/AspectIcons/swirlAspect.webp"
     },
     {
       "god": "Cerberus",
       "aspect": "Aspect of Souls",
       "blank": "Souls",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swirlAspect.webp",
+      "image": "/media/AspectIcons/swirlAspect.webp"
     },
     {
       "god": "Cernunnos",
       "aspect": "Aspect of Strife",
       "blank": "Strife",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "fistAspect.webp",
+      "image": "/media/AspectIcons/fistAspect.webp"
     },
     {
       "god": "Chaac",
       "aspect": "Aspect of Fulmination",
       "blank": "Fulmination",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swordsAspect.webp",
+      "image": "/media/AspectIcons/swordsAspect.webp"
     },
     {
       "god": "Charon",
       "aspect": "Aspect of the Tollkeeper",
       "blank": "Tollkeeper",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "fatArrowAspect.webp",
+      "image": "/media/AspectIcons/fatArrowAspect.webp"
     },
     {
       "god": "Chiron",
       "aspect": "Aspect of the Heroic Tutor",
       "blank": "Heroic Tutor",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "arrowAspect.webp",
+      "image": "/media/AspectIcons/arrowAspect.webp"
     },
     {
       "god": "Chronos",
       "aspect": "Aspect of Relativity",
       "blank": "Relativity",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swirlAspect.webp",
+      "image": "/media/AspectIcons/swirlAspect.webp"
     },
     {
       "god": "Cu Chulainn",
       "aspect": "Aspect of the Warped",
       "blank": "Warped",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "fistAspect.webp",
+      "image": "/media/AspectIcons/fistAspect.webp"
     },
     {
       "god": "Cupid",
       "aspect": "Aspect of Love",
       "blank": "Love",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "heartAspect.webp",
+      "image": "/media/AspectIcons/heartAspect.webp"
     },
     {
       "god": "Da Ji",
       "aspect": "Aspect of Ferocity",
       "blank": "Ferocity",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swordAspect.webp",
+      "image": "/media/AspectIcons/swordAspect.webp"
     },
     {
       "god": "Danzaburou",
       "aspect": "Aspect of Fellowship",
       "blank": "Fellowship",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "handAspect.webp",
+      "image": "/media/AspectIcons/handAspect.webp"
     },
     {
       "god": "Discordia",
       "aspect": "Aspect of the Gilded Victor",
       "blank": "Gilded Victor",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "swordAspect.webp",
+      "image": "/media/AspectIcons/swordAspect.webp"
     },
     {
       "god": "Eset",
       "aspect": "Aspect of Lifewarden",
       "blank": "Lifewarden",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "fatHeartAspect.webp",
+      "image": "/media/AspectIcons/fatHeartAspect.webp"
     },
     {
       "god": "Fenrir",
       "aspect": "Aspect of Loyalty",
       "blank": "Loyalty",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "stickyFootAspect.webp",
+      "image": "/media/AspectIcons/stickyFootAspect.webp"
     },
     {
       "god": "Ganesha",
       "aspect": "Aspect of the Triumphant",
       "blank": "Triumphant",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "swirlAspect.webp",
+      "image": "/media/AspectIcons/swirlAspect.webp"
     },
     {
       "god": "Geb",
       "aspect": "Aspect of Calamity",
       "blank": "Calamity",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "radarAspect.webp",
+      "image": "/media/AspectIcons/radarAspect.webp"
     },
     {
       "god": "Gilgamesh",
       "aspect": "Aspect of Shamash",
       "blank": "Shamash",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "fatArrowAspect.webp",
+      "image": "/media/AspectIcons/fatArrowAspect.webp"
     },
     {
       "god": "Guan Yu",
       "aspect": "Aspect of The General",
       "blank": "General",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "swordsAspect.webp",
+      "image": "/media/AspectIcons/swordsAspect.webp"
     },
     {
       "god": "Hecate",
       "aspect": "Aspect of Ruin",
       "blank": "Ruin",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swirlAspect.webp",
+      "image": "/media/AspectIcons/swirlAspect.webp"
     },
     {
       "god": "Hercules",
       "aspect": "Aspect of Preservation",
       "blank": "Preservation",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "heartAspect.webp",
+      "image": "/media/AspectIcons/heartAspect.webp"
     },
     {
       "god": "Horus",
       "aspect": "Aspect of The Falcon",
       "blank": "Falcon",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "fistAspect.webp",
+      "image": "/media/AspectIcons/fistAspect.webp"
     },
     {
       "god": "Hou Yi",
       "aspect": "Aspect of the Mark",
       "blank": "Mark",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "arrowAspect.webp",
+      "image": "/media/AspectIcons/arrowAspect.webp"
     },
     {
       "god": "Hun Batz",
       "aspect": "Aspect of Disruption",
       "blank": "Disruption",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "stunAspect.webp",
+      "image": "/media/AspectIcons/stunAspect.webp"
     },
     {
       "god": "Ishtar",
       "aspect": "Aspect of the Passionate Storm",
       "blank": "Passionate Storm",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "swirlAspect.webp",
+      "image": "/media/AspectIcons/swirlAspect.webp"
     },
     {
       "god": "Ix Chel",
       "aspect": "Aspect of the Mother's Light",
       "blank": "Mother's Light",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "heartAspect.webp",
+      "image": "/media/AspectIcons/heartAspect.webp"
     },
     {
       "god": "Jormungandr",
       "aspect": "Aspect of the Unyielding",
       "blank": "Unyielding",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "fatArrowAspect.webp",
+      "image": "/media/AspectIcons/fatArrowAspect.webp"
     },
     {
       "god": "Kali",
       "aspect": "Aspect of Unbound Destruction",
       "blank": "Unbound Destruction",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "arrowAspect.webp",
+      "image": "/media/AspectIcons/arrowAspect.webp"
     },
     {
       "god": "Khepri",
       "aspect": "Aspect of Laceration",
       "blank": "Laceration",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swordsAspect.webp",
+      "image": "/media/AspectIcons/swordsAspect.webp"
     },
     {
       "god": "Kukulkan",
       "aspect": "Aspect of the Squall",
       "blank": "Squall",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "fatArrowAspect.webp",
+      "image": "/media/AspectIcons/fatArrowAspect.webp"
     },
     {
       "god": "Loki",
       "aspect": "Aspect of Agony",
       "blank": "Agony",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "eyeAspect.webp",
+      "image": "/media/AspectIcons/eyeAspect.webp"
     },
     {
       "god": "Merlin",
       "aspect": "Aspect of Pandamonium",
       "blank": "Pandamonium",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swirlAspect.webp",
+      "image": "/media/AspectIcons/swirlAspect.webp"
     },
     {
       "god": "Mordred",
       "aspect": "Aspect of Rage",
       "blank": "Rage",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "fatArrowAspect.webp",
+      "image": "/media/AspectIcons/fatArrowAspect.webp"
     },
     {
       "god": "Morgan Le Fay",
       "aspect": "Aspect of the Cursed Crown",
       "blank": "Cursed Crown",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "swordsAspect.webp",
+      "image": "/media/AspectIcons/swordsAspect.webp"
     },
     {
       "god": "Ne Zha",
       "aspect": "Aspect of Righteous Flame",
       "blank": "Righteous Flame",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "fatArrowAspect.webp",
+      "image": "/media/AspectIcons/fatArrowAspect.webp"
     },
     {
       "god": "Neith",
       "aspect": "Aspect of Wind",
       "blank": "Wind",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swordAspect.webp",
+      "image": "/media/AspectIcons/swordAspect.webp"
     },
     {
       "god": "Nemesis",
       "aspect": "Aspect of Justice",
       "blank": "Justice",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "fatHeartAspect.webp",
+      "image": "/media/AspectIcons/fatHeartAspect.webp"
     },
     {
       "god": "Nu Wa",
       "aspect": "Aspect of Shining Mist",
       "blank": "Shining Mist",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swordAspect.webp",
+      "image": "/media/AspectIcons/swordAspect.webp"
     },
     {
       "god": "Nut",
       "aspect": "Aspect of the Cosmos",
       "blank": "Cosmos",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "stunAspect.webp",
+      "image": "/media/AspectIcons/stunAspect.webp"
     },
     {
       "god": "Osiris",
       "aspect": "Aspect of the Fragmented",
       "blank": "Fragmented",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "swirlAspect.webp",
+      "image": "/media/AspectIcons/swirlAspect.webp"
     },
     {
       "god": "Pele",
       "aspect": "Aspect of Obsidian",
       "blank": "Obsidian",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "fatHeartAspect.webp",
+      "image": "/media/AspectIcons/fatHeartAspect.webp"
     },
     {
       "god": "Poseidon",
       "aspect": "Aspect of the Trident",
       "blank": "Trident",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "swordAspect.webp",
+      "image": "/media/AspectIcons/swordAspect.webp"
     },
     {
       "god": "Ra",
       "aspect": "Aspect of Thermotherapy",
       "blank": "Thermotherapy",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "heartAspect.webp",
+      "image": "/media/AspectIcons/heartAspect.webp"
     },
     {
       "god": "Rama",
       "aspect": "Aspect of Precision",
       "blank": "Precision",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "arrowAspect.webp",
+      "image": "/media/AspectIcons/arrowAspect.webp"
     },
     {
       "god": "Ratatoskr",
       "aspect": "Aspect of the Thickbark",
       "blank": "Thickbark",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "handAspect.webp",
+      "image": "/media/AspectIcons/handAspect.webp"
     },
     {
       "god": "Scylla",
       "aspect": "Aspect of the Devourer",
       "blank": "Devourer",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "fatArrowAspect.webp",
+      "image": "/media/AspectIcons/fatArrowAspect.webp"
     },
     {
       "god": "Sobek",
       "aspect": "Aspect of Prey",
       "blank": "Prey",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "fatArrowAspect.webp",
+      "image": "/media/AspectIcons/fatArrowAspect.webp"
     },
     {
       "god": "Sol",
       "aspect": "Aspect of Conflagration",
       "blank": "Conflagration",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swirlAspect.webp",
+      "image": "/media/AspectIcons/swirlAspect.webp"
     },
     {
       "god": "Sun Wukong",
       "aspect": "Aspect of Transformation",
       "blank": "Transformation",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "arrowAspect.webp",
+      "image": "/media/AspectIcons/arrowAspect.webp"
     },
     {
       "god": "Sylvanus",
       "aspect": "Aspect of Grover's Wrath",
       "blank": "Grover's Wrath",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "fistAspect.webp",
+      "image": "/media/AspectIcons/fistAspect.webp"
     },
     {
       "god": "Thanatos",
       "aspect": "Aspect of Reaping",
       "blank": "Reaping",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "fatHeartAspect.webp",
+      "image": "/media/AspectIcons/fatHeartAspect.webp"
     },
     {
       "god": "The Morrigan",
       "aspect": "Aspect of Mischief",
       "blank": "Mischief",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "arrowAspect.webp",
+      "image": "/media/AspectIcons/arrowAspect.webp"
     },
     {
       "god": "Thor",
       "aspect": "Aspect of Thunderstruck",
       "blank": "Thunderstruck",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "shieldAspect.webp",
+      "image": "/media/AspectIcons/shieldAspect.webp"
     },
     {
       "god": "Tsukuyomi",
       "aspect": "Aspect of Mangestu",
       "blank": "Mangestu",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swirlAspect.webp",
+      "image": "/media/AspectIcons/swirlAspect.webp"
     },
     {
       "god": "Vulcan",
       "aspect": "Aspect of Fortification",
       "blank": "Fortification",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "shieldAspect.webp",
+      "image": "/media/AspectIcons/shieldAspect.webp"
     },
     {
       "god": "Xbalanque",
       "aspect": "Aspect of the Nightstalker",
       "blank": "Nightstalker",
-      "usesThe": true
+      "usesThe": true,
+      "icon": "fatArrowAspect.webp",
+      "image": "/media/AspectIcons/fatArrowAspect.webp"
     },
     {
       "god": "Xing Tian",
       "aspect": "Aspect of Relentless Spite",
       "blank": "Relentless Spite",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swirlAspect.webp",
+      "image": "/media/AspectIcons/swirlAspect.webp"
     },
     {
       "god": "Yemoja",
       "aspect": "Aspect of Downpour",
       "blank": "Downpour",
-      "usesThe": false
+      "usesThe": false,
+      "icon": "swirlAspect.webp",
+      "image": "/media/AspectIcons/swirlAspect.webp"
     }
   ],
   "abilities": [
+    {
+      "god": "Ravana",
+      "name": "10-Hand Shadow Fist"
+    },
     {
       "god": "Sun Wukong",
       "name": "72 Transformations"
@@ -6420,6 +6567,10 @@
     {
       "god": "Zeus",
       "name": "Chain Lightning"
+    },
+    {
+      "god": "Ravana",
+      "name": "Chain of Blows"
     },
     {
       "god": "The Morrigan",
@@ -7090,6 +7241,10 @@
       "name": "Mysterious Fog"
     },
     {
+      "god": "Ravana",
+      "name": "Mystic Rush"
+    },
+    {
       "god": "Princess Bari",
       "name": "Mystic Surge"
     },
@@ -7140,6 +7295,10 @@
     {
       "god": "Hun Batz",
       "name": "Overhand Smash"
+    },
+    {
+      "god": "Ravana",
+      "name": "Overhead Kick"
     },
     {
       "god": "Merlin",
@@ -7200,6 +7359,10 @@
     {
       "god": "Kukulkan",
       "name": "Power Of The Wind Jewel"
+    },
+    {
+      "god": "Ravana",
+      "name": "Prana Onslaught"
     },
     {
       "god": "Athena",

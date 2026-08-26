@@ -284,7 +284,128 @@ function applyStatSwap(source, fromItem, next, stat, pool) {
   return { patch };
 }
 
+function isItemHasStatPrompt(source) {
+  const kind = String(source?.meta?.remix_kind || '');
+  if (kind === 'item_has_stat') return true;
+  return /(?:what|which)\s+item\s+has\b/i.test(String(source?.prompt || ''));
+}
+
+function isAspectIconPrompt(source) {
+  const kind = String(source?.meta?.remix_kind || '');
+  if (kind === 'aspect_icon') return true;
+  return /aspect\s+icon|pick the god(?:s)? that has this aspect|which gods? (?:share|have|use) this aspect/i.test(
+    String(source?.prompt || '')
+  );
+}
+
+/** Group gods that share the same aspect pool icon (for identify-the-icon questions). */
+function aspectIconGroups() {
+  const map = new Map();
+  for (const a of catalog.aspects || []) {
+    if (!a?.image || !a?.icon) continue;
+    const key = norm(a.icon);
+    if (!map.has(key)) map.set(key, { icon: a.icon, image: a.image, gods: [] });
+    const g = map.get(key);
+    if (!g.gods.some((n) => norm(n) === norm(a.god))) g.gods.push(a.god);
+  }
+  return [...map.values()];
+}
+
+function currentAspectIconKey(source) {
+  const fromMeta = source?.meta?.hint_context?.aspect_icon;
+  if (fromMeta) return norm(fromMeta);
+  const url = String(source?.image_url || source?.image_urls?.[0] || '');
+  const file = url.split('/').pop() || '';
+  try {
+    return norm(decodeURIComponent(file));
+  } catch {
+    return norm(file);
+  }
+}
+
+function makeItemHasStatQuestion({ count = 4, avoidStats = new Set() } = {}) {
+  const stats = popularStats().filter((s) => !avoidStats.has(norm(s)));
+  const pool = stats.length ? stats : popularStats();
+  const stat = pickOne(pool);
+  if (!stat) return null;
+  const withStat = catalog.items.filter((i) => i.stats?.[stat] != null);
+  const without = catalog.items.filter((i) => i.stats?.[stat] == null);
+  const correct = pickOne(withStat);
+  if (!correct || without.length < 3) return null;
+  return packMc({
+    prompt: `What item has ${stat}?`,
+    correctLabel: correct.name,
+    distractors: pickDistinct(without.map((i) => i.name), count - 1, new Set([norm(correct.name)])),
+    count,
+    clearMedia: true,
+    extraMeta: { remix_kind: 'item_has_stat', hint_context: { stat } },
+  });
+}
+
+/**
+ * Aspect-icon identify: show shared emblem, pick god(s) that use it.
+ * Multi-select when 2+ gods share the icon; single MC when only one.
+ */
+function makeAspectIconQuestion({ count = 5, avoidIcons = new Set(), keepPrompt = null } = {}) {
+  const groups = aspectIconGroups().filter((g) => g.gods.length >= 1 && !avoidIcons.has(norm(g.icon)));
+  if (!groups.length) return null;
+  const multi = groups.filter((g) => g.gods.length >= 2);
+  const group = pickOne(multi.length ? multi : groups);
+  if (!group) return null;
+
+  const correctGods = [...group.gods];
+  const single = correctGods.length === 1;
+  const type = single ? 'multiple_choice' : 'multiple_selection';
+  const wantCorrect = single
+    ? 1
+    : Math.min(correctGods.length, Math.max(2, Math.min(4, Math.floor(count / 2))));
+  const correctPick = single
+    ? [correctGods[0]]
+    : pickDistinct(correctGods, wantCorrect, new Set());
+  const needWrong = Math.max(single ? count - 1 : 2, count - correctPick.length);
+  const taken = new Set(correctPick.map(norm));
+  const otherGods = godNamePool().filter((n) => !correctGods.some((g) => norm(g) === norm(n)));
+  const wrong = pickDistinct(otherGods, needWrong, taken);
+  const options = shuffle([...correctPick, ...wrong].slice(0, Math.max(count, correctPick.length + 1)));
+  const indices = correctPick
+    .map((g) => options.findIndex((o) => norm(o) === norm(g)))
+    .filter((i) => i >= 0);
+  if (!indices.length) return null;
+
+  const prompt =
+    keepPrompt ||
+    'Pick the God that has this aspect icon. (May or may not be more than one God)';
+  return {
+    patch: {
+      type,
+      prompt,
+      options,
+      correct: single ? { index: indices[0] } : { indices, index: indices[0] },
+      meta: {
+        randomize_order: true,
+        allow_partial_credit: !single,
+        media: 'image',
+        remix_kind: 'aspect_icon',
+        hint_context: { aspect_icon: group.icon, gods: correctGods },
+      },
+      image_url: group.image,
+      image_urls: [group.image],
+    },
+  };
+}
+
 function remixItem(source, avoidTexts) {
+  // Text "which item has [stat]?" — rotate the stat, never attach item icons.
+  if (isItemHasStatPrompt(source)) {
+    const current = findStatsInText(source.prompt || '');
+    const avoid = new Set(current.map(norm));
+    const hit =
+      makeItemHasStatQuestion({ count: optionCount(source), avoidStats: avoid }) ||
+      makeItemHasStatQuestion({ count: optionCount(source) });
+    if (hit?.patch) return hit;
+    return { error: 'No other item-has-stat questions left to build.' };
+  }
+
   const blob = blobOf(source);
   const names = catalog.items.map((i) => i.name);
   const fromName =
@@ -315,14 +436,33 @@ function remixItem(source, avoidTexts) {
   if (numericQuestion) {
     return applyStatSwap(source, fromItem, next, stat, pool);
   }
-  return applySwap(source, fromName, next.name, {
+  const attachImage =
+    isIdentifyItemPrompt(source.prompt) || source?.meta?.remix_kind === 'item_identify';
+  const swapped = applySwap(source, fromName, next.name, {
     distractors: pool.map((i) => i.name),
-    image: next.image,
+    image: attachImage ? next.image : undefined,
     prefer: itemLowerTierNames(next),
   });
+  if (!attachImage) {
+    swapped.patch.image_url = null;
+    swapped.patch.image_urls = [];
+    swapped.patch.clearMedia = true;
+  }
+  return swapped;
 }
 
 function remixAspect(source, avoidTexts) {
+  if (isAspectIconPrompt(source)) {
+    const avoid = new Set();
+    const cur = currentAspectIconKey(source);
+    if (cur) avoid.add(cur);
+    const hit =
+      makeAspectIconQuestion({ count: optionCount(source), avoidIcons: avoid }) ||
+      makeAspectIconQuestion({ count: optionCount(source) });
+    if (hit?.patch) return hit;
+    return { error: 'No other aspect icons left to swap to.' };
+  }
+
   const text = blobOf(source);
   const fromGod = findNameInText(text, catalog.aspects.map((a) => a.god));
   if (!fromGod) return null;
@@ -671,6 +811,17 @@ function remixAbilitySound(source, avoidTexts) {
 }
 
 function remixGod(source, avoidTexts) {
+  if (isAspectIconPrompt(source)) {
+    const avoid = new Set();
+    const cur = currentAspectIconKey(source);
+    if (cur) avoid.add(cur);
+    const hit =
+      makeAspectIconQuestion({ count: optionCount(source), avoidIcons: avoid }) ||
+      makeAspectIconQuestion({ count: optionCount(source) });
+    if (hit?.patch) return hit;
+    return { error: 'No other aspect icons left to swap to.' };
+  }
+
   const names = catalog.gods.map((g) => g.name);
   const fromName =
     exactOptionHit(
@@ -1142,6 +1293,40 @@ export function fillAnswersFromPrompt(question) {
     return { error: 'No release-order gods to fill answers. Try Random question.' };
   }
 
+  if (isAspectIconPrompt(question)) {
+    const avoid = new Set();
+    const cur = currentAspectIconKey(question);
+    if (cur) avoid.add(cur);
+    const hit =
+      makeAspectIconQuestion({ count, avoidIcons: avoid, keepPrompt: prompt }) ||
+      makeAspectIconQuestion({ count, keepPrompt: prompt });
+    if (hit?.patch) return hit;
+    return { error: 'No aspect icons to fill answers.' };
+  }
+
+  if (isItemHasStatPrompt(question) || (stats.length && /(?:what|which)\s+item\s+has\b/i.test(prompt))) {
+    const current = findStatsInText(prompt);
+    const stat = current[0] || pickOne(popularStats());
+    if (!stat) return { error: 'No item stats to fill answers.' };
+    const withStat = catalog.items.filter((i) => i.stats?.[stat] != null);
+    const without = catalog.items.filter((i) => i.stats?.[stat] == null);
+    const marked = currentCorrectLabel(question);
+    const markedItem =
+      marked &&
+      !isPlaceholderOption(marked) &&
+      catalog.items.find((i) => norm(i.name) === norm(marked) && i.stats?.[stat] != null);
+    const correct = markedItem || pickOne(withStat);
+    if (!correct || without.length < count - 1) return { error: `Not enough items for ${stat}.` };
+    return packMc({
+      prompt,
+      correctLabel: correct.name,
+      distractors: pickDistinct(without.map((i) => i.name), count - 1, new Set([norm(correct.name)])),
+      count,
+      clearMedia: true,
+      extraMeta: { remix_kind: 'item_has_stat', hint_context: { stat } },
+    });
+  }
+
   if (isGodEmojiPrompt(question)) {
     const markedRaw = currentCorrectLabel(question);
     const markedGod =
@@ -1219,7 +1404,7 @@ export function fillAnswersFromPrompt(question) {
     !isPlaceholderOption(markedRawEarly) &&
     catalog.gods.find((g) => norm(g.name) === norm(markedRawEarly));
   const optionGodName = exactOptionHit(question?.options || [], godNames);
-  if (markedGodEarly || optionGodName) {
+  if ((markedGodEarly || optionGodName) && !isAspectIconPrompt(question) && !isItemHasStatPrompt(question)) {
     const correctLabel = markedGodEarly?.name || optionGodName;
     return packMc({
       prompt,
@@ -1233,7 +1418,7 @@ export function fillAnswersFromPrompt(question) {
     });
   }
 
-  if (namedItem && stats.length) {
+  if (namedItem && stats.length && !isItemHasStatPrompt(question)) {
     const item = catalog.items.find((i) => i.name === namedItem);
     const stat = stats.find((s) => item?.stats?.[s] != null) || stats[0];
     const val = item?.stats?.[stat];
@@ -1249,7 +1434,7 @@ export function fillAnswersFromPrompt(question) {
     });
   }
 
-  if (stats.length && /item/i.test(prompt)) {
+  if (stats.length && /item/i.test(prompt) && !isItemHasStatPrompt(question)) {
     const stat = stats[0];
     const withStat = catalog.items.filter((i) => i.stats?.[stat] != null);
     const without = catalog.items.filter((i) => i.stats?.[stat] == null);
@@ -1266,6 +1451,8 @@ export function fillAnswersFromPrompt(question) {
       distractors: pickDistinct(without.map((i) => i.name), count - 1, new Set([norm(correct.name)])),
       count,
       image: isIdentifyItemPrompt(prompt) ? correct.image : undefined,
+      clearMedia: !isIdentifyItemPrompt(prompt),
+      extraMeta: isIdentifyItemPrompt(prompt) ? {} : { remix_kind: 'item_has_stat', hint_context: { stat } },
     });
   }
 
@@ -1359,6 +1546,12 @@ export const RANDOM_QUESTION_STYLES = [
     group: 'Gods',
   },
   {
+    id: 'aspect_icon',
+    label: 'Aspect icon',
+    blurb: 'Show aspect emblem — pick god(s) that use it (multi when shared)',
+    group: 'Gods',
+  },
+  {
     id: 'release_after',
     label: 'Who came after',
     blurb: 'Select all gods released after a named god',
@@ -1398,7 +1591,13 @@ export const RANDOM_QUESTION_QUICK = [
   'item_identify',
 ];
 
-export const MEDIA_REMIX_KINDS = new Set(['voice_line', 'ability_sound', 'skin_guess', 'god_emoji']);
+export const MEDIA_REMIX_KINDS = new Set([
+  'voice_line',
+  'ability_sound',
+  'skin_guess',
+  'god_emoji',
+  'aspect_icon',
+]);
 
 /** Apply a remix patch onto version A (mirrors QuestionCard). */
 export function applyRemixPatchToQuestion(question, patch) {
@@ -1529,19 +1728,7 @@ export function optionsAreValid(q) {
 
 function styleMakers(count) {
   return {
-    item_has_stat: () => {
-      const stat = pickOne(popularStats());
-      const withStat = catalog.items.filter((i) => i.stats?.[stat] != null);
-      const without = catalog.items.filter((i) => i.stats?.[stat] == null);
-      const correct = pickOne(withStat);
-      if (!correct || without.length < 3) return null;
-      return packMc({
-        prompt: `What item has ${stat}?`,
-        correctLabel: correct.name,
-        distractors: pickDistinct(without.map((i) => i.name), count - 1, new Set([norm(correct.name)])),
-        count,
-      });
-    },
+    item_has_stat: () => makeItemHasStatQuestion({ count }),
     item_stat_amount: () => {
       const stat = pickOne(popularStats());
       const withStat = catalog.items.filter((i) => i.stats?.[stat] != null);
@@ -1557,6 +1744,8 @@ function styleMakers(count) {
         correctLabel: String(val),
         distractors: others,
         count,
+        clearMedia: true,
+        extraMeta: { remix_kind: 'item_stat_amount', hint_context: { stat, item: item.name } },
       });
     },
     item_identify: () => {
@@ -1568,8 +1757,10 @@ function styleMakers(count) {
         distractors: itemIdentifyDistractors(item.name, count - 1),
         count,
         image: item.image,
+        extraMeta: { remix_kind: 'item_identify', media: 'image', hint_context: { item: item.name } },
       });
     },
+    aspect_icon: () => makeAspectIconQuestion({ count }),
     ob_release: () => {
       const rel = pickOne(catalog.releases);
       if (!rel) return null;
@@ -1684,6 +1875,19 @@ export function randomizeQuestion(question) {
   const count = optionCount(question);
   const fillBlank = question?.meta?.kind === 'fill_blank';
   if (fillBlank) return makeRandomQuestionByStyle('aspect_blank', question);
+
+  if (isAspectIconPrompt(question)) {
+    const hit = makeAspectIconQuestion({ count });
+    if (hit?.patch) return hit;
+  }
+
+  if (isItemHasStatPrompt(question)) {
+    const current = findStatsInText(question?.prompt || '');
+    const hit =
+      makeItemHasStatQuestion({ count, avoidStats: new Set(current.map(norm)) }) ||
+      makeItemHasStatQuestion({ count });
+    if (hit?.patch) return hit;
+  }
 
   if (isReleaseAfterPrompt(question?.prompt) || question?.meta?.remix_kind === 'release_after') {
     const avoidGods = usedNames([question?.prompt]);
