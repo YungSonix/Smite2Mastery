@@ -34,10 +34,12 @@ export default function SkinCropThumb({ src, seed = 'skin' }) {
       {failed ? (
         <p className="f-skin-crop-fallback f-muted">
           Image failed to load
-          {String(src || '').includes('/media/') ? (
+          {/God%20Renders|God Renders|raw\.githubusercontent\.com\/.*\/assets\//i.test(
+            String(src || '')
+          ) ? (
             <>
               {' '}
-              — for God Renders, run <code>npm run trivia:api</code> (port 3000) alongside trivia:dev
+              — skin art loads from the GitHub <code>assets</code> branch; check network or path
             </>
           ) : null}
         </p>

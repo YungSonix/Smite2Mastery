@@ -9,7 +9,17 @@ const GITHUB_MASTER =
 const GITHUB_ASSETS =
   'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data';
 
-/** Local `/media/...` is proxied by the trivia API. VoiceAudio is gitignored — load from the assets branch. */
+/** Prefer local `/media` proxy (trivia:api) even for gitignored assets. Default is false. */
+function preferLocalMediaProxy() {
+  try {
+    return String(import.meta.env?.VITE_TRIVIA_LOCAL_MEDIA || '').toLowerCase() === '1'
+      || String(import.meta.env?.VITE_TRIVIA_LOCAL_MEDIA || '').toLowerCase() === 'true';
+  } catch {
+    return false;
+  }
+}
+
+/** Local `/media/...` is proxied by the trivia API. VoiceAudio + God Renders are gitignored — load from the assets branch. */
 export function resolveMediaUrl(url) {
   const s = String(url || '');
   if (!s.startsWith('/media/')) return s;
@@ -20,14 +30,17 @@ export function resolveMediaUrl(url) {
   } catch {
     /* keep encoded */
   }
-  // VoiceAudio is gitignored on master — always load from the assets branch.
+  const toAssets = () =>
+    `${GITHUB_ASSETS}/${rel.split('/').map(encodeURIComponent).join('/')}`;
+  // VoiceAudio + God Renders are gitignored on master — always load from the assets branch
+  // (unless VITE_TRIVIA_LOCAL_MEDIA=1 to force trivia:api /media proxy).
   if (rel.startsWith('VoiceAudio/') || relRaw.startsWith('VoiceAudio/')) {
-    return `${GITHUB_ASSETS}/${rel.split('/').map(encodeURIComponent).join('/')}`;
+    if (preferLocalMediaProxy()) return s;
+    return toAssets();
   }
-  // God Renders are gitignored. Dev: keep /media for trivia:api proxy. Prod: assets branch if uploaded.
   if (rel.startsWith('God Renders/') || relRaw.startsWith('God%20Renders/')) {
-    if (typeof import.meta !== 'undefined' && import.meta.env?.DEV) return s;
-    return `${GITHUB_ASSETS}/${rel.split('/').map(encodeURIComponent).join('/')}`;
+    if (preferLocalMediaProxy()) return s;
+    return toAssets();
   }
   if (typeof import.meta !== 'undefined' && import.meta.env?.DEV) return s;
   return `${GITHUB_MASTER}/${rel.split('/').map(encodeURIComponent).join('/')}`;

@@ -7,7 +7,7 @@ Players only get a take link. Hosts and helpers get the editor, Responses, Insig
 ## What is stored where
 
 **In the GitHub repo (static)**  
-Question text, options, answer keys, and media files under `app/data/` (god portraits, icons, audio). Quizzes store `/media/...` paths. Locally those files are served by `npm run trivia:api`. On Vercel, most files load from GitHub `master/app/data`. **VoiceAudio** is gitignored on master — `/media/VoiceAudio/...` loads from the `assets` branch. Do not embed `data:image` or `data:audio` in question rows.
+Question text, options, answer keys, and media files under `app/data/` (god portraits, icons, audio). Quizzes store `/media/...` paths. Locally most files are served by `npm run trivia:api`. On Vercel, most files load from GitHub `master/app/data`. **VoiceAudio** and **God Renders** are gitignored on master — `/media/VoiceAudio/...` and `/media/God Renders/...` always resolve to the `assets` branch (dev and prod). Optional override: `VITE_TRIVIA_LOCAL_MEDIA=1` to keep those on the local `/media` proxy. Do not embed `data:image` or `data:audio` in question rows.
 
 **In Supabase (live contest data only)**  
 Each submission is one row: Discord name, in-game name, answers JSON, score, per-question grades, IP, user-agent, timestamp.
