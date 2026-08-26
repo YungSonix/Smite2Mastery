@@ -399,7 +399,11 @@ function isGodEmojiPrompt(source) {
 }
 
 function makeGodEmojiQuestion({ count, avoidGods = new Set(), correctName = null } = {}) {
-  const gods = (catalog.gods || []).filter((g) => g?.name && !avoidGods.has(norm(g.name)));
+  const gods = (catalog.gods || []).filter((g) => {
+    if (!g?.name || avoidGods.has(norm(g.name))) return false;
+    const emojis = godMeta?.[g.name]?.emojis;
+    return Array.isArray(emojis) && emojis.length > 0;
+  });
   if (gods.length < 4) return null;
   let god = null;
   if (correctName) {
@@ -421,6 +425,8 @@ function makeGodEmojiQuestion({ count, avoidGods = new Set(), correctName = null
       remix_kind: 'god_emoji',
       emoji_set: setLetter,
       hint_context: { god: god.name },
+      category: 'gods',
+      difficulty: 'medium',
     },
   });
 }
@@ -429,7 +435,7 @@ function isVoiceLinePrompt(source) {
   return (
     source?.meta?.remix_kind === 'voice_line' ||
     source?.meta?.media === 'audio' ||
-    /voice line belongs/i.test(source?.prompt || '')
+    /voice\s*line belongs/i.test(source?.prompt || '')
   );
 }
 
@@ -539,7 +545,7 @@ function remixSkinGuess(source, avoidTexts) {
   if (!card) return { error: 'No other skin cards left to swap to.' };
   const count = optionCount(source);
   const wrong = godIdentifyDistractors(card.god, count - 1);
-  const seed = `${card.god}|${card.skinName}`;
+  const seed = `${card.god}|${card.file || card.skinName}`;
   return packMc({
     prompt: source.prompt || 'Choose the correct god this skin belongs to.',
     correctLabel: card.god,
@@ -551,7 +557,7 @@ function remixSkinGuess(source, avoidTexts) {
       media_crop: 'skin_zoom_center',
       media_seed: seed,
       remix_kind: 'skin_guess',
-      hint_context: { god: card.god, skin: card.skinName },
+      hint_context: { god: card.god, skin: card.skinName, file: card.file || null },
     },
     clearMedia: false,
   });
@@ -619,8 +625,17 @@ function remixGod(source, avoidTexts) {
 }
 
 function optionCount(question) {
-  const n = Array.isArray(question?.options) ? question.options.filter(Boolean).length : 0;
-  return Math.min(6, Math.max(4, n));
+  const n = Array.isArray(question?.options)
+    ? question.options.map((o) => String(o || '').trim()).filter(Boolean).length
+    : 0;
+  // Preserve host-added options (was hard-capped at 4–6 and wiped extras on Random answers).
+  if (n >= 2) return Math.min(12, n);
+  return 4;
+}
+
+/** @internal exported for local sim suite */
+export function optionCountForSim(question) {
+  return optionCount(question);
 }
 
 function pickDistinct(list, count, exclude = new Set()) {
@@ -871,12 +886,24 @@ function currentCorrectLabel(question) {
 }
 
 function packMc({ prompt, correctLabel, distractors, count, image, type = 'multiple_choice', extraMeta = {}, clearMedia }) {
-  const options = shuffle([correctLabel, ...distractors.slice(0, count - 1)]);
+  const label = String(correctLabel ?? '').trim();
+  const want = Math.max(2, Number(count) || 4);
+  const wrong = (distractors || [])
+    .map((d) => String(d ?? '').trim())
+    .filter((d) => d && norm(d) !== norm(label));
+  let options = shuffle([label, ...wrong.slice(0, Math.max(0, want - 1))].filter(Boolean));
+  // Prefer keeping the requested length when enough distractors exist.
+  if (options.length > want) options = options.slice(0, want);
+  let index = options.findIndex((o) => norm(o) === norm(label));
+  if (!label || index < 0) {
+    options = [label || 'Correct', ...options.filter((o) => norm(o) !== norm(label))].slice(0, want);
+    index = 0;
+  }
   const patch = {
     type,
     prompt,
     options,
-    correct: { index: options.findIndex((o) => norm(o) === norm(correctLabel)) },
+    correct: { index },
     meta: { randomize_order: true, ...extraMeta },
   };
   if (image) {
@@ -979,7 +1006,9 @@ function makeReleaseAfterQuestion({
       type,
       prompt: nextPrompt,
       options,
-      correct: single ? { index: indices[0] } : { indices },
+      correct: single
+        ? { index: indices[0] }
+        : { indices, index: indices[0] },
       meta: {
         randomize_order: true,
         remix_kind: 'release_after',
@@ -1069,9 +1098,9 @@ export function fillAnswersFromPrompt(question) {
           extraMeta: {
             media: 'image',
             media_crop: 'skin_zoom_center',
-            media_seed: `${card.god}|${card.skinName}`,
+            media_seed: `${card.god}|${card.file || card.skinName}`,
             remix_kind: 'skin_guess',
-            hint_context: { god: card.god, skin: card.skinName },
+            hint_context: { god: card.god, skin: card.skinName, file: card.file || null },
           },
         });
       }
@@ -1214,53 +1243,186 @@ export const RANDOM_QUESTION_STYLES = [
     id: 'item_has_stat',
     label: 'Item has this stat',
     blurb: 'Multiple choice — which item grants a named stat',
+    group: 'Items',
   },
   {
     id: 'item_stat_amount',
     label: 'How much stat on item',
     blurb: 'Multiple choice — numeric amount for one item stat',
+    group: 'Items',
   },
   {
     id: 'item_identify',
     label: 'Identify the item',
     blurb: 'Name the item from its icon',
+    group: 'Items',
   },
   {
     id: 'ob_release',
     label: 'OB release god',
     blurb: 'Which god released in a given Open Beta patch',
+    group: 'Gods',
   },
   {
     id: 'aspect_name',
     label: 'Aspect name',
     blurb: 'Fill the Aspect of ____ blank for a god',
-  },
-  {
-    id: 'voice_line',
-    label: 'Guess the voice line',
-    blurb: 'Audio — which god speaks this Skin00_Base VOX line',
-  },
-  {
-    id: 'ability_sound',
-    label: 'Guess the ability sound',
-    blurb: 'Audio — Skin00_Base Ability1–4 Activate/Start cast SFX',
-  },
-  {
-    id: 'skin_guess',
-    label: 'Guess the skin (zoomed)',
-    blurb: 'Zoomed skin card — which god it belongs to',
+    group: 'Gods',
   },
   {
     id: 'release_after',
     label: 'Who came after',
     blurb: 'Select all gods released after a named god',
+    group: 'Gods',
   },
   {
     id: 'god_emoji',
     label: 'Guess from emojis',
     blurb: 'Three-emoji card — which god',
+    group: 'Gods',
+  },
+  {
+    id: 'voice_line',
+    label: 'Guess the voice line',
+    blurb: 'Audio — which god speaks this Skin00_Base VOX line',
+    group: 'Media',
+  },
+  {
+    id: 'ability_sound',
+    label: 'Guess the ability sound',
+    blurb: 'Audio — Skin00_Base Ability1–4 Activate/Start cast SFX',
+    group: 'Media',
+  },
+  {
+    id: 'skin_guess',
+    label: 'Guess the skin (zoomed)',
+    blurb: 'Zoomed God Render screenshot — which god',
+    group: 'Media',
   },
 ];
+
+export const RANDOM_QUESTION_QUICK = [
+  'god_emoji',
+  'skin_guess',
+  'voice_line',
+  'release_after',
+  'item_identify',
+];
+
+export const MEDIA_REMIX_KINDS = new Set(['voice_line', 'ability_sound', 'skin_guess', 'god_emoji']);
+
+/** Apply a remix patch onto version A (mirrors QuestionCard). */
+export function applyRemixPatchToQuestion(question, patch) {
+  if (!patch || patch.error) return { error: patch?.error || 'No patch' };
+  const p = patch.patch || patch;
+  const meta = { ...(question?.meta || {}), ...(p.meta || {}), variants: question?.meta?.variants };
+  if (p.clearMedia) delete meta.image_urls;
+  let next = { ...question, ...p, meta };
+  if (p.clearMedia) {
+    next = { ...next, image_url: null, image_urls: [] };
+    delete next.meta.image_urls;
+  } else if (p.image_urls || p.image_url) {
+    const list = (p.image_urls || [p.image_url]).filter(Boolean);
+    next = { ...next, image_url: list[0] || null, meta: { ...next.meta, image_urls: list } };
+  }
+  delete next.clearMedia;
+  return { question: next };
+}
+
+/** Apply a remix patch onto variant B/C (mirrors QuestionCard.commitVariantRemixPatch). */
+export function applyRemixPatchToVariant(question, slotIndex, patch) {
+  if (!patch || patch.error) return { error: patch?.error || 'No patch' };
+  const p = patch.patch || patch;
+  const variants = Array.isArray(question?.meta?.variants) ? [...question.meta.variants] : [];
+  while (variants.length <= slotIndex) {
+    variants.push({
+      prompt: question?.prompt || '',
+      options: Array.isArray(question?.options) ? [...question.options] : [],
+      correct: question?.correct ? JSON.parse(JSON.stringify(question.correct)) : {},
+      image_url: question?.image_url || null,
+      image_urls: question?.image_urls || (question?.image_url ? [question.image_url] : []),
+      type: question?.type,
+      enabled: true,
+    });
+  }
+  const {
+    meta: patchMeta,
+    points: _p,
+    required: _r,
+    clearMedia: _c,
+    ...slotPatch
+  } = p;
+  const mediaKeys = ['media', 'media_crop', 'media_seed', 'remix_kind', 'emoji_set', 'hint_context'];
+  const mediaBits = {};
+  for (const k of mediaKeys) {
+    if (patchMeta?.[k] !== undefined) mediaBits[k] = patchMeta[k];
+  }
+  let slotNext = { ...(variants[slotIndex] || {}), ...slotPatch, ...mediaBits };
+  if (p.type) slotNext.type = p.type;
+  if (p.clearMedia) {
+    slotNext = { ...slotNext, image_url: null, image_urls: [] };
+    delete slotNext.media_crop;
+    delete slotNext.media_seed;
+  } else if (p.image_urls || p.image_url) {
+    const list = (p.image_urls || [p.image_url]).filter(Boolean);
+    slotNext = { ...slotNext, image_url: list[0] || null, image_urls: list };
+  }
+  variants[slotIndex] = slotNext;
+  return {
+    question: { ...question, meta: { ...(question?.meta || {}), variants } },
+    variant: slotNext,
+  };
+}
+
+/** True when a choice question has a collectible correct answer for host UI / scoring. */
+export function hasCollectibleCorrect(q) {
+  if (!q) return false;
+  const opts = Array.isArray(q.options) ? q.options : [];
+  if (q.type === 'multiple_selection' || Array.isArray(q.correct?.indices)) {
+    const indices = (q.correct?.indices || [])
+      .map(Number)
+      .filter((i) => Number.isFinite(i) && opts[i] != null);
+    return indices.length > 0;
+  }
+  if (q.type === 'short_answer' || q.meta?.kind === 'fill_blank') {
+    const answers = q.correct?.answers || [];
+    return answers.some((a) => String(a || '').trim());
+  }
+  const idx = Number(q.correct?.index);
+  return Number.isFinite(idx) && idx >= 0 && opts[idx] != null && String(opts[idx]).trim() !== '';
+}
+
+/** Stable key for near-duplicate detection within a host session / generated set. */
+export function questionFingerprint(q) {
+  const opts = Array.isArray(q?.options) ? q.options : [];
+  const url = q?.image_url || q?.image_urls?.[0] || '';
+  let correct = '';
+  if (Array.isArray(q?.correct?.indices) && q.correct.indices.length) {
+    correct = q.correct.indices.map((i) => opts[i]).filter(Boolean).join('|');
+  } else if (Number.isFinite(Number(q?.correct?.index))) {
+    correct = opts[q.correct.index] || '';
+  } else if (Array.isArray(q?.correct?.answers)) {
+    correct = q.correct.answers.join('|');
+  }
+  return [q?.meta?.remix_kind || q?.type || '', norm(q?.prompt), norm(correct), norm(url)].join('::');
+}
+
+/** True when correct answer is not also present as a distractor / duplicate option. */
+export function optionsAreValid(q) {
+  const opts = (Array.isArray(q?.options) ? q.options : [])
+    .map((o) => String(o || '').trim())
+    .filter(Boolean);
+  if (opts.length < 2) return false;
+  const seen = new Set();
+  for (const o of opts) {
+    const k = norm(o);
+    if (!k) return false;
+    if (seen.has(k)) return false;
+    seen.add(k);
+  }
+  if (!hasCollectibleCorrect(q)) return false;
+  return true;
+}
 
 function styleMakers(count) {
   return {
@@ -1354,7 +1516,7 @@ function styleMakers(count) {
       if (cards.length < 4) return null;
       const card = pickOne(cards);
       const wrong = godIdentifyDistractors(card.god, count - 1);
-      const seed = `${card.god}|${card.skinName}`;
+      const seed = `${card.god}|${card.file || card.skinName}`;
       return packMc({
         prompt: 'Choose the correct god this skin belongs to.',
         correctLabel: card.god,
@@ -1366,7 +1528,7 @@ function styleMakers(count) {
           media_crop: 'skin_zoom_center',
           media_seed: seed,
           remix_kind: 'skin_guess',
-          hint_context: { god: card.god, skin: card.skinName },
+          hint_context: { god: card.god, skin: card.skinName, file: card.file || null },
         },
       });
     },
@@ -1435,6 +1597,8 @@ export function remixQuestionFromA(questionA, { avoidTexts = [] } = {}) {
     options: Array.isArray(questionA?.options) ? [...questionA.options] : questionA?.options,
     correct: clone(questionA?.correct) || {},
     meta: questionA?.meta,
+    image_url: questionA?.image_url,
+    image_urls: questionA?.image_urls,
   };
   const avoid = [source.prompt, ...avoidTexts];
   const tries = [

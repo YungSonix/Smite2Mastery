@@ -189,18 +189,114 @@ if (fs.existsSync(VOICE_ROOT)) {
 }
 
 const destMedia = path.join(ROOT, 'formative-web/src/lib/triviaMediaCatalog.json');
-let skinCards = [];
 let prevAbilitySounds = [];
 if (fs.existsSync(destMedia)) {
   try {
     const prev = JSON.parse(fs.readFileSync(destMedia, 'utf8'));
-    if (Array.isArray(prev.skinCards)) skinCards = prev.skinCards;
     if (Array.isArray(prev.abilitySounds)) prevAbilitySounds = prev.abilitySounds;
   } catch {
     /* keep empty */
   }
 }
 
+/** Prefer screenshot map names, then OCR extract; always key media by screenshot filename. */
+function loadExtractedSkinNames() {
+  const byKey = new Map();
+  const mapPath = path.join(ROOT, 'app/data/God Information/Skins/_godRenderScreenshotMap.json');
+  if (fs.existsSync(mapPath)) {
+    try {
+      const data = JSON.parse(fs.readFileSync(mapPath, 'utf8'));
+      for (const [folder, files] of Object.entries(data.gods || {})) {
+        for (const [fileName, row] of Object.entries(files || {})) {
+          const file = String(row.fileName || fileName || '').trim();
+          if (!file) continue;
+          const skinName = String(
+            row.variantName || row.displayName || row.skinName || row.appliedTo || ''
+          ).trim();
+          if (!skinName || skinName === '. SKIN') continue;
+          byKey.set(`${norm(folder)}|${norm(file)}`, {
+            god: String(row.godName || '').trim(),
+            skinName,
+            file,
+          });
+        }
+      }
+    } catch {
+      /* ignore */
+    }
+  }
+  const extractedPath = path.join(ROOT, 'app/data/God Information/Skins/_godRendersExtracted.json');
+  if (!fs.existsSync(extractedPath)) return byKey;
+  try {
+    const data = JSON.parse(fs.readFileSync(extractedPath, 'utf8'));
+    for (const row of data.results || []) {
+      const god = String(row.godName || '').trim();
+      for (const ex of row.extractions || []) {
+        const shot = String(ex.screenshot || ex.loadout?.screenshot || '').replace(/\\/g, '/');
+        if (!shot) continue;
+        const file = path.basename(shot);
+        const folder = path.basename(path.dirname(shot));
+        const key = `${norm(folder)}|${norm(file)}`;
+        if (byKey.has(key)) continue;
+        const skinName = String(ex.displayName || ex.parentSkinName || '').trim();
+        if (!skinName || skinName === '. SKIN') continue;
+        byKey.set(key, {
+          god: String(ex.godName || god || '').trim(),
+          skinName,
+          file,
+        });
+      }
+    }
+  } catch {
+    /* ignore bad extract file */
+  }
+  return byKey;
+}
+
+function godFromRenderFolder(folder) {
+  const raw = String(folder || '').trim();
+  if (!raw) return null;
+  return (
+    folderToGod.get(raw) ||
+    folderToGod.get(norm(raw)) ||
+    folderToGod.get(raw.replace(/\s+/g, '_')) ||
+    folderToGod.get(norm(raw.replace(/\s+/g, ''))) ||
+    godNames.find((n) => norm(n) === norm(raw)) ||
+    null
+  );
+}
+
+function godRenderMediaUrl(folder, file) {
+  const parts = ['God Renders', folder, file].map((p) => encodeURIComponent(p));
+  return `${ASSETS}/${parts.join('/')}`;
+}
+
+function buildSkinCardsFromGodRenders() {
+  const rendersRoot = path.join(ROOT, 'app/data/God Renders');
+  const extracted = loadExtractedSkinNames();
+  const cards = [];
+  if (!fs.existsSync(rendersRoot)) return cards;
+  for (const ent of fs.readdirSync(rendersRoot, { withFileTypes: true })) {
+    if (!ent.isDirectory()) continue;
+    const folder = ent.name;
+    const god = godFromRenderFolder(folder);
+    if (!god) continue;
+    const dir = path.join(rendersRoot, folder);
+    for (const file of fs.readdirSync(dir)) {
+      if (!/\.(png|jpe?g|webp)$/i.test(file)) continue;
+      const hit = extracted.get(`${norm(folder)}|${norm(file)}`);
+      cards.push({
+        god: hit?.god || god,
+        skinName: hit?.skinName || path.parse(file).name,
+        file,
+        url: godRenderMediaUrl(folder, file),
+      });
+    }
+  }
+  return cards;
+}
+
+const skinCards = buildSkinCardsFromGodRenders();
 const finalAbilitySounds = abilitySounds.length ? abilitySounds : prevAbilitySounds;
 
 fs.writeFileSync(
@@ -212,5 +308,5 @@ const destMeta = path.join(ROOT, 'formative-web/src/lib/triviaGodMeta.json');
 fs.writeFileSync(destMeta, `${JSON.stringify(meta, null, 2)}\n`);
 
 console.log(
-  `Wrote ${voiceClips.length} voice clips, ${finalAbilitySounds.length} ability sounds (Activate/Start under Skin00_Base Ability1–4), ${skinCards.length} skin cards, ${Object.keys(meta).length} god meta rows`
+  `Wrote ${voiceClips.length} voice clips, ${finalAbilitySounds.length} ability sounds (Activate/Start under Skin00_Base Ability1–4), ${skinCards.length} skin cards (God Renders filenames), ${Object.keys(meta).length} god meta rows`
 );

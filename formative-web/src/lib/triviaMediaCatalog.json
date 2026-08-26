@@ -519,44 +519,5410 @@
   ],
   "skinCards": [
     {
-      "god": "Da Ji",
-      "skinName": "Silkshade",
-      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/NewGodSkins/Da_Ji/Skins/Silkshade/t_DaJi_Card_Silkshade.png"
+      "god": "Achilles",
+      "skinName": "Base",
+      "file": "Screenshot (108).png",
+      "url": "/media/God%20Renders/achilles/Screenshot%20(108).png"
     },
     {
-      "god": "Neith",
-      "skinName": "World Weaver",
-      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/NewGodSkins/Neith/Skins/WorldWeaver/t_Neith_Card_WorldWeaver.png"
+      "god": "Achilles",
+      "skinName": "Soul Piercer",
+      "file": "Screenshot (109).png",
+      "url": "/media/God%20Renders/achilles/Screenshot%20(109).png"
     },
     {
-      "god": "Thor",
-      "skinName": "Heavy Metal",
-      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/NewGodSkins/Thor/Skins/HeavyMetal/t_Thor_Card_HeavyMetal.png"
+      "god": "Achilles",
+      "skinName": "Prism 2",
+      "file": "Screenshot (110).png",
+      "url": "/media/God%20Renders/achilles/Screenshot%20(110).png"
     },
     {
-      "god": "Ra",
-      "skinName": "Solar Sentinel",
-      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/NewGodSkins/Ra/Skins/SolarSentinel/t_Ra_Card_SolarSentinel.png"
+      "god": "Achilles",
+      "skinName": "Prism 3",
+      "file": "Screenshot (111).png",
+      "url": "/media/God%20Renders/achilles/Screenshot%20(111).png"
     },
     {
-      "god": "Loki",
-      "skinName": "Graveyard Shift",
-      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/NewGodSkins/Loki/Skins/GraveyardShift/t_Loki_Card_GraveyardShift.png"
+      "god": "Achilles",
+      "skinName": "Prism 4",
+      "file": "Screenshot (112).png",
+      "url": "/media/God%20Renders/achilles/Screenshot%20(112).png"
     },
     {
-      "god": "Medusa",
-      "skinName": "Black Heart",
-      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/NewGodSkins/Medusa/Skins/BlackHeart/t_Medusa_Card_BlackHeart.png"
+      "god": "Achilles",
+      "skinName": "Shadow",
+      "file": "Screenshot (113).png",
+      "url": "/media/God%20Renders/achilles/Screenshot%20(113).png"
     },
     {
-      "god": "Susano",
-      "skinName": "Swashbuckler",
-      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/NewGodSkins/Susano/Skins/Swashbuckler/t_Susano_Card_Swashbuckler.png"
+      "god": "Achilles",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (114).png",
+      "url": "/media/God%20Renders/achilles/Screenshot%20(114).png"
+    },
+    {
+      "god": "Achilles",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (115).png",
+      "url": "/media/God%20Renders/achilles/Screenshot%20(115).png"
+    },
+    {
+      "god": "Achilles",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (116).png",
+      "url": "/media/God%20Renders/achilles/Screenshot%20(116).png"
+    },
+    {
+      "god": "Agni",
+      "skinName": "Base",
+      "file": "Screenshot (117).png",
+      "url": "/media/God%20Renders/agni/Screenshot%20(117).png"
+    },
+    {
+      "god": "Agni",
+      "skinName": "Infinite Duality",
+      "file": "Screenshot (118).png",
+      "url": "/media/God%20Renders/agni/Screenshot%20(118).png"
+    },
+    {
+      "god": "Agni",
+      "skinName": "Prism 1",
+      "file": "Screenshot (119).png",
+      "url": "/media/God%20Renders/agni/Screenshot%20(119).png"
+    },
+    {
+      "god": "Agni",
+      "skinName": "Screenshot (120)",
+      "file": "Screenshot (120).png",
+      "url": "/media/God%20Renders/agni/Screenshot%20(120).png"
+    },
+    {
+      "god": "Agni",
+      "skinName": "Screenshot (121)",
+      "file": "Screenshot (121).png",
+      "url": "/media/God%20Renders/agni/Screenshot%20(121).png"
+    },
+    {
+      "god": "Agni",
+      "skinName": "Screenshot (122)",
+      "file": "Screenshot (122).png",
+      "url": "/media/God%20Renders/agni/Screenshot%20(122).png"
+    },
+    {
+      "god": "Agni",
+      "skinName": "Shadow",
+      "file": "Screenshot (123).png",
+      "url": "/media/God%20Renders/agni/Screenshot%20(123).png"
+    },
+    {
+      "god": "Agni",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (124).png",
+      "url": "/media/God%20Renders/agni/Screenshot%20(124).png"
+    },
+    {
+      "god": "Agni",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (125).png",
+      "url": "/media/God%20Renders/agni/Screenshot%20(125).png"
+    },
+    {
+      "god": "Agni",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (126).png",
+      "url": "/media/God%20Renders/agni/Screenshot%20(126).png"
+    },
+    {
+      "god": "Ah Puch",
+      "skinName": "Base",
+      "file": "Screenshot (127).png",
+      "url": "/media/God%20Renders/ah%20puch/Screenshot%20(127).png"
+    },
+    {
+      "god": "Ah Puch",
+      "skinName": "Shadow",
+      "file": "Screenshot (128).png",
+      "url": "/media/God%20Renders/ah%20puch/Screenshot%20(128).png"
+    },
+    {
+      "god": "Ah Puch",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (129).png",
+      "url": "/media/God%20Renders/ah%20puch/Screenshot%20(129).png"
+    },
+    {
+      "god": "Ah Puch",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (130).png",
+      "url": "/media/God%20Renders/ah%20puch/Screenshot%20(130).png"
+    },
+    {
+      "god": "Ah Puch",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (131).png",
+      "url": "/media/God%20Renders/ah%20puch/Screenshot%20(131).png"
+    },
+    {
+      "god": "Aladdin",
+      "skinName": "Base",
+      "file": "Screenshot (132).png",
+      "url": "/media/God%20Renders/aladdin/Screenshot%20(132).png"
+    },
+    {
+      "god": "Aladdin",
+      "skinName": "Winter's Wish",
+      "file": "Screenshot (133).png",
+      "url": "/media/God%20Renders/aladdin/Screenshot%20(133).png"
+    },
+    {
+      "god": "Aladdin",
+      "skinName": "Silent Wish",
+      "file": "Screenshot (134).png",
+      "url": "/media/God%20Renders/aladdin/Screenshot%20(134).png"
+    },
+    {
+      "god": "Aladdin",
+      "skinName": "Shadow",
+      "file": "Screenshot (135).png",
+      "url": "/media/God%20Renders/aladdin/Screenshot%20(135).png"
+    },
+    {
+      "god": "Aladdin",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (136).png",
+      "url": "/media/God%20Renders/aladdin/Screenshot%20(136).png"
+    },
+    {
+      "god": "Aladdin",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (137).png",
+      "url": "/media/God%20Renders/aladdin/Screenshot%20(137).png"
+    },
+    {
+      "god": "Aladdin",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (138).png",
+      "url": "/media/God%20Renders/aladdin/Screenshot%20(138).png"
+    },
+    {
+      "god": "Amaterasu",
+      "skinName": "Base",
+      "file": "Screenshot (139).png",
+      "url": "/media/God%20Renders/amaterasu/Screenshot%20(139).png"
+    },
+    {
+      "god": "Amaterasu",
+      "skinName": "Foxy",
+      "file": "Screenshot (140).png",
+      "url": "/media/God%20Renders/amaterasu/Screenshot%20(140).png"
+    },
+    {
+      "god": "Amaterasu",
+      "skinName": "Honor Roll",
+      "file": "Screenshot (141).png",
+      "url": "/media/God%20Renders/amaterasu/Screenshot%20(141).png"
+    },
+    {
+      "god": "Amaterasu",
+      "skinName": "Maid of Mischief",
+      "file": "Screenshot (142).png",
+      "url": "/media/God%20Renders/amaterasu/Screenshot%20(142).png"
+    },
+    {
+      "god": "Amaterasu",
+      "skinName": "Nova Hex",
+      "file": "Screenshot (143).png",
+      "url": "/media/God%20Renders/amaterasu/Screenshot%20(143).png"
+    },
+    {
+      "god": "Amaterasu",
+      "skinName": "Shadow",
+      "file": "Screenshot (144).png",
+      "url": "/media/God%20Renders/amaterasu/Screenshot%20(144).png"
+    },
+    {
+      "god": "Amaterasu",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (145).png",
+      "url": "/media/God%20Renders/amaterasu/Screenshot%20(145).png"
+    },
+    {
+      "god": "Amaterasu",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (146).png",
+      "url": "/media/God%20Renders/amaterasu/Screenshot%20(146).png"
+    },
+    {
+      "god": "Amaterasu",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (147).png",
+      "url": "/media/God%20Renders/amaterasu/Screenshot%20(147).png"
+    },
+    {
+      "god": "Anhur",
+      "skinName": "Base",
+      "file": "Screenshot (148).png",
+      "url": "/media/God%20Renders/anhur/Screenshot%20(148).png"
+    },
+    {
+      "god": "Anhur",
+      "skinName": "Duke Dan de Lyons",
+      "file": "Screenshot (149).png",
+      "url": "/media/God%20Renders/anhur/Screenshot%20(149).png"
+    },
+    {
+      "god": "Anhur",
+      "skinName": "Iron Fang",
+      "file": "Screenshot (150).png",
+      "url": "/media/God%20Renders/anhur/Screenshot%20(150).png"
+    },
+    {
+      "god": "Anhur",
+      "skinName": "Debonhair",
+      "file": "Screenshot (151).png",
+      "url": "/media/God%20Renders/anhur/Screenshot%20(151).png"
+    },
+    {
+      "god": "Anhur",
+      "skinName": "Screenshot (152)",
+      "file": "Screenshot (152).png",
+      "url": "/media/God%20Renders/anhur/Screenshot%20(152).png"
+    },
+    {
+      "god": "Anhur",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (153).png",
+      "url": "/media/God%20Renders/anhur/Screenshot%20(153).png"
+    },
+    {
+      "god": "Anhur",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (154).png",
+      "url": "/media/God%20Renders/anhur/Screenshot%20(154).png"
+    },
+    {
+      "god": "Anhur",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (155).png",
+      "url": "/media/God%20Renders/anhur/Screenshot%20(155).png"
+    },
+    {
+      "god": "Anubis",
+      "skinName": "Base",
+      "file": "Screenshot (156).png",
+      "url": "/media/God%20Renders/anubis/Screenshot%20(156).png"
+    },
+    {
+      "god": "Anubis",
+      "skinName": "Festive Knit-Wit",
+      "file": "Screenshot (157).png",
+      "url": "/media/God%20Renders/anubis/Screenshot%20(157).png"
+    },
+    {
+      "god": "Anubis",
+      "skinName": "Prism 2",
+      "file": "Screenshot (159).png",
+      "url": "/media/God%20Renders/anubis/Screenshot%20(159).png"
+    },
+    {
+      "god": "Anubis",
+      "skinName": "Prism 3",
+      "file": "Screenshot (160).png",
+      "url": "/media/God%20Renders/anubis/Screenshot%20(160).png"
+    },
+    {
+      "god": "Anubis",
+      "skinName": "Prism 4",
+      "file": "Screenshot (161).png",
+      "url": "/media/God%20Renders/anubis/Screenshot%20(161).png"
+    },
+    {
+      "god": "Anubis",
+      "skinName": "Prism 5",
+      "file": "Screenshot (162).png",
+      "url": "/media/God%20Renders/anubis/Screenshot%20(162).png"
+    },
+    {
+      "god": "Anubis",
+      "skinName": "Embalmed",
+      "file": "Screenshot (163).png",
+      "url": "/media/God%20Renders/anubis/Screenshot%20(163).png"
+    },
+    {
+      "god": "Anubis",
+      "skinName": "Blight Hound",
+      "file": "Screenshot (164).png",
+      "url": "/media/God%20Renders/anubis/Screenshot%20(164).png"
+    },
+    {
+      "god": "Anubis",
+      "skinName": "Kitsune Sage",
+      "file": "Screenshot (165).png",
+      "url": "/media/God%20Renders/anubis/Screenshot%20(165).png"
+    },
+    {
+      "god": "Anubis",
+      "skinName": "Screenshot (166)",
+      "file": "Screenshot (166).png",
+      "url": "/media/God%20Renders/anubis/Screenshot%20(166).png"
+    },
+    {
+      "god": "Anubis",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (167).png",
+      "url": "/media/God%20Renders/anubis/Screenshot%20(167).png"
+    },
+    {
+      "god": "Anubis",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (168).png",
+      "url": "/media/God%20Renders/anubis/Screenshot%20(168).png"
+    },
+    {
+      "god": "Anubis",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (169).png",
+      "url": "/media/God%20Renders/anubis/Screenshot%20(169).png"
+    },
+    {
+      "god": "Aphrodite",
+      "skinName": "Base",
+      "file": "Screenshot (170).png",
+      "url": "/media/God%20Renders/aphrodite/Screenshot%20(170).png"
+    },
+    {
+      "god": "Aphrodite",
+      "skinName": "Burning Passion",
+      "file": "Screenshot (171).png",
+      "url": "/media/God%20Renders/aphrodite/Screenshot%20(171).png"
+    },
+    {
+      "god": "Aphrodite",
+      "skinName": "Yule Cheer",
+      "file": "Screenshot (172).png",
+      "url": "/media/God%20Renders/aphrodite/Screenshot%20(172).png"
+    },
+    {
+      "god": "Aphrodite",
+      "skinName": "Prism 1",
+      "file": "Screenshot (173).png",
+      "url": "/media/God%20Renders/aphrodite/Screenshot%20(173).png"
+    },
+    {
+      "god": "Aphrodite",
+      "skinName": "Prism 2",
+      "file": "Screenshot (174).png",
+      "url": "/media/God%20Renders/aphrodite/Screenshot%20(174).png"
+    },
+    {
+      "god": "Aphrodite",
+      "skinName": "Prism 3",
+      "file": "Screenshot (175).png",
+      "url": "/media/God%20Renders/aphrodite/Screenshot%20(175).png"
+    },
+    {
+      "god": "Aphrodite",
+      "skinName": "Prism 4",
+      "file": "Screenshot (176).png",
+      "url": "/media/God%20Renders/aphrodite/Screenshot%20(176).png"
+    },
+    {
+      "god": "Aphrodite",
+      "skinName": "Beach Babe",
+      "file": "Screenshot (177).png",
+      "url": "/media/God%20Renders/aphrodite/Screenshot%20(177).png"
+    },
+    {
+      "god": "Aphrodite",
+      "skinName": "Prism B",
+      "file": "Screenshot (178).png",
+      "url": "/media/God%20Renders/aphrodite/Screenshot%20(178).png"
+    },
+    {
+      "god": "Aphrodite",
+      "skinName": "Prism C",
+      "file": "Screenshot (179).png",
+      "url": "/media/God%20Renders/aphrodite/Screenshot%20(179).png"
+    },
+    {
+      "god": "Aphrodite",
+      "skinName": "Prism D",
+      "file": "Screenshot (180).png",
+      "url": "/media/God%20Renders/aphrodite/Screenshot%20(180).png"
+    },
+    {
+      "god": "Aphrodite",
+      "skinName": "Court Charmer",
+      "file": "Screenshot (181).png",
+      "url": "/media/God%20Renders/aphrodite/Screenshot%20(181).png"
+    },
+    {
+      "god": "Aphrodite",
+      "skinName": "KissMeXOXO",
+      "file": "Screenshot (182).png",
+      "url": "/media/God%20Renders/aphrodite/Screenshot%20(182).png"
+    },
+    {
+      "god": "Aphrodite",
+      "skinName": "Shadow",
+      "file": "Screenshot (183).png",
+      "url": "/media/God%20Renders/aphrodite/Screenshot%20(183).png"
+    },
+    {
+      "god": "Aphrodite",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (184).png",
+      "url": "/media/God%20Renders/aphrodite/Screenshot%20(184).png"
+    },
+    {
+      "god": "Aphrodite",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (185).png",
+      "url": "/media/God%20Renders/aphrodite/Screenshot%20(185).png"
+    },
+    {
+      "god": "Aphrodite",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (186).png",
+      "url": "/media/God%20Renders/aphrodite/Screenshot%20(186).png"
+    },
+    {
+      "god": "Apollo",
+      "skinName": "Base",
+      "file": "Screenshot (187).png",
+      "url": "/media/God%20Renders/apollo/Screenshot%20(187).png"
+    },
+    {
+      "god": "Apollo",
+      "skinName": "Bit Blaster",
+      "file": "Screenshot (188).png",
+      "url": "/media/God%20Renders/apollo/Screenshot%20(188).png"
+    },
+    {
+      "god": "Apollo",
+      "skinName": "Prism A",
+      "file": "Screenshot (189).png",
+      "url": "/media/God%20Renders/apollo/Screenshot%20(189).png"
+    },
+    {
+      "god": "Apollo",
+      "skinName": "Prism B",
+      "file": "Screenshot (190).png",
+      "url": "/media/God%20Renders/apollo/Screenshot%20(190).png"
+    },
+    {
+      "god": "Apollo",
+      "skinName": "Prism C",
+      "file": "Screenshot (191).png",
+      "url": "/media/God%20Renders/apollo/Screenshot%20(191).png"
+    },
+    {
+      "god": "Apollo",
+      "skinName": "Prism D",
+      "file": "Screenshot (192).png",
+      "url": "/media/God%20Renders/apollo/Screenshot%20(192).png"
+    },
+    {
+      "god": "Apollo",
+      "skinName": "Shadow",
+      "file": "Screenshot (193).png",
+      "url": "/media/God%20Renders/apollo/Screenshot%20(193).png"
+    },
+    {
+      "god": "Apollo",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (194).png",
+      "url": "/media/God%20Renders/apollo/Screenshot%20(194).png"
+    },
+    {
+      "god": "Apollo",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (195).png",
+      "url": "/media/God%20Renders/apollo/Screenshot%20(195).png"
+    },
+    {
+      "god": "Apollo",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (196).png",
+      "url": "/media/God%20Renders/apollo/Screenshot%20(196).png"
+    },
+    {
+      "god": "Ares",
+      "skinName": "Base",
+      "file": "Screenshot (197).png",
+      "url": "/media/God%20Renders/ares/Screenshot%20(197).png"
+    },
+    {
+      "god": "Ares",
+      "skinName": "Tokyo Knight",
+      "file": "Screenshot (198).png",
+      "url": "/media/God%20Renders/ares/Screenshot%20(198).png"
+    },
+    {
+      "god": "Ares",
+      "skinName": "Gleaming Defender",
+      "file": "Screenshot (199).png",
+      "url": "/media/God%20Renders/ares/Screenshot%20(199).png"
+    },
+    {
+      "god": "Ares",
+      "skinName": "Corebreaker",
+      "file": "Screenshot (200).png",
+      "url": "/media/God%20Renders/ares/Screenshot%20(200).png"
+    },
+    {
+      "god": "Ares",
+      "skinName": "Prism P2",
+      "file": "Screenshot (201).png",
+      "url": "/media/God%20Renders/ares/Screenshot%20(201).png"
+    },
+    {
+      "god": "Ares",
+      "skinName": "Prism P3",
+      "file": "Screenshot (202).png",
+      "url": "/media/God%20Renders/ares/Screenshot%20(202).png"
+    },
+    {
+      "god": "Ares",
+      "skinName": "Prism P4",
+      "file": "Screenshot (203).png",
+      "url": "/media/God%20Renders/ares/Screenshot%20(203).png"
+    },
+    {
+      "god": "Ares",
+      "skinName": "Shadow",
+      "file": "Screenshot (204).png",
+      "url": "/media/God%20Renders/ares/Screenshot%20(204).png"
+    },
+    {
+      "god": "Ares",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (205).png",
+      "url": "/media/God%20Renders/ares/Screenshot%20(205).png"
+    },
+    {
+      "god": "Ares",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (206).png",
+      "url": "/media/God%20Renders/ares/Screenshot%20(206).png"
+    },
+    {
+      "god": "Ares",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (207).png",
+      "url": "/media/God%20Renders/ares/Screenshot%20(207).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Base",
+      "file": "Screenshot (209).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(209).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Fletched Faun",
+      "file": "Screenshot (210).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(210).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Warrenborn",
+      "file": "Screenshot (211).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(211).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Prism B",
+      "file": "Screenshot (212).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(212).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Prism C",
+      "file": "Screenshot (213).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(213).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Prism D",
+      "file": "Screenshot (214).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(214).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Prism E",
+      "file": "Screenshot (215).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(215).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Frostwarden - Arctic Monarch",
+      "file": "Screenshot (216).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(216).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Prism T1 B",
+      "file": "Screenshot (217).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(217).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Prism T1 C",
+      "file": "Screenshot (218).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(218).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Prism T1 D",
+      "file": "Screenshot (219).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(219).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Prism T1 E",
+      "file": "Screenshot (220).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(220).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Prism T2 A",
+      "file": "Screenshot (221).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(221).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Prism T2 B",
+      "file": "Screenshot (222).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(222).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Prism T2 C",
+      "file": "Screenshot (223).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(223).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Prism T2 D",
+      "file": "Screenshot (224).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(224).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Prism T2 E",
+      "file": "Screenshot (225).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(225).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Prism T3 A",
+      "file": "Screenshot (226).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(226).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Prism T3 B",
+      "file": "Screenshot (227).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(227).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Prism T3 C",
+      "file": "Screenshot (228).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(228).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Prism T3 D",
+      "file": "Screenshot (229).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(229).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Prism T3 E",
+      "file": "Screenshot (230).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(230).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Shadow",
+      "file": "Screenshot (231).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(231).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (232).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(232).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (233).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(233).png"
+    },
+    {
+      "god": "Artemis",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (234).png",
+      "url": "/media/God%20Renders/artemis/Screenshot%20(234).png"
+    },
+    {
+      "god": "Artio",
+      "skinName": "Base",
+      "file": "Screenshot (235).png",
+      "url": "/media/God%20Renders/artio/Screenshot%20(235).png"
+    },
+    {
+      "god": "Artio",
+      "skinName": "Fiend Hunter",
+      "file": "Screenshot (236).png",
+      "url": "/media/God%20Renders/artio/Screenshot%20(236).png"
+    },
+    {
+      "god": "Artio",
+      "skinName": "Prism 1",
+      "file": "Screenshot (237).png",
+      "url": "/media/God%20Renders/artio/Screenshot%20(237).png"
+    },
+    {
+      "god": "Artio",
+      "skinName": "Prism 2",
+      "file": "Screenshot (238).png",
+      "url": "/media/God%20Renders/artio/Screenshot%20(238).png"
+    },
+    {
+      "god": "Artio",
+      "skinName": "Prism 3",
+      "file": "Screenshot (240).png",
+      "url": "/media/God%20Renders/artio/Screenshot%20(240).png"
+    },
+    {
+      "god": "Artio",
+      "skinName": "Prism 4",
+      "file": "Screenshot (241).png",
+      "url": "/media/God%20Renders/artio/Screenshot%20(241).png"
+    },
+    {
+      "god": "Artio",
+      "skinName": "Den Mother",
+      "file": "Screenshot (242).png",
+      "url": "/media/God%20Renders/artio/Screenshot%20(242).png"
+    },
+    {
+      "god": "Artio",
+      "skinName": "Shadow",
+      "file": "Screenshot (243).png",
+      "url": "/media/God%20Renders/artio/Screenshot%20(243).png"
+    },
+    {
+      "god": "Artio",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (244).png",
+      "url": "/media/God%20Renders/artio/Screenshot%20(244).png"
+    },
+    {
+      "god": "Artio",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (245).png",
+      "url": "/media/God%20Renders/artio/Screenshot%20(245).png"
+    },
+    {
+      "god": "Artio",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (246).png",
+      "url": "/media/God%20Renders/artio/Screenshot%20(246).png"
+    },
+    {
+      "god": "Athena",
+      "skinName": "Base",
+      "file": "Screenshot (247).png",
+      "url": "/media/God%20Renders/athena/Screenshot%20(247).png"
+    },
+    {
+      "god": "Athena",
+      "skinName": "Heartguard",
+      "file": "Screenshot (248).png",
+      "url": "/media/God%20Renders/athena/Screenshot%20(248).png"
+    },
+    {
+      "god": "Athena",
+      "skinName": "Mystic Guardian",
+      "file": "Screenshot (249).png",
+      "url": "/media/God%20Renders/athena/Screenshot%20(249).png"
+    },
+    {
+      "god": "Athena",
+      "skinName": "Prism P1",
+      "file": "Screenshot (250).png",
+      "url": "/media/God%20Renders/athena/Screenshot%20(250).png"
+    },
+    {
+      "god": "Athena",
+      "skinName": "Prism P2",
+      "file": "Screenshot (251).png",
+      "url": "/media/God%20Renders/athena/Screenshot%20(251).png"
+    },
+    {
+      "god": "Athena",
+      "skinName": "Prism P3",
+      "file": "Screenshot (252).png",
+      "url": "/media/God%20Renders/athena/Screenshot%20(252).png"
+    },
+    {
+      "god": "Athena",
+      "skinName": "Prism P4",
+      "file": "Screenshot (253).png",
+      "url": "/media/God%20Renders/athena/Screenshot%20(253).png"
+    },
+    {
+      "god": "Athena",
+      "skinName": "Steel Sentry",
+      "file": "Screenshot (254).png",
+      "url": "/media/God%20Renders/athena/Screenshot%20(254).png"
+    },
+    {
+      "god": "Athena",
+      "skinName": "Shadow",
+      "file": "Screenshot (255).png",
+      "url": "/media/God%20Renders/athena/Screenshot%20(255).png"
+    },
+    {
+      "god": "Athena",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (256).png",
+      "url": "/media/God%20Renders/athena/Screenshot%20(256).png"
+    },
+    {
+      "god": "Athena",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (257).png",
+      "url": "/media/God%20Renders/athena/Screenshot%20(257).png"
+    },
+    {
+      "god": "Athena",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (258).png",
+      "url": "/media/God%20Renders/athena/Screenshot%20(258).png"
+    },
+    {
+      "god": "Atlas",
+      "skinName": "Base",
+      "file": "Screenshot (259).png",
+      "url": "/media/God%20Renders/atlas/Screenshot%20(259).png"
+    },
+    {
+      "god": "Atlas",
+      "skinName": "Shadow",
+      "file": "Screenshot (260).png",
+      "url": "/media/God%20Renders/atlas/Screenshot%20(260).png"
+    },
+    {
+      "god": "Atlas",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (261).png",
+      "url": "/media/God%20Renders/atlas/Screenshot%20(261).png"
+    },
+    {
+      "god": "Atlas",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (262).png",
+      "url": "/media/God%20Renders/atlas/Screenshot%20(262).png"
+    },
+    {
+      "god": "Atlas",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (263).png",
+      "url": "/media/God%20Renders/atlas/Screenshot%20(263).png"
+    },
+    {
+      "god": "Awilix",
+      "skinName": "Base",
+      "file": "Screenshot (264).png",
+      "url": "/media/God%20Renders/awilix/Screenshot%20(264).png"
+    },
+    {
+      "god": "Awilix",
+      "skinName": "Feline Fashion",
+      "file": "Screenshot (265).png",
+      "url": "/media/God%20Renders/awilix/Screenshot%20(265).png"
+    },
+    {
+      "god": "Awilix",
+      "skinName": "Prism 1",
+      "file": "Screenshot (266).png",
+      "url": "/media/God%20Renders/awilix/Screenshot%20(266).png"
+    },
+    {
+      "god": "Awilix",
+      "skinName": "Prism 2",
+      "file": "Screenshot (267).png",
+      "url": "/media/God%20Renders/awilix/Screenshot%20(267).png"
+    },
+    {
+      "god": "Awilix",
+      "skinName": "Prism 3",
+      "file": "Screenshot (268).png",
+      "url": "/media/God%20Renders/awilix/Screenshot%20(268).png"
+    },
+    {
+      "god": "Awilix",
+      "skinName": "Prism 4",
+      "file": "Screenshot (269).png",
+      "url": "/media/God%20Renders/awilix/Screenshot%20(269).png"
+    },
+    {
+      "god": "Awilix",
+      "skinName": "Cyberclaw",
+      "file": "Screenshot (270).png",
+      "url": "/media/God%20Renders/awilix/Screenshot%20(270).png"
+    },
+    {
+      "god": "Awilix",
+      "skinName": "Shadow",
+      "file": "Screenshot (271).png",
+      "url": "/media/God%20Renders/awilix/Screenshot%20(271).png"
+    },
+    {
+      "god": "Awilix",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (272).png",
+      "url": "/media/God%20Renders/awilix/Screenshot%20(272).png"
+    },
+    {
+      "god": "Awilix",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (273).png",
+      "url": "/media/God%20Renders/awilix/Screenshot%20(273).png"
+    },
+    {
+      "god": "Awilix",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (274).png",
+      "url": "/media/God%20Renders/awilix/Screenshot%20(274).png"
+    },
+    {
+      "god": "Bacchus",
+      "skinName": "Base",
+      "file": "Screenshot (275).png",
+      "url": "/media/God%20Renders/bacchus/Screenshot%20(275).png"
+    },
+    {
+      "god": "Bacchus",
+      "skinName": "Dapper Catter",
+      "file": "Screenshot (276).png",
+      "url": "/media/God%20Renders/bacchus/Screenshot%20(276).png"
+    },
+    {
+      "god": "Bacchus",
+      "skinName": "Funky Grooves",
+      "file": "Screenshot (277).png",
+      "url": "/media/God%20Renders/bacchus/Screenshot%20(277).png"
+    },
+    {
+      "god": "Bacchus",
+      "skinName": "Sir Croakus",
+      "file": "Screenshot (278).png",
+      "url": "/media/God%20Renders/bacchus/Screenshot%20(278).png"
+    },
+    {
+      "god": "Bacchus",
+      "skinName": "Shadow",
+      "file": "Screenshot (279).png",
+      "url": "/media/God%20Renders/bacchus/Screenshot%20(279).png"
+    },
+    {
+      "god": "Bacchus",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (280).png",
+      "url": "/media/God%20Renders/bacchus/Screenshot%20(280).png"
+    },
+    {
+      "god": "Bacchus",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (281).png",
+      "url": "/media/God%20Renders/bacchus/Screenshot%20(281).png"
+    },
+    {
+      "god": "Bacchus",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (282).png",
+      "url": "/media/God%20Renders/bacchus/Screenshot%20(282).png"
+    },
+    {
+      "god": "Baron Samedi",
+      "skinName": "Base",
+      "file": "Screenshot (283).png",
+      "url": "/media/God%20Renders/baron%20samedi/Screenshot%20(283).png"
+    },
+    {
+      "god": "Baron Samedi",
+      "skinName": "Nano-Mancer",
+      "file": "Screenshot (284).png",
+      "url": "/media/God%20Renders/baron%20samedi/Screenshot%20(284).png"
+    },
+    {
+      "god": "Baron Samedi",
+      "skinName": "Gingersnap",
+      "file": "Screenshot (285).png",
+      "url": "/media/God%20Renders/baron%20samedi/Screenshot%20(285).png"
+    },
+    {
+      "god": "Baron Samedi",
+      "skinName": "Shadow",
+      "file": "Screenshot (286).png",
+      "url": "/media/God%20Renders/baron%20samedi/Screenshot%20(286).png"
+    },
+    {
+      "god": "Baron Samedi",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (287).png",
+      "url": "/media/God%20Renders/baron%20samedi/Screenshot%20(287).png"
+    },
+    {
+      "god": "Baron Samedi",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (288).png",
+      "url": "/media/God%20Renders/baron%20samedi/Screenshot%20(288).png"
+    },
+    {
+      "god": "Baron Samedi",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (289).png",
+      "url": "/media/God%20Renders/baron%20samedi/Screenshot%20(289).png"
+    },
+    {
+      "god": "Bastet",
+      "skinName": "Base",
+      "file": "Screenshot (290).png",
+      "url": "/media/God%20Renders/bastet/Screenshot%20(290).png"
+    },
+    {
+      "god": "Bastet",
+      "skinName": "Shadow",
+      "file": "Screenshot (291).png",
+      "url": "/media/God%20Renders/bastet/Screenshot%20(291).png"
+    },
+    {
+      "god": "Bastet",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (292).png",
+      "url": "/media/God%20Renders/bastet/Screenshot%20(292).png"
+    },
+    {
+      "god": "Bastet",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (293).png",
+      "url": "/media/God%20Renders/bastet/Screenshot%20(293).png"
+    },
+    {
+      "god": "Bastet",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (294).png",
+      "url": "/media/God%20Renders/bastet/Screenshot%20(294).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Base",
+      "file": "Screenshot (295).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(295).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Miss Senshi",
+      "file": "Screenshot (296).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(296).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Screenshot (297)",
+      "file": "Screenshot (297).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(297).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Screenshot (298)",
+      "file": "Screenshot (298).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(298).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Screenshot (299)",
+      "file": "Screenshot (299).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(299).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Interstellar Empyrean",
+      "file": "Screenshot (300).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(300).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Screenshot (301)",
+      "file": "Screenshot (301).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(301).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Screenshot (302)",
+      "file": "Screenshot (302).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(302).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Screenshot (303)",
+      "file": "Screenshot (303).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(303).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Screenshot (304)",
+      "file": "Screenshot (304).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(304).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Screenshot (305)",
+      "file": "Screenshot (305).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(305).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Screenshot (306)",
+      "file": "Screenshot (306).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(306).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Screenshot (307)",
+      "file": "Screenshot (307).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(307).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Screenshot (308)",
+      "file": "Screenshot (308).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(308).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Screenshot (309)",
+      "file": "Screenshot (309).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(309).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Screenshot (310)",
+      "file": "Screenshot (310).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(310).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Screenshot (311)",
+      "file": "Screenshot (311).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(311).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Screenshot (312)",
+      "file": "Screenshot (312).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(312).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Screenshot (313)",
+      "file": "Screenshot (313).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(313).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Screenshot (314)",
+      "file": "Screenshot (314).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(314).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Jade Dragons",
+      "file": "Screenshot (315).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(315).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Untamed",
+      "file": "Screenshot (316).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(316).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Shadow",
+      "file": "Screenshot (317).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(317).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (318).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(318).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (319).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(319).png"
+    },
+    {
+      "god": "Bellona",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (320).png",
+      "url": "/media/God%20Renders/bellona/Screenshot%20(320).png"
+    },
+    {
+      "god": "Cabrakan",
+      "skinName": "Base",
+      "file": "Screenshot (321).png",
+      "url": "/media/God%20Renders/cabrakan/Screenshot%20(321).png"
+    },
+    {
+      "god": "Cabrakan",
+      "skinName": "Fat Loki",
+      "file": "Screenshot (322).png",
+      "url": "/media/God%20Renders/cabrakan/Screenshot%20(322).png"
+    },
+    {
+      "god": "Cabrakan",
+      "skinName": "Screenshot (323)",
+      "file": "Screenshot (323).png",
+      "url": "/media/God%20Renders/cabrakan/Screenshot%20(323).png"
+    },
+    {
+      "god": "Cabrakan",
+      "skinName": "Screenshot (324)",
+      "file": "Screenshot (324).png",
+      "url": "/media/God%20Renders/cabrakan/Screenshot%20(324).png"
+    },
+    {
+      "god": "Cabrakan",
+      "skinName": "Screenshot (325)",
+      "file": "Screenshot (325).png",
+      "url": "/media/God%20Renders/cabrakan/Screenshot%20(325).png"
+    },
+    {
+      "god": "Cabrakan",
+      "skinName": "Nerd Rage",
+      "file": "Screenshot (326).png",
+      "url": "/media/God%20Renders/cabrakan/Screenshot%20(326).png"
+    },
+    {
+      "god": "Cabrakan",
+      "skinName": "Screenshot (327)",
+      "file": "Screenshot (327).png",
+      "url": "/media/God%20Renders/cabrakan/Screenshot%20(327).png"
+    },
+    {
+      "god": "Cabrakan",
+      "skinName": "Screenshot (328)",
+      "file": "Screenshot (328).png",
+      "url": "/media/God%20Renders/cabrakan/Screenshot%20(328).png"
+    },
+    {
+      "god": "Cabrakan",
+      "skinName": "Screenshot (329)",
+      "file": "Screenshot (329).png",
+      "url": "/media/God%20Renders/cabrakan/Screenshot%20(329).png"
+    },
+    {
+      "god": "Cabrakan",
+      "skinName": "Screenshot (330)",
+      "file": "Screenshot (330).png",
+      "url": "/media/God%20Renders/cabrakan/Screenshot%20(330).png"
+    },
+    {
+      "god": "Cabrakan",
+      "skinName": "Shadow",
+      "file": "Screenshot (331).png",
+      "url": "/media/God%20Renders/cabrakan/Screenshot%20(331).png"
+    },
+    {
+      "god": "Cabrakan",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (332).png",
+      "url": "/media/God%20Renders/cabrakan/Screenshot%20(332).png"
+    },
+    {
+      "god": "Cabrakan",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (333).png",
+      "url": "/media/God%20Renders/cabrakan/Screenshot%20(333).png"
+    },
+    {
+      "god": "Cabrakan",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (334).png",
+      "url": "/media/God%20Renders/cabrakan/Screenshot%20(334).png"
     },
     {
       "god": "Cerberus",
-      "skinName": "Hellwatch",
-      "url": "https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data/NewGodSkins/Cerberus/Skins/Hellwatch/t_Cerberus_Card_Hellwatch.png"
+      "skinName": "Base",
+      "file": "Screenshot (336).png",
+      "url": "/media/God%20Renders/cerberus/Screenshot%20(336).png"
+    },
+    {
+      "god": "Cerberus",
+      "skinName": "Screenshot (337)",
+      "file": "Screenshot (337).png",
+      "url": "/media/God%20Renders/cerberus/Screenshot%20(337).png"
+    },
+    {
+      "god": "Cerberus",
+      "skinName": "Screenshot (338)",
+      "file": "Screenshot (338).png",
+      "url": "/media/God%20Renders/cerberus/Screenshot%20(338).png"
+    },
+    {
+      "god": "Cerberus",
+      "skinName": "Screenshot (339)",
+      "file": "Screenshot (339).png",
+      "url": "/media/God%20Renders/cerberus/Screenshot%20(339).png"
+    },
+    {
+      "god": "Cerberus",
+      "skinName": "Screenshot (340)",
+      "file": "Screenshot (340).png",
+      "url": "/media/God%20Renders/cerberus/Screenshot%20(340).png"
+    },
+    {
+      "god": "Cerberus",
+      "skinName": "Screenshot (341)",
+      "file": "Screenshot (341).png",
+      "url": "/media/God%20Renders/cerberus/Screenshot%20(341).png"
+    },
+    {
+      "god": "Cerberus",
+      "skinName": "Screenshot (342)",
+      "file": "Screenshot (342).png",
+      "url": "/media/God%20Renders/cerberus/Screenshot%20(342).png"
+    },
+    {
+      "god": "Cerberus",
+      "skinName": "Shadow",
+      "file": "Screenshot (343).png",
+      "url": "/media/God%20Renders/cerberus/Screenshot%20(343).png"
+    },
+    {
+      "god": "Cerberus",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (344).png",
+      "url": "/media/God%20Renders/cerberus/Screenshot%20(344).png"
+    },
+    {
+      "god": "Cerberus",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (345).png",
+      "url": "/media/God%20Renders/cerberus/Screenshot%20(345).png"
+    },
+    {
+      "god": "Cerberus",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (346).png",
+      "url": "/media/God%20Renders/cerberus/Screenshot%20(346).png"
+    },
+    {
+      "god": "Chaac",
+      "skinName": "Base",
+      "file": "Screenshot (355).png",
+      "url": "/media/God%20Renders/chaac/Screenshot%20(355).png"
+    },
+    {
+      "god": "Chaac",
+      "skinName": "Slaughterhouse",
+      "file": "Screenshot (356).png",
+      "url": "/media/God%20Renders/chaac/Screenshot%20(356).png"
+    },
+    {
+      "god": "Chaac",
+      "skinName": "Prism 2",
+      "file": "Screenshot (357).png",
+      "url": "/media/God%20Renders/chaac/Screenshot%20(357).png"
+    },
+    {
+      "god": "Chaac",
+      "skinName": "Prism 3",
+      "file": "Screenshot (358).png",
+      "url": "/media/God%20Renders/chaac/Screenshot%20(358).png"
+    },
+    {
+      "god": "Chaac",
+      "skinName": "Prism 4",
+      "file": "Screenshot (359).png",
+      "url": "/media/God%20Renders/chaac/Screenshot%20(359).png"
+    },
+    {
+      "god": "Chaac",
+      "skinName": "Prism 5",
+      "file": "Screenshot (360).png",
+      "url": "/media/God%20Renders/chaac/Screenshot%20(360).png"
+    },
+    {
+      "god": "Chaac",
+      "skinName": "Screenshot (361)",
+      "file": "Screenshot (361).png",
+      "url": "/media/God%20Renders/chaac/Screenshot%20(361).png"
+    },
+    {
+      "god": "Chaac",
+      "skinName": "Screenshot (362)",
+      "file": "Screenshot (362).png",
+      "url": "/media/God%20Renders/chaac/Screenshot%20(362).png"
+    },
+    {
+      "god": "Chaac",
+      "skinName": "Abyssal Hunter",
+      "file": "Screenshot (363).png",
+      "url": "/media/God%20Renders/chaac/Screenshot%20(363).png"
+    },
+    {
+      "god": "Chaac",
+      "skinName": "Shadow",
+      "file": "Screenshot (364).png",
+      "url": "/media/God%20Renders/chaac/Screenshot%20(364).png"
+    },
+    {
+      "god": "Chaac",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (365).png",
+      "url": "/media/God%20Renders/chaac/Screenshot%20(365).png"
+    },
+    {
+      "god": "Chaac",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (366).png",
+      "url": "/media/God%20Renders/chaac/Screenshot%20(366).png"
+    },
+    {
+      "god": "Chaac",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (367).png",
+      "url": "/media/God%20Renders/chaac/Screenshot%20(367).png"
+    },
+    {
+      "god": "Charon",
+      "skinName": "Base",
+      "file": "Screenshot (368).png",
+      "url": "/media/God%20Renders/charon/Screenshot%20(368).png"
+    },
+    {
+      "god": "Charon",
+      "skinName": "Crimson Ferryman",
+      "file": "Screenshot (369).png",
+      "url": "/media/God%20Renders/charon/Screenshot%20(369).png"
+    },
+    {
+      "god": "Charon",
+      "skinName": "Shadow",
+      "file": "Screenshot (370).png",
+      "url": "/media/God%20Renders/charon/Screenshot%20(370).png"
+    },
+    {
+      "god": "Charon",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (371).png",
+      "url": "/media/God%20Renders/charon/Screenshot%20(371).png"
+    },
+    {
+      "god": "Charon",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (372).png",
+      "url": "/media/God%20Renders/charon/Screenshot%20(372).png"
+    },
+    {
+      "god": "Charon",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (373).png",
+      "url": "/media/God%20Renders/charon/Screenshot%20(373).png"
+    },
+    {
+      "god": "Chiron",
+      "skinName": "Base",
+      "file": "Screenshot (374).png",
+      "url": "/media/God%20Renders/chiron/Screenshot%20(374).png"
+    },
+    {
+      "god": "Chiron",
+      "skinName": "Fabulous",
+      "file": "Screenshot (375).png",
+      "url": "/media/God%20Renders/chiron/Screenshot%20(375).png"
+    },
+    {
+      "god": "Chiron",
+      "skinName": "Screenshot (376)",
+      "file": "Screenshot (376).png",
+      "url": "/media/God%20Renders/chiron/Screenshot%20(376).png"
+    },
+    {
+      "god": "Chiron",
+      "skinName": "Screenshot (377)",
+      "file": "Screenshot (377).png",
+      "url": "/media/God%20Renders/chiron/Screenshot%20(377).png"
+    },
+    {
+      "god": "Chiron",
+      "skinName": "Screenshot (378)",
+      "file": "Screenshot (378).png",
+      "url": "/media/God%20Renders/chiron/Screenshot%20(378).png"
+    },
+    {
+      "god": "Chiron",
+      "skinName": "Sagittarius",
+      "file": "Screenshot (379).png",
+      "url": "/media/God%20Renders/chiron/Screenshot%20(379).png"
+    },
+    {
+      "god": "Chiron",
+      "skinName": "Shadow",
+      "file": "Screenshot (380).png",
+      "url": "/media/God%20Renders/chiron/Screenshot%20(380).png"
+    },
+    {
+      "god": "Chiron",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (381).png",
+      "url": "/media/God%20Renders/chiron/Screenshot%20(381).png"
+    },
+    {
+      "god": "Chiron",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (382).png",
+      "url": "/media/God%20Renders/chiron/Screenshot%20(382).png"
+    },
+    {
+      "god": "Chiron",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (383).png",
+      "url": "/media/God%20Renders/chiron/Screenshot%20(383).png"
+    },
+    {
+      "god": "Cupid",
+      "skinName": "Base",
+      "file": "Screenshot (384).png",
+      "url": "/media/God%20Renders/cupid/Screenshot%20(384).png"
+    },
+    {
+      "god": "Cupid",
+      "skinName": "Lil Thanatos",
+      "file": "Screenshot (385).png",
+      "url": "/media/God%20Renders/cupid/Screenshot%20(385).png"
+    },
+    {
+      "god": "Cupid",
+      "skinName": "Screenshot (386)",
+      "file": "Screenshot (386).png",
+      "url": "/media/God%20Renders/cupid/Screenshot%20(386).png"
+    },
+    {
+      "god": "Cupid",
+      "skinName": "Screenshot (387)",
+      "file": "Screenshot (387).png",
+      "url": "/media/God%20Renders/cupid/Screenshot%20(387).png"
+    },
+    {
+      "god": "Cupid",
+      "skinName": "Screenshot (388)",
+      "file": "Screenshot (388).png",
+      "url": "/media/God%20Renders/cupid/Screenshot%20(388).png"
+    },
+    {
+      "god": "Cupid",
+      "skinName": "Screenshot (389)",
+      "file": "Screenshot (389).png",
+      "url": "/media/God%20Renders/cupid/Screenshot%20(389).png"
+    },
+    {
+      "god": "Cupid",
+      "skinName": "Screenshot (390)",
+      "file": "Screenshot (390).png",
+      "url": "/media/God%20Renders/cupid/Screenshot%20(390).png"
+    },
+    {
+      "god": "Cupid",
+      "skinName": "Screenshot (391)",
+      "file": "Screenshot (391).png",
+      "url": "/media/God%20Renders/cupid/Screenshot%20(391).png"
+    },
+    {
+      "god": "Cupid",
+      "skinName": "Shadow",
+      "file": "Screenshot (392).png",
+      "url": "/media/God%20Renders/cupid/Screenshot%20(392).png"
+    },
+    {
+      "god": "Cupid",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (393).png",
+      "url": "/media/God%20Renders/cupid/Screenshot%20(393).png"
+    },
+    {
+      "god": "Cupid",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (394).png",
+      "url": "/media/God%20Renders/cupid/Screenshot%20(394).png"
+    },
+    {
+      "god": "Cupid",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (395).png",
+      "url": "/media/God%20Renders/cupid/Screenshot%20(395).png"
+    },
+    {
+      "god": "Da Ji",
+      "skinName": "Base",
+      "file": "Screenshot (396).png",
+      "url": "/media/God%20Renders/da%20ji/Screenshot%20(396).png"
+    },
+    {
+      "god": "Da Ji",
+      "skinName": "Devil Punk",
+      "file": "Screenshot (397).png",
+      "url": "/media/God%20Renders/da%20ji/Screenshot%20(397).png"
+    },
+    {
+      "god": "Da Ji",
+      "skinName": "Prism 1",
+      "file": "Screenshot (398).png",
+      "url": "/media/God%20Renders/da%20ji/Screenshot%20(398).png"
+    },
+    {
+      "god": "Da Ji",
+      "skinName": "Prism 2",
+      "file": "Screenshot (399).png",
+      "url": "/media/God%20Renders/da%20ji/Screenshot%20(399).png"
+    },
+    {
+      "god": "Da Ji",
+      "skinName": "Prism 3",
+      "file": "Screenshot (400).png",
+      "url": "/media/God%20Renders/da%20ji/Screenshot%20(400).png"
+    },
+    {
+      "god": "Da Ji",
+      "skinName": "Prism 4",
+      "file": "Screenshot (401).png",
+      "url": "/media/God%20Renders/da%20ji/Screenshot%20(401).png"
+    },
+    {
+      "god": "Da Ji",
+      "skinName": "Vixen",
+      "file": "Screenshot (402).png",
+      "url": "/media/God%20Renders/da%20ji/Screenshot%20(402).png"
+    },
+    {
+      "god": "Da Ji",
+      "skinName": "Shadow",
+      "file": "Screenshot (403).png",
+      "url": "/media/God%20Renders/da%20ji/Screenshot%20(403).png"
+    },
+    {
+      "god": "Da Ji",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (404).png",
+      "url": "/media/God%20Renders/da%20ji/Screenshot%20(404).png"
+    },
+    {
+      "god": "Da Ji",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (405).png",
+      "url": "/media/God%20Renders/da%20ji/Screenshot%20(405).png"
+    },
+    {
+      "god": "Da Ji",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (406).png",
+      "url": "/media/God%20Renders/da%20ji/Screenshot%20(406).png"
+    },
+    {
+      "god": "Danzaburou",
+      "skinName": "Base",
+      "file": "Screenshot (407).png",
+      "url": "/media/God%20Renders/danzaburou/Screenshot%20(407).png"
+    },
+    {
+      "god": "Danzaburou",
+      "skinName": "Party Animal",
+      "file": "Screenshot (408).png",
+      "url": "/media/God%20Renders/danzaburou/Screenshot%20(408).png"
+    },
+    {
+      "god": "Danzaburou",
+      "skinName": "Screenshot (409)",
+      "file": "Screenshot (409).png",
+      "url": "/media/God%20Renders/danzaburou/Screenshot%20(409).png"
+    },
+    {
+      "god": "Danzaburou",
+      "skinName": "Polar Prankster",
+      "file": "Screenshot (410).png",
+      "url": "/media/God%20Renders/danzaburou/Screenshot%20(410).png"
+    },
+    {
+      "god": "Danzaburou",
+      "skinName": "Prism P1",
+      "file": "Screenshot (411).png",
+      "url": "/media/God%20Renders/danzaburou/Screenshot%20(411).png"
+    },
+    {
+      "god": "Danzaburou",
+      "skinName": "Prism P2",
+      "file": "Screenshot (412).png",
+      "url": "/media/God%20Renders/danzaburou/Screenshot%20(412).png"
+    },
+    {
+      "god": "Danzaburou",
+      "skinName": "Prism P3",
+      "file": "Screenshot (413).png",
+      "url": "/media/God%20Renders/danzaburou/Screenshot%20(413).png"
+    },
+    {
+      "god": "Danzaburou",
+      "skinName": "Prism P4",
+      "file": "Screenshot (414).png",
+      "url": "/media/God%20Renders/danzaburou/Screenshot%20(414).png"
+    },
+    {
+      "god": "Danzaburou",
+      "skinName": "Screenshot (415)",
+      "file": "Screenshot (415).png",
+      "url": "/media/God%20Renders/danzaburou/Screenshot%20(415).png"
+    },
+    {
+      "god": "Danzaburou",
+      "skinName": "Shadow",
+      "file": "Screenshot (416).png",
+      "url": "/media/God%20Renders/danzaburou/Screenshot%20(416).png"
+    },
+    {
+      "god": "Danzaburou",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (417).png",
+      "url": "/media/God%20Renders/danzaburou/Screenshot%20(417).png"
+    },
+    {
+      "god": "Danzaburou",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (418).png",
+      "url": "/media/God%20Renders/danzaburou/Screenshot%20(418).png"
+    },
+    {
+      "god": "Danzaburou",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (419).png",
+      "url": "/media/God%20Renders/danzaburou/Screenshot%20(419).png"
+    },
+    {
+      "god": "Discordia",
+      "skinName": "Base",
+      "file": "Screenshot (420).png",
+      "url": "/media/God%20Renders/discordia/Screenshot%20(420).png"
+    },
+    {
+      "god": "Discordia",
+      "skinName": "Oblivion Queen",
+      "file": "Screenshot (421).png",
+      "url": "/media/God%20Renders/discordia/Screenshot%20(421).png"
+    },
+    {
+      "god": "Discordia",
+      "skinName": "Prism 1",
+      "file": "Screenshot (422).png",
+      "url": "/media/God%20Renders/discordia/Screenshot%20(422).png"
+    },
+    {
+      "god": "Discordia",
+      "skinName": "Prism 2",
+      "file": "Screenshot (423).png",
+      "url": "/media/God%20Renders/discordia/Screenshot%20(423).png"
+    },
+    {
+      "god": "Discordia",
+      "skinName": "Prism 3",
+      "file": "Screenshot (424).png",
+      "url": "/media/God%20Renders/discordia/Screenshot%20(424).png"
+    },
+    {
+      "god": "Discordia",
+      "skinName": "Prism 4",
+      "file": "Screenshot (425).png",
+      "url": "/media/God%20Renders/discordia/Screenshot%20(425).png"
+    },
+    {
+      "god": "Discordia",
+      "skinName": "Rebellious",
+      "file": "Screenshot (426).png",
+      "url": "/media/God%20Renders/discordia/Screenshot%20(426).png"
+    },
+    {
+      "god": "Discordia",
+      "skinName": "Shadow",
+      "file": "Screenshot (427).png",
+      "url": "/media/God%20Renders/discordia/Screenshot%20(427).png"
+    },
+    {
+      "god": "Discordia",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (428).png",
+      "url": "/media/God%20Renders/discordia/Screenshot%20(428).png"
+    },
+    {
+      "god": "Discordia",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (429).png",
+      "url": "/media/God%20Renders/discordia/Screenshot%20(429).png"
+    },
+    {
+      "god": "Discordia",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (430).png",
+      "url": "/media/God%20Renders/discordia/Screenshot%20(430).png"
+    },
+    {
+      "god": "Eset",
+      "skinName": "Base",
+      "file": "Screenshot (431).png",
+      "url": "/media/God%20Renders/eset/Screenshot%20(431).png"
+    },
+    {
+      "god": "Eset",
+      "skinName": "Crimson Mist",
+      "file": "Screenshot (432).png",
+      "url": "/media/God%20Renders/eset/Screenshot%20(432).png"
+    },
+    {
+      "god": "Eset",
+      "skinName": "Shadow",
+      "file": "Screenshot (433).png",
+      "url": "/media/God%20Renders/eset/Screenshot%20(433).png"
+    },
+    {
+      "god": "Eset",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (434).png",
+      "url": "/media/God%20Renders/eset/Screenshot%20(434).png"
+    },
+    {
+      "god": "Eset",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (435).png",
+      "url": "/media/God%20Renders/eset/Screenshot%20(435).png"
+    },
+    {
+      "god": "Eset",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (436).png",
+      "url": "/media/God%20Renders/eset/Screenshot%20(436).png"
+    },
+    {
+      "god": "Fenrir",
+      "skinName": "Base",
+      "file": "Screenshot (437).png",
+      "url": "/media/God%20Renders/fenrir/Screenshot%20(437).png"
+    },
+    {
+      "god": "Fenrir",
+      "skinName": "Wreck the Halls",
+      "file": "Screenshot (438).png",
+      "url": "/media/God%20Renders/fenrir/Screenshot%20(438).png"
+    },
+    {
+      "god": "Fenrir",
+      "skinName": "Prism P1",
+      "file": "Screenshot (439).png",
+      "url": "/media/God%20Renders/fenrir/Screenshot%20(439).png"
+    },
+    {
+      "god": "Fenrir",
+      "skinName": "Prism P2",
+      "file": "Screenshot (441).png",
+      "url": "/media/God%20Renders/fenrir/Screenshot%20(441).png"
+    },
+    {
+      "god": "Fenrir",
+      "skinName": "Prism P3",
+      "file": "Screenshot (442).png",
+      "url": "/media/God%20Renders/fenrir/Screenshot%20(442).png"
+    },
+    {
+      "god": "Fenrir",
+      "skinName": "Prism P4",
+      "file": "Screenshot (443).png",
+      "url": "/media/God%20Renders/fenrir/Screenshot%20(443).png"
+    },
+    {
+      "god": "Fenrir",
+      "skinName": "Lord Slashington III",
+      "file": "Screenshot (444).png",
+      "url": "/media/God%20Renders/fenrir/Screenshot%20(444).png"
+    },
+    {
+      "god": "Fenrir",
+      "skinName": "Mighty Mutt",
+      "file": "Screenshot (445).png",
+      "url": "/media/God%20Renders/fenrir/Screenshot%20(445).png"
+    },
+    {
+      "god": "Fenrir",
+      "skinName": "The Undead",
+      "file": "Screenshot (446).png",
+      "url": "/media/God%20Renders/fenrir/Screenshot%20(446).png"
+    },
+    {
+      "god": "Fenrir",
+      "skinName": "Shadow",
+      "file": "Screenshot (447).png",
+      "url": "/media/God%20Renders/fenrir/Screenshot%20(447).png"
+    },
+    {
+      "god": "Fenrir",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (448).png",
+      "url": "/media/God%20Renders/fenrir/Screenshot%20(448).png"
+    },
+    {
+      "god": "Fenrir",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (449).png",
+      "url": "/media/God%20Renders/fenrir/Screenshot%20(449).png"
+    },
+    {
+      "god": "Fenrir",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (450).png",
+      "url": "/media/God%20Renders/fenrir/Screenshot%20(450).png"
+    },
+    {
+      "god": "Ganesha",
+      "skinName": "Base",
+      "file": "Screenshot (451).png",
+      "url": "/media/God%20Renders/ganesha/Screenshot%20(451).png"
+    },
+    {
+      "god": "Ganesha",
+      "skinName": "Screenshot (452)",
+      "file": "Screenshot (452).png",
+      "url": "/media/God%20Renders/ganesha/Screenshot%20(452).png"
+    },
+    {
+      "god": "Ganesha",
+      "skinName": "Prism 2",
+      "file": "Screenshot (453).png",
+      "url": "/media/God%20Renders/ganesha/Screenshot%20(453).png"
+    },
+    {
+      "god": "Ganesha",
+      "skinName": "Prism 3",
+      "file": "Screenshot (454).png",
+      "url": "/media/God%20Renders/ganesha/Screenshot%20(454).png"
+    },
+    {
+      "god": "Ganesha",
+      "skinName": "Prism 4",
+      "file": "Screenshot (455).png",
+      "url": "/media/God%20Renders/ganesha/Screenshot%20(455).png"
+    },
+    {
+      "god": "Ganesha",
+      "skinName": "Prism 5",
+      "file": "Screenshot (456).png",
+      "url": "/media/God%20Renders/ganesha/Screenshot%20(456).png"
+    },
+    {
+      "god": "Ganesha",
+      "skinName": "Prism 6",
+      "file": "Screenshot (457).png",
+      "url": "/media/God%20Renders/ganesha/Screenshot%20(457).png"
+    },
+    {
+      "god": "Ganesha",
+      "skinName": "Prism 7",
+      "file": "Screenshot (458).png",
+      "url": "/media/God%20Renders/ganesha/Screenshot%20(458).png"
+    },
+    {
+      "god": "Ganesha",
+      "skinName": "Prism 8",
+      "file": "Screenshot (459).png",
+      "url": "/media/God%20Renders/ganesha/Screenshot%20(459).png"
+    },
+    {
+      "god": "Ganesha",
+      "skinName": "Prism 9",
+      "file": "Screenshot (460).png",
+      "url": "/media/God%20Renders/ganesha/Screenshot%20(460).png"
+    },
+    {
+      "god": "Ganesha",
+      "skinName": "Screenshot (461)",
+      "file": "Screenshot (461).png",
+      "url": "/media/God%20Renders/ganesha/Screenshot%20(461).png"
+    },
+    {
+      "god": "Ganesha",
+      "skinName": "Shadow",
+      "file": "Screenshot (462).png",
+      "url": "/media/God%20Renders/ganesha/Screenshot%20(462).png"
+    },
+    {
+      "god": "Ganesha",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (463).png",
+      "url": "/media/God%20Renders/ganesha/Screenshot%20(463).png"
+    },
+    {
+      "god": "Ganesha",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (464).png",
+      "url": "/media/God%20Renders/ganesha/Screenshot%20(464).png"
+    },
+    {
+      "god": "Ganesha",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (465).png",
+      "url": "/media/God%20Renders/ganesha/Screenshot%20(465).png"
+    },
+    {
+      "god": "Geb",
+      "skinName": "Base",
+      "file": "Screenshot (466).png",
+      "url": "/media/God%20Renders/geb/Screenshot%20(466).png"
+    },
+    {
+      "god": "Geb",
+      "skinName": "G.E.B. 1",
+      "file": "Screenshot (467).png",
+      "url": "/media/God%20Renders/geb/Screenshot%20(467).png"
+    },
+    {
+      "god": "Geb",
+      "skinName": "Prism B",
+      "file": "Screenshot (468).png",
+      "url": "/media/God%20Renders/geb/Screenshot%20(468).png"
+    },
+    {
+      "god": "Geb",
+      "skinName": "Prism C",
+      "file": "Screenshot (469).png",
+      "url": "/media/God%20Renders/geb/Screenshot%20(469).png"
+    },
+    {
+      "god": "Geb",
+      "skinName": "Prism D",
+      "file": "Screenshot (470).png",
+      "url": "/media/God%20Renders/geb/Screenshot%20(470).png"
+    },
+    {
+      "god": "Geb",
+      "skinName": "Spirit Stones",
+      "file": "Screenshot (471).png",
+      "url": "/media/God%20Renders/geb/Screenshot%20(471).png"
+    },
+    {
+      "god": "Geb",
+      "skinName": "Shadow",
+      "file": "Screenshot (472).png",
+      "url": "/media/God%20Renders/geb/Screenshot%20(472).png"
+    },
+    {
+      "god": "Geb",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (473).png",
+      "url": "/media/God%20Renders/geb/Screenshot%20(473).png"
+    },
+    {
+      "god": "Geb",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (474).png",
+      "url": "/media/God%20Renders/geb/Screenshot%20(474).png"
+    },
+    {
+      "god": "Geb",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (475).png",
+      "url": "/media/God%20Renders/geb/Screenshot%20(475).png"
+    },
+    {
+      "god": "Gilgamesh",
+      "skinName": "Base",
+      "file": "Screenshot (476).png",
+      "url": "/media/God%20Renders/gilgamesh/Screenshot%20(476).png"
+    },
+    {
+      "god": "Gilgamesh",
+      "skinName": "Shadow",
+      "file": "Screenshot (477).png",
+      "url": "/media/God%20Renders/gilgamesh/Screenshot%20(477).png"
+    },
+    {
+      "god": "Gilgamesh",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (478).png",
+      "url": "/media/God%20Renders/gilgamesh/Screenshot%20(478).png"
+    },
+    {
+      "god": "Gilgamesh",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (479).png",
+      "url": "/media/God%20Renders/gilgamesh/Screenshot%20(479).png"
+    },
+    {
+      "god": "Gilgamesh",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (480).png",
+      "url": "/media/God%20Renders/gilgamesh/Screenshot%20(480).png"
+    },
+    {
+      "god": "Guan Yu",
+      "skinName": "Screenshot (481)",
+      "file": "Screenshot (481).png",
+      "url": "/media/God%20Renders/guan%20yu/Screenshot%20(481).png"
+    },
+    {
+      "god": "Guan Yu",
+      "skinName": "Screenshot (482)",
+      "file": "Screenshot (482).png",
+      "url": "/media/God%20Renders/guan%20yu/Screenshot%20(482).png"
+    },
+    {
+      "god": "Guan Yu",
+      "skinName": "Screenshot (483)",
+      "file": "Screenshot (483).png",
+      "url": "/media/God%20Renders/guan%20yu/Screenshot%20(483).png"
+    },
+    {
+      "god": "Guan Yu",
+      "skinName": "Screenshot (484)",
+      "file": "Screenshot (484).png",
+      "url": "/media/God%20Renders/guan%20yu/Screenshot%20(484).png"
+    },
+    {
+      "god": "Guan Yu",
+      "skinName": "Screenshot (485)",
+      "file": "Screenshot (485).png",
+      "url": "/media/God%20Renders/guan%20yu/Screenshot%20(485).png"
+    },
+    {
+      "god": "Guan Yu",
+      "skinName": "Screenshot (486)",
+      "file": "Screenshot (486).png",
+      "url": "/media/God%20Renders/guan%20yu/Screenshot%20(486).png"
+    },
+    {
+      "god": "Guan Yu",
+      "skinName": "Screenshot (487)",
+      "file": "Screenshot (487).png",
+      "url": "/media/God%20Renders/guan%20yu/Screenshot%20(487).png"
+    },
+    {
+      "god": "Guan Yu",
+      "skinName": "Screenshot (488)",
+      "file": "Screenshot (488).png",
+      "url": "/media/God%20Renders/guan%20yu/Screenshot%20(488).png"
+    },
+    {
+      "god": "Guan Yu",
+      "skinName": "Screenshot (489)",
+      "file": "Screenshot (489).png",
+      "url": "/media/God%20Renders/guan%20yu/Screenshot%20(489).png"
+    },
+    {
+      "god": "Guan Yu",
+      "skinName": "Screenshot (490)",
+      "file": "Screenshot (490).png",
+      "url": "/media/God%20Renders/guan%20yu/Screenshot%20(490).png"
+    },
+    {
+      "god": "Guan Yu",
+      "skinName": "Screenshot (491)",
+      "file": "Screenshot (491).png",
+      "url": "/media/God%20Renders/guan%20yu/Screenshot%20(491).png"
+    },
+    {
+      "god": "Hades",
+      "skinName": "Base",
+      "file": "Screenshot (492).png",
+      "url": "/media/God%20Renders/hades/Screenshot%20(492).png"
+    },
+    {
+      "god": "Hades",
+      "skinName": "Oni King",
+      "file": "Screenshot (493).png",
+      "url": "/media/God%20Renders/hades/Screenshot%20(493).png"
+    },
+    {
+      "god": "Hades",
+      "skinName": "Cosmic Thrawn",
+      "file": "Screenshot (494).png",
+      "url": "/media/God%20Renders/hades/Screenshot%20(494).png"
+    },
+    {
+      "god": "Hades",
+      "skinName": "Shadow",
+      "file": "Screenshot (495).png",
+      "url": "/media/God%20Renders/hades/Screenshot%20(495).png"
+    },
+    {
+      "god": "Hades",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (496).png",
+      "url": "/media/God%20Renders/hades/Screenshot%20(496).png"
+    },
+    {
+      "god": "Hades",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (497).png",
+      "url": "/media/God%20Renders/hades/Screenshot%20(497).png"
+    },
+    {
+      "god": "Hades",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (498).png",
+      "url": "/media/God%20Renders/hades/Screenshot%20(498).png"
+    },
+    {
+      "god": "Hecate",
+      "skinName": "Base",
+      "file": "Screenshot (499).png",
+      "url": "/media/God%20Renders/hecate/Screenshot%20(499).png"
+    },
+    {
+      "god": "Hecate",
+      "skinName": "Lunar Hex",
+      "file": "Screenshot (500).png",
+      "url": "/media/God%20Renders/hecate/Screenshot%20(500).png"
+    },
+    {
+      "god": "Hecate",
+      "skinName": "Maid of Midnight",
+      "file": "Screenshot (501).png",
+      "url": "/media/God%20Renders/hecate/Screenshot%20(501).png"
+    },
+    {
+      "god": "Hecate",
+      "skinName": "Screenshot (502)",
+      "file": "Screenshot (502).png",
+      "url": "/media/God%20Renders/hecate/Screenshot%20(502).png"
+    },
+    {
+      "god": "Hecate",
+      "skinName": "Shadow",
+      "file": "Screenshot (503).png",
+      "url": "/media/God%20Renders/hecate/Screenshot%20(503).png"
+    },
+    {
+      "god": "Hecate",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (504).png",
+      "url": "/media/God%20Renders/hecate/Screenshot%20(504).png"
+    },
+    {
+      "god": "Hecate",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (507).png",
+      "url": "/media/God%20Renders/hecate/Screenshot%20(507).png"
+    },
+    {
+      "god": "Hecate",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (508).png",
+      "url": "/media/God%20Renders/hecate/Screenshot%20(508).png"
+    },
+    {
+      "god": "Hercules",
+      "skinName": "Base",
+      "file": "Screenshot (509).png",
+      "url": "/media/God%20Renders/hercules/Screenshot%20(509).png"
+    },
+    {
+      "god": "Hercules",
+      "skinName": "Screenshot (510)",
+      "file": "Screenshot (510).png",
+      "url": "/media/God%20Renders/hercules/Screenshot%20(510).png"
+    },
+    {
+      "god": "Hercules",
+      "skinName": "Screenshot (511)",
+      "file": "Screenshot (511).png",
+      "url": "/media/God%20Renders/hercules/Screenshot%20(511).png"
+    },
+    {
+      "god": "Hercules",
+      "skinName": "Screenshot (512)",
+      "file": "Screenshot (512).png",
+      "url": "/media/God%20Renders/hercules/Screenshot%20(512).png"
+    },
+    {
+      "god": "Hercules",
+      "skinName": "Shadow",
+      "file": "Screenshot (513).png",
+      "url": "/media/God%20Renders/hercules/Screenshot%20(513).png"
+    },
+    {
+      "god": "Hercules",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (514).png",
+      "url": "/media/God%20Renders/hercules/Screenshot%20(514).png"
+    },
+    {
+      "god": "Hercules",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (515).png",
+      "url": "/media/God%20Renders/hercules/Screenshot%20(515).png"
+    },
+    {
+      "god": "Hercules",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (516).png",
+      "url": "/media/God%20Renders/hercules/Screenshot%20(516).png"
+    },
+    {
+      "god": "Horus",
+      "skinName": "Base",
+      "file": "Screenshot (517).png",
+      "url": "/media/God%20Renders/horus/Screenshot%20(517).png"
+    },
+    {
+      "god": "Horus",
+      "skinName": "Shadow",
+      "file": "Screenshot (518).png",
+      "url": "/media/God%20Renders/horus/Screenshot%20(518).png"
+    },
+    {
+      "god": "Horus",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (519).png",
+      "url": "/media/God%20Renders/horus/Screenshot%20(519).png"
+    },
+    {
+      "god": "Horus",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (520).png",
+      "url": "/media/God%20Renders/horus/Screenshot%20(520).png"
+    },
+    {
+      "god": "Horus",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (521).png",
+      "url": "/media/God%20Renders/horus/Screenshot%20(521).png"
+    },
+    {
+      "god": "Hou Yi",
+      "skinName": "Screenshot (522)",
+      "file": "Screenshot (522).png",
+      "url": "/media/God%20Renders/hou%20yi/Screenshot%20(522).png"
+    },
+    {
+      "god": "Hou Yi",
+      "skinName": "Screenshot (523)",
+      "file": "Screenshot (523).png",
+      "url": "/media/God%20Renders/hou%20yi/Screenshot%20(523).png"
+    },
+    {
+      "god": "Hou Yi",
+      "skinName": "Screenshot (524)",
+      "file": "Screenshot (524).png",
+      "url": "/media/God%20Renders/hou%20yi/Screenshot%20(524).png"
+    },
+    {
+      "god": "Hou Yi",
+      "skinName": "Screenshot (525)",
+      "file": "Screenshot (525).png",
+      "url": "/media/God%20Renders/hou%20yi/Screenshot%20(525).png"
+    },
+    {
+      "god": "Hou Yi",
+      "skinName": "Screenshot (526)",
+      "file": "Screenshot (526).png",
+      "url": "/media/God%20Renders/hou%20yi/Screenshot%20(526).png"
+    },
+    {
+      "god": "Hou Yi",
+      "skinName": "Screenshot (527)",
+      "file": "Screenshot (527).png",
+      "url": "/media/God%20Renders/hou%20yi/Screenshot%20(527).png"
+    },
+    {
+      "god": "Hua Mulan",
+      "skinName": "Base",
+      "file": "Screenshot (528).png",
+      "url": "/media/God%20Renders/hua%20mulan/Screenshot%20(528).png"
+    },
+    {
+      "god": "Hua Mulan",
+      "skinName": "Unmasked Warrior",
+      "file": "Screenshot (529).png",
+      "url": "/media/God%20Renders/hua%20mulan/Screenshot%20(529).png"
+    },
+    {
+      "god": "Hua Mulan",
+      "skinName": "Sentai",
+      "file": "Screenshot (530).png",
+      "url": "/media/God%20Renders/hua%20mulan/Screenshot%20(530).png"
+    },
+    {
+      "god": "Hua Mulan",
+      "skinName": "Prism B",
+      "file": "Screenshot (531).png",
+      "url": "/media/God%20Renders/hua%20mulan/Screenshot%20(531).png"
+    },
+    {
+      "god": "Hua Mulan",
+      "skinName": "Prism C",
+      "file": "Screenshot (532).png",
+      "url": "/media/God%20Renders/hua%20mulan/Screenshot%20(532).png"
+    },
+    {
+      "god": "Hua Mulan",
+      "skinName": "Prism D",
+      "file": "Screenshot (533).png",
+      "url": "/media/God%20Renders/hua%20mulan/Screenshot%20(533).png"
+    },
+    {
+      "god": "Hua Mulan",
+      "skinName": "Prism E",
+      "file": "Screenshot (534).png",
+      "url": "/media/God%20Renders/hua%20mulan/Screenshot%20(534).png"
+    },
+    {
+      "god": "Hua Mulan",
+      "skinName": "High Honor",
+      "file": "Screenshot (535).png",
+      "url": "/media/God%20Renders/hua%20mulan/Screenshot%20(535).png"
+    },
+    {
+      "god": "Hua Mulan",
+      "skinName": "Moolan",
+      "file": "Screenshot (536).png",
+      "url": "/media/God%20Renders/hua%20mulan/Screenshot%20(536).png"
+    },
+    {
+      "god": "Hua Mulan",
+      "skinName": "Prism 1",
+      "file": "Screenshot (537).png",
+      "url": "/media/God%20Renders/hua%20mulan/Screenshot%20(537).png"
+    },
+    {
+      "god": "Hua Mulan",
+      "skinName": "Prism 2",
+      "file": "Screenshot (538).png",
+      "url": "/media/God%20Renders/hua%20mulan/Screenshot%20(538).png"
+    },
+    {
+      "god": "Hua Mulan",
+      "skinName": "Prism 3",
+      "file": "Screenshot (539).png",
+      "url": "/media/God%20Renders/hua%20mulan/Screenshot%20(539).png"
+    },
+    {
+      "god": "Hua Mulan",
+      "skinName": "Shadow",
+      "file": "Screenshot (540).png",
+      "url": "/media/God%20Renders/hua%20mulan/Screenshot%20(540).png"
+    },
+    {
+      "god": "Hua Mulan",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (541).png",
+      "url": "/media/God%20Renders/hua%20mulan/Screenshot%20(541).png"
+    },
+    {
+      "god": "Hua Mulan",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (542).png",
+      "url": "/media/God%20Renders/hua%20mulan/Screenshot%20(542).png"
+    },
+    {
+      "god": "Hua Mulan",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (543).png",
+      "url": "/media/God%20Renders/hua%20mulan/Screenshot%20(543).png"
+    },
+    {
+      "god": "Hun Batz",
+      "skinName": "Base",
+      "file": "Screenshot (544).png",
+      "url": "/media/God%20Renders/hun%20batz/Screenshot%20(544).png"
+    },
+    {
+      "god": "Hun Batz",
+      "skinName": "Shadow Howler",
+      "file": "Screenshot (545).png",
+      "url": "/media/God%20Renders/hun%20batz/Screenshot%20(545).png"
+    },
+    {
+      "god": "Hun Batz",
+      "skinName": "Arcane Ape",
+      "file": "Screenshot (546).png",
+      "url": "/media/God%20Renders/hun%20batz/Screenshot%20(546).png"
+    },
+    {
+      "god": "Hun Batz",
+      "skinName": "Shadow",
+      "file": "Screenshot (547).png",
+      "url": "/media/God%20Renders/hun%20batz/Screenshot%20(547).png"
+    },
+    {
+      "god": "Hun Batz",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (548).png",
+      "url": "/media/God%20Renders/hun%20batz/Screenshot%20(548).png"
+    },
+    {
+      "god": "Hun Batz",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (549).png",
+      "url": "/media/God%20Renders/hun%20batz/Screenshot%20(549).png"
+    },
+    {
+      "god": "Hun Batz",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (550).png",
+      "url": "/media/God%20Renders/hun%20batz/Screenshot%20(550).png"
+    },
+    {
+      "god": "Ishtar",
+      "skinName": "Base",
+      "file": "Screenshot (551).png",
+      "url": "/media/God%20Renders/ishtar/Screenshot%20(551).png"
+    },
+    {
+      "god": "Ishtar",
+      "skinName": "Striking Archon",
+      "file": "Screenshot (552).png",
+      "url": "/media/God%20Renders/ishtar/Screenshot%20(552).png"
+    },
+    {
+      "god": "Ishtar",
+      "skinName": "Prism 2",
+      "file": "Screenshot (553).png",
+      "url": "/media/God%20Renders/ishtar/Screenshot%20(553).png"
+    },
+    {
+      "god": "Ishtar",
+      "skinName": "Prism 3",
+      "file": "Screenshot (554).png",
+      "url": "/media/God%20Renders/ishtar/Screenshot%20(554).png"
+    },
+    {
+      "god": "Ishtar",
+      "skinName": "Prism 4",
+      "file": "Screenshot (555).png",
+      "url": "/media/God%20Renders/ishtar/Screenshot%20(555).png"
+    },
+    {
+      "god": "Ishtar",
+      "skinName": "Shadow",
+      "file": "Screenshot (556).png",
+      "url": "/media/God%20Renders/ishtar/Screenshot%20(556).png"
+    },
+    {
+      "god": "Ishtar",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (557).png",
+      "url": "/media/God%20Renders/ishtar/Screenshot%20(557).png"
+    },
+    {
+      "god": "Ishtar",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (558).png",
+      "url": "/media/God%20Renders/ishtar/Screenshot%20(558).png"
+    },
+    {
+      "god": "Ishtar",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (559).png",
+      "url": "/media/God%20Renders/ishtar/Screenshot%20(559).png"
+    },
+    {
+      "god": "Izanami",
+      "skinName": "Base",
+      "file": "Screenshot (560).png",
+      "url": "/media/God%20Renders/izanami/Screenshot%20(560).png"
+    },
+    {
+      "god": "Izanami",
+      "skinName": "Screenshot (561)",
+      "file": "Screenshot (561).png",
+      "url": "/media/God%20Renders/izanami/Screenshot%20(561).png"
+    },
+    {
+      "god": "Izanami",
+      "skinName": "Screenshot (562)",
+      "file": "Screenshot (562).png",
+      "url": "/media/God%20Renders/izanami/Screenshot%20(562).png"
+    },
+    {
+      "god": "Izanami",
+      "skinName": "Maid to Kill",
+      "file": "Screenshot (563).png",
+      "url": "/media/God%20Renders/izanami/Screenshot%20(563).png"
+    },
+    {
+      "god": "Izanami",
+      "skinName": "Shadow",
+      "file": "Screenshot (564).png",
+      "url": "/media/God%20Renders/izanami/Screenshot%20(564).png"
+    },
+    {
+      "god": "Izanami",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (565).png",
+      "url": "/media/God%20Renders/izanami/Screenshot%20(565).png"
+    },
+    {
+      "god": "Izanami",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (566).png",
+      "url": "/media/God%20Renders/izanami/Screenshot%20(566).png"
+    },
+    {
+      "god": "Izanami",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (567).png",
+      "url": "/media/God%20Renders/izanami/Screenshot%20(567).png"
+    },
+    {
+      "god": "Janus",
+      "skinName": "Base",
+      "file": "Screenshot (568).png",
+      "url": "/media/God%20Renders/janus/Screenshot%20(568).png"
+    },
+    {
+      "god": "Janus",
+      "skinName": "Jandroid",
+      "file": "Screenshot (569).png",
+      "url": "/media/God%20Renders/janus/Screenshot%20(569).png"
+    },
+    {
+      "god": "Janus",
+      "skinName": "Screenshot (570)",
+      "file": "Screenshot (570).png",
+      "url": "/media/God%20Renders/janus/Screenshot%20(570).png"
+    },
+    {
+      "god": "Janus",
+      "skinName": "Screenshot (571)",
+      "file": "Screenshot (571).png",
+      "url": "/media/God%20Renders/janus/Screenshot%20(571).png"
+    },
+    {
+      "god": "Janus",
+      "skinName": "Screenshot (572)",
+      "file": "Screenshot (572).png",
+      "url": "/media/God%20Renders/janus/Screenshot%20(572).png"
+    },
+    {
+      "god": "Janus",
+      "skinName": "Screenshot (573)",
+      "file": "Screenshot (573).png",
+      "url": "/media/God%20Renders/janus/Screenshot%20(573).png"
+    },
+    {
+      "god": "Janus",
+      "skinName": "Shadow",
+      "file": "Screenshot (574).png",
+      "url": "/media/God%20Renders/janus/Screenshot%20(574).png"
+    },
+    {
+      "god": "Janus",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (575).png",
+      "url": "/media/God%20Renders/janus/Screenshot%20(575).png"
+    },
+    {
+      "god": "Janus",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (576).png",
+      "url": "/media/God%20Renders/janus/Screenshot%20(576).png"
+    },
+    {
+      "god": "Janus",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (577).png",
+      "url": "/media/God%20Renders/janus/Screenshot%20(577).png"
+    },
+    {
+      "god": "Jing Wei",
+      "skinName": "Base",
+      "file": "Screenshot (578).png",
+      "url": "/media/God%20Renders/jing%20wei/Screenshot%20(578).png"
+    },
+    {
+      "god": "Jing Wei",
+      "skinName": "Bumble Bee",
+      "file": "Screenshot (579).png",
+      "url": "/media/God%20Renders/jing%20wei/Screenshot%20(579).png"
+    },
+    {
+      "god": "Jing Wei",
+      "skinName": "Prism 1",
+      "file": "Screenshot (580).png",
+      "url": "/media/God%20Renders/jing%20wei/Screenshot%20(580).png"
+    },
+    {
+      "god": "Jing Wei",
+      "skinName": "Prism 2",
+      "file": "Screenshot (581).png",
+      "url": "/media/God%20Renders/jing%20wei/Screenshot%20(581).png"
+    },
+    {
+      "god": "Jing Wei",
+      "skinName": "Prism 3",
+      "file": "Screenshot (582).png",
+      "url": "/media/God%20Renders/jing%20wei/Screenshot%20(582).png"
+    },
+    {
+      "god": "Jing Wei",
+      "skinName": "Pool Party",
+      "file": "Screenshot (583).png",
+      "url": "/media/God%20Renders/jing%20wei/Screenshot%20(583).png"
+    },
+    {
+      "god": "Jing Wei",
+      "skinName": "Dragonheart Rebel",
+      "file": "Screenshot (584).png",
+      "url": "/media/God%20Renders/jing%20wei/Screenshot%20(584).png"
+    },
+    {
+      "god": "Jing Wei",
+      "skinName": "Prism 1",
+      "file": "Screenshot (585).png",
+      "url": "/media/God%20Renders/jing%20wei/Screenshot%20(585).png"
+    },
+    {
+      "god": "Jing Wei",
+      "skinName": "Prism 2",
+      "file": "Screenshot (586).png",
+      "url": "/media/God%20Renders/jing%20wei/Screenshot%20(586).png"
+    },
+    {
+      "god": "Jing Wei",
+      "skinName": "Prism 3",
+      "file": "Screenshot (587).png",
+      "url": "/media/God%20Renders/jing%20wei/Screenshot%20(587).png"
+    },
+    {
+      "god": "Jing Wei",
+      "skinName": "Prism 4",
+      "file": "Screenshot (588).png",
+      "url": "/media/God%20Renders/jing%20wei/Screenshot%20(588).png"
+    },
+    {
+      "god": "Jing Wei",
+      "skinName": "Screenshot (589)",
+      "file": "Screenshot (589).png",
+      "url": "/media/God%20Renders/jing%20wei/Screenshot%20(589).png"
+    },
+    {
+      "god": "Jing Wei",
+      "skinName": "Shadow",
+      "file": "Screenshot (590).png",
+      "url": "/media/God%20Renders/jing%20wei/Screenshot%20(590).png"
+    },
+    {
+      "god": "Jing Wei",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (591).png",
+      "url": "/media/God%20Renders/jing%20wei/Screenshot%20(591).png"
+    },
+    {
+      "god": "Jing Wei",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (592).png",
+      "url": "/media/God%20Renders/jing%20wei/Screenshot%20(592).png"
+    },
+    {
+      "god": "Jing Wei",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (593).png",
+      "url": "/media/God%20Renders/jing%20wei/Screenshot%20(593).png"
+    },
+    {
+      "god": "Jormungandr",
+      "skinName": "Base",
+      "file": "Screenshot (594).png",
+      "url": "/media/God%20Renders/jormungandr/Screenshot%20(594).png"
+    },
+    {
+      "god": "Jormungandr",
+      "skinName": "World Kitty",
+      "file": "Screenshot (595).png",
+      "url": "/media/God%20Renders/jormungandr/Screenshot%20(595).png"
+    },
+    {
+      "god": "Jormungandr",
+      "skinName": "Prism P1",
+      "file": "Screenshot (596).png",
+      "url": "/media/God%20Renders/jormungandr/Screenshot%20(596).png"
+    },
+    {
+      "god": "Jormungandr",
+      "skinName": "Prism P2",
+      "file": "Screenshot (597).png",
+      "url": "/media/God%20Renders/jormungandr/Screenshot%20(597).png"
+    },
+    {
+      "god": "Jormungandr",
+      "skinName": "Prism P3",
+      "file": "Screenshot (598).png",
+      "url": "/media/God%20Renders/jormungandr/Screenshot%20(598).png"
+    },
+    {
+      "god": "Jormungandr",
+      "skinName": "Prism P4",
+      "file": "Screenshot (599).png",
+      "url": "/media/God%20Renders/jormungandr/Screenshot%20(599).png"
+    },
+    {
+      "god": "Jormungandr",
+      "skinName": "Shadow",
+      "file": "Screenshot (600).png",
+      "url": "/media/God%20Renders/jormungandr/Screenshot%20(600).png"
+    },
+    {
+      "god": "Jormungandr",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (601).png",
+      "url": "/media/God%20Renders/jormungandr/Screenshot%20(601).png"
+    },
+    {
+      "god": "Jormungandr",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (602).png",
+      "url": "/media/God%20Renders/jormungandr/Screenshot%20(602).png"
+    },
+    {
+      "god": "Jormungandr",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (603).png",
+      "url": "/media/God%20Renders/jormungandr/Screenshot%20(603).png"
+    },
+    {
+      "god": "Kali",
+      "skinName": "Base",
+      "file": "Screenshot (604).png",
+      "url": "/media/God%20Renders/kali/Screenshot%20(604).png"
+    },
+    {
+      "god": "Kali",
+      "skinName": "Trophy Hunter",
+      "file": "Screenshot (605).png",
+      "url": "/media/God%20Renders/kali/Screenshot%20(605).png"
+    },
+    {
+      "god": "Kali",
+      "skinName": "Prism B",
+      "file": "Screenshot (606).png",
+      "url": "/media/God%20Renders/kali/Screenshot%20(606).png"
+    },
+    {
+      "god": "Kali",
+      "skinName": "Prism C",
+      "file": "Screenshot (607).png",
+      "url": "/media/God%20Renders/kali/Screenshot%20(607).png"
+    },
+    {
+      "god": "Kali",
+      "skinName": "Prism D",
+      "file": "Screenshot (608).png",
+      "url": "/media/God%20Renders/kali/Screenshot%20(608).png"
+    },
+    {
+      "god": "Kali",
+      "skinName": "Ceramic Circuit",
+      "file": "Screenshot (609).png",
+      "url": "/media/God%20Renders/kali/Screenshot%20(609).png"
+    },
+    {
+      "god": "Kali",
+      "skinName": "Shadow",
+      "file": "Screenshot (610).png",
+      "url": "/media/God%20Renders/kali/Screenshot%20(610).png"
+    },
+    {
+      "god": "Kali",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (611).png",
+      "url": "/media/God%20Renders/kali/Screenshot%20(611).png"
+    },
+    {
+      "god": "Kali",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (612).png",
+      "url": "/media/God%20Renders/kali/Screenshot%20(612).png"
+    },
+    {
+      "god": "Kali",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (613).png",
+      "url": "/media/God%20Renders/kali/Screenshot%20(613).png"
+    },
+    {
+      "god": "Khepri",
+      "skinName": "Base",
+      "file": "Screenshot (614).png",
+      "url": "/media/God%20Renders/khepri/Screenshot%20(614).png"
+    },
+    {
+      "god": "Khepri",
+      "skinName": "Chef's Special",
+      "file": "Screenshot (615).png",
+      "url": "/media/God%20Renders/khepri/Screenshot%20(615).png"
+    },
+    {
+      "god": "Khepri",
+      "skinName": "Prism 1",
+      "file": "Screenshot (616).png",
+      "url": "/media/God%20Renders/khepri/Screenshot%20(616).png"
+    },
+    {
+      "god": "Khepri",
+      "skinName": "Prism 2",
+      "file": "Screenshot (617).png",
+      "url": "/media/God%20Renders/khepri/Screenshot%20(617).png"
+    },
+    {
+      "god": "Khepri",
+      "skinName": "Prism 3",
+      "file": "Screenshot (618).png",
+      "url": "/media/God%20Renders/khepri/Screenshot%20(618).png"
+    },
+    {
+      "god": "Khepri",
+      "skinName": "Prism 4",
+      "file": "Screenshot (619).png",
+      "url": "/media/God%20Renders/khepri/Screenshot%20(619).png"
+    },
+    {
+      "god": "Khepri",
+      "skinName": "Living Brain",
+      "file": "Screenshot (620).png",
+      "url": "/media/God%20Renders/khepri/Screenshot%20(620).png"
+    },
+    {
+      "god": "Khepri",
+      "skinName": "Shadow",
+      "file": "Screenshot (621).png",
+      "url": "/media/God%20Renders/khepri/Screenshot%20(621).png"
+    },
+    {
+      "god": "Khepri",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (622).png",
+      "url": "/media/God%20Renders/khepri/Screenshot%20(622).png"
+    },
+    {
+      "god": "Khepri",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (623).png",
+      "url": "/media/God%20Renders/khepri/Screenshot%20(623).png"
+    },
+    {
+      "god": "Khepri",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (624).png",
+      "url": "/media/God%20Renders/khepri/Screenshot%20(624).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Base",
+      "file": "Screenshot (625).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(625).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Void Wyrm",
+      "file": "Screenshot (626).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(626).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Prism 1",
+      "file": "Screenshot (627).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(627).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Screenshot (628)",
+      "file": "Screenshot (628).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(628).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Screenshot (629)",
+      "file": "Screenshot (629).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(629).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Screenshot (630)",
+      "file": "Screenshot (630).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(630).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Prismatic Gust",
+      "file": "Screenshot (631).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(631).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Screenshot (632)",
+      "file": "Screenshot (632).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(632).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Screenshot (633)",
+      "file": "Screenshot (633).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(633).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Screenshot (634)",
+      "file": "Screenshot (634).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(634).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Screenshot (635)",
+      "file": "Screenshot (635).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(635).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Screenshot (636)",
+      "file": "Screenshot (636).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(636).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Screenshot (637)",
+      "file": "Screenshot (637).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(637).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Screenshot (638)",
+      "file": "Screenshot (638).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(638).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Screenshot (639)",
+      "file": "Screenshot (639).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(639).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Screenshot (640)",
+      "file": "Screenshot (640).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(640).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Screenshot (641)",
+      "file": "Screenshot (641).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(641).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Archfiend - Necrotic Tyrant",
+      "file": "Screenshot (642).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(642).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Prism P1",
+      "file": "Screenshot (643).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(643).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Prism P2",
+      "file": "Screenshot (644).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(644).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Prism P3",
+      "file": "Screenshot (645).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(645).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Prism P4",
+      "file": "Screenshot (646).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(646).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Shadow",
+      "file": "Screenshot (647).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(647).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (648).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(648).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (649).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(649).png"
+    },
+    {
+      "god": "Kukulkan",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (650).png",
+      "url": "/media/God%20Renders/kukulkan/Screenshot%20(650).png"
+    },
+    {
+      "god": "Loki",
+      "skinName": "Base",
+      "file": "Screenshot (651).png",
+      "url": "/media/God%20Renders/loki/Screenshot%20(651).png"
+    },
+    {
+      "god": "Loki",
+      "skinName": "Loki Charms",
+      "file": "Screenshot (652).png",
+      "url": "/media/God%20Renders/loki/Screenshot%20(652).png"
+    },
+    {
+      "god": "Loki",
+      "skinName": "Prism 1",
+      "file": "Screenshot (653).png",
+      "url": "/media/God%20Renders/loki/Screenshot%20(653).png"
+    },
+    {
+      "god": "Loki",
+      "skinName": "Prism 2",
+      "file": "Screenshot (654).png",
+      "url": "/media/God%20Renders/loki/Screenshot%20(654).png"
+    },
+    {
+      "god": "Loki",
+      "skinName": "Prism 3",
+      "file": "Screenshot (655).png",
+      "url": "/media/God%20Renders/loki/Screenshot%20(655).png"
+    },
+    {
+      "god": "Loki",
+      "skinName": "Prism 4",
+      "file": "Screenshot (656).png",
+      "url": "/media/God%20Renders/loki/Screenshot%20(656).png"
+    },
+    {
+      "god": "Loki",
+      "skinName": "Joki",
+      "file": "Screenshot (657).png",
+      "url": "/media/God%20Renders/loki/Screenshot%20(657).png"
+    },
+    {
+      "god": "Loki",
+      "skinName": "Eliminator",
+      "file": "Screenshot (658).png",
+      "url": "/media/God%20Renders/loki/Screenshot%20(658).png"
+    },
+    {
+      "god": "Loki",
+      "skinName": "Slasher",
+      "file": "Screenshot (659).png",
+      "url": "/media/God%20Renders/loki/Screenshot%20(659).png"
+    },
+    {
+      "god": "Loki",
+      "skinName": "Shadow",
+      "file": "Screenshot (660).png",
+      "url": "/media/God%20Renders/loki/Screenshot%20(660).png"
+    },
+    {
+      "god": "Loki",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (661).png",
+      "url": "/media/God%20Renders/loki/Screenshot%20(661).png"
+    },
+    {
+      "god": "Loki",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (662).png",
+      "url": "/media/God%20Renders/loki/Screenshot%20(662).png"
+    },
+    {
+      "god": "Loki",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (663).png",
+      "url": "/media/God%20Renders/loki/Screenshot%20(663).png"
+    },
+    {
+      "god": "Medusa",
+      "skinName": "Base",
+      "file": "Screenshot (664).png",
+      "url": "/media/God%20Renders/Medusa/Screenshot%20(664).png"
+    },
+    {
+      "god": "Medusa",
+      "skinName": "Venom Strike",
+      "file": "Screenshot (665).png",
+      "url": "/media/God%20Renders/Medusa/Screenshot%20(665).png"
+    },
+    {
+      "god": "Medusa",
+      "skinName": "Prism 1",
+      "file": "Screenshot (666).png",
+      "url": "/media/God%20Renders/Medusa/Screenshot%20(666).png"
+    },
+    {
+      "god": "Medusa",
+      "skinName": "Prism 2",
+      "file": "Screenshot (667).png",
+      "url": "/media/God%20Renders/Medusa/Screenshot%20(667).png"
+    },
+    {
+      "god": "Medusa",
+      "skinName": "Prism 3",
+      "file": "Screenshot (668).png",
+      "url": "/media/God%20Renders/Medusa/Screenshot%20(668).png"
+    },
+    {
+      "god": "Medusa",
+      "skinName": "Summer Fun",
+      "file": "Screenshot (669).png",
+      "url": "/media/God%20Renders/Medusa/Screenshot%20(669).png"
+    },
+    {
+      "god": "Medusa",
+      "skinName": "Shadow",
+      "file": "Screenshot (670).png",
+      "url": "/media/God%20Renders/Medusa/Screenshot%20(670).png"
+    },
+    {
+      "god": "Medusa",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (671).png",
+      "url": "/media/God%20Renders/Medusa/Screenshot%20(671).png"
+    },
+    {
+      "god": "Medusa",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (672).png",
+      "url": "/media/God%20Renders/Medusa/Screenshot%20(672).png"
+    },
+    {
+      "god": "Medusa",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (673).png",
+      "url": "/media/God%20Renders/Medusa/Screenshot%20(673).png"
+    },
+    {
+      "god": "Mercury",
+      "skinName": "Base",
+      "file": "Screenshot (674).png",
+      "url": "/media/God%20Renders/mercury/Screenshot%20(674).png"
+    },
+    {
+      "god": "Mercury",
+      "skinName": "Screenshot (675)",
+      "file": "Screenshot (675).png",
+      "url": "/media/God%20Renders/mercury/Screenshot%20(675).png"
+    },
+    {
+      "god": "Mercury",
+      "skinName": "Shadow",
+      "file": "Screenshot (676).png",
+      "url": "/media/God%20Renders/mercury/Screenshot%20(676).png"
+    },
+    {
+      "god": "Mercury",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (677).png",
+      "url": "/media/God%20Renders/mercury/Screenshot%20(677).png"
+    },
+    {
+      "god": "Mercury",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (678).png",
+      "url": "/media/God%20Renders/mercury/Screenshot%20(678).png"
+    },
+    {
+      "god": "Mercury",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (679).png",
+      "url": "/media/God%20Renders/mercury/Screenshot%20(679).png"
+    },
+    {
+      "god": "Merlin",
+      "skinName": "Base",
+      "file": "Screenshot (680).png",
+      "url": "/media/God%20Renders/merlin/Screenshot%20(680).png"
+    },
+    {
+      "god": "Merlin",
+      "skinName": "Cosmic Conjurer",
+      "file": "Screenshot (681).png",
+      "url": "/media/God%20Renders/merlin/Screenshot%20(681).png"
+    },
+    {
+      "god": "Merlin",
+      "skinName": "Magic Mischief",
+      "file": "Screenshot (682).png",
+      "url": "/media/God%20Renders/merlin/Screenshot%20(682).png"
+    },
+    {
+      "god": "Merlin",
+      "skinName": "Prism 1",
+      "file": "Screenshot (683).png",
+      "url": "/media/God%20Renders/merlin/Screenshot%20(683).png"
+    },
+    {
+      "god": "Merlin",
+      "skinName": "Prism 2",
+      "file": "Screenshot (684).png",
+      "url": "/media/God%20Renders/merlin/Screenshot%20(684).png"
+    },
+    {
+      "god": "Merlin",
+      "skinName": "Prism 3",
+      "file": "Screenshot (685).png",
+      "url": "/media/God%20Renders/merlin/Screenshot%20(685).png"
+    },
+    {
+      "god": "Merlin",
+      "skinName": "Shadow",
+      "file": "Screenshot (686).png",
+      "url": "/media/God%20Renders/merlin/Screenshot%20(686).png"
+    },
+    {
+      "god": "Merlin",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (687).png",
+      "url": "/media/God%20Renders/merlin/Screenshot%20(687).png"
+    },
+    {
+      "god": "Merlin",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (688).png",
+      "url": "/media/God%20Renders/merlin/Screenshot%20(688).png"
+    },
+    {
+      "god": "Merlin",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (689).png",
+      "url": "/media/God%20Renders/merlin/Screenshot%20(689).png"
+    },
+    {
+      "god": "Mordred",
+      "skinName": "Base",
+      "file": "Screenshot (690).png",
+      "url": "/media/God%20Renders/mordred/Screenshot%20(690).png"
+    },
+    {
+      "god": "Mordred",
+      "skinName": "Grovebound",
+      "file": "Screenshot (691).png",
+      "url": "/media/God%20Renders/mordred/Screenshot%20(691).png"
+    },
+    {
+      "god": "Mordred",
+      "skinName": "Prism 1",
+      "file": "Screenshot (692).png",
+      "url": "/media/God%20Renders/mordred/Screenshot%20(692).png"
+    },
+    {
+      "god": "Mordred",
+      "skinName": "Prism 2",
+      "file": "Screenshot (695).png",
+      "url": "/media/God%20Renders/mordred/Screenshot%20(695).png"
+    },
+    {
+      "god": "Mordred",
+      "skinName": "Prism 3",
+      "file": "Screenshot (696).png",
+      "url": "/media/God%20Renders/mordred/Screenshot%20(696).png"
+    },
+    {
+      "god": "Mordred",
+      "skinName": "Screenshot (697)",
+      "file": "Screenshot (697).png",
+      "url": "/media/God%20Renders/mordred/Screenshot%20(697).png"
+    },
+    {
+      "god": "Mordred",
+      "skinName": "Shadow",
+      "file": "Screenshot (698).png",
+      "url": "/media/God%20Renders/mordred/Screenshot%20(698).png"
+    },
+    {
+      "god": "Mordred",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (699).png",
+      "url": "/media/God%20Renders/mordred/Screenshot%20(699).png"
+    },
+    {
+      "god": "Mordred",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (700).png",
+      "url": "/media/God%20Renders/mordred/Screenshot%20(700).png"
+    },
+    {
+      "god": "Mordred",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (701).png",
+      "url": "/media/God%20Renders/mordred/Screenshot%20(701).png"
+    },
+    {
+      "god": "Morgan Le Fay",
+      "skinName": "Base",
+      "file": "Screenshot (702).png",
+      "url": "/media/God%20Renders/morgan%20le%20fay/Screenshot%20(702).png"
+    },
+    {
+      "god": "Morgan Le Fay",
+      "skinName": "Screenshot (703)",
+      "file": "Screenshot (703).png",
+      "url": "/media/God%20Renders/morgan%20le%20fay/Screenshot%20(703).png"
+    },
+    {
+      "god": "Morgan Le Fay",
+      "skinName": "Shadow",
+      "file": "Screenshot (704).png",
+      "url": "/media/God%20Renders/morgan%20le%20fay/Screenshot%20(704).png"
+    },
+    {
+      "god": "Morgan Le Fay",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (705).png",
+      "url": "/media/God%20Renders/morgan%20le%20fay/Screenshot%20(705).png"
+    },
+    {
+      "god": "Morgan Le Fay",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (706).png",
+      "url": "/media/God%20Renders/morgan%20le%20fay/Screenshot%20(706).png"
+    },
+    {
+      "god": "Morgan Le Fay",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (707).png",
+      "url": "/media/God%20Renders/morgan%20le%20fay/Screenshot%20(707).png"
+    },
+    {
+      "god": "Ne Zha",
+      "skinName": "Base",
+      "file": "Screenshot (708).png",
+      "url": "/media/God%20Renders/ne%20zha/Screenshot%20(708).png"
+    },
+    {
+      "god": "Ne Zha",
+      "skinName": "Fire Lord",
+      "file": "Screenshot (709).png",
+      "url": "/media/God%20Renders/ne%20zha/Screenshot%20(709).png"
+    },
+    {
+      "god": "Ne Zha",
+      "skinName": "Prism 1",
+      "file": "Screenshot (710).png",
+      "url": "/media/God%20Renders/ne%20zha/Screenshot%20(710).png"
+    },
+    {
+      "god": "Ne Zha",
+      "skinName": "Prism 2",
+      "file": "Screenshot (711).png",
+      "url": "/media/God%20Renders/ne%20zha/Screenshot%20(711).png"
+    },
+    {
+      "god": "Ne Zha",
+      "skinName": "Prism 3",
+      "file": "Screenshot (712).png",
+      "url": "/media/God%20Renders/ne%20zha/Screenshot%20(712).png"
+    },
+    {
+      "god": "Ne Zha",
+      "skinName": "Shadow",
+      "file": "Screenshot (713).png",
+      "url": "/media/God%20Renders/ne%20zha/Screenshot%20(713).png"
+    },
+    {
+      "god": "Ne Zha",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (714).png",
+      "url": "/media/God%20Renders/ne%20zha/Screenshot%20(714).png"
+    },
+    {
+      "god": "Ne Zha",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (715).png",
+      "url": "/media/God%20Renders/ne%20zha/Screenshot%20(715).png"
+    },
+    {
+      "god": "Ne Zha",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (716).png",
+      "url": "/media/God%20Renders/ne%20zha/Screenshot%20(716).png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "Base",
+      "file": "Screenshot (717).png",
+      "url": "/media/God%20Renders/neith/Screenshot%20(717).png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "Midnight Glamour",
+      "file": "Screenshot (718).png",
+      "url": "/media/God%20Renders/neith/Screenshot%20(718).png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "Prism 1",
+      "file": "Screenshot (719).png",
+      "url": "/media/God%20Renders/neith/Screenshot%20(719).png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "Prism 2",
+      "file": "Screenshot (720).png",
+      "url": "/media/God%20Renders/neith/Screenshot%20(720).png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "Prism 3",
+      "file": "Screenshot (721).png",
+      "url": "/media/God%20Renders/neith/Screenshot%20(721).png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "Prism 4",
+      "file": "Screenshot (722).png",
+      "url": "/media/God%20Renders/neith/Screenshot%20(722).png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "Screenshot (723)",
+      "file": "Screenshot (723).png",
+      "url": "/media/God%20Renders/neith/Screenshot%20(723).png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "Prism 1",
+      "file": "Screenshot (724).png",
+      "url": "/media/God%20Renders/neith/Screenshot%20(724).png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "Prism 2",
+      "file": "Screenshot (725).png",
+      "url": "/media/God%20Renders/neith/Screenshot%20(725).png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "Prism 3",
+      "file": "Screenshot (726).png",
+      "url": "/media/God%20Renders/neith/Screenshot%20(726).png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "Prism 4",
+      "file": "Screenshot (727).png",
+      "url": "/media/God%20Renders/neith/Screenshot%20(727).png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "Basscannon",
+      "file": "Screenshot (728).png",
+      "url": "/media/God%20Renders/neith/Screenshot%20(728).png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "Screenshot (729)",
+      "file": "Screenshot (729).png",
+      "url": "/media/God%20Renders/neith/Screenshot%20(729).png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "Screenshot (730)",
+      "file": "Screenshot (730).png",
+      "url": "/media/God%20Renders/neith/Screenshot%20(730).png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "Shadow",
+      "file": "Screenshot (731).png",
+      "url": "/media/God%20Renders/neith/Screenshot%20(731).png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (732).png",
+      "url": "/media/God%20Renders/neith/Screenshot%20(732).png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (733).png",
+      "url": "/media/God%20Renders/neith/Screenshot%20(733).png"
+    },
+    {
+      "god": "Neith",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (734).png",
+      "url": "/media/God%20Renders/neith/Screenshot%20(734).png"
+    },
+    {
+      "god": "Nemesis",
+      "skinName": "Base",
+      "file": "Screenshot (735).png",
+      "url": "/media/God%20Renders/nemesis/Screenshot%20(735).png"
+    },
+    {
+      "god": "Nemesis",
+      "skinName": "Screenshot (736)",
+      "file": "Screenshot (736).png",
+      "url": "/media/God%20Renders/nemesis/Screenshot%20(736).png"
+    },
+    {
+      "god": "Nemesis",
+      "skinName": "Prism P1",
+      "file": "Screenshot (737).png",
+      "url": "/media/God%20Renders/nemesis/Screenshot%20(737).png"
+    },
+    {
+      "god": "Nemesis",
+      "skinName": "Prism P2",
+      "file": "Screenshot (738).png",
+      "url": "/media/God%20Renders/nemesis/Screenshot%20(738).png"
+    },
+    {
+      "god": "Nemesis",
+      "skinName": "Prism P3",
+      "file": "Screenshot (739).png",
+      "url": "/media/God%20Renders/nemesis/Screenshot%20(739).png"
+    },
+    {
+      "god": "Nemesis",
+      "skinName": "Prism P4",
+      "file": "Screenshot (740).png",
+      "url": "/media/God%20Renders/nemesis/Screenshot%20(740).png"
+    },
+    {
+      "god": "Nemesis",
+      "skinName": "Screenshot (741)",
+      "file": "Screenshot (741).png",
+      "url": "/media/God%20Renders/nemesis/Screenshot%20(741).png"
+    },
+    {
+      "god": "Nemesis",
+      "skinName": "Shadow",
+      "file": "Screenshot (742).png",
+      "url": "/media/God%20Renders/nemesis/Screenshot%20(742).png"
+    },
+    {
+      "god": "Nemesis",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (743).png",
+      "url": "/media/God%20Renders/nemesis/Screenshot%20(743).png"
+    },
+    {
+      "god": "Nemesis",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (744).png",
+      "url": "/media/God%20Renders/nemesis/Screenshot%20(744).png"
+    },
+    {
+      "god": "Nemesis",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (745).png",
+      "url": "/media/God%20Renders/nemesis/Screenshot%20(745).png"
+    },
+    {
+      "god": "Nu Wa",
+      "skinName": "Base",
+      "file": "Screenshot (746).png",
+      "url": "/media/God%20Renders/nu%20wa/Screenshot%20(746).png"
+    },
+    {
+      "god": "Nu Wa",
+      "skinName": "Mystic Enchantress",
+      "file": "Screenshot (747).png",
+      "url": "/media/God%20Renders/nu%20wa/Screenshot%20(747).png"
+    },
+    {
+      "god": "Nu Wa",
+      "skinName": "Prism 1",
+      "file": "Screenshot (748).png",
+      "url": "/media/God%20Renders/nu%20wa/Screenshot%20(748).png"
+    },
+    {
+      "god": "Nu Wa",
+      "skinName": "Prism 2",
+      "file": "Screenshot (749).png",
+      "url": "/media/God%20Renders/nu%20wa/Screenshot%20(749).png"
+    },
+    {
+      "god": "Nu Wa",
+      "skinName": "Prism 3",
+      "file": "Screenshot (750).png",
+      "url": "/media/God%20Renders/nu%20wa/Screenshot%20(750).png"
+    },
+    {
+      "god": "Nu Wa",
+      "skinName": "Bad Bunny",
+      "file": "Screenshot (751).png",
+      "url": "/media/God%20Renders/nu%20wa/Screenshot%20(751).png"
+    },
+    {
+      "god": "Nu Wa",
+      "skinName": "Dark Supreme",
+      "file": "Screenshot (752).png",
+      "url": "/media/God%20Renders/nu%20wa/Screenshot%20(752).png"
+    },
+    {
+      "god": "Nu Wa",
+      "skinName": "Bunny Babe",
+      "file": "Screenshot (753).png",
+      "url": "/media/God%20Renders/nu%20wa/Screenshot%20(753).png"
+    },
+    {
+      "god": "Nu Wa",
+      "skinName": "Screenshot (754)",
+      "file": "Screenshot (754).png",
+      "url": "/media/God%20Renders/nu%20wa/Screenshot%20(754).png"
+    },
+    {
+      "god": "Nu Wa",
+      "skinName": "Prism B",
+      "file": "Screenshot (755).png",
+      "url": "/media/God%20Renders/nu%20wa/Screenshot%20(755).png"
+    },
+    {
+      "god": "Nu Wa",
+      "skinName": "Prism C",
+      "file": "Screenshot (756).png",
+      "url": "/media/God%20Renders/nu%20wa/Screenshot%20(756).png"
+    },
+    {
+      "god": "Nu Wa",
+      "skinName": "Prism D",
+      "file": "Screenshot (757).png",
+      "url": "/media/God%20Renders/nu%20wa/Screenshot%20(757).png"
+    },
+    {
+      "god": "Nu Wa",
+      "skinName": "Prism E",
+      "file": "Screenshot (758).png",
+      "url": "/media/God%20Renders/nu%20wa/Screenshot%20(758).png"
+    },
+    {
+      "god": "Nu Wa",
+      "skinName": "Bunny Bliss",
+      "file": "Screenshot (759).png",
+      "url": "/media/God%20Renders/nu%20wa/Screenshot%20(759).png"
+    },
+    {
+      "god": "Nu Wa",
+      "skinName": "Shadow",
+      "file": "Screenshot (760).png",
+      "url": "/media/God%20Renders/nu%20wa/Screenshot%20(760).png"
+    },
+    {
+      "god": "Nu Wa",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (761).png",
+      "url": "/media/God%20Renders/nu%20wa/Screenshot%20(761).png"
+    },
+    {
+      "god": "Nu Wa",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (762).png",
+      "url": "/media/God%20Renders/nu%20wa/Screenshot%20(762).png"
+    },
+    {
+      "god": "Nu Wa",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (763).png",
+      "url": "/media/God%20Renders/nu%20wa/Screenshot%20(763).png"
+    },
+    {
+      "god": "Nut",
+      "skinName": "Base",
+      "file": "Screenshot (764).png",
+      "url": "/media/God%20Renders/nut/Screenshot%20(764).png"
+    },
+    {
+      "god": "Nut",
+      "skinName": "Screenshot (765)",
+      "file": "Screenshot (765).png",
+      "url": "/media/God%20Renders/nut/Screenshot%20(765).png"
+    },
+    {
+      "god": "Nut",
+      "skinName": "Screenshot (766)",
+      "file": "Screenshot (766).png",
+      "url": "/media/God%20Renders/nut/Screenshot%20(766).png"
+    },
+    {
+      "god": "Nut",
+      "skinName": "Shadow",
+      "file": "Screenshot (767).png",
+      "url": "/media/God%20Renders/nut/Screenshot%20(767).png"
+    },
+    {
+      "god": "Nut",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (768).png",
+      "url": "/media/God%20Renders/nut/Screenshot%20(768).png"
+    },
+    {
+      "god": "Nut",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (769).png",
+      "url": "/media/God%20Renders/nut/Screenshot%20(769).png"
+    },
+    {
+      "god": "Nut",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (770).png",
+      "url": "/media/God%20Renders/nut/Screenshot%20(770).png"
+    },
+    {
+      "god": "Odin",
+      "skinName": "Base",
+      "file": "Screenshot (771).png",
+      "url": "/media/God%20Renders/odin/Screenshot%20(771).png"
+    },
+    {
+      "god": "Odin",
+      "skinName": "Screenshot (772)",
+      "file": "Screenshot (772).png",
+      "url": "/media/God%20Renders/odin/Screenshot%20(772).png"
+    },
+    {
+      "god": "Odin",
+      "skinName": "Hot Diggity",
+      "file": "Screenshot (773).png",
+      "url": "/media/God%20Renders/odin/Screenshot%20(773).png"
+    },
+    {
+      "god": "Odin",
+      "skinName": "Screenshot (774)",
+      "file": "Screenshot (774).png",
+      "url": "/media/God%20Renders/odin/Screenshot%20(774).png"
+    },
+    {
+      "god": "Odin",
+      "skinName": "Shadow",
+      "file": "Screenshot (775).png",
+      "url": "/media/God%20Renders/odin/Screenshot%20(775).png"
+    },
+    {
+      "god": "Odin",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (776).png",
+      "url": "/media/God%20Renders/odin/Screenshot%20(776).png"
+    },
+    {
+      "god": "Odin",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (777).png",
+      "url": "/media/God%20Renders/odin/Screenshot%20(777).png"
+    },
+    {
+      "god": "Odin",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (778).png",
+      "url": "/media/God%20Renders/odin/Screenshot%20(778).png"
+    },
+    {
+      "god": "Osiris",
+      "skinName": "Base",
+      "file": "Screenshot (779).png",
+      "url": "/media/God%20Renders/osiris/Screenshot%20(779).png"
+    },
+    {
+      "god": "Osiris",
+      "skinName": "Black Knight",
+      "file": "Screenshot (780).png",
+      "url": "/media/God%20Renders/osiris/Screenshot%20(780).png"
+    },
+    {
+      "god": "Osiris",
+      "skinName": "Screenshot (781)",
+      "file": "Screenshot (781).png",
+      "url": "/media/God%20Renders/osiris/Screenshot%20(781).png"
+    },
+    {
+      "god": "Osiris",
+      "skinName": "Screenshot (782)",
+      "file": "Screenshot (782).png",
+      "url": "/media/God%20Renders/osiris/Screenshot%20(782).png"
+    },
+    {
+      "god": "Osiris",
+      "skinName": "Screenshot (783)",
+      "file": "Screenshot (783).png",
+      "url": "/media/God%20Renders/osiris/Screenshot%20(783).png"
+    },
+    {
+      "god": "Osiris",
+      "skinName": "Screenshot (784)",
+      "file": "Screenshot (784).png",
+      "url": "/media/God%20Renders/osiris/Screenshot%20(784).png"
+    },
+    {
+      "god": "Osiris",
+      "skinName": "Noble Knight",
+      "file": "Screenshot (785).png",
+      "url": "/media/God%20Renders/osiris/Screenshot%20(785).png"
+    },
+    {
+      "god": "Osiris",
+      "skinName": "Screenshot (786)",
+      "file": "Screenshot (786).png",
+      "url": "/media/God%20Renders/osiris/Screenshot%20(786).png"
+    },
+    {
+      "god": "Osiris",
+      "skinName": "Screenshot (787)",
+      "file": "Screenshot (787).png",
+      "url": "/media/God%20Renders/osiris/Screenshot%20(787).png"
+    },
+    {
+      "god": "Osiris",
+      "skinName": "Screenshot (788)",
+      "file": "Screenshot (788).png",
+      "url": "/media/God%20Renders/osiris/Screenshot%20(788).png"
+    },
+    {
+      "god": "Osiris",
+      "skinName": "Screenshot (789)",
+      "file": "Screenshot (789).png",
+      "url": "/media/God%20Renders/osiris/Screenshot%20(789).png"
+    },
+    {
+      "god": "Osiris",
+      "skinName": "Shadow",
+      "file": "Screenshot (790).png",
+      "url": "/media/God%20Renders/osiris/Screenshot%20(790).png"
+    },
+    {
+      "god": "Osiris",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (791).png",
+      "url": "/media/God%20Renders/osiris/Screenshot%20(791).png"
+    },
+    {
+      "god": "Osiris",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (792).png",
+      "url": "/media/God%20Renders/osiris/Screenshot%20(792).png"
+    },
+    {
+      "god": "Osiris",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (793).png",
+      "url": "/media/God%20Renders/osiris/Screenshot%20(793).png"
+    },
+    {
+      "god": "Pele",
+      "skinName": "Base",
+      "file": "Screenshot (794).png",
+      "url": "/media/God%20Renders/pele/Screenshot%20(794).png"
+    },
+    {
+      "god": "Pele",
+      "skinName": "Screenshot (795)",
+      "file": "Screenshot (795).png",
+      "url": "/media/God%20Renders/pele/Screenshot%20(795).png"
+    },
+    {
+      "god": "Pele",
+      "skinName": "Ghoul Green",
+      "file": "Screenshot (796).png",
+      "url": "/media/God%20Renders/pele/Screenshot%20(796).png"
+    },
+    {
+      "god": "Pele",
+      "skinName": "Pumpkin",
+      "file": "Screenshot (797).png",
+      "url": "/media/God%20Renders/pele/Screenshot%20(797).png"
+    },
+    {
+      "god": "Pele",
+      "skinName": "Cotton Candy",
+      "file": "Screenshot (798).png",
+      "url": "/media/God%20Renders/pele/Screenshot%20(798).png"
+    },
+    {
+      "god": "Pele",
+      "skinName": "Supernova",
+      "file": "Screenshot (799).png",
+      "url": "/media/God%20Renders/pele/Screenshot%20(799).png"
+    },
+    {
+      "god": "Pele",
+      "skinName": "Moonlit Flame",
+      "file": "Screenshot (800).png",
+      "url": "/media/God%20Renders/pele/Screenshot%20(800).png"
+    },
+    {
+      "god": "Pele",
+      "skinName": "Shadow",
+      "file": "Screenshot (801).png",
+      "url": "/media/God%20Renders/pele/Screenshot%20(801).png"
+    },
+    {
+      "god": "Pele",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (802).png",
+      "url": "/media/God%20Renders/pele/Screenshot%20(802).png"
+    },
+    {
+      "god": "Pele",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (803).png",
+      "url": "/media/God%20Renders/pele/Screenshot%20(803).png"
+    },
+    {
+      "god": "Pele",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (804).png",
+      "url": "/media/God%20Renders/pele/Screenshot%20(804).png"
+    },
+    {
+      "god": "Poseidon",
+      "skinName": "Base",
+      "file": "Screenshot (805).png",
+      "url": "/media/God%20Renders/poseidon/Screenshot%20(805).png"
+    },
+    {
+      "god": "Poseidon",
+      "skinName": "Crimson Kraken",
+      "file": "Screenshot (806).png",
+      "url": "/media/God%20Renders/poseidon/Screenshot%20(806).png"
+    },
+    {
+      "god": "Poseidon",
+      "skinName": "Prism 1",
+      "file": "Screenshot (807).png",
+      "url": "/media/God%20Renders/poseidon/Screenshot%20(807).png"
+    },
+    {
+      "god": "Poseidon",
+      "skinName": "Prism 2",
+      "file": "Screenshot (808).png",
+      "url": "/media/God%20Renders/poseidon/Screenshot%20(808).png"
+    },
+    {
+      "god": "Poseidon",
+      "skinName": "Prism 3",
+      "file": "Screenshot (809).png",
+      "url": "/media/God%20Renders/poseidon/Screenshot%20(809).png"
+    },
+    {
+      "god": "Poseidon",
+      "skinName": "Prism 4",
+      "file": "Screenshot (810).png",
+      "url": "/media/God%20Renders/poseidon/Screenshot%20(810).png"
+    },
+    {
+      "god": "Poseidon",
+      "skinName": "Phantom Seas",
+      "file": "Screenshot (811).png",
+      "url": "/media/God%20Renders/poseidon/Screenshot%20(811).png"
+    },
+    {
+      "god": "Poseidon",
+      "skinName": "Hot Stuff",
+      "file": "Screenshot (812).png",
+      "url": "/media/God%20Renders/poseidon/Screenshot%20(812).png"
+    },
+    {
+      "god": "Poseidon",
+      "skinName": "Shadow",
+      "file": "Screenshot (813).png",
+      "url": "/media/God%20Renders/poseidon/Screenshot%20(813).png"
+    },
+    {
+      "god": "Poseidon",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (814).png",
+      "url": "/media/God%20Renders/poseidon/Screenshot%20(814).png"
+    },
+    {
+      "god": "Poseidon",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (815).png",
+      "url": "/media/God%20Renders/poseidon/Screenshot%20(815).png"
+    },
+    {
+      "god": "Poseidon",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (816).png",
+      "url": "/media/God%20Renders/poseidon/Screenshot%20(816).png"
+    },
+    {
+      "god": "Princess Bari",
+      "skinName": "Base",
+      "file": "Screenshot (817).png",
+      "url": "/media/God%20Renders/princess%20bari/Screenshot%20(817).png"
+    },
+    {
+      "god": "Princess Bari",
+      "skinName": "Spooky Oracle",
+      "file": "Screenshot (818).png",
+      "url": "/media/God%20Renders/princess%20bari/Screenshot%20(818).png"
+    },
+    {
+      "god": "Princess Bari",
+      "skinName": "Shattered Vision",
+      "file": "Screenshot (819).png",
+      "url": "/media/God%20Renders/princess%20bari/Screenshot%20(819).png"
+    },
+    {
+      "god": "Princess Bari",
+      "skinName": "Shadow",
+      "file": "Screenshot (820).png",
+      "url": "/media/God%20Renders/princess%20bari/Screenshot%20(820).png"
+    },
+    {
+      "god": "Princess Bari",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (821).png",
+      "url": "/media/God%20Renders/princess%20bari/Screenshot%20(821).png"
+    },
+    {
+      "god": "Princess Bari",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (822).png",
+      "url": "/media/God%20Renders/princess%20bari/Screenshot%20(822).png"
+    },
+    {
+      "god": "Princess Bari",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (823).png",
+      "url": "/media/God%20Renders/princess%20bari/Screenshot%20(823).png"
+    },
+    {
+      "god": "Ra",
+      "skinName": "Base",
+      "file": "Screenshot (824).png",
+      "url": "/media/God%20Renders/ra/Screenshot%20(824).png"
+    },
+    {
+      "god": "Ra",
+      "skinName": "Screenshot (825)",
+      "file": "Screenshot (825).png",
+      "url": "/media/God%20Renders/ra/Screenshot%20(825).png"
+    },
+    {
+      "god": "Ra",
+      "skinName": "Screenshot (826)",
+      "file": "Screenshot (826).png",
+      "url": "/media/God%20Renders/ra/Screenshot%20(826).png"
+    },
+    {
+      "god": "Ra",
+      "skinName": "Screenshot (827)",
+      "file": "Screenshot (827).png",
+      "url": "/media/God%20Renders/ra/Screenshot%20(827).png"
+    },
+    {
+      "god": "Ra",
+      "skinName": "Screenshot (828)",
+      "file": "Screenshot (828).png",
+      "url": "/media/God%20Renders/ra/Screenshot%20(828).png"
+    },
+    {
+      "god": "Ra",
+      "skinName": "Screenshot (829)",
+      "file": "Screenshot (829).png",
+      "url": "/media/God%20Renders/ra/Screenshot%20(829).png"
+    },
+    {
+      "god": "Ra",
+      "skinName": "Screenshot (830)",
+      "file": "Screenshot (830).png",
+      "url": "/media/God%20Renders/ra/Screenshot%20(830).png"
+    },
+    {
+      "god": "Ra",
+      "skinName": "Vizier Egbert Beakington",
+      "file": "Screenshot (831).png",
+      "url": "/media/God%20Renders/ra/Screenshot%20(831).png"
+    },
+    {
+      "god": "Ra",
+      "skinName": "Plucky",
+      "file": "Screenshot (832).png",
+      "url": "/media/God%20Renders/ra/Screenshot%20(832).png"
+    },
+    {
+      "god": "Ra",
+      "skinName": "Shadow",
+      "file": "Screenshot (833).png",
+      "url": "/media/God%20Renders/ra/Screenshot%20(833).png"
+    },
+    {
+      "god": "Ra",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (834).png",
+      "url": "/media/God%20Renders/ra/Screenshot%20(834).png"
+    },
+    {
+      "god": "Ra",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (835).png",
+      "url": "/media/God%20Renders/ra/Screenshot%20(835).png"
+    },
+    {
+      "god": "Ra",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (836).png",
+      "url": "/media/God%20Renders/ra/Screenshot%20(836).png"
+    },
+    {
+      "god": "Rama",
+      "skinName": "Base",
+      "file": "Screenshot (837).png",
+      "url": "/media/God%20Renders/rama/Screenshot%20(837).png"
+    },
+    {
+      "god": "Rama",
+      "skinName": "Sacred Arrow",
+      "file": "Screenshot (838).png",
+      "url": "/media/God%20Renders/rama/Screenshot%20(838).png"
+    },
+    {
+      "god": "Rama",
+      "skinName": "Prism 1",
+      "file": "Screenshot (839).png",
+      "url": "/media/God%20Renders/rama/Screenshot%20(839).png"
+    },
+    {
+      "god": "Rama",
+      "skinName": "Prism 2",
+      "file": "Screenshot (840).png",
+      "url": "/media/God%20Renders/rama/Screenshot%20(840).png"
+    },
+    {
+      "god": "Rama",
+      "skinName": "Prism 3",
+      "file": "Screenshot (841).png",
+      "url": "/media/God%20Renders/rama/Screenshot%20(841).png"
+    },
+    {
+      "god": "Rama",
+      "skinName": "Prism 4",
+      "file": "Screenshot (842).png",
+      "url": "/media/God%20Renders/rama/Screenshot%20(842).png"
+    },
+    {
+      "god": "Rama",
+      "skinName": "Shadow",
+      "file": "Screenshot (843).png",
+      "url": "/media/God%20Renders/rama/Screenshot%20(843).png"
+    },
+    {
+      "god": "Rama",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (844).png",
+      "url": "/media/God%20Renders/rama/Screenshot%20(844).png"
+    },
+    {
+      "god": "Rama",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (845).png",
+      "url": "/media/God%20Renders/rama/Screenshot%20(845).png"
+    },
+    {
+      "god": "Rama",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (846).png",
+      "url": "/media/God%20Renders/rama/Screenshot%20(846).png"
+    },
+    {
+      "god": "Ratatoskr",
+      "skinName": "Base",
+      "file": "Screenshot (847).png",
+      "url": "/media/God%20Renders/ratatoskr/Screenshot%20(847).png"
+    },
+    {
+      "god": "Ratatoskr",
+      "skinName": "Shadowrunner",
+      "file": "Screenshot (848).png",
+      "url": "/media/God%20Renders/ratatoskr/Screenshot%20(848).png"
+    },
+    {
+      "god": "Ratatoskr",
+      "skinName": "Prism 1",
+      "file": "Screenshot (849).png",
+      "url": "/media/God%20Renders/ratatoskr/Screenshot%20(849).png"
+    },
+    {
+      "god": "Ratatoskr",
+      "skinName": "Prism 2",
+      "file": "Screenshot (850).png",
+      "url": "/media/God%20Renders/ratatoskr/Screenshot%20(850).png"
+    },
+    {
+      "god": "Ratatoskr",
+      "skinName": "Prism 3",
+      "file": "Screenshot (851).png",
+      "url": "/media/God%20Renders/ratatoskr/Screenshot%20(851).png"
+    },
+    {
+      "god": "Ratatoskr",
+      "skinName": "Flurry",
+      "file": "Screenshot (852).png",
+      "url": "/media/God%20Renders/ratatoskr/Screenshot%20(852).png"
+    },
+    {
+      "god": "Ratatoskr",
+      "skinName": "Shadow",
+      "file": "Screenshot (853).png",
+      "url": "/media/God%20Renders/ratatoskr/Screenshot%20(853).png"
+    },
+    {
+      "god": "Ratatoskr",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (854).png",
+      "url": "/media/God%20Renders/ratatoskr/Screenshot%20(854).png"
+    },
+    {
+      "god": "Ratatoskr",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (855).png",
+      "url": "/media/God%20Renders/ratatoskr/Screenshot%20(855).png"
+    },
+    {
+      "god": "Ratatoskr",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (856).png",
+      "url": "/media/God%20Renders/ratatoskr/Screenshot%20(856).png"
+    },
+    {
+      "god": "Scylla",
+      "skinName": "Base",
+      "file": "Screenshot (857).png",
+      "url": "/media/God%20Renders/scylla/Screenshot%20(857).png"
+    },
+    {
+      "god": "Scylla",
+      "skinName": "Snow Day",
+      "file": "Screenshot (858).png",
+      "url": "/media/God%20Renders/scylla/Screenshot%20(858).png"
+    },
+    {
+      "god": "Scylla",
+      "skinName": "Prism P1",
+      "file": "Screenshot (859).png",
+      "url": "/media/God%20Renders/scylla/Screenshot%20(859).png"
+    },
+    {
+      "god": "Scylla",
+      "skinName": "Prism P2",
+      "file": "Screenshot (860).png",
+      "url": "/media/God%20Renders/scylla/Screenshot%20(860).png"
+    },
+    {
+      "god": "Scylla",
+      "skinName": "Prism P3",
+      "file": "Screenshot (861).png",
+      "url": "/media/God%20Renders/scylla/Screenshot%20(861).png"
+    },
+    {
+      "god": "Scylla",
+      "skinName": "Prism P4",
+      "file": "Screenshot (862).png",
+      "url": "/media/God%20Renders/scylla/Screenshot%20(862).png"
+    },
+    {
+      "god": "Scylla",
+      "skinName": "Screenshot (863)",
+      "file": "Screenshot (863).png",
+      "url": "/media/God%20Renders/scylla/Screenshot%20(863).png"
+    },
+    {
+      "god": "Scylla",
+      "skinName": "Possum Punk",
+      "file": "Screenshot (864).png",
+      "url": "/media/God%20Renders/scylla/Screenshot%20(864).png"
+    },
+    {
+      "god": "Scylla",
+      "skinName": "Ruby Rummager",
+      "file": "Screenshot (865).png",
+      "url": "/media/God%20Renders/scylla/Screenshot%20(865).png"
+    },
+    {
+      "god": "Scylla",
+      "skinName": "Pale Pest",
+      "file": "Screenshot (866).png",
+      "url": "/media/God%20Renders/scylla/Screenshot%20(866).png"
+    },
+    {
+      "god": "Scylla",
+      "skinName": "Shadow",
+      "file": "Screenshot (867).png",
+      "url": "/media/God%20Renders/scylla/Screenshot%20(867).png"
+    },
+    {
+      "god": "Scylla",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (868).png",
+      "url": "/media/God%20Renders/scylla/Screenshot%20(868).png"
+    },
+    {
+      "god": "Scylla",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (869).png",
+      "url": "/media/God%20Renders/scylla/Screenshot%20(869).png"
+    },
+    {
+      "god": "Scylla",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (870).png",
+      "url": "/media/God%20Renders/scylla/Screenshot%20(870).png"
+    },
+    {
+      "god": "Sobek",
+      "skinName": "Base",
+      "file": "Screenshot (871).png",
+      "url": "/media/God%20Renders/sobek/Screenshot%20(871).png"
+    },
+    {
+      "god": "Sobek",
+      "skinName": "Soul Piercer",
+      "file": "Screenshot (872).png",
+      "url": "/media/God%20Renders/sobek/Screenshot%20(872).png"
+    },
+    {
+      "god": "Sobek",
+      "skinName": "Soul Piercer - Orca Black",
+      "file": "Screenshot (873).png",
+      "url": "/media/God%20Renders/sobek/Screenshot%20(873).png"
+    },
+    {
+      "god": "Sobek",
+      "skinName": "Radiant",
+      "file": "Screenshot (874).png",
+      "url": "/media/God%20Renders/sobek/Screenshot%20(874).png"
+    },
+    {
+      "god": "Sobek",
+      "skinName": "Soul Piercer - Tubular Teal",
+      "file": "Screenshot (875).png",
+      "url": "/media/God%20Renders/sobek/Screenshot%20(875).png"
+    },
+    {
+      "god": "Sobek",
+      "skinName": "Lil Bites",
+      "file": "Screenshot (876).png",
+      "url": "/media/God%20Renders/sobek/Screenshot%20(876).png"
+    },
+    {
+      "god": "Sobek",
+      "skinName": "Shadow",
+      "file": "Screenshot (877).png",
+      "url": "/media/God%20Renders/sobek/Screenshot%20(877).png"
+    },
+    {
+      "god": "Sobek",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (878).png",
+      "url": "/media/God%20Renders/sobek/Screenshot%20(878).png"
+    },
+    {
+      "god": "Sobek",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (879).png",
+      "url": "/media/God%20Renders/sobek/Screenshot%20(879).png"
+    },
+    {
+      "god": "Sobek",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (880).png",
+      "url": "/media/God%20Renders/sobek/Screenshot%20(880).png"
+    },
+    {
+      "god": "Sol",
+      "skinName": "Base",
+      "file": "Screenshot (881).png",
+      "url": "/media/God%20Renders/sol/Screenshot%20(881).png"
+    },
+    {
+      "god": "Sol",
+      "skinName": "Screenshot (882)",
+      "file": "Screenshot (882).png",
+      "url": "/media/God%20Renders/sol/Screenshot%20(882).png"
+    },
+    {
+      "god": "Sol",
+      "skinName": "Screenshot (883)",
+      "file": "Screenshot (883).png",
+      "url": "/media/God%20Renders/sol/Screenshot%20(883).png"
+    },
+    {
+      "god": "Sol",
+      "skinName": "Screenshot (884)",
+      "file": "Screenshot (884).png",
+      "url": "/media/God%20Renders/sol/Screenshot%20(884).png"
+    },
+    {
+      "god": "Sol",
+      "skinName": "Screenshot (885)",
+      "file": "Screenshot (885).png",
+      "url": "/media/God%20Renders/sol/Screenshot%20(885).png"
+    },
+    {
+      "god": "Sol",
+      "skinName": "Screenshot (886)",
+      "file": "Screenshot (886).png",
+      "url": "/media/God%20Renders/sol/Screenshot%20(886).png"
+    },
+    {
+      "god": "Sol",
+      "skinName": "Screenshot (887)",
+      "file": "Screenshot (887).png",
+      "url": "/media/God%20Renders/sol/Screenshot%20(887).png"
+    },
+    {
+      "god": "Sol",
+      "skinName": "FireFly",
+      "file": "Screenshot (888).png",
+      "url": "/media/God%20Renders/sol/Screenshot%20(888).png"
+    },
+    {
+      "god": "Sol",
+      "skinName": "Screenshot (889)",
+      "file": "Screenshot (889).png",
+      "url": "/media/God%20Renders/sol/Screenshot%20(889).png"
+    },
+    {
+      "god": "Sol",
+      "skinName": "Screenshot (890)",
+      "file": "Screenshot (890).png",
+      "url": "/media/God%20Renders/sol/Screenshot%20(890).png"
+    },
+    {
+      "god": "Sol",
+      "skinName": "Screenshot (891)",
+      "file": "Screenshot (891).png",
+      "url": "/media/God%20Renders/sol/Screenshot%20(891).png"
+    },
+    {
+      "god": "Sol",
+      "skinName": "Screenshot (892)",
+      "file": "Screenshot (892).png",
+      "url": "/media/God%20Renders/sol/Screenshot%20(892).png"
+    },
+    {
+      "god": "Sol",
+      "skinName": "Screenshot (893)",
+      "file": "Screenshot (893).png",
+      "url": "/media/God%20Renders/sol/Screenshot%20(893).png"
+    },
+    {
+      "god": "Sol",
+      "skinName": "Shadow",
+      "file": "Screenshot (894).png",
+      "url": "/media/God%20Renders/sol/Screenshot%20(894).png"
+    },
+    {
+      "god": "Sol",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (895).png",
+      "url": "/media/God%20Renders/sol/Screenshot%20(895).png"
+    },
+    {
+      "god": "Sol",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (896).png",
+      "url": "/media/God%20Renders/sol/Screenshot%20(896).png"
+    },
+    {
+      "god": "Sol",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (897).png",
+      "url": "/media/God%20Renders/sol/Screenshot%20(897).png"
+    },
+    {
+      "god": "Susano",
+      "skinName": "Base",
+      "file": "Screenshot (909).png",
+      "url": "/media/God%20Renders/susano/Screenshot%20(909).png"
+    },
+    {
+      "god": "Susano",
+      "skinName": "Steel Samurai",
+      "file": "Screenshot (910).png",
+      "url": "/media/God%20Renders/susano/Screenshot%20(910).png"
+    },
+    {
+      "god": "Susano",
+      "skinName": "Screenshot (911)",
+      "file": "Screenshot (911).png",
+      "url": "/media/God%20Renders/susano/Screenshot%20(911).png"
+    },
+    {
+      "god": "Susano",
+      "skinName": "Prism 1",
+      "file": "Screenshot (912).png",
+      "url": "/media/God%20Renders/susano/Screenshot%20(912).png"
+    },
+    {
+      "god": "Susano",
+      "skinName": "Prism 2",
+      "file": "Screenshot (913).png",
+      "url": "/media/God%20Renders/susano/Screenshot%20(913).png"
+    },
+    {
+      "god": "Susano",
+      "skinName": "Prism 3",
+      "file": "Screenshot (914).png",
+      "url": "/media/God%20Renders/susano/Screenshot%20(914).png"
+    },
+    {
+      "god": "Susano",
+      "skinName": "Onyx Blade",
+      "file": "Screenshot (915).png",
+      "url": "/media/God%20Renders/susano/Screenshot%20(915).png"
+    },
+    {
+      "god": "Susano",
+      "skinName": "Shadow",
+      "file": "Screenshot (916).png",
+      "url": "/media/God%20Renders/susano/Screenshot%20(916).png"
+    },
+    {
+      "god": "Susano",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (917).png",
+      "url": "/media/God%20Renders/susano/Screenshot%20(917).png"
+    },
+    {
+      "god": "Susano",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (918).png",
+      "url": "/media/God%20Renders/susano/Screenshot%20(918).png"
+    },
+    {
+      "god": "Susano",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (919).png",
+      "url": "/media/God%20Renders/susano/Screenshot%20(919).png"
+    },
+    {
+      "god": "Sylvanus",
+      "skinName": "Base",
+      "file": "Screenshot (920).png",
+      "url": "/media/God%20Renders/sylvanus/Screenshot%20(920).png"
+    },
+    {
+      "god": "Sylvanus",
+      "skinName": "Harvest Keeper",
+      "file": "Screenshot (921).png",
+      "url": "/media/God%20Renders/sylvanus/Screenshot%20(921).png"
+    },
+    {
+      "god": "Sylvanus",
+      "skinName": "Highnoon",
+      "file": "Screenshot (922).png",
+      "url": "/media/God%20Renders/sylvanus/Screenshot%20(922).png"
+    },
+    {
+      "god": "Sylvanus",
+      "skinName": "Screenshot (923)",
+      "file": "Screenshot (923).png",
+      "url": "/media/God%20Renders/sylvanus/Screenshot%20(923).png"
+    },
+    {
+      "god": "Sylvanus",
+      "skinName": "Screenshot (924)",
+      "file": "Screenshot (924).png",
+      "url": "/media/God%20Renders/sylvanus/Screenshot%20(924).png"
+    },
+    {
+      "god": "Sylvanus",
+      "skinName": "Screenshot (925)",
+      "file": "Screenshot (925).png",
+      "url": "/media/God%20Renders/sylvanus/Screenshot%20(925).png"
+    },
+    {
+      "god": "Sylvanus",
+      "skinName": "Shadow",
+      "file": "Screenshot (926).png",
+      "url": "/media/God%20Renders/sylvanus/Screenshot%20(926).png"
+    },
+    {
+      "god": "Sylvanus",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (927).png",
+      "url": "/media/God%20Renders/sylvanus/Screenshot%20(927).png"
+    },
+    {
+      "god": "Sylvanus",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (928).png",
+      "url": "/media/God%20Renders/sylvanus/Screenshot%20(928).png"
+    },
+    {
+      "god": "Sylvanus",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (929).png",
+      "url": "/media/God%20Renders/sylvanus/Screenshot%20(929).png"
+    },
+    {
+      "god": "Thanatos",
+      "skinName": "Base",
+      "file": "Screenshot (930).png",
+      "url": "/media/God%20Renders/thanatos/Screenshot%20(930).png"
+    },
+    {
+      "god": "Thanatos",
+      "skinName": "Screenshot (931)",
+      "file": "Screenshot (931).png",
+      "url": "/media/God%20Renders/thanatos/Screenshot%20(931).png"
+    },
+    {
+      "god": "Thanatos",
+      "skinName": "Screenshot (932)",
+      "file": "Screenshot (932).png",
+      "url": "/media/God%20Renders/thanatos/Screenshot%20(932).png"
+    },
+    {
+      "god": "Thanatos",
+      "skinName": "Screenshot (933)",
+      "file": "Screenshot (933).png",
+      "url": "/media/God%20Renders/thanatos/Screenshot%20(933).png"
+    },
+    {
+      "god": "Thanatos",
+      "skinName": "Screenshot (934)",
+      "file": "Screenshot (934).png",
+      "url": "/media/God%20Renders/thanatos/Screenshot%20(934).png"
+    },
+    {
+      "god": "Thanatos",
+      "skinName": "Screenshot (935)",
+      "file": "Screenshot (935).png",
+      "url": "/media/God%20Renders/thanatos/Screenshot%20(935).png"
+    },
+    {
+      "god": "Thanatos",
+      "skinName": "Screenshot (936)",
+      "file": "Screenshot (936).png",
+      "url": "/media/God%20Renders/thanatos/Screenshot%20(936).png"
+    },
+    {
+      "god": "Thanatos",
+      "skinName": "Shadow",
+      "file": "Screenshot (937).png",
+      "url": "/media/God%20Renders/thanatos/Screenshot%20(937).png"
+    },
+    {
+      "god": "Thanatos",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (938).png",
+      "url": "/media/God%20Renders/thanatos/Screenshot%20(938).png"
+    },
+    {
+      "god": "Thanatos",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (939).png",
+      "url": "/media/God%20Renders/thanatos/Screenshot%20(939).png"
+    },
+    {
+      "god": "Thanatos",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (940).png",
+      "url": "/media/God%20Renders/thanatos/Screenshot%20(940).png"
+    },
+    {
+      "god": "The Morrigan",
+      "skinName": "Base",
+      "file": "Screenshot (941).png",
+      "url": "/media/God%20Renders/the%20morrigan/Screenshot%20(941).png"
+    },
+    {
+      "god": "The Morrigan",
+      "skinName": "Screenshot (942)",
+      "file": "Screenshot (942).png",
+      "url": "/media/God%20Renders/the%20morrigan/Screenshot%20(942).png"
+    },
+    {
+      "god": "The Morrigan",
+      "skinName": "Shadow",
+      "file": "Screenshot (943).png",
+      "url": "/media/God%20Renders/the%20morrigan/Screenshot%20(943).png"
+    },
+    {
+      "god": "The Morrigan",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (944).png",
+      "url": "/media/God%20Renders/the%20morrigan/Screenshot%20(944).png"
+    },
+    {
+      "god": "The Morrigan",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (945).png",
+      "url": "/media/God%20Renders/the%20morrigan/Screenshot%20(945).png"
+    },
+    {
+      "god": "The Morrigan",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (946).png",
+      "url": "/media/God%20Renders/the%20morrigan/Screenshot%20(946).png"
+    },
+    {
+      "god": "Thor",
+      "skinName": "Base",
+      "file": "Screenshot (947).png",
+      "url": "/media/God%20Renders/thor/Screenshot%20(947).png"
+    },
+    {
+      "god": "Thor",
+      "skinName": "Hellforged",
+      "file": "Screenshot (948).png",
+      "url": "/media/God%20Renders/thor/Screenshot%20(948).png"
+    },
+    {
+      "god": "Thor",
+      "skinName": "Screenshot (949)",
+      "file": "Screenshot (949).png",
+      "url": "/media/God%20Renders/thor/Screenshot%20(949).png"
+    },
+    {
+      "god": "Thor",
+      "skinName": "Thorge Washington",
+      "file": "Screenshot (950).png",
+      "url": "/media/God%20Renders/thor/Screenshot%20(950).png"
+    },
+    {
+      "god": "Thor",
+      "skinName": "Shadow",
+      "file": "Screenshot (951).png",
+      "url": "/media/God%20Renders/thor/Screenshot%20(951).png"
+    },
+    {
+      "god": "Thor",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (952).png",
+      "url": "/media/God%20Renders/thor/Screenshot%20(952).png"
+    },
+    {
+      "god": "Thor",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (953).png",
+      "url": "/media/God%20Renders/thor/Screenshot%20(953).png"
+    },
+    {
+      "god": "Thor",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (954).png",
+      "url": "/media/God%20Renders/thor/Screenshot%20(954).png"
+    },
+    {
+      "god": "Tsukuyomi",
+      "skinName": "Base",
+      "file": "Screenshot (955).png",
+      "url": "/media/God%20Renders/tsukuyomi/Screenshot%20(955).png"
+    },
+    {
+      "god": "Tsukuyomi",
+      "skinName": "Silver Bullet",
+      "file": "Screenshot (956).png",
+      "url": "/media/God%20Renders/tsukuyomi/Screenshot%20(956).png"
+    },
+    {
+      "god": "Tsukuyomi",
+      "skinName": "Screenshot (957)",
+      "file": "Screenshot (957).png",
+      "url": "/media/God%20Renders/tsukuyomi/Screenshot%20(957).png"
+    },
+    {
+      "god": "Tsukuyomi",
+      "skinName": "Screenshot (958)",
+      "file": "Screenshot (958).png",
+      "url": "/media/God%20Renders/tsukuyomi/Screenshot%20(958).png"
+    },
+    {
+      "god": "Tsukuyomi",
+      "skinName": "Screenshot (959)",
+      "file": "Screenshot (959).png",
+      "url": "/media/God%20Renders/tsukuyomi/Screenshot%20(959).png"
+    },
+    {
+      "god": "Tsukuyomi",
+      "skinName": "Screenshot (960)",
+      "file": "Screenshot (960).png",
+      "url": "/media/God%20Renders/tsukuyomi/Screenshot%20(960).png"
+    },
+    {
+      "god": "Tsukuyomi",
+      "skinName": "Shadow",
+      "file": "Screenshot (961).png",
+      "url": "/media/God%20Renders/tsukuyomi/Screenshot%20(961).png"
+    },
+    {
+      "god": "Tsukuyomi",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (962).png",
+      "url": "/media/God%20Renders/tsukuyomi/Screenshot%20(962).png"
+    },
+    {
+      "god": "Tsukuyomi",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (963).png",
+      "url": "/media/God%20Renders/tsukuyomi/Screenshot%20(963).png"
+    },
+    {
+      "god": "Tsukuyomi",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (964).png",
+      "url": "/media/God%20Renders/tsukuyomi/Screenshot%20(964).png"
+    },
+    {
+      "god": "Ullr",
+      "skinName": "Base",
+      "file": "Screenshot (965).png",
+      "url": "/media/God%20Renders/ullr/Screenshot%20(965).png"
+    },
+    {
+      "god": "Ullr",
+      "skinName": "Screenshot (966)",
+      "file": "Screenshot (966).png",
+      "url": "/media/God%20Renders/ullr/Screenshot%20(966).png"
+    },
+    {
+      "god": "Ullr",
+      "skinName": "Screenshot (967)",
+      "file": "Screenshot (967).png",
+      "url": "/media/God%20Renders/ullr/Screenshot%20(967).png"
+    },
+    {
+      "god": "Ullr",
+      "skinName": "Screenshot (968)",
+      "file": "Screenshot (968).png",
+      "url": "/media/God%20Renders/ullr/Screenshot%20(968).png"
+    },
+    {
+      "god": "Ullr",
+      "skinName": "Screenshot (969)",
+      "file": "Screenshot (969).png",
+      "url": "/media/God%20Renders/ullr/Screenshot%20(969).png"
+    },
+    {
+      "god": "Ullr",
+      "skinName": "Screenshot (970)",
+      "file": "Screenshot (970).png",
+      "url": "/media/God%20Renders/ullr/Screenshot%20(970).png"
+    },
+    {
+      "god": "Ullr",
+      "skinName": "Shadow",
+      "file": "Screenshot (971).png",
+      "url": "/media/God%20Renders/ullr/Screenshot%20(971).png"
+    },
+    {
+      "god": "Ullr",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (972).png",
+      "url": "/media/God%20Renders/ullr/Screenshot%20(972).png"
+    },
+    {
+      "god": "Ullr",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (973).png",
+      "url": "/media/God%20Renders/ullr/Screenshot%20(973).png"
+    },
+    {
+      "god": "Ullr",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (974).png",
+      "url": "/media/God%20Renders/ullr/Screenshot%20(974).png"
+    },
+    {
+      "god": "Vulcan",
+      "skinName": "Base",
+      "file": "Screenshot (975).png",
+      "url": "/media/God%20Renders/vulcan/Screenshot%20(975).png"
+    },
+    {
+      "god": "Vulcan",
+      "skinName": "Chef Vulcan",
+      "file": "Screenshot (976).png",
+      "url": "/media/God%20Renders/vulcan/Screenshot%20(976).png"
+    },
+    {
+      "god": "Vulcan",
+      "skinName": "Prism 1",
+      "file": "Screenshot (977).png",
+      "url": "/media/God%20Renders/vulcan/Screenshot%20(977).png"
+    },
+    {
+      "god": "Vulcan",
+      "skinName": "Prism 2",
+      "file": "Screenshot (978).png",
+      "url": "/media/God%20Renders/vulcan/Screenshot%20(978).png"
+    },
+    {
+      "god": "Vulcan",
+      "skinName": "Prism 4",
+      "file": "Screenshot (979).png",
+      "url": "/media/God%20Renders/vulcan/Screenshot%20(979).png"
+    },
+    {
+      "god": "Vulcan",
+      "skinName": "Screenshot (980)",
+      "file": "Screenshot (980).png",
+      "url": "/media/God%20Renders/vulcan/Screenshot%20(980).png"
+    },
+    {
+      "god": "Vulcan",
+      "skinName": "Emberlord - Ashen Ascendant",
+      "file": "Screenshot (981).png",
+      "url": "/media/God%20Renders/vulcan/Screenshot%20(981).png"
+    },
+    {
+      "god": "Vulcan",
+      "skinName": "Emberlord - Pyreforged Tyrant",
+      "file": "Screenshot (982).png",
+      "url": "/media/God%20Renders/vulcan/Screenshot%20(982).png"
+    },
+    {
+      "god": "Vulcan",
+      "skinName": "Emberlord - Inferno Incarnate",
+      "file": "Screenshot (983).png",
+      "url": "/media/God%20Renders/vulcan/Screenshot%20(983).png"
+    },
+    {
+      "god": "Vulcan",
+      "skinName": "Prism D",
+      "file": "Screenshot (984).png",
+      "url": "/media/God%20Renders/vulcan/Screenshot%20(984).png"
+    },
+    {
+      "god": "Vulcan",
+      "skinName": "Prism A",
+      "file": "Screenshot (985).png",
+      "url": "/media/God%20Renders/vulcan/Screenshot%20(985).png"
+    },
+    {
+      "god": "Vulcan",
+      "skinName": "Prism B",
+      "file": "Screenshot (986).png",
+      "url": "/media/God%20Renders/vulcan/Screenshot%20(986).png"
+    },
+    {
+      "god": "Vulcan",
+      "skinName": "Prism C",
+      "file": "Screenshot (987).png",
+      "url": "/media/God%20Renders/vulcan/Screenshot%20(987).png"
+    },
+    {
+      "god": "Vulcan",
+      "skinName": "Shadow",
+      "file": "Screenshot (988).png",
+      "url": "/media/God%20Renders/vulcan/Screenshot%20(988).png"
+    },
+    {
+      "god": "Vulcan",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (989).png",
+      "url": "/media/God%20Renders/vulcan/Screenshot%20(989).png"
+    },
+    {
+      "god": "Vulcan",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (990).png",
+      "url": "/media/God%20Renders/vulcan/Screenshot%20(990).png"
+    },
+    {
+      "god": "Vulcan",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (991).png",
+      "url": "/media/God%20Renders/vulcan/Screenshot%20(991).png"
+    },
+    {
+      "god": "Xbalanque",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (1000).png",
+      "url": "/media/God%20Renders/xbalanque/Screenshot%20(1000).png"
+    },
+    {
+      "god": "Xbalanque",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (1001).png",
+      "url": "/media/God%20Renders/xbalanque/Screenshot%20(1001).png"
+    },
+    {
+      "god": "Xbalanque",
+      "skinName": "Base",
+      "file": "Screenshot (992).png",
+      "url": "/media/God%20Renders/xbalanque/Screenshot%20(992).png"
+    },
+    {
+      "god": "Xbalanque",
+      "skinName": "Darkest Knight",
+      "file": "Screenshot (993).png",
+      "url": "/media/God%20Renders/xbalanque/Screenshot%20(993).png"
+    },
+    {
+      "god": "Xbalanque",
+      "skinName": "Screenshot (994)",
+      "file": "Screenshot (994).png",
+      "url": "/media/God%20Renders/xbalanque/Screenshot%20(994).png"
+    },
+    {
+      "god": "Xbalanque",
+      "skinName": "Screenshot (995)",
+      "file": "Screenshot (995).png",
+      "url": "/media/God%20Renders/xbalanque/Screenshot%20(995).png"
+    },
+    {
+      "god": "Xbalanque",
+      "skinName": "Screenshot (996)",
+      "file": "Screenshot (996).png",
+      "url": "/media/God%20Renders/xbalanque/Screenshot%20(996).png"
+    },
+    {
+      "god": "Xbalanque",
+      "skinName": "Screenshot (997)",
+      "file": "Screenshot (997).png",
+      "url": "/media/God%20Renders/xbalanque/Screenshot%20(997).png"
+    },
+    {
+      "god": "Xbalanque",
+      "skinName": "Shadow",
+      "file": "Screenshot (998).png",
+      "url": "/media/God%20Renders/xbalanque/Screenshot%20(998).png"
+    },
+    {
+      "god": "Xbalanque",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (999).png",
+      "url": "/media/God%20Renders/xbalanque/Screenshot%20(999).png"
+    },
+    {
+      "god": "Yemoja",
+      "skinName": "Base",
+      "file": "Screenshot (1002).png",
+      "url": "/media/God%20Renders/yemoja/Screenshot%20(1002).png"
+    },
+    {
+      "god": "Yemoja",
+      "skinName": "Mastermind",
+      "file": "Screenshot (1003).png",
+      "url": "/media/God%20Renders/yemoja/Screenshot%20(1003).png"
+    },
+    {
+      "god": "Yemoja",
+      "skinName": "Firewall",
+      "file": "Screenshot (1004).png",
+      "url": "/media/God%20Renders/yemoja/Screenshot%20(1004).png"
+    },
+    {
+      "god": "Yemoja",
+      "skinName": "Circuit",
+      "file": "Screenshot (1005).png",
+      "url": "/media/God%20Renders/yemoja/Screenshot%20(1005).png"
+    },
+    {
+      "god": "Yemoja",
+      "skinName": "Matrix",
+      "file": "Screenshot (1006).png",
+      "url": "/media/God%20Renders/yemoja/Screenshot%20(1006).png"
+    },
+    {
+      "god": "Yemoja",
+      "skinName": "Dawn Spirit",
+      "file": "Screenshot (1007).png",
+      "url": "/media/God%20Renders/yemoja/Screenshot%20(1007).png"
+    },
+    {
+      "god": "Yemoja",
+      "skinName": "Hive Mother",
+      "file": "Screenshot (1008).png",
+      "url": "/media/God%20Renders/yemoja/Screenshot%20(1008).png"
+    },
+    {
+      "god": "Yemoja",
+      "skinName": "Shadow",
+      "file": "Screenshot (1009).png",
+      "url": "/media/God%20Renders/yemoja/Screenshot%20(1009).png"
+    },
+    {
+      "god": "Yemoja",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (1010).png",
+      "url": "/media/God%20Renders/yemoja/Screenshot%20(1010).png"
+    },
+    {
+      "god": "Yemoja",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (1011).png",
+      "url": "/media/God%20Renders/yemoja/Screenshot%20(1011).png"
+    },
+    {
+      "god": "Yemoja",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (1012).png",
+      "url": "/media/God%20Renders/yemoja/Screenshot%20(1012).png"
+    },
+    {
+      "god": "Ymir",
+      "skinName": "Base",
+      "file": "Screenshot (1013).png",
+      "url": "/media/God%20Renders/ymir/Screenshot%20(1013).png"
+    },
+    {
+      "god": "Ymir",
+      "skinName": "Screenshot (1014)",
+      "file": "Screenshot (1014).png",
+      "url": "/media/God%20Renders/ymir/Screenshot%20(1014).png"
+    },
+    {
+      "god": "Ymir",
+      "skinName": "Screenshot (1015)",
+      "file": "Screenshot (1015).png",
+      "url": "/media/God%20Renders/ymir/Screenshot%20(1015).png"
+    },
+    {
+      "god": "Ymir",
+      "skinName": "Screenshot (1016)",
+      "file": "Screenshot (1016).png",
+      "url": "/media/God%20Renders/ymir/Screenshot%20(1016).png"
+    },
+    {
+      "god": "Ymir",
+      "skinName": "Screenshot (1017)",
+      "file": "Screenshot (1017).png",
+      "url": "/media/God%20Renders/ymir/Screenshot%20(1017).png"
+    },
+    {
+      "god": "Ymir",
+      "skinName": "Cacodemon 2",
+      "file": "Screenshot (1018).png",
+      "url": "/media/God%20Renders/ymir/Screenshot%20(1018).png"
+    },
+    {
+      "god": "Ymir",
+      "skinName": "Shadow",
+      "file": "Screenshot (1019).png",
+      "url": "/media/God%20Renders/ymir/Screenshot%20(1019).png"
+    },
+    {
+      "god": "Ymir",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (1020).png",
+      "url": "/media/God%20Renders/ymir/Screenshot%20(1020).png"
+    },
+    {
+      "god": "Ymir",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (1021).png",
+      "url": "/media/God%20Renders/ymir/Screenshot%20(1021).png"
+    },
+    {
+      "god": "Ymir",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (1022).png",
+      "url": "/media/God%20Renders/ymir/Screenshot%20(1022).png"
+    },
+    {
+      "god": "Zeus",
+      "skinName": "Base",
+      "file": "Screenshot (1023).png",
+      "url": "/media/God%20Renders/zeus/Screenshot%20(1023).png"
+    },
+    {
+      "god": "Zeus",
+      "skinName": "Dark Lord",
+      "file": "Screenshot (1024).png",
+      "url": "/media/God%20Renders/zeus/Screenshot%20(1024).png"
+    },
+    {
+      "god": "Zeus",
+      "skinName": "Prism 1",
+      "file": "Screenshot (1025).png",
+      "url": "/media/God%20Renders/zeus/Screenshot%20(1025).png"
+    },
+    {
+      "god": "Zeus",
+      "skinName": "Prism 2",
+      "file": "Screenshot (1026).png",
+      "url": "/media/God%20Renders/zeus/Screenshot%20(1026).png"
+    },
+    {
+      "god": "Zeus",
+      "skinName": "Prism 3",
+      "file": "Screenshot (1027).png",
+      "url": "/media/God%20Renders/zeus/Screenshot%20(1027).png"
+    },
+    {
+      "god": "Zeus",
+      "skinName": "Heaven's Rave",
+      "file": "Screenshot (1028).png",
+      "url": "/media/God%20Renders/zeus/Screenshot%20(1028).png"
+    },
+    {
+      "god": "Zeus",
+      "skinName": "Screenshot (1029)",
+      "file": "Screenshot (1029).png",
+      "url": "/media/God%20Renders/zeus/Screenshot%20(1029).png"
+    },
+    {
+      "god": "Zeus",
+      "skinName": "Screenshot (1030)",
+      "file": "Screenshot (1030).png",
+      "url": "/media/God%20Renders/zeus/Screenshot%20(1030).png"
+    },
+    {
+      "god": "Zeus",
+      "skinName": "Screenshot (1031)",
+      "file": "Screenshot (1031).png",
+      "url": "/media/God%20Renders/zeus/Screenshot%20(1031).png"
+    },
+    {
+      "god": "Zeus",
+      "skinName": "Screenshot (1032)",
+      "file": "Screenshot (1032).png",
+      "url": "/media/God%20Renders/zeus/Screenshot%20(1032).png"
+    },
+    {
+      "god": "Zeus",
+      "skinName": "Shadow",
+      "file": "Screenshot (1033).png",
+      "url": "/media/God%20Renders/zeus/Screenshot%20(1033).png"
+    },
+    {
+      "god": "Zeus",
+      "skinName": "Mastery Onyx",
+      "file": "Screenshot (1034).png",
+      "url": "/media/God%20Renders/zeus/Screenshot%20(1034).png"
+    },
+    {
+      "god": "Zeus",
+      "skinName": "Mastery Opal",
+      "file": "Screenshot (1035).png",
+      "url": "/media/God%20Renders/zeus/Screenshot%20(1035).png"
+    },
+    {
+      "god": "Zeus",
+      "skinName": "Mastery Radiant",
+      "file": "Screenshot (1036).png",
+      "url": "/media/God%20Renders/zeus/Screenshot%20(1036).png"
     }
   ],
   "abilitySounds": [

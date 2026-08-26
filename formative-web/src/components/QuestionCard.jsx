@@ -23,7 +23,7 @@ import {
 } from '../lib/matching';
 import CategorizeBoard from './CategorizeBoard';
 import { parseCategorize } from '../lib/categorize';
-import { remixQuestionFromA, fillAnswersFromPrompt, makeRandomQuestionByStyle, RANDOM_QUESTION_STYLES } from '../lib/triviaRemix';
+import { remixQuestionFromA, fillAnswersFromPrompt, makeRandomQuestionByStyle, RANDOM_QUESTION_STYLES, RANDOM_QUESTION_QUICK } from '../lib/triviaRemix';
 import { classifyMediaUrl } from '../lib/mediaUrl';
 import { MAX_QUESTION_VARIANTS, variantLetter } from '../lib/triviaVariants';
 import {
@@ -74,8 +74,15 @@ function AttachFileButton({ onChange, accept = 'image/*,audio/*,video/*' }) {
 function RandomQuestionPicker({ onPick, fillBlank }) {
   const [open, setOpen] = useState(false);
   const styles = fillBlank
-    ? [{ id: 'aspect_blank', label: 'Aspect fill-in-blank', blurb: 'God Aspect of ____' }]
+    ? [{ id: 'aspect_blank', label: 'Aspect fill-in-blank', blurb: 'God Aspect of ____', group: 'Gods' }]
     : RANDOM_QUESTION_STYLES;
+  const byGroup = styles.reduce((acc, s) => {
+    const g = s.group || 'Other';
+    if (!acc[g]) acc[g] = [];
+    acc[g].push(s);
+    return acc;
+  }, {});
+  const quick = (fillBlank ? styles : RANDOM_QUESTION_QUICK.map((id) => styles.find((s) => s.id === id)).filter(Boolean));
 
   return (
     <div className="f-random-style-wrap">
@@ -89,22 +96,73 @@ function RandomQuestionPicker({ onPick, fillBlank }) {
         Random question
       </button>
       {open ? (
-        <div className="f-random-style-menu" role="menu">
-          <div className="f-random-style-menu-title">Question style</div>
-          {styles.map((s) => (
-            <button
-              key={s.id}
-              type="button"
-              role="menuitem"
-              onClick={() => {
-                setOpen(false);
-                onPick(s.id);
-              }}
-            >
-              <span className="f-random-style-label">{s.label}</span>
-              {s.blurb ? <span className="f-random-style-blurb">{s.blurb}</span> : null}
+        <div className="f-random-style-panel" role="menu">
+          <div className="f-random-style-panel-head">
+            <span>Question style</span>
+            <button type="button" className="f-icon-btn" aria-label="Close" onClick={() => setOpen(false)}>
+              ✕
             </button>
-          ))}
+          </div>
+          <div className="f-random-style-panel-body">
+            <div className="f-random-style-sections">
+              {Object.entries(byGroup).map(([group, items]) => (
+                <section className="f-random-style-section" key={group}>
+                  <h4>{group}</h4>
+                  <div className="f-random-style-section-grid">
+                    {items.map((s) => (
+                      <button
+                        key={s.id}
+                        type="button"
+                        className="f-add-item"
+                        role="menuitem"
+                        onClick={() => {
+                          setOpen(false);
+                          onPick(s.id);
+                        }}
+                      >
+                        <span className="f-random-style-label">{s.label}</span>
+                        {s.blurb ? <span className="f-random-style-blurb">{s.blurb}</span> : null}
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+            <aside className="f-random-style-side">
+              <h4>Templates</h4>
+              <p>Pick a style to roll a fresh question with matching answers and media when the catalog has it.</p>
+            </aside>
+          </div>
+          <div className="f-add-footer">
+            <div className="f-quickbar">
+              <button
+                type="button"
+                className="plus"
+                aria-label="Pick first style"
+                onClick={() => {
+                  const first = styles[0];
+                  if (!first) return;
+                  setOpen(false);
+                  onPick(first.id);
+                }}
+              >
+                +
+              </button>
+              {quick.map((s) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  className="f-quick-btn"
+                  onClick={() => {
+                    setOpen(false);
+                    onPick(s.id);
+                  }}
+                >
+                  {s.label.replace(/^Guess (the|from) /i, '').replace(/^Who /i, '')}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       ) : null}
     </div>
@@ -154,10 +212,35 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
   const isFillBlank = q.meta?.kind === 'fill_blank';
   const isGraphing = q.meta?.kind === 'graphing';
   const variantExtras = Array.isArray(q.meta?.variants) ? q.meta.variants : [];
+  const VARIANT_MEDIA_META_KEYS = [
+    'media',
+    'media_crop',
+    'media_seed',
+    'remix_kind',
+    'emoji_set',
+    'hint_context',
+  ];
+  const mediaMetaFromObj = (obj, fallbackMeta = {}) => {
+    const src = obj && typeof obj === 'object' ? obj : {};
+    const meta = fallbackMeta && typeof fallbackMeta === 'object' ? fallbackMeta : {};
+    const out = {};
+    for (const key of VARIANT_MEDIA_META_KEYS) {
+      if (src[key] !== undefined) out[key] = src[key];
+      else if (meta[key] !== undefined) out[key] = meta[key];
+    }
+    return out;
+  };
   const activeMediaUrls =
     variantTab === 0
       ? listMediaUrls(q)
       : listMediaUrls(variantExtras[variantTab - 1] || {});
+  const activeMediaMeta =
+    variantTab === 0
+      ? q.meta || {}
+      : {
+          ...(q.meta || {}),
+          ...mediaMetaFromObj(variantExtras[variantTab - 1] || {}, q.meta || {}),
+        };
   const firstMedia = activeMediaUrls[0] || null;
   const useMediaSplit =
     !isGate &&
@@ -258,12 +341,13 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
     const maxExtras = MAX_QUESTION_VARIANTS - 1;
     const target = Math.min(slotIndex, maxExtras - 1);
     while (variants.length <= target && variants.length < maxExtras) {
+      const seeded = withMediaUrlsOnVariant({}, listMediaUrls(q));
       variants.push({
         prompt: q.prompt || '',
         options: Array.isArray(q.options) ? [...q.options] : q.options,
         correct: q.correct ? JSON.parse(JSON.stringify(q.correct)) : {},
-        image_url: null,
-        image_urls: [],
+        ...seeded,
+        ...mediaMetaFromObj(q.meta || {}),
         enabled: true,
       });
     }
@@ -341,12 +425,47 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
     setMediaPreviewToken(`${Date.now()}|${url}|${meta.media_seed || ''}`);
   };
 
+  const activeSourceQuestion = () => {
+    if (variantTab <= 0) return q;
+    const slot = variantExtras[variantTab - 1] || {};
+    return {
+      ...q,
+      ...slot,
+      image_url: slot.image_url !== undefined ? slot.image_url : q.image_url,
+      image_urls: Array.isArray(slot.image_urls) ? slot.image_urls : listMediaUrls(slot).length ? listMediaUrls(slot) : listMediaUrls(q),
+      meta: {
+        ...(q.meta || {}),
+        ...mediaMetaFromObj(slot, q.meta || {}),
+      },
+    };
+  };
+
+  const commitVariantRemixPatch = (patch) => {
+    const slot = variantTab - 1;
+    const variants = ensureVariantSlot(slot);
+    const { meta: patchMeta, points: _p, required: _r, clearMedia: _c, ...slotPatch } = patch || {};
+    let slotNext = { ...(variants[slot] || {}), ...slotPatch, ...mediaMetaFromObj(patchMeta || {}) };
+    if (patch?.type) slotNext.type = patch.type;
+    if (patch.clearMedia) {
+      slotNext = { ...slotNext, image_url: null, image_urls: [] };
+      delete slotNext.media_crop;
+      delete slotNext.media_seed;
+    } else if (patch.image_urls || patch.image_url) {
+      slotNext = withMediaUrlsOnVariant(
+        slotNext,
+        patch.image_urls || [patch.image_url].filter(Boolean)
+      );
+    }
+    variants[slot] = slotNext;
+    commit({ ...q, meta: { ...(q.meta || {}), variants } });
+  };
+
   const applyChangeQuestionAnswer = () => {
     const avoid =
       variantTab > 0
         ? variantExtras.map((v, i) => (i === variantTab - 1 ? '' : v?.prompt)).filter(Boolean)
         : [];
-    const result = remixQuestionFromA(q, { avoidTexts: avoid });
+    const result = remixQuestionFromA(activeSourceQuestion(), { avoidTexts: avoid });
     if (result.error) {
       setUploadError(result.error);
       return;
@@ -356,23 +475,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
     const metaFields = patch.meta || {};
 
     if (variantTab > 0) {
-      const slot = variantTab - 1;
-      const variants = ensureVariantSlot(slot);
-      const { meta: _m, type: _t, points: _p, required: _r, clearMedia: _c, ...slotPatch } = patch;
-      let slotNext = { ...(variants[slot] || {}), ...slotPatch };
-      if (patch.clearMedia) {
-        slotNext = { ...slotNext, image_url: null, image_urls: [] };
-      } else if (patch.image_urls || patch.image_url) {
-        slotNext = withMediaUrlsOnVariant(
-          slotNext,
-          patch.image_urls || [patch.image_url].filter(Boolean)
-        );
-      }
-      variants[slot] = slotNext;
-      commit({
-        ...q,
-        meta: { ...(q.meta || {}), ...metaFields, variants },
-      });
+      commitVariantRemixPatch(patch);
     } else {
       let next = {
         ...q,
@@ -403,6 +506,11 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
     }
     setUploadError('');
     const patch = result.patch || {};
+    if (variantTab > 0) {
+      commitVariantRemixPatch(patch);
+      triggerChangeRemixPreview(patch);
+      return;
+    }
     const meta = { ...(q.meta || {}), ...(patch.meta || {}), variants: q.meta?.variants };
     if (patch.clearMedia) delete meta.image_urls;
     let next = { ...q, ...patch, meta };
@@ -417,25 +525,13 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
         overwrite: false,
       });
     }
-    if (variantTab > 0) {
-      const { meta: _m, type: _t, points: _p, required: _r, clearMedia: _c, ...slot } = patch;
-      if (patch.clearMedia) {
-        patchVariantSlot(variantTab - 1, { ...slot, image_url: null, image_urls: [] });
-      } else {
-        patchVariantSlot(variantTab - 1, slot);
-      }
-      triggerChangeRemixPreview(patch);
-      return;
-    }
     delete next.clearMedia;
     commit(next);
     triggerChangeRemixPreview(patch);
   };
 
   const pickRandomStyle = (styleId) => {
-    const extras = Array.isArray(q.meta?.variants) ? q.meta.variants : [];
-    const src = variantTab === 0 ? q : { ...q, ...(extras[variantTab - 1] || {}) };
-    applyGeneratedPatch(makeRandomQuestionByStyle(styleId, src));
+    applyGeneratedPatch(makeRandomQuestionByStyle(styleId, activeSourceQuestion()));
   };
 
   const generateButtons = !isGate ? (
@@ -490,6 +586,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
           options: Array.isArray(q.options) ? q.options : [],
           correct: q.correct || {},
           image_url: q.image_url,
+          type: q.type,
         }
       : {
           prompt: variantExtras[variantTab - 1]?.prompt ?? q.prompt ?? '',
@@ -503,7 +600,14 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
             variantExtras[variantTab - 1]?.image_url !== undefined
               ? variantExtras[variantTab - 1].image_url
               : q.image_url,
+          type: variantExtras[variantTab - 1]?.type || q.type,
         };
+  const activeIsMulti = activeVariantFields.type === 'multiple_selection';
+  const activeIsChoice =
+    activeVariantFields.type === 'multiple_choice' ||
+    activeVariantFields.type === 'true_false' ||
+    activeVariantFields.type === 'dropdown' ||
+    activeIsMulti;
 
   const attachQuestionType = (type) => {
     const defaults = questionDefaultsForType(type);
@@ -528,8 +632,8 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
         <MediaStack
           urls={activeMediaUrls}
           editable
-          imageCrop={q.meta?.media_crop}
-          imageCropSeed={q.meta?.media_seed}
+          imageCrop={activeMediaMeta?.media_crop}
+          imageCropSeed={activeMediaMeta?.media_seed}
           autoPlayAudioToken={mediaPreviewToken}
           onRemove={(i) => setActiveMedia(activeMediaUrls.filter((_, j) => j !== i))}
         />
@@ -1044,8 +1148,8 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
           <MediaStack
             urls={activeMediaUrls}
             editable
-            imageCrop={q.meta?.media_crop}
-            imageCropSeed={q.meta?.media_seed}
+            imageCrop={activeMediaMeta?.media_crop}
+            imageCropSeed={activeMediaMeta?.media_seed}
             autoPlayAudioToken={mediaPreviewToken}
             onRemove={(i) => setActiveMedia(activeMediaUrls.filter((_, j) => j !== i))}
           />
@@ -1313,11 +1417,11 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
             }}
           />
         </label>
-        {(isChoice || isMulti || q.type === 'true_false') && (
+        {(activeIsChoice || q.type === 'true_false') && (
           <div className="f-choice-list" style={{ marginTop: 10 }}>
             {(activeVariantFields.options || []).map((opt, i) => (
               <div className="f-option-row" key={i}>
-                {isMulti ? (
+                {activeIsMulti ? (
                   <input
                     type="checkbox"
                     checked={(activeVariantFields.correct?.indices || []).map(Number).includes(i)}
@@ -1350,7 +1454,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
                   onBlur={() => commit()}
                   placeholder={`Option ${i + 1}`}
                 />
-                {q.type !== 'true_false' ? (
+                {activeVariantFields.type !== 'true_false' ? (
                   <button
                     type="button"
                     className="f-ghost-btn"
@@ -1359,7 +1463,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
                       const current = [...(activeVariantFields.options || [])];
                       if (current.length <= 2) return;
                       const next = current.filter((_, idx) => idx !== i);
-                      if (isMulti) {
+                      if (activeIsMulti) {
                         const indices = (activeVariantFields.correct?.indices || [])
                           .map(Number)
                           .filter((x) => x !== i)
@@ -1438,8 +1542,8 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
                 prompt: q.prompt || '',
                 options: Array.isArray(q.options) ? [...q.options] : q.options,
                 correct: q.correct ? JSON.parse(JSON.stringify(q.correct)) : {},
-                image_url: listMediaUrls(q)[0] || null,
-                image_urls: listMediaUrls(q),
+                ...withMediaUrlsOnVariant({}, listMediaUrls(q)),
+                ...mediaMetaFromObj(q.meta || {}),
               })
             }
           >
@@ -1457,7 +1561,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
             type="button"
             className="f-outline-btn"
             title="Keep this prompt; fill real answers from builds.json"
-            onClick={() => applyGeneratedPatch(fillAnswersFromPrompt({ ...q, ...activeVariantFields }))}
+            onClick={() => applyGeneratedPatch(fillAnswersFromPrompt(activeSourceQuestion()))}
           >
             Random answers
           </button>

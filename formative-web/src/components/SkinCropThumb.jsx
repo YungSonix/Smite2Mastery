@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 function hashSeed(str) {
   let h = 0;
@@ -12,6 +12,9 @@ function hashSeed(str) {
 /** Centered zoom crop for skin-guess trivia (web). Uses % sizing so mobile width does not break the crop. */
 export default function SkinCropThumb({ src, seed = 'skin' }) {
   const [failed, setFailed] = useState(false);
+  useEffect(() => {
+    setFailed(false);
+  }, [src]);
   const crop = useMemo(() => {
     const h = hashSeed(seed);
     const scale = 2.35 + (h % 40) / 100;

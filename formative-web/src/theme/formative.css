@@ -2406,6 +2406,87 @@ label.f-file-btn:hover {
   flex: 0 0 auto;
 }
 
+.f-random-style-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 50;
+  width: min(720px, 94vw);
+  max-height: min(520px, 78vh);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--f-card);
+  border: 1px solid var(--f-border);
+  border-radius: 12px;
+  box-shadow: var(--f-shadow);
+  text-align: left;
+}
+
+.f-random-style-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--f-border);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--f-blue);
+}
+
+.f-random-style-panel-body {
+  display: grid;
+  grid-template-columns: 1fr minmax(140px, 200px);
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+.f-random-style-sections {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px 16px;
+  padding: 14px 16px;
+  overflow: auto;
+}
+
+.f-random-style-section h4 {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--f-label);
+}
+
+.f-random-style-section-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.f-random-style-section .f-add-item {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 8px 8px;
+}
+
+.f-random-style-side {
+  background: var(--f-panel);
+  border-left: 1px solid var(--f-border);
+  padding: 14px;
+  font-size: 13px;
+  color: var(--f-muted);
+  overflow: auto;
+}
+
+.f-random-style-side h4 {
+  margin: 0 0 8px;
+  color: var(--f-blue);
+}
+
 .f-random-style-menu {
   position: absolute;
   top: calc(100% + 8px);

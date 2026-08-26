@@ -23,8 +23,8 @@ function iconKey(name) {
 }
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const ITEM_ICON_BASE = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/Item%20Icons';
-const GOD_ICON_BASE = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img/God%20Info';
+const ITEM_ICON_BASE = '/media/Icons/Item Icons';
+const GOD_ICON_BASE = '/media/Icons/God Info';
 
 function flatten(arr) {
   if (!arr) return [];
@@ -45,7 +45,7 @@ function stripMd(s) {
     .trim();
 }
 
-function githubFileUrl(base, file) {
+function mediaFileUrl(base, file) {
   const name = String(file || '').split(/[/\\]/).pop();
   if (!name) return null;
   return `${base}/${encodeURIComponent(name)}`;
@@ -57,7 +57,10 @@ function itemImage(item) {
   const alias = ITEM_ICON_ALIASES[iconKey(stem)]
     || ITEM_ICON_ALIASES[iconKey(item.name)]
     || ITEM_ICON_ALIASES[iconKey(item.internalName)];
-  return githubFileUrl(ITEM_ICON_BASE, alias || iconBase || `${item.name}.webp`);
+  const file = alias || iconBase || `${item.name}.webp`;
+  const disk = path.join(ROOT, 'app/data/Icons/Item Icons', file);
+  if (!fs.existsSync(disk)) return null;
+  return mediaFileUrl(ITEM_ICON_BASE, file);
 }
 
 function itemStats(item) {
@@ -161,7 +164,7 @@ for (const raw of flatten(builds.gods)) {
   const icon = god.icon || god.baseInformation?.icon;
   gods.push({
     name,
-    image: githubFileUrl(GOD_ICON_BASE, String(icon || '').split('/').pop()),
+    image: mediaFileUrl(GOD_ICON_BASE, String(icon || '').split('/').pop()),
   });
 
   const aspectName = stripMd(god.aspect?.name);
@@ -212,10 +215,10 @@ for (const file of fs.readdirSync(notesDir).filter((f) => /^patchnotesob\d+\.jso
 releases.push({ patch: 39, god: 'Xing Tian' }, { patch: 40, god: 'Cu Chulainn' });
 
 if (!gods.some((g) => norm(g.name) === 'xingtian')) {
-  gods.push({ name: 'Xing Tian', image: githubFileUrl(GOD_ICON_BASE, 'xingTianImage.webp') });
+  gods.push({ name: 'Xing Tian', image: mediaFileUrl(GOD_ICON_BASE, 'xingTianImage.webp') });
 }
 if (!gods.some((g) => norm(g.name) === 'cuchulainn')) {
-  gods.push({ name: 'Cu Chulainn', image: githubFileUrl(GOD_ICON_BASE, 'cuChulainnImage.webp') });
+  gods.push({ name: 'Cu Chulainn', image: mediaFileUrl(GOD_ICON_BASE, 'cuChulainnImage.webp') });
 }
 
 const seenRel = new Set();

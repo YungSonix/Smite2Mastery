@@ -86,7 +86,7 @@ function normalize(s) {
 export function gradeOne(q, raw) {
   if (!q) return false;
   const correct = q.correct;
-  if (q.type === 'short_answer') {
+  if (q.type === 'short_answer' || q.meta?.kind === 'fill_blank') {
     const accepted = Array.isArray(correct?.answers)
       ? correct.answers
       : correct?.answer
@@ -95,10 +95,22 @@ export function gradeOne(q, raw) {
     const given = normalize(raw);
     return accepted.some((a) => normalize(a) === given);
   }
-  if (q.type === 'multiple_choice' || q.type === 'true_false') {
+  if (q.type === 'multiple_choice' || q.type === 'true_false' || q.type === 'dropdown') {
     const idx = typeof correct?.index === 'number' ? correct.index : correct?.value;
     if (typeof idx === 'number') return Number(raw) === idx;
     return normalize(raw) === normalize(correct?.answer ?? correct);
+  }
+  if (q.type === 'multiple_selection') {
+    const want = new Set((correct?.indices || []).map(Number).filter((n) => Number.isFinite(n)));
+    const got = new Set(
+      (Array.isArray(raw) ? raw : String(raw ?? '').split(','))
+        .map((x) => Number(x))
+        .filter((n) => Number.isFinite(n))
+    );
+    if (!want.size) return false;
+    if (want.size !== got.size) return false;
+    for (const i of want) if (!got.has(i)) return false;
+    return true;
   }
   return false;
 }

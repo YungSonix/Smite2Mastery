@@ -6,7 +6,7 @@
     "emojis": [
       "icons/spear.png",
       "🛡️",
-      "🪖"
+      "🦶"
     ]
   },
   "Agni": {
@@ -15,7 +15,7 @@
     "gender": "Male",
     "emojis": [
       "🔥",
-      "✋",
+      "💨",
       "☄️"
     ]
   },
@@ -36,7 +36,7 @@
     "emojis": [
       "🧞",
       "🪔",
-      "🐒"
+      "✨"
     ]
   },
   "Amaterasu": {
@@ -44,8 +44,8 @@
     "role": "Solo",
     "gender": "Female",
     "emojis": [
+      "☀️",
       "🪞",
-      "🌅",
       "⚔️"
     ]
   },
@@ -56,7 +56,7 @@
     "emojis": [
       "🦁",
       "icons/spear.png",
-      "🏜️"
+      "🪨"
     ]
   },
   "Anubis": {
@@ -64,7 +64,7 @@
     "role": "Mid",
     "gender": "Male",
     "emojis": [
-      "🐕",
+      "icons/jackal.svg",
       "⚖️",
       "⚱️"
     ]
@@ -84,9 +84,9 @@
     "role": "ADC",
     "gender": "Male",
     "emojis": [
-      "☀️",
       "🎵",
-      "🏹"
+      "☀️",
+      "icons/bow.svg"
     ]
   },
   "Ares": {
@@ -94,8 +94,8 @@
     "role": "Support",
     "gender": "Male",
     "emojis": [
-      "⛓️",
       "🪖",
+      "⛓️",
       "🔥"
     ]
   },
@@ -105,8 +105,8 @@
     "gender": "Female",
     "emojis": [
       "🐗",
-      "🏹",
-      "🚫"
+      "icons/bow.svg",
+      "🌙"
     ]
   },
   "Artio": {
@@ -116,7 +116,7 @@
     "emojis": [
       "🐻",
       "🍃",
-      "🔄"
+      "2️⃣"
     ]
   },
   "Athena": {
@@ -124,9 +124,9 @@
     "role": "Support",
     "gender": "Female",
     "emojis": [
-      "🦉",
       "🛡️",
-      "🪖"
+      "icons/spear.png",
+      "👥"
     ]
   },
   "Atlas": {
@@ -134,9 +134,9 @@
     "role": "Support",
     "gender": "Male",
     "emojis": [
-      "🌍",
+      "🌌",
       "🏋️",
-      "🌌"
+      "🌍"
     ]
   },
   "Awilix": {
@@ -145,7 +145,7 @@
     "gender": "Female",
     "emojis": [
       "🐆",
-      "🌛",
+      "🌙",
       "icons/pluck.svg"
     ]
   },
@@ -154,8 +154,8 @@
     "role": "Support",
     "gender": "Male",
     "emojis": [
-      "🍇",
       "🍷",
+      "🍇",
       "🤢"
     ]
   },
@@ -175,8 +175,8 @@
     "gender": "Female",
     "emojis": [
       "🐱",
-      "🐾",
-      "🌙"
+      "icons/whip.svg",
+      "🐾"
     ]
   },
   "Bellona": {
@@ -184,9 +184,9 @@
     "role": "Solo",
     "gender": "Female",
     "emojis": [
-      "⚔️",
+      "🛡️",
       "🔨",
-      "🛡️"
+      "icons/whip.svg"
     ]
   },
   "Cabrakan": {
@@ -194,9 +194,9 @@
     "role": "Support",
     "gender": "Male",
     "emojis": [
-      "🌋",
+      "🌍",
       "icons/wall.svg",
-      "🌍"
+      "🛡️"
     ]
   },
   "Cerberus": {
@@ -206,7 +206,7 @@
     "emojis": [
       "🐕",
       "3️⃣",
-      "🔥"
+      "👻"
     ]
   },
   "Cernunnos": {
@@ -216,7 +216,7 @@
     "emojis": [
       "🦌",
       "🍃",
-      "🪓"
+      "icons/bow.svg"
     ]
   },
   "Chaac": {
@@ -236,7 +236,7 @@
     "emojis": [
       "⛵",
       "🪙",
-      "☠️"
+      "🌊"
     ]
   },
   "Chiron": {
@@ -245,8 +245,8 @@
     "gender": "Male",
     "emojis": [
       "🐴",
-      "🏹",
-      "📖"
+      "icons/bow.svg",
+      "🧑‍🏫"
     ]
   },
   "Chronos": {
@@ -255,8 +255,8 @@
     "gender": "Male",
     "emojis": [
       "⏳",
-      "🔄",
-      "⚙️"
+      "⚙️",
+      "⌛"
     ]
   },
   "Cupid": {
@@ -265,7 +265,7 @@
     "gender": "Male",
     "emojis": [
       "💕",
-      "🏹",
+      "icons/bow.svg",
       "😇"
     ]
   },
@@ -276,7 +276,7 @@
     "emojis": [
       "🦊",
       "⛓️",
-      "💔"
+      "🩸"
     ]
   },
   "Danzaburou": {
@@ -296,7 +296,7 @@
     "emojis": [
       "🍎",
       "🌩️",
-      "🎭"
+      "🌪️"
     ]
   },
   "Eset": {
@@ -305,7 +305,7 @@
     "gender": "Female",
     "emojis": [
       "🪽",
-      "🪄",
+      "icons/staff.svg",
       "🐦"
     ]
   },
@@ -316,7 +316,7 @@
     "emojis": [
       "🐺",
       "⛓️",
-      "🌑"
+      "🦷"
     ]
   },
   "Ganesha": {
@@ -326,7 +326,7 @@
     "emojis": [
       "🐘",
       "🚫",
-      "🙏"
+      "🪷"
     ]
   },
   "Geb": {
@@ -336,7 +336,7 @@
     "emojis": [
       "🌍",
       "🪨",
-      "🛡️"
+      "icons/wall.svg"
     ]
   },
   "Gilgamesh": {
@@ -344,9 +344,9 @@
     "role": "Solo",
     "gender": "Male",
     "emojis": [
-      "🧱",
       "🦵",
-      "⚔️"
+      "⚔️",
+      "🧱"
     ]
   },
   "Guan Yu": {
@@ -355,7 +355,7 @@
     "gender": "Male",
     "emojis": [
       "🐴",
-      "⚔️",
+      "icons/spear.png",
       "💚"
     ]
   },
@@ -364,9 +364,9 @@
     "role": "Mid",
     "gender": "Male",
     "emojis": [
-      "🌀",
       "💀",
-      "🚫"
+      "icons/whirl.svg",
+      "🌑"
     ]
   },
   "Hecate": {
@@ -375,8 +375,8 @@
     "gender": "Female",
     "emojis": [
       "🌙",
-      "🐕",
-      "🔮"
+      "3️⃣",
+      "🪄"
     ]
   },
   "Hercules": {
@@ -385,7 +385,7 @@
     "gender": "Male",
     "emojis": [
       "💪",
-      "🦁",
+      "🏏",
       "🪨"
     ]
   },
@@ -396,7 +396,7 @@
     "emojis": [
       "🐦",
       "👁️",
-      "🛡️"
+      "🪽"
     ]
   },
   "Hou Yi": {
@@ -404,9 +404,9 @@
     "role": "ADC",
     "gender": "Male",
     "emojis": [
-      "🏹",
+      "icons/bow.svg",
       "☀️",
-      "🐦"
+      "9️⃣"
     ]
   },
   "Hua Mulan": {
@@ -414,9 +414,9 @@
     "role": "Solo",
     "gender": "Female",
     "emojis": [
-      "🪖",
-      "🌸",
-      "⚔️"
+      "🚩",
+      "⚔️",
+      "🌸"
     ]
   },
   "Hun Batz": {
@@ -425,8 +425,8 @@
     "gender": "Male",
     "emojis": [
       "🐒",
-      "🪃",
-      "🎭"
+      "🥁",
+      "🪃"
     ]
   },
   "Ishtar": {
@@ -435,8 +435,8 @@
     "gender": "Female",
     "emojis": [
       "⭐",
-      "🏹",
-      "⚔️"
+      "icons/bow.svg",
+      "👑"
     ]
   },
   "Izanami": {
@@ -445,8 +445,8 @@
     "gender": "Female",
     "emojis": [
       "🪃",
-      "🎭",
-      "🌑"
+      "👻",
+      "icons/scythe.svg"
     ]
   },
   "Janus": {
@@ -456,7 +456,7 @@
     "emojis": [
       "🚪",
       "🌀",
-      "🎭"
+      "2️⃣"
     ]
   },
   "Jing Wei": {
@@ -475,8 +475,8 @@
     "gender": "Male",
     "emojis": [
       "🐍",
-      "🌍",
-      "🌊"
+      "icons/poison.svg",
+      "🌍"
     ]
   },
   "Kali": {
@@ -495,7 +495,7 @@
     "gender": "Male",
     "emojis": [
       "🪲",
-      "🌅",
+      "☀️",
       "♻️"
     ]
   },
@@ -516,7 +516,7 @@
     "emojis": [
       "🗡️",
       "🫥",
-      "🐍"
+      "👥"
     ]
   },
   "Medusa": {
@@ -546,7 +546,7 @@
     "emojis": [
       "🔥",
       "❄️",
-      "⚡"
+      "icons/staff.svg"
     ]
   },
   "Mordred": {
@@ -554,9 +554,9 @@
     "role": "Solo",
     "gender": "Male",
     "emojis": [
-      "🩸",
+      "2️⃣",
       "⚔️",
-      "☠️"
+      "🩸"
     ]
   },
   "Morgan Le Fay": {
@@ -575,8 +575,8 @@
     "gender": "Female",
     "emojis": [
       "🧵",
-      "🏹",
-      "👘"
+      "icons/bow.svg",
+      "🕸️"
     ]
   },
   "Nemesis": {
@@ -595,7 +595,7 @@
     "gender": "Male",
     "emojis": [
       "⭕",
-      "🔥",
+      "icons/spear.png",
       "🪷"
     ]
   },
@@ -604,9 +604,9 @@
     "role": "Mid",
     "gender": "Female",
     "emojis": [
-      "🐍",
       "🌫️",
-      "👥"
+      "👥",
+      "🪨"
     ]
   },
   "Nut": {
@@ -616,7 +616,7 @@
     "emojis": [
       "🌌",
       "⭐",
-      "🏹"
+      "🌃"
     ]
   },
   "Odin": {
@@ -625,8 +625,8 @@
     "gender": "Male",
     "emojis": [
       "🐦‍⬛",
-      "⭕",
-      "icons/spear.png"
+      "icons/spear.png",
+      "⭕"
     ]
   },
   "Osiris": {
@@ -635,8 +635,8 @@
     "gender": "Male",
     "emojis": [
       "🧟",
-      "🌾",
-      "icons/scythe.svg"
+      "icons/scythe.svg",
+      "🌾"
     ]
   },
   "Pele": {
@@ -645,7 +645,7 @@
     "gender": "Female",
     "emojis": [
       "🌋",
-      "💃",
+      "🔥",
       "🌺"
     ]
   },
@@ -665,8 +665,8 @@
     "gender": "Female",
     "emojis": [
       "🔔",
-      "🌸",
-      "💨"
+      "💚",
+      "🌸"
     ]
   },
   "Ra": {
@@ -676,7 +676,7 @@
     "emojis": [
       "☀️",
       "🐦",
-      "👁️"
+      "🔆"
     ]
   },
   "Rama": {
@@ -684,7 +684,7 @@
     "role": "ADC",
     "gender": "Male",
     "emojis": [
-      "🏹",
+      "icons/bow.svg",
       "👑",
       "🐒"
     ]
@@ -695,8 +695,8 @@
     "gender": "Male",
     "emojis": [
       "🐿️",
-      "🌳",
-      "🥜"
+      "🥜",
+      "🌳"
     ]
   },
   "Scylla": {
@@ -735,7 +735,7 @@
     "gender": "Male",
     "emojis": [
       "🐒",
-      "🪵",
+      "icons/staff.svg",
       "☁️"
     ]
   },
@@ -744,9 +744,9 @@
     "role": "Jungle",
     "gender": "Male",
     "emojis": [
-      "🌪️",
       "⚔️",
-      "🌊"
+      "🌪️",
+      "🌩️"
     ]
   },
   "Sylvanus": {
@@ -755,8 +755,8 @@
     "gender": "Male",
     "emojis": [
       "🌳",
-      "🦉",
-      "🍃"
+      "🍃",
+      "icons/pluck.svg"
     ]
   },
   "Thanatos": {
@@ -764,9 +764,9 @@
     "role": "Jungle",
     "gender": "Male",
     "emojis": [
-      "🪽",
       "icons/scythe.svg",
-      "🩸"
+      "🪽",
+      "☠️"
     ]
   },
   "The Morrigan": {
@@ -775,8 +775,8 @@
     "gender": "Female",
     "emojis": [
       "🐦‍⬛",
-      "👥",
-      "🔮"
+      "🎭",
+      "👥"
     ]
   },
   "Thor": {
@@ -784,9 +784,9 @@
     "role": "Jungle",
     "gender": "Male",
     "emojis": [
-      "⚡",
       "🔨",
-      "🌩️"
+      "⚡",
+      "icons/wall.svg"
     ]
   },
   "Tsukuyomi": {
@@ -796,7 +796,7 @@
     "emojis": [
       "🌙",
       "🥷",
-      "🗡️"
+      "⭐"
     ]
   },
   "Ullr": {
@@ -804,7 +804,7 @@
     "role": "ADC",
     "gender": "Male",
     "emojis": [
-      "🏹",
+      "icons/bow.svg",
       "🪓",
       "❄️"
     ]
@@ -815,8 +815,8 @@
     "gender": "Male",
     "emojis": [
       "🔨",
-      "🤖",
-      "🌋"
+      "⚙️",
+      "🔥"
     ]
   },
   "Xbalanque": {
@@ -824,9 +824,9 @@
     "role": "ADC",
     "gender": "Male",
     "emojis": [
-      "🌙",
       "🌃",
-      "☀️"
+      "🎯",
+      "icons/poison.svg"
     ]
   },
   "Yemoja": {
@@ -836,7 +836,7 @@
     "emojis": [
       "💧",
       "🌊",
-      "⭕"
+      "💚"
     ]
   },
   "Ymir": {
@@ -845,7 +845,7 @@
     "gender": "Male",
     "emojis": [
       "🧊",
-      "👹",
+      "icons/wall.svg",
       "❄️"
     ]
   },

@@ -14,7 +14,13 @@ export function resolveMediaUrl(url) {
   const s = String(url || '');
   if (!s.startsWith('/media/')) return s;
   const rel = s.slice('/media/'.length);
+  // VoiceAudio is gitignored on master — always load from the assets branch.
   if (rel.startsWith('VoiceAudio/')) return `${GITHUB_ASSETS}/${rel}`;
+  // God Renders are local-only (gitignored). Dev: trivia:api /media proxy. Prod: assets branch if uploaded.
+  if (rel.startsWith('God Renders/')) {
+    if (typeof import.meta !== 'undefined' && import.meta.env?.DEV) return s;
+    return `${GITHUB_ASSETS}/${rel}`;
+  }
   if (typeof import.meta !== 'undefined' && import.meta.env?.DEV) return s;
   return `${GITHUB_MASTER}/${rel}`;
 }
