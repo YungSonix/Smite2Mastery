@@ -32,7 +32,15 @@ export default function SkinCropThumb({ src, seed = 'skin' }) {
   return (
     <div className="f-skin-crop">
       {failed ? (
-        <p className="f-skin-crop-fallback f-muted">Image failed to load</p>
+        <p className="f-skin-crop-fallback f-muted">
+          Image failed to load
+          {String(src || '').includes('/media/') ? (
+            <>
+              {' '}
+              — for God Renders, run <code>npm run trivia:api</code> (port 3000) alongside trivia:dev
+            </>
+          ) : null}
+        </p>
       ) : (
         <img
           src={src}

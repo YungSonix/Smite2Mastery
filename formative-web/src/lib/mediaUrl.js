@@ -13,16 +13,24 @@ const GITHUB_ASSETS =
 export function resolveMediaUrl(url) {
   const s = String(url || '');
   if (!s.startsWith('/media/')) return s;
-  const rel = s.slice('/media/'.length);
+  const relRaw = s.slice('/media/'.length);
+  let rel = relRaw;
+  try {
+    rel = decodeURIComponent(relRaw);
+  } catch {
+    /* keep encoded */
+  }
   // VoiceAudio is gitignored on master — always load from the assets branch.
-  if (rel.startsWith('VoiceAudio/')) return `${GITHUB_ASSETS}/${rel}`;
-  // God Renders are local-only (gitignored). Dev: trivia:api /media proxy. Prod: assets branch if uploaded.
-  if (rel.startsWith('God Renders/')) {
+  if (rel.startsWith('VoiceAudio/') || relRaw.startsWith('VoiceAudio/')) {
+    return `${GITHUB_ASSETS}/${rel.split('/').map(encodeURIComponent).join('/')}`;
+  }
+  // God Renders are gitignored. Dev: keep /media for trivia:api proxy. Prod: assets branch if uploaded.
+  if (rel.startsWith('God Renders/') || relRaw.startsWith('God%20Renders/')) {
     if (typeof import.meta !== 'undefined' && import.meta.env?.DEV) return s;
-    return `${GITHUB_ASSETS}/${rel}`;
+    return `${GITHUB_ASSETS}/${rel.split('/').map(encodeURIComponent).join('/')}`;
   }
   if (typeof import.meta !== 'undefined' && import.meta.env?.DEV) return s;
-  return `${GITHUB_MASTER}/${rel}`;
+  return `${GITHUB_MASTER}/${rel.split('/').map(encodeURIComponent).join('/')}`;
 }
 
 /** Per-URL kind. Does not use question type — mixed lists are allowed. */

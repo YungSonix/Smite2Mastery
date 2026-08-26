@@ -432,26 +432,29 @@ function makeGodEmojiQuestion({ count, avoidGods = new Set(), correctName = null
 }
 
 function isVoiceLinePrompt(source) {
+  const kind = String(source?.meta?.remix_kind || '');
+  if (kind && kind !== 'voice_line') return false;
   return (
-    source?.meta?.remix_kind === 'voice_line' ||
+    kind === 'voice_line' ||
     source?.meta?.media === 'audio' ||
     /voice\s*line belongs/i.test(source?.prompt || '')
   );
 }
 
 function isSkinGuessPrompt(source) {
-  return (
-    source?.meta?.remix_kind === 'skin_guess' ||
-    source?.meta?.media_crop === 'skin_zoom_center' ||
-    /skin belongs/i.test(source?.prompt || '')
-  );
+  const kind = String(source?.meta?.remix_kind || '');
+  // Explicit non-skin kinds must win over leftover media_crop from Version A / prior remix.
+  if (kind && kind !== 'skin_guess') return false;
+  if (isGodEmojiPrompt(source) && kind !== 'skin_guess') return false;
+  if (kind === 'skin_guess') return true;
+  if (/skin belongs/i.test(source?.prompt || '')) return true;
+  return source?.meta?.media_crop === 'skin_zoom_center';
 }
 
 function isAbilitySoundPrompt(source) {
-  return (
-    source?.meta?.remix_kind === 'ability_sound' ||
-    /which ability is this sound/i.test(source?.prompt || '')
-  );
+  const kind = String(source?.meta?.remix_kind || '');
+  if (kind && kind !== 'ability_sound') return false;
+  return kind === 'ability_sound' || /which ability is this sound/i.test(source?.prompt || '');
 }
 
 function abilityOptionLabel(row) {
@@ -1316,6 +1319,14 @@ export function applyRemixPatchToQuestion(question, patch) {
   if (!patch || patch.error) return { error: patch?.error || 'No patch' };
   const p = patch.patch || patch;
   const meta = { ...(question?.meta || {}), ...(p.meta || {}), variants: question?.meta?.variants };
+  const kind = p.meta?.remix_kind;
+  const skin =
+    kind === 'skin_guess' ||
+    (p.meta?.media_crop === 'skin_zoom_center' && (!kind || kind === 'skin_guess'));
+  if (!skin) {
+    delete meta.media_crop;
+    delete meta.media_seed;
+  }
   if (p.clearMedia) delete meta.image_urls;
   let next = { ...question, ...p, meta };
   if (p.clearMedia) {
@@ -1355,7 +1366,7 @@ export function applyRemixPatchToVariant(question, slotIndex, patch) {
   const mediaKeys = ['media', 'media_crop', 'media_seed', 'remix_kind', 'emoji_set', 'hint_context'];
   const mediaBits = {};
   for (const k of mediaKeys) {
-    if (patchMeta?.[k] !== undefined) mediaBits[k] = patchMeta[k];
+    if (patchMeta?.[k] !== undefined && patchMeta[k] !== null) mediaBits[k] = patchMeta[k];
   }
   let slotNext = { ...(variants[slotIndex] || {}), ...slotPatch, ...mediaBits };
   if (p.type) slotNext.type = p.type;
@@ -1366,6 +1377,12 @@ export function applyRemixPatchToVariant(question, slotIndex, patch) {
   } else if (p.image_urls || p.image_url) {
     const list = (p.image_urls || [p.image_url]).filter(Boolean);
     slotNext = { ...slotNext, image_url: list[0] || null, image_urls: list };
+  }
+  const skin =
+    patchMeta?.remix_kind === 'skin_guess' || patchMeta?.media_crop === 'skin_zoom_center';
+  if (!skin) {
+    delete slotNext.media_crop;
+    delete slotNext.media_seed;
   }
   variants[slotIndex] = slotNext;
   return {

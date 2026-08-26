@@ -110,6 +110,22 @@ function OpaqueSrc({ url, children }) {
   return children(src);
 }
 
+function ThumbImg({ src }) {
+  const [failed, setFailed] = useState(false);
+  useEffect(() => {
+    setFailed(false);
+  }, [src]);
+  if (failed) {
+    return <p className="f-media-load-fail f-muted">Image failed to load</p>;
+  }
+  return (
+    <img
+      {...mediaProps(src)}
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
 function mediaProps(src) {
   return {
     src,
@@ -181,7 +197,7 @@ export default function MediaStack({
           } else {
             body = (
               <div className="f-media-thumb">
-                <img {...mediaProps(src)} />
+                <ThumbImg src={src} />
               </div>
             );
           }

@@ -24,9 +24,8 @@ import {
 import CategorizeBoard from './CategorizeBoard';
 import { parseCategorize } from '../lib/categorize';
 import { remixQuestionFromA, fillAnswersFromPrompt, makeRandomQuestionByStyle, RANDOM_QUESTION_STYLES, RANDOM_QUESTION_QUICK } from '../lib/triviaRemix';
-import { classifyMediaUrl } from '../lib/mediaUrl';
-import { MAX_QUESTION_VARIANTS, variantLetter } from '../lib/triviaVariants';
-import {
+import { applyPromptTextStyle } from '../lib/richText';
+import { MAX_QUESTION_VARIANTS, variantLetter } from '../lib/triviaVariants';import {
   questionHintUiAllowed,
   storedHintList,
   withGeneratedHints,
@@ -220,27 +219,49 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
     'emoji_set',
     'hint_context',
   ];
-  const mediaMetaFromObj = (obj, fallbackMeta = {}) => {
+  /** Crop/seed must not fall back to Version A — that forces skin zoom on emoji/item URLs. */
+  const CROP_META_KEYS = new Set(['media_crop', 'media_seed']);
+  const mediaMetaFromObj = (obj, fallbackMeta = {}, { inheritCrop = true } = {}) => {
     const src = obj && typeof obj === 'object' ? obj : {};
     const meta = fallbackMeta && typeof fallbackMeta === 'object' ? fallbackMeta : {};
     const out = {};
     for (const key of VARIANT_MEDIA_META_KEYS) {
-      if (src[key] !== undefined) out[key] = src[key];
-      else if (meta[key] !== undefined) out[key] = meta[key];
+      if (src[key] !== undefined && src[key] !== null) out[key] = src[key];
+      else if (src[key] === null) continue;
+      else if (!inheritCrop && CROP_META_KEYS.has(key)) continue;
+      else if (meta[key] !== undefined && meta[key] !== null) out[key] = meta[key];
     }
     return out;
+  };
+  const isSkinCropMeta = (meta) => {
+    const kind = meta?.remix_kind;
+    if (kind && kind !== 'skin_guess') return false;
+    return kind === 'skin_guess' || meta?.media_crop === 'skin_zoom_center';
+  };
+  const stripCropUnlessSkin = (meta) => {
+    if (!meta || typeof meta !== 'object') return meta;
+    if (isSkinCropMeta(meta)) return meta;
+    const next = { ...meta };
+    delete next.media_crop;
+    delete next.media_seed;
+    return next;
   };
   const activeMediaUrls =
     variantTab === 0
       ? listMediaUrls(q)
       : listMediaUrls(variantExtras[variantTab - 1] || {});
-  const activeMediaMeta =
-    variantTab === 0
-      ? q.meta || {}
-      : {
-          ...(q.meta || {}),
-          ...mediaMetaFromObj(variantExtras[variantTab - 1] || {}, q.meta || {}),
-        };
+  const activeMediaMeta = (() => {
+    if (variantTab === 0) return q.meta || {};
+    const slot = variantExtras[variantTab - 1] || {};
+    const merged = {
+      ...(q.meta || {}),
+      ...mediaMetaFromObj(slot, q.meta || {}, { inheritCrop: false }),
+    };
+    // Spreading A first would keep A's skin zoom — strip unless this slot owns crop.
+    if (slot.media_crop == null) delete merged.media_crop;
+    if (slot.media_seed == null) delete merged.media_seed;
+    return merged;
+  })();
   const firstMedia = activeMediaUrls[0] || null;
   const useMediaSplit =
     !isGate &&
@@ -414,28 +435,30 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
   const triggerChangeRemixPreview = (patch) => {
     const meta = patch?.meta || {};
     const url = patch.image_url || patch.image_urls?.[0] || '';
-    const isAudio =
-      meta.remix_kind === 'voice_line' ||
-      meta.remix_kind === 'ability_sound' ||
-      meta.media === 'audio' ||
-      classifyMediaUrl(url) === 'audio';
-    const isSkin =
-      meta.remix_kind === 'skin_guess' || meta.media_crop === 'skin_zoom_center';
-    if (!isAudio && !isSkin) return;
-    setMediaPreviewToken(`${Date.now()}|${url}|${meta.media_seed || ''}`);
+    // Remount media pane for every media swap (emoji/item/skin/audio) — stale crop/img state otherwise sticks.
+    setMediaPreviewToken(`${Date.now()}|${url}|${meta.media_seed || ''}|${meta.remix_kind || ''}`);
   };
 
   const activeSourceQuestion = () => {
     if (variantTab <= 0) return q;
     const slot = variantExtras[variantTab - 1] || {};
+    const slotMeta = mediaMetaFromObj(slot, q.meta || {}, { inheritCrop: false });
+    if (slot.media_crop == null) delete slotMeta.media_crop;
+    if (slot.media_seed == null) delete slotMeta.media_seed;
     return {
       ...q,
       ...slot,
       image_url: slot.image_url !== undefined ? slot.image_url : q.image_url,
-      image_urls: Array.isArray(slot.image_urls) ? slot.image_urls : listMediaUrls(slot).length ? listMediaUrls(slot) : listMediaUrls(q),
+      image_urls: Array.isArray(slot.image_urls)
+        ? slot.image_urls
+        : listMediaUrls(slot).length
+          ? listMediaUrls(slot)
+          : listMediaUrls(q),
       meta: {
         ...(q.meta || {}),
-        ...mediaMetaFromObj(slot, q.meta || {}),
+        ...slotMeta,
+        ...(slot.media_crop == null ? { media_crop: undefined } : {}),
+        ...(slot.media_seed == null ? { media_seed: undefined } : {}),
       },
     };
   };
@@ -456,8 +479,18 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
         patch.image_urls || [patch.image_url].filter(Boolean)
       );
     }
+    // Drop leftover skin zoom when remixing to emoji / item / audio (URL alone used to keep crop).
+    if (!isSkinCropMeta(patchMeta || {})) {
+      delete slotNext.media_crop;
+      delete slotNext.media_seed;
+    }
     variants[slot] = slotNext;
     commit({ ...q, meta: { ...(q.meta || {}), variants } });
+  };
+
+  const styleRemixPatch = (patch, styleFromPrompt) => {
+    if (!patch?.prompt) return patch;
+    return { ...patch, prompt: applyPromptTextStyle(styleFromPrompt, patch.prompt) };
   };
 
   const applyChangeQuestionAnswer = () => {
@@ -465,13 +498,14 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
       variantTab > 0
         ? variantExtras.map((v, i) => (i === variantTab - 1 ? '' : v?.prompt)).filter(Boolean)
         : [];
-    const result = remixQuestionFromA(activeSourceQuestion(), { avoidTexts: avoid });
+    const source = activeSourceQuestion();
+    const result = remixQuestionFromA(source, { avoidTexts: avoid });
     if (result.error) {
       setUploadError(result.error);
       return;
     }
     setUploadError('');
-    const patch = result.patch || {};
+    const patch = styleRemixPatch(result.patch || {}, source.prompt);
     const metaFields = patch.meta || {};
 
     if (variantTab > 0) {
@@ -480,12 +514,18 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
       let next = {
         ...q,
         ...patch,
-        meta: { ...(q.meta || {}), ...metaFields, variants: q.meta?.variants },
+        meta: stripCropUnlessSkin({
+          ...(q.meta || {}),
+          ...metaFields,
+          variants: q.meta?.variants,
+        }),
       };
       if (patch.clearMedia) {
         next = withMediaUrlsOnQuestion({ ...next, image_url: null }, []);
+        next = { ...next, meta: stripCropUnlessSkin(next.meta) };
       } else if (patch.image_urls || patch.image_url) {
         next = withMediaUrlsOnQuestion(next, patch.image_urls || [patch.image_url].filter(Boolean));
+        next = { ...next, meta: stripCropUnlessSkin({ ...next.meta, ...(patch.meta || {}) }) };
       }
       delete next.clearMedia;
       if (autoHints || next.meta?.hints_enabled) {
@@ -505,19 +545,26 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
       return;
     }
     setUploadError('');
-    const patch = result.patch || {};
+    const styleFrom = activeSourceQuestion().prompt;
+    const patch = styleRemixPatch(result.patch || {}, styleFrom);
     if (variantTab > 0) {
       commitVariantRemixPatch(patch);
       triggerChangeRemixPreview(patch);
       return;
     }
-    const meta = { ...(q.meta || {}), ...(patch.meta || {}), variants: q.meta?.variants };
+    const meta = stripCropUnlessSkin({
+      ...(q.meta || {}),
+      ...(patch.meta || {}),
+      variants: q.meta?.variants,
+    });
     if (patch.clearMedia) delete meta.image_urls;
     let next = { ...q, ...patch, meta };
     if (patch.clearMedia) {
       next = withMediaUrlsOnQuestion({ ...next, image_url: null }, []);
+      next = { ...next, meta: stripCropUnlessSkin(next.meta) };
     } else if (patch.image_urls || patch.image_url) {
       next = withMediaUrlsOnQuestion(next, patch.image_urls || [patch.image_url].filter(Boolean));
+      next = { ...next, meta: stripCropUnlessSkin({ ...next.meta, ...(patch.meta || {}) }) };
     }
     if (autoHints || next.meta?.hints_enabled) {
       next = withGeneratedHints(next, {
@@ -630,6 +677,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
       <div className="f-q-media-label">Media</div>
       {activeMediaUrls.length ? (
         <MediaStack
+          key={mediaPreviewToken || activeMediaUrls[0] || 'media'}
           urls={activeMediaUrls}
           editable
           imageCrop={activeMediaMeta?.media_crop}
@@ -1146,6 +1194,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
           ) : null}
           {uploadError ? <div className="f-error">{uploadError}</div> : null}
           <MediaStack
+            key={mediaPreviewToken || activeMediaUrls[0] || 'media-inline'}
             urls={activeMediaUrls}
             editable
             imageCrop={activeMediaMeta?.media_crop}

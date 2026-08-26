@@ -13,6 +13,7 @@ import { readImageAsDataUrl } from '../lib/imageUpload';
 import { mergeQuizSettings } from '../lib/quizSettings';
 import { quizThemeProps } from '../lib/quizThemes';
 import { randomizeQuestion } from '../lib/triviaRemix';
+import { applyPromptTextStyle } from '../lib/richText';
 import { withGeneratedHints } from '../lib/triviaHints';
 import { presenceStatus } from '../lib/triviaPresence';
 import QuizSettingsModal from '../components/QuizSettingsModal';
@@ -390,6 +391,7 @@ export default function Activity() {
         body: { action: 'add_question', quizId, type, patch },
       });
       let nextQ = data.question;
+      const styleFrom = questions[questions.length - 1]?.prompt || '';
       const merged = mergeQuizSettings(quiz?.settings);
       const auto = merged.auto_random_questions;
       const canFill = ['multiple_choice', 'multiple_selection', 'dropdown', 'short_answer', 'fill_blank'].includes(
@@ -404,6 +406,9 @@ export default function Activity() {
             meta: { ...(nextQ.meta || {}), ...(gen.patch.meta || {}) },
           };
         }
+      }
+      if (styleFrom && nextQ?.prompt) {
+        nextQ = { ...nextQ, prompt: applyPromptTextStyle(styleFrom, nextQ.prompt) };
       }
       if (merged.auto_hints) {
         nextQ = withGeneratedHints(nextQ, { enable: true });

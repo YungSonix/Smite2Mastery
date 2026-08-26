@@ -263,3 +263,58 @@ export function applyLink(value, start, end) {
   const urlStart = s + inner.length + 3;
   return { value: next, start: urlStart, end: urlStart + 8 };
 }
+
+/** Plain text from rich/markdown prompts (node-safe, no DOM). */
+export function htmlToPlainText(raw) {
+  return String(raw || '')
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<\/(?:p|div|li|h[1-6])>/gi, '\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/\u00a0/g, ' ')
+    .replace(/[ \t]+\n/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+/**
+ * Copy bold / color / size / emphasis from a styled host prompt onto new prompt text.
+ * Used when adding questions or Change/Random replaces the wording.
+ */
+export function applyPromptTextStyle(styleFromPrompt, newPrompt) {
+  const from = String(styleFromPrompt || '');
+  let next = String(newPrompt || '');
+  if (!next.trim()) return next;
+  // Already richly styled — keep as-is.
+  if (looksLikeHtml(next) && /<(?:strong|b|em|i|u|span)\b/i.test(next) && /style=|<(?:strong|b)\b/i.test(next)) {
+    return next;
+  }
+  if (looksLikeHtml(next)) next = htmlToPlainText(next);
+  if (!looksLikeHtml(from)) return next;
+
+  const color = from.match(/color:\s*([^;:"']+)/i)?.[1]?.trim();
+  const fontSize = from.match(/font-size:\s*([^;:"']+)/i)?.[1]?.trim();
+  const align = from.match(/text-align:\s*([^;:"']+)/i)?.[1]?.trim();
+  const bold = /<(?:strong|b)\b/i.test(from) || /font-weight:\s*(bold|[6-9]00)/i.test(from);
+  const italic = /<(?:em|i)\b/i.test(from) || /font-style:\s*italic/i.test(from);
+  const underline = /<u\b/i.test(from) || /text-decoration:\s*underline/i.test(from);
+
+  let inner = escapeHtml(next);
+  const spanStyles = [];
+  if (color) spanStyles.push(`color: ${color}`);
+  if (fontSize) spanStyles.push(`font-size: ${fontSize}`);
+  if (spanStyles.length) inner = `<span style="${spanStyles.join('; ')}">${inner}</span>`;
+  if (underline) inner = `<u>${inner}</u>`;
+  if (italic) inner = `<em>${inner}</em>`;
+  if (bold) inner = `<strong>${inner}</strong>`;
+
+  const pStyle = align ? ` style="text-align: ${align}"` : '';
+  if (/<p\b/i.test(from) || bold || italic || underline || spanStyles.length) {
+    return `<p${pStyle}>${inner}</p>`;
+  }
+  return inner;
+}
