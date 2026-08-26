@@ -112,7 +112,17 @@ export default function MorePage({ activeTab = DEFAULT_TAB_STATE.more, currentUs
           </View>
         }
       >
-        <GuessEmojiPage onBack={() => setSelectedGame(null)} />
+        <GuessEmojiPage
+          onBack={() => setSelectedGame(null)}
+          onSwitchToProfile={
+            onSwitchToProfile
+              ? () => {
+                  setSelectedGame(null);
+                  onSwitchToProfile();
+                }
+              : null
+          }
+        />
       </Suspense>
     );
   }

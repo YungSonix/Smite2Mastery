@@ -264,11 +264,13 @@ export function MinigamePrimaryButton({ label, onPress, disabled }) {
 }
 
 /** Ghost / secondary action — same chrome as back button (Reveal, Skip, etc.). */
-export function MinigameSecondaryButton({ label, onPress, disabled }) {
+export function MinigameSecondaryButton({ label, onPress, onLongPress, disabled }) {
   return (
     <TouchableOpacity
       style={[shell.secondaryBtn, disabled && shell.secondaryBtnDisabled]}
       onPress={onPress}
+      onLongPress={onLongPress}
+      delayLongPress={380}
       disabled={disabled}
       activeOpacity={0.85}
     >

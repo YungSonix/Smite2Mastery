@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { StyleSheet, Text, View, Platform } from 'react-native';
+import { Image } from 'expo-image';
 import { COLORS } from '../../lib/themeColors';
 import { UI_THEME } from '../../lib/uiTheme';
 import { playMinigameSound } from '../../lib/minigameSounds';
@@ -27,6 +28,26 @@ import {
 } from '../../lib/MinigameShell';
 
 const IS_WEB = Platform.OS === 'web';
+
+/** Metro needs static requires for clue icons under app/data. */
+const CLUE_ICON_SOURCES = {
+  'ankh.svg': require('../data/Minigames/god-emoji-guess/icons/ankh.svg'),
+  'bat.svg': require('../data/Minigames/god-emoji-guess/icons/bat.svg'),
+  'bow.svg': require('../data/Minigames/god-emoji-guess/icons/bow.svg'),
+  'guandao.svg': require('../data/Minigames/god-emoji-guess/icons/guandao.svg'),
+  'honey.svg': require('../data/Minigames/god-emoji-guess/icons/honey.svg'),
+  'jackal.svg': require('../data/Minigames/god-emoji-guess/icons/jackal.svg'),
+  'pluck.svg': require('../data/Minigames/god-emoji-guess/icons/pluck.svg'),
+  'poison.svg': require('../data/Minigames/god-emoji-guess/icons/poison.svg'),
+  'scythe.svg': require('../data/Minigames/god-emoji-guess/icons/scythe.svg'),
+  'sickle.svg': require('../data/Minigames/god-emoji-guess/icons/sickle.svg'),
+  'spear.svg': require('../data/Minigames/god-emoji-guess/icons/spear.svg'),
+  'staff.svg': require('../data/Minigames/god-emoji-guess/icons/staff.svg'),
+  'turret.svg': require('../data/Minigames/god-emoji-guess/icons/turret.svg'),
+  'wall.svg': require('../data/Minigames/god-emoji-guess/icons/wall.svg'),
+  'whip.svg': require('../data/Minigames/god-emoji-guess/icons/whip.svg'),
+  'whirl.svg': require('../data/Minigames/god-emoji-guess/icons/whirl.svg'),
+};
 
 let supabase;
 try {
@@ -85,12 +106,23 @@ function ClueRow({ clues, visibleCount }) {
       {[0, 1, 2].map((i) => {
         const shown = i < visibleCount;
         const clue = clues?.[i];
+        const iconSrc =
+          clue?.kind === 'icon' && clue.file ? CLUE_ICON_SOURCES[clue.file] : null;
         return (
           <View key={i} style={[localStyles.clueSlot, !shown && localStyles.clueSlotHidden]}>
             {shown && clue ? (
-              <Text style={localStyles.clueGlyph} accessibilityLabel={clue.key}>
-                {clue.glyph}
-              </Text>
+              iconSrc ? (
+                <Image
+                  source={iconSrc}
+                  style={localStyles.clueIcon}
+                  contentFit="contain"
+                  accessibilityLabel={clue.key}
+                />
+              ) : (
+                <Text style={localStyles.clueGlyph} accessibilityLabel={clue.key}>
+                  {clue.glyph}
+                </Text>
+              )
             ) : (
               <Text style={localStyles.clueHiddenMark}>?</Text>
             )}
@@ -101,8 +133,8 @@ function ClueRow({ clues, visibleCount }) {
   );
 }
 
-export default function GuessEmojiPage({ onBack = null }) {
-  const { gold } = useMinigameGold();
+export default function GuessEmojiPage({ onBack = null, onSwitchToProfile = null }) {
+  const { gold, refreshGold } = useMinigameGold();
   const [modeId, setModeId] = useState('easy');
   const [target, setTarget] = useState(() => pickEmojiGuessRound('easy'));
   const [visibleCount, setVisibleCount] = useState(1);
@@ -209,6 +241,8 @@ export default function GuessEmojiPage({ onBack = null }) {
       setVisibleCount(1);
       setGuessGodText('');
       setError('');
+      setFeedback('');
+      setFeedbackType('neutral');
     },
     [modeId]
   );
@@ -235,6 +269,17 @@ export default function GuessEmojiPage({ onBack = null }) {
     if (visibleCount >= 3) return;
     setVisibleCount((c) => Math.min(3, c + 1));
     setError('');
+    setFeedback('');
+    setFeedbackType('neutral');
+  }, [roundBusy, target, visibleCount]);
+
+  const handleRevealAll = useCallback(() => {
+    if (roundBusy || !target) return;
+    if (visibleCount >= 3) return;
+    setVisibleCount(3);
+    setError('');
+    setFeedback('');
+    setFeedbackType('neutral');
   }, [roundBusy, target, visibleCount]);
 
   const handleSkip = useCallback(async () => {
@@ -276,20 +321,51 @@ export default function GuessEmojiPage({ onBack = null }) {
         setFeedback(`Correct! ${target.godName} — +${gained} (run ${nextRun}).`);
         setFeedbackType('success');
         playMinigameSound('correct');
+        try {
+          const { awardChallenge, awardGold } = require('../../lib/shopChallenges');
+          // Once per day challenge + uncapped per-correct bonus from clue points.
+          const goldReward = Math.max(5, gained * 8);
+          await Promise.all([
+            awardChallenge('emoji_guess_win').catch(() => null),
+            awardGold(goldReward).catch(() => null),
+          ]);
+          await refreshGold?.();
+        } catch (_) {}
         const prev = target;
         await pauseMinigameRound(setRoundBusy);
         startNextRound(prev.godName);
         return;
       }
 
-      setFeedback(`Wrong — ${target.godName}. Run ended at ${runScore}.`);
-      setFeedbackType('error');
       playMinigameSound('incorrect');
-      await endRun(runScore);
-      await pauseMinigameRound(setRoundBusy);
-      startNextRound(target.godName);
+      // Hard: one wrong ends the run and reveals the answer.
+      // Easy / Classic: keep the run — try again or Skip (do not leak the answer).
+      if (mode.oneSubmit) {
+        setFeedback(`Wrong — ${target.godName}. Run ended at ${runScore}.`);
+        setFeedbackType('error');
+        await endRun(runScore);
+        await pauseMinigameRound(setRoundBusy);
+        startNextRound(target.godName);
+        return;
+      }
+
+      setFeedback('Wrong — try again, reveal more clues, or Skip.');
+      setFeedbackType('error');
+      setGuessGodText('');
     },
-    [target, roundBusy, guessGodText, poolGods, modeId, visibleCount, runScore, startNextRound, endRun]
+    [
+      target,
+      roundBusy,
+      guessGodText,
+      poolGods,
+      modeId,
+      mode.oneSubmit,
+      visibleCount,
+      runScore,
+      startNextRound,
+      endRun,
+      refreshGold,
+    ]
   );
 
   const modeSubtitle =
@@ -354,6 +430,7 @@ export default function GuessEmojiPage({ onBack = null }) {
               <MinigameSecondaryButton
                 label={visibleCount >= 3 ? 'All clues shown' : 'Reveal next'}
                 onPress={handleReveal}
+                onLongPress={handleRevealAll}
                 disabled={roundBusy || visibleCount >= 3}
               />
             </View>
@@ -361,8 +438,28 @@ export default function GuessEmojiPage({ onBack = null }) {
               <MinigameSecondaryButton label="Skip" onPress={handleSkip} disabled={roundBusy} />
             </View>
           </View>
+          {visibleCount < 3 ? (
+            <Text style={localStyles.hint}>Long-press Reveal to show all clues (worth 1 pt).</Text>
+          ) : null}
           {mode.oneSubmit ? (
             <Text style={localStyles.hint}>Hard: one wrong answer ends the run.</Text>
+          ) : (
+            <Text style={localStyles.hint}>Easy/Classic: wrong guesses do not end the run — try again or Skip.</Text>
+          )}
+          {!currentUser ? (
+            <View style={localStyles.loginPrompt}>
+              <Text style={localStyles.loginPromptText}>
+                Sign in to sync gold, save your best run, and appear on the leaderboard.
+              </Text>
+              {typeof onSwitchToProfile === 'function' ? (
+                <MinigameSecondaryButton
+                  label="Go to Profile to sign in"
+                  onPress={onSwitchToProfile}
+                />
+              ) : (
+                <Text style={localStyles.hint}>Open More → Profile to sign in.</Text>
+              )}
+            </View>
           ) : null}
         </>
       )}
@@ -450,5 +547,23 @@ const localStyles = StyleSheet.create({
     color: UI_THEME.textMuted,
     fontSize: 12,
     marginBottom: 10,
+  },
+  loginPrompt: {
+    marginBottom: 12,
+    padding: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: UI_THEME.borderCyan,
+    backgroundColor: COLORS.bgDeep,
+    gap: 8,
+  },
+  loginPromptText: {
+    color: UI_THEME.textBody,
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  clueIcon: {
+    width: IS_WEB ? 56 : 48,
+    height: IS_WEB ? 56 : 48,
   },
 });
