@@ -5589,3 +5589,249 @@ label.f-file-btn:hover {
   pointer-events: none;
 }
 
+/* Responses: Sort students menu (Formative-style) */
+.f-sort-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.f-sort-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.f-sort-trigger.open {
+  background: var(--f-blue);
+  color: var(--f-on-accent, #fff);
+}
+
+.f-sort-az {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  opacity: 0.85;
+}
+
+.f-sort-chevron {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.f-sort-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 40;
+  min-width: 220px;
+  max-height: min(420px, 70vh);
+  overflow: auto;
+  padding: 8px 0;
+  background: var(--f-card, #fff);
+  border: 1px solid var(--f-blue-border);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+}
+
+.f-sort-menu::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: 18px;
+  width: 12px;
+  height: 12px;
+  background: var(--f-card, #fff);
+  border-left: 1px solid var(--f-blue-border);
+  border-top: 1px solid var(--f-blue-border);
+  transform: rotate(45deg);
+}
+
+.f-sort-menu-label {
+  padding: 4px 14px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--f-muted);
+  text-transform: none;
+}
+
+.f-sort-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  color: var(--f-text);
+  font: inherit;
+  font-size: 13px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.f-sort-menu button:hover {
+  background: color-mix(in srgb, var(--f-blue) 12%, transparent);
+}
+
+.f-sort-menu button.is-active {
+  background: color-mix(in srgb, var(--f-blue) 18%, transparent);
+  color: var(--f-blue);
+  font-weight: 700;
+}
+
+/* Clickable question column headers */
+.f-q-col-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 22px;
+  margin: 0;
+  padding: 2px 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.f-q-col-btn:hover {
+  background: color-mix(in srgb, var(--f-blue) 22%, transparent);
+  color: var(--f-blue);
+}
+
+.f-grid .col-q.is-q-active,
+.f-grid th.col-q.is-q-active {
+  background: color-mix(in srgb, var(--f-blue) 18%, var(--f-card));
+}
+
+.f-grid .col-q.is-q-active .f-q-col-btn {
+  color: var(--f-blue);
+}
+
+/* Question review side panel */
+.f-q-review-panel {
+  width: min(480px, 52vw);
+}
+
+.f-q-review-back {
+  flex-shrink: 0;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 999px;
+}
+
+.f-q-review-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+  padding: 8px 12px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--f-border);
+}
+
+.f-q-review-tab {
+  flex: 0 0 auto;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--f-muted);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.f-q-review-tab.is-totals {
+  min-width: auto;
+  padding: 0 10px;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+
+.f-q-review-tab:hover {
+  background: color-mix(in srgb, var(--f-blue) 12%, transparent);
+  color: var(--f-blue);
+}
+
+.f-q-review-tab.is-active {
+  background: color-mix(in srgb, var(--f-blue) 18%, transparent);
+  border-color: var(--f-blue-border);
+  color: var(--f-blue);
+}
+
+.f-q-review-meta {
+  padding: 12px 16px 4px;
+  border-bottom: 1px solid var(--f-border);
+}
+
+.f-q-review-prompt {
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--f-text);
+  line-height: 1.35;
+}
+
+.f-q-review-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 16px;
+}
+
+.f-q-review-card {
+  cursor: pointer;
+}
+
+.f-q-review-card:hover {
+  border-color: var(--f-blue-border);
+}
+
+.f-q-review-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.f-q-review-names {
+  min-width: 0;
+}
+
+.f-q-review-names .f-student-name {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.f-q-review-mark {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--f-muted) 16%, transparent);
+  color: var(--f-muted);
+}
+
+.f-q-review-mark.is-ok {
+  background: color-mix(in srgb, var(--f-teal, #14b8a6) 18%, transparent);
+  color: var(--f-teal, #0f766e);
+}
+
+.f-q-review-mark.is-bad {
+  background: color-mix(in srgb, var(--f-red-bar, #e07a6a) 18%, transparent);
+  color: var(--f-red-bar, #c45c4a);
+}
+
+@media (max-width: 720px) {
+  .f-q-review-panel {
+    width: 100%;
+  }
+}
+

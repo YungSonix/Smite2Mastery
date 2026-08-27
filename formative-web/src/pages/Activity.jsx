@@ -7,6 +7,8 @@ import InsightsPanel from '../components/InsightsPanel';
 import ResponsesGrid from '../components/ResponsesGrid';
 import StudentResponsePanel from '../components/StudentResponsePanel';
 import LiveSessionPanel from '../components/LiveSessionPanel';
+import QuestionReviewPanel from '../components/QuestionReviewPanel';
+import SortStudentsMenu from '../components/SortStudentsMenu';
 import { hostApi, takeUrl, activityHref, previewUrl } from '../lib/api';
 import { downloadResponsesCsv } from '../lib/exportResponses';
 import { readImageAsDataUrl } from '../lib/imageUpload';
@@ -16,6 +18,7 @@ import { randomizeQuestion } from '../lib/triviaRemix';
 import { applyPromptTextStyle } from '../lib/richText';
 import { withGeneratedHints } from '../lib/triviaHints';
 import { presenceStatus } from '../lib/triviaPresence';
+import { scoredInsightQuestions } from '../lib/triviaInsights';
 import QuizSettingsModal from '../components/QuizSettingsModal';
 import {
   clearEditorDraft,
@@ -67,6 +70,8 @@ export default function Activity() {
   const [quizSettingsOpen, setQuizSettingsOpen] = useState(false);
   const [selectedResponse, setSelectedResponse] = useState(null);
   const [selectedSession, setSelectedSession] = useState(null);
+  const [selectedQuestionId, setSelectedQuestionId] = useState(null);
+  const [responseSort, setResponseSort] = useState('submitted_desc');
   const [saving, setSaving] = useState(false);
   const [autoSaveHint, setAutoSaveHint] = useState('');
   const [quizDirty, setQuizDirty] = useState(false);
@@ -863,12 +868,14 @@ export default function Activity() {
       )}
 
       {tab === 'responses' && (
-        <div className={`f-responses ${selectedResponse || selectedSession ? 'has-panel' : ''}`}>
+        <div
+          className={`f-responses ${
+            selectedResponse || selectedSession || selectedQuestionId ? 'has-panel' : ''
+          }`}
+        >
           <div className="f-responses-main">
             <div className="f-responses-tools">
-              <button type="button" className="f-outline-btn" disabled>
-                AZ Active
-              </button>
+              <SortStudentsMenu value={responseSort} onChange={setResponseSort} />
               <button type="button" className="f-outline-btn" disabled>
                 Grading method
               </button>
@@ -890,14 +897,23 @@ export default function Activity() {
               responses={responses}
               sessions={sessions}
               sessionsError={sessionsError}
+              sortBy={responseSort}
               selectedId={selectedResponse?.id}
               selectedLiveId={selectedSession?.id}
+              selectedQuestionId={selectedQuestionId}
               onSelect={(r) => {
                 setSelectedSession(null);
+                setSelectedQuestionId(null);
                 setSelectedResponse(r);
+              }}
+              onQuestionSelect={(q) => {
+                setSelectedSession(null);
+                setSelectedResponse(null);
+                setSelectedQuestionId(q.id);
               }}
               onLiveSelect={async (s) => {
                 setSelectedResponse(null);
+                setSelectedQuestionId(null);
                 setSelectedSession(s);
                 try {
                   const r = await hostApi(
@@ -922,6 +938,22 @@ export default function Activity() {
               questions={questions}
               onClose={() => setSelectedSession(null)}
               onSelect={setSelectedSession}
+            />
+          ) : null}
+          {selectedQuestionId && !selectedResponse && !selectedSession ? (
+            <QuestionReviewPanel
+              question={(questions || []).find((q) => q.id === selectedQuestionId)}
+              questionIndex={scoredInsightQuestions(questions).findIndex(
+                (q) => q.id === selectedQuestionId
+              )}
+              scoredQuestions={scoredInsightQuestions(questions)}
+              responses={responses}
+              onClose={() => setSelectedQuestionId(null)}
+              onSelectQuestion={(q) => setSelectedQuestionId(q.id)}
+              onSelectStudent={(r) => {
+                setSelectedQuestionId(null);
+                setSelectedResponse(r);
+              }}
             />
           ) : null}
           {selectedResponse ? (

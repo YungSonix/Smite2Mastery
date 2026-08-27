@@ -5,79 +5,13 @@ import { formatIp } from '../lib/quizSettings';
 import { typeLabel } from '../lib/questionTypes';
 import { promptPlain } from '../lib/promptPlain';
 import { formatDuration, responseDurationMs } from '../lib/triviaInsights';
-
-const CONTENT_TYPES = new Set(['image', 'content', 'audio', 'video', 'embed']);
-
-function isGate(q) {
-  return Boolean(q?.meta?.is_discord_gate || q?.meta?.is_ingame_gate);
-}
-
-function isScoredQuestion(q) {
-  if (!q || CONTENT_TYPES.has(q.type) || isGate(q)) return false;
-  return Number(q.points) > 0;
-}
-
-function formatAnswer(q, raw, response) {
-  if (q?.meta?.is_discord_gate) {
-    return response?.discord_username || (typeof raw === 'string' && raw.trim() ? raw : null);
-  }
-  if (q?.meta?.is_ingame_gate) {
-    return response?.ingame_name || (typeof raw === 'string' && raw.trim() ? raw : null);
-  }
-  if (raw == null || raw === '') return null;
-  const type = q?.type;
-  if (type === 'multiple_choice' || type === 'true_false' || type === 'dropdown') {
-    const opts = Array.isArray(q.options) ? q.options : [];
-    if (typeof raw === 'number' || (typeof raw === 'string' && /^\d+$/.test(raw))) {
-      const idx = Number(raw);
-      return opts[idx] ?? String(raw);
-    }
-    return String(raw);
-  }
-  if (type === 'multiple_selection') {
-    const opts = Array.isArray(q.options) ? q.options : [];
-    const idxs = Array.isArray(raw)
-      ? raw.map(Number)
-      : String(raw)
-          .split(',')
-          .map((x) => Number(x.trim()))
-          .filter((n) => Number.isFinite(n));
-    if (!idxs.length) return String(raw);
-    return idxs.map((i) => opts[i] ?? `#${i}`).join(', ');
-  }
-  if (type === 'matching' || type === 'categorize') {
-    if (raw && typeof raw === 'object') {
-      return Object.entries(raw)
-        .map(([k, v]) => `${k} → ${Array.isArray(v) ? v.join(', ') : v}`)
-        .join('\n');
-    }
-    return String(raw);
-  }
-  if (type === 'ordering' || type === 'drag_drop') {
-    if (Array.isArray(raw)) return raw.map((s, i) => `${i + 1}. ${s}`).join('\n');
-    return String(raw);
-  }
-  if (type === 'hot_spot' && raw && typeof raw === 'object') {
-    return `x: ${raw.x}, y: ${raw.y}`;
-  }
-  if (typeof raw === 'object') {
-    try {
-      return JSON.stringify(raw, null, 2);
-    } catch {
-      return String(raw);
-    }
-  }
-  return String(raw);
-}
-
-/** Convert stored per_question value (0/1 fraction or points) to earned points. */
-function earnedFromStored(stored, maxPts) {
-  if (stored == null || stored === '') return null;
-  const n = Number(stored);
-  if (!Number.isFinite(n)) return null;
-  if (maxPts > 0 && n >= 0 && n <= 1) return n * maxPts;
-  return n;
-}
+import {
+  earnedFromStored,
+  formatResponseAnswer,
+  isContentQuestion,
+  isGateQuestion,
+  isScoredQuestion,
+} from '../lib/formatResponseAnswer';
 
 function MenuIcon({ name }) {
   const props = {
@@ -183,7 +117,7 @@ export default function StudentResponsePanel({
   const reviewQuestions = useMemo(
     () =>
       (questions || []).filter(
-        (q) => !CONTENT_TYPES.has(q.type) || response?.answers?.[q.id] != null
+        (q) => !isContentQuestion(q) || response?.answers?.[q.id] != null
       ),
     [questions, response]
   );
@@ -413,7 +347,7 @@ export default function StudentResponsePanel({
 
       <div className="f-student-panel-body">
         {reviewQuestions.map((q, i) => {
-          const answerText = formatAnswer(q, response.answers?.[q.id], response);
+          const answerText = formatResponseAnswer(q, response.answers?.[q.id], response);
           const scored = isScoredQuestion(q);
           const maxPts = Number(q.points) || 0;
           const stored = response.per_question?.[q.id];
@@ -460,7 +394,7 @@ export default function StudentResponsePanel({
                     />
                     <span>/ {maxPts}pt</span>
                   </label>
-                ) : isGate(q) ? (
+                ) : isGateQuestion(q) ? (
                   <span className="f-muted">Identity</span>
                 ) : (
                   <span className="f-muted">—</span>
