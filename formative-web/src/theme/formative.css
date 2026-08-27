@@ -2449,13 +2449,10 @@ label.f-file-btn:hover {
   flex: 0 0 auto;
 }
 
+/* Centered in viewport via .f-overlay (not absolute under the Random question button). */
 .f-random-style-panel {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  z-index: 50;
   width: min(720px, 94vw);
-  max-height: min(520px, 78vh);
+  max-height: min(78vh, 640px);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -2528,6 +2525,18 @@ label.f-file-btn:hover {
 .f-random-style-side h4 {
   margin: 0 0 8px;
   color: var(--f-blue);
+}
+
+@media (max-width: 840px) {
+  .f-random-style-panel-body {
+    grid-template-columns: 1fr;
+  }
+  .f-random-style-side {
+    display: none;
+  }
+  .f-random-style-sections {
+    grid-template-columns: 1fr;
+  }
 }
 
 .f-random-style-menu {

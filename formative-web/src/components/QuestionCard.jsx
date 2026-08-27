@@ -84,6 +84,15 @@ function RandomQuestionPicker({ onPick, fillBlank }) {
   }, {});
   const quick = (fillBlank ? styles : RANDOM_QUESTION_QUICK.map((id) => styles.find((s) => s.id === id)).filter(Boolean));
 
+  useEffect(() => {
+    if (!open) return undefined;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
+
   return (
     <div className="f-random-style-wrap">
       <button
@@ -96,71 +105,78 @@ function RandomQuestionPicker({ onPick, fillBlank }) {
         Random question
       </button>
       {open ? (
-        <div className="f-random-style-panel" role="menu">
-          <div className="f-random-style-panel-head">
-            <span>Question style</span>
-            <button type="button" className="f-icon-btn" aria-label="Close" onClick={() => setOpen(false)}>
-              ✕
-            </button>
-          </div>
-          <div className="f-random-style-panel-body">
-            <div className="f-random-style-sections">
-              {Object.entries(byGroup).map(([group, items]) => (
-                <section className="f-random-style-section" key={group}>
-                  <h4>{group}</h4>
-                  <div className="f-random-style-section-grid">
-                    {items.map((s) => (
-                      <button
-                        key={s.id}
-                        type="button"
-                        className="f-add-item"
-                        role="menuitem"
-                        onClick={() => {
-                          setOpen(false);
-                          onPick(s.id);
-                        }}
-                      >
-                        <span className="f-random-style-label">{s.label}</span>
-                        {s.blurb ? <span className="f-random-style-blurb">{s.blurb}</span> : null}
-                      </button>
-                    ))}
-                  </div>
-                </section>
-              ))}
-            </div>
-            <aside className="f-random-style-side">
-              <h4>Templates</h4>
-              <p>Pick a style to roll a fresh question with matching answers and media when the catalog has it.</p>
-            </aside>
-          </div>
-          <div className="f-add-footer">
-            <div className="f-quickbar">
-              <button
-                type="button"
-                className="plus"
-                aria-label="Pick first style"
-                onClick={() => {
-                  const first = styles[0];
-                  if (!first) return;
-                  setOpen(false);
-                  onPick(first.id);
-                }}
-              >
-                +
+        <div className="f-overlay" onClick={() => setOpen(false)} role="presentation">
+          <div
+            className="f-random-style-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Question style"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="f-random-style-panel-head">
+              <span>Question style</span>
+              <button type="button" className="f-icon-btn" aria-label="Close" onClick={() => setOpen(false)}>
+                ✕
               </button>
-              {quick.map((s) => (
+            </div>
+            <div className="f-random-style-panel-body">
+              <div className="f-random-style-sections">
+                {Object.entries(byGroup).map(([group, items]) => (
+                  <section className="f-random-style-section" key={group}>
+                    <h4>{group}</h4>
+                    <div className="f-random-style-section-grid">
+                      {items.map((s) => (
+                        <button
+                          key={s.id}
+                          type="button"
+                          className="f-add-item"
+                          onClick={() => {
+                            setOpen(false);
+                            onPick(s.id);
+                          }}
+                        >
+                          <span className="f-random-style-label">{s.label}</span>
+                          {s.blurb ? <span className="f-random-style-blurb">{s.blurb}</span> : null}
+                        </button>
+                      ))}
+                    </div>
+                  </section>
+                ))}
+              </div>
+              <aside className="f-random-style-side">
+                <h4>Templates</h4>
+                <p>Pick a style to roll a fresh question with matching answers and media when the catalog has it.</p>
+              </aside>
+            </div>
+            <div className="f-add-footer">
+              <div className="f-quickbar">
                 <button
-                  key={s.id}
                   type="button"
-                  className="f-quick-btn"
+                  className="plus"
+                  aria-label="Pick first style"
                   onClick={() => {
+                    const first = styles[0];
+                    if (!first) return;
                     setOpen(false);
-                    onPick(s.id);
+                    onPick(first.id);
                   }}
                 >
-                  {s.label.replace(/^Guess (the|from) /i, '').replace(/^Who /i, '')}
+                  +
                 </button>
-              ))}
+                {quick.map((s) => (
+                  <button
+                    key={s.id}
+                    type="button"
+                    className="f-quick-btn"
+                    onClick={() => {
+                      setOpen(false);
+                      onPick(s.id);
+                    }}
+                  >
+                    {s.label.replace(/^Guess (the|from) /i, '').replace(/^Who /i, '')}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
