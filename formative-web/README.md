@@ -2,7 +2,7 @@
 
 Contest host for Smite Scroll. Served at `/trivia` on the same Vercel project as the companion app.
 
-Players only get a take link. Hosts and helpers get the editor, Responses, Insights, Analytics, and Assign settings.
+Players only get a take link. Hosts and helpers get the editor, Responses, Insights, Analytics, and Assign settings. The editor **eye** button opens a **host preview** (`/activity/:id/preview`) with every question and correct answers — not a timed student take.
 
 ## What is stored where
 

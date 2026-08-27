@@ -7,7 +7,7 @@ import InsightsPanel from '../components/InsightsPanel';
 import ResponsesGrid from '../components/ResponsesGrid';
 import StudentResponsePanel from '../components/StudentResponsePanel';
 import LiveSessionPanel from '../components/LiveSessionPanel';
-import { hostApi, takeUrl, activityHref } from '../lib/api';
+import { hostApi, takeUrl, activityHref, previewUrl } from '../lib/api';
 import { downloadResponsesCsv } from '../lib/exportResponses';
 import { readImageAsDataUrl } from '../lib/imageUpload';
 import { mergeQuizSettings } from '../lib/quizSettings';
@@ -602,8 +602,8 @@ export default function Activity() {
           <button
             type="button"
             className="f-icon-btn"
-            title="Preview"
-            onClick={() => window.open(link, '_blank')}
+            title="Preview all questions and answers"
+            onClick={() => window.open(previewUrl(quiz), '_blank')}
           >
             👁
           </button>

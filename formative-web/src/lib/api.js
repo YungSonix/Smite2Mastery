@@ -120,6 +120,16 @@ export function activityHref(quiz) {
   return `/activity/${encodeURIComponent(key || '')}`;
 }
 
+/** Host-only preview of all questions + answers (not a student take). */
+export function previewHref(quiz) {
+  return `${activityHref(quiz)}/preview`;
+}
+
+export function previewUrl(quiz) {
+  if (typeof window === 'undefined') return `/trivia${previewHref(quiz)}`;
+  return `${window.location.origin}/trivia${previewHref(quiz)}`;
+}
+
 export function slugify() {
   const alphabet = 'abcdefghjkmnpqrstuvwxyz23456789';
   let out = '';

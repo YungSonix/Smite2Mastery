@@ -3,10 +3,10 @@ import { getHostSession } from './lib/auth';
 import Activity from './pages/Activity';
 import Analytics from './pages/Analytics';
 import Home from './pages/Home';
+import HostPreview from './pages/HostPreview';
 import Instructions from './pages/Instructions';
 import Login from './pages/Login';
 import TakeQuiz from './pages/TakeQuiz';
-
 function RequireHost({ children }) {
   const session = getHostSession();
   if (!session) return <Navigate to="/login" replace />;
@@ -39,6 +39,14 @@ export default function App() {
         element={
           <RequireHost>
             <Instructions />
+          </RequireHost>
+        }
+      />
+      <Route
+        path="/activity/:quizId/preview"
+        element={
+          <RequireHost>
+            <HostPreview />
           </RequireHost>
         }
       />
