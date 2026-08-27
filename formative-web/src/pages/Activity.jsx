@@ -12,7 +12,7 @@ import SortStudentsMenu from '../components/SortStudentsMenu';
 import { hostApi, takeUrl, activityHref, previewUrl } from '../lib/api';
 import { downloadResponsesCsv } from '../lib/exportResponses';
 import { readImageAsDataUrl } from '../lib/imageUpload';
-import { mergeQuizSettings } from '../lib/quizSettings';
+import { mergeQuizSettings, mergeDraftQuizSettings } from '../lib/quizSettings';
 import { quizThemeProps } from '../lib/quizThemes';
 import { randomizeQuestion } from '../lib/triviaRemix';
 import { applyPromptTextStyle } from '../lib/richText';
@@ -48,6 +48,49 @@ function fromLocalInput(value) {
   const d = new Date(value);
   if (Number.isNaN(d.getTime())) return '';
   return d.toISOString();
+}
+
+function DeferredNumberInput({ value, onCommit, min = 0, step = 1, ...props }) {
+  const [draft, setDraft] = useState(null);
+  const display = draft !== null ? draft : String(value ?? '');
+
+  return (
+    <input
+      type="number"
+      min={min}
+      step={step}
+      value={display}
+      onFocus={() => setDraft(String(value ?? ''))}
+      onChange={(e) => setDraft(e.target.value)}
+      onBlur={() => {
+        const raw = draft ?? String(value ?? '');
+        setDraft(null);
+        const n = Math.max(min, Number(raw) || 0);
+        if (n !== value) onCommit(n);
+      }}
+      {...props}
+    />
+  );
+}
+
+function DeferredDatetimeInput({ isoValue, onCommit }) {
+  const [draft, setDraft] = useState(null);
+  const display = draft !== null ? draft : toLocalInput(isoValue);
+
+  return (
+    <input
+      type="datetime-local"
+      value={display}
+      onFocus={() => setDraft(toLocalInput(isoValue))}
+      onChange={(e) => setDraft(e.target.value)}
+      onBlur={() => {
+        const raw = draft ?? toLocalInput(isoValue);
+        setDraft(null);
+        const iso = fromLocalInput(raw);
+        if (iso !== (isoValue || '')) onCommit(iso);
+      }}
+    />
+  );
 }
 
 export default function Activity() {
@@ -124,7 +167,7 @@ export default function Activity() {
           setQuiz({
             ...data.quiz,
             ...draft.quiz,
-            settings: { ...(data.quiz.settings || {}), ...(draft.quiz.settings || {}) },
+            settings: mergeDraftQuizSettings(data.quiz?.settings, draft.quiz?.settings),
           });
           setQuizDirty(true);
         }
@@ -251,11 +294,12 @@ export default function Activity() {
 
   const saveAll = useCallback(async (source) => {
     if (source && typeof source !== 'string') source = undefined;
-    if (!quiz) return false;
+    const q = quizRef.current;
+    if (!q) return false;
     if (saveLockRef.current) return 'busy';
-    const changed = questions.filter((q) => dirtyIds.includes(q.id));
+    const changed = questions.filter((item) => dirtyIds.includes(item.id));
     const instructionsNow = instructionsLiveRef.current;
-    const instructionsDirty = instructionsNow !== (quiz.settings?.instructions ?? '');
+    const instructionsDirty = instructionsNow !== (q.settings?.instructions ?? '');
     if (!quizDirty && !bannerDirty && !instructionsDirty && !changed.length) return true;
     saveLockRef.current = true;
     setSaving(true);
@@ -263,13 +307,13 @@ export default function Activity() {
     try {
       if (quizDirty || bannerDirty || instructionsDirty) {
         const patch = {
-          title: quiz.title,
+          title: q.title,
           settings: {
-            ...mergeQuizSettings(quiz.settings),
+            ...mergeQuizSettings(q.settings),
             instructions: instructionsNow,
           },
         };
-        if (bannerDirty) patch.banner_url = quiz.banner_url;
+        if (bannerDirty) patch.banner_url = q.banner_url;
         const data = await hostApi('/api/trivia/host', {
           method: 'PUT',
           body: {
@@ -447,7 +491,11 @@ export default function Activity() {
       const ok = await saveAll();
       if (!ok) return;
     }
-    await saveQuizPatch({ is_assigned: true });
+    const q = quizRef.current;
+    await saveQuizPatch({
+      is_assigned: true,
+      settings: mergeQuizSettings(q?.settings),
+    });
     setAssignOpen(true);
   };
 
@@ -544,14 +592,17 @@ export default function Activity() {
   const settings = mergeQuizSettings(quiz?.settings);
 
   const patchSettings = (partial) => {
-    if (!quiz) return;
-    const next = {
-      ...mergeQuizSettings(quiz.settings),
-      ...partial,
-      instructions: instructionsLiveRef.current,
-    };
-    setQuiz({ ...quiz, settings: next });
-    saveQuizPatch({ settings: next });
+    let nextSettings = null;
+    setQuiz((prev) => {
+      if (!prev) return prev;
+      nextSettings = {
+        ...mergeQuizSettings(prev.settings),
+        ...partial,
+        instructions: instructionsLiveRef.current,
+      };
+      return { ...prev, settings: nextSettings };
+    });
+    if (nextSettings) saveQuizPatch({ settings: nextSettings });
   };
 
   const link = quiz ? takeUrl(quiz.slug) : '';
@@ -1152,15 +1203,12 @@ export default function Activity() {
                     Time limit (minutes)
                     <small>0 = no timer. Starts when they click Start.</small>
                   </span>
-                  <input
-                    type="number"
-                    min="0"
-                    step="1"
+                  <DeferredNumberInput
+                    min={0}
+                    step={1}
                     value={Math.round(Number(settings.time_limit_seconds || 0) / 60) || 0}
-                    onChange={(e) =>
-                      patchSettings({
-                        time_limit_seconds: Math.max(0, Number(e.target.value) || 0) * 60,
-                      })
+                    onCommit={(minutes) =>
+                      patchSettings({ time_limit_seconds: Math.max(0, minutes) * 60 })
                     }
                   />
                 </label>
@@ -1169,10 +1217,9 @@ export default function Activity() {
                     Opens
                     <small>Empty = already open. Times use this computer&apos;s timezone.</small>
                   </span>
-                  <input
-                    type="datetime-local"
-                    value={toLocalInput(settings.opens_at)}
-                    onChange={(e) => patchSettings({ opens_at: fromLocalInput(e.target.value) })}
+                  <DeferredDatetimeInput
+                    isoValue={settings.opens_at}
+                    onCommit={(iso) => patchSettings({ opens_at: iso })}
                   />
                 </label>
                 <label className="f-assign-row">
@@ -1180,10 +1227,9 @@ export default function Activity() {
                     Closes
                     <small>Empty = no end.</small>
                   </span>
-                  <input
-                    type="datetime-local"
-                    value={toLocalInput(settings.closes_at)}
-                    onChange={(e) => patchSettings({ closes_at: fromLocalInput(e.target.value) })}
+                  <DeferredDatetimeInput
+                    isoValue={settings.closes_at}
+                    onCommit={(iso) => patchSettings({ closes_at: iso })}
                   />
                 </label>
                 <label className="f-assign-row">

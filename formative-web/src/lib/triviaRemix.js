@@ -520,6 +520,48 @@ function otherGodsAbilityNames(exceptGod, limit = 40) {
   return pool;
 }
 
+/** Same pantheon → role → power type → alphabetical neighbors (godProfiles only). */
+function godProfileNeighbors(profile, limit = 12) {
+  const all = godProfiles().filter((p) => p?.name);
+  const name = profile?.name;
+  if (!name || !all.length) return [];
+  const pantheon = norm(profile.pantheon);
+  const role = norm(profile.role);
+  const type = norm(profile.type);
+  const tiers = [[], [], [], []];
+  const sorted = [...all].sort((a, b) => a.name.localeCompare(b.name));
+  const idx = sorted.findIndex((p) => norm(p.name) === norm(name));
+  if (idx >= 0) {
+    if (idx > 0) tiers[3].push(sorted[idx - 1]);
+    if (idx < sorted.length - 1) tiers[3].push(sorted[idx + 1]);
+  }
+  for (const p of all) {
+    if (norm(p.name) === norm(name)) continue;
+    if (pantheon && norm(p.pantheon) === pantheon) tiers[0].push(p);
+    else if (role && norm(p.role) === role) tiers[1].push(p);
+    else if (type && norm(p.type) === type) tiers[2].push(p);
+  }
+  const out = [];
+  const seen = new Set([norm(name)]);
+  for (const tier of tiers) {
+    for (const p of shuffle(tier)) {
+      if (seen.has(norm(p.name))) continue;
+      seen.add(norm(p.name));
+      out.push(p);
+      if (out.length >= limit) return out;
+    }
+  }
+  return out;
+}
+
+function godClaimAllTrueLabel(god) {
+  return `Actually, all of the above are correct about ${god}`;
+}
+
+const GOD_CLAIM_NONE_LABEL = 'None of the above';
+const GOD_CLAIM_META_ALL_TRUE_RATE = 0.2;
+const GOD_CLAIM_NONE_DISTRACTOR_RATE = 0.18;
+
 /**
  * Build verified true/false claim sentences for one god.
  * Skips CC when kit text wasn't parsed; never invents kit facts.
@@ -541,7 +583,7 @@ function buildGodClaimBank(profile) {
   const pantheon = String(profile.pantheon || '').trim();
   if (pantheon) {
     pushT(`${god} is from the ${pantheon} pantheon`);
-    for (const p of shuffle(pantheonPool()).filter((x) => norm(x) !== norm(pantheon)).slice(0, 4)) {
+    for (const p of shuffle(pantheonPool()).filter((x) => norm(x) !== norm(pantheon)).slice(0, 2)) {
       pushF(`${god} is from the ${p} pantheon`);
     }
   }
@@ -552,7 +594,7 @@ function buildGodClaimBank(profile) {
   );
   if (role) {
     pushT(`${god} is a ${role} god`);
-    for (const r of shuffle(rolePool()).filter((x) => !roleSet.has(norm(x))).slice(0, 3)) {
+    for (const r of shuffle(rolePool()).filter((x) => !roleSet.has(norm(x))).slice(0, 2)) {
       pushF(`${god} is a ${r} god`);
     }
   }
@@ -586,7 +628,7 @@ function buildGodClaimBank(profile) {
   if (profile.isStanceSwitcher && profile.stanceCount >= 2) {
     pushT(`${god} has ${profile.stanceCount} stances`);
     pushT(`${god} is a stance switcher`);
-    for (const n of [profile.stanceCount + 2, 5, 10]) {
+    for (const n of [profile.stanceCount + 1, profile.stanceCount + 2, 5]) {
       if (n !== profile.stanceCount) pushF(`${god} has ${n} stances`);
     }
     pushF(`${god} is not a stance switcher`);
@@ -594,6 +636,44 @@ function buildGodClaimBank(profile) {
     pushT(`${god} is not a stance switcher`);
     pushF(`${god} has 3 stances`);
     pushF(`${god} has 5 stances`);
+  }
+
+  // Plausible wrong kit facts from similar gods (pantheon / role / type neighbors).
+  for (const n of shuffle(godProfileNeighbors(profile, 10))) {
+    const np = String(n.pantheon || '').trim();
+    if (np && norm(np) !== norm(pantheon)) pushF(`${god} is from the ${np} pantheon`);
+
+    const nr = String(n.role || '').trim();
+    if (nr && !roleSet.has(norm(nr))) pushF(`${god} is a ${nr} god`);
+
+    const nt = String(n.type || '').trim();
+    if (/^magical$/i.test(nt) && !/^magical$/i.test(type)) pushF(`${god} is a Magical god`);
+    else if (/^physical$/i.test(nt) && !/^physical$/i.test(type)) pushF(`${god} is a Physical god`);
+
+    const ng = String(n.range || '').trim();
+    if (/^ranged$/i.test(ng) && !/^ranged$/i.test(range)) pushF(`${god} is Ranged`);
+    else if (/^melee$/i.test(ng) && !/^melee$/i.test(range)) pushF(`${god} is Melee`);
+
+    if (n.hasAspect !== profile.hasAspect) {
+      pushF(n.hasAspect ? `${god} has an Aspect` : `${god} does not have an Aspect`);
+    }
+
+    if (n.isStanceSwitcher && n.stanceCount >= 2 && !profile.isStanceSwitcher) {
+      pushF(`${god} has ${n.stanceCount} stances`);
+      pushF(`${god} is a stance switcher`);
+    } else if (profile.isStanceSwitcher && profile.stanceCount >= 2 && !n.isStanceSwitcher) {
+      pushF(`${god} is not a stance switcher`);
+      if (n.stanceCount >= 2 && n.stanceCount !== profile.stanceCount) {
+        pushF(`${god} has ${n.stanceCount} stances`);
+      }
+    }
+
+    if (profile.ccParsed && n.ccParsed && Array.isArray(n.ccs)) {
+      const have = new Set((profile.ccs || []).map(norm));
+      for (const id of n.ccs) {
+        if (!have.has(norm(id))) pushF(`${god} has ${claimCcPhrase(id)}`);
+      }
+    }
   }
 
   // Kit size: slots + passive (fair for Discord). Inflated named counts are false near-misses.
@@ -641,12 +721,15 @@ const GOD_CLAIM_CORRECT_PROMPTS = [
   (g) => `Which of these is true about ${g}?`,
   (g) => `Choose the answer that is correct about ${g}`,
   (g) => `Surely you know ${g} — which claim is actually true?`,
+  (g) => `One of these about ${g} is real. Pick it.`,
 ];
 
 const GOD_CLAIM_INCORRECT_PROMPTS = [
   (g) => `Which of these is NOT true about ${g}?`,
   (g) => `Choose the answer that is not correct about ${g}`,
   (g) => `Pick the claim that is wrong about ${g}`,
+  (g) => `Spot the lie about ${g}`,
+  (g) => `${g} facts — which one is bogus?`,
 ];
 
 function isGodClaimCorrectPrompt(source) {
@@ -727,8 +810,8 @@ function packGodClaimMc({
 }
 
 /**
- * god_claim_correct — one true claim + false near-misses.
- * god_claim_incorrect — one false claim + true facts (multi only when pools allow).
+ * god_claim_correct — one true claim + false near-misses (optional "None of the above" trap).
+ * god_claim_incorrect — one false claim + true facts, or meta-trick when every option is true.
  */
 function makeGodClaimQuestion({
   mode = 'correct',
@@ -760,12 +843,48 @@ function makeGodClaimQuestion({
       const promptImpliesMulti = /answers that (?:are|aren't)|choose the answers/i.test(
         String(keepPrompt || '')
       );
-      // Random answers on a singular "NOT true" prompt stays single-select.
       const multiOk =
         allowMulti &&
         bank.falseClaims.length >= 2 &&
         bank.trueClaims.length >= 2 &&
         (promptImpliesMulti || (!keepPrompt && Math.random() < 0.28));
+
+      const metaAllTrueOk =
+        !keepPrompt &&
+        !multiOk &&
+        !promptImpliesMulti &&
+        Math.random() < GOD_CLAIM_META_ALL_TRUE_RATE &&
+        bank.trueClaims.length >= want - 1;
+      if (metaAllTrueOk) {
+        const metaLabel = godClaimAllTrueLabel(cand.name);
+        const trueDistractors = pickDistinct(
+          bank.trueClaims,
+          want - 1,
+          new Set([norm(metaLabel)])
+        );
+        if (trueDistractors.length >= want - 1) {
+          const prompt = pickOne(GOD_CLAIM_INCORRECT_PROMPTS)(cand.name);
+          const hit = packGodClaimMc({
+            prompt,
+            correctLabels: [metaLabel],
+            distractors: trueDistractors,
+            count: want,
+            type: 'multiple_choice',
+            extraMeta: {
+              remix_kind: 'god_claim_incorrect',
+              hint_context: {
+                god: cand.name,
+                mode: 'incorrect',
+                trick: 'meta_all_true',
+                correct_claims: [metaLabel],
+              },
+            },
+          });
+          if (hit?.patch) return hit;
+        }
+      }
+
+      // Random answers on a singular "NOT true" prompt stays single-select.
       const correctLabels = multiOk
         ? pickDistinct(bank.falseClaims, Math.min(2, bank.falseClaims.length), new Set())
         : [pickOne(bank.falseClaims)];
@@ -801,11 +920,14 @@ function makeGodClaimQuestion({
 
     // correct mode — always single true answer for reliability
     const trueOne = pickOne(bank.trueClaims);
-    const distractors = pickDistinct(bank.falseClaims, want - 1, new Set([norm(trueOne)]));
-    if (distractors.length < want - 1) {
+    const useNoneDistractor = !keepPrompt && Math.random() < GOD_CLAIM_NONE_DISTRACTOR_RATE;
+    const falseNeed = useNoneDistractor ? want - 2 : want - 1;
+    const distractors = pickDistinct(bank.falseClaims, falseNeed, new Set([norm(trueOne)]));
+    if (distractors.length < falseNeed) {
       if (lockGod) break;
       continue;
     }
+    if (useNoneDistractor) distractors.push(GOD_CLAIM_NONE_LABEL);
     const prompt = keepPrompt || pickOne(GOD_CLAIM_CORRECT_PROMPTS)(cand.name);
     const hit = packGodClaimMc({
       prompt,
@@ -818,6 +940,7 @@ function makeGodClaimQuestion({
         hint_context: {
           god: cand.name,
           mode: 'correct',
+          trick: useNoneDistractor ? 'none_distractor' : null,
           correct_claims: [trueOne],
         },
       },
@@ -828,11 +951,11 @@ function makeGodClaimQuestion({
   return null;
 }
 
-function makeGodClaimCorrectQuestion(opts = {}) {
+export function makeGodClaimCorrectQuestion(opts = {}) {
   return makeGodClaimQuestion({ ...opts, mode: 'correct' });
 }
 
-function makeGodClaimIncorrectQuestion(opts = {}) {
+export function makeGodClaimIncorrectQuestion(opts = {}) {
   return makeGodClaimQuestion({ ...opts, mode: 'incorrect' });
 }
 
@@ -2435,7 +2558,7 @@ export const RANDOM_QUESTION_STYLES = [
   {
     id: 'god_claim_incorrect',
     label: 'Not true about this god',
-    blurb: 'Which claim is wrong about a named god (multi when two solid fakes exist)',
+    blurb: 'Which claim is wrong about a named god — neighbor near-misses and occasional meta-trick when all listed facts are true',
     group: 'Gods',
   },
   {

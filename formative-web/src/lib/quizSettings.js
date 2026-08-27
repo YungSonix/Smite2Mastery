@@ -61,3 +61,35 @@ export function quizWindowState(settings, nowMs = Date.now()) {
 export function mergeQuizSettings(settings) {
   return { ...DEFAULT_QUIZ_SETTINGS, ...(settings && typeof settings === 'object' ? settings : {}) };
 }
+
+/** Assign-modal fields — saved to Supabase immediately, not via editor draft. */
+export const ASSIGN_SETTINGS_KEYS = [
+  'opens_at',
+  'closes_at',
+  'time_limit_seconds',
+  'allow_retake',
+  'after_submission',
+  'show_scores',
+  'show_answers',
+];
+
+/** Merge draft + server settings; server assign fields always win. */
+export function mergeDraftQuizSettings(serverSettings, draftSettings) {
+  const merged = {
+    ...mergeQuizSettings(draftSettings),
+    ...mergeQuizSettings(serverSettings),
+  };
+  for (const key of ASSIGN_SETTINGS_KEYS) {
+    if (serverSettings && Object.prototype.hasOwnProperty.call(serverSettings, key)) {
+      merged[key] = serverSettings[key];
+    }
+  }
+  return merged;
+}
+
+export function stripAssignSettings(settings) {
+  if (!settings || typeof settings !== 'object') return settings;
+  const next = { ...settings };
+  for (const key of ASSIGN_SETTINGS_KEYS) delete next[key];
+  return next;
+}

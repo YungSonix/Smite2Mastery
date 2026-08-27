@@ -1,3 +1,5 @@
+import { stripAssignSettings } from './quizSettings';
+
 const LS_PREFIX = 'scroll_trivia_editor_draft:';
 const IDB_NAME = 'scroll_trivia_editor_drafts';
 const IDB_STORE = 'drafts';
@@ -36,16 +38,24 @@ function stripQuestionMedia(q) {
   return next;
 }
 
+function stripAssignFromQuiz(quiz) {
+  if (!quiz || typeof quiz !== 'object') return quiz;
+  return {
+    ...quiz,
+    settings: stripAssignSettings(quiz.settings),
+  };
+}
+
 export function sanitizeEditorDraft(payload) {
   return {
     ...payload,
     lite: true,
     questions: (payload.questions || []).map(stripQuestionMedia),
     quiz: payload.quiz
-      ? {
+      ? stripAssignFromQuiz({
           ...payload.quiz,
           banner_url: isHeavyUrl(payload.quiz.banner_url) ? null : payload.quiz.banner_url,
-        }
+        })
       : null,
   };
 }
@@ -150,12 +160,16 @@ export function shouldPreferServerOverDraft(draft, quiz, questions) {
 /** Full draft in IndexedDB (~50MB+); lite text-only copy in localStorage when it fits. */
 export async function saveEditorDraft(quizId, payload) {
   const key = draftKey(quizId);
-  const lite = sanitizeEditorDraft(payload);
+  const stored = {
+    ...payload,
+    quiz: payload.quiz ? stripAssignFromQuiz(payload.quiz) : null,
+  };
+  const lite = sanitizeEditorDraft(stored);
   let idbOk = false;
   let lsOk = false;
   let lsSkipped = false;
   try {
-    await idbSet(key, payload);
+    await idbSet(key, stored);
     idbOk = true;
   } catch {
     idbOk = false;
