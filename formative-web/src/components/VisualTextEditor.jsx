@@ -343,6 +343,11 @@ export default function VisualTextEditor({
         aria-label={placeholder || 'Text'}
         data-placeholder={placeholder}
         style={{ minHeight }}
+        onClick={(e) => e.stopPropagation()}
+        onDoubleClick={(e) => {
+          // Word-select only — never format. Also block parent <label> from activating Bold.
+          e.stopPropagation();
+        }}
         onInput={() => {
           if (skipInput.current) return;
           markAndEmit();

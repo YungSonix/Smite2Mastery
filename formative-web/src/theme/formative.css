@@ -2599,11 +2599,18 @@ label.f-file-btn:hover {
   display: flex;
   gap: 8px;
   align-items: flex-start;
-  font-weight: 600;
 }
 
 .f-q-prompt-edit .f-q-num {
   margin-top: 8px;
+  font-weight: 600;
+}
+
+/* Variant prompt: field chrome is label-weight/gold; editor must use body text styles. */
+.f-variant-prompt-field .f-visual-wrap {
+  font-weight: 400;
+  color: var(--f-text);
+  font-size: 15px;
 }
 
 .f-q-prompt-edit textarea {

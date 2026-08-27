@@ -392,20 +392,27 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
     });
   };
 
+  /** Deep-clone Version A prompt HTML + answers/correct/media into a new B/C slot. */
+  const cloneFieldsFromVersionA = () => {
+    const seeded = withMediaUrlsOnVariant({}, listMediaUrls(q));
+    return {
+      // String copy preserves rich HTML (color / bold / size), not plain text.
+      prompt: String(q.prompt ?? ''),
+      options: Array.isArray(q.options) ? q.options.map((o) => (typeof o === 'string' ? o : { ...o })) : q.options,
+      correct: q.correct ? JSON.parse(JSON.stringify(q.correct)) : {},
+      type: q.type,
+      ...seeded,
+      ...mediaMetaFromObj(q.meta || {}),
+      enabled: true,
+    };
+  };
+
   const ensureVariantSlot = (slotIndex) => {
     const variants = [...variantExtras];
     const maxExtras = MAX_QUESTION_VARIANTS - 1;
     const target = Math.min(slotIndex, maxExtras - 1);
     while (variants.length <= target && variants.length < maxExtras) {
-      const seeded = withMediaUrlsOnVariant({}, listMediaUrls(q));
-      variants.push({
-        prompt: q.prompt || '',
-        options: Array.isArray(q.options) ? [...q.options] : q.options,
-        correct: q.correct ? JSON.parse(JSON.stringify(q.correct)) : {},
-        ...seeded,
-        ...mediaMetaFromObj(q.meta || {}),
-        enabled: true,
-      });
+      variants.push(cloneFieldsFromVersionA());
     }
     return variants;
   };
@@ -528,6 +535,9 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
     return { ...patch, prompt: applyPromptTextStyle(styleFromPrompt, patch.prompt) };
   };
 
+  /** Prefer Version A’s rich prompt as the style template (extras may already be remixed plain). */
+  const promptStyleSource = () => q.prompt || activeSourceQuestion().prompt || '';
+
   const applyChangeQuestionAnswer = () => {
     const avoid =
       variantTab > 0
@@ -540,7 +550,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
       return;
     }
     setUploadError('');
-    const patch = styleRemixPatch(result.patch || {}, source.prompt);
+    const patch = styleRemixPatch(result.patch || {}, promptStyleSource());
     const metaFields = patch.meta || {};
 
     if (variantTab > 0) {
@@ -580,8 +590,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
       return;
     }
     setUploadError('');
-    const styleFrom = activeSourceQuestion().prompt;
-    const patch = styleRemixPatch(result.patch || {}, styleFrom);
+    const patch = styleRemixPatch(result.patch || {}, promptStyleSource());
     if (variantTab > 0) {
       commitVariantRemixPatch(patch);
       triggerChangeRemixPreview(patch);
@@ -1478,9 +1487,10 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
           Version {variantLetter(variantTab)} — different players may see this wording instead of A.
           Keep difficulty similar.
         </p>
-        <label className="f-fib-field">
+        <div className="f-fib-field f-variant-prompt-field">
           <span>Prompt</span>
           <VisualTextEditor
+            key={`variant-prompt-${q.id}-${variantTab}`}
             initialValue={activeVariantFields.prompt}
             placeholder="Version prompt"
             minHeight={96}
@@ -1489,7 +1499,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
               patchVariantSlot(variantTab - 1, { prompt: next });
             }}
           />
-        </label>
+        </div>
         {(activeIsChoice || q.type === 'true_false') && (
           <div className="f-choice-list" style={{ marginTop: 10 }}>
             {(activeVariantFields.options || []).map((opt, i) => (
@@ -1610,15 +1620,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
           <button
             type="button"
             className="f-outline-btn"
-            onClick={() =>
-              patchVariantSlot(variantTab - 1, {
-                prompt: q.prompt || '',
-                options: Array.isArray(q.options) ? [...q.options] : q.options,
-                correct: q.correct ? JSON.parse(JSON.stringify(q.correct)) : {},
-                ...withMediaUrlsOnVariant({}, listMediaUrls(q)),
-                ...mediaMetaFromObj(q.meta || {}),
-              })
-            }
+            onClick={() => patchVariantSlot(variantTab - 1, cloneFieldsFromVersionA())}
           >
             Copy from version A
           </button>

@@ -296,7 +296,9 @@ export function applyPromptTextStyle(styleFromPrompt, newPrompt) {
   if (looksLikeHtml(next)) next = htmlToPlainText(next);
   if (!looksLikeHtml(from)) return next;
 
-  const color = from.match(/color:\s*([^;:"']+)/i)?.[1]?.trim();
+  const color =
+    from.match(/color:\s*([^;:"']+)/i)?.[1]?.trim() ||
+    from.match(/<font\b[^>]*\bcolor=["']?([^"'>\s]+)/i)?.[1]?.trim();
   const fontSize = from.match(/font-size:\s*([^;:"']+)/i)?.[1]?.trim();
   const align = from.match(/text-align:\s*([^;:"']+)/i)?.[1]?.trim();
   const bold = /<(?:strong|b)\b/i.test(from) || /font-weight:\s*(bold|[6-9]00)/i.test(from);
