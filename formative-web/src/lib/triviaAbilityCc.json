@@ -223,6 +223,47 @@
       ]
     },
     {
+      "god": "Artio",
+      "name": "Entangling Vines",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "cripple"
+      ],
+      "stance": "druid"
+    },
+    {
+      "god": "Artio",
+      "name": "Ferocious Roar",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "stun"
+      ],
+      "stance": "bear"
+    },
+    {
+      "god": "Artio",
+      "name": "Life Tap",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "root",
+        "slow"
+      ],
+      "stance": "druid"
+    },
+    {
+      "god": "Artio",
+      "name": "Heavy Charge",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow"
+      ],
+      "stance": "bear"
+    },
+    {
       "god": "Athena",
       "name": "Preemptive Strike",
       "slot": "1",
@@ -567,6 +608,46 @@
       ]
     },
     {
+      "god": "Cu Chulainn",
+      "name": "Barbed Spear",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "stun"
+      ],
+      "stance": "human"
+    },
+    {
+      "god": "Cu Chulainn",
+      "name": "Ground Slam",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "root"
+      ],
+      "stance": "berserk"
+    },
+    {
+      "god": "Cu Chulainn",
+      "name": "Furious Charge",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "stun"
+      ],
+      "stance": "berserk"
+    },
+    {
+      "god": "Cu Chulainn",
+      "name": "Spear of Mortal Pain",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockup"
+      ],
+      "stance": "human"
+    },
+    {
       "god": "Cupid",
       "name": "Heart Bomb",
       "slot": "1",
@@ -707,6 +788,16 @@
       "slotLabel": "3",
       "ccs": [
         "grab"
+      ]
+    },
+    {
+      "god": "Ganesha",
+      "name": "Ohm",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "silence",
+        "slow"
       ]
     },
     {
@@ -1243,6 +1334,56 @@
       ]
     },
     {
+      "god": "Merlin",
+      "name": "Frostbolt",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ],
+      "stance": "ice"
+    },
+    {
+      "god": "Merlin",
+      "name": "Vortex",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "pull"
+      ],
+      "stance": "arcane"
+    },
+    {
+      "god": "Merlin",
+      "name": "Blizzard",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ],
+      "stance": "ice"
+    },
+    {
+      "god": "Merlin",
+      "name": "Elemental Mastery (Arcane)",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockup"
+      ],
+      "stance": "arcane"
+    },
+    {
+      "god": "Merlin",
+      "name": "Elemental Mastery (Ice)",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "slow"
+      ],
+      "stance": "ice"
+    },
+    {
       "god": "Mordred",
       "name": "Severing Slice",
       "slot": "3",
@@ -1752,6 +1893,46 @@
       ]
     },
     {
+      "god": "Ullr",
+      "name": "Thrown Axe",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "stun"
+      ],
+      "stance": "axe"
+    },
+    {
+      "god": "Ullr",
+      "name": "Hail of Arrows",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow"
+      ],
+      "stance": "bow"
+    },
+    {
+      "god": "Ullr",
+      "name": "Wield Axes",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "disarm"
+      ],
+      "stance": "bow"
+    },
+    {
+      "god": "Ullr",
+      "name": "Wield Bow",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "disarm"
+      ],
+      "stance": "axe"
+    },
+    {
       "god": "Xbalanque",
       "name": "Poison Darts",
       "slot": "2",
@@ -1888,7 +2069,8 @@
     {
       "god": "Ah Puch",
       "name": "Hollow Ground",
-      "summary": "Exhume decaying corpses at will. When you walk over a decaying corpse, reduce the Cooldown of Undead Surge and Fleeting Breath and restore a portion of your max Health and Mana [3% Max Health]. • Enemy gods and the Fire "
+      "summary": "Exhume decaying corpses at will. When you walk over a decaying corpse, reduce the Cooldown of Undead Surge and Fleeting Breath and restore a portion of your max Health and Mana [3% Max Health]. • Enemy gods and the Fire ",
+      "image": "/media/Icons/God Info/puchPassive.webp"
     },
     {
       "god": "Aladdin",
@@ -1953,7 +2135,8 @@
     {
       "god": "Atlas",
       "name": "The Astrolabe",
-      "summary": "You gain Energy in your Astrolabe when you take damage from enemy gods or deal damage with your Attacks or Abilities (minions grant reduced Energy). At enough Energy, you may press your interact key to unleash an Empower"
+      "summary": "You gain Energy in your Astrolabe when you take damage from enemy gods or deal damage with your Attacks or Abilities (minions grant reduced Energy). At enough Energy, you may press your interact key to unleash an Empower",
+      "image": "/media/Icons/God Info/atlasPassive.webp"
     },
     {
       "god": "Awilix",
@@ -1976,7 +2159,8 @@
     {
       "god": "Bastet",
       "name": "Nightstalker",
-      "summary": "Hitting enemies grants Lifesteal. Hitting enemy gods additionally grants stacks of Strength and Reveals them for a duration."
+      "summary": "Hitting enemies grants Lifesteal. Hitting enemy gods additionally grants stacks of Strength and Reveals them for a duration.",
+      "image": "/media/Icons/God Info/bastetPassive.webp"
     },
     {
       "god": "Bellona",
@@ -2011,22 +2195,26 @@
     {
       "god": "Charon",
       "name": "Ferryman of Souls",
-      "summary": "When any friendly lane minion or jungle monster dies, they drop a coin for you to collect that persists for 8 seconds. Coins grant you 1 gold and a Soul Stack. You lose all soul stacks when returning to base and gain 2 m"
+      "summary": "When any friendly lane minion or jungle monster dies, they drop a coin for you to collect that persists for 8 seconds. Coins grant you 1 gold and a Soul Stack. You lose all soul stacks when returning to base and gain 2 m",
+      "image": "/media/Icons/God Info/charonPassive.webp"
     },
     {
       "god": "Chiron",
       "name": "Herbal Medicine",
-      "summary": "Gain a charge every 12 seconds. Using an ability consumes a charge to throw a poultice to an injured ally, applying a Heal over Time. • Healed allies also gain Strength and Intelligence for a duration • Poultices priorit"
+      "summary": "Gain a charge every 12 seconds. Using an ability consumes a charge to throw a poultice to an injured ally, applying a Heal over Time. • Healed allies also gain Strength and Intelligence for a duration • Poultices priorit",
+      "image": "/media/Icons/God Info/chironPassive.webp"
     },
     {
       "god": "Chronos",
       "name": "Time Lord",
-      "summary": "You become empowered as time flows around you. Over time you gain stacks that grant Intelligence. Stacks have a maximum and are permanent. • You gain 1 stack every 1.5 minutes • Intelligence: [5 Per Stack] • Max Stacks: "
+      "summary": "You become empowered as time flows around you. Over time you gain stacks that grant Intelligence. Stacks have a maximum and are permanent. • You gain 1 stack every 1.5 minutes • Intelligence: [5 Per Stack] • Max Stacks: ",
+      "image": "/media/Icons/God Info/chronosPassive.webp"
     },
     {
       "god": "Cu Chulainn",
       "name": "Berserk",
-      "summary": "Your Mana, Mana Regen, and Mana Heals convert into your Health Pool instead of Mana. Abilities cost Rage, which only regenerates up to 25. Gain Rage by hitting Abilities, per Attack, and when you or a nearby ally takes d"
+      "summary": "Your Mana, Mana Regen, and Mana Heals convert into your Health Pool instead of Mana. Abilities cost Rage, which only regenerates up to 25. Gain Rage by hitting Abilities, per Attack, and when you or a nearby ally takes d",
+      "image": "/media/Icons/God Info/cuchuPassive.webp"
     },
     {
       "god": "Cupid",
@@ -2049,7 +2237,8 @@
     {
       "god": "Discordia",
       "name": "Contest of Gods",
-      "summary": "The god on your team with the highest damage dealt to enemy gods gains a buff of Strength and Intelligence. Gaining a level or a god kill/assist provides a random temporary buff of Intelligence, Lifesteal or Healing. Hea"
+      "summary": "The god on your team with the highest damage dealt to enemy gods gains a buff of Strength and Intelligence. Gaining a level or a god kill/assist provides a random temporary buff of Intelligence, Lifesteal or Healing. Hea",
+      "image": "/media/Icons/God Info/discoPassive.webp"
     },
     {
       "god": "Eset",
@@ -2078,7 +2267,8 @@
     {
       "god": "Gilgamesh",
       "name": "Epic of Gilgamesh",
-      "summary": "You wield artifacts that demand quests to unlock their true potential. Sun-forged Scimitar: Extend buff to max by hitting only gods 3 times. Drop Kick: Drop Kick a target into a god 3 times. Hero's Advance: Kill or Assis"
+      "summary": "You wield artifacts that demand quests to unlock their true potential. Sun-forged Scimitar: Extend buff to max by hitting only gods 3 times. Drop Kick: Drop Kick a target into a god 3 times. Hero's Advance: Kill or Assis",
+      "image": "/media/Icons/God Info/gilgaPassive.webp"
     },
     {
       "god": "Guan Yu",
@@ -2107,7 +2297,8 @@
     {
       "god": "Horus",
       "name": "Resolute",
-      "summary": "Gain Resolute stacks when an enemy god damages you. Each stack grants Protections and Crowd Control Reduction for a short duration. When Resolute expires, Heal based on your stacks. • Protections: [2.5 Per Stack] • Crowd"
+      "summary": "Gain Resolute stacks when an enemy god damages you. Each stack grants Protections and Crowd Control Reduction for a short duration. When Resolute expires, Heal based on your stacks. • Protections: [2.5 Per Stack] • Crowd",
+      "image": "/media/Icons/God Info/horusPassive.webp"
     },
     {
       "god": "Hou Yi",
@@ -2130,12 +2321,14 @@
     {
       "god": "Ishtar",
       "name": "Mark of Vengeance",
-      "summary": "When you drop below 75% Health, apply Mark of Vengeance to the enemy god that most recently damaged you for 10s. Each Attack against the marked god grants stacking Attack Speed for 4s; each stack refreshes duration. Scor"
+      "summary": "When you drop below 75% Health, apply Mark of Vengeance to the enemy god that most recently damaged you for 10s. Each Attack against the marked god grants stacking Attack Speed for 4s; each stack refreshes duration. Scor",
+      "image": "/media/Icons/God Info/ishtarPassive.webp"
     },
     {
       "god": "Ix Chel",
       "name": "Rainbow Weaver",
-      "summary": "Gain a Rainbow Weaver stack whenever your Abilities hit an enemy god or grant a beneficial effect to an allied god. At 6 stacks, your next Attack has no movement penalty, is larger, travels farther, and deals [40% INT] b"
+      "summary": "Gain a Rainbow Weaver stack whenever your Abilities hit an enemy god or grant a beneficial effect to an allied god. At 6 stacks, your next Attack has no movement penalty, is larger, travels farther, and deals [40% INT] b",
+      "image": "/media/Icons/God Info/ixchelPassive.webp"
     },
     {
       "god": "Izanami",
@@ -2146,7 +2339,8 @@
     {
       "god": "Janus",
       "name": "Passages",
-      "summary": "When you pass through a Portal or Threshold, your next ability deals [20% INT] bonus Magical Damage. Stacks up to 2 times."
+      "summary": "When you pass through a Portal or Threshold, your next ability deals [20% INT] bonus Magical Damage. Stacks up to 2 times.",
+      "image": "/media/Icons/God Info/janusPassive.webp"
     },
     {
       "god": "Jing Wei",
@@ -2211,12 +2405,14 @@
     {
       "god": "Morgan Le Fay",
       "name": "Empowered Blade",
-      "summary": "Damaging enemy gods with abilities Marks them and activates a shared Symbol on your sword, providing Mana Regen. After gaining all 5 Symbols you become empowered temporarily, causing your Cooldowns to be decreased and pr"
+      "summary": "Damaging enemy gods with abilities Marks them and activates a shared Symbol on your sword, providing Mana Regen. After gaining all 5 Symbols you become empowered temporarily, causing your Cooldowns to be decreased and pr",
+      "image": "/media/Icons/God Info/morganLeFayPassive.webp"
     },
     {
       "god": "Ne Zha",
       "name": "Righteous Spirit",
-      "summary": "Build Righteous Spirit stacks by hitting enemies to gain Movement Speed. Stacks reset if you have not taken or dealt damage recently. Critical Strikes grant 2 stacks. Gaining a stack permanently increases Critical Strike"
+      "summary": "Build Righteous Spirit stacks by hitting enemies to gain Movement Speed. Stacks reset if you have not taken or dealt damage recently. Critical Strikes grant 2 stacks. Gaining a stack permanently increases Critical Strike",
+      "image": "/media/Icons/God Info/neZhaPassive.webp"
     },
     {
       "god": "Neith",
@@ -2239,7 +2435,8 @@
     {
       "god": "Nut",
       "name": "Flux",
-      "summary": "While Strength exceeds Intelligence, Ability hits grant Stellar Flux which provides Attack Speed. Stacks decay every 3s. Otherwise, Basic Attacks grant Astral Flux. Abilities consume this for Bonus Magical Damage and eff"
+      "summary": "While Strength exceeds Intelligence, Ability hits grant Stellar Flux which provides Attack Speed. Stacks decay every 3s. Otherwise, Basic Attacks grant Astral Flux. Abilities consume this for Bonus Magical Damage and eff",
+      "image": "/media/Icons/God Info/nutPassive.webp"
     },
     {
       "god": "Odin",
@@ -2286,12 +2483,14 @@
     {
       "god": "Ratatoskr",
       "name": "Acorn of Yggdrasil",
-      "summary": "You spawn with a Magic Acorn in your inventory. This can be upgraded anywhere on the map to provide different bonuses After purchasing an Acorn, you cannot perform other actions and are Rooted for 0.7 seconds."
+      "summary": "You spawn with a Magic Acorn in your inventory. This can be upgraded anywhere on the map to provide different bonuses After purchasing an Acorn, you cannot perform other actions and are Rooted for 0.7 seconds.",
+      "image": "/media/Icons/God Info/ratPassive.webp"
     },
     {
       "god": "Ravana",
       "name": "Chain of Blows",
-      "summary": "Successful Attacks and abilities against enemies add to your Combo. Each time Combo reaches 8, you gain a Shield as well as Movement Speed and Strength. • Shield Health: [6% Max Health] • Movement Speed: 3% • Strength: 5"
+      "summary": "Successful Attacks and abilities against enemies add to your Combo. Each time Combo reaches 8, you gain a Shield as well as Movement Speed and Strength. • Shield Health: [6% Max Health] • Movement Speed: 3% • Strength: 5",
+      "image": "/media/Icons/God Info/ravPassive.webp"
     },
     {
       "god": "Scylla",
@@ -2356,7 +2555,8 @@
     {
       "god": "Ullr",
       "name": "Weapon Master",
-      "summary": "When you use an ability in either stance your Cooldowns in the opposite stance are reduced."
+      "summary": "When you use an ability in either stance your Cooldowns in the opposite stance are reduced.",
+      "image": "/media/Icons/God Info/ullrPassive.webp"
     },
     {
       "god": "Vulcan",
@@ -2373,7 +2573,8 @@
     {
       "god": "Xing Tian",
       "name": "Smouldering Rage",
-      "summary": "Ability hits grant Smouldering Rage stacks. Each stack grants Health Regen and temporary Maximum Health for a duration. • Stack duration refreshes when you hit with an ability • Health Regen: [0.6] • Maximum Health: [5] "
+      "summary": "Ability hits grant Smouldering Rage stacks. Each stack grants Health Regen and temporary Maximum Health for a duration. • Stack duration refreshes when you hit with an ability • Health Regen: [0.6] • Maximum Health: [5] ",
+      "image": "/media/Icons/God Info/xingPassive.webp"
     },
     {
       "god": "Yemoja",
@@ -2471,6 +2672,15 @@
     },
     {
       "god": "Artemis",
+      "ccs": [
+        "cripple",
+        "root",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Artio",
       "ccs": [
         "cripple",
         "root",
@@ -2595,6 +2805,14 @@
       ]
     },
     {
+      "god": "Cu Chulainn",
+      "ccs": [
+        "knockup",
+        "root",
+        "stun"
+      ]
+    },
+    {
       "god": "Cupid",
       "ccs": [
         "mesmerize",
@@ -2647,6 +2865,7 @@
       "god": "Ganesha",
       "ccs": [
         "grab",
+        "silence",
         "slow"
       ]
     },
@@ -2825,6 +3044,14 @@
       ]
     },
     {
+      "god": "Merlin",
+      "ccs": [
+        "knockup",
+        "pull",
+        "slow"
+      ]
+    },
+    {
       "god": "Mordred",
       "ccs": [
         "root",
@@ -3013,6 +3240,14 @@
       "ccs": [
         "disarm",
         "knockup",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Ullr",
+      "ccs": [
+        "disarm",
         "slow",
         "stun"
       ]

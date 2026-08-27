@@ -287,7 +287,34 @@ function applyStatSwap(source, fromItem, next, stat, pool) {
 function isItemHasStatPrompt(source) {
   const kind = String(source?.meta?.remix_kind || '');
   if (kind === 'item_has_stat') return true;
+  if (isItemStatOddOnePrompt(source)) return false;
   return /(?:what|which)\s+item\s+has\b/i.test(String(source?.prompt || ''));
+}
+
+function isPantheonOddOnePrompt(source) {
+  const kind = String(source?.meta?.remix_kind || '');
+  if (kind === 'pantheon_odd_one') return true;
+  const p = String(source?.prompt || '');
+  if (/different pantheon|wrong pantheon|from a different pantheon/i.test(p)) return true;
+  if (/\bdoes not belong\b/i.test(p) && /\bgods?\b|\bpantheon\b/i.test(p)) return true;
+  if (/\bodd one out\b/i.test(p) && /\bgods?\b|\bpantheon\b/i.test(p)) return true;
+  if (/\bodd one out\b/i.test(p) && !/\bitems?\b/i.test(p)) {
+    const opts = Array.isArray(source?.options) ? source.options : [];
+    if (exactOptionHit(opts, godNamePool())) return true;
+  }
+  return false;
+}
+
+function isItemStatOddOnePrompt(source) {
+  const kind = String(source?.meta?.remix_kind || '');
+  if (kind === 'item_stat_odd_one') return true;
+  const p = String(source?.prompt || '');
+  if (/which item does(?:\s*not|n't)\b/i.test(p)) return true;
+  if (/does(?:\s*not|n't)\s+have\b/i.test(p) && (/\bitems?\b/i.test(p) || findStatsInText(p).length)) {
+    return true;
+  }
+  if (/\bodd one out\b/i.test(p) && /\bitems?\b/i.test(p) && findStatsInText(p).length) return true;
+  return false;
 }
 
 function isAspectIconPrompt(source) {
@@ -340,6 +367,506 @@ function makeItemHasStatQuestion({ count = 4, avoidStats = new Set() } = {}) {
     clearMedia: true,
     extraMeta: { remix_kind: 'item_has_stat', hint_context: { stat } },
   });
+}
+
+/** Gods that have pantheon metadata (skip missing). */
+function godsByPantheon() {
+  const map = new Map();
+  for (const g of catalog.gods || []) {
+    const name = String(g?.name || '').trim();
+    if (!name) continue;
+    const pantheon = String(godMeta[name]?.pantheon || '').trim();
+    if (!pantheon) continue;
+    const key = pantheon.toLowerCase();
+    if (!map.has(key)) map.set(key, { pantheon, gods: [] });
+    map.get(key).gods.push(name);
+  }
+  return [...map.values()];
+}
+
+const PANTHEON_ODD_PROMPTS = [
+  'Which god is from a different pantheon?',
+  'Which god does not belong?',
+];
+
+/** Four gods: 3 share a pantheon, 1 is the odd pantheon out. */
+function makePantheonOddOneQuestion({ count = 4 } = {}) {
+  const buckets = godsByPantheon();
+  const majorityPool = buckets.filter((b) => b.gods.length >= 3);
+  if (!majorityPool.length) return null;
+  const majority = pickOne(majorityPool);
+  const otherBuckets = buckets.filter((b) => norm(b.pantheon) !== norm(majority.pantheon) && b.gods.length);
+  if (!otherBuckets.length) return null;
+  const oddBucket = pickOne(otherBuckets);
+  const same = pickDistinct(majority.gods, 3, new Set());
+  const odd = pickOne(oddBucket.gods);
+  if (same.length < 3 || !odd) return null;
+  const want = Math.max(4, Number(count) || 4);
+  return packMc({
+    prompt: pickOne(PANTHEON_ODD_PROMPTS),
+    correctLabel: odd,
+    distractors: same,
+    count: want,
+    clearMedia: true,
+    extraMeta: {
+      remix_kind: 'pantheon_odd_one',
+      hint_context: {
+        majority_pantheon: majority.pantheon,
+        odd_pantheon: oddBucket.pantheon,
+        odd_god: odd,
+        gods: [...same, odd],
+      },
+    },
+  });
+}
+
+/** Popular stats with enough items that have / lack the stat for a clean 3+1 puzzle. */
+function oddOneItemStats({ avoidStats = new Set() } = {}) {
+  return popularStats().filter((stat) => {
+    if (avoidStats.has(norm(stat))) return false;
+    let withN = 0;
+    let withoutN = 0;
+    for (const i of catalog.items) {
+      if (i.stats?.[stat] != null) withN += 1;
+      else withoutN += 1;
+    }
+    // Need 3 with + 1 without; require a healthy without pool so the odd item isn't unique trivia.
+    return withN >= 8 && withoutN >= 8;
+  });
+}
+
+/** Four items: 3 grant a named stat, 1 does not. */
+function makeItemStatOddOneQuestion({ count = 4, preferStat = null, avoidStats = new Set() } = {}) {
+  const pool = oddOneItemStats({ avoidStats });
+  let stat = null;
+  if (preferStat) {
+    const withN = catalog.items.filter((i) => i.stats?.[preferStat] != null).length;
+    const withoutN = catalog.items.filter((i) => i.stats?.[preferStat] == null).length;
+    if (withN >= 3 && withoutN >= 1) stat = preferStat;
+  }
+  if (!stat) stat = pickOne(pool.length ? pool : oddOneItemStats());
+  if (!stat) return null;
+  const withStat = catalog.items.filter((i) => i.stats?.[stat] != null).map((i) => i.name);
+  const without = catalog.items.filter((i) => i.stats?.[stat] == null).map((i) => i.name);
+  const same = pickDistinct(withStat, 3, new Set());
+  const odd = pickOne(without);
+  if (same.length < 3 || !odd) return null;
+  const want = Math.max(4, Number(count) || 4);
+  return packMc({
+    prompt: `Which item does not have ${stat}?`,
+    correctLabel: odd,
+    distractors: same,
+    count: want,
+    clearMedia: true,
+    extraMeta: {
+      remix_kind: 'item_stat_odd_one',
+      hint_context: { stat, odd_item: odd, items_with_stat: same },
+    },
+  });
+}
+
+/** Friendly CC wording for claim sentences (mez = mesmerize). */
+function claimCcPhrase(id) {
+  const key = String(id || '').toLowerCase();
+  if (key === 'mesmerize') return 'a mez';
+  if (key === 'knockup') return 'a knockup';
+  if (key === 'knockback') return 'a knockback';
+  const label = formatCcLabel(key).toLowerCase();
+  return /^[aeiou]/i.test(label) ? `an ${label}` : `a ${label}`;
+}
+
+function godProfiles() {
+  return Array.isArray(catalog.godProfiles) ? catalog.godProfiles : [];
+}
+
+function findGodProfile(name) {
+  if (!name) return null;
+  return godProfiles().find((p) => norm(p.name) === norm(name)) || null;
+}
+
+function pantheonPool() {
+  return [
+    ...new Set(
+      godProfiles()
+        .map((p) => String(p.pantheon || '').trim())
+        .filter(Boolean)
+    ),
+  ];
+}
+
+function rolePool() {
+  return [
+    ...new Set(
+      godProfiles()
+        .map((p) => String(p.role || '').trim())
+        .filter(Boolean)
+    ),
+  ];
+}
+
+function otherGodsAbilityNames(exceptGod, limit = 40) {
+  const mine = new Set(
+    (findGodProfile(exceptGod)?.abilityNames || []).map(norm)
+  );
+  const pool = [];
+  for (const p of shuffle(godProfiles())) {
+    if (norm(p.name) === norm(exceptGod)) continue;
+    for (const n of p.abilityNames || []) {
+      if (!n || mine.has(norm(n))) continue;
+      pool.push(n);
+      if (pool.length >= limit) return pool;
+    }
+  }
+  return pool;
+}
+
+/**
+ * Build verified true/false claim sentences for one god.
+ * Skips CC when kit text wasn't parsed; never invents kit facts.
+ */
+function buildGodClaimBank(profile) {
+  const god = profile?.name;
+  if (!god) return { trueClaims: [], falseClaims: [] };
+  const trueClaims = [];
+  const falseClaims = [];
+  const pushT = (s) => {
+    if (s && !trueClaims.some((c) => norm(c) === norm(s))) trueClaims.push(s);
+  };
+  const pushF = (s) => {
+    if (s && !falseClaims.some((c) => norm(c) === norm(s)) && !trueClaims.some((c) => norm(c) === norm(s))) {
+      falseClaims.push(s);
+    }
+  };
+
+  const pantheon = String(profile.pantheon || '').trim();
+  if (pantheon) {
+    pushT(`${god} is from the ${pantheon} pantheon`);
+    for (const p of shuffle(pantheonPool()).filter((x) => norm(x) !== norm(pantheon)).slice(0, 4)) {
+      pushF(`${god} is from the ${p} pantheon`);
+    }
+  }
+
+  const role = String(profile.role || godMeta[god]?.role || '').trim();
+  const roleSet = new Set(
+    (Array.isArray(profile.roles) && profile.roles.length ? profile.roles : role ? [role] : []).map(norm)
+  );
+  if (role) {
+    pushT(`${god} is a ${role} god`);
+    for (const r of shuffle(rolePool()).filter((x) => !roleSet.has(norm(x))).slice(0, 3)) {
+      pushF(`${god} is a ${r} god`);
+    }
+  }
+
+  if (profile.hasAspect) {
+    pushT(`${god} has an Aspect`);
+    pushF(`${god} does not have an Aspect`);
+  } else {
+    pushT(`${god} does not have an Aspect`);
+    pushF(`${god} has an Aspect`);
+  }
+
+  const type = String(profile.type || '').trim();
+  if (/^magical$/i.test(type)) {
+    pushT(`${god} is a Magical god`);
+    pushF(`${god} is a Physical god`);
+  } else if (/^physical$/i.test(type)) {
+    pushT(`${god} is a Physical god`);
+    pushF(`${god} is a Magical god`);
+  }
+
+  const range = String(profile.range || '').trim();
+  if (/^ranged$/i.test(range)) {
+    pushT(`${god} is Ranged`);
+    pushF(`${god} is Melee`);
+  } else if (/^melee$/i.test(range)) {
+    pushT(`${god} is Melee`);
+    pushF(`${god} is Ranged`);
+  }
+
+  if (profile.isStanceSwitcher && profile.stanceCount >= 2) {
+    pushT(`${god} has ${profile.stanceCount} stances`);
+    pushT(`${god} is a stance switcher`);
+    for (const n of [profile.stanceCount + 2, 5, 10]) {
+      if (n !== profile.stanceCount) pushF(`${god} has ${n} stances`);
+    }
+    pushF(`${god} is not a stance switcher`);
+  } else {
+    pushT(`${god} is not a stance switcher`);
+    pushF(`${god} has 3 stances`);
+    pushF(`${god} has 5 stances`);
+  }
+
+  // Kit size: slots + passive (fair for Discord). Inflated named counts are false near-misses.
+  const kitN = Number(profile.kitAbilityCount) || 0;
+  if (kitN >= 4 && kitN <= 6 && !profile.isStanceSwitcher) {
+    pushT(`${god} has ${kitN} abilities in their base kit`);
+  }
+  for (const n of [8, 10, 12, 15]) {
+    if (n !== kitN && n !== profile.namedAbilityCount) {
+      pushF(`${god} has ${n} abilities`);
+    }
+  }
+  // Stance gods: "10 abilities" is a classic wrong guess; only assert named total when it is obviously > 8.
+  if (profile.isStanceSwitcher && profile.namedAbilityCount >= 8) {
+    pushF(`${god} has only 4 abilities`);
+  }
+
+  const names = (profile.abilityNames || []).filter((n) => String(n || '').length >= 4);
+  for (const ab of shuffle(names).slice(0, 3)) {
+    pushT(`${god} has an ability called ${ab}`);
+  }
+  for (const ab of shuffle(otherGodsAbilityNames(god, 24)).slice(0, 4)) {
+    pushF(`${god} has an ability called ${ab}`);
+  }
+  if (profile.passive) {
+    pushT(`${god}'s passive is called ${profile.passive}`);
+  }
+
+  // CC only when the kit was parsed into tags/text hits.
+  if (profile.ccParsed && Array.isArray(profile.ccs)) {
+    const have = new Set(profile.ccs.map(norm));
+    for (const id of profile.ccs) {
+      pushT(`${god} has ${claimCcPhrase(id)}`);
+    }
+    // Only claim "does not have X" / wrong CC when we saw real ability text for this god.
+    for (const id of shuffle(allCcIds()).filter((id) => !have.has(norm(id))).slice(0, 5)) {
+      pushF(`${god} has ${claimCcPhrase(id)}`);
+    }
+  }
+
+  return { trueClaims, falseClaims };
+}
+
+const GOD_CLAIM_CORRECT_PROMPTS = [
+  (g) => `Which of these is true about ${g}?`,
+  (g) => `Choose the answer that is correct about ${g}`,
+  (g) => `Surely you know ${g} — which claim is actually true?`,
+];
+
+const GOD_CLAIM_INCORRECT_PROMPTS = [
+  (g) => `Which of these is NOT true about ${g}?`,
+  (g) => `Choose the answer that is not correct about ${g}`,
+  (g) => `Pick the claim that is wrong about ${g}`,
+];
+
+function isGodClaimCorrectPrompt(source) {
+  const kind = String(source?.meta?.remix_kind || '');
+  if (kind === 'god_claim_correct') return true;
+  if (kind === 'god_claim_incorrect') return false;
+  const p = String(source?.prompt || '');
+  if (/not\s+correct|not\s+true|is\s+wrong|aren't\s+correct|are\s+not\s+correct/i.test(p)) return false;
+  return /which of these is true about|is correct about|actually true about|claim is actually true/i.test(p);
+}
+
+function isGodClaimIncorrectPrompt(source) {
+  const kind = String(source?.meta?.remix_kind || '');
+  if (kind === 'god_claim_incorrect') return true;
+  if (kind === 'god_claim_correct') return false;
+  const p = String(source?.prompt || '');
+  return (
+    /not\s+correct about|not\s+true about|is\s+NOT\s+true about|claim that is wrong about|aren't\s+correct about|are\s+not\s+correct about/i.test(
+      p
+    ) || /choose the answers? that (?:are|is) not correct about/i.test(p)
+  );
+}
+
+function isGodClaimPrompt(source) {
+  return isGodClaimCorrectPrompt(source) || isGodClaimIncorrectPrompt(source);
+}
+
+function godNamedInClaimPrompt(prompt) {
+  return findNameInText(
+    prompt,
+    godProfiles().map((p) => p.name).concat(catalog.gods.map((g) => g.name)),
+    { min: 3 }
+  );
+}
+
+function packGodClaimMc({
+  prompt,
+  correctLabels,
+  distractors,
+  count,
+  type,
+  extraMeta,
+}) {
+  const want = Math.max(4, Number(count) || 4);
+  const correct = [...new Set((correctLabels || []).map((s) => String(s || '').trim()).filter(Boolean))];
+  const wrong = [...new Set((distractors || []).map((s) => String(s || '').trim()).filter(Boolean))].filter(
+    (d) => !correct.some((c) => norm(c) === norm(d))
+  );
+  if (!correct.length || wrong.length < (type === 'multiple_selection' ? 1 : want - correct.length)) {
+    return null;
+  }
+  const needWrong = Math.max(1, want - correct.length);
+  const pickedWrong = shuffle(wrong).slice(0, needWrong);
+  const options = shuffle([...correct, ...pickedWrong].slice(0, want));
+  const indices = correct
+    .map((c) => options.findIndex((o) => norm(o) === norm(c)))
+    .filter((i) => i >= 0);
+  if (!indices.length) return null;
+  const single = type === 'multiple_choice' || correct.length === 1;
+  return {
+    patch: {
+      type: single ? 'multiple_choice' : 'multiple_selection',
+      prompt,
+      options,
+      correct: single
+        ? { index: indices[0] }
+        : { indices, index: indices[0] },
+      meta: {
+        randomize_order: true,
+        allow_partial_credit: !single,
+        ...extraMeta,
+      },
+      image_url: null,
+      image_urls: [],
+      clearMedia: true,
+    },
+  };
+}
+
+/**
+ * god_claim_correct — one true claim + false near-misses.
+ * god_claim_incorrect — one false claim + true facts (multi only when pools allow).
+ */
+function makeGodClaimQuestion({
+  mode = 'correct',
+  count = 4,
+  preferGod = null,
+  keepPrompt = null,
+  allowMulti = true,
+} = {}) {
+  const profiles = godProfiles().filter(
+    (p) => p?.name && (p.pantheon || p.role || (p.abilityNames || []).length)
+  );
+  if (!profiles.length) return null;
+
+  const preferred = preferGod ? findGodProfile(preferGod) : null;
+  // When regenerating answers for a named prompt, stay on that god.
+  const lockGod = !!(preferGod && keepPrompt && preferred);
+  const tries = lockGod ? [preferred] : preferred ? [preferred, ...shuffle(profiles.filter((p) => norm(p.name) !== norm(preferred.name)))] : shuffle(profiles);
+
+  for (const cand of tries.slice(0, lockGod ? 1 : 24)) {
+    if (!cand) continue;
+    const bank = buildGodClaimBank(cand);
+    if (bank.trueClaims.length < 2 || bank.falseClaims.length < 2) {
+      if (lockGod) break;
+      continue;
+    }
+
+    const want = Math.max(4, Number(count) || 4);
+    if (mode === 'incorrect') {
+      const promptImpliesMulti = /answers that (?:are|aren't)|choose the answers/i.test(
+        String(keepPrompt || '')
+      );
+      // Random answers on a singular "NOT true" prompt stays single-select.
+      const multiOk =
+        allowMulti &&
+        bank.falseClaims.length >= 2 &&
+        bank.trueClaims.length >= 2 &&
+        (promptImpliesMulti || (!keepPrompt && Math.random() < 0.28));
+      const correctLabels = multiOk
+        ? pickDistinct(bank.falseClaims, Math.min(2, bank.falseClaims.length), new Set())
+        : [pickOne(bank.falseClaims)];
+      const distractors = pickDistinct(
+        bank.trueClaims,
+        want - correctLabels.length,
+        new Set(correctLabels.map(norm))
+      );
+      const prompt =
+        keepPrompt ||
+        (multiOk && correctLabels.length > 1
+          ? `Choose the answers that are not correct about ${cand.name}`
+          : pickOne(GOD_CLAIM_INCORRECT_PROMPTS)(cand.name));
+      const hit = packGodClaimMc({
+        prompt,
+        correctLabels,
+        distractors,
+        count: want,
+        type: correctLabels.length > 1 ? 'multiple_selection' : 'multiple_choice',
+        extraMeta: {
+          remix_kind: 'god_claim_incorrect',
+          hint_context: {
+            god: cand.name,
+            mode: 'incorrect',
+            correct_claims: correctLabels,
+          },
+        },
+      });
+      if (hit?.patch) return hit;
+      if (lockGod) break;
+      continue;
+    }
+
+    // correct mode — always single true answer for reliability
+    const trueOne = pickOne(bank.trueClaims);
+    const distractors = pickDistinct(bank.falseClaims, want - 1, new Set([norm(trueOne)]));
+    if (distractors.length < want - 1) {
+      if (lockGod) break;
+      continue;
+    }
+    const prompt = keepPrompt || pickOne(GOD_CLAIM_CORRECT_PROMPTS)(cand.name);
+    const hit = packGodClaimMc({
+      prompt,
+      correctLabels: [trueOne],
+      distractors,
+      count: want,
+      type: 'multiple_choice',
+      extraMeta: {
+        remix_kind: 'god_claim_correct',
+        hint_context: {
+          god: cand.name,
+          mode: 'correct',
+          correct_claims: [trueOne],
+        },
+      },
+    });
+    if (hit?.patch) return hit;
+    if (lockGod) break;
+  }
+  return null;
+}
+
+function makeGodClaimCorrectQuestion(opts = {}) {
+  return makeGodClaimQuestion({ ...opts, mode: 'correct' });
+}
+
+function makeGodClaimIncorrectQuestion(opts = {}) {
+  return makeGodClaimQuestion({ ...opts, mode: 'incorrect' });
+}
+
+function remixGodClaim(source) {
+  if (!isGodClaimPrompt(source)) return null;
+  const mode = isGodClaimIncorrectPrompt(source) ? 'incorrect' : 'correct';
+  const preferGod =
+    source?.meta?.hint_context?.god || godNamedInClaimPrompt(source?.prompt);
+  // Change question: new god. Random answers path passes keepPrompt separately.
+  return (
+    makeGodClaimQuestion({
+      mode,
+      count: optionCount(source),
+      preferGod: null,
+      allowMulti: mode === 'incorrect',
+    }) ||
+    makeGodClaimQuestion({ mode, count: optionCount(source), preferGod })
+  );
+}
+
+function remixPantheonOddOne(source) {
+  if (!isPantheonOddOnePrompt(source)) return null;
+  return makePantheonOddOneQuestion({ count: optionCount(source) });
+}
+
+function remixItemStatOddOne(source) {
+  if (!isItemStatOddOnePrompt(source)) return null;
+  const current = findStatsInText(source?.prompt || '');
+  return (
+    makeItemStatOddOneQuestion({
+      count: optionCount(source),
+      avoidStats: new Set(current.map(norm)),
+    }) || makeItemStatOddOneQuestion({ count: optionCount(source) })
+  );
 }
 
 /**
@@ -1603,6 +2130,44 @@ export function fillAnswersFromPrompt(question) {
     return { error: 'No release-order gods to fill answers. Try Random question.' };
   }
 
+  if (isPantheonOddOnePrompt(question)) {
+    const hit = makePantheonOddOneQuestion({ count });
+    if (hit?.patch) return { patch: { ...hit.patch, prompt } };
+    return { error: 'Not enough pantheon data for an odd-one-out question.' };
+  }
+
+  if (isItemStatOddOnePrompt(question)) {
+    const namedStats = findStatsInText(prompt);
+    const hit = makeItemStatOddOneQuestion({
+      count,
+      preferStat: namedStats[0] || null,
+    });
+    if (hit?.patch) {
+      return {
+        patch: {
+          ...hit.patch,
+          prompt: namedStats.length ? prompt : hit.patch.prompt,
+        },
+      };
+    }
+    return { error: 'Not enough items for that stat odd-one-out.' };
+  }
+
+  if (isGodClaimPrompt(question)) {
+    const mode = isGodClaimIncorrectPrompt(question) ? 'incorrect' : 'correct';
+    const preferGod =
+      question?.meta?.hint_context?.god || godNamedInClaimPrompt(prompt);
+    const hit = makeGodClaimQuestion({
+      mode,
+      count,
+      preferGod,
+      keepPrompt: prompt,
+      allowMulti: mode === 'incorrect',
+    });
+    if (hit?.patch) return hit;
+    return { error: 'Not enough grounded god claims to fill answers for that prompt.' };
+  }
+
   if (isAspectIconPrompt(question)) {
     const avoid = new Set();
     const cur = currentAspectIconKey(question);
@@ -1714,7 +2279,7 @@ export function fillAnswersFromPrompt(question) {
     !isPlaceholderOption(markedRawEarly) &&
     catalog.gods.find((g) => norm(g.name) === norm(markedRawEarly));
   const optionGodName = exactOptionHit(question?.options || [], godNames);
-  if ((markedGodEarly || optionGodName) && !isAspectIconPrompt(question) && !isItemHasStatPrompt(question)) {
+  if ((markedGodEarly || optionGodName) && !isAspectIconPrompt(question) && !isItemHasStatPrompt(question) && !isPantheonOddOnePrompt(question) && !isGodClaimPrompt(question)) {
     const correctLabel = markedGodEarly?.name || optionGodName;
     return packMc({
       prompt,
@@ -1744,7 +2309,7 @@ export function fillAnswersFromPrompt(question) {
     });
   }
 
-  if (stats.length && /item/i.test(prompt) && !isItemHasStatPrompt(question)) {
+  if (stats.length && /item/i.test(prompt) && !isItemHasStatPrompt(question) && !isItemStatOddOnePrompt(question)) {
     const stat = stats[0];
     const withStat = catalog.items.filter((i) => i.stats?.[stat] != null);
     const without = catalog.items.filter((i) => i.stats?.[stat] == null);
@@ -1844,9 +2409,33 @@ export const RANDOM_QUESTION_STYLES = [
     group: 'Items',
   },
   {
+    id: 'item_stat_odd_one',
+    label: 'Item missing this stat',
+    blurb: 'Four items — three have a named stat, pick the one that does not',
+    group: 'Items',
+  },
+  {
     id: 'ob_release',
     label: 'OB release god',
     blurb: 'Which god released in a given Open Beta patch',
+    group: 'Gods',
+  },
+  {
+    id: 'pantheon_odd_one',
+    label: 'Odd pantheon out',
+    blurb: 'Four gods — three share a pantheon, pick the one that does not',
+    group: 'Gods',
+  },
+  {
+    id: 'god_claim_correct',
+    label: 'True about this god',
+    blurb: 'Multiple choice — which claim sentence is true about a named god',
+    group: 'Gods',
+  },
+  {
+    id: 'god_claim_incorrect',
+    label: 'Not true about this god',
+    blurb: 'Which claim is wrong about a named god (multi when two solid fakes exist)',
     group: 'Gods',
   },
   {
@@ -2057,6 +2646,10 @@ export function optionsAreValid(q) {
 function styleMakers(count) {
   return {
     item_has_stat: () => makeItemHasStatQuestion({ count }),
+    item_stat_odd_one: () => makeItemStatOddOneQuestion({ count }),
+    pantheon_odd_one: () => makePantheonOddOneQuestion({ count }),
+    god_claim_correct: () => makeGodClaimCorrectQuestion({ count }),
+    god_claim_incorrect: () => makeGodClaimIncorrectQuestion({ count }),
     item_stat_amount: () => {
       const stat = pickOne(popularStats());
       const withStat = catalog.items.filter((i) => i.stats?.[stat] != null);
@@ -2220,6 +2813,25 @@ export function randomizeQuestion(question) {
     if (hit?.patch) return hit;
   }
 
+  if (isPantheonOddOnePrompt(question)) {
+    const hit = makePantheonOddOneQuestion({ count });
+    if (hit?.patch) return hit;
+  }
+
+  if (isItemStatOddOnePrompt(question)) {
+    const current = findStatsInText(question?.prompt || '');
+    const hit =
+      makeItemStatOddOneQuestion({ count, avoidStats: new Set(current.map(norm)) }) ||
+      makeItemStatOddOneQuestion({ count });
+    if (hit?.patch) return hit;
+  }
+
+  if (isGodClaimPrompt(question)) {
+    const mode = isGodClaimIncorrectPrompt(question) ? 'incorrect' : 'correct';
+    const hit = makeGodClaimQuestion({ mode, count, preferGod: null });
+    if (hit?.patch) return hit;
+  }
+
   if (isReleaseAfterPrompt(question?.prompt) || question?.meta?.remix_kind === 'release_after') {
     const avoidGods = usedNames([question?.prompt]);
     const hit = makeReleaseAfterQuestion({ count, avoidGods });
@@ -2247,6 +2859,9 @@ export function remixQuestionFromA(questionA, { avoidTexts = [] } = {}) {
   };
   const avoid = [source.prompt, ...avoidTexts];
   const tries = [
+    remixGodClaim,
+    remixPantheonOddOne,
+    remixItemStatOddOne,
     remixAbilityCc,
     remixPassive,
     remixComboCc,

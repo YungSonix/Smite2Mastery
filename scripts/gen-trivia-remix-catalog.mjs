@@ -254,6 +254,25 @@ const builds = JSON.parse(
   fs.readFileSync(path.join(ROOT, 'app/data/God Information/Builds/builds.json'), 'utf8')
 );
 
+let smite2GodsMeta = {};
+try {
+  const rows = JSON.parse(
+    fs.readFileSync(path.join(ROOT, 'app/data/Smite2Gods.json'), 'utf8')
+  );
+  for (const row of Array.isArray(rows) ? rows : []) {
+    const n = String(row?.godName || row?.name || row?.Name || '').trim();
+    if (!n) continue;
+    smite2GodsMeta[norm(n)] = {
+      pantheon: String(row.pantheon || row.Pantheon || '').trim(),
+      role: String(row.Role || row.role || row.primaryRole || '').trim(),
+      powerType: String(row['Power Type'] || row.powerType || '').trim(),
+      attackType: String(row['Attack Type'] || row.attackType || '').trim(),
+    };
+  }
+} catch {
+  smite2GodsMeta = {};
+}
+
 const rawItems = flatten(builds.items).filter((item) => String(item?.name || '').trim());
 const byInternal = new Map();
 const byName = new Map();
@@ -361,15 +380,67 @@ function abilitySlotMeta(key, ability, indexFallback) {
   if (/^PASSIVE|^PSV/i.test(raw) || ability?.key?.includes?.('.PSV.')) {
     return { slot: 'passive', slotLabel: 'passive' };
   }
-  const m = raw.match(/^A0?([1-4])$/i) || String(ability?.key || '').match(/\.A0?([1-4])\./i);
+  // Smite 2 stance kits (Cu Chulainn) can expose A05 as a form swap.
+  const m =
+    raw.match(/^A0?([1-5])$/i) || String(ability?.key || '').match(/\.A0?([1-5])\./i);
   if (m) {
     slot = Number(m[1]);
-  } else if (Number.isFinite(indexFallback) && indexFallback >= 0 && indexFallback < 4) {
+  } else if (Number.isFinite(indexFallback) && indexFallback >= 0 && indexFallback < 5) {
     slot = indexFallback + 1;
   }
   if (!slot) return null;
   slotLabel = slot === 4 ? 'ultimate' : String(slot);
   return { slot: String(slot), slotLabel };
+}
+
+/**
+ * Flatten stance-nested abilities (Merlin/Ullr/Artio/Cu Chulainn):
+ * `{ A01: { ice: {...}, fire: {...} } }` → leaf ability rows.
+ */
+function expandAbilityLeaves(abilities) {
+  const out = [];
+  const entries = Object.entries(abilities || {});
+  entries.forEach(([key, ab], idx) => {
+    if (!ab || typeof ab !== 'object') return;
+    if (String(ab.name || '').trim()) {
+      out.push({ key, ability: ab, indexFallback: idx, stance: null });
+      return;
+    }
+    for (const [stance, leaf] of Object.entries(ab)) {
+      if (!leaf || typeof leaf !== 'object') continue;
+      if (!String(leaf.name || '').trim()) continue;
+      out.push({ key, ability: leaf, indexFallback: idx, stance: String(stance) });
+    }
+  });
+  return out;
+}
+
+function mapPrimaryRole(roles, shortRole, metaRole) {
+  const fromMeta = String(metaRole || '').trim();
+  if (fromMeta) return fromMeta;
+  const list = Array.isArray(roles) ? roles.map((r) => String(r || '').trim()).filter(Boolean) : [];
+  const map = {
+    middle: 'Mid',
+    mid: 'Mid',
+    solo: 'Solo',
+    jungle: 'Jungle',
+    carry: 'ADC',
+    adc: 'ADC',
+    hunter: 'ADC',
+    support: 'Support',
+    guardian: 'Support',
+  };
+  for (const r of list) {
+    const hit = map[r.toLowerCase()];
+    if (hit) return hit;
+  }
+  const blob = String(shortRole || '').toLowerCase();
+  if (/mid|mage|wizard/.test(blob)) return 'Mid';
+  if (/solo|warrior/.test(blob)) return 'Solo';
+  if (/jungle|assassin/.test(blob)) return 'Jungle';
+  if (/carry|hunter|adc/.test(blob)) return 'ADC';
+  if (/support|guardian/.test(blob)) return 'Support';
+  return list[0] || '';
 }
 
 function passiveSummary(passive) {
@@ -386,6 +457,7 @@ const abilities = [];
 const abilityCc = [];
 const passives = [];
 const godCc = [];
+const godProfiles = [];
 const seenGod = new Set();
 
 for (const raw of flatten(builds.gods)) {
@@ -400,6 +472,9 @@ for (const raw of flatten(builds.gods)) {
   });
 
   const aspectName = stripMd(god.aspect?.name);
+  const hasAspect =
+    god.hasAspect === true ||
+    (/^aspect of/i.test(aspectName) && aspectName.length > 10);
   if (/^aspect of/i.test(aspectName)) {
     const usesThe = /^aspect of the /i.test(aspectName);
     const blank = aspectName.replace(/^aspect of(?: the)?\s+/i, '').trim();
@@ -418,15 +493,20 @@ for (const raw of flatten(builds.gods)) {
   }
 
   const godCcSet = new Set();
-  const abilityEntries = Object.entries(god.abilities || {});
-  abilityEntries.forEach(([key, ab], idx) => {
+  const abilityNameSet = new Set();
+  const slotKeys = new Set();
+  const leaves = expandAbilityLeaves(god.abilities);
+  for (const leaf of leaves) {
+    const ab = leaf.ability;
     const an = String(ab?.name || '').trim();
-    if (!an || an.length < 4) return;
+    if (!an || an.length < 3) continue;
+    abilityNameSet.add(an);
     abilities.push({ god: name, name: an });
-    const meta = abilitySlotMeta(key, ab, idx);
-    if (!meta || meta.slot === 'passive') return;
+    const meta = abilitySlotMeta(leaf.key, ab, leaf.indexFallback);
+    if (!meta || meta.slot === 'passive') continue;
+    slotKeys.add(meta.slot);
     const ccs = extractCcTags(ab);
-    if (!ccs.length) return;
+    if (!ccs.length) continue;
     for (const c of ccs) godCcSet.add(c);
     abilityCc.push({
       god: name,
@@ -434,8 +514,9 @@ for (const raw of flatten(builds.gods)) {
       slot: meta.slot,
       slotLabel: meta.slotLabel,
       ccs,
+      ...(leaf.stance ? { stance: leaf.stance } : {}),
     });
-  });
+  }
 
   const psv = god.passive;
   const pName = String(psv?.name || '').trim();
@@ -449,11 +530,61 @@ for (const raw of flatten(builds.gods)) {
       ...(image ? { image } : {}),
     });
     abilities.push({ god: name, name: pName });
+    abilityNameSet.add(pName);
   }
 
   if (godCcSet.size) {
     godCc.push({ god: name, ccs: [...godCcSet].sort() });
   }
+
+  const metaRow = smite2GodsMeta[norm(name)] || {};
+  const pantheon = String(god.pantheon || metaRow.pantheon || '').trim();
+  const role = mapPrimaryRole(god.roles, god.shortRole, metaRow.role);
+  const roleMap = {
+    middle: 'Mid',
+    mid: 'Mid',
+    solo: 'Solo',
+    jungle: 'Jungle',
+    carry: 'ADC',
+    adc: 'ADC',
+    hunter: 'ADC',
+    support: 'Support',
+    guardian: 'Support',
+  };
+  const allRoles = [
+    ...new Set(
+      (Array.isArray(god.roles) ? god.roles : [])
+        .map((r) => roleMap[String(r || '').toLowerCase()] || String(r || '').trim())
+        .filter(Boolean)
+        .concat(role ? [role] : [])
+    ),
+  ];
+  const stances = Array.isArray(god.stances)
+    ? god.stances.map((s) => String(s || '').trim()).filter(Boolean)
+    : [];
+  const isStance = god.isStanceSwitcher === true || stances.length >= 2;
+  const type = String(god.Type || god.type || metaRow.powerType || '').trim();
+  const range = String(god.range || metaRow.attackType || '').trim();
+  const activeSlotCount = slotKeys.size || Object.keys(god.abilities || {}).length;
+  godProfiles.push({
+    name,
+    pantheon,
+    role,
+    roles: allRoles,
+    type,
+    range,
+    hasAspect: !!hasAspect,
+    isStanceSwitcher: !!isStance,
+    stanceCount: isStance ? stances.length : 0,
+    stances: isStance ? stances : [],
+    abilityNames: [...abilityNameSet].sort((a, b) => a.localeCompare(b)),
+    namedAbilityCount: abilityNameSet.size,
+    activeSlotCount,
+    kitAbilityCount: activeSlotCount + (pName ? 1 : 0),
+    passive: pName || null,
+    ccs: [...godCcSet].sort(),
+    ccParsed: godCcSet.size > 0 || leaves.length > 0,
+  });
 }
 
 aspects.push(
@@ -519,6 +650,7 @@ const out = {
   abilityCc: abilityCc.sort((a, b) => a.god.localeCompare(b.god) || a.slot.localeCompare(b.slot)),
   passives: passives.sort((a, b) => a.god.localeCompare(b.god)),
   godCc: godCc.sort((a, b) => a.god.localeCompare(b.god)),
+  godProfiles: godProfiles.sort((a, b) => a.name.localeCompare(b.name)),
   releases: releasesDedup.sort((a, b) => a.patch - b.patch || a.god.localeCompare(b.god)),
 };
 
@@ -543,7 +675,7 @@ fs.writeFileSync(
 const ls = items.filter((i) => i.stats.lifesteal != null).length;
 const statKeys = [...new Set(items.flatMap((i) => Object.keys(i.stats)))].sort();
 console.log(
-  `Wrote ${dest} (${items.length} items, ${statKeys.length} stat types, ${ls} with lifesteal, ${gods.length} gods, ${aspectsDedup.length} aspects, ${abilities.length} abilities, ${abilityCc.length} ability-CC, ${passives.length} passives, ${godCc.length} god-CC kits, ${releasesDedup.length} OB releases)`
+  `Wrote ${dest} (${items.length} items, ${statKeys.length} stat types, ${ls} with lifesteal, ${gods.length} gods, ${godProfiles.length} godProfiles, ${aspectsDedup.length} aspects, ${abilities.length} abilities, ${abilityCc.length} ability-CC, ${passives.length} passives, ${godCc.length} god-CC kits, ${releasesDedup.length} OB releases)`
 );
 console.log(`Also wrote ${ccDest}`);
 console.log(`Stats: ${statKeys.join(', ')}`);

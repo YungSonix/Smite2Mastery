@@ -6465,6 +6465,10 @@
       "name": "Backfire"
     },
     {
+      "god": "Cu Chulainn",
+      "name": "Barbed Spear"
+    },
+    {
       "god": "Guan Yu",
       "name": "Battle Fervor"
     },
@@ -6485,8 +6489,16 @@
       "name": "Berserk"
     },
     {
+      "god": "Cu Chulainn",
+      "name": "Berserk Form"
+    },
+    {
       "god": "Thor",
       "name": "Berserker Barrage"
+    },
+    {
+      "god": "Ullr",
+      "name": "Bladed Arrow"
     },
     {
       "god": "Ishtar",
@@ -6503,6 +6515,10 @@
     {
       "god": "Hades",
       "name": "Blight"
+    },
+    {
+      "god": "Merlin",
+      "name": "Blizzard"
     },
     {
       "god": "Mordred",
@@ -6777,6 +6793,10 @@
       "name": "Doomsayer"
     },
     {
+      "god": "Merlin",
+      "name": "Dragonfire"
+    },
+    {
       "god": "Morgan Le Fay",
       "name": "Dragonflight"
     },
@@ -6805,6 +6825,22 @@
       "name": "Earthshaker"
     },
     {
+      "god": "Merlin",
+      "name": "Eclipse"
+    },
+    {
+      "god": "Merlin",
+      "name": "Elemental Mastery (Arcane)"
+    },
+    {
+      "god": "Merlin",
+      "name": "Elemental Mastery (Fire)"
+    },
+    {
+      "god": "Merlin",
+      "name": "Elemental Mastery (Ice)"
+    },
+    {
       "god": "Morgan Le Fay",
       "name": "Empowered Blade"
     },
@@ -6813,12 +6849,20 @@
       "name": "Empty the Crypts"
     },
     {
+      "god": "Artio",
+      "name": "Energy Surge"
+    },
+    {
       "god": "Anhur",
       "name": "Enfeeble"
     },
     {
       "god": "Bastet",
       "name": "Ensnaring Claw"
+    },
+    {
+      "god": "Artio",
+      "name": "Entangling Vines"
     },
     {
       "god": "Gilgamesh",
@@ -6845,6 +6889,10 @@
       "name": "Explosive Bolts"
     },
     {
+      "god": "Ullr",
+      "name": "Expose Weakness"
+    },
+    {
       "god": "Izanami",
       "name": "Fade Away"
     },
@@ -6863,6 +6911,10 @@
     {
       "god": "Awilix",
       "name": "Feather Step"
+    },
+    {
+      "god": "Artio",
+      "name": "Ferocious Roar"
     },
     {
       "god": "Charon",
@@ -6887,6 +6939,18 @@
     {
       "god": "Ah Puch",
       "name": "Fleeting Breath"
+    },
+    {
+      "god": "Merlin",
+      "name": "Flicker (Arcane)"
+    },
+    {
+      "god": "Merlin",
+      "name": "Flicker (Fire)"
+    },
+    {
+      "god": "Merlin",
+      "name": "Flicker (Ice)"
     },
     {
       "god": "Ratatoskr",
@@ -6929,8 +6993,16 @@
       "name": "Frostbite"
     },
     {
+      "god": "Merlin",
+      "name": "Frostbolt"
+    },
+    {
       "god": "Eset",
       "name": "Funeral Rites"
+    },
+    {
+      "god": "Cu Chulainn",
+      "name": "Furious Charge"
     },
     {
       "god": "Xing Tian",
@@ -6965,6 +7037,10 @@
       "name": "Glorious Charge"
     },
     {
+      "god": "Ullr",
+      "name": "Glory Bound"
+    },
+    {
       "god": "Discordia",
       "name": "Golden Apple of Discord"
     },
@@ -6993,8 +7069,16 @@
       "name": "Great End"
     },
     {
+      "god": "Cu Chulainn",
+      "name": "Ground Slam"
+    },
+    {
       "god": "Odin",
       "name": "Gungnir's Might"
+    },
+    {
+      "god": "Ullr",
+      "name": "Hail of Arrows"
     },
     {
       "god": "Geb",
@@ -7015,6 +7099,10 @@
     {
       "god": "Amaterasu",
       "name": "Heavenly Reflection"
+    },
+    {
+      "god": "Artio",
+      "name": "Heavy Charge"
     },
     {
       "god": "Cernunnos",
@@ -7047,6 +7135,10 @@
     {
       "god": "Thanatos",
       "name": "Hovering Death"
+    },
+    {
+      "god": "Cu Chulainn",
+      "name": "Human Form"
     },
     {
       "god": "Baron Samedi",
@@ -7105,6 +7197,10 @@
       "name": "Intoxicate"
     },
     {
+      "god": "Ullr",
+      "name": "Invigorate"
+    },
+    {
       "god": "Susano",
       "name": "Jet Stream"
     },
@@ -7143,6 +7239,10 @@
     {
       "god": "Baron Samedi",
       "name": "Life of the Party"
+    },
+    {
+      "god": "Artio",
+      "name": "Life Tap"
     },
     {
       "god": "Zeus",
@@ -7213,6 +7313,10 @@
       "name": "Masterful Shot"
     },
     {
+      "god": "Artio",
+      "name": "Maul Prey"
+    },
+    {
       "god": "Mercury",
       "name": "Maximum Velocity"
     },
@@ -7275,6 +7379,10 @@
     {
       "god": "Agni",
       "name": "Noxious Fumes"
+    },
+    {
+      "god": "Ganesha",
+      "name": "Ohm"
     },
     {
       "god": "Yemoja",
@@ -7393,6 +7501,10 @@
       "name": "Radiant Glory"
     },
     {
+      "god": "Merlin",
+      "name": "Radiate"
+    },
+    {
       "god": "Fenrir",
       "name": "Ragnarok"
     },
@@ -7509,6 +7621,10 @@
       "name": "Sacred Monkey"
     },
     {
+      "god": "Cu Chulainn",
+      "name": "Salmon's Leap"
+    },
+    {
       "god": "Nemesis",
       "name": "Scales of Fate"
     },
@@ -7559,6 +7675,14 @@
     {
       "god": "Cabrakan",
       "name": "Shadow Zone"
+    },
+    {
+      "god": "Artio",
+      "name": "Shapeshift"
+    },
+    {
+      "god": "Artio",
+      "name": "Shapeshift (Bear)"
     },
     {
       "god": "Ymir",
@@ -7691,6 +7815,10 @@
     {
       "god": "Thanatos",
       "name": "Soul Reap"
+    },
+    {
+      "god": "Cu Chulainn",
+      "name": "Spear of Mortal Pain"
     },
     {
       "god": "Hua Mulan",
@@ -7885,6 +8013,10 @@
       "name": "Through the Cosmos"
     },
     {
+      "god": "Ullr",
+      "name": "Thrown Axe"
+    },
+    {
       "god": "Vulcan",
       "name": "Thumper XXV"
     },
@@ -8021,6 +8153,14 @@
       "name": "Venomous Haze"
     },
     {
+      "god": "Cu Chulainn",
+      "name": "Vent Anger"
+    },
+    {
+      "god": "Cu Chulainn",
+      "name": "Vent Anger"
+    },
+    {
       "god": "Sylvanus",
       "name": "Verdant Growth"
     },
@@ -8035,6 +8175,14 @@
     {
       "god": "Pele",
       "name": "Volcanic Lightning"
+    },
+    {
+      "god": "Merlin",
+      "name": "Vortex"
+    },
+    {
+      "god": "Cu Chulainn",
+      "name": "War Cry"
     },
     {
       "god": "Princess Bari",
@@ -8067,6 +8215,14 @@
     {
       "god": "Xing Tian",
       "name": "Whirlwind of Rage and Steel"
+    },
+    {
+      "god": "Ullr",
+      "name": "Wield Axes"
+    },
+    {
+      "god": "Ullr",
+      "name": "Wield Bow"
     },
     {
       "god": "Ne Zha",
@@ -8331,6 +8487,47 @@
       "ccs": [
         "stun"
       ]
+    },
+    {
+      "god": "Artio",
+      "name": "Entangling Vines",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "cripple"
+      ],
+      "stance": "druid"
+    },
+    {
+      "god": "Artio",
+      "name": "Ferocious Roar",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "stun"
+      ],
+      "stance": "bear"
+    },
+    {
+      "god": "Artio",
+      "name": "Life Tap",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "root",
+        "slow"
+      ],
+      "stance": "druid"
+    },
+    {
+      "god": "Artio",
+      "name": "Heavy Charge",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow"
+      ],
+      "stance": "bear"
     },
     {
       "god": "Athena",
@@ -8677,6 +8874,46 @@
       ]
     },
     {
+      "god": "Cu Chulainn",
+      "name": "Barbed Spear",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "stun"
+      ],
+      "stance": "human"
+    },
+    {
+      "god": "Cu Chulainn",
+      "name": "Ground Slam",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "root"
+      ],
+      "stance": "berserk"
+    },
+    {
+      "god": "Cu Chulainn",
+      "name": "Furious Charge",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "stun"
+      ],
+      "stance": "berserk"
+    },
+    {
+      "god": "Cu Chulainn",
+      "name": "Spear of Mortal Pain",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockup"
+      ],
+      "stance": "human"
+    },
+    {
       "god": "Cupid",
       "name": "Heart Bomb",
       "slot": "1",
@@ -8817,6 +9054,16 @@
       "slotLabel": "3",
       "ccs": [
         "grab"
+      ]
+    },
+    {
+      "god": "Ganesha",
+      "name": "Ohm",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "silence",
+        "slow"
       ]
     },
     {
@@ -9353,6 +9600,56 @@
       ]
     },
     {
+      "god": "Merlin",
+      "name": "Frostbolt",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ],
+      "stance": "ice"
+    },
+    {
+      "god": "Merlin",
+      "name": "Vortex",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "pull"
+      ],
+      "stance": "arcane"
+    },
+    {
+      "god": "Merlin",
+      "name": "Blizzard",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ],
+      "stance": "ice"
+    },
+    {
+      "god": "Merlin",
+      "name": "Elemental Mastery (Arcane)",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockup"
+      ],
+      "stance": "arcane"
+    },
+    {
+      "god": "Merlin",
+      "name": "Elemental Mastery (Ice)",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "slow"
+      ],
+      "stance": "ice"
+    },
+    {
       "god": "Mordred",
       "name": "Severing Slice",
       "slot": "3",
@@ -9862,6 +10159,46 @@
       ]
     },
     {
+      "god": "Ullr",
+      "name": "Thrown Axe",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "stun"
+      ],
+      "stance": "axe"
+    },
+    {
+      "god": "Ullr",
+      "name": "Hail of Arrows",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow"
+      ],
+      "stance": "bow"
+    },
+    {
+      "god": "Ullr",
+      "name": "Wield Axes",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "disarm"
+      ],
+      "stance": "bow"
+    },
+    {
+      "god": "Ullr",
+      "name": "Wield Bow",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "disarm"
+      ],
+      "stance": "axe"
+    },
+    {
       "god": "Xbalanque",
       "name": "Poison Darts",
       "slot": "2",
@@ -9998,7 +10335,8 @@
     {
       "god": "Ah Puch",
       "name": "Hollow Ground",
-      "summary": "Exhume decaying corpses at will. When you walk over a decaying corpse, reduce the Cooldown of Undead Surge and Fleeting Breath and restore a portion of your max Health and Mana [3% Max Health]. • Enemy gods and the Fire "
+      "summary": "Exhume decaying corpses at will. When you walk over a decaying corpse, reduce the Cooldown of Undead Surge and Fleeting Breath and restore a portion of your max Health and Mana [3% Max Health]. • Enemy gods and the Fire ",
+      "image": "/media/Icons/God Info/puchPassive.webp"
     },
     {
       "god": "Aladdin",
@@ -10063,7 +10401,8 @@
     {
       "god": "Atlas",
       "name": "The Astrolabe",
-      "summary": "You gain Energy in your Astrolabe when you take damage from enemy gods or deal damage with your Attacks or Abilities (minions grant reduced Energy). At enough Energy, you may press your interact key to unleash an Empower"
+      "summary": "You gain Energy in your Astrolabe when you take damage from enemy gods or deal damage with your Attacks or Abilities (minions grant reduced Energy). At enough Energy, you may press your interact key to unleash an Empower",
+      "image": "/media/Icons/God Info/atlasPassive.webp"
     },
     {
       "god": "Awilix",
@@ -10086,7 +10425,8 @@
     {
       "god": "Bastet",
       "name": "Nightstalker",
-      "summary": "Hitting enemies grants Lifesteal. Hitting enemy gods additionally grants stacks of Strength and Reveals them for a duration."
+      "summary": "Hitting enemies grants Lifesteal. Hitting enemy gods additionally grants stacks of Strength and Reveals them for a duration.",
+      "image": "/media/Icons/God Info/bastetPassive.webp"
     },
     {
       "god": "Bellona",
@@ -10121,22 +10461,26 @@
     {
       "god": "Charon",
       "name": "Ferryman of Souls",
-      "summary": "When any friendly lane minion or jungle monster dies, they drop a coin for you to collect that persists for 8 seconds. Coins grant you 1 gold and a Soul Stack. You lose all soul stacks when returning to base and gain 2 m"
+      "summary": "When any friendly lane minion or jungle monster dies, they drop a coin for you to collect that persists for 8 seconds. Coins grant you 1 gold and a Soul Stack. You lose all soul stacks when returning to base and gain 2 m",
+      "image": "/media/Icons/God Info/charonPassive.webp"
     },
     {
       "god": "Chiron",
       "name": "Herbal Medicine",
-      "summary": "Gain a charge every 12 seconds. Using an ability consumes a charge to throw a poultice to an injured ally, applying a Heal over Time. • Healed allies also gain Strength and Intelligence for a duration • Poultices priorit"
+      "summary": "Gain a charge every 12 seconds. Using an ability consumes a charge to throw a poultice to an injured ally, applying a Heal over Time. • Healed allies also gain Strength and Intelligence for a duration • Poultices priorit",
+      "image": "/media/Icons/God Info/chironPassive.webp"
     },
     {
       "god": "Chronos",
       "name": "Time Lord",
-      "summary": "You become empowered as time flows around you. Over time you gain stacks that grant Intelligence. Stacks have a maximum and are permanent. • You gain 1 stack every 1.5 minutes • Intelligence: [5 Per Stack] • Max Stacks: "
+      "summary": "You become empowered as time flows around you. Over time you gain stacks that grant Intelligence. Stacks have a maximum and are permanent. • You gain 1 stack every 1.5 minutes • Intelligence: [5 Per Stack] • Max Stacks: ",
+      "image": "/media/Icons/God Info/chronosPassive.webp"
     },
     {
       "god": "Cu Chulainn",
       "name": "Berserk",
-      "summary": "Your Mana, Mana Regen, and Mana Heals convert into your Health Pool instead of Mana. Abilities cost Rage, which only regenerates up to 25. Gain Rage by hitting Abilities, per Attack, and when you or a nearby ally takes d"
+      "summary": "Your Mana, Mana Regen, and Mana Heals convert into your Health Pool instead of Mana. Abilities cost Rage, which only regenerates up to 25. Gain Rage by hitting Abilities, per Attack, and when you or a nearby ally takes d",
+      "image": "/media/Icons/God Info/cuchuPassive.webp"
     },
     {
       "god": "Cupid",
@@ -10159,7 +10503,8 @@
     {
       "god": "Discordia",
       "name": "Contest of Gods",
-      "summary": "The god on your team with the highest damage dealt to enemy gods gains a buff of Strength and Intelligence. Gaining a level or a god kill/assist provides a random temporary buff of Intelligence, Lifesteal or Healing. Hea"
+      "summary": "The god on your team with the highest damage dealt to enemy gods gains a buff of Strength and Intelligence. Gaining a level or a god kill/assist provides a random temporary buff of Intelligence, Lifesteal or Healing. Hea",
+      "image": "/media/Icons/God Info/discoPassive.webp"
     },
     {
       "god": "Eset",
@@ -10188,7 +10533,8 @@
     {
       "god": "Gilgamesh",
       "name": "Epic of Gilgamesh",
-      "summary": "You wield artifacts that demand quests to unlock their true potential. Sun-forged Scimitar: Extend buff to max by hitting only gods 3 times. Drop Kick: Drop Kick a target into a god 3 times. Hero's Advance: Kill or Assis"
+      "summary": "You wield artifacts that demand quests to unlock their true potential. Sun-forged Scimitar: Extend buff to max by hitting only gods 3 times. Drop Kick: Drop Kick a target into a god 3 times. Hero's Advance: Kill or Assis",
+      "image": "/media/Icons/God Info/gilgaPassive.webp"
     },
     {
       "god": "Guan Yu",
@@ -10217,7 +10563,8 @@
     {
       "god": "Horus",
       "name": "Resolute",
-      "summary": "Gain Resolute stacks when an enemy god damages you. Each stack grants Protections and Crowd Control Reduction for a short duration. When Resolute expires, Heal based on your stacks. • Protections: [2.5 Per Stack] • Crowd"
+      "summary": "Gain Resolute stacks when an enemy god damages you. Each stack grants Protections and Crowd Control Reduction for a short duration. When Resolute expires, Heal based on your stacks. • Protections: [2.5 Per Stack] • Crowd",
+      "image": "/media/Icons/God Info/horusPassive.webp"
     },
     {
       "god": "Hou Yi",
@@ -10240,12 +10587,14 @@
     {
       "god": "Ishtar",
       "name": "Mark of Vengeance",
-      "summary": "When you drop below 75% Health, apply Mark of Vengeance to the enemy god that most recently damaged you for 10s. Each Attack against the marked god grants stacking Attack Speed for 4s; each stack refreshes duration. Scor"
+      "summary": "When you drop below 75% Health, apply Mark of Vengeance to the enemy god that most recently damaged you for 10s. Each Attack against the marked god grants stacking Attack Speed for 4s; each stack refreshes duration. Scor",
+      "image": "/media/Icons/God Info/ishtarPassive.webp"
     },
     {
       "god": "Ix Chel",
       "name": "Rainbow Weaver",
-      "summary": "Gain a Rainbow Weaver stack whenever your Abilities hit an enemy god or grant a beneficial effect to an allied god. At 6 stacks, your next Attack has no movement penalty, is larger, travels farther, and deals [40% INT] b"
+      "summary": "Gain a Rainbow Weaver stack whenever your Abilities hit an enemy god or grant a beneficial effect to an allied god. At 6 stacks, your next Attack has no movement penalty, is larger, travels farther, and deals [40% INT] b",
+      "image": "/media/Icons/God Info/ixchelPassive.webp"
     },
     {
       "god": "Izanami",
@@ -10256,7 +10605,8 @@
     {
       "god": "Janus",
       "name": "Passages",
-      "summary": "When you pass through a Portal or Threshold, your next ability deals [20% INT] bonus Magical Damage. Stacks up to 2 times."
+      "summary": "When you pass through a Portal or Threshold, your next ability deals [20% INT] bonus Magical Damage. Stacks up to 2 times.",
+      "image": "/media/Icons/God Info/janusPassive.webp"
     },
     {
       "god": "Jing Wei",
@@ -10321,12 +10671,14 @@
     {
       "god": "Morgan Le Fay",
       "name": "Empowered Blade",
-      "summary": "Damaging enemy gods with abilities Marks them and activates a shared Symbol on your sword, providing Mana Regen. After gaining all 5 Symbols you become empowered temporarily, causing your Cooldowns to be decreased and pr"
+      "summary": "Damaging enemy gods with abilities Marks them and activates a shared Symbol on your sword, providing Mana Regen. After gaining all 5 Symbols you become empowered temporarily, causing your Cooldowns to be decreased and pr",
+      "image": "/media/Icons/God Info/morganLeFayPassive.webp"
     },
     {
       "god": "Ne Zha",
       "name": "Righteous Spirit",
-      "summary": "Build Righteous Spirit stacks by hitting enemies to gain Movement Speed. Stacks reset if you have not taken or dealt damage recently. Critical Strikes grant 2 stacks. Gaining a stack permanently increases Critical Strike"
+      "summary": "Build Righteous Spirit stacks by hitting enemies to gain Movement Speed. Stacks reset if you have not taken or dealt damage recently. Critical Strikes grant 2 stacks. Gaining a stack permanently increases Critical Strike",
+      "image": "/media/Icons/God Info/neZhaPassive.webp"
     },
     {
       "god": "Neith",
@@ -10349,7 +10701,8 @@
     {
       "god": "Nut",
       "name": "Flux",
-      "summary": "While Strength exceeds Intelligence, Ability hits grant Stellar Flux which provides Attack Speed. Stacks decay every 3s. Otherwise, Basic Attacks grant Astral Flux. Abilities consume this for Bonus Magical Damage and eff"
+      "summary": "While Strength exceeds Intelligence, Ability hits grant Stellar Flux which provides Attack Speed. Stacks decay every 3s. Otherwise, Basic Attacks grant Astral Flux. Abilities consume this for Bonus Magical Damage and eff",
+      "image": "/media/Icons/God Info/nutPassive.webp"
     },
     {
       "god": "Odin",
@@ -10396,12 +10749,14 @@
     {
       "god": "Ratatoskr",
       "name": "Acorn of Yggdrasil",
-      "summary": "You spawn with a Magic Acorn in your inventory. This can be upgraded anywhere on the map to provide different bonuses After purchasing an Acorn, you cannot perform other actions and are Rooted for 0.7 seconds."
+      "summary": "You spawn with a Magic Acorn in your inventory. This can be upgraded anywhere on the map to provide different bonuses After purchasing an Acorn, you cannot perform other actions and are Rooted for 0.7 seconds.",
+      "image": "/media/Icons/God Info/ratPassive.webp"
     },
     {
       "god": "Ravana",
       "name": "Chain of Blows",
-      "summary": "Successful Attacks and abilities against enemies add to your Combo. Each time Combo reaches 8, you gain a Shield as well as Movement Speed and Strength. • Shield Health: [6% Max Health] • Movement Speed: 3% • Strength: 5"
+      "summary": "Successful Attacks and abilities against enemies add to your Combo. Each time Combo reaches 8, you gain a Shield as well as Movement Speed and Strength. • Shield Health: [6% Max Health] • Movement Speed: 3% • Strength: 5",
+      "image": "/media/Icons/God Info/ravPassive.webp"
     },
     {
       "god": "Scylla",
@@ -10466,7 +10821,8 @@
     {
       "god": "Ullr",
       "name": "Weapon Master",
-      "summary": "When you use an ability in either stance your Cooldowns in the opposite stance are reduced."
+      "summary": "When you use an ability in either stance your Cooldowns in the opposite stance are reduced.",
+      "image": "/media/Icons/God Info/ullrPassive.webp"
     },
     {
       "god": "Vulcan",
@@ -10483,7 +10839,8 @@
     {
       "god": "Xing Tian",
       "name": "Smouldering Rage",
-      "summary": "Ability hits grant Smouldering Rage stacks. Each stack grants Health Regen and temporary Maximum Health for a duration. • Stack duration refreshes when you hit with an ability • Health Regen: [0.6] • Maximum Health: [5] "
+      "summary": "Ability hits grant Smouldering Rage stacks. Each stack grants Health Regen and temporary Maximum Health for a duration. • Stack duration refreshes when you hit with an ability • Health Regen: [0.6] • Maximum Health: [5] ",
+      "image": "/media/Icons/God Info/xingPassive.webp"
     },
     {
       "god": "Yemoja",
@@ -10581,6 +10938,15 @@
     },
     {
       "god": "Artemis",
+      "ccs": [
+        "cripple",
+        "root",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Artio",
       "ccs": [
         "cripple",
         "root",
@@ -10705,6 +11071,14 @@
       ]
     },
     {
+      "god": "Cu Chulainn",
+      "ccs": [
+        "knockup",
+        "root",
+        "stun"
+      ]
+    },
+    {
       "god": "Cupid",
       "ccs": [
         "mesmerize",
@@ -10757,6 +11131,7 @@
       "god": "Ganesha",
       "ccs": [
         "grab",
+        "silence",
         "slow"
       ]
     },
@@ -10935,6 +11310,14 @@
       ]
     },
     {
+      "god": "Merlin",
+      "ccs": [
+        "knockup",
+        "pull",
+        "slow"
+      ]
+    },
+    {
       "god": "Mordred",
       "ccs": [
         "root",
@@ -11128,6 +11511,14 @@
       ]
     },
     {
+      "god": "Ullr",
+      "ccs": [
+        "disarm",
+        "slow",
+        "stun"
+      ]
+    },
+    {
       "god": "Xbalanque",
       "ccs": [
         "slow"
@@ -11163,6 +11554,2884 @@
         "slow",
         "stun"
       ]
+    }
+  ],
+  "godProfiles": [
+    {
+      "name": "Achilles",
+      "pantheon": "Greek",
+      "role": "Solo",
+      "roles": [
+        "Solo"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Combat Dodge",
+        "Fatal Strike",
+        "Gift of the Gods",
+        "Radiant Glory",
+        "Shield of Achilles"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Gift of the Gods",
+      "ccs": [
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Agni",
+      "pantheon": "Hindu",
+      "role": "Mid",
+      "roles": [
+        "Mid"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Combustion",
+        "Flame Wave",
+        "Noxious Fumes",
+        "Path of Flames",
+        "Rain Fire"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Combustion",
+      "ccs": [
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Ah Puch",
+      "pantheon": "Mayan",
+      "role": "Mid",
+      "roles": [
+        "Mid",
+        "Solo"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Corpse Explosion",
+        "Empty the Crypts",
+        "Fleeting Breath",
+        "Hollow Ground",
+        "Undead Surge"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Hollow Ground",
+      "ccs": [
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Aladdin",
+      "pantheon": "Tales of Arabia",
+      "role": "Jungle",
+      "roles": [
+        "Mid",
+        "Jungle"
+      ],
+      "type": "Magical",
+      "range": "Melee",
+      "hasAspect": false,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Agile Run",
+        "Into The Lamp",
+        "Kufic Invocation",
+        "Sultan's Grace",
+        "Three Wishes"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Three Wishes",
+      "ccs": [
+        "knockback"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Amaterasu",
+      "pantheon": "Japanese",
+      "role": "Solo",
+      "roles": [
+        "Jungle",
+        "Solo"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Dazzling Offensive",
+        "Divine Presence",
+        "Glorious Charge",
+        "Heavenly Reflection",
+        "Illuminating Strike"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Illuminating Strike",
+      "ccs": [
+        "silence",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Anhur",
+      "pantheon": "Egyptian",
+      "role": "ADC",
+      "roles": [
+        "ADC"
+      ],
+      "type": "Physical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Desert Fury",
+        "Disperse",
+        "Enfeeble",
+        "Impale",
+        "Shifting Sands"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Enfeeble",
+      "ccs": [
+        "knockback",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Anubis",
+      "pantheon": "Egyptian",
+      "role": "Mid",
+      "roles": [
+        "Mid",
+        "Solo"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": false,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Death Gaze",
+        "Grasping Hands",
+        "Mummify",
+        "Plague Of Locusts",
+        "The Scales"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "The Scales",
+      "ccs": [
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Aphrodite",
+      "pantheon": "Greek",
+      "role": "Mid",
+      "roles": [
+        "Mid",
+        "Support"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": false,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Back Off!",
+        "Center of Attention",
+        "Kiss",
+        "Love Birds",
+        "Undying Love"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Center of Attention",
+      "ccs": [
+        "knockback",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Apollo",
+      "pantheon": "Greek",
+      "role": "ADC",
+      "roles": [
+        "ADC",
+        "Jungle"
+      ],
+      "type": "Physical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Across the Sky",
+        "Audacity",
+        "Serenade",
+        "So Beautiful",
+        "The Moves"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Audacity",
+      "ccs": [
+        "knockback",
+        "mesmerize",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Ares",
+      "pantheon": "Greek",
+      "role": "Support",
+      "roles": [
+        "Support"
+      ],
+      "type": "Magical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Blessed Armaments",
+        "Call To Arms",
+        "No Escape",
+        "Searing Flesh",
+        "Shackles"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Blessed Armaments",
+      "ccs": [
+        "cripple",
+        "pull",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Artemis",
+      "pantheon": "Greek",
+      "role": "ADC",
+      "roles": [
+        "ADC",
+        "Mid"
+      ],
+      "type": "Physical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Calydonian Boar",
+        "Still Target",
+        "Suppress the Insolent",
+        "Transgressor's Fate",
+        "Vengeful Assault"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Still Target",
+      "ccs": [
+        "cripple",
+        "root",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Artio",
+      "pantheon": "Celtic",
+      "role": "Support",
+      "roles": [
+        "Solo",
+        "Support"
+      ],
+      "type": "Magical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": true,
+      "stanceCount": 2,
+      "stances": [
+        "bear",
+        "druid"
+      ],
+      "abilityNames": [
+        "Decompose",
+        "Energy Surge",
+        "Entangling Vines",
+        "Ferocious Roar",
+        "Heavy Charge",
+        "Life Tap",
+        "Maul Prey",
+        "Shapeshift",
+        "Shapeshift (Bear)"
+      ],
+      "namedAbilityCount": 9,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Decompose",
+      "ccs": [
+        "cripple",
+        "root",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Athena",
+      "pantheon": "Greek",
+      "role": "Support",
+      "roles": [
+        "Support",
+        "Jungle"
+      ],
+      "type": "Magical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Confound",
+        "Defender Of Olympus",
+        "Preemptive Strike",
+        "Reach",
+        "Shield Wall"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Reach",
+      "ccs": [
+        "slow",
+        "taunt"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Atlas",
+      "pantheon": "Greek",
+      "role": "Support",
+      "roles": [
+        "Support"
+      ],
+      "type": "Magical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Gamma-Ray Burst",
+        "Gravity Pull",
+        "Kinetic Charge",
+        "The Astrolabe",
+        "Unburden"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "The Astrolabe",
+      "ccs": [
+        "knockup",
+        "pull",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Awilix",
+      "pantheon": "Mayan",
+      "role": "Jungle",
+      "roles": [
+        "Solo/Jungle",
+        "Jungle"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": false,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Feather Step",
+        "Gravity Surge",
+        "Initiative",
+        "Moonlight Charge",
+        "Summon Suku"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Initiative",
+      "ccs": [
+        "cripple",
+        "knockup",
+        "pull",
+        "root",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Bacchus",
+      "pantheon": "Roman",
+      "role": "Support",
+      "roles": [
+        "Solo",
+        "Support"
+      ],
+      "type": "Magical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Belch Of The Gods",
+        "Belly Flop",
+        "Chug",
+        "Drunk-O-Meter",
+        "Intoxicate"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Drunk-O-Meter",
+      "ccs": [
+        "knockup",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Baron Samedi",
+      "pantheon": "Voodoo",
+      "role": "Mid",
+      "roles": [
+        "Solo",
+        "Mid",
+        "Support"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Consign Spirits",
+        "Hysteria",
+        "Life of the Party",
+        "Vivid Gaze",
+        "Wrap It Up"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Hysteria",
+      "ccs": [
+        "mesmerize",
+        "root",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Bastet",
+      "pantheon": "Egyptian",
+      "role": "Jungle",
+      "roles": [
+        "Jungle"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Cat Call",
+        "Ensnaring Claw",
+        "Nightstalker",
+        "Pounce",
+        "Razor Whip"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Nightstalker",
+      "ccs": [
+        "root",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Bellona",
+      "pantheon": "Roman",
+      "role": "Solo",
+      "roles": [
+        "Support",
+        "Solo",
+        "Jungle"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Bludgeon",
+        "Eagle's Rally",
+        "Master Of War",
+        "Scourge",
+        "Shield Bash"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Master Of War",
+      "ccs": [
+        "disarm",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Cabrakan",
+      "pantheon": "Mayan",
+      "role": "Support",
+      "roles": [
+        "Jungle",
+        "Support",
+        "Solo"
+      ],
+      "type": "Magical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Refraction Shield",
+        "Seismic Crush",
+        "Shadow Zone",
+        "Tectonic Shift",
+        "Tremors"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Shadow Zone",
+      "ccs": [
+        "cripple",
+        "root",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Cerberus",
+      "pantheon": "Greek",
+      "role": "Support",
+      "roles": [
+        "Solo",
+        "Support"
+      ],
+      "type": "Magical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Ghastly Breath",
+        "Paralyzing Spit",
+        "Soul Expulsion",
+        "Spirit of Death",
+        "Stygian Torment"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Spirit of Death",
+      "ccs": [
+        "knockup",
+        "pull",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Cernunnos",
+      "pantheon": "Celtic",
+      "role": "ADC",
+      "roles": [
+        "ADC",
+        "Jungle"
+      ],
+      "type": "Physical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Bramble Blast",
+        "Heavy Glaive",
+        "Horn Charge",
+        "Shifter Of Seasons",
+        "The Wild Hunt"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Heavy Glaive",
+      "ccs": [
+        "cripple",
+        "polymorph",
+        "root",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Chaac",
+      "pantheon": "Mayan",
+      "role": "Solo",
+      "roles": [
+        "Solo",
+        "Mid"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Overflow",
+        "Rain Dance",
+        "Storm Call",
+        "Thunder Strike",
+        "Torrent"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Overflow",
+      "ccs": [
+        "knockup",
+        "silence",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Charon",
+      "pantheon": "Greek",
+      "role": "Support",
+      "roles": [
+        "Support",
+        "Solo",
+        "Mid"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Damnation",
+        "Ferryman of Souls",
+        "Spectral Surge",
+        "Summon Styx",
+        "Swift Voyage"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Ferryman of Souls",
+      "ccs": [
+        "fear",
+        "root",
+        "silence",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Chiron",
+      "pantheon": "Greek",
+      "role": "ADC",
+      "roles": [
+        "Mid",
+        "Support",
+        "ADC"
+      ],
+      "type": "Physical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Centaurus",
+        "Giddyup!",
+        "Herbal Medicine",
+        "Masterful Shot",
+        "Training Exercise"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Herbal Medicine",
+      "ccs": [
+        "knockup",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Chronos",
+      "pantheon": "Greek",
+      "role": "Mid",
+      "roles": [
+        "Mid"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Accelerate",
+        "Rewind",
+        "Stop Time",
+        "Time Lord",
+        "Time Rift"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Time Lord",
+      "ccs": [
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Cu Chulainn",
+      "pantheon": "Celtic",
+      "role": "Solo",
+      "roles": [
+        "Solo"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": true,
+      "stanceCount": 2,
+      "stances": [
+        "human",
+        "berserk"
+      ],
+      "abilityNames": [
+        "Barbed Spear",
+        "Berserk",
+        "Berserk Form",
+        "Furious Charge",
+        "Ground Slam",
+        "Human Form",
+        "Salmon's Leap",
+        "Spear of Mortal Pain",
+        "Vent Anger",
+        "War Cry"
+      ],
+      "namedAbilityCount": 10,
+      "activeSlotCount": 5,
+      "kitAbilityCount": 6,
+      "passive": "Berserk",
+      "ccs": [
+        "knockup",
+        "root",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Cupid",
+      "pantheon": "Roman",
+      "role": "ADC",
+      "roles": [
+        "ADC",
+        "Support"
+      ],
+      "type": "Physical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Fields of Love",
+        "Flutter",
+        "Heart Bomb",
+        "Lovestruck",
+        "Share the Love"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Lovestruck",
+      "ccs": [
+        "mesmerize",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Da Ji",
+      "pantheon": "Chinese",
+      "role": "Jungle",
+      "roles": [
+        "Jungle"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Horrible Burns",
+        "One Thousand Cuts",
+        "Paolao",
+        "Torture Blades",
+        "Trickster Spirit"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Torture Blades",
+      "ccs": [
+        "cripple",
+        "pull",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Danzaburou",
+      "pantheon": "Japanese",
+      "role": "ADC",
+      "roles": [
+        "ADC",
+        "Jungle"
+      ],
+      "type": "Physical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Alluring Spirits",
+        "Dishonest Duplication",
+        "Fool's Gold",
+        "Tanuki Trickery",
+        "Uproarious Rocket"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Dishonest Duplication",
+      "ccs": [
+        "slow",
+        "stun",
+        "taunt"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Discordia",
+      "pantheon": "Greek",
+      "role": "Mid",
+      "roles": [
+        "Mid"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Contest of Gods",
+        "Erratic Behavior",
+        "Golden Apple of Discord",
+        "Strife",
+        "Unruly Magic"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Contest of Gods",
+      "ccs": [
+        "cripple",
+        "root"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Eset",
+      "pantheon": "Egyptian",
+      "role": "Mid",
+      "roles": [
+        "Support",
+        "Mid"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Circle of Protection",
+        "Dispel Magic",
+        "Funeral Rites",
+        "Spirit Ball",
+        "Wing Gust"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Funeral Rites",
+      "ccs": [
+        "knockback",
+        "root",
+        "silence",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Fenrir",
+      "pantheon": "Norse",
+      "role": "Jungle",
+      "roles": [
+        "Jungle"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Brutalize",
+        "Ragnarok",
+        "Seething Howl",
+        "Unbound Runes",
+        "Unchained"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Unbound Runes",
+      "ccs": [
+        "grab",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Ganesha",
+      "pantheon": "Hindu",
+      "role": "Support",
+      "roles": [
+        "Support"
+      ],
+      "type": "Magical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Dharmic Pillars",
+        "Good Fortune",
+        "Ohm",
+        "Remove Obstacles",
+        "Turn of Fate"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Good Fortune",
+      "ccs": [
+        "grab",
+        "silence",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Geb",
+      "pantheon": "Egyptian",
+      "role": "Support",
+      "roles": [
+        "Support"
+      ],
+      "type": "Magical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Cataclysm",
+        "Hard as Rock",
+        "Roll Out",
+        "Shock Wave",
+        "Stone Shield"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Hard as Rock",
+      "ccs": [
+        "knockback",
+        "knockup",
+        "pull",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Gilgamesh",
+      "pantheon": "Babylonian",
+      "role": "Solo",
+      "roles": [
+        "Solo",
+        "Jungle"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Drop Kick",
+        "Epic of Gilgamesh",
+        "Hero's Advance",
+        "Sun-forged Scimitar",
+        "Winds of Shamash"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Epic of Gilgamesh",
+      "ccs": [
+        "knockback",
+        "pull",
+        "root",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Guan Yu",
+      "pantheon": "Chinese",
+      "role": "Solo",
+      "roles": [
+        "Support, Solo",
+        "Solo"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Battle Fervor",
+        "Cavalry Charge",
+        "Conviction",
+        "Taolu Assault",
+        "Warrior's Will"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Battle Fervor",
+      "ccs": [
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Hades",
+      "pantheon": "Greek",
+      "role": "Mid",
+      "roles": [
+        "Solo",
+        "Mid"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": false,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Blight",
+        "Death From Below",
+        "Devour Souls",
+        "Pillar Of Agony",
+        "Shroud Of Darkness"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Blight",
+      "ccs": [
+        "fear",
+        "silence",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Hecate",
+      "pantheon": "Greek",
+      "role": "Mid",
+      "roles": [
+        "Mid"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Mythic Ritual",
+        "Open the Gates",
+        "Repel Magic",
+        "Spell Eater",
+        "Triplicate Form"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Mythic Ritual",
+      "ccs": [
+        "mesmerize",
+        "pull",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Hercules",
+      "pantheon": "Roman",
+      "role": "Solo",
+      "roles": [
+        "Solo",
+        "Support",
+        "Jungle"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Apotheosis",
+        "Driving Strike",
+        "Earthbreaker",
+        "Excavate",
+        "Mitigate Wounds"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Apotheosis",
+      "ccs": [
+        "knockup",
+        "pull",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Horus",
+      "pantheon": "Egyptian",
+      "role": "Support",
+      "roles": [
+        "Support",
+        "Solo"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Fracture",
+        "Protector's Surge",
+        "Resolute",
+        "To The Skies!",
+        "Updraft"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Resolute",
+      "ccs": [
+        "knockback",
+        "knockup",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Hou Yi",
+      "pantheon": "Chinese",
+      "role": "ADC",
+      "roles": [
+        "ADC",
+        "Mid"
+      ],
+      "type": "Physical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Divebomb",
+        "Mark of the Golden Crow",
+        "Ricochet",
+        "Sunbreaker",
+        "Suntouched"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Suntouched",
+      "ccs": [
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Hua Mulan",
+      "pantheon": "Chinese",
+      "role": "Solo",
+      "roles": [
+        "Solo"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": false,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Cross Strike",
+        "Divine Mastery",
+        "Grapple",
+        "Spear Thrust",
+        "Training Arc"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Training Arc",
+      "ccs": [
+        "knockup",
+        "pull",
+        "root",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Hun Batz",
+      "pantheon": "Mayan",
+      "role": "Jungle",
+      "roles": [
+        "Jungle",
+        "Support"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Fear No Evil",
+        "Infused Strikes",
+        "Overhand Smash",
+        "Sacred Monkey",
+        "Somersault"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Infused Strikes",
+      "ccs": [
+        "fear",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Ishtar",
+      "pantheon": "Babylonian",
+      "role": "ADC",
+      "roles": [
+        "ADC",
+        "Mid"
+      ],
+      "type": "Physical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Blades of Retribution",
+        "Imbue Arrows",
+        "Jolt",
+        "Mark of Vengeance",
+        "Rolling Thunder"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Mark of Vengeance",
+      "ccs": [
+        "cripple",
+        "mesmerize",
+        "root",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Ix Chel",
+      "pantheon": "Mayan",
+      "role": "Mid",
+      "roles": [
+        "Mid",
+        "Support"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Gleaming Blast",
+        "Great End",
+        "Lunar Invocation",
+        "Rainbow Crash",
+        "Rainbow Weaver"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Rainbow Weaver",
+      "ccs": [
+        "knockup",
+        "root"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Izanami",
+      "pantheon": "Japanese",
+      "role": "ADC",
+      "roles": [
+        "ADC",
+        "Mid"
+      ],
+      "type": "Physical",
+      "range": "Ranged",
+      "hasAspect": false,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Dark Portal",
+        "Death Draws Nigh",
+        "Fade Away",
+        "Sickle Storm",
+        "Spectral Projection"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Death Draws Nigh",
+      "ccs": [
+        "silence",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Janus",
+      "pantheon": "Roman",
+      "role": "Mid",
+      "roles": [
+        "Mid"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": false,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Passages",
+        "Portal",
+        "Threshold",
+        "Through Space and Time",
+        "Unstable Vortex"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Passages",
+      "ccs": [
+        "banish",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Jing Wei",
+      "pantheon": "Chinese",
+      "role": "ADC",
+      "roles": [
+        "ADC"
+      ],
+      "type": "Physical",
+      "range": "Ranged",
+      "hasAspect": false,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Agility",
+        "Air Strike",
+        "Explosive Bolts",
+        "Persistent Gust",
+        "Rapid Reincarnation"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Rapid Reincarnation",
+      "ccs": [
+        "knockup"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Jormungandr",
+      "pantheon": "Norse",
+      "role": "Solo",
+      "roles": [
+        "Support",
+        "Solo"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Consuming Bellow",
+        "Immovable",
+        "Submerge",
+        "The World Serpent",
+        "Venomous Haze"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Immovable",
+      "ccs": [
+        "knockup",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Kali",
+      "pantheon": "Hindu",
+      "role": "Jungle",
+      "roles": [
+        "Jungle",
+        "ADC"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Destruction",
+        "Incense",
+        "Lash",
+        "Marked for Death",
+        "Nimble Strike"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Marked for Death",
+      "ccs": [
+        "root",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Khepri",
+      "pantheon": "Egyptian",
+      "role": "Support",
+      "roles": [
+        "Support"
+      ],
+      "type": "Magical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Abduct",
+        "Fortitude",
+        "Rising Dawn",
+        "Scarab's Blessing",
+        "Solar Flare"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Fortitude",
+      "ccs": [
+        "pull",
+        "root",
+        "silence",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Kukulkan",
+      "pantheon": "Mayan",
+      "role": "Mid",
+      "roles": [
+        "Mid"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Power Of The Wind Jewel",
+        "Slipstream",
+        "Spirit Of The Nine Winds",
+        "Whirlwind",
+        "Zephyr"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Power Of The Wind Jewel",
+      "ccs": [
+        "knockback",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Loki",
+      "pantheon": "Norse",
+      "role": "Jungle",
+      "roles": [
+        "Jungle"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Agonizing Visions",
+        "Assassinate",
+        "Behind You",
+        "Flurry Strike",
+        "Vanish"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Behind You",
+      "ccs": [
+        "cripple",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Medusa",
+      "pantheon": "Greek",
+      "role": "ADC",
+      "roles": [
+        "ADC",
+        "Mid"
+      ],
+      "type": "Physical",
+      "range": "Ranged",
+      "hasAspect": false,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Acid Spray",
+        "Lacerate",
+        "Petrify",
+        "Sidewinder",
+        "Viper Shot"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Sidewinder",
+      "ccs": [
+        "root",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Mercury",
+      "pantheon": "Roman",
+      "role": "Jungle",
+      "roles": [
+        "Jungle"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": false,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Fastest God Alive",
+        "Made You Look",
+        "Maximum Velocity",
+        "Sonic Boom",
+        "Special Delivery"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Fastest God Alive",
+      "ccs": [
+        "grab",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Merlin",
+      "pantheon": "Arthurian",
+      "role": "Mid",
+      "roles": [
+        "Mid",
+        "Solo"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": true,
+      "stanceCount": 3,
+      "stances": [
+        "ice",
+        "fire",
+        "arcane"
+      ],
+      "abilityNames": [
+        "Blizzard",
+        "Dragonfire",
+        "Eclipse",
+        "Elemental Mastery (Arcane)",
+        "Elemental Mastery (Fire)",
+        "Elemental Mastery (Ice)",
+        "Flicker (Arcane)",
+        "Flicker (Fire)",
+        "Flicker (Ice)",
+        "Frostbolt",
+        "Overload",
+        "Radiate",
+        "Vortex"
+      ],
+      "namedAbilityCount": 13,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Overload",
+      "ccs": [
+        "knockup",
+        "pull",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Mordred",
+      "pantheon": "Arthurian",
+      "role": "Solo",
+      "roles": [
+        "Jungle",
+        "Solo"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Bloodrage",
+        "Cruel Strikes",
+        "Heart Slash",
+        "Severing Slice",
+        "Shoulder Charge",
+        "Wrath of the Forsaken"
+      ],
+      "namedAbilityCount": 6,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Wrath of the Forsaken",
+      "ccs": [
+        "root",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Morgan Le Fay",
+      "pantheon": "Arthurian",
+      "role": "Mid",
+      "roles": [
+        "Mid",
+        "Solo"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Consuming Power",
+        "Dragonflight",
+        "Empowered Blade",
+        "Shroud of Wildfire",
+        "Sigil Mastery"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Empowered Blade",
+      "ccs": [
+        "fear",
+        "knockback",
+        "knockup",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Ne Zha",
+      "pantheon": "Chinese",
+      "role": "Jungle",
+      "roles": [
+        "Jungle",
+        "Solo",
+        "Support"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Armillary Sash",
+        "Flaming Spear",
+        "Righteous Spirit",
+        "Universe Ring Toss",
+        "Wind Fire Wheels"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Righteous Spirit",
+      "ccs": [
+        "knockup",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Neith",
+      "pantheon": "Egyptian",
+      "role": "ADC",
+      "roles": [
+        "ADC",
+        "Mid"
+      ],
+      "type": "Physical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Back Flip",
+        "Broken Weave",
+        "Spirit Arrow",
+        "Unravel",
+        "World Weaver"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Broken Weave",
+      "ccs": [
+        "root",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Nemesis",
+      "pantheon": "Greek",
+      "role": "Jungle",
+      "roles": [
+        "Jungle",
+        "Solo"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Divine Judgement",
+        "Retribution",
+        "Scales of Fate",
+        "Slice and Dice",
+        "Swift Vengeance"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Scales of Fate",
+      "ccs": [
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Nu Wa",
+      "pantheon": "Chinese",
+      "role": "Mid",
+      "roles": [
+        "Mid",
+        "ADC"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Clay Soldiers",
+        "Fire Shards",
+        "Mysterious Fog",
+        "Shining Metal",
+        "Strength of Wood"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Strength of Wood",
+      "ccs": [
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Nut",
+      "pantheon": "Egyptian",
+      "role": "Support",
+      "roles": [
+        "Support",
+        "ADC",
+        "Mid"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Convergence",
+        "Crashing Comet",
+        "Flux",
+        "Skyfall",
+        "Warp"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Flux",
+      "ccs": [
+        "root",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Odin",
+      "pantheon": "Norse",
+      "role": "Solo",
+      "roles": [
+        "Jungle",
+        "Solo"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": false,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Gungnir's Might",
+        "Lunge",
+        "Path to Valhalla",
+        "Raven Shout",
+        "Ring Of Spears"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Path to Valhalla",
+      "ccs": [
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Osiris",
+      "pantheon": "Egyptian",
+      "role": "Solo",
+      "roles": [
+        "Solo"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Fragmented",
+        "Judgement Tether",
+        "Lord of the Afterlife",
+        "Sickle Strike",
+        "Spirit Flail"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Fragmented",
+      "ccs": [
+        "root",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Pele",
+      "pantheon": "Polynesian",
+      "role": "Jungle",
+      "roles": [
+        "Solo",
+        "Jungle"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Eruption",
+        "Everlasting Flame",
+        "Magma Rush",
+        "Pyroclast",
+        "Volcanic Lightning"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Everlasting Flame",
+      "ccs": [
+        "knockup",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Poseidon",
+      "pantheon": "Greek",
+      "role": "Mid",
+      "roles": [
+        "Mid",
+        "ADC"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Changing Tides",
+        "Release the Kraken!",
+        "Tidal Surge",
+        "Trident",
+        "Whirlpool"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Changing Tides",
+      "ccs": [
+        "knockback",
+        "knockup",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Princess Bari",
+      "pantheon": "Korean",
+      "role": "ADC",
+      "roles": [
+        "ADC",
+        "Mid"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": false,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Mystic Surge",
+        "Reverent Steps",
+        "Sacred Bell",
+        "Spirit's Cadence",
+        "Warding Gust"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Mystic Surge",
+      "ccs": [
+        "knockback",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Ra",
+      "pantheon": "Egyptian",
+      "role": "Mid",
+      "roles": [
+        "Mid",
+        "Solo"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Celestial Beam",
+        "Divine Light",
+        "Searing Pain",
+        "Solar Blessing",
+        "Speed of Light"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Speed of Light",
+      "ccs": [
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Rama",
+      "pantheon": "Hindu",
+      "role": "ADC",
+      "roles": [
+        "ADC"
+      ],
+      "type": "Physical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Astral Barrage",
+        "Astral Quiver",
+        "Astral Strike",
+        "Infinite Arrows",
+        "Rolling Assault"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Astral Quiver",
+      "ccs": [
+        "cripple",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Ratatoskr",
+      "pantheon": "Norse",
+      "role": "Solo",
+      "roles": [
+        "Solo",
+        "Jungle"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Acorn Blast",
+        "Acorn of Yggdrasil",
+        "Dart",
+        "Flurry",
+        "Through the Cosmos"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Acorn of Yggdrasil",
+      "ccs": [
+        "knockup",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Ravana",
+      "pantheon": "Hindu",
+      "role": "Jungle",
+      "roles": [
+        "Jungle"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": false,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "10-Hand Shadow Fist",
+        "Chain of Blows",
+        "Mystic Rush",
+        "Overhead Kick",
+        "Prana Onslaught"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Chain of Blows",
+      "ccs": [
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Scylla",
+      "pantheon": "Greek",
+      "role": "Mid",
+      "roles": [
+        "Mid",
+        "Jungle"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Crush",
+        "I'm a Monster",
+        "Quick Learner",
+        "Sentinel",
+        "Sic 'Em"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Quick Learner",
+      "ccs": [
+        "cripple",
+        "root",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Sobek",
+      "pantheon": "Egyptian",
+      "role": "Support",
+      "roles": [
+        "Solo",
+        "Support"
+      ],
+      "type": "Magical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Blessing of the Nile",
+        "Charge Prey",
+        "Lurking in the Waters",
+        "Sickening Strike",
+        "Tail Whip"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Blessing of the Nile",
+      "ccs": [
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Sol",
+      "pantheon": "Norse",
+      "role": "Mid",
+      "roles": [
+        "ADC",
+        "Mid"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Disapparate",
+        "Radiance",
+        "Stellar Burst",
+        "Supernova",
+        "Unstable Manifestation"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Unstable Manifestation",
+      "ccs": [
+        "knockback",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Sun Wukong",
+      "pantheon": "Chinese",
+      "role": "Solo",
+      "roles": [
+        "Solo, Middle",
+        "Solo"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "72 Transformations",
+        "Master's Will",
+        "Somersault Cloud",
+        "The Magic Cudgel",
+        "Undefeated Body"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Undefeated Body",
+      "ccs": [
+        "knockback",
+        "knockup",
+        "root",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Susano",
+      "pantheon": "Japanese",
+      "role": "Jungle",
+      "roles": [
+        "Jungle"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": false,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Jet Stream",
+        "Storm Kata",
+        "Storm's Edge",
+        "Typhoon",
+        "Wind Siphon"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Storm's Edge",
+      "ccs": [
+        "knockup"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Sylvanus",
+      "pantheon": "Roman",
+      "role": "Support",
+      "roles": [
+        "Support"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Nature's Bounty",
+        "Nature's Grasp",
+        "Verdant Growth",
+        "Wisps",
+        "Wrath of Terra"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Nature's Bounty",
+      "ccs": [
+        "knockup",
+        "pull",
+        "root",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Thanatos",
+      "pantheon": "Greek",
+      "role": "Jungle",
+      "roles": [
+        "Jungle"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Death Scythe",
+        "Harvester of Souls",
+        "Hovering Death",
+        "Scent of Death",
+        "Soul Reap"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Harvester of Souls",
+      "ccs": [
+        "silence",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "The Morrigan",
+      "pantheon": "Celtic",
+      "role": "Mid",
+      "roles": [
+        "Mid",
+        "Jungle",
+        "Solo"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Changeling",
+        "Confusion",
+        "Dark Omen",
+        "Deadly Aspects",
+        "Doomsayer"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Doomsayer",
+      "ccs": [
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Thor",
+      "pantheon": "Norse",
+      "role": "Jungle",
+      "roles": [
+        "Jungle",
+        "Solo"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Anvil of Dawn",
+        "Berserker Barrage",
+        "Mjolnir's Attunement",
+        "Tectonic Rift",
+        "Warrior's Madness"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Warrior's Madness",
+      "ccs": [
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Tsukuyomi",
+      "pantheon": "Japanese",
+      "role": "Jungle",
+      "roles": [
+        "Jungle",
+        "Solo",
+        "Mid"
+      ],
+      "type": "Physical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Dark Moon Shuriken",
+        "Kusarigama",
+        "Piercing Moonlight",
+        "Shingetsu & Mangetsu",
+        "Silver Moon Caltrops"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Shingetsu & Mangetsu",
+      "ccs": [
+        "disarm",
+        "knockup",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Ullr",
+      "pantheon": "Norse",
+      "role": "ADC",
+      "roles": [
+        "ADC",
+        "Mid",
+        "Jungle"
+      ],
+      "type": "Physical",
+      "range": "Ranged",
+      "hasAspect": false,
+      "isStanceSwitcher": true,
+      "stanceCount": 2,
+      "stances": [
+        "axe",
+        "bow"
+      ],
+      "abilityNames": [
+        "Bladed Arrow",
+        "Expose Weakness",
+        "Glory Bound",
+        "Hail of Arrows",
+        "Invigorate",
+        "Thrown Axe",
+        "Weapon Master",
+        "Wield Axes",
+        "Wield Bow"
+      ],
+      "namedAbilityCount": 9,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Weapon Master",
+      "ccs": [
+        "disarm",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Vulcan",
+      "pantheon": "Roman",
+      "role": "Mid",
+      "roles": [
+        "Mid",
+        "Solo"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Backfire",
+        "Earthshaker",
+        "Inferno Cannon",
+        "Magma Bomb",
+        "Master Craftsman",
+        "Thumper XXV"
+      ],
+      "namedAbilityCount": 6,
+      "activeSlotCount": 5,
+      "kitAbilityCount": 6,
+      "passive": "Master Craftsman",
+      "ccs": [],
+      "ccParsed": true
+    },
+    {
+      "name": "Xbalanque",
+      "pantheon": "Mayan",
+      "role": "ADC",
+      "roles": [
+        "ADC"
+      ],
+      "type": "Physical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Branching Bola",
+        "Darkest of Nights",
+        "Dead of Night",
+        "Poison Darts",
+        "Rising Jaguar"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Dead of Night",
+      "ccs": [
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Xing Tian",
+      "pantheon": "Chinese",
+      "role": "Solo",
+      "roles": [
+        "Solo",
+        "Support"
+      ],
+      "type": "Magical",
+      "range": "Melee",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Furious Roar",
+        "Hook Slam",
+        "Sky-Cutting Axe",
+        "Smouldering Rage",
+        "Whirlwind of Rage and Steel"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Smouldering Rage",
+      "ccs": [
+        "grab",
+        "knockback",
+        "knockup",
+        "root"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Yemoja",
+      "pantheon": "Yoruba",
+      "role": "Support",
+      "roles": [
+        "Support",
+        "Solo"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": true,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Bouncing Bubble (Moonstrike)",
+        "Mending Waters",
+        "Omi",
+        "Riptide",
+        "River's Rebuke"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Omi",
+      "ccs": [
+        "knockback",
+        "slow"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Ymir",
+      "pantheon": "Norse",
+      "role": "Support",
+      "roles": [
+        "Jungle",
+        "Support"
+      ],
+      "type": "Magical",
+      "range": "Melee",
+      "hasAspect": false,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Frost Breath",
+        "Frostbite",
+        "Glacial Strike",
+        "Ice Wall",
+        "Shards Of Ice"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Frostbite",
+      "ccs": [
+        "knockback",
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
+    },
+    {
+      "name": "Zeus",
+      "pantheon": "Greek",
+      "role": "Mid",
+      "roles": [
+        "Mid",
+        "ADC"
+      ],
+      "type": "Magical",
+      "range": "Ranged",
+      "hasAspect": false,
+      "isStanceSwitcher": false,
+      "stanceCount": 0,
+      "stances": [],
+      "abilityNames": [
+        "Chain Lightning",
+        "Detonate Charge",
+        "Lightning Storm",
+        "Overcharge",
+        "Thunderclap"
+      ],
+      "namedAbilityCount": 5,
+      "activeSlotCount": 4,
+      "kitAbilityCount": 5,
+      "passive": "Overcharge",
+      "ccs": [
+        "slow",
+        "stun"
+      ],
+      "ccParsed": true
     }
   ],
   "releases": [

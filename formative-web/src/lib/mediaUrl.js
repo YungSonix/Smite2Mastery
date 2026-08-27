@@ -39,7 +39,7 @@ export function resolveMediaUrl(url) {
       .map(encodeURIComponent)
       .join('/')}`;
 
-  // Current god portraits live on `main/img/God Info` (not master/assets app/data).
+  // God Info: portraits still on `main/img/God Info`; passive ability icons on `assets`.
   if (
     rel.startsWith('Icons/God Info/') ||
     relRaw.startsWith('Icons/God%20Info/') ||
@@ -47,6 +47,9 @@ export function resolveMediaUrl(url) {
   ) {
     if (preferLocalMediaProxy()) return s;
     const file = rel.slice('Icons/God Info/'.length);
+    if (/passive/i.test(file)) {
+      return toAssets();
+    }
     return toMainImg(`God Info/${file}`);
   }
 
