@@ -23,6 +23,7 @@ import { quizThemeProps } from '../lib/quizThemes';
 import { pingTriviaPresence, compactDraftAnswers } from '../lib/triviaPresence';
 import { LIFELINES_PER_ATTEMPT, totalLifelinesUsed, lifelineMultiplier } from '../lib/triviaHints';
 import { allChoicesHaveArt, lookupChoiceArt } from '../lib/choiceArt';
+import { resolveMediaUrl } from '../lib/mediaUrl';
 
 async function fileToDataUrl(file, maxBytes = 2.5 * 1024 * 1024) {
   if (!file) throw new Error('No file');
@@ -85,7 +86,14 @@ function TakeChoices({ q, choices, answers, setAnswer, multi = false }) {
             setAnswer(q.id, [...next].sort((a, b) => a - b));
           }}
         />
-        {art ? <img className="f-choice-tile-art" src={art.image} alt="" draggable={false} /> : null}
+        {art ? (
+          <img
+            className="f-choice-tile-art"
+            src={resolveMediaUrl(art.image)}
+            alt=""
+            draggable={false}
+          />
+        ) : null}
         <span>{label}</span>
       </label>
     );

@@ -8,6 +8,7 @@ const GITHUB_MASTER =
   'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/master/app/data';
 const GITHUB_ASSETS =
   'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data';
+const GITHUB_MAIN_IMG = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img';
 
 /** Prefer local `/media` proxy (trivia:api) even for gitignored assets. Default is false. */
 function preferLocalMediaProxy() {
@@ -19,7 +20,7 @@ function preferLocalMediaProxy() {
   }
 }
 
-/** Local `/media/...` is proxied by the trivia API. Large/gitignored trees load from the assets branch. */
+/** Local `/media/...` is proxied by the trivia API. Large/gitignored trees load from remote branches. */
 export function resolveMediaUrl(url) {
   const s = String(url || '');
   if (!s.startsWith('/media/')) return s;
@@ -32,6 +33,23 @@ export function resolveMediaUrl(url) {
   }
   const toAssets = () =>
     `${GITHUB_ASSETS}/${rel.split('/').map(encodeURIComponent).join('/')}`;
+  const toMainImg = (subPath) =>
+    `${GITHUB_MAIN_IMG}/${String(subPath || '')
+      .split('/')
+      .map(encodeURIComponent)
+      .join('/')}`;
+
+  // Current god portraits live on `main/img/God Info` (not master/assets app/data).
+  if (
+    rel.startsWith('Icons/God Info/') ||
+    relRaw.startsWith('Icons/God%20Info/') ||
+    relRaw.startsWith('Icons/God Info/')
+  ) {
+    if (preferLocalMediaProxy()) return s;
+    const file = rel.slice('Icons/God Info/'.length);
+    return toMainImg(`God Info/${file}`);
+  }
+
   // These live on the `assets` branch (often missing/404 on master). Always use assets
   // unless VITE_TRIVIA_LOCAL_MEDIA=1 forces the local /media proxy.
   const assetsPrefixes = [

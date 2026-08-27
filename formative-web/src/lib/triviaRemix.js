@@ -1189,6 +1189,223 @@ function godNamePool() {
   return (catalog.gods || []).map((g) => g.name).filter(Boolean);
 }
 
+const CC_LABELS = {
+  stun: 'Stun',
+  root: 'Root',
+  slow: 'Slow',
+  knockup: 'Knockup',
+  knockback: 'Knockback',
+  silence: 'Silence',
+  cripple: 'Cripple',
+  disarm: 'Disarm',
+  fear: 'Fear',
+  taunt: 'Taunt',
+  mesmerize: 'Mesmerize',
+  polymorph: 'Polymorph',
+  banish: 'Banish',
+  pull: 'Pull',
+  grab: 'Grab',
+};
+
+function formatCcLabel(id) {
+  return CC_LABELS[String(id || '').toLowerCase()] || String(id || '').replace(/_/g, ' ');
+}
+
+function allCcIds() {
+  return Object.keys(CC_LABELS);
+}
+
+function godPossessive(godName) {
+  const gender = String(godMeta[String(godName || '').trim()]?.gender || '')
+    .trim()
+    .toLowerCase();
+  if (gender === 'female') return 'her';
+  if (gender === 'male') return 'his';
+  return 'their';
+}
+
+function abilitySlotPhrase(row) {
+  const label = String(row?.slotLabel || row?.slot || '').toLowerCase();
+  if (label === 'ultimate' || row?.slot === '4') return 'ultimate';
+  return label || row?.slot || '?';
+}
+
+/** Ability CC: which CC does this god ability apply? */
+function makeAbilityCcQuestion({ count = 4 } = {}) {
+  const pool = (catalog.abilityCc || []).filter((r) => Array.isArray(r.ccs) && r.ccs.length);
+  const row = pickOne(pool);
+  if (!row) return null;
+  const correctId = pickOne(row.ccs);
+  if (!correctId) return null;
+  const correctLabel = formatCcLabel(correctId);
+  const onAbility = new Set(row.ccs.map(norm));
+  const wrongPool = allCcIds()
+    .filter((id) => !onAbility.has(norm(id)))
+    .map(formatCcLabel);
+  const slotPhrase = abilitySlotPhrase(row);
+  const poss = godPossessive(row.god);
+  const prompt =
+    Math.random() < 0.45
+      ? `What crowd control does ${row.god}'s ${row.name} apply?`
+      : `If ${row.god} hits you with ${poss} ${slotPhrase}, what CC is applied?`;
+  return packMc({
+    prompt,
+    correctLabel,
+    distractors: pickDistinct(wrongPool, count - 1, new Set([norm(correctLabel)])),
+    count,
+    clearMedia: true,
+    extraMeta: {
+      remix_kind: 'ability_cc',
+      hint_context: {
+        god: row.god,
+        ability: row.name,
+        slot: row.slot,
+        cc: correctId,
+        all_ccs: row.ccs,
+      },
+    },
+  });
+}
+
+/** Passive: name the god from the passive, or name the passive. */
+function makePassiveQuestion({ count = 4 } = {}) {
+  const pool = (catalog.passives || []).filter((p) => p?.god && p?.name);
+  const row = pickOne(pool);
+  if (!row) return null;
+  const identifyGod = Boolean(row.summary) && Math.random() < 0.55;
+  if (identifyGod) {
+    const snippet = String(row.summary).slice(0, 160).replace(/\s+\S*$/, '');
+    return packMc({
+      prompt: `Whose passive is this?\n\n“${snippet}${snippet.length < row.summary.length ? '…' : ''}”`,
+      correctLabel: row.god,
+      distractors: godIdentifyDistractors(row.god, count - 1),
+      count,
+      clearMedia: true,
+      extraMeta: {
+        remix_kind: 'passive',
+        hint_context: { god: row.god, passive: row.name, mode: 'whose' },
+      },
+    });
+  }
+  const wrongNames = (catalog.passives || [])
+    .filter((p) => norm(p.god) !== norm(row.god) && norm(p.name) !== norm(row.name))
+    .map((p) => p.name);
+  return packMc({
+    prompt: `What is ${row.god}'s passive called?`,
+    correctLabel: row.name,
+    distractors: trickishDistractors(row.name, wrongNames, count - 1),
+    count,
+    clearMedia: true,
+    extraMeta: {
+      remix_kind: 'passive',
+      hint_context: { god: row.god, passive: row.name, mode: 'name' },
+    },
+  });
+}
+
+function godsWithAllCcs(ccIds) {
+  const need = (ccIds || []).map(norm).filter(Boolean);
+  if (!need.length) return [];
+  return (catalog.godCc || [])
+    .filter((row) => {
+      const have = new Set((row.ccs || []).map(norm));
+      return need.every((c) => have.has(c));
+    })
+    .map((row) => row.god);
+}
+
+function godsMissingSomeCcs(ccIds) {
+  const need = (ccIds || []).map(norm).filter(Boolean);
+  return (catalog.godCc || [])
+    .filter((row) => {
+      const have = new Set((row.ccs || []).map(norm));
+      const hits = need.filter((c) => have.has(c)).length;
+      return hits > 0 && hits < need.length;
+    })
+    .map((row) => row.god);
+}
+
+/** Combo CC: which god(s) can apply this set of CCs across their kit. */
+function makeComboCcQuestion({ count = 4 } = {}) {
+  const kits = (catalog.godCc || []).filter((r) => (r.ccs || []).length >= 2);
+  if (kits.length < 4) return null;
+
+  // Prefer 2–3 CCs that multiple gods share, else fall back to a unique kit combo.
+  let combo = null;
+  let fits = [];
+  for (let attempt = 0; attempt < 24; attempt += 1) {
+    const seed = pickOne(kits.filter((r) => r.ccs.length >= 2));
+    if (!seed) break;
+    const n = seed.ccs.length >= 3 && Math.random() < 0.55 ? 3 : 2;
+    const pick = shuffle([...seed.ccs]).slice(0, n);
+    const match = godsWithAllCcs(pick);
+    if (!match.length) continue;
+    if (match.length >= 2 || attempt > 12) {
+      combo = pick;
+      fits = match;
+      break;
+    }
+  }
+  if (!combo?.length || !fits.length) return null;
+
+  const comboLabels = combo.map(formatCcLabel);
+  const comboText = comboLabels.join(' + ');
+  const almost = godsMissingSomeCcs(combo);
+  const others = godNamePool().filter((n) => !fits.some((g) => norm(g) === norm(n)));
+
+  if (fits.length >= 2) {
+    const wantCorrect = Math.min(2, fits.length, Math.max(1, count - 2));
+    const correctPick = pickDistinct(fits, wantCorrect, new Set());
+    const needWrong = Math.max(2, count - correctPick.length);
+    const taken = new Set(correctPick.map(norm));
+    let wrong = pickDistinct(almost, needWrong, taken);
+    if (wrong.length < needWrong) {
+      wrong = [
+        ...wrong,
+        ...pickDistinct(others, needWrong - wrong.length, new Set([...taken, ...wrong.map(norm)])),
+      ];
+    }
+    const options = shuffle([...correctPick, ...wrong].slice(0, Math.max(count, correctPick.length + 1)));
+    const indices = correctPick
+      .map((g) => options.findIndex((o) => norm(o) === norm(g)))
+      .filter((i) => i >= 0);
+    if (!indices.length) return null;
+    return {
+      patch: {
+        type: 'multiple_selection',
+        prompt: `Which god(s) can apply ${comboText} from their kit?`,
+        options,
+        correct: { indices, index: indices[0] },
+        meta: {
+          randomize_order: true,
+          remix_kind: 'combo_cc',
+          hint_context: { ccs: combo, combo: comboText, correct_count: indices.length },
+        },
+        image_url: null,
+        image_urls: [],
+        clearMedia: true,
+      },
+    };
+  }
+
+  const correct = fits[0];
+  const wrongPool = almost.length >= count - 1 ? almost : [...almost, ...others];
+  return packMc({
+    prompt: `Which god's kit can apply ${comboText}?`,
+    correctLabel: correct,
+    distractors: trickishDistractors(correct, wrongPool, count - 1, {
+      prefer: [...almost.filter((n) => norm(n) !== norm(correct)), ...godNeighborNames(correct)],
+      realOnly: true,
+    }),
+    count,
+    clearMedia: true,
+    extraMeta: {
+      remix_kind: 'combo_cc',
+      hint_context: { ccs: combo, combo: comboText, god: correct },
+    },
+  });
+}
+
 /** “Who came after X?” / “Which god(s) were released after X?” — options are always god names. */
 function makeReleaseAfterQuestion({
   anchorName,
@@ -1558,6 +1775,24 @@ export const RANDOM_QUESTION_STYLES = [
     group: 'Gods',
   },
   {
+    id: 'ability_cc',
+    label: 'Ability CC',
+    blurb: 'Multiple choice — which CC an ability applies (stun, root, slow…)',
+    group: 'Gods',
+  },
+  {
+    id: 'passive',
+    label: 'Passive',
+    blurb: 'Name the passive, or identify whose passive from the description',
+    group: 'Gods',
+  },
+  {
+    id: 'combo_cc',
+    label: 'Combo CC',
+    blurb: 'Which god(s) can apply a CC combo across their kit (multi when shared)',
+    group: 'Gods',
+  },
+  {
     id: 'god_emoji',
     label: 'Guess from emojis',
     blurb: 'Three-emoji card — which god',
@@ -1834,6 +2069,9 @@ function styleMakers(count) {
       });
     },
     release_after: () => makeReleaseAfterQuestion({ count }),
+    ability_cc: () => makeAbilityCcQuestion({ count }),
+    passive: () => makePassiveQuestion({ count }),
+    combo_cc: () => makeComboCcQuestion({ count }),
     god_emoji: () => makeGodEmojiQuestion({ count }),
   };
 }

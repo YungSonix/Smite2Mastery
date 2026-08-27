@@ -186,6 +186,34 @@ export function generateHintList(q) {
     return out.slice(0, HINTS_PER_QUESTION);
   }
 
+  if (kind === 'ability_cc') {
+    const slot = q?.meta?.hint_context?.slot;
+    const out = [];
+    if (slot) out.push(`Look at ability ${slot === '4' ? 'ultimate' : slot}.`);
+    out.push('The answer is a crowd-control type, not a god or item.');
+    const grey = greyWrongLine(opts, labels);
+    if (grey) out.push(grey);
+    return out.slice(0, HINTS_PER_QUESTION);
+  }
+
+  if (kind === 'passive') {
+    const god = q?.meta?.hint_context?.god || '';
+    if (q?.meta?.hint_context?.mode === 'whose') {
+      return godFactTiers(god, opts);
+    }
+    return godFactTiers(god, opts);
+  }
+
+  if (kind === 'combo_cc') {
+    const k = labels.length || Number(q?.meta?.hint_context?.correct_count) || 0;
+    const out = [];
+    if (k > 0) out.push(`${k} of these options are correct.`);
+    out.push('Score gods whose full kit covers every CC in the combo.');
+    const grey = greyWrongLine(opts, labels);
+    if (grey) out.push(grey);
+    return out.slice(0, HINTS_PER_QUESTION);
+  }
+
   if (kind === 'release_after' || kind === 'pick_all') {
     const k = labels.length || Number(q?.meta?.hint_context?.correct_count) || 0;
     const out = [];

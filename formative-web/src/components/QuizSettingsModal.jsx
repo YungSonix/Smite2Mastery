@@ -9,6 +9,7 @@ import {
   applyPresetPatch,
   onAccentColor,
   paletteForMode,
+  quizThemeStyle,
   resolvedQuizTheme,
 } from '../lib/quizThemes';
 
@@ -184,7 +185,12 @@ export default function QuizSettingsModal({ settings, onChange, onClose }) {
   };
 
   return (
-    <div className="f-overlay f-settings-chrome" onClick={onClose} role="presentation">
+    <div
+      className="f-overlay f-settings-chrome"
+      onClick={onClose}
+      role="presentation"
+      style={quizThemeStyle(settings)}
+    >
       <div
         className="f-modal f-settings-modal f-settings-modal-v2"
         onClick={(e) => e.stopPropagation()}

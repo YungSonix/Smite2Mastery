@@ -7277,6 +7277,10 @@
       "name": "Noxious Fumes"
     },
     {
+      "god": "Yemoja",
+      "name": "Omi"
+    },
+    {
       "god": "Da Ji",
       "name": "One Thousand Cuts"
     },
@@ -8103,6 +8107,2992 @@
     {
       "god": "Kukulkan",
       "name": "Zephyr"
+    }
+  ],
+  "abilityCc": [
+    {
+      "god": "Achilles",
+      "name": "Shield of Achilles",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Achilles",
+      "name": "Combat Dodge",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Agni",
+      "name": "Noxious Fumes",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Ah Puch",
+      "name": "Undead Surge",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Ah Puch",
+      "name": "Fleeting Breath",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Aladdin",
+      "name": "Agile Run",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "knockback"
+      ]
+    },
+    {
+      "god": "Amaterasu",
+      "name": "Glorious Charge",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "silence"
+      ]
+    },
+    {
+      "god": "Amaterasu",
+      "name": "Dazzling Offensive",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Anhur",
+      "name": "Shifting Sands",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Anhur",
+      "name": "Impale",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "knockback",
+        "stun"
+      ]
+    },
+    {
+      "god": "Anhur",
+      "name": "Disperse",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "knockback"
+      ]
+    },
+    {
+      "god": "Anubis",
+      "name": "Mummify",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Anubis",
+      "name": "Grasping Hands",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Aphrodite",
+      "name": "Kiss",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Aphrodite",
+      "name": "Back Off!",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "knockback",
+        "slow"
+      ]
+    },
+    {
+      "god": "Apollo",
+      "name": "Serenade",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "mesmerize"
+      ]
+    },
+    {
+      "god": "Apollo",
+      "name": "The Moves",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Apollo",
+      "name": "Across the Sky",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockback"
+      ]
+    },
+    {
+      "god": "Ares",
+      "name": "Shackles",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "cripple",
+        "slow"
+      ]
+    },
+    {
+      "god": "Ares",
+      "name": "No Escape",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "stun",
+        "pull"
+      ]
+    },
+    {
+      "god": "Artemis",
+      "name": "Transgressor's Fate",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "cripple",
+        "root"
+      ]
+    },
+    {
+      "god": "Artemis",
+      "name": "Vengeful Assault",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Artemis",
+      "name": "Suppress the Insolent",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Artemis",
+      "name": "Calydonian Boar",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Athena",
+      "name": "Preemptive Strike",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Athena",
+      "name": "Confound",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "taunt"
+      ]
+    },
+    {
+      "god": "Athena",
+      "name": "Shield Wall",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Atlas",
+      "name": "Unburden",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Atlas",
+      "name": "Gravity Pull",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "knockup",
+        "pull"
+      ]
+    },
+    {
+      "god": "Atlas",
+      "name": "Kinetic Charge",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "knockup",
+        "slow"
+      ]
+    },
+    {
+      "god": "Awilix",
+      "name": "Feather Step",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "cripple",
+        "root"
+      ]
+    },
+    {
+      "god": "Awilix",
+      "name": "Moonlight Charge",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "knockup"
+      ]
+    },
+    {
+      "god": "Awilix",
+      "name": "Gravity Surge",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockup",
+        "root",
+        "slow",
+        "stun",
+        "pull"
+      ]
+    },
+    {
+      "god": "Bacchus",
+      "name": "Belly Flop",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "knockup",
+        "slow"
+      ]
+    },
+    {
+      "god": "Bacchus",
+      "name": "Belch Of The Gods",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Baron Samedi",
+      "name": "Consign Spirits",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Baron Samedi",
+      "name": "Wrap It Up",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "mesmerize",
+        "root",
+        "slow"
+      ]
+    },
+    {
+      "god": "Baron Samedi",
+      "name": "Life of the Party",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Bastet",
+      "name": "Ensnaring Claw",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "root",
+        "slow"
+      ]
+    },
+    {
+      "god": "Bastet",
+      "name": "Cat Call",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Bellona",
+      "name": "Shield Bash",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Bellona",
+      "name": "Scourge",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "disarm"
+      ]
+    },
+    {
+      "god": "Bellona",
+      "name": "Eagle's Rally",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Cabrakan",
+      "name": "Seismic Crush",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "root",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Cabrakan",
+      "name": "Refraction Shield",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Cabrakan",
+      "name": "Tremors",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "cripple"
+      ]
+    },
+    {
+      "god": "Cerberus",
+      "name": "Paralyzing Spit",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Cerberus",
+      "name": "Ghastly Breath",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Cerberus",
+      "name": "Stygian Torment",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockup",
+        "pull"
+      ]
+    },
+    {
+      "god": "Cernunnos",
+      "name": "Shifter Of Seasons",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Cernunnos",
+      "name": "Bramble Blast",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "cripple",
+        "root"
+      ]
+    },
+    {
+      "god": "Cernunnos",
+      "name": "The Wild Hunt",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "polymorph",
+        "slow"
+      ]
+    },
+    {
+      "god": "Chaac",
+      "name": "Rain Dance",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Chaac",
+      "name": "Storm Call",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockup",
+        "silence"
+      ]
+    },
+    {
+      "god": "Charon",
+      "name": "Spectral Surge",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "silence",
+        "slow"
+      ]
+    },
+    {
+      "god": "Charon",
+      "name": "Swift Voyage",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "root",
+        "slow"
+      ]
+    },
+    {
+      "god": "Charon",
+      "name": "Summon Styx",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "fear"
+      ]
+    },
+    {
+      "god": "Chiron",
+      "name": "Masterful Shot",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Chiron",
+      "name": "Giddyup!",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "knockup"
+      ]
+    },
+    {
+      "god": "Chronos",
+      "name": "Stop Time",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Cupid",
+      "name": "Heart Bomb",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Cupid",
+      "name": "Fields of Love",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "mesmerize",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Da Ji",
+      "name": "Horrible Burns",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Da Ji",
+      "name": "One Thousand Cuts",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Da Ji",
+      "name": "Paolao",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "cripple",
+        "stun",
+        "pull"
+      ]
+    },
+    {
+      "god": "Danzaburou",
+      "name": "Alluring Spirits",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow",
+        "taunt"
+      ]
+    },
+    {
+      "god": "Danzaburou",
+      "name": "Tanuki Trickery",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Danzaburou",
+      "name": "Uproarious Rocket",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Discordia",
+      "name": "Strife",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "root"
+      ]
+    },
+    {
+      "god": "Discordia",
+      "name": "Golden Apple of Discord",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "cripple"
+      ]
+    },
+    {
+      "god": "Eset",
+      "name": "Wing Gust",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "root",
+        "knockback"
+      ]
+    },
+    {
+      "god": "Eset",
+      "name": "Spirit Ball",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Eset",
+      "name": "Dispel Magic",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "silence",
+        "slow"
+      ]
+    },
+    {
+      "god": "Fenrir",
+      "name": "Unchained",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Fenrir",
+      "name": "Brutalize",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "grab"
+      ]
+    },
+    {
+      "god": "Ganesha",
+      "name": "Remove Obstacles",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "grab"
+      ]
+    },
+    {
+      "god": "Ganesha",
+      "name": "Dharmic Pillars",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Geb",
+      "name": "Roll Out",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "knockback",
+        "knockup",
+        "slow"
+      ]
+    },
+    {
+      "god": "Geb",
+      "name": "Shock Wave",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "knockup"
+      ]
+    },
+    {
+      "god": "Geb",
+      "name": "Cataclysm",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "stun",
+        "pull"
+      ]
+    },
+    {
+      "god": "Gilgamesh",
+      "name": "Sun-forged Scimitar",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Gilgamesh",
+      "name": "Drop Kick",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "knockback",
+        "stun"
+      ]
+    },
+    {
+      "god": "Gilgamesh",
+      "name": "Winds of Shamash",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "pull",
+        "root",
+        "slow"
+      ]
+    },
+    {
+      "god": "Guan Yu",
+      "name": "Warrior's Will",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Guan Yu",
+      "name": "Cavalry Charge",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Hades",
+      "name": "Death From Below",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Hades",
+      "name": "Shroud Of Darkness",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "fear",
+        "silence"
+      ]
+    },
+    {
+      "god": "Hecate",
+      "name": "Triplicate Form",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "mesmerize"
+      ]
+    },
+    {
+      "god": "Hecate",
+      "name": "Open the Gates",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "pull",
+        "stun"
+      ]
+    },
+    {
+      "god": "Hercules",
+      "name": "Driving Strike",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Hercules",
+      "name": "Earthbreaker",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "pull"
+      ]
+    },
+    {
+      "god": "Hercules",
+      "name": "Excavate",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockup"
+      ]
+    },
+    {
+      "god": "Horus",
+      "name": "Updraft",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "knockup",
+        "slow"
+      ]
+    },
+    {
+      "god": "Horus",
+      "name": "Fracture",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Horus",
+      "name": "To The Skies!",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockback"
+      ]
+    },
+    {
+      "god": "Hou Yi",
+      "name": "Ricochet",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Hou Yi",
+      "name": "Mark of the Golden Crow",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "stun",
+        "slow"
+      ]
+    },
+    {
+      "god": "Hou Yi",
+      "name": "Sunbreaker",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Hua Mulan",
+      "name": "Spear Thrust",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Hua Mulan",
+      "name": "Grapple",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "stun",
+        "pull"
+      ]
+    },
+    {
+      "god": "Hua Mulan",
+      "name": "Divine Mastery",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockup",
+        "root"
+      ]
+    },
+    {
+      "god": "Hun Batz",
+      "name": "Somersault",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Hun Batz",
+      "name": "Fear No Evil",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "fear"
+      ]
+    },
+    {
+      "god": "Ishtar",
+      "name": "Rolling Thunder",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "mesmerize"
+      ]
+    },
+    {
+      "god": "Ishtar",
+      "name": "Jolt",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "root"
+      ]
+    },
+    {
+      "god": "Ishtar",
+      "name": "Blades of Retribution",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "cripple",
+        "stun"
+      ]
+    },
+    {
+      "god": "Ix Chel",
+      "name": "Lunar Invocation",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "knockup"
+      ]
+    },
+    {
+      "god": "Ix Chel",
+      "name": "Rainbow Crash",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "root"
+      ]
+    },
+    {
+      "god": "Izanami",
+      "name": "Spectral Projection",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Izanami",
+      "name": "Dark Portal",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "silence",
+        "slow"
+      ]
+    },
+    {
+      "god": "Janus",
+      "name": "Portal",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "banish"
+      ]
+    },
+    {
+      "god": "Janus",
+      "name": "Threshold",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Jing Wei",
+      "name": "Persistent Gust",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "knockup"
+      ]
+    },
+    {
+      "god": "Jormungandr",
+      "name": "Venomous Haze",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Jormungandr",
+      "name": "Consuming Bellow",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Jormungandr",
+      "name": "Submerge",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "knockup"
+      ]
+    },
+    {
+      "god": "Jormungandr",
+      "name": "The World Serpent",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockup"
+      ]
+    },
+    {
+      "god": "Kali",
+      "name": "Incense",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Kali",
+      "name": "Destruction",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "root",
+        "slow"
+      ]
+    },
+    {
+      "god": "Khepri",
+      "name": "Abduct",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "pull",
+        "silence"
+      ]
+    },
+    {
+      "god": "Khepri",
+      "name": "Solar Flare",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "root"
+      ]
+    },
+    {
+      "god": "Khepri",
+      "name": "Scarab's Blessing",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Kukulkan",
+      "name": "Zephyr",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Kukulkan",
+      "name": "Slipstream",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Kukulkan",
+      "name": "Spirit Of The Nine Winds",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockback"
+      ]
+    },
+    {
+      "god": "Loki",
+      "name": "Vanish",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Loki",
+      "name": "Flurry Strike",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Loki",
+      "name": "Assassinate",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "cripple",
+        "stun"
+      ]
+    },
+    {
+      "god": "Medusa",
+      "name": "Lacerate",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "root"
+      ]
+    },
+    {
+      "god": "Medusa",
+      "name": "Petrify",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Mercury",
+      "name": "Maximum Velocity",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Mercury",
+      "name": "Special Delivery",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "grab"
+      ]
+    },
+    {
+      "god": "Mordred",
+      "name": "Severing Slice",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Mordred",
+      "name": "Heart Slash",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "root"
+      ]
+    },
+    {
+      "god": "Morgan Le Fay",
+      "name": "Sigil Mastery",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "fear",
+        "slow"
+      ]
+    },
+    {
+      "god": "Morgan Le Fay",
+      "name": "Dragonflight",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "knockback",
+        "knockup"
+      ]
+    },
+    {
+      "god": "Ne Zha",
+      "name": "Universe Ring Toss",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Ne Zha",
+      "name": "Armillary Sash",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Ne Zha",
+      "name": "Wind Fire Wheels",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockup"
+      ]
+    },
+    {
+      "god": "Neith",
+      "name": "Spirit Arrow",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "root"
+      ]
+    },
+    {
+      "god": "Neith",
+      "name": "Unravel",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Neith",
+      "name": "World Weaver",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Nemesis",
+      "name": "Slice and Dice",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Nu Wa",
+      "name": "Shining Metal",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Nut",
+      "name": "Crashing Comet",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "root"
+      ]
+    },
+    {
+      "god": "Nut",
+      "name": "Warp",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Odin",
+      "name": "Gungnir's Might",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Odin",
+      "name": "Ring Of Spears",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Osiris",
+      "name": "Sickle Strike",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Osiris",
+      "name": "Spirit Flail",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Osiris",
+      "name": "Judgement Tether",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Osiris",
+      "name": "Lord of the Afterlife",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "root"
+      ]
+    },
+    {
+      "god": "Pele",
+      "name": "Eruption",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "knockup"
+      ]
+    },
+    {
+      "god": "Pele",
+      "name": "Volcanic Lightning",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Poseidon",
+      "name": "Tidal Surge",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "knockback"
+      ]
+    },
+    {
+      "god": "Poseidon",
+      "name": "Release the Kraken!",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockup",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Princess Bari",
+      "name": "Sacred Bell",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Princess Bari",
+      "name": "Warding Gust",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "knockback"
+      ]
+    },
+    {
+      "god": "Ra",
+      "name": "Divine Light",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Rama",
+      "name": "Astral Strike",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Rama",
+      "name": "Rolling Assault",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "cripple"
+      ]
+    },
+    {
+      "god": "Ratatoskr",
+      "name": "Dart",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Ratatoskr",
+      "name": "Acorn Blast",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Ratatoskr",
+      "name": "Through the Cosmos",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockup"
+      ]
+    },
+    {
+      "god": "Ravana",
+      "name": "Prana Onslaught",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Scylla",
+      "name": "Sic 'Em",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "cripple",
+        "root"
+      ]
+    },
+    {
+      "god": "Scylla",
+      "name": "Crush",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Sobek",
+      "name": "Charge Prey",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Sobek",
+      "name": "Lurking in the Waters",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Sol",
+      "name": "Stellar Burst",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Sol",
+      "name": "Disapparate",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Sol",
+      "name": "Supernova",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockback"
+      ]
+    },
+    {
+      "god": "Sun Wukong",
+      "name": "Master's Will",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Sun Wukong",
+      "name": "72 Transformations",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "knockback",
+        "root",
+        "slow",
+        "stun",
+        "knockup"
+      ]
+    },
+    {
+      "god": "Susano",
+      "name": "Typhoon",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockup"
+      ]
+    },
+    {
+      "god": "Sylvanus",
+      "name": "Verdant Growth",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "root"
+      ]
+    },
+    {
+      "god": "Sylvanus",
+      "name": "Nature's Grasp",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "stun",
+        "pull"
+      ]
+    },
+    {
+      "god": "Sylvanus",
+      "name": "Wrath of Terra",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "knockup"
+      ]
+    },
+    {
+      "god": "Thanatos",
+      "name": "Death Scythe",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Thanatos",
+      "name": "Scent of Death",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Thanatos",
+      "name": "Soul Reap",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "silence"
+      ]
+    },
+    {
+      "god": "Thanatos",
+      "name": "Hovering Death",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "The Morrigan",
+      "name": "Deadly Aspects",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Thor",
+      "name": "Tectonic Rift",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Thor",
+      "name": "Anvil of Dawn",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Tsukuyomi",
+      "name": "Kusarigama",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "disarm",
+        "knockup",
+        "stun"
+      ]
+    },
+    {
+      "god": "Tsukuyomi",
+      "name": "Silver Moon Caltrops",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Xbalanque",
+      "name": "Poison Darts",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Xbalanque",
+      "name": "Darkest of Nights",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Xing Tian",
+      "name": "Hook Slam",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "knockup",
+        "root"
+      ]
+    },
+    {
+      "god": "Xing Tian",
+      "name": "Whirlwind of Rage and Steel",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "grab",
+        "knockback"
+      ]
+    },
+    {
+      "god": "Yemoja",
+      "name": "Bouncing Bubble (Moonstrike)",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Yemoja",
+      "name": "Riptide",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "knockback",
+        "slow"
+      ]
+    },
+    {
+      "god": "Yemoja",
+      "name": "River's Rebuke",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Ymir",
+      "name": "Ice Wall",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "knockback"
+      ]
+    },
+    {
+      "god": "Ymir",
+      "name": "Glacial Strike",
+      "slot": "2",
+      "slotLabel": "2",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Ymir",
+      "name": "Frost Breath",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Ymir",
+      "name": "Shards Of Ice",
+      "slot": "4",
+      "slotLabel": "ultimate",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Zeus",
+      "name": "Chain Lightning",
+      "slot": "1",
+      "slotLabel": "1",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Zeus",
+      "name": "Detonate Charge",
+      "slot": "3",
+      "slotLabel": "3",
+      "ccs": [
+        "stun"
+      ]
+    }
+  ],
+  "passives": [
+    {
+      "god": "Achilles",
+      "name": "Gift of the Gods",
+      "summary": "Choose to wear armor or forgo it. Wearing armor grants bonus Health and Protections, while forgoing it grants bonus Strength and Movement Speed. • Swap between armor states by using Basic Attacks while the Passive target"
+    },
+    {
+      "god": "Agni",
+      "name": "Combustion",
+      "summary": "Hitting an enemy with a Basic Attack provides 1 stack of Combustion. Hitting an enemy god provides 2. At 4 stacks Agni's next Flame Wave or Rain Fire will ignite all enemies hit, dealing [6% INT] Magical Damage every 0.5"
+    },
+    {
+      "god": "Ah Puch",
+      "name": "Hollow Ground",
+      "summary": "Exhume decaying corpses at will. When you walk over a decaying corpse, reduce the Cooldown of Undead Surge and Fleeting Breath and restore a portion of your max Health and Mana [3% Max Health]. • Enemy gods and the Fire "
+    },
+    {
+      "god": "Aladdin",
+      "name": "Three Wishes",
+      "summary": "Make 3 wishes at any time in the match. Gain up to 1 charge of Genie's Strength, every 10s, -1s CD for each enemy slain, or 5s for gods slain. • Wish: Wealth. God Kills and Assists grant 33 more gold and gain 7.5% Bonus "
+    },
+    {
+      "god": "Amaterasu",
+      "name": "Illuminating Strike",
+      "summary": "Basic attack or hit an enemy with Dazzling offensive 3 times to illuminate their weaknesses, causing them and other nearby enemies to take more damage from all sources. • Damage increase: 10%"
+    },
+    {
+      "god": "Anhur",
+      "name": "Enfeeble",
+      "summary": "Dealing Damage to enemies reduces their Physical Protection."
+    },
+    {
+      "god": "Anubis",
+      "name": "The Scales",
+      "summary": "Anubis starts the game with 2% Lifesteal and 5 Protections. Gain additional Bonus Lifesteal and Protections scaled from missing health. Caps at +4% Lifesteal and 16 Protections at 20% Health."
+    },
+    {
+      "god": "Aphrodite",
+      "name": "Center of Attention",
+      "summary": "Gain Physical Protection and Magical Protection for each friendly or enemy god nearby."
+    },
+    {
+      "god": "Apollo",
+      "name": "Audacity",
+      "summary": "Gain a stack of Audacity for each successful Basic Attack on any enemy and for each successful damaging ability on Enemy gods. At 10 stacks you gain 100% Attack Speed and Increased Basic Attack Projectile Speed for his n"
+    },
+    {
+      "god": "Ares",
+      "name": "Blessed Armaments",
+      "summary": "Provide Strength and Intelligence in an Aura. • Build Protections to increase Strength Aura [8% Item Protections] • Build Cooldown Rate to increase Intelligence Aura [80%] • Both Auras increase with Level [1 Per Level] •"
+    },
+    {
+      "god": "Artemis",
+      "name": "Still Target",
+      "summary": "Artemis deals 15% increased Basic Attack Damage to gods that are affected by Crowd Control, and 30% increased Basic Attack Damage to non-gods affected by Crowd Control. She is also able to detect nearby enemy gods hidden"
+    },
+    {
+      "god": "Artio",
+      "name": "Decompose",
+      "summary": "Damaging enemies applies Decompose, reducing Protections [4% per stack, max 5]."
+    },
+    {
+      "god": "Athena",
+      "name": "Reach",
+      "summary": "After using an ability, your next basic attack becomes a ranged projectile that deals [125% STR + 70% INT] Magical Damage."
+    },
+    {
+      "god": "Atlas",
+      "name": "The Astrolabe",
+      "summary": "You gain Energy in your Astrolabe when you take damage from enemy gods or deal damage with your Attacks or Abilities (minions grant reduced Energy). At enough Energy, you may press your interact key to unleash an Empower"
+    },
+    {
+      "god": "Awilix",
+      "name": "Initiative",
+      "summary": "If you have not taken or dealt damage in the last 5s, gain 25% increased Basic Attack Power and Strength for 4s if you strike an enemy first. • The buff is extended by 2s if triggered by the leap from Summon Suku"
+    },
+    {
+      "god": "Bacchus",
+      "name": "Drunk-O-Meter",
+      "summary": "As you become more Drunk, gain Strength, Intelligence, and Protections. • You become Tipsy at 30% Drunk • You become Smashed at 60%, doubling the buffs"
+    },
+    {
+      "god": "Baron Samedi",
+      "name": "Hysteria",
+      "summary": "Damage applies Hysteria, granting your abilities bonus effects when enough is applied. Your team can also purchase Baron's Brew from the item store. • Gods at Max Hysteria [70] deal 20% Reduced Damage to Baron Samedi • B"
+    },
+    {
+      "god": "Bastet",
+      "name": "Nightstalker",
+      "summary": "Hitting enemies grants Lifesteal. Hitting enemy gods additionally grants stacks of Strength and Reveals them for a duration."
+    },
+    {
+      "god": "Bellona",
+      "name": "Master Of War",
+      "summary": "When you hit or are hit by basic attacks, you gain stacks of Movement Speed. • If using Sword and Shield, you also get Protection stacks • If using Scourge, you also get Attack Speed stacks • If using Hammer, you also ge"
+    },
+    {
+      "god": "Cabrakan",
+      "name": "Shadow Zone",
+      "summary": "You and nearby allies take reduced damage. Deal increased damage to enemies that damage you or your nearby allies. You also gain 1% Damage Mitigation per 100 Item Protections. (Not granted to allies)"
+    },
+    {
+      "god": "Cerberus",
+      "name": "Spirit of Death",
+      "summary": "Any time a nearby enemy god is Healed, that Heal is reduced by 40% and you receive 60% +1% per level of the Heal. • The amount stolen is based off of the base heal effect and does not include any increase or reduction ap"
+    },
+    {
+      "god": "Cernunnos",
+      "name": "Heavy Glaive",
+      "summary": "Basic attacks deal [8 + 1 Per Level] + [30% STR + 5% INT] bonus Physical Damage to enemies in melee range."
+    },
+    {
+      "god": "Chaac",
+      "name": "Overflow",
+      "summary": "After 5 successful basic attacks, the next ability you use: • Costs 0 Mana • Has lower Cooldown • Heals you for [20% INT]"
+    },
+    {
+      "god": "Charon",
+      "name": "Ferryman of Souls",
+      "summary": "When any friendly lane minion or jungle monster dies, they drop a coin for you to collect that persists for 8 seconds. Coins grant you 1 gold and a Soul Stack. You lose all soul stacks when returning to base and gain 2 m"
+    },
+    {
+      "god": "Chiron",
+      "name": "Herbal Medicine",
+      "summary": "Gain a charge every 12 seconds. Using an ability consumes a charge to throw a poultice to an injured ally, applying a Heal over Time. • Healed allies also gain Strength and Intelligence for a duration • Poultices priorit"
+    },
+    {
+      "god": "Chronos",
+      "name": "Time Lord",
+      "summary": "You become empowered as time flows around you. Over time you gain stacks that grant Intelligence. Stacks have a maximum and are permanent. • You gain 1 stack every 1.5 minutes • Intelligence: [5 Per Stack] • Max Stacks: "
+    },
+    {
+      "god": "Cu Chulainn",
+      "name": "Berserk",
+      "summary": "Your Mana, Mana Regen, and Mana Heals convert into your Health Pool instead of Mana. Abilities cost Rage, which only regenerates up to 25. Gain Rage by hitting Abilities, per Attack, and when you or a nearby ally takes d"
+    },
+    {
+      "god": "Cupid",
+      "name": "Lovestruck",
+      "summary": "Hitting a Basic Attack grants a stack, or 2 stacks if the target is an enemy god. • Heart Bomb, Share the Love, and Fields of Love always consume up to 8 stacks on use, granting them additional Damage, Healing, and bonus"
+    },
+    {
+      "god": "Da Ji",
+      "name": "Torture Blades",
+      "summary": "Basic Attacks and Non-Ultimate Abilites bleed enemies, dealing [5% STR] Physical Damage every 1s for 2s. • Stacks infinitely • Does not proc item effects."
+    },
+    {
+      "god": "Danzaburou",
+      "name": "Dishonest Duplication",
+      "summary": "You have a 5% + 0.5% per level + 0.05% per Intelligence chance of spawning a clone of yourself with each basic attack hitting an enemy. These clones deal (10 + (1 x level)) + [10% of your Basic Attack Damage]"
+    },
+    {
+      "god": "Discordia",
+      "name": "Contest of Gods",
+      "summary": "The god on your team with the highest damage dealt to enemy gods gains a buff of Strength and Intelligence. Gaining a level or a god kill/assist provides a random temporary buff of Intelligence, Lifesteal or Healing. Hea"
+    },
+    {
+      "god": "Eset",
+      "name": "Funeral Rites",
+      "summary": "Whenever a God dies within 12m of Eset, she gains a stack of Funeral Rites, granting Health Regen and Mana Regen for her and nearby allies. Additionally, every third Basic Attack from Eset is empowered, allowing it to hi"
+    },
+    {
+      "god": "Fenrir",
+      "name": "Unbound Runes",
+      "summary": "Your Runes are activated by successful basic attacks, or by activating abilities. At five Runes your next Ability becomes Empowered and gains an additional effect."
+    },
+    {
+      "god": "Ganesha",
+      "name": "Good Fortune",
+      "summary": "Any time you deal a killing blow, the nearest allied god receives the credit and you receive the rewards for an assist instead plus a bonus amount of gold. In addition, your assist range and the time before you lose assi"
+    },
+    {
+      "god": "Geb",
+      "name": "Hard as Rock",
+      "summary": "Geb cannot take more than 20% of his max HP from a single attack. Enemy god basic attack damage taken is decreased by 5% and Critical Strike bonus damage taken is decreased by 50%."
+    },
+    {
+      "god": "Gilgamesh",
+      "name": "Epic of Gilgamesh",
+      "summary": "You wield artifacts that demand quests to unlock their true potential. Sun-forged Scimitar: Extend buff to max by hitting only gods 3 times. Drop Kick: Drop Kick a target into a god 3 times. Hero's Advance: Kill or Assis"
+    },
+    {
+      "god": "Guan Yu",
+      "name": "Battle Fervor",
+      "summary": "Gains stacks of Fervor when dealing or taking damage. • Fervor provides Attack Speed per stack • At Maximum Stacks [20] it provides more Attack Speed."
+    },
+    {
+      "god": "Hades",
+      "name": "Blight",
+      "summary": "Your attacks and abilities apply Blight. • Blighted enemies deal 5% less damage. • Your abilities have extra effects on Blighted enemies"
+    },
+    {
+      "god": "Hecate",
+      "name": "Mythic Ritual",
+      "summary": "You may interact with things to empower them. • Interacting with an allied Structure creates a zone which regenerates health and mana • Interacting with an ally who has recently killed a god will increase both your and t"
+    },
+    {
+      "god": "Hercules",
+      "name": "Apotheosis",
+      "summary": "Hercules gains Strength when enemy gods damage him. This stacks up to 3 times and lasts 5s. Additionally, hit a target with an ability to gain a stack toward achieving Apotheosis, or 2 stacks from his Ultimate. At 4 stac"
+    },
+    {
+      "god": "Horus",
+      "name": "Resolute",
+      "summary": "Gain Resolute stacks when an enemy god damages you. Each stack grants Protections and Crowd Control Reduction for a short duration. When Resolute expires, Heal based on your stacks. • Protections: [2.5 Per Stack] • Crowd"
+    },
+    {
+      "god": "Hou Yi",
+      "name": "Suntouched",
+      "summary": "When critically hit or taking more than 25% of your Health in a single blow, become Suntouched, reducing active cooldowns by 2s and Marking the enemy who triggered this effect. While Suntouched, you cannot be critically "
+    },
+    {
+      "god": "Hua Mulan",
+      "name": "Training Arc",
+      "summary": "Utilize your Sword, Spear, and Bow with your abilities to gain Skill towards them by damaging enemies. Your expertise in each weapon enhances their respective abilities. Additionally, gain two unique benefits: • Training"
+    },
+    {
+      "god": "Hun Batz",
+      "name": "Infused Strikes",
+      "summary": "After using an ability, Hun Batz's next Basic Attack will deal 20% increased damage and grants Hun Batz a stacking Strength buff on successful hit. Stacks up to 4 times."
+    },
+    {
+      "god": "Ishtar",
+      "name": "Mark of Vengeance",
+      "summary": "When you drop below 75% Health, apply Mark of Vengeance to the enemy god that most recently damaged you for 10s. Each Attack against the marked god grants stacking Attack Speed for 4s; each stack refreshes duration. Scor"
+    },
+    {
+      "god": "Ix Chel",
+      "name": "Rainbow Weaver",
+      "summary": "Gain a Rainbow Weaver stack whenever your Abilities hit an enemy god or grant a beneficial effect to an allied god. At 6 stacks, your next Attack has no movement penalty, is larger, travels farther, and deals [40% INT] b"
+    },
+    {
+      "god": "Izanami",
+      "name": "Death Draws Nigh",
+      "summary": "Gain Physical Penetration and Intelligence for each 1% of your Max Health taken as damage. • Each stack fades 10 seconds after the damage was taken. • Stack count cannot drop below the percentage of your current missing "
+    },
+    {
+      "god": "Janus",
+      "name": "Passages",
+      "summary": "When you pass through a Portal or Threshold, your next ability deals [20% INT] bonus Magical Damage. Stacks up to 2 times."
+    },
+    {
+      "god": "Jing Wei",
+      "name": "Rapid Reincarnation",
+      "summary": "When exiting the fountain, fly into the sky and soar over obstacles. • Select a landing location early or descend when the duration expires"
+    },
+    {
+      "god": "Jormungandr",
+      "name": "Immovable",
+      "summary": "You are immune to Hard Displacement, but are instead Dazed, a debuff that Slows you and increases the damage you take. Hits from Basic attacks and Venomous Haze cause enemy gods to gain a debuff stack. At max stacks, the"
+    },
+    {
+      "god": "Kali",
+      "name": "Marked for Death",
+      "summary": "Mark a god. Gain Physical Penetration against that god. Killing that god restores Health [20% Max HP]. Assists restore less Health [7.5% Max HP]. You also gain bonus gold bounty [15% Bonus Gold]. Additionally, Basic Atta"
+    },
+    {
+      "god": "Khepri",
+      "name": "Fortitude",
+      "summary": "Every 5s apply a 2% Health Shield to yourself and nearby allies. • The interval is increased to 10s if you have taken or dealt damage in the last 5s"
+    },
+    {
+      "god": "Kukulkan",
+      "name": "Power Of The Wind Jewel",
+      "summary": "As you build items that provide Mana, you gain bonus Intelligence."
+    },
+    {
+      "god": "Loki",
+      "name": "Behind You",
+      "summary": "Hitting enemies from behind deals bonus damage. This is also triggered on enemies Blinded by Agonizing Visions."
+    },
+    {
+      "god": "Medusa",
+      "name": "Sidewinder",
+      "summary": "You suffer no movement penalty when strafing and half the movement penalty when backpedaling."
+    },
+    {
+      "god": "Mercury",
+      "name": "Fastest God Alive",
+      "summary": "Gain bonus basic damage on your next basic based on distance travelled. Gain Strength from Movement Speed."
+    },
+    {
+      "god": "Merlin",
+      "name": "Overload",
+      "summary": "Using an ability provides 1 stack of Overload. Firing a basic attack consumed 1 stack of Overload and deals [20% INT] Magical Damage to enemies hit. This can trigger ability item effects."
+    },
+    {
+      "god": "Mordred",
+      "name": "Wrath of the Forsaken",
+      "summary": "Hit enemies to gain Wrath. • Your Ultimate Ability Heart Slash can only be used after reaching 40 Wrath • Your Ultimate Ability Pursue the Weak can only be used after reaching 80 Wrath After using an ability or attacking"
+    },
+    {
+      "god": "Morgan Le Fay",
+      "name": "Empowered Blade",
+      "summary": "Damaging enemy gods with abilities Marks them and activates a shared Symbol on your sword, providing Mana Regen. After gaining all 5 Symbols you become empowered temporarily, causing your Cooldowns to be decreased and pr"
+    },
+    {
+      "god": "Ne Zha",
+      "name": "Righteous Spirit",
+      "summary": "Build Righteous Spirit stacks by hitting enemies to gain Movement Speed. Stacks reset if you have not taken or dealt damage recently. Critical Strikes grant 2 stacks. Gaining a stack permanently increases Critical Strike"
+    },
+    {
+      "god": "Neith",
+      "name": "Broken Weave",
+      "summary": "Your abilities either create or detonate Weaves. • Detonating Weaves deals [20% STR + 20% INT] Physical Damage to nearby enemies and Roots them • You gain a stacking Attack Speed and Intelligence increase per Weave deton"
+    },
+    {
+      "god": "Nemesis",
+      "name": "Scales of Fate",
+      "summary": "Hitting enemies with Basic Attacks reduces the target's Basic Attack Damage, Strength, and Intelligence while increasing yours."
+    },
+    {
+      "god": "Nu Wa",
+      "name": "Strength of Wood",
+      "summary": "Every 15s your next Basic Attack will Root all targets hit. Damaging an enemy with a Basic Attack reduces this cooldown by 1s."
+    },
+    {
+      "god": "Nut",
+      "name": "Flux",
+      "summary": "While Strength exceeds Intelligence, Ability hits grant Stellar Flux which provides Attack Speed. Stacks decay every 3s. Otherwise, Basic Attacks grant Astral Flux. Abilities consume this for Bonus Magical Damage and eff"
+    },
+    {
+      "god": "Odin",
+      "name": "Path to Valhalla",
+      "summary": "Killing a god grants a brief increase to Movement Speed, Strength, and Intelligence."
+    },
+    {
+      "god": "Osiris",
+      "name": "Fragmented",
+      "summary": "After losing 8 fragments, become a spirit for 6 successful Basic Attacks: walk through enemies and blockers, gain Attack Speed, and Basic Attacks ignore movement penalty."
+    },
+    {
+      "god": "Pele",
+      "name": "Everlasting Flame",
+      "summary": "When you drop below 50% health, gain increased Strength and Lifesteal. This effect has a cooldown."
+    },
+    {
+      "god": "Poseidon",
+      "name": "Changing Tides",
+      "summary": "Successfully hit basic attacks to gain Tide. You have increased Movement Speed and your abilities do additional damage based on the amount of Tide you have. Using abilities decreases Tide. At MAX Tide, abilities deal 15%"
+    },
+    {
+      "god": "Princess Bari",
+      "name": "Mystic Surge",
+      "summary": "Accumulate Spirit by dealing damage to enemies. Upon reaching 100 Spirit you enter Mystic Surge for 5s and can use any of your first 3 abilities with no cooldown. Abilities used this way have a bonus effect. • Gain bonus"
+    },
+    {
+      "god": "Ra",
+      "name": "Speed of Light",
+      "summary": "After using an ability gain Movement Speed. • This buff stacks up to 3 times"
+    },
+    {
+      "god": "Rama",
+      "name": "Astral Quiver",
+      "summary": "Your Astral Quiver generates an Astral Arrow every 12s. • Each Basic Attack hit reduces the time to generate an Astral Arrow by 3s. The first hit of Astral Arrow will also trigger this effect. • The first time a fired As"
+    },
+    {
+      "god": "Ratatoskr",
+      "name": "Acorn of Yggdrasil",
+      "summary": "You spawn with a Magic Acorn in your inventory. This can be upgraded anywhere on the map to provide different bonuses After purchasing an Acorn, you cannot perform other actions and are Rooted for 0.7 seconds."
+    },
+    {
+      "god": "Ravana",
+      "name": "Chain of Blows",
+      "summary": "Successful Attacks and abilities against enemies add to your Combo. Each time Combo reaches 8, you gain a Shield as well as Movement Speed and Strength. • Shield Health: [6% Max Health] • Movement Speed: 3% • Strength: 5"
+    },
+    {
+      "god": "Scylla",
+      "name": "Quick Learner",
+      "summary": "Each of Scylla's abilities gain an additional effect at max rank. In addition, Scylla gains Bonus Intelligence for each max rank ability."
+    },
+    {
+      "god": "Sobek",
+      "name": "Blessing of the Nile",
+      "summary": "When Sobek deals damage he gains a stack of Protections. • This effect stacks 3 times and lasts for 10s • An ability can only provide one stack per cast"
+    },
+    {
+      "god": "Sol",
+      "name": "Unstable Manifestation",
+      "summary": "Hit enemies with basic attacks or use abilities to gain Heat. • Heat grants increased Strength, Intelligence, and Attack Speed • At Max Heat, increase your basic attack damage. (Calculated here fully max heat)"
+    },
+    {
+      "god": "Sun Wukong",
+      "name": "Undefeated Body",
+      "summary": "Gain stat boosts below 60% HP and spawn a clone below 30% HP. Clones inherit stats and copy abilities, but deal reduced damage."
+    },
+    {
+      "god": "Susano",
+      "name": "Storm's Edge",
+      "summary": "After using an ability, your next basic attack will add a Storm's Edge debuff stack to an enemy for 5 seconds. • At 1 stack, enemies have reduced Strength • At 2 stacks, enemies are also Slowed • At 3 stacks, enemies als"
+    },
+    {
+      "god": "Sylvanus",
+      "name": "Nature's Bounty",
+      "summary": "When your abilities hit or are deployed, a seed pod appears. Picking it up restores Mana and reduces your cooldowns. Picking up 8 spawns a pod near Sylvanus. • Reduces cooldowns by 0.5s; at level 15 the reduction increas"
+    },
+    {
+      "god": "Thanatos",
+      "name": "Harvester of Souls",
+      "summary": "You revel in the deaths of your foes. • Enemy gods at low health are revealed to you • Killing an enemy heals you for a percentage of their max health. • Killing a god reduces all of your cooldowns • Your abilities cost "
+    },
+    {
+      "god": "The Morrigan",
+      "name": "Doomsayer",
+      "summary": "The third hit of your basic attack chain explodes, dealing 9% of the target's Health as Magical Ability Damage over 3 seconds."
+    },
+    {
+      "god": "Thor",
+      "name": "Warrior's Madness",
+      "summary": "You gain Strength for each enemy god near you, up to 3. After using Berserker's Barrage or Anvil of Dawn, you gain Thunderstruck. • While Thunderstruck, Mjolnir deals [10% STR] bonus Physical Damage • Thunderstruck's dam"
+    },
+    {
+      "god": "Tsukuyomi",
+      "name": "Shingetsu & Mangetsu",
+      "summary": "Shingetsu & Mangetsu Damaging enemies empowers your twin tonfas, Shingetsu and Mangetsu. Empowered Shingetsu cleaves for 50% damage and restores mana. Empowered Mangetsu deals bonus Physical Damage and restores health."
+    },
+    {
+      "god": "Ullr",
+      "name": "Weapon Master",
+      "summary": "When you use an ability in either stance your Cooldowns in the opposite stance are reduced."
+    },
+    {
+      "god": "Vulcan",
+      "name": "Master Craftsman",
+      "summary": "Vulcan has access to a variety of Mods in the item shop that affect his abilities. There are 3 sets of mods available at different levels. You can only have one Mod from each set. Hitting an enemy god with an ability gra"
+    },
+    {
+      "god": "Xbalanque",
+      "name": "Dead of Night",
+      "summary": "Deal damage to enemy Gods to gain stacks up to 6 stacks. Each stack provides Strength or Intelligence, whichever is higher. At 3 and 6 stacks you gain an additional buff of Strength and Intelligence"
+    },
+    {
+      "god": "Xing Tian",
+      "name": "Smouldering Rage",
+      "summary": "Ability hits grant Smouldering Rage stacks. Each stack grants Health Regen and temporary Maximum Health for a duration. • Stack duration refreshes when you hit with an ability • Health Regen: [0.6] • Maximum Health: [5] "
+    },
+    {
+      "god": "Yemoja",
+      "name": "Omi",
+      "summary": "Yemoja uses Omi to cast spells instead of Mana. • Starting with 7, earning up to 10. These level breakpoints are at levels 5, 10, and 15. Omi Regeneration is calculated as 1 + 0.01 per Level Omi per 5s. Total rate includ"
+    },
+    {
+      "god": "Ymir",
+      "name": "Frostbite",
+      "summary": "Your abilities apply Frostbite when they damage or CC enemies. • Frostbitten enemies take more basic attack damage [175% Attack Damage + 175% STR + 35% INT] from you and deal less damage to you. They also have their Atta"
+    },
+    {
+      "god": "Zeus",
+      "name": "Overcharge",
+      "summary": "Deal damage to apply Charges. • Enemies take increased basic attack damage from you for each Charge they have"
+    }
+  ],
+  "godCc": [
+    {
+      "god": "Achilles",
+      "ccs": [
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Agni",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Ah Puch",
+      "ccs": [
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Aladdin",
+      "ccs": [
+        "knockback"
+      ]
+    },
+    {
+      "god": "Amaterasu",
+      "ccs": [
+        "silence",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Anhur",
+      "ccs": [
+        "knockback",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Anubis",
+      "ccs": [
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Aphrodite",
+      "ccs": [
+        "knockback",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Apollo",
+      "ccs": [
+        "knockback",
+        "mesmerize",
+        "slow"
+      ]
+    },
+    {
+      "god": "Ares",
+      "ccs": [
+        "cripple",
+        "pull",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Artemis",
+      "ccs": [
+        "cripple",
+        "root",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Athena",
+      "ccs": [
+        "slow",
+        "taunt"
+      ]
+    },
+    {
+      "god": "Atlas",
+      "ccs": [
+        "knockup",
+        "pull",
+        "slow"
+      ]
+    },
+    {
+      "god": "Awilix",
+      "ccs": [
+        "cripple",
+        "knockup",
+        "pull",
+        "root",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Bacchus",
+      "ccs": [
+        "knockup",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Baron Samedi",
+      "ccs": [
+        "mesmerize",
+        "root",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Bastet",
+      "ccs": [
+        "root",
+        "slow"
+      ]
+    },
+    {
+      "god": "Bellona",
+      "ccs": [
+        "disarm",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Cabrakan",
+      "ccs": [
+        "cripple",
+        "root",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Cerberus",
+      "ccs": [
+        "knockup",
+        "pull",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Cernunnos",
+      "ccs": [
+        "cripple",
+        "polymorph",
+        "root",
+        "slow"
+      ]
+    },
+    {
+      "god": "Chaac",
+      "ccs": [
+        "knockup",
+        "silence",
+        "slow"
+      ]
+    },
+    {
+      "god": "Charon",
+      "ccs": [
+        "fear",
+        "root",
+        "silence",
+        "slow"
+      ]
+    },
+    {
+      "god": "Chiron",
+      "ccs": [
+        "knockup",
+        "slow"
+      ]
+    },
+    {
+      "god": "Chronos",
+      "ccs": [
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Cupid",
+      "ccs": [
+        "mesmerize",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Da Ji",
+      "ccs": [
+        "cripple",
+        "pull",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Danzaburou",
+      "ccs": [
+        "slow",
+        "stun",
+        "taunt"
+      ]
+    },
+    {
+      "god": "Discordia",
+      "ccs": [
+        "cripple",
+        "root"
+      ]
+    },
+    {
+      "god": "Eset",
+      "ccs": [
+        "knockback",
+        "root",
+        "silence",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Fenrir",
+      "ccs": [
+        "grab",
+        "stun"
+      ]
+    },
+    {
+      "god": "Ganesha",
+      "ccs": [
+        "grab",
+        "slow"
+      ]
+    },
+    {
+      "god": "Geb",
+      "ccs": [
+        "knockback",
+        "knockup",
+        "pull",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Gilgamesh",
+      "ccs": [
+        "knockback",
+        "pull",
+        "root",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Guan Yu",
+      "ccs": [
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Hades",
+      "ccs": [
+        "fear",
+        "silence",
+        "slow"
+      ]
+    },
+    {
+      "god": "Hecate",
+      "ccs": [
+        "mesmerize",
+        "pull",
+        "stun"
+      ]
+    },
+    {
+      "god": "Hercules",
+      "ccs": [
+        "knockup",
+        "pull",
+        "stun"
+      ]
+    },
+    {
+      "god": "Horus",
+      "ccs": [
+        "knockback",
+        "knockup",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Hou Yi",
+      "ccs": [
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Hua Mulan",
+      "ccs": [
+        "knockup",
+        "pull",
+        "root",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Hun Batz",
+      "ccs": [
+        "fear",
+        "slow"
+      ]
+    },
+    {
+      "god": "Ishtar",
+      "ccs": [
+        "cripple",
+        "mesmerize",
+        "root",
+        "stun"
+      ]
+    },
+    {
+      "god": "Ix Chel",
+      "ccs": [
+        "knockup",
+        "root"
+      ]
+    },
+    {
+      "god": "Izanami",
+      "ccs": [
+        "silence",
+        "slow"
+      ]
+    },
+    {
+      "god": "Janus",
+      "ccs": [
+        "banish",
+        "slow"
+      ]
+    },
+    {
+      "god": "Jing Wei",
+      "ccs": [
+        "knockup"
+      ]
+    },
+    {
+      "god": "Jormungandr",
+      "ccs": [
+        "knockup",
+        "slow"
+      ]
+    },
+    {
+      "god": "Kali",
+      "ccs": [
+        "root",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Khepri",
+      "ccs": [
+        "pull",
+        "root",
+        "silence",
+        "slow"
+      ]
+    },
+    {
+      "god": "Kukulkan",
+      "ccs": [
+        "knockback",
+        "slow"
+      ]
+    },
+    {
+      "god": "Loki",
+      "ccs": [
+        "cripple",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Medusa",
+      "ccs": [
+        "root",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Mercury",
+      "ccs": [
+        "grab",
+        "slow"
+      ]
+    },
+    {
+      "god": "Mordred",
+      "ccs": [
+        "root",
+        "slow"
+      ]
+    },
+    {
+      "god": "Morgan Le Fay",
+      "ccs": [
+        "fear",
+        "knockback",
+        "knockup",
+        "slow"
+      ]
+    },
+    {
+      "god": "Ne Zha",
+      "ccs": [
+        "knockup",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Neith",
+      "ccs": [
+        "root",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Nemesis",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Nu Wa",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Nut",
+      "ccs": [
+        "root",
+        "slow"
+      ]
+    },
+    {
+      "god": "Odin",
+      "ccs": [
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Osiris",
+      "ccs": [
+        "root",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Pele",
+      "ccs": [
+        "knockup",
+        "slow"
+      ]
+    },
+    {
+      "god": "Poseidon",
+      "ccs": [
+        "knockback",
+        "knockup",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Princess Bari",
+      "ccs": [
+        "knockback",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Ra",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Rama",
+      "ccs": [
+        "cripple",
+        "slow"
+      ]
+    },
+    {
+      "god": "Ratatoskr",
+      "ccs": [
+        "knockup",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Ravana",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Scylla",
+      "ccs": [
+        "cripple",
+        "root",
+        "slow"
+      ]
+    },
+    {
+      "god": "Sobek",
+      "ccs": [
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Sol",
+      "ccs": [
+        "knockback",
+        "slow"
+      ]
+    },
+    {
+      "god": "Sun Wukong",
+      "ccs": [
+        "knockback",
+        "knockup",
+        "root",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Susano",
+      "ccs": [
+        "knockup"
+      ]
+    },
+    {
+      "god": "Sylvanus",
+      "ccs": [
+        "knockup",
+        "pull",
+        "root",
+        "stun"
+      ]
+    },
+    {
+      "god": "Thanatos",
+      "ccs": [
+        "silence",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "The Morrigan",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Thor",
+      "ccs": [
+        "stun"
+      ]
+    },
+    {
+      "god": "Tsukuyomi",
+      "ccs": [
+        "disarm",
+        "knockup",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Xbalanque",
+      "ccs": [
+        "slow"
+      ]
+    },
+    {
+      "god": "Xing Tian",
+      "ccs": [
+        "grab",
+        "knockback",
+        "knockup",
+        "root"
+      ]
+    },
+    {
+      "god": "Yemoja",
+      "ccs": [
+        "knockback",
+        "slow"
+      ]
+    },
+    {
+      "god": "Ymir",
+      "ccs": [
+        "knockback",
+        "slow",
+        "stun"
+      ]
+    },
+    {
+      "god": "Zeus",
+      "ccs": [
+        "slow",
+        "stun"
+      ]
     }
   ],
   "releases": [

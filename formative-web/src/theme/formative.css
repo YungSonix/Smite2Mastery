@@ -3070,27 +3070,8 @@ label.f-file-btn:hover {
   padding: 12px 20px;
 }
 
-/* Host chrome for Quiz settings — do not inherit take-page theme tokens. */
+/* Quiz settings overlay — tokens come from quizThemeStyle on the element (match take page). */
 .f-settings-chrome {
-  --f-blue: #7dd3fc;
-  --f-blue-hover: #38bdf8;
-  --f-blue-soft: rgba(125, 211, 252, 0.12);
-  --f-blue-border: rgba(125, 211, 252, 0.42);
-  --f-page: #070b14;
-  --f-card: rgba(8, 12, 22, 0.98);
-  --f-text: #f8fafc;
-  --f-body: #d7e0ea;
-  --f-muted: #b8c4d4;
-  --f-border: #1e3a5f;
-  --f-input: #1a2740;
-  --f-input-hover: #203050;
-  --f-input-border: #4b6f96;
-  --f-label: #bfdbfe;
-  --f-close: #e6eef8;
-  --f-font: 'Sora', system-ui, sans-serif;
-  --f-display: 'Outfit', 'Sora', system-ui, sans-serif;
-  --f-radius: 14px;
-  --f-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
   color: var(--f-text);
   font-family: var(--f-font);
 }

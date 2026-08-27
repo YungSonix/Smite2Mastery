@@ -180,9 +180,90 @@ for (const item of rawItems) {
   });
 }
 
+/** Enemy-applied crowd control tags (excludes self-/immunity). */
+const CC_APPLY = new Set([
+  'stun',
+  'root',
+  'slow',
+  'knockup',
+  'knockback',
+  'silence',
+  'cripple',
+  'disarm',
+  'fear',
+  'taunt',
+  'mesmerize',
+  'polymorph',
+  'banish',
+  'pull',
+  'grab',
+]);
+
+const CC_TEXT_PATTERNS = [
+  [/knock[\s-]?ups?/i, 'knockup'],
+  [/knock[\s-]?backs?/i, 'knockback'],
+  [/\bstuns?\b/i, 'stun'],
+  [/\broots?\b/i, 'root'],
+  [/\bslows?\b/i, 'slow'],
+  [/\bsilences?\b/i, 'silence'],
+  [/\bcripples?\b/i, 'cripple'],
+  [/\bdisarms?\b/i, 'disarm'],
+  [/\bfears?\b/i, 'fear'],
+  [/\btaunts?\b/i, 'taunt'],
+  [/\bmesmeriz(?:e|es|ed)\b/i, 'mesmerize'],
+  [/\bpolymorph(?:s|ed)?\b/i, 'polymorph'],
+  [/\bbanish(?:es|ed)?\b/i, 'banish'],
+  [/\bpulls?\b/i, 'pull'],
+  [/\bgrabs?\b/i, 'grab'],
+];
+
+function extractCcTags(ability) {
+  const found = new Set();
+  for (const t of ability?.tags || []) {
+    const key = String(t || '')
+      .toLowerCase()
+      .trim();
+    if (CC_APPLY.has(key)) found.add(key);
+  }
+  const blob = `${ability?.shortDesc || ''} ${ability?.description || ''}`;
+  for (const [re, key] of CC_TEXT_PATTERNS) {
+    if (re.test(blob)) found.add(key);
+  }
+  return [...found];
+}
+
+function abilitySlotMeta(key, ability, indexFallback) {
+  const raw = String(key || '').toUpperCase();
+  let slot = null;
+  let slotLabel = null;
+  if (/^PASSIVE|^PSV/i.test(raw) || ability?.key?.includes?.('.PSV.')) {
+    return { slot: 'passive', slotLabel: 'passive' };
+  }
+  const m = raw.match(/^A0?([1-4])$/i) || String(ability?.key || '').match(/\.A0?([1-4])\./i);
+  if (m) {
+    slot = Number(m[1]);
+  } else if (Number.isFinite(indexFallback) && indexFallback >= 0 && indexFallback < 4) {
+    slot = indexFallback + 1;
+  }
+  if (!slot) return null;
+  slotLabel = slot === 4 ? 'ultimate' : String(slot);
+  return { slot: String(slot), slotLabel };
+}
+
+function passiveSummary(passive) {
+  return String(passive?.shortDesc || passive?.description || '')
+    .replace(/\n+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 220);
+}
+
 const gods = [];
 const aspects = [];
 const abilities = [];
+const abilityCc = [];
+const passives = [];
+const godCc = [];
 const seenGod = new Set();
 
 for (const raw of flatten(builds.gods)) {
@@ -214,11 +295,40 @@ for (const raw of flatten(builds.gods)) {
     });
   }
 
-  const kit = [god.passive, ...Object.values(god.abilities || {})];
-  for (const ab of kit) {
+  const godCcSet = new Set();
+  const abilityEntries = Object.entries(god.abilities || {});
+  abilityEntries.forEach(([key, ab], idx) => {
     const an = String(ab?.name || '').trim();
-    if (!an || an.length < 4) continue;
+    if (!an || an.length < 4) return;
     abilities.push({ god: name, name: an });
+    const meta = abilitySlotMeta(key, ab, idx);
+    if (!meta || meta.slot === 'passive') return;
+    const ccs = extractCcTags(ab);
+    if (!ccs.length) return;
+    for (const c of ccs) godCcSet.add(c);
+    abilityCc.push({
+      god: name,
+      name: an,
+      slot: meta.slot,
+      slotLabel: meta.slotLabel,
+      ccs,
+    });
+  });
+
+  const psv = god.passive;
+  const pName = String(psv?.name || '').trim();
+  if (pName) {
+    const summary = passiveSummary(psv);
+    passives.push({
+      god: name,
+      name: pName,
+      ...(summary ? { summary } : {}),
+    });
+    abilities.push({ god: name, name: pName });
+  }
+
+  if (godCcSet.size) {
+    godCc.push({ god: name, ccs: [...godCcSet].sort() });
   }
 }
 
@@ -282,14 +392,34 @@ const out = {
   items: items.sort((a, b) => a.name.localeCompare(b.name)),
   aspects: aspectsDedup.sort((a, b) => a.god.localeCompare(b.god)),
   abilities: abilities.sort((a, b) => a.name.localeCompare(b.name)),
+  abilityCc: abilityCc.sort((a, b) => a.god.localeCompare(b.god) || a.slot.localeCompare(b.slot)),
+  passives: passives.sort((a, b) => a.god.localeCompare(b.god)),
+  godCc: godCc.sort((a, b) => a.god.localeCompare(b.god)),
   releases: releasesDedup.sort((a, b) => a.patch - b.patch || a.god.localeCompare(b.god)),
 };
 
 const dest = path.join(ROOT, 'formative-web/src/lib/triviaRemixCatalog.json');
 fs.writeFileSync(dest, `${JSON.stringify(out, null, 2)}\n`);
+
+// Slim mirror for tooling / external sims
+const ccDest = path.join(ROOT, 'formative-web/src/lib/triviaAbilityCc.json');
+fs.writeFileSync(
+  ccDest,
+  `${JSON.stringify(
+    {
+      abilityCc: out.abilityCc,
+      passives: out.passives,
+      godCc: out.godCc,
+    },
+    null,
+    2
+  )}\n`
+);
+
 const ls = items.filter((i) => i.stats.lifesteal != null).length;
 const statKeys = [...new Set(items.flatMap((i) => Object.keys(i.stats)))].sort();
 console.log(
-  `Wrote ${dest} (${items.length} items, ${statKeys.length} stat types, ${ls} with lifesteal, ${gods.length} gods, ${aspectsDedup.length} aspects, ${abilities.length} abilities, ${releasesDedup.length} OB releases)`
+  `Wrote ${dest} (${items.length} items, ${statKeys.length} stat types, ${ls} with lifesteal, ${gods.length} gods, ${aspectsDedup.length} aspects, ${abilities.length} abilities, ${abilityCc.length} ability-CC, ${passives.length} passives, ${godCc.length} god-CC kits, ${releasesDedup.length} OB releases)`
 );
+console.log(`Also wrote ${ccDest}`);
 console.log(`Stats: ${statKeys.join(', ')}`);
