@@ -246,7 +246,9 @@ export default function TakeQuiz() {
       try {
         const saved = loadTriviaProgress(slug);
         const discordQ = saved?.discord ? `&discord=${encodeURIComponent(saved.discord)}` : '';
-        const res = await fetch(`/api/trivia/public?slug=${encodeURIComponent(slug)}${discordQ}`);
+        const res = await fetch(`/api/trivia/public?slug=${encodeURIComponent(slug)}${discordQ}`, {
+          cache: 'no-store',
+        });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Failed to load');
         if (!alive) return;
@@ -287,7 +289,8 @@ export default function TakeQuiz() {
     const t = setTimeout(async () => {
       try {
         const res = await fetch(
-          `/api/trivia/public?slug=${encodeURIComponent(slug)}&discord=${encodeURIComponent(name)}`
+          `/api/trivia/public?slug=${encodeURIComponent(slug)}&discord=${encodeURIComponent(name)}`,
+          { cache: 'no-store' }
         );
         const data = await res.json();
         if (!res.ok || !alive) return;
@@ -832,7 +835,8 @@ export default function TakeQuiz() {
                   try {
                     if (name.length >= 2) {
                       const res = await fetch(
-                        `/api/trivia/public?slug=${encodeURIComponent(slug)}&discord=${encodeURIComponent(name)}&assign=1`
+                        `/api/trivia/public?slug=${encodeURIComponent(slug)}&discord=${encodeURIComponent(name)}&assign=1`,
+                        { cache: 'no-store' }
                       );
                       const data = await res.json().catch(() => ({}));
                       if (res.ok) {

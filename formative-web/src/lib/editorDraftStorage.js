@@ -124,6 +124,29 @@ export async function loadEditorDraft(quizId) {
   return (Number(full.savedAt) || 0) >= (Number(lite.savedAt) || 0) ? full : lite;
 }
 
+/** Latest server touch — quiz.updated_at or any question.updated_at (ms). */
+export function serverQuizUpdatedMs(quiz, questions) {
+  let max = 0;
+  const quizAt = Date.parse(quiz?.updated_at || '');
+  if (Number.isFinite(quizAt)) max = Math.max(max, quizAt);
+  for (const q of questions || []) {
+    const t = Date.parse(q?.updated_at || '');
+    if (Number.isFinite(t)) max = Math.max(max, t);
+  }
+  return max;
+}
+
+/**
+ * Prefer server when it is newer or equal to the local draft (stale phone drafts,
+ * post-save). Prefer draft only when it has a strictly newer savedAt (unsaved edits).
+ */
+export function shouldPreferServerOverDraft(draft, quiz, questions) {
+  if (!draft?.questions?.length) return true;
+  const draftAt = Number(draft.savedAt) || 0;
+  const serverAt = serverQuizUpdatedMs(quiz, questions);
+  return serverAt >= draftAt;
+}
+
 /** Full draft in IndexedDB (~50MB+); lite text-only copy in localStorage when it fits. */
 export async function saveEditorDraft(quizId, payload) {
   const key = draftKey(quizId);

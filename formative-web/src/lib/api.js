@@ -21,6 +21,7 @@ async function parseJson(res) {
 export async function hostApi(path, { method = 'GET', body } = {}) {
   const res = await fetch(path, {
     method,
+    cache: 'no-store',
     headers: {
       'Content-Type': 'application/json',
       ...hostHeaders(),

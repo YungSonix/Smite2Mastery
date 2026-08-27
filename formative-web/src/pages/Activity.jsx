@@ -21,6 +21,7 @@ import {
   clearEditorDraft,
   loadEditorDraft,
   saveEditorDraft,
+  shouldPreferServerOverDraft,
 } from '../lib/editorDraftStorage';
 
 const MORE_ITEMS = [
@@ -105,7 +106,9 @@ export default function Activity() {
       );
       setQuiz(data.quiz);
       const draft = await loadEditorDraft(quizId);
-      if (draft?.questions?.length) {
+      const preferServer = shouldPreferServerOverDraft(draft, data.quiz, data.questions);
+      if (draft?.questions?.length && !preferServer) {
+        // Local draft is newer than server — recover unsaved edits
         setQuestions(draft.questions);
         setDirtyIds(
           Array.isArray(draft.dirtyIds) && draft.dirtyIds.length
@@ -122,6 +125,8 @@ export default function Activity() {
         }
         setBannerDirty(Boolean(draft.bannerDirty));
       } else {
+        // Server newer/equal (or no draft) — drop stale device drafts
+        if (draft?.questions?.length) clearEditorDraft(quizId);
         setQuestions(data.questions || []);
         setQuizDirty(false);
         setBannerDirty(false);
