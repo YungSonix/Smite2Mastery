@@ -539,6 +539,16 @@ function remixRelease(source, avoidTexts) {
 }
 
 function remixAbility(source, avoidTexts) {
+  if (
+    source?.meta?.remix_kind === 'ability_cc' ||
+    source?.meta?.remix_kind === 'passive' ||
+    source?.meta?.remix_kind === 'combo_cc' ||
+    /crowd control|what cc is applied|whose passive|passive called|can apply .+ from their kit/i.test(
+      source?.prompt || ''
+    )
+  ) {
+    return null;
+  }
   const names = catalog.abilities.map((a) => a.name);
   const fromName =
     exactOptionHit(source.options || [], names) || findNameInText(source.prompt, names, { min: 6 });
@@ -811,6 +821,16 @@ function remixAbilitySound(source, avoidTexts) {
 }
 
 function remixGod(source, avoidTexts) {
+  if (
+    source?.meta?.remix_kind === 'ability_cc' ||
+    source?.meta?.remix_kind === 'passive' ||
+    source?.meta?.remix_kind === 'combo_cc' ||
+    /crowd control|what cc is applied|whose passive|passive called|can apply .+ from their kit/i.test(
+      source?.prompt || ''
+    )
+  ) {
+    return null;
+  }
   if (isAspectIconPrompt(source)) {
     const avoid = new Set();
     const cur = currentAspectIconKey(source);
@@ -1231,9 +1251,14 @@ function abilitySlotPhrase(row) {
 }
 
 /** Ability CC: which CC does this god ability apply? */
-function makeAbilityCcQuestion({ count = 4 } = {}) {
-  const pool = (catalog.abilityCc || []).filter((r) => Array.isArray(r.ccs) && r.ccs.length);
-  const row = pickOne(pool);
+function makeAbilityCcQuestion({ count = 4, avoidKeys = new Set() } = {}) {
+  const pool = (catalog.abilityCc || []).filter((r) => {
+    if (!Array.isArray(r.ccs) || !r.ccs.length) return false;
+    const key = `${norm(r.god)}|${norm(r.name)}`;
+    return !avoidKeys.has(key);
+  });
+  const usePool = pool.length ? pool : (catalog.abilityCc || []).filter((r) => Array.isArray(r.ccs) && r.ccs.length);
+  const row = pickOne(usePool);
   if (!row) return null;
   const correctId = pickOne(row.ccs);
   if (!correctId) return null;
@@ -1265,6 +1290,84 @@ function makeAbilityCcQuestion({ count = 4 } = {}) {
       },
     },
   });
+}
+
+function isAbilityCcPrompt(source) {
+  return (
+    source?.meta?.remix_kind === 'ability_cc' ||
+    /crowd control does .+ apply|what cc is applied/i.test(source?.prompt || '')
+  );
+}
+
+function isPassivePrompt(source) {
+  return (
+    source?.meta?.remix_kind === 'passive' ||
+    /whose passive is this|passive called\?/i.test(source?.prompt || '')
+  );
+}
+
+function isComboCcPrompt(source) {
+  return (
+    source?.meta?.remix_kind === 'combo_cc' ||
+    /can apply .+ from their kit/i.test(source?.prompt || '')
+  );
+}
+
+function currentAbilityCcKey(source) {
+  const g = source?.meta?.hint_context?.god;
+  const a = source?.meta?.hint_context?.ability;
+  if (g && a) return `${norm(g)}|${norm(a)}`;
+  return null;
+}
+
+/** Change/Random: full ability+god+CC regen so names never desync. */
+function remixAbilityCc(source, avoidTexts) {
+  if (!isAbilityCcPrompt(source)) return null;
+  const avoid = new Set();
+  const cur = currentAbilityCcKey(source);
+  if (cur) avoid.add(cur);
+  const hit =
+    makeAbilityCcQuestion({ count: optionCount(source), avoidKeys: avoid }) ||
+    makeAbilityCcQuestion({ count: optionCount(source) });
+  if (hit?.patch) return hit;
+  return { error: 'No other ability CC questions left to swap to.' };
+}
+
+function remixPassive(source, avoidTexts) {
+  if (!isPassivePrompt(source)) return null;
+  const taken = usedNames(avoidTexts);
+  const curGod = source?.meta?.hint_context?.god || findNameInText(source.prompt, catalog.gods.map((g) => g.name), { min: 3 });
+  if (curGod) taken.add(norm(curGod));
+  for (let i = 0; i < 12; i += 1) {
+    const hit = makePassiveQuestion({ count: optionCount(source) });
+    if (!hit?.patch) break;
+    const g = hit.patch.meta?.hint_context?.god;
+    if (g && taken.has(norm(g))) continue;
+    return hit;
+  }
+  const hit = makePassiveQuestion({ count: optionCount(source) });
+  if (hit?.patch) return hit;
+  return { error: 'No other passive questions left to swap to.' };
+}
+
+function remixComboCc(source, avoidTexts) {
+  if (!isComboCcPrompt(source)) return null;
+  const curCombo = (source?.meta?.hint_context?.ccs || []).map(norm).filter(Boolean).sort().join('|');
+  for (let i = 0; i < 16; i += 1) {
+    const hit = makeComboCcQuestion({ count: optionCount(source) });
+    if (!hit?.patch) break;
+    const nextCombo = (hit.patch.meta?.hint_context?.ccs || [])
+      .map(norm)
+      .filter(Boolean)
+      .sort()
+      .join('|');
+    if (curCombo && nextCombo === curCombo) continue;
+    if (avoidTexts.length && avoidTexts.some((t) => norm(t) === norm(hit.patch.prompt))) continue;
+    return hit;
+  }
+  const hit = makeComboCcQuestion({ count: optionCount(source) });
+  if (hit?.patch) return hit;
+  return { error: 'No other combo CC questions left to swap to.' };
 }
 
 /** Passive: name the god from the passive, or name the passive. */
@@ -2154,6 +2257,9 @@ export function remixQuestionFromA(questionA, { avoidTexts = [] } = {}) {
   };
   const avoid = [source.prompt, ...avoidTexts];
   const tries = [
+    remixAbilityCc,
+    remixPassive,
+    remixComboCc,
     remixAbilitySound,
     remixVoiceLine,
     remixSkinGuess,
