@@ -1876,12 +1876,14 @@
     {
       "god": "Achilles",
       "name": "Gift of the Gods",
-      "summary": "Choose to wear armor or forgo it. Wearing armor grants bonus Health and Protections, while forgoing it grants bonus Strength and Movement Speed. • Swap between armor states by using Basic Attacks while the Passive target"
+      "summary": "Choose to wear armor or forgo it. Wearing armor grants bonus Health and Protections, while forgoing it grants bonus Strength and Movement Speed. • Swap between armor states by using Basic Attacks while the Passive target",
+      "image": "/media/Icons/God Info/achillesPassive.webp"
     },
     {
       "god": "Agni",
       "name": "Combustion",
-      "summary": "Hitting an enemy with a Basic Attack provides 1 stack of Combustion. Hitting an enemy god provides 2. At 4 stacks Agni's next Flame Wave or Rain Fire will ignite all enemies hit, dealing [6% INT] Magical Damage every 0.5"
+      "summary": "Hitting an enemy with a Basic Attack provides 1 stack of Combustion. Hitting an enemy god provides 2. At 4 stacks Agni's next Flame Wave or Rain Fire will ignite all enemies hit, dealing [6% INT] Magical Damage every 0.5",
+      "image": "/media/Icons/God Info/agniPassive.webp"
     },
     {
       "god": "Ah Puch",
@@ -1891,52 +1893,62 @@
     {
       "god": "Aladdin",
       "name": "Three Wishes",
-      "summary": "Make 3 wishes at any time in the match. Gain up to 1 charge of Genie's Strength, every 10s, -1s CD for each enemy slain, or 5s for gods slain. • Wish: Wealth. God Kills and Assists grant 33 more gold and gain 7.5% Bonus "
+      "summary": "Make 3 wishes at any time in the match. Gain up to 1 charge of Genie's Strength, every 10s, -1s CD for each enemy slain, or 5s for gods slain. • Wish: Wealth. God Kills and Assists grant 33 more gold and gain 7.5% Bonus ",
+      "image": "/media/Icons/God Info/aladdinPassive.webp"
     },
     {
       "god": "Amaterasu",
       "name": "Illuminating Strike",
-      "summary": "Basic attack or hit an enemy with Dazzling offensive 3 times to illuminate their weaknesses, causing them and other nearby enemies to take more damage from all sources. • Damage increase: 10%"
+      "summary": "Basic attack or hit an enemy with Dazzling offensive 3 times to illuminate their weaknesses, causing them and other nearby enemies to take more damage from all sources. • Damage increase: 10%",
+      "image": "/media/Icons/God Info/amaPassive.webp"
     },
     {
       "god": "Anhur",
       "name": "Enfeeble",
-      "summary": "Dealing Damage to enemies reduces their Physical Protection."
+      "summary": "Dealing Damage to enemies reduces their Physical Protection.",
+      "image": "/media/Icons/God Info/anhurPassive.webp"
     },
     {
       "god": "Anubis",
       "name": "The Scales",
-      "summary": "Anubis starts the game with 2% Lifesteal and 5 Protections. Gain additional Bonus Lifesteal and Protections scaled from missing health. Caps at +4% Lifesteal and 16 Protections at 20% Health."
+      "summary": "Anubis starts the game with 2% Lifesteal and 5 Protections. Gain additional Bonus Lifesteal and Protections scaled from missing health. Caps at +4% Lifesteal and 16 Protections at 20% Health.",
+      "image": "/media/Icons/God Info/anubisPassive.webp"
     },
     {
       "god": "Aphrodite",
       "name": "Center of Attention",
-      "summary": "Gain Physical Protection and Magical Protection for each friendly or enemy god nearby."
+      "summary": "Gain Physical Protection and Magical Protection for each friendly or enemy god nearby.",
+      "image": "/media/Icons/God Info/aphroPassive.webp"
     },
     {
       "god": "Apollo",
       "name": "Audacity",
-      "summary": "Gain a stack of Audacity for each successful Basic Attack on any enemy and for each successful damaging ability on Enemy gods. At 10 stacks you gain 100% Attack Speed and Increased Basic Attack Projectile Speed for his n"
+      "summary": "Gain a stack of Audacity for each successful Basic Attack on any enemy and for each successful damaging ability on Enemy gods. At 10 stacks you gain 100% Attack Speed and Increased Basic Attack Projectile Speed for his n",
+      "image": "/media/Icons/God Info/apolloPassive.webp"
     },
     {
       "god": "Ares",
       "name": "Blessed Armaments",
-      "summary": "Provide Strength and Intelligence in an Aura. • Build Protections to increase Strength Aura [8% Item Protections] • Build Cooldown Rate to increase Intelligence Aura [80%] • Both Auras increase with Level [1 Per Level] •"
+      "summary": "Provide Strength and Intelligence in an Aura. • Build Protections to increase Strength Aura [8% Item Protections] • Build Cooldown Rate to increase Intelligence Aura [80%] • Both Auras increase with Level [1 Per Level] •",
+      "image": "/media/Icons/God Info/aresPassive.webp"
     },
     {
       "god": "Artemis",
       "name": "Still Target",
-      "summary": "Artemis deals 15% increased Basic Attack Damage to gods that are affected by Crowd Control, and 30% increased Basic Attack Damage to non-gods affected by Crowd Control. She is also able to detect nearby enemy gods hidden"
+      "summary": "Artemis deals 15% increased Basic Attack Damage to gods that are affected by Crowd Control, and 30% increased Basic Attack Damage to non-gods affected by Crowd Control. She is also able to detect nearby enemy gods hidden",
+      "image": "/media/Icons/God Info/artemisPassive.webp"
     },
     {
       "god": "Artio",
       "name": "Decompose",
-      "summary": "Damaging enemies applies Decompose, reducing Protections [4% per stack, max 5]."
+      "summary": "Damaging enemies applies Decompose, reducing Protections [4% per stack, max 5].",
+      "image": "/media/Icons/God Info/artioPassive.webp"
     },
     {
       "god": "Athena",
       "name": "Reach",
-      "summary": "After using an ability, your next basic attack becomes a ranged projectile that deals [125% STR + 70% INT] Magical Damage."
+      "summary": "After using an ability, your next basic attack becomes a ranged projectile that deals [125% STR + 70% INT] Magical Damage.",
+      "image": "/media/Icons/God Info/athenaPassive.webp"
     },
     {
       "god": "Atlas",
@@ -1946,17 +1958,20 @@
     {
       "god": "Awilix",
       "name": "Initiative",
-      "summary": "If you have not taken or dealt damage in the last 5s, gain 25% increased Basic Attack Power and Strength for 4s if you strike an enemy first. • The buff is extended by 2s if triggered by the leap from Summon Suku"
+      "summary": "If you have not taken or dealt damage in the last 5s, gain 25% increased Basic Attack Power and Strength for 4s if you strike an enemy first. • The buff is extended by 2s if triggered by the leap from Summon Suku",
+      "image": "/media/Icons/God Info/awilixPassive.webp"
     },
     {
       "god": "Bacchus",
       "name": "Drunk-O-Meter",
-      "summary": "As you become more Drunk, gain Strength, Intelligence, and Protections. • You become Tipsy at 30% Drunk • You become Smashed at 60%, doubling the buffs"
+      "summary": "As you become more Drunk, gain Strength, Intelligence, and Protections. • You become Tipsy at 30% Drunk • You become Smashed at 60%, doubling the buffs",
+      "image": "/media/Icons/God Info/bacchusPassive.webp"
     },
     {
       "god": "Baron Samedi",
       "name": "Hysteria",
-      "summary": "Damage applies Hysteria, granting your abilities bonus effects when enough is applied. Your team can also purchase Baron's Brew from the item store. • Gods at Max Hysteria [70] deal 20% Reduced Damage to Baron Samedi • B"
+      "summary": "Damage applies Hysteria, granting your abilities bonus effects when enough is applied. Your team can also purchase Baron's Brew from the item store. • Gods at Max Hysteria [70] deal 20% Reduced Damage to Baron Samedi • B",
+      "image": "/media/Icons/God Info/baronPassive.webp"
     },
     {
       "god": "Bastet",
@@ -1966,27 +1981,32 @@
     {
       "god": "Bellona",
       "name": "Master Of War",
-      "summary": "When you hit or are hit by basic attacks, you gain stacks of Movement Speed. • If using Sword and Shield, you also get Protection stacks • If using Scourge, you also get Attack Speed stacks • If using Hammer, you also ge"
+      "summary": "When you hit or are hit by basic attacks, you gain stacks of Movement Speed. • If using Sword and Shield, you also get Protection stacks • If using Scourge, you also get Attack Speed stacks • If using Hammer, you also ge",
+      "image": "/media/Icons/God Info/bellPassive.webp"
     },
     {
       "god": "Cabrakan",
       "name": "Shadow Zone",
-      "summary": "You and nearby allies take reduced damage. Deal increased damage to enemies that damage you or your nearby allies. You also gain 1% Damage Mitigation per 100 Item Protections. (Not granted to allies)"
+      "summary": "You and nearby allies take reduced damage. Deal increased damage to enemies that damage you or your nearby allies. You also gain 1% Damage Mitigation per 100 Item Protections. (Not granted to allies)",
+      "image": "/media/Icons/God Info/cabPassive.webp"
     },
     {
       "god": "Cerberus",
       "name": "Spirit of Death",
-      "summary": "Any time a nearby enemy god is Healed, that Heal is reduced by 40% and you receive 60% +1% per level of the Heal. • The amount stolen is based off of the base heal effect and does not include any increase or reduction ap"
+      "summary": "Any time a nearby enemy god is Healed, that Heal is reduced by 40% and you receive 60% +1% per level of the Heal. • The amount stolen is based off of the base heal effect and does not include any increase or reduction ap",
+      "image": "/media/Icons/God Info/cerbPassive.webp"
     },
     {
       "god": "Cernunnos",
       "name": "Heavy Glaive",
-      "summary": "Basic attacks deal [8 + 1 Per Level] + [30% STR + 5% INT] bonus Physical Damage to enemies in melee range."
+      "summary": "Basic attacks deal [8 + 1 Per Level] + [30% STR + 5% INT] bonus Physical Damage to enemies in melee range.",
+      "image": "/media/Icons/God Info/cernPassive.webp"
     },
     {
       "god": "Chaac",
       "name": "Overflow",
-      "summary": "After 5 successful basic attacks, the next ability you use: • Costs 0 Mana • Has lower Cooldown • Heals you for [20% INT]"
+      "summary": "After 5 successful basic attacks, the next ability you use: • Costs 0 Mana • Has lower Cooldown • Heals you for [20% INT]",
+      "image": "/media/Icons/God Info/chaacPassive.webp"
     },
     {
       "god": "Charon",
@@ -2011,17 +2031,20 @@
     {
       "god": "Cupid",
       "name": "Lovestruck",
-      "summary": "Hitting a Basic Attack grants a stack, or 2 stacks if the target is an enemy god. • Heart Bomb, Share the Love, and Fields of Love always consume up to 8 stacks on use, granting them additional Damage, Healing, and bonus"
+      "summary": "Hitting a Basic Attack grants a stack, or 2 stacks if the target is an enemy god. • Heart Bomb, Share the Love, and Fields of Love always consume up to 8 stacks on use, granting them additional Damage, Healing, and bonus",
+      "image": "/media/Icons/God Info/cupidPassive.webp"
     },
     {
       "god": "Da Ji",
       "name": "Torture Blades",
-      "summary": "Basic Attacks and Non-Ultimate Abilites bleed enemies, dealing [5% STR] Physical Damage every 1s for 2s. • Stacks infinitely • Does not proc item effects."
+      "summary": "Basic Attacks and Non-Ultimate Abilites bleed enemies, dealing [5% STR] Physical Damage every 1s for 2s. • Stacks infinitely • Does not proc item effects.",
+      "image": "/media/Icons/God Info/daJiPassive.webp"
     },
     {
       "god": "Danzaburou",
       "name": "Dishonest Duplication",
-      "summary": "You have a 5% + 0.5% per level + 0.05% per Intelligence chance of spawning a clone of yourself with each basic attack hitting an enemy. These clones deal (10 + (1 x level)) + [10% of your Basic Attack Damage]"
+      "summary": "You have a 5% + 0.5% per level + 0.05% per Intelligence chance of spawning a clone of yourself with each basic attack hitting an enemy. These clones deal (10 + (1 x level)) + [10% of your Basic Attack Damage]",
+      "image": "/media/Icons/God Info/danzaPassive.webp"
     },
     {
       "god": "Discordia",
@@ -2031,22 +2054,26 @@
     {
       "god": "Eset",
       "name": "Funeral Rites",
-      "summary": "Whenever a God dies within 12m of Eset, she gains a stack of Funeral Rites, granting Health Regen and Mana Regen for her and nearby allies. Additionally, every third Basic Attack from Eset is empowered, allowing it to hi"
+      "summary": "Whenever a God dies within 12m of Eset, she gains a stack of Funeral Rites, granting Health Regen and Mana Regen for her and nearby allies. Additionally, every third Basic Attack from Eset is empowered, allowing it to hi",
+      "image": "/media/Icons/God Info/esetPassive.webp"
     },
     {
       "god": "Fenrir",
       "name": "Unbound Runes",
-      "summary": "Your Runes are activated by successful basic attacks, or by activating abilities. At five Runes your next Ability becomes Empowered and gains an additional effect."
+      "summary": "Your Runes are activated by successful basic attacks, or by activating abilities. At five Runes your next Ability becomes Empowered and gains an additional effect.",
+      "image": "/media/Icons/God Info/fenrirPassive.webp"
     },
     {
       "god": "Ganesha",
       "name": "Good Fortune",
-      "summary": "Any time you deal a killing blow, the nearest allied god receives the credit and you receive the rewards for an assist instead plus a bonus amount of gold. In addition, your assist range and the time before you lose assi"
+      "summary": "Any time you deal a killing blow, the nearest allied god receives the credit and you receive the rewards for an assist instead plus a bonus amount of gold. In addition, your assist range and the time before you lose assi",
+      "image": "/media/Icons/God Info/ganeshaPassive.webp"
     },
     {
       "god": "Geb",
       "name": "Hard as Rock",
-      "summary": "Geb cannot take more than 20% of his max HP from a single attack. Enemy god basic attack damage taken is decreased by 5% and Critical Strike bonus damage taken is decreased by 50%."
+      "summary": "Geb cannot take more than 20% of his max HP from a single attack. Enemy god basic attack damage taken is decreased by 5% and Critical Strike bonus damage taken is decreased by 50%.",
+      "image": "/media/Icons/God Info/gebPassive.webp"
     },
     {
       "god": "Gilgamesh",
@@ -2056,22 +2083,26 @@
     {
       "god": "Guan Yu",
       "name": "Battle Fervor",
-      "summary": "Gains stacks of Fervor when dealing or taking damage. • Fervor provides Attack Speed per stack • At Maximum Stacks [20] it provides more Attack Speed."
+      "summary": "Gains stacks of Fervor when dealing or taking damage. • Fervor provides Attack Speed per stack • At Maximum Stacks [20] it provides more Attack Speed.",
+      "image": "/media/Icons/God Info/guanPassive.webp"
     },
     {
       "god": "Hades",
       "name": "Blight",
-      "summary": "Your attacks and abilities apply Blight. • Blighted enemies deal 5% less damage. • Your abilities have extra effects on Blighted enemies"
+      "summary": "Your attacks and abilities apply Blight. • Blighted enemies deal 5% less damage. • Your abilities have extra effects on Blighted enemies",
+      "image": "/media/Icons/God Info/hadesPassive.webp"
     },
     {
       "god": "Hecate",
       "name": "Mythic Ritual",
-      "summary": "You may interact with things to empower them. • Interacting with an allied Structure creates a zone which regenerates health and mana • Interacting with an ally who has recently killed a god will increase both your and t"
+      "summary": "You may interact with things to empower them. • Interacting with an allied Structure creates a zone which regenerates health and mana • Interacting with an ally who has recently killed a god will increase both your and t",
+      "image": "/media/Icons/God Info/hecatePassive.webp"
     },
     {
       "god": "Hercules",
       "name": "Apotheosis",
-      "summary": "Hercules gains Strength when enemy gods damage him. This stacks up to 3 times and lasts 5s. Additionally, hit a target with an ability to gain a stack toward achieving Apotheosis, or 2 stacks from his Ultimate. At 4 stac"
+      "summary": "Hercules gains Strength when enemy gods damage him. This stacks up to 3 times and lasts 5s. Additionally, hit a target with an ability to gain a stack toward achieving Apotheosis, or 2 stacks from his Ultimate. At 4 stac",
+      "image": "/media/Icons/God Info/hercPassive.webp"
     },
     {
       "god": "Horus",
@@ -2081,17 +2112,20 @@
     {
       "god": "Hou Yi",
       "name": "Suntouched",
-      "summary": "When critically hit or taking more than 25% of your Health in a single blow, become Suntouched, reducing active cooldowns by 2s and Marking the enemy who triggered this effect. While Suntouched, you cannot be critically "
+      "summary": "When critically hit or taking more than 25% of your Health in a single blow, become Suntouched, reducing active cooldowns by 2s and Marking the enemy who triggered this effect. While Suntouched, you cannot be critically ",
+      "image": "/media/Icons/God Info/houYiPassive.webp"
     },
     {
       "god": "Hua Mulan",
       "name": "Training Arc",
-      "summary": "Utilize your Sword, Spear, and Bow with your abilities to gain Skill towards them by damaging enemies. Your expertise in each weapon enhances their respective abilities. Additionally, gain two unique benefits: • Training"
+      "summary": "Utilize your Sword, Spear, and Bow with your abilities to gain Skill towards them by damaging enemies. Your expertise in each weapon enhances their respective abilities. Additionally, gain two unique benefits: • Training",
+      "image": "/media/Icons/God Info/mulanPassive.webp"
     },
     {
       "god": "Hun Batz",
       "name": "Infused Strikes",
-      "summary": "After using an ability, Hun Batz's next Basic Attack will deal 20% increased damage and grants Hun Batz a stacking Strength buff on successful hit. Stacks up to 4 times."
+      "summary": "After using an ability, Hun Batz's next Basic Attack will deal 20% increased damage and grants Hun Batz a stacking Strength buff on successful hit. Stacks up to 4 times.",
+      "image": "/media/Icons/God Info/batzPassive.webp"
     },
     {
       "god": "Ishtar",
@@ -2106,7 +2140,8 @@
     {
       "god": "Izanami",
       "name": "Death Draws Nigh",
-      "summary": "Gain Physical Penetration and Intelligence for each 1% of your Max Health taken as damage. • Each stack fades 10 seconds after the damage was taken. • Stack count cannot drop below the percentage of your current missing "
+      "summary": "Gain Physical Penetration and Intelligence for each 1% of your Max Health taken as damage. • Each stack fades 10 seconds after the damage was taken. • Stack count cannot drop below the percentage of your current missing ",
+      "image": "/media/Icons/God Info/izaPassive.webp"
     },
     {
       "god": "Janus",
@@ -2116,52 +2151,62 @@
     {
       "god": "Jing Wei",
       "name": "Rapid Reincarnation",
-      "summary": "When exiting the fountain, fly into the sky and soar over obstacles. • Select a landing location early or descend when the duration expires"
+      "summary": "When exiting the fountain, fly into the sky and soar over obstacles. • Select a landing location early or descend when the duration expires",
+      "image": "/media/Icons/God Info/jingPassive.webp"
     },
     {
       "god": "Jormungandr",
       "name": "Immovable",
-      "summary": "You are immune to Hard Displacement, but are instead Dazed, a debuff that Slows you and increases the damage you take. Hits from Basic attacks and Venomous Haze cause enemy gods to gain a debuff stack. At max stacks, the"
+      "summary": "You are immune to Hard Displacement, but are instead Dazed, a debuff that Slows you and increases the damage you take. Hits from Basic attacks and Venomous Haze cause enemy gods to gain a debuff stack. At max stacks, the",
+      "image": "/media/Icons/God Info/jormPassive.webp"
     },
     {
       "god": "Kali",
       "name": "Marked for Death",
-      "summary": "Mark a god. Gain Physical Penetration against that god. Killing that god restores Health [20% Max HP]. Assists restore less Health [7.5% Max HP]. You also gain bonus gold bounty [15% Bonus Gold]. Additionally, Basic Atta"
+      "summary": "Mark a god. Gain Physical Penetration against that god. Killing that god restores Health [20% Max HP]. Assists restore less Health [7.5% Max HP]. You also gain bonus gold bounty [15% Bonus Gold]. Additionally, Basic Atta",
+      "image": "/media/Icons/God Info/kaliPassive.webp"
     },
     {
       "god": "Khepri",
       "name": "Fortitude",
-      "summary": "Every 5s apply a 2% Health Shield to yourself and nearby allies. • The interval is increased to 10s if you have taken or dealt damage in the last 5s"
+      "summary": "Every 5s apply a 2% Health Shield to yourself and nearby allies. • The interval is increased to 10s if you have taken or dealt damage in the last 5s",
+      "image": "/media/Icons/God Info/khepPassive.webp"
     },
     {
       "god": "Kukulkan",
       "name": "Power Of The Wind Jewel",
-      "summary": "As you build items that provide Mana, you gain bonus Intelligence."
+      "summary": "As you build items that provide Mana, you gain bonus Intelligence.",
+      "image": "/media/Icons/God Info/kukuPassive.webp"
     },
     {
       "god": "Loki",
       "name": "Behind You",
-      "summary": "Hitting enemies from behind deals bonus damage. This is also triggered on enemies Blinded by Agonizing Visions."
+      "summary": "Hitting enemies from behind deals bonus damage. This is also triggered on enemies Blinded by Agonizing Visions.",
+      "image": "/media/Icons/God Info/lokiPassive.webp"
     },
     {
       "god": "Medusa",
       "name": "Sidewinder",
-      "summary": "You suffer no movement penalty when strafing and half the movement penalty when backpedaling."
+      "summary": "You suffer no movement penalty when strafing and half the movement penalty when backpedaling.",
+      "image": "/media/Icons/God Info/medusaPassive.webp"
     },
     {
       "god": "Mercury",
       "name": "Fastest God Alive",
-      "summary": "Gain bonus basic damage on your next basic based on distance travelled. Gain Strength from Movement Speed."
+      "summary": "Gain bonus basic damage on your next basic based on distance travelled. Gain Strength from Movement Speed.",
+      "image": "/media/Icons/God Info/mercPassive.webp"
     },
     {
       "god": "Merlin",
       "name": "Overload",
-      "summary": "Using an ability provides 1 stack of Overload. Firing a basic attack consumed 1 stack of Overload and deals [20% INT] Magical Damage to enemies hit. This can trigger ability item effects."
+      "summary": "Using an ability provides 1 stack of Overload. Firing a basic attack consumed 1 stack of Overload and deals [20% INT] Magical Damage to enemies hit. This can trigger ability item effects.",
+      "image": "/media/Icons/God Info/merlinPassive.webp"
     },
     {
       "god": "Mordred",
       "name": "Wrath of the Forsaken",
-      "summary": "Hit enemies to gain Wrath. • Your Ultimate Ability Heart Slash can only be used after reaching 40 Wrath • Your Ultimate Ability Pursue the Weak can only be used after reaching 80 Wrath After using an ability or attacking"
+      "summary": "Hit enemies to gain Wrath. • Your Ultimate Ability Heart Slash can only be used after reaching 40 Wrath • Your Ultimate Ability Pursue the Weak can only be used after reaching 80 Wrath After using an ability or attacking",
+      "image": "/media/Icons/God Info/mordredPassive.webp"
     },
     {
       "god": "Morgan Le Fay",
@@ -2176,17 +2221,20 @@
     {
       "god": "Neith",
       "name": "Broken Weave",
-      "summary": "Your abilities either create or detonate Weaves. • Detonating Weaves deals [20% STR + 20% INT] Physical Damage to nearby enemies and Roots them • You gain a stacking Attack Speed and Intelligence increase per Weave deton"
+      "summary": "Your abilities either create or detonate Weaves. • Detonating Weaves deals [20% STR + 20% INT] Physical Damage to nearby enemies and Roots them • You gain a stacking Attack Speed and Intelligence increase per Weave deton",
+      "image": "/media/Icons/God Info/neithPassive.webp"
     },
     {
       "god": "Nemesis",
       "name": "Scales of Fate",
-      "summary": "Hitting enemies with Basic Attacks reduces the target's Basic Attack Damage, Strength, and Intelligence while increasing yours."
+      "summary": "Hitting enemies with Basic Attacks reduces the target's Basic Attack Damage, Strength, and Intelligence while increasing yours.",
+      "image": "/media/Icons/God Info/nemPassive.webp"
     },
     {
       "god": "Nu Wa",
       "name": "Strength of Wood",
-      "summary": "Every 15s your next Basic Attack will Root all targets hit. Damaging an enemy with a Basic Attack reduces this cooldown by 1s."
+      "summary": "Every 15s your next Basic Attack will Root all targets hit. Damaging an enemy with a Basic Attack reduces this cooldown by 1s.",
+      "image": "/media/Icons/God Info/nuWaPassive.webp"
     },
     {
       "god": "Nut",
@@ -2196,37 +2244,44 @@
     {
       "god": "Odin",
       "name": "Path to Valhalla",
-      "summary": "Killing a god grants a brief increase to Movement Speed, Strength, and Intelligence."
+      "summary": "Killing a god grants a brief increase to Movement Speed, Strength, and Intelligence.",
+      "image": "/media/Icons/God Info/odinPassive.webp"
     },
     {
       "god": "Osiris",
       "name": "Fragmented",
-      "summary": "After losing 8 fragments, become a spirit for 6 successful Basic Attacks: walk through enemies and blockers, gain Attack Speed, and Basic Attacks ignore movement penalty."
+      "summary": "After losing 8 fragments, become a spirit for 6 successful Basic Attacks: walk through enemies and blockers, gain Attack Speed, and Basic Attacks ignore movement penalty.",
+      "image": "/media/Icons/God Info/osirisPassive.webp"
     },
     {
       "god": "Pele",
       "name": "Everlasting Flame",
-      "summary": "When you drop below 50% health, gain increased Strength and Lifesteal. This effect has a cooldown."
+      "summary": "When you drop below 50% health, gain increased Strength and Lifesteal. This effect has a cooldown.",
+      "image": "/media/Icons/God Info/pelePassive.webp"
     },
     {
       "god": "Poseidon",
       "name": "Changing Tides",
-      "summary": "Successfully hit basic attacks to gain Tide. You have increased Movement Speed and your abilities do additional damage based on the amount of Tide you have. Using abilities decreases Tide. At MAX Tide, abilities deal 15%"
+      "summary": "Successfully hit basic attacks to gain Tide. You have increased Movement Speed and your abilities do additional damage based on the amount of Tide you have. Using abilities decreases Tide. At MAX Tide, abilities deal 15%",
+      "image": "/media/Icons/God Info/posPassive.webp"
     },
     {
       "god": "Princess Bari",
       "name": "Mystic Surge",
-      "summary": "Accumulate Spirit by dealing damage to enemies. Upon reaching 100 Spirit you enter Mystic Surge for 5s and can use any of your first 3 abilities with no cooldown. Abilities used this way have a bonus effect. • Gain bonus"
+      "summary": "Accumulate Spirit by dealing damage to enemies. Upon reaching 100 Spirit you enter Mystic Surge for 5s and can use any of your first 3 abilities with no cooldown. Abilities used this way have a bonus effect. • Gain bonus",
+      "image": "/media/Icons/God Info/bariPassive.webp"
     },
     {
       "god": "Ra",
       "name": "Speed of Light",
-      "summary": "After using an ability gain Movement Speed. • This buff stacks up to 3 times"
+      "summary": "After using an ability gain Movement Speed. • This buff stacks up to 3 times",
+      "image": "/media/Icons/God Info/raPassive.webp"
     },
     {
       "god": "Rama",
       "name": "Astral Quiver",
-      "summary": "Your Astral Quiver generates an Astral Arrow every 12s. • Each Basic Attack hit reduces the time to generate an Astral Arrow by 3s. The first hit of Astral Arrow will also trigger this effect. • The first time a fired As"
+      "summary": "Your Astral Quiver generates an Astral Arrow every 12s. • Each Basic Attack hit reduces the time to generate an Astral Arrow by 3s. The first hit of Astral Arrow will also trigger this effect. • The first time a fired As",
+      "image": "/media/Icons/God Info/ramaPassive.webp"
     },
     {
       "god": "Ratatoskr",
@@ -2241,52 +2296,62 @@
     {
       "god": "Scylla",
       "name": "Quick Learner",
-      "summary": "Each of Scylla's abilities gain an additional effect at max rank. In addition, Scylla gains Bonus Intelligence for each max rank ability."
+      "summary": "Each of Scylla's abilities gain an additional effect at max rank. In addition, Scylla gains Bonus Intelligence for each max rank ability.",
+      "image": "/media/Icons/God Info/scyllaPassive.webp"
     },
     {
       "god": "Sobek",
       "name": "Blessing of the Nile",
-      "summary": "When Sobek deals damage he gains a stack of Protections. • This effect stacks 3 times and lasts for 10s • An ability can only provide one stack per cast"
+      "summary": "When Sobek deals damage he gains a stack of Protections. • This effect stacks 3 times and lasts for 10s • An ability can only provide one stack per cast",
+      "image": "/media/Icons/God Info/sobekPassive.webp"
     },
     {
       "god": "Sol",
       "name": "Unstable Manifestation",
-      "summary": "Hit enemies with basic attacks or use abilities to gain Heat. • Heat grants increased Strength, Intelligence, and Attack Speed • At Max Heat, increase your basic attack damage. (Calculated here fully max heat)"
+      "summary": "Hit enemies with basic attacks or use abilities to gain Heat. • Heat grants increased Strength, Intelligence, and Attack Speed • At Max Heat, increase your basic attack damage. (Calculated here fully max heat)",
+      "image": "/media/Icons/God Info/solPassive.webp"
     },
     {
       "god": "Sun Wukong",
       "name": "Undefeated Body",
-      "summary": "Gain stat boosts below 60% HP and spawn a clone below 30% HP. Clones inherit stats and copy abilities, but deal reduced damage."
+      "summary": "Gain stat boosts below 60% HP and spawn a clone below 30% HP. Clones inherit stats and copy abilities, but deal reduced damage.",
+      "image": "/media/Icons/God Info/wukongPassive.webp"
     },
     {
       "god": "Susano",
       "name": "Storm's Edge",
-      "summary": "After using an ability, your next basic attack will add a Storm's Edge debuff stack to an enemy for 5 seconds. • At 1 stack, enemies have reduced Strength • At 2 stacks, enemies are also Slowed • At 3 stacks, enemies als"
+      "summary": "After using an ability, your next basic attack will add a Storm's Edge debuff stack to an enemy for 5 seconds. • At 1 stack, enemies have reduced Strength • At 2 stacks, enemies are also Slowed • At 3 stacks, enemies als",
+      "image": "/media/Icons/God Info/susPassive.webp"
     },
     {
       "god": "Sylvanus",
       "name": "Nature's Bounty",
-      "summary": "When your abilities hit or are deployed, a seed pod appears. Picking it up restores Mana and reduces your cooldowns. Picking up 8 spawns a pod near Sylvanus. • Reduces cooldowns by 0.5s; at level 15 the reduction increas"
+      "summary": "When your abilities hit or are deployed, a seed pod appears. Picking it up restores Mana and reduces your cooldowns. Picking up 8 spawns a pod near Sylvanus. • Reduces cooldowns by 0.5s; at level 15 the reduction increas",
+      "image": "/media/Icons/God Info/sylvanusPassive.webp"
     },
     {
       "god": "Thanatos",
       "name": "Harvester of Souls",
-      "summary": "You revel in the deaths of your foes. • Enemy gods at low health are revealed to you • Killing an enemy heals you for a percentage of their max health. • Killing a god reduces all of your cooldowns • Your abilities cost "
+      "summary": "You revel in the deaths of your foes. • Enemy gods at low health are revealed to you • Killing an enemy heals you for a percentage of their max health. • Killing a god reduces all of your cooldowns • Your abilities cost ",
+      "image": "/media/Icons/God Info/thanaPassive.webp"
     },
     {
       "god": "The Morrigan",
       "name": "Doomsayer",
-      "summary": "The third hit of your basic attack chain explodes, dealing 9% of the target's Health as Magical Ability Damage over 3 seconds."
+      "summary": "The third hit of your basic attack chain explodes, dealing 9% of the target's Health as Magical Ability Damage over 3 seconds.",
+      "image": "/media/Icons/God Info/morriPassive.webp"
     },
     {
       "god": "Thor",
       "name": "Warrior's Madness",
-      "summary": "You gain Strength for each enemy god near you, up to 3. After using Berserker's Barrage or Anvil of Dawn, you gain Thunderstruck. • While Thunderstruck, Mjolnir deals [10% STR] bonus Physical Damage • Thunderstruck's dam"
+      "summary": "You gain Strength for each enemy god near you, up to 3. After using Berserker's Barrage or Anvil of Dawn, you gain Thunderstruck. • While Thunderstruck, Mjolnir deals [10% STR] bonus Physical Damage • Thunderstruck's dam",
+      "image": "/media/Icons/God Info/thorPassive.webp"
     },
     {
       "god": "Tsukuyomi",
       "name": "Shingetsu & Mangetsu",
-      "summary": "Shingetsu & Mangetsu Damaging enemies empowers your twin tonfas, Shingetsu and Mangetsu. Empowered Shingetsu cleaves for 50% damage and restores mana. Empowered Mangetsu deals bonus Physical Damage and restores health."
+      "summary": "Shingetsu & Mangetsu Damaging enemies empowers your twin tonfas, Shingetsu and Mangetsu. Empowered Shingetsu cleaves for 50% damage and restores mana. Empowered Mangetsu deals bonus Physical Damage and restores health.",
+      "image": "/media/Icons/God Info/tsukuPassive.webp"
     },
     {
       "god": "Ullr",
@@ -2296,12 +2361,14 @@
     {
       "god": "Vulcan",
       "name": "Master Craftsman",
-      "summary": "Vulcan has access to a variety of Mods in the item shop that affect his abilities. There are 3 sets of mods available at different levels. You can only have one Mod from each set. Hitting an enemy god with an ability gra"
+      "summary": "Vulcan has access to a variety of Mods in the item shop that affect his abilities. There are 3 sets of mods available at different levels. You can only have one Mod from each set. Hitting an enemy god with an ability gra",
+      "image": "/media/Icons/God Info/vulcanPassive.webp"
     },
     {
       "god": "Xbalanque",
       "name": "Dead of Night",
-      "summary": "Deal damage to enemy Gods to gain stacks up to 6 stacks. Each stack provides Strength or Intelligence, whichever is higher. At 3 and 6 stacks you gain an additional buff of Strength and Intelligence"
+      "summary": "Deal damage to enemy Gods to gain stacks up to 6 stacks. Each stack provides Strength or Intelligence, whichever is higher. At 3 and 6 stacks you gain an additional buff of Strength and Intelligence",
+      "image": "/media/Icons/God Info/xbalPassive.webp"
     },
     {
       "god": "Xing Tian",
@@ -2311,17 +2378,20 @@
     {
       "god": "Yemoja",
       "name": "Omi",
-      "summary": "Yemoja uses Omi to cast spells instead of Mana. • Starting with 7, earning up to 10. These level breakpoints are at levels 5, 10, and 15. Omi Regeneration is calculated as 1 + 0.01 per Level Omi per 5s. Total rate includ"
+      "summary": "Yemoja uses Omi to cast spells instead of Mana. • Starting with 7, earning up to 10. These level breakpoints are at levels 5, 10, and 15. Omi Regeneration is calculated as 1 + 0.01 per Level Omi per 5s. Total rate includ",
+      "image": "/media/Icons/God Info/yemPassive.webp"
     },
     {
       "god": "Ymir",
       "name": "Frostbite",
-      "summary": "Your abilities apply Frostbite when they damage or CC enemies. • Frostbitten enemies take more basic attack damage [175% Attack Damage + 175% STR + 35% INT] from you and deal less damage to you. They also have their Atta"
+      "summary": "Your abilities apply Frostbite when they damage or CC enemies. • Frostbitten enemies take more basic attack damage [175% Attack Damage + 175% STR + 35% INT] from you and deal less damage to you. They also have their Atta",
+      "image": "/media/Icons/God Info/ymirPassive.webp"
     },
     {
       "god": "Zeus",
       "name": "Overcharge",
-      "summary": "Deal damage to apply Charges. • Enemies take increased basic attack damage from you for each Charge they have"
+      "summary": "Deal damage to apply Charges. • Enemies take increased basic attack damage from you for each Charge they have",
+      "image": "/media/Icons/God Info/zeusPassive.webp"
     }
   ],
   "godCc": [

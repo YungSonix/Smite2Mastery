@@ -26,7 +26,129 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ITEM_ICON_BASE = '/media/Icons/Item Icons';
 const GOD_ICON_BASE = '/media/Icons/God Info';
 const ASPECT_ICON_BASE = '/media/AspectIcons';
+const PASSIVE_ICON_DIRS = [
+  path.join(ROOT, 'app/data/Icons/God Info'),
+  path.join(ROOT, 'app/data/Icons/God Info/jacob_s icons'),
+];
 
+/** Short stems used when builds basenames diverge (e.g. bellonaPassive → bellPassive). */
+const GOD_PASSIVE_ALIASES = {
+  bellona: 'bell',
+  ahpuch: 'puch',
+  hunbatz: 'batz',
+  huamulan: 'mulan',
+  themorrigan: 'morri',
+  baronsamedi: 'baron',
+  sunwukong: 'wukong',
+  princessbari: 'bari',
+  danzaburou: 'danza',
+  cernunnos: 'cern',
+  cerberus: 'cerb',
+  cabrakan: 'cab',
+  hercules: 'herc',
+  mercury: 'merc',
+  nemesis: 'nem',
+  poseidon: 'pos',
+  thanatos: 'thana',
+  xbalanque: 'xbal',
+  yemoja: 'yem',
+  amaterasu: 'ama',
+  izanami: 'iza',
+  jingwei: 'jing',
+  jormungandr: 'jorm',
+  khepri: 'khep',
+  kukulkan: 'kuku',
+  tsukuyomi: 'tsuku',
+  susano: 'sus',
+  aphrodite: 'aphro',
+  cuchulainn: 'cuchu',
+  ixchel: 'ixchel',
+  nezha: 'nezha',
+  morganlefay: 'morganlefay',
+};
+
+function listPassiveIconFiles() {
+  const byLower = new Map();
+  const byStem = new Map();
+  for (const dir of PASSIVE_ICON_DIRS) {
+    if (!fs.existsSync(dir)) continue;
+    for (const name of fs.readdirSync(dir)) {
+      if (!/passive/i.test(name) || !/\.(webp|png|jpe?g)$/i.test(name)) continue;
+      const lower = name.toLowerCase();
+      if (!byLower.has(lower)) byLower.set(lower, name);
+      const stem = lower.replace(/\.[^.]+$/, '').replace(/passive$/, '');
+      if (stem && !byStem.has(stem)) byStem.set(stem, name);
+    }
+  }
+  return { byLower, byStem };
+}
+
+const PASSIVE_ICON_FILES = listPassiveIconFiles();
+
+function passiveStemCandidates(iconPath, godName) {
+  const out = [];
+  const push = (s) => {
+    const t = String(s || '')
+      .toLowerCase()
+      .replace(/['']/g, '')
+      .replace(/[^a-z0-9]+/g, '');
+    if (t && !out.includes(t)) out.push(t);
+  };
+  const file = String(iconPath || '')
+    .split(/[/\\]/)
+    .pop();
+  if (file) {
+    push(file.replace(/\.[^.]+$/, '').replace(/passive$/i, ''));
+  }
+  const god = String(godName || '').trim();
+  if (god) {
+    push(god);
+    push(god.replace(/\s+/g, ''));
+    const parts = god.split(/\s+/).filter(Boolean);
+    if (parts[0]) push(parts[0]);
+    if (parts.length > 1) push(parts[parts.length - 1]);
+    const alias = GOD_PASSIVE_ALIASES[norm(god)];
+    if (alias) push(alias);
+  }
+  return out;
+}
+
+/**
+ * Resolve passive art that exists on disk (CDN mirrors God Info basenames).
+ * Prefer builds basename; else fuzzy stem / god aliases. Omit if no file.
+ */
+function passiveImage(iconPath, godName) {
+  const file = String(iconPath || '')
+    .split(/[/\\]/)
+    .pop();
+  if (file && /\.(webp|png|jpe?g)$/i.test(file)) {
+    const exact = PASSIVE_ICON_FILES.byLower.get(file.toLowerCase());
+    if (exact) return mediaFileUrl(GOD_ICON_BASE, exact);
+  }
+
+  const candidates = passiveStemCandidates(iconPath, godName);
+  for (const stem of candidates) {
+    const hit = PASSIVE_ICON_FILES.byStem.get(stem);
+    if (hit) return mediaFileUrl(GOD_ICON_BASE, hit);
+  }
+
+  // Prefix fuzzy: bellona → bellPassive (longest stem that prefixes a candidate).
+  let best = null;
+  for (const stem of candidates) {
+    if (stem.length < 3) continue;
+    for (const [diskStem, fname] of PASSIVE_ICON_FILES.byStem) {
+      if (diskStem.length < 3) continue;
+      if (stem === diskStem || stem.startsWith(diskStem) || diskStem.startsWith(stem)) {
+        const score = Math.min(stem.length, diskStem.length);
+        if (!best || score > best.score || (score === best.score && diskStem.length > best.diskLen)) {
+          best = { fname, score, diskLen: diskStem.length };
+        }
+      }
+    }
+  }
+  if (best) return mediaFileUrl(GOD_ICON_BASE, best.fname);
+  return null;
+}
 /** Shared aspect slot art under `app/data/AspectIcons/` (assets branch). */
 const ASPECT_POOL_FILENAMES = new Set(
   [
@@ -319,10 +441,12 @@ for (const raw of flatten(builds.gods)) {
   const pName = String(psv?.name || '').trim();
   if (pName) {
     const summary = passiveSummary(psv);
+    const image = passiveImage(psv?.icon, name);
     passives.push({
       god: name,
       name: pName,
       ...(summary ? { summary } : {}),
+      ...(image ? { image } : {}),
     });
     abilities.push({ god: name, name: pName });
   }

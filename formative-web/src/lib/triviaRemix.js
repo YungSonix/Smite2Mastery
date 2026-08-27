@@ -1336,18 +1336,19 @@ function remixAbilityCc(source, avoidTexts) {
 function remixPassive(source, avoidTexts) {
   if (!isPassivePrompt(source)) return null;
   const taken = usedNames(avoidTexts);
-  const curGod = source?.meta?.hint_context?.god || findNameInText(source.prompt, catalog.gods.map((g) => g.name), { min: 3 });
+  const curGod =
+    source?.meta?.hint_context?.god ||
+    findNameInText(
+      source.prompt,
+      catalog.gods.map((g) => g.name),
+      { min: 3 }
+    );
   if (curGod) taken.add(norm(curGod));
-  for (let i = 0; i < 12; i += 1) {
-    const hit = makePassiveQuestion({ count: optionCount(source) });
-    if (!hit?.patch) break;
-    const g = hit.patch.meta?.hint_context?.god;
-    if (g && taken.has(norm(g))) continue;
-    return hit;
-  }
-  const hit = makePassiveQuestion({ count: optionCount(source) });
+  const hit =
+    makePassiveQuestion({ count: optionCount(source), avoidGods: taken }) ||
+    makePassiveQuestion({ count: optionCount(source) });
   if (hit?.patch) return hit;
-  return { error: 'No other passive questions left to swap to.' };
+  return { error: 'No other passive icon questions left to swap to.' };
 }
 
 function remixComboCc(source, avoidTexts) {
@@ -1370,38 +1371,27 @@ function remixComboCc(source, avoidTexts) {
   return { error: 'No other combo CC questions left to swap to.' };
 }
 
-/** Passive: name the god from the passive, or name the passive. */
-function makePassiveQuestion({ count = 4 } = {}) {
-  const pool = (catalog.passives || []).filter((p) => p?.god && p?.name);
-  const row = pickOne(pool);
-  if (!row) return null;
-  const identifyGod = Boolean(row.summary) && Math.random() < 0.55;
-  if (identifyGod) {
-    const snippet = String(row.summary).slice(0, 160).replace(/\s+\S*$/, '');
-    return packMc({
-      prompt: `Whose passive is this?\n\n“${snippet}${snippet.length < row.summary.length ? '…' : ''}”`,
-      correctLabel: row.god,
-      distractors: godIdentifyDistractors(row.god, count - 1),
-      count,
-      clearMedia: true,
-      extraMeta: {
-        remix_kind: 'passive',
-        hint_context: { god: row.god, passive: row.name, mode: 'whose' },
-      },
-    });
-  }
-  const wrongNames = (catalog.passives || [])
-    .filter((p) => norm(p.god) !== norm(row.god) && norm(p.name) !== norm(row.name))
-    .map((p) => p.name);
+/** Passive: show passive icon; players pick the god (MC). */
+function makePassiveQuestion({ count = 4, avoidGods = new Set() } = {}) {
+  const pool = (catalog.passives || []).filter(
+    (p) => p?.god && p?.image && !avoidGods.has(norm(p.god))
+  );
+  const usePool = pool.length
+    ? pool
+    : (catalog.passives || []).filter((p) => p?.god && p?.image);
+  const row = pickOne(usePool);
+  if (!row?.image) return null;
   return packMc({
-    prompt: `What is ${row.god}'s passive called?`,
-    correctLabel: row.name,
-    distractors: trickishDistractors(row.name, wrongNames, count - 1),
+    prompt: 'Whose passive is this?',
+    correctLabel: row.god,
+    distractors: godIdentifyDistractors(row.god, count - 1),
     count,
-    clearMedia: true,
+    image: row.image,
+    clearMedia: false,
     extraMeta: {
+      media: 'image',
       remix_kind: 'passive',
-      hint_context: { god: row.god, passive: row.name, mode: 'name' },
+      hint_context: { god: row.god, passive: row.name, mode: 'icon' },
     },
   });
 }
@@ -1886,7 +1876,7 @@ export const RANDOM_QUESTION_STYLES = [
   {
     id: 'passive',
     label: 'Passive',
-    blurb: 'Name the passive, or identify whose passive from the description',
+    blurb: 'Passive ability icon — pick which god it belongs to',
     group: 'Gods',
   },
   {
