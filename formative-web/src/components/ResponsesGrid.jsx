@@ -1,4 +1,5 @@
 import { formatIp } from '../lib/quizSettings';
+import { formatDuration, responseDurationMs } from '../lib/triviaInsights';
 import { presenceLabel, presenceStatus } from '../lib/triviaPresence';
 
 export default function ResponsesGrid({
@@ -145,6 +146,9 @@ export default function ResponsesGrid({
             </th>
             <th className="col-ingame">In-Game</th>
             <th className="totals-col">%</th>
+            <th className="col-time" title="Time spent on the quiz">
+              Time
+            </th>
             {scored.map((q, i) => (
               <th key={q.id} className="col-q">
                 {i + 1}
@@ -158,6 +162,7 @@ export default function ResponsesGrid({
             <td className="f-muted col-discord">Avg</td>
             <td className="f-muted col-ingame">—</td>
             <td className="totals-col">{totalsAvg}%</td>
+            <td className="col-time f-muted">—</td>
             {scored.map((q) => {
               const a = qAvg(q.id);
               return (
@@ -177,6 +182,7 @@ export default function ResponsesGrid({
               Number(r.max_score) > 0
                 ? Math.round((Number(r.score) / Number(r.max_score)) * 100)
                 : 0;
+            const took = formatDuration(responseDurationMs(r));
             const initial = (r.discord_username || '?').charAt(0).toUpperCase();
             return (
               <tr
@@ -199,6 +205,9 @@ export default function ResponsesGrid({
                   {r.ingame_name || '—'}
                 </td>
                 <td className="totals-col">{pct}%</td>
+                <td className="col-time" title={took === '—' ? 'No finish time on older takes' : took}>
+                  {took}
+                </td>
                 {scored.map((q) => {
                   const v = r.per_question?.[q.id];
                   const cls = v == null ? 'empty' : Number(v) ? 'ok' : 'bad';

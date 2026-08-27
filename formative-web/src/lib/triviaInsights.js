@@ -23,9 +23,17 @@ export function formatDuration(ms) {
   if (ms == null || !Number.isFinite(Number(ms)) || Number(ms) < 0) return '—';
   const s = Math.round(Number(ms) / 1000);
   if (s < 60) return `${s}s`;
-  const m = Math.floor(s / 60);
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
   const r = s % 60;
+  if (h > 0) return m ? `${h}h ${m}m` : `${h}h`;
   return r ? `${m}m ${r}s` : `${m}m`;
+}
+
+/** Total take time from answers.__duration_ms (newer submits only). */
+export function responseDurationMs(response) {
+  const ms = Number(response?.answers?.__duration_ms);
+  return Number.isFinite(ms) && ms >= 0 ? ms : null;
 }
 
 function median(nums) {

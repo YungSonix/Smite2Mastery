@@ -3416,6 +3416,13 @@ label.f-file-btn:hover {
   margin-top: 2px;
 }
 
+.f-student-panel-took {
+  font-family: var(--f-sans, inherit);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--f-muted);
+}
+
 .f-student-panel-menu-wrap {
   position: relative;
 }
@@ -3704,6 +3711,17 @@ label.f-file-btn:hover {
   max-width: 60px;
   color: var(--f-text);
   font-size: 12px;
+  padding: 8px 4px;
+}
+
+.f-grid .col-time {
+  width: 64px;
+  min-width: 56px;
+  max-width: 72px;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--f-muted, #6b5e52);
   padding: 8px 4px;
 }
 

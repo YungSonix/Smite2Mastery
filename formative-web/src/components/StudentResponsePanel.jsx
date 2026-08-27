@@ -4,6 +4,7 @@ import { listMediaUrls } from '../lib/questionMedia';
 import { formatIp } from '../lib/quizSettings';
 import { typeLabel } from '../lib/questionTypes';
 import { promptPlain } from '../lib/promptPlain';
+import { formatDuration, responseDurationMs } from '../lib/triviaInsights';
 
 const CONTENT_TYPES = new Set(['image', 'content', 'audio', 'video', 'embed']);
 
@@ -227,6 +228,8 @@ export default function StudentResponsePanel({
   const submitted = response.submitted_at
     ? new Date(response.submitted_at).toLocaleString()
     : '—';
+  const durationMs = responseDurationMs(response);
+  const tookLabel = durationMs != null ? formatDuration(durationMs) : null;
 
   const commitScore = async (questionId) => {
     const q = (questions || []).find((x) => x.id === questionId);
@@ -361,6 +364,17 @@ export default function StudentResponsePanel({
           <div className="f-student-panel-score-label">Activity total points</div>
           <div className="f-student-panel-score">
             {totalScore} / {maxScore}pts
+            {tookLabel ? (
+              <span className="f-student-panel-took" title="Time from start to submit">
+                {' '}
+                · Took {tookLabel}
+              </span>
+            ) : (
+              <span className="f-student-panel-took f-muted" title="Older takes have no finish clock">
+                {' '}
+                · Took —
+              </span>
+            )}
           </div>
         </div>
         <div className="f-student-panel-menu-wrap" ref={menuRef}>
@@ -424,7 +438,7 @@ export default function StudentResponsePanel({
                 )}
               </div>
               <div className="f-answer-foot">
-                <span className="f-muted">{submitted}</span>
+                <span className="f-muted" aria-hidden="true" />
                 {scored ? (
                   <label className="f-grade-input">
                     <input
