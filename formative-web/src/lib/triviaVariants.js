@@ -13,6 +13,68 @@ function cloneJson(v) {
   return v == null ? v : JSON.parse(JSON.stringify(v));
 }
 
+function normOpt(s) {
+  return String(s ?? '').trim().toLowerCase();
+}
+
+function optionsEqual(a, b) {
+  const aa = Array.isArray(a) ? a : [];
+  const bb = Array.isArray(b) ? b : [];
+  if (aa.length !== bb.length) return false;
+  return aa.every((v, i) => v === bb[i]);
+}
+
+function correctLabels(correct, options) {
+  const opts = Array.isArray(options) ? options : [];
+  if (!correct || typeof correct !== 'object') return [];
+  if (Array.isArray(correct.indices)) {
+    return correct.indices
+      .map((i) => opts[Number(i)])
+      .filter((l) => l != null && String(l).trim());
+  }
+  if (Number.isFinite(Number(correct.index))) {
+    const label = opts[Number(correct.index)];
+    return label != null && String(label).trim() ? [String(label)] : [];
+  }
+  if (Array.isArray(correct.answers)) return correct.answers.map(String).filter(Boolean);
+  if (correct.answer != null && String(correct.answer).trim()) return [String(correct.answer)];
+  return [];
+}
+
+function indexForLabel(options, label) {
+  const n = normOpt(label);
+  if (!n) return -1;
+  return (Array.isArray(options) ? options : []).findIndex((o) => normOpt(o) === n);
+}
+
+/** Map correct.index/indices from source option list onto target option list by label. */
+function remapCorrectForOptions(correct, sourceOptions, targetOptions) {
+  if (!correct || typeof correct !== 'object') return correct;
+  if (optionsEqual(sourceOptions, targetOptions)) return cloneJson(correct);
+
+  const labels = correctLabels(correct, sourceOptions);
+  if (!labels.length) return cloneJson(correct);
+
+  if (Array.isArray(correct.indices)) {
+    const indices = labels.map((l) => indexForLabel(targetOptions, l)).filter((i) => i >= 0);
+    if (!indices.length) return cloneJson(correct);
+    return { indices, index: indices[0] };
+  }
+
+  const idx = indexForLabel(targetOptions, labels[0]);
+  if (idx < 0) return cloneJson(correct);
+  return { index: idx };
+}
+
+function variantHasOwnMedia(raw) {
+  if (!raw || typeof raw !== 'object') return false;
+  return (
+    raw.image_url !== undefined ||
+    Array.isArray(raw.image_urls) ||
+    (Array.isArray(raw.meta?.image_urls) && raw.meta.image_urls.length > 0)
+  );
+}
+
 export function listVariants(q) {
   if (!q) return [];
   const base = {
@@ -29,12 +91,21 @@ export function listVariants(q) {
     if (raw.enabled === false) continue;
     if (out.length >= MAX_QUESTION_VARIANTS) break;
     const urls = listImageUrls(raw);
-    const hasOwnMedia =
-      raw.image_url !== undefined || Array.isArray(raw.image_urls);
+    const hasOwnMedia = variantHasOwnMedia(raw);
+    const options =
+      raw.options != null ? cloneJson(raw.options) : cloneJson(base.options);
+    const correctSourceOptions =
+      raw.correct != null
+        ? raw.options != null
+          ? cloneJson(raw.options)
+          : cloneJson(base.options)
+        : cloneJson(base.options);
+    const correctRaw =
+      raw.correct != null ? cloneJson(raw.correct) : cloneJson(base.correct);
     out.push({
       prompt: raw.prompt != null ? String(raw.prompt) : base.prompt,
-      options: raw.options != null ? cloneJson(raw.options) : cloneJson(base.options),
-      correct: raw.correct != null ? cloneJson(raw.correct) : cloneJson(base.correct),
+      options,
+      correct: remapCorrectForOptions(correctRaw, correctSourceOptions, options),
       image_url: hasOwnMedia ? urls[0] || null : base.image_url,
       image_urls: hasOwnMedia ? urls : base.image_urls,
     });
@@ -73,13 +144,20 @@ export function applyVariant(q, index) {
   const v = variants[i];
   const meta = { ...(q.meta || {}) };
   delete meta.variants;
+  const mediaUrls = v.image_urls || listImageUrls(v);
   return {
     ...q,
     prompt: v.prompt,
     options: v.options,
     correct: v.correct,
     image_url: v.image_url,
-    meta: { ...meta, variant_index: i, image_urls: v.image_urls || listImageUrls(v) },
+    image_urls: mediaUrls,
+    meta: {
+      ...meta,
+      ...(v.meta || {}),
+      variant_index: i,
+      image_urls: mediaUrls,
+    },
   };
 }
 

@@ -131,7 +131,9 @@ function PreviewQuestionCard({ q, idx, variantIndex, onVariantChange }) {
       ) : null}
       {media.length ? (
         <MediaStack
+          key={`${q.id}-v${variantIndex}-${media[0] || ''}`}
           urls={media}
+          opaque
           imageCrop={displayQ.meta?.media_crop}
           imageCropSeed={displayQ.meta?.media_seed}
         />
