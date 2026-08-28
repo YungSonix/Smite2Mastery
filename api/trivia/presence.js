@@ -12,6 +12,25 @@ function draftUnsupported(err) {
   return err?.code === '42703' || /draft_answers|variant_map|client_started_at|schema cache/i.test(msg);
 }
 
+/** Skip redundant DB writes when clients ping faster than this (visibility + interval). */
+const MIN_PRESENCE_WRITE_MS = Number(process.env.TRIVIA_PRESENCE_MIN_WRITE_MS) || 12000;
+
+function shouldThrottlePresenceWrite(existing, body, extra, answered) {
+  if (!existing?.last_seen_at) return false;
+  if (body.left_page || leftPageTruthy(body)) return false;
+  if (Math.min(1, Math.max(0, Number(body.hidden_inc) || 0)) > 0) return false;
+  if (Object.keys(extra).length > 0) return false;
+  if (answered !== Number(existing.answered_count || 0)) return false;
+
+  const last = Date.parse(existing.last_seen_at);
+  if (!Number.isFinite(last)) return false;
+  return Date.now() - last < MIN_PRESENCE_WRITE_MS;
+}
+
+function leftPageTruthy(body) {
+  return Boolean(body.left_page);
+}
+
 function draftPatch(body, existing) {
   const extra = {};
   if (body.answers && typeof body.answers === 'object') {
@@ -71,7 +90,7 @@ module.exports = async function handler(req, res) {
     const { data: existing, error: findErr } = await sb
       .from('trivia_sessions')
       .select(
-        'id, hidden_count, ingame_name, user_agent, client_started_at, started_at, left_page, discord_username'
+        'id, hidden_count, ingame_name, user_agent, client_started_at, started_at, left_page, discord_username, last_seen_at, answered_count'
       )
       .eq('quiz_id', quiz.id)
       .ilike('discord_username', discord)
@@ -95,6 +114,10 @@ module.exports = async function handler(req, res) {
       user_agent: req.headers['user-agent'] || existing?.user_agent || null,
     };
     const extra = draftPatch(body, existing);
+
+    if (shouldThrottlePresenceWrite(existing, body, extra, answered)) {
+      return send(res, 200, { ok: true, throttled: true });
+    }
 
     const saveCols =
       'id, left_page, client_started_at, started_at, discord_username, ingame_name, ip_address, user_agent';

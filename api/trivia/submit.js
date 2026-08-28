@@ -1,6 +1,21 @@
 const { supabaseAdmin, readIp, send, readBody } = require('../../lib/server/triviaApi');
 const { commitGuestAttempt } = require('../../lib/server/triviaCommit');
 
+const SUBMIT_MAX_BYTES = Number(process.env.TRIVIA_SUBMIT_MAX_BYTES) || 4.5 * 1024 * 1024;
+
+function submitErrorContext(body, req) {
+  const slug = String(body?.slug || '').trim();
+  const discord = String(body?.discord_username || body?.discordUsername || '').trim();
+  const answerKeys = body?.answers && typeof body.answers === 'object' ? Object.keys(body.answers).length : 0;
+  const cl = req.headers['content-length'];
+  return {
+    slug: slug || null,
+    discord: discord ? `${discord.slice(0, 3)}…` : null,
+    answerKeys,
+    contentLength: cl != null ? Number(cl) : null,
+  };
+}
+
 module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -12,8 +27,9 @@ module.exports = async function handler(req, res) {
     return send(res, 405, { error: 'Method not allowed' });
   }
 
+  let body = {};
   try {
-    const body = await readBody(req);
+    body = await readBody(req, { maxBytes: SUBMIT_MAX_BYTES });
     const slug = String(body.slug || '').trim();
     const discord = String(body.discord_username || body.discordUsername || '').trim();
     const ingame = String(body.ingame_name || body.ingameName || '').trim();
@@ -65,7 +81,23 @@ module.exports = async function handler(req, res) {
     });
     return send(res, 200, payload);
   } catch (e) {
-    console.error('trivia submit error', e);
+    const ctx = submitErrorContext(body, req);
+    if (e.code === 'PAYLOAD_TOO_LARGE' || e.status === 413) {
+      console.error('trivia submit payload too large', { ...ctx, maxBytes: SUBMIT_MAX_BYTES });
+      return send(res, 413, {
+        error: 'Submission too large. Remove large drawings or attachments and try again.',
+      });
+    }
+    if (e.code === 'INVALID_JSON') {
+      console.error('trivia submit invalid json', ctx);
+      return send(res, 400, { error: 'Invalid submission format.' });
+    }
+    console.error('trivia submit error', {
+      ...ctx,
+      message: e.message,
+      status: e.status,
+      code: e.code,
+    });
     return send(res, e.status || 500, { error: e.message || 'Submit failed' });
   }
 };

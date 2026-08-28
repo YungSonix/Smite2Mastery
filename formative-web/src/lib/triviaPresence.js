@@ -1,6 +1,14 @@
 export const LIVE_MS = 90000;
 export const KEEP_MS = 15 * 60 * 1000;
 
+/**
+ * Take-page presence heartbeat interval.
+ * 15s keeps ~27 writes/s at 400 concurrent takers (vs ~80/s at 5s).
+ * Host "Live now" still feels fresh: LIVE_MS is 90s; server throttles duplicate pings <12s.
+ * Tradeoff: slower away/left detection on host grid (worst case +15s lag vs 5s).
+ */
+export const PRESENCE_POLL_MS = 15000;
+
 export function compactDraftAnswers(answers) {
   const out = {};
   if (!answers || typeof answers !== 'object' || Array.isArray(answers)) return out;

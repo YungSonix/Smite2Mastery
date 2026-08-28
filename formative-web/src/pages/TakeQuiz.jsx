@@ -20,7 +20,7 @@ import {
 } from '../lib/triviaVariants';
 import { quizWindowState } from '../lib/quizSettings';
 import { quizThemeProps } from '../lib/quizThemes';
-import { pingTriviaPresence, compactDraftAnswers } from '../lib/triviaPresence';
+import { pingTriviaPresence, compactDraftAnswers, PRESENCE_POLL_MS } from '../lib/triviaPresence';
 import { LIFELINES_PER_ATTEMPT, totalLifelinesUsed, lifelineMultiplier } from '../lib/triviaHints';
 import { allChoicesHaveArt, lookupChoiceArt } from '../lib/choiceArt';
 import { resolveMediaUrl } from '../lib/mediaUrl';
@@ -439,6 +439,22 @@ export default function TakeQuiz() {
   }, [showQuestions, playable, slug]);
 
   useEffect(() => {
+    if (!import.meta.env.DEV) return undefined;
+    const onWindowError = (event) => {
+      console.warn('[TakeQuiz]', event.message, event.filename, event.lineno, event.error?.stack || '');
+    };
+    const onRejection = (event) => {
+      console.warn('[TakeQuiz] unhandled rejection', event.reason);
+    };
+    window.addEventListener('error', onWindowError);
+    window.addEventListener('unhandledrejection', onRejection);
+    return () => {
+      window.removeEventListener('error', onWindowError);
+      window.removeEventListener('unhandledrejection', onRejection);
+    };
+  }, []);
+
+  useEffect(() => {
     if (!timed || !startedAt || result) return undefined;
     const t = setInterval(() => setNow(Date.now()), 250);
     return () => clearInterval(t);
@@ -485,7 +501,7 @@ export default function TakeQuiz() {
     };
 
     sendPing();
-    const tick = setInterval(() => sendPing(), 15000);
+    const tick = setInterval(() => sendPing(), PRESENCE_POLL_MS);
     const onVis = () => {
       sendPing({ hidden_inc: document.hidden ? 1 : 0 });
     };
