@@ -4,7 +4,7 @@ import { devToolsLikelyOpen, installScrapeGuard } from '../lib/scrapeGuard';
 
 /**
  * Anti-scrape deterrent for Scroll Trivia (not real security — slows casual copying).
- * - All pages except login: block DevTools shortcuts
+ * - All pages except login: block DevTools shortcuts and right-click (Inspect menu)
  * - Take + host preview: strict mode (no copy/select/print/save outside inputs)
  */
 export default function ScrapeGuard() {

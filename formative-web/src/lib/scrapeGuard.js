@@ -30,6 +30,10 @@ export function isDevToolsShortcut(e) {
   if (e.metaKey && alt && 'ijcu'.includes(key)) return true;
   if (e.metaKey && alt && key === 'k') return true;
 
+  // Context menu / Inspect entry (keyboard)
+  if (e.key === 'ContextMenu') return true;
+  if (e.shiftKey && (e.key === 'F10' || code === 'F10')) return true;
+
   return false;
 }
 
@@ -112,7 +116,6 @@ export function installScrapeGuard({ strict = false, onDevToolsOpen, onDevToolsC
   };
 
   const onContextMenu = (e) => {
-    if (!strict) return;
     if (isEditableTarget(e.target)) return;
     blockEvent(e);
   };
