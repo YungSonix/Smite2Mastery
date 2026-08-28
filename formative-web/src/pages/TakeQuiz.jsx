@@ -24,6 +24,11 @@ import { pingTriviaPresence, compactDraftAnswers } from '../lib/triviaPresence';
 import { LIFELINES_PER_ATTEMPT, totalLifelinesUsed, lifelineMultiplier } from '../lib/triviaHints';
 import { allChoicesHaveArt, lookupChoiceArt } from '../lib/choiceArt';
 import { resolveMediaUrl } from '../lib/mediaUrl';
+import {
+  formatUnlockCountdown,
+  formatWhenLocal,
+  formatWhenWithLocalHint,
+} from '../lib/formatWhen';
 
 async function fileToDataUrl(file, maxBytes = 2.5 * 1024 * 1024) {
   if (!file) throw new Error('No file');
@@ -171,13 +176,6 @@ function formatRemain(ms) {
   const m = Math.floor(total / 60);
   const s = total % 60;
   return `${m}:${String(s).padStart(2, '0')}`;
-}
-
-function formatWhen(iso) {
-  if (!iso) return '';
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return String(iso);
-  return d.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
 }
 
 function isGate(q) {
@@ -568,7 +566,7 @@ export default function TakeQuiz() {
     setMissingConfirm(null);
     try {
       if (!opts.force && windowState.status === 'not_open') {
-        throw new Error(`This quiz opens ${formatWhen(windowState.opensAt)}.`);
+        throw new Error(`This quiz opens ${formatWhenWithLocalHint(windowState.opensAt)}.`);
       }
       if (!opts.force && windowState.status === 'closed') {
         throw new Error('This quiz is closed.');
@@ -739,11 +737,17 @@ export default function TakeQuiz() {
 
         {windowState.status === 'not_open' ? (
           <div className="f-notice f-fade-up">
-            Opens {formatWhen(windowState.opensAt)}. You can read the rules now — Start unlocks then.
+            Opens {formatWhenWithLocalHint(windowState.opensAt)}.
+            {formatUnlockCountdown(windowState.opensAt, now)
+              ? ` ${formatUnlockCountdown(windowState.opensAt, now)}.`
+              : ''}{' '}
+            You can read the rules now — Start unlocks then.
           </div>
         ) : null}
         {windowState.status === 'closed' ? (
-          <div className="f-notice f-fade-up">This quiz closed {formatWhen(windowState.closesAt)}.</div>
+          <div className="f-notice f-fade-up">
+            This quiz closed {formatWhenWithLocalHint(windowState.closesAt)}.
+          </div>
         ) : null}
 
         <form className="f-take-form" onSubmit={(e) => onSubmit(e)}>
@@ -852,7 +856,8 @@ export default function TakeQuiz() {
                 }}
               >
                 {windowState.status === 'not_open'
-                  ? `Opens ${formatWhen(windowState.opensAt)}`
+                  ? formatUnlockCountdown(windowState.opensAt, now) ||
+                    `Opens ${formatWhenLocal(windowState.opensAt)}`
                   : windowState.status === 'closed'
                     ? 'Quiz closed'
                     : timed

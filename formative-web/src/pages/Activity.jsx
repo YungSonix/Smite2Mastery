@@ -26,6 +26,7 @@ import {
   saveEditorDraft,
   shouldPreferServerOverDraft,
 } from '../lib/editorDraftStorage';
+import { localTimeZoneLabel } from '../lib/formatWhen';
 
 const MORE_ITEMS = [
   { id: 'join', label: 'Join instructions', wire: true },
@@ -1215,7 +1216,10 @@ export default function Activity() {
                 <label className="f-assign-row">
                   <span>
                     Opens
-                    <small>Empty = already open. Times use this computer&apos;s timezone.</small>
+                    <small>
+                      Empty = already open. You&apos;re setting times in{' '}
+                      {localTimeZoneLabel()}. Students see unlock times in their own timezone.
+                    </small>
                   </span>
                   <DeferredDatetimeInput
                     isoValue={settings.opens_at}
