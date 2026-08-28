@@ -5529,6 +5529,36 @@ label.f-file-btn:hover {
   font-size: 13px;
 }
 
+.f-host-preview-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 12px 16px 0;
+  padding: 10px 14px;
+  max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 12px;
+  border: 1px solid var(--f-border);
+  background: var(--f-card);
+  box-shadow: var(--f-shadow);
+}
+
+.f-host-preview-nav-counter {
+  min-width: 9rem;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--f-text);
+}
+
+.f-host-preview-nav .f-outline-btn {
+  min-width: 6.5rem;
+}
+
 .f-host-preview-list {
   display: flex;
   flex-direction: column;

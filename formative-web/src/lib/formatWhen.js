@@ -19,11 +19,19 @@ export function formatWhenLocal(iso) {
   if (!iso) return '';
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return String(iso);
-  return d.toLocaleString(undefined, {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-    timeZoneName: 'short',
-  });
+  try {
+    // dateStyle/timeStyle cannot be combined with timeZoneName (throws "Invalid option : option").
+    return d.toLocaleString(undefined, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      timeZoneName: 'short',
+    });
+  } catch {
+    return d.toLocaleString();
+  }
 }
 
 /** Student-facing unlock/close label — always in the viewer's local timezone. */
