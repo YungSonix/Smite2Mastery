@@ -63,17 +63,38 @@ function blockEvent(e) {
   return false;
 }
 
-/** Docked DevTools often shrink the inner viewport. */
+/**
+ * Mobile / tablet browser chrome (esp. iOS Safari toolbars) routinely creates a
+ * large outerHeight−innerHeight gap. That must not be treated as docked DevTools.
+ */
+export function isMobileBrowserChrome() {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
+  const ua = String(navigator.userAgent || '');
+  if (/iPhone|iPad|iPod|Android/i.test(ua)) return true;
+  try {
+    if (navigator.maxTouchPoints > 0 && window.matchMedia('(pointer: coarse)').matches) {
+      return true;
+    }
+  } catch {
+    /* matchMedia unavailable */
+  }
+  return false;
+}
+
+/** Docked DevTools often shrink the inner viewport (desktop only). */
 export function devToolsLikelyOpen() {
   if (typeof window === 'undefined') return false;
+  // iPhone Safari chrome alone can exceed the 140px threshold and black-screen take/preview.
+  if (isMobileBrowserChrome()) return false;
   const widthGap = window.outerWidth - window.innerWidth;
   const heightGap = window.outerHeight - window.innerHeight;
   return widthGap > 140 || heightGap > 140;
 }
 
-/** Console is only read when DevTools is open (classic probe). */
+/** Console is only read when DevTools is open (classic probe). Desktop only — unreliable on mobile. */
 function installConsoleProbe(onOpen) {
   if (typeof window === 'undefined' || typeof console === 'undefined') return () => {};
+  if (isMobileBrowserChrome()) return () => {};
   let timer = null;
   const probe = () => {
     try {

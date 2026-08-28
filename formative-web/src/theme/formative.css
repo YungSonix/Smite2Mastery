@@ -5900,7 +5900,8 @@ html.f-scrape-guard-take .f-take [contenteditable='true'] {
   user-select: text;
 }
 
-html.f-scrape-guard-active #root {
+/* Blur quiz content only — scrim lives inside #root and must stay readable. */
+html.f-scrape-guard-active #root > *:not(.f-scrape-guard-scrim) {
   filter: blur(14px);
   pointer-events: none;
   user-select: none;
@@ -5916,6 +5917,8 @@ html.f-scrape-guard-active #root {
   padding: 24px;
   background: rgba(7, 11, 20, 0.92);
   backdrop-filter: blur(4px);
+  pointer-events: auto;
+  filter: none;
 }
 
 .f-scrape-guard-card {
