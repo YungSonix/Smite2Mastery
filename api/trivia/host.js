@@ -213,9 +213,10 @@ module.exports = async function handler(req, res) {
         return send(res, 200, { unchanged: true, watermark });
       }
 
+      // answers required for duration/presence meta even on lite polls (stripped by mapResponseForHost)
       const responseColumns = includeAnswers
         ? 'id, quiz_id, discord_username, ingame_name, score, max_score, per_question, submitted_at, ip_address, answers, user_agent'
-        : 'id, quiz_id, discord_username, ingame_name, score, max_score, per_question, submitted_at, ip_address';
+        : 'id, quiz_id, discord_username, ingame_name, score, max_score, per_question, submitted_at, ip_address, answers';
 
       const [{ data: questions }, { data: responses, error: rErr }] = await Promise.all([
         asCsv

@@ -41,7 +41,7 @@ function durationFromTimestamps(submittedAt, startedAt) {
 
 /** Normalize stored duration (seconds-as-ms, timestamps, stale starts). */
 export function normalizeDurationMs(rawMs, submittedAt, startedAt) {
-  let ms = Number(rawMs);
+  let ms = rawMs != null && rawMs !== '' ? Number(rawMs) : null;
   const fromTs = durationFromTimestamps(submittedAt, startedAt);
 
   if (!Number.isFinite(ms) || ms < 0) ms = null;
@@ -62,9 +62,12 @@ export function normalizeDurationMs(rawMs, submittedAt, startedAt) {
 
 /** Total take time from host lite fields or answers.__duration_ms. */
 export function responseDurationMs(response) {
-  const top = Number(response?.duration_ms);
-  if (Number.isFinite(top) && top >= 0) {
-    return normalizeDurationMs(top, response?.submitted_at, response?.answers?.__started_at);
+  if (response?.duration_ms != null && Number.isFinite(Number(response.duration_ms))) {
+    return normalizeDurationMs(
+      response.duration_ms,
+      response?.submitted_at,
+      response?.answers?.__started_at
+    );
   }
   return normalizeDurationMs(
     response?.answers?.__duration_ms,
@@ -74,14 +77,21 @@ export function responseDurationMs(response) {
 }
 
 export function responseTabAwayCount(response) {
-  const top = Number(response?.tab_away_count);
-  if (Number.isFinite(top)) return Math.max(0, top);
-  return Math.max(0, Number(response?.answers?.__presence?.hidden_count) || 0);
+  if (response?.tab_away_count != null && Number.isFinite(Number(response.tab_away_count))) {
+    return Math.max(0, Number(response.tab_away_count));
+  }
+  const pres = response?.answers?.__presence;
+  if (pres && typeof pres === 'object') {
+    return Math.max(0, Number(pres.hidden_count) || 0);
+  }
+  return null;
 }
 
 export function responseLeftPage(response) {
   if (response?.left_page != null) return Boolean(response.left_page);
-  return Boolean(response?.answers?.__presence?.left_page);
+  const pres = response?.answers?.__presence;
+  if (pres && typeof pres === 'object') return Boolean(pres.left_page);
+  return null;
 }
 
 function median(nums) {
@@ -171,9 +181,7 @@ export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {
     };
   });
 
-  const durations = rows
-    .map((r) => Number(r.answers?.__duration_ms))
-    .filter((ms) => Number.isFinite(ms) && ms >= 0);
+  const durations = rows.map((r) => responseDurationMs(r)).filter((ms) => ms != null);
   const buckets = timeBuckets(timeLimitSeconds).map((b) => ({
     label: b.label,
     value: durations.filter((ms) => {

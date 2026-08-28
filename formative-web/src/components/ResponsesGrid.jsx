@@ -244,11 +244,25 @@ export default function ResponsesGrid({
                   <td className="col-time" title={took === '—' ? 'No finish time on older takes' : took}>
                     {took}
                   </td>
-                  <td className="col-tab-away" title="Tab background count during take">
-                    {tabAway}
+                  <td
+                    className="col-tab-away"
+                    title={
+                      tabAway == null ? 'Not tracked on older submissions' : 'Tab background count during take'
+                    }
+                  >
+                    {tabAway == null ? '—' : tabAway}
                   </td>
-                  <td className="col-left-page" title={leftPage ? 'Left before submit' : 'Stayed on page'}>
-                    {leftPage ? 'Yes' : '—'}
+                  <td
+                    className="col-left-page"
+                    title={
+                      leftPage == null
+                        ? 'Not tracked on older submissions'
+                        : leftPage
+                          ? 'Left before submit'
+                          : 'Stayed on page'
+                    }
+                  >
+                    {leftPage == null ? '—' : leftPage ? 'Yes' : '—'}
                   </td>
                   {scored.map((q) => {
                     const v = r.per_question?.[q.id];
