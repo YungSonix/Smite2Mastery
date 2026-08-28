@@ -10,6 +10,12 @@ const GITHUB_ASSETS =
   'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data';
 const GITHUB_MAIN_IMG = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img';
 
+/** Legacy catalog filenames → builds.json / assets branch basenames. */
+const GOD_INFO_FILENAME_ALIASES = {
+  'cuChulainnImage.webp': 'cuchuImage.webp',
+  'xingTianImage.webp': 'xingImage.webp',
+};
+
 /** God Info files on `assets` only (not yet mirrored to `main/img/God Info`). */
 const GOD_INFO_ASSETS_ONLY = new Set([
   'atlasPassive.webp',
@@ -69,8 +75,12 @@ export function resolveMediaUrl(url) {
     relRaw.startsWith('Icons/God Info/')
   ) {
     if (preferLocalMediaProxy()) return s;
-    const file = rel.slice('Icons/God Info/'.length);
-    if (GOD_INFO_ASSETS_ONLY.has(file)) return toAssets();
+    const rawFile = rel.slice('Icons/God Info/'.length);
+    const file = GOD_INFO_FILENAME_ALIASES[rawFile] || rawFile;
+    if (GOD_INFO_ASSETS_ONLY.has(file)) {
+      const resolvedRel = `Icons/God Info/${file}`;
+      return `${GITHUB_ASSETS}/${resolvedRel.split('/').map(encodeURIComponent).join('/')}`;
+    }
     return toMainImg(`God Info/${file}`);
   }
 

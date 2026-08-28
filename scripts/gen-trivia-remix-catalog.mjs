@@ -620,10 +620,10 @@ for (const file of fs.readdirSync(notesDir).filter((f) => /^patchnotesob\d+\.jso
 releases.push({ patch: 39, god: 'Xing Tian' }, { patch: 40, god: 'Cu Chulainn' });
 
 if (!gods.some((g) => norm(g.name) === 'xingtian')) {
-  gods.push({ name: 'Xing Tian', image: mediaFileUrl(GOD_ICON_BASE, 'xingTianImage.webp') });
+  gods.push({ name: 'Xing Tian', image: mediaFileUrl(GOD_ICON_BASE, 'xingImage.webp') });
 }
 if (!gods.some((g) => norm(g.name) === 'cuchulainn')) {
-  gods.push({ name: 'Cu Chulainn', image: mediaFileUrl(GOD_ICON_BASE, 'cuChulainnImage.webp') });
+  gods.push({ name: 'Cu Chulainn', image: mediaFileUrl(GOD_ICON_BASE, 'cuchuImage.webp') });
 }
 
 const seenRel = new Set();
