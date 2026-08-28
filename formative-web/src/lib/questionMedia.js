@@ -49,3 +49,14 @@ export function withImageUrlsOnVariant(variant, urls) {
 }
 
 export const withMediaUrlsOnVariant = withImageUrlsOnVariant;
+
+/** Prompt/question media crop — skin_guess implies skin_zoom_center when media_crop omitted. */
+export function questionMediaCrop(meta) {
+  if (!meta || typeof meta !== 'object') return '';
+  return meta.media_crop || (meta.remix_kind === 'skin_guess' ? 'skin_zoom_center' : '');
+}
+
+export function questionMediaCropSeed(meta, fallbackUrl) {
+  if (!meta || typeof meta !== 'object') return String(fallbackUrl || '').trim();
+  return meta.media_seed || String(fallbackUrl || '').trim();
+}

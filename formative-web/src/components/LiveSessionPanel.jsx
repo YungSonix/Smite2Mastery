@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import MediaStack from './MediaStack';
-import { listMediaUrls } from '../lib/questionMedia';
+import { listMediaUrls, questionMediaCrop, questionMediaCropSeed } from '../lib/questionMedia';
 import { formatIp } from '../lib/quizSettings';
 import {
   currentLiveQuestion,
@@ -155,7 +155,11 @@ export default function LiveSessionPanel({ session, sessions, questions, onClose
                   <div>{promptPlainLocal(q.prompt) || typeLabel(q)}</div>
                 </div>
               </div>
-              <MediaStack urls={listMediaUrls(q)} imageCrop={q.meta?.media_crop} imageCropSeed={q.meta?.media_seed} />
+              <MediaStack
+                urls={listMediaUrls(q)}
+                imageCrop={questionMediaCrop(q.meta)}
+                imageCropSeed={questionMediaCropSeed(q.meta, listMediaUrls(q)[0])}
+              />
               <div className="f-answer-value">
                 {draft != null ? <pre>{draft}</pre> : <span className="f-muted">Not answered yet</span>}
               </div>

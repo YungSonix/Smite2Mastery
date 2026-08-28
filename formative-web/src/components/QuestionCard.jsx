@@ -5,6 +5,8 @@ import { joinFillBlankPrompt, splitFillBlankPrompt } from '../lib/fillBlank';
 import {
   MAX_VERSION_MEDIA,
   listMediaUrls,
+  questionMediaCrop,
+  questionMediaCropSeed,
   withMediaUrlsOnQuestion,
   withMediaUrlsOnVariant,
 } from '../lib/questionMedia';
@@ -724,8 +726,8 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
           key={mediaPreviewToken || activeMediaUrls[0] || 'media'}
           urls={activeMediaUrls}
           editable
-          imageCrop={activeMediaMeta?.media_crop}
-          imageCropSeed={activeMediaMeta?.media_seed}
+          imageCrop={questionMediaCrop(activeMediaMeta)}
+          imageCropSeed={questionMediaCropSeed(activeMediaMeta, activeMediaUrls[0])}
           autoPlayAudioToken={mediaPreviewToken}
           onRemove={(i) => setActiveMedia(activeMediaUrls.filter((_, j) => j !== i))}
         />
@@ -1241,8 +1243,8 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
             key={mediaPreviewToken || activeMediaUrls[0] || 'media-inline'}
             urls={activeMediaUrls}
             editable
-            imageCrop={activeMediaMeta?.media_crop}
-            imageCropSeed={activeMediaMeta?.media_seed}
+            imageCrop={questionMediaCrop(activeMediaMeta)}
+            imageCropSeed={questionMediaCropSeed(activeMediaMeta, activeMediaUrls[0])}
             autoPlayAudioToken={mediaPreviewToken}
             onRemove={(i) => setActiveMedia(activeMediaUrls.filter((_, j) => j !== i))}
           />

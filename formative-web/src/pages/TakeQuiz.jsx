@@ -4,7 +4,7 @@ import RichText from '../components/RichText';
 import MediaStack from '../components/MediaStack';
 import { submitTrivia, requestTriviaHint } from '../lib/api';
 import { splitFillBlankPrompt } from '../lib/fillBlank';
-import { listMediaUrls } from '../lib/questionMedia';
+import { listMediaUrls, questionMediaCrop, questionMediaCropSeed } from '../lib/questionMedia';
 import { typeLabel } from '../lib/questionTypes';
 import {
   isOrderingQuestion,
@@ -918,8 +918,8 @@ export default function TakeQuiz() {
               <MediaStack
                 urls={mediaUrls}
                 opaque
-                imageCrop={q.meta?.media_crop}
-                imageCropSeed={q.meta?.media_seed}
+                imageCrop={questionMediaCrop(q.meta)}
+                imageCropSeed={questionMediaCropSeed(q.meta, mediaUrls[0])}
                 hotspot={q.type === 'hot_spot'}
                 onHotspot={(e) => {
                   if (q.type !== 'hot_spot') return;

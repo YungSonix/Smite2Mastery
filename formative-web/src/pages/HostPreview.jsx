@@ -4,7 +4,7 @@ import MediaStack from '../components/MediaStack';
 import RichText from '../components/RichText';
 import { activityHref, hostApi } from '../lib/api';
 import { allChoicesHaveArt, lookupChoiceArt } from '../lib/choiceArt';
-import { listMediaUrls } from '../lib/questionMedia';
+import { listMediaUrls, questionMediaCrop, questionMediaCropSeed } from '../lib/questionMedia';
 import { typeLabel } from '../lib/questionTypes';
 import { mergeQuizSettings } from '../lib/quizSettings';
 import { quizThemeProps } from '../lib/quizThemes';
@@ -134,8 +134,8 @@ function PreviewQuestionCard({ q, idx, variantIndex, onVariantChange }) {
           key={`${q.id}-v${variantIndex}-${media[0] || ''}`}
           urls={media}
           opaque
-          imageCrop={displayQ.meta?.media_crop}
-          imageCropSeed={displayQ.meta?.media_seed}
+          imageCrop={questionMediaCrop(displayQ.meta)}
+          imageCropSeed={questionMediaCropSeed(displayQ.meta, media[0])}
         />
       ) : null}
       {!isGate && !isContent ? (

@@ -75,6 +75,38 @@ function variantHasOwnMedia(raw) {
   );
 }
 
+const VARIANT_SLOT_MEDIA_KEYS = [
+  'media',
+  'media_crop',
+  'media_seed',
+  'remix_kind',
+  'emoji_set',
+  'hint_context',
+];
+const CROP_META_KEYS = new Set(['media_crop', 'media_seed']);
+
+function slotOwnsCropField(slot, key) {
+  if (!slot || typeof slot !== 'object') return false;
+  if (slot[key] !== undefined && slot[key] !== null) return true;
+  return slot.meta?.[key] !== undefined && slot.meta?.[key] !== null;
+}
+
+/** Mirror QuestionCard variant-tab media meta (crop/seed do not inherit from Version A). */
+function mediaMetaFromSlot(slot, baseMeta = {}, { inheritCrop = true } = {}) {
+  const src = slot && typeof slot === 'object' ? slot : {};
+  const meta = baseMeta && typeof baseMeta === 'object' ? baseMeta : {};
+  const nested = src.meta && typeof src.meta === 'object' ? src.meta : {};
+  const out = {};
+  for (const key of VARIANT_SLOT_MEDIA_KEYS) {
+    if (src[key] !== undefined && src[key] !== null) out[key] = src[key];
+    else if (src[key] === null) continue;
+    else if (nested[key] !== undefined && nested[key] !== null) out[key] = nested[key];
+    else if (!inheritCrop && CROP_META_KEYS.has(key)) continue;
+    else if (meta[key] !== undefined && meta[key] !== null) out[key] = meta[key];
+  }
+  return out;
+}
+
 export function listVariants(q) {
   if (!q) return [];
   const base = {
@@ -142,9 +174,20 @@ export function applyVariant(q, index) {
   if (!variants.length) return q;
   const i = Math.max(0, Math.min(variants.length - 1, Number(index) || 0));
   const v = variants[i];
-  const meta = { ...(q.meta || {}) };
-  delete meta.variants;
+  const baseMeta = { ...(q.meta || {}) };
+  delete baseMeta.variants;
   const mediaUrls = v.image_urls || listImageUrls(v);
+  let mergedMeta = baseMeta;
+  if (i > 0) {
+    const extras = Array.isArray(q.meta?.variants) ? q.meta.variants : [];
+    const slot = extras[i - 1] || {};
+    mergedMeta = {
+      ...baseMeta,
+      ...mediaMetaFromSlot(slot, baseMeta, { inheritCrop: false }),
+    };
+    if (!slotOwnsCropField(slot, 'media_crop')) delete mergedMeta.media_crop;
+    if (!slotOwnsCropField(slot, 'media_seed')) delete mergedMeta.media_seed;
+  }
   return {
     ...q,
     prompt: v.prompt,
@@ -153,7 +196,7 @@ export function applyVariant(q, index) {
     image_url: v.image_url,
     image_urls: mediaUrls,
     meta: {
-      ...meta,
+      ...mergedMeta,
       ...(v.meta || {}),
       variant_index: i,
       image_urls: mediaUrls,
