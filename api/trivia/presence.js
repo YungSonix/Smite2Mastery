@@ -126,8 +126,20 @@ module.exports = async function handler(req, res) {
       user_agent: req.headers['user-agent'] || existing?.user_agent || null,
     };
     const extra = draftPatch(body, existing);
+    const mergedForDue = existing
+      ? {
+          ...existing,
+          ...row,
+          client_started_at: extra.client_started_at || existing.client_started_at,
+        }
+      : null;
 
     if (shouldThrottlePresenceWrite(existing, body, extra, answered)) {
+      if (mergedForDue && sessionDraftDue(mergedForDue, quiz.settings)) {
+        await flushSessionIfDue(sb, quiz, mergedForDue).catch((err) =>
+          console.warn('trivia flush after throttled presence', err.message)
+        );
+      }
       return send(res, 200, { ok: true, throttled: true });
     }
 

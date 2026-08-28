@@ -454,12 +454,6 @@ export default function TakeQuiz() {
     };
   }, []);
 
-  useEffect(() => {
-    if (!timed || !startedAt || result) return undefined;
-    const t = setInterval(() => setNow(Date.now()), 250);
-    return () => clearInterval(t);
-  }, [timed, startedAt, result]);
-
   const answeredCount = useMemo(() => {
     let n = 0;
     playable.forEach((q) => {
@@ -620,9 +614,13 @@ export default function TakeQuiz() {
       if (Date.now() < deadline) return;
       onSubmitRef.current?.(null, { force: true, keepalive });
     };
+    const tick = setInterval(() => {
+      const n = Date.now();
+      setNow(n);
+      fire(false);
+    }, 250);
     const wait = Math.max(0, deadline - Date.now());
     const tid = window.setTimeout(() => fire(false), wait);
-    const retry = window.setInterval(() => fire(false), 2000);
     const onVis = () => fire(false);
     const onHide = () => fire(true);
     document.addEventListener('visibilitychange', onVis);
@@ -630,8 +628,8 @@ export default function TakeQuiz() {
     window.addEventListener('pagehide', onHide);
     fire(false);
     return () => {
+      clearInterval(tick);
       window.clearTimeout(tid);
-      window.clearInterval(retry);
       document.removeEventListener('visibilitychange', onVis);
       window.removeEventListener('focus', onVis);
       window.removeEventListener('pagehide', onHide);
