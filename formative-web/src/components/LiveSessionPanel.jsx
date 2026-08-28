@@ -2,32 +2,17 @@ import { useMemo } from 'react';
 import MediaStack from './MediaStack';
 import { listMediaUrls } from '../lib/questionMedia';
 import { formatIp } from '../lib/quizSettings';
+import {
+  currentLiveQuestion,
+  isGateQuestion,
+  isLiveAnswered,
+  isScoredLiveQuestion,
+  liveSessionSummary,
+} from '../lib/liveSessionStats';
+import { useLiveClock } from '../lib/useLiveClock';
 import { presenceLabel, presenceStatus } from '../lib/triviaPresence';
 import { typeLabel } from '../lib/questionTypes';
 import { promptPlain } from '../lib/promptPlain';
-
-const CONTENT_TYPES = new Set(['image', 'content', 'audio', 'video', 'embed']);
-
-function isGate(q) {
-  return Boolean(q?.meta?.is_discord_gate || q?.meta?.is_ingame_gate);
-}
-
-function isScoredQuestion(q) {
-  if (!q || CONTENT_TYPES.has(q.type) || isGate(q)) return false;
-  return Number(q.points) > 0;
-}
-
-function isAnswered(q, answers) {
-  const v = answers?.[q.id];
-  if (v == null || v === '') return false;
-  if (Array.isArray(v)) return v.length > 0;
-  if (typeof v === 'object') {
-    if (v.x != null || v.y != null) return true;
-    if (v.data || v.url) return true;
-    return Object.values(v).some((x) => (Array.isArray(x) ? x.length > 0 : String(x || '').trim()));
-  }
-  return true;
-}
 
 function formatDraft(q, raw, session) {
   if (q?.meta?.is_discord_gate) return session?.discord_username || raw || null;
@@ -67,6 +52,7 @@ function promptPlainLocal(html) {
 }
 
 export default function LiveSessionPanel({ session, sessions, questions, onClose, onSelect }) {
+  const now = useLiveClock(Boolean(session));
   const index = useMemo(
     () => (sessions || []).findIndex((s) => s.id === session?.id),
     [sessions, session?.id]
@@ -76,26 +62,29 @@ export default function LiveSessionPanel({ session, sessions, questions, onClose
 
   const answers = session?.draft_answers || {};
   const status = presenceStatus(session);
-  const scored = useMemo(() => (questions || []).filter((q) => isScoredQuestion(q)), [questions]);
+  const scored = useMemo(() => (questions || []).filter((q) => isScoredLiveQuestion(q)), [questions]);
 
   const progress = useMemo(() => {
     let answered = 0;
     for (const q of scored) {
-      if (isAnswered(q, answers)) answered += 1;
+      if (isLiveAnswered(q, answers)) answered += 1;
     }
     return { answered, total: scored.length };
   }, [scored, answers]);
 
+  const liveSummary = useMemo(
+    () => liveSessionSummary(session, { questions, now }),
+    [session, questions, now]
+  );
+
   const currentHint = useMemo(() => {
-    for (let i = 0; i < (questions || []).length; i += 1) {
-      const q = questions[i];
-      if (isGate(q)) continue;
-      if (CONTENT_TYPES.has(q.type) && Number(q.points) === 0) continue;
-      if (!isAnswered(q, answers)) {
-        return { num: i + 1, preview: promptPlainLocal(q.prompt) || typeLabel(q) };
-      }
-    }
-    return null;
+    const current = currentLiveQuestion(questions, answers);
+    if (!current) return null;
+    const q = questions[current.num - 1];
+    return {
+      num: current.num,
+      preview: promptPlainLocal(q?.prompt) || typeLabel(q),
+    };
   }, [questions, answers]);
 
   if (!session) return null;
@@ -113,7 +102,7 @@ export default function LiveSessionPanel({ session, sessions, questions, onClose
           <div className="f-student-panel-title">
             <div className="f-student-panel-name">{session.discord_username}</div>
             <div className="f-muted f-student-panel-sub">
-              {session.ingame_name || '—'} · Live
+              {session.ingame_name || '—'} · Live · {liveSummary.text}
             </div>
           </div>
         </div>
@@ -148,9 +137,9 @@ export default function LiveSessionPanel({ session, sessions, questions, onClose
 
       <div className="f-student-panel-body">
         {(questions || []).map((q, i) => {
-          if (isGate(q) && !answers[q.id]) return null;
+          if (isGateQuestion(q) && !answers[q.id]) return null;
           const draft = formatDraft(q, answers[q.id], session);
-          const answered = isAnswered(q, answers);
+          const answered = isLiveAnswered(q, answers);
           const mark = answered ? 'ok' : 'empty';
           const isCurrent = currentHint?.num === i + 1;
 

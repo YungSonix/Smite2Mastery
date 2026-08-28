@@ -3837,11 +3837,27 @@ label.f-file-btn:hover {
   min-width: 0;
 }
 
+.f-student-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
 .f-student-name {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 12px;
+}
+
+.f-live-row-hint {
+  font-size: 10px;
+  color: var(--f-hint);
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .f-bar {

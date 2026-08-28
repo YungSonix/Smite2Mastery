@@ -1,8 +1,10 @@
 import { useEffect, useMemo } from 'react';
+import { liveSessionSummary } from '../lib/liveSessionStats';
 import { formatIp } from '../lib/quizSettings';
 import { formatDuration, responseDurationMs, scoredInsightQuestions } from '../lib/triviaInsights';
 import { presenceLabel, presenceStatus } from '../lib/triviaPresence';
 import { responsePercent, sortResponses } from '../lib/sortResponses';
+import { useLiveClock } from '../lib/useLiveClock';
 import { PaginationBar, usePagination } from '../lib/usePagination';
 
 export default function ResponsesGrid({
@@ -54,6 +56,7 @@ export default function ResponsesGrid({
   };
 
   const live = (sessions || []).filter((s) => presenceStatus(s) !== 'gone');
+  const liveNow = useLiveClock(live.length > 0);
   const submittedNames = new Set(
     (responses || []).map((r) => String(r.discord_username || '').toLowerCase())
   );
@@ -96,6 +99,7 @@ export default function ResponsesGrid({
                 const initial = (s.discord_username || '?').charAt(0).toUpperCase();
                 const qn = Number(s.question_count) || 0;
                 const an = Number(s.answered_count) || 0;
+                const liveHint = liveSessionSummary(s, { questions, now: liveNow });
                 return (
                   <tr
                     key={s.id || s.discord_username}
@@ -108,12 +112,17 @@ export default function ResponsesGrid({
                         <div className="f-avatar" style={{ width: 22, height: 22, fontSize: 11 }}>
                           {initial}
                         </div>
-                        <span className="f-student-name" title={s.discord_username}>
-                          {s.discord_username}
-                          {submittedNames.has(String(s.discord_username || '').toLowerCase())
-                            ? ' (submitted)'
-                            : ''}
-                        </span>
+                        <div className="f-student-text">
+                          <span className="f-student-name" title={s.discord_username}>
+                            {s.discord_username}
+                            {submittedNames.has(String(s.discord_username || '').toLowerCase())
+                              ? ' (submitted)'
+                              : ''}
+                          </span>
+                          <span className="f-live-row-hint" title="Question progress and time on quiz">
+                            {liveHint.text}
+                          </span>
+                        </div>
                       </div>
                     </td>
                     <td className="col-ingame" title={s.ingame_name || ''}>
