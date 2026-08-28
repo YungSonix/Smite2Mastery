@@ -77,6 +77,7 @@ export function applyVariant(q, index) {
     ...q,
     prompt: v.prompt,
     options: v.options,
+    correct: v.correct,
     image_url: v.image_url,
     meta: { ...meta, variant_index: i, image_urls: v.image_urls || listImageUrls(v) },
   };
