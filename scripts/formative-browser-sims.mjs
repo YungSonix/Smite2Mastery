@@ -14,6 +14,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium, webkit, devices } from 'playwright';
+import {
+  answerAllQuestions,
+  plannedAnswers,
+  submitTakeQuiz,
+  waitForQuestionImages,
+  waitForUi,
+} from './formative-sim-helpers.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -118,63 +125,11 @@ function loadQuiz() {
   return JSON.parse(fs.readFileSync(QUIZ_PATH, 'utf8'));
 }
 
-async function waitForUi(timeoutMs = 60_000) {
-  const deadline = Date.now() + timeoutMs;
-  while (Date.now() < deadline) {
-    try {
-      const res = await fetch(`${UI_BASE}/trivia/`);
-      if (res.ok || res.status === 304) return;
-    } catch {
-      /* retry */
-    }
-    await new Promise((r) => setTimeout(r, 500));
-  }
-  throw new Error(`Trivia UI not reachable at ${UI_BASE}/trivia/`);
-}
-
-function correctAnswerFor(q) {
-  if (!q?.correct) return null;
-  if (q.type === 'short_answer') {
-    const answers = q.correct.answers || [];
-    return answers[0] || '';
-  }
-  if (q.type === 'multiple_choice' || q.type === 'true_false' || q.type === 'dropdown') {
-    return Number(q.correct.index);
-  }
-  if (q.type === 'multiple_selection') {
-    return Array.isArray(q.correct.indices) ? q.correct.indices : [];
-  }
-  return null;
-}
-
-/** Mix of correct / wrong answers so sims aren't all perfect. */
-function plannedAnswers(answerKey, runIndex) {
-  const map = {};
-  answerKey.forEach((q, i) => {
-    const correct = correctAnswerFor(q);
-    const forceWrong = (runIndex + i) % 3 === 0;
-    if (q.type === 'short_answer') {
-      map[q.id] = forceWrong ? 'DefinitelyNotAGod' : correct;
-    } else if (q.type === 'multiple_choice' || q.type === 'true_false') {
-      if (forceWrong) {
-        const opts = Array.isArray(q.options) ? q.options : [];
-        const wrongIdx = [...opts.keys()].find((idx) => idx !== correct) ?? 0;
-        map[q.id] = wrongIdx;
-      } else {
-        map[q.id] = correct;
-      }
-    } else {
-      map[q.id] = correct;
-    }
-  });
-  return map;
-}
-
 async function runOne(browserLauncher, profile, quizPayload, runIndex) {
   const started = Date.now();
   const slug = quizPayload.quiz.slug;
   const answerKey = quizPayload.answerKey || [];
-  const answers = plannedAnswers(answerKey, runIndex);
+  const answers = plannedAnswers(answerKey, runIndex, 3);
   const discord = `Sim User ${profile.index} ${Date.now().toString(36)}`;
   const ingame = `IG_${profile.label}`;
   const shotDir = path.join(OUT_DIR, 'screenshots', profile.group);
@@ -248,14 +203,7 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
       { timeout: 15_000 }
     );
 
-    await page.waitForFunction(
-      () => {
-        const imgs = [...document.querySelectorAll('.f-qcard img')];
-        if (!imgs.length) return true;
-        return imgs.every((img) => img.complete && img.naturalWidth > 0);
-      },
-      { timeout: 20_000 }
-    );
+    await waitForQuestionImages(page);
 
     const timer = page.locator('.f-timer-float');
     if (!(await timer.count())) {
@@ -385,91 +333,10 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
       }
     }
 
-    // Answer each scored question in DOM order (skip gates — already filled above)
-    for (const q of answerKey) {
-      const value = answers[q.id];
-      const isFillBlank =
-        q.kind === 'fill_blank' || q.meta?.kind === 'fill_blank' || q.addType === 'fill_blank';
-      if (q.type === 'short_answer' || isFillBlank) {
-        const raw = String(q.prompt || '');
-        const needles = [
-          raw.replace('{{blank}}', ' ').replace(/_{3,}/g, ' ').trim().slice(0, 36),
-          raw.split('{{blank}}')[0].trim().slice(0, 28),
-          raw.split('{{blank}}')[1]?.trim().slice(0, 28),
-        ].filter(Boolean);
-        let input = null;
-        for (const needle of needles) {
-          const block = page.locator('section.f-qcard').filter({ hasText: needle });
-          if (!(await block.count())) continue;
-          const fib = block.locator('input.f-fib-inline').first();
-          const plain = block.locator('input[type="text"]').first();
-          input = (await fib.count()) ? fib : plain;
-          if (await input.count()) break;
-        }
-        if (!input || !(await input.count())) {
-          throw new Error(`Could not find text input for: ${raw.slice(0, 48)}`);
-        }
-        await input.waitFor({ state: 'visible', timeout: 10_000 });
-        await input.fill(String(value ?? ''));
-      } else if (q.type === 'multiple_choice' || q.type === 'true_false') {
-        const name = `q-${q.id}`;
-        const radio = page.locator(`input[type="radio"][name="${name}"]`).nth(Number(value));
-        await radio.waitFor({ state: 'attached', timeout: 10_000 });
-        // WebKit sometimes reports check() as no-op; click the label row instead.
-        const row = radio.locator('xpath=ancestor::label[1]');
-        if (await row.count()) {
-          await row.click({ force: true });
-        } else {
-          await radio.click({ force: true });
-        }
-        const selected = await radio.isChecked().catch(() => false);
-        if (!selected) {
-          await page.evaluate(
-            ({ n, idx }) => {
-              const inputs = [...document.querySelectorAll(`input[type="radio"][name="${n}"]`)];
-              const el = inputs[idx];
-              if (!el) return;
-              el.checked = true;
-              el.dispatchEvent(new Event('input', { bubbles: true }));
-              el.dispatchEvent(new Event('change', { bubbles: true }));
-            },
-            { n: name, idx: Number(value) }
-          );
-        }
-      }
-
-      // Soft checks that media actually rendered for image/audio items
-      if (q.kind === 'image' || q.meta?.media === 'image') {
-        const img = page.locator('section.f-qcard img').first();
-        if (await img.count()) {
-          /* ok */
-        }
-      }
-      if (q.kind === 'audio' || q.meta?.media === 'audio') {
-        const audio = page.locator('section.f-qcard audio').first();
-        await audio.waitFor({ state: 'attached', timeout: 15_000 });
-      }
-    }
-
-    const submitBtn = page.locator('button.f-submit-btn[type="submit"]');
-    await submitBtn.scrollIntoViewIfNeeded();
-    await submitBtn.click({ force: true });
-    // If native validation blocked submit, surface it.
-    const invalid = await page.locator(':invalid').count();
-    if (invalid > 0) {
-      throw new Error(`Submit blocked by ${invalid} invalid field(s)`);
-    }
-    await page.waitForSelector('.f-success-card', { timeout: 30_000 });
-
-    const scoreText = await page
-      .locator('.f-success-card')
-      .innerText()
-      .catch(() => '');
-    const m = scoreText.match(/(\d+)\s*\/\s*(\d+)/);
-    if (m) {
-      result.score = Number(m[1]);
-      result.maxScore = Number(m[2]);
-    }
+    await answerAllQuestions(page, answerKey, answers);
+    const { score, maxScore } = await submitTakeQuiz(page);
+    result.score = score;
+    result.maxScore = maxScore;
 
     const shotPath = path.join(shotDir, `${profile.label}.png`);
     const success = page.locator('.f-success-card').first();
@@ -502,7 +369,7 @@ async function runOne(browserLauncher, profile, quizPayload, runIndex) {
 
 async function main() {
   fs.mkdirSync(OUT_DIR, { recursive: true });
-  await waitForUi();
+  await waitForUi(UI_BASE);
 
   // Confirm API still up
   const health = await fetch(`${API_BASE}/api/trivia/health`);
@@ -559,7 +426,7 @@ async function main() {
       effective.fallback = 'chromium-iphone-emulation';
     }
     process.stdout.write(`  → ${effective.label} (${effective.browserType}${effective.fallback ? ' fallback' : ''})… `);
-    await waitForUi(30_000);
+    await waitForUi(UI_BASE, 30_000);
     const r = await runOne(launcher, effective, quizPayload, runIndex);
     runIndex += 1;
     results.push(r);
