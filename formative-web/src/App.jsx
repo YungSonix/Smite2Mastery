@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { getHostSession } from './lib/auth';
+import ScrapeGuard from './components/ScrapeGuard';
 import Activity from './pages/Activity';
 import Analytics from './pages/Analytics';
 import Home from './pages/Home';
@@ -15,7 +16,9 @@ function RequireHost({ children }) {
 
 export default function App() {
   return (
-    <Routes>
+    <>
+      <ScrapeGuard />
+      <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/take/:slug" element={<TakeQuiz />} />
       <Route
@@ -60,5 +63,6 @@ export default function App() {
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+    </>
   );
 }
