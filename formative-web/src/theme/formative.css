@@ -5835,8 +5835,9 @@ label.f-file-btn:hover {
   }
 }
 
-/* Anti-scrape deterrent (take page) — not real security */
-html.f-scrape-guard-take .f-take {
+/* Anti-scrape deterrent (take / preview) — not real security */
+html.f-scrape-guard-take .f-take,
+html.f-scrape-guard-take .f-host-preview {
   -webkit-user-select: none;
   user-select: none;
 }
@@ -5846,6 +5847,12 @@ html.f-scrape-guard-take .f-take textarea,
 html.f-scrape-guard-take .f-take [contenteditable='true'] {
   -webkit-user-select: text;
   user-select: text;
+}
+
+html.f-scrape-guard-active #root {
+  filter: blur(14px);
+  pointer-events: none;
+  user-select: none;
 }
 
 .f-scrape-guard-scrim {
