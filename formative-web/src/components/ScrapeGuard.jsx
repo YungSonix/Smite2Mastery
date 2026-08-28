@@ -3,27 +3,30 @@ import { useLocation } from 'react-router-dom';
 import { devToolsLikelyOpen, installScrapeGuard } from '../lib/scrapeGuard';
 
 /**
- * Anti-scrape deterrent for Scroll Trivia (not real security — slows casual copying).
- * - All pages except login: block DevTools shortcuts and right-click (Inspect menu)
- * - Take + host preview: strict mode (no copy/select/print/save outside inputs)
+ * Anti-scrape deterrent for Scroll Trivia host surfaces (not real security).
+ * Take pages are excluded — players must never be blocked by DevTools heuristics.
+ * Host preview: strict mode (no copy/select/print/save outside inputs + DevTools overlay).
+ * Other host routes: block DevTools shortcuts and right-click only.
  */
 export default function ScrapeGuard() {
   const { pathname } = useLocation();
   const isLogin = pathname.startsWith('/login');
-  const strict = pathname.startsWith('/take/') || pathname.includes('/preview');
+  const isTake = pathname.startsWith('/take/');
+  const skip = isLogin || isTake;
+  const strict = pathname.includes('/preview');
   const [devtoolsOpen, setDevtoolsOpen] = useState(false);
 
   useEffect(() => {
-    if (isLogin) return undefined;
+    if (skip) return undefined;
     document.documentElement.classList.toggle('f-scrape-guard-take', strict);
     document.documentElement.classList.toggle('f-scrape-guard-active', strict && devtoolsOpen);
     return () => {
       document.documentElement.classList.remove('f-scrape-guard-take', 'f-scrape-guard-active');
     };
-  }, [isLogin, strict, devtoolsOpen]);
+  }, [skip, strict, devtoolsOpen]);
 
   useEffect(() => {
-    if (isLogin) return undefined;
+    if (skip) return undefined;
     return installScrapeGuard({
       strict,
       onDevToolsOpen: () => setDevtoolsOpen(true),
@@ -31,9 +34,9 @@ export default function ScrapeGuard() {
         if (!devToolsLikelyOpen()) setDevtoolsOpen(false);
       },
     });
-  }, [isLogin, strict]);
+  }, [skip, strict]);
 
-  if (isLogin || !strict || !devtoolsOpen) return null;
+  if (skip || !strict || !devtoolsOpen) return null;
 
   return (
     <div className="f-scrape-guard-scrim" role="alert" aria-live="assertive">
