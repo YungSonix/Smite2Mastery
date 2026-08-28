@@ -789,10 +789,6 @@ export default function TakeQuiz() {
                 <span className="f-chevron" aria-hidden="true" />
               </summary>
               <div className="f-take-fold-body">
-                <p className="f-field-hint">
-                  Discord IGN must be First Last. Wrong format is a DQ. You can still fix a typo
-                  here before submit.
-                </p>
                 <div className="f-field-grid">
                   <label className="f-field" htmlFor="discord-username">
                     <span>{settings.discord_field_label || 'Discord Username'}</span>
@@ -824,9 +820,6 @@ export default function TakeQuiz() {
           ) : (
             <section className="f-identity-card f-fade-up">
               <h2>Your details</h2>
-              <p className="f-field-hint">
-                Discord IGN must be First Last. Wrong format is a DQ.
-              </p>
               <div className="f-field-grid">
                 <label className="f-field" htmlFor="discord-username">
                   <span>{settings.discord_field_label || 'Discord Username'}</span>
