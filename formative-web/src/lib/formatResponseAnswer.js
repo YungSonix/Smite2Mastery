@@ -13,6 +13,36 @@ export function isScoredQuestion(q) {
   return Number(q.points) > 0;
 }
 
+const MANUAL_GRADE_TYPES = new Set(['file_response', 'audio_response', 'drawing']);
+
+export function isManualGradeQuestion(q) {
+  return MANUAL_GRADE_TYPES.has(String(q?.type || ''));
+}
+
+export function isBlankAnswer(raw) {
+  if (raw == null || raw === '') return true;
+  if (typeof raw === 'string' && !raw.trim()) return true;
+  if (Array.isArray(raw)) return raw.length === 0;
+  if (typeof raw === 'object') return Object.keys(raw).length === 0;
+  return false;
+}
+
+/** Earned points for display; blank unanswered with no stored grade counts as 0. */
+export function effectiveEarned(q, response, maxPts) {
+  const stored = response?.per_question?.[q?.id];
+  const earned = earnedFromStored(stored, maxPts);
+  if (earned != null) return earned;
+  if (isBlankAnswer(response?.answers?.[q?.id])) return 0;
+  return null;
+}
+
+/** True when host must assign points (answered but not auto-graded). */
+export function needsManualGrade(q, response) {
+  if (!isScoredQuestion(q)) return false;
+  if (response?.per_question?.[q?.id] != null) return false;
+  return !isBlankAnswer(response?.answers?.[q?.id]);
+}
+
 /** Human-readable answer text for host review (MC/TF/multi/matching/etc.). */
 export function formatResponseAnswer(q, raw, response) {
   if (q?.meta?.is_discord_gate) {

@@ -3,7 +3,9 @@ import MediaStack from './MediaStack';
 import SortStudentsMenu from './SortStudentsMenu';
 import {
   earnedFromStored,
+  effectiveEarned,
   formatResponseAnswer,
+  isBlankAnswer,
   isScoredQuestion,
 } from '../lib/formatResponseAnswer';
 import { listMediaUrls } from '../lib/questionMedia';
@@ -20,10 +22,12 @@ const PANEL_SORT = [
   { id: 'submitted_desc', label: 'Submission date (newest)' },
 ];
 
-function markFor(stored, maxPts) {
-  if (stored == null || stored === '') return 'empty';
+function markFor(stored, maxPts, answerRaw) {
+  if (stored == null || stored === '') {
+    return isBlankAnswer(answerRaw) ? 'bad' : 'empty';
+  }
   const earned = earnedFromStored(stored, maxPts);
-  if (earned == null) return 'empty';
+  if (earned == null) return isBlankAnswer(answerRaw) ? 'bad' : 'empty';
   return earned > 0 ? 'ok' : 'bad';
 }
 
@@ -99,8 +103,8 @@ export default function QuestionReviewPanel({
         {visibleRows.map((r) => {
           const answerText = formatResponseAnswer(question, r.answers?.[question.id], r);
           const stored = r.per_question?.[question.id];
-          const mark = markFor(stored, maxPts);
-          const earned = earnedFromStored(stored, maxPts);
+          const mark = markFor(stored, maxPts, r.answers?.[question.id]);
+          const earned = effectiveEarned(question, r, maxPts);
           const initial = (r.discord_username || '?').charAt(0).toUpperCase();
           return (
             <article

@@ -3495,10 +3495,15 @@ label.f-file-btn:hover {
   margin: 0 16px 10px;
   padding: 10px 12px;
   border-radius: 8px;
-  background: rgba(250, 204, 21, 0.12);
-  border: 1px solid rgba(250, 204, 21, 0.45);
-  color: #fde68a;
+  background: rgba(8, 12, 22, 0.98);
+  border: 1px solid rgba(125, 211, 252, 0.42);
+  color: #7dd3fc;
   font-size: 13px;
+}
+
+.f-no-response {
+  color: rgba(148, 163, 184, 0.85);
+  font-style: italic;
 }
 
 .f-student-panel-body {

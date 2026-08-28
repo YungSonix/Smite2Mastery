@@ -7,10 +7,13 @@ import { promptPlain } from '../lib/promptPlain';
 import { formatDuration, responseDurationMs } from '../lib/triviaInsights';
 import {
   earnedFromStored,
+  effectiveEarned,
   formatResponseAnswer,
+  isBlankAnswer,
   isContentQuestion,
   isGateQuestion,
   isScoredQuestion,
+  needsManualGrade,
 } from '../lib/formatResponseAnswer';
 
 function MenuIcon({ name }) {
@@ -126,8 +129,7 @@ export default function StudentResponsePanel({
     if (!response) return 0;
     let n = 0;
     for (const q of questions || []) {
-      if (!isScoredQuestion(q)) continue;
-      if (response.per_question?.[q.id] == null) n += 1;
+      if (needsManualGrade(q, response)) n += 1;
     }
     return n;
   }, [questions, response]);
@@ -138,7 +140,7 @@ export default function StudentResponsePanel({
     for (const q of questions || []) {
       if (!isScoredQuestion(q)) continue;
       const maxPts = Number(q.points) || 0;
-      const earned = earnedFromStored(response.per_question?.[q.id], maxPts);
+      const earned = effectiveEarned(q, response, maxPts);
       nextDraft[q.id] = earned == null ? '' : String(earned);
     }
     setDraftScores(nextDraft);
@@ -191,6 +193,7 @@ export default function StudentResponsePanel({
       for (const q of questions || []) {
         if (!isScoredQuestion(q)) continue;
         if (response.per_question?.[q.id] != null) continue;
+        if (!isBlankAnswer(response.answers?.[q.id])) continue;
         patches[q.id] = 0;
       }
       if (Object.keys(patches).length) {
@@ -341,7 +344,7 @@ export default function StudentResponsePanel({
 
       {ungradedCount > 0 ? (
         <div className="f-ungraded-banner" role="status">
-          ⚠ This submission has ungraded responses.
+          {ungradedCount} response{ungradedCount === 1 ? '' : 's'} need manual grading.
         </div>
       ) : null}
 
@@ -350,9 +353,9 @@ export default function StudentResponsePanel({
           const answerText = formatResponseAnswer(q, response.answers?.[q.id], response);
           const scored = isScoredQuestion(q);
           const maxPts = Number(q.points) || 0;
-          const stored = response.per_question?.[q.id];
+          const earned = effectiveEarned(q, response, maxPts);
           const mark =
-            stored == null ? 'empty' : Number(stored) > 0 || earnedFromStored(stored, maxPts) > 0 ? 'ok' : 'bad';
+            earned == null ? 'empty' : earned > 0 ? 'ok' : 'bad';
 
           return (
             <article key={q.id} className={`f-answer-card mark-${mark}`}>
@@ -368,7 +371,7 @@ export default function StudentResponsePanel({
                 {answerText != null ? (
                   <pre>{answerText}</pre>
                 ) : (
-                  <span className="f-muted">No response</span>
+                  <span className="f-no-response">No response</span>
                 )}
               </div>
               <div className="f-answer-foot">
