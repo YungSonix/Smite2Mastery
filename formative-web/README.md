@@ -81,6 +81,38 @@ npm run formative:trivia:gallery
 
 Sims cover desktop plus older-to-newer iOS/Android web widths. Gallery screenshots go to `artifacts/trivia-sims/` (gitignored).
 
+## API load test (400+ takers)
+
+Pure Node fetch — no browser. Exercises `GET /api/trivia/public` (with discord variant path), `POST /api/trivia/presence`, and `POST /api/trivia/submit` with realistic payloads (`variant_map`, `__timings`, unique `loadtest-user-{n}` Discord names).
+
+**Local** (API must be running):
+
+```bash
+npm run trivia:api
+node scripts/formative-random-quiz.mjs
+npm run trivia:load-test
+```
+
+Smoke (20 users):
+
+```bash
+TRIVIA_LOAD_N=20 npm run trivia:load-test
+```
+
+Full burst (default 400 users, concurrency 30):
+
+```bash
+TRIVIA_LOAD_N=400 TRIVIA_LOAD_CONCURRENCY=30 npm run trivia:load-test
+```
+
+Use `TRIVIA_SLUG=your-slug` if you already have an assigned quiz. Report: `artifacts/trivia-load/report.json` (p50/p95 latency, status codes, 409 duplicate handling).
+
+**Production** (throttled — max concurrency 10, script prints a warning):
+
+```bash
+TRIVIA_LOAD_PROD=1 FORMATIVE_API_BASE=https://smitescroll.com TRIVIA_SLUG=your-slug TRIVIA_LOAD_N=50 npm run trivia:load-test
+```
+
 ## Host features
 
 - Pencil rename on the top bar and quiz cover
