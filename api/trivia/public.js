@@ -1,10 +1,19 @@
-const { supabaseAdmin, send, sanitizeQuestionForPublic, buildVariantMap, applyVariant } = require('../../lib/server/triviaApi');
+const {
+  supabaseAdmin,
+  send,
+  sanitizeQuestionForPublic,
+  buildVariantMap,
+  applyVariant,
+  rateLimit,
+  isValidQuizSlug,
+} = require('../../lib/server/triviaApi');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'GET') return send(res, 405, { error: 'Method not allowed' });
   try {
+    rateLimit(req, 'public', { max: 240 });
     const url = new URL(req.url, 'http://localhost');
-    const slug = String(url.searchParams.get('slug') || '').trim();
+    const slug = String(url.searchParams.get('slug') || '').trim().toLowerCase();
     const discord = String(url.searchParams.get('discord') || '').trim();
     const sb = supabaseAdmin();
 
@@ -20,6 +29,8 @@ module.exports = async function handler(req, res) {
       if (error) return send(res, 500, { error: error.message });
       return send(res, 200, { quiz: data || null });
     }
+
+    if (!isValidQuizSlug(slug)) return send(res, 400, { error: 'Invalid quiz slug' });
 
     const { data: quiz, error } = await sb
       .from('trivia_quizzes')

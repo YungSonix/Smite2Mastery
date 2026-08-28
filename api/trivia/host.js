@@ -4,6 +4,7 @@ const {
   send,
   readBody,
   getEnv,
+  parseHostAllowlist,
   defaultQuestion,
   isQuizKeyUuid,
   shortQuizSlug,
@@ -87,17 +88,9 @@ module.exports = async function handler(req, res) {
       if (!secret) return send(res, 500, { error: 'TRIVIA_HOST_SECRET is not set' });
       if (!username) return send(res, 400, { error: 'Username required' });
       if (body.secret !== secret) return send(res, 401, { error: 'Invalid host secret' });
-      const allow = getEnv('TRIVIA_HOST_ALLOWLIST', 'VITE_TRIVIA_HOST_ALLOWLIST');
-      if (allow) {
-        const set = new Set(
-          allow
-            .split(',')
-            .map((s) => s.trim().toLowerCase())
-            .filter(Boolean)
-        );
-        if (!set.has(username.toLowerCase())) {
-          return send(res, 403, { error: 'Username not allowlisted' });
-        }
+      const allowSet = parseHostAllowlist(getEnv('TRIVIA_HOST_ALLOWLIST', 'VITE_TRIVIA_HOST_ALLOWLIST'));
+      if (allowSet && !allowSet.has(username.toLowerCase())) {
+        return send(res, 403, { error: 'Username not allowlisted' });
       }
       return send(res, 200, { ok: true, username });
     }

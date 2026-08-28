@@ -1,7 +1,15 @@
-const { supabaseAdmin, readIp, send, readBody } = require('../../lib/server/triviaApi');
+const {
+  supabaseAdmin,
+  readIp,
+  send,
+  readBody,
+  rateLimit,
+  isValidQuizSlug,
+  sanitizePlayerName,
+} = require('../../lib/server/triviaApi');
 const { commitGuestAttempt } = require('../../lib/server/triviaCommit');
 
-const SUBMIT_MAX_BYTES = Number(process.env.TRIVIA_SUBMIT_MAX_BYTES) || 4.5 * 1024 * 1024;
+const SUBMIT_MAX_BYTES = Number(process.env.TRIVIA_SUBMIT_MAX_BYTES) || 1024 * 1024;
 
 function submitErrorContext(body, req) {
   const slug = String(body?.slug || '').trim();
@@ -29,10 +37,13 @@ module.exports = async function handler(req, res) {
 
   let body = {};
   try {
+    rateLimit(req, 'submit', { max: 40 });
     body = await readBody(req, { maxBytes: SUBMIT_MAX_BYTES });
-    const slug = String(body.slug || '').trim();
-    const discord = String(body.discord_username || body.discordUsername || '').trim();
-    const ingame = String(body.ingame_name || body.ingameName || '').trim();
+    const slug = String(body.slug || '').trim().toLowerCase();
+    const discordRaw = body.discord_username || body.discordUsername;
+    const ingameRaw = body.ingame_name || body.ingameName;
+    const discordCheck = sanitizePlayerName(discordRaw, 'Discord Username');
+    const ingameCheck = sanitizePlayerName(ingameRaw, 'In-Game Name');
     const answers = body.answers && typeof body.answers === 'object' ? body.answers : {};
     const variantMap =
       body.variant_map && typeof body.variant_map === 'object'
@@ -44,10 +55,11 @@ module.exports = async function handler(req, res) {
     delete cleanAnswers.__variant_map;
 
     if (!slug) return send(res, 400, { error: 'Missing quiz slug' });
-    if (!discord) return send(res, 400, { error: 'Discord Username is required' });
-    if (discord.length > 64) return send(res, 400, { error: 'Discord Username too long' });
-    if (!ingame) return send(res, 400, { error: 'In-Game Name is required' });
-    if (ingame.length > 64) return send(res, 400, { error: 'In-Game Name too long' });
+    if (!isValidQuizSlug(slug)) return send(res, 400, { error: 'Invalid quiz slug' });
+    if (!discordCheck.ok) return send(res, 400, { error: discordCheck.error });
+    if (!ingameCheck.ok) return send(res, 400, { error: ingameCheck.error });
+    const discord = discordCheck.value;
+    const ingame = ingameCheck.value;
 
     const sb = supabaseAdmin();
     const { data: quiz, error: quizErr } = await sb

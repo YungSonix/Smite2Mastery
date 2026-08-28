@@ -1,4 +1,12 @@
-const { supabaseAdmin, send, readBody, readIp } = require('../../lib/server/triviaApi');
+const {
+  supabaseAdmin,
+  send,
+  readBody,
+  readIp,
+  rateLimit,
+  isValidQuizSlug,
+  sanitizePlayerName,
+} = require('../../lib/server/triviaApi');
 const { compactDraftAnswers, flushSessionIfDue, sessionDraftDue } = require('../../lib/server/triviaCommit');
 const { quizWindowState, shouldPurgeLiveSessions, purgeLiveSessions } = require('../../lib/server/triviaWindow');
 
@@ -56,15 +64,19 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return send(res, 405, { error: 'Method not allowed' });
 
   try {
-    const body = await readBody(req);
-    const slug = String(body.slug || '').trim();
-    const discord = String(body.discord_username || body.discordUsername || '').trim();
-    const ingame = String(body.ingame_name || body.ingameName || '').trim();
+    rateLimit(req, 'presence', { max: 180 });
+    const body = await readBody(req, { maxBytes: 256 * 1024 });
+    const slug = String(body.slug || '').trim().toLowerCase();
+    const discordCheck = sanitizePlayerName(body.discord_username || body.discordUsername, 'Discord Username');
+    const ingameRaw = body.ingame_name || body.ingameName;
+    const ingame = ingameRaw != null && String(ingameRaw).trim() ? String(ingameRaw).trim() : '';
     if (!slug) return send(res, 400, { error: 'Missing quiz slug' });
-    if (!discord || discord.length < 2) return send(res, 400, { error: 'Discord Username required' });
-    if (discord.length > 64 || ingame.length > 64) {
-      return send(res, 400, { error: 'Name too long' });
+    if (!isValidQuizSlug(slug)) return send(res, 400, { error: 'Invalid quiz slug' });
+    if (!discordCheck.ok || discordCheck.value.length < 2) {
+      return send(res, 400, { error: 'Discord Username required' });
     }
+    if (ingame.length > 64) return send(res, 400, { error: 'Name too long' });
+    const discord = discordCheck.value;
 
     const sb = supabaseAdmin();
     const { data: quiz, error: quizErr } = await sb

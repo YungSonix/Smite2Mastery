@@ -1,4 +1,12 @@
-const { supabaseAdmin, send, readBody, applyVariant } = require('../../lib/server/triviaApi');
+const {
+  supabaseAdmin,
+  send,
+  readBody,
+  applyVariant,
+  rateLimit,
+  isValidQuizSlug,
+  sanitizePlayerName,
+} = require('../../lib/server/triviaApi');
 const { compactDraftAnswers } = require('../../lib/server/triviaCommit');
 const {
   storedHintList,
@@ -21,14 +29,21 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return send(res, 405, { error: 'Method not allowed' });
 
   try {
-    const body = await readBody(req);
-    const slug = String(body.slug || '').trim();
-    const discord = String(body.discord_username || body.discordUsername || '').trim();
+    rateLimit(req, 'hint', { max: 90 });
+    const body = await readBody(req, { maxBytes: 64 * 1024 });
+    const slug = String(body.slug || '').trim().toLowerCase();
+    const discordCheck = sanitizePlayerName(body.discord_username || body.discordUsername, 'Discord Username');
     const questionId = String(body.questionId || body.question_id || '').trim();
     const variantMap = body.variant_map && typeof body.variant_map === 'object' ? body.variant_map : {};
     if (!slug) return send(res, 400, { error: 'Missing quiz slug' });
-    if (!discord || discord.length < 2) return send(res, 400, { error: 'Discord Username required' });
-    if (!questionId) return send(res, 400, { error: 'Missing question' });
+    if (!isValidQuizSlug(slug)) return send(res, 400, { error: 'Invalid quiz slug' });
+    if (!discordCheck.ok || discordCheck.value.length < 2) {
+      return send(res, 400, { error: 'Discord Username required' });
+    }
+    if (!questionId || !/^[0-9a-f-]{36}$/i.test(questionId)) {
+      return send(res, 400, { error: 'Missing question' });
+    }
+    const discord = discordCheck.value;
 
     const sb = supabaseAdmin();
     const { data: quiz, error: quizErr } = await sb

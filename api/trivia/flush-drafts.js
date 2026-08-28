@@ -1,4 +1,4 @@
-const { supabaseAdmin, send } = require('../../lib/server/triviaApi');
+const { supabaseAdmin, send, assertCronSecret } = require('../../lib/server/triviaApi');
 const { flushQuizDrafts } = require('../../lib/server/triviaCommit');
 
 module.exports = async function handler(req, res) {
@@ -6,6 +6,7 @@ module.exports = async function handler(req, res) {
     return send(res, 405, { error: 'Method not allowed' });
   }
   try {
+    assertCronSecret(req);
     const sb = supabaseAdmin();
     const { data: quizzes, error } = await sb
       .from('trivia_quizzes')
@@ -20,6 +21,6 @@ module.exports = async function handler(req, res) {
     return send(res, 200, { ok: true, flushed });
   } catch (e) {
     console.error('trivia flush-drafts', e);
-    return send(res, 500, { error: e.message || 'Flush failed' });
+    return send(res, e.status || 500, { error: e.message || 'Flush failed' });
   }
 };

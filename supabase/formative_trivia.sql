@@ -113,6 +113,7 @@ alter table public.trivia_sessions enable row level security;
 drop policy if exists trivia_quizzes_public_read_assigned on public.trivia_quizzes;
 create policy trivia_quizzes_public_read_assigned
   on public.trivia_quizzes for select
+  to anon, authenticated
   using (is_assigned = true);
 
 drop policy if exists trivia_questions_public_read_assigned on public.trivia_questions;

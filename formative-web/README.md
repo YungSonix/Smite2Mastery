@@ -18,6 +18,8 @@ Keep Supabase as the live store. Use **Export Excel/CSV** when you want a spread
 
 A few thousand submissions are still small (kilobytes to a few megabytes). Large cost is **egress** (bytes leaving Postgres), not disk: host Responses used to re-download full question `meta` and every live `draft_answers` every 5 seconds. Polls are now 20s with thin columns; take presence is 15s and only auto-submits **that** session when time is up or they leave. After deploy, run `supabase/formative_trivia_rls_tighten.sql` so the anon key cannot `select` question rows (answers + fat `meta`) via PostgREST. Take pages use `/api/trivia/public`.
 
+**Security:** see [`docs/trivia-security.md`](../docs/trivia-security.md) for RLS checklist, env vars, and pre-contest verification.
+
 ## Local
 
 Two **separate** terminals. Do not paste both commands on one line.
@@ -81,6 +83,23 @@ npm run formative:trivia:gallery
 
 Sims cover desktop plus older-to-newer iOS/Android web widths. Gallery screenshots go to `artifacts/trivia-sims/` (gitignored).
 
+### Device/browser matrix (500-session harness)
+
+Scale checks across 12 viewports × 6 browser profiles (Chrome, Edge, Opera GX, Firefox, Safari macOS, Safari iOS):
+
+```bash
+# Local (API + Vite must be running)
+npm run trivia:device-sims
+
+# 100-run smoke
+TRIVIA_DEVICE_SIMS_N=100 npm run trivia:device-sims
+
+# Production (safe — requires explicit flag, concurrency capped at 5)
+TRIVIA_DEVICE_SIMS_PROD=1 TRIVIA_DEVICE_SIMS_N=100 FORMATIVE_UI_BASE=https://smitescroll.com npm run trivia:device-sims
+```
+
+Env: `TRIVIA_DEVICE_SIMS_N` (default 500), `TRIVIA_DEVICE_SIMS_CONCURRENCY` (default 8 local / 5 prod), `TRIVIA_DEVICE_SIMS_PROD=1`, `FORMATIVE_UI_BASE`, `FORMATIVE_API_BASE`, `TRIVIA_SLUG` or `artifacts/trivia-sims/quiz.json`. Reports: `artifacts/trivia-device-sims/report.json`.
+
 ## API load test (400+ takers)
 
 Pure Node fetch — no browser. Exercises `GET /api/trivia/public` (with discord variant path), `POST /api/trivia/presence`, and `POST /api/trivia/submit` with realistic payloads (`variant_map`, `__timings`, unique `loadtest-user-{n}` Discord names).
@@ -143,7 +162,8 @@ TRIVIA_LOAD_PROD=1 FORMATIVE_API_BASE=https://smitescroll.com TRIVIA_SLUG=your-s
    `SUPABASE_URL`  
    `SUPABASE_SERVICE_ROLE_KEY`  
    `TRIVIA_HOST_SECRET`  
-   optional `TRIVIA_HOST_ALLOWLIST`
+   optional `TRIVIA_HOST_ALLOWLIST`  
+   optional `TRIVIA_CRON_SECRET` (if using `/api/trivia/flush-drafts` on a schedule)
 3. Redeploy. Open `https://YOUR-DOMAIN/trivia/`
 
 Dual build: `scripts/build-web-with-formative.js` → Expo in `dist/`, trivia in `dist/trivia/`.
