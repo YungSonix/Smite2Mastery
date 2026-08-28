@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { liveSessionSummary } from '../lib/liveSessionStats';
 import { formatIp } from '../lib/quizSettings';
-import { formatDuration, responseDurationMs, scoredInsightQuestions } from '../lib/triviaInsights';
+import { formatDuration, responseDurationMs, responseLeftPage, responseTabAwayCount, scoredInsightQuestions } from '../lib/triviaInsights';
 import { presenceLabel, presenceStatus } from '../lib/triviaPresence';
 import { responsePercent, sortResponses } from '../lib/sortResponses';
 import { useLiveClock } from '../lib/useLiveClock';
@@ -166,6 +166,12 @@ export default function ResponsesGrid({
               <th className="col-time" title="Time spent on the quiz">
                 Time
               </th>
+              <th className="col-tab-away" title="Times the quiz tab went to the background">
+                Tab away
+              </th>
+              <th className="col-left-page" title="Closed or navigated away before submit">
+                Left page
+              </th>
               {scored.map((q, i) => (
                 <th key={q.id} className={`col-q ${selectedQuestionId === q.id ? 'is-q-active' : ''}`}>
                   <button
@@ -187,6 +193,8 @@ export default function ResponsesGrid({
               <td className="f-muted col-ingame">—</td>
               <td className="totals-col">{totalsAvg}%</td>
               <td className="col-time f-muted">—</td>
+              <td className="col-tab-away f-muted">—</td>
+              <td className="col-left-page f-muted">—</td>
               {scored.map((q) => {
                 const a = qAvg(q.id);
                 return (
@@ -209,6 +217,8 @@ export default function ResponsesGrid({
             {visibleRows.map((r) => {
               const pct = responsePercent(r);
               const took = formatDuration(responseDurationMs(r));
+              const tabAway = responseTabAwayCount(r);
+              const leftPage = responseLeftPage(r);
               const initial = (r.discord_username || '?').charAt(0).toUpperCase();
               return (
                 <tr
@@ -233,6 +243,12 @@ export default function ResponsesGrid({
                   <td className="totals-col">{pct}%</td>
                   <td className="col-time" title={took === '—' ? 'No finish time on older takes' : took}>
                     {took}
+                  </td>
+                  <td className="col-tab-away" title="Tab background count during take">
+                    {tabAway}
+                  </td>
+                  <td className="col-left-page" title={leftPage ? 'Left before submit' : 'Stayed on page'}>
+                    {leftPage ? 'Yes' : '—'}
                   </td>
                   {scored.map((q) => {
                     const v = r.per_question?.[q.id];

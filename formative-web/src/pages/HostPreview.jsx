@@ -10,6 +10,7 @@ import { mergeQuizSettings } from '../lib/quizSettings';
 import { quizThemeProps } from '../lib/quizThemes';
 import { resolveMediaUrl } from '../lib/mediaUrl';
 import { promptPlain } from '../lib/promptPlain';
+import { applyVariant, variantCount, variantLetter } from '../lib/triviaVariants';
 
 function correctIndexes(q) {
   if (q?.type === 'multiple_selection' || Array.isArray(q?.correct?.indices)) {
@@ -76,38 +77,70 @@ function PreviewChoices({ q }) {
   );
 }
 
-function PreviewQuestionCard({ q, idx }) {
-  const media = listMediaUrls(q);
-  const isGate = q.meta?.is_discord_gate || q.meta?.is_ingame_gate;
-  const isContent = ['image', 'audio', 'video', 'embed', 'content'].includes(q.type);
+function VariantSwitcher({ questionId, index, count, onChange }) {
+  if (count <= 1) return null;
+  const prev = () => onChange(questionId, (index + count - 1) % count);
+  const next = () => onChange(questionId, (index + 1) % count);
+  return (
+    <div className="f-host-preview-variant-bar" role="group" aria-label="Question version">
+      <button type="button" className="f-outline-btn f-compact" onClick={prev} aria-label="Previous version">
+        ←
+      </button>
+      <span className="f-host-preview-variant-label">
+        Version {variantLetter(index)} <span className="f-muted">({index + 1}/{count})</span>
+      </span>
+      <button type="button" className="f-outline-btn f-compact" onClick={next} aria-label="Next version">
+        →
+      </button>
+    </div>
+  );
+}
+
+function PreviewQuestionCard({ q, idx, variantIndex, onVariantChange }) {
+  const displayQ = useMemo(() => applyVariant(q, variantIndex), [q, variantIndex]);
+  const count = variantCount(q);
+  const media = listMediaUrls(displayQ);
+  const isGate = displayQ.meta?.is_discord_gate || displayQ.meta?.is_ingame_gate;
+  const isContent = ['image', 'audio', 'video', 'embed', 'content'].includes(displayQ.type);
 
   return (
     <article className="f-host-preview-card" id={`preview-q-${q.id}`}>
       <div className="f-host-preview-card-head">
         <span className="f-q-num">{idx + 1}</span>
-        <span className="f-type-pill">{typeLabel(q)}</span>
+        <span className="f-type-pill">{typeLabel(displayQ)}</span>
+        <VariantSwitcher
+          questionId={q.id}
+          index={variantIndex}
+          count={count}
+          onChange={onVariantChange}
+        />
         <span className="f-muted" style={{ marginLeft: 'auto', fontSize: 13 }}>
-          {Number(q.points) || 0} pts
-          {q.required ? ' · required' : ''}
+          {Number(displayQ.points) || 0} pts
+          {displayQ.required ? ' · required' : ''}
         </span>
       </div>
-      {promptPlain(q.prompt) ? (
+      {count > 1 ? (
+        <p className="f-muted f-preview-variant-note">
+          Players with alternates see one randomized version — switch above to preview each wording.
+        </p>
+      ) : null}
+      {promptPlain(displayQ.prompt) ? (
         <div className="f-host-preview-prompt">
-          <RichText className="f-md" text={q.prompt} />
+          <RichText className="f-md" text={displayQ.prompt} />
         </div>
       ) : null}
       {media.length ? (
         <MediaStack
           urls={media}
-          imageCrop={q.meta?.media_crop}
-          imageCropSeed={q.meta?.media_seed}
+          imageCrop={displayQ.meta?.media_crop}
+          imageCropSeed={displayQ.meta?.media_seed}
         />
       ) : null}
       {!isGate && !isContent ? (
         <>
-          <PreviewChoices q={q} />
+          <PreviewChoices q={displayQ} />
           <p className="f-preview-answer-line">
-            <strong>Answer:</strong> {correctAnswerText(q)}
+            <strong>Answer:</strong> {correctAnswerText(displayQ)}
           </p>
         </>
       ) : null}
@@ -124,7 +157,7 @@ export default function HostPreview() {
   const [questions, setQuestions] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
-  const [index, setIndex] = useState(0);
+  const [variantByQ, setVariantByQ] = useState({});
 
   useEffect(() => {
     let alive = true;
@@ -138,7 +171,7 @@ export default function HostPreview() {
         if (!alive) return;
         setQuiz(data.quiz);
         setQuestions(data.questions || []);
-        setIndex(0);
+        setVariantByQ({});
       } catch (e) {
         if (alive) setError(e.message || 'Failed to load preview');
       } finally {
@@ -149,13 +182,6 @@ export default function HostPreview() {
       alive = false;
     };
   }, [quizId]);
-
-  useEffect(() => {
-    setIndex((i) => {
-      if (!questions.length) return 0;
-      return Math.min(i, questions.length - 1);
-    });
-  }, [questions.length]);
 
   const settings = mergeQuizSettings(quiz?.settings);
   const theme = quizThemeProps(settings);
@@ -168,20 +194,29 @@ export default function HostPreview() {
     [questions]
   );
 
-  const total = questions.length;
-  const current = questions[index] || null;
-  const goPrev = useCallback(() => setIndex((i) => Math.max(0, i - 1)), []);
-  const goNext = useCallback(() => setIndex((i) => Math.min(total - 1, i + 1)), [total]);
+  const variantableCount = useMemo(
+    () => questions.filter((q) => variantCount(q) > 1).length,
+    [questions]
+  );
 
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.target.closest('input, textarea, select, [contenteditable="true"]')) return;
-      if (e.key === 'ArrowLeft') goPrev();
-      if (e.key === 'ArrowRight') goNext();
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [goPrev, goNext]);
+  const cycleAllVariants = useCallback(() => {
+    setVariantByQ((prev) => {
+      const next = { ...prev };
+      for (const q of questions) {
+        const count = variantCount(q);
+        if (count <= 1) continue;
+        const cur = prev[q.id] ?? 0;
+        next[q.id] = (cur + 1) % count;
+      }
+      return next;
+    });
+  }, [questions]);
+
+  const resetAllVariants = useCallback(() => setVariantByQ({}), []);
+
+  const setVariant = useCallback((questionId, index) => {
+    setVariantByQ((prev) => ({ ...prev, [questionId]: index }));
+  }, []);
 
   if (loading) {
     return (
@@ -212,8 +247,18 @@ export default function HostPreview() {
         </Link>
         <div className="f-topbar-title">{quiz.title || 'Untitled'} — Preview</div>
         <div className="f-topbar-actions">
+          {variantableCount > 0 ? (
+            <>
+              <button type="button" className="f-outline-btn" onClick={cycleAllVariants}>
+                Next variant (all)
+              </button>
+              <button type="button" className="f-outline-btn" onClick={resetAllVariants}>
+                Reset to A
+              </button>
+            </>
+          ) : null}
           <span className="f-muted" style={{ fontSize: 13 }}>
-            {total} Q · {points} pts
+            {questions.length} Q · {points} pts
           </span>
           <a className="f-outline-btn" href={`/trivia/take/${encodeURIComponent(quiz.slug || '')}`} target="_blank" rel="noreferrer">
             Open student link
@@ -223,43 +268,26 @@ export default function HostPreview() {
 
       <div className="f-host-preview-banner">
         Host preview — all questions and correct answers. This is not a timed take and does not record a response.
+        {variantableCount > 0
+          ? ` ${variantableCount} question${variantableCount === 1 ? '' : 's'} have alternate versions — use the version controls on each card.`
+          : ''}
       </div>
 
-      {total ? (
-        <>
-          <div className="f-host-preview-nav" role="navigation" aria-label="Question navigation">
-            <button
-              type="button"
-              className="f-outline-btn"
-              onClick={goPrev}
-              disabled={index <= 0}
-              aria-label="Previous question"
-            >
-              ← Prev
-            </button>
-            <span className="f-host-preview-nav-counter" aria-live="polite">
-              Question <strong>{index + 1}</strong> of {total}
-            </span>
-            <button
-              type="button"
-              className="f-outline-btn"
-              onClick={goNext}
-              disabled={index >= total - 1}
-              aria-label="Next question"
-            >
-              Next →
-            </button>
-          </div>
-
-          <div className="f-host-preview-list">
-            {current ? <PreviewQuestionCard q={current} idx={index} /> : null}
-          </div>
-        </>
-      ) : (
-        <div className="f-host-preview-list">
+      <div className="f-host-preview-list">
+        {questions.length ? (
+          questions.map((q, idx) => (
+            <PreviewQuestionCard
+              key={q.id || idx}
+              q={q}
+              idx={idx}
+              variantIndex={variantByQ[q.id] ?? 0}
+              onVariantChange={setVariant}
+            />
+          ))
+        ) : (
           <p className="f-muted">No questions in this quiz yet.</p>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

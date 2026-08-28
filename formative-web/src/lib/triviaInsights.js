@@ -30,10 +30,58 @@ export function formatDuration(ms) {
   return r ? `${m}m ${r}s` : `${m}m`;
 }
 
-/** Total take time from answers.__duration_ms (newer submits only). */
+function durationFromTimestamps(submittedAt, startedAt) {
+  const end = Date.parse(submittedAt);
+  let start = Number(startedAt);
+  if (!Number.isFinite(start)) start = Date.parse(startedAt);
+  if (!Number.isFinite(end) || !Number.isFinite(start)) return null;
+  const d = end - start;
+  return d >= 0 ? d : null;
+}
+
+/** Normalize stored duration (seconds-as-ms, timestamps, stale starts). */
+export function normalizeDurationMs(rawMs, submittedAt, startedAt) {
+  let ms = Number(rawMs);
+  const fromTs = durationFromTimestamps(submittedAt, startedAt);
+
+  if (!Number.isFinite(ms) || ms < 0) ms = null;
+  if (ms != null && ms > 1e12) ms = null;
+  if (ms != null && ms > 0 && ms < 100000 && fromTs != null && fromTs > ms * 50) {
+    ms = ms * 1000;
+  }
+
+  const maxReasonable = 7 * 24 * 3600 * 1000;
+  if (ms != null && ms > maxReasonable) {
+    if (fromTs != null && fromTs <= maxReasonable) ms = fromTs;
+    else if (fromTs != null && fromTs < ms) ms = fromTs;
+  }
+
+  if (ms == null) ms = fromTs;
+  return ms != null && Number.isFinite(ms) && ms >= 0 ? Math.round(ms) : null;
+}
+
+/** Total take time from host lite fields or answers.__duration_ms. */
 export function responseDurationMs(response) {
-  const ms = Number(response?.answers?.__duration_ms);
-  return Number.isFinite(ms) && ms >= 0 ? ms : null;
+  const top = Number(response?.duration_ms);
+  if (Number.isFinite(top) && top >= 0) {
+    return normalizeDurationMs(top, response?.submitted_at, response?.answers?.__started_at);
+  }
+  return normalizeDurationMs(
+    response?.answers?.__duration_ms,
+    response?.submitted_at,
+    response?.answers?.__started_at
+  );
+}
+
+export function responseTabAwayCount(response) {
+  const top = Number(response?.tab_away_count);
+  if (Number.isFinite(top)) return Math.max(0, top);
+  return Math.max(0, Number(response?.answers?.__presence?.hidden_count) || 0);
+}
+
+export function responseLeftPage(response) {
+  if (response?.left_page != null) return Boolean(response.left_page);
+  return Boolean(response?.answers?.__presence?.left_page);
 }
 
 function median(nums) {

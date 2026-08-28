@@ -13,6 +13,7 @@ const {
 const { isContentType, isManualType } = require('../../lib/server/triviaQuestionTypes');
 const { responsesToCsv } = require('../../lib/server/triviaExport');
 const { flushQuizDrafts } = require('../../lib/server/triviaCommit');
+const { mapResponseForHost } = require('../../lib/server/triviaResponseMeta');
 const { shouldPurgeLiveSessions, purgeLiveSessions } = require('../../lib/server/triviaWindow');
 const { checkTriviaPayload, formatPayloadCheckReport } = require('../../lib/server/triviaPayloadCheck');
 
@@ -268,7 +269,7 @@ module.exports = async function handler(req, res) {
         return;
       }
       return send(res, 200, {
-        responses: responses || [],
+        responses: (responses || []).map((r) => mapResponseForHost(r, { includeAnswers })),
         sessions,
         sessionsError,
         watermark,

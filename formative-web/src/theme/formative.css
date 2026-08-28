@@ -3746,6 +3746,19 @@ label.f-file-btn:hover {
   padding: 8px 4px;
 }
 
+.f-grid .col-tab-away,
+.f-grid .col-left-page {
+  width: 52px;
+  min-width: 48px;
+  max-width: 60px;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--f-muted, #6b5e52);
+  padding: 8px 4px;
+  text-align: center;
+}
+
 .f-grid tbody tr:hover .totals-col,
 .f-grid tbody tr.is-selected .totals-col {
   background: color-mix(in srgb, var(--f-blue) 32%, var(--f-card));
@@ -5579,7 +5592,26 @@ label.f-file-btn:hover {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
   margin-bottom: 10px;
+}
+
+.f-host-preview-variant-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 4px;
+}
+
+.f-host-preview-variant-label {
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.f-preview-variant-note {
+  margin: 0 0 8px;
+  font-size: 12px;
 }
 
 .f-host-preview-prompt {
