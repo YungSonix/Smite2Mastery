@@ -10,6 +10,29 @@ const GITHUB_ASSETS =
   'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/assets/app/data';
 const GITHUB_MAIN_IMG = 'https://raw.githubusercontent.com/YungSonix/Smite2Mastery/main/img';
 
+/** God Info files on `assets` only (not yet mirrored to `main/img/God Info`). */
+const GOD_INFO_ASSETS_ONLY = new Set([
+  'atlasPassive.webp',
+  'charonPassive.webp',
+  'chironPassive.webp',
+  'cuchuImage.webp',
+  'cuchuPassive.webp',
+  'discoPassive.webp',
+  'gilgaPassive.webp',
+  'ishtarPassive.webp',
+  'ixchelImage.webp',
+  'ixchelPassive.webp',
+  'morganLeFayPassive.webp',
+  'neZhaPassive.webp',
+  'puchPassive.webp',
+  'ratPassive.webp',
+  'ravImage.webp',
+  'ravPassive.webp',
+  'ullrPassive.webp',
+  'xingImage.webp',
+  'xingPassive.webp',
+]);
+
 /** Prefer local `/media` proxy (trivia:api) even for gitignored assets. Default is false. */
 function preferLocalMediaProxy() {
   try {
@@ -39,7 +62,7 @@ export function resolveMediaUrl(url) {
       .map(encodeURIComponent)
       .join('/')}`;
 
-  // God Info: portraits and passive ability icons both live on `main/img/God Info`.
+  // God Info: most portraits/passives on `main/img/God Info`; newer gods may be assets-only.
   if (
     rel.startsWith('Icons/God Info/') ||
     relRaw.startsWith('Icons/God%20Info/') ||
@@ -47,6 +70,7 @@ export function resolveMediaUrl(url) {
   ) {
     if (preferLocalMediaProxy()) return s;
     const file = rel.slice('Icons/God Info/'.length);
+    if (GOD_INFO_ASSETS_ONLY.has(file)) return toAssets();
     return toMainImg(`God Info/${file}`);
   }
 
