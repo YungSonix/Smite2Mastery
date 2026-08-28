@@ -33,6 +33,15 @@ export function formatWhenWithLocalHint(iso) {
   return `${when} (your local time)`;
 }
 
+/** Replace raw ISO timestamps in API error strings with local labels. */
+export function humanizeQuizError(message) {
+  const text = String(message || '').trim();
+  if (!text) return text;
+  return text.replace(
+    /\d{4}-\d{2}-\d{2}T[\d:.]+Z/g,
+    (iso) => formatWhenWithLocalHint(iso) || iso
+  );
+}
 /** Countdown until an ISO instant, e.g. "Unlocks in 2h 15m". Empty when past or invalid. */
 export function formatUnlockCountdown(iso, nowMs = Date.now()) {
   const target = Date.parse(iso);

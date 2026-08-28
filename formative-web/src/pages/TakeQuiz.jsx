@@ -26,8 +26,8 @@ import { allChoicesHaveArt, lookupChoiceArt } from '../lib/choiceArt';
 import { resolveMediaUrl } from '../lib/mediaUrl';
 import {
   formatUnlockCountdown,
-  formatWhenLocal,
   formatWhenWithLocalHint,
+  humanizeQuizError,
 } from '../lib/formatWhen';
 
 async function fileToDataUrl(file, maxBytes = 2.5 * 1024 * 1024) {
@@ -269,7 +269,7 @@ export default function TakeQuiz() {
           setResumed(true);
         }
       } catch (e) {
-        if (alive) setError(e.message || 'Failed to load quiz');
+        if (alive) setError(humanizeQuizError(e.message) || 'Failed to load quiz');
       } finally {
         if (alive) setLoading(false);
       }
@@ -385,7 +385,7 @@ export default function TakeQuiz() {
       }));
       setHintCounts((prev) => ({ ...prev, [q.id]: data.usedOnQuestion }));
     } catch (e) {
-      setError(e.message || 'Hint failed');
+      setError(humanizeQuizError(e.message) || 'Hint failed');
     } finally {
       setHintBusy('');
     }
@@ -587,7 +587,7 @@ export default function TakeQuiz() {
       if (!opts.keepalive) setResult(data);
       else setResult(data || { ok: true });
     } catch (err) {
-      setError(err.message || 'Submit failed');
+      setError(humanizeQuizError(err.message) || 'Submit failed');
       submittingRef.current = false;
     } finally {
       setBusy(false);
@@ -750,7 +750,21 @@ export default function TakeQuiz() {
           </div>
         ) : null}
 
-        <form className="f-take-form" onSubmit={(e) => onSubmit(e)}>
+        <form
+          className="f-take-form"
+          onSubmit={(e) => {
+            if (quizLocked) {
+              e.preventDefault();
+              if (windowState.status === 'not_open') {
+                setError(`This quiz opens ${formatWhenWithLocalHint(windowState.opensAt)}.`);
+              } else if (windowState.status === 'closed') {
+                setError('This quiz is closed.');
+              }
+              return;
+            }
+            onSubmit(e);
+          }}
+        >
           {showQuestions ? (
             <details className="f-identity-card f-take-fold f-fade-up">
               <summary>
@@ -857,7 +871,7 @@ export default function TakeQuiz() {
               >
                 {windowState.status === 'not_open'
                   ? formatUnlockCountdown(windowState.opensAt, now) ||
-                    `Opens ${formatWhenLocal(windowState.opensAt)}`
+                    `Opens ${formatWhenWithLocalHint(windowState.opensAt)}`
                   : windowState.status === 'closed'
                     ? 'Quiz closed'
                     : timed
@@ -1138,7 +1152,7 @@ export default function TakeQuiz() {
                       try {
                         setAnswer(q.id, await fileToDataUrl(file));
                       } catch (err) {
-                        setError(err.message);
+                        setError(humanizeQuizError(err.message));
                       }
                     }}
                   />
