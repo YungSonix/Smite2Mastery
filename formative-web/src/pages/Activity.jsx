@@ -10,7 +10,7 @@ import LiveSessionPanel from '../components/LiveSessionPanel';
 import QuestionReviewPanel from '../components/QuestionReviewPanel';
 import SortStudentsMenu from '../components/SortStudentsMenu';
 import { hostApi, takeUrl, activityHref, previewUrl } from '../lib/api';
-import { downloadResponsesCsv } from '../lib/exportResponses';
+import { downloadResponsesCsvFromServer } from '../lib/exportResponses';
 import { readImageAsDataUrl } from '../lib/imageUpload';
 import { mergeQuizSettings, mergeDraftQuizSettings } from '../lib/quizSettings';
 import { quizThemeProps } from '../lib/quizThemes';
@@ -137,7 +137,56 @@ export default function Activity() {
   const autoHintTimerRef = useRef(null);
   const saveLockRef = useRef(false);
   const selectedSessionRef = useRef(null);
+  const responsesWatermarkRef = useRef('');
   selectedSessionRef.current = selectedSession;
+
+  const fetchResponses = useCallback(
+    async ({ includeAnswers = false, since } = {}) => {
+      const params = new URLSearchParams({
+        action: 'responses',
+        quizId: String(quizId),
+      });
+      if (includeAnswers) params.set('includeAnswers', '1');
+      if (since) params.set('since', since);
+      const r = await hostApi(`/api/trivia/host?${params.toString()}`);
+      if (r.watermark) responsesWatermarkRef.current = r.watermark;
+      return r;
+    },
+    [quizId]
+  );
+
+  const applyResponsesPayload = useCallback((r) => {
+    if (r.unchanged) return;
+    setResponses(r.responses || []);
+    setSessions((prev) => {
+      const next = r.sessions || [];
+      const open = selectedSessionRef.current;
+      if (!open?.draft_answers) return next;
+      return next.map((s) =>
+        s.id === open.id ? { ...s, draft_answers: open.draft_answers, variant_map: open.variant_map } : s
+      );
+    });
+    setSessionsError(r.sessionsError || '');
+  }, []);
+
+  const openStudentResponse = useCallback(async (r) => {
+    setSelectedSession(null);
+    setSelectedQuestionId(null);
+    if (r?.answers) {
+      setSelectedResponse(r);
+      return;
+    }
+    setSelectedResponse(r);
+    try {
+      const data = await hostApi(`/api/trivia/host?action=response&id=${encodeURIComponent(r.id)}`);
+      if (data.response) {
+        setResponses((prev) => prev.map((row) => (row.id === data.response.id ? data.response : row)));
+        setSelectedResponse(data.response);
+      }
+    } catch {
+      /* lite row still opens; grading may need refresh */
+    }
+  }, []);
 
   const setTab = (t) => {
     const next = new URLSearchParams(params);
@@ -183,21 +232,36 @@ export default function Activity() {
       }
       instructionsLiveRef.current = data.quiz?.settings?.instructions ?? '';
       if (tab === 'responses' || tab === 'insights') {
-        const r = await hostApi(`/api/trivia/host?action=responses&quizId=${encodeURIComponent(quizId)}`);
-        setResponses(r.responses || []);
-        setSessions(r.sessions || []);
-        setSessionsError(r.sessionsError || '');
+        const r = await fetchResponses();
+        applyResponsesPayload(r);
       }
     } catch (e) {
       setError(e.message || 'Failed to load');
     } finally {
       setLoading(false);
     }
-  }, [quizId, tab]);
+  }, [quizId, tab, fetchResponses, applyResponsesPayload]);
 
   useEffect(() => {
     load();
   }, [load]);
+
+  useEffect(() => {
+    if (!selectedQuestionId || tab !== 'responses') return undefined;
+    let alive = true;
+    (async () => {
+      try {
+        const r = await fetchResponses({ includeAnswers: true });
+        if (!alive) return;
+        applyResponsesPayload(r);
+      } catch {
+        /* review panel still shows scores */
+      }
+    })();
+    return () => {
+      alive = false;
+    };
+  }, [selectedQuestionId, tab, fetchResponses, applyResponsesPayload]);
 
   useEffect(() => {
     if (!quiz?.slug || !quizId) return;
@@ -210,23 +274,14 @@ export default function Activity() {
     if (tab !== 'responses' && tab !== 'insights') return undefined;
     const id = setInterval(async () => {
       try {
-        const r = await hostApi(`/api/trivia/host?action=responses&quizId=${encodeURIComponent(quizId)}`);
-        setResponses(r.responses || []);
-        setSessions((prev) => {
-          const next = r.sessions || [];
-          const open = selectedSessionRef.current;
-          if (!open?.draft_answers) return next;
-          return next.map((s) =>
-            s.id === open.id ? { ...s, draft_answers: open.draft_answers, variant_map: open.variant_map } : s
-          );
-        });
-        setSessionsError(r.sessionsError || '');
+        const r = await fetchResponses({ since: responsesWatermarkRef.current });
+        applyResponsesPayload(r);
       } catch {
         /* ignore poll errors */
       }
     }, 20000);
     return () => clearInterval(id);
-  }, [tab, quizId]);
+  }, [tab, fetchResponses, applyResponsesPayload]);
 
   const points = useMemo(
     () =>
@@ -936,7 +991,13 @@ export default function Activity() {
                 className="f-outline-btn"
                 disabled={!responses?.length}
                 title="Download Excel-friendly CSV of all submissions"
-                onClick={() => downloadResponsesCsv(quiz, questions, responses)}
+                onClick={async () => {
+                  try {
+                    await downloadResponsesCsvFromServer(quizId);
+                  } catch (e) {
+                    setError(e.message || 'Export failed');
+                  }
+                }}
               >
                 Export Excel/CSV
               </button>
@@ -953,11 +1014,7 @@ export default function Activity() {
               selectedId={selectedResponse?.id}
               selectedLiveId={selectedSession?.id}
               selectedQuestionId={selectedQuestionId}
-              onSelect={(r) => {
-                setSelectedSession(null);
-                setSelectedQuestionId(null);
-                setSelectedResponse(r);
-              }}
+              onSelect={openStudentResponse}
               onQuestionSelect={(q) => {
                 setSelectedSession(null);
                 setSelectedResponse(null);
@@ -1002,10 +1059,7 @@ export default function Activity() {
               responses={responses}
               onClose={() => setSelectedQuestionId(null)}
               onSelectQuestion={(q) => setSelectedQuestionId(q.id)}
-              onSelectStudent={(r) => {
-                setSelectedQuestionId(null);
-                setSelectedResponse(r);
-              }}
+              onSelectStudent={openStudentResponse}
             />
           ) : null}
           {selectedResponse ? (

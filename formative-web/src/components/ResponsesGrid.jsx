@@ -1,8 +1,9 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { formatIp } from '../lib/quizSettings';
 import { formatDuration, responseDurationMs, scoredInsightQuestions } from '../lib/triviaInsights';
 import { presenceLabel, presenceStatus } from '../lib/triviaPresence';
 import { responsePercent, sortResponses } from '../lib/sortResponses';
+import { PaginationBar, usePagination } from '../lib/usePagination';
 
 export default function ResponsesGrid({
   questions,
@@ -20,6 +21,13 @@ export default function ResponsesGrid({
   const scored = scoredInsightQuestions(questions);
 
   const sorted = useMemo(() => sortResponses(responses, sortBy), [responses, sortBy]);
+  const { page, setPage, pageCount, slice, from, to, reset } = usePagination(sorted.length);
+
+  useEffect(() => {
+    reset();
+  }, [sortBy, responses?.length, reset]);
+
+  const visibleRows = slice(sorted);
 
   const totalsAvg = (() => {
     if (!responses?.length) return 0;
@@ -189,7 +197,7 @@ export default function ResponsesGrid({
               })}
               <td className="ip-col f-muted">—</td>
             </tr>
-            {sorted.map((r) => {
+            {visibleRows.map((r) => {
               const pct = responsePercent(r);
               const took = formatDuration(responseDurationMs(r));
               const initial = (r.discord_username || '?').charAt(0).toUpperCase();
@@ -244,6 +252,14 @@ export default function ResponsesGrid({
             })}
           </tbody>
         </table>
+        <PaginationBar
+          page={page}
+          pageCount={pageCount}
+          from={from}
+          to={to}
+          total={sorted.length}
+          onPage={setPage}
+        />
         {!responses?.length ? (
           <p className="f-muted" style={{ padding: '12px 4px' }}>
             No submissions yet. After someone takes the quiz, Discord, In-Game Name, and IP appear here

@@ -3,6 +3,8 @@
  * Spreadsheet export is for review — live contest storage stays on the API/DB.
  */
 
+import { hostHeaders } from './auth';
+
 function csvEscape(value) {
   const s = value == null ? '' : String(value);
   if (/[",\n\r]/.test(s)) return `"${s.replace(/"/g, '""')}"`;
@@ -79,6 +81,39 @@ export function downloadResponsesCsv(quiz, questions, responses) {
   const a = document.createElement('a');
   a.href = url;
   a.download = `${slug}-responses-${stamp}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+/** Server-side CSV — full answers without loading them into the host grid. */
+export async function downloadResponsesCsvFromServer(quizId) {
+  const params = new URLSearchParams({
+    action: 'responses',
+    quizId: String(quizId),
+    format: 'csv',
+  });
+  const res = await fetch(`/api/trivia/host?${params.toString()}`, {
+    headers: hostHeaders(),
+  });
+  if (!res.ok) {
+    let msg = res.statusText || 'Export failed';
+    try {
+      const data = await res.json();
+      msg = data?.error || msg;
+    } catch {
+      /* binary or empty */
+    }
+    throw new Error(msg);
+  }
+  const csv = await res.text();
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  const stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `trivia-responses-${stamp}.csv`;
   document.body.appendChild(a);
   a.click();
   a.remove();

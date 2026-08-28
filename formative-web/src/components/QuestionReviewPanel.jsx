@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import MediaStack from './MediaStack';
 import SortStudentsMenu from './SortStudentsMenu';
 import {
@@ -10,6 +10,7 @@ import { listMediaUrls } from '../lib/questionMedia';
 import { promptPlain } from '../lib/promptPlain';
 import { typeLabel } from '../lib/questionTypes';
 import { sortResponses } from '../lib/sortResponses';
+import { PaginationBar, usePagination } from '../lib/usePagination';
 
 const PANEL_SORT = [
   { id: 'discord_az', label: 'Discord (A–Z)' },
@@ -38,6 +39,13 @@ export default function QuestionReviewPanel({
   const [sortBy, setSortBy] = useState('discord_az');
 
   const rows = useMemo(() => sortResponses(responses, sortBy), [responses, sortBy]);
+  const { page, setPage, pageCount, slice, from, to, reset } = usePagination(rows.length);
+
+  useEffect(() => {
+    reset();
+  }, [sortBy, question?.id, rows.length, reset]);
+
+  const visibleRows = slice(rows);
   const maxPts = Number(question?.points) || 0;
   const scored = isScoredQuestion(question);
 
@@ -88,7 +96,7 @@ export default function QuestionReviewPanel({
       </div>
 
       <div className="f-student-panel-body">
-        {rows.map((r) => {
+        {visibleRows.map((r) => {
           const answerText = formatResponseAnswer(question, r.answers?.[question.id], r);
           const stored = r.per_question?.[question.id];
           const mark = markFor(stored, maxPts);
@@ -143,6 +151,14 @@ export default function QuestionReviewPanel({
             </article>
           );
         })}
+        <PaginationBar
+          page={page}
+          pageCount={pageCount}
+          from={from}
+          to={to}
+          total={rows.length}
+          onPage={setPage}
+        />
         {!rows.length ? <p className="f-muted">No submissions yet.</p> : null}
       </div>
     </aside>

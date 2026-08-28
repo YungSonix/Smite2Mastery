@@ -13,6 +13,7 @@ const { isContentType, isManualType } = require('../../lib/server/triviaQuestion
 const { responsesToCsv } = require('../../lib/server/triviaExport');
 const { flushQuizDrafts } = require('../../lib/server/triviaCommit');
 const { shouldPurgeLiveSessions, purgeLiveSessions } = require('../../lib/server/triviaWindow');
+const { checkTriviaPayload, formatPayloadCheckReport } = require('../../lib/server/triviaPayloadCheck');
 
 function recomputeScore(questions, perQuestion) {
   let score = 0;
@@ -153,16 +154,75 @@ module.exports = async function handler(req, res) {
       return send(res, 200, { session });
     }
 
+    if (req.method === 'GET' && action === 'response' && id) {
+      const { data: row, error } = await sb
+        .from('trivia_responses')
+        .select(
+          'id, quiz_id, discord_username, ingame_name, score, max_score, per_question, submitted_at, ip_address, answers, user_agent'
+        )
+        .eq('id', id)
+        .maybeSingle();
+      if (error) return send(res, 500, { error: error.message });
+      if (!row) return send(res, 404, { error: 'Response not found' });
+      const { data: quiz } = await sb
+        .from('trivia_quizzes')
+        .select('id, owner_username')
+        .eq('id', row.quiz_id)
+        .eq('owner_username', username)
+        .maybeSingle();
+      if (!quiz) return send(res, 403, { error: 'Forbidden' });
+      return send(res, 200, { response: row });
+    }
+
     if (req.method === 'GET' && action === 'responses') {
       const { data: quiz, error } = await findOwnedQuiz(sb, username, quizId);
       if (error) return send(res, 500, { error: error.message });
       if (!quiz) return send(res, 404, { error: 'Quiz not found' });
       const format = String(url.searchParams.get('format') || '').toLowerCase();
       const asCsv = format === 'csv' || format === 'excel';
+      const includeAnswers =
+        asCsv || String(url.searchParams.get('includeAnswers') || '').toLowerCase() === '1';
+      const clientSince = String(url.searchParams.get('since') || '').trim();
       await flushQuizDrafts(sb, quiz).catch((err) => console.warn('trivia flush on responses', err.message));
       if (shouldPurgeLiveSessions(quiz)) {
         await purgeLiveSessions(sb, quiz.id);
       }
+
+      const [{ count: responseCount }, { data: latestResp }] = await Promise.all([
+        sb
+          .from('trivia_responses')
+          .select('id', { count: 'exact', head: true })
+          .eq('quiz_id', quiz.id),
+        sb
+          .from('trivia_responses')
+          .select('submitted_at')
+          .eq('quiz_id', quiz.id)
+          .order('submitted_at', { ascending: false })
+          .limit(1)
+          .maybeSingle(),
+      ]);
+
+      let latestSessionAt = '';
+      if (!shouldPurgeLiveSessions(quiz)) {
+        const { data: latestSession } = await sb
+          .from('trivia_sessions')
+          .select('last_seen_at')
+          .eq('quiz_id', quiz.id)
+          .order('last_seen_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+        latestSessionAt = latestSession?.last_seen_at || '';
+      }
+
+      const watermark = `${responseCount || 0}|${latestResp?.submitted_at || ''}|${latestSessionAt}`;
+      if (clientSince && clientSince === watermark) {
+        return send(res, 200, { unchanged: true, watermark });
+      }
+
+      const responseColumns = includeAnswers
+        ? 'id, quiz_id, discord_username, ingame_name, score, max_score, per_question, submitted_at, ip_address, answers, user_agent'
+        : 'id, quiz_id, discord_username, ingame_name, score, max_score, per_question, submitted_at, ip_address';
+
       const [{ data: questions }, { data: responses, error: rErr }] = await Promise.all([
         asCsv
           ? sb
@@ -173,9 +233,7 @@ module.exports = async function handler(req, res) {
           : Promise.resolve({ data: [] }),
         sb
           .from('trivia_responses')
-          .select(
-            'id, quiz_id, discord_username, ingame_name, score, max_score, per_question, submitted_at, ip_address, answers'
-          )
+          .select(responseColumns)
           .eq('quiz_id', quiz.id)
           .order('submitted_at', { ascending: false }),
       ]);
@@ -220,6 +278,7 @@ module.exports = async function handler(req, res) {
         responses: responses || [],
         sessions,
         sessionsError,
+        watermark,
       });
     }
 
@@ -363,8 +422,29 @@ module.exports = async function handler(req, res) {
         const patch = { ...body.patch, updated_at: new Date().toISOString() };
         delete patch.id;
         delete patch.owner_username;
-        const { data: owned } = await findOwnedQuiz(sb, username, body.quizId, 'id');
+        const { data: owned } = await findOwnedQuiz(sb, username, body.quizId, '*');
         if (!owned) return send(res, 404, { error: 'Quiz not found' });
+        if (patch.is_assigned === true) {
+          const { data: assignQuestions, error: aqErr } = await sb
+            .from('trivia_questions')
+            .select('*')
+            .eq('quiz_id', owned.id)
+            .order('sort_order', { ascending: true });
+          if (aqErr) return send(res, 500, { error: aqErr.message });
+          const payloadCheck = checkTriviaPayload({
+            quiz: { ...owned, ...patch },
+            questions: assignQuestions || [],
+          });
+          if (!payloadCheck.ok) {
+            return send(res, 400, {
+              error: 'Quiz payload too large or contains inline data: media — run npm run trivia:payload-check',
+              payloadCheck,
+            });
+          }
+          if (payloadCheck.level === 'warn') {
+            console.warn('[trivia-payload-check] assign warning:\n' + formatPayloadCheckReport(payloadCheck));
+          }
+        }
         const { data, error } = await sb
           .from('trivia_quizzes')
           .update(patch)
@@ -417,7 +497,24 @@ module.exports = async function handler(req, res) {
         const failed = updates.find((result) => result.error);
         if (failed?.error) return send(res, 500, { error: failed.error.message });
         await touchQuiz(sb, quiz.id);
-        return send(res, 200, { ok: true });
+        const { data: allQuestions } = await sb
+          .from('trivia_questions')
+          .select('*')
+          .eq('quiz_id', quiz.id)
+          .order('sort_order', { ascending: true });
+        const { data: quizRow } = await sb
+          .from('trivia_quizzes')
+          .select('*')
+          .eq('id', quiz.id)
+          .maybeSingle();
+        const payloadCheck = checkTriviaPayload({
+          quiz: quizRow || { id: quiz.id },
+          questions: allQuestions || [],
+        });
+        if (payloadCheck.level !== 'ok') {
+          console.warn('[trivia-payload-check] after save:\n' + formatPayloadCheckReport(payloadCheck));
+        }
+        return send(res, 200, { ok: true, payloadCheck: payloadCheck.level !== 'ok' ? payloadCheck : undefined });
       }
       if (body.action === 'update_question') {
         const { data: qq } = await sb
@@ -450,7 +547,28 @@ module.exports = async function handler(req, res) {
           .select('*')
           .single();
         if (error) return send(res, 500, { error: error.message });
-        return send(res, 200, { question: rewriteQuestionMedia(data) });
+        await touchQuiz(sb, quiz.id);
+        const { data: quizRow } = await sb
+          .from('trivia_quizzes')
+          .select('*')
+          .eq('id', qq.quiz_id)
+          .maybeSingle();
+        const { data: allQuestions } = await sb
+          .from('trivia_questions')
+          .select('*')
+          .eq('quiz_id', qq.quiz_id)
+          .order('sort_order', { ascending: true });
+        const payloadCheck = checkTriviaPayload({
+          quiz: quizRow || { id: qq.quiz_id },
+          questions: allQuestions || [],
+        });
+        if (payloadCheck.level !== 'ok') {
+          console.warn('[trivia-payload-check] after save:\n' + formatPayloadCheckReport(payloadCheck));
+        }
+        return send(res, 200, {
+          question: rewriteQuestionMedia(data),
+          payloadCheck: payloadCheck.level !== 'ok' ? payloadCheck : undefined,
+        });
       }
       if (body.action === 'reorder') {
         const orders = Array.isArray(body.orders) ? body.orders : [];
