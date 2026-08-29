@@ -5868,6 +5868,94 @@ label.f-file-btn:hover {
   color: var(--f-blue);
 }
 
+/* Student replay on themed take pages — stronger contrast than editor chrome */
+.f-student-take-view .f-student-replay-card .f-q-head {
+  color: var(--f-text);
+  font-size: 14px;
+}
+
+.f-student-take-view .f-type-pill {
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--f-text) 16%, var(--f-border));
+  background: color-mix(in srgb, var(--f-text) 6%, var(--f-card));
+  color: var(--f-text);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.f-student-take-view .f-student-replay-card .f-muted {
+  color: color-mix(in srgb, var(--f-text) 80%, transparent);
+}
+
+.f-student-take-view .f-student-replay-card .f-q-media-label {
+  color: color-mix(in srgb, var(--f-text) 82%, transparent);
+}
+
+.f-student-take-view .f-replay-verdict {
+  font-size: 12px;
+}
+
+.f-student-take-view .f-replay-correct-line {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.f-student-take-view .f-preview-option-list.f-student-replay-list li {
+  color: var(--f-text);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  background: color-mix(in srgb, var(--f-text) 5%, var(--f-card));
+  border-color: color-mix(in srgb, var(--f-text) 14%, var(--f-border));
+}
+
+.f-student-take-view .f-preview-option-list.f-student-replay-list li.is-correct {
+  color: #14532d;
+  background: color-mix(in srgb, #22c55e 18%, var(--f-card));
+  border-color: color-mix(in srgb, #16a34a 48%, var(--f-border));
+}
+
+.f-student-take-view .f-preview-option-list.f-student-replay-list li.is-incorrect {
+  color: #7f1d1d;
+  background: color-mix(in srgb, #ef4444 14%, var(--f-card));
+  border-color: color-mix(in srgb, #ef4444 45%, var(--f-border));
+}
+
+.f-student-take-view .f-preview-opt-mark {
+  color: color-mix(in srgb, var(--f-text) 58%, transparent);
+  font-size: 14px;
+}
+
+.f-student-take-view .f-preview-option-list li.is-correct .f-preview-opt-mark {
+  color: #15803d;
+}
+
+.f-student-take-view .f-preview-option-list li.is-incorrect .f-preview-opt-mark {
+  color: #b91c1c;
+}
+
+.f-student-take-view .f-student-pick-tag {
+  font-size: 12px;
+}
+
+.f-student-take-view .f-choice-tile {
+  color: var(--f-text);
+}
+
+.f-student-take-view .f-choice-tile.is-correct {
+  color: #14532d;
+}
+
+.f-student-take-view .f-choice-tile.is-incorrect {
+  color: #7f1d1d;
+}
+
+.f-student-take-view .f-preview-correct-tag {
+  color: #14532d;
+  font-size: 12px;
+}
+
 /* Responses: Sort students menu (Formative-style) */
 .f-sort-wrap {
   position: relative;
