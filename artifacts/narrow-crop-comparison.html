@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Skin crop — what you want vs what we fixed</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 28px;
+      font-family: system-ui, Segoe UI, sans-serif;
+      background: #e8dfd0;
+      color: #3d2f28;
+    }
+    h1 { margin: 0 0 8px; font-size: 22px; }
+    p.lead { margin: 0 0 24px; max-width: 900px; line-height: 1.45; }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 1100px;
+    }
+    .card {
+      background: #f5efe4;
+      border: 2px solid #8b6f5c;
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .card.bad { border-color: #b4534a; opacity: 0.92; }
+    .card.good { border-color: #2d6a4f; }
+    .card.now { grid-column: 1 / -1; border-color: #2d6a4f; background: #eef8f0; }
+    h2 {
+      margin: 0 0 10px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    h2.want { color: #2d6a4f; }
+    h2.dont { color: #b4534a; }
+    img {
+      width: 100%;
+      border-radius: 8px;
+      display: block;
+      border: 1px solid #c4b5a5;
+    }
+    .tag {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .tag.ok { background: #d8f3dc; color: #1b4332; }
+    .tag.no { background: #fde8e6; color: #9b2226; }
+    .arrow {
+      text-align: center;
+      font-size: 28px;
+      margin: 16px 0 8px;
+      color: #2d6a4f;
+    }
+  </style>
+</head>
+<body>
+  <h1>Skin-guess crop — your two screenshots</h1>
+  <p class="lead">
+  After commit <strong>a3aa0ee5b</strong>, editor · host preview · and take page all use the
+  <strong>narrow sidebar crop</strong> (Image 1) — not the wide zoom strip (Image 2).
+  </p>
+
+  <div class="row">
+    <div class="card good">
+      <h2 class="want">Image 1 — what you want</h2>
+      <img src="user-crop-want.png" alt="Target: narrow MEDIA sidebar crop" />
+      <span class="tag ok">Keep this framing</span>
+    </div>
+    <div class="card bad">
+      <h2 class="dont">Image 2 — not this</h2>
+      <img src="user-crop-dont-want.png" alt="Wrong: full-width over-zoomed strip" />
+      <span class="tag no">Removed — was the 100cqw breakout</span>
+    </div>
+    <div class="card now">
+      <h2 class="want">Now (editor · preview · take) → matches Image 1</h2>
+      <img src="user-crop-want.png" alt="After fix: same as Image 1 everywhere" style="max-width: 320px;" />
+      <span class="tag ok">280px max-width SkinCropThumb — same crop on all surfaces</span>
+    </div>
+  </div>
+</body>
+</html>
