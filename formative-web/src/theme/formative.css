@@ -5695,6 +5695,66 @@ label.f-file-btn:hover {
   pointer-events: none;
 }
 
+/* Host: student take replay (new tab) */
+.f-student-take-view {
+  padding: 16px 18px 48px;
+}
+
+.f-student-take-view-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.f-student-take-view-title {
+  margin: 0 0 4px;
+  font-family: var(--f-display);
+  font-size: 1.35rem;
+}
+
+.f-student-take-view-list {
+  gap: 16px;
+}
+
+.f-student-replay-card {
+  pointer-events: none;
+}
+
+.f-student-replay-prompt {
+  margin: 8px 0 12px;
+}
+
+.f-student-replay-answer pre,
+.f-student-replay-empty {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--f-input);
+  border: 1px solid var(--f-border);
+}
+
+.f-student-replay-choices,
+.f-student-replay-list {
+  pointer-events: none;
+}
+
+.f-choice-tile.is-student-pick,
+.f-preview-option-list li.is-student-pick {
+  border-color: var(--f-blue);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--f-blue) 35%, transparent);
+}
+
+.f-student-pick-tag {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--f-blue);
+}
+
 /* Responses: Sort students menu (Formative-style) */
 .f-sort-wrap {
   position: relative;

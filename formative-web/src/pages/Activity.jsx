@@ -1085,6 +1085,7 @@ export default function Activity() {
               }
               responses={responses}
               questions={questions}
+              quiz={quiz}
               onClose={() => setSelectedResponse(null)}
               onSelect={setSelectedResponse}
               onViewActivity={() => {

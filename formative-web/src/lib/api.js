@@ -131,6 +131,17 @@ export function previewUrl(quiz) {
   return `${window.location.origin}/trivia${previewHref(quiz)}`;
 }
 
+/** Host-only replay of one student's take (variants + picks, no answer key). */
+export function studentTakeViewHref(quiz, responseId) {
+  const key = quiz?.slug || quiz?.id;
+  return `${activityHref({ slug: key })}/student-view/${encodeURIComponent(responseId)}`;
+}
+
+export function studentTakeViewUrl(quiz, responseId) {
+  if (typeof window === 'undefined') return `/trivia${studentTakeViewHref(quiz, responseId)}`;
+  return `${window.location.origin}/trivia${studentTakeViewHref(quiz, responseId)}`;
+}
+
 export function slugify() {
   const alphabet = 'abcdefghjkmnpqrstuvwxyz23456789';
   let out = '';

@@ -5,6 +5,7 @@ import Activity from './pages/Activity';
 import Analytics from './pages/Analytics';
 import Home from './pages/Home';
 import HostPreview from './pages/HostPreview';
+import StudentTakeView from './pages/StudentTakeView';
 import Instructions from './pages/Instructions';
 import Login from './pages/Login';
 import TakeQuiz from './pages/TakeQuiz';
@@ -50,6 +51,14 @@ export default function App() {
         element={
           <RequireHost>
             <HostPreview />
+          </RequireHost>
+        }
+      />
+      <Route
+        path="/activity/:quizId/student-view/:responseId"
+        element={
+          <RequireHost>
+            <StudentTakeView />
           </RequireHost>
         }
       />

@@ -5,6 +5,7 @@ import { formatIp } from '../lib/quizSettings';
 import { typeLabel } from '../lib/questionTypes';
 import { promptPlain } from '../lib/promptPlain';
 import { formatDuration, responseDurationMs } from '../lib/triviaInsights';
+import { studentTakeViewUrl } from '../lib/api';
 import {
   earnedFromStored,
   effectiveEarned,
@@ -98,6 +99,7 @@ export default function StudentResponsePanel({
   response,
   responses,
   questions,
+  quiz,
   onClose,
   onSelect,
   onGrade,
@@ -222,8 +224,8 @@ export default function StudentResponsePanel({
 
   const menuItems = [
     { id: 'print', label: 'Print responses', icon: 'print', onClick: printResponses },
-    { id: 'submit', label: 'Submit for student', icon: 'check', disabled: true },
-    { id: 'behalf', label: 'Answer on behalf of student', icon: 'edit', disabled: true },
+    { id: 'submit', label: 'Submit for student', icon: 'check', disabled: true, title: 'Coming soon' },
+    { id: 'behalf', label: 'Answer on behalf of student', icon: 'edit', disabled: true, title: 'Coming soon' },
     {
       id: 'zero',
       label: 'Grade empty responses zero',
@@ -231,12 +233,24 @@ export default function StudentResponsePanel({
       disabled: ungradedCount === 0 || busy,
       onClick: gradeEmptyZero,
     },
-    { id: 'undo', label: 'Undo submission', icon: 'undo', disabled: true },
-    { id: 'pause', label: 'Pause submission', icon: 'pause', disabled: true },
-    { id: 'timeline', label: 'View student timeline', icon: 'timeline', disabled: true },
+    { id: 'undo', label: 'Undo submission', icon: 'undo', disabled: true, title: 'Coming soon' },
+    { id: 'pause', label: 'Pause submission', icon: 'pause', disabled: true, title: 'Coming soon' },
+    { id: 'timeline', label: 'View student timeline', icon: 'timeline', disabled: true, title: 'Coming soon' },
     {
       id: 'view',
-      label: 'View quiz',
+      label: 'View quiz (what they saw)',
+      icon: 'external',
+      disabled: !quiz || !response?.id,
+      onClick: () => {
+        setMenuOpen(false);
+        if (quiz && response?.id) {
+          window.open(studentTakeViewUrl(quiz, response.id), '_blank', 'noopener,noreferrer');
+        }
+      },
+    },
+    {
+      id: 'edit',
+      label: 'Edit questions',
       icon: 'external',
       onClick: () => {
         setMenuOpen(false);
