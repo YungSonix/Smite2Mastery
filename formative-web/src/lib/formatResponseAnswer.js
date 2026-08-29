@@ -1,3 +1,6 @@
+import { gradeOne } from './api';
+import { formatCorrectAnswer } from './correctAnswer';
+
 const CONTENT_TYPES = new Set(['image', 'content', 'audio', 'video', 'embed']);
 
 export function isGateQuestion(q) {
@@ -120,4 +123,29 @@ export function earnedFromStored(stored, maxPts) {
   if (!Number.isFinite(n)) return null;
   if (maxPts > 0 && n >= 0 && n <= 1) return n * maxPts;
   return n;
+}
+
+export function replayQuestionVerdict(q, response) {
+  const raw = response?.answers?.[q?.id];
+  if (isBlankAnswer(raw)) {
+    return { status: 'empty', label: 'No answer', showCorrect: false };
+  }
+  if (needsManualGrade(q, response)) {
+    return { status: 'ungraded', label: 'Needs grading', showCorrect: false };
+  }
+  const maxPts = Number(q?.points) || 0;
+  const stored = response?.per_question?.[q?.id];
+  const earned = earnedFromStored(stored, maxPts);
+  let correct = false;
+  if (earned != null) correct = earned > 0;
+  else correct = Boolean(gradeOne(q, raw));
+  if (correct) {
+    return { status: 'correct', label: 'Correct', showCorrect: false };
+  }
+  return {
+    status: 'incorrect',
+    label: 'Incorrect',
+    showCorrect: true,
+    correctText: formatCorrectAnswer(q),
+  };
 }

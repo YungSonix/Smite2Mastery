@@ -4,7 +4,8 @@ import MediaStack from '../components/MediaStack';
 import RichText from '../components/RichText';
 import { hostApi, activityHref } from '../lib/api';
 import { allChoicesHaveArt, lookupChoiceArt } from '../lib/choiceArt';
-import { formatResponseAnswer, hasResponseAnswers, isContentQuestion } from '../lib/formatResponseAnswer';
+import { formatResponseAnswer, hasResponseAnswers, isContentQuestion, replayQuestionVerdict } from '../lib/formatResponseAnswer';
+import { correctChoiceIndexes } from '../lib/correctAnswer';
 import { listMediaUrls, questionMediaCrop, questionMediaCropSeed } from '../lib/questionMedia';
 import { promptPlain } from '../lib/promptPlain';
 import { typeLabel } from '../lib/questionTypes';
@@ -17,7 +18,7 @@ import {
   orderQuestionsLikeStudent,
 } from '../lib/triviaVariants';
 
-function ReplayChoices({ q, answerRaw }) {
+function ReplayChoices({ q, answerRaw, verdict }) {
   const options = Array.isArray(q.options) ? q.options : [];
   const useTiles = allChoicesHaveArt(options);
   const selected = new Set();
@@ -26,6 +27,8 @@ function ReplayChoices({ q, answerRaw }) {
   } else if (answerRaw != null && answerRaw !== '') {
     selected.add(Number(answerRaw));
   }
+  const correct = new Set(correctChoiceIndexes(q));
+  const showKey = verdict?.status === 'correct' || verdict?.status === 'incorrect';
 
   if (!options.length) return null;
 
@@ -35,18 +38,26 @@ function ReplayChoices({ q, answerRaw }) {
         {options.map((label, i) => {
           const art = lookupChoiceArt(label);
           const picked = selected.has(i);
+          const isCorrect = correct.has(i);
+          const classes = ['f-choice-tile'];
+          if (isCorrect) classes.push('is-correct');
+          if (picked) classes.push('is-student-pick');
+          if (picked && showKey && !isCorrect) classes.push('is-incorrect');
           return (
-            <div
-              key={`${q.id}-opt-${i}`}
-              className={`f-choice-tile ${picked ? 'is-student-pick' : ''}`}
-            >
+            <div key={`${q.id}-opt-${i}`} className={classes.join(' ')}>
               {art?.image ? (
                 <img className="f-choice-tile-art" src={resolveMediaUrl(art.image)} alt="" draggable={false} />
               ) : (
                 <div className="f-choice-tile-art f-choice-tile-art-empty" />
               )}
               <span>{label}</span>
-              {picked ? <span className="f-student-pick-tag">Their pick</span> : null}
+              {picked ? (
+                <span className={`f-student-pick-tag ${showKey && !isCorrect ? 'is-wrong' : ''}`}>
+                  Their pick{showKey ? (isCorrect ? ' · correct' : ' · wrong') : ''}
+                </span>
+              ) : isCorrect && showKey ? (
+                <span className="f-preview-correct-tag">Correct answer</span>
+              ) : null}
             </div>
           );
         })}
@@ -58,10 +69,20 @@ function ReplayChoices({ q, answerRaw }) {
     <ul className="f-preview-option-list f-student-replay-list">
       {options.map((label, i) => {
         const picked = selected.has(i);
+        const isCorrect = correct.has(i);
+        const classes = [];
+        if (isCorrect) classes.push('is-correct');
+        if (picked) classes.push('is-student-pick');
+        if (picked && showKey && !isCorrect) classes.push('is-incorrect');
         return (
-          <li key={`${q.id}-opt-${i}`} className={picked ? 'is-student-pick' : ''}>
-            <span className="f-preview-opt-mark">{picked ? '●' : '○'}</span>
+          <li key={`${q.id}-opt-${i}`} className={classes.join(' ') || undefined}>
+            <span className="f-preview-opt-mark">
+              {isCorrect && showKey ? '✓' : picked ? '●' : '○'}
+            </span>
             <span>{label}</span>
+            {picked && showKey ? (
+              <span className="f-student-pick-tag">{isCorrect ? 'Correct' : 'Wrong'}</span>
+            ) : null}
           </li>
         );
       })}
@@ -70,6 +91,7 @@ function ReplayChoices({ q, answerRaw }) {
 }
 
 function QuestionReplayCard({ q, idx, answerRaw, response }) {
+  const verdict = replayQuestionVerdict(q, response);
   const media = listMediaUrls(q);
   const isChoice =
     q.type === 'multiple_choice' || q.type === 'true_false' || q.type === 'dropdown';
@@ -93,7 +115,7 @@ function QuestionReplayCard({ q, idx, answerRaw, response }) {
   const body = (
     <>
       {isChoice || q.type === 'multiple_selection' ? (
-        <ReplayChoices q={q} answerRaw={answerRaw} />
+        <ReplayChoices q={q} answerRaw={answerRaw} verdict={verdict} />
       ) : answerText != null ? (
         <div className="f-student-replay-answer">
           <pre>{answerText}</pre>
@@ -109,6 +131,7 @@ function QuestionReplayCard({ q, idx, answerRaw, response }) {
       <div className="f-q-head">
         <span className="f-q-num">{idx + 1}</span>
         <span className="f-type-pill">{typeLabel(q)}</span>
+        <span className={`f-replay-verdict f-replay-verdict--${verdict.status}`}>{verdict.label}</span>
         {q.meta?.variant_index > 0 ? (
           <span className="f-muted" style={{ fontSize: 12 }}>
             Version {String.fromCharCode(65 + (q.meta.variant_index || 0))}
@@ -119,6 +142,11 @@ function QuestionReplayCard({ q, idx, answerRaw, response }) {
         <div className="f-student-replay-prompt">
           <RichText className="f-md" text={q.prompt} />
         </div>
+      ) : null}
+      {verdict.showCorrect && verdict.correctText ? (
+        <p className="f-replay-correct-line">
+          Correct answer: <strong>{verdict.correctText}</strong>
+        </p>
       ) : null}
       {useMediaSplit ? (
         <div className="f-q-split">
