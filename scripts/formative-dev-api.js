@@ -25,7 +25,7 @@ const {
   applyVariant,
   scoreAnswersWithVariants,
 } = require('../lib/server/triviaVariants');
-const { rewriteQuestionMedia } = require('../lib/server/triviaMediaRewrite');
+const { rewriteQuestionMedia, rewriteQuizBannerUrl } = require('../lib/server/triviaMediaRewrite');
 const { applyQuizPartialCreditToQuestions } = require('../lib/server/quizGradingSettings');
 const { responsesToCsv } = require('../lib/server/triviaExport');
 const { quizWindowState, shouldPurgeLiveSessions } = require('../lib/server/triviaWindow');
@@ -423,7 +423,7 @@ async function handleHost(req, res, url) {
         id: randomUUID(),
         title,
         slug: uniqueShortSlug(),
-        banner_url: body.banner_url || null,
+        banner_url: rewriteQuizBannerUrl(body.banner_url),
         owner_username: username,
         join_code: joinCode(),
         is_assigned: false,
@@ -519,11 +519,15 @@ async function handleHost(req, res, url) {
     if (body.action === 'update_quiz') {
       const quiz = findOwnedQuiz(username, body.quizId);
       if (!quiz) return json(res, 404, { error: 'Quiz not found' });
-      Object.assign(quiz, body.patch || {}, { updated_at: new Date().toISOString() });
+      const patch = { ...(body.patch || {}) };
+      if (Object.prototype.hasOwnProperty.call(patch, 'banner_url')) {
+        patch.banner_url = rewriteQuizBannerUrl(patch.banner_url);
+      }
+      Object.assign(quiz, patch, { updated_at: new Date().toISOString() });
       delete quiz.owner_username;
       quiz.owner_username = username;
       db.quizzes.set(quiz.id, quiz);
-      if (body.patch && body.patch.is_assigned === true) {
+      if (patch.is_assigned === true) {
         for (const other of db.quizzes.values()) {
           if (other.owner_username === username && other.id !== quiz.id) other.is_assigned = false;
         }
