@@ -6,6 +6,16 @@ import { presenceLabel, presenceStatus } from '../lib/triviaPresence';
 import { responsePercent, sortResponses } from '../lib/sortResponses';
 import { useLiveClock } from '../lib/useLiveClock';
 import { PaginationBar, usePagination } from '../lib/usePagination';
+import { duplicateIpCounts, sharedIpLabel, sharedIpSubmissionCount } from '../lib/duplicateIp';
+
+function selectRow(r, e, onSelect) {
+  if (!onSelect) return;
+  const row = e?.currentTarget;
+  onSelect(r, { clientY: e?.clientY, rowEl: row });
+  requestAnimationFrame(() => {
+    row?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
+}
 
 export default function ResponsesGrid({
   questions,
@@ -30,6 +40,8 @@ export default function ResponsesGrid({
   }, [sortBy, responses?.length, reset]);
 
   const visibleRows = slice(sorted);
+
+  const ipCounts = useMemo(() => duplicateIpCounts(responses), [responses]);
 
   const totalsAvg = (() => {
     if (!responses?.length) return 0;
@@ -160,6 +172,9 @@ export default function ResponsesGrid({
         <table className="f-grid">
           <thead>
             <tr>
+              <th className="col-rank" title="Rank in current sort">
+                #
+              </th>
               <th className="col-discord">Discord</th>
               <th className="col-ingame">In-Game</th>
               <th className="totals-col">%</th>
@@ -189,6 +204,7 @@ export default function ResponsesGrid({
           </thead>
           <tbody>
             <tr>
+              <td className="col-rank f-muted">—</td>
               <td className="f-muted col-discord">Avg</td>
               <td className="f-muted col-ingame">—</td>
               <td className="totals-col">{totalsAvg}%</td>
@@ -214,19 +230,25 @@ export default function ResponsesGrid({
               })}
               <td className="ip-col f-muted">—</td>
             </tr>
-            {visibleRows.map((r) => {
+            {visibleRows.map((r, rowIdx) => {
+              const rank = from + rowIdx;
               const pct = responsePercent(r);
               const took = formatDuration(responseDurationMs(r));
               const tabAway = responseTabAwayCount(r);
               const leftPage = responseLeftPage(r);
               const initial = (r.discord_username || '?').charAt(0).toUpperCase();
+              const ipShareCount = sharedIpSubmissionCount(r.ip_address, ipCounts);
+              const sharedIp = ipShareCount > 1;
               return (
                 <tr
                   key={r.id}
                   className={selectedId === r.id ? 'is-selected' : undefined}
                   style={{ cursor: onSelect ? 'pointer' : 'default' }}
-                  onClick={() => onSelect?.(r)}
+                  onClick={(e) => selectRow(r, e, onSelect)}
                 >
+                  <td className="col-rank" title={`#${rank} in list`}>
+                    {rank}
+                  </td>
                   <td className="col-discord">
                     <div className="f-student">
                       <div className="f-avatar" style={{ width: 22, height: 22, fontSize: 11 }}>
@@ -282,9 +304,20 @@ export default function ResponsesGrid({
                     );
                   })}
                   <td className="ip-col">
-                    <code className="f-ip" title={r.ip_address || ''}>
-                      {formatIp(r.ip_address)}
-                    </code>
+                    <span className={`f-ip-cell${sharedIp ? ' has-shared-ip' : ''}`}>
+                      {sharedIp ? (
+                        <span
+                          className="f-dup-ip-flag"
+                          title={sharedIpLabel(ipShareCount)}
+                          aria-label={sharedIpLabel(ipShareCount)}
+                        >
+                          ⚑
+                        </span>
+                      ) : null}
+                      <code className="f-ip" title={r.ip_address || ''}>
+                        {formatIp(r.ip_address)}
+                      </code>
+                    </span>
                   </td>
                 </tr>
               );

@@ -1,3 +1,6 @@
+import { extractVariantMap, variantCount, variantLetter } from './triviaVariants';
+import { promptPlain } from './promptPlain';
+
 const SKIP_TYPES = new Set([
   'image',
   'content',
@@ -152,7 +155,26 @@ export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {
 
   let correct = 0;
   let wrong = 0;
+  const variantPalette = ['#38bdf8', '#a78bfa', '#f472b6', '#fbbf24', '#34d399', '#fb923c'];
+  const variantUsage = {};
+  let variantQuestionCount = 0;
+
   const perQuestion = scored.map((q, i) => {
+    const vCount = variantCount(q);
+    const hasVariants = vCount > 1;
+    if (hasVariants) variantQuestionCount += 1;
+
+    const byVariant = Array.from({ length: vCount }, (_, vi) => ({
+      index: vi,
+      letter: variantLetter(vi),
+      n: 0,
+      ok: 0,
+      pct: 0,
+      avgMs: null,
+      times: [],
+      color: variantPalette[vi % variantPalette.length],
+    }));
+
     let seen = 0;
     let ok = 0;
     const times = [];
@@ -160,15 +182,36 @@ export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {
       const v = r.per_question?.[q.id];
       if (v == null) continue;
       seen += 1;
+      const variantMap = extractVariantMap(r.answers) || {};
+      const vi = Math.max(0, Math.min(vCount - 1, Number(variantMap[q.id]) || 0));
+      const slot = byVariant[vi];
+      slot.n += 1;
       if (Number(v)) {
         ok += 1;
+        slot.ok += 1;
         correct += 1;
       } else {
         wrong += 1;
       }
       const ms = Number(r.answers?.__timings?.[q.id]);
-      if (Number.isFinite(ms) && ms >= 0) times.push(ms);
+      if (Number.isFinite(ms) && ms >= 0) {
+        times.push(ms);
+        slot.times.push(ms);
+      }
+      if (hasVariants) {
+        const key = variantLetter(vi);
+        variantUsage[key] = (variantUsage[key] || 0) + 1;
+      }
     }
+
+    for (const slot of byVariant) {
+      slot.pct = slot.n ? Math.round((slot.ok / slot.n) * 100) : 0;
+      slot.avgMs = slot.times.length
+        ? Math.round(slot.times.reduce((a, b) => a + b, 0) / slot.times.length)
+        : null;
+      delete slot.times;
+    }
+
     const avgMs = times.length ? Math.round(times.reduce((a, b) => a + b, 0) / times.length) : null;
     return {
       id: q.id,
@@ -178,8 +221,39 @@ export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {
       pct: seen ? Math.round((ok / seen) * 100) : 0,
       n: seen,
       avgMs,
+      variantCount: vCount,
+      hasVariants,
+      variants: byVariant.filter((slot) => slot.n > 0 || hasVariants),
     };
   });
+
+  const variantUsageParts = Object.entries(variantUsage)
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(([letter, value], idx) => ({
+      label: `Version ${letter}`,
+      value,
+      color: variantPalette[idx % variantPalette.length],
+    }));
+
+  const variantCompareRows = perQuestion
+    .filter((q) => q.hasVariants)
+    .flatMap((q) =>
+      q.variants
+        .filter((slot) => slot.n > 0)
+        .map((slot) => ({
+          id: `${q.id}-v${slot.index}`,
+          label: `${q.label} · ${slot.letter}`,
+          title: `${promptPlain(q.prompt) || 'Question'} — Version ${slot.letter}`,
+          value: slot.pct,
+          display: `${slot.pct}%`,
+          n: slot.n,
+          variantLetter: slot.letter,
+          color: slot.color,
+        }))
+    )
+    .sort((a, b) => a.value - b.value);
+
+  const hardestVariants = [...variantCompareRows].sort((a, b) => a.value - b.value).slice(0, 8);
 
   const durations = rows.map((r) => responseDurationMs(r)).filter((ms) => ms != null);
   const buckets = timeBuckets(timeLimitSeconds).map((b) => ({
@@ -190,15 +264,26 @@ export function buildQuizInsights({ questions, responses, timeLimitSeconds } = {
     }).length,
   }));
 
+  const passCount = pcts.filter((p) => p >= 70).length;
+  const failCount = Math.max(0, pcts.length - passCount);
+
   return {
     n,
     avg,
     scoredCount: scored.length,
+    variantQuestionCount,
     bands,
+    passFail: [
+      { label: 'Pass (≥70%)', value: passCount, color: '#2dd4bf' },
+      { label: 'Below 70%', value: failCount, color: '#f87171' },
+    ],
     answerMix: [
       { label: 'Correct', value: correct, color: '#2dd4bf' },
       { label: 'Wrong', value: wrong, color: '#f87171' },
     ],
+    variantUsageParts,
+    variantCompareRows,
+    hardestVariants,
     perQuestion,
     durations,
     avgDurationMs: durations.length

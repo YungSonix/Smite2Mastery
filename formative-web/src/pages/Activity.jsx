@@ -25,6 +25,7 @@ import { withGeneratedHints } from '../lib/triviaHints';
 import { presenceStatus } from '../lib/triviaPresence';
 import { scoredInsightQuestions } from '../lib/triviaInsights';
 import { hasResponseAnswers } from '../lib/formatResponseAnswer';
+import { clearResponsePanelAnchor, setResponsePanelAnchor } from '../lib/responsePanelAnchor';
 import QuizSettingsModal from '../components/QuizSettingsModal';
 import {
   clearEditorDraft,
@@ -186,9 +187,10 @@ export default function Activity() {
     setSessionsError(r.sessionsError || '');
   }, []);
 
-  const openStudentResponse = useCallback(async (r) => {
+  const openStudentResponse = useCallback(async (r, meta) => {
     setSelectedSession(null);
     setSelectedQuestionId(null);
+    if (meta?.clientY != null) setResponsePanelAnchor(meta.clientY);
     setSelectedResponse(r);
     if (hasResponseAnswers(r?.answers)) return;
     try {
@@ -201,6 +203,20 @@ export default function Activity() {
       /* lite row still opens; grading may need refresh */
     }
   }, []);
+
+  useEffect(() => {
+    if (!selectedResponse && !selectedSession && !selectedQuestionId) {
+      clearResponsePanelAnchor();
+    }
+  }, [selectedResponse, selectedSession, selectedQuestionId]);
+
+  useEffect(() => {
+    if (!selectedResponse?.id) return;
+    if (typeof window === 'undefined' || window.innerWidth > 900) return;
+    requestAnimationFrame(() => {
+      document.querySelector('.f-student-panel')?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    });
+  }, [selectedResponse?.id]);
 
   const setTab = (t) => {
     const next = new URLSearchParams(params);
@@ -1227,7 +1243,10 @@ export default function Activity() {
               responses={responses}
               questions={questions}
               quiz={quiz}
-              onClose={() => setSelectedResponse(null)}
+              onClose={() => {
+                setSelectedResponse(null);
+                clearResponsePanelAnchor();
+              }}
               onSelect={setSelectedResponse}
               onViewActivity={() => {
                 setSelectedResponse(null);
