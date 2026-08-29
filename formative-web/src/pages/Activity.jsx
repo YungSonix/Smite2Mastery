@@ -951,6 +951,11 @@ export default function Activity() {
                       setBannerLinkError('');
                     }}
                     onKeyDown={(e) => {
+                      if (e.key === 'Escape') {
+                        e.preventDefault();
+                        setBannerLinkOpen(false);
+                        return;
+                      }
                       if (e.key !== 'Enter') return;
                       e.preventDefault();
                       const parsed = parseBannerLink(bannerLinkDraft);
@@ -964,6 +969,7 @@ export default function Activity() {
                       setBannerLinkDraft(parsed.url);
                       setBannerLinkError('');
                       setError('');
+                      setBannerLinkOpen(false);
                     }}
                   />
                   <button
@@ -981,6 +987,7 @@ export default function Activity() {
                       setBannerLinkDraft(parsed.url);
                       setBannerLinkError('');
                       setError('');
+                      setBannerLinkOpen(false);
                     }}
                   >
                     Apply
@@ -1001,6 +1008,7 @@ export default function Activity() {
                     setBannerDirty(true);
                     setBannerLinkError('');
                     setError('');
+                    setBannerLinkOpen(false);
                   }}
                 >
                   Use assets/IMG_3538.jpeg
