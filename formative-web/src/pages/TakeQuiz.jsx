@@ -17,6 +17,7 @@ import {
   clearTriviaProgress,
   loadTriviaProgress,
   saveTriviaProgress,
+  seededShuffle,
 } from '../lib/triviaVariants';
 import { quizWindowState } from '../lib/quizSettings';
 import { quizThemeProps } from '../lib/quizThemes';
@@ -39,22 +40,6 @@ async function fileToDataUrl(file, maxBytes = 2.5 * 1024 * 1024) {
     reader.onerror = () => reject(new Error('Read failed'));
     reader.readAsDataURL(file);
   });
-}
-
-/** Stable shuffle so re-renders don't reshuffle mid-answer. */
-function seededShuffle(list, seedStr) {
-  const out = [...list];
-  let seed = 0;
-  const id = String(seedStr || '');
-  for (let i = 0; i < id.length; i += 1) seed = (seed * 31 + id.charCodeAt(i)) >>> 0;
-  for (let i = out.length - 1; i > 0; i -= 1) {
-    seed = (seed * 1664525 + 1013904223) >>> 0;
-    const j = seed % (i + 1);
-    const tmp = out[i];
-    out[i] = out[j];
-    out[j] = tmp;
-  }
-  return out;
 }
 
 function choiceRows(q, quizRandomize) {
@@ -353,12 +338,19 @@ export default function TakeQuiz() {
   const remainingMs = startedAt && timed ? startedAt + timeLimitSec * 1000 - now : null;
   const quizLocked = windowState.status !== 'open';
   const showQuestions = !quizLocked && Boolean(startedAt);
+  const shuffleAnswersMeta = settings.shuffle_questions
+    ? {
+        __question_order: orderedPlayable.map((q) => q.id),
+        __shuffle_seed: shuffleSeed || `${slug}|${discord}|${ingame}`,
+      }
+    : {};
   payloadRef.current = {
     slug,
     discord,
     ingame,
     answers: {
       ...answers,
+      ...shuffleAnswersMeta,
       __lifelines: hintCounts,
       __duration_ms: startedAt ? Math.max(0, Date.now() - Number(startedAt)) : undefined,
     },

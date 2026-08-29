@@ -10,7 +10,12 @@ import { promptPlain } from '../lib/promptPlain';
 import { typeLabel } from '../lib/questionTypes';
 import { quizThemeProps } from '../lib/quizThemes';
 import { resolveMediaUrl } from '../lib/mediaUrl';
-import { applyVariant, extractVariantMap } from '../lib/triviaVariants';
+import {
+  applyVariant,
+  extractQuestionOrder,
+  extractVariantMap,
+  orderQuestionsLikeStudent,
+} from '../lib/triviaVariants';
 
 function ReplayChoices({ q, answerRaw }) {
   const options = Array.isArray(q.options) ? q.options : [];
@@ -172,10 +177,21 @@ export default function StudentTakeView() {
   );
 
   const displayQuestions = useMemo(() => {
-    return (questions || [])
+    const filtered = (questions || [])
       .filter((q) => !isContentQuestion(q))
       .map((q) => applyVariant(q, variantMap[q.id] ?? 0));
-  }, [questions, variantMap]);
+    const answers = hasResponseAnswers(response?.answers) ? response.answers : {};
+    return orderQuestionsLikeStudent(filtered, answers, {
+      slug: quizId,
+      discord: response?.discord_username,
+      ingame: response?.ingame_name,
+      shuffleQuestions: Boolean(quiz?.settings?.shuffle_questions),
+    });
+  }, [questions, variantMap, response, quizId, quiz]);
+
+  const orderApproximated =
+    Boolean(quiz?.settings?.shuffle_questions) &&
+    !extractQuestionOrder(hasResponseAnswers(response?.answers) ? response.answers : {});
 
   const theme = quizThemeProps(quiz?.settings?.theme);
 
@@ -196,8 +212,6 @@ export default function StudentTakeView() {
     );
   }
 
-  const answers = hasResponseAnswers(response.answers) ? response.answers : {};
-
   return (
     <div className={`f-take-shell f-student-take-view ${theme.className}`} style={theme.style}>
       <header className="f-student-take-view-head">
@@ -207,6 +221,11 @@ export default function StudentTakeView() {
             What <strong>{response.discord_username}</strong> saw · read-only replay
             {response.ingame_name ? ` · ${response.ingame_name}` : ''}
           </p>
+          {orderApproximated ? (
+            <p className="f-muted" style={{ fontSize: 12, marginTop: 4 }}>
+              Order approximated (submission before order tracking)
+            </p>
+          ) : null}
         </div>
         <Link className="f-outline-btn" to={activityHref(quiz)}>
           Back to activity
@@ -215,7 +234,13 @@ export default function StudentTakeView() {
 
       <div className="f-take-form f-student-take-view-list">
         {displayQuestions.map((q, idx) => (
-          <QuestionReplayCard key={q.id} q={q} idx={idx} answerRaw={answers[q.id]} response={response} />
+          <QuestionReplayCard
+            key={q.id}
+            q={q}
+            idx={idx}
+            answerRaw={response.answers?.[q.id]}
+            response={response}
+          />
         ))}
       </div>
     </div>

@@ -16,6 +16,7 @@ import {
   isScoredQuestion,
   needsManualGrade,
 } from '../lib/formatResponseAnswer';
+import { orderQuestionsLikeStudent } from '../lib/triviaVariants';
 
 function MenuIcon({ name }) {
   const props = {
@@ -119,13 +120,17 @@ export default function StudentResponsePanel({
   const prev = index > 0 ? responses[index - 1] : null;
   const next = index >= 0 && index < (responses?.length || 0) - 1 ? responses[index + 1] : null;
 
-  const reviewQuestions = useMemo(
-    () =>
-      (questions || []).filter(
-        (q) => !isContentQuestion(q) || response?.answers?.[q.id] != null
-      ),
-    [questions, response]
-  );
+  const reviewQuestions = useMemo(() => {
+    const filtered = (questions || []).filter(
+      (q) => !isContentQuestion(q) || response?.answers?.[q.id] != null
+    );
+    return orderQuestionsLikeStudent(filtered, response?.answers, {
+      slug: quiz?.slug || quiz?.id,
+      discord: response?.discord_username,
+      ingame: response?.ingame_name,
+      shuffleQuestions: Boolean(quiz?.settings?.shuffle_questions),
+    });
+  }, [questions, response, quiz]);
 
   const ungradedCount = useMemo(() => {
     if (!response) return 0;

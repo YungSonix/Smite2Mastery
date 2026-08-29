@@ -185,6 +185,62 @@ function hashSeed(parts) {
   return h >>> 0;
 }
 
+/** Stable shuffle so re-renders don't reshuffle mid-answer. */
+export function seededShuffle(list, seedStr) {
+  const out = [...list];
+  let seed = 0;
+  const id = String(seedStr || '');
+  for (let i = 0; i < id.length; i += 1) seed = (seed * 31 + id.charCodeAt(i)) >>> 0;
+  for (let i = out.length - 1; i > 0; i -= 1) {
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    const j = seed % (i + 1);
+    const tmp = out[i];
+    out[i] = out[j];
+    out[j] = tmp;
+  }
+  return out;
+}
+
+export function extractQuestionOrder(answers) {
+  if (!answers || typeof answers !== 'object') return null;
+  const order = answers.__question_order;
+  if (!Array.isArray(order) || !order.length) return null;
+  return order.map(String);
+}
+
+/** Host replay order: saved take order, else seeded shuffle, else editor order. */
+export function orderQuestionsLikeStudent(questions, answers, { slug, discord, ingame, shuffleQuestions } = {}) {
+  const list = Array.isArray(questions) ? questions : [];
+  if (!list.length) return list;
+
+  const savedOrder = extractQuestionOrder(answers);
+  if (savedOrder?.length) {
+    const byId = new Map(list.map((q) => [String(q.id), q]));
+    const ordered = [];
+    const seen = new Set();
+    for (const id of savedOrder) {
+      const q = byId.get(String(id));
+      if (q) {
+        ordered.push(q);
+        seen.add(String(id));
+      }
+    }
+    for (const q of list) {
+      if (!seen.has(String(q.id))) ordered.push(q);
+    }
+    return ordered;
+  }
+
+  if (shuffleQuestions) {
+    const seed =
+      (answers && answers.__shuffle_seed) ||
+      `${slug || ''}|${discord || ''}|${ingame || ''}`;
+    return seededShuffle(list, seed);
+  }
+
+  return list;
+}
+
 export function pickVariantIndex(slug, discord, questionId, count, previousIndex, salt) {
   const n = Math.max(1, Number(count) || 1);
   if (n <= 1) return 0;
