@@ -8,6 +8,7 @@ const {
   sanitizePlayerName,
 } = require('../../lib/server/triviaApi');
 const { commitGuestAttempt } = require('../../lib/server/triviaCommit');
+const { readTakeSessionToken } = require('../../lib/server/triviaSessions');
 
 const SUBMIT_MAX_BYTES = Number(process.env.TRIVIA_SUBMIT_MAX_BYTES) || 1024 * 1024;
 
@@ -89,6 +90,7 @@ module.exports = async function handler(req, res) {
       variantMap,
       ip: readIp(req),
       ua: req.headers['user-agent'] || null,
+      sessionToken: readTakeSessionToken(body),
       allowClosedWindow: Boolean(body.force_timeout),
     });
     return send(res, 200, payload);

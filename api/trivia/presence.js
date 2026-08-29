@@ -8,6 +8,12 @@ const {
   sanitizePlayerName,
 } = require('../../lib/server/triviaApi');
 const { compactDraftAnswers, flushSessionIfDue, sessionDraftDue } = require('../../lib/server/triviaCommit');
+const {
+  readTakeSessionToken,
+  findQuizSession,
+  discordSessionTaken,
+  tokenColumnMissing,
+} = require('../../lib/server/triviaSessions');
 const { quizWindowState, shouldPurgeLiveSessions, purgeLiveSessions } = require('../../lib/server/triviaWindow');
 
 function tableMissing(err) {
@@ -98,18 +104,33 @@ module.exports = async function handler(req, res) {
     const answered = Math.max(0, Math.min(200, Number(body.answered_count) || 0));
     const qCount = Math.max(0, Math.min(200, Number(body.question_count) || 0));
     const now = new Date().toISOString();
+    const sessionToken = readTakeSessionToken(body);
 
-    const { data: existing, error: findErr } = await sb
-      .from('trivia_sessions')
-      .select(
-        'id, hidden_count, ingame_name, user_agent, client_started_at, started_at, left_page, discord_username, last_seen_at, answered_count'
-      )
-      .eq('quiz_id', quiz.id)
-      .ilike('discord_username', discord)
-      .maybeSingle();
-    if (findErr) {
+    let existing = null;
+    try {
+      const found = await findQuizSession(sb, quiz.id, { discord, sessionToken });
+      if (found.conflict === 'discord_taken') {
+        return send(res, 409, {
+          error: 'That Discord Username is already in use on this quiz by another taker.',
+        });
+      }
+      existing = found.session;
+    } catch (findErr) {
       if (tableMissing(findErr)) return send(res, 200, { ok: false, skipped: true });
       return send(res, 500, { error: findErr.message });
+    }
+
+    if (
+      existing &&
+      sessionToken &&
+      String(existing.discord_username || '').toLowerCase() !== discord.toLowerCase()
+    ) {
+      const taken = await discordSessionTaken(sb, quiz.id, discord, existing.id);
+      if (taken) {
+        return send(res, 409, {
+          error: 'That Discord Username is already in use on this quiz by another taker.',
+        });
+      }
     }
 
     const row = {
@@ -149,20 +170,24 @@ module.exports = async function handler(req, res) {
       if (existing) {
         return sb.from('trivia_sessions').update(payload).eq('id', existing.id).select(saveCols).maybeSingle();
       }
-      return sb
-        .from('trivia_sessions')
-        .insert({ ...payload, started_at: now })
-        .select(saveCols)
-        .maybeSingle();
+      const insertRow = { ...payload, started_at: now };
+      if (sessionToken) insertRow.client_session_token = sessionToken;
+      return sb.from('trivia_sessions').insert(insertRow).select(saveCols).maybeSingle();
     };
 
-    let saved = await save({ ...row, ...extra });
+    const tokenPatch = sessionToken && !existing?.client_session_token ? { client_session_token: sessionToken } : {};
+    let saved = await save({ ...row, ...extra, ...tokenPatch });
     if (saved.error && draftUnsupported(saved.error) && Object.keys(extra).length) {
       saved = await save(row);
     }
     if (saved.error) {
       if (tableMissing(saved.error)) return send(res, 200, { ok: false, skipped: true });
-      if (saved.error.code === '23505') return send(res, 200, { ok: true });
+      if (saved.error.code === '23505') {
+        if (tokenColumnMissing(saved.error)) return send(res, 200, { ok: true });
+        return send(res, 409, {
+          error: 'That Discord Username is already in use on this quiz by another taker.',
+        });
+      }
       return send(res, 500, { error: saved.error.message });
     }
 

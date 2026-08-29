@@ -31,7 +31,8 @@ create table if not exists public.trivia_sessions (
 alter table public.trivia_sessions
   add column if not exists draft_answers jsonb,
   add column if not exists variant_map jsonb,
-  add column if not exists client_started_at timestamptz;
+  add column if not exists client_started_at timestamptz,
+  add column if not exists client_session_token text;
 
 create unique index if not exists trivia_sessions_quiz_discord_uidx
   on public.trivia_sessions (quiz_id, lower(discord_username));

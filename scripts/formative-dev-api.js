@@ -185,6 +185,28 @@ function sessionKey(quizId, discord) {
   return `${quizId}|${String(discord || '').toLowerCase()}`;
 }
 
+function readTakeSessionToken(body) {
+  const t = String(body?.take_session_token || body?.takeSessionToken || '').trim();
+  return t || '';
+}
+
+function findMemorySession(quizId, { discord, sessionToken }) {
+  if (sessionToken) {
+    for (const s of db.sessions.values()) {
+      if (s.quiz_id === quizId && s.client_session_token === sessionToken) return s;
+    }
+  }
+  if (discord) return db.sessions.get(sessionKey(quizId, discord)) || null;
+  return null;
+}
+
+function dropMemorySession(session) {
+  if (!session?.id) return;
+  for (const [key, s] of db.sessions.entries()) {
+    if (s.id === session.id) db.sessions.delete(key);
+  }
+}
+
 function purgeMemorySessions(quizId) {
   for (const [key, s] of db.sessions) {
     if (s.quiz_id === quizId) db.sessions.delete(key);
@@ -261,13 +283,31 @@ async function handlePresence(req, res) {
     purgeMemorySessions(quiz.id);
     return json(res, 403, { error: 'This quiz is closed' });
   }
-  const key = sessionKey(quiz.id, discord);
-  const existing = db.sessions.get(key);
+  const sessionToken = readTakeSessionToken(body);
+  let existing = findMemorySession(quiz.id, { discord, sessionToken });
+  if (
+    existing &&
+    sessionToken &&
+    String(existing.discord_username || '').toLowerCase() !== discord.toLowerCase()
+  ) {
+    const taken = [...db.sessions.values()].some(
+      (s) =>
+        s.quiz_id === quiz.id &&
+        s.id !== existing.id &&
+        String(s.discord_username || '').toLowerCase() === discord.toLowerCase()
+    );
+    if (taken) {
+      return json(res, 409, {
+        error: 'That Discord Username is already in use on this quiz by another taker.',
+      });
+    }
+    dropMemorySession(existing);
+  }
   const hiddenInc = Math.min(1, Math.max(0, Number(body.hidden_inc) || 0));
   const now = new Date().toISOString();
   const leftPage = Boolean(body.left_page);
   const started = Number(body.started_at);
-  db.sessions.set(key, {
+  const record = {
     id: existing?.id || randomUUID(),
     quiz_id: quiz.id,
     discord_username: discord,
@@ -284,9 +324,12 @@ async function handlePresence(req, res) {
     client_started_at:
       existing?.client_started_at ||
       (Number.isFinite(started) && started > 0 ? new Date(started).toISOString() : null),
+    client_session_token: sessionToken || existing?.client_session_token || null,
     ip_address: readIp(req),
     user_agent: req.headers['user-agent'] || existing?.user_agent || null,
-  });
+  };
+  dropMemorySession(record);
+  db.sessions.set(sessionKey(quiz.id, discord), record);
   flushMemoryDrafts(quiz);
   return json(res, 200, { ok: true });
 }
@@ -676,7 +719,9 @@ async function handleSubmit(req, res) {
   }
   if (existing && allowRetake) db.responses.delete(existing.id);
 
-  const live = db.sessions.get(sessionKey(quiz.id, discord));
+  const sessionToken = readTakeSessionToken(body);
+  const live =
+    findMemorySession(quiz.id, { discord, sessionToken }) || db.sessions.get(sessionKey(quiz.id, discord));
   answers.__lifelines = mergeLifelineCounts(
     extractLifelines(live?.draft_answers),
     extractLifelines(answers)
@@ -709,7 +754,8 @@ async function handleSubmit(req, res) {
     submitted_at: new Date().toISOString(),
   };
   db.responses.set(row.id, row);
-  db.sessions.delete(sessionKey(quiz.id, discord));
+  if (live) dropMemorySession(live);
+  else db.sessions.delete(sessionKey(quiz.id, discord));
   const showScores = Boolean(quiz.settings?.show_scores);
   const payload = { ok: true, responseId: row.id };
   if (showScores) {

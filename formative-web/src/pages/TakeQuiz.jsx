@@ -23,6 +23,24 @@ import { quizWindowState } from '../lib/quizSettings';
 import { quizThemeProps } from '../lib/quizThemes';
 import { pingTriviaPresence, compactDraftAnswers, PRESENCE_POLL_MS } from '../lib/triviaPresence';
 import { LIFELINES_PER_ATTEMPT, totalLifelinesUsed, lifelineMultiplier } from '../lib/triviaHints';
+
+function createTakeSessionToken() {
+  try {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+      return crypto.randomUUID();
+    }
+  } catch {
+    /* ignore */
+  }
+  return `t-${Date.now()}-${Math.random().toString(36).slice(2, 12)}`;
+}
+
+function ensureTakeSessionToken(ref, savedToken) {
+  if (ref.current) return ref.current;
+  const token = savedToken || createTakeSessionToken();
+  ref.current = token;
+  return token;
+}
 import { allChoicesHaveArt, lookupChoiceArt } from '../lib/choiceArt';
 import { resolveMediaUrl } from '../lib/mediaUrl';
 import {
@@ -221,6 +239,7 @@ export default function TakeQuiz() {
   const submittingRef = useRef(false);
   const resultRef = useRef(null);
   const payloadRef = useRef({});
+  const takeSessionTokenRef = useRef('');
   resultRef.current = result;
 
   useEffect(() => {
@@ -247,6 +266,12 @@ export default function TakeQuiz() {
           if (saved.shuffleSeed) setShuffleSeed(String(saved.shuffleSeed));
           else if (saved.startedAt) {
             setShuffleSeed(`${slug}|${saved.discord || ''}|${saved.ingame || ''}`);
+          }
+          if (saved.takeSessionToken) {
+            takeSessionTokenRef.current = String(saved.takeSessionToken);
+          }
+          if (saved.startedAt) {
+            ensureTakeSessionToken(takeSessionTokenRef, saved.takeSessionToken);
           }
           if (saved.startedAt && saved.variantMap && typeof saved.variantMap === 'object') {
             setVariantMap(saved.variantMap);
@@ -300,6 +325,7 @@ export default function TakeQuiz() {
       variantMap,
       startedAt,
       shuffleSeed,
+      takeSessionToken: takeSessionTokenRef.current || undefined,
     });
   }, [slug, discord, ingame, answers, variantMap, startedAt, shuffleSeed, result, loading]);
 
@@ -326,6 +352,7 @@ export default function TakeQuiz() {
           variantMap,
           startedAt,
           shuffleSeed,
+          takeSessionToken: takeSessionTokenRef.current || undefined,
         });
       }
       return next;
@@ -356,6 +383,7 @@ export default function TakeQuiz() {
     },
     variantMap,
     startedAt,
+    takeSessionToken: takeSessionTokenRef.current,
   };
 
   const lifelinesLeft = Math.max(0, LIFELINES_PER_ATTEMPT - totalLifelinesUsed(hintCounts));
@@ -473,6 +501,7 @@ export default function TakeQuiz() {
           slug: p.slug || slug,
           discord_username: name,
           ingame_name: String(p.ingame || ingame || '').trim(),
+          take_session_token: p.takeSessionToken || takeSessionTokenRef.current,
           answered_count: answeredCount,
           question_count: scoredQuestionCount,
           currently_hidden: extra.left_page ? true : hidden,
@@ -578,6 +607,7 @@ export default function TakeQuiz() {
           slug: p.slug,
           discord_username: discordName,
           ingame_name: ingameName,
+          take_session_token: p.takeSessionToken || takeSessionTokenRef.current,
           answers: p.answers,
           variant_map: p.variantMap,
           force_timeout: Boolean(opts.force),
@@ -862,6 +892,7 @@ export default function TakeQuiz() {
                       }
                     }
                     setShuffleSeed(`${slug}|${discord}|${ingame}|${Date.now()}`);
+                    ensureTakeSessionToken(takeSessionTokenRef, loadTriviaProgress(slug)?.takeSessionToken);
                     setStartedAt(Date.now());
                   } finally {
                     setBusy(false);
