@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Timer warnings preview — 8 min quiz</title>
+  <style>
+    :root {
+      --bg: #1a1410;
+      --card: rgba(32, 24, 18, 0.94);
+      --border: rgba(125, 211, 252, 0.42);
+      --text: #f5e6d3;
+      --muted: #a89a8a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: linear-gradient(180deg, #2a1f18, var(--bg));
+      color: var(--text);
+    }
+    .page {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+    h1 { font-size: 1.1rem; margin: 0 0 8px; }
+    p.lead { color: var(--muted); font-size: 0.9rem; margin: 0 0 20px; line-height: 1.45; }
+    .phone {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--card);
+      min-height: 520px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+    }
+    .progress {
+      padding: 12px 16px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      border-bottom: 1px solid rgba(125, 211, 252, 0.15);
+    }
+    .q {
+      padding: 20px 16px;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    .choice {
+      margin: 12px 16px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(125, 211, 252, 0.2);
+      background: rgba(8, 12, 22, 0.35);
+      font-size: 0.95rem;
+    }
+    .timer-stack {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    .timer {
+      min-width: 92px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: color-mix(in srgb, var(--card) 94%, transparent);
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      text-align: center;
+      font-size: 1rem;
+    }
+    .timer.low { color: #fecaca; border-color: rgba(248, 113, 113, 0.55); }
+    .timer.final {
+      min-width: 52px;
+      font-size: 1.35rem;
+      color: #fff;
+      border-color: rgba(248, 113, 113, 0.75);
+      background: rgba(127, 29, 29, 0.9);
+    }
+    .cue {
+      padding: 4px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: color-mix(in srgb, var(--card) 94%, transparent);
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    button {
+      border: 1px solid var(--border);
+      background: rgba(8, 12, 22, 0.6);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    button:hover { background: rgba(125, 211, 252, 0.12); }
+    button.active { outline: 2px solid rgba(125, 211, 252, 0.5); }
+    .timeline {
+      margin-top: 16px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .timeline strong { color: var(--text); }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>Minimal timer — 8 minute quiz</h1>
+    <p class="lead">Top-right only: clock chip + tiny label when a mark hits. Last 5 seconds the chip counts 5→1 (no fullscreen).</p>
+
+    <div class="phone" id="phone">
+      <div class="timer-stack">
+        <div class="timer" id="timer">8:00</div>
+        <div class="cue" id="cue" hidden></div>
+      </div>
+      <div class="progress">Question 3 of 25</div>
+      <div class="q">Which god has an ability called Love Birds?</div>
+      <div class="choice">Aphrodite</div>
+      <div class="choice">Apollo</div>
+    </div>
+
+    <div class="controls">
+      <button type="button" data-sec="480">8:00 normal</button>
+      <button type="button" data-sec="300">5:00 → cue</button>
+      <button type="button" data-sec="90">1:30</button>
+      <button type="button" data-sec="60">1:00 → cue</button>
+      <button type="button" data-sec="30">0:30 → cue</button>
+      <button type="button" data-sec="5">0:05 → 5</button>
+      <button type="button" data-sec="3">0:03</button>
+      <button type="button" data-sec="1">0:01</button>
+    </div>
+
+    <div class="timeline">
+      <strong>Your 8 min quiz:</strong> 5:00 · 1:00 · 0:30 toasts under the chip · 0:05–0:01 chip shows <strong>5 4 3 2 1</strong> in red.
+    </div>
+  </div>
+  <script>
+    const cues = [
+      [300, '5 minutes left'],
+      [60, '1 minute left'],
+      [30, '30 seconds left'],
+    ];
+    const timer = document.getElementById('timer');
+    const cue = document.getElementById('cue');
+    const buttons = document.querySelectorAll('button[data-sec]');
+
+    function show(sec) {
+      timer.className = 'timer';
+      cue.hidden = true;
+      if (sec > 0 && sec <= 5) {
+        timer.textContent = String(sec);
+        timer.classList.add('final');
+      } else {
+        const m = Math.floor(sec / 60);
+        const s = sec % 60;
+        timer.textContent = m + ':' + String(s).padStart(2, '0');
+        if (sec <= 30) timer.classList.add('low');
+      }
+      for (const [mark, label] of cues) {
+        if (sec === mark) {
+          cue.textContent = label;
+          cue.hidden = false;
+          break;
+        }
+      }
+      buttons.forEach((b) => b.classList.toggle('active', Number(b.dataset.sec) === sec));
+    }
+
+    buttons.forEach((b) => b.addEventListener('click', () => show(Number(b.dataset.sec))));
+    show(480);
+  </script>
+</body>
+</html>

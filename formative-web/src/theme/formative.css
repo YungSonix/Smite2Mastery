@@ -1546,11 +1546,22 @@ label.f-file-btn:hover {
   backdrop-filter: blur(10px);
 }
 
-.f-timer-float {
+.f-timer-stack {
   position: fixed;
   top: max(12px, env(safe-area-inset-top, 0px));
   right: max(12px, env(safe-area-inset-right, 0px));
   z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.f-timer-float {
+  position: static;
+  top: auto;
+  right: auto;
   min-width: 92px;
   padding: 10px 14px;
   border-radius: 10px;
@@ -1569,6 +1580,27 @@ label.f-file-btn:hover {
 .f-timer-float.is-low {
   color: #fecaca;
   border-color: rgba(248, 113, 113, 0.55);
+}
+
+.f-timer-float.is-final {
+  min-width: 52px;
+  font-size: 1.35rem;
+  color: #fff;
+  border-color: rgba(248, 113, 113, 0.75);
+  background: rgba(127, 29, 29, 0.9);
+}
+
+.f-timer-cue {
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--f-blue-border);
+  background: color-mix(in srgb, var(--f-card) 94%, transparent);
+  color: var(--f-muted);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  text-align: right;
+  backdrop-filter: blur(10px);
 }
 
 .f-missing-scrim {

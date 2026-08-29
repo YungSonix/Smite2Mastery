@@ -22,6 +22,11 @@ import {
 import { quizWindowState } from '../lib/quizSettings';
 import { quizThemeProps } from '../lib/quizThemes';
 import { pingTriviaPresence, compactDraftAnswers, PRESENCE_POLL_MS } from '../lib/triviaPresence';
+import {
+  formatTimerDisplay,
+  nextTimerCue,
+  timerFloatClassName,
+} from '../lib/quizTimeWarnings';
 import { LIFELINES_PER_ATTEMPT, totalLifelinesUsed, lifelineMultiplier } from '../lib/triviaHints';
 
 function createTakeSessionToken() {
@@ -174,13 +179,6 @@ function DrawingPad({ value, onChange }) {
   );
 }
 
-function formatRemain(ms) {
-  const total = Math.max(0, Math.ceil(ms / 1000));
-  const m = Math.floor(total / 60);
-  const s = total % 60;
-  return `${m}:${String(s).padStart(2, '0')}`;
-}
-
 function isGate(q) {
   return Boolean(q?.meta?.is_discord_gate || q?.meta?.is_ingame_gate);
 }
@@ -240,6 +238,8 @@ export default function TakeQuiz() {
   const resultRef = useRef(null);
   const payloadRef = useRef({});
   const takeSessionTokenRef = useRef('');
+  const timerCuesFiredRef = useRef(new Set());
+  const [timerCue, setTimerCue] = useState(null);
   resultRef.current = result;
 
   useEffect(() => {
@@ -658,6 +658,28 @@ export default function TakeQuiz() {
     };
   }, [timed, startedAt, timeLimitSec, result]);
 
+  useEffect(() => {
+    if (!timed || !startedAt || result || !showQuestions || remainingMs == null) return;
+    const cue = nextTimerCue(remainingMs, timerCuesFiredRef.current);
+    if (!cue) return;
+    timerCuesFiredRef.current.add(cue.sec);
+    setTimerCue(cue);
+  }, [timed, startedAt, result, showQuestions, remainingMs]);
+
+  useEffect(() => {
+    if (!timerCue) return undefined;
+    const t = setTimeout(() => setTimerCue(null), 2800);
+    return () => clearTimeout(t);
+  }, [timerCue]);
+
+  useEffect(() => {
+    if (!startedAt) return;
+    timerCuesFiredRef.current = new Set();
+    setTimerCue(null);
+  }, [startedAt]);
+
+  const timerDisplay = formatTimerDisplay(remainingMs);
+
   if (loading) {
     return (
       <div className="f-take">
@@ -720,12 +742,15 @@ export default function TakeQuiz() {
         </div>
       ) : null}
       {timed && startedAt && showQuestions ? (
-        <div
-          className={`f-timer-float ${remainingMs != null && remainingMs < 30000 ? 'is-low' : ''}`}
-          role="timer"
-          aria-live="polite"
-        >
-          {formatRemain(remainingMs ?? 0)}
+        <div className="f-timer-stack">
+          <div className={timerFloatClassName(remainingMs)} role="timer" aria-live="polite">
+            {timerDisplay}
+          </div>
+          {timerCue ? (
+            <div className="f-timer-cue" role="status" aria-live="polite">
+              {timerCue.label}
+            </div>
+          ) : null}
         </div>
       ) : null}
       <div className="f-take-shell">
