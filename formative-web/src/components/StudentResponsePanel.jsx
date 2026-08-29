@@ -16,7 +16,8 @@ import {
   isScoredQuestion,
   needsManualGrade,
 } from '../lib/formatResponseAnswer';
-import { orderQuestionsLikeStudent } from '../lib/triviaVariants';
+import { orderQuestionsLikeStudent, applyVariant, extractVariantMap, extractQuestionOrder } from '../lib/triviaVariants';
+import { scoredInsightQuestions } from '../lib/triviaInsights';
 
 function MenuIcon({ name }) {
   const props = {
@@ -120,17 +121,32 @@ export default function StudentResponsePanel({
   const prev = index > 0 ? responses[index - 1] : null;
   const next = index >= 0 && index < (responses?.length || 0) - 1 ? responses[index + 1] : null;
 
+  const variantMap = useMemo(
+    () => extractVariantMap(response?.answers) || {},
+    [response?.answers]
+  );
+
+  const editorNumById = useMemo(() => {
+    const map = new Map();
+    scoredInsightQuestions(questions).forEach((q, i) => map.set(q.id, i + 1));
+    return map;
+  }, [questions]);
+
   const reviewQuestions = useMemo(() => {
     const filtered = (questions || []).filter(
       (q) => !isContentQuestion(q) || response?.answers?.[q.id] != null
     );
-    return orderQuestionsLikeStudent(filtered, response?.answers, {
+    const ordered = orderQuestionsLikeStudent(filtered, response?.answers, {
       slug: quiz?.slug || quiz?.id,
       discord: response?.discord_username,
       ingame: response?.ingame_name,
       shuffleQuestions: Boolean(quiz?.settings?.shuffle_questions),
     });
-  }, [questions, response, quiz]);
+    return ordered.map((q) => applyVariant(q, variantMap[q.id] ?? 0));
+  }, [questions, response, quiz, variantMap]);
+
+  const orderTracked = Boolean(extractQuestionOrder(response?.answers)?.length);
+  const shuffleOn = Boolean(quiz?.settings?.shuffle_questions);
 
   const ungradedCount = useMemo(() => {
     if (!response) return 0;
@@ -313,6 +329,12 @@ export default function StudentResponsePanel({
 
       <div className="f-student-panel-meta">
         <span className="f-muted">IP {formatIp(response.ip_address)}</span>
+        {shuffleOn ? (
+          <span className="f-muted f-student-panel-order-note">
+            Numbers = their take order (grid columns use editor order).
+            {!orderTracked ? ' Order approximated for this submission.' : ''}
+          </span>
+        ) : null}
       </div>
 
       <div className="f-student-panel-score-row">
@@ -375,13 +397,32 @@ export default function StudentResponsePanel({
           const earned = effectiveEarned(q, response, maxPts);
           const mark =
             earned == null ? 'empty' : earned > 0 ? 'ok' : 'bad';
+          const editorNum = editorNumById.get(q.id);
+          const takeNum = i + 1;
 
           return (
             <article key={q.id} className={`f-answer-card mark-${mark}`}>
               <div className="f-answer-card-head">
-                <span className="f-q-num">{i + 1}</span>
+                <span
+                  className="f-q-num"
+                  title={
+                    shuffleOn && editorNum != null && editorNum !== takeNum
+                      ? `Editor list: Q${editorNum}`
+                      : undefined
+                  }
+                >
+                  {takeNum}
+                </span>
                 <div className="f-answer-card-prompt">
-                  <div className="f-answer-type">{typeLabel(q)}</div>
+                  <div className="f-answer-type">
+                    {typeLabel(q)}
+                    {q.meta?.variant_index > 0 ? (
+                      <span className="f-muted"> · Version {String.fromCharCode(65 + (q.meta.variant_index || 0))}</span>
+                    ) : null}
+                    {shuffleOn && editorNum != null && editorNum !== takeNum ? (
+                      <span className="f-muted"> · Editor Q{editorNum}</span>
+                    ) : null}
+                  </div>
                   <div>{promptPlain(q.prompt) || typeLabel(q)}</div>
                 </div>
               </div>

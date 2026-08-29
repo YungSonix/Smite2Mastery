@@ -3460,6 +3460,14 @@ label.f-file-btn:hover {
 .f-student-panel-meta {
   padding: 6px 16px 0;
   font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.f-student-panel-order-note {
+  line-height: 1.35;
+  max-width: 42ch;
 }
 
 .f-student-panel-score-row {
