@@ -5736,10 +5736,6 @@ label.f-file-btn:hover {
 }
 
 /* Host: student take replay (new tab) */
-.f-student-take-view {
-  padding: 16px 18px 48px;
-}
-
 .f-student-take-view-head {
   display: flex;
   flex-wrap: wrap;
@@ -5747,12 +5743,37 @@ label.f-file-btn:hover {
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 18px;
+  padding: 14px 16px;
+  border-radius: var(--f-radius);
+  border: 1px solid color-mix(in srgb, var(--f-student-page-ink, var(--f-text)) 12%, var(--f-border));
+  background: color-mix(in srgb, var(--f-card) 88%, var(--f-page));
+  box-shadow: var(--f-shadow);
 }
 
 .f-student-take-view-title {
-  margin: 0 0 4px;
+  margin: 0 0 6px;
   font-family: var(--f-display);
   font-size: 1.35rem;
+  color: var(--f-student-page-ink, var(--f-text));
+}
+
+.f-student-take-view-sub {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--f-student-page-muted, var(--f-muted));
+}
+
+.f-student-take-view-sub strong {
+  color: var(--f-student-page-ink, var(--f-text));
+  font-weight: 700;
+}
+
+.f-student-take-view-note {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--f-student-page-muted, var(--f-muted));
 }
 
 .f-student-take-view-list {
@@ -5868,28 +5889,46 @@ label.f-file-btn:hover {
   color: var(--f-blue);
 }
 
-/* Student replay on themed take pages — stronger contrast than editor chrome */
+/* Student replay — ink derived from card surface (not theme text token) */
+.f-student-take-view .f-student-replay-card {
+  color: var(--f-student-card-ink, var(--f-text));
+}
+
 .f-student-take-view .f-student-replay-card .f-q-head {
-  color: var(--f-text);
+  color: var(--f-student-card-ink, var(--f-text));
   font-size: 14px;
 }
 
 .f-student-take-view .f-type-pill {
   padding: 2px 10px;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--f-text) 16%, var(--f-border));
-  background: color-mix(in srgb, var(--f-text) 6%, var(--f-card));
-  color: var(--f-text);
+  border: 1px solid var(--f-student-card-border, var(--f-border));
+  background: var(--f-student-card-soft, var(--f-blue-soft));
+  color: var(--f-student-card-ink, var(--f-text));
   font-size: 12px;
   font-weight: 700;
 }
 
 .f-student-take-view .f-student-replay-card .f-muted {
-  color: color-mix(in srgb, var(--f-text) 80%, transparent);
+  color: var(--f-student-card-muted, var(--f-muted));
 }
 
 .f-student-take-view .f-student-replay-card .f-q-media-label {
-  color: color-mix(in srgb, var(--f-text) 82%, transparent);
+  color: var(--f-student-card-muted, var(--f-muted));
+}
+
+.f-student-take-view .f-student-replay-prompt,
+.f-student-take-view .f-student-replay-prompt .f-md,
+.f-student-take-view .f-student-replay-prompt .f-md p {
+  color: var(--f-student-card-ink, var(--f-text));
+}
+
+.f-student-take-view .f-replay-correct-line {
+  color: var(--f-student-card-ink, var(--f-text));
+}
+
+.f-student-take-view .f-student-replay-answer pre {
+  color: var(--f-student-card-ink, var(--f-text));
 }
 
 .f-student-take-view .f-replay-verdict {
@@ -5902,12 +5941,12 @@ label.f-file-btn:hover {
 }
 
 .f-student-take-view .f-preview-option-list.f-student-replay-list li {
-  color: var(--f-text);
+  color: var(--f-student-card-ink, var(--f-text));
   font-size: 15px;
   font-weight: 600;
   line-height: 1.4;
-  background: color-mix(in srgb, var(--f-text) 5%, var(--f-card));
-  border-color: color-mix(in srgb, var(--f-text) 14%, var(--f-border));
+  background: var(--f-student-card-soft, color-mix(in srgb, var(--f-text) 5%, var(--f-card)));
+  border-color: var(--f-student-card-border, color-mix(in srgb, var(--f-text) 14%, var(--f-border)));
 }
 
 .f-student-take-view .f-preview-option-list.f-student-replay-list li.is-correct {
@@ -5923,7 +5962,7 @@ label.f-file-btn:hover {
 }
 
 .f-student-take-view .f-preview-opt-mark {
-  color: color-mix(in srgb, var(--f-text) 58%, transparent);
+  color: var(--f-student-card-muted, color-mix(in srgb, var(--f-text) 58%, transparent));
   font-size: 14px;
 }
 
@@ -5940,7 +5979,7 @@ label.f-file-btn:hover {
 }
 
 .f-student-take-view .f-choice-tile {
-  color: var(--f-text);
+  color: var(--f-student-card-ink, var(--f-text));
 }
 
 .f-student-take-view .f-choice-tile.is-correct {

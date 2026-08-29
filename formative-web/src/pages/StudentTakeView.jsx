@@ -9,7 +9,7 @@ import { correctChoiceIndexes } from '../lib/correctAnswer';
 import { listMediaUrls, questionMediaCrop, questionMediaCropSeed } from '../lib/questionMedia';
 import { promptPlain } from '../lib/promptPlain';
 import { typeLabel } from '../lib/questionTypes';
-import { quizThemeProps } from '../lib/quizThemes';
+import { quizThemeProps, studentReplayThemeVars } from '../lib/quizThemes';
 import { resolveMediaUrl } from '../lib/mediaUrl';
 import {
   applyVariant,
@@ -221,55 +221,62 @@ export default function StudentTakeView() {
     Boolean(quiz?.settings?.shuffle_questions) &&
     !extractQuestionOrder(hasResponseAnswers(response?.answers) ? response.answers : {});
 
-  const theme = quizThemeProps(quiz?.settings?.theme);
+  const theme = quizThemeProps(quiz?.settings);
+  const replayStyle = quiz?.settings
+    ? { ...theme.style, ...studentReplayThemeVars(quiz.settings) }
+    : theme.style;
 
   if (loading) {
     return (
-      <div className="f-activity-shell">
-        <p className="f-muted">Loading student view…</p>
+      <div className="f-take f-student-take-view">
+        <div className="f-take-shell">
+          <p className="f-muted">Loading student view…</p>
+        </div>
       </div>
     );
   }
 
   if (error || !quiz || !response) {
     return (
-      <div className="f-activity-shell">
-        <p className="f-error">{error || 'Not found'}</p>
-        <Link to={activityHref({ slug: quizId })}>Back to activity</Link>
+      <div className="f-take f-student-take-view">
+        <div className="f-take-shell">
+          <p className="f-error">{error || 'Not found'}</p>
+          <Link to={activityHref({ slug: quizId })}>Back to activity</Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className={`f-take-shell f-student-take-view ${theme.className}`} style={theme.style}>
-      <header className="f-student-take-view-head">
-        <div>
-          <h1 className="f-student-take-view-title">{quiz.title || 'Quiz'}</h1>
-          <p className="f-muted">
-            What <strong>{response.discord_username}</strong> saw · read-only replay
-            {response.ingame_name ? ` · ${response.ingame_name}` : ''}
-          </p>
-          {orderApproximated ? (
-            <p className="f-muted" style={{ fontSize: 12, marginTop: 4 }}>
-              Order approximated (submission before order tracking)
+    <div className={`f-take f-student-take-view ${theme.className}`} style={replayStyle}>
+      <div className="f-take-shell">
+        <header className="f-student-take-view-head">
+          <div>
+            <h1 className="f-student-take-view-title">{quiz.title || 'Quiz'}</h1>
+            <p className="f-student-take-view-sub">
+              What <strong>{response.discord_username}</strong> saw · read-only replay
+              {response.ingame_name ? ` · ${response.ingame_name}` : ''}
             </p>
-          ) : null}
-        </div>
-        <Link className="f-outline-btn" to={activityHref(quiz)}>
-          Back to activity
-        </Link>
-      </header>
+            {orderApproximated ? (
+              <p className="f-student-take-view-note">Order approximated (submission before order tracking)</p>
+            ) : null}
+          </div>
+          <Link className="f-outline-btn" to={activityHref(quiz)}>
+            Back to activity
+          </Link>
+        </header>
 
-      <div className="f-take-form f-student-take-view-list">
-        {displayQuestions.map((q, idx) => (
-          <QuestionReplayCard
-            key={q.id}
-            q={q}
-            idx={idx}
-            answerRaw={response.answers?.[q.id]}
-            response={response}
-          />
-        ))}
+        <div className="f-take-form f-student-take-view-list">
+          {displayQuestions.map((q, idx) => (
+            <QuestionReplayCard
+              key={q.id}
+              q={q}
+              idx={idx}
+              answerRaw={response.answers?.[q.id]}
+              response={response}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

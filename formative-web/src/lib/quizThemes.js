@@ -191,6 +191,29 @@ export function onAccentColor(hex) {
   return (r * 299 + g * 587 + b * 114) / 1000 > 155 ? '#14213d' : '#ffffff';
 }
 
+/** Readable body copy on a given surface (card/page), independent of theme text token. */
+export function surfaceInk(hex, { muted = false } = {}) {
+  const dark = onAccentColor(hex) === '#14213d';
+  if (muted) {
+    return dark ? rgba('#2c3546', 0.78) : rgba('#ece8df', 0.82);
+  }
+  return dark ? '#2c3546' : '#ece8df';
+}
+
+/** Extra CSS vars for host student replay — fixes light text on light cards. */
+export function studentReplayThemeVars(settings) {
+  const t = resolvedQuizTheme(settings);
+  const cardInk = surfaceInk(t.card);
+  return {
+    '--f-student-page-ink': t.text,
+    '--f-student-page-muted': rgba(t.text, 0.86),
+    '--f-student-card-ink': cardInk,
+    '--f-student-card-muted': surfaceInk(t.card, { muted: true }),
+    '--f-student-card-soft': rgba(cardInk, 0.08),
+    '--f-student-card-border': rgba(cardInk, 0.16),
+  };
+}
+
 export function rgba(hex, a) {
   const [r, g, b] = hexToRgb(hex);
   return `rgba(${r}, ${g}, ${b}, ${a})`;
