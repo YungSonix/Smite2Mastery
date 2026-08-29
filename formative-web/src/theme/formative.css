@@ -4513,8 +4513,78 @@ label.f-file-btn:hover {
   color: var(--f-text);
 }
 
+.f-tool-btn.active {
+  background: var(--f-blue);
+  color: var(--f-on-accent, #fff);
+}
+
 .f-tool-btn input {
   display: none;
+}
+
+.f-banner-link-panel {
+  position: absolute;
+  top: 58px;
+  right: 14px;
+  z-index: 4;
+  width: min(420px, calc(100% - 28px));
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--f-blue-border);
+  background: color-mix(in srgb, var(--f-card, #fff) 92%, transparent);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--f-shadow);
+  display: grid;
+  gap: 8px;
+}
+
+.f-banner-link-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--f-text);
+}
+
+.f-banner-link-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.f-banner-link-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 36px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid var(--f-blue-border);
+  background: var(--f-card, #fff);
+  color: var(--f-text);
+  font-size: 12px;
+}
+
+.f-banner-link-preset {
+  justify-self: start;
+  border: none;
+  background: transparent;
+  color: var(--f-blue);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.f-banner-link-hint,
+.f-banner-link-error {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--f-muted, #667);
+}
+
+.f-banner-link-error {
+  color: var(--f-danger, #b42318);
 }
 
 .f-take {

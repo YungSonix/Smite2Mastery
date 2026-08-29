@@ -9,6 +9,7 @@ const {
   isQuizKeyUuid,
   shortQuizSlug,
   rewriteQuestionMedia,
+  rewriteQuizBannerUrl,
 } = require('../../lib/server/triviaApi');
 const { isContentType, isManualType } = require('../../lib/server/triviaQuestionTypes');
 const { responsesToCsv } = require('../../lib/server/triviaExport');
@@ -309,7 +310,7 @@ module.exports = async function handler(req, res) {
         const title = String(body.title || 'Untitled Scroll Trivia').trim() || 'Untitled Scroll Trivia';
         const row = {
           title,
-          banner_url: body.banner_url || null,
+          banner_url: rewriteQuizBannerUrl(body.banner_url),
           owner_username: username,
           join_code: joinCode(),
           is_assigned: false,
@@ -417,6 +418,9 @@ module.exports = async function handler(req, res) {
         const patch = { ...body.patch, updated_at: new Date().toISOString() };
         delete patch.id;
         delete patch.owner_username;
+        if (Object.prototype.hasOwnProperty.call(patch, 'banner_url')) {
+          patch.banner_url = rewriteQuizBannerUrl(patch.banner_url);
+        }
         const { data: owned } = await findOwnedQuiz(sb, username, body.quizId, '*');
         if (!owned) return send(res, 404, { error: 'Quiz not found' });
         if (patch.is_assigned === true) {

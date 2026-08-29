@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HostShell from '../components/HostShell';
 import { hostApi, activityHref } from '../lib/api';
+import { resolveBannerUrl } from '../lib/mediaUrl';
 
 const ICON = `${import.meta.env.BASE_URL}scroll-icon.png`;
 
@@ -124,7 +125,7 @@ export default function Home() {
                 tabIndex={0}
               >
                 {q.banner_url ? (
-                  <img className="f-activity-thumb" src={q.banner_url} alt="" />
+                  <img className="f-activity-thumb" src={resolveBannerUrl(q.banner_url)} alt="" />
                 ) : (
                   <div className="f-activity-thumb" />
                 )}
