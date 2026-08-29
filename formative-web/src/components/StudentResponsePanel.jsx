@@ -5,6 +5,7 @@ import { formatIp } from '../lib/quizSettings';
 import { typeLabel } from '../lib/questionTypes';
 import { promptPlain } from '../lib/promptPlain';
 import { formatDuration, responseDurationMs } from '../lib/triviaInsights';
+import { responsePercent } from '../lib/sortResponses';
 import { studentTakeViewUrl } from '../lib/api';
 import {
   earnedFromStored,
@@ -113,6 +114,7 @@ export default function StudentResponsePanel({
   const [busy, setBusy] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
   const menuRef = useRef(null);
+  const bodyRef = useRef(null);
 
   const index = useMemo(
     () => (responses || []).findIndex((r) => r.id === response?.id),
@@ -179,6 +181,11 @@ export default function StudentResponsePanel({
     return () => document.removeEventListener('mousedown', onDoc);
   }, [menuOpen]);
 
+  useEffect(() => {
+    if (!response?.id) return;
+    bodyRef.current?.scrollTo({ top: 0, behavior: 'auto' });
+  }, [response?.id]);
+
   if (!response) return null;
 
   const initial = (response.discord_username || '?').charAt(0).toUpperCase();
@@ -189,6 +196,7 @@ export default function StudentResponsePanel({
     : '—';
   const durationMs = responseDurationMs(response);
   const tookLabel = durationMs != null ? formatDuration(durationMs) : null;
+  const scorePct = responsePercent(response);
 
   const commitScore = async (questionId) => {
     const q = (questions || []).find((x) => x.id === questionId);
@@ -286,6 +294,7 @@ export default function StudentResponsePanel({
       className={`f-student-panel f-student-panel-v2 ${fullscreen ? 'fullscreen' : ''}`}
       aria-label={`Responses for ${response.discord_username}`}
     >
+      <div className="f-student-panel-chrome">
       <header className="f-student-panel-head f-student-panel-head-v2">
         <button
           type="button"
@@ -339,17 +348,18 @@ export default function StudentResponsePanel({
 
       <div className="f-student-panel-score-row">
         <div>
-          <div className="f-student-panel-score-label">Activity total points</div>
+          <div className="f-student-panel-score-label">Quiz score</div>
           <div className="f-student-panel-score">
-            {totalScore} / {maxScore}pts
+            <span className="f-student-panel-score-pct">{scorePct}%</span>
+            <span className="f-student-panel-score-pts">
+              {totalScore} / {maxScore}pts
+            </span>
             {tookLabel ? (
               <span className="f-student-panel-took" title="Time from start to submit">
-                {' '}
                 · Took {tookLabel}
               </span>
             ) : (
               <span className="f-student-panel-took f-muted" title="Older takes have no finish clock">
-                {' '}
                 · Took —
               </span>
             )}
@@ -388,8 +398,9 @@ export default function StudentResponsePanel({
           {ungradedCount} response{ungradedCount === 1 ? '' : 's'} need manual grading.
         </div>
       ) : null}
+      </div>
 
-      <div className="f-student-panel-body">
+      <div className="f-student-panel-body" ref={bodyRef}>
         {reviewQuestions.map((q, i) => {
           const answerText = formatResponseAnswer(q, response.answers?.[q.id], response);
           const scored = isScoredQuestion(q);

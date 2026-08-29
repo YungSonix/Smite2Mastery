@@ -3405,6 +3405,8 @@ label.f-file-btn:hover {
   border-left: 1px solid var(--f-blue-border);
   box-shadow: -12px 0 32px rgba(0, 0, 0, 0.35);
   max-height: calc(100vh - var(--f-panel-anchor-y, 72px) - 12px);
+  min-height: 0;
+  overflow: hidden;
   animation: f-panel-in 180ms var(--f-ease);
 }
 
@@ -3489,12 +3491,35 @@ label.f-file-btn:hover {
   color: var(--f-muted);
 }
 
+.f-student-panel-chrome {
+  flex-shrink: 0;
+  background: var(--f-panel);
+  border-bottom: 1px solid var(--f-border);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+  z-index: 2;
+}
+
 .f-student-panel-score {
   font-family: var(--f-display);
   font-size: 22px;
   font-weight: 700;
   color: var(--f-blue);
   margin-top: 2px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 8px;
+}
+
+.f-student-panel-score-pct {
+  font-size: 28px;
+  line-height: 1;
+  color: var(--f-text);
+}
+
+.f-student-panel-score-pts {
+  font-size: 15px;
+  color: var(--f-blue);
 }
 
 .f-student-panel-took {
@@ -3868,11 +3893,12 @@ label.f-file-btn:hover {
 }
 
 .f-grid .ip-col {
-  width: 76px;
-  min-width: 64px;
-  max-width: 88px;
-  white-space: nowrap;
+  width: 88px;
+  min-width: 80px;
+  max-width: 104px;
+  white-space: normal;
   padding: 8px 4px;
+  vertical-align: middle;
 }
 
 .f-live-block {
@@ -4215,11 +4241,30 @@ label.f-file-btn:hover {
 
 .f-ip-cell {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 3px;
   max-width: 100%;
   min-width: 0;
   vertical-align: middle;
+}
+
+.f-ip-cell-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.f-dup-ip-peers {
+  display: block;
+  font-size: 9px;
+  line-height: 1.25;
+  color: #fbbf24;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 
 .f-dup-ip-flag {

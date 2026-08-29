@@ -6,7 +6,7 @@ import { presenceLabel, presenceStatus } from '../lib/triviaPresence';
 import { responsePercent, sortResponses } from '../lib/sortResponses';
 import { useLiveClock } from '../lib/useLiveClock';
 import { PaginationBar, usePagination } from '../lib/usePagination';
-import { duplicateIpCounts, sharedIpLabel, sharedIpSubmissionCount } from '../lib/duplicateIp';
+import { duplicateIpCounts, duplicateIpPeers, sharedIpPeerSummary, sharedIpPeerTitle, sharedIpPeersFor, sharedIpSubmissionCount } from '../lib/duplicateIp';
 
 function selectRow(r, e, onSelect) {
   if (!onSelect) return;
@@ -42,6 +42,7 @@ export default function ResponsesGrid({
   const visibleRows = slice(sorted);
 
   const ipCounts = useMemo(() => duplicateIpCounts(responses), [responses]);
+  const ipPeers = useMemo(() => duplicateIpPeers(responses), [responses]);
 
   const totalsAvg = (() => {
     if (!responses?.length) return 0;
@@ -239,6 +240,9 @@ export default function ResponsesGrid({
               const initial = (r.discord_username || '?').charAt(0).toUpperCase();
               const ipShareCount = sharedIpSubmissionCount(r.ip_address, ipCounts);
               const sharedIp = ipShareCount > 1;
+              const ipPeersList = sharedIpPeersFor(r, ipPeers);
+              const peerSummary = sharedIpPeerSummary(ipPeersList);
+              const peerTitle = sharedIpPeerTitle(ipPeersList);
               return (
                 <tr
                   key={r.id}
@@ -306,17 +310,20 @@ export default function ResponsesGrid({
                   <td className="ip-col">
                     <span className={`f-ip-cell${sharedIp ? ' has-shared-ip' : ''}`}>
                       {sharedIp ? (
-                        <span
-                          className="f-dup-ip-flag"
-                          title={sharedIpLabel(ipShareCount)}
-                          aria-label={sharedIpLabel(ipShareCount)}
-                        >
+                        <span className="f-dup-ip-flag" title={peerTitle} aria-label={peerTitle}>
                           ⚑
                         </span>
                       ) : null}
-                      <code className="f-ip" title={r.ip_address || ''}>
-                        {formatIp(r.ip_address)}
-                      </code>
+                      <span className="f-ip-cell-main">
+                        <code className="f-ip" title={r.ip_address || ''}>
+                          {formatIp(r.ip_address)}
+                        </code>
+                        {sharedIp && peerSummary ? (
+                          <span className="f-dup-ip-peers" title={peerTitle}>
+                            also {peerSummary}
+                          </span>
+                        ) : null}
+                      </span>
                     </span>
                   </td>
                 </tr>
