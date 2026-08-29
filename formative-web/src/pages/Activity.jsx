@@ -11,7 +11,12 @@ import QuestionReviewPanel from '../components/QuestionReviewPanel';
 import SortStudentsMenu from '../components/SortStudentsMenu';
 import { hostApi, takeUrl, activityHref, previewUrl } from '../lib/api';
 import { downloadResponsesCsvFromServer } from '../lib/exportResponses';
-import { readImageAsDataUrl } from '../lib/imageUpload';
+import {
+  ASSETS_BRANCH_BANNER_EXAMPLE,
+  parseBannerLink,
+  readImageAsDataUrl,
+} from '../lib/imageUpload';
+import { resolveBannerUrl } from '../lib/mediaUrl';
 import { mergeQuizSettings, mergeDraftQuizSettings } from '../lib/quizSettings';
 import { quizThemeProps } from '../lib/quizThemes';
 import { randomizeQuestion } from '../lib/triviaRemix';
@@ -121,6 +126,9 @@ export default function Activity() {
   const [autoSaveHint, setAutoSaveHint] = useState('');
   const [quizDirty, setQuizDirty] = useState(false);
   const [bannerDirty, setBannerDirty] = useState(false);
+  const [bannerLinkOpen, setBannerLinkOpen] = useState(false);
+  const [bannerLinkDraft, setBannerLinkDraft] = useState('');
+  const [bannerLinkError, setBannerLinkError] = useState('');
   const [dirtyIds, setDirtyIds] = useState([]);
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleDraft, setTitleDraft] = useState('');
@@ -842,10 +850,45 @@ export default function Activity() {
           ) : null}
           <div className="f-edit-scroll">
           <header className={`f-cover f-cover-edit ${quiz.banner_url ? 'has-art' : ''}`}>
-            {quiz.banner_url ? <img className="f-cover-img" src={quiz.banner_url} alt="" /> : null}
+            {quiz.banner_url ? (
+              <img className="f-cover-img" src={resolveBannerUrl(quiz.banner_url)} alt="" />
+            ) : null}
             <div className="f-cover-scrim" />
             <div className="f-banner-tools">
-              <label className="f-tool-btn" title="Upload banner">
+              <button
+                type="button"
+                className={`f-tool-btn ${bannerLinkOpen ? 'active' : ''}`}
+                title="Use image link (recommended for assign)"
+                aria-expanded={bannerLinkOpen}
+                onClick={() => {
+                  setBannerLinkOpen((open) => !open);
+                  setBannerLinkError('');
+                  if (!bannerLinkDraft) {
+                    setBannerLinkDraft(
+                      String(quiz.banner_url || '').startsWith('data:')
+                        ? ASSETS_BRANCH_BANNER_EXAMPLE
+                        : quiz.banner_url || ASSETS_BRANCH_BANNER_EXAMPLE
+                    );
+                  }
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path
+                    d="M6.5 9.5a3 3 0 0 0 4.24 0l1.76-1.76a3 3 0 0 0-4.24-4.24L7.5 4.26"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M9.5 6.5a3 3 0 0 0-4.24 0L3.5 8.26a3 3 0 0 0 4.24 4.24L8.5 11.74"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                Link
+              </button>
+              <label className="f-tool-btn" title="Upload embeds the file (blocked on assign)">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                   <rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
                   <circle cx="5.5" cy="6.5" r="1" fill="currentColor" />
@@ -864,6 +907,10 @@ export default function Activity() {
                       setQuiz({ ...quiz, banner_url: dataUrl });
                       setQuizDirty(true);
                       setBannerDirty(true);
+                      setBannerLinkOpen(false);
+                      setError(
+                        'Banner upload embeds the image. Use Link with a GitHub/assets URL before Assign.'
+                      );
                     } catch (err) {
                       setError(err.message || 'Banner upload failed');
                     }
@@ -879,12 +926,97 @@ export default function Activity() {
                     setQuiz({ ...quiz, banner_url: null });
                     setQuizDirty(true);
                     setBannerDirty(true);
+                    setBannerLinkDraft('');
+                    setBannerLinkError('');
                   }}
                 >
                   Clear
                 </button>
               ) : null}
             </div>
+            {bannerLinkOpen ? (
+              <div className="f-banner-link-panel" role="region" aria-label="Banner image link">
+                <label className="f-banner-link-label" htmlFor="banner-link-input">
+                  Image link (GitHub file page or raw URL)
+                </label>
+                <div className="f-banner-link-row">
+                  <input
+                    id="banner-link-input"
+                    className="f-banner-link-input"
+                    type="url"
+                    value={bannerLinkDraft}
+                    placeholder={ASSETS_BRANCH_BANNER_EXAMPLE}
+                    onChange={(e) => {
+                      setBannerLinkDraft(e.target.value);
+                      setBannerLinkError('');
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key !== 'Enter') return;
+                      e.preventDefault();
+                      const parsed = parseBannerLink(bannerLinkDraft);
+                      if (!parsed.ok) {
+                        setBannerLinkError(parsed.error);
+                        return;
+                      }
+                      setQuiz({ ...quiz, banner_url: parsed.url });
+                      setQuizDirty(true);
+                      setBannerDirty(true);
+                      setBannerLinkDraft(parsed.url);
+                      setBannerLinkError('');
+                      setError('');
+                    }}
+                  />
+                  <button
+                    type="button"
+                    className="f-tool-btn"
+                    onClick={() => {
+                      const parsed = parseBannerLink(bannerLinkDraft);
+                      if (!parsed.ok) {
+                        setBannerLinkError(parsed.error);
+                        return;
+                      }
+                      setQuiz({ ...quiz, banner_url: parsed.url });
+                      setQuizDirty(true);
+                      setBannerDirty(true);
+                      setBannerLinkDraft(parsed.url);
+                      setBannerLinkError('');
+                      setError('');
+                    }}
+                  >
+                    Apply
+                  </button>
+                </div>
+                <button
+                  type="button"
+                  className="f-banner-link-preset"
+                  onClick={() => {
+                    const parsed = parseBannerLink(ASSETS_BRANCH_BANNER_EXAMPLE);
+                    if (!parsed.ok) {
+                      setBannerLinkError(parsed.error);
+                      return;
+                    }
+                    setBannerLinkDraft(parsed.url);
+                    setQuiz({ ...quiz, banner_url: parsed.url });
+                    setQuizDirty(true);
+                    setBannerDirty(true);
+                    setBannerLinkError('');
+                    setError('');
+                  }}
+                >
+                  Use assets/IMG_3538.jpeg
+                </button>
+                {bannerLinkError ? (
+                  <p className="f-banner-link-error" role="alert">
+                    {bannerLinkError}
+                  </p>
+                ) : (
+                  <p className="f-banner-link-hint">
+                    Blob page links are converted to raw.githubusercontent.com so the take page can
+                    load the image. Prefer Link over Upload before Assign.
+                  </p>
+                )}
+              </div>
+            ) : null}
             <div className="f-cover-caption">
               <span className="f-kicker">Quiz cover</span>
               {editingTitle && titleEditAt === 'cover' ? (

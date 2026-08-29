@@ -49,6 +49,34 @@ function preferLocalMediaProxy() {
   }
 }
 
+const GITHUB_BLOB_RE =
+  /^https?:\/\/(?:www\.)?github\.com\/([^/]+)\/([^/]+)\/(?:blob|raw)\/([^/]+)\/(.+?)(?:\?|#|$)/i;
+const GITHUB_RAW_HOST = 'https://raw.githubusercontent.com';
+
+/**
+ * Convert github.com/.../blob/... page links into raw.githubusercontent.com URLs
+ * so <img src> can load the file. Leaves other URLs unchanged.
+ */
+export function normalizeExternalMediaUrl(url) {
+  const s = String(url || '').trim();
+  if (!s) return '';
+  const m = s.match(GITHUB_BLOB_RE);
+  if (!m) return s;
+  const [, owner, repo, ref, filePath] = m;
+  const encoded = String(filePath)
+    .split('/')
+    .map((seg) => encodeURIComponent(decodeURIComponent(seg)))
+    .join('/');
+  return `${GITHUB_RAW_HOST}/${owner}/${repo}/${ref}/${encoded}`;
+}
+
+/** Banner / cover art: normalize GitHub blob links, then resolve /media paths. */
+export function resolveBannerUrl(url) {
+  const normalized = normalizeExternalMediaUrl(url);
+  if (!normalized) return '';
+  return resolveMediaUrl(normalized);
+}
+
 /** Local `/media/...` is proxied by the trivia API. Large/gitignored trees load from remote branches. */
 export function resolveMediaUrl(url) {
   const s = String(url || '');

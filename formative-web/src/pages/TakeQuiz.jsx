@@ -47,7 +47,7 @@ function ensureTakeSessionToken(ref, savedToken) {
   return token;
 }
 import { allChoicesHaveArt, lookupChoiceArt } from '../lib/choiceArt';
-import { resolveMediaUrl } from '../lib/mediaUrl';
+import { resolveBannerUrl, resolveMediaUrl } from '../lib/mediaUrl';
 import {
   formatUnlockCountdown,
   formatWhenWithLocalHint,
@@ -755,7 +755,9 @@ export default function TakeQuiz() {
       ) : null}
       <div className="f-take-shell">
         <header className={`f-cover ${quiz.banner_url ? 'has-art' : ''}`}>
-          {quiz.banner_url ? <img className="f-cover-img" src={quiz.banner_url} alt="" /> : null}
+          {quiz.banner_url ? (
+            <img className="f-cover-img" src={resolveBannerUrl(quiz.banner_url)} alt="" />
+          ) : null}
           <div className="f-cover-scrim" />
           {quiz.banner_url ? (
             <div className="f-cover-caption">
