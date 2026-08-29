@@ -27,6 +27,12 @@ export function isBlankAnswer(raw) {
   return false;
 }
 
+/** True when answers JSON includes at least one question answer (not just __meta keys). */
+export function hasResponseAnswers(answers) {
+  if (!answers || typeof answers !== 'object') return false;
+  return Object.keys(answers).some((k) => !k.startsWith('__'));
+}
+
 /** Earned points for display; blank unanswered with no stored grade counts as 0. */
 export function effectiveEarned(q, response, maxPts) {
   const stored = response?.per_question?.[q?.id];

@@ -19,6 +19,7 @@ import { applyPromptTextStyle } from '../lib/richText';
 import { withGeneratedHints } from '../lib/triviaHints';
 import { presenceStatus } from '../lib/triviaPresence';
 import { scoredInsightQuestions } from '../lib/triviaInsights';
+import { hasResponseAnswers } from '../lib/formatResponseAnswer';
 import QuizSettingsModal from '../components/QuizSettingsModal';
 import {
   clearEditorDraft,
@@ -157,7 +158,15 @@ export default function Activity() {
 
   const applyResponsesPayload = useCallback((r) => {
     if (r.unchanged) return;
-    setResponses(r.responses || []);
+    setResponses((prev) => {
+      const next = r.responses || [];
+      return next.map((row) => {
+        const old = prev.find((p) => p.id === row.id);
+        if (!old || hasResponseAnswers(row.answers)) return row;
+        if (hasResponseAnswers(old.answers)) return { ...row, answers: old.answers };
+        return row;
+      });
+    });
     setSessions((prev) => {
       const next = r.sessions || [];
       const open = selectedSessionRef.current;
@@ -172,11 +181,8 @@ export default function Activity() {
   const openStudentResponse = useCallback(async (r) => {
     setSelectedSession(null);
     setSelectedQuestionId(null);
-    if (r?.answers) {
-      setSelectedResponse(r);
-      return;
-    }
     setSelectedResponse(r);
+    if (hasResponseAnswers(r?.answers)) return;
     try {
       const data = await hostApi(`/api/trivia/host?action=response&id=${encodeURIComponent(r.id)}`);
       if (data.response) {
@@ -1065,7 +1071,17 @@ export default function Activity() {
           {selectedResponse ? (
             <StudentResponsePanel
               response={
-                responses.find((r) => r.id === selectedResponse.id) || selectedResponse
+                (() => {
+                  const fromList = responses.find((r) => r.id === selectedResponse.id);
+                  if (!fromList) return selectedResponse;
+                  if (
+                    hasResponseAnswers(selectedResponse.answers) &&
+                    !hasResponseAnswers(fromList.answers)
+                  ) {
+                    return selectedResponse;
+                  }
+                  return fromList;
+                })()
               }
               responses={responses}
               questions={questions}
