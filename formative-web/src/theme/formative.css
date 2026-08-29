@@ -1177,7 +1177,8 @@ label.f-file-btn:hover {
   display: block;
 }
 
-.f-media-thumb-crop {
+.f-media-thumb-crop,
+.f-question-media-crop {
   min-height: 180px;
   max-height: 320px;
   aspect-ratio: 4 / 3;
@@ -2291,6 +2292,18 @@ label.f-file-btn:hover {
   margin: 0 -18px 0;
   min-height: 220px;
   overflow: visible;
+  container-type: inline-size;
+  container-name: q-split;
+}
+
+/* Skin-guess crop in split layout: span full card width so crop matches host preview. */
+.f-q-split .f-q-media-pane {
+  overflow: visible;
+}
+
+.f-q-split .f-q-media-pane .f-media-grid.is-single:has(.f-question-media-crop) {
+  width: 100cqw;
+  max-width: 100cqw;
 }
 
 .f-q-media-pane {
@@ -2301,6 +2314,18 @@ label.f-file-btn:hover {
   flex-direction: column;
   gap: 10px;
   min-width: 0;
+}
+
+/* Editor MEDIA sidebar — same SkinCropThumb 4:3 frame as host preview / take */
+.f-q-media-pane .f-media-grid.is-single {
+  width: 100%;
+}
+
+.f-q-media-pane .f-media-thumb-crop,
+.f-q-media-pane .f-skin-crop {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 4 / 3;
 }
 
 .f-q-media-pane.is-audio {

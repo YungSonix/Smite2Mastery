@@ -190,7 +190,7 @@ export default function MediaStack({
             );
           } else if (imageCrop === 'skin_zoom_center' && i === 0) {
             body = (
-              <div className="f-media-thumb f-media-thumb-crop">
+              <div className="f-media-thumb f-media-thumb-crop f-question-media-crop">
                 <SkinCropThumb src={src} seed={imageCropSeed || src} />
               </div>
             );

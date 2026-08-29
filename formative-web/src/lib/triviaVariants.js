@@ -85,14 +85,14 @@ const VARIANT_SLOT_MEDIA_KEYS = [
 ];
 const CROP_META_KEYS = new Set(['media_crop', 'media_seed']);
 
-function slotOwnsCropField(slot, key) {
+export function slotOwnsCropField(slot, key) {
   if (!slot || typeof slot !== 'object') return false;
   if (slot[key] !== undefined && slot[key] !== null) return true;
   return slot.meta?.[key] !== undefined && slot.meta?.[key] !== null;
 }
 
 /** Mirror QuestionCard variant-tab media meta (crop/seed do not inherit from Version A). */
-function mediaMetaFromSlot(slot, baseMeta = {}, { inheritCrop = true } = {}) {
+export function mediaMetaFromSlot(slot, baseMeta = {}, { inheritCrop = true } = {}) {
   const src = slot && typeof slot === 'object' ? slot : {};
   const meta = baseMeta && typeof baseMeta === 'object' ? baseMeta : {};
   const nested = src.meta && typeof src.meta === 'object' ? src.meta : {};
@@ -105,6 +105,21 @@ function mediaMetaFromSlot(slot, baseMeta = {}, { inheritCrop = true } = {}) {
     else if (meta[key] !== undefined && meta[key] !== null) out[key] = meta[key];
   }
   return out;
+}
+
+/** Media meta for editor / crop — matches applyVariant() resolution. */
+export function resolveVariantMediaMeta(question, variantTab = 0) {
+  if (!variantTab) return question?.meta && typeof question.meta === 'object' ? question.meta : {};
+  const extras = Array.isArray(question?.meta?.variants) ? question.meta.variants : [];
+  const slot = extras[variantTab - 1] || {};
+  const baseMeta = question?.meta && typeof question.meta === 'object' ? question.meta : {};
+  const merged = {
+    ...baseMeta,
+    ...mediaMetaFromSlot(slot, baseMeta, { inheritCrop: false }),
+  };
+  if (!slotOwnsCropField(slot, 'media_crop')) delete merged.media_crop;
+  if (!slotOwnsCropField(slot, 'media_seed')) delete merged.media_seed;
+  return merged;
 }
 
 export function listVariants(q) {

@@ -27,7 +27,7 @@ import CategorizeBoard from './CategorizeBoard';
 import { parseCategorize } from '../lib/categorize';
 import { remixQuestionFromA, fillAnswersFromPrompt, makeRandomQuestionByStyle, RANDOM_QUESTION_STYLES, RANDOM_QUESTION_QUICK } from '../lib/triviaRemix';
 import { applyPromptTextStyle } from '../lib/richText';
-import { MAX_QUESTION_VARIANTS, variantLetter } from '../lib/triviaVariants';
+import { MAX_QUESTION_VARIANTS, resolveVariantMediaMeta, variantLetter } from '../lib/triviaVariants';
 import {
   questionHintUiAllowed,
   storedHintList,
@@ -261,10 +261,12 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
   const mediaMetaFromObj = (obj, fallbackMeta = {}, { inheritCrop = true } = {}) => {
     const src = obj && typeof obj === 'object' ? obj : {};
     const meta = fallbackMeta && typeof fallbackMeta === 'object' ? fallbackMeta : {};
+    const nested = src.meta && typeof src.meta === 'object' ? src.meta : {};
     const out = {};
     for (const key of VARIANT_MEDIA_META_KEYS) {
       if (src[key] !== undefined && src[key] !== null) out[key] = src[key];
       else if (src[key] === null) continue;
+      else if (nested[key] !== undefined && nested[key] !== null) out[key] = nested[key];
       else if (!inheritCrop && CROP_META_KEYS.has(key)) continue;
       else if (meta[key] !== undefined && meta[key] !== null) out[key] = meta[key];
     }
@@ -287,18 +289,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
     variantTab === 0
       ? listMediaUrls(q)
       : listMediaUrls(variantExtras[variantTab - 1] || {});
-  const activeMediaMeta = (() => {
-    if (variantTab === 0) return q.meta || {};
-    const slot = variantExtras[variantTab - 1] || {};
-    const merged = {
-      ...(q.meta || {}),
-      ...mediaMetaFromObj(slot, q.meta || {}, { inheritCrop: false }),
-    };
-    // Spreading A first would keep A's skin zoom — strip unless this slot owns crop.
-    if (slot.media_crop == null) delete merged.media_crop;
-    if (slot.media_seed == null) delete merged.media_seed;
-    return merged;
-  })();
+  const activeMediaMeta = resolveVariantMediaMeta(q, variantTab);
   const firstMedia = activeMediaUrls[0] || null;
   const useMediaSplit =
     !isGate &&
@@ -486,9 +477,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
   const activeSourceQuestion = () => {
     if (variantTab <= 0) return q;
     const slot = variantExtras[variantTab - 1] || {};
-    const slotMeta = mediaMetaFromObj(slot, q.meta || {}, { inheritCrop: false });
-    if (slot.media_crop == null) delete slotMeta.media_crop;
-    if (slot.media_seed == null) delete slotMeta.media_seed;
+    const slotMeta = resolveVariantMediaMeta(q, variantTab);
     return {
       ...q,
       ...slot,
@@ -498,12 +487,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
         : listMediaUrls(slot).length
           ? listMediaUrls(slot)
           : listMediaUrls(q),
-      meta: {
-        ...(q.meta || {}),
-        ...slotMeta,
-        ...(slot.media_crop == null ? { media_crop: undefined } : {}),
-        ...(slot.media_seed == null ? { media_seed: undefined } : {}),
-      },
+      meta: slotMeta,
     };
   };
 
