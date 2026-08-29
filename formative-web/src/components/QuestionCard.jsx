@@ -27,7 +27,7 @@ import CategorizeBoard from './CategorizeBoard';
 import { parseCategorize } from '../lib/categorize';
 import { remixQuestionFromA, fillAnswersFromPrompt, makeRandomQuestionByStyle, RANDOM_QUESTION_STYLES, RANDOM_QUESTION_QUICK } from '../lib/triviaRemix';
 import { applyPromptTextStyle } from '../lib/richText';
-import { MAX_QUESTION_VARIANTS, resolveVariantMediaMeta, variantLetter } from '../lib/triviaVariants';
+import { applyVariant, MAX_QUESTION_VARIANTS, variantLetter } from '../lib/triviaVariants';
 import {
   questionHintUiAllowed,
   storedHintList,
@@ -285,11 +285,9 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
     delete next.media_seed;
     return next;
   };
-  const activeMediaUrls =
-    variantTab === 0
-      ? listMediaUrls(q)
-      : listMediaUrls(variantExtras[variantTab - 1] || {});
-  const activeMediaMeta = resolveVariantMediaMeta(q, variantTab);
+  const displayVariant = applyVariant(q, variantTab);
+  const activeMediaUrls = listMediaUrls(displayVariant);
+  const activeMediaMeta = displayVariant.meta || {};
   const firstMedia = activeMediaUrls[0] || null;
   const useMediaSplit =
     !isGate &&
@@ -474,22 +472,7 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
     setMediaPreviewToken(`${Date.now()}|${url}|${meta.media_seed || ''}|${meta.remix_kind || ''}`);
   };
 
-  const activeSourceQuestion = () => {
-    if (variantTab <= 0) return q;
-    const slot = variantExtras[variantTab - 1] || {};
-    const slotMeta = resolveVariantMediaMeta(q, variantTab);
-    return {
-      ...q,
-      ...slot,
-      image_url: slot.image_url !== undefined ? slot.image_url : q.image_url,
-      image_urls: Array.isArray(slot.image_urls)
-        ? slot.image_urls
-        : listMediaUrls(slot).length
-          ? listMediaUrls(slot)
-          : listMediaUrls(q),
-      meta: slotMeta,
-    };
-  };
+  const activeSourceQuestion = () => applyVariant(q, variantTab);
 
   const commitVariantRemixPatch = (patch) => {
     const slot = variantTab - 1;

@@ -1181,6 +1181,7 @@ label.f-file-btn:hover {
 .f-question-media-crop {
   min-height: 180px;
   max-height: 320px;
+  max-width: min(280px, 100%);
   aspect-ratio: 4 / 3;
   width: 100%;
   display: block;
@@ -2291,19 +2292,6 @@ label.f-file-btn:hover {
   border-top: 1px solid var(--f-border);
   margin: 0 -18px 0;
   min-height: 220px;
-  overflow: visible;
-  container-type: inline-size;
-  container-name: q-split;
-}
-
-/* Skin-guess crop in split layout: span full card width so crop matches host preview. */
-.f-q-split .f-q-media-pane {
-  overflow: visible;
-}
-
-.f-q-split .f-q-media-pane .f-media-grid.is-single:has(.f-question-media-crop) {
-  width: 100cqw;
-  max-width: 100cqw;
 }
 
 .f-q-media-pane {
@@ -5617,6 +5605,10 @@ label.f-file-btn:hover {
   border-radius: 14px;
   background: var(--f-card);
   padding: 14px 16px 16px;
+}
+
+.f-host-preview-card .f-media-grid.is-single {
+  max-width: min(280px, 100%);
 }
 
 .f-host-preview-card-head {

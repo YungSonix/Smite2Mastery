@@ -107,6 +107,17 @@ export function mediaMetaFromSlot(slot, baseMeta = {}, { inheritCrop = true } = 
   return out;
 }
 
+/** Resolved question slice for one variant tab — editor, host preview, and take use this. */
+export function resolveVariantQuestion(question, variantIndex = 0) {
+  return applyVariant(question, variantIndex);
+}
+
+/** Media URLs for a variant tab — matches HostPreview listMediaUrls(applyVariant(...)). */
+export function resolveVariantMediaUrls(question, variantIndex = 0) {
+  const resolved = applyVariant(question, variantIndex);
+  return listImageUrls(resolved);
+}
+
 /** Media meta for editor / crop — matches applyVariant() resolution. */
 export function resolveVariantMediaMeta(question, variantTab = 0) {
   if (!variantTab) return question?.meta && typeof question.meta === 'object' ? question.meta : {};
