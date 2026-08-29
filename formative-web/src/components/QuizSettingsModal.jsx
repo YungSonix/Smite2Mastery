@@ -226,6 +226,16 @@ export default function QuizSettingsModal({ settings, onChange, onClose }) {
           {tab === 'play' ? (
             <>
               <section className="f-settings-card">
+                <h4>Grading</h4>
+                <Toggle
+                  label="Partial credit on multiple selection"
+                  hint="All pick-all-that-apply questions: score = (correct picks − wrong picks) ÷ number of correct answers"
+                  checked={settings.partial_credit_multiple_selection}
+                  onChange={(v) => onChange({ partial_credit_multiple_selection: v })}
+                />
+              </section>
+
+              <section className="f-settings-card">
                 <h4>During the quiz</h4>
                 <Toggle
                   label="Randomize answer order"

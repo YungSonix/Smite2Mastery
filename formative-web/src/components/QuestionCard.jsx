@@ -27,6 +27,7 @@ import CategorizeBoard from './CategorizeBoard';
 import { parseCategorize } from '../lib/categorize';
 import { remixQuestionFromA, fillAnswersFromPrompt, makeRandomQuestionByStyle, RANDOM_QUESTION_STYLES, RANDOM_QUESTION_QUICK } from '../lib/triviaRemix';
 import { applyPromptTextStyle } from '../lib/richText';
+import { questionAllowsPartialCredit } from '../lib/quizGrading';
 import { applyVariant, MAX_QUESTION_VARIANTS, variantLetter } from '../lib/triviaVariants';
 import {
   questionHintUiAllowed,
@@ -187,7 +188,14 @@ function RandomQuestionPicker({ onPick, fillBlank }) {
   );
 }
 
-export default function QuestionCard({ question, index, onChange, onDelete, autoHints = false }) {
+export default function QuestionCard({
+  question,
+  index,
+  onChange,
+  onDelete,
+  autoHints = false,
+  quizPartialCreditMs = false,
+}) {
   const [q, setQ] = useState(question);
   const [uploadError, setUploadError] = useState('');
   const [attachOpen, setAttachOpen] = useState(false);
@@ -1065,12 +1073,17 @@ export default function QuestionCard({ question, index, onChange, onDelete, auto
           <label className="f-toggle-row">
             <span>
               Allow partial credit
-              <small>Score = (correct picks minus extras) / number of correct options</small>
+              <small>
+                {quizPartialCreditMs
+                  ? 'On for all multiple-selection questions (Quiz settings → Grading)'
+                  : 'Score = (correct picks minus extras) / number of correct options'}
+              </small>
             </span>
             <input
               type="checkbox"
               className="f-toggle"
-              checked={Boolean(q.meta?.allow_partial_credit)}
+              checked={questionAllowsPartialCredit(q, { partial_credit_multiple_selection: quizPartialCreditMs })}
+              disabled={quizPartialCreditMs}
               onChange={(e) =>
                 commit({
                   ...q,

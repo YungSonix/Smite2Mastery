@@ -951,6 +951,7 @@ export default function Activity() {
               question={q}
               index={idx}
               autoHints={Boolean(mergeQuizSettings(quiz?.settings).auto_hints)}
+              quizPartialCreditMs={Boolean(settings.partial_credit_multiple_selection)}
               onChange={saveQuestion}
               onDelete={() => deleteQuestion(q.id)}
             />

@@ -42,7 +42,19 @@ export const DEFAULT_QUIZ_SETTINGS = {
   auto_random_questions: false,
   auto_hints: false,
   lifelines_enabled: false,
+  partial_credit_multiple_selection: false,
 };
+
+/** Strip legacy "(First Last)" from host-configured Discord field labels. */
+export function discordFieldLabel(settings) {
+  const raw = String(settings?.discord_field_label || '').trim();
+  if (!raw) return 'Discord IGN';
+  return raw.replace(/\s*\(first\s*last\)\s*/gi, '').trim() || 'Discord IGN';
+}
+
+export function discordFieldPlaceholder(settings) {
+  return discordFieldLabel(settings);
+}
 
 export function quizWindowState(settings, nowMs = Date.now()) {
   const opensRaw = settings?.opens_at;

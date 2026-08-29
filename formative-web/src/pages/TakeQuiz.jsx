@@ -19,7 +19,7 @@ import {
   saveTriviaProgress,
   seededShuffle,
 } from '../lib/triviaVariants';
-import { quizWindowState } from '../lib/quizSettings';
+import { quizWindowState, discordFieldLabel, discordFieldPlaceholder } from '../lib/quizSettings';
 import { quizThemeProps } from '../lib/quizThemes';
 import { pingTriviaPresence, compactDraftAnswers, PRESENCE_POLL_MS } from '../lib/triviaPresence';
 import {
@@ -838,14 +838,14 @@ export default function TakeQuiz() {
               <div className="f-take-fold-body">
                 <div className="f-field-grid">
                   <label className="f-field" htmlFor="discord-username">
-                    <span>{settings.discord_field_label || 'Discord Username'}</span>
+                    <span>{discordFieldLabel(settings)}</span>
                     <input
                       id="discord-username"
                       type="text"
                       required
                       value={discord}
                       onChange={(e) => setDiscord(e.target.value)}
-                      placeholder="First Last"
+                      placeholder={discordFieldPlaceholder(settings)}
                       autoComplete="off"
                     />
                   </label>
@@ -869,14 +869,14 @@ export default function TakeQuiz() {
               <h2>Your details</h2>
               <div className="f-field-grid">
                 <label className="f-field" htmlFor="discord-username">
-                  <span>{settings.discord_field_label || 'Discord Username'}</span>
+                  <span>{discordFieldLabel(settings)}</span>
                   <input
                     id="discord-username"
                     type="text"
                     required
                     value={discord}
                     onChange={(e) => setDiscord(e.target.value)}
-                    placeholder="First Last"
+                    placeholder={discordFieldPlaceholder(settings)}
                     autoComplete="off"
                   />
                 </label>

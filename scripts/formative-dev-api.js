@@ -26,6 +26,7 @@ const {
   scoreAnswersWithVariants,
 } = require('../lib/server/triviaVariants');
 const { rewriteQuestionMedia } = require('../lib/server/triviaMediaRewrite');
+const { applyQuizPartialCreditToQuestions } = require('../lib/server/quizGradingSettings');
 const { responsesToCsv } = require('../lib/server/triviaExport');
 const { quizWindowState, shouldPurgeLiveSessions } = require('../lib/server/triviaWindow');
 const { compactDraftAnswers, sessionDraftDue } = require('../lib/server/triviaCommit');
@@ -251,7 +252,12 @@ function flushMemoryDrafts(quiz) {
     if (existing && allowRetake) db.responses.delete(existing.id);
     const answers = compactDraftAnswers(session.draft_answers || {});
     const variantMap = session.variant_map && typeof session.variant_map === 'object' ? session.variant_map : {};
-    const graded = scoreAnswersWithVariants(scoreAnswers, questions, answers, variantMap);
+    const graded = scoreAnswersWithVariants(
+      scoreAnswers,
+      applyQuizPartialCreditToQuestions(questions, quiz.settings),
+      answers,
+      variantMap
+    );
     const row = {
       id: randomUUID(),
       quiz_id: quiz.id,
@@ -738,7 +744,12 @@ async function handleSubmit(req, res) {
     left_page: Boolean(clientPresence.left_page ?? live?.left_page),
     currently_hidden: Boolean(clientPresence.currently_hidden ?? live?.currently_hidden),
   };
-  const graded = scoreAnswersWithVariants(scoreAnswers, questions, answers, variantMap);
+  const graded = scoreAnswersWithVariants(
+    scoreAnswers,
+    applyQuizPartialCreditToQuestions(questions, quiz.settings),
+    answers,
+    variantMap
+  );
   const resolved = questions.map((q) => applyVariant(q, variantMap[q.id] ?? 0));
   const row = {
     id: randomUUID(),
