@@ -705,13 +705,12 @@ label.f-file-btn:hover {
 }
 
 .f-activity-shell {
-  min-height: 100%;
+  min-height: 100vh;
   background: var(--f-page);
   color: var(--f-text);
   font-family: var(--f-font);
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 }
 
 .f-topbar {
